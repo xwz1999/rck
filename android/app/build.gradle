@@ -1,0 +1,143 @@
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+//    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+apply plugin: 'com.android.application'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+apply plugin: 'com.mob.sdk'
+MobSDK {
+    appKey "2e499d0b6a624"
+    appSecret "bd3f4abb0124b99db715c062dd280fd1"
+    ShareSDK {
+        loopShare true
+        devInfo {
+            QQ {
+                appId "101876843"
+                appKey "6f367bfad98978e22c2e11897dd74f00"
+            }
+            SinaWeibo {
+                appKey "3484799074"
+                appSecret "0cc08d31b4d63dc81fbb7a2559999fb3"
+                callbackUri "https://www.reecook.cn"
+            }
+            QZone {
+                appId "101876843"
+                appKey "6f367bfad98978e22c2e11897dd74f00"
+            }
+        }
+    }
+}
+
+
+
+
+android {
+    compileSdkVersion 28
+
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+
+    defaultConfig {
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId "com.akuhome.recook"
+        minSdkVersion 16
+        targetSdkVersion 28
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+//        ndk {
+//            //设置支持的SO库架构
+//            abiFilters 'armeabi-v7a', 'x86'//, 'arm64-v8a', 'x86', 'x86_64'
+//        }
+        manifestPlaceholders = [
+                 OPENINSTALL_APPKEY : "uapywo",
+        ]
+        multiDexEnabled true
+    }
+
+    buildTypes {
+        release {
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig signingConfigs.debug
+            ndk {
+                //设置支持的SO库架构
+                abiFilters 'armeabi-v7a', 'x86'//, 'arm64-v8a', 'x86', 'x86_64'
+            }
+        }
+
+        debug {
+            signingConfig signingConfigs.debug
+            ndk {
+                abiFilters "armeabi","armeabi-v7a","arm64-v8a", "x86"
+                //设置支持的SO库架构
+//                abiFilters 'armeabi-v7a', 'x86'//, 'arm64-v8a', 'x86', 'x86_64'
+            }
+        }
+    }
+
+    signingConfigs {
+        debug {
+            keyAlias 'alias'
+            keyPassword 'recook'
+            // storeFile file('/Users/nansi/Desktop/Flutter/Project/recook/jks/recook.keystore')
+            storeFile file('../../jks/recook.keystore');
+            storePassword 'recook'
+        }
+    }
+
+    configurations.all {
+        resolutionStrategy {
+            resolutionStrategy.eachDependency { details ->
+                if (details.requested.group == 'androidx.core') {
+                    details.useVersion "1.0.2"
+                }
+                if (details.requested.group == 'androidx.lifecycle') {
+                    details.useVersion "2.0.0"
+                }
+                if (details.requested.group == 'androidx.versionedparcelable') {
+                    details.useVersion "1.0.0"
+                }
+                if (details.requested.group == 'androidx.fragment') {
+                    details.useVersion "1.0.0"
+                }
+                if (details.requested.group == 'androidx.appcompat') {
+                    details.useVersion "1.0.1"
+                }
+            }
+        }
+    }
+
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+}
+

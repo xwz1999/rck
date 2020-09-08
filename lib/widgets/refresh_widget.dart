@@ -1,0 +1,230 @@
+/*
+ * ====================================================
+ * package   : widgets
+ * author    : Created by nansi.
+ * time      : 2019/5/7  5:54 PM 
+ * remark    : 
+ * ====================================================
+ */
+
+/*
+  enableOverScroll : 自己创建的属性  用于下拉放大效果的界面， 第三方在1.3.5版本取消了
+
+  用处在 [smart_refresh.dart] 文件中
+
+   // build the customScrollView
+  Widget _buildBodyBySlivers(Widget childView, List<Widget> slivers) {
+    Widget body;
+    if (childView is ScrollView) {
+      print(RefreshPhysics().applyTo(childView.physics));
+      body = CustomScrollView(
+        physics: !widget.enableOverScroll ? ClampingScrollPhysics() : _getScrollPhysics(conf).applyTo(childView.physics),
+        controller: controller.scrollController,
+        cacheExtent: childView.cacheExtent,
+        key: childView.key,
+        semanticChildCount: childView.semanticChildCount,
+        slivers: slivers,
+        dragStartBehavior: childView.dragStartBehavior,
+        reverse: childView.reverse,
+      );
+    } else {
+      body = CustomScrollView(
+        physics:
+        RefreshPhysics().applyTo(const AlwaysScrollableScrollPhysics()),
+        controller: controller.scrollController,
+        slivers: slivers,
+      );
+    }
+    return body;
+  }
+
+ */
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import 'package:recook/constants/header.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+
+typedef OnRefresh = Function();
+typedef OnLoadMore = Function();
+
+class RefreshWidget extends StatefulWidget {
+  RefreshWidget(
+      {this.body,
+      this.onRefresh,
+      this.onLoadMore,
+      this.isInNest = false,
+      GSRefreshController controller,
+      this.enableOverScroll = true,
+      this.color = const Color(0xff555555),
+      this.refreshingText: "正在努力获取数据...",
+      this.completeText: "刷新完成",
+      this.failedText: "网络出了一点问题呢",
+      this.idleText: "下拉刷新",
+      this.releaseText: "松开刷新",
+      this.loadingText: "正在加载中...",
+      this.noDataText: "已经到底了",
+      this.headerTriggerDistance,
+      this.header})
+      : this.controller = controller ?? GSRefreshController();
+
+  final Widget body;
+  final Color color;
+  final OnRefresh onRefresh;
+  final OnLoadMore onLoadMore;
+  final bool isInNest;
+  final bool enableOverScroll;
+  final GSRefreshController controller;
+
+  final double headerTriggerDistance;
+  final String refreshingText;
+  final String completeText;
+  final String failedText;
+  final String idleText;
+  final String releaseText;
+
+  final String loadingText;
+  final String noDataText;
+  final Widget header;
+
+  @override
+  State<StatefulWidget> createState() {
+    return _RefreshWidgetState();
+  }
+}
+
+class _RefreshWidgetState extends State<RefreshWidget> {
+  @override
+  initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return RefreshConfiguration(
+      autoLoad: true,
+      hideFooterWhenNotFull: true,
+      headerTriggerDistance: widget.headerTriggerDistance ?? rSize(60),
+      child: SmartRefresher(
+        // enableOverScroll: widget.enableOverScroll,
+        enablePullDown: widget.onRefresh != null,
+        enablePullUp: widget.onLoadMore != null,
+        header: widget.header != null
+            ? widget.header
+            : ClassicHeader(
+                textStyle: TextStyle(
+                    fontSize: ScreenAdapterUtils.setSp(14),
+                    color: widget.color),
+                idleIcon: Icon(
+                  Icons.arrow_downward,
+                  size: ScreenAdapterUtils.setSp(20),
+                  color: widget.color,
+                ),
+                releaseIcon: Icon(
+                  Icons.arrow_upward,
+                  size: ScreenAdapterUtils.setSp(20),
+                  color: widget.color,
+                ),
+                refreshingIcon: CupertinoActivityIndicator(
+                  animating: true,
+                  radius: ScreenAdapterUtils.setWidth(9.0),
+                ),
+                completeIcon: Icon(
+                  Icons.check,
+                  size: ScreenAdapterUtils.setSp(20),
+                  color: widget.color,
+                ),
+                spacing: rSize(5),
+                refreshingText: widget.refreshingText,
+                completeText: widget.completeText,
+                failedText: widget.failedText,
+                idleText: widget.idleText,
+                releaseText: widget.releaseText,
+              ),
+        footer: ClassicFooter(
+          textStyle: TextStyle(
+              fontSize: ScreenAdapterUtils.setSp(14), color: Color(0xff555555)),
+          idleText: "上拉加载更多",
+          idleIcon: Icon(
+            Icons.arrow_upward,
+            size: ScreenAdapterUtils.setSp(20),
+            color: Color(0xff555555),
+          ),
+          loadingText: widget.loadingText,
+          failedText: "网络出了一点问题呢",
+          noDataText: widget.noDataText,
+        ),
+        controller: widget.controller._controller,
+        onRefresh: widget.onRefresh,
+        onLoading: widget.onLoadMore,
+        child: widget.body,
+//      isNestWrapped: widget.isInNest,
+      ),
+    );
+  }
+}
+
+class GSRefreshController {
+  RefreshController _controller;
+
+  GSRefreshController({
+    bool initialRefresh = false,
+  }) {
+    _controller = RefreshController(initialRefresh: initialRefresh);
+  }
+
+  void requestRefresh() {
+    _controller.requestRefresh();
+  }
+
+  void requestLoadMore() {
+    _controller.requestLoading();
+  }
+
+  void refreshCompleted({bool resetFooterState = false}) {
+    _controller.refreshCompleted(resetFooterState: resetFooterState);
+  }
+
+  /// request failed,the header display failed state
+  void refreshFailed() {
+    _controller.refreshFailed();
+  }
+
+  /// not show success or failed, it will set header state to idle and spring back at once
+  void refreshToIdle() {
+    _controller.refreshToIdle();
+  }
+
+  /// after data returned,set the footer state to idle
+  void loadComplete() {
+    _controller.loadComplete();
+  }
+
+  /// If catchError happen,you may call loadFailed indicate fetch data from network failed
+  void loadFailed() {
+    _controller.loadFailed();
+  }
+
+  /// load more success without error,but no data returned
+  void loadNoData() {
+    _controller.loadNoData();
+  }
+
+  /// reset footer noData state  to idle
+  void resetNoData() {
+    _controller.resetNoData();
+  }
+
+  bool isRefresh() {
+    return _controller.isRefresh;
+  }
+
+  bool isLoading() {
+    return _controller.isLoading;
+  }
+
+  void dispose() {
+    _controller.dispose();
+  }
+}
