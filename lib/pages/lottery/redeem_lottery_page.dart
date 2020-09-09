@@ -38,7 +38,7 @@ class _RedeemLotteryPageState extends State<RedeemLotteryPage> {
           _lotteryCard(
             type: LotteryType.DOUBLE_LOTTERY,
             redBalls: [2, 6, 11, 14, 18, 22],
-            blueBalls: [02],
+            blueBalls: [2],
           ),
           _lotteryCard(
             type: LotteryType.BIG_LOTTERY,

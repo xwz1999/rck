@@ -58,24 +58,39 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
         ],
       ),
       actions: [
-        MaterialButton(
-          minWidth: rSize(20),
-          onPressed: () {},
-          child: Image.asset(
-            R.ASSETS_LOTTERY_REDEEM_LOTTERY_DETAIL_PNG,
-            width: rSize(20),
-            height: rSize(20),
+        SizedBox(
+          width: rSize(20 + 15.0),
+          child: FlatButton(
+            padding: EdgeInsets.zero,
+            onPressed: () => AppRouter.push(
+              context,
+              RouteName.LOTTERY_HELP_PAGE,
+              arguments: {'type': widget.arguments['type']},
+            ),
+            child: Image.asset(
+              R.ASSETS_LOTTERY_REDEEM_LOTTERY_DETAIL_PNG,
+              width: rSize(20),
+              height: rSize(20),
+            ),
           ),
         ),
-        MaterialButton(
-          minWidth: rSize(20),
-          onPressed: () {},
-          child: Image.asset(
-            R.ASSETS_LOTTERY_REDEEM_LOTTERY_HISTORY_PNG,
-            width: rSize(20),
-            height: rSize(20),
+        SizedBox(
+          width: rSize(20 + 15.0),
+          child: FlatButton(
+            padding: EdgeInsets.zero,
+            onPressed: () => AppRouter.push(
+              context,
+              RouteName.LOTTERY_HISTORY_PAGE,
+              arguments: {'type': widget.arguments['type']},
+            ),
+            child: Image.asset(
+              R.ASSETS_LOTTERY_REDEEM_LOTTERY_HISTORY_PNG,
+              width: rSize(20),
+              height: rSize(20),
+            ),
           ),
         ),
+        SizedBox(width: rSize(7.5)),
       ],
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -199,26 +214,56 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
                   color: Color(0xFFCCCCCC),
                 ),
                 SizedBox(width: rSize(10)),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${lotteryShots * 2}瑞币或$lotteryShots\彩票券',
-                      style: TextStyle(
-                        fontSize: rSP(12),
-                        color: Color(0xFF666666),
+                SizedBox(
+                  width: rSize(115),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${lotteryShots * 2}瑞币或$lotteryShots\彩票券',
+                        maxLines: 2,
+                        style: TextStyle(
+                          height: 1,
+                          fontSize: rSP(12),
+                          color: Color(0xFF666666),
+                        ),
                       ),
-                    ),
-                    Text(
-                      '$lotteryShots\注',
-                      style: TextStyle(
-                        fontSize: rSP(12),
-                        color: Color(0xFF666666),
+                      Text(
+                        '$lotteryShots\注',
+                        style: TextStyle(
+                          fontSize: rSP(12),
+                          color: Color(0xFF666666),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+                Expanded(
+                  child: FlatButton(
+                    onPressed: () {},
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.horizontal(
+                        left: Radius.circular(rSize(20)),
+                      ),
+                    ),
+                    color: Color(0xFFFF8534),
+                    child: Text('加入选号'),
+                  ),
+                ),
+                Expanded(
+                  child: FlatButton(
+                    onPressed: () {},
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.horizontal(
+                        right: Radius.circular(rSize(20)),
+                      ),
+                    ),
+                    color: Color(0xFFE02020),
+                    child: Text('完成选号'),
+                  ),
+                ),
+                SizedBox(width: rSize(15)),
               ],
             ),
           ),

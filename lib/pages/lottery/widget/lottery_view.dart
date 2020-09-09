@@ -40,13 +40,16 @@ class LotteryViewState extends State<LotteryView> {
     _lotteryBoxes.forEach((element) {
       _selectedBoxes.add(element);
     });
+
     setState(() {});
+    widget.onSelect(_selectedBoxes.map((e) => e.value).toList());
   }
 
   clear() {
     _selectedBoxes.clear();
     _focusedBoxes.clear();
     setState(() {});
+    widget.onSelect([]);
   }
 
   random1Shot() {
@@ -63,6 +66,7 @@ class LotteryViewState extends State<LotteryView> {
       _selectedBoxes.add(temp[0]);
       temp.removeAt(0);
     }
+    widget.onSelect(_selectedBoxes.map((e) => e.value).toList());
     setState(() {});
 
     //  随机球不包含胆球算法
@@ -147,6 +151,7 @@ class LotteryViewState extends State<LotteryView> {
               box.displayStr,
               style: TextStyle(
                 fontSize: rSP(16),
+                height: 1,
                 color: selected
                     ? Colors.white
                     : widget.colorType == LotteryColorType.RED

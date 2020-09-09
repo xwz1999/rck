@@ -41,7 +41,9 @@ class _LotteryScaffoldState extends State<LotteryScaffold> {
         title: widget.title is String
             ? Text(
                 widget.title,
-                style: TextStyle(color: AppColor.blackColor),
+                style: TextStyle(
+                  color: widget.red ? Colors.white : AppColor.blackColor,
+                ),
               )
             : widget.title,
         leading: RecookBackButton(
