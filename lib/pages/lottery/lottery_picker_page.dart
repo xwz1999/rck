@@ -220,22 +220,38 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '${lotteryShots * 2}瑞币或$lotteryShots\彩票券',
-                        maxLines: 2,
-                        style: TextStyle(
-                          height: 1,
-                          fontSize: rSP(12),
-                          color: Color(0xFF666666),
-                        ),
-                      ),
-                      Text(
-                        '$lotteryShots\注',
-                        style: TextStyle(
-                          fontSize: rSP(12),
-                          color: Color(0xFF666666),
-                        ),
-                      ),
+                      lotteryShots == 0
+                          ? Text(
+                              widget.arguments['type']
+                                  ? '至少选6红球1蓝球'
+                                  : '至少选5红球2蓝球',
+                              style: TextStyle(
+                                height: 1,
+                                fontSize: rSP(12),
+                                color: Color(0xFF666666),
+                              ),
+                            )
+                          : SizedBox(),
+                      lotteryShots == 0
+                          ? SizedBox()
+                          : Text(
+                              '${lotteryShots * 2}瑞币或$lotteryShots\彩票券',
+                              maxLines: 2,
+                              style: TextStyle(
+                                height: 1,
+                                fontSize: rSP(12),
+                                color: Color(0xFF666666),
+                              ),
+                            ),
+                      lotteryShots == 0
+                          ? SizedBox()
+                          : Text(
+                              '$lotteryShots\注',
+                              style: TextStyle(
+                                fontSize: rSP(12),
+                                color: Color(0xFF666666),
+                              ),
+                            ),
                     ],
                   ),
                 ),

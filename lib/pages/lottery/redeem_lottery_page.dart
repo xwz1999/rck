@@ -25,7 +25,8 @@ class _RedeemLotteryPageState extends State<RedeemLotteryPage> {
         MaterialButton(
           padding: EdgeInsets.symmetric(horizontal: rSize(16)),
           minWidth: rSize(52),
-          onPressed: () {},
+          onPressed: () =>
+              AppRouter.push(context, RouteName.LOTTERY_ORDER_PAGE),
           child: Image.asset(
             R.ASSETS_LOTTERY_REDEEM_LOTTERY_LIST_PNG,
             width: rSize(20),
@@ -98,7 +99,7 @@ class _RedeemLotteryPageState extends State<RedeemLotteryPage> {
                       ),
                     ),
                     Text(
-                      'DATE',
+                      '第20200820期',
                       style: TextStyle(
                         color: Color(0xFF666666),
                         fontSize: rSP(12),
