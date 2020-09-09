@@ -100,7 +100,7 @@ class UserManager {
       Toast.showInfo(model.msg);
       return false;
     }
-    _identifier = model.data.identifier;
+    _identifier = model.data == null ? '' : model.data.identifier;
 
     store.dispatch(UpdateUserBriefAction(model.data));
     return true;
