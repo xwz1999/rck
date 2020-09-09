@@ -6,7 +6,6 @@
  * remark    : 
  * ====================================================
  */
-import 'package:async/async.dart';
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
@@ -18,7 +17,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -33,12 +31,10 @@ import 'package:recook/models/promotion_list_model.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/home_page_tabbar.dart';
-import 'package:recook/pages/home/items/item_column_goods.dart';
 import 'package:recook/pages/home/items/item_row_acitivity.dart';
-import 'package:recook/pages/home/items/item_row_goods.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
+import 'package:recook/pages/home/widget/animated_home_background.dart';
 import 'package:recook/pages/home/widget/goods_list_temp_page.dart';
-import 'package:recook/pages/home/widget/home_color_animation_widget.dart';
 import 'package:recook/pages/home/widget/home_countdown_widget.dart';
 import 'package:recook/pages/home/widget/home_weather_view.dart';
 import 'package:recook/pages/noticeList/notice_list_model.dart';
@@ -49,10 +45,8 @@ import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/color_util.dart';
 import 'package:recook/utils/permission_tool.dart';
 import 'package:recook/utils/share_tool.dart';
-import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/banner.dart';
-import 'package:recook/widgets/bottom_sheet/bottom_share_dialog.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/goods_item.dart';
 import 'package:recook/widgets/home_gif_header.dart';
@@ -119,7 +113,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   HomeCountdownController _homeCountdownController;
   Color _backgroundColor;
   StateSetter _bannerState;
-  GlobalKey<HomeColorAnimationWidgetState> _colorAnimationState = GlobalKey();
+  GlobalKey<AnimatedHomeBackgroundState> _animatedBackgroundState = GlobalKey();
   GlobalKey<homeAppBar.SliverAppBarState> _sliverAppBarGlobalKey = GlobalKey();
   @override
   bool needStore() {
@@ -645,9 +639,8 @@ class _HomePageState extends BaseStoreState<HomePage>
           // color: Colors.white,
           child: Stack(
             children: <Widget>[
-              HomeColorAnimationWidget(
-                key: _colorAnimationState,
-                width: screenWidth,
+              AnimatedHomeBackground(
+                key: _animatedBackgroundState,
                 height: weatherHeight + bannerHeight - 32,
                 backgroundColor:
                     _backgroundColor == null ? Colors.white : _backgroundColor,
@@ -683,7 +676,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       if (!TextUtils.isEmpty(bannerModel.color)) {
         Color color = ColorsUtil.hexToColor(bannerModel.color);
         _backgroundColor = color;
-        _colorAnimationState.currentState.changeBackgroundColor(color);
+        _animatedBackgroundState.currentState.changeColor(color);
         _sliverAppBarGlobalKey.currentState.changeBackgroundColor(color);
       }
     }
@@ -704,7 +697,7 @@ class _HomePageState extends BaseStoreState<HomePage>
           if (!TextUtils.isEmpty(bannerModel.color)) {
             Color color = ColorsUtil.hexToColor(bannerModel.color);
             _backgroundColor = color;
-            _colorAnimationState.currentState.changeBackgroundColor(color);
+            _animatedBackgroundState.currentState.changeColor(color);
             _sliverAppBarGlobalKey.currentState.changeBackgroundColor(color);
           }
         },
