@@ -62,7 +62,8 @@ class _RedeemLotteryPageState extends State<RedeemLotteryPage> {
 
     return CustomImageButton(
       onPressed: () {
-        AppRouter.push(context, RouteName.LOTTERY_PICKER_PAGE);
+        AppRouter.push(context, RouteName.LOTTERY_PICKER_PAGE,
+            arguments: {'type': type == LotteryType.DOUBLE_LOTTERY});
       },
       child: Container(
         padding: EdgeInsets.all(rSize(16)),

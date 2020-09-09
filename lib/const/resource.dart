@@ -2,6 +2,9 @@
 /// PLEASE DO NOT EDIT MANUALLY.
 class R {
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/.DS_Store)
+  static const String ASSETS__DS_STORE = 'assets/.DS_Store';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/HomeRefreshHeader3.gif)
   static const String ASSETS_HOMEREFRESHHEADER3_GIF = 'assets/HomeRefreshHeader3.gif';
 
@@ -346,6 +349,12 @@ class R {
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/lottery_redeem/lottery_list.png)
   static const String ASSETS_LOTTERY_REDEEM_LOTTERY_LIST_PNG = 'assets/lottery_redeem/lottery_list.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/lottery_redeem/random.png)
+  static const String ASSETS_LOTTERY_REDEEM_RANDOM_PNG = 'assets/lottery_redeem/random.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/lottery_redeem/win.png)
+  static const String ASSETS_LOTTERY_REDEEM_WIN_PNG = 'assets/lottery_redeem/win.png';
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/mask_money.png)
   static const String ASSETS_MASK_MONEY_PNG = 'assets/mask_money.png';

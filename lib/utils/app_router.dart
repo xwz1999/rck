@@ -301,6 +301,7 @@ class RouteName {
   //彩票相关
   ///兑换彩票
   static const String REDEEM_LOTTERY_PAGE = "/ReddemLotteryPage";
+
   ///选择彩票
   static const String LOTTERY_PICKER_PAGE = "/LotteryPickerPage";
 }
@@ -599,13 +600,15 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.USER_INVOICE_USUALLY_USED: (contex, {arguments}) =>
       InvoiceUsuallyUsedPage(),
   RouteName.USER_INVOICE_ADD_TITLE: (contex, {arguments}) =>
-      InvoiceAddTitlePage(arguments:arguments),
+      InvoiceAddTitlePage(arguments: arguments),
   RouteName.USER_INVOICE_DETAIL_INFOMATION: (contex, {arguments}) =>
       InvoiceDetailInfomationPage(
         arguments: arguments,
       ),
   RouteName.REDEEM_LOTTERY_PAGE: (context, {arguments}) => RedeemLotteryPage(),
-  RouteName.LOTTERY_PICKER_PAGE:(context,{arguments})=>LotteryPickerPage(),
+  RouteName.LOTTERY_PICKER_PAGE: (context, {arguments}) => LotteryPickerPage(
+        arguments: arguments,
+      ),
 };
 
 ///  应用中路由跳转
