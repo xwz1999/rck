@@ -329,6 +329,24 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/lottery/upgrade.png)
   static const String ASSETS_LOTTERY_UPGRADE_PNG = 'assets/lottery/upgrade.png';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/lottery_redeem/big_lottery.png)
+  static const String ASSETS_LOTTERY_REDEEM_BIG_LOTTERY_PNG = 'assets/lottery_redeem/big_lottery.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/lottery_redeem/double_lottery.png)
+  static const String ASSETS_LOTTERY_REDEEM_DOUBLE_LOTTERY_PNG = 'assets/lottery_redeem/double_lottery.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/lottery_redeem/lottery_delete.png)
+  static const String ASSETS_LOTTERY_REDEEM_LOTTERY_DELETE_PNG = 'assets/lottery_redeem/lottery_delete.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/lottery_redeem/lottery_detail.png)
+  static const String ASSETS_LOTTERY_REDEEM_LOTTERY_DETAIL_PNG = 'assets/lottery_redeem/lottery_detail.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/lottery_redeem/lottery_history.png)
+  static const String ASSETS_LOTTERY_REDEEM_LOTTERY_HISTORY_PNG = 'assets/lottery_redeem/lottery_history.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/lottery_redeem/lottery_list.png)
+  static const String ASSETS_LOTTERY_REDEEM_LOTTERY_LIST_PNG = 'assets/lottery_redeem/lottery_list.png';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/mask_money.png)
   static const String ASSETS_MASK_MONEY_PNG = 'assets/mask_money.png';
 
