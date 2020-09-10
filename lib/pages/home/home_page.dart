@@ -36,6 +36,7 @@ import 'package:recook/pages/home/promotion_time_tool.dart';
 import 'package:recook/pages/home/widget/animated_home_background.dart';
 import 'package:recook/pages/home/widget/goods_list_temp_page.dart';
 import 'package:recook/pages/home/widget/home_countdown_widget.dart';
+import 'package:recook/pages/home/widget/home_sliver_app_bar.dart';
 import 'package:recook/pages/home/widget/home_weather_view.dart';
 import 'package:recook/pages/noticeList/notice_list_model.dart';
 import 'package:recook/pages/noticeList/notice_list_tool.dart';
@@ -55,7 +56,6 @@ import 'package:recook/widgets/toast.dart';
 import 'package:recook/widgets/weather_page/weather_city_model.dart';
 import 'package:recook/widgets/weather_page/weather_city_page.dart';
 import 'package:recook/widgets/webView.dart';
-import 'package:recook/pages/home/widget/home_app_bar.dart' as homeAppBar;
 import 'package:recook/pages/home/lottery_page.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
@@ -114,7 +114,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   Color _backgroundColor;
   StateSetter _bannerState;
   GlobalKey<AnimatedHomeBackgroundState> _animatedBackgroundState = GlobalKey();
-  GlobalKey<homeAppBar.SliverAppBarState> _sliverAppBarGlobalKey = GlobalKey();
+  GlobalKey<HomeSliverAppBarState> _sliverAppBarGlobalKey = GlobalKey();
   @override
   bool needStore() {
     return true;
@@ -492,18 +492,11 @@ class _HomePageState extends BaseStoreState<HomePage>
     return CustomScrollView(
       controller: _sliverListController,
       slivers: <Widget>[
-        homeAppBar.SliverAppBar(
+        HomeSliverAppBar(
             key: _sliverAppBarGlobalKey,
-            titleSpacing: 3,
             actions: _actionsWidget(),
             title: _buildTitle(),
-            floating: false,
-            pinned: true,
-            snap: false,
-            elevation: 0,
             backgroundColor: AppColor.themeColor,
-            // backgroundColor: getCurrentThemeColor(),
-            // expandedHeight: weatherHeight + bannerHeight + buttonsHeight + t1Height + t23Height + t4Height + timeHeight + tabbarHeight - ScreenUtil.statusBarHeight ,
             expandedHeight: _promotionList == null || _promotionList.length == 0
                 ? weatherHeight +
                     bannerHeight +
@@ -677,7 +670,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         Color color = ColorsUtil.hexToColor(bannerModel.color);
         _backgroundColor = color;
         _animatedBackgroundState.currentState.changeColor(color);
-        _sliverAppBarGlobalKey.currentState.changeBackgroundColor(color);
+        _sliverAppBarGlobalKey.currentState.updateColor(color);
       }
     }
     Widget banner =
@@ -698,7 +691,7 @@ class _HomePageState extends BaseStoreState<HomePage>
             Color color = ColorsUtil.hexToColor(bannerModel.color);
             _backgroundColor = color;
             _animatedBackgroundState.currentState.changeColor(color);
-            _sliverAppBarGlobalKey.currentState.changeBackgroundColor(color);
+            _sliverAppBarGlobalKey.currentState.updateColor(color);
           }
         },
         height: bannerHeight,

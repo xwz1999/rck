@@ -47,6 +47,7 @@ class TransparentAppBar extends StatelessWidget {
       onNotification: (updateDetail) {
         double offset = updateDetail.metrics.pixels;
         controller.offset.value = offset;
+        return;
       },
       child: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
