@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:recook/constants/constants.dart';
 import 'package:recook/pages/user/invoice/invoice_scaffold_widget.dart';
 
-import '../../../constants/constants.dart';
 
 class InvoiceDetailMorePage extends StatefulWidget {
   final TextEditingController addr;

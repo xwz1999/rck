@@ -7,8 +7,6 @@ import 'package:recook/pages/user/invoice/pick_invoice_title_picker.dart';
 import 'package:recook/pages/user/widget/recook_check_box.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/sc_tile.dart';
-
-import '../../../constants/constants.dart';
 import 'invoice_detail_more_page.dart';
 
 class InvoiceDetailPage extends StatefulWidget {

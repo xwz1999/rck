@@ -1,21 +1,12 @@
+import 'package:recook/constants/api.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/user/invoice/models/invoice_bill_list_model.dart';
 import 'package:recook/pages/user/invoice/models/invoice_detail_model.dart';
 import 'package:recook/pages/user/invoice/models/invoice_get_bill_model.dart';
 import 'package:recook/pages/user/invoice/models/invoice_title_list_model.dart';
+import 'package:recook/widgets/toast.dart';
 
-import '../../../constants/api.dart';
-import '../../../constants/api.dart';
-import '../../../constants/api.dart';
-import '../../../constants/api.dart';
-import '../../../manager/http_manager.dart';
-import '../../../manager/http_manager.dart';
-import '../../../manager/http_manager.dart';
-import '../../../manager/http_manager.dart';
-import '../../../manager/http_manager.dart';
-import '../../../manager/http_manager.dart';
-import '../../../manager/user_manager.dart';
-import '../../../manager/user_manager.dart';
-import '../../../widgets/toast.dart';
 
 class InvoicePresenter {
   Future<List<InvoiceGetBillModel>> getInvoice({int page = 0}) async {
