@@ -7,7 +7,7 @@ import 'package:recook/widgets/custom_image_button.dart';
 class LotteryView extends StatefulWidget {
   final LotteryType type;
   final LotteryColorType colorType;
-  final Function(List<int> selected) onSelect;
+  final Function(List<int> selected, List<int> focused) onSelect;
   LotteryView({
     Key key,
     this.type = LotteryType.DOUBLE_LOTTERY,
@@ -42,14 +42,17 @@ class LotteryViewState extends State<LotteryView> {
     });
 
     setState(() {});
-    widget.onSelect(_selectedBoxes.map((e) => e.value).toList());
+    widget.onSelect(
+      _selectedBoxes.map((e) => e.value).toList(),
+      _focusedBoxes.map((e) => e.value).toList(),
+    );
   }
 
   clear() {
     _selectedBoxes.clear();
     _focusedBoxes.clear();
     setState(() {});
-    widget.onSelect([]);
+    widget.onSelect([], []);
   }
 
   random1Shot() {
@@ -66,31 +69,11 @@ class LotteryViewState extends State<LotteryView> {
       _selectedBoxes.add(temp[0]);
       temp.removeAt(0);
     }
-    widget.onSelect(_selectedBoxes.map((e) => e.value).toList());
+    widget.onSelect(
+      _selectedBoxes.map((e) => e.value).toList(),
+      _focusedBoxes.map((e) => e.value).toList(),
+    );
     setState(() {});
-
-    //  随机球不包含胆球算法
-    // if (limitSize < _focusedBoxes.length) {
-    //   showToast(
-    //       '${widget.colorType == LotteryColorType.RED ? '红球' : '蓝球'}胆球数过多');
-    // } else {
-    //   _selectedBoxes.clear();
-    //   List<SingleBox> temp = [];
-    //   _lotteryBoxes.forEach((element) => temp.add(element));
-    //   _focusedBoxes.forEach((element) {
-    //     _selectedBoxes.add(element);
-    //     temp.remove(element);
-    //   });
-    //   int randomShotsSize = widget.type == LotteryType.DOUBLE_LOTTERY
-    //       ? widget.colorType == LotteryColorType.RED ? 6 : 1
-    //       : widget.colorType == LotteryColorType.RED ? 5 : 2;
-    //   for (int i = 0; i < (randomShotsSize - _focusedBoxes.length); i++) {
-    //     temp.shuffle();
-    //     _selectedBoxes.add(temp[0]);
-    //     temp.removeAt(0);
-    //   }
-    //   setState(() {});
-    // }
   }
 
   @override
@@ -118,13 +101,47 @@ class LotteryViewState extends State<LotteryView> {
         if (!selected) {
           _selectedBoxes.add(box);
         } else if (selected && !focused) {
-          _focusedBoxes.add(box);
+          //添加胆球
+          //双色球胆球不能超过5，大乐透胆球不能超过4
+          //双色球蓝球没有胆球，大乐透蓝色胆球数不能超过1
+          switch (widget.type) {
+            case LotteryType.DOUBLE_LOTTERY:
+              switch (widget.colorType) {
+                case LotteryColorType.RED:
+                  if (_focusedBoxes.length == 5)
+                    _selectedBoxes.remove(box);
+                  else
+                    _focusedBoxes.add(box);
+                  break;
+                case LotteryColorType.BLUE:
+                  _selectedBoxes.remove(box);
+                  break;
+              }
+              break;
+            case LotteryType.BIG_LOTTERY:
+              switch (widget.colorType) {
+                case LotteryColorType.RED:
+                  if (_focusedBoxes.length == 4)
+                    _selectedBoxes.remove(box);
+                  else
+                    _focusedBoxes.add(box);
+                  break;
+                case LotteryColorType.BLUE:
+                  if (_focusedBoxes.length == 1)
+                    _selectedBoxes.remove(box);
+                  else
+                    _focusedBoxes.add(box);
+                  break;
+              }
+              break;
+          }
         } else {
           _selectedBoxes.remove(box);
           _focusedBoxes.remove(box);
         }
         widget.onSelect(
           _selectedBoxes.map((e) => e.value).toList(),
+          _focusedBoxes.map((e) => e.value).toList(),
         );
         setState(() {});
       },

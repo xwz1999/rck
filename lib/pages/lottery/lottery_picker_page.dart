@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/lottery/lottery_cart_model.dart';
 import 'package:recook/pages/lottery/redeem_lottery_page.dart';
 import 'package:recook/pages/lottery/widget/lottery_ball.dart';
+import 'package:recook/pages/lottery/widget/lottery_result_boxes.dart';
 import 'package:recook/pages/lottery/widget/lottery_scaffold.dart';
 import 'package:recook/pages/lottery/widget/lottery_view.dart';
 import 'package:recook/utils/math/recook_math.dart';
@@ -25,6 +28,11 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
 
   List<int> _redBalls = [];
   List<int> _blueBalls = [];
+  List<int> _focusedRedBalls = [];
+  List<int> _focusedBlueBalls = [];
+
+  bool _random1ShotSelected = false;
+  bool _randomAllBlueSelected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +44,32 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
           color: Color(0xFFFEF8E2),
           height: rSize(36),
           width: double.infinity,
+          child: Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  left: rSize(16),
+                  right: rSize(12),
+                ),
+                child: Text(
+                  '2020077期',
+                  style: TextStyle(
+                    color: Color(0xFFE02020),
+                    fontSize: rSP(12),
+                  ),
+                ),
+              ),
+              Expanded(
+                child: LotteryResultBoxes(
+                  type: LotteryType.DOUBLE_LOTTERY,
+                  small: true,
+                  redBalls: [1, 2, 3, 4, 5, 6],
+                  blueBalls: [1],
+                ),
+              ),
+              SizedBox(width: rSize(80)),
+            ],
+          ),
         ),
         preferredSize: Size.fromHeight(rSize(36)),
       ),
@@ -117,16 +151,17 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
                   type: widget.arguments['type']
                       ? LotteryType.DOUBLE_LOTTERY
                       : LotteryType.BIG_LOTTERY,
-                  onSelect: (selected) {
+                  onSelect: (selected, focused) {
                     _redBalls = selected;
-
+                    _focusedRedBalls = focused;
                     _countLotteryShot();
                   },
                 ),
                 SizedBox(height: rSize(15)),
                 LotteryView(
-                  onSelect: (selected) {
+                  onSelect: (selected, focused) {
                     _blueBalls = selected;
+                    _focusedBlueBalls = focused;
                     _countLotteryShot();
                   },
                   key: _blueLotteryViewKey,
@@ -157,16 +192,36 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
             ),
             child: Row(
               children: [
-                _buildFastCard('机选1注', () {
-                  _redLotteryViewKey.currentState.random1Shot();
-                  _blueLotteryViewKey.currentState.random1Shot();
-                }),
+                _buildFastCard(
+                  '机选1注',
+                  () {
+                    _clearAllSelect();
+                    _random1ShotSelected = true;
+                    _redLotteryViewKey.currentState.random1Shot();
+                    _blueLotteryViewKey.currentState.random1Shot();
+                  },
+                  selected: _random1ShotSelected,
+                  imagePath: R.ASSETS_LOTTERY_REDEEM_RANDOM_PNG,
+                ),
                 SizedBox(width: rSize(16)),
-                _buildFastCard('机选5注', () {}),
+                _buildFastCard(
+                  '机选5注',
+                  () {
+                    _clearAllSelect();
+                  },
+                ),
                 SizedBox(width: rSize(16)),
-                _buildFastCard('后区全包', () {
-                  _blueLotteryViewKey.currentState.selectAllBlue();
-                }),
+                _buildFastCard(
+                  '后区全包',
+                  () {
+                    _clearAllSelect();
+                    _randomAllBlueSelected = true;
+                    _redLotteryViewKey.currentState.random1Shot();
+                    _blueLotteryViewKey.currentState.selectAllBlue();
+                  },
+                  selected: _randomAllBlueSelected,
+                  imagePath: R.ASSETS_LOTTERY_REDEEM_WIN_PNG,
+                ),
               ],
             ),
           ),
@@ -257,26 +312,70 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
                 ),
                 Expanded(
                   child: FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (lotteryShots == 0) {
+                        showToast(widget.arguments['type']
+                            ? '至少选6红球1蓝球'
+                            : '至少选5红球2蓝球');
+                      } else {}
+                    },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.horizontal(
                         left: Radius.circular(rSize(20)),
                       ),
                     ),
                     color: Color(0xFFFF8534),
-                    child: Text('加入选号'),
+                    child: Text(
+                      '加入选号',
+                      style: TextStyle(
+                        fontSize: rSP(14),
+                      ),
+                    ),
                   ),
                 ),
                 Expanded(
                   child: FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      helpRandom1Shot() {
+                        _redLotteryViewKey.currentState.random1Shot();
+                        _blueLotteryViewKey.currentState.random1Shot();
+                        Future.delayed(Duration(milliseconds: 500), () {
+                          showToast('已帮您机选一注');
+                        });
+                      }
+
+                      if (widget.arguments['type']) {
+                        if (LotteryCartStore.doubleLotteryModels.length == 0) {
+                          helpRandom1Shot();
+                        }
+                      } else {
+                        if (LotteryCartStore.bigLotteryModels.length == 0) {
+                          helpRandom1Shot();
+                        }
+                      }
+                    },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.horizontal(
                         right: Radius.circular(rSize(20)),
                       ),
                     ),
                     color: Color(0xFFE02020),
-                    child: Text('完成选号'),
+                    child: Builder(
+                      builder: (context) {
+                        final storeSize = widget.arguments['type']
+                            ? LotteryCartStore.doubleLotteryModels.length
+                            : LotteryCartStore.bigLotteryModels.length;
+                        return Text(
+                          '完成选号($storeSize)',
+                          maxLines: 1,
+                          softWrap: false,
+                          overflow: TextOverflow.visible,
+                          style: TextStyle(
+                            fontSize: rSP(14),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
                 SizedBox(width: rSize(15)),
@@ -290,33 +389,71 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
 
   _countLotteryShot() {
     if (widget.arguments['type']) {
-      lotteryShots = RecookMath.combination(6, _redBalls.length) *
-          RecookMath.combination(1, _blueBalls.length);
+      if (_focusedRedBalls.length >= 1 && _redBalls.length > 6)
+        lotteryShots = RecookMath.combination(6 - _focusedRedBalls.length,
+                _redBalls.length - _focusedRedBalls.length) *
+            RecookMath.combination(1, _blueBalls.length);
+      else
+        lotteryShots = RecookMath.combination(6, _redBalls.length) *
+            RecookMath.combination(1, _blueBalls.length);
     } else {
-      lotteryShots = RecookMath.combination(5, _redBalls.length) *
-          RecookMath.combination(2, _blueBalls.length);
+      if ((_focusedRedBalls.length >= 1 || _focusedBlueBalls.length >= 1) &&
+          _redBalls.length > 5)
+        lotteryShots = RecookMath.combination(5 - _focusedRedBalls.length,
+                _redBalls.length - _focusedRedBalls.length) *
+            RecookMath.combination(2 - _focusedBlueBalls.length,
+                _blueBalls.length - _focusedBlueBalls.length);
+      else
+        lotteryShots = RecookMath.combination(5, _redBalls.length) *
+            RecookMath.combination(2, _blueBalls.length);
     }
+
     setState(() {});
   }
 
-  _buildFastCard(String title, VoidCallback onTap) {
+  _clearAllSelect() {
+    _redLotteryViewKey.currentState.clear();
+    _blueLotteryViewKey.currentState.clear();
+    _focusedBlueBalls.clear();
+    _focusedRedBalls.clear();
+    _random1ShotSelected = false;
+    _randomAllBlueSelected = false;
+  }
+
+  _buildFastCard(String title, VoidCallback onTap,
+      {bool selected = false, String imagePath}) {
     return Expanded(
       child: CustomImageButton(
         onPressed: onTap,
-        child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: Color(0xFFFFF4F4),
-            borderRadius: BorderRadius.circular(rSize(4)),
-          ),
-          height: rSize(36),
-          child: Text(
-            title,
-            style: TextStyle(
-              color: Color(0xFFE02020),
-              fontSize: rSP(14),
+        child: Stack(
+          children: [
+            Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: selected ? Color(0xFFE02020) : Color(0xFFFFF4F4),
+                borderRadius: BorderRadius.circular(rSize(4)),
+              ),
+              height: rSize(36),
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: selected ? Colors.white : Color(0xFFE02020),
+                  fontSize: rSP(14),
+                ),
+              ),
             ),
-          ),
+            Positioned(
+              right: 0,
+              top: 0,
+              child: selected
+                  ? Image.asset(
+                      imagePath,
+                      width: rSize(38),
+                      height: rSize(27),
+                    )
+                  : SizedBox(),
+            ),
+          ],
         ),
       ),
     );

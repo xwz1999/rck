@@ -6,9 +6,16 @@ class LotteryResultBoxes extends StatelessWidget {
   final LotteryType type;
   final List<int> redBalls;
   final List<int> blueBalls;
-  const LotteryResultBoxes({Key key, this.type, this.redBalls, this.blueBalls})
-      //红球数量限制
-      : assert(redBalls.length == (type == LotteryType.DOUBLE_LOTTERY ? 6 : 5),
+  final bool small;
+  const LotteryResultBoxes({
+    Key key,
+    this.type,
+    this.redBalls,
+    this.blueBalls,
+    this.small = false,
+  })  
+  //红球数量限制
+  : assert(redBalls.length == (type == LotteryType.DOUBLE_LOTTERY ? 6 : 5),
             "红球数量错误"),
         //篮球数量限制
         assert(
@@ -21,12 +28,20 @@ class LotteryResultBoxes extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: redBalls
           .map(
-            (element) => LotteryBall(type: LotteryColorType.RED, ball: element),
+            (element) => LotteryBall(
+              type: LotteryColorType.RED,
+              ball: element,
+              small: small,
+            ),
           )
           .toList()
             ..addAll(
               blueBalls.map(
-                (e) => LotteryBall(type: LotteryColorType.BLUE, ball: e),
+                (e) => LotteryBall(
+                  type: LotteryColorType.BLUE,
+                  ball: e,
+                  small: small,
+                ),
               ),
             ),
     );

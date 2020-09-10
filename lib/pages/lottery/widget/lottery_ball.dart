@@ -9,10 +9,12 @@ enum LotteryColorType {
 class LotteryBall extends StatelessWidget {
   final LotteryColorType type;
   final int ball;
+  final bool small;
   const LotteryBall({
     Key key,
     @required this.type,
     @required this.ball,
+    this.small = false,
   }) : super(key: key);
 
   String _computeBallDisplayValue() {
@@ -26,8 +28,8 @@ class LotteryBall extends StatelessWidget {
   Widget build(BuildContext context) {
     final isRed = type == LotteryColorType.RED;
     return Container(
-      height: rSize(32),
-      width: rSize(32),
+      height: small ? rSize(24) : rSize(32),
+      width: small ? rSize(24) : rSize(32),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(rSize(16)),
         color: isRed ? Color(0xFFE02020) : Color(0xFF0E89E7),
@@ -37,7 +39,7 @@ class LotteryBall extends StatelessWidget {
         _computeBallDisplayValue(),
         style: TextStyle(
           color: Colors.white,
-          fontSize: rSP(14),
+          fontSize: small ? rSP(12) : rSP(14),
         ),
       ),
     );

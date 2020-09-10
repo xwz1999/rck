@@ -8,6 +8,7 @@ class RecookMath {
   ///
   ///[blog](https://blog.plover.com/math/choose.html)
   static int combination(int k, int n) {
+    if (k <= 0 || n <= 0) return 0;
     int r = 1;
     int d;
     if (k > n) return 0;
