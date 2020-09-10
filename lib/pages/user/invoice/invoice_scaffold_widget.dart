@@ -29,6 +29,9 @@ class _InvoiceScaffoldWidgetState extends State<InvoiceScaffoldWidget> {
         elevation: 0,
         leading: _backButton(context),
         appBackground: Colors.white,
+        themeData: AppBarTheme(
+          brightness: Brightness.light,
+        ),
         title: Text(
           widget.title ?? '开具发票',
           style: TextStyle(color: AppColor.blackColor),
