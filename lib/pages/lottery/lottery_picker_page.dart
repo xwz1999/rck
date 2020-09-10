@@ -312,27 +312,7 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
                 ),
                 Expanded(
                   child: FlatButton(
-                    onPressed: () {
-                      if (lotteryShots == 0) {
-                        showToast(widget.arguments['type']
-                            ? '至少选6红球1蓝球'
-                            : '至少选5红球2蓝球');
-                      } else {
-                        _clearAllSelect();
-                        if (widget.arguments['type']) {
-                          LotteryCartStore.add1Shot(
-                            LotteryType.DOUBLE_LOTTERY,
-                            LotteryCartModel(
-                              type: LotteryType.DOUBLE_LOTTERY,
-                              redBalls: _redBalls,
-                              blueBalls: _blueBalls,
-                              focusedRedBalls: _focusedRedBalls,
-                              focusedBlueBalls: _focusedBlueBalls,
-                            ),
-                          );
-                        }
-                      }
-                    },
+                    onPressed: _addShot,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.horizontal(
                         left: Radius.circular(rSize(20)),
@@ -349,25 +329,7 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
                 ),
                 Expanded(
                   child: FlatButton(
-                    onPressed: () {
-                      helpRandom1Shot() {
-                        _redLotteryViewKey.currentState.random1Shot();
-                        _blueLotteryViewKey.currentState.random1Shot();
-                        Future.delayed(Duration(milliseconds: 500), () {
-                          showToast('已帮您机选一注');
-                        });
-                      }
-
-                      if (widget.arguments['type']) {
-                        if (LotteryCartStore.doubleLotteryModels.length == 0) {
-                          helpRandom1Shot();
-                        }
-                      } else {
-                        if (LotteryCartStore.bigLotteryModels.length == 0) {
-                          helpRandom1Shot();
-                        }
-                      }
-                    },
+                    onPressed: _complateShot,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.horizontal(
                         right: Radius.circular(rSize(20)),
@@ -397,6 +359,75 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  _addShot() {
+    if (lotteryShots == 0) {
+      showToast(widget.arguments['type'] ? '至少选6红球1蓝球' : '至少选5红球2蓝球');
+    } else {
+      _addOneShot();
+      _clearAllSelect();
+      setState(() {});
+    }
+  }
+
+  _complateShot() {
+    final bool isDoubleLottery = widget.arguments['type'];
+
+    ///空购物车
+    final bool emptyCart = isDoubleLottery
+        ? LotteryCartStore.doubleLotteryModels.isEmpty
+        : LotteryCartStore.bigLotteryModels.isEmpty;
+
+    ///未选择
+    final bool emptySelect = _redBalls.isEmpty && _blueBalls.isEmpty;
+
+    ///注数为0
+    final bool shotZero = lotteryShots == 0;
+
+    if (emptySelect && emptyCart) {
+      _helpRandom1Shot();
+      _addOneShot();
+      _clearAllSelect();
+      AppRouter.push(context, RouteName.LOTTERY_CART_PAGE,
+              arguments: {'type': widget.arguments['type']})
+          .then((value) => setState(() {}));
+    } else if (emptySelect && !emptyCart) {
+      AppRouter.push(context, RouteName.LOTTERY_CART_PAGE,
+              arguments: {'type': widget.arguments['type']})
+          .then((value) => setState(() {}));
+    } else if (shotZero) {
+      showToast(widget.arguments['type'] ? '至少选6红球1蓝球' : '至少选5红球2蓝球');
+    } else {
+      _addOneShot();
+      _clearAllSelect();
+      AppRouter.push(context, RouteName.LOTTERY_CART_PAGE,
+              arguments: {'type': widget.arguments['type']})
+          .then((value) => setState(() {}));
+    }
+  }
+
+  _helpRandom1Shot() {
+    _redLotteryViewKey.currentState.random1Shot();
+    _blueLotteryViewKey.currentState.random1Shot();
+    Future.delayed(Duration(milliseconds: 500), () {
+      showToast('已帮您机选一注');
+    });
+  }
+
+  _addOneShot() {
+    LotteryCartStore.add1Shot(
+      widget.arguments['type']
+          ? LotteryType.DOUBLE_LOTTERY
+          : LotteryType.BIG_LOTTERY,
+      LotteryCartModel(
+        type: LotteryType.DOUBLE_LOTTERY,
+        redBalls: _redBalls,
+        blueBalls: _blueBalls,
+        focusedRedBalls: _focusedRedBalls,
+        focusedBlueBalls: _focusedBlueBalls,
       ),
     );
   }
