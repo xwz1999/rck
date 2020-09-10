@@ -317,7 +317,21 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
                         showToast(widget.arguments['type']
                             ? '至少选6红球1蓝球'
                             : '至少选5红球2蓝球');
-                      } else {}
+                      } else {
+                        _clearAllSelect();
+                        if (widget.arguments['type']) {
+                          LotteryCartStore.add1Shot(
+                            LotteryType.DOUBLE_LOTTERY,
+                            LotteryCartModel(
+                              type: LotteryType.DOUBLE_LOTTERY,
+                              redBalls: _redBalls,
+                              blueBalls: _blueBalls,
+                              focusedRedBalls: _focusedRedBalls,
+                              focusedBlueBalls: _focusedBlueBalls,
+                            ),
+                          );
+                        }
+                      }
                     },
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.horizontal(
@@ -388,25 +402,15 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
   }
 
   _countLotteryShot() {
-    if (widget.arguments['type']) {
-      if (_focusedRedBalls.length >= 1 && _redBalls.length > 6)
-        lotteryShots = RecookMath.combination(6 - _focusedRedBalls.length,
-                _redBalls.length - _focusedRedBalls.length) *
-            RecookMath.combination(1, _blueBalls.length);
-      else
-        lotteryShots = RecookMath.combination(6, _redBalls.length) *
-            RecookMath.combination(1, _blueBalls.length);
-    } else {
-      if ((_focusedRedBalls.length >= 1 || _focusedBlueBalls.length >= 1) &&
-          _redBalls.length > 5)
-        lotteryShots = RecookMath.combination(5 - _focusedRedBalls.length,
-                _redBalls.length - _focusedRedBalls.length) *
-            RecookMath.combination(2 - _focusedBlueBalls.length,
-                _blueBalls.length - _focusedBlueBalls.length);
-      else
-        lotteryShots = RecookMath.combination(5, _redBalls.length) *
-            RecookMath.combination(2, _blueBalls.length);
-    }
+    lotteryShots = LotteryCartStore.countLotteryBalls(
+      widget.arguments['type']
+          ? LotteryType.DOUBLE_LOTTERY
+          : LotteryType.BIG_LOTTERY,
+      redBalls: _redBalls,
+      blueBalls: _blueBalls,
+      focusedRedBalls: _focusedRedBalls,
+      focusedBlueBalls: _focusedBlueBalls,
+    );
 
     setState(() {});
   }

@@ -26,6 +26,7 @@ import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
 import 'package:recook/pages/home/widget/goods_list_temp_page.dart';
 import 'package:recook/pages/login/wechat_bind_page.dart';
 import 'package:recook/pages/login/wechat_input_invitecode_page.dart';
+import 'package:recook/pages/lottery/lottery_cart_page.dart';
 import 'package:recook/pages/lottery/lottery_help_page.dart';
 import 'package:recook/pages/lottery/lottery_history_page.dart';
 import 'package:recook/pages/lottery/lottery_order_detail_page.dart';
@@ -320,6 +321,9 @@ class RouteName {
 
   ///彩票订单详情
   static const String LOTTERY_ORDER_DETAIL_PAGE = "/LotteryOrderDetailPage";
+
+  ///彩票购物车
+  static const String LOTTERY_CART_PAGE = "/LotteryCartPage";
 }
 
 typedef RouteBuilder = Widget Function(BuildContext context,
@@ -629,6 +633,9 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.LOTTERY_ORDER_PAGE: (context, {arguments}) => LotteryOrderPage(),
   RouteName.LOTTERY_ORDER_DETAIL_PAGE: (context, {arguments}) =>
       LotteryOrderDetailPage(arguments: arguments),
+      RouteName.LOTTERY_CART_PAGE:(context,{arguments})=> LotteryCartPage(
+        arguments:arguments
+      ),
 };
 
 ///  应用中路由跳转
