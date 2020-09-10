@@ -7,7 +7,6 @@ import 'package:recook/pages/lottery/widget/lottery_ball.dart';
 import 'package:recook/pages/lottery/widget/lottery_result_boxes.dart';
 import 'package:recook/pages/lottery/widget/lottery_scaffold.dart';
 import 'package:recook/pages/lottery/widget/lottery_view.dart';
-import 'package:recook/utils/math/recook_math.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/const/resource.dart';
 
@@ -328,30 +327,75 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
                   ),
                 ),
                 Expanded(
-                  child: FlatButton(
-                    onPressed: _complateShot,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.horizontal(
-                        right: Radius.circular(rSize(20)),
-                      ),
-                    ),
-                    color: Color(0xFFE02020),
-                    child: Builder(
-                      builder: (context) {
-                        final storeSize = widget.arguments['type']
-                            ? LotteryCartStore.doubleLotteryModels.length
-                            : LotteryCartStore.bigLotteryModels.length;
-                        return Text(
-                          '完成选号($storeSize)',
-                          maxLines: 1,
-                          softWrap: false,
-                          overflow: TextOverflow.visible,
-                          style: TextStyle(
-                            fontSize: rSP(14),
+                  child: Builder(
+                    builder: (context) {
+                      int doubleShots = 0;
+                      int bigShots = 0;
+                      LotteryCartStore.doubleLotteryModels.forEach((element) {
+                        doubleShots += element.shots;
+                      });
+                      LotteryCartStore.bigLotteryModels.forEach((element) {
+                        bigShots += element.shots;
+                      });
+                      final storeSize =
+                          widget.arguments['type'] ? doubleShots : bigShots;
+                      return Stack(
+                        overflow: Overflow.visible,
+                        children: [
+                          FlatButton(
+                            onPressed: _complateShot,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.horizontal(
+                                right: Radius.circular(rSize(20)),
+                              ),
+                            ),
+                            color: Color(0xFFE02020),
+                            child: Text(
+                              '完成选号',
+                              maxLines: 1,
+                              softWrap: false,
+                              overflow: TextOverflow.visible,
+                              style: TextStyle(
+                                fontSize: rSP(14),
+                              ),
+                            ),
                           ),
-                        );
-                      },
-                    ),
+                          Positioned(
+                            top: -rSize(8),
+                            right: rSize(8),
+                            child: storeSize == 0
+                                ? SizedBox()
+                                : Container(
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFE02020),
+                                      border: Border.all(
+                                        width: rSize(1),
+                                        color: Colors.white,
+                                      ),
+                                      borderRadius: BorderRadius.circular(10),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          blurRadius: 5,
+                                          color: Colors.black.withOpacity(0.5),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Text(
+                                      '$storeSize',
+                                      style: TextStyle(
+                                        fontSize: rSP(12),
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: rSize(5),
+                                      vertical: rSize(2),
+                                    ),
+                                  ),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
                 SizedBox(width: rSize(15)),
@@ -423,7 +467,9 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
           ? LotteryType.DOUBLE_LOTTERY
           : LotteryType.BIG_LOTTERY,
       LotteryCartModel(
-        type: LotteryType.DOUBLE_LOTTERY,
+        type: widget.arguments['type']
+            ? LotteryType.DOUBLE_LOTTERY
+            : LotteryType.BIG_LOTTERY,
         redBalls: _redBalls,
         blueBalls: _blueBalls,
         focusedRedBalls: _focusedRedBalls,

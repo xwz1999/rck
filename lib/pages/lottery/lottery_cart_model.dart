@@ -15,6 +15,36 @@ class LotteryCartModel {
     @required this.focusedRedBalls,
     @required this.focusedBlueBalls,
   });
+  ///彩票下单类型
+  String get typeStr {
+    if (isDoubleLottery) {
+      if (redBalls.length == 6 && blueBalls.length == 1)
+        return '单式';
+      else if (focusedRedBalls.length != 0 || focusedBlueBalls.length != 0)
+        return '胆拖';
+      else
+        return '复式';
+    } else {
+      if (redBalls.length == 5 && blueBalls.length == 2)
+        return '单式';
+      else if (focusedRedBalls.length != 0 || focusedBlueBalls.length != 0)
+        return '胆拖';
+      else
+        return '复式';
+    }
+  }
+
+  ///获取注数
+  int get shots => LotteryCartStore.countLotteryBalls(
+        type,
+        redBalls: redBalls,
+        blueBalls: blueBalls,
+        focusedRedBalls: focusedRedBalls,
+        focusedBlueBalls: focusedBlueBalls,
+      );
+
+  ///是否为双色球
+  bool get isDoubleLottery => type == LotteryType.DOUBLE_LOTTERY;
 }
 
 class LotteryCartStore {
@@ -49,8 +79,8 @@ class LotteryCartStore {
               RecookMath.combination(1, blueBalls.length);
         break;
       case LotteryType.BIG_LOTTERY:
-        if ((focusedRedBalls.length >= 1 || focusedBlueBalls.length >= 1) &&
-            redBalls.length > 5)
+        if ((focusedRedBalls.isNotEmpty && focusedBlueBalls.isNotEmpty) &&
+            redBalls.length >= 5)
           return RecookMath.combination(5 - focusedRedBalls.length,
                   redBalls.length - focusedRedBalls.length) *
               RecookMath.combination(2 - focusedBlueBalls.length,
