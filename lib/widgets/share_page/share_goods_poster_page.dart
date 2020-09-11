@@ -1,4 +1,3 @@
-
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -23,13 +22,14 @@ import 'dart:ui' as ui;
 
 class ShareGoodsPosterPage extends StatefulWidget {
   final Map arguments;
-  
+
   ShareGoodsPosterPage({Key key, this.arguments}) : super(key: key);
-  static setArguments({String goodsId="0"}){
+  static setArguments({String goodsId = "0"}) {
     return {
       "goodsId": goodsId,
     };
   }
+
   @override
   _ShareGoodsPosterPageState createState() => _ShareGoodsPosterPageState();
 }
@@ -47,16 +47,14 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
   // double postImageHorizontalMargin = 30;
   //
   String _bigImageUrl = "";
-  List<MainPhotos> _selectPhotos=[];
+  List<MainPhotos> _selectPhotos = [];
   PostAllWidgetController _postAllWidgetController = PostAllWidgetController();
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     try {
       _goodsId = int.parse(widget.arguments["goodsId"]);
-    } catch (e) {
-
-    }
+    } catch (e) {}
     _getDetail();
   }
 
@@ -70,12 +68,11 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
       ),
       bottomNavigationBar: _bottomWidget(),
       // body: _goodsDetail == null && _goodsDetailImagesModel == null?
-      body: _goodsDetail == null ?
-        loadingWidget()
-        : _body(),
+      body: _goodsDetail == null ? loadingWidget() : _body(),
     );
   }
-  _body(){
+
+  _body() {
     return Container(
       color: AppColor.frenchColor,
       child: ListView(
@@ -85,60 +82,58 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
             padding: EdgeInsets.symmetric(vertical: 10),
             height: ScreenAdapterUtils.setHeight(100),
             child: PostSelectImage(
-              selectImages: (List<MainPhotos> images){
+              selectImages: (List<MainPhotos> images) {
                 _selectPhotos = images;
-                if (images.length>0) {
+                if (images.length > 0) {
                   _bigImageUrl = Api.getImgUrl(images[0].url);
                 }
                 setState(() {});
                 _postAllWidgetController.refreshWidget(images);
               },
-              goodsDetailModel: _goodsDetail,),
+              goodsDetailModel: _goodsDetail,
+            ),
           ),
           Container(
-            padding: EdgeInsets.only(left: postHorizontalMargin/2, right: postHorizontalMargin/2, bottom: 10),
+            padding: EdgeInsets.only(
+                left: postHorizontalMargin / 2,
+                right: postHorizontalMargin / 2,
+                bottom: 10),
             child: RepaintBoundary(
-              key: _globalKey,
-              child: PostAllWidget(
-                controller: _postAllWidgetController,
-                selectImagePhotos: _selectPhotos,
-                bigImageUrl: _bigImageUrl,
-                goodsDetailModel: _goodsDetail,)
-            ),
+                key: _globalKey,
+                child: PostAllWidget(
+                  controller: _postAllWidgetController,
+                  selectImagePhotos: _selectPhotos,
+                  bigImageUrl: _bigImageUrl,
+                  goodsDetailModel: _goodsDetail,
+                )),
           )
         ],
       ),
     );
   }
-  
+
   _capturePng() async {
     // '保存中...'
     showLoading("");
     RenderRepaintBoundary boundary =
         _globalKey.currentContext.findRenderObject();
     ui.Image image =
-        await boundary.toImage(pixelRatio: ui.window.devicePixelRatio);
+        await boundary.toImage(pixelRatio: ui.window.devicePixelRatio * 1.2);
     ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     Uint8List pngBytes = byteData.buffer.asUint8List();
-    if (pngBytes==null || pngBytes.length==0) {
+    if (pngBytes == null || pngBytes.length == 0) {
       dismissLoading();
       showError("图片获取失败...");
       return;
     }
-    ImageUtils.saveImage(
-      [pngBytes], 
-      (index){
-        
-      },
-      (success){
-        dismissLoading();
-        if (success) {
-          showSuccess("图片已经保存到相册!");
-        }else{
-          showError("图片保存失败...");
-        }
+    ImageUtils.saveImage([pngBytes], (index) {}, (success) {
+      dismissLoading();
+      if (success) {
+        showSuccess("图片已经保存到相册!");
+      } else {
+        showError("图片保存失败...");
       }
-    );
+    });
 
     // var filePath = await ImagePickerSaver.saveFile(fileData: pngBytes);
 
@@ -149,17 +144,17 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
     // // '保存成功'
     // showSuccess("保存成功!");
   }
-  
+
   _getDetail() async {
-    _goodsDetail =
-        await GoodsDetailModelImpl.getDetailInfo(_goodsId, UserManager.instance.user.info.id);
+    _goodsDetail = await GoodsDetailModelImpl.getDetailInfo(
+        _goodsId, UserManager.instance.user.info.id);
     if (_goodsDetail.code != HttpStatus.SUCCESS) {
       Toast.showError(_goodsDetail.msg);
       return;
     }
     // _bottomBarController.setFavorite(_goodsDetail.data.isFavorite);
     MainPhotos photo = _goodsDetail.data.mainPhotos[0];
-    if (_goodsDetail.data.mainPhotos.length>=2) {
+    if (_goodsDetail.data.mainPhotos.length >= 2) {
       photo = _goodsDetail.data.mainPhotos[1];
     }
     photo.isSelect = true;
@@ -168,23 +163,22 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
     _selectPhotos.add(photo);
     setState(() {});
   }
-  _bottomWidget(){
+
+  _bottomWidget() {
     return Container(
       margin: EdgeInsets.only(bottom: ScreenUtil.bottomBarHeight),
       padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
       height: 60,
       child: CustomImageButton(
-        onPressed: (){
+        onPressed: () {
           _capturePng();
         },
         boxDecoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          color: AppColor.themeColor
-        ),
+            borderRadius: BorderRadius.circular(30),
+            color: AppColor.themeColor),
         title: "保存到相册",
         style: TextStyle(color: Colors.white, fontSize: 16),
       ),
     );
   }
-  
 }

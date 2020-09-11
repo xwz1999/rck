@@ -1,4 +1,3 @@
-
 import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
@@ -20,20 +19,26 @@ class PostWeatherWidget extends StatelessWidget {
   final HomeWeatherModel homeWeatherModel;
   const PostWeatherWidget({Key key, this.homeWeatherModel}) : super(key: key);
 
-  static final TextStyle textStyle = TextStyle(color: Colors.black, fontSize: ScreenAdapterUtils.setSp(10));
-  _normalText(str){
+  static final TextStyle textStyle =
+      TextStyle(color: Colors.black, fontSize: ScreenAdapterUtils.setSp(10));
+  _normalText(str) {
     if (TextUtils.isEmpty(str)) {
       return "";
     }
     return str;
   }
-  _getWeatherImage(wea_img){
+
+  _getWeatherImage(wea_img) {
     return "assets/weatherCake/$wea_img.png";
   }
+
   @override
   Widget build(BuildContext context) {
     DateTime nowDateTime = DateTime.now();
-    Solar solar = Solar(solarYear: nowDateTime.year, solarDay: nowDateTime.day, solarMonth: nowDateTime.month);
+    Solar solar = Solar(
+        solarYear: nowDateTime.year,
+        solarDay: nowDateTime.day,
+        solarMonth: nowDateTime.month);
     Lunar lunar = LunarSolarConverter.solarToLunar(solar);
     return Container(
       alignment: Alignment.centerLeft,
@@ -42,8 +47,13 @@ class PostWeatherWidget extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              Text("[${_normalText(homeWeatherModel.city)}]"+"天气:"+_normalText(homeWeatherModel.wea), style: textStyle,),
-              Container(width:2),
+              Text(
+                "[${_normalText(homeWeatherModel.city)}]" +
+                    "天气:" +
+                    _normalText(homeWeatherModel.wea),
+                style: textStyle,
+              ),
+              Container(width: 2),
               // ColorFiltered(
               //   colorFilter: ColorFilter.mode(Colors.black, BlendMode.screen),
               //   child: Container(
@@ -52,7 +62,10 @@ class PostWeatherWidget extends StatelessWidget {
               //   ),
               // ),
               Spacer(),
-              Text(lunar.toString(), style: textStyle,),
+              Text(
+                lunar.toString(),
+                style: textStyle,
+              ),
             ],
           ),
           Flex(
@@ -62,7 +75,10 @@ class PostWeatherWidget extends StatelessWidget {
                 child: ExtendedText.rich(
                   TextSpan(
                     children: [
-                      TextSpan(text:"湿度:${_normalText(homeWeatherModel.humidity)} 温度:${_normalText(homeWeatherModel.tem2)}-${_normalText(homeWeatherModel.tem1)}℃", style: textStyle),
+                      TextSpan(
+                          text:
+                              "湿度:${_normalText(homeWeatherModel.humidity)} 温度:${_normalText(homeWeatherModel.tem2)}-${_normalText(homeWeatherModel.tem1)}℃",
+                          style: textStyle),
                       // TextSpan(text:"  温度:${_normalText(widget.homeWeatherModel.tem2)}-${_normalText(widget.homeWeatherModel.tem1)}℃", style: textStyle),
                       // WidgetSpan(
                       //   child: Container(
@@ -71,7 +87,10 @@ class PostWeatherWidget extends StatelessWidget {
                       //   ),
                       // ),
                       // TextSpan(text:"${_normalText(homeWeatherModel.air)}${_normalText(homeWeatherModel.airLevel)}", style: textStyle),
-                      TextSpan(text:" 空气质量:${_normalText(homeWeatherModel.airLevel)}", style: textStyle),
+                      TextSpan(
+                          text:
+                              " 空气质量:${_normalText(homeWeatherModel.airLevel)}",
+                          style: textStyle),
                     ],
                   ),
                   maxLines: 1,
@@ -80,7 +99,9 @@ class PostWeatherWidget extends StatelessWidget {
               ),
               Container(
                 alignment: Alignment.centerRight,
-                child: Text("${nowDateTime.year}.${nowDateTime.month}.${nowDateTime.day}${_normalText(homeWeatherModel.week)}", style: textStyle),
+                child: Text(
+                    "${nowDateTime.year}.${nowDateTime.month}.${nowDateTime.day}${_normalText(homeWeatherModel.week)}",
+                    style: textStyle),
               )
               // Expanded(
               //   child: Container(
@@ -116,7 +137,7 @@ class PostWeatherWidget extends StatelessWidget {
 // 用户信息
 class PostUserInfo extends StatelessWidget {
   final String name;
-  const PostUserInfo({Key key, this.name="瑞库客"}) : super(key: key);
+  const PostUserInfo({Key key, this.name = "瑞库客"}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -129,26 +150,40 @@ class PostUserInfo extends StatelessWidget {
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child:Image.asset(AppImageName.recook_icon_120),
+              child: Image.asset(AppImageName.recook_icon_120),
             ),
-            Container(width: 15,),
+            Container(
+              width: 15,
+            ),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Container(height: 6,),
+                  Container(
+                    height: 6,
+                  ),
                   Text(
-                    name, 
+                    name,
                     maxLines: 1,
                     textAlign: TextAlign.left,
-                    style: TextStyle(color: Colors.black,fontSize: 14.0,),),
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 14.0,
+                    ),
+                  ),
                   Spacer(),
                   Text(
-                    title, 
+                    title,
                     maxLines: 1,
                     textAlign: TextAlign.left,
-                    style: TextStyle(color: Color(0xff666666),fontSize: ScreenAdapterUtils.setSp(10.0),),),
-                  Container(height: 6,),
+                    style: TextStyle(
+                      color: Color(0xff666666),
+                      fontSize: ScreenAdapterUtils.setSp(10.0),
+                    ),
+                  ),
+                  Container(
+                    height: 6,
+                  ),
                 ],
               ),
             )
@@ -162,7 +197,11 @@ class PostUserInfo extends StatelessWidget {
 class PostBigImage extends StatefulWidget {
   final Size imageSize;
   final String url;
-  PostBigImage({Key key, this.imageSize = const Size(0, 0), this.url="",}) : super(key: key);
+  PostBigImage({
+    Key key,
+    this.imageSize = const Size(0, 0),
+    this.url = "",
+  }) : super(key: key);
 
   @override
   _PostBigImageState createState() => _PostBigImageState();
@@ -176,7 +215,10 @@ class _PostBigImageState extends State<PostBigImage> {
         color: AppColor.frenchColor,
         width: widget.imageSize.width,
         height: widget.imageSize.height,
-        child: ExtendedImage.network(widget.url,),
+        child: ExtendedImage.network(
+          widget.url,
+          filterQuality: FilterQuality.medium,
+        ),
       ),
     );
   }
@@ -184,7 +226,7 @@ class _PostBigImageState extends State<PostBigImage> {
 
 class PostBannerInfo extends StatelessWidget {
   final String timeInfo;
-  const PostBannerInfo({Key key, this.timeInfo=""}) : super(key: key);
+  const PostBannerInfo({Key key, this.timeInfo = ""}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -193,48 +235,59 @@ class PostBannerInfo extends StatelessWidget {
       child: _body(),
     );
   }
-  _body(){
+
+  _body() {
     List<Widget> widgetList = [];
     double bannerHeight = 45;
     double rightBannerWidth = 100;
     String rightBannerImage = "assets/post_right_banner.png";
     String leftBannerImage = "assets/post_left_banner.png";
     if (!TextUtils.isEmpty(timeInfo)) {
-      widgetList.add(
-        Positioned(
-          right: 0, top: 0, bottom: 0, width: rightBannerWidth,
-          child: Image.asset(rightBannerImage, width: rightBannerWidth, fit: BoxFit.fill,),
-        )
-      );
-      widgetList.add(
-        Positioned(
-          right: 0, top: 0, bottom: 0, width: rightBannerWidth,
-          child: Container(
-            alignment: Alignment.center,
-            child: Text(
-              timeInfo,
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              style: TextStyle(
-                color: Colors.white,
-                textBaseline: TextBaseline.alphabetic,
-                fontSize: 10.0,
-              ),
+      widgetList.add(Positioned(
+        right: 0,
+        top: 0,
+        bottom: 0,
+        width: rightBannerWidth,
+        child: Image.asset(
+          rightBannerImage,
+          width: rightBannerWidth,
+          fit: BoxFit.fill,
+        ),
+      ));
+      widgetList.add(Positioned(
+        right: 0,
+        top: 0,
+        bottom: 0,
+        width: rightBannerWidth,
+        child: Container(
+          alignment: Alignment.center,
+          child: Text(
+            timeInfo,
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            style: TextStyle(
+              color: Colors.white,
+              textBaseline: TextBaseline.alphabetic,
+              fontSize: 10.0,
             ),
           ),
-        )
-      );
-      widgetList.add(
-        Positioned(
+        ),
+      ));
+      widgetList.add(Positioned(
+        width: ScreenUtil.screenWidthDp - 80 - rightBannerWidth + 15,
+        left: 0,
+        top: 0,
+        bottom: 0,
+        child: Image.asset(
+          leftBannerImage,
+          fit: BoxFit.fill,
+        ),
+      ));
+      widgetList.add(Positioned(
           width: ScreenUtil.screenWidthDp - 80 - rightBannerWidth + 15,
-          left: 0, top: 0, bottom: 0,
-          child: Image.asset(leftBannerImage, fit: BoxFit.fill,),
-        )
-      );
-      widgetList.add(
-        Positioned(
-          width: ScreenUtil.screenWidthDp - 80 - rightBannerWidth + 15,
-          left: 0, top: 0, bottom: 0,
+          left: 0,
+          top: 0,
+          bottom: 0,
           child: Container(
             alignment: Alignment.center,
             child: Text(
@@ -242,32 +295,31 @@ class PostBannerInfo extends StatelessWidget {
               textAlign: TextAlign.left,
               maxLines: 1,
               style: TextStyle(
-                fontSize: ScreenAdapterUtils.setSp(14),
-                color: Colors.white,
-                textBaseline: TextBaseline.alphabetic
-              ),
+                  fontSize: ScreenAdapterUtils.setSp(14),
+                  color: Colors.white,
+                  textBaseline: TextBaseline.alphabetic),
             ),
-          )
-        )
-      );
-    }else{
+          )));
+    } else {
       widgetList.add(
-        Image.asset(leftBannerImage, fit: BoxFit.fill,width: double.infinity,),
+        Image.asset(
+          leftBannerImage,
+          fit: BoxFit.fill,
+          width: double.infinity,
+        ),
       );
-      widgetList.add(
-        Container(
-          alignment: Alignment.center,
-          child: Text(
-            "全球精品 | 正品保障 | 售后无忧",
-            textAlign: TextAlign.center,
-            maxLines: 1,
-            style: TextStyle(
+      widgetList.add(Container(
+        alignment: Alignment.center,
+        child: Text(
+          "全球精品 | 正品保障 | 售后无忧",
+          textAlign: TextAlign.center,
+          maxLines: 1,
+          style: TextStyle(
               fontSize: ScreenAdapterUtils.setSp(14),
               color: Colors.white,
               textBaseline: TextBaseline.alphabetic),
-          ),
-        )
-      );
+        ),
+      ));
     }
     return Container(
       width: double.infinity,
@@ -285,60 +337,60 @@ class PostBottomWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String qrCode = "${AppConfig.debug?WebApi.testGoodsDetail:WebApi.goodsDetail}${goodsDetailModel.data.id}/${UserManager.instance.user.info.invitationNo}";;
+    String qrCode =
+        "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}${goodsDetailModel.data.id}/${UserManager.instance.user.info.invitationNo}";
+    ;
     String info = goodsDetailModel.data.goodsName;
-    String crossedPrice = goodsDetailModel.data.price.max.originalPrice.toStringAsFixed(2);
+    String crossedPrice =
+        goodsDetailModel.data.price.max.originalPrice.toStringAsFixed(2);
     String price = goodsDetailModel.data.getPriceString();
-    
+
     return Container(
       height: 75,
       width: double.infinity,
       child: Row(
         children: <Widget>[
           Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 4),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: <Widget>[
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: RichText(
+              child: Container(
+            padding: EdgeInsets.symmetric(vertical: 4),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: RichText(
                       textAlign: TextAlign.left,
-                      text: TextSpan(
-                        children: [
-                          TextSpan(
+                      text: TextSpan(children: [
+                        TextSpan(
                             text: "¥$price ",
                             style: TextStyle(
                               color: Color(0xffff0000),
-                              fontSize: 18,)
-                          ),
-                          TextSpan(
+                              fontSize: 18,
+                            )),
+                        TextSpan(
                             text: "¥$crossedPrice",
                             style: TextStyle(
                               fontSize: 14,
                               decoration: TextDecoration.lineThrough,
-                              color: Color(0xff999999),)
-                          )
-                        ]
-                      )
+                              color: Color(0xff999999),
+                            ))
+                      ])),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    info,
+                    textAlign: TextAlign.left,
+                    maxLines: 2,
+                    style: TextStyle(
+                      fontSize: 14.0,
+                      color: Color(0xff333333),
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      info,
-                      textAlign: TextAlign.left,
-                      maxLines: 2,
-                      style: TextStyle(
-                        fontSize: 14.0,
-                        color: Color(0xff333333),),
-                    ),
-                  )
-                ],
-              ),
-            )
-          ),
+                )
+              ],
+            ),
+          )),
           Container(
             margin: EdgeInsets.only(left: 10),
             child: Column(
@@ -352,15 +404,15 @@ class PostBottomWidget extends StatelessWidget {
                   gapless: false,
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 5),
-                  child: Text(
-                    "长按二维码立购",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 8,
-                      color: Color(0xff333333),),
-                  )
-                )
+                    margin: EdgeInsets.only(top: 5),
+                    child: Text(
+                      "长按二维码立购",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 8,
+                        color: Color(0xff333333),
+                      ),
+                    ))
               ],
             ),
           )
@@ -370,14 +422,20 @@ class PostBottomWidget extends StatelessWidget {
   }
 }
 
-class PostBottomImagesController{
+class PostBottomImagesController {
   Function(List<MainPhotos>) changeImage;
 }
+
 class PostBottomImages extends StatefulWidget {
   final List<MainPhotos> selectPhotos;
   final double width;
   final PostBottomImagesController controller;
-  PostBottomImages({Key key, this.selectPhotos, this.width = 0, this.controller, }) : super(key: key);
+  PostBottomImages({
+    Key key,
+    this.selectPhotos,
+    this.width = 0,
+    this.controller,
+  }) : super(key: key);
   @override
   _PostBottomImagesState createState() => _PostBottomImagesState();
 }
@@ -390,16 +448,17 @@ class _PostBottomImagesState extends State<PostBottomImages> {
     // for (int i = 0; i < widget.selectPhotos.length; i++) {
     //   if (i>0) photos.add(Api.getImgUrl(widget.selectPhotos[i].url));
     // }
-    if (widget.controller!=null) {
-      widget.controller.changeImage = (list){
+    if (widget.controller != null) {
+      widget.controller.changeImage = (list) {
         photos = [];
         for (int i = 0; i < list.length; i++) {
-          if (i>0) photos.add(Api.getImgUrl(list[i].url));
+          if (i > 0) photos.add(Api.getImgUrl(list[i].url));
         }
         setState(() {});
       };
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -407,20 +466,22 @@ class _PostBottomImagesState extends State<PostBottomImages> {
       child: _imageWidget(),
     );
   }
-  _imageWidget(){
-    if (photos.length==0) {
+
+  _imageWidget() {
+    if (photos.length == 0) {
       return Container();
     }
-    if (photos.length==1){
+    if (photos.length == 1) {
       return Container(
         color: AppColor.frenchColor,
         height: widget.width,
         child: ExtendedImage.network(photos[0]),
       );
     }
-    if (photos.length==4) {
+    if (photos.length == 4) {
       return Container(
-        width: widget.width, height: widget.width,
+        width: widget.width,
+        height: widget.width,
         child: GridView.count(
           physics: NeverScrollableScrollPhysics(),
           //水平子Widget之间间距
@@ -440,27 +501,26 @@ class _PostBottomImagesState extends State<PostBottomImages> {
     }
     return Container(
       width: widget.width,
-      height: widget.width/photos.length,
+      height: widget.width / photos.length,
       child: Row(
         children: _imagesRow(),
       ),
     );
   }
-  _imagesRow(){
+
+  _imagesRow() {
     List<Widget> list = [];
     for (String url in photos) {
-      list.add(
-        Container(
-          color: AppColor.frenchColor,
-          child: ExtendedImage.network(url),
-        )
-      );
+      list.add(Container(
+        color: AppColor.frenchColor,
+        child: ExtendedImage.network(url),
+      ));
     }
     return list;
   }
 }
 
-class PostAllWidgetController{
+class PostAllWidgetController {
   Function(List<MainPhotos>) refreshWidget;
 }
 
@@ -469,7 +529,13 @@ class PostAllWidget extends StatefulWidget {
   final GoodsDetailModel goodsDetailModel;
   final String bigImageUrl;
   final List<MainPhotos> selectImagePhotos;
-  PostAllWidget({Key key, this.goodsDetailModel, this.bigImageUrl="", this.selectImagePhotos, this.controller}) : super(key: key);
+  PostAllWidget(
+      {Key key,
+      this.goodsDetailModel,
+      this.bigImageUrl = "",
+      this.selectImagePhotos,
+      this.controller})
+      : super(key: key);
 
   @override
   _PostAllWidgetState createState() => _PostAllWidgetState();
@@ -478,49 +544,68 @@ class PostAllWidget extends StatefulWidget {
 class _PostAllWidgetState extends State<PostAllWidget> {
   double postImageHorizontalMargin = 30;
   double postHorizontalMargin = 50;
-  PostBottomImagesController _postBottomImagesController = PostBottomImagesController();
+  PostBottomImagesController _postBottomImagesController =
+      PostBottomImagesController();
   @override
   void initState() {
     super.initState();
-    if (widget.controller!=null) {
-      widget.controller.refreshWidget = (list){
+    if (widget.controller != null) {
+      widget.controller.refreshWidget = (list) {
         _postBottomImagesController.changeImage(list);
       };
     }
   }
+
   @override
   Widget build(BuildContext context) {
-    
-    double postWidth = MediaQuery.of(context).size.width-postHorizontalMargin;
-    double truePhotoWidth = postWidth-postImageHorizontalMargin;
+    double postWidth = MediaQuery.of(context).size.width - postHorizontalMargin;
+    double truePhotoWidth = postWidth - postImageHorizontalMargin;
     double truePhotoHeight = truePhotoWidth;
 
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.symmetric(horizontal: postImageHorizontalMargin/2),
+      padding: EdgeInsets.symmetric(horizontal: postImageHorizontalMargin / 2),
       width: double.infinity,
-      child:Column(
+      child: Column(
         children: <Widget>[
-          UserManager.instance.homeWeatherModel!=null 
-          ? Container(
-            color: Colors.white,
-            padding: EdgeInsets.only(top: postImageHorizontalMargin/2,),
-            height: ScreenAdapterUtils.setHeight(40),
-            child: PostWeatherWidget(homeWeatherModel: UserManager.instance.homeWeatherModel,),
-          )
-          : Container(),
+          UserManager.instance.homeWeatherModel != null
+              ? Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.only(
+                    top: postImageHorizontalMargin / 2,
+                  ),
+                  height: ScreenAdapterUtils.setHeight(40),
+                  child: PostWeatherWidget(
+                    homeWeatherModel: UserManager.instance.homeWeatherModel,
+                  ),
+                )
+              : Container(),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 10,),
-            child: PostUserInfo(name: UserManager.instance.user.info.nickname+"的店铺",),
+            padding: EdgeInsets.symmetric(
+              vertical: 10,
+            ),
+            child: PostUserInfo(
+              name: UserManager.instance.user.info.nickname + "的店铺",
+            ),
           ),
-          PostBigImage(url: widget.bigImageUrl ,imageSize: Size(truePhotoWidth, truePhotoHeight),),
-          PostBannerInfo(timeInfo: _getTimeInfo(),),
-          PostBottomWidget(goodsDetailModel: widget.goodsDetailModel,),
+          PostBigImage(
+            url: widget.bigImageUrl,
+            imageSize: Size(truePhotoWidth, truePhotoHeight),
+          ),
+          PostBannerInfo(
+            timeInfo: _getTimeInfo(),
+          ),
+          PostBottomWidget(
+            goodsDetailModel: widget.goodsDetailModel,
+          ),
           PostBottomImages(
             controller: _postBottomImagesController,
             width: truePhotoWidth,
-            selectPhotos: widget.selectImagePhotos,),
-          Container(height: postImageHorizontalMargin/2,)
+            selectPhotos: widget.selectImagePhotos,
+          ),
+          Container(
+            height: postImageHorizontalMargin / 2,
+          )
           // Container(
           //   padding: EdgeInsets.all(postImageHorizontalMargin/2),
           //   height: truePhotoHeight,
@@ -534,21 +619,26 @@ class _PostAllWidgetState extends State<PostAllWidget> {
     );
   }
 
-  String _getTimeInfo(){
+  String _getTimeInfo() {
     GoodsDetailModel _goodsDetail = widget.goodsDetailModel;
     DateFormat dateFormat = DateFormat('M月d日 HH:mm');
-    if (_goodsDetail.data.promotion!=null && _goodsDetail.data.promotion.id > 0) {
-      if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(_goodsDetail) == PromotionStatus.start){  
+    if (_goodsDetail.data.promotion != null &&
+        _goodsDetail.data.promotion.id > 0) {
+      if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
+              _goodsDetail) ==
+          PromotionStatus.start) {
         //活动中
         DateTime endTime = DateTime.parse(_goodsDetail.data.promotion.endTime);
         return "结束时间\n${dateFormat.format(endTime)}";
       }
-      if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(_goodsDetail) == PromotionStatus.ready) {  
-        DateTime startTime = DateTime.parse(_goodsDetail.data.promotion.startTime);
+      if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
+              _goodsDetail) ==
+          PromotionStatus.ready) {
+        DateTime startTime =
+            DateTime.parse(_goodsDetail.data.promotion.startTime);
         return "开始时间\n${dateFormat.format(startTime)}";
       }
     }
     return "";
   }
-  
 }
