@@ -11,9 +11,11 @@ import 'package:flutter/material.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/pages/home/widget/plus_minus_view.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/selected_list.dart';
@@ -161,27 +163,34 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      RichText(
-                        text: TextSpan(children: [
-                          TextSpan(
-                            text:
-                                "￥${_sku != null ? _sku.discountPrice.toStringAsFixed(2) : _price}${_sku != null && _sku.commission != null ? "/" : ""}",
-                            // "￥ ${_sku.discountPrice}",
-                            style: AppTextStyle.generate(
-                                ScreenAdapterUtils.setSp(18),
-                                fontWeight: FontWeight.w500,
-                                color: Colors.black),
-                          ),
-                          TextSpan(
-                            text: _sku != null && _sku.commission != null
-                                ? " 赚${_sku.commission.toStringAsFixed(2)}"
-                                : "",
-                            // "￥ ${_sku.discountPrice}",
-                            style: AppTextStyle.generate(
-                                ScreenAdapterUtils.setSp(12),
-                                color: Color(0xffC92219)),
-                          ),
-                        ]),
+                      Builder(
+                        builder: (context) {
+                          final skuNotNull =
+                              _sku != null && _sku.commission != null;
+                          final haveLogin = UserManager.instance.haveLogin;
+                          return RichText(
+                            text: TextSpan(children: [
+                              TextSpan(
+                                text:
+                                    "￥${_sku != null ? _sku.discountPrice.toStringAsFixed(2) : _price}${skuNotNull && haveLogin ? "/" : ""}",
+                                // "￥ ${_sku.discountPrice}",
+                                style: AppTextStyle.generate(
+                                    ScreenAdapterUtils.setSp(18),
+                                    fontWeight: FontWeight.w500,
+                                    color: Colors.black),
+                              ),
+                              TextSpan(
+                                text: skuNotNull && haveLogin
+                                    ? " 赚${_sku.commission.toStringAsFixed(2)}"
+                                    : "",
+                                // "￥ ${_sku.discountPrice}",
+                                style: AppTextStyle.generate(
+                                    ScreenAdapterUtils.setSp(12),
+                                    color: Color(0xffC92219)),
+                              ),
+                            ]),
+                          );
+                        },
                       ),
                       Text(
                         "库存 ${_sku != null ? _sku.inventory : widget.model.data.inventory}件",
