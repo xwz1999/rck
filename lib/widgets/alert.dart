@@ -54,9 +54,7 @@ class Alert {
 
 enum NormalTextDialogType { normal, delete }
 
-/*
-  普通文本弹框
- */
+///普通文本弹框
 class NormalTextDialog extends Dialog {
   final String title;
   final String content;
