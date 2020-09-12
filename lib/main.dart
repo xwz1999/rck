@@ -13,6 +13,7 @@ import 'package:recook/pages/welcome/launch_widget.dart';
 import 'package:recook/redux/openinstall_state.dart';
 import 'package:recook/redux/recook_state.dart';
 import 'package:recook/third_party/bugly_helper.dart';
+import 'package:recook/utils/CommonLocalizationsDelegate.dart';
 import 'package:recook/utils/test.dart';
 import 'package:redux/redux.dart';
 
@@ -163,7 +164,7 @@ class MyAppState extends State<MyApp> {
               localizationsDelegates: [
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,
-                // CommonLocalizationsDelegate(),
+                CommonLocalizationsDelegate(),
               ],
               supportedLocales: [
                 const Locale('zh', 'CN'),
