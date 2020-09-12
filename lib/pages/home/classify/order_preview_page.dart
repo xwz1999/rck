@@ -22,7 +22,6 @@ import 'package:recook/pages/home/classify/mvp/order_mvp/order_presenter_impl.da
 import 'package:recook/pages/home/classify/order_prepay_page.dart';
 import 'package:recook/pages/home/items/goods_item_order.dart';
 import 'package:recook/pages/user/address/receiving_address_page.dart';
-import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/bottom_sheet/bottom_list.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -70,6 +69,9 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
         }
         _changeBuyerMessage(text);
       }
+    });
+    Future.delayed(Duration(milliseconds: 300), () {
+      if (mounted) _changeOrderCoinOnOff();
     });
   }
 
