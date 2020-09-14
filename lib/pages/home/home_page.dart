@@ -16,6 +16,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -959,21 +960,26 @@ class _HomePageState extends BaseStoreState<HomePage>
                   // AppRouter.push(context, RouteName.NEW_USER_DISCOUNT_PAGE);
                 }),
                 _buttonTitleRow(
-                    AppConfig.getShowCommission()
-                        ? "assets/home_menu_bb.png"
-                        : "assets/listtemp_homelife_icon.png",
-                    AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
-                    onPressed: () {
-                  if (AppConfig.getShowCommission()) {
-                    bool value = UserManager.instance.selectTabbar.value;
-                    UserManager.instance.selectTabbar.value = !value;
-                    UserManager.instance.selectTabbarIndex = 2;
-                  } else {
-                    AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
-                        arguments: GoodsListTempPage.setArguments(
-                            title: "家居生活", type: GoodsListTempType.homeLife));
-                  }
-                }),
+                  AppConfig.getShowCommission()
+                      ? "assets/home_menu_bb.png"
+                      : "assets/listtemp_homelife_icon.png",
+                  AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
+                  onPressed: () {
+                    showToast('⚠️需要处理打开逻辑');
+                    AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
+                  },
+                  // () {
+                  //   if (AppConfig.getShowCommission()) {
+                  //     bool value = UserManager.instance.selectTabbar.value;
+                  //     UserManager.instance.selectTabbar.value = !value;
+                  //     UserManager.instance.selectTabbarIndex = 2;
+                  //   } else {
+                  //     AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
+                  //         arguments: GoodsListTempPage.setArguments(
+                  //             title: "家居生活", type: GoodsListTempType.homeLife));
+                  //   }
+                  // },
+                ),
                 _buttonTitleRow(
                     AppConfig.getShowCommission()
                         ? "assets/home_menu_cc.png"
