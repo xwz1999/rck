@@ -39,6 +39,8 @@ import 'package:recook/pages/shop/upgrade/shop_upgrade_code_page.dart';
 import 'package:recook/pages/upgradeCard/upgrade_card_page.dart';
 import 'package:recook/pages/upgradeCard/upgrade_card_send_user_list_page.dart';
 import 'package:recook/pages/user/about_us_page.dart';
+import 'package:recook/pages/user/account_and_safety/account_and_safety_page.dart';
+import 'package:recook/pages/user/account_and_safety/delete_account_page.dart';
 import 'package:recook/pages/user/cash_withdraw_history_page.dart';
 import 'package:recook/pages/user/cash_withdraw_result_page.dart';
 import 'package:recook/pages/user/invite/invite_search_page.dart';
@@ -208,6 +210,12 @@ class RouteName {
   static const String USER_INVITE_SEARCH = "/UserInviteSearch";
   static const String USER_BILLING_DETAILS = "/UserBillingDetails";
   static const String USER_SET_PASSWORD_VARCODE = "/UserSetPasswordVarCode";
+
+  ///账户与安全
+  static const String ACCOUNT_AND_SAFETY_PAGE = "AccountAndSafetyPage";
+
+  ///注销账户
+  static const String USER_DELETE_ACCOUNT_PAGE = "/UserDeleteAccountPage";
   static const String USER_SET_PASSWORD = "/UserSetPassword";
   static const String USER_SET_PASSWORD_AGAIN = "/UserSetPasswordAgain";
   static const String USER_INFO_ADDRESS_PAGE = "/UserInfoAddressPage";
@@ -432,6 +440,10 @@ final Map<String, RouteBuilder> _routes = {
   //设置支付密码
   RouteName.USER_SET_PASSWORD_VARCODE: (context, {arguments}) =>
       UserSetPasswordVarCode(),
+  RouteName.USER_DELETE_ACCOUNT_PAGE: (context, {arguments}) =>
+      DeleteAccountPage(),
+  RouteName.ACCOUNT_AND_SAFETY_PAGE: (context, {arguments}) =>
+      AccountAndSafetyPage(),
   RouteName.USER_SET_PASSWORD: (context, {arguments}) => UserSetPassword(),
   RouteName.USER_SET_PASSWORD_AGAIN: (context, {arguments}) =>
       UserSetPasswordAgain(
@@ -591,7 +603,7 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.USER_INVOICE_USUALLY_USED: (contex, {arguments}) =>
       InvoiceUsuallyUsedPage(),
   RouteName.USER_INVOICE_ADD_TITLE: (contex, {arguments}) =>
-      InvoiceAddTitlePage(arguments:arguments),
+      InvoiceAddTitlePage(arguments: arguments),
   RouteName.USER_INVOICE_DETAIL_INFOMATION: (contex, {arguments}) =>
       InvoiceDetailInfomationPage(
         arguments: arguments,

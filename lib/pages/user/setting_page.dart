@@ -51,9 +51,9 @@ class _SettingItemListViewState extends BaseStoreState<SettingItemListView> {
                       SCTile.normalTile("个人资料", needDivide: true, listener: () {
                         push(RouteName.USER_INFO_PAGE);
                       }),
-                      SCTile.normalTile("支付密码设置", listener: () {
-                        // push(RouteName.USER_SET_PASSWORD);
-                        push(RouteName.USER_SET_PASSWORD_VARCODE);
+                      SCTile.normalTile('账户与安全',
+                          needDivide: true, needArrow: true, listener: () {
+                        push(RouteName.ACCOUNT_AND_SAFETY_PAGE);
                       }),
                       getEmptyBox(),
                       // SCTile.normalTile("清除缓存", needDivide: true, listener: () {}),
