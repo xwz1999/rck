@@ -2,6 +2,9 @@
 /// PLEASE DO NOT EDIT MANUALLY.
 class R {
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/.DS_Store)
+  static const String ASSETS__DS_STORE = 'assets/.DS_Store';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/HomeRefreshHeader3.gif)
   static const String ASSETS_HOMEREFRESHHEADER3_GIF = 'assets/HomeRefreshHeader3.gif';
 
@@ -895,6 +898,9 @@ class R {
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/sound/recook_scan.mp3)
   static const String ASSETS_SOUND_RECOOK_SCAN_MP3 = 'assets/sound/recook_scan.mp3';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/static/shop_bg.png)
+  static const String ASSETS_STATIC_SHOP_BG_PNG = 'assets/static/shop_bg.png';
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/store_bg.png)
   static const String ASSETS_STORE_BG_PNG = 'assets/store_bg.png';

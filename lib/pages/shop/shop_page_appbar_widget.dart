@@ -176,14 +176,13 @@ class _ShopPageAppbarWidgetState extends BaseStoreState<ShopPageAppbarWidget> {
     if (!TextUtils.isEmpty(UserManager.instance.user.info.createdAt)) {
       createTime = DateTime.parse(UserManager.instance.user.info.createdAt);
     }
-    double cardWidth = MediaQuery.of(context).size.width - 30;
-    double cardHeight = 345 / cardWidth * 190;
+    double cardWidth = MediaQuery.of(context).size.width;
+    double cardHeight = cardWidth / 750 * 449;
     // UserLevelTool.cardImagePath(UserLevelTool.roleLevelEnum(_shopSummaryModel.data.roleLevel));
     // percent = 0.3;
     progressGlobalkey?.currentState?.updateView(percent: percent);
 
     return Container(
-      margin: EdgeInsets.only(top: 30, bottom: 5),
       height: cardHeight,
       width: cardWidth,
       child: Stack(
@@ -195,6 +194,16 @@ class _ShopPageAppbarWidgetState extends BaseStoreState<ShopPageAppbarWidget> {
               fit: BoxFit.fill,
             ),
             // child: Image.asset(UserLevelTool.currentCardImagePath(), fit: BoxFit.fill,),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            child: Image.asset(
+              R.ASSETS_STATIC_SHOP_BG_PNG,
+              width: cardWidth,
+            ),
           ),
           Positioned(
               left: 10,

@@ -198,6 +198,7 @@ flutter:
     - assets/share_bottom/
     - assets/json/
     - assets/lottery/
+    - assets/static/
   fonts:
     - family: AppIcons
       fonts:

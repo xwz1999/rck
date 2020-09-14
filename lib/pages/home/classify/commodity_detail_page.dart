@@ -9,9 +9,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluwx/fluwx.dart';
 import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -23,10 +21,8 @@ import 'package:recook/pages/home/classify/material_page.dart' as MP;
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/widget/modify_detail_app_bar.dart';
 import 'package:recook/pages/home/widget/modify_detail_bottom_bar.dart';
-import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/bottom_sheet/bottom_share_dialog.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
 import 'package:recook/widgets/toast.dart';
 

@@ -1,0 +1,1 @@
+fgen -o ./lib/const/resource.dart
