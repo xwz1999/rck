@@ -187,14 +187,14 @@ class _ShopPageAppbarWidgetState extends BaseStoreState<ShopPageAppbarWidget> {
       width: cardWidth,
       child: Stack(
         children: <Widget>[
-          Positioned(
-            left: 0, right: 0, bottom: 0, top: 0,
-            child: Image.asset(
-              UserLevelTool.cardImagePath(_roleLevel),
-              fit: BoxFit.fill,
-            ),
-            // child: Image.asset(UserLevelTool.currentCardImagePath(), fit: BoxFit.fill,),
-          ),
+          // Positioned(
+          //   left: 0, right: 0, bottom: 0, top: 0,
+          //   child: Image.asset(
+          //     UserLevelTool.cardImagePath(_roleLevel),
+          //     fit: BoxFit.fill,
+          //   ),
+          //   // child: Image.asset(UserLevelTool.currentCardImagePath(), fit: BoxFit.fill,),
+          // ),
           Positioned(
             left: 0,
             right: 0,
@@ -203,6 +203,16 @@ class _ShopPageAppbarWidgetState extends BaseStoreState<ShopPageAppbarWidget> {
             child: Image.asset(
               R.ASSETS_STATIC_SHOP_BG_PNG,
               width: cardWidth,
+            ),
+          ),
+          Positioned(
+            bottom: rSize(16),
+            left: rSize(16),
+            right: rSize(16),
+            child: Container(
+              width: double.infinity,
+              height: 100,
+              color: Colors.grey,
             ),
           ),
           Positioned(
