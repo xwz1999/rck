@@ -199,7 +199,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                             ),
                             SizedBox(height: rSize(16)),
                             Text(
-                              '产品不支持配送到该地区',
+                              '不支持配送到该地区',
                               style: TextStyle(
                                 color: AppColor.blackColor,
                                 fontSize: rSP(12),
@@ -290,17 +290,17 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                       fontWeight: FontWeight.w300),
                 ),
               ),
-              Offstage(
-                offstage: !(_orderModel.data.addr.isDeliveryArea == 0),
-                child: Container(
-                  margin: EdgeInsets.only(top: rSize(6)),
-                  child: Text(
-                    "当前地址不支持快递发货",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(12),
-                        color: Colors.red, fontWeight: FontWeight.w300),
-                  ),
-                ),
-              ),
+              // Offstage(
+              //   offstage: !(_orderModel.data.addr.isDeliveryArea == 0),
+              //   child: Container(
+              //     margin: EdgeInsets.only(top: rSize(6)),
+              //     child: Text(
+              //       "当前地址不支持快递发货",
+              //       style: AppTextStyle.generate(ScreenAdapterUtils.setSp(12),
+              //           color: Colors.red, fontWeight: FontWeight.w300),
+              //     ),
+              //   ),
+              // ),
             ],
           );
   }
