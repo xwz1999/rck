@@ -124,22 +124,22 @@ class UserLevelTool {
   }
 
   static String currentMedalImagePath() {
-    return medalImagePath(currentRoleLevelEnum());
+    return cardBadge(currentRoleLevelEnum());
   }
 
-  static String medalImagePath(UserRoleLevel roleLevel) {
+  static String cardBadge(UserRoleLevel roleLevel) {
     switch (roleLevel) {
       case UserRoleLevel.Silver:
-        return "assets/user_level_silver.png";
+        return R.ASSETS_SHOP_SILVER_BADGE_PNG;
         break;
       case UserRoleLevel.Gold:
-        return "assets/user_level_gold.png";
+        return R.ASSETS_SHOP_GOLD_BADGE_PNG;
         break;
       case UserRoleLevel.Diamond:
-        return "assets/user_level_diamond.png";
+        return R.ASSETS_SHOP_DIAMOND_BADGE_PNG;
         break;
       case UserRoleLevel.Master:
-        return "assets/user_level_master.png";
+        return R.ASSETS_SHOP_MASTER_BADGE_PNG;
         break;
       default:
         return "";
@@ -149,16 +149,48 @@ class UserLevelTool {
   static String cardImagePath(UserRoleLevel roleLevel) {
     switch (roleLevel) {
       case UserRoleLevel.Silver:
-        return "assets/shop_page_head_card_silver.png";
+        return R.ASSETS_SHOP_SILVER_BG_WEBP;
         break;
       case UserRoleLevel.Gold:
-        return "assets/shop_page_head_card_gold.png";
+        return R.ASSETS_SHOP_GOLD_BG_WEBP;
         break;
       case UserRoleLevel.Diamond:
-        return "assets/shop_page_head_card_diamond.png";
+        return R.ASSETS_SHOP_DIAMOND_BG_WEBP;
         break;
       default:
-        return "assets/shop_page_head_card_master.png";
+        return R.ASSETS_SHOP_MASTER_BG_WEBP;
+    }
+  }
+
+  static String cardBarPath(UserRoleLevel roleLevel) {
+    switch (roleLevel) {
+      case UserRoleLevel.Diamond:
+        return R.ASSETS_SHOP_DIAMOND_BAR_PNG;
+        break;
+      case UserRoleLevel.Gold:
+        return R.ASSETS_SHOP_GOLD_BAR_PNG;
+        break;
+      case UserRoleLevel.Silver:
+        return R.ASSETS_SHOP_SILVER_BAR_PNG;
+        break;
+
+      default:
+        return R.ASSETS_SHOP_MASTER_BAR_PNG;
+        break;
+    }
+  }
+
+  static Color cardTitleColor(UserRoleLevel roleLevel) {
+    switch (roleLevel) {
+      case UserRoleLevel.Silver:
+        return Color(0xFF36393F);
+        break;
+      case UserRoleLevel.Gold:
+        return Color(0xFF5F431E);
+      case UserRoleLevel.Diamond:
+        return Color(0xFF2B2B31);
+      default:
+        return Color(0xFF52383D);
     }
   }
 

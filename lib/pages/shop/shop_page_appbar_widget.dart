@@ -187,14 +187,7 @@ class _ShopPageAppbarWidgetState extends BaseStoreState<ShopPageAppbarWidget> {
       width: cardWidth,
       child: Stack(
         children: <Widget>[
-          // Positioned(
-          //   left: 0, right: 0, bottom: 0, top: 0,
-          //   child: Image.asset(
-          //     UserLevelTool.cardImagePath(_roleLevel),
-          //     fit: BoxFit.fill,
-          //   ),
-          //   // child: Image.asset(UserLevelTool.currentCardImagePath(), fit: BoxFit.fill,),
-          // ),
+          //头图背景
           Positioned(
             left: 0,
             right: 0,
@@ -205,75 +198,81 @@ class _ShopPageAppbarWidgetState extends BaseStoreState<ShopPageAppbarWidget> {
               width: cardWidth,
             ),
           ),
+          //头图卡片
           Positioned(
-            bottom: rSize(16),
-            left: rSize(16),
-            right: rSize(16),
-            child: Container(
-              width: double.infinity,
-              height: 100,
-              color: Colors.grey,
+            left: rSize(10),
+            right: rSize(10),
+            bottom: rSize(15),
+            child: Image.asset(
+              UserLevelTool.cardImagePath(_roleLevel),
+              fit: BoxFit.cover,
+              height:
+                  (MediaQuery.of(context).size.width - rSize(20)) / 1052 * 469,
+            ),
+          ),
+          //注册时间
+          Positioned(
+            bottom: rSize(22.5),
+            right: rSize(26),
+            child: Text(
+              createTime != null
+                  ? '注册时间 ${createTime.year}-${createTime.month}-${createTime.day}'
+                  : "",
+              style: TextStyle(
+                color: UserLevelTool.cardTitleColor(_roleLevel),
+                fontSize: rSP(10),
+              ),
+            ),
+          ),
+          //进度条
+          Positioned(
+            left: rSize(34),
+            right: rSize(34),
+            bottom: rSize(65),
+            child: Image.asset(
+              UserLevelTool.cardBarPath(_roleLevel),
             ),
           ),
           Positioned(
-              left: 10,
-              right: 10,
-              height: 45,
-              top: 0,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text.rich(TextSpan(children: [
-                        TextSpan(
-                            text:
-                                "${UserManager.instance.user.info.nickname}的店铺",
-                            style: TextStyle(color: nameColor, fontSize: 16)),
-                        TextSpan(
-                            text: "(${UserLevelTool.currentRoleLevel()})",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w300,
-                                color: nameColor.withOpacity(0.8),
-                                fontSize: 12)),
-                      ])),
-                      Text(
-                        createTime != null
-                            ? '注册时间 ${createTime.year}-${createTime.month}-${createTime.day}'
-                            : "",
-                        style: TextStyle(
-                            color: nameColor.withOpacity(0.7),
-                            fontWeight: FontWeight.w300,
-                            fontSize: 10),
-                      ),
-                    ],
+            right: rSize(26.5),
+            top: rSize(67.5),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  '${UserManager.instance.user.info.nickname}的店铺',
+                  style: TextStyle(
+                    fontSize: rSP(16),
+                    height: 1,
+                    color: UserLevelTool.cardTitleColor(_roleLevel),
                   ),
-                  Spacer(),
-                  GestureDetector(
-                    onTap: () {
-                      AppRouter.push(
-                        globalContext,
-                        RouteName.SHOP_PAGE_USER_RIGHTS_PAGE,
-                      );
-                    },
-                    child: Image.asset(
-                      UserLevelTool.medalImagePath(_roleLevel),
-                      width: 45,
-                      height: 45,
-                    ),
+                ),
+                SizedBox(height: rSize(5)),
+                Text(
+                  '(${UserLevelTool.currentRoleLevel()})',
+                  style: TextStyle(
+                    fontSize: rSP(12),
+                    height: 1,
+                    color: UserLevelTool.cardTitleColor(_roleLevel),
                   ),
-                  Container(
-                    width: 10,
+                ),
+                SizedBox(height: rSize(6)),
+                GestureDetector(
+                  onTap: () {
+                    AppRouter.push(
+                      globalContext,
+                      RouteName.SHOP_PAGE_USER_RIGHTS_PAGE,
+                    );
+                  },
+                  child: Image.asset(
+                    UserLevelTool.cardBadge(_roleLevel),
+                    width: 45,
+                    height: 45,
                   ),
-                  Icon(
-                    Icons.keyboard_arrow_right,
-                    color: nameColor.withOpacity(0.7),
-                    size: 15,
-                  ),
-                ],
-              )),
+                ),
+              ],
+            ),
+          ),
           Positioned(
             left: 25,
             right: 25,
@@ -345,7 +344,7 @@ class _ShopPageAppbarWidgetState extends BaseStoreState<ShopPageAppbarWidget> {
               );
             },
             child: Image.asset(
-              UserLevelTool.medalImagePath(UserRoleLevel.Master),
+              UserLevelTool.cardBadge(UserRoleLevel.Master),
               width: 45,
               height: 45,
             ),
