@@ -149,14 +149,17 @@ class UserApi {
   static const String verify_sms_send = "/v1/messages/verify/sms/send";
   static const String verify_sms = "/v1/messages/verify/sms";
   static const String password_save = "/v1/wallet/pay/password/save";
-  // 升级码查询
+  /// 升级码查询
   static const String query_up_code = "/v1/users/role/query_up_code";
-  // 赠送升级码或者保级码
+  /// 赠送升级码或者保级码
   static const String give_code = "/v1/users/role/give_code";
-  // 用升级码升级
+  /// 用升级码升级
   static const String upgrade_by_code = "/v1/users/role/upgrade_by_code";
-  // 保级码保级
+  /// 保级码保级
   static const String keep_by_code = "/v1/users/role/keep_by_code";
+
+  ///注销账号
+  static const String deleteAccount = "/v1/users/profile/userDestroy";
 }
 
 class GoodsApi {

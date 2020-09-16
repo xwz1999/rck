@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 
@@ -66,7 +70,17 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
                         deleteItem: '确定',
                         deleteListener: () {
                           //TODO 注销账号
-                          SystemNavigator.pop();
+                          HttpManager.post(UserApi.deleteAccount, {
+                            "user_id": UserManager.instance.user.info.id,
+                          }).then((value) {
+                            if (value.data['code'] == "SUCCESS") {
+                              UserManager.logout();
+                              SystemNavigator.pop();
+                            } else {
+                              showToast('注销失败${value.data['msg']}');
+                              Navigator.pop(context);
+                            }
+                          });
                         },
                       ),
                     );
