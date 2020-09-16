@@ -174,45 +174,52 @@ class _UserAppBarState extends BaseStoreState<UserAppBar> {
                   ]),
                   textAlign: TextAlign.start,
                 ),
-                Container(
-                  height: 3,
-                ),
-                Text('每月10日、25日审核提现申请',
-                    style: TextStyle(
-                        fontWeight: FontWeight.w300,
-                        color: _goldColor,
-                        fontSize: 10)),
+                AppConfig.getShowCommission()
+                    ? Container(
+                        height: 3,
+                      )
+                    : SizedBox(),
+                AppConfig.getShowCommission()
+                    ? Text('每月10日、25日审核提现申请',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w300,
+                            color: _goldColor,
+                            fontSize: 10))
+                    : SizedBox(),
               ],
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              if (!UserManager.instance.user.info.realInfoStatus) {
-                AppRouter.push(context, RouteName.USER_VERIFY,
-                    arguments: {'isCashWithdraw': true});
-              } else {
-                if (widget.withdrawListener != null) widget.withdrawListener();
-              }
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(14),
-                gradient: const LinearGradient(
-                    colors: [Color(0xfffeccab), Color(0xfffeb273)]),
-              ),
-              margin: EdgeInsets.only(right: 15),
-              alignment: Alignment.center,
-              width: 64,
-              height: 25,
-              child: Text(
-                "提现",
-                style: TextStyle(
-                    color: Colors.brown,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 14),
-              ),
-            ),
-          ),
+          AppConfig.getShowCommission()
+              ? GestureDetector(
+                  onTap: () {
+                    if (!UserManager.instance.user.info.realInfoStatus) {
+                      AppRouter.push(context, RouteName.USER_VERIFY,
+                          arguments: {'isCashWithdraw': true});
+                    } else {
+                      if (widget.withdrawListener != null)
+                        widget.withdrawListener();
+                    }
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(14),
+                      gradient: const LinearGradient(
+                          colors: [Color(0xfffeccab), Color(0xfffeb273)]),
+                    ),
+                    margin: EdgeInsets.only(right: 15),
+                    alignment: Alignment.center,
+                    width: 64,
+                    height: 25,
+                    child: Text(
+                      "提现",
+                      style: TextStyle(
+                          color: Colors.brown,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14),
+                    ),
+                  ),
+                )
+              : SizedBox(),
         ],
       ),
     );
