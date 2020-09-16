@@ -52,7 +52,7 @@ class BannerListViewState<T> extends State<BannerListView> {
   @override
   void initState() {
     super.initState();
-    _controller = new PageController();
+    _controller = new PageController(initialPage: 1);
   }
 
   @override
@@ -68,10 +68,12 @@ class BannerListViewState<T> extends State<BannerListView> {
               : BannerView(
                   _buildBanners(context),
                   onPageChanged: (index) {
+                    print(index);
                     if (widget.onPageChanged != null) {
                       widget.onPageChanged(index);
                     }
                   },
+                  initIndex: 1,
                   log: false,
                   controller: _controller,
                   intervalDuration: Duration(seconds: 2),
