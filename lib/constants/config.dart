@@ -7,8 +7,6 @@
  * ====================================================
  */
 
-import 'dart:io';
-
 import 'package:recook/constants/api.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/utils/user_level_tool.dart';
@@ -18,6 +16,8 @@ class AppConfig {
   static bool debug;
   static bool needEncrypt;
   static bool showCommission;
+
+  ///后台控制显示
   static bool showExtraCommission = false;
   static const String WX_APP_ID = "wx21724a42aebe20cc";
   static const String WX_APP_SECRET = "83f8932eb742257316e3168ba9e920dc";
@@ -49,23 +49,29 @@ class AppConfig {
     needEncrypt = isEncrypt;
   }
 
-  static setShowCommission(bool canShowCommission) {
-    if (showCommission == canShowCommission) {
-      return;
-    }
-    showCommission = canShowCommission;
-  }
+  // static setShowCommission(bool canShowCommission) {
+  //   if (showCommission == canShowCommission) {
+  //     return;
+  //   }
+  //   showCommission = canShowCommission;
+  // }
 
+
+  ///佣金控制显示
+  ///
+  ///首先判断showExtraCommission，该值由后台控制显示
+  ///
+  ///其次未登陆和一般会员用户无法显示该值
   static bool getShowCommission() {
-    // return false;
     if (showExtraCommission) {
+      if ((!UserManager.instance.haveLogin ||
+          UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
+          UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.None)) {
+        return false;
+      }
       return true;
-    } else if ((!UserManager.instance.haveLogin ||
-            UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
-            UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.None) &&
-        !Platform.isAndroid) {
-      return false;
     }
+
     return showCommission;
   }
 }

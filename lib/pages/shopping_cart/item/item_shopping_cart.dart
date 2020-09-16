@@ -247,19 +247,22 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                     ),
                     Row(
                       children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 0.4, color: AppColor.themeColor)),
-                          margin: EdgeInsets.only(right: 5),
-                          padding: EdgeInsets.symmetric(horizontal: 2),
-                          child: Text(
-                            "赚${goods.commission.toStringAsFixed(2)}",
-                            style: TextStyle(
-                                color: AppColor.themeColor,
-                                fontSize: ScreenAdapterUtils.setSp(11)),
-                          ),
-                        ),
+                        AppConfig.getShowCommission()
+                            ? Container(
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        width: 0.4,
+                                        color: AppColor.themeColor)),
+                                margin: EdgeInsets.only(right: 5),
+                                padding: EdgeInsets.symmetric(horizontal: 2),
+                                child: Text(
+                                  "赚${goods.commission.toStringAsFixed(2)}",
+                                  style: TextStyle(
+                                      color: AppColor.themeColor,
+                                      fontSize: ScreenAdapterUtils.setSp(11)),
+                                ),
+                              )
+                            : SizedBox(),
                         // !goods.isWaitPromotionStart()?
                         // Container()
                         // :Container(

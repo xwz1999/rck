@@ -168,11 +168,14 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
                           final skuNotNull =
                               _sku != null && _sku.commission != null;
                           final haveLogin = UserManager.instance.haveLogin;
+                          final isNotVIP =
+                              UserLevelTool.currentRoleLevelEnum() !=
+                                  UserRoleLevel.Vip;
                           return RichText(
                             text: TextSpan(children: [
                               TextSpan(
                                 text:
-                                    "￥${_sku != null ? _sku.discountPrice.toStringAsFixed(2) : _price}${skuNotNull && haveLogin ? "/" : ""}",
+                                    "￥${_sku != null ? _sku.discountPrice.toStringAsFixed(2) : _price}${skuNotNull && haveLogin && isNotVIP ? "/" : ""}",
                                 // "￥ ${_sku.discountPrice}",
                                 style: AppTextStyle.generate(
                                     ScreenAdapterUtils.setSp(18),
@@ -180,7 +183,7 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
                                     color: Colors.black),
                               ),
                               TextSpan(
-                                text: skuNotNull && haveLogin
+                                text: skuNotNull && haveLogin && isNotVIP
                                     ? " 赚${_sku.commission.toStringAsFixed(2)}"
                                     : "",
                                 // "￥ ${_sku.discountPrice}",
