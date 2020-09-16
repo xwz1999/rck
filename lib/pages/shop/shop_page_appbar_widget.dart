@@ -229,9 +229,29 @@ class _ShopPageAppbarWidgetState extends BaseStoreState<ShopPageAppbarWidget> {
             left: rSize(34),
             right: rSize(34),
             bottom: rSize(65),
-            child: Image.asset(
-              UserLevelTool.cardBarPath(_roleLevel),
-            ),
+            child: _roleLevel == UserRoleLevel.Master
+                ? Container(
+                    height: rSize(4.5),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF6D595A),
+                          Color(0xFFD4AEAE),
+                        ],
+                      ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 1,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                      borderRadius: BorderRadius.circular(2.25),
+                    ),
+                  )
+                : Image.asset(
+                    UserLevelTool.cardBarPath(_roleLevel),
+                  ),
           ),
           Positioned(
             right: rSize(26.5),

@@ -125,13 +125,15 @@ class ShopPageLineProgressWidgetState
   void initState() {
     _percent = widget.percent;
     _keyList = [_node0Key, _node1Key, _node2Key, _node3Key, _node4Key];
-    WidgetsBinding.instance.addPostFrameCallback((callback) {
-      RenderBox allBox = _nodeAllKey.currentContext.findRenderObject();
-      _allBoxSize = allBox.size;
-      RenderBox lineBox = _lineKey.currentContext.findRenderObject();
-      _lineBoxOffset = lineBox.localToGlobal(Offset.zero, ancestor: allBox);
-      _hasPostFrameCallBack = true;
-      updateView(percent: _percent);
+    Future.delayed(Duration.zero, () {
+      WidgetsBinding.instance.addPostFrameCallback((callback) {
+        RenderBox allBox = _nodeAllKey.currentContext.findRenderObject();
+        _allBoxSize = allBox.size;
+        RenderBox lineBox = _lineKey.currentContext?.findRenderObject();
+        _lineBoxOffset = lineBox.localToGlobal(Offset.zero, ancestor: allBox);
+        _hasPostFrameCallBack = true;
+        updateView(percent: _percent);
+      });
     });
     super.initState();
   }
