@@ -68,7 +68,6 @@ class BannerListViewState<T> extends State<BannerListView> {
               : BannerView(
                   _buildBanners(context),
                   onPageChanged: (index) {
-                    print(index);
                     if (widget.onPageChanged != null) {
                       widget.onPageChanged(index);
                     }
