@@ -256,6 +256,7 @@ class MyShoppingWithTime {
     return data;
   }
 }
+
 class TeamIncomeWithTime {
   TeamInToday today;
   TeamInToday thisMonth;
@@ -264,7 +265,8 @@ class TeamIncomeWithTime {
   TeamIncomeWithTime({this.today, this.thisMonth, this.prevMonth});
 
   TeamIncomeWithTime.fromJson(Map<String, dynamic> json) {
-    today = json['today'] != null ? new TeamInToday.fromJson(json['today']) : null;
+    today =
+        json['today'] != null ? new TeamInToday.fromJson(json['today']) : null;
     thisMonth = json['thisMonth'] != null
         ? new TeamInToday.fromJson(json['thisMonth'])
         : null;
@@ -370,8 +372,16 @@ class Assessment {
   UpStandard keepStandard;
   Upper upper;
   Upper keeper;
+  String content;
 
-  Assessment({this.aTime, this.upStandard, this.keepStandard, this.upper, this.keeper});
+  Assessment({
+    this.aTime,
+    this.upStandard,
+    this.keepStandard,
+    this.upper,
+    this.keeper,
+    this.content,
+  });
 
   Assessment.fromJson(Map<String, dynamic> json) {
     aTime = json['aTime'];
@@ -383,6 +393,7 @@ class Assessment {
         : null;
     upper = json['upper'] != null ? new Upper.fromJson(json['upper']) : null;
     keeper = json['keeper'] != null ? new Upper.fromJson(json['keeper']) : null;
+    content = json['content'];
   }
 
   Map<String, dynamic> toJson() {
@@ -400,6 +411,7 @@ class Assessment {
       data['keeper'] = this.keeper.toJson();
     }
     data['aTime'] = this.aTime;
+    data['content'] = this.content;
     return data;
   }
 }

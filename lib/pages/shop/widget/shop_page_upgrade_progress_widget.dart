@@ -94,7 +94,6 @@ class _ShopPageUpgradeProgressState
     String goldIconPersonKeep = "assets/shop_page_progress_icon_gold_person.png";
 
     List<Widget> returnList = [];
-    DateTime date = DateTime.parse(_shopSummaryModel.data.assessment.aTime);
     double upSale = double.parse(_shopSummaryModel.data.assessment.upper.sale);
     int upPerson = int.parse(_shopSummaryModel.data.assessment.upper.developNew);
     double keepSale = double.parse(_shopSummaryModel.data.assessment.keeper.sale);
@@ -105,7 +104,7 @@ class _ShopPageUpgradeProgressState
       int standardPerson = _shopSummaryModel.data.assessment.upStandard.role300.person.toInt();
       bool fullSale = upSale >= standardSale;
       bool fullPerson = upPerson>=standardPerson;
-      String expireDate = "在" + "${date.year}-${date.month}-${date.day}前完成升级";
+      String expireDate = _shopSummaryModel.data.assessment.content;
       returnList.add(
         Expanded(
           child: _itemWidget(
@@ -135,7 +134,7 @@ class _ShopPageUpgradeProgressState
       int standardPerson = _shopSummaryModel.data.assessment.keepStandard.role200.person.toInt();
       bool fullSale = keepSale >= standardSale;
       bool fullPerson = keepPerson>=standardPerson;
-      String expireDate = "在" + "${date.year}-${date.month}-${date.day}前完成保级";
+      String expireDate = _shopSummaryModel.data.assessment.content;
       returnList.add(
         Expanded(
           child: _itemWidget(
@@ -170,7 +169,7 @@ class _ShopPageUpgradeProgressState
       int keepStandardPerson = _shopSummaryModel.data.assessment.keepStandard.role300.person.toInt();
       bool fullKeepSale = keepSale >= keepStandardSale;
       bool fullKeepPerson = keepPerson >= keepStandardPerson;
-      String expireDate = "在" + "${date.year}-${date.month}-${date.day}前完成升级";
+      String expireDate = _shopSummaryModel.data.assessment.content;
       returnList.add(
         Expanded(
           child: _itemWidget(
