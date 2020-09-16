@@ -120,7 +120,6 @@ class ShopPageLineProgressWidgetState
   bool _hasPostFrameCallBack = false;
 
   Size _allBoxSize;
-  Offset _lineBoxOffset;
   @override
   void initState() {
     _percent = widget.percent;
@@ -129,8 +128,6 @@ class ShopPageLineProgressWidgetState
       WidgetsBinding.instance.addPostFrameCallback((callback) {
         RenderBox allBox = _nodeAllKey.currentContext.findRenderObject();
         _allBoxSize = allBox.size;
-        RenderBox lineBox = _lineKey.currentContext?.findRenderObject();
-        _lineBoxOffset = lineBox.localToGlobal(Offset.zero, ancestor: allBox);
         _hasPostFrameCallBack = true;
         updateView(percent: _percent);
       });
@@ -169,7 +166,7 @@ class ShopPageLineProgressWidgetState
       camelLeft = start - 15;
     }
     _camelPopViewModel =
-        ShopPopViewModel(0, camelLeft, _lineBoxOffset.dy - 32, 40, 36, false);
+        ShopPopViewModel(0, camelLeft, rSize(65), 40, 36, false);
     double textLeft = 0;
     bool leftOrRight = false;
     if ((_allBoxSize.width - camelLeft - 40) < 110) {
