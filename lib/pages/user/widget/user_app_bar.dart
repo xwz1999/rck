@@ -46,7 +46,7 @@ class _UserAppBarState extends BaseStoreState<UserAppBar> {
             height: double.infinity,
             child: Image.asset(
               UserLevelTool.currentAppBarBGImagePath(),
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
             ),
           ),
           _buildAppBar(context),

@@ -201,19 +201,19 @@ class UserLevelTool {
   static String appBarBGImagePath(UserRoleLevel roleLevel) {
     switch (roleLevel) {
       case UserRoleLevel.Master:
-        return "assets/user_page_appbar_master.png";
+        return R.ASSETS_HEADER_MASTER_HEADER_PNG;
         break;
       case UserRoleLevel.Silver:
-        return "assets/user_page_appbar_silver.png";
+        return R.ASSETS_HEADER_SILVER_HEADER_PNG;
         break;
       case UserRoleLevel.Gold:
-        return "assets/user_page_appbar_gold.png";
+        return R.ASSETS_HEADER_GOLD_HEADER_PNG;
         break;
       case UserRoleLevel.Diamond:
-        return "assets/user_page_appbar_diamond.png";
+        return R.ASSETS_HEADER_SILVER_HEADER_PNG;
         break;
       default:
-        return "assets/user_page_appbar_vip.png";
+        return R.ASSETS_HEADER_VIP_HEADER_PNG;
         break;
     }
   }

@@ -117,34 +117,48 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
     _context = context;
     return Scaffold(
       backgroundColor: AppColor.tableViewGrayColor,
-      appBar: CustomAppBar(
-        appBackground: getAppBarColor(),
-        title: "购物车($_totalNum)",
-        actions: <Widget>[
-          CustomImageButton(
-            padding: EdgeInsets.only(right: rSize(10), top: rSize(5)),
-            title: !_manageStatus ? "管理" : "完成",
-            color: Colors.white,
-            fontSize: ScreenAdapterUtils.setSp(15),
-            onPressed: () {
-              if (_editting) {
-                FocusScope.of(context).requestFocus(FocusNode());
-                return;
-              }
-              // 切换管理状态  重置所以数据到原始数据
-              // for (ShoppingCartBrandModel _brandModel in _controller.getData()) {
-              //   _brandModel.selected = false;
-              //   for (ShoppingCartGoodsModel _goodsModel in _brandModel.children) {
-              //     _goodsModel.selected = false;
-              //   }
-              // }
-              // _checkAll = false;
-              // _selectedGoods.clear();
-              _manageStatus = !_manageStatus;
-              setState(() {});
-            },
-          )
-        ],
+      appBar: PreferredSize(
+        child: Stack(
+          children: [
+            Image.asset(
+              UserLevelTool.currentAppBarBGImagePath(),
+              fit: BoxFit.cover,
+              width: double.infinity,
+            ),
+            AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              centerTitle: true,
+              title: Text("购物车($_totalNum)"),
+              actions: <Widget>[
+                CustomImageButton(
+                  padding: EdgeInsets.only(right: rSize(10), top: rSize(5)),
+                  title: !_manageStatus ? "管理" : "完成",
+                  color: Colors.white,
+                  fontSize: ScreenAdapterUtils.setSp(15),
+                  onPressed: () {
+                    if (_editting) {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      return;
+                    }
+                    // 切换管理状态  重置所以数据到原始数据
+                    // for (ShoppingCartBrandModel _brandModel in _controller.getData()) {
+                    //   _brandModel.selected = false;
+                    //   for (ShoppingCartGoodsModel _goodsModel in _brandModel.children) {
+                    //     _goodsModel.selected = false;
+                    //   }
+                    // }
+                    // _checkAll = false;
+                    // _selectedGoods.clear();
+                    _manageStatus = !_manageStatus;
+                    setState(() {});
+                  },
+                )
+              ],
+            ),
+          ],
+        ),
+        preferredSize: Size.fromHeight(30 + MediaQuery.of(context).padding.top),
       ),
       body: _buildList(context),
       bottomNavigationBar:

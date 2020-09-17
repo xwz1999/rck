@@ -2,7 +2,7 @@ name: recook
 description: Recook Market App.
 publish_to: "none"
 
-version: 1.1.16+158
+version: 1.1.17+159
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -201,6 +201,7 @@ flutter:
     - assets/static/
     - assets/lottery_redeem/
     - assets/shop/
+    - assets/header/
   fonts:
     - family: AppIcons
       fonts:
