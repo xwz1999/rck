@@ -124,14 +124,14 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
                   ScreenAdapterUtils.setSp(13),
                   color: Color.fromARGB(255, 249, 62, 13),
                 )),
-            AppConfig.getShowCommission()
+            AppConfig.commissionByRoleLevel
                 ? TextSpan(
                     text: "  赚:",
                     style: AppTextStyle.generate(
                       ScreenAdapterUtils.setSp(13),
                     ))
                 : TextSpan(text: ''),
-            AppConfig.getShowCommission()
+            AppConfig.commissionByRoleLevel
                 ? TextSpan(
                     text: '$commission',
                     style: AppTextStyle.generate(

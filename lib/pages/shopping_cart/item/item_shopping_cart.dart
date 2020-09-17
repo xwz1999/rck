@@ -247,7 +247,7 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                     ),
                     Row(
                       children: <Widget>[
-                        AppConfig.getShowCommission()
+                        AppConfig.commissionByRoleLevel
                             ? Container(
                                 decoration: BoxDecoration(
                                     border: Border.all(

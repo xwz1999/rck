@@ -56,7 +56,6 @@ class AppConfig {
   //   showCommission = canShowCommission;
   // }
 
-
   ///佣金控制显示
   ///
   ///首先判断showExtraCommission，该值由后台控制显示
@@ -64,14 +63,24 @@ class AppConfig {
   ///其次未登陆和一般会员用户无法显示该值
   static bool getShowCommission() {
     if (showExtraCommission) {
+      return true;
+    } else {
       if ((!UserManager.instance.haveLogin ||
           UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
           UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.None)) {
         return false;
       }
-      return true;
     }
 
     return showCommission;
+  }
+
+  static bool get commissionByRoleLevel {
+    if ((!UserManager.instance.haveLogin ||
+        UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
+        UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.None)) {
+      return false;
+    } else
+      return true;
   }
 }

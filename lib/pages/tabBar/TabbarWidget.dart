@@ -44,13 +44,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
       VersionTool.checkVersionInfo(_context);
     });
     _tabController = TabController(
-        length: (!UserManager.instance.haveLogin ||
-                    UserLevelTool.currentRoleLevelEnum() ==
-                        UserRoleLevel.Vip) &&
-                !AppConfig.showExtraCommission
-            ? 4
-            : 5,
-        vsync: this);
+        length: !AppConfig.getShowCommission() ? 4 : 5, vsync: this);
     _bottomBarController = BottomBarController();
 
     UserManager.instance.login.addListener(_loginListener);
@@ -82,10 +76,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
           controller: _tabController,
           children:
               // AppConfig.getShowCommission()
-              (!UserManager.instance.haveLogin ||
-                          UserLevelTool.currentRoleLevelEnum() ==
-                              UserRoleLevel.Vip) &&
-                      !AppConfig.showExtraCommission
+              !AppConfig.getShowCommission()
                   ? <Widget>[
                       HomePage(),
                       BusinessPage(),
@@ -107,8 +98,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
     return BottomBar(
       barController: _bottomBarController,
       tabChangeListener: (index) {
-        if ((!UserManager.instance.haveLogin ||
-            UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip)) {
+        if (!AppConfig.getShowCommission()) {
           // if(AppConfig.getShowCommission()){
           // if (index == 2) {
           //   UserManager.instance.refreshShopPage.value = !UserManager.instance.refreshShopPage.value;
@@ -190,9 +180,7 @@ class _BottomBarState extends State<BottomBar> {
       iconUnSelectedColor: unSelectedColor,
       protrudingColor: selectedColor,
       // items: AppConfig.getShowCommission()
-      items: (!UserManager.instance.haveLogin ||
-                  UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip) &&
-              !AppConfig.showExtraCommission
+      items: !AppConfig.getShowCommission()
           ? [
               NavigationItemBean(
                 textStr: '特卖',

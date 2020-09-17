@@ -657,7 +657,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          AppConfig.getShowCommission()
+          AppConfig.commissionByRoleLevel
               ? Container(
                   alignment: Alignment.center,
                   padding: EdgeInsets.symmetric(

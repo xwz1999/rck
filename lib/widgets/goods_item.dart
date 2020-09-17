@@ -577,10 +577,8 @@ class GoodsItemWidget extends StatelessWidget {
                       ),
                     )
                   : SizedBox(),
-              (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.None ||
-                      UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip)
-                  ? Container()
-                  : Container(
+              AppConfig.commissionByRoleLevel
+                  ? Container(
                       child: Stack(
                         alignment: Alignment.center,
                         children: <Widget>[
@@ -616,7 +614,8 @@ class GoodsItemWidget extends StatelessWidget {
                               : SizedBox(),
                         ],
                       ),
-                    ),
+                    )
+                  : SizedBox(),
               Spacer(),
             ],
           ),
