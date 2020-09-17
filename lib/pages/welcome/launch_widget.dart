@@ -43,7 +43,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
     }
     WidgetsBinding.instance.addPostFrameCallback((callback) {
       // _gifController.repeat(min: 0, max:59, period: Duration(milliseconds: 1500));
-      Future.delayed(Duration(milliseconds: 2355), () {
+      Future.delayed(Duration(milliseconds: 2000), () {
         AppRouter.fadeAndReplaced(globalContext, RouteName.WELCOME_PAGE);
       });
     });
@@ -60,8 +60,8 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
         child: ImagesAnimation(
             w: width,
             h: height,
-            milliseconds: 2355,
-            entry: ImagesAnimationEntry(0,70,
+            milliseconds: 2000,
+            entry: ImagesAnimationEntry(0, 70,
                 "assets/recook_launch_image/recook_launch_image_%s.png")),
       ),
     );

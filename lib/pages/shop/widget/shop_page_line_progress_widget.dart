@@ -255,8 +255,11 @@ class ShopPageLineProgressWidgetState
                           //     : "assets/camel_pop_right.png"),
                           Center(
                               child: Container(
-                            width: rSize(80),
-                            padding: EdgeInsets.symmetric(horizontal: rSize(8)),
+                            width: rSize(100),
+                            padding: EdgeInsets.symmetric(
+                              horizontal: rSize(8),
+                              vertical: rSize(4),
+                            ),
                             decoration: BoxDecoration(
                               color: Colors.black.withOpacity(0.2),
                               borderRadius: BorderRadius.circular(rSize(6)),
@@ -264,6 +267,7 @@ class ShopPageLineProgressWidgetState
                             // padding: EdgeInsets.symmetric(horizontal: 20),
                             child: Text(widget.camelTitle,
                                 maxLines: 2,
+                                overflow: TextOverflow.visible,
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 10)),
                           )),
