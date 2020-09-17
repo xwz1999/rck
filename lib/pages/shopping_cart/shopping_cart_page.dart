@@ -200,7 +200,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
                     style: AppTextStyle.generate(ScreenAdapterUtils.setSp(16),
                         color: Colors.black))
               ])),
-          totalCommission > 0 && AppConfig.getShowCommission()
+          totalCommission > 0 && AppConfig.commissionByRoleLevel
               ? Text(
                   "赚${totalCommission.toStringAsFixed(2)}",
                   style: TextStyle(
