@@ -3,7 +3,7 @@
 
 ## 瑞库客 商城应用 📦
 
-### Before Started
+## Before Started
 
 `fluwx` 和 `sharesdk_plugin`冲突 ，参考 [ShareSDK(分享插件)和Fluwx(微信支付插件)存在冲突](https://github.com/OpenFlutter/fluwx/blob/master/doc/QA_CN.md#sharesdk%E5%88%86%E4%BA%AB%E6%8F%92%E4%BB%B6%E5%92%8Cfluwx%E5%BE%AE%E4%BF%A1%E6%94%AF%E4%BB%98%E6%8F%92%E4%BB%B6%E5%AD%98%E5%9C%A8%E5%86%B2%E7%AA%81)
 
@@ -59,3 +59,12 @@
 ```
 
 注意 *⚠️ 本修改直接修改依赖文件，需要注意其他使用相同依赖的项目*
+
+## Getting Started
+
+开发分支在`master`,`main.dart`中isDebug参数为`true`
+
+发行分支在`release`,`main.dart`中isDebug参数为`false`
+
+
+注意 ⚠️ 请勿直接修改发行`isDebug`参数,打包发行分支前请合并开发分支
