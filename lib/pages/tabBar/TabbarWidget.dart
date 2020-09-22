@@ -8,19 +8,22 @@
  */
 import 'package:flutter/material.dart';
 import 'package:recook/constants/config.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/business/business_page.dart';
 import 'package:recook/pages/home/home_page.dart';
+import 'package:recook/pages/live/pages/discovery_page.dart';
+import 'package:recook/pages/live/widget/live_fab_location.dart';
 import 'package:recook/pages/shop/widget/normal_shop_page.dart';
 import 'package:recook/pages/shopping_cart/shopping_cart_page.dart';
 import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/third_party/bugly_helper.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/print_util.dart';
-import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/utils/versionInfo/version_tool.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/tabbarWidget/ace_bottom_navigation_bar.dart';
 
 class TabBarWidget extends StatefulWidget {
@@ -46,6 +49,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
     _tabController = TabController(
         length: !AppConfig.getShowCommission() ? 4 : 5, vsync: this);
     _bottomBarController = BottomBarController();
+    _tabController.addListener(_tabListener);
 
     UserManager.instance.login.addListener(_loginListener);
     UserManager.instance.selectTabbar.addListener(_selectTabbar);
@@ -64,12 +68,107 @@ class _TabBarWidgetState extends State<TabBarWidget>
     _tabController.index = UserManager.instance.selectTabbarIndex;
   }
 
+  _tabListener() {
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_context == null) {
       _context = context;
     }
     return Scaffold(
+        floatingActionButton: _tabController.index == 2
+            ? Container(
+                padding: EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: CustomImageButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return Container(
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(rSize(15))),
+                            ),
+                            child: Builder(builder: (context) {
+                              verticalButton(String title, String path) {
+                                return CustomImageButton(
+                                  onPressed: () {},
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      SizedBox(height: rSize(20)),
+                                      Image.asset(
+                                        path,
+                                        height: rSize(44),
+                                        width: rSize(44),
+                                      ),
+                                      SizedBox(height: rSize(10)),
+                                      Text(
+                                        title,
+                                        style: TextStyle(
+                                          fontSize: rSP(14),
+                                          color: Color(0xFF666666),
+                                        ),
+                                      ),
+                                      SizedBox(height: rSize(20)),
+                                    ],
+                                  ),
+                                );
+                              }
+
+                              return Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.stretch,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      verticalButton(
+                                        '直播',
+                                        R.ASSETS_LIVE_ADD_STREAM_PNG,
+                                      ),
+                                      verticalButton(
+                                        '视频',
+                                        R.ASSETS_LIVE_ADD_VIDEO_PNG,
+                                      ),
+                                      verticalButton(
+                                        '图文',
+                                        R.ASSETS_LIVE_ADD_IMAGE_PNG,
+                                      ),
+                                    ],
+                                  ),
+                                  CustomImageButton(
+                                    height: rSize(66),
+                                    onPressed: () {},
+                                    child: Text('取消',
+                                        style: TextStyle(
+                                          color: Color(0xFF333333),
+                                          fontSize: rSP(14),
+                                        )),
+                                  ),
+                                ],
+                              );
+                            }),
+                          );
+                        });
+                  },
+                  child: Container(
+                    height: 40,
+                    width: 40,
+                    child: Image.asset(R.ASSETS_LIVE_RECOOK_FAB_PNG),
+                  ),
+                ),
+              )
+            : null,
+        floatingActionButtonLocation: FabLocation.recook,
         body: CacheTabBarView(
           physics: NeverScrollableScrollPhysics(),
           needAnimation: false,
@@ -79,14 +178,14 @@ class _TabBarWidgetState extends State<TabBarWidget>
               !AppConfig.getShowCommission()
                   ? <Widget>[
                       HomePage(),
-                      BusinessPage(),
+                      DiscoveryPage(),
                       ShoppingCartPage(),
                       UserPage()
                     ]
                   : <Widget>[
                       HomePage(),
-                      BusinessPage(),
                       NormalShopPage(),
+                      DiscoveryPage(),
                       ShoppingCartPage(),
                       UserPage()
                     ],
@@ -108,7 +207,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
                 !UserManager.instance.refreshUserPage.value;
           }
         } else {
-          if (index == 2) {
+          if (index == 1) {
             UserManager.instance.refreshShopPage.value =
                 !UserManager.instance.refreshShopPage.value;
           }
@@ -132,6 +231,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
     _bottomBarController.dispose();
     UserManager.instance.login?.removeListener(_loginListener);
     UserManager.instance.selectTabbar.removeListener(_selectTabbar);
+    _tabController?.removeListener(_tabListener);
     super.dispose();
   }
 
@@ -212,14 +312,14 @@ class _BottomBarState extends State<BottomBar> {
                 imageSelected: AssetImage("assets/tabbar_sale_selected.png"),
               ),
               NavigationItemBean(
-                textStr: '发现',
-                image: AssetImage("assets/tabbar_find_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_find_selected.png"),
-              ),
-              NavigationItemBean(
                 textStr: '店铺',
                 image: AssetImage("assets/tabbar_shop_normal.png"),
                 imageSelected: AssetImage("assets/tabbar_shop_selected.png"),
+              ),
+              NavigationItemBean(
+                textStr: '发现',
+                image: AssetImage("assets/tabbar_find_normal.png"),
+                imageSelected: AssetImage("assets/tabbar_find_selected.png"),
               ),
               NavigationItemBean(
                 textStr: '购物车',

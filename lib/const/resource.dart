@@ -332,6 +332,21 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/listtemp_recookmaketitle_bg.png)
   static const String ASSETS_LISTTEMP_RECOOKMAKETITLE_BG_PNG = 'assets/listtemp_recookmaketitle_bg.png';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/.DS_Store)
+  static const String ASSETS_LIVE__DS_STORE = 'assets/live/.DS_Store';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/add_image.png)
+  static const String ASSETS_LIVE_ADD_IMAGE_PNG = 'assets/live/add_image.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/add_stream.png)
+  static const String ASSETS_LIVE_ADD_STREAM_PNG = 'assets/live/add_stream.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/add_video.png)
+  static const String ASSETS_LIVE_ADD_VIDEO_PNG = 'assets/live/add_video.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/recook_fab.png)
+  static const String ASSETS_LIVE_RECOOK_FAB_PNG = 'assets/live/recook_fab.png';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/login_logo.png)
   static const String ASSETS_LOGIN_LOGO_PNG = 'assets/login_logo.png';
 

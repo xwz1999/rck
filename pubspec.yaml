@@ -177,6 +177,9 @@ dependencies:
 
   flip_card: ^0.4.4
 
+  #腾讯直播
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -202,6 +205,7 @@ flutter:
     - assets/lottery_redeem/
     - assets/shop/
     - assets/header/
+    - assets/live/
   fonts:
     - family: AppIcons
       fonts:
