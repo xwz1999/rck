@@ -347,6 +347,9 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/recook_fab.png)
   static const String ASSETS_LIVE_RECOOK_FAB_PNG = 'assets/live/recook_fab.png';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/user.png)
+  static const String ASSETS_LIVE_USER_PNG = 'assets/live/user.png';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/login_logo.png)
   static const String ASSETS_LOGIN_LOGO_PNG = 'assets/login_logo.png';
 

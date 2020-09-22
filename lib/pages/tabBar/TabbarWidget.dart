@@ -147,7 +147,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
                                   ),
                                   CustomImageButton(
                                     height: rSize(66),
-                                    onPressed: () {},
+                                    onPressed: () => Navigator.pop(context),
                                     child: Text('取消',
                                         style: TextStyle(
                                           color: Color(0xFF333333),
@@ -179,6 +179,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
                   ? <Widget>[
                       HomePage(),
                       DiscoveryPage(),
+                      // BusinessPage(),
                       ShoppingCartPage(),
                       UserPage()
                     ]
@@ -186,6 +187,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
                       HomePage(),
                       NormalShopPage(),
                       DiscoveryPage(),
+                      // BusinessPage(),
                       ShoppingCartPage(),
                       UserPage()
                     ],
