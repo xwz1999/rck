@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
+import 'package:recook/pages/business/recommend/child_recommend_page.dart';
+import 'package:recook/pages/live/sub_page/image_text_page.dart';
+import 'package:recook/pages/live/sub_page/live_stream_page.dart';
+import 'package:recook/pages/live/sub_page/video_page.dart';
 import 'package:recook/pages/live/widget/round_tab_bar_indicator.dart';
+import 'package:recook/widgets/cache_tab_bar_view.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class DiscoveryPage extends StatefulWidget {
@@ -83,7 +88,16 @@ class _DiscoveryPageState extends State<DiscoveryPage>
                 ],
               ),
             ),
-          )
+          ),
+          Expanded(
+              child: CacheTabBarView(
+            controller: _tabController,
+            children: [
+              LiveStreamPage(),
+              VideoPage(),
+              RecommendPage(),
+            ],
+          )),
         ],
       ),
     );

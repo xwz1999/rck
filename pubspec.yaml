@@ -179,6 +179,8 @@ dependencies:
 
   #腾讯直播
 
+  #瀑布流
+  waterfall_flow: 2.0.3
 
 dev_dependencies:
   flutter_test:

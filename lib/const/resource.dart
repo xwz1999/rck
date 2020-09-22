@@ -344,8 +344,20 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/add_video.png)
   static const String ASSETS_LIVE_ADD_VIDEO_PNG = 'assets/live/add_video.png';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/favorite.png)
+  static const String ASSETS_LIVE_FAVORITE_PNG = 'assets/live/favorite.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/favorite_black.png)
+  static const String ASSETS_LIVE_FAVORITE_BLACK_PNG = 'assets/live/favorite_black.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/on_stream.png)
+  static const String ASSETS_LIVE_ON_STREAM_PNG = 'assets/live/on_stream.png';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/recook_fab.png)
   static const String ASSETS_LIVE_RECOOK_FAB_PNG = 'assets/live/recook_fab.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/stream_play_back.png)
+  static const String ASSETS_LIVE_STREAM_PLAY_BACK_PNG = 'assets/live/stream_play_back.png';
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/user.png)
   static const String ASSETS_LIVE_USER_PNG = 'assets/live/user.png';
