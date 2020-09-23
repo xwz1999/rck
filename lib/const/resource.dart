@@ -182,6 +182,9 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/header/vip_header.png)
   static const String ASSETS_HEADER_VIP_HEADER_PNG = 'assets/header/vip_header.png';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/home/invite.webp)
+  static const String ASSETS_HOME_INVITE_WEBP = 'assets/home/invite.webp';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/home_formal.png)
   static const String ASSETS_HOME_FORMAL_PNG = 'assets/home_formal.png';
 
@@ -338,6 +341,9 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/lottery/upgrade.png)
   static const String ASSETS_LOTTERY_UPGRADE_PNG = 'assets/lottery/upgrade.png';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/lottery_redeem/.DS_Store)
+  static const String ASSETS_LOTTERY_REDEEM__DS_STORE = 'assets/lottery_redeem/.DS_Store';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/lottery_redeem/big_lottery.png)
   static const String ASSETS_LOTTERY_REDEEM_BIG_LOTTERY_PNG = 'assets/lottery_redeem/big_lottery.png';
 
@@ -353,6 +359,9 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/lottery_redeem/lottery_history.png)
   static const String ASSETS_LOTTERY_REDEEM_LOTTERY_HISTORY_PNG = 'assets/lottery_redeem/lottery_history.png';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/lottery_redeem/lottery_icon.png)
+  static const String ASSETS_LOTTERY_REDEEM_LOTTERY_ICON_PNG = 'assets/lottery_redeem/lottery_icon.png';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/lottery_redeem/lottery_list.png)
   static const String ASSETS_LOTTERY_REDEEM_LOTTERY_LIST_PNG = 'assets/lottery_redeem/lottery_list.png';
 
@@ -367,9 +376,6 @@ class R {
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/master_right_remind.png)
   static const String ASSETS_MASTER_RIGHT_REMIND_PNG = 'assets/master_right_remind.png';
-
-  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/meizi.JPG)
-  static const String ASSETS_MEIZI_JPG = 'assets/meizi.JPG';
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/navigation_category.png)
   static const String ASSETS_NAVIGATION_CATEGORY_PNG = 'assets/navigation_category.png';

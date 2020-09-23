@@ -14,7 +14,6 @@ import 'package:recook/pages/business/selling_point/selling_point_page.dart';
 import 'package:recook/pages/home/barcode/fail_barcode_page.dart';
 import 'package:recook/pages/home/barcode/input_barcode_page.dart';
 import 'package:recook/pages/home/barcode/photos_fail_barcode_page.dart';
-import 'package:recook/pages/home/classify/brand_detail_page.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/home/classify/classify_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
@@ -159,7 +158,6 @@ class RouteName {
   static const String CLASSIFY = "/classify";
 
   // 品牌详情
-  static const String BRAND_PAGE = "/brandPage";
   static const String GOODS_LIST_PAGE = "/GoodsList";
   static const String BRANDGOODS_LIST_PAGE = "/BrandGoodsListPage";
   // 商品详情
@@ -386,8 +384,6 @@ final Map<String, RouteBuilder> _routes = {
   //商品列表(只供显示)
   RouteName.GOODS_LIST_TEMP: (context, {arguments}) =>
       GoodsListTempPage(arguments: arguments),
-  // 品牌
-  RouteName.BRAND_PAGE: (context, {arguments}) => BrandDetailPage(),
   // 商品列表
   RouteName.GOODS_LIST_PAGE: (context, {arguments}) => GoodsListPage(
         arguments: arguments,
@@ -645,9 +641,8 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.LOTTERY_ORDER_PAGE: (context, {arguments}) => LotteryOrderPage(),
   RouteName.LOTTERY_ORDER_DETAIL_PAGE: (context, {arguments}) =>
       LotteryOrderDetailPage(arguments: arguments),
-      RouteName.LOTTERY_CART_PAGE:(context,{arguments})=> LotteryCartPage(
-        arguments:arguments
-      ),
+  RouteName.LOTTERY_CART_PAGE: (context, {arguments}) =>
+      LotteryCartPage(arguments: arguments),
 };
 
 ///  应用中路由跳转

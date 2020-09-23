@@ -187,6 +187,9 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+
+    #TODO 重构图片assets
+    - assets/home/
     - assets/activityImage/
     - assets/recook_launch_image/
     - assets/keys/server_rsa_public_key.pem
