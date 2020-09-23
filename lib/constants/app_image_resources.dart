@@ -58,11 +58,6 @@ class AppImageName {
   static const String home_welfare = 'assets/home_welfare.png';
   static const String store_bg = 'assets/store_bg.png';
 
-  static const String invite_bg = 'assets/invite_bg.png';
-  static const String my_invite_bg = 'assets/my_invite_bg.png';
-  static const String invite_icon = 'assets/invite_icon.png';
-  static const String my_invite_icon = 'assets/my_invite_icon.png';
-
   static const String img_no_data = 'assets/img_no_data.png';
   static const String img_no_data_search = 'assets/img_no_data_search.png';
 

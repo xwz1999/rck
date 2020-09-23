@@ -269,9 +269,6 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/img_no_data_search.png)
   static const String ASSETS_IMG_NO_DATA_SEARCH_PNG = 'assets/img_no_data_search.png';
 
-  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/invite_bg.png)
-  static const String ASSETS_INVITE_BG_PNG = 'assets/invite_bg.png';
-
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/invite_detail_edit.png)
   static const String ASSETS_INVITE_DETAIL_EDIT_PNG = 'assets/invite_detail_edit.png';
 
@@ -280,15 +277,6 @@ class R {
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/invite_detail_time.png)
   static const String ASSETS_INVITE_DETAIL_TIME_PNG = 'assets/invite_detail_time.png';
-
-  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/invite_icon.png)
-  static const String ASSETS_INVITE_ICON_PNG = 'assets/invite_icon.png';
-
-  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/invite_view_update_bg.png)
-  static const String ASSETS_INVITE_VIEW_UPDATE_BG_PNG = 'assets/invite_view_update_bg.png';
-
-  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/invite_view_update_icon.png)
-  static const String ASSETS_INVITE_VIEW_UPDATE_ICON_PNG = 'assets/invite_view_update_icon.png';
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/json/weatherCity.json)
   static const String ASSETS_JSON_WEATHERCITY_JSON = 'assets/json/weatherCity.json';
@@ -382,12 +370,6 @@ class R {
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/meizi.JPG)
   static const String ASSETS_MEIZI_JPG = 'assets/meizi.JPG';
-
-  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/my_invite_bg.png)
-  static const String ASSETS_MY_INVITE_BG_PNG = 'assets/my_invite_bg.png';
-
-  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/my_invite_icon.png)
-  static const String ASSETS_MY_INVITE_ICON_PNG = 'assets/my_invite_icon.png';
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/navigation_category.png)
   static const String ASSETS_NAVIGATION_CATEGORY_PNG = 'assets/navigation_category.png';
