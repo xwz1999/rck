@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/lottery/lottery_cart_model.dart';
+import 'package:recook/pages/lottery/lottery_history_page.dart';
+import 'package:recook/pages/lottery/models/lottery_list_model.dart';
 import 'package:recook/pages/lottery/redeem_lottery_page.dart';
+import 'package:recook/pages/lottery/tools/lottery_tool.dart';
 import 'package:recook/pages/lottery/widget/lottery_ball.dart';
 import 'package:recook/pages/lottery/widget/lottery_result_boxes.dart';
 import 'package:recook/pages/lottery/widget/lottery_scaffold.dart';
 import 'package:recook/pages/lottery/widget/lottery_view.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/const/resource.dart';
 
 class LotteryPickerPage extends StatefulWidget {
-  final dynamic arguments;
-  LotteryPickerPage({Key key, @required this.arguments}) : super(key: key);
+  final bool isDouble;
+  final LotteryListModel lotteryListModel;
+  LotteryPickerPage({
+    Key key,
+    @required this.isDouble,
+    @required this.lotteryListModel,
+  }) : super(key: key);
 
   @override
   _LotteryPickerPageState createState() => _LotteryPickerPageState();
@@ -51,7 +62,7 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
                   right: rSize(12),
                 ),
                 child: Text(
-                  '2020077期',
+                  '${widget.lotteryListModel.last.number}期',
                   style: TextStyle(
                     color: Color(0xFFE02020),
                     fontSize: rSP(12),
@@ -61,8 +72,11 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
               Expanded(
                 child: LotteryResultBoxes(
                   small: true,
-                  redBalls: [1, 2, 3, 4, 5, 6],
-                  blueBalls: [1],
+                  redBalls: parseBalls(widget.lotteryListModel.last.bonusCode),
+                  blueBalls: parseBalls(
+                    widget.lotteryListModel.last.bonusCode,
+                    red: false,
+                  ),
                 ),
               ),
               SizedBox(width: rSize(80)),
@@ -74,7 +88,7 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
       title: Column(
         children: [
           Text(
-            widget.arguments['type'] ? '双色球' : '大乐透',
+            widget.isDouble ? '双色球' : '大乐透',
             style: TextStyle(
               color: Colors.white,
               fontSize: rSP(18),
@@ -97,7 +111,7 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
             onPressed: () => AppRouter.push(
               context,
               RouteName.LOTTERY_HELP_PAGE,
-              arguments: {'type': widget.arguments['type']},
+              arguments: {'type': widget.isDouble},
             ),
             child: Image.asset(
               R.ASSETS_LOTTERY_REDEEM_LOTTERY_DETAIL_PNG,
@@ -110,11 +124,12 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
           width: rSize(20 + 15.0),
           child: FlatButton(
             padding: EdgeInsets.zero,
-            onPressed: () => AppRouter.push(
-              context,
-              RouteName.LOTTERY_HISTORY_PAGE,
-              arguments: {'type': widget.arguments['type']},
-            ),
+            onPressed: () {
+              CRoute.push(
+                context,
+                LotteryHistoryPage(id: widget.lotteryListModel.id),
+              );
+            },
             child: Image.asset(
               R.ASSETS_LOTTERY_REDEEM_LOTTERY_HISTORY_PNG,
               width: rSize(20),
@@ -146,7 +161,7 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
                 LotteryView(
                   colorType: LotteryColorType.RED,
                   key: _redLotteryViewKey,
-                  type: widget.arguments['type']
+                  type: widget.isDouble
                       ? LotteryType.DOUBLE_LOTTERY
                       : LotteryType.BIG_LOTTERY,
                   onSelect: (selected, focused) {
@@ -164,7 +179,7 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
                   },
                   key: _blueLotteryViewKey,
                   colorType: LotteryColorType.BLUE,
-                  type: widget.arguments['type']
+                  type: widget.isDouble
                       ? LotteryType.DOUBLE_LOTTERY
                       : LotteryType.BIG_LOTTERY,
                 ),
@@ -275,9 +290,7 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
                     children: [
                       lotteryShots == 0
                           ? Text(
-                              widget.arguments['type']
-                                  ? '至少选6红球1蓝球'
-                                  : '至少选5红球2蓝球',
+                              widget.isDouble ? '至少选6红球1蓝球' : '至少选5红球2蓝球',
                               style: TextStyle(
                                 height: 1,
                                 fontSize: rSP(12),
@@ -337,7 +350,7 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
                         bigShots += element.shots;
                       });
                       final storeSize =
-                          widget.arguments['type'] ? doubleShots : bigShots;
+                          widget.isDouble ? doubleShots : bigShots;
                       return Stack(
                         overflow: Overflow.visible,
                         children: [
@@ -408,7 +421,7 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
 
   _addShot() {
     if (lotteryShots == 0) {
-      showToast(widget.arguments['type'] ? '至少选6红球1蓝球' : '至少选5红球2蓝球');
+      showToast(widget.isDouble ? '至少选6红球1蓝球' : '至少选5红球2蓝球');
     } else {
       _addOneShot();
       _clearAllSelect();
@@ -417,7 +430,7 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
   }
 
   _complateShot() {
-    final bool isDoubleLottery = widget.arguments['type'];
+    final bool isDoubleLottery = widget.isDouble;
 
     ///空购物车
     final bool emptyCart = isDoubleLottery
@@ -435,19 +448,19 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
       _addOneShot();
       _clearAllSelect();
       AppRouter.push(context, RouteName.LOTTERY_CART_PAGE,
-              arguments: {'type': widget.arguments['type']})
+              arguments: {'type': widget.isDouble})
           .then((value) => setState(() {}));
     } else if (emptySelect && !emptyCart) {
       AppRouter.push(context, RouteName.LOTTERY_CART_PAGE,
-              arguments: {'type': widget.arguments['type']})
+              arguments: {'type': widget.isDouble})
           .then((value) => setState(() {}));
     } else if (shotZero) {
-      showToast(widget.arguments['type'] ? '至少选6红球1蓝球' : '至少选5红球2蓝球');
+      showToast(widget.isDouble ? '至少选6红球1蓝球' : '至少选5红球2蓝球');
     } else {
       _addOneShot();
       _clearAllSelect();
       AppRouter.push(context, RouteName.LOTTERY_CART_PAGE,
-              arguments: {'type': widget.arguments['type']})
+              arguments: {'type': widget.isDouble})
           .then((value) => setState(() {}));
     }
   }
@@ -462,11 +475,9 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
 
   _addOneShot() {
     LotteryCartStore.add1Shot(
-      widget.arguments['type']
-          ? LotteryType.DOUBLE_LOTTERY
-          : LotteryType.BIG_LOTTERY,
+      widget.isDouble ? LotteryType.DOUBLE_LOTTERY : LotteryType.BIG_LOTTERY,
       LotteryCartModel(
-        type: widget.arguments['type']
+        type: widget.isDouble
             ? LotteryType.DOUBLE_LOTTERY
             : LotteryType.BIG_LOTTERY,
         redBalls: _redBalls,
@@ -479,9 +490,7 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
 
   _countLotteryShot() {
     lotteryShots = LotteryCartStore.countLotteryBalls(
-      widget.arguments['type']
-          ? LotteryType.DOUBLE_LOTTERY
-          : LotteryType.BIG_LOTTERY,
+      widget.isDouble ? LotteryType.DOUBLE_LOTTERY : LotteryType.BIG_LOTTERY,
       redBalls: _redBalls,
       blueBalls: _blueBalls,
       focusedRedBalls: _focusedRedBalls,

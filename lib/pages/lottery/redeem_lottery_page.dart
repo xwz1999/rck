@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/lottery/lottery_picker_page.dart';
 import 'package:recook/pages/lottery/models/lottery_list_model.dart';
+import 'package:recook/pages/lottery/tools/lottery_tool.dart';
 import 'package:recook/pages/lottery/widget/lottery_result_boxes.dart';
 import 'package:recook/pages/lottery/widget/lottery_scaffold.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 enum LotteryType {
@@ -81,23 +84,18 @@ class _RedeemLotteryPageState extends State<RedeemLotteryPage> {
     }
     List<int> redBalls, blueBalls;
     if (TextUtils.isNotEmpty(model.last.bonusCode)) {
-      redBalls = model.last.bonusCode
-          .split('#')[0]
-          .split(',')
-          .map((e) => int.parse(e))
-          .toList();
-
-      blueBalls = model.last.bonusCode
-          .split('#')[1]
-          .split(',')
-          .map((e) => int.parse(e))
-          .toList();
+      redBalls = parseBalls(model.last.bonusCode);
+      blueBalls = parseBalls(model.last.bonusCode, red: false);
     }
 
     return CustomImageButton(
       onPressed: () {
-        AppRouter.push(context, RouteName.LOTTERY_PICKER_PAGE,
-            arguments: {'type': model.id == 1});
+        CRoute.push(
+            context,
+            LotteryPickerPage(
+              isDouble: model.id == 1,
+              lotteryListModel: model,
+            ));
       },
       child: Container(
         padding: EdgeInsets.all(rSize(16)),
