@@ -5,6 +5,7 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/user/review/add_review_page.dart';
 import 'package:recook/pages/user/review/models/order_review_list_model.dart';
+import 'package:recook/pages/user/review/review_detail_page.dart';
 import 'package:recook/utils/custom_route.dart';
 
 class ReviewCard extends StatelessWidget {
@@ -137,11 +138,7 @@ class ReviewCard extends StatelessWidget {
                       onBack();
                     });
                   } else {
-                    HttpManager.post(OrderApi.checkReview, {
-                      "id": model.evaluatedId,
-                    }).then((value) {
-                      print(value);
-                    });
+                    CRoute.push(context, ReviewDetailPage(reviewModel: model));
                   }
                 },
                 shape: RoundedRectangleBorder(
