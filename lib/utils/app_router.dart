@@ -87,6 +87,7 @@ import 'package:recook/pages/user/order/publish_evaluation_page.dart';
 import 'package:recook/pages/user/order/refund_goods_page.dart';
 import 'package:recook/pages/user/order/return_goods_page.dart';
 import 'package:recook/pages/user/qrcode/user_info_qrcode_page.dart';
+import 'package:recook/pages/user/review/review_page.dart';
 import 'package:recook/pages/user/rui_coin_page.dart';
 import 'package:recook/pages/user/balance_page.dart';
 import 'package:recook/pages/user/rui_transfer_to_balance_page.dart';
@@ -215,6 +216,9 @@ class RouteName {
   static const String USER_INVITE_SEARCH = "/UserInviteSearch";
   static const String USER_BILLING_DETAILS = "/UserBillingDetails";
   static const String USER_SET_PASSWORD_VARCODE = "/UserSetPasswordVarCode";
+
+  ///用户评价列表页面
+  static const String USER_REVIEW_PAGE = "/UserReviewPage";
 
   ///账户与安全
   static const String ACCOUNT_AND_SAFETY_PAGE = "AccountAndSafetyPage";
@@ -467,6 +471,7 @@ final Map<String, RouteBuilder> _routes = {
       UserSetPasswordVarCode(),
   RouteName.USER_DELETE_ACCOUNT_PAGE: (context, {arguments}) =>
       DeleteAccountPage(),
+  RouteName.USER_REVIEW_PAGE: (context, {arguments}) => ReviewPage(),
   RouteName.ACCOUNT_AND_SAFETY_PAGE: (context, {arguments}) =>
       AccountAndSafetyPage(),
   RouteName.USER_SET_PASSWORD: (context, {arguments}) => UserSetPassword(),

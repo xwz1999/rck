@@ -190,6 +190,8 @@ flutter:
 
     #TODO 重构图片assets
     - assets/home/
+    - assets/user/
+
     - assets/activityImage/
     - assets/recook_launch_image/
     - assets/keys/server_rsa_public_key.pem

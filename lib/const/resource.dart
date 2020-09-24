@@ -1058,6 +1058,30 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/upgrade_page_upgrade_used_card_bg.png)
   static const String ASSETS_UPGRADE_PAGE_UPGRADE_USED_CARD_BG_PNG = 'assets/upgrade_page_upgrade_used_card_bg.png';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/user/.DS_Store)
+  static const String ASSETS_USER__DS_STORE = 'assets/user/.DS_Store';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/user/after_sale.png)
+  static const String ASSETS_USER_AFTER_SALE_PNG = 'assets/user/after_sale.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/user/deliver.png)
+  static const String ASSETS_USER_DELIVER_PNG = 'assets/user/deliver.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/user/logistics.png)
+  static const String ASSETS_USER_LOGISTICS_PNG = 'assets/user/logistics.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/user/pay.png)
+  static const String ASSETS_USER_PAY_PNG = 'assets/user/pay.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/user/review.png)
+  static const String ASSETS_USER_REVIEW_PNG = 'assets/user/review.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/user/upload_images.png)
+  static const String ASSETS_USER_UPLOAD_IMAGES_PNG = 'assets/user/upload_images.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/user/upload_images.webp)
+  static const String ASSETS_USER_UPLOAD_IMAGES_WEBP = 'assets/user/upload_images.webp';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/user_info_qrcode_man.png)
   static const String ASSETS_USER_INFO_QRCODE_MAN_PNG = 'assets/user_info_qrcode_man.png';
 
@@ -1135,18 +1159,6 @@ class R {
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/user_page_income_team_page.png)
   static const String ASSETS_USER_PAGE_INCOME_TEAM_PAGE_PNG = 'assets/user_page_income_team_page.png';
-
-  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/user_page_order_after_sale.png)
-  static const String ASSETS_USER_PAGE_ORDER_AFTER_SALE_PNG = 'assets/user_page_order_after_sale.png';
-
-  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/user_page_order_deliver.png)
-  static const String ASSETS_USER_PAGE_ORDER_DELIVER_PNG = 'assets/user_page_order_deliver.png';
-
-  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/user_page_order_logistics.png)
-  static const String ASSETS_USER_PAGE_ORDER_LOGISTICS_PNG = 'assets/user_page_order_logistics.png';
-
-  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/user_page_order_pay.png)
-  static const String ASSETS_USER_PAGE_ORDER_PAY_PNG = 'assets/user_page_order_pay.png';
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/userpage_member_invite_1.png)
   static const String ASSETS_USERPAGE_MEMBER_INVITE_1_PNG = 'assets/userpage_member_invite_1.png';
