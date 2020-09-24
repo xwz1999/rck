@@ -1,4 +1,4 @@
-class LotteryList {
+class LotteryListModel {
   int id;
   String name;
   String icon;
@@ -6,10 +6,10 @@ class LotteryList {
   Now now;
   Now last;
 
-  LotteryList(
+  LotteryListModel(
       {this.id, this.name, this.icon, this.number, this.now, this.last});
 
-  LotteryList.fromJson(Map<String, dynamic> json) {
+  LotteryListModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     icon = json['icon'];
@@ -36,7 +36,7 @@ class LotteryList {
 
 class Now {
   int id;
-  String lotteryId;
+  int lotteryId;
   String number;
   String startTime;
   String stopTime;

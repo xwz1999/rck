@@ -359,3 +359,12 @@ class SystemApi {
     return _instance;
   }
 }
+
+///彩票相关API
+class LotteryAPI {
+  ///彩票列表接口
+  static const String list = "/v1/ticket/list";
+
+  ///彩票兑换记录列表接口
+  static const String redeem_history = "/v1/ticket/order/list";
+}

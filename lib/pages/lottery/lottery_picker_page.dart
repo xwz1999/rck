@@ -60,7 +60,6 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
               ),
               Expanded(
                 child: LotteryResultBoxes(
-                  type: LotteryType.DOUBLE_LOTTERY,
                   small: true,
                   redBalls: [1, 2, 3, 4, 5, 6],
                   blueBalls: [1],

@@ -74,7 +74,6 @@ class _LotteryHistoryPageState extends State<LotteryHistoryPage> {
             children: [
               Expanded(
                 child: LotteryResultBoxes(
-                  type: LotteryType.DOUBLE_LOTTERY,
                   redBalls: [1, 2, 3, 4, 5, 6],
                   blueBalls: [7],
                 ),
