@@ -261,12 +261,14 @@ class OrderApi {
   static const String evaluation_add = "/v1/order/evaluation/create";
 
   ///订单评价列表
-  static const String orderReview =
-      "/v1/order/evaluation/orderEvaluationList";
+  static const String orderReview = "/v1/order/evaluation/orderEvaluationList";
 
   ///订单添加评价接口
   static const String addReview =
       "/v1/order/evaluation/createOrderEvaluationOne";
+
+  ///订单查看评价接口
+  static const String checkReview = "/v1/order/evaluation/evaluationDea";
 }
 
 class HomeApi {
