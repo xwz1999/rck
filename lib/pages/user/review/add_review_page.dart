@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:photo/photo.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/media_model.dart';
 import 'package:recook/pages/user/review/models/order_review_list_model.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
@@ -33,11 +36,12 @@ class _AddReviewPageState extends State<AddReviewPage> {
       backgroundColor: AppColor.frenchColor,
       appBar: AppBar(
         backgroundColor: Colors.white,
+        brightness: Brightness.light,
         elevation: 0,
         leading: RecookBackButton(),
         centerTitle: true,
         title: Text(
-          '发表评价${widget.goodsDetailId}',
+          '发表评价',
           style: TextStyle(
             color: Color(0xFF333333),
             fontWeight: FontWeight.w600,
@@ -141,21 +145,24 @@ class _AddReviewPageState extends State<AddReviewPage> {
                                   )
                                       .then(
                                     (model) {
-                                      _mediaModels.add(model);
+                                      if (model != null)
+                                        _mediaModels.add(model);
                                       setState(() {});
                                     },
                                   );
                                 } else if (index == 1) {
                                   ImagePicker.builder(
-                                    maxSelected: 6,
+                                    maxSelected: 6 - _mediaModels.length,
                                     pickType: PickType.onlyImage,
                                   ).pickAsset(context).then(
                                     (models) {
-                                      _mediaModels.addAll(models);
+                                      if (models != null && models.isNotEmpty)
+                                        _mediaModels.addAll(models);
                                       setState(() {});
                                     },
                                   );
                                 }
+                                Navigator.pop(context);
                               },
                             );
                           },
@@ -192,7 +199,11 @@ class _AddReviewPageState extends State<AddReviewPage> {
             height: rSize(48),
             padding: EdgeInsets.zero,
             disabledColor: Colors.white12,
-            onPressed: isDisabled() ? null : () {},
+            onPressed: isDisabled()
+                ? null
+                : () {
+                    uploadFiles();
+                  },
             child: Text(
               '提交',
               style: TextStyle(
@@ -208,5 +219,51 @@ class _AddReviewPageState extends State<AddReviewPage> {
 
   isDisabled() {
     return TextUtils.isEmpty(_controller.text);
+  }
+
+  uploadFiles() {
+    if (_mediaModels.isNotEmpty) {
+      GSDialog.of(context).showLoadingDialog(context, '上传图片');
+      HttpManager.uploadFiles(medias: _mediaModels).then((_) {
+        GSDialog.of(context).dismiss(context);
+        GSDialog.of(context).showLoadingDialog(context, '评价中');
+        addComment(_controller.text,
+                images: _mediaModels
+                    .map((e) => {
+                          'path': e.result.url,
+                          'width': e.width,
+                          'height': e.height,
+                        })
+                    .toList())
+            .then((value) {
+          GSDialog.of(context).dismiss(context);
+          Navigator.pop(context);
+        });
+      });
+    } else {
+      GSDialog.of(context).showLoadingDialog(context, '评价中');
+      addComment(_controller.text).then((value) {
+        GSDialog.of(context).dismiss(context);
+        Navigator.pop(context);
+      });
+    }
+  }
+
+  Future addComment(String comment, {List<Map<String, dynamic>> images}) async {
+    Map params = {
+      'userId': UserManager.instance.user.info.id,
+      'goodsDetailId': widget.model.goodsDetailId,
+      'content': comment,
+    };
+    if (images != null) params.putIfAbsent('images', () => images);
+    ResultData resultData = await HttpManager.post(
+      OrderApi.addReview,
+      params,
+    );
+    if (resultData.data['code'] == "FAIL") {
+      showToast('${resultData.data['msg']}');
+      return;
+    }
+    return;
   }
 }
