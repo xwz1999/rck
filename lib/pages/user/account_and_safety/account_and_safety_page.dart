@@ -29,7 +29,7 @@ class _AccountAndSafetyPageState extends State<AccountAndSafetyPage> {
       body: ListView(
         padding: EdgeInsets.only(top: rSize(16)),
         children: [
-          SCTile.normalTile("支付密码设置", listener: () {
+          SCTile.normalTile("支付密码设置", needDivide: true, listener: () {
             // push(RouteName.USER_SET_PASSWORD);
             AppRouter.push(context, RouteName.USER_SET_PASSWORD_VARCODE);
           }),

@@ -14,7 +14,6 @@ import 'package:recook/pages/business/selling_point/selling_point_page.dart';
 import 'package:recook/pages/home/barcode/fail_barcode_page.dart';
 import 'package:recook/pages/home/barcode/input_barcode_page.dart';
 import 'package:recook/pages/home/barcode/photos_fail_barcode_page.dart';
-import 'package:recook/pages/home/classify/brand_detail_page.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/home/classify/classify_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
@@ -88,6 +87,7 @@ import 'package:recook/pages/user/order/publish_evaluation_page.dart';
 import 'package:recook/pages/user/order/refund_goods_page.dart';
 import 'package:recook/pages/user/order/return_goods_page.dart';
 import 'package:recook/pages/user/qrcode/user_info_qrcode_page.dart';
+import 'package:recook/pages/user/review/review_page.dart';
 import 'package:recook/pages/user/rui_coin_page.dart';
 import 'package:recook/pages/user/balance_page.dart';
 import 'package:recook/pages/user/rui_transfer_to_balance_page.dart';
@@ -159,7 +159,6 @@ class RouteName {
   static const String CLASSIFY = "/classify";
 
   // 品牌详情
-  static const String BRAND_PAGE = "/brandPage";
   static const String GOODS_LIST_PAGE = "/GoodsList";
   static const String BRANDGOODS_LIST_PAGE = "/BrandGoodsListPage";
   // 商品详情
@@ -217,6 +216,9 @@ class RouteName {
   static const String USER_INVITE_SEARCH = "/UserInviteSearch";
   static const String USER_BILLING_DETAILS = "/UserBillingDetails";
   static const String USER_SET_PASSWORD_VARCODE = "/UserSetPasswordVarCode";
+
+  ///用户评价列表页面
+  static const String USER_REVIEW_PAGE = "/UserReviewPage";
 
   ///账户与安全
   static const String ACCOUNT_AND_SAFETY_PAGE = "AccountAndSafetyPage";
@@ -386,8 +388,6 @@ final Map<String, RouteBuilder> _routes = {
   //商品列表(只供显示)
   RouteName.GOODS_LIST_TEMP: (context, {arguments}) =>
       GoodsListTempPage(arguments: arguments),
-  // 品牌
-  RouteName.BRAND_PAGE: (context, {arguments}) => BrandDetailPage(),
   // 商品列表
   RouteName.GOODS_LIST_PAGE: (context, {arguments}) => GoodsListPage(
         arguments: arguments,
@@ -471,6 +471,7 @@ final Map<String, RouteBuilder> _routes = {
       UserSetPasswordVarCode(),
   RouteName.USER_DELETE_ACCOUNT_PAGE: (context, {arguments}) =>
       DeleteAccountPage(),
+  RouteName.USER_REVIEW_PAGE: (context, {arguments}) => ReviewPage(),
   RouteName.ACCOUNT_AND_SAFETY_PAGE: (context, {arguments}) =>
       AccountAndSafetyPage(),
   RouteName.USER_SET_PASSWORD: (context, {arguments}) => UserSetPassword(),
@@ -645,9 +646,8 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.LOTTERY_ORDER_PAGE: (context, {arguments}) => LotteryOrderPage(),
   RouteName.LOTTERY_ORDER_DETAIL_PAGE: (context, {arguments}) =>
       LotteryOrderDetailPage(arguments: arguments),
-      RouteName.LOTTERY_CART_PAGE:(context,{arguments})=> LotteryCartPage(
-        arguments:arguments
-      ),
+  RouteName.LOTTERY_CART_PAGE: (context, {arguments}) =>
+      LotteryCartPage(arguments: arguments),
 };
 
 ///  应用中路由跳转

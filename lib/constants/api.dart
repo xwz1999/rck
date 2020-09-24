@@ -255,6 +255,8 @@ class OrderApi {
   static const String invoice_add = "/v1/users/invoice/create";
 
   static const String evaluation_add = "/v1/order/evaluation/create";
+///订单评价列表
+  static const String orderReview = "/v1/manage/order/evaluation/orderEvaluationList";
 }
 
 class HomeApi {

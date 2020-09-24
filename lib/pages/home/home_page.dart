@@ -16,6 +16,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -933,11 +934,10 @@ class _HomePageState extends BaseStoreState<HomePage>
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                // _buttonTitleRow("assets/home_menu_a.png", "我的权益",
                 _buttonTitleRow(
                     AppConfig.getShowCommission()
-                        ? "assets/home_menu_a.png"
-                        : "assets/listtemp_recookmake_icon.png",
+                        ? R.ASSETS_HOME_MENU_A_PNG
+                        : R.ASSETS_LISTTEMP_RECOOKMAKE_ICON_PNG,
                     AppConfig.getShowCommission() ? "我的权益" : "瑞库制品",
                     onPressed: () {
                   if (AppConfig.getShowCommission()) {
@@ -959,32 +959,33 @@ class _HomePageState extends BaseStoreState<HomePage>
                   // AppRouter.push(context, RouteName.NEW_USER_DISCOUNT_PAGE);
                 }),
                 _buttonTitleRow(
+                  // R.ASSETS_LOTTERY_REDEEM_LOTTERY_ICON_PNG,
                   AppConfig.getShowCommission()
-                      ? "assets/home_menu_bb.png"
-                      : "assets/listtemp_homelife_icon.png",
+                      ? R.ASSETS_HOME_MENU_BB_PNG
+                      : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
                   AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
                   onPressed:
                       //TODO 下一版本彩票入口
-                      //  () {
-                      //   showToast('⚠️需要处理打开逻辑');
-                      //   AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
-                      // },
                       () {
-                    if (AppConfig.getShowCommission()) {
-                      bool value = UserManager.instance.selectTabbar.value;
-                      UserManager.instance.selectTabbar.value = !value;
-                      UserManager.instance.selectTabbarIndex = 2;
-                    } else {
-                      AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
-                          arguments: GoodsListTempPage.setArguments(
-                              title: "家居生活", type: GoodsListTempType.homeLife));
-                    }
+                    showToast('⚠️需要处理打开逻辑');
+                    AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
                   },
+                  //     () {
+                  //   if (AppConfig.getShowCommission()) {
+                  //     bool value = UserManager.instance.selectTabbar.value;
+                  //     UserManager.instance.selectTabbar.value = !value;
+                  //     UserManager.instance.selectTabbarIndex = 2;
+                  //   } else {
+                  //     AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
+                  //         arguments: GoodsListTempPage.setArguments(
+                  //             title: "家居生活", type: GoodsListTempType.homeLife));
+                  //   }
+                  // },
                 ),
                 _buttonTitleRow(
                     AppConfig.getShowCommission()
-                        ? "assets/home_menu_cc.png"
-                        : "assets/listtemp_homeappliances_icon.png",
+                        ? R.ASSETS_HOME_INVITE_WEBP
+                        : R.ASSETS_LISTTEMP_HOMEAPPLIANCES_ICON_PNG,
                     AppConfig.getShowCommission()
                         // ? "升级店主"
                         ? "一键邀请"
@@ -1000,11 +1001,11 @@ class _HomePageState extends BaseStoreState<HomePage>
                   }
                 }),
 
-                _buttonTitleRow("assets/home_menu_dd.png", "热销榜单",
+                _buttonTitleRow(R.ASSETS_HOME_MENU_DD_PNG, "热销榜单",
                     onPressed: () {
                   AppRouter.push(context, RouteName.GOODS_HOT_LIST);
                 }),
-                _buttonTitleRow("assets/home_menu_ee.png", "全部分类",
+                _buttonTitleRow(R.ASSETS_HOME_MENU_EE_PNG, "全部分类",
                     onPressed: () {
                   AppRouter.push(context, RouteName.CLASSIFY);
                 }),

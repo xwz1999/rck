@@ -5,148 +5,207 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/utils/app_router.dart';
 
 class InviteView extends StatefulWidget {
-  final bool single; // 只显示单行
+  final bool isDiamond; // 只显示单行
   final Function() shareListener;
-  const InviteView({Key key, this.shareListener, this.single=true}) : super(key: key);
+  const InviteView({Key key, this.shareListener, this.isDiamond = true})
+      : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _InviteViewState();
   }
 }
 
-class _InviteViewState extends State<InviteView>{
-  
+class _InviteViewState extends State<InviteView> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        // borderRadius: BorderRadius.circular(10),
-      ),
-      // margin: EdgeInsets.symmetric(horizontal: 10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          _titleWidget(),
-          widget.single?
-          Container()
-          :GestureDetector(
-            onTap: (){
-              AppRouter.push(context, RouteName.SHOP_RECOMMEND_UPGRADE_PAGE);
-            },
-            child: _updateWidget(),
-          ),
-          _rowInviteView()
-        ],
-      )
-    );
+        decoration: BoxDecoration(
+          color: Colors.white,
+          // borderRadius: BorderRadius.circular(10),
+        ),
+        // margin: EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            _titleWidget(),
+            widget.isDiamond ? _buildDiamondCards() : _rowInviteView()
+          ],
+        ));
   }
 
-  _titleWidget(){
+  _titleWidget() {
     return Container(
-      height: 40, width: double.infinity,
+      height: 40,
+      width: double.infinity,
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(left: 15),
-      child: Text("邀请升级", style: AppTextStyle.generate(16, fontWeight: FontWeight.w700),),
+      child: Text(
+        "邀请升级",
+        style: AppTextStyle.generate(16, fontWeight: FontWeight.w700),
+      ),
     );
   }
 
-  _updateWidget(){
+  _buildDiamondCards() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 15), height: 90, width: double.infinity,
-      child: Stack(
-        children: <Widget>[
-          Positioned(
-            left: 0, right: 0, top: 0, bottom: 0,
-            child: Image.asset("assets/invite_view_update_bg.png", fit: BoxFit.fill,),
+      height: rSize(150),
+      padding: EdgeInsets.symmetric(horizontal: rSize(14)),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SizedBox(
+            width: rSize(130),
+            child: _buildUpgrade(),
           ),
-          Positioned(
-            right: 15, width: 110, height: 60, top: 15,
-            child: Image.asset("assets/invite_view_update_icon.png", fit: BoxFit.fill,),
-          ),
-          Positioned(
-            left: 0, top: 0, right: 0, bottom: 0,
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text("升级你的财富圈", textAlign: TextAlign.left, style: TextStyle(fontWeight: FontWeight.w500 ,fontSize: ScreenAdapterUtils.setSp(19), color: Colors.white, ),),
-                  Text("邀请好友·福利双赢",style: TextStyle( letterSpacing: 2,color: Colors.white, fontSize: 9),)
-                ],
+          SizedBox(width: rSize(5)),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Expanded(child: _buildMyRecommend()),
+                      SizedBox(width: rSize(5)),
+                      Expanded(child: _buildMyInvite()),
+                    ],
+                  ),
+                ),
+                SizedBox(height: rSize(5)),
+                Expanded(child: _buildInvite()),
+              ],
             ),
-            )
-          )
+          ),
         ],
       ),
     );
   }
 
   _rowInviteView() {
-  return Container(
-    height: 90, padding: EdgeInsets.symmetric(horizontal: 15),
-    child: Row(
-      children: <Widget>[
-        Expanded(
-          flex: 1,
-          child: ClipRRect(
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-              child: Stack(
-                alignment: Alignment.center,
-                children: <Widget>[
-                  Image.asset( AppImageName.invite_bg, fit: BoxFit.cover,),
-                  MaterialButton(
-                    onPressed: () {
-                      if (widget.shareListener != null) widget.shareListener();
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly, crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        Expanded(
-                          child: Text('邀请开店', style: TextStyle(fontWeight: FontWeight.w500 ,fontSize: ScreenAdapterUtils.setSp(19), color: Colors.white, ),),
-                          // child: RichText(
-                          //   text: TextSpan(
-                          //     children: [
-                          //       TextSpan(text: '邀请开店\n', style: TextStyle(fontWeight: FontWeight.w500 ,fontSize: ScreenAdapterUtils.setSp(19), color: Colors.white, ),),
-                          //       TextSpan(text: '我的邀请码: ${UserManager.instance.user.info.invitationNo}', style: TextStyle(fontSize: 10, color: Colors.white, ),),
-                          //     ]
-                          //   ),
-                          // ),
-                        ),
-                        Image.asset(AppImageName.invite_icon,height: 40, width:40)
-                      ],
-                    ),
-                  ),
-                ],
-              ))),
-        Container( width: 10,),
-        Expanded(
-          flex: 1,
-          child: ClipRRect(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
-            child: Stack(
-              alignment: Alignment.center,
-              children: <Widget>[
-                Image.asset( AppImageName.my_invite_bg, fit: BoxFit.cover,),
-                MaterialButton(
-                  onPressed: () {
-                    AppRouter.push(context, RouteName.USER_INVITE,);
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Text("我的邀请", style: TextStyle(fontWeight: FontWeight.w500 ,fontSize: ScreenAdapterUtils.setSp(19), color: Colors.white, ),),
-                      Image.asset(AppImageName.my_invite_icon, width: 40, height: 40,)
-                    ],
-                  ),
-                )
-              ],
-            ))),
+    return Container(
+      height: 90,
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      child: Row(
+        children: <Widget>[
+          Expanded(child: _buildInvite()),
+          Container(width: rSize(5)),
+          Expanded(child: _buildMyInvite()),
         ],
       ),
     );
   }
 
-  
+  _buildUpgrade() {
+    return _buildCard(
+      background: Container(
+        color: Colors.deepOrange,
+      ),
+      title: '升级财富圈',
+      subTitle: '邀请好友·福利双赢',
+      onTap: () =>
+          AppRouter.push(context, RouteName.SHOP_RECOMMEND_UPGRADE_PAGE),
+    );
+  }
+
+  _buildInvite() {
+    return _buildCard(
+      background: Container(
+        color: Colors.orange,
+      ),
+      title: '邀请开店',
+      subTitle: '邀请码',
+      onTap: () {
+        if (widget.shareListener != null) widget.shareListener();
+      },
+    );
+  }
+
+  _buildMyInvite() {
+    return _buildCard(
+      background: Container(
+        color: Colors.blueAccent,
+      ),
+      title: '我的邀请',
+      subTitle: '有福同享·真壕友',
+      onTap: () => AppRouter.push(
+        context,
+        RouteName.USER_INVITE,
+      ),
+    );
+  }
+
+  _buildMyRecommend() {
+    return _buildCard(
+        background: Container(
+          color: Colors.blue,
+        ),
+        title: '我的推荐',
+        subTitle: '呼朋唤友·享收益',
+        onTap: () {});
+  }
+
+  Widget _buildCard({
+    @required Widget background,
+    @required String title,
+    @required String subTitle,
+    @required VoidCallback onTap,
+  }) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(rSize(4)),
+      child: Stack(
+        alignment: Alignment.topLeft,
+        children: [
+          Positioned(
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: background,
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: rSize(10),
+              vertical: rSize(15),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: rSP(14),
+                    height: 20 / 14,
+                  ),
+                ),
+                SizedBox(height: rSize(4)),
+                Text(
+                  subTitle,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: rSP(10),
+                    height: 14 / 10,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Positioned(
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: onTap,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

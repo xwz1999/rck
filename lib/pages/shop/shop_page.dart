@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -54,38 +53,37 @@ class _ShopPageState extends BaseStoreState<ShopPage> {
       // backgroundColor: Color.fromARGB(255, 243, 245, 247),
       backgroundColor: Color(0xff3a3943),
       body: RefreshWidget(
-        header: ClassicHeader(
-          outerBuilder: (child){
-            return Container(
-              child: child,
-            );
+          header: ClassicHeader(
+            outerBuilder: (child) {
+              return Container(
+                child: child,
+              );
+            },
+            height: ScreenUtil.statusBarHeight + kToolbarHeight,
+            textStyle: TextStyle(
+                fontSize: ScreenAdapterUtils.setSp(14), color: Colors.white),
+            refreshingText: "正在努力获取数据...",
+            completeText: "刷新完成",
+            failedText: "网络出了一点问题呢",
+            idleText: "下拉刷新",
+            releaseText: "松开刷新",
+          ),
+          isInNest: true,
+          // headerTriggerDistance: ScreenUtil.statusBarHeight+kToolbarHeight,
+          color: Colors.black,
+          onRefresh: () {
+            _getShopSummary();
           },
-          height: ScreenUtil.statusBarHeight + kToolbarHeight,
-          textStyle: TextStyle(
-              fontSize: ScreenAdapterUtils.setSp(14), color: Colors.white),
-          refreshingText: "正在努力获取数据...",
-          completeText: "刷新完成",
-          failedText: "网络出了一点问题呢",
-          idleText: "下拉刷新",
-          releaseText: "松开刷新",
-        ),
-        isInNest: true,
-        // headerTriggerDistance: ScreenUtil.statusBarHeight+kToolbarHeight,
-        color: Colors.black,
-        onRefresh: () {
-          _getShopSummary();
-        },
-        controller: _gsRefreshController,
-        body: _shopSummaryModel == null
-            ? Container(
-              color: AppColor.frenchColor,
-              child: noDataView(''),
-            )
-            : ListView(
-                physics: BouncingScrollPhysics(),
-                children: _bodyListWidget(),
-              )
-      ),
+          controller: _gsRefreshController,
+          body: _shopSummaryModel == null
+              ? Container(
+                  color: AppColor.frenchColor,
+                  child: noDataView(''),
+                )
+              : ListView(
+                  physics: BouncingScrollPhysics(),
+                  children: _bodyListWidget(),
+                )),
     );
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -96,68 +94,67 @@ class _ShopPageState extends BaseStoreState<ShopPage> {
 
   _bodyListWidget() {
     List<Widget> listWidget = [];
-    listWidget.add(
-      ShopPageAppbarWidget(
-        cumulativeIncome: (){
-          push(RouteName.CUMULATIVE_INCOME);
-        },
-        shopSummaryModel: _shopSummaryModel,
+    listWidget.add(ShopPageAppbarWidget(
+      cumulativeIncome: () {
+        push(RouteName.CUMULATIVE_INCOME);
+      },
+      shopSummaryModel: _shopSummaryModel,
     ));
     // listWidget.add(Container(
     //   height: 10,
     // ));
-    listWidget.add(
-      ShopPageColumnInfoWidget(
-        shopSummaryModel: _shopSummaryModel,
+    listWidget.add(ShopPageColumnInfoWidget(
+      shopSummaryModel: _shopSummaryModel,
     ));
     listWidget.add(Container(
       height: 10,
       color: AppColor.frenchColor,
     ));
-    
+
     // 测试用
     // listWidget.add(
-      // ShopPageUpgradeProgress(shopSummaryModel: _shopSummaryModel,)
+    // ShopPageUpgradeProgress(shopSummaryModel: _shopSummaryModel,)
     // );
     // 正式用
-    if (
-      ( UserLevelTool.currentUserLevelEnum() == UserLevel.First
-        ||UserLevelTool.currentUserLevelEnum() == UserLevel.Second) &&
+    if ((UserLevelTool.currentUserLevelEnum() == UserLevel.First ||
+            UserLevelTool.currentUserLevelEnum() == UserLevel.Second) &&
         UserLevelTool.currentRoleLevelEnum() != UserRoleLevel.Diamond &&
         UserLevelTool.currentRoleLevelEnum() != UserRoleLevel.Vip) {
       listWidget.add(
-        ShopPageUpgradeProgress(shopSummaryModel: _shopSummaryModel,),
+        ShopPageUpgradeProgress(
+          shopSummaryModel: _shopSummaryModel,
+        ),
       );
     }
 
     // 邀请升级
-    listWidget.add(
-        InviteView(
-          single: UserLevelTool.roleLevelEnum(_shopSummaryModel.data.roleLevel) == UserRoleLevel.Diamond 
-              ? false
-              : true,
-          shareListener: () => ShareTool().inviteShare(context, customTitle: Container() )));
+    listWidget.add(InviteView(
+        isDiamond:
+            UserLevelTool.roleLevelEnum(_shopSummaryModel.data.roleLevel) ==
+                UserRoleLevel.Diamond,
+        shareListener: () =>
+            ShareTool().inviteShare(context, customTitle: Container())));
     listWidget.add(Container(
-      height: 10, color: AppColor.frenchColor,
+      height: 10,
+      color: AppColor.frenchColor,
     ));
     //订单中心
-    listWidget.add(
-      ShopPageOrderView(
-        clickListener: (index) {
-          if (index == 4) {
-            AppRouter.push(context, RouteName.ORDER_AFTER_SALE_GOODS_LIST, arguments: OrderAfterSalePage.setArguments(OrderAfterSaleType.shopPage, null, null));
-            return;
-          }
-          push(RouteName.SHOP_ORDER_LIST_PAGE,
-              arguments: ShopOrderCenterPage.setArguments(index));
-        },
-        shopSummaryModel: _shopSummaryModel,
-      ));
+    listWidget.add(ShopPageOrderView(
+      clickListener: (index) {
+        if (index == 4) {
+          AppRouter.push(context, RouteName.ORDER_AFTER_SALE_GOODS_LIST,
+              arguments: OrderAfterSalePage.setArguments(
+                  OrderAfterSaleType.shopPage, null, null));
+          return;
+        }
+        push(RouteName.SHOP_ORDER_LIST_PAGE,
+            arguments: ShopOrderCenterPage.setArguments(index));
+      },
+      shopSummaryModel: _shopSummaryModel,
+    ));
 
     return listWidget;
   }
-
-
 
   _getShopSummary() async {
     ResultData resultData = await HttpManager.post(ShopApi.shop_index, {
@@ -181,30 +178,32 @@ class _ShopPageState extends BaseStoreState<ShopPage> {
       return;
     }
     _shopSummaryModel = model;
-    if ( UserManager.instance.user.info.roleLevel != _shopSummaryModel.data.roleLevel){
-        UserManager.instance.user.info.roleLevel = _shopSummaryModel.data.roleLevel;
-        UserManager.instance.refreshUserRole.value = !UserManager.instance.refreshUserRole.value;
-        UserManager.updateUserInfo(getStore());
-      }
+    if (UserManager.instance.user.info.roleLevel !=
+        _shopSummaryModel.data.roleLevel) {
+      UserManager.instance.user.info.roleLevel =
+          _shopSummaryModel.data.roleLevel;
+      UserManager.instance.refreshUserRole.value =
+          !UserManager.instance.refreshUserRole.value;
+      UserManager.updateUserInfo(getStore());
+    }
     if (mounted) setState(() {});
     if (model.data.upNotify.isNotify) {
       _showUpgradeAlert();
     }
   }
 
-  _showUpgradeAlert(){
+  _showUpgradeAlert() {
     showDialog(
-      context: context,
-      child: GestureDetector(
-        onTap: (){
-          Navigator.pop(context);
-        },
-        child: ShopPageUpgradeAlert(
-          width: MediaQuery.of(context).size.width ,
-          userRoleLevel: UserLevelTool.roleLevelEnum(_shopSummaryModel.data.roleLevel),),
-      )
-    );
+        context: context,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: ShopPageUpgradeAlert(
+            width: MediaQuery.of(context).size.width,
+            userRoleLevel:
+                UserLevelTool.roleLevelEnum(_shopSummaryModel.data.roleLevel),
+          ),
+        ));
   }
-
 }
-
