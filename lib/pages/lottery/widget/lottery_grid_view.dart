@@ -10,12 +10,13 @@ class LotteryGridView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<int> focusRedBalls = model.focusedRedBalls;
-    final List<int> redBalls = model.redBalls;
+    final List<int> redBalls = new List<int>.from(model.redBalls);
+
     focusRedBalls.forEach((element) {
       redBalls.remove(element);
     });
     final List<int> focusBlueBalls = model.focusedBlueBalls;
-    final List<int> blueBalls = model.blueBalls;
+    final List<int> blueBalls = new List<int>.from(model.blueBalls);
     focusBlueBalls.forEach((element) {
       blueBalls.remove(element);
     });

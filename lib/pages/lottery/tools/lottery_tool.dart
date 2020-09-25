@@ -24,6 +24,41 @@ List<int> parseBalls(String balls, {bool red: true}) {
   }
 }
 
+class ParseBall {
+  String balls = "";
+  ParseBall(this.balls);
+  List<int> get redBalls => balls
+      .split('#')[0]
+      .replaceAll('\$', ",")
+      .split(',')
+      .map((e) => stringToBall(e))
+      .toList();
+
+  List<int> get blueBalls => balls
+      .split('#')[1]
+      .replaceAll('\$', ",")
+      .split(',')
+      .map((e) => stringToBall(e))
+      .toList();
+
+  List<int> get focusRedBalls => balls.split('#')[0].contains('\$')
+      ? balls
+          .split('#')[0]
+          .split('\$')[0]
+          .split(',')
+          .map((e) => stringToBall(e))
+          .toList()
+      : [];
+  List<int> get focusBlueBalls => balls.split('#')[1].contains('\$')
+      ? balls
+          .split('#')[1]
+          .split('\$')[0]
+          .split(',')
+          .map((e) => stringToBall(e))
+          .toList()
+      : [];
+}
+
 String convertCartBalls(LotteryCartModel model) {
   return convertBalls(
     redBalls: model.redBalls,

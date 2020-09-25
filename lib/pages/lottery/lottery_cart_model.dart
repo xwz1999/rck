@@ -78,35 +78,56 @@ class LotteryCartStore {
     int multiplyType = 0;
     int withChildType = 0;
 
-    doubleLotteryModels.forEach((element) {
-      switch (element.lotteryTypeCode) {
-        case 101:
-          normalType++;
-          break;
-        case 102:
-          multiplyType++;
-          break;
-        case 103:
-          withChildType++;
-          break;
-      }
-    });
+    int normalTypeBigLottery = 0;
+    int multiplyTypeBigLottery = 0;
+    int withChildTypeBigLottery = 0;
 
-    if (normalType >= 5 && model.lotteryTypeCode == 101)
-      showToast('一次只能兑换5注单式彩票');
-    else if (multiplyType >= 1 && model.lotteryTypeCode == 102)
-      showToast('一次只能兑换1注复式彩票');
-    else if (withChildType >= 1 && model.lotteryTypeCode == 103)
-      showToast('一次只能兑换1注脱胆彩票');
-    else
-      switch (type) {
-        case LotteryType.DOUBLE_LOTTERY:
-          doubleLotteryModels.add(model);
-          break;
-        case LotteryType.BIG_LOTTERY:
-          bigLotteryModels.add(model);
-          break;
-      }
+    //TODO：需要重构
+    if (type == LotteryType.DOUBLE_LOTTERY) {
+      doubleLotteryModels.forEach((element) {
+        switch (element.lotteryTypeCode) {
+          case 101:
+            normalType++;
+            break;
+          case 102:
+            multiplyType++;
+            break;
+          case 103:
+            withChildType++;
+            break;
+        }
+      });
+      if (normalType >= 5 && model.lotteryTypeCode == 101)
+        showToast('一次只能兑换5注单式彩票');
+      else if (multiplyType >= 1 && model.lotteryTypeCode == 102)
+        showToast('一次只能兑换1注复式彩票');
+      else if (withChildType >= 1 && model.lotteryTypeCode == 103)
+        showToast('一次只能兑换1注脱胆彩票');
+      else
+        doubleLotteryModels.add(model);
+    } else {
+      bigLotteryModels.forEach((element) {
+        switch (element.lotteryTypeCode) {
+          case 101:
+            normalTypeBigLottery++;
+            break;
+          case 102:
+            multiplyTypeBigLottery++;
+            break;
+          case 103:
+            withChildTypeBigLottery++;
+            break;
+        }
+      });
+      if (normalTypeBigLottery >= 5 && model.lotteryTypeCode == 101)
+        showToast('一次只能兑换5注单式彩票');
+      else if (multiplyTypeBigLottery >= 1 && model.lotteryTypeCode == 102)
+        showToast('一次只能兑换1注复式彩票');
+      else if (withChildTypeBigLottery >= 1 && model.lotteryTypeCode == 103)
+        showToast('一次只能兑换1注脱胆彩票');
+      else
+        bigLotteryModels.add(model);
+    }
   }
 
   static int countLotteryBalls(

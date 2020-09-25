@@ -373,4 +373,7 @@ class LotteryAPI {
 
   ///彩票下注
   static const String redeem_shots = "/v1/ticket/bet";
+
+  ///彩票订单详情
+  static const String lottery_order_detail = "/v1/ticket/order/info";
 }

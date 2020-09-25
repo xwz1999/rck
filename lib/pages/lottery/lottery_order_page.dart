@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/lottery/lottery_order_detail_page.dart';
 import 'package:recook/pages/lottery/models/lottery_redeem_history_model.dart';
 import 'package:recook/pages/lottery/widget/lottery_scaffold.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class LotteryOrderPage extends StatefulWidget {
@@ -79,7 +81,11 @@ class _LotteryOrderPageState extends State<LotteryOrderPage> {
 
   _buildLotteryCard(LotteryRedeemHistoryModel model) {
     return InkWell(
-      onTap: () => AppRouter.push(context, RouteName.LOTTERY_ORDER_DETAIL_PAGE),
+      onTap: () => CRoute.push(
+          context,
+          LotteryOrderDetailPage(
+            model: model,
+          )),
       child: Container(
         padding: EdgeInsets.all(rSize(16)),
         decoration: BoxDecoration(
