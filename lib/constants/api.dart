@@ -314,7 +314,7 @@ class WebApi {
   static const String aboutUs = "${recookHttp}introduction.html";
   static const String businessCooperation = "${recookHttp}business.html";
   static const String argumentsUrl = "https://h5.reecook.cn/agreement.html";
-  static const String privacy = "${recookHttp}privacy.html";
+  static const String privacy = "https://h5.reecook.cn/privacy.html";
   static const String feedback = "${recookHttp}feedback.html";
   static const String iOSUrl = "itms-apps://itunes.apple.com/app/id1477928534";
   // static const String iOSUrl = "https://apps.apple.com/app/id1477928534";
