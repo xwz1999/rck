@@ -21,6 +21,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/daos/home_dao.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/meiqia_manager.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -30,6 +31,7 @@ import 'package:recook/models/home_weather_model.dart';
 import 'package:recook/models/promotion_goods_list_model.dart';
 import 'package:recook/models/promotion_list_model.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
+import 'package:recook/pages/home/classify/classify_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/home_page_tabbar.dart';
 import 'package:recook/pages/home/items/item_row_acitivity.dart';
@@ -45,6 +47,7 @@ import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/utils/android_back_desktop.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/color_util.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/permission_tool.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/alert.dart';
@@ -505,6 +508,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     t1Height +
                     t23Height +
                     t4Height +
+                    rSize(62) +
                     timeHeight +
                     tabbarHeight -
                     ScreenUtil.statusBarHeight -
@@ -516,6 +520,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     t1Height +
                     t23Height +
                     t4Height +
+                    rSize(62) +
                     timeHeight +
                     tabbarHeight -
                     ScreenUtil.statusBarHeight +
@@ -646,6 +651,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     homeWeatherModel: _homeWeatherModel,
                   ),
                   _bannerView(),
+                  _buildGoodsCards(),
                   _buttonTitle(context),
                   _activityImageTitle(),
                   _activityImageRow(),
@@ -1006,7 +1012,15 @@ class _HomePageState extends BaseStoreState<HomePage>
                 }),
                 _buttonTitleRow(R.ASSETS_HOME_MENU_EE_PNG, "全部分类",
                     onPressed: () {
-                  AppRouter.push(context, RouteName.CLASSIFY);
+                  HomeDao.getCategories(success: (data, code, msg) {
+                    CRoute.push(
+                        context,
+                        ClassifyPage(
+                          data: data,
+                        ));
+                  }, failure: (code, msg) {
+                    Toast.showError(msg);
+                  });
                 }),
               ],
             ),
@@ -1057,6 +1071,87 @@ class _HomePageState extends BaseStoreState<HomePage>
             onPressed();
           }
         },
+      ),
+    );
+  }
+
+  ///首页上方分类功能卡片
+  _buildGoodsCards() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: rSize(62),
+      child: Row(
+        children: [
+          Expanded(
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_DEPARTMENT_PNG, '日用百货'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_FOOD_PNG, '美食酒水'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_IMPORT_PNG, '进口专区'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_FOOD_PNG, '有机食品'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_VEGETABLES_PNG, '蔬果生鲜'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_RICE_PNG, '柴米油盐'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_ELECTRICITY_PNG, '家用电器'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_PHONE_PNG, '手机数码'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_BABY_PNG, '母婴用品'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_SPORT_PNG, '运动旅行'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_HAIR_PNG, '美妆护肤'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_CLEAN_PNG, '个护清洁'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_FURNITURE_PNG, '家具饰品'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_BOOK_PNG, '图书教育'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_CLOTHES_PNG, '服饰内衣'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_BAG_PNG, '鞋靴箱包'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_MEMBERS_PNG, '会员专享'),
+              ],
+            ),
+          ),
+          Container(
+            width: rSize(48),
+            height: rSize(62),
+            child: _buildSingleGoodsCard(
+                R.ASSETS_HOME_IC_CLASSIFICATION_PNG, '分类'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSingleGoodsCard(String path, String name) {
+    return InkWell(
+      onTap: () {
+        HomeDao.getCategories(success: (data, code, msg) {
+          CRoute.push(
+              context,
+              ClassifyPage(
+                data: data,
+                initValue: name,
+              ));
+        }, failure: (code, msg) {
+          Toast.showError(msg);
+        });
+      },
+      child: Container(
+        alignment: Alignment.center,
+        width: rSize(54),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              path,
+              height: rSize(20),
+              width: rSize(20),
+            ),
+            SizedBox(height: rSize(6)),
+            Text(
+              name,
+              style: TextStyle(
+                color: Color(0xFF333333),
+                fontSize: rSize(10),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

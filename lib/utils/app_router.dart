@@ -15,7 +15,6 @@ import 'package:recook/pages/home/barcode/fail_barcode_page.dart';
 import 'package:recook/pages/home/barcode/input_barcode_page.dart';
 import 'package:recook/pages/home/barcode/photos_fail_barcode_page.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
-import 'package:recook/pages/home/classify/classify_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/evaluation_list_page.dart';
 import 'package:recook/pages/home/classify/goods_list_page.dart';
@@ -150,9 +149,6 @@ class RouteName {
 
   //商品列表(只供显示)
   static const String GOODS_LIST_TEMP = "/GoodsListTempPage";
-
-  // 分类
-  static const String CLASSIFY = "/classify";
 
   // 品牌详情
   static const String GOODS_LIST_PAGE = "/GoodsList";
@@ -365,8 +361,6 @@ final Map<String, RouteBuilder> _routes = {
   // 新人特惠
   RouteName.NEW_USER_DISCOUNT_PAGE: (context, {arguments}) =>
       NewUserDiscountPage(),
-  // 分类
-  RouteName.CLASSIFY: (context, {arguments}) => ClassifyPage(),
   // 热销榜单
   RouteName.GOODS_HOT_LIST: (context, {arguments}) => GoodsHotListPage(),
   //商品列表(只供显示)
