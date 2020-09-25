@@ -110,11 +110,12 @@ class _InviteViewState extends State<InviteView> {
 
   _buildInvite() {
     return _buildCard(
-      background: Container(
-        color: Colors.orange,
+      background: Image.asset(
+        R.ASSETS_SHOP_INVITE_OPEN_STORE_PNG,
+        fit: BoxFit.cover,
       ),
       title: '邀请开店',
-      subTitle: '邀请码',
+      subTitle: '0元创业·轻松赚',
       onTap: () {
         if (widget.shareListener != null) widget.shareListener();
       },
@@ -123,8 +124,9 @@ class _InviteViewState extends State<InviteView> {
 
   _buildMyInvite() {
     return _buildCard(
-      background: Container(
-        color: Colors.blueAccent,
+      background: Image.asset(
+        R.ASSETS_SHOP_MY_INVITE_PNG,
+        fit: BoxFit.cover,
       ),
       title: '我的邀请',
       subTitle: '有福同享·真壕友',

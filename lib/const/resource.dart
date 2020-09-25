@@ -806,6 +806,9 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/shop/gold_bg.webp)
   static const String ASSETS_SHOP_GOLD_BG_WEBP = 'assets/shop/gold_bg.webp';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/shop/invite_open_store.png)
+  static const String ASSETS_SHOP_INVITE_OPEN_STORE_PNG = 'assets/shop/invite_open_store.png';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/shop/master_badge.png)
   static const String ASSETS_SHOP_MASTER_BADGE_PNG = 'assets/shop/master_badge.png';
 
@@ -814,6 +817,9 @@ class R {
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/shop/master_bg.webp)
   static const String ASSETS_SHOP_MASTER_BG_WEBP = 'assets/shop/master_bg.webp';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/shop/my_invite.png)
+  static const String ASSETS_SHOP_MY_INVITE_PNG = 'assets/shop/my_invite.png';
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/shop/silver_badge.png)
   static const String ASSETS_SHOP_SILVER_BADGE_PNG = 'assets/shop/silver_badge.png';
