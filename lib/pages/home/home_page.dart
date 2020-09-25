@@ -968,7 +968,6 @@ class _HomePageState extends BaseStoreState<HomePage>
                   onPressed:
                       //TODO 下一版本彩票入口
                       () {
-                    showToast('⚠️需要处理打开逻辑');
                     AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
                   },
                   //     () {
@@ -1001,7 +1000,6 @@ class _HomePageState extends BaseStoreState<HomePage>
                     // AppRouter.push(context, RouteName.Member_BENEFITS_PAGE,);
                   }
                 }),
-
                 _buttonTitleRow(R.ASSETS_HOME_MENU_DD_PNG, "热销榜单",
                     onPressed: () {
                   AppRouter.push(context, RouteName.GOODS_HOT_LIST);

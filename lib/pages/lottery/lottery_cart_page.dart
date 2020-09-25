@@ -150,23 +150,22 @@ class _LotteryCartPageState extends State<LotteryCartPage> {
                             ),
                             items: ['取消', '确定'],
                             listener: (index) {
-                              _redeemLottery();
-                              // switch (index) {
-                              //   case 0:
-                              //     Navigator.pop(context);
-                              //     break;
-                              //   case 1:
-                              //     if (UserManager
-                              //             .instance.userBrief.myAssets.coinNum <
-                              //         countShots * 2.0) {
-                              //       Navigator.pop(context);
-                              //       showToast('瑞币余额不足,无法兑换');
-                              //     } else {
-                              //       _redeemLottery();
-                              //     }
+                              switch (index) {
+                                case 0:
+                                  Navigator.pop(context);
+                                  break;
+                                case 1:
+                                  if (UserManager
+                                          .instance.userBrief.myAssets.coinNum <
+                                      countShots * 2.0) {
+                                    Navigator.pop(context);
+                                    showToast('瑞币余额不足,无法兑换');
+                                  } else {
+                                    _redeemLottery();
+                                  }
 
-                              //     break;
-                              // }
+                                  break;
+                              }
                             },
                           ),
                         );
@@ -327,8 +326,9 @@ class _LotteryCartPageState extends State<LotteryCartPage> {
       params,
     );
     if (resultData.data['code'] == "SUCCESS") {
-      Navigator.pop(context);
       GSDialog.of(context).dismiss(context);
+      Navigator.pop(context);
+      Navigator.pop(context);
     } else {
       Navigator.pop(context);
       GSDialog.of(context).dismiss(context);

@@ -221,7 +221,13 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
                 _buildFastCard(
                   '机选5注',
                   () {
-                    _clearAllSelect();
+                    for (int i = 0; i < 5; i++) {
+                      _clearAllSelect();
+                      _redLotteryViewKey.currentState.random1Shot();
+                      _blueLotteryViewKey.currentState.random1Shot();
+                      _addShot();
+                    }
+                    _complateShot();
                   },
                 ),
                 SizedBox(width: rSize(16)),
