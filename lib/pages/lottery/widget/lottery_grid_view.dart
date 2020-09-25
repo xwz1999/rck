@@ -69,12 +69,28 @@ class LotteryGridView extends StatelessWidget {
             : Color(0xFF0E89E7),
         borderRadius: BorderRadius.circular(rSize(16)),
       ),
-      child: Text(
-        _computeBallDisplayValue(value),
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: rSP(17),
-        ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            _computeBallDisplayValue(value),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: rSP(14),
+              height: 1.02,
+            ),
+          ),
+          isFocused
+              ? Text(
+                  '胆',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: rSP(14),
+                    height: 1.02,
+                  ),
+                )
+              : SizedBox(),
+        ],
       ),
     );
   }

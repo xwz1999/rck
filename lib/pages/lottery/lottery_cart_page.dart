@@ -1,16 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/const/resource.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/home/widget/plus_minus_view.dart';
 import 'package:recook/pages/lottery/lottery_cart_model.dart';
+import 'package:recook/pages/lottery/redeem_lottery_page.dart';
+import 'package:recook/pages/lottery/tools/lottery_tool.dart';
 import 'package:recook/pages/lottery/widget/lottery_grid_view.dart';
 import 'package:recook/pages/lottery/widget/lottery_scaffold.dart';
+import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class LotteryCartPage extends StatefulWidget {
-  final dynamic arguments;
-  LotteryCartPage({Key key, this.arguments}) : super(key: key);
+  final bool isDouble;
+  LotteryCartPage({Key key, @required this.isDouble}) : super(key: key);
 
   @override
   _LotteryCartPageState createState() => _LotteryCartPageState();
@@ -20,7 +29,7 @@ class _LotteryCartPageState extends State<LotteryCartPage> {
   int multiply = 1;
   @override
   Widget build(BuildContext context) {
-    final models = widget.arguments['type']
+    final models = widget.isDouble
         ? LotteryCartStore.doubleLotteryModels
         : LotteryCartStore.bigLotteryModels;
     int doubleShots = 0;
@@ -31,11 +40,11 @@ class _LotteryCartPageState extends State<LotteryCartPage> {
     LotteryCartStore.bigLotteryModels.forEach((element) {
       bigShots += element.shots;
     });
-    final countShots = widget.arguments['type'] ? doubleShots : bigShots;
+    final countShots = widget.isDouble ? doubleShots : bigShots;
     return LotteryScaffold(
       red: true,
       whiteBg: true,
-      title: '双色球',
+      title: widget.isDouble ? '双色球' : '大乐透',
       bottomNavi: Container(
         color: Colors.white,
         child: SafeArea(
@@ -93,7 +102,7 @@ class _LotteryCartPageState extends State<LotteryCartPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          '${countShots * 2}瑞币或$countShots彩票券',
+                          '${countShots * 2 * multiply}瑞币或${countShots * multiply}彩票券',
                           style: TextStyle(
                             color: Color(0xFF666666),
                             fontSize: rSP(12),
@@ -115,7 +124,53 @@ class _LotteryCartPageState extends State<LotteryCartPage> {
                       ),
                       color: Color(0xFFE02020),
                       splashColor: Colors.black38,
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          child: NormalContentDialog(
+                            title: '兑换彩票',
+                            content: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  '确定使用${countShots * 2.0 * multiply}瑞币',
+                                  style: TextStyle(
+                                    color: Color(0xFF333333),
+                                    fontSize: rSP(16),
+                                  ),
+                                ),
+                                Text(
+                                  '当前瑞币余额：${UserManager.instance.userBrief.myAssets.coinNum}',
+                                  style: TextStyle(
+                                    color: Color(0xFF666666),
+                                    fontSize: rSP(15),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            items: ['取消', '确定'],
+                            listener: (index) {
+                              _redeemLottery();
+                              // switch (index) {
+                              //   case 0:
+                              //     Navigator.pop(context);
+                              //     break;
+                              //   case 1:
+                              //     if (UserManager
+                              //             .instance.userBrief.myAssets.coinNum <
+                              //         countShots * 2.0) {
+                              //       Navigator.pop(context);
+                              //       showToast('瑞币余额不足,无法兑换');
+                              //     } else {
+                              //       _redeemLottery();
+                              //     }
+
+                              //     break;
+                              // }
+                            },
+                          ),
+                        );
+                      },
                       child: Text(
                         '兑换彩票',
                         style: TextStyle(
@@ -140,7 +195,7 @@ class _LotteryCartPageState extends State<LotteryCartPage> {
                 children: [
                   CustomImageButton(
                     onPressed: () {
-                      if (widget.arguments['type'])
+                      if (widget.isDouble)
                         LotteryCartStore.doubleLotteryModels.clear();
                       else
                         LotteryCartStore.bigLotteryModels.clear();
@@ -196,36 +251,110 @@ class _LotteryCartPageState extends State<LotteryCartPage> {
   }
 
   _buildChildBox(LotteryCartModel model) {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        padding: EdgeInsets.all(rSize(16)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: LotteryGridView(model: model),
-                ),
-                SizedBox(width: rSize(34)),
-                Icon(
-                  AppIcons.icon_next,
-                  size: rSize(16),
-                  color: Color(0xFF666666),
-                ),
-              ],
-            ),
-            Text(
-              '${model.typeStr} ${model.shots}注',
-              style: TextStyle(
-                color: Color(0xFF333333),
-                fontSize: rSize(14),
+    return Slidable(
+      child: InkWell(
+        onTap: () {},
+        child: Container(
+          padding: EdgeInsets.all(rSize(16)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: LotteryGridView(model: model),
+                  ),
+                  SizedBox(width: rSize(34)),
+                  Icon(
+                    AppIcons.icon_next,
+                    size: rSize(16),
+                    color: Color(0xFF666666),
+                  ),
+                ],
               ),
-            ),
-          ],
+              Text(
+                '${model.typeStr} ${model.shots}注',
+                style: TextStyle(
+                  color: Color(0xFF333333),
+                  fontSize: rSize(14),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
+      secondaryActions: [
+        SlideAction(
+          color: Color(0xFFFF4D4F),
+          child: Text(
+            '删除',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: rSP(15),
+            ),
+          ),
+          onTap: () {
+            final models = widget.isDouble
+                ? LotteryCartStore.doubleLotteryModels
+                : LotteryCartStore.bigLotteryModels;
+            models.remove(model);
+            setState(() {});
+          },
+        ),
+      ],
+      actionPane: SlidableDrawerActionPane(),
     );
+  }
+
+  _redeemLottery() async {
+    GSDialog.of(context).showLoadingDialog(context, '兑换中');
+    Map<String, dynamic> params = {
+      'lotteryId': widget.isDouble ? 1 : 2,
+      'num': multiply,
+    };
+    params.putIfAbsent('item', () {
+      List<Map> item = [];
+      Map singleLottery = lotteryItem(101);
+      Map multiLottery = lotteryItem(102);
+      Map childLottery = lotteryItem(103);
+      if (singleLottery != null) item.add(lotteryItem(101));
+      if (multiLottery != null) item.add(lotteryItem(102));
+      if (childLottery != null) item.add(lotteryItem(103));
+      return item;
+    });
+    ResultData resultData = await HttpManager.post(
+      LotteryAPI.redeem_shots,
+      params,
+    );
+    if (resultData.data['code'] == "SUCCESS") {
+      Navigator.pop(context);
+      GSDialog.of(context).dismiss(context);
+    } else {
+      Navigator.pop(context);
+      GSDialog.of(context).dismiss(context);
+      showToast('兑换失败');
+    }
+  }
+
+  lotteryItem(int code) {
+    final models = widget.isDouble
+        ? LotteryCartStore.doubleLotteryModels
+        : LotteryCartStore.bigLotteryModels;
+
+    List<String> lotteryCodes = [];
+    int money = 0;
+    models.forEach((element) {
+      if (element.lotteryTypeCode == code) {
+        lotteryCodes.add(convertCartBalls(element));
+        money += element.shots * 2;
+      }
+    });
+    return lotteryCodes.length == 0
+        ? null
+        : {
+            'anteCode': lotteryCodes,
+            'playType': code,
+            'money': money,
+          };
   }
 }

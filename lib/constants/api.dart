@@ -370,4 +370,7 @@ class LotteryAPI {
 
   ///彩票兑换记录列表接口
   static const String redeem_history = "/v1/ticket/order/list";
+
+  ///彩票下注
+  static const String redeem_shots = "/v1/ticket/bet";
 }

@@ -27,6 +27,7 @@ import 'package:redux/redux.dart';
 class UserManager {
   static bool shouldRefresh = false;
   User user;
+  UserBrief userBrief;
   // 天气数据
   HomeWeatherModel homeWeatherModel;
   ValueNotifier<bool> login = ValueNotifier(false);
@@ -63,6 +64,7 @@ class UserManager {
       _instance = new UserManager._internal();
       _instance.user = User.empty();
       _instance.selectTabbarIndex = 0;
+      _instance.userBrief = UserBrief.empty();
     }
     return _instance;
   }
@@ -101,7 +103,7 @@ class UserManager {
       return false;
     }
     _identifier = model.data == null ? '' : model.data.identifier;
-
+    _instance.userBrief = model.data;
     store.dispatch(UpdateUserBriefAction(model.data));
     return true;
   }

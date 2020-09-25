@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/lottery/lottery_cart_model.dart';
+import 'package:recook/pages/lottery/lottery_cart_page.dart';
 import 'package:recook/pages/lottery/lottery_history_page.dart';
 import 'package:recook/pages/lottery/models/lottery_list_model.dart';
 import 'package:recook/pages/lottery/redeem_lottery_page.dart';
@@ -88,7 +87,9 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
       title: Column(
         children: [
           Text(
-            widget.isDouble ? '双色球' : '大乐透',
+            '${widget.isDouble ? '双色球' : '大乐透'}${widget.lotteryListModel.now.number.substring(
+              widget.lotteryListModel.now.number.length - 3,
+            )}期',
             style: TextStyle(
               color: Colors.white,
               fontSize: rSP(18),
@@ -447,20 +448,17 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
       _helpRandom1Shot();
       _addOneShot();
       _clearAllSelect();
-      AppRouter.push(context, RouteName.LOTTERY_CART_PAGE,
-              arguments: {'type': widget.isDouble})
+      CRoute.push(context, LotteryCartPage(isDouble: widget.isDouble))
           .then((value) => setState(() {}));
     } else if (emptySelect && !emptyCart) {
-      AppRouter.push(context, RouteName.LOTTERY_CART_PAGE,
-              arguments: {'type': widget.isDouble})
+      CRoute.push(context, LotteryCartPage(isDouble: widget.isDouble))
           .then((value) => setState(() {}));
     } else if (shotZero) {
       showToast(widget.isDouble ? '至少选6红球1蓝球' : '至少选5红球2蓝球');
     } else {
       _addOneShot();
       _clearAllSelect();
-      AppRouter.push(context, RouteName.LOTTERY_CART_PAGE,
-              arguments: {'type': widget.isDouble})
+      CRoute.push(context, LotteryCartPage(isDouble: widget.isDouble))
           .then((value) => setState(() {}));
     }
   }

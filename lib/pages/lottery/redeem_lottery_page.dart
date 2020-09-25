@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -23,13 +24,17 @@ class RedeemLotteryPage extends StatefulWidget {
 }
 
 class _RedeemLotteryPageState extends State<RedeemLotteryPage> {
-  List<LotteryListModel> _models = [];
+  List<LotteryListModel> _models;
 
   @override
   void initState() {
     super.initState();
     HttpManager.post(LotteryAPI.list, {}).then((resultData) {
       setState(() {
+        if (resultData.data['code'] == 'FAIL') {
+          showToast(resultData.data['mesg']);
+          _models = [];
+        }
         _models = resultData.data['data'] == null
             ? []
             : (resultData.data['data'] as List)
@@ -56,7 +61,7 @@ class _RedeemLotteryPageState extends State<RedeemLotteryPage> {
           ),
         ),
       ],
-      body: _models.isEmpty
+      body: _models == null
           ? Center(
               child: CircularProgressIndicator(),
             )
