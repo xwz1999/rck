@@ -173,15 +173,16 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       // }
       return Container(
         width: width,
+        decoration: BoxDecoration(
+          border: Border.all(width: 0.0),
+        ),
         child: GestureDetector(
           onLongPress: () {
             _saveImageWithUrl(image.url);
           },
-          child: AspectRatioImage.network(
-            Api.getImgUrl(image.url),
-            builder: (context, snapshot, value) {
-              return Image.network(value);
-            },
+          child: FadeInImage.assetNetwork(
+            image: Api.getImgUrl(image.url),
+            placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
           ),
         ),
       );
