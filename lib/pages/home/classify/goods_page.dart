@@ -7,7 +7,6 @@
  * ====================================================
  */
 
-import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';

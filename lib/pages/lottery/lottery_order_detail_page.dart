@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -27,7 +28,8 @@ class _LotteryOrderDetailPageState extends State<LotteryOrderDetailPage> {
       'orderId': widget.model.orderId,
     }).then((resultData) {
       if (resultData.data['data'] == null) {
-        setState(() {});
+        showToast(resultData.data['msg']);
+        Navigator.pop(context);
       } else {
         model = LotteryRedeemDetailModel.fromJson(resultData.data['data']);
         setState(() {});

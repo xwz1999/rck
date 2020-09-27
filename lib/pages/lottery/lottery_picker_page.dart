@@ -484,10 +484,10 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
         type: widget.isDouble
             ? LotteryType.DOUBLE_LOTTERY
             : LotteryType.BIG_LOTTERY,
-        redBalls: _redBalls,
-        blueBalls: _blueBalls,
-        focusedRedBalls: _focusedRedBalls,
-        focusedBlueBalls: _focusedBlueBalls,
+        redBalls: _redBalls..sort(),
+        blueBalls: _blueBalls..sort(),
+        focusedRedBalls: _focusedRedBalls..sort(),
+        focusedBlueBalls: _focusedBlueBalls..sort(),
       ),
     );
   }

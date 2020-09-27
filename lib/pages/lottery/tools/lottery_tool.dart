@@ -26,7 +26,13 @@ List<int> parseBalls(String balls, {bool red: true}) {
 
 class ParseBall {
   String balls = "";
-  ParseBall(this.balls);
+  ParseBall(String rawBalls) {
+    if (TextUtils.isEmpty(rawBalls)) {
+      balls = "0#0";
+    } else {
+      balls = rawBalls;
+    }
+  }
   List<int> get redBalls => balls
       .split('#')[0]
       .replaceAll('\$', ",")
@@ -108,7 +114,7 @@ String ballToString(int ball) {
 ///
 /// ball to int
 int stringToBall(String ball) {
-  return int.parse(ball);
+  return TextUtils.isEmpty(ball) ? 0 : int.parse(ball);
 }
 
 ///List\<int\> => String
