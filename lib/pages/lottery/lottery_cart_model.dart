@@ -130,6 +130,14 @@ class LotteryCartStore {
     }
   }
 
+  static clear(LotteryType type) {
+    if (type == LotteryType.DOUBLE_LOTTERY) {
+      doubleLotteryModels.clear();
+    } else {
+      bigLotteryModels.clear();
+    }
+  }
+
   static int countLotteryBalls(
     LotteryType type, {
     @required List<int> redBalls,

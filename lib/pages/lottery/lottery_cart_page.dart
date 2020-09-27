@@ -327,6 +327,11 @@ class _LotteryCartPageState extends State<LotteryCartPage> {
     );
     if (resultData.data['code'] == "SUCCESS") {
       GSDialog.of(context).dismiss(context);
+      showToast('下单成功');
+      LotteryCartStore.clear(widget.isDouble
+          ? LotteryType.DOUBLE_LOTTERY
+          : LotteryType.BIG_LOTTERY);
+      Navigator.pop(context);
       Navigator.pop(context);
       Navigator.pop(context);
     } else {
