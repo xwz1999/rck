@@ -149,12 +149,16 @@ class UserApi {
   static const String verify_sms_send = "/v1/messages/verify/sms/send";
   static const String verify_sms = "/v1/messages/verify/sms";
   static const String password_save = "/v1/wallet/pay/password/save";
+
   /// 升级码查询
   static const String query_up_code = "/v1/users/role/query_up_code";
+
   /// 赠送升级码或者保级码
   static const String give_code = "/v1/users/role/give_code";
+
   /// 用升级码升级
   static const String upgrade_by_code = "/v1/users/role/upgrade_by_code";
+
   /// 保级码保级
   static const String keep_by_code = "/v1/users/role/keep_by_code";
 
@@ -255,8 +259,16 @@ class OrderApi {
   static const String invoice_add = "/v1/users/invoice/create";
 
   static const String evaluation_add = "/v1/order/evaluation/create";
-///订单评价列表
-  static const String orderReview = "/v1/manage/order/evaluation/orderEvaluationList";
+
+  ///订单评价列表
+  static const String orderReview = "/v1/order/evaluation/orderEvaluationList";
+
+  ///订单添加评价接口
+  static const String addReview =
+      "/v1/order/evaluation/createOrderEvaluationOne";
+
+  ///订单查看评价接口
+  static const String checkReview = "/v1/order/evaluation/evaluationDea";
 }
 
 class HomeApi {
@@ -302,7 +314,7 @@ class WebApi {
   static const String aboutUs = "${recookHttp}introduction.html";
   static const String businessCooperation = "${recookHttp}business.html";
   static const String argumentsUrl = "https://h5.reecook.cn/agreement.html";
-  static const String privacy = "${recookHttp}privacy.html";
+  static const String privacy = "https://h5.reecook.cn/privacy.html";
   static const String feedback = "${recookHttp}feedback.html";
   static const String iOSUrl = "itms-apps://itunes.apple.com/app/id1477928534";
   // static const String iOSUrl = "https://apps.apple.com/app/id1477928534";
@@ -346,4 +358,22 @@ class SystemApi {
     }
     return _instance;
   }
+}
+
+///彩票相关API
+class LotteryAPI {
+  ///彩票列表接口
+  static const String list = "/v1/ticket/list";
+
+  ///彩票历史期数接口
+  static const String history = "/v1/ticket/history";
+
+  ///彩票兑换记录列表接口
+  static const String redeem_history = "/v1/ticket/order/list";
+
+  ///彩票下注
+  static const String redeem_shots = "/v1/ticket/bet";
+
+  ///彩票订单详情
+  static const String lottery_order_detail = "/v1/ticket/order/info";
 }

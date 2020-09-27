@@ -2,14 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/user/review/add_review_page.dart';
 import 'package:recook/pages/user/review/models/order_review_list_model.dart';
+import 'package:recook/pages/user/review/review_detail_page.dart';
 import 'package:recook/utils/custom_route.dart';
 
 class ReviewCard extends StatelessWidget {
   final OrderReviewListModel model;
   final VoidCallback onBack;
-  const ReviewCard({Key key, @required this.model, @required this.onBack})
+  final bool reviewStatusAdd;
+  const ReviewCard(
+      {Key key,
+      @required this.model,
+      @required this.onBack,
+      this.reviewStatusAdd = true})
       : super(key: key);
 
   @override
@@ -120,21 +127,25 @@ class ReviewCard extends StatelessWidget {
               child: OutlineButton(
                 padding: EdgeInsets.all(1),
                 onPressed: () {
-                  CRoute.push(
-                    context,
-                    AddReviewPage(
-                      goodsDetailId: model.goodsDetailId,
-                      model: model,
-                    ),
-                  ).then((value) {
-                    onBack();
-                  });
+                  if (reviewStatusAdd) {
+                    CRoute.push(
+                      context,
+                      AddReviewPage(
+                        goodsDetailId: model.goodsDetailId,
+                        model: model,
+                      ),
+                    ).then((value) {
+                      onBack();
+                    });
+                  } else {
+                    CRoute.push(context, ReviewDetailPage(reviewModel: model));
+                  }
                 },
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(rSize(14)),
                 ),
                 child: Text(
-                  '评价',
+                  reviewStatusAdd ? '评价' : '查看评价',
                   style: TextStyle(
                     color: Color(0xFFDB2D2D),
                   ),

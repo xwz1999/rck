@@ -46,7 +46,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     // double picHeight = width*1.51>height?height-50:width*1.51;
-    double picHeight = height * 0.82;
+    double picHeight = height * 0.80;
     double bottomHeight = height - picHeight;
     double bottomPicHeight = 50;
     TextStyle textStyle = TextStyle(
@@ -75,10 +75,10 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                         ? ExtendedImage.network(Api.getImgUrl(_backgroundUrl),
                             // 'https://cdn.reecook.cn/static/photo/test01.png',
                             width: width,
-                            alignment: Alignment.bottomCenter,
+                            alignment: Alignment.center,
                             height: picHeight,
                             // fit: BoxFit.fill,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.fitWidth,
                             enableLoadState: false)
                         : Container(),
                   ),

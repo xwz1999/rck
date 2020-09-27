@@ -15,7 +15,6 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
-import 'package:recook/daos/home_dao.dart';
 import 'package:recook/models/category_model.dart';
 import 'package:recook/pages/home/classify/goods_list_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -23,9 +22,12 @@ import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/sc_grid_view.dart';
 import 'package:recook/widgets/sc_tab_bar.dart';
-import 'package:recook/widgets/toast.dart';
 
 class ClassifyPage extends StatefulWidget {
+  final List<FirstCategory> data;
+  final String initValue;
+  ClassifyPage({Key key, @required this.data, this.initValue})
+      : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _ClassifyPageState();
@@ -36,7 +38,6 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
     with TickerProviderStateMixin {
   PageController _controller = PageController();
   TabBarController _tabController = TabBarController();
-  List<FirstCategory> _data;
 
   int currentIndex = 0;
 
@@ -44,16 +45,16 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
 
   @override
   bool get wantKeepAlive => true;
-
   @override
   void initState() {
     super.initState();
-    HomeDao.getCategories(success: (data, code, msg) {
-      setState(() {
-        _data = data;
-      });
-    }, failure: (code, msg) {
-      Toast.showError(msg);
+    Future.delayed(Duration(milliseconds: 300), () {
+      int current =
+          widget.data.indexWhere((element) => element.name == widget.initValue);
+      currentIndex = current == -1 ? 0 : current;
+      _tabController.jumpToIndex(currentIndex);
+      _controller.animateToPage(currentIndex,
+          duration: Duration(milliseconds: 200), curve: Curves.easeIn);
     });
   }
 
@@ -66,7 +67,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
         // leading: Container(),
         themeData: AppThemes.themeDataGrey.appBarTheme,
       ),
-      body: _data == null ? _blankView() : _buildContent(),
+      body: widget.data == null ? _blankView() : _buildContent(),
     );
   }
 
@@ -130,7 +131,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
       indicatorHeight: rSize(4),
       direction: Axis.vertical,
       spacing: rSize(20),
-      items: _data.map((item) {
+      items: widget.data.map((item) {
         return item.name;
       }).toList(),
       itemBuilder: (context, index, item) {
@@ -163,7 +164,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
     double appbarHeight = 56.0;
 
     return PageView.builder(
-        itemCount: _data.length,
+        itemCount: widget.data.length,
         controller: _controller,
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
@@ -172,7 +173,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
               onNotification: (ScrollUpdateNotification notification) {
                 if (animating) return true;
 
-                if (currentIndex < _data.length - 1 &&
+                if (currentIndex < widget.data.length - 1 &&
                     notification.metrics.pixels.toInt() >
                         notification.metrics.maxScrollExtent + 120) {
                   if (!animating) {
@@ -216,8 +217,8 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
 
   SCGridView buildGridView(
       double appbarHeight, double statusBarHeight, int index) {
-    List<SecondCategory> secondCategories = _data[index].sub;
-    String first_title = _data[index].name;
+    List<SecondCategory> secondCategories = widget.data[index].sub;
+    String first_title = widget.data[index].name;
     return SCGridView(
         viewportHeight:
             DeviceInfo.screenHeight - appbarHeight - statusBarHeight + 5,
@@ -225,7 +226,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
         sectionCount: 1,
         childAspectRatio: 0.9,
         itemCount: (section) {
-          return _data[index].sub.length;
+          return widget.data[index].sub.length;
         },
         headerBuilder: (context, section) {
           return Container(
@@ -236,7 +237,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
                 width: ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth / 4),
                 height:
                     ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth / 4 * 3),
-                imageUrl: Api.getImgUrl(_data[index].logoUrl)),
+                imageUrl: Api.getImgUrl(widget.data[index].logoUrl)),
           );
         },
         itemBuilder: (context, indexIn) {

@@ -21,7 +21,6 @@ class _ReviewPageState extends State<ReviewPage>
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
-    
   }
 
   @override
@@ -35,6 +34,7 @@ class _ReviewPageState extends State<ReviewPage>
     return Scaffold(
       backgroundColor: AppColor.frenchColor,
       appBar: AppBar(
+        brightness: Brightness.light,
         backgroundColor: Colors.white,
         elevation: 0,
         leading: RecookBackButton(),

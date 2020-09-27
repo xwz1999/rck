@@ -1,112 +1,84 @@
 class LotteryListModel {
-  String code;
-  List<Data> data;
-  String msg;
+  int id;
+  String name;
+  String icon;
+  String number;
+  Now now;
+  Now last;
 
-  LotteryListModel({this.code, this.data, this.msg});
+  LotteryListModel(
+      {this.id, this.name, this.icon, this.number, this.now, this.last});
 
   LotteryListModel.fromJson(Map<String, dynamic> json) {
-    code = json['code'];
-    if (json['data'] != null) {
-      data = new List<Data>();
-      json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
-      });
-    }
-    msg = json['msg'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
-    }
-    data['msg'] = this.msg;
-    return data;
-  }
-}
-
-class Data {
-  String icon;
-  int id;
-  Last last;
-  String name;
-  Last now;
-  String number;
-
-  Data({this.icon, this.id, this.last, this.name, this.now, this.number});
-
-  Data.fromJson(Map<String, dynamic> json) {
-    icon = json['icon'];
     id = json['id'];
-    last = json['last'] != null ? new Last.fromJson(json['last']) : null;
     name = json['name'];
-    now = json['now'] != null ? new Last.fromJson(json['now']) : null;
+    icon = json['icon'];
     number = json['number'];
+    now = json['now'] != null ? new Now.fromJson(json['now']) : null;
+    last = json['last'] != null ? new Now.fromJson(json['last']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['icon'] = this.icon;
     data['id'] = this.id;
-    if (this.last != null) {
-      data['last'] = this.last.toJson();
-    }
     data['name'] = this.name;
+    data['icon'] = this.icon;
+    data['number'] = this.number;
     if (this.now != null) {
       data['now'] = this.now.toJson();
     }
-    data['number'] = this.number;
+    if (this.last != null) {
+      data['last'] = this.last.toJson();
+    }
     return data;
   }
 }
 
-class Last {
-  String bonusCode;
+class Now {
   int id;
-  String lotteryId;
+  int lotteryId;
   String number;
+  String startTime;
+  String stopTime;
   String officialStartTime;
   String officialStopTime;
-  String startTime;
   int status;
-  String stopTime;
+  String bonusCode;
 
-  Last(
-      {this.bonusCode,
-      this.id,
+  Now(
+      {this.id,
       this.lotteryId,
       this.number,
+      this.startTime,
+      this.stopTime,
       this.officialStartTime,
       this.officialStopTime,
-      this.startTime,
       this.status,
-      this.stopTime});
+      this.bonusCode});
 
-  Last.fromJson(Map<String, dynamic> json) {
-    bonusCode = json['bonus_code'];
+  Now.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     lotteryId = json['lottery_id'];
     number = json['number'];
+    startTime = json['start_time'];
+    stopTime = json['stop_time'];
     officialStartTime = json['official_start_time'];
     officialStopTime = json['official_stop_time'];
-    startTime = json['start_time'];
     status = json['status'];
-    stopTime = json['stop_time'];
+    bonusCode = json['bonus_code'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['bonus_code'] = this.bonusCode;
     data['id'] = this.id;
     data['lottery_id'] = this.lotteryId;
     data['number'] = this.number;
+    data['start_time'] = this.startTime;
+    data['stop_time'] = this.stopTime;
     data['official_start_time'] = this.officialStartTime;
     data['official_stop_time'] = this.officialStopTime;
-    data['start_time'] = this.startTime;
     data['status'] = this.status;
-    data['stop_time'] = this.stopTime;
+    data['bonus_code'] = this.bonusCode;
     return data;
   }
 }

@@ -15,7 +15,6 @@ import 'package:recook/pages/home/barcode/fail_barcode_page.dart';
 import 'package:recook/pages/home/barcode/input_barcode_page.dart';
 import 'package:recook/pages/home/barcode/photos_fail_barcode_page.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
-import 'package:recook/pages/home/classify/classify_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/evaluation_list_page.dart';
 import 'package:recook/pages/home/classify/goods_list_page.dart';
@@ -25,12 +24,8 @@ import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
 import 'package:recook/pages/home/widget/goods_list_temp_page.dart';
 import 'package:recook/pages/login/wechat_bind_page.dart';
 import 'package:recook/pages/login/wechat_input_invitecode_page.dart';
-import 'package:recook/pages/lottery/lottery_cart_page.dart';
 import 'package:recook/pages/lottery/lottery_help_page.dart';
-import 'package:recook/pages/lottery/lottery_history_page.dart';
-import 'package:recook/pages/lottery/lottery_order_detail_page.dart';
 import 'package:recook/pages/lottery/lottery_order_page.dart';
-import 'package:recook/pages/lottery/lottery_picker_page.dart';
 import 'package:recook/pages/lottery/redeem_lottery_page.dart';
 import 'package:recook/pages/shop/cumulative_income_page.dart';
 import 'package:recook/pages/shop/member_benefits_page.dart';
@@ -154,9 +149,6 @@ class RouteName {
 
   //商品列表(只供显示)
   static const String GOODS_LIST_TEMP = "/GoodsListTempPage";
-
-  // 分类
-  static const String CLASSIFY = "/classify";
 
   // 品牌详情
   static const String GOODS_LIST_PAGE = "/GoodsList";
@@ -317,23 +309,11 @@ class RouteName {
   ///兑换彩票
   static const String REDEEM_LOTTERY_PAGE = "/ReddemLotteryPage";
 
-  ///选择彩票
-  static const String LOTTERY_PICKER_PAGE = "/LotteryPickerPage";
-
   ///彩票帮助页面
   static const String LOTTERY_HELP_PAGE = "/LotteryHelpPage";
 
-  ///彩票开奖历史记录
-  static const String LOTTERY_HISTORY_PAGE = "/LotteryHistoryPage";
-
   ///彩票订单历史
   static const String LOTTERY_ORDER_PAGE = "/LotteryOrderPage";
-
-  ///彩票订单详情
-  static const String LOTTERY_ORDER_DETAIL_PAGE = "/LotteryOrderDetailPage";
-
-  ///彩票购物车
-  static const String LOTTERY_CART_PAGE = "/LotteryCartPage";
 }
 
 typedef RouteBuilder = Widget Function(BuildContext context,
@@ -381,8 +361,6 @@ final Map<String, RouteBuilder> _routes = {
   // 新人特惠
   RouteName.NEW_USER_DISCOUNT_PAGE: (context, {arguments}) =>
       NewUserDiscountPage(),
-  // 分类
-  RouteName.CLASSIFY: (context, {arguments}) => ClassifyPage(),
   // 热销榜单
   RouteName.GOODS_HOT_LIST: (context, {arguments}) => GoodsHotListPage(),
   //商品列表(只供显示)
@@ -637,17 +615,10 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.USER_INVOICE_DETAIL_INFOMATION: (contex, {arguments}) =>
       InvoiceDetailInfomationPage(arguments: arguments),
   RouteName.REDEEM_LOTTERY_PAGE: (context, {arguments}) => RedeemLotteryPage(),
-  RouteName.LOTTERY_PICKER_PAGE: (context, {arguments}) =>
-      LotteryPickerPage(arguments: arguments),
+
   RouteName.LOTTERY_HELP_PAGE: (context, {arguments}) =>
       LotteryHelpPage(arguments: arguments),
-  RouteName.LOTTERY_HISTORY_PAGE: (context, {arguments}) =>
-      LotteryHistoryPage(arguments: arguments),
   RouteName.LOTTERY_ORDER_PAGE: (context, {arguments}) => LotteryOrderPage(),
-  RouteName.LOTTERY_ORDER_DETAIL_PAGE: (context, {arguments}) =>
-      LotteryOrderDetailPage(arguments: arguments),
-  RouteName.LOTTERY_CART_PAGE: (context, {arguments}) =>
-      LotteryCartPage(arguments: arguments),
 };
 
 ///  应用中路由跳转

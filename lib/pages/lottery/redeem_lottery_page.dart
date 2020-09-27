@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/lottery/lottery_picker_page.dart';
+import 'package:recook/pages/lottery/models/lottery_list_model.dart';
+import 'package:recook/pages/lottery/tools/lottery_tool.dart';
 import 'package:recook/pages/lottery/widget/lottery_result_boxes.dart';
 import 'package:recook/pages/lottery/widget/lottery_scaffold.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 enum LotteryType {
@@ -17,6 +24,26 @@ class RedeemLotteryPage extends StatefulWidget {
 }
 
 class _RedeemLotteryPageState extends State<RedeemLotteryPage> {
+  List<LotteryListModel> _models;
+
+  @override
+  void initState() {
+    super.initState();
+    HttpManager.post(LotteryAPI.list, {}).then((resultData) {
+      setState(() {
+        if (resultData.data['code'] == 'FAIL') {
+          showToast(resultData.data['mesg']);
+          _models = [];
+        }
+        _models = resultData.data['data'] == null
+            ? []
+            : (resultData.data['data'] as List)
+                .map((e) => LotteryListModel.fromJson(e))
+                .toList();
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return LotteryScaffold(
@@ -34,37 +61,46 @@ class _RedeemLotteryPageState extends State<RedeemLotteryPage> {
           ),
         ),
       ],
-      body: ListView(
-        children: [
-          _lotteryCard(
-            type: LotteryType.DOUBLE_LOTTERY,
-            redBalls: [2, 6, 11, 14, 18, 22],
-            blueBalls: [2],
-          ),
-          _lotteryCard(
-            type: LotteryType.BIG_LOTTERY,
-            redBalls: [2, 6, 11, 14, 18],
-            blueBalls: [7, 12],
-          ),
-        ],
-      ),
+      body: _models == null
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView(
+              children: _models
+                  .map(
+                    (e) => _lotteryCard(model: e),
+                  )
+                  .toList(),
+            ),
     );
   }
 
-  _lotteryCard({
-    LotteryType type,
-    List<int> redBalls,
-    List<int> blueBalls,
-  }) {
-    String title = type == LotteryType.DOUBLE_LOTTERY ? "双色球" : "大乐透";
-    String asset = type == LotteryType.DOUBLE_LOTTERY
-        ? R.ASSETS_LOTTERY_REDEEM_DOUBLE_LOTTERY_PNG
-        : R.ASSETS_LOTTERY_REDEEM_BIG_LOTTERY_PNG;
+  Widget _lotteryCard({@required LotteryListModel model}) {
+    String asset;
+    switch (model.id) {
+      case 1:
+        asset = R.ASSETS_LOTTERY_REDEEM_DOUBLE_LOTTERY_PNG;
+        break;
+      case 2:
+        asset = R.ASSETS_LOTTERY_REDEEM_BIG_LOTTERY_PNG;
+        break;
+      default:
+        asset = R.ASSETS_LOTTERY_REDEEM_DOUBLE_LOTTERY_PNG;
+    }
+    List<int> redBalls, blueBalls;
+    if (TextUtils.isNotEmpty(model.last.bonusCode)) {
+      redBalls = parseBalls(model.last.bonusCode);
+      blueBalls = parseBalls(model.last.bonusCode, red: false);
+    }
 
     return CustomImageButton(
       onPressed: () {
-        AppRouter.push(context, RouteName.LOTTERY_PICKER_PAGE,
-            arguments: {'type': type == LotteryType.DOUBLE_LOTTERY});
+        CRoute.push(
+            context,
+            LotteryPickerPage(
+              isDouble: model.id == 1,
+              lotteryListModel: model,
+            ));
       },
       child: Container(
         padding: EdgeInsets.all(rSize(16)),
@@ -92,14 +128,14 @@ class _RedeemLotteryPageState extends State<RedeemLotteryPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      model.name,
                       style: TextStyle(
                         color: Color(0xFF333333),
                         fontSize: rSP(16),
                       ),
                     ),
                     Text(
-                      '第20200820期',
+                      '第${model.last.number}\期',
                       style: TextStyle(
                         color: Color(0xFF666666),
                         fontSize: rSP(12),
@@ -116,18 +152,19 @@ class _RedeemLotteryPageState extends State<RedeemLotteryPage> {
               ],
             ),
             SizedBox(height: rSize(20)),
-            Row(
-              children: [
-                Expanded(
-                  child: LotteryResultBoxes(
-                    type: type,
-                    redBalls: redBalls,
-                    blueBalls: blueBalls,
+            redBalls == null
+                ? SizedBox()
+                : Row(
+                    children: [
+                      Expanded(
+                        child: LotteryResultBoxes(
+                          redBalls: redBalls ?? [],
+                          blueBalls: blueBalls ?? [],
+                        ),
+                      ),
+                      SizedBox(width: rSize(34)),
+                    ],
                   ),
-                ),
-                SizedBox(width: rSize(34)),
-              ],
-            ),
           ],
         ),
       ),

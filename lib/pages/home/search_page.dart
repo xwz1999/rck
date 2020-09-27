@@ -75,21 +75,26 @@ class _SearchPageState extends BaseStoreState<SearchPage>
   @override
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
-        backgroundColor: AppColor.frenchColor,
-        // appBar: CustomAppBar(title: "搜索"),
-        appBar: CustomAppBar(
-          elevation: 0,
-          title: _buildTitle(),
-          themeData: AppThemes.themeDataGrey.appBarTheme,
-          actions: TextUtils.isEmpty(_textEditController.text)
-              ? <Widget>[
-                  Container(
-                    width: 10,
-                  )
-                ]
-              : _rightActions(getStore()),
-        ),
-        body: Stack(
+      backgroundColor: AppColor.frenchColor,
+      // appBar: CustomAppBar(title: "搜索"),
+      appBar: CustomAppBar(
+        elevation: 0,
+        title: _buildTitle(),
+        themeData: AppThemes.themeDataGrey.appBarTheme,
+        actions: TextUtils.isEmpty(_textEditController.text)
+            ? <Widget>[
+                Container(
+                  width: 10,
+                )
+              ]
+            : _rightActions(getStore()),
+      ),
+      body: GestureDetector(
+        behavior: HitTestBehavior.translucent,
+        onTap: () {
+          FocusScope.of(context).requestFocus(FocusNode());
+        },
+        child: Stack(
           children: <Widget>[
             Positioned(
               child: FilterToolBarResultContainer(
@@ -116,7 +121,9 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                       )),
                     ))),
           ],
-        ));
+        ),
+      ),
+    );
   }
 
   _filterToolBar(BuildContext context) {

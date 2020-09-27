@@ -373,12 +373,10 @@ packages:
   flutter_slidable:
     dependency: "direct main"
     description:
-      path: "."
-      ref: "4073e1ff7db967aad4f97f0eee5909c5f8f339b5"
-      resolved-ref: "4073e1ff7db967aad4f97f0eee5909c5f8f339b5"
-      url: "https://github.com/haysuperman/flutter_slidable"
-    source: git
-    version: "0.5.4"
+      name: flutter_slidable
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.5.7"
   flutter_spinkit:
     dependency: "direct main"
     description:

@@ -188,10 +188,10 @@ class NormalContentDialog extends Dialog {
   final NormalTextDialogType type;
 
   NormalContentDialog({
-    this.title,
+    @required this.title,
     this.content,
     this.deleteItem,
-    this.items,
+    @required this.items,
     this.listener,
     this.deleteListener,
     this.type = NormalTextDialogType.normal,

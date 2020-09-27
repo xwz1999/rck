@@ -43,7 +43,7 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
   final String _alertMessage =
       "重要提醒：请谨防网络及客服诈骗！瑞库客不会以订单异常、系统维护等情况为由，要求你进行退款操作。";
   // List<String> _items = ["全部", "未付款", "待发货", "待收货", "售后/退款"];
-  List<String> _items = ["全部", "未付款", "待发货", "待收货", "待评价"];
+  List<String> _items = ["全部", "未付款", "待发货", "待收货"];
   List<String> _storeItems = ["全部", "未付款", "待自提", "待评价"];
   TabController _allTabController;
   TabController _tabController;
@@ -79,7 +79,7 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
     _allTabController.addListener(() {
       _titleSwitchController.changeIndex(_allTabController.index);
     });
-    _tabController = TabController(initialIndex: index, length: 5, vsync: this);
+    _tabController = TabController(initialIndex: index, length: 4, vsync: this);
     _storeTabController =
         TabController(initialIndex: 0, length: 4, vsync: this);
   }
@@ -114,19 +114,19 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
         appBackground: Colors.white,
         elevation: 0,
         actions: [
-          MaterialButton(
-            minWidth: rSize(74),
-            onPressed: () {
-              AppRouter.push(context, RouteName.USER_INVOICE);
-            },
-            child: Text(
-              '开发票',
-              style: TextStyle(
-                color: AppColor.blackColor,
-                fontSize: ScreenAdapterUtils.setSp(14),
-              ),
-            ),
-          ),
+          // MaterialButton(
+          //   minWidth: rSize(74),
+          //   onPressed: () {
+          //     AppRouter.push(context, RouteName.USER_INVOICE);
+          //   },
+          //   child: Text(
+          //     '开发票',
+          //     style: TextStyle(
+          //       color: AppColor.blackColor,
+          //       fontSize: ScreenAdapterUtils.setSp(14),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
       body: _newBuildBody(),
@@ -222,11 +222,11 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
                       positionType: _positionType,
                     ),
                     // Container()
-                    OrderListPage(
-                      controller: _orderListControllers[4],
-                      type: OrderListType.afterSale,
-                      positionType: _positionType,
-                    ),
+                    // OrderListPage(
+                    //   controller: _orderListControllers[4],
+                    //   type: OrderListType.afterSale,
+                    //   positionType: _positionType,
+                    // ),
                   ],
                 ),
               )

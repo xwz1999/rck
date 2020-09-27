@@ -68,12 +68,12 @@ class _InviteViewState extends State<InviteView> {
                     children: [
                       Expanded(child: _buildMyRecommend()),
                       SizedBox(width: rSize(5)),
-                      Expanded(child: _buildMyInvite()),
+                      Expanded(child: _buildMyInvite(small: true)),
                     ],
                   ),
                 ),
                 SizedBox(height: rSize(5)),
-                Expanded(child: _buildInvite()),
+                Expanded(child: _buildInvite(small: true)),
               ],
             ),
           ),
@@ -98,8 +98,9 @@ class _InviteViewState extends State<InviteView> {
 
   _buildUpgrade() {
     return _buildCard(
-      background: Container(
-        color: Colors.deepOrange,
+      background: Image.asset(
+        R.ASSETS_SHOP_UPGRADE_PNG,
+        fit: BoxFit.cover,
       ),
       title: '升级财富圈',
       subTitle: '邀请好友·福利双赢',
@@ -108,23 +109,27 @@ class _InviteViewState extends State<InviteView> {
     );
   }
 
-  _buildInvite() {
+  _buildInvite({bool small = false}) {
     return _buildCard(
-      background: Container(
-        color: Colors.orange,
+      background: Image.asset(
+        small
+            ? R.ASSETS_SHOP_INVITE_OPEN_STORE_SMALL_PNG
+            : R.ASSETS_SHOP_INVITE_OPEN_STORE_PNG,
+        fit: BoxFit.cover,
       ),
       title: '邀请开店',
-      subTitle: '邀请码',
+      subTitle: '0元创业·轻松赚',
       onTap: () {
         if (widget.shareListener != null) widget.shareListener();
       },
     );
   }
 
-  _buildMyInvite() {
+  _buildMyInvite({bool small = false}) {
     return _buildCard(
-      background: Container(
-        color: Colors.blueAccent,
+      background: Image.asset(
+        small ? R.ASSETS_SHOP_MY_INVITE_SMALL_PNG : R.ASSETS_SHOP_MY_INVITE_PNG,
+        fit: BoxFit.cover,
       ),
       title: '我的邀请',
       subTitle: '有福同享·真壕友',
@@ -137,8 +142,9 @@ class _InviteViewState extends State<InviteView> {
 
   _buildMyRecommend() {
     return _buildCard(
-        background: Container(
-          color: Colors.blue,
+        background: Image.asset(
+          R.ASSETS_SHOP_MY_RECOMMAND_PNG,
+          fit: BoxFit.cover,
         ),
         title: '我的推荐',
         subTitle: '呼朋唤友·享收益',
