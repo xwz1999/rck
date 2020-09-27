@@ -1139,10 +1139,9 @@ class _HomePageState extends BaseStoreState<HomePage>
           children: [
             Image.asset(
               path,
-              height: rSize(20),
-              width: rSize(20),
+              height: rSize(28),
+              width: rSize(28),
             ),
-            SizedBox(height: rSize(6)),
             Text(
               name,
               style: TextStyle(
