@@ -138,3 +138,29 @@ String ballsToString(List<int> balls) {
   });
   return focusTemp.substring(1);
 }
+
+///计算彩票截止日期
+///
+///RAW：2020-09-24T19:47:00+08:00
+///
+///parse to DateTime
+String lotteryDisplayDay(String date) {
+  if (TextUtils.isEmpty(date)) {
+    return '';
+  } else {
+    DateTime dateTime = DateTime.parse(date);
+    switch (dateTime.difference(DateTime.now()).inDays) {
+      case 0:
+        return '${dateTime.hour}:${dateTime.minute}截止';
+        break;
+      case 1:
+        return '明天${dateTime.hour}:${dateTime.minute}截止';
+        break;
+      case 2:
+        return '明天${dateTime.hour}:${dateTime.minute}截止';
+        break;
+      default:
+        return date;
+    }
+  }
+}

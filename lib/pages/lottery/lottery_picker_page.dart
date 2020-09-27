@@ -99,7 +99,7 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
             ),
           ),
           Text(
-            '明日',
+            lotteryDisplayDay(widget.lotteryListModel.now.stopTime),
             style: TextStyle(
               color: Colors.white,
               fontSize: rSP(12),
