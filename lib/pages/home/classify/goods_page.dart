@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -41,7 +42,6 @@ import 'package:recook/widgets/pic_swiper.dart';
 import 'package:recook/widgets/selected_list.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:recook/widgets/video_view.dart';
-
 import 'commodity_detail_page.dart';
 
 typedef ScrollListener = Function(ScrollUpdateNotification notification);
@@ -143,6 +143,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               return true;
             },
             child: ListView(
+              //ListView 子项不销毁
+              cacheExtent: double.infinity,
               physics: BouncingScrollPhysics(),
               children: _detailListWidget(),
             ),
@@ -160,32 +162,29 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   List<Widget> _goodDetailImages() {
     if (_model == null) return [];
 
-    double width = DeviceInfo.screenWidth;
     List<Widget> children = _model.data.list.map((Images image) {
-      double height = image.height * (width / image.width);
-      // String placeHolder;
-      // if (width > height) {
-      //   placeHolder = AppImageName.placeholder_2x1;
-      // } else if (width == height) {
-      //   placeHolder = AppImageName.placeholder_1x1;
-      // } else {
-      //   placeHolder = AppImageName.placeholder_1x2;
-      // }
-      return Container(
-        width: width,
-        decoration: BoxDecoration(
-          border: Border.all(width: 0.0),
-        ),
-        child: GestureDetector(
-          onLongPress: () {
-            _saveImageWithUrl(image.url);
-          },
-          child: FadeInImage.assetNetwork(
-            image: Api.getImgUrl(image.url),
-            placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-          ),
-        ),
-      );
+      // Rect imageRect = await WidgetUtil.getImageWH(url: "Url");
+
+      // ignore: unnecessary_cast
+      return (GestureDetector(
+        onLongPress: () {
+          _saveImageWithUrl(image.url);
+        },
+        child: AspectRatioImage.network(Api.getImgUrl(image.url),
+            builder: (context, snapshot, url) {
+          return Container(
+            height: snapshot.data.height /
+                    snapshot.data.width *
+                    MediaQuery.of(context).size.width -
+                2,
+            child: FadeInImage.assetNetwork(
+              image: Api.getImgUrl(image.url),
+              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+              fit: BoxFit.cover,
+            ),
+          );
+        }),
+      )) as Widget;
     }).toList();
 
     if (widget.goodsDetail.data.video != null) {
@@ -210,10 +209,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               onLongPress: () {
                 _saveImageWithUrl(widget.goodsDetail.data.brand.firstImg);
               },
-              child: CustomCacheImage(
-                imageUrl: Api.getImgUrl(widget.goodsDetail.data.brand.firstImg),
-                width: width,
-                fit: BoxFit.fill,
+              child: FadeInImage.assetNetwork(
+                image: Api.getImgUrl(widget.goodsDetail.data.brand.firstImg),
+                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
               ),
             ),
           ));
@@ -226,10 +224,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           onLongPress: () {
             _saveImageWithUrl(widget.goodsDetail.data.brand.lastImg);
           },
-          child: CustomCacheImage(
-            imageUrl: Api.getImgUrl(widget.goodsDetail.data.brand.lastImg),
-            width: width,
-            fit: BoxFit.fill,
+          child: FadeInImage.assetNetwork(
+            image: Api.getImgUrl(widget.goodsDetail.data.brand.lastImg),
+            placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
           ),
         ),
       ));
