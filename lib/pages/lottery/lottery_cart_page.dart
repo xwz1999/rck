@@ -264,11 +264,11 @@ class _LotteryCartPageState extends State<LotteryCartPage> {
                     child: LotteryGridView(model: model),
                   ),
                   SizedBox(width: rSize(34)),
-                  Icon(
-                    AppIcons.icon_next,
-                    size: rSize(16),
-                    color: Color(0xFF666666),
-                  ),
+                  // Icon(
+                  //   AppIcons.icon_next,
+                  //   size: rSize(16),
+                  //   color: Color(0xFF666666),
+                  // ),
                 ],
               ),
               Text(
@@ -313,12 +313,24 @@ class _LotteryCartPageState extends State<LotteryCartPage> {
     };
     params.putIfAbsent('item', () {
       List<Map> item = [];
-      Map singleLottery = lotteryItem(101);
-      Map multiLottery = lotteryItem(102);
-      Map childLottery = lotteryItem(103);
-      if (singleLottery != null) item.add(lotteryItem(101));
-      if (multiLottery != null) item.add(lotteryItem(102));
-      if (childLottery != null) item.add(lotteryItem(103));
+      List<Map> singleLottery = lotteryItem(101);
+      List<Map> multiLottery = lotteryItem(102);
+      List<Map> childLottery = lotteryItem(103);
+      if (singleLottery != null && singleLottery.isNotEmpty) {
+        singleLottery.forEach((element) {
+          item.add(element);
+        });
+      }
+      if (multiLottery != null && multiLottery.isNotEmpty) {
+        multiLottery.forEach((element) {
+          item.add(element);
+        });
+      }
+      if (childLottery != null && childLottery.isNotEmpty) {
+        childLottery.forEach((element) {
+          item.add(element);
+        });
+      }
       return item;
     });
     ResultData resultData = await HttpManager.post(
@@ -341,25 +353,49 @@ class _LotteryCartPageState extends State<LotteryCartPage> {
     }
   }
 
-  lotteryItem(int code) {
+  List<Map> lotteryItem(int code) {
     final models = widget.isDouble
         ? LotteryCartStore.doubleLotteryModels
         : LotteryCartStore.bigLotteryModels;
 
-    List<String> lotteryCodes = [];
-    int money = 0;
+    List<Map> result = [];
+    List<LotteryCartModel> cartTempModels = [];
     models.forEach((element) {
       if (element.lotteryTypeCode == code) {
-        lotteryCodes.add(convertCartBalls(element));
-        money += element.shots * 2;
+        cartTempModels.add(element);
       }
     });
-    return lotteryCodes.length == 0
-        ? null
-        : {
-            'anteCode': lotteryCodes,
-            'playType': code,
-            'money': money,
-          };
+    if (code == 101) {
+      int rangeIndex = 0;
+      for (int i = 0; i < cartTempModels.length; i += 5) {
+        List<String> tempBalls = [];
+        int money = 0;
+        cartTempModels
+            .getRange(
+                rangeIndex,
+                (rangeIndex + 5) >= cartTempModels.length
+                    ? cartTempModels.length
+                    : (rangeIndex + 5))
+            .forEach((element) {
+          money += element.shots * 2;
+          tempBalls.add(convertCartBalls(element));
+        });
+        rangeIndex += 5;
+        result.add({
+          'anteCode': tempBalls,
+          'playType': code,
+          'money': money,
+        });
+      }
+    } else {
+      cartTempModels.forEach((element) {
+        result.add({
+          'anteCode': [convertCartBalls(element)],
+          'playType': code,
+          'money': element.shots * 2,
+        });
+      });
+    }
+    return result;
   }
 }

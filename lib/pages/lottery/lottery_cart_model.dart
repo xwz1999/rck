@@ -84,48 +84,48 @@ class LotteryCartStore {
 
     //TODO：需要重构
     if (type == LotteryType.DOUBLE_LOTTERY) {
-      doubleLotteryModels.forEach((element) {
-        switch (element.lotteryTypeCode) {
-          case 101:
-            normalType++;
-            break;
-          case 102:
-            multiplyType++;
-            break;
-          case 103:
-            withChildType++;
-            break;
-        }
-      });
-      if (normalType >= 5 && model.lotteryTypeCode == 101)
-        showToast('一次只能兑换5注单式彩票');
-      else if (multiplyType >= 1 && model.lotteryTypeCode == 102)
-        showToast('一次只能兑换1注复式彩票');
-      else if (withChildType >= 1 && model.lotteryTypeCode == 103)
-        showToast('一次只能兑换1注脱胆彩票');
-      else
+      // doubleLotteryModels.forEach((element) {
+      //   switch (element.lotteryTypeCode) {
+      //     case 101:
+      //       normalType++;
+      //       break;
+      //     case 102:
+      //       multiplyType++;
+      //       break;
+      //     case 103:
+      //       withChildType++;
+      //       break;
+      //   }
+      // });
+      // if (normalType >= 5 && model.lotteryTypeCode == 101)
+      //   showToast('一次只能兑换5注单式彩票');
+      // else if (multiplyType >= 1 && model.lotteryTypeCode == 102)
+      //   showToast('一次只能兑换1注复式彩票');
+      // else if (withChildType >= 1 && model.lotteryTypeCode == 103)
+      //   showToast('一次只能兑换1注脱胆彩票');
+      // else
         doubleLotteryModels.add(model);
     } else {
-      bigLotteryModels.forEach((element) {
-        switch (element.lotteryTypeCode) {
-          case 101:
-            normalTypeBigLottery++;
-            break;
-          case 102:
-            multiplyTypeBigLottery++;
-            break;
-          case 103:
-            withChildTypeBigLottery++;
-            break;
-        }
-      });
-      if (normalTypeBigLottery >= 5 && model.lotteryTypeCode == 101)
-        showToast('一次只能兑换5注单式彩票');
-      else if (multiplyTypeBigLottery >= 1 && model.lotteryTypeCode == 102)
-        showToast('一次只能兑换1注复式彩票');
-      else if (withChildTypeBigLottery >= 1 && model.lotteryTypeCode == 103)
-        showToast('一次只能兑换1注脱胆彩票');
-      else
+      // bigLotteryModels.forEach((element) {
+      //   switch (element.lotteryTypeCode) {
+      //     case 101:
+      //       normalTypeBigLottery++;
+      //       break;
+      //     case 102:
+      //       multiplyTypeBigLottery++;
+      //       break;
+      //     case 103:
+      //       withChildTypeBigLottery++;
+      //       break;
+      //   }
+      // });
+      // if (normalTypeBigLottery >= 5 && model.lotteryTypeCode == 101)
+      //   showToast('一次只能兑换5注单式彩票');
+      // else if (multiplyTypeBigLottery >= 1 && model.lotteryTypeCode == 102)
+      //   showToast('一次只能兑换1注复式彩票');
+      // else if (withChildTypeBigLottery >= 1 && model.lotteryTypeCode == 103)
+      //   showToast('一次只能兑换1注脱胆彩票');
+      // else
         bigLotteryModels.add(model);
     }
   }
