@@ -96,7 +96,18 @@ String convertBalls({
       return ballsBuffer.toString();
       break;
     case LotteryType.BIG_LOTTERY:
-      return '';
+      if (focusRedBalls.isNotEmpty) {
+        ballsBuffer.write(ballsToString(focusRedBalls));
+        ballsBuffer.write('\$');
+      }
+      ballsBuffer.write(ballsToString(redBalls));
+      ballsBuffer.write('#');
+      if (focusBlueBalls.isNotEmpty) {
+        ballsBuffer.write(ballsToString(focusBlueBalls));
+        ballsBuffer.write('\$');
+      }
+      ballsBuffer.write(ballsToString(blueBalls));
+      return ballsBuffer.toString();
       break;
     default:
       return '';

@@ -102,7 +102,7 @@ class _LotteryCartPageState extends State<LotteryCartPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          '${countShots * 2 * multiply}瑞币或${countShots * multiply}彩票券',
+                          '${countShots * 2 * multiply}瑞币',
                           style: TextStyle(
                             color: Color(0xFF666666),
                             fontSize: rSP(12),
