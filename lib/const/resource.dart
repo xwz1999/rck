@@ -416,6 +416,9 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/user.png)
   static const String ASSETS_LIVE_USER_PNG = 'assets/live/user.png';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/video_play.png)
+  static const String ASSETS_LIVE_VIDEO_PLAY_PNG = 'assets/live/video_play.png';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/login_logo.png)
   static const String ASSETS_LOGIN_LOGO_PNG = 'assets/login_logo.png';
 

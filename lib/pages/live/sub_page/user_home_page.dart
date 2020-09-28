@@ -4,6 +4,7 @@ import 'package:recook/constants/styles.dart';
 import 'package:recook/pages/live/sub_page/user_attention_page.dart';
 import 'package:recook/pages/live/widget/sliver_bottom_persistent_delegate.dart';
 import 'package:recook/pages/live/widget/user_activity_card.dart';
+import 'package:recook/pages/live/widget/user_live_playback_card.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
@@ -133,7 +134,7 @@ class _UserHomePageState extends State<UserHomePage>
                 return UserActivityCard();
               }),
               ListView.builder(itemBuilder: (context, index) {
-                return Text('test');
+                return UserPlaybackCard();
               })
             ],
           ),

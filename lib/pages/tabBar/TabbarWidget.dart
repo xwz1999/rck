@@ -13,6 +13,7 @@ import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/business/business_page.dart';
 import 'package:recook/pages/home/home_page.dart';
+import 'package:recook/pages/live/live_stream/add_video_page.dart';
 import 'package:recook/pages/live/pages/discovery_page.dart';
 import 'package:recook/pages/live/widget/live_fab_location.dart';
 import 'package:recook/pages/shop/widget/normal_shop_page.dart';
@@ -20,6 +21,7 @@ import 'package:recook/pages/shopping_cart/shopping_cart_page.dart';
 import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/third_party/bugly_helper.dart';
 import 'package:recook/utils/app_router.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/print_util.dart';
 import 'package:recook/utils/versionInfo/version_tool.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
@@ -97,9 +99,13 @@ class _TabBarWidgetState extends State<TabBarWidget>
                                   top: Radius.circular(rSize(15))),
                             ),
                             child: Builder(builder: (context) {
-                              verticalButton(String title, String path) {
+                              verticalButton(
+                                String title,
+                                String path, {
+                                VoidCallback onTap,
+                              }) {
                                 return CustomImageButton(
-                                  onPressed: () {},
+                                  onPressed: onTap,
                                   child: Column(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -134,14 +140,18 @@ class _TabBarWidgetState extends State<TabBarWidget>
                                       verticalButton(
                                         '直播',
                                         R.ASSETS_LIVE_ADD_STREAM_PNG,
+                                        onTap: () {},
                                       ),
                                       verticalButton(
                                         '视频',
                                         R.ASSETS_LIVE_ADD_VIDEO_PNG,
+                                        onTap: () => CRoute.push(
+                                            context, AddVideoPage()),
                                       ),
                                       verticalButton(
                                         '图文',
                                         R.ASSETS_LIVE_ADD_IMAGE_PNG,
+                                        onTap: () {},
                                       ),
                                     ],
                                   ),
