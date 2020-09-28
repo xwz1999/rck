@@ -2,12 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/pages/business/recommend/child_recommend_page.dart';
-import 'package:recook/pages/live/sub_page/image_text_page.dart';
 import 'package:recook/pages/live/sub_page/live_stream_page.dart';
+import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/pages/live/sub_page/video_page.dart';
-import 'package:recook/pages/live/widget/round_tab_bar_indicator.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/recook_indicator.dart';
 
 class DiscoveryPage extends StatefulWidget {
   DiscoveryPage({Key key}) : super(key: key);
@@ -60,7 +61,7 @@ class _DiscoveryPageState extends State<DiscoveryPage>
                       ),
                       labelPadding: EdgeInsets.zero,
                       indicatorSize: TabBarIndicatorSize.label,
-                      indicator: RoundTabBarIndicator(
+                      indicator: RecookIndicator(
                         borderSide: BorderSide(
                           width: rSize(3),
                           color: Color(0xFFDB2D2D),
@@ -83,7 +84,9 @@ class _DiscoveryPageState extends State<DiscoveryPage>
                       width: rSize(20),
                       height: rSize(20),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      CRoute.push(context, UserHomePage());
+                    },
                   ),
                 ],
               ),
