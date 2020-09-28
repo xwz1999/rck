@@ -169,20 +169,14 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         onLongPress: () {
           _saveImageWithUrl(image.url);
         },
-        child: AspectRatioImage.network(Api.getImgUrl(image.url),
-            builder: (context, snapshot, url) {
-          return Container(
-            height: snapshot.data.height /
-                    snapshot.data.width *
-                    MediaQuery.of(context).size.width -
-                2,
-            child: FadeInImage.assetNetwork(
-              image: Api.getImgUrl(image.url),
-              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-              fit: BoxFit.cover,
-            ),
-          );
-        }),
+        child: Transform.translate(
+          offset: Offset(0, 0 - _model.data.list.indexOf(image).toDouble()),
+          child: FadeInImage.assetNetwork(
+            image: Api.getImgUrl(image.url),
+            placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+            fit: BoxFit.cover,
+          ),
+        ),
       )) as Widget;
     }).toList();
 
