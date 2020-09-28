@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bugly/flutter_bugly.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -24,12 +25,15 @@ import 'utils/app_router.dart';
 
 import 'package:openinstall_flutter_plugin/openinstall_flutter_plugin.dart';
 
+List<CameraDescription> cameras;
 void main() async {
-  AppConfig.initial(
-    useEncrypt: false
-    /// 网络请求加密功能
-    // useEncrypt: true
-  );
+  WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
+  AppConfig.initial(useEncrypt: false
+
+      /// 网络请求加密功能
+      // useEncrypt: true
+      );
   // 设置当前是否为测试环境
   bool isDebug = true;
   AppConfig.setDebug(isDebug);
