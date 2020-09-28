@@ -181,6 +181,8 @@ dependencies:
 
   #瀑布流
   waterfall_flow: 2.0.3
+  #相机
+  camera: ^0.5.8+7
 
 dev_dependencies:
   flutter_test:
