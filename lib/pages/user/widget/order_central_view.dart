@@ -109,7 +109,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                           .toString(),
                   dotColor: AppColor.themeColor,
                   icon: Image.asset(
-                    "assets/user_page_order_pay.png",
+                    R.ASSETS_USER_PAY_PNG,
                     width: 30,
                     height: 30,
                   ),
@@ -136,7 +136,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                           .toString(),
                   dotColor: AppColor.themeColor,
                   icon: Image.asset(
-                    "assets/user_page_order_deliver.png",
+                    R.ASSETS_USER_DELIVER_PNG,
                     width: 30,
                     height: 30,
                   ),
@@ -163,7 +163,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                           .toString(),
                   dotColor: AppColor.themeColor,
                   icon: Image.asset(
-                    "assets/user_page_order_logistics.png",
+                    R.ASSETS_USER_LOGISTICS_PNG,
                     width: 30,
                     height: 30,
                   ),
@@ -178,11 +178,27 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
               ),
               Expanded(
                 child: CustomImageButton(
+                  icon: Image.asset(
+                    R.ASSETS_USER_REVIEW_PNG,
+                    width: 30,
+                    height: 30,
+                  ),
+                  title: "待评价",
+                  color: Colors.grey[700],
+                  fontSize: _fontSize,
+                  contentSpacing: 8,
+                  onPressed: () {
+                    widget.clickListener(4);
+                  },
+                ),
+              ),
+              Expanded(
+                child: CustomImageButton(
                   // dotNum: null,
                   // padding: EdgeInsets.symmetric(vertical: rSize(10)),
                   // dotColor: AppColor.themeColor,
                   icon: Image.asset(
-                    "assets/user_page_order_after_sale.png",
+                    R.ASSETS_USER_AFTER_SALE_PNG,
                     width: 30,
                     height: 30,
                   ),
@@ -191,7 +207,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                   fontSize: _fontSize,
                   contentSpacing: 8,
                   onPressed: () {
-                    widget.clickListener(4);
+                    widget.clickListener(5);
                   },
                 ),
               ),

@@ -183,6 +183,10 @@ class _UserPageState extends BaseStoreState<UserPage> {
               OrderCentralView(
                 clickListener: (int index) {
                   if (index == 4) {
+                    AppRouter.push(context, RouteName.USER_REVIEW_PAGE);
+                    return;
+                  }
+                  if (index == 5) {
                     AppRouter.push(
                         context, RouteName.ORDER_AFTER_SALE_GOODS_LIST,
                         arguments: OrderAfterSalePage.setArguments(

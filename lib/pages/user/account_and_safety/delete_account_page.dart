@@ -75,7 +75,6 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
                           }).then((value) {
                             if (value.data['code'] == "SUCCESS") {
                               UserManager.logout();
-                              SystemNavigator.pop();
                             } else {
                               showToast('注销失败${value.data['msg']}');
                               Navigator.pop(context);

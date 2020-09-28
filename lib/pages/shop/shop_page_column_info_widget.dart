@@ -45,10 +45,9 @@ class _ShopPageColumnInfoWidgetState
               icon: myIncomeIcon,
               title: "自购收益",
               titleClick: () {
-                AppRouter.push(
-                  context, 
-                  RouteName.SHOP_PAGE_SUB_INCOME_PAGE, 
-                  arguments: ShopPageSubIncomesPage.setArguments(ShopPageSubIncomesPageType.ShopPageSelfIncome));
+                AppRouter.push(context, RouteName.SHOP_PAGE_SUB_INCOME_PAGE,
+                    arguments: ShopPageSubIncomesPage.setArguments(
+                        ShopPageSubIncomesPageType.ShopPageSelfIncome));
               },
               infosToDay: [
                 widget.shopSummaryModel.data.myShoppingWithTime.today.orderNum
@@ -56,25 +55,34 @@ class _ShopPageColumnInfoWidgetState
                 widget.shopSummaryModel.data.myShoppingWithTime.today.amount
                     .toStringAsFixed(2),
                 widget.shopSummaryModel.data.myShoppingWithTime.today
-                    .historyIncome.toStringAsFixed(2)
+                    .historyIncome
+                    .toStringAsFixed(2)
               ],
               infosThisMonth: [
-                widget.shopSummaryModel.data.myShoppingWithTime.thisMonth.orderNum
+                widget
+                    .shopSummaryModel.data.myShoppingWithTime.thisMonth.orderNum
                     .toString(),
                 widget.shopSummaryModel.data.myShoppingWithTime.thisMonth.amount
                     .toStringAsFixed(2),
                 widget.shopSummaryModel.data.myShoppingWithTime.thisMonth
-                    .historyIncome.toStringAsFixed(2)
+                    .historyIncome
+                    .toStringAsFixed(2)
               ],
               infosPrevMonth: [
-                widget.shopSummaryModel.data.myShoppingWithTime.prevMonth.orderNum
+                widget
+                    .shopSummaryModel.data.myShoppingWithTime.prevMonth.orderNum
                     .toString(),
                 widget.shopSummaryModel.data.myShoppingWithTime.prevMonth.amount
                     .toStringAsFixed(2),
                 widget.shopSummaryModel.data.myShoppingWithTime.prevMonth
-                    .historyIncome.toStringAsFixed(2)
+                    .historyIncome
+                    .toStringAsFixed(2)
               ],
-              titles: ['订单(笔)', '销售额(元)', "预估收益(瑞币)"]),
+              titles: [
+                '订单(笔)',
+                '销售额(元)',
+                "预估收益(瑞币)"
+              ]),
           _cellWidget(
               typeSelectClick: (type) {
                 _shopIncomeType = type;
@@ -84,10 +92,9 @@ class _ShopPageColumnInfoWidgetState
               icon: shopIncomeIcon,
               title: "导购收益",
               titleClick: () {
-                AppRouter.push(
-                  context, 
-                  RouteName.SHOP_PAGE_SUB_INCOME_PAGE, 
-                  arguments: ShopPageSubIncomesPage.setArguments(ShopPageSubIncomesPageType.ShopPageShareIncome));
+                AppRouter.push(context, RouteName.SHOP_PAGE_SUB_INCOME_PAGE,
+                    arguments: ShopPageSubIncomesPage.setArguments(
+                        ShopPageSubIncomesPageType.ShopPageShareIncome));
               },
               infosToDay: [
                 widget.shopSummaryModel.data.shareIncomeWithTime.today.orderNum
@@ -95,75 +102,98 @@ class _ShopPageColumnInfoWidgetState
                 widget.shopSummaryModel.data.shareIncomeWithTime.today.amount
                     .toStringAsFixed(2),
                 widget.shopSummaryModel.data.shareIncomeWithTime.today
-                    .historyIncome.toStringAsFixed(2)
+                    .historyIncome
+                    .toStringAsFixed(2)
               ],
               infosThisMonth: [
-                widget.shopSummaryModel.data.shareIncomeWithTime.thisMonth.orderNum
+                widget.shopSummaryModel.data.shareIncomeWithTime.thisMonth
+                    .orderNum
                     .toString(),
-                widget.shopSummaryModel.data.shareIncomeWithTime.thisMonth.amount
+                widget
+                    .shopSummaryModel.data.shareIncomeWithTime.thisMonth.amount
                     .toStringAsFixed(2),
                 widget.shopSummaryModel.data.shareIncomeWithTime.thisMonth
-                    .historyIncome.toStringAsFixed(2)
+                    .historyIncome
+                    .toStringAsFixed(2)
               ],
               infosPrevMonth: [
-                widget.shopSummaryModel.data.shareIncomeWithTime.prevMonth.orderNum
+                widget.shopSummaryModel.data.shareIncomeWithTime.prevMonth
+                    .orderNum
                     .toString(),
-                widget.shopSummaryModel.data.shareIncomeWithTime.prevMonth.amount
+                widget
+                    .shopSummaryModel.data.shareIncomeWithTime.prevMonth.amount
                     .toStringAsFixed(2),
                 widget.shopSummaryModel.data.shareIncomeWithTime.prevMonth
-                    .historyIncome.toStringAsFixed(2)
+                    .historyIncome
+                    .toStringAsFixed(2)
               ],
-              titles: ['订单(笔)', '销售额(元)', "预估收益(瑞币)"]),
-            UserLevelTool.currentUserLevelEnum()==UserLevel.Others
-            && UserLevelTool.roleLevelEnum(widget.shopSummaryModel.data.roleLevel) == UserRoleLevel.Master 
-            ?Container()
-            :_cellWidget(
-              title2: "  上月  ",
-              typeSelectClick: (type) {
-                _teamIncomType = type;
-                setState(() {});
-              },
-              incomeType: _teamIncomType,
-              icon: teamIncomeIcon,
-              title: "团队收益",
-              titleClick: () {
-                AppRouter.push(
-                  context, 
-                  RouteName.SHOP_PAGE_SUB_INCOME_PAGE, 
-                  arguments: ShopPageSubIncomesPage.setArguments(ShopPageSubIncomesPageType.ShopPageTeamIncome));
-              },
-              infosToDay: [
-                widget.shopSummaryModel.data.teamIncomeWithTime.today.amount
-                    .toStringAsFixed(2),
-                widget.shopSummaryModel.data.teamIncomeWithTime.today.percent
-                    .toString(),
-                widget.shopSummaryModel.data.teamIncomeWithTime.today
-                    .historyIncome.toStringAsFixed(2)
-              ],
-              infosThisMonth: [
-                widget.shopSummaryModel.data.teamIncomeWithTime.thisMonth.amount
-                    .toStringAsFixed(2),
-                widget.shopSummaryModel.data.teamIncomeWithTime.thisMonth.percent
-                    .toString(),
-                widget.shopSummaryModel.data.teamIncomeWithTime.thisMonth
-                    .historyIncome.toStringAsFixed(2)
-              ],
-              infosPrevMonth: [
-                widget.shopSummaryModel.data.teamIncomeWithTime.prevMonth.amount
-                    .toStringAsFixed(2),
-                widget.shopSummaryModel.data.teamIncomeWithTime.prevMonth.percent
-                    .toString(),
-                widget.shopSummaryModel.data.teamIncomeWithTime.prevMonth
-                    .historyIncome.toStringAsFixed(2)
-              ],
-              titles: ['团队销售额(元)', '预估提成比例(%)', "预估收益(瑞币)"],
-              titlesPrevMonth: ['团队销售额(元)', '预估提成比例(%)', "预估收益(瑞币)"],
-              msg: _teamIncomType == IncomeType.today?
-                    widget.shopSummaryModel.data.teamIncomeWithTime.today.msg 
-                    : _teamIncomType == IncomeType.thisMonth ? 
-                    widget.shopSummaryModel.data.teamIncomeWithTime.thisMonth.msg  
-                    : widget.shopSummaryModel.data.teamIncomeWithTime.prevMonth.msg,
-              ),
+              titles: [
+                '订单(笔)',
+                '销售额(元)',
+                "预估收益(瑞币)"
+              ]),
+          UserLevelTool.currentUserLevelEnum() == UserLevel.Others &&
+                  UserLevelTool.roleLevelEnum(
+                          widget.shopSummaryModel.data.roleLevel) ==
+                      UserRoleLevel.Master
+              ? Container()
+              : _cellWidget(
+                  title2: "  上月  ",
+                  typeSelectClick: (type) {
+                    _teamIncomType = type;
+                    setState(() {});
+                  },
+                  incomeType: _teamIncomType,
+                  icon: teamIncomeIcon,
+                  title: "团队收益",
+                  titleClick: () {
+                    AppRouter.push(context, RouteName.SHOP_PAGE_SUB_INCOME_PAGE,
+                        arguments: ShopPageSubIncomesPage.setArguments(
+                            ShopPageSubIncomesPageType.ShopPageTeamIncome));
+                  },
+                  infosToDay: [
+                    widget.shopSummaryModel.data.teamIncomeWithTime.today.amount
+                        .toStringAsFixed(2),
+                    widget
+                        .shopSummaryModel.data.teamIncomeWithTime.today.percent
+                        .toString(),
+                    widget.shopSummaryModel.data.teamIncomeWithTime.today
+                        .historyIncome
+                        .toStringAsFixed(2)
+                  ],
+                  infosThisMonth: [
+                    widget.shopSummaryModel.data.teamIncomeWithTime.thisMonth
+                        .amount
+                        .toStringAsFixed(2),
+                    widget.shopSummaryModel.data.teamIncomeWithTime.thisMonth
+                        .percent
+                        .toString(),
+                    widget.shopSummaryModel.data.teamIncomeWithTime.thisMonth
+                        .historyIncome
+                        .toStringAsFixed(2)
+                  ],
+                  infosPrevMonth: [
+                    widget.shopSummaryModel.data.teamIncomeWithTime.prevMonth
+                        .amount
+                        .toStringAsFixed(2),
+                    widget.shopSummaryModel.data.teamIncomeWithTime.prevMonth
+                        .percent
+                        .toString(),
+                    widget.shopSummaryModel.data.teamIncomeWithTime.prevMonth
+                        .historyIncome
+                        .toStringAsFixed(2)
+                  ],
+                  titles: ['团队销售额(元)', '预估提成比例(%)', "预估收益(瑞币)"],
+                  titlesPrevMonth: ['团队销售额(元)', '预估提成比例(%)', "预估收益(瑞币)"],
+                  msg: _teamIncomType == IncomeType.today
+                      ? widget
+                          .shopSummaryModel.data.teamIncomeWithTime.today.msg
+                      : _teamIncomType == IncomeType.thisMonth
+                          ? widget.shopSummaryModel.data.teamIncomeWithTime
+                              .thisMonth.msg
+                          : widget.shopSummaryModel.data.teamIncomeWithTime
+                              .prevMonth.msg,
+                ),
         ],
       ),
     );
@@ -182,8 +212,10 @@ class _ShopPageColumnInfoWidgetState
       List<String> titlesPrevMonth,
       String msg,
       IncomeType incomeType,
-      Function typeSelectClick, String title0, String title1, String title2}) {
-
+      Function typeSelectClick,
+      String title0,
+      String title1,
+      String title2}) {
     return Container(
       color: Colors.white,
       width: double.infinity,
@@ -194,7 +226,9 @@ class _ShopPageColumnInfoWidgetState
           Container(
             height: 40,
             child: _titleWidget(
-                title0: title0, title1: title1, title2: title2,
+                title0: title0,
+                title1: title1,
+                title2: title2,
                 icon: icon,
                 title: title,
                 click: titleClick,
@@ -208,18 +242,21 @@ class _ShopPageColumnInfoWidgetState
           Container(
             height: 60,
             child: _contentWidget(
-                titles: incomeType == IncomeType.today && titlesToDay!=null? titlesToDay:
-                    incomeType == IncomeType.thisMonth && titlesThisMonth!=null? titlesThisMonth:
-                    incomeType == IncomeType.prevMonth && titlesPrevMonth!=null? titlesPrevMonth:
-                    titles, 
-                infos:incomeType == IncomeType.today?infosToDay:incomeType==IncomeType.thisMonth?infosThisMonth:infosPrevMonth),
+                titles: incomeType == IncomeType.today && titlesToDay != null
+                    ? titlesToDay
+                    : incomeType == IncomeType.thisMonth &&
+                            titlesThisMonth != null
+                        ? titlesThisMonth
+                        : incomeType == IncomeType.prevMonth &&
+                                titlesPrevMonth != null
+                            ? titlesPrevMonth
+                            : titles,
+                infos: incomeType == IncomeType.today
+                    ? infosToDay
+                    : incomeType == IncomeType.thisMonth
+                        ? infosThisMonth
+                        : infosPrevMonth),
           ),
-          TextUtils.isEmpty(msg)?Container():
-          Container(
-            margin: EdgeInsets.only(left: 5, bottom: 5),
-            alignment: Alignment.centerLeft,
-            child: Text(msg, style: TextStyle(color: Color(0xff999999), fontSize: 12),),
-          )
         ],
       ),
     );
@@ -282,7 +319,10 @@ class _ShopPageColumnInfoWidgetState
       title = "",
       Function click,
       IncomeType incomeType,
-      Function typeSelectClick, String title0, String title1, String title2}){
+      Function typeSelectClick,
+      String title0,
+      String title1,
+      String title2}) {
     TextStyle selectStyle = TextStyle(
         color: Color(0xffd5101a), fontSize: 12, fontWeight: FontWeight.w400);
     TextStyle normalStyle = TextStyle(
@@ -316,7 +356,7 @@ class _ShopPageColumnInfoWidgetState
               }
             },
             child: Text(
-              !TextUtils.isEmpty(title0)?title0:'  今日  ',
+              !TextUtils.isEmpty(title0) ? title0 : '  今日  ',
               style: incomeType == IncomeType.today ? selectStyle : normalStyle,
             ),
           ),
@@ -327,7 +367,7 @@ class _ShopPageColumnInfoWidgetState
               }
             },
             child: Text(
-              !TextUtils.isEmpty(title1)?title1:'  本月  ',
+              !TextUtils.isEmpty(title1) ? title1 : '  本月  ',
               style: incomeType == IncomeType.thisMonth
                   ? selectStyle
                   : normalStyle,
@@ -340,7 +380,7 @@ class _ShopPageColumnInfoWidgetState
               }
             },
             child: Text(
-              !TextUtils.isEmpty(title2)?title2:'  上月  ',
+              !TextUtils.isEmpty(title2) ? title2 : '  上月  ',
               style: incomeType == IncomeType.prevMonth
                   ? selectStyle
                   : normalStyle,

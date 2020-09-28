@@ -13,18 +13,27 @@ class ShopCircularPercentIndicatorModel {
   final double progress;
   final centerIcon;
   ShopCircularPercentIndicatorModel(
-      {this.add=false, this.money=false, this.bottomText = "", this.progress = 0, this.centerIcon});
+      {this.add = false,
+      this.money = false,
+      this.bottomText = "",
+      this.progress = 0,
+      this.centerIcon});
 
-  static defult({add=false, money=false, bottomText = "", progress = 0, centerIcon}){
-    if (progress>1) {
+  static defult(
+      {add = false, money = false, bottomText = "", progress = 0, centerIcon}) {
+    if (progress > 1) {
       progress = 1.0;
     }
     if (progress < 0) {
       progress = 0.0;
     }
-    return ShopCircularPercentIndicatorModel(add: add, money: money, bottomText: bottomText, progress: progress, centerIcon: centerIcon);
+    return ShopCircularPercentIndicatorModel(
+        add: add,
+        money: money,
+        bottomText: bottomText,
+        progress: progress,
+        centerIcon: centerIcon);
   }
-  
 }
 
 class ShopPageUpgradeProgress extends StatefulWidget {
@@ -65,7 +74,6 @@ class _ShopPageUpgradeProgressState
         ? masterColor
         : _roleLevel == UserRoleLevel.Silver ? silverColor : goldColor;
 
-    
     _width = MediaQuery.of(context).size.width;
     _height = _uiHeight * _uiWidth / _width;
     // DateTime date = DateTime.parse(_shopSummaryModel.data.expireDate);
@@ -85,42 +93,58 @@ class _ShopPageUpgradeProgressState
 
   List<Widget> _rowChildrenWidget() {
     String masterIconSaleUp = "assets/shop_page_progress_icon_master_sale.png";
-    String masterIconPersonUp = "assets/shop_page_progress_icon_master_person.png";
-    String silverIconPersonUp = "assets/shop_page_progress_icon_silver_person.png";
+    String masterIconPersonUp =
+        "assets/shop_page_progress_icon_master_person.png";
+    String silverIconPersonUp =
+        "assets/shop_page_progress_icon_silver_person.png";
     String silverIconSaleUp = "assets/shop_page_progress_icon_silver_sale.png";
-    String silverIconPersonKeep = silverIconPersonUp; // "assets/shop_page_progress_icon_gold_sale.png";
-    String silverIconSaleKeep = silverIconSaleUp;     // "assets/shop_page_progress_icon_gold_sale.png";
+    String silverIconPersonKeep =
+        silverIconPersonUp; // "assets/shop_page_progress_icon_gold_sale.png";
+    String silverIconSaleKeep =
+        silverIconSaleUp; // "assets/shop_page_progress_icon_gold_sale.png";
     String goldIconSaleKeep = "assets/shop_page_progress_icon_gold_sale.png";
-    String goldIconPersonKeep = "assets/shop_page_progress_icon_gold_person.png";
+    String goldIconPersonKeep =
+        "assets/shop_page_progress_icon_gold_person.png";
 
     List<Widget> returnList = [];
     double upSale = double.parse(_shopSummaryModel.data.assessment.upper.sale);
-    int upPerson = int.parse(_shopSummaryModel.data.assessment.upper.developNew);
-    double keepSale = double.parse(_shopSummaryModel.data.assessment.keeper.sale);
-    int keepPerson = int.parse(_shopSummaryModel.data.assessment.keeper.developNew);
+    int upPerson =
+        int.parse(_shopSummaryModel.data.assessment.upper.developNew);
+    double keepSale =
+        double.parse(_shopSummaryModel.data.assessment.keeper.sale);
+    int keepPerson =
+        int.parse(_shopSummaryModel.data.assessment.keeper.developNew);
     if (_roleLevel == UserRoleLevel.Master) {
       // 只有升级到白银店铺
-      int standardSale = _shopSummaryModel.data.assessment.upStandard.role300.quantity.toInt();
-      int standardPerson = _shopSummaryModel.data.assessment.upStandard.role300.person.toInt();
+      int standardSale =
+          _shopSummaryModel.data.assessment.upStandard.role300.quantity.toInt();
+      int standardPerson =
+          _shopSummaryModel.data.assessment.upStandard.role300.person.toInt();
       bool fullSale = upSale >= standardSale;
-      bool fullPerson = upPerson>=standardPerson;
+      bool fullPerson = upPerson >= standardPerson;
       String expireDate = _shopSummaryModel.data.assessment.content;
       returnList.add(
         Expanded(
           child: _itemWidget(
             widgetList: _itemProgressRows(list: [
-              fullPerson ? null : 
-                ShopCircularPercentIndicatorModel.defult(
-                  centerIcon: masterIconSaleUp,
-                  money: true,
-                  progress: upSale.toDouble()/standardSale.toDouble(),
-                  bottomText: fullSale ? "已满足升级标准" : "还需销售额\n${standardSale-upSale}元"),
-              fullSale ? null : 
-                ShopCircularPercentIndicatorModel.defult(
-                  centerIcon: masterIconPersonUp,
-                  add: true,
-                  progress: upPerson.toDouble()/standardPerson.toDouble(),
-                  bottomText: fullPerson ? "已满足升级标准" : "还需推广\n${(standardPerson - upPerson)}人"),
+              fullPerson
+                  ? null
+                  : ShopCircularPercentIndicatorModel.defult(
+                      centerIcon: masterIconSaleUp,
+                      money: true,
+                      progress: upSale.toDouble() / standardSale.toDouble(),
+                      bottomText: fullSale
+                          ? "已满足升级标准"
+                          : "还需销售额\n${standardSale - upSale}元"),
+              fullSale
+                  ? null
+                  : ShopCircularPercentIndicatorModel.defult(
+                      centerIcon: masterIconPersonUp,
+                      add: true,
+                      progress: upPerson.toDouble() / standardPerson.toDouble(),
+                      bottomText: fullPerson
+                          ? "已满足升级标准"
+                          : "还需推广\n${(standardPerson - upPerson)}人"),
             ]),
             title: "升至白银店铺",
             headText: expireDate,
@@ -130,27 +154,37 @@ class _ShopPageUpgradeProgressState
     }
     if (_roleLevel == UserRoleLevel.Gold) {
       // 只有保级黄金店铺标准
-      int standardSale = _shopSummaryModel.data.assessment.keepStandard.role200.quantity.toInt();
-      int standardPerson = _shopSummaryModel.data.assessment.keepStandard.role200.person.toInt();
+      int standardSale = _shopSummaryModel
+          .data.assessment.keepStandard.role200.quantity
+          .toInt();
+      int standardPerson =
+          _shopSummaryModel.data.assessment.keepStandard.role200.person.toInt();
       bool fullSale = keepSale >= standardSale;
-      bool fullPerson = keepPerson>=standardPerson;
+      bool fullPerson = keepPerson >= standardPerson;
       String expireDate = _shopSummaryModel.data.assessment.content;
       returnList.add(
         Expanded(
           child: _itemWidget(
             widgetList: _itemProgressRows(list: [
-              fullPerson ? null : 
-                ShopCircularPercentIndicatorModel.defult(
-                  centerIcon: goldIconSaleKeep,
-                  money: true,
-                  progress: keepSale.toDouble()/standardSale.toDouble(),
-                  bottomText: fullSale ? "已满足保级标准" : "还需销售额\n${standardSale-keepSale}元"),
-              fullSale ? null : 
-                ShopCircularPercentIndicatorModel.defult(
-                  centerIcon: goldIconPersonKeep,
-                  add: true,
-                  progress: keepPerson.toDouble()/standardPerson.toDouble(),
-                  bottomText: fullPerson ? "已满足保级标准" : "还需推广\n${(standardPerson - keepPerson)}人"),
+              fullPerson
+                  ? null
+                  : ShopCircularPercentIndicatorModel.defult(
+                      centerIcon: goldIconSaleKeep,
+                      money: true,
+                      progress: keepSale.toDouble() / standardSale.toDouble(),
+                      bottomText: fullSale
+                          ? "已满足保级标准"
+                          : "还需销售额\n${standardSale - keepSale}元"),
+              fullSale
+                  ? null
+                  : ShopCircularPercentIndicatorModel.defult(
+                      centerIcon: goldIconPersonKeep,
+                      add: true,
+                      progress:
+                          keepPerson.toDouble() / standardPerson.toDouble(),
+                      bottomText: fullPerson
+                          ? "已满足保级标准"
+                          : "还需推广\n${(standardPerson - keepPerson)}人"),
             ]),
             title: "保级黄金店铺",
             headText: expireDate,
@@ -160,13 +194,18 @@ class _ShopPageUpgradeProgressState
     }
     if (_roleLevel == UserRoleLevel.Silver) {
       // 保级白银标准  升级黄金标准
-      int upStandardSale = _shopSummaryModel.data.assessment.upStandard.role200.quantity.toInt();
-      int upStandardPerson = _shopSummaryModel.data.assessment.upStandard.role200.person.toInt();
+      int upStandardSale =
+          _shopSummaryModel.data.assessment.upStandard.role200.quantity.toInt();
+      int upStandardPerson =
+          _shopSummaryModel.data.assessment.upStandard.role200.person.toInt();
       bool fullUpSale = upSale >= upStandardSale;
       bool fullUpPerson = upPerson >= upStandardPerson;
       //
-      int keepStandardSale = _shopSummaryModel.data.assessment.keepStandard.role300.quantity.toInt();
-      int keepStandardPerson = _shopSummaryModel.data.assessment.keepStandard.role300.person.toInt();
+      int keepStandardSale = _shopSummaryModel
+          .data.assessment.keepStandard.role300.quantity
+          .toInt();
+      int keepStandardPerson =
+          _shopSummaryModel.data.assessment.keepStandard.role300.person.toInt();
       bool fullKeepSale = keepSale >= keepStandardSale;
       bool fullKeepPerson = keepPerson >= keepStandardPerson;
       String expireDate = _shopSummaryModel.data.assessment.content;
@@ -174,18 +213,25 @@ class _ShopPageUpgradeProgressState
         Expanded(
           child: _itemWidget(
             widgetList: _itemProgressRows(list: [
-              fullUpPerson ? null : 
-                ShopCircularPercentIndicatorModel.defult(
-                  centerIcon: silverIconSaleUp,
-                  money: true,
-                  progress: upSale.toDouble()/upStandardSale.toDouble(),
-                  bottomText: fullUpSale ? "已满足升级标准" : "还需销售额\n${upStandardSale-upSale}元"),
-              fullUpSale ? null : 
-                ShopCircularPercentIndicatorModel.defult(
-                  centerIcon: silverIconPersonUp,
-                  add: true,
-                  progress: upPerson.toDouble()/upStandardPerson.toDouble(),
-                  bottomText: fullUpPerson ? "已满足升级标准" : "还需推广\n${(upStandardPerson - upPerson)}人"),
+              fullUpPerson
+                  ? null
+                  : ShopCircularPercentIndicatorModel.defult(
+                      centerIcon: silverIconSaleUp,
+                      money: true,
+                      progress: upSale.toDouble() / upStandardSale.toDouble(),
+                      bottomText: fullUpSale
+                          ? "已满足升级标准"
+                          : "还需销售额\n${upStandardSale - upSale}元"),
+              fullUpSale
+                  ? null
+                  : ShopCircularPercentIndicatorModel.defult(
+                      centerIcon: silverIconPersonUp,
+                      add: true,
+                      progress:
+                          upPerson.toDouble() / upStandardPerson.toDouble(),
+                      bottomText: fullUpPerson
+                          ? "已满足升级标准"
+                          : "还需推广\n${(upStandardPerson - upPerson)}人"),
             ]),
             title: "升级黄金店铺",
             headText: expireDate,
@@ -203,18 +249,26 @@ class _ShopPageUpgradeProgressState
         Expanded(
           child: _itemWidget(
             widgetList: _itemProgressRows(list: [
-              fullKeepPerson ? null : 
-                ShopCircularPercentIndicatorModel.defult(
-                  centerIcon: silverIconSaleKeep,
-                  money: true,
-                  progress: keepSale.toDouble()/keepStandardSale.toDouble(),
-                  bottomText: fullKeepSale ? "已满足保级标准" : "还需销售额\n${keepStandardSale-keepSale}元"),
-              fullKeepSale ? null : 
-                ShopCircularPercentIndicatorModel.defult(
-                  centerIcon: silverIconPersonKeep,
-                  add: true,
-                  progress: keepPerson.toDouble()/keepStandardPerson.toDouble(),
-                  bottomText: fullKeepPerson ? "已满足保级标准" : "还需推广\n${(keepStandardPerson - keepPerson)}人"),
+              fullKeepPerson
+                  ? null
+                  : ShopCircularPercentIndicatorModel.defult(
+                      centerIcon: silverIconSaleKeep,
+                      money: true,
+                      progress:
+                          keepSale.toDouble() / keepStandardSale.toDouble(),
+                      bottomText: fullKeepSale
+                          ? "已满足保级标准"
+                          : "还需销售额\n${keepStandardSale - keepSale}元"),
+              fullKeepSale
+                  ? null
+                  : ShopCircularPercentIndicatorModel.defult(
+                      centerIcon: silverIconPersonKeep,
+                      add: true,
+                      progress:
+                          keepPerson.toDouble() / keepStandardPerson.toDouble(),
+                      bottomText: fullKeepPerson
+                          ? "已满足保级标准"
+                          : "还需推广\n${(keepStandardPerson - keepPerson)}人"),
             ]),
             title: "保级白银店铺",
             headText: "",
@@ -237,7 +291,8 @@ class _ShopPageUpgradeProgressState
         Expanded(
           child: Column(
             children: <Widget>[
-              _circularWidget(model.progress, model.add, model.money, centerIcon: model.centerIcon),
+              _circularWidget(model.progress, model.add, model.money,
+                  centerIcon: model.centerIcon),
               Text(
                 model.bottomText,
                 textAlign: TextAlign.center,
@@ -290,7 +345,8 @@ class _ShopPageUpgradeProgressState
                 headText,
                 textAlign: TextAlign.center,
                 maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+                softWrap: false,
+                overflow: TextOverflow.visible,
                 style: TextStyle(color: Color(0xffaaaaaa), fontSize: 13),
               ),
             ),
@@ -411,14 +467,19 @@ class _ShopPageUpgradeProgressState
               radius: 60.0 / _uiHeight * _height, //大小
               lineWidth: 5.0, //指示线条大小
               percent: progress, //当前进度
-              center: centerIcon is String && !TextUtils.isEmpty(centerIcon) ?
-               Image.asset(centerIcon, width: 15, height: 15,):
-               centerIcon is Widget? centerIcon
-               :Icon(
-                money ? Icons.star_border : Icons.person_outline,
-                color: progressColor,
-                size: 15,
-              ),
+              center: centerIcon is String && !TextUtils.isEmpty(centerIcon)
+                  ? Image.asset(
+                      centerIcon,
+                      width: 15,
+                      height: 15,
+                    )
+                  : centerIcon is Widget
+                      ? centerIcon
+                      : Icon(
+                          money ? Icons.star_border : Icons.person_outline,
+                          color: progressColor,
+                          size: 15,
+                        ),
               circularStrokeCap: CircularStrokeCap.round,
               progressColor: progressColor,
               backgroundColor: Color(0xfff5f5f5),
@@ -457,7 +518,7 @@ class _ShopPageUpgradeProgressState
                     //         color: Colors.white,
                     //         size: 7,
                     //       ),
-                        ),
+                  ),
                 )
               ],
             ),

@@ -26,16 +26,13 @@ import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/classify/sku_choose_page.dart';
 import 'package:recook/pages/home/items/item_user_comment.dart';
 import 'package:recook/pages/home/items/item_users_like.dart';
-import 'package:recook/pages/home/promotion_time_tool.dart';
 import 'package:recook/pages/home/widget/good_price_view.dart';
 import 'package:recook/pages/home/widget/goods_image_page_view.dart';
 import 'package:recook/pages/shopping_cart/mvp/shopping_cart_model_impl.dart';
-import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/aspect_ratio_image.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
-import 'package:recook/widgets/bottom_sheet/bottom_share_dialog.dart';
 import 'package:recook/widgets/bottom_sheet/custom_bottom_sheet.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -44,7 +41,6 @@ import 'package:recook/widgets/pic_swiper.dart';
 import 'package:recook/widgets/selected_list.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:recook/widgets/video_view.dart';
-
 import 'commodity_detail_page.dart';
 
 typedef ScrollListener = Function(ScrollUpdateNotification notification);
@@ -146,6 +142,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               return true;
             },
             child: ListView(
+              //ListView 子项不销毁
+              cacheExtent: double.infinity,
               physics: BouncingScrollPhysics(),
               children: _detailListWidget(),
             ),
@@ -163,31 +161,23 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   List<Widget> _goodDetailImages() {
     if (_model == null) return [];
 
-    double width = DeviceInfo.screenWidth;
     List<Widget> children = _model.data.list.map((Images image) {
-      double height = image.height * (width / image.width);
-      // String placeHolder;
-      // if (width > height) {
-      //   placeHolder = AppImageName.placeholder_2x1;
-      // } else if (width == height) {
-      //   placeHolder = AppImageName.placeholder_1x1;
-      // } else {
-      //   placeHolder = AppImageName.placeholder_1x2;
-      // }
-      return Container(
-        width: width,
-        child: GestureDetector(
-          onLongPress: () {
-            _saveImageWithUrl(image.url);
-          },
-          child: AspectRatioImage.network(
-            Api.getImgUrl(image.url),
-            builder: (context, snapshot, value) {
-              return Image.network(value);
-            },
+      // Rect imageRect = await WidgetUtil.getImageWH(url: "Url");
+
+      // ignore: unnecessary_cast
+      return (GestureDetector(
+        onLongPress: () {
+          _saveImageWithUrl(image.url);
+        },
+        child: Transform.translate(
+          offset: Offset(0, 0 - _model.data.list.indexOf(image).toDouble()),
+          child: FadeInImage.assetNetwork(
+            image: Api.getImgUrl(image.url),
+            placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+            fit: BoxFit.cover,
           ),
         ),
-      );
+      )) as Widget;
     }).toList();
 
     if (widget.goodsDetail.data.video != null) {
@@ -212,10 +202,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               onLongPress: () {
                 _saveImageWithUrl(widget.goodsDetail.data.brand.firstImg);
               },
-              child: CustomCacheImage(
-                imageUrl: Api.getImgUrl(widget.goodsDetail.data.brand.firstImg),
-                width: width,
-                fit: BoxFit.fill,
+              child: FadeInImage.assetNetwork(
+                image: Api.getImgUrl(widget.goodsDetail.data.brand.firstImg),
+                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
               ),
             ),
           ));
@@ -228,10 +217,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           onLongPress: () {
             _saveImageWithUrl(widget.goodsDetail.data.brand.lastImg);
           },
-          child: CustomCacheImage(
-            imageUrl: Api.getImgUrl(widget.goodsDetail.data.brand.lastImg),
-            width: width,
-            fit: BoxFit.fill,
+          child: FadeInImage.assetNetwork(
+            image: Api.getImgUrl(widget.goodsDetail.data.brand.lastImg),
+            placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
           ),
         ),
       ));

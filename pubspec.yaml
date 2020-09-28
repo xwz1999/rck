@@ -2,7 +2,7 @@ name: recook
 description: Recook Market App.
 publish_to: "none"
 
-version: 1.2.0+161
+version: 1.2.2+163
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -150,11 +150,11 @@ dependencies:
   flutter_datetime_picker: ^1.3.8
 
   # 侧滑item
-  # flutter_slidable: 0.5.3
-  flutter_slidable:
-    git:
-      url: https://github.com/haysuperman/flutter_slidable
-      ref: 4073e1ff7db967aad4f97f0eee5909c5f8f339b5
+  flutter_slidable: 0.5.7
+  # flutter_slidable:
+  #   git:
+  #     url: https://github.com/haysuperman/flutter_slidable
+  #     ref: 4073e1ff7db967aad4f97f0eee5909c5f8f339b5
 
   # 图片选择
   photo: 0.5.0-dev.3
@@ -187,6 +187,11 @@ flutter:
   uses-material-design: true
   assets:
     - assets/
+
+    #TODO 重构图片assets
+    - assets/home/
+    - assets/user/
+
     - assets/activityImage/
     - assets/recook_launch_image/
     - assets/keys/server_rsa_public_key.pem

@@ -14,9 +14,7 @@ import 'package:recook/pages/business/selling_point/selling_point_page.dart';
 import 'package:recook/pages/home/barcode/fail_barcode_page.dart';
 import 'package:recook/pages/home/barcode/input_barcode_page.dart';
 import 'package:recook/pages/home/barcode/photos_fail_barcode_page.dart';
-import 'package:recook/pages/home/classify/brand_detail_page.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
-import 'package:recook/pages/home/classify/classify_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/evaluation_list_page.dart';
 import 'package:recook/pages/home/classify/goods_list_page.dart';
@@ -26,12 +24,8 @@ import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
 import 'package:recook/pages/home/widget/goods_list_temp_page.dart';
 import 'package:recook/pages/login/wechat_bind_page.dart';
 import 'package:recook/pages/login/wechat_input_invitecode_page.dart';
-import 'package:recook/pages/lottery/lottery_cart_page.dart';
 import 'package:recook/pages/lottery/lottery_help_page.dart';
-import 'package:recook/pages/lottery/lottery_history_page.dart';
-import 'package:recook/pages/lottery/lottery_order_detail_page.dart';
 import 'package:recook/pages/lottery/lottery_order_page.dart';
-import 'package:recook/pages/lottery/lottery_picker_page.dart';
 import 'package:recook/pages/lottery/redeem_lottery_page.dart';
 import 'package:recook/pages/shop/cumulative_income_page.dart';
 import 'package:recook/pages/shop/member_benefits_page.dart';
@@ -88,6 +82,7 @@ import 'package:recook/pages/user/order/publish_evaluation_page.dart';
 import 'package:recook/pages/user/order/refund_goods_page.dart';
 import 'package:recook/pages/user/order/return_goods_page.dart';
 import 'package:recook/pages/user/qrcode/user_info_qrcode_page.dart';
+import 'package:recook/pages/user/review/review_page.dart';
 import 'package:recook/pages/user/rui_coin_page.dart';
 import 'package:recook/pages/user/balance_page.dart';
 import 'package:recook/pages/user/rui_transfer_to_balance_page.dart';
@@ -155,11 +150,7 @@ class RouteName {
   //商品列表(只供显示)
   static const String GOODS_LIST_TEMP = "/GoodsListTempPage";
 
-  // 分类
-  static const String CLASSIFY = "/classify";
-
   // 品牌详情
-  static const String BRAND_PAGE = "/brandPage";
   static const String GOODS_LIST_PAGE = "/GoodsList";
   static const String BRANDGOODS_LIST_PAGE = "/BrandGoodsListPage";
   // 商品详情
@@ -217,6 +208,9 @@ class RouteName {
   static const String USER_INVITE_SEARCH = "/UserInviteSearch";
   static const String USER_BILLING_DETAILS = "/UserBillingDetails";
   static const String USER_SET_PASSWORD_VARCODE = "/UserSetPasswordVarCode";
+
+  ///用户评价列表页面
+  static const String USER_REVIEW_PAGE = "/UserReviewPage";
 
   ///账户与安全
   static const String ACCOUNT_AND_SAFETY_PAGE = "AccountAndSafetyPage";
@@ -315,23 +309,11 @@ class RouteName {
   ///兑换彩票
   static const String REDEEM_LOTTERY_PAGE = "/ReddemLotteryPage";
 
-  ///选择彩票
-  static const String LOTTERY_PICKER_PAGE = "/LotteryPickerPage";
-
   ///彩票帮助页面
   static const String LOTTERY_HELP_PAGE = "/LotteryHelpPage";
 
-  ///彩票开奖历史记录
-  static const String LOTTERY_HISTORY_PAGE = "/LotteryHistoryPage";
-
   ///彩票订单历史
   static const String LOTTERY_ORDER_PAGE = "/LotteryOrderPage";
-
-  ///彩票订单详情
-  static const String LOTTERY_ORDER_DETAIL_PAGE = "/LotteryOrderDetailPage";
-
-  ///彩票购物车
-  static const String LOTTERY_CART_PAGE = "/LotteryCartPage";
 }
 
 typedef RouteBuilder = Widget Function(BuildContext context,
@@ -379,15 +361,11 @@ final Map<String, RouteBuilder> _routes = {
   // 新人特惠
   RouteName.NEW_USER_DISCOUNT_PAGE: (context, {arguments}) =>
       NewUserDiscountPage(),
-  // 分类
-  RouteName.CLASSIFY: (context, {arguments}) => ClassifyPage(),
   // 热销榜单
   RouteName.GOODS_HOT_LIST: (context, {arguments}) => GoodsHotListPage(),
   //商品列表(只供显示)
   RouteName.GOODS_LIST_TEMP: (context, {arguments}) =>
       GoodsListTempPage(arguments: arguments),
-  // 品牌
-  RouteName.BRAND_PAGE: (context, {arguments}) => BrandDetailPage(),
   // 商品列表
   RouteName.GOODS_LIST_PAGE: (context, {arguments}) => GoodsListPage(
         arguments: arguments,
@@ -471,6 +449,7 @@ final Map<String, RouteBuilder> _routes = {
       UserSetPasswordVarCode(),
   RouteName.USER_DELETE_ACCOUNT_PAGE: (context, {arguments}) =>
       DeleteAccountPage(),
+  RouteName.USER_REVIEW_PAGE: (context, {arguments}) => ReviewPage(),
   RouteName.ACCOUNT_AND_SAFETY_PAGE: (context, {arguments}) =>
       AccountAndSafetyPage(),
   RouteName.USER_SET_PASSWORD: (context, {arguments}) => UserSetPassword(),
@@ -636,18 +615,10 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.USER_INVOICE_DETAIL_INFOMATION: (contex, {arguments}) =>
       InvoiceDetailInfomationPage(arguments: arguments),
   RouteName.REDEEM_LOTTERY_PAGE: (context, {arguments}) => RedeemLotteryPage(),
-  RouteName.LOTTERY_PICKER_PAGE: (context, {arguments}) =>
-      LotteryPickerPage(arguments: arguments),
+
   RouteName.LOTTERY_HELP_PAGE: (context, {arguments}) =>
       LotteryHelpPage(arguments: arguments),
-  RouteName.LOTTERY_HISTORY_PAGE: (context, {arguments}) =>
-      LotteryHistoryPage(arguments: arguments),
   RouteName.LOTTERY_ORDER_PAGE: (context, {arguments}) => LotteryOrderPage(),
-  RouteName.LOTTERY_ORDER_DETAIL_PAGE: (context, {arguments}) =>
-      LotteryOrderDetailPage(arguments: arguments),
-      RouteName.LOTTERY_CART_PAGE:(context,{arguments})=> LotteryCartPage(
-        arguments:arguments
-      ),
 };
 
 ///  应用中路由跳转

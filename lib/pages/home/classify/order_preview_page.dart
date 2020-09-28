@@ -71,7 +71,12 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
       }
     });
     Future.delayed(Duration(milliseconds: 300), () {
-      if (mounted) _changeOrderCoinOnOff();
+      if (mounted)
+        _changeOrderCoinOnOff().then((_) {
+          if (_orderModel.data.addr.isDeliveryArea == 0) {
+            _canNotDeliver();
+          }
+        });
     });
   }
 
@@ -175,48 +180,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
 //            if (_orderModel.data.addr != null && address.id == _orderModel.data.addr.addressId) return;
             _changeAddress(address).then((value) {
               if (_orderModel.data.addr.isDeliveryArea == 0) {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return Dialog(
-                      backgroundColor: Colors.white,
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(
-                            rSize(32), rSize(32), rSize(32), rSize(16)),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Center(
-                              child: Text(
-                                '提示',
-                                style: TextStyle(
-                                  color: AppColor.blackColor,
-                                  fontSize: rSP(16),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                            SizedBox(height: rSize(16)),
-                            Text(
-                              '不支持配送到该地区',
-                              style: TextStyle(
-                                color: AppColor.blackColor,
-                                fontSize: rSP(12),
-                              ),
-                            ),
-                            SizedBox(height: rSize(16)),
-                            FlatButton(
-                              onPressed: () => Navigator.pop(context),
-                              child: Text('我知道了'),
-                              color: Color.fromRGBO(244, 3, 5, 1),
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                );
+                _canNotDeliver();
               }
             });
           }
@@ -303,6 +267,51 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
               // ),
             ],
           );
+  }
+
+  _canNotDeliver() {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.white,
+          child: Padding(
+            padding:
+                EdgeInsets.fromLTRB(rSize(32), rSize(32), rSize(32), rSize(16)),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Center(
+                  child: Text(
+                    '提示',
+                    style: TextStyle(
+                      color: AppColor.blackColor,
+                      fontSize: rSP(16),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SizedBox(height: rSize(16)),
+                Text(
+                  '不支持配送到该地区',
+                  style: TextStyle(
+                    color: AppColor.blackColor,
+                    fontSize: rSP(12),
+                  ),
+                ),
+                SizedBox(height: rSize(16)),
+                FlatButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('我知道了'),
+                  color: Color.fromRGBO(244, 3, 5, 1),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   _otherTiles() {
@@ -822,7 +831,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
     setState(() {});
   }
 
-  _changeOrderCoinOnOff() async {
+  Future _changeOrderCoinOnOff() async {
     GSDialog.of(context).showLoadingDialog(context, "");
     HttpResultModel<OrderPreviewModel> model =
         await _presenterImpl.changeCoinOnOff(

@@ -15,6 +15,7 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/pages/home/widget/plus_minus_view.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -331,6 +332,12 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
                 }
                 if (_num > _sku.inventory) {
                   Toast.showInfo("所选数量大于库存数量");
+                  return;
+                }
+
+                if (_sku.inventory <= 0) {
+                  Toast.showInfo('该物品为空');
+                  CRoute.popBottom(context);
                   return;
                 }
 
