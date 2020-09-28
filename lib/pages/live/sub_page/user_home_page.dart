@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:recook/const/resource.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/styles.dart';
+import 'package:recook/pages/live/sub_page/user_attention_page.dart';
 import 'package:recook/pages/live/widget/sliver_bottom_persistent_delegate.dart';
 import 'package:recook/pages/live/widget/user_activity_card.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
@@ -82,7 +83,11 @@ class _UserHomePageState extends State<UserHomePage>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _buildVerticalView('关注', 226),
+                            _buildVerticalView('关注', 226,
+                                onTap: () => CRoute.push(
+                                      context,
+                                      UserAttentionPage(),
+                                    )),
                             _buildVerticalView('粉丝', 12),
                             _buildVerticalView('获赞', 100),
                           ],
@@ -137,9 +142,9 @@ class _UserHomePageState extends State<UserHomePage>
     );
   }
 
-  Widget _buildVerticalView(String title, int num) {
+  Widget _buildVerticalView(String title, int num, {VoidCallback onTap}) {
     return CustomImageButton(
-      onPressed: () {},
+      onPressed: onTap,
       child: Column(
         children: [
           Text(

@@ -52,7 +52,9 @@ class _RecookScaffoldState extends State<RecookScaffold> {
         leading: RecookBackButton(
           white: widget.red,
         ),
-        appBackground: widget.red ? Color(0xFFE02020) : Color(0xFFF9F9FB),
+        appBackground: widget.red
+            ? Color(0xFFE02020)
+            : widget.whiteBg ? Colors.white : Color(0xFFF9F9FB),
         actions: widget.actions,
       ),
       body: widget.body,
