@@ -395,11 +395,20 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/favorite_black.png)
   static const String ASSETS_LIVE_FAVORITE_BLACK_PNG = 'assets/live/favorite_black.png';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/like.png)
+  static const String ASSETS_LIVE_LIKE_PNG = 'assets/live/like.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/more.png)
+  static const String ASSETS_LIVE_MORE_PNG = 'assets/live/more.png';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/on_stream.png)
   static const String ASSETS_LIVE_ON_STREAM_PNG = 'assets/live/on_stream.png';
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/recook_fab.png)
   static const String ASSETS_LIVE_RECOOK_FAB_PNG = 'assets/live/recook_fab.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/review.png)
+  static const String ASSETS_LIVE_REVIEW_PNG = 'assets/live/review.png';
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/stream_play_back.png)
   static const String ASSETS_LIVE_STREAM_PLAY_BACK_PNG = 'assets/live/stream_play_back.png';
