@@ -114,6 +114,8 @@ class UserApi {
   static const String realInfo = "/v1/users/profile/real_info";
   static const String realBinding = "/v1/users/profile/info/real/binding";
   static const String invite = "/v1/users/profile/invite/list";
+  static const String diamond_recommand_list =
+      "/v1/users/profile/invite/diamond";
   static const String invite_count = "/v1/users/profile/invite/count";
   static const String invite_remark_name =
       "/v1/users/profile/invite/remark-name/update";

@@ -211,19 +211,19 @@ class _OrderListItemState extends State<OrderListItem> {
         break;
       case 4:
         if (!TextUtils.isEmpty(widget.orderModel.evaluatedAt)) break;
-        children
-          ..add(CustomImageButton(
-            padding:
-                EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(20)),
-            title: "评价",
-            borderRadius: BorderRadius.all(Radius.circular(40)),
-            color: Colors.grey[700],
-            fontSize: ScreenAdapterUtils.setSp(14),
-            border: Border.all(color: Colors.grey[700], width: 0.3),
-            onPressed: () {
-              widget.evaluation(widget.orderModel);
-            },
-          ));
+        // children
+        //   ..add(CustomImageButton(
+        //     padding:
+        //         EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(20)),
+        //     title: "评价",
+        //     borderRadius: BorderRadius.all(Radius.circular(40)),
+        //     color: Colors.grey[700],
+        //     fontSize: ScreenAdapterUtils.setSp(14),
+        //     border: Border.all(color: Colors.grey[700], width: 0.3),
+        //     onPressed: () {
+        //       widget.evaluation(widget.orderModel);
+        //     },
+        //   ));
         break;
       case 5:
         {

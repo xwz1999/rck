@@ -1084,10 +1084,11 @@ class _HomePageState extends BaseStoreState<HomePage>
         children: [
           Expanded(
             child: ListView(
+              padding: EdgeInsets.only(left: rSize(10)),
               scrollDirection: Axis.horizontal,
               children: [
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_DEPARTMENT_PNG, '日用百货'),
-                _buildSingleGoodsCard(R.ASSETS_HOME_IC_FOOD_PNG, '美食酒水'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_WINE_PNG, '美食酒水'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_IMPORT_PNG, '进口专区'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_FOOD_PNG, '有机食品'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_VEGETABLES_PNG, '蔬果生鲜'),
@@ -1133,7 +1134,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       },
       child: Container(
         alignment: Alignment.center,
-        width: rSize(54),
+        margin: EdgeInsets.only(right: rSize(14)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
