@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/live/sub_page/topic_page.dart';
+import 'package:recook/utils/custom_route.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
 import 'package:recook/widgets/recook_indicator.dart';
 
@@ -106,66 +109,71 @@ class _UserAttentionPageState extends State<UserAttentionPage>
     String subTitlePrefix,
     String subTitleSuffix,
   }) {
-    return Container(
-      padding: EdgeInsets.all(rSize(15)),
-      child: Row(
-        children: [
-          prefix,
-          SizedBox(width: rSize(15)),
-          Expanded(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: Color(0xFF333333),
-                    fontSize: rSP(14),
-                    fontWeight: FontWeight.bold,
+    return CustomImageButton(
+      onPressed: () {
+        CRoute.push(context, TopicPage());
+      },
+      child: Container(
+        padding: EdgeInsets.all(rSize(15)),
+        child: Row(
+          children: [
+            prefix,
+            SizedBox(width: rSize(15)),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      color: Color(0xFF333333),
+                      fontSize: rSP(14),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                SizedBox(height: rSize(3)),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        subTitlePrefix,
-                        style: TextStyle(
-                          color: Color(0xFF666666),
-                          fontSize: rSP(13),
+                  SizedBox(height: rSize(3)),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          subTitlePrefix,
+                          style: TextStyle(
+                            color: Color(0xFF666666),
+                            fontSize: rSP(13),
+                          ),
                         ),
                       ),
-                    ),
-                    Expanded(
-                      child: Text(
-                        subTitleSuffix,
-                        style: TextStyle(
-                          color: Color(0xFF666666),
-                          fontSize: rSP(13),
+                      Expanded(
+                        child: Text(
+                          subTitleSuffix,
+                          style: TextStyle(
+                            color: Color(0xFF666666),
+                            fontSize: rSP(13),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          SizedBox(width: rSize(15)),
-          SizedBox(
-            height: rSize(28),
-            width: rSize(78),
-            child: OutlineButton(
-              child: Text('已关注'),
-              onPressed: () {},
-              textColor: Color(0xFF666666),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(rSize(14)),
+                    ],
+                  ),
+                ],
               ),
-              borderSide: BorderSide(color: Color(0xFF666666)),
             ),
-          ),
-        ],
+            SizedBox(width: rSize(15)),
+            SizedBox(
+              height: rSize(28),
+              width: rSize(78),
+              child: OutlineButton(
+                child: Text('已关注'),
+                onPressed: () {},
+                textColor: Color(0xFF666666),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(rSize(14)),
+                ),
+                borderSide: BorderSide(color: Color(0xFF666666)),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
