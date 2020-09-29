@@ -2,12 +2,17 @@ import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:recook/constants/header.dart';
 import 'package:recook/main.dart';
+import 'package:recook/pages/live/live_stream/crop_video_page.dart';
 import 'package:recook/pages/live/widget/local_file_video.dart';
 import 'package:recook/pages/live/widget/video_record_button.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class AddVideoPage extends StatefulWidget {
@@ -189,7 +194,21 @@ class _AddVideoPageState extends State<AddVideoPage> {
                           child: Text('确定'),
                         )
                       : CustomImageButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            ImagePicker()
+                                .getVideo(source: ImageSource.gallery)
+                                .then((file) {
+                              if (file == null ||
+                                  TextUtils.isEmpty(file.path)) {
+                                showToast('没有选择文件');
+                              } else {
+                                CRoute.pushReplace(
+                                  context,
+                                  CropVideoPage(file: File(file.path)),
+                                );
+                              }
+                            });
+                          },
                           child: Column(
                             children: [
                               Container(

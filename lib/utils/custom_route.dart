@@ -16,6 +16,10 @@ class CRoute {
     await Navigator.push(context, _cPageRoute(context, page));
   }
 
+  static Future pushReplace(BuildContext context, Widget page) async {
+    await Navigator.pushReplacement(context, _cPageRoute(context, page));
+  }
+
   ///路由到根
   static popBottom(BuildContext context) {
     if (Navigator.canPop(context)) {
