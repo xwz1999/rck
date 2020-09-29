@@ -11,6 +11,7 @@ class LiveStreamViewPage extends StatefulWidget {
 }
 
 class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
+  bool _showTools = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,11 +27,20 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
               child: Placeholder(),
             ),
           ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                _showTools = !_showTools;
+              });
+            },
+          ),
           //头部工具栏
-          Positioned(
-            top: MediaQuery.of(context).padding.top,
+          AnimatedPositioned(
+            top: _showTools ? MediaQuery.of(context).padding.top : -rSize(52),
             left: 0,
             right: 0,
+            duration: Duration(milliseconds: 300),
+            curve: Curves.easeInOutCubic,
             child: Padding(
               padding: EdgeInsets.only(
                 left: rSize(15),
@@ -99,21 +109,30 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                   ),
                   Spacer(),
                   MorePeople(),
-                  CustomImageButton(
-                    padding: EdgeInsets.symmetric(horizontal: rSize(15)),
-                    icon: Icon(
-                      Icons.clear,
-                      color: Colors.white,
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                  ),
+                  SizedBox(width: rSize(54)),
                 ],
               ),
             ),
           ),
-          //底部工具栏
+//关闭
           Positioned(
-            bottom: 0,
+            top: MediaQuery.of(context).padding.top + rSize(24),
+            right: 0,
+            child: CustomImageButton(
+              padding: EdgeInsets.symmetric(horizontal: rSize(15)),
+              icon: Icon(
+                Icons.clear,
+                color: Colors.white,
+              ),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+
+          //底部工具栏
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 300),
+            curve: Curves.easeInOutCubic,
+            bottom: _showTools ? 0 : -rSize(15 + 44.0),
             left: 0,
             right: 0,
             child: Padding(
@@ -139,7 +158,14 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                             decoration: InputDecoration(
                               isDense: true,
                               border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(),
+                              hintText: '说点什么吧…',
+                              hintStyle: TextStyle(
+                                fontSize: rSP(12),
+                                color: Colors.white,
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: rSize(14),
+                              ),
                             ),
                           ),
                         ),
