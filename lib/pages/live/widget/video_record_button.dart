@@ -1,10 +1,20 @@
 import 'dart:async';
 
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:recook/constants/header.dart';
 
 class VideoRecordButton extends StatefulWidget {
-  VideoRecordButton({Key key}) : super(key: key);
+  final VoidCallback onStart;
+  final VoidCallback onEnd;
+  final bool disabled;
+  VideoRecordButton({
+    Key key,
+    @required this.onStart,
+    @required this.onEnd,
+    this.disabled = false,
+  }) : super(key: key);
 
   @override
   _VideoRecordButtonState createState() => _VideoRecordButtonState();
@@ -14,6 +24,13 @@ class _VideoRecordButtonState extends State<VideoRecordButton> {
   bool _isOnTap = false;
   Timer _timer;
   int _seconds = 0;
+
+  @override
+  void dispose() {
+    _timer?.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -24,7 +41,7 @@ class _VideoRecordButtonState extends State<VideoRecordButton> {
           top: -rSize(34 + 20.0),
           child: _isOnTap
               ? Text(
-                  '00:00',
+                  getDateStr(),
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: rSP(14),
@@ -50,22 +67,53 @@ class _VideoRecordButtonState extends State<VideoRecordButton> {
             ),
           ),
         ),
+        Positioned(
+          left: -25,
+          right: -25,
+          top: -25,
+          bottom: -25,
+          child: Center(
+            child: CircularPercentIndicator(
+              radius: rSize(104),
+              lineWidth: rSize(4),
+              percent: (_seconds / 60.0),
+              addAutomaticKeepAlive: false,
+              animation: true,
+              animateFromLastPercent: true,
+              progressColor: Colors.white,
+              backgroundColor: Colors.transparent,
+              circularStrokeCap: CircularStrokeCap.round,
+            ),
+          ),
+        ),
         GestureDetector(
-          onTapDown: (details) {
-            setState(() {
-              _isOnTap = true;
-            });
-          },
-          onTapUp: (details) {
-            setState(() {
-              _isOnTap = false;
-            });
-          },
-          onTapCancel: () {
-            setState(() {
-              _isOnTap = false;
-            });
-          },
+          onTapDown: widget.disabled
+              ? null
+              : (details) {
+                  setState(() {
+                    _isOnTap = true;
+                  });
+                  _startTimer();
+                  widget.onStart();
+                },
+          onTapUp: widget.disabled
+              ? null
+              : (details) {
+                  setState(() {
+                    _isOnTap = false;
+                  });
+                  _cancelTimer();
+                  widget.onEnd();
+                },
+          onTapCancel: widget.disabled
+              ? null
+              : () {
+                  setState(() {
+                    _isOnTap = false;
+                  });
+                  _cancelTimer();
+                  widget.onEnd();
+                },
           child: Container(
             decoration: BoxDecoration(
               color: Color(0xFFFA3B3E),
@@ -79,11 +127,21 @@ class _VideoRecordButtonState extends State<VideoRecordButton> {
     );
   }
 
+  String getDateStr() {
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(_seconds * 1000);
+    return DateUtil.formatDate(dateTime, format: 'mm:ss');
+  }
+
   _startTimer() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
-        _second
+        _seconds++;
       });
     });
+  }
+
+  _cancelTimer() {
+    _timer.cancel();
+    _seconds = 0;
   }
 }

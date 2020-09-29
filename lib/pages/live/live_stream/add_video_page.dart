@@ -1,8 +1,14 @@
+import 'dart:io';
+
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/main.dart';
+import 'package:recook/pages/live/widget/local_file_video.dart';
 import 'package:recook/pages/live/widget/video_record_button.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 
 class AddVideoPage extends StatefulWidget {
   AddVideoPage({Key key}) : super(key: key);
@@ -14,10 +20,19 @@ class AddVideoPage extends StatefulWidget {
 class _AddVideoPageState extends State<AddVideoPage> {
   bool frontCam = false;
   CameraController _cameraController;
+  File _tempFile;
+  bool _videoDone = false;
 
   @override
   void initState() {
     super.initState();
+    getTemporaryDirectory().then((dirPath) {
+      _tempFile = File(join(dirPath.path, 'tempRecord.mp4'));
+      print(_tempFile.path);
+      if (_tempFile.existsSync()) {
+        _tempFile.deleteSync();
+      }
+    });
     _cameraController = CameraController(
       cameras[0],
       ResolutionPreset.medium,
@@ -47,10 +62,15 @@ class _AddVideoPageState extends State<AddVideoPage> {
                 ? Container(
                     child: Text('相机加载中'),
                   )
-                : AspectRatio(
-                    aspectRatio: _cameraController.value.aspectRatio,
-                    child: CameraPreview(_cameraController),
-                  ),
+                : _videoDone
+                    ? LocalFileVideo(
+                        file: _tempFile,
+                        aspectRatio: _cameraController.value.aspectRatio,
+                      )
+                    : AspectRatio(
+                        aspectRatio: _cameraController.value.aspectRatio,
+                        child: CameraPreview(_cameraController),
+                      ),
           ),
           Positioned(
             top: MediaQuery.of(context).padding.top,
@@ -126,9 +146,75 @@ class _AddVideoPageState extends State<AddVideoPage> {
             left: 0,
             right: 0,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                VideoRecordButton(),
+                SizedBox(
+                  width: rSize(72),
+                  child: _videoDone
+                      ? MaterialButton(
+                          child: Icon(
+                            Icons.refresh,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            _tempFile.deleteSync();
+                            setState(() {
+                              _videoDone = false;
+                            });
+                          },
+                        )
+                      : SizedBox(),
+                ),
+                VideoRecordButton(
+                  disabled: _videoDone,
+                  onEnd: () {
+                    _cameraController.stopVideoRecording();
+                    setState(() {
+                      _videoDone = true;
+                    });
+                  },
+                  onStart: () {
+                    _cameraController.startVideoRecording(_tempFile.path);
+                  },
+                ),
+                SizedBox(
+                  width: rSize(72),
+                  child: _videoDone
+                      ? MaterialButton(
+                          color: Color(0xFFFA3B3E),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(rSize(17)),
+                          ),
+                          onPressed: () {},
+                          child: Text('确定'),
+                        )
+                      : CustomImageButton(
+                          onPressed: () {},
+                          child: Column(
+                            children: [
+                              Container(
+                                height: rSize(36),
+                                width: rSize(36),
+                                decoration: BoxDecoration(
+                                  color: Colors.blue,
+                                  borderRadius: BorderRadius.circular(rSize(2)),
+                                ),
+                                child: Icon(
+                                  Icons.image,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                '上传',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: rSP(11),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                ),
               ],
             ),
           ),
