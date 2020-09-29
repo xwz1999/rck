@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 
@@ -152,11 +153,71 @@ class _TopicPageState extends State<TopicPage> {
   }
 
   _buildCard() {
-    final height = 200 + 100 * Random().nextDouble();
-    return Container(
-      height: height,
-      decoration: BoxDecoration(
-        color: Colors.white,
+    final height = 100 + 150 * Random().nextDouble();
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: CustomImageButton(
+        onPressed: () {},
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              height: height,
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Placeholder(),
+            ),
+            Container(
+              color: Colors.white,
+              padding: EdgeInsets.all(rSize(10)),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    '爱生活，爱厨房，爱上厨房精美的器具里生活的…',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Color(0xFF333333),
+                      fontSize: rSP(13),
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: rSize(6)),
+                  Row(
+                    children: [
+                      CircleAvatar(
+                        radius: rSize(9),
+                      ),
+                      Expanded(
+                        child: Text(
+                          '',
+                          style: TextStyle(
+                            color: Color(0xFF666666),
+                            fontSize: rSP(12),
+                          ),
+                        ),
+                      ),
+                      Image.asset(
+                        R.ASSETS_LIVE_FAVORITE_BLACK_PNG,
+                        height: rSize(14),
+                        width: rSize(14),
+                      ),
+                      Text(
+                        '13',
+                        style: TextStyle(
+                          color: Color(0xFf666666),
+                          fontSize: rSP(12),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
