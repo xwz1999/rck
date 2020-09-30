@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/main.dart';
 import 'package:recook/pages/live/live_stream/crop_video_page.dart';
+import 'package:recook/pages/live/live_stream/video_advance_page.dart';
 import 'package:recook/pages/live/widget/local_file_video.dart';
 import 'package:recook/pages/live/widget/video_record_button.dart';
 import 'package:recook/utils/custom_route.dart';
@@ -190,7 +191,10 @@ class _AddVideoPageState extends State<AddVideoPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(rSize(17)),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            CRoute.pushReplace(
+                                context, VideoAdvancePage(file: _tempFile));
+                          },
                           child: Text('确定'),
                         )
                       : CustomImageButton(

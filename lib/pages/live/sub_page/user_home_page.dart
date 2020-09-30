@@ -84,13 +84,24 @@ class _UserHomePageState extends State<UserHomePage>
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _buildVerticalView('关注', 226,
-                                onTap: () => CRoute.push(
-                                      context,
-                                      UserAttentionPage(),
-                                    )),
-                            _buildVerticalView('粉丝', 12),
-                            _buildVerticalView('获赞', 100),
+                            _buildVerticalView(
+                              '关注',
+                              226,
+                              onTap: () => CRoute.push(
+                                context,
+                                UserAttentionPage(),
+                              ),
+                            ),
+                            _buildVerticalView(
+                              '粉丝',
+                              12,
+                              onTap: () {},
+                            ),
+                            _buildVerticalView(
+                              '获赞',
+                              100,
+                              onTap: () {},
+                            ),
                           ],
                         ),
                       ),

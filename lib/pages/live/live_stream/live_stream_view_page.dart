@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
@@ -48,64 +49,11 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
               ),
               child: Row(
                 children: [
-                  Container(
-                    padding: EdgeInsets.all(rSize(5)),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(rSize(18)),
-                      color: Colors.black.withOpacity(0.1),
-                    ),
-                    child: Row(
-                      children: [
-                        CircleAvatar(
-                          radius: rSize(16),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: rSize(8)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '吕贝贝',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: rSP(12),
-                                ),
-                              ),
-                              Text(
-                                '点赞数 10101',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: rSP(10),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: rSize(56),
-                          height: rSize(26),
-                          child: MaterialButton(
-                            padding: EdgeInsets.zero,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(rSize(13)),
-                            ),
-                            child: Text(
-                              '+ 关注',
-                              softWrap: false,
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.visible,
-                              maxLines: 1,
-                              style: TextStyle(
-                                fontSize: rSP(12),
-                                height: 1,
-                              ),
-                            ),
-                            onPressed: () {},
-                            color: Color(0xFFDB2D2D),
-                          ),
-                        ),
-                      ],
-                    ),
+                  LiveUserBar(
+                    initAttention: false,
+                    onAttention: () {},
+                    title: '吕贝贝',
+                    subTitle: '点赞数 1235',
                   ),
                   Spacer(),
                   MorePeople(),
