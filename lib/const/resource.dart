@@ -413,6 +413,9 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/live_more.png)
   static const String ASSETS_LIVE_LIVE_MORE_PNG = 'assets/live/live_more.png';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/live_playback.png)
+  static const String ASSETS_LIVE_LIVE_PLAYBACK_PNG = 'assets/live/live_playback.png';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/live_share.png)
   static const String ASSETS_LIVE_LIVE_SHARE_PNG = 'assets/live/live_share.png';
 
@@ -427,6 +430,9 @@ class R {
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/review.png)
   static const String ASSETS_LIVE_REVIEW_PNG = 'assets/live/review.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/shop.png)
+  static const String ASSETS_LIVE_SHOP_PNG = 'assets/live/shop.png';
 
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/stream_play_back.png)
   static const String ASSETS_LIVE_STREAM_PLAY_BACK_PNG = 'assets/live/stream_play_back.png';

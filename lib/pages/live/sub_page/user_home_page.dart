@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/styles.dart';
+import 'package:recook/pages/live/sub_page/live_host_center_page.dart';
 import 'package:recook/pages/live/sub_page/user_attention_page.dart';
 import 'package:recook/pages/live/widget/live_attention_button.dart';
 import 'package:recook/pages/live/widget/sliver_bottom_persistent_delegate.dart';
@@ -85,7 +86,12 @@ class _UserHomePageState extends State<UserHomePage>
                                   height: rSize(30),
                                   child: Text('主播中心'),
                                   color: Color(0xFFDB2D2D),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    CRoute.push(
+                                      context,
+                                      LiveHostCenterPage(),
+                                    );
+                                  },
                                 )
                               : LiveAttentionButton(
                                   filled: true,
