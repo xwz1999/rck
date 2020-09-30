@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/live/sub_page/topic_page.dart';
+import 'package:recook/pages/live/widget/live_attention_button.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
@@ -159,18 +160,11 @@ class _UserAttentionPageState extends State<UserAttentionPage>
               ),
             ),
             SizedBox(width: rSize(15)),
-            SizedBox(
-              height: rSize(28),
-              width: rSize(78),
-              child: OutlineButton(
-                child: Text('已关注'),
-                onPressed: () {},
-                textColor: Color(0xFF666666),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(rSize(14)),
-                ),
-                borderSide: BorderSide(color: Color(0xFF666666)),
-              ),
+            LiveAttentionButton(
+              initAttention: false,
+              onAttention: (oldAttentionState) {
+                
+              },
             ),
           ],
         ),

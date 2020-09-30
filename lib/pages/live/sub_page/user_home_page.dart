@@ -11,7 +11,8 @@ import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
 
 class UserHomePage extends StatefulWidget {
-  UserHomePage({Key key}) : super(key: key);
+  final bool selfFlag;
+  UserHomePage({Key key, @required this.selfFlag}) : super(key: key);
 
   @override
   _UserHomePageState createState() => _UserHomePageState();

@@ -85,7 +85,10 @@ class _DiscoveryPageState extends State<DiscoveryPage>
                       height: rSize(20),
                     ),
                     onPressed: () {
-                      CRoute.push(context, UserHomePage());
+                      CRoute.push(
+                        context,
+                        UserHomePage(selfFlag: true),
+                      );
                     },
                   ),
                 ],
