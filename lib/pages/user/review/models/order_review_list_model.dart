@@ -20,11 +20,11 @@ class OrderReviewListModel {
   num unitPrice;
   num purchasePrice;
   num totalCommission;
-  int brandCouponAmount;
-  int universeBrandCouponAmount;
-  int coinAmount;
+  num brandCouponAmount;
+  num universeBrandCouponAmount;
+  num coinAmount;
   num goodsAmount;
-  int expressFee;
+  num expressFee;
   num actualAmount;
   String buyerMessage;
   String orderTime;

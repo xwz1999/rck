@@ -965,28 +965,27 @@ class _HomePageState extends BaseStoreState<HomePage>
                   // AppRouter.push(context, RouteName.NEW_USER_DISCOUNT_PAGE);
                 }),
                 _buttonTitleRow(
-                  R.ASSETS_LOTTERY_REDEEM_LOTTERY_ICON_PNG,
-                  // AppConfig.getShowCommission()
-                  //     ? R.ASSETS_HOME_MENU_BB_PNG
-                  //     : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
-                  // AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
-                  '彩票兑换',
+                  // R.ASSETS_LOTTERY_REDEEM_LOTTERY_ICON_PNG,
+                  AppConfig.getShowCommission()
+                      ? R.ASSETS_HOME_MENU_BB_PNG
+                      : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
+                  AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
+                  // '彩票兑换',
                   onPressed:
-                      //TODO 下一版本彩票入口
+                      //  () {
+                      //   AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
+                      // },
                       () {
-                    AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
+                    if (AppConfig.getShowCommission()) {
+                      bool value = UserManager.instance.selectTabbar.value;
+                      UserManager.instance.selectTabbar.value = !value;
+                      UserManager.instance.selectTabbarIndex = 2;
+                    } else {
+                      AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
+                          arguments: GoodsListTempPage.setArguments(
+                              title: "家居生活", type: GoodsListTempType.homeLife));
+                    }
                   },
-                  //     () {
-                  //   if (AppConfig.getShowCommission()) {
-                  //     bool value = UserManager.instance.selectTabbar.value;
-                  //     UserManager.instance.selectTabbar.value = !value;
-                  //     UserManager.instance.selectTabbarIndex = 2;
-                  //   } else {
-                  //     AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
-                  //         arguments: GoodsListTempPage.setArguments(
-                  //             title: "家居生活", type: GoodsListTempType.homeLife));
-                  //   }
-                  // },
                 ),
                 _buttonTitleRow(
                     AppConfig.getShowCommission()
@@ -1084,10 +1083,11 @@ class _HomePageState extends BaseStoreState<HomePage>
         children: [
           Expanded(
             child: ListView(
+              padding: EdgeInsets.only(left: rSize(10)),
               scrollDirection: Axis.horizontal,
               children: [
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_DEPARTMENT_PNG, '日用百货'),
-                _buildSingleGoodsCard(R.ASSETS_HOME_IC_FOOD_PNG, '美食酒水'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_WINE_PNG, '美食酒水'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_IMPORT_PNG, '进口专区'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_FOOD_PNG, '有机食品'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_VEGETABLES_PNG, '蔬果生鲜'),
@@ -1133,7 +1133,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       },
       child: Container(
         alignment: Alignment.center,
-        width: rSize(54),
+        margin: EdgeInsets.only(right: rSize(14)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

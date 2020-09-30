@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/user/invite/diamond_recommand_page.dart';
 import 'package:recook/utils/app_router.dart';
+import 'package:recook/utils/custom_route.dart';
 
 class InviteView extends StatefulWidget {
   final bool isDiamond; // 只显示单行
@@ -148,7 +150,7 @@ class _InviteViewState extends State<InviteView> {
         ),
         title: '我的推荐',
         subTitle: '呼朋唤友·享收益',
-        onTap: () {});
+        onTap: () => CRoute.push(context, DiamondRecommandPage()));
   }
 
   Widget _buildCard({
