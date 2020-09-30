@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/live/widget/live_attention_button.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
@@ -28,6 +29,7 @@ class _TopicPageState extends State<TopicPage> {
             slivers: [
               SliverAppBar(
                 leading: RecookBackButton(white: true),
+                brightness: Brightness.light,
                 stretch: true,
                 floating: true,
                 expandedHeight:
@@ -83,16 +85,12 @@ class _TopicPageState extends State<TopicPage> {
                                           ),
                                         ),
                                       ),
-                                      MaterialButton(
-                                        minWidth: rSize(56),
+                                      LiveAttentionButton(
+                                        initAttention: false,
+                                        filled: true,
+                                        width: rSize(56),
                                         height: rSize(26),
-                                        onPressed: () {},
-                                        color: Color(0xFFDB2D2D),
-                                        child: Text('+ 关注'),
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(rSize(13)),
-                                        ),
+                                        onAttention: (oldAttentionState) {},
                                       ),
                                     ],
                                   ),

@@ -15,6 +15,9 @@ class LiveAttentionButton extends StatefulWidget {
   ///初始关注值 true/false
   final bool initAttention;
 
+  ///圆角
+  final bool rounded;
+
   ///点击关注回调
   final Function(bool oldAttentionState) onAttention;
   LiveAttentionButton({
@@ -24,6 +27,7 @@ class LiveAttentionButton extends StatefulWidget {
     this.width,
     @required this.initAttention,
     @required this.onAttention,
+    this.rounded = true,
   }) : super(key: key);
 
   @override
@@ -50,10 +54,13 @@ class _LiveAttentionButtonState extends State<LiveAttentionButton> {
       width: _width,
       child: widget.filled
           ? MaterialButton(
-              child: Text('关注'),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(_height / 2),
-              ),
+              child: _title,
+              padding: EdgeInsets.zero,
+              shape: widget.rounded
+                  ? RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(_height / 2),
+                    )
+                  : null,
               color: _widgetColor,
               onPressed: () {
                 widget.onAttention(_isAttention);
@@ -64,15 +71,7 @@ class _LiveAttentionButtonState extends State<LiveAttentionButton> {
             )
           : OutlineButton(
               padding: EdgeInsets.zero,
-              child: _isAttention
-                  ? Text(
-                      '已关注',
-                      style: _textStyle,
-                    )
-                  : Text(
-                      '+ 关注',
-                      style: _textStyle,
-                    ),
+              child: _title,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(_height / 2),
               ),
@@ -93,7 +92,26 @@ class _LiveAttentionButtonState extends State<LiveAttentionButton> {
 
   TextStyle get _textStyle => TextStyle(
         fontSize: rSP(14),
+        height: 1,
       );
   Color get _widgetColor =>
       _isAttention ? Color(0xFF666666) : Color(0xFFDB2D2D);
+
+  Widget get _title => _isAttention
+      ? Text(
+          '已关注',
+          maxLines: 1,
+          overflow: TextOverflow.visible,
+          softWrap: false,
+          textAlign: TextAlign.center,
+          style: _textStyle,
+        )
+      : Text(
+          '+ 关注',
+          maxLines: 1,
+          style: _textStyle,
+          softWrap: false,
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.visible,
+        );
 }

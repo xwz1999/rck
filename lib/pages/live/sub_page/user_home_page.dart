@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/pages/live/sub_page/user_attention_page.dart';
+import 'package:recook/pages/live/widget/live_attention_button.dart';
 import 'package:recook/pages/live/widget/sliver_bottom_persistent_delegate.dart';
 import 'package:recook/pages/live/widget/user_activity_card.dart';
 import 'package:recook/pages/live/widget/user_live_playback_card.dart';
@@ -69,13 +70,31 @@ class _UserHomePageState extends State<UserHomePage>
                         children: [
                           CircleAvatar(radius: rSize(54 / 2.0)),
                           SizedBox(width: rSize(10)),
-                          Text(
-                            'USER TEST',
-                            style: TextStyle(
-                              color: Color(0xFF333333),
-                              fontSize: rSP(18),
+                          Expanded(
+                            child: Text(
+                              'USER TEST',
+                              style: TextStyle(
+                                color: Color(0xFF333333),
+                                fontSize: rSP(18),
+                              ),
                             ),
                           ),
+                          widget.selfFlag
+                              ? MaterialButton(
+                                  minWidth: rSize(60),
+                                  height: rSize(30),
+                                  child: Text('主播中心'),
+                                  color: Color(0xFFDB2D2D),
+                                  onPressed: () {},
+                                )
+                              : LiveAttentionButton(
+                                  filled: true,
+                                  rounded: false,
+                                  initAttention: false,
+                                  width: rSize(68),
+                                  height: rSize(30),
+                                  onAttention: (oldAttentionState) {},
+                                ),
                         ],
                       ),
                       Spacer(),
