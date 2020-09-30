@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/live/sub_page/data_manager_page.dart';
 import 'package:recook/pages/user/order/order_return_status_page.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
 import 'package:recook/widgets/sc_tile.dart';
@@ -128,7 +130,9 @@ class _LiveHostCenterPageState extends State<LiveHostCenterPage>
                           color: Color(0xFFDB2D2D),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        CRoute.push(context, DataManagerPage());
+                      },
                     ),
                   ],
                 ),

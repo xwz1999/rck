@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/live/sub_page/topic_page.dart';
+import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/pages/live/widget/live_attention_button.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -88,6 +89,9 @@ class _UserAttentionPageState extends State<UserAttentionPage>
       title: 'Kyleigh Corkery',
       subTitlePrefix: '关注 234',
       subTitleSuffix: '粉丝 10万',
+      onTap: () {
+        CRoute.push(context, UserHomePage(selfFlag: false));
+      },
     );
   }
 
@@ -101,19 +105,21 @@ class _UserAttentionPageState extends State<UserAttentionPage>
       title: '# 高颜值厨房好物',
       subTitlePrefix: '共23条内容',
       subTitleSuffix: '537人参与',
+      onTap: () {
+        CRoute.push(context, TopicPage());
+      },
     );
   }
 
   Widget _buildUserBaseCard({
     Widget prefix,
-    String title,
+    @required String title,
     String subTitlePrefix,
     String subTitleSuffix,
+    @required VoidCallback onTap,
   }) {
     return CustomImageButton(
-      onPressed: () {
-        CRoute.push(context, TopicPage());
-      },
+      onPressed: onTap,
       child: Container(
         padding: EdgeInsets.all(rSize(15)),
         child: Row(
@@ -162,9 +168,7 @@ class _UserAttentionPageState extends State<UserAttentionPage>
             SizedBox(width: rSize(15)),
             LiveAttentionButton(
               initAttention: false,
-              onAttention: (oldAttentionState) {
-                
-              },
+              onAttention: (oldAttentionState) {},
             ),
           ],
         ),
