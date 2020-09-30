@@ -45,6 +45,7 @@ class _UserHomePageState extends State<UserHomePage>
           return [
             SliverAppBar(
               backgroundColor: Colors.white,
+              brightness: Brightness.light,
               leading: RecookBackButton(),
               centerTitle: true,
               title: Text(

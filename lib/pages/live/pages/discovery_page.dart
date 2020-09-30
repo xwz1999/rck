@@ -36,65 +36,63 @@ class _DiscoveryPageState extends State<DiscoveryPage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.frenchColor,
-      body: Column(
-        children: [
-          Container(
-            color: Colors.white,
-            child: SafeArea(
-              top: true,
-              bottom: false,
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: rSize(80)),
-                    child: TabBar(
-                      controller: _tabController,
-                      labelColor: Color(0xFF333333),
-                      unselectedLabelColor: Color(0xFF333333).withOpacity(0.3),
-                      labelStyle: TextStyle(
-                        fontSize: rSP(18),
-                        fontWeight: FontWeight.w600,
-                      ),
-                      unselectedLabelStyle: TextStyle(
-                        fontSize: rSP(18),
-                        fontWeight: FontWeight.w400,
-                      ),
-                      labelPadding: EdgeInsets.zero,
-                      indicatorSize: TabBarIndicatorSize.label,
-                      indicator: RecookIndicator(
-                        borderSide: BorderSide(
-                          width: rSize(3),
-                          color: Color(0xFFDB2D2D),
-                        ),
-                      ),
-                      tabs: [
-                        Tab(text: '直播'),
-                        Tab(text: '视频'),
-                        Tab(text: '图文'),
-                      ],
-                    ),
-                  ),
-                  CustomImageButton(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: rSize(16),
-                      vertical: rSize(12),
-                    ),
-                    child: Image.asset(
-                      R.ASSETS_LIVE_USER_PNG,
-                      width: rSize(20),
-                      height: rSize(20),
-                    ),
-                    onPressed: () {
-                      CRoute.push(
-                        context,
-                        UserHomePage(selfFlag: true),
-                      );
-                    },
-                  ),
-                ],
-              ),
+      appBar: AppBar(
+        brightness: Brightness.light,
+        backgroundColor: Colors.white,
+        leading: SizedBox(
+          width: rSize(50),
+          child: CustomImageButton(
+            padding: EdgeInsets.symmetric(
+              horizontal: rSize(16),
+              vertical: rSize(12),
+            ),
+            child: Image.asset(
+              R.ASSETS_LIVE_USER_PNG,
+              width: rSize(20),
+              height: rSize(20),
+            ),
+            onPressed: () {
+              CRoute.push(
+                context,
+                UserHomePage(selfFlag: true),
+              );
+            },
+          ),
+        ),
+        title: TabBar(
+          controller: _tabController,
+          labelColor: Color(0xFF333333),
+          unselectedLabelColor: Color(0xFF333333).withOpacity(0.3),
+          labelStyle: TextStyle(
+            fontSize: rSP(18),
+            fontWeight: FontWeight.w600,
+          ),
+          unselectedLabelStyle: TextStyle(
+            fontSize: rSP(18),
+            fontWeight: FontWeight.w400,
+          ),
+          labelPadding: EdgeInsets.zero,
+          indicatorSize: TabBarIndicatorSize.label,
+          indicator: RecookIndicator(
+            borderSide: BorderSide(
+              width: rSize(3),
+              color: Color(0xFFDB2D2D),
             ),
           ),
+          tabs: [
+            Tab(text: '直播'),
+            Tab(text: '视频'),
+            Tab(text: '图文'),
+          ],
+        ),
+        centerTitle: true,
+        titleSpacing: 0,
+        actions: [
+          SizedBox(width: rSize(50)),
+        ],
+      ),
+      body: Column(
+        children: [
           Expanded(
               child: CacheTabBarView(
             controller: _tabController,
