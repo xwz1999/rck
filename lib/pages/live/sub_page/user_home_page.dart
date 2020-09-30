@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/styles.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/sub_page/live_host_center_page.dart';
 import 'package:recook/pages/live/sub_page/user_attention_page.dart';
 import 'package:recook/pages/live/widget/live_attention_button.dart';
@@ -73,7 +74,10 @@ class _UserHomePageState extends State<UserHomePage>
                           SizedBox(width: rSize(10)),
                           Expanded(
                             child: Text(
-                              'USER TEST',
+                              widget.selfFlag
+                                  ? UserManager.instance.user.info.nickname
+                                  //TODO online user nick name
+                                  : 'USER TEST',
                               style: TextStyle(
                                 color: Color(0xFF333333),
                                 fontSize: rSP(18),

@@ -63,17 +63,27 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
                   ),
                 ],
               ),
-              initialValue: 'test',
+              initialValue: '近7天数据',
               itemBuilder: (context) {
                 return [
                   PopupMenuItem(
+                      value: '近7天数据',
                       child: Text(
-                    '近7天数据',
-                    style: TextStyle(
-                      color: Color(0xFF333333),
-                      fontSize: rSP(16),
-                    ),
-                  )),
+                        '近7天数据',
+                        style: TextStyle(
+                          color: Color(0xFF333333),
+                          fontSize: rSP(16),
+                        ),
+                      )),
+                  PopupMenuItem(
+                      value: '近30天数据',
+                      child: Text(
+                        '近30天数据',
+                        style: TextStyle(
+                          color: Color(0xFF333333),
+                          fontSize: rSP(16),
+                        ),
+                      )),
                 ];
               },
             ),
