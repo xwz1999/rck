@@ -9,8 +9,8 @@ import 'package:image_picker/image_picker.dart';
 
 import 'package:recook/constants/header.dart';
 import 'package:recook/main.dart';
-import 'package:recook/pages/live/live_stream/crop_video_page.dart';
-import 'package:recook/pages/live/live_stream/video_advance_page.dart';
+import 'package:recook/pages/live/video/crop_video_page.dart';
+import 'package:recook/pages/live/video/video_advance_page.dart';
 import 'package:recook/pages/live/widget/local_file_video.dart';
 import 'package:recook/pages/live/widget/video_record_button.dart';
 import 'package:recook/utils/custom_route.dart';

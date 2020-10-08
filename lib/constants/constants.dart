@@ -41,13 +41,23 @@ class ScreenAdapterUtils {
 //DESIGN CONSTANT
 
 ///DESIGN WIDTH
-rSize(double size) {
+double rSize(double size) {
   return ScreenAdapterUtils.setWidth(size);
 }
 
 ///DESIGN SP
-rSP(double size) {
+double rSP(double size) {
   return ScreenAdapterUtils.setSp(size);
+}
+
+/// DESIGN SizedBox with width
+Widget rWBox(double size) {
+  return SizedBox(width: ScreenAdapterUtils.setWidth(size));
+}
+
+/// DESIGN SizedBox with height
+Widget rHBox(double size) {
+  return SizedBox(height: ScreenAdapterUtils.setWidth(size));
 }
 
 class AppStrings {

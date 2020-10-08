@@ -13,7 +13,7 @@ import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/business/business_page.dart';
 import 'package:recook/pages/home/home_page.dart';
-import 'package:recook/pages/live/live_stream/add_video_page.dart';
+import 'package:recook/pages/live/video/add_video_page.dart';
 import 'package:recook/pages/live/pages/discovery_page.dart';
 import 'package:recook/pages/live/widget/live_fab_location.dart';
 import 'package:recook/pages/shop/widget/normal_shop_page.dart';

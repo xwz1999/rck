@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/pages/live/video/video_advance_page.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:video_trimmer/trim_editor.dart';
@@ -53,7 +56,21 @@ class _CropVideoPageState extends State<CropVideoPage> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(rSize(14)),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  GSDialog.of(context).showLoadingDialog(context, '保存视频中');
+                  _trimmer
+                      .saveTrimmedVideo(
+                    startValue: _startValue,
+                    endValue: _endValue,
+                  )
+                      .then((path) {
+                    GSDialog.of(context).dismiss(context);
+                    CRoute.pushReplace(
+                      context,
+                      VideoAdvancePage(file: File(path)),
+                    );
+                  });
+                },
                 color: Color(0xFFFA3B3E),
               ),
             ),

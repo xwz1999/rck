@@ -10,7 +10,7 @@ class LocalFileVideo extends StatefulWidget {
   LocalFileVideo({
     Key key,
     @required this.file,
-    @required this.aspectRatio,
+    this.aspectRatio,
   }) : super(key: key);
 
   @override

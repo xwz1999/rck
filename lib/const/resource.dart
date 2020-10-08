@@ -440,6 +440,12 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/stream_play_back.png)
   static const String ASSETS_LIVE_STREAM_PLAY_BACK_PNG = 'assets/live/stream_play_back.png';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/topic.png)
+  static const String ASSETS_LIVE_TOPIC_PNG = 'assets/live/topic.png';
+
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/upload_cart.png)
+  static const String ASSETS_LIVE_UPLOAD_CART_PNG = 'assets/live/upload_cart.png';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/user.png)
   static const String ASSETS_LIVE_USER_PNG = 'assets/live/user.png';
 
