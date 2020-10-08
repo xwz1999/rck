@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/sub_page/data_manager_page.dart';
-import 'package:recook/pages/user/order/order_return_status_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
-import 'package:recook/widgets/sc_tile.dart';
 
 class LiveHostCenterPage extends StatefulWidget {
   LiveHostCenterPage({Key key}) : super(key: key);
@@ -75,7 +74,7 @@ class _LiveHostCenterPageState extends State<LiveHostCenterPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '吕贝贝',
+                      UserManager.instance.user.info.nickname,
                       style: TextStyle(
                         color: Color(0xFF333333),
                         fontSize: rSP(18),

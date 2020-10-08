@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -70,7 +71,17 @@ class _UserHomePageState extends State<UserHomePage>
                     children: [
                       Row(
                         children: [
-                          CircleAvatar(radius: rSize(54 / 2.0)),
+                          widget.selfFlag
+                              ? CircleAvatar(
+                                  radius: rSize(54 / 2.0),
+                                  backgroundImage: NetworkImage(
+                                    Api.getImgUrl(UserManager
+                                        .instance.user.info.headImgUrl),
+                                  ),
+                                )
+                              : CircleAvatar(
+                                  radius: rSize(54 / 2.0),
+                                ),
                           SizedBox(width: rSize(10)),
                           Expanded(
                             child: Text(
