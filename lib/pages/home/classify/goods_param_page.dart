@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/widgets/text_button.dart';
+import 'package:recook/widgets/text_button.dart' as TButton;
 
 class GoodsParamPage extends StatefulWidget {
   // final List<Sku> skus;
@@ -147,7 +147,7 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
                   ],
                 ),
               ),
-              TextButton(
+              TButton.TextButton(
                 margin: EdgeInsets.only(top: 8, left: 20, right: 20),
                 radius: BorderRadius.all(Radius.circular(30)),
                 height: rSize(35),

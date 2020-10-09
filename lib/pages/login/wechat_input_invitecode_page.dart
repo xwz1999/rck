@@ -9,7 +9,7 @@ import 'package:recook/constants/styles.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/text_button.dart';
+import 'package:recook/widgets/text_button.dart' as TButton;
 import 'package:recook/widgets/toast.dart';
 
 class WeChatInputInviteCodePage extends StatefulWidget {
@@ -165,7 +165,7 @@ class _WeChatInputInviteCodePageState
 
   _loginBtnWidget() {
     return Container(
-      child: TextButton(
+      child: TButton.TextButton(
         title: '登录',
         textColor: Colors.white,
         unableBackgroundColor: Colors.grey[300],
