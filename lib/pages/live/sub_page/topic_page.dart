@@ -7,7 +7,6 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/models/topic_base_info_model.dart';
 import 'package:recook/pages/live/models/topic_content_list_model.dart';
 import 'package:recook/pages/live/widget/live_attention_button.dart';
-import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
@@ -35,6 +34,9 @@ class _TopicPageState extends State<TopicPage> {
         _topicBaseInfoModel =
             TopicBaseInfoModel.fromJson(resultData.data['data']);
       });
+    });
+    Future.delayed(Duration(milliseconds: 300), () {
+      _controller.requestRefresh();
     });
   }
 
@@ -147,6 +149,14 @@ class _TopicPageState extends State<TopicPage> {
                   models = getModels;
                   if (mounted) setState(() {});
                   _controller.refreshCompleted();
+                });
+              },
+              onLoadMore: () {
+                _page++;
+                _getTopicContentModels().then((getModels) {
+                  models.addAll(getModels);
+                  if (mounted) setState(() {});
+                  _controller.loadComplete();
                 });
               },
               body: WaterfallFlow.builder(

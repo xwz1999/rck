@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
+import 'package:recook/pages/live/models/follow_list_model.dart';
+import 'package:recook/pages/live/sub_page/user_attention_page.dart';
+import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
@@ -12,6 +18,20 @@ class LiveStreamPage extends StatefulWidget {
 }
 
 class _LiveStreamPageState extends State<LiveStreamPage> {
+  List<FollowListModel> followListModels = [];
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 300), () {
+      getUserModels().then((models) {
+        setState(() {
+          followListModels = models;
+        });
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -28,28 +48,35 @@ class _LiveStreamPageState extends State<LiveStreamPage> {
     return Container(
       height: rSize(102),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          rHBox(rSize(102)),
           Expanded(
             child: ListView.separated(
               padding: EdgeInsets.symmetric(
                 horizontal: rSize(20),
-                vertical: rSize(15),
+                vertical: rSize(10),
               ),
               separatorBuilder: (context, index) {
                 return SizedBox(width: rSize(16));
               },
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                return _buildAttentionBox('user $index');
+                return _buildAttentionBox(followListModels[index]);
               },
-              itemCount: 20,
+              itemCount: followListModels.length,
             ),
           ),
           Container(
             width: rSize(52),
             child: CustomImageButton(
               height: rSize(102),
-              onPressed: () {},
+              onPressed: () {
+                CRoute.push(
+                  context,
+                  UserAttentionPage(id: UserManager.instance.user.info.id),
+                );
+              },
               child: Text(
                 '全部\n关注',
                 style: TextStyle(
@@ -64,14 +91,20 @@ class _LiveStreamPageState extends State<LiveStreamPage> {
     );
   }
 
-  _buildAttentionBox(String nickName) {
+  _buildAttentionBox(FollowListModel model) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Stack(
           children: [
-            CircleAvatar(
-              radius: rSize(52 / 2),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(rSize(52 / 2)),
+              child: FadeInImage.assetNetwork(
+                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                image: model.headImgUrl,
+                height: rSize(52),
+                width: rSize(52),
+              ),
             ),
             Positioned(
               right: rSize(3),
@@ -86,7 +119,7 @@ class _LiveStreamPageState extends State<LiveStreamPage> {
         ),
         SizedBox(height: rSize(4)),
         Text(
-          nickName,
+          model.nickname,
           style: TextStyle(
             color: Color(0xFF666666),
             fontSize: rSP(11),
@@ -273,5 +306,19 @@ class _LiveStreamPageState extends State<LiveStreamPage> {
         ),
       ),
     );
+  }
+
+  Future<List<FollowListModel>> getUserModels() async {
+    ResultData resultData = await HttpManager.post(LiveAPI.followList, {
+      'findUserId': UserManager.instance.user.info.id,
+      'page': 1,
+      'limit': 10,
+    });
+    if (resultData?.data['data'] == null)
+      return [];
+    else
+      return (resultData?.data['data']['list'] as List)
+          .map((e) => FollowListModel.fromJson(e))
+          .toList();
   }
 }
