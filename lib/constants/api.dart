@@ -411,4 +411,7 @@ class LiveAPI {
 
   /// 取消关注话题
   static const String cancelTopic = '/v1/live/topic/follow/cancel';
+
+  ///话题详情列表
+  static const String topicContentList = '/v1/live/topic/content/list';
 }

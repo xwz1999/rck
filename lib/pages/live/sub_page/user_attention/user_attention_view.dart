@@ -98,7 +98,10 @@ class _UserAttentionViewState extends State<UserAttentionView>
       onTap: () {
         CRoute.push(
           context,
-          UserHomePage(userId: model.userId),
+          UserHomePage(
+            userId: model.userId,
+            initAttention: model.isFollow == 1,
+          ),
         );
       },
       onAttention: (bool oldState) {

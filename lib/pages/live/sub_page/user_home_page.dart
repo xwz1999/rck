@@ -19,7 +19,9 @@ import 'package:recook/widgets/recook_indicator.dart';
 
 class UserHomePage extends StatefulWidget {
   final int userId;
-  UserHomePage({Key key, @required this.userId}) : super(key: key);
+  final bool initAttention;
+  UserHomePage({Key key, @required this.userId, this.initAttention = false})
+      : super(key: key);
 
   @override
   _UserHomePageState createState() => _UserHomePageState();
@@ -122,7 +124,7 @@ class _UserHomePageState extends State<UserHomePage>
                               : LiveAttentionButton(
                                   filled: true,
                                   rounded: false,
-                                  initAttention: false,
+                                  initAttention: widget.initAttention,
                                   width: rSize(68),
                                   height: rSize(30),
                                   onAttention: (oldAttentionState) {},
