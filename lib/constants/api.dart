@@ -399,4 +399,16 @@ class LiveAPI {
 
   ///取消关注
   static const String cancelFollow = '/v1/live/user/follow/cancel';
+
+  ///话题基础信息
+  static const String topicBaseInfo = '/v1/live/topic/info';
+
+  ///话题列表
+  static const String topicList = '/v1/live/topic/follow/list';
+
+  ///关注话题
+  static const String addTopic = '/v1/live/topic/follow/add';
+
+  /// 取消关注话题
+  static const String cancelTopic = '/v1/live/topic/follow/cancel';
 }

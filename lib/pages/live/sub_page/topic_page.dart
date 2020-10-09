@@ -4,19 +4,36 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/live/models/topic_base_info_model.dart';
 import 'package:recook/pages/live/widget/live_attention_button.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 
 class TopicPage extends StatefulWidget {
-  TopicPage({Key key}) : super(key: key);
+  final int topicId;
+  TopicPage({Key key, @required this.topicId}) : super(key: key);
 
   @override
   _TopicPageState createState() => _TopicPageState();
 }
 
 class _TopicPageState extends State<TopicPage> {
+  TopicBaseInfoModel _topicBaseInfoModel = TopicBaseInfoModel.zero();
+  @override
+  void initState() {
+    super.initState();
+    HttpManager.post(LiveAPI.topicBaseInfo, {
+      'topicId': widget.topicId,
+    }).then((resultData) {
+      setState(() {
+        _topicBaseInfoModel =
+            TopicBaseInfoModel.fromJson(resultData.data['data']);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,8 +61,7 @@ class _TopicPageState extends State<TopicPage> {
                         top: 0,
                         child: FadeInImage.assetNetwork(
                           placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                          image: Api.getImgUrl(
-                              '/photo/58ea9ceb4be7300fa79c47e1ea80252f.jpg'),
+                          image: Api.getImgUrl(_topicBaseInfoModel.topicImg),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -63,8 +79,8 @@ class _TopicPageState extends State<TopicPage> {
                           children: [
                             FadeInImage.assetNetwork(
                               placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                              image: Api.getImgUrl(
-                                  '/photo/58ea9ceb4be7300fa79c47e1ea80252f.jpg'),
+                              image:
+                                  Api.getImgUrl(_topicBaseInfoModel.topicImg),
                               fit: BoxFit.cover,
                               height: rSize(64),
                               width: rSize(64),
@@ -78,7 +94,7 @@ class _TopicPageState extends State<TopicPage> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          '#高颜值厨房好物',
+                                          '#${_topicBaseInfoModel.title}',
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: rSP(16),
@@ -86,11 +102,19 @@ class _TopicPageState extends State<TopicPage> {
                                         ),
                                       ),
                                       LiveAttentionButton(
-                                        initAttention: false,
+                                        initAttention:
+                                            _topicBaseInfoModel.isFollow == 1,
                                         filled: true,
                                         width: rSize(56),
                                         height: rSize(26),
-                                        onAttention: (oldAttentionState) {},
+                                        onAttention: (oldAttentionState) {
+                                          HttpManager.post(
+                                            oldAttentionState
+                                                ? LiveAPI.cancelTopic
+                                                : LiveAPI.addTopic,
+                                            {'topicId': widget.topicId},
+                                          );
+                                        },
                                       ),
                                     ],
                                   ),
@@ -107,9 +131,12 @@ class _TopicPageState extends State<TopicPage> {
               SliverPadding(
                 padding: EdgeInsets.all(rSize(15)),
                 sliver: SliverWaterfallFlow(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    return _buildCard();
-                  }),
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return _buildCard();
+                    },
+                    // childCount: 
+                  ),
                   gridDelegate:
                       SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
