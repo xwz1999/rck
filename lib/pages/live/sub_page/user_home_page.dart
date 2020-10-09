@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/sub_page/live_host_center_page.dart';
 import 'package:recook/pages/live/sub_page/user_attention_page.dart';
 import 'package:recook/pages/live/widget/live_attention_button.dart';
@@ -15,8 +18,8 @@ import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
 
 class UserHomePage extends StatefulWidget {
-  final bool selfFlag;
-  UserHomePage({Key key, @required this.selfFlag}) : super(key: key);
+  final int userId;
+  UserHomePage({Key key, @required this.userId}) : super(key: key);
 
   @override
   _UserHomePageState createState() => _UserHomePageState();
@@ -25,6 +28,9 @@ class UserHomePage extends StatefulWidget {
 class _UserHomePageState extends State<UserHomePage>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
+  LiveBaseInfoModel model = LiveBaseInfoModel.zero();
+  bool get selfFlag => widget.userId == UserManager.instance.user.info.id;
+
   @override
   void initState() {
     super.initState();
@@ -32,6 +38,15 @@ class _UserHomePageState extends State<UserHomePage>
       length: 2,
       vsync: this,
     );
+    HttpManager.post(LiveAPI.baseInfo, {
+      'findUserId': widget.userId,
+    }).then((resultData) {
+      if (resultData?.data['data'] != null) {
+        setState(() {
+          model = LiveBaseInfoModel.fromJson(resultData.data['data']);
+        });
+      }
+    });
   }
 
   @override
@@ -53,7 +68,7 @@ class _UserHomePageState extends State<UserHomePage>
               leading: RecookBackButton(),
               centerTitle: true,
               title: Text(
-                '我的主页',
+                selfFlag ? '我的主页' : 'TA的主页',
                 style: TextStyle(
                   color: Color(0xFF333333),
                 ),
@@ -71,31 +86,27 @@ class _UserHomePageState extends State<UserHomePage>
                     children: [
                       Row(
                         children: [
-                          widget.selfFlag
-                              ? CircleAvatar(
-                                  radius: rSize(54 / 2.0),
-                                  backgroundImage: NetworkImage(
-                                    Api.getImgUrl(UserManager
-                                        .instance.user.info.headImgUrl),
-                                  ),
-                                )
-                              : CircleAvatar(
-                                  radius: rSize(54 / 2.0),
-                                ),
+                          ClipRRect(
+                            borderRadius:
+                                BorderRadius.circular(rSize(54 / 2.0)),
+                            child: FadeInImage.assetNetwork(
+                              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                              image: Api.getImgUrl(model.headImgUrl),
+                              height: rSize(54),
+                              width: rSize(54),
+                            ),
+                          ),
                           SizedBox(width: rSize(10)),
                           Expanded(
                             child: Text(
-                              widget.selfFlag
-                                  ? UserManager.instance.user.info.nickname
-                                  //TODO online user nick name
-                                  : 'USER TEST',
+                              model.nickname,
                               style: TextStyle(
                                 color: Color(0xFF333333),
                                 fontSize: rSP(18),
                               ),
                             ),
                           ),
-                          widget.selfFlag
+                          selfFlag
                               ? MaterialButton(
                                   minWidth: rSize(60),
                                   height: rSize(30),
@@ -128,20 +139,20 @@ class _UserHomePageState extends State<UserHomePage>
                           children: [
                             _buildVerticalView(
                               '关注',
-                              226,
+                              model.follows,
                               onTap: () => CRoute.push(
                                 context,
-                                UserAttentionPage(),
+                                UserAttentionPage(id: widget.userId),
                               ),
                             ),
                             _buildVerticalView(
                               '粉丝',
-                              12,
+                              model.fans,
                               onTap: () {},
                             ),
                             _buildVerticalView(
                               '获赞',
-                              100,
+                              model.praise,
                               onTap: () {},
                             ),
                           ],

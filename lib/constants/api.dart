@@ -379,3 +379,24 @@ class LotteryAPI {
   ///彩票订单详情
   static const String lottery_order_detail = "/v1/ticket/order/info";
 }
+
+///直播接口
+class LiveAPI {
+  ///商品橱窗
+  static const String shopWindow = '/v1/live/cupboard/list';
+
+  ///删除商品橱窗
+  static const String deleteShopWindow = '/v1/live/cupboard/delete';
+
+  ///会员基础信息
+  static const String baseInfo = '/v1/live/user/baseinfo';
+
+  ///关注列表
+  static const String followList = '/v1/live/user/follow/list';
+
+  ///添加关注
+  static const String addFollow = '/v1/live/user/follow/add';
+
+  ///取消关注
+  static const String cancelFollow = '/v1/live/user/follow/cancel';
+}

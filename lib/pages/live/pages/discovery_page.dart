@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/business/recommend/child_recommend_page.dart';
 import 'package:recook/pages/live/sub_page/live_stream_page.dart';
 import 'package:recook/pages/live/sub_page/user_home_page.dart';
@@ -54,7 +55,9 @@ class _DiscoveryPageState extends State<DiscoveryPage>
             onPressed: () {
               CRoute.push(
                 context,
-                UserHomePage(selfFlag: true),
+                UserHomePage(
+                  userId: UserManager.instance.user.info.id,
+                ),
               );
             },
           ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/live/pages/goods_window_page.dart';
 import 'package:recook/pages/live/sub_page/data_manager_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/recook_back_button.dart';
@@ -36,6 +38,7 @@ class _LiveHostCenterPageState extends State<LiveHostCenterPage>
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
+        brightness: Brightness.light,
         backgroundColor: Colors.white,
         leading: RecookBackButton(),
         title: Text(
@@ -65,8 +68,15 @@ class _LiveHostCenterPageState extends State<LiveHostCenterPage>
         children: [
           Row(
             children: [
-              CircleAvatar(
-                radius: rSize(54 / 2),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(rSize(54 / 2.0)),
+                child: FadeInImage.assetNetwork(
+                  placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                  image:
+                      Api.getImgUrl(UserManager.instance.user.info.headImgUrl),
+                  height: rSize(54),
+                  width: rSize(54),
+                ),
               ),
               SizedBox(width: rSize(10)),
               Expanded(
@@ -178,7 +188,9 @@ class _LiveHostCenterPageState extends State<LiveHostCenterPage>
               width: rSize(20),
               height: rSize(20),
             ),
-            onTap: () {},
+            onTap: () {
+              CRoute.push(context, GoodsWindowPage());
+            },
           ),
         ],
       ),

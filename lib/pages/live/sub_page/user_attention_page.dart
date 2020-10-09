@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/live/models/follow_list_model.dart';
 import 'package:recook/pages/live/sub_page/topic_page.dart';
 import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/pages/live/widget/live_attention_button.dart';
@@ -7,9 +11,11 @@ import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
 import 'package:recook/widgets/recook_indicator.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 
 class UserAttentionPage extends StatefulWidget {
-  UserAttentionPage({Key key}) : super(key: key);
+  final int id;
+  UserAttentionPage({Key key, @required this.id}) : super(key: key);
 
   @override
   _UserAttentionPageState createState() => _UserAttentionPageState();
@@ -18,6 +24,14 @@ class UserAttentionPage extends StatefulWidget {
 class _UserAttentionPageState extends State<UserAttentionPage>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
+  GSRefreshController _userController = GSRefreshController();
+  GSRefreshController _topicController = GSRefreshController();
+
+  int _page = 1;
+  List<FollowListModel> followModels = [];
+
+  bool get selfFlag => widget.id == UserManager.instance.user.info.id;
+
   @override
   void initState() {
     super.initState();
@@ -25,18 +39,23 @@ class _UserAttentionPageState extends State<UserAttentionPage>
       length: 2,
       vsync: this,
     );
+    Future.delayed(Duration(milliseconds: 300), () {
+      _userController.requestRefresh();
+    });
   }
 
   @override
   void dispose() {
     _tabController?.dispose();
+    _userController?.dispose();
+    _topicController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return RecookScaffold(
-      title: '我的关注',
+      title: selfFlag ? '我的关注' : 'TA的关注',
       whiteBg: true,
       appBarBottom: PreferredSize(
         preferredSize: Size.fromHeight(rSize(38)),
@@ -60,16 +79,39 @@ class _UserAttentionPageState extends State<UserAttentionPage>
             labelColor: Color(0xFF333333),
             unselectedLabelColor: Color(0xFF666666),
             controller: _tabController,
+            onTap: (index) {
+              switch (index) {
+                case 0:
+                  Future.delayed(Duration(milliseconds: 300), () {
+                    _userController.requestRefresh();
+                  });
+                  break;
+                case 1:
+                  break;
+              }
+            },
           ),
         ),
       ),
       body: TabBarView(
         controller: _tabController,
         children: [
-          ListView.builder(
-            itemBuilder: (context, index) {
-              return _buildUserCard();
+          RefreshWidget(
+            controller: _userController,
+            onRefresh: () {
+              getUserModels().then((models) {
+                if (mounted) followModels = models;
+                setState(() {});
+                _userController.refreshCompleted();
+              });
             },
+            body: ListView.builder(
+              itemBuilder: (context, index) {
+                final model = followModels[index];
+                return _buildUserCard(model);
+              },
+              itemCount: followModels.length,
+            ),
           ),
           ListView.builder(
             itemBuilder: (context, index) {
@@ -81,16 +123,32 @@ class _UserAttentionPageState extends State<UserAttentionPage>
     );
   }
 
-  _buildUserCard() {
+  _buildUserCard(FollowListModel model) {
     return _buildUserBaseCard(
-      prefix: CircleAvatar(
-        radius: rSize(42 / 2),
+      prefix: ClipRRect(
+        borderRadius: BorderRadius.circular(rSize(42 / 2)),
+        child: FadeInImage.assetNetwork(
+          placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+          image: Api.getImgUrl(model.headImgUrl),
+          height: rSize(42),
+          width: rSize(42),
+        ),
       ),
-      title: 'Kyleigh Corkery',
-      subTitlePrefix: '关注 234',
-      subTitleSuffix: '粉丝 10万',
+      title: model.nickname,
+      subTitlePrefix: '关注 ${model.follows}',
+      subTitleSuffix: '粉丝 ${model.fans}',
+      initAttention: model.isFollow == 1,
       onTap: () {
-        CRoute.push(context, UserHomePage(selfFlag: false));
+        CRoute.push(
+          context,
+          UserHomePage(userId: model.userId),
+        );
+      },
+      onAttention: (bool oldState) {
+        HttpManager.post(
+          oldState ? LiveAPI.cancelFollow : LiveAPI.addFollow,
+          {'followUserId': model.userId},
+        );
       },
     );
   }
@@ -108,6 +166,7 @@ class _UserAttentionPageState extends State<UserAttentionPage>
       onTap: () {
         CRoute.push(context, TopicPage());
       },
+      onAttention: (bool oldState) {},
     );
   }
 
@@ -117,6 +176,8 @@ class _UserAttentionPageState extends State<UserAttentionPage>
     String subTitlePrefix,
     String subTitleSuffix,
     @required VoidCallback onTap,
+    bool initAttention = false,
+    @required Function(bool oldState) onAttention,
   }) {
     return CustomImageButton(
       onPressed: onTap,
@@ -167,12 +228,26 @@ class _UserAttentionPageState extends State<UserAttentionPage>
             ),
             SizedBox(width: rSize(15)),
             LiveAttentionButton(
-              initAttention: false,
-              onAttention: (oldAttentionState) {},
+              initAttention: initAttention,
+              onAttention: onAttention,
             ),
           ],
         ),
       ),
     );
+  }
+
+  Future<List<FollowListModel>> getUserModels() async {
+    ResultData resultData = await HttpManager.post(LiveAPI.followList, {
+      'findUserId': widget.id,
+      'page': _page,
+      'limit': 15,
+    });
+    if (resultData?.data['data'] == null)
+      return [];
+    else
+      return (resultData?.data['data']['list'] as List)
+          .map((e) => FollowListModel.fromJson(e))
+          .toList();
   }
 }
