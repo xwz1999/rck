@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/live/video/video_preview_page.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/recook/recook_list_tile.dart';
 import 'package:recook/widgets/sc_tile.dart';
 
@@ -74,22 +76,29 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
             width: rSize(100),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(rSize(4)),
-              child: InkWell(
-                onTap: () {},
-                splashColor: Colors.white.withOpacity(0.5),
-                child: Ink.image(
-                  image: FileImage(widget.coverImageFile),
-                  fit: BoxFit.cover,
-                  child: Container(
-                    width: rSize(100),
-                    height: rSize(100),
-                    alignment: Alignment.center,
-                    child: Image.asset(
-                      R.ASSETS_LIVE_VIDEO_PLAY_PNG,
-                      height: rSize(34),
-                      width: rSize(34),
+              child: Hero(
+                tag: 'preview_video',
+                child: Material(
+                  child: Ink.image(
+                    image: FileImage(widget.coverImageFile),
+                    fit: BoxFit.cover,
+                    child: InkWell(
+                      onTap: () {
+                        CRoute.push(
+                            context, VideoPreviewPage(file: widget.videoFile));
+                      },
+                      child: Container(
+                        width: rSize(100),
+                        height: rSize(100),
+                        alignment: Alignment.center,
+                        child: Image.asset(
+                          R.ASSETS_LIVE_VIDEO_PLAY_PNG,
+                          height: rSize(34),
+                          width: rSize(34),
+                        ),
+                        color: Colors.black.withOpacity(0.35),
+                      ),
                     ),
-                    color: Colors.black.withOpacity(0.35),
                   ),
                 ),
               ),

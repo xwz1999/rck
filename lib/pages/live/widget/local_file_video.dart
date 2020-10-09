@@ -19,17 +19,22 @@ class LocalFileVideo extends StatefulWidget {
 
 class _LocalFileVideoState extends State<LocalFileVideo> {
   ChewieController _chewieController;
+  VideoPlayerController _videoPlayerController;
   @override
   void initState() {
     super.initState();
-    _chewieController = ChewieController(
-      aspectRatio: widget.aspectRatio,
-      autoPlay: true,
-      showControls: false,
-      looping: true,
-      placeholder: new Container(color: Colors.black),
-      videoPlayerController: VideoPlayerController.file(widget.file),
-    );
+    _videoPlayerController = VideoPlayerController.file(widget.file);
+    _videoPlayerController.initialize().then((value) {
+      _chewieController = ChewieController(
+        aspectRatio: _videoPlayerController.value.aspectRatio,
+        autoPlay: true,
+        showControls: false,
+        looping: true,
+        placeholder: new Container(color: Colors.black),
+        videoPlayerController: _videoPlayerController,
+      );
+      setState(() {});
+    });
   }
 
   @override
@@ -40,8 +45,10 @@ class _LocalFileVideoState extends State<LocalFileVideo> {
 
   @override
   Widget build(BuildContext context) {
-    return Chewie(
-      controller: _chewieController,
-    );
+    return _chewieController == null
+        ? Center(child: CircularProgressIndicator())
+        : Chewie(
+            controller: _chewieController,
+          );
   }
 }
