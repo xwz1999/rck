@@ -414,4 +414,7 @@ class LiveAPI {
 
   ///话题详情列表
   static const String topicContentList = '/v1/live/topic/content/list';
+
+  ///视频列表
+  static const String videoList = '/v1/live/short/list';
 }

@@ -6,7 +6,6 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
 import 'package:recook/pages/live/models/follow_list_model.dart';
 import 'package:recook/pages/live/sub_page/user_attention_page.dart';
-import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
@@ -17,7 +16,8 @@ class LiveStreamPage extends StatefulWidget {
   _LiveStreamPageState createState() => _LiveStreamPageState();
 }
 
-class _LiveStreamPageState extends State<LiveStreamPage> {
+class _LiveStreamPageState extends State<LiveStreamPage>
+    with AutomaticKeepAliveClientMixin {
   List<FollowListModel> followListModels = [];
 
   @override
@@ -34,6 +34,7 @@ class _LiveStreamPageState extends State<LiveStreamPage> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Column(
       children: [
         _buildAttentions(),
@@ -321,4 +322,7 @@ class _LiveStreamPageState extends State<LiveStreamPage> {
           .map((e) => FollowListModel.fromJson(e))
           .toList();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
