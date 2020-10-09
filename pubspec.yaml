@@ -81,7 +81,7 @@ dependencies:
 
   # 路径
   path_provider: ^1.6.11
-  path: 1.7.0
+  path:
 
   # 网络请求
   dio: ^3.0.9
