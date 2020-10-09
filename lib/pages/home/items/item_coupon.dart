@@ -14,8 +14,7 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/pages/home/classify/mvp/coupon_list_model_impl.dart';
 import 'package:recook/utils/time_transition_util.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/text_button.dart';
+import 'package:recook/widgets/text_button.dart' as TButton;
 import 'package:recook/models/coupon_list_model.dart';
 import 'package:recook/widgets/toast.dart';
 
@@ -143,7 +142,7 @@ class _CouponItemState extends State<CouponItem> {
                 ),
               ],
             ),
-            TextButton(
+            TButton.TextButton(
               padding: EdgeInsets.symmetric(horizontal: rSize(20)),
               radius: BorderRadius.horizontal(right: Radius.circular(11)),
               height: double.infinity,

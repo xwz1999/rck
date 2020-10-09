@@ -20,7 +20,7 @@ import 'package:recook/pages/login/input_invitation_code_page.dart';
 import 'package:recook/utils/share_preference.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/progress/sc_dialog.dart';
-import 'package:recook/widgets/text_button.dart';
+import 'package:recook/widgets/text_button.dart' as TButton;
 import 'package:recook/widgets/toast.dart';
 
 class PhoneLoginPage extends StatefulWidget {
@@ -215,7 +215,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                   suffixIcon: _clearButton(_smsCodeController, _smsCodeNode)),
             ),
           ),
-          TextButton(
+          TButton.TextButton(
             title: _countDownStr,
             width: rSize(120),
             textColor: Colors.grey[700],
@@ -257,7 +257,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
           //   highlightTextColor: Colors.grey[400],
           //   onTap: () {},
           // ),
-          TextButton(
+          TButton.TextButton(
             title: "收不到验证码？",
             font: ScreenAdapterUtils.setSp(14),
             textColor: Colors.grey[500],
@@ -270,8 +270,8 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   }
 
   /// 登录按钮
-  TextButton _loginButton(BuildContext context) {
-    return TextButton(
+  TButton.TextButton _loginButton(BuildContext context) {
+    return TButton.TextButton(
       height: 45,
       title: "登录",
       textColor: Colors.white,

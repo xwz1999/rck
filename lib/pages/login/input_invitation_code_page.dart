@@ -13,11 +13,10 @@ import 'package:flutter/services.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
-import 'package:recook/redux/user_redux.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/progress/sc_dialog.dart';
-import 'package:recook/widgets/text_button.dart';
+import 'package:recook/widgets/text_button.dart' as TButton;
 import 'package:recook/widgets/toast.dart';
 
 class InvitationCodePage extends StatefulWidget {
@@ -56,7 +55,7 @@ class InvitationCodePage extends StatefulWidget {
 
 class _InvitationCodePageState extends BaseStoreState<InvitationCodePage> {
   TextEditingController _controller;
-  
+
   bool _loginEnable = false;
 
   @override
@@ -92,12 +91,15 @@ class _InvitationCodePageState extends BaseStoreState<InvitationCodePage> {
                 )),
             Container(
                 margin: EdgeInsets.only(top: 8, left: 20, right: 20),
-                child: getStore().state.openinstall.code.length>0 ? Container() : Text(
-                  "检测到您是第一次登录，请输入邀请码",
-                  style: AppTextStyle.generate(16, color: Colors.grey[700]),
-                )),
+                child: getStore().state.openinstall.code.length > 0
+                    ? Container()
+                    : Text(
+                        "检测到您是第一次登录，请输入邀请码",
+                        style:
+                            AppTextStyle.generate(16, color: Colors.grey[700]),
+                      )),
             _invitationInput(context),
-            TextButton(
+            TButton.TextButton(
               title: "登录",
               textColor: Colors.white,
               unableBackgroundColor: Colors.grey[300],
@@ -110,7 +112,7 @@ class _InvitationCodePageState extends BaseStoreState<InvitationCodePage> {
                 GSDialog.of(context).showLoadingDialog(context, "");
                 if (phoneLogin) {
                   _phoneRegister(context);
-                }else {
+                } else {
                   // _weChatRegister(context);
                 }
               },
@@ -123,7 +125,7 @@ class _InvitationCodePageState extends BaseStoreState<InvitationCodePage> {
 
   Container _invitationInput(BuildContext context) {
     String bindData = getStore().state.openinstall.code;
-    if (bindData.length > 0){
+    if (bindData.length > 0) {
       setState(() {
         _loginEnable = true;
       });
@@ -133,17 +135,21 @@ class _InvitationCodePageState extends BaseStoreState<InvitationCodePage> {
       child: Theme(
         data: ThemeData(primaryColor: Theme.of(context).primaryColor),
         // child: _invitationTF(),
-        child: bindData.length > 0 ? _invitationText(bindData) : _invitationTF(),
+        child:
+            bindData.length > 0 ? _invitationText(bindData) : _invitationTF(),
       ),
     );
   }
 
-
   Text _invitationText(bindData) {
-    return Text("邀请码: $bindData", style: AppTextStyle.generate(30, color: Colors.black), maxLines: 1,);
+    return Text(
+      "邀请码: $bindData",
+      style: AppTextStyle.generate(30, color: Colors.black),
+      maxLines: 1,
+    );
   }
 
-  TextField _invitationTF(){
+  TextField _invitationTF() {
     return TextField(
       enableInteractiveSelection: true,
       maxLength: 8,
@@ -168,8 +174,7 @@ class _InvitationCodePageState extends BaseStoreState<InvitationCodePage> {
       textAlign: TextAlign.center,
       cursorColor: Colors.grey[400],
       style: AppTextStyle.generate(30,
-          fontWeight: FontWeight.w700,
-          color: Theme.of(context).primaryColor),
+          fontWeight: FontWeight.w700, color: Theme.of(context).primaryColor),
       decoration: InputDecoration(
           hintText: "请输入邀请码",
           hintStyle: AppTextStyle.generate(30, color: Colors.grey[400])),
@@ -178,11 +183,10 @@ class _InvitationCodePageState extends BaseStoreState<InvitationCodePage> {
 
   _phoneRegister(BuildContext context) {
     String bindData = getStore().state.openinstall.code;
-    if (bindData.length <= 0){
+    if (bindData.length <= 0) {
       bindData = _controller.text.toUpperCase();
     }
-    UserDao.phoneRegister(
-        widget.argument["mobile"], bindData,
+    UserDao.phoneRegister(widget.argument["mobile"], bindData,
         success: (data, code, msg) {
       GSDialog.of(context).dismiss(context);
       AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);

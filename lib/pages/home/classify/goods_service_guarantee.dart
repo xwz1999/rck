@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/text_button.dart';
+import 'package:recook/widgets/text_button.dart' as TButton;
 
 class GoodsServiceGuarantee extends StatefulWidget {
   // final List<Sku> skus;
@@ -68,7 +68,7 @@ class _GoodsServiceGuaranteeState
                   _contentView('支持七天无理由退换货', '该商品支持七天无理由退货(未使用)'),
                 ],
               )),
-              TextButton(
+              TButton.TextButton(
                 margin: EdgeInsets.only(top: 8, left: 20, right: 20),
                 radius: BorderRadius.all(Radius.circular(30)),
                 height: rSize(35),
