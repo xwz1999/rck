@@ -19,6 +19,20 @@ class _UserActivityViewState extends State<UserActivityView>
   int _page = 1;
   GSRefreshController _controller = GSRefreshController();
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 300), () {
+      if (mounted) _controller.requestRefresh();
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context);
     return RefreshWidget(

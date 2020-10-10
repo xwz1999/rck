@@ -420,4 +420,10 @@ class LiveAPI {
 
   ///用户动态
   static const String activityList = '/v1/live/user/trend/list';
+
+  ///用户动态评论
+  static const String activityReview = '/v1/live/user/trend/comment/list';
+
+  ///添加用户动态评论
+  static const String addActivityReview = '/v1/live/user/trend/comment/add';
 }
