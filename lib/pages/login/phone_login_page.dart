@@ -8,7 +8,6 @@
  */
 
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -16,8 +15,6 @@ import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/login/input_invitation_code_page.dart';
-import 'package:recook/utils/share_preference.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/progress/sc_dialog.dart';
 import 'package:recook/widgets/text_button.dart' as TButton;
@@ -48,13 +45,8 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
     super.initState();
 
     if (AppConfig.debug) {
-      // _phoneController = TextEditingController(text: "18867626276");
-      // _phoneController = TextEditingController(text: "17326714946");
-      _smsCodeController = TextEditingController(text: "0000");
-      // _phoneController = TextEditingController(text: "15669291989");
-      _phoneController = TextEditingController(text: "18067170899");
+      _smsCodeController = TextEditingController(text: "0520");
       _phoneController = TextEditingController(text: "18906611076");
-      // _smsCodeController = TextEditingController(text: "0000");
       _loginEnable = true;
       _getCodeEnable = true;
     } else {
