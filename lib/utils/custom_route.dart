@@ -29,4 +29,16 @@ class CRoute {
       return;
     }
   }
+
+  ///透明路由
+  static transparent(BuildContext context, Widget child) {
+    Navigator.push(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondAnimation) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+          opaque: false,
+        ));
+  }
 }

@@ -13,6 +13,7 @@ import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/business/business_page.dart';
 import 'package:recook/pages/home/home_page.dart';
+import 'package:recook/pages/live/live_stream/live_page.dart';
 import 'package:recook/pages/live/video/add_video_page.dart';
 import 'package:recook/pages/live/pages/discovery_page.dart';
 import 'package:recook/pages/live/widget/live_fab_location.dart';
@@ -22,6 +23,7 @@ import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/third_party/bugly_helper.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/custom_route.dart';
+import 'package:recook/utils/permission_tool.dart';
 import 'package:recook/utils/print_util.dart';
 import 'package:recook/utils/versionInfo/version_tool.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
@@ -140,7 +142,11 @@ class _TabBarWidgetState extends State<TabBarWidget>
                                       verticalButton(
                                         '直播',
                                         R.ASSETS_LIVE_ADD_STREAM_PNG,
-                                        onTap: () {},
+                                        onTap: () {
+                                          PermissionTool.haveCameraPermission()
+                                              .then((value) {});
+                                          CRoute.push(context, LivePage());
+                                        },
                                       ),
                                       verticalButton(
                                         '视频',

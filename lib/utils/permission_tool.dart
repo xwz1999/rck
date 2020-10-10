@@ -24,6 +24,15 @@ class PermissionTool{
     }
   }
 
+  static Future<bool> haveAudioPermission() async {
+    Map<PermissionGroup, PermissionStatus> permissions = await PermissionHandler().requestPermissions([PermissionGroup.microphone]);
+    if (permissions[PermissionGroup.photos] == PermissionStatus.granted) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
   static showOpenPermissionDialog(BuildContext context, String message,{Function open}){
     showCupertinoDialog<int>(
       context: context, 

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/live/live_stream/live_blur_page.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 
 class LiveStreamViewPage extends StatefulWidget {
   LiveStreamViewPage({Key key}) : super(key: key);
@@ -13,6 +16,23 @@ class LiveStreamViewPage extends StatefulWidget {
 
 class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   bool _showTools = true;
+  LivePlayer _livePlayer;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 10), () {
+      _livePlayer?.pausePlay();
+      CRoute.transparent(context, LiveBlurPage());
+    });
+  }
+
+  @override
+  void dispose() {
+    _livePlayer?.stopPlay();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,15 +45,28 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
             child: Container(
               height: MediaQuery.of(context).size.height,
               color: Colors.black54,
-              child: Placeholder(),
+              child: CloudVideo(
+                onCloudVideoCreated: (controller) async {
+                  _livePlayer = await LivePlayer.create();
+                  await _livePlayer.setPlayerView(controller);
+                  _livePlayer
+                      .startPlay('rtmp://58.200.131.2:1935/livetv/cctv1');
+                },
+              ),
             ),
           ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                _showTools = !_showTools;
-              });
-            },
+          Positioned(
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 0,
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  _showTools = !_showTools;
+                });
+              },
+            ),
           ),
           //头部工具栏
           AnimatedPositioned(
