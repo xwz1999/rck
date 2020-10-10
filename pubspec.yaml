@@ -19,7 +19,7 @@ dependencies:
 
   timeline_tile: 0.1.2
   # 高德定位
-  amap_location_fluttify: 0.13.0
+  amap_map_fluttify:
   # icons
   flutter_icons: 1.1.0
   # 拼音
@@ -178,7 +178,7 @@ dependencies:
   flip_card: ^0.4.4
 
   #腾讯直播
-
+  tencent_live_fluttify: ^0.2.0+1
   #瀑布流
   waterfall_flow: 2.0.3
   #相机

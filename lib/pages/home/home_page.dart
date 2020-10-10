@@ -10,13 +10,12 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
-import 'package:amap_location_fluttify/amap_location_fluttify.dart';
+import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -141,8 +140,6 @@ class _HomePageState extends BaseStoreState<HomePage>
     super.initState();
     // 分享注册
     _mobShareInit();
-    // 高德定位注册
-    _amapInit();
     // 判断微信是否登录
     WeChatUtils.initial();
     // meiqia注册
@@ -1305,7 +1302,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     // if (_weatherLocation==null)
 
     if (await requestPermission())
-      _weatherLocation = await AmapLocation.fetchLocation();
+      _weatherLocation = await AmapLocation.instance.fetchLocation();
 
     String url =
         "https://tianqiapi.com/api?version=v61&appid=81622428&appsecret=AxKzYWq3";
@@ -1337,10 +1334,6 @@ class _HomePageState extends BaseStoreState<HomePage>
         "https://www.reecook.cn");
     register.setupQQ("101876843", "6f367bfad98978e22c2e11897dd74f00");
     SharesdkPlugin.regist(register);
-  }
-
-  _amapInit() {
-    AmapCore.init("e8a8057cfedcdcadcf4e8f2c7f8de982");
   }
 
   Future<bool> requestPermission() async {

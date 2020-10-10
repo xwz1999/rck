@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bugly/flutter_bugly.dart';
@@ -29,6 +30,7 @@ List<CameraDescription> cameras;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
+  AmapLocation.instance.init(iosKey: 'e8a8057cfedcdcadcf4e8f2c7f8de982');
   AppConfig.initial(useEncrypt: false
 
       /// 网络请求加密功能
