@@ -40,120 +40,128 @@ class _ReviewChildCardsState extends State<ReviewChildCards> {
   Widget build(BuildContext context) {
     return Align(
       alignment: Alignment.bottomCenter,
-      child: DraggableScrollableSheet(
-        maxChildSize: 1 - (MediaQuery.of(context).padding.top / rSize(667)),
-        minChildSize: rSize(434) / rSize(667),
-        initialChildSize: rSize(434) / rSize(667),
-        builder: (context, scrollController) {
-          return Material(
-            color: Colors.white,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.vertical(
-              top: Radius.circular(rSize(15)),
-            )),
-            child: Column(
-              children: [
-                SizedBox(height: rSize(15)),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Row(
-                    children: [
-                      SizedBox(width: rSize(15)),
-                      Text(
-                        '评论',
-                        style: TextStyle(
-                          color: Color(0xFF333333),
-                          fontSize: rSP(16),
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      SizedBox(width: rSize(8)),
-                      Text(
-                        count.toString(),
-                        style: TextStyle(
-                          color: Color(0xFF333333).withOpacity(0.4),
-                          fontSize: rSP(16),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: rSize(15)),
-                Expanded(
-                  child: RefreshWidget(
-                    controller: _controller,
-                    onRefresh: () {
-                      _page = 1;
-                      getActivityReviews().then((models) {
-                        setState(() {
-                          activityReviewListModels = models;
-                        });
-                        _controller.refreshCompleted();
-                      });
-                    },
-                    body: ListView.builder(
-                      controller: scrollController,
-                      padding: EdgeInsets.symmetric(horizontal: rSize(15)),
-                      itemBuilder: (context, index) {
-                        return _buildReviewCard(
-                            activityReviewListModels[index]);
-                      },
-                      itemCount: activityReviewListModels.length,
-                    ),
-                  ),
-                ),
-                Container(
-                  color: Colors.white,
-                  height: rSize(48),
-                  alignment: Alignment.center,
-                  padding: EdgeInsets.symmetric(
-                    vertical: rSize(6),
-                    horizontal: rSize(15),
-                  ),
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: TextField(
-                      controller: _editingController,
-                      onSubmitted: (text) {
-                        addReview(widget.trendId, text).then((_) {
-                          if (mounted) _controller.requestRefresh();
-                          _editingController.clear();
-                        });
-                      },
+      child: Container(
+        height: MediaQuery.of(context).size.height -rSize(233) +
+            MediaQuery.of(context).viewInsets.bottom,
+        child: Material(
+          color: Colors.white,
+          shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+            top: Radius.circular(rSize(15)),
+          )),
+          child: Column(
+            children: [
+              SizedBox(height: rSize(15)),
+              GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Row(
+                  children: [
+                    SizedBox(width: rSize(15)),
+                    Text(
+                      '评论',
                       style: TextStyle(
                         color: Color(0xFF333333),
-                        fontSize: rSP(14),
-                      ),
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        isDense: true,
-                        hintText: '随便说两句…',
-                        hintStyle: TextStyle(
-                          color: Color(0xFF7F858D),
-                          fontSize: rSP(14),
-                        ),
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: rSize(15),
-                        ),
+                        fontSize: rSP(16),
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFF5F5F5),
-                      borderRadius: BorderRadius.circular(rSize(18)),
+                    SizedBox(width: rSize(8)),
+                    Text(
+                      count.toString(),
+                      style: TextStyle(
+                        color: Color(0xFF333333).withOpacity(0.4),
+                        fontSize: rSP(16),
+                      ),
                     ),
+                  ],
+                ),
+              ),
+              SizedBox(height: rSize(15)),
+              Expanded(
+                child: RefreshWidget(
+                  controller: _controller,
+                  onRefresh: () {
+                    _page = 1;
+                    getActivityReviews().then((models) {
+                      setState(() {
+                        activityReviewListModels = models;
+                      });
+                      _controller.refreshCompleted();
+                    });
+                  },
+                  onLoadMore: () {
+                    _page++;
+                    getActivityReviews().then((models) {
+                      setState(() {
+                        activityReviewListModels.addAll(models);
+                      });
+                      if (models.isEmpty)
+                        _controller.loadNoData();
+                      else
+                        _controller.loadComplete();
+                    });
+                  },
+                  body: ListView.builder(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    padding: EdgeInsets.symmetric(horizontal: rSize(15)),
+                    itemBuilder: (context, index) {
+                      return _buildReviewCard(activityReviewListModels[index]);
+                    },
+                    itemCount: activityReviewListModels.length,
                   ),
                 ),
-                AnimatedContainer(
-                  duration: Duration(milliseconds: 300),
-                  height: MediaQuery.of(context).viewPadding.bottom +
-                      MediaQuery.of(context).viewInsets.bottom,
+              ),
+              Container(
+                color: Colors.white,
+                height: rSize(48),
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(
+                  vertical: rSize(6),
+                  horizontal: rSize(15),
                 ),
-              ],
-            ),
-          );
-        },
+                child: Container(
+                  alignment: Alignment.center,
+                  child: TextField(
+                    controller: _editingController,
+                    onSubmitted: (text) {
+                      addReview(widget.trendId, text).then((_) {
+                        if (mounted) _controller.requestRefresh();
+                        _editingController.clear();
+                      });
+                    },
+                    style: TextStyle(
+                      color: Color(0xFF333333),
+                      fontSize: rSP(14),
+                    ),
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      isDense: true,
+                      hintText: '随便说两句…',
+                      hintStyle: TextStyle(
+                        color: Color(0xFF7F858D),
+                        fontSize: rSP(14),
+                      ),
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: rSize(15),
+                      ),
+                    ),
+                  ),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF5F5F5),
+                    borderRadius: BorderRadius.circular(rSize(18)),
+                  ),
+                ),
+              ),
+              AnimatedContainer(
+                duration: Duration(milliseconds: 300),
+                height: MediaQuery.of(context).viewPadding.bottom +
+                    MediaQuery.of(context).viewInsets.bottom,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

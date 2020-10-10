@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/models/activity_list_model.dart';
 import 'package:recook/pages/live/widget/review_child_cards.dart';
 import 'package:recook/pages/live/widget/user_base_card.dart';
 import 'package:recook/utils/date/recook_date_util.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/recook/recook_like_button.dart';
 
 class UserActivityCard extends StatefulWidget {
   final ActivityListModel model;
@@ -143,14 +145,19 @@ class _UserActivityCardState extends State<UserActivityCard> {
               onPressed: _showReviewDialog,
             ),
             SizedBox(width: rSize(10)),
-            CustomImageButton(
+            Padding(
               padding: EdgeInsets.only(top: rSize(10)),
-              child: Image.asset(
-                R.ASSETS_LIVE_LIKE_PNG,
-                width: rSize(18),
-                height: rSize(18),
+              child: RecookLikeButton(
+                //TODO 赞字段
+                initValue: false,
+                size: 18,
+                onChange: (oldState) {
+                  HttpManager.post(
+                    oldState ? LiveAPI.dislikeActivity : LiveAPI.likeActivity,
+                    {'trendId': widget.model.id},
+                  );
+                },
               ),
-              onPressed: () {},
             ),
           ],
         ),
@@ -179,4 +186,3 @@ class _UserActivityCardState extends State<UserActivityCard> {
     );
   }
 }
-

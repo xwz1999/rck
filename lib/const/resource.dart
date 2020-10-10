@@ -404,6 +404,9 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/like.png)
   static const String ASSETS_LIVE_LIKE_PNG = 'assets/live/like.png';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/like_on.png)
+  static const String ASSETS_LIVE_LIKE_ON_PNG = 'assets/live/like_on.png';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/live_detail.png)
   static const String ASSETS_LIVE_LIVE_DETAIL_PNG = 'assets/live/live_detail.png';
 

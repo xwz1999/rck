@@ -426,4 +426,10 @@ class LiveAPI {
 
   ///添加用户动态评论
   static const String addActivityReview = '/v1/live/user/trend/comment/add';
+
+  ///用户动态点赞
+  static const String likeActivity = '/v1/live/user/trend/praise/add';
+
+  ///用户动态取消点赞
+  static const String dislikeActivity = '/v1/live/user/trend/praise/cancel';
 }
