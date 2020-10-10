@@ -417,4 +417,7 @@ class LiveAPI {
 
   ///视频列表
   static const String videoList = '/v1/live/short/list';
+
+  ///用户动态
+  static const String activityList = '/v1/live/user/trend/list';
 }

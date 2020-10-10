@@ -1,45 +1,71 @@
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/live/models/activity_list_model.dart';
 import 'package:recook/pages/live/widget/user_base_card.dart';
+import 'package:recook/utils/date/recook_date_util.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class UserActivityCard extends StatefulWidget {
-  UserActivityCard({Key key}) : super(key: key);
+  final ActivityListModel model;
+  UserActivityCard({Key key, @required this.model}) : super(key: key);
 
   @override
   _UserActivityCardState createState() => _UserActivityCardState();
 }
 
 class _UserActivityCardState extends State<UserActivityCard> {
+  int get imgSize => widget.model.imgList.length;
+
+  int get axisCount {
+    if (imgSize == 1)
+      return 1;
+    else if (imgSize <= 4)
+      return 2;
+    else
+      return 3;
+  }
+
   @override
   Widget build(BuildContext context) {
+    final recookDateUtil = RecookDateUtil.fromString(widget.model.updatedAt);
+
     return UserBaseCard(
-      date: '昨天',
-      detailDate: '14:30',
+      date: recookDateUtil.prefixDay,
+      detailDate: recookDateUtil.detailDate,
       children: [
         SizedBox(height: rSize(35)),
-        GridView(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 3,
-            crossAxisSpacing: rSize(9),
-            mainAxisSpacing: rSize(9),
-          ),
-          physics: NeverScrollableScrollPhysics(),
-          children: [
-            Image.asset(R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG),
-            Image.asset(R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG),
-            Image.asset(R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG),
-          ],
-          shrinkWrap: true,
-        ),
+        Builder(builder: (context) {
+          if (widget.model.trendType == 1)
+            return widget.model.imgList.isEmpty
+                ? SizedBox()
+                : GridView(
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: axisCount,
+                      crossAxisSpacing: rSize(9),
+                      mainAxisSpacing: rSize(9),
+                    ),
+                    physics: NeverScrollableScrollPhysics(),
+                    children: widget.model.imgList
+                        .map((e) => FadeInImage.assetNetwork(
+                              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                              image: Api.getImgUrl(e.url),
+                            ))
+                        .toList(),
+                    shrinkWrap: true,
+                  );
+          else if (widget.model.trendType == 2)
+            return Image.asset(R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG);
+          else
+            return SizedBox();
+        }),
         Padding(
           padding: EdgeInsets.symmetric(
             vertical: rSize(10),
           ),
           child: Text(
-            '''麦饭石不粘锅炒锅具家用平底电磁炉适用燃煤气灶专用炒菜锅
-下单立减20元，凑单满300再减30，正品保证''',
+            widget.model.content,
             style: TextStyle(
               color: Color(0xFF333333),
               fontSize: rSP(14),
@@ -51,8 +77,9 @@ class _UserActivityCardState extends State<UserActivityCard> {
           padding: EdgeInsets.all(12),
           child: Row(
             children: [
-              Image.asset(
-                R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+              FadeInImage.assetNetwork(
+                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                image: Api.getImgUrl(widget.model.goods.mainPhotoURL),
                 height: rSize(48),
                 width: rSize(48),
               ),
@@ -62,7 +89,7 @@ class _UserActivityCardState extends State<UserActivityCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '左家右厨16cm迷煎盘',
+                      widget.model.goods.name,
                       maxLines: 1,
                       style: TextStyle(
                         color: Color(0xFF333333),
@@ -71,7 +98,7 @@ class _UserActivityCardState extends State<UserActivityCard> {
                     ),
                     SizedBox(height: rSize(6)),
                     Text(
-                      '¥199',
+                      '¥${widget.model.goods.price}',
                       maxLines: 1,
                       style: TextStyle(
                         color: Color(0xFF333333),

@@ -148,11 +148,11 @@ class _TabBarWidgetState extends State<TabBarWidget>
                                         onTap: () => CRoute.push(
                                             context, AddVideoPage()),
                                       ),
-                                      verticalButton(
-                                        '图文',
-                                        R.ASSETS_LIVE_ADD_IMAGE_PNG,
-                                        onTap: () {},
-                                      ),
+                                      // verticalButton(
+                                      //   '图文',
+                                      //   R.ASSETS_LIVE_ADD_IMAGE_PNG,
+                                      //   onTap: () {},
+                                      // ),
                                     ],
                                   ),
                                   CustomImageButton(
