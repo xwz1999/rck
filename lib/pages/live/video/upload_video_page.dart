@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/live/models/topic_list_model.dart';
+import 'package:recook/pages/live/video/pick_topic_page.dart';
 import 'package:recook/pages/live/video/video_preview_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/recook/recook_list_tile.dart';
@@ -19,6 +21,7 @@ class UploadVideoPage extends StatefulWidget {
 }
 
 class _UploadVideoPageState extends State<UploadVideoPage> {
+  TopicListModel _topicListModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,14 +109,43 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
           ),
           rHBox(48),
           RecookListTile(
-            title: '高颜值厨房好物',
+            title: _topicListModel == null
+                ? Row(
+                    children: [
+                      Text(
+                        '添加话题',
+                        style: TextStyle(
+                          color: Color(0xFF333333),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        '（推荐）',
+                        style: TextStyle(
+                          color: Color(0xFF999999),
+                        ),
+                      ),
+                    ],
+                  )
+                : _topicListModel.title,
             titleColor: Color(0xFFEB8A49),
             prefix: Image.asset(
               R.ASSETS_LIVE_TOPIC_PNG,
               width: rSize(16),
               height: rSize(16),
             ),
-            onTap: () {},
+            onTap: () {
+              CRoute.push(
+                context,
+                PickTopicPage(
+                  onPick: (model) {
+                    _topicListModel = model;
+                  },
+                ),
+              ).then((value) {
+                setState(() {});
+              });
+            },
           ),
           RecookListTile(
             title: '麦饭石不粘锅炒锅具家用平底电磁炉适用燃煤麦饭石不粘锅炒锅具家用平底电磁炉适用燃煤…',

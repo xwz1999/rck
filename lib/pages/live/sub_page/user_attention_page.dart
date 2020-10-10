@@ -7,7 +7,6 @@ import 'package:recook/pages/live/widget/live_attention_button.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
 import 'package:recook/widgets/recook_indicator.dart';
-import 'package:recook/widgets/refresh_widget.dart';
 
 class UserAttentionPage extends StatefulWidget {
   final int id;

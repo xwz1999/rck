@@ -4,6 +4,7 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/models/activity_review_list_model.dart';
 import 'package:recook/utils/date/recook_date_util.dart';
+import 'package:recook/widgets/recook/recook_like_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class ReviewChildCards extends StatefulWidget {
@@ -41,7 +42,8 @@ class _ReviewChildCardsState extends State<ReviewChildCards> {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: MediaQuery.of(context).size.height -rSize(233) +
+        height: MediaQuery.of(context).size.height -
+            rSize(233) +
             MediaQuery.of(context).viewInsets.bottom,
         child: Material(
           color: Colors.white,
@@ -195,10 +197,14 @@ class _ReviewChildCardsState extends State<ReviewChildCards> {
                     ),
                   ),
                   Spacer(),
-                  Image.asset(
-                    R.ASSETS_LIVE_LIKE_PNG,
-                    width: rSize(14),
-                    height: rSize(14),
+                  RecookLikeButton(
+                    initValue: model.isPraise == 1,
+                    onChange: (oldState) {
+                      HttpManager.post(
+                        oldState ? LiveAPI.dislikeComment : LiveAPI.likeComment,
+                        {'commentId': model.id},
+                      );
+                    },
                   ),
                 ],
               ),

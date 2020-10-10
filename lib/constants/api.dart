@@ -432,4 +432,17 @@ class LiveAPI {
 
   ///用户动态取消点赞
   static const String dislikeActivity = '/v1/live/user/trend/praise/cancel';
+
+  ///用户评论点赞
+  static const String likeComment = '/v1/live/user/trend/comment/praise/add';
+
+  ///用户评论取消点赞
+  static const String dislikeComment =
+      '/v1/live/user/trend/comment/praise/cancel';
+
+  ///热门话题
+  static const String hotTopics = '/v1/live/topic/hot';
+
+  ///搜索话题或话题列表
+  static const String topicSearchList = '/v1/live/topic/list';
 }
