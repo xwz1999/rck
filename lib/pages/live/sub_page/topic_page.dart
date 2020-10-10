@@ -13,7 +13,9 @@ import 'package:waterfall_flow/waterfall_flow.dart';
 
 class TopicPage extends StatefulWidget {
   final int topicId;
-  TopicPage({Key key, @required this.topicId}) : super(key: key);
+  final bool initAttention;
+  TopicPage({Key key, @required this.topicId, this.initAttention = false})
+      : super(key: key);
 
   @override
   _TopicPageState createState() => _TopicPageState();
@@ -113,8 +115,7 @@ class _TopicPageState extends State<TopicPage> {
                                           ),
                                         ),
                                         LiveAttentionButton(
-                                          initAttention:
-                                              _topicBaseInfoModel.isFollow == 1,
+                                          initAttention: widget.initAttention,
                                           filled: true,
                                           width: rSize(56),
                                           height: rSize(26),

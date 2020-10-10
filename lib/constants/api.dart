@@ -445,4 +445,10 @@ class LiveAPI {
 
   ///搜索话题或话题列表
   static const String topicSearchList = '/v1/live/topic/list';
+
+  ///历史购买
+  static const String historyGoods = '/v1/live/order/history';
+
+  ///搜索商品
+  static const String goodsList = '/v1/live/goods/list';
 }

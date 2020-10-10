@@ -3,11 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/live/models/topic_list_model.dart';
+import 'package:recook/pages/live/models/video_goods_model.dart';
 import 'package:recook/pages/live/video/pick_topic_page.dart';
+import 'package:recook/pages/live/video/video_goods_page.dart';
 import 'package:recook/pages/live/video/video_preview_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/recook/recook_list_tile.dart';
-import 'package:recook/widgets/sc_tile.dart';
 
 class UploadVideoPage extends StatefulWidget {
   final File videoFile;
@@ -22,6 +23,7 @@ class UploadVideoPage extends StatefulWidget {
 
 class _UploadVideoPageState extends State<UploadVideoPage> {
   TopicListModel _topicListModel;
+  VideoGoodsModel _videoGoodsModel;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,12 +150,26 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
             },
           ),
           RecookListTile(
-            title: '麦饭石不粘锅炒锅具家用平底电磁炉适用燃煤麦饭石不粘锅炒锅具家用平底电磁炉适用燃煤…',
+            title: _videoGoodsModel == null
+                ? '添加关联产品'
+                : _videoGoodsModel.goodsName,
             prefix: Image.asset(
               R.ASSETS_LIVE_UPLOAD_CART_PNG,
               width: rSize(16),
               height: rSize(16),
             ),
+            onTap: () {
+              CRoute.push(
+                context,
+                VideoGoodsPage(
+                  onPick: (model) {
+                    _videoGoodsModel = model;
+                  },
+                ),
+              ).then((value) {
+                setState(() {});
+              });
+            },
           ),
         ],
       ),
