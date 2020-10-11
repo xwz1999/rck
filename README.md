@@ -66,5 +66,13 @@
 
 发行分支在`release`,`main.dart`中isDebug参数为`false`
 
-
 注意 ⚠️ 请勿直接修改发行`isDebug`参数,打包发行分支前请合并开发分支
+
+## Design Guide Book
+
+* 设计宽 Design Width `rSize`
+* 设计高 Design Height `rSize`
+
+example:
+
+rSize(`value`) `value` is design `pt`
