@@ -625,6 +625,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.4+1"
+  many_like:
+    dependency: "direct main"
+    description:
+      name: many_like
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.1"
   matcher:
     dependency: transitive
     description:

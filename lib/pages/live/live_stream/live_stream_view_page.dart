@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:many_like/many_like.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/pages/live/live_stream/live_blur_page.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 
@@ -21,10 +20,10 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 10), () {
-      _livePlayer?.pausePlay();
-      CRoute.transparent(context, LiveBlurPage());
-    });
+    // Future.delayed(Duration(seconds: 10), () {
+    //   _livePlayer?.pausePlay();
+    //   CRoute.transparent(context, LiveBlurPage());
+    // });
   }
 
   @override
@@ -164,10 +163,12 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                         height: rSize(32),
                       ),
                       SizedBox(width: rSize(10)),
-                      Image.asset(
-                        R.ASSETS_LIVE_LIVE_LIKE_PNG,
-                        width: rSize(32),
-                        height: rSize(32),
+                      ManyLikeButton(
+                        child: Image.asset(
+                          R.ASSETS_LIVE_LIVE_LIKE_PNG,
+                          width: rSize(32),
+                          height: rSize(32),
+                        ),
                       ),
                       SizedBox(width: rSize(10)),
                       Image.asset(

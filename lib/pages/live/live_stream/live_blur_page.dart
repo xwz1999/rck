@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
-import 'package:recook/widgets/recook_back_button.dart';
 
 class LiveBlurPage extends StatefulWidget {
   LiveBlurPage({Key key}) : super(key: key);

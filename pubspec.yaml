@@ -188,6 +188,9 @@ dependencies:
   #视频剪辑
   video_trimmer: ^0.2.7
 
+  #点赞组件
+  many_like:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
