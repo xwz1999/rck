@@ -454,4 +454,7 @@ class LiveAPI {
 
   ///直播列表
   static const String liveList = '/v1/live/live/list';
+
+  ///直播关注列表
+  static const String liveAttentionList = '/v1/live/live/follow_list';
 }

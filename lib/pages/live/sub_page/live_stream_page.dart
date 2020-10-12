@@ -1,14 +1,14 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
 import 'package:recook/pages/live/models/follow_list_model.dart';
+import 'package:recook/pages/live/models/live_attention_list_model.dart';
 import 'package:recook/pages/live/models/live_list_model.dart';
-import 'package:recook/pages/live/sub_page/user_attention_page.dart';
 import 'package:recook/utils/custom_route.dart';
-import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class LiveStreamPage extends StatefulWidget {
@@ -20,20 +20,21 @@ class LiveStreamPage extends StatefulWidget {
 
 class _LiveStreamPageState extends State<LiveStreamPage>
     with AutomaticKeepAliveClientMixin {
-  List<FollowListModel> followListModels = [];
+  List<LiveAttentionListModel> _liveAttentionListModels = [];
   List<LiveListModel> _liveListModels = [];
   int _livePage = 1;
+  int _attentionPage = 1;
   GSRefreshController _liveListController = GSRefreshController();
+  GSRefreshController _liveAttentionController = GSRefreshController();
 
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration(milliseconds: 300), () {
-      getUserModels().then((models) {
-        setState(() {
-          followListModels = models;
-        });
-      });
+      if (mounted) {
+        _liveListController.requestRefresh();
+        _liveAttentionController.requestRefresh();
+      }
     });
   }
 
@@ -58,46 +59,98 @@ class _LiveStreamPageState extends State<LiveStreamPage>
         children: [
           rHBox(rSize(102)),
           Expanded(
-            child: ListView.separated(
-              padding: EdgeInsets.symmetric(
-                horizontal: rSize(20),
-                vertical: rSize(10),
-              ),
-              separatorBuilder: (context, index) {
-                return SizedBox(width: rSize(16));
-              },
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return _buildAttentionBox(followListModels[index]);
-              },
-              itemCount: followListModels.length,
-            ),
-          ),
-          Container(
-            width: rSize(52),
-            child: CustomImageButton(
-              height: rSize(102),
-              onPressed: () {
-                CRoute.push(
-                  context,
-                  UserAttentionPage(id: UserManager.instance.user.info.id),
-                );
-              },
-              child: Text(
-                '全部\n关注',
-                style: TextStyle(
-                  color: Color(0xFFDB2D2D),
-                  fontSize: rSP(11),
+            child: RefreshWidget(
+              header: ClassicHeader(
+                textStyle: TextStyle(
+                    fontSize: ScreenAdapterUtils.setSp(14),
+                    color: Color(0xff555555)),
+                idleIcon: Icon(
+                  Icons.arrow_downward,
+                  size: ScreenAdapterUtils.setSp(20),
+                  color: Color(0xff555555),
                 ),
+                releaseIcon: Icon(
+                  Icons.arrow_forward,
+                  size: ScreenAdapterUtils.setSp(20),
+                  color: Color(0xff555555),
+                ),
+                refreshingIcon: CupertinoActivityIndicator(
+                  animating: true,
+                  radius: ScreenAdapterUtils.setWidth(9.0),
+                ),
+                completeIcon: Icon(
+                  Icons.check,
+                  size: ScreenAdapterUtils.setSp(20),
+                  color: Color(0xff555555),
+                ),
+                spacing: rSize(5),
+                refreshingText: '加载中',
+                completeText: '加载完成',
+                failedText: '网络错误',
+                idleText: '右拉刷新',
+                releaseText: '刷新',
+              ),
+              controller: _liveAttentionController,
+              onRefresh: () {
+                _attentionPage = 1;
+                getUserModels().then((models) {
+                  setState(() {
+                    _liveAttentionListModels = models;
+                  });
+                  _liveAttentionController.refreshCompleted();
+                });
+              },
+              onLoadMore: () {
+                _attentionPage++;
+                getUserModels().then((models) {
+                  setState(() {
+                    _liveAttentionListModels.addAll(models);
+                  });
+                  _liveAttentionController.refreshCompleted();
+                });
+              },
+              body: ListView.separated(
+                padding: EdgeInsets.symmetric(
+                  horizontal: rSize(20),
+                  vertical: rSize(10),
+                ),
+                separatorBuilder: (context, index) {
+                  return SizedBox(width: rSize(16));
+                },
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (context, index) {
+                  return _buildAttentionBox(_liveAttentionListModels[index]);
+                },
+                itemCount: _liveAttentionListModels.length,
               ),
             ),
           ),
+          // Container(
+          //   width: rSize(52),
+          //   child: CustomImageButton(
+          //     height: rSize(102),
+          //     onPressed: () {
+          //       CRoute.push(
+          //         context,
+          //         UserAttentionPage(id: UserManager.instance.user.info.id),
+          //       );
+          //     },
+          //     child: Text(
+          //       '全部\n关注',
+          //       style: TextStyle(
+          //         color: Color(0xFFDB2D2D),
+          //         fontSize: rSP(11),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       ),
     );
   }
 
-  _buildAttentionBox(FollowListModel model) {
+  _buildAttentionBox(LiveAttentionListModel model) {
+    final bool isLive = model.isLive == 1;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -107,7 +160,7 @@ class _LiveStreamPageState extends State<LiveStreamPage>
               borderRadius: BorderRadius.circular(rSize(52 / 2)),
               child: FadeInImage.assetNetwork(
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                image: model.headImgUrl,
+                image: Api.getImgUrl(model.headImgUrl),
                 height: rSize(52),
                 width: rSize(52),
               ),
@@ -116,7 +169,9 @@ class _LiveStreamPageState extends State<LiveStreamPage>
               right: rSize(3),
               bottom: 0,
               child: Image.asset(
-                R.ASSETS_LIVE_ON_STREAM_PNG,
+                isLive
+                    ? R.ASSETS_LIVE_ON_STREAM_PNG
+                    : R.ASSETS_LIVE_STREAM_PLAY_BACK_PNG,
                 height: rSize(12),
                 width: rSize(12),
               ),
@@ -176,6 +231,7 @@ class _LiveStreamPageState extends State<LiveStreamPage>
   }
 
   _buildGridCard(LiveListModel model) {
+    final bool isLive = model.isLive == 1;
     return ClipRRect(
       borderRadius: BorderRadius.circular(rSize(10)),
       child: MaterialButton(
@@ -210,9 +266,13 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Image.asset(R.ASSETS_LIVE_ON_STREAM_PNG),
+                          Image.asset(
+                            isLive
+                                ? R.ASSETS_LIVE_ON_STREAM_PNG
+                                : R.ASSETS_LIVE_STREAM_PLAY_BACK_PNG,
+                          ),
                           Text(
-                            '${model.look}人观看',
+                            '${model.look}人${isLive ? '观看' : '看过'}',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: rSP(10),
@@ -254,6 +314,7 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                     children: [
                       Expanded(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Expanded(
                               child: Text(
@@ -348,17 +409,16 @@ class _LiveStreamPageState extends State<LiveStreamPage>
     );
   }
 
-  Future<List<FollowListModel>> getUserModels() async {
-    ResultData resultData = await HttpManager.post(LiveAPI.followList, {
-      'findUserId': UserManager.instance.user.info.id,
-      'page': 1,
+  Future<List<LiveAttentionListModel>> getUserModels() async {
+    ResultData resultData = await HttpManager.post(LiveAPI.liveAttentionList, {
+      'page': _attentionPage,
       'limit': 10,
     });
     if (resultData?.data['data'] == null)
       return [];
     else
-      return (resultData?.data['data']['list'] as List)
-          .map((e) => FollowListModel.fromJson(e))
+      return (resultData?.data['data'] as List)
+          .map((e) => LiveAttentionListModel.fromJson(e))
           .toList();
   }
 

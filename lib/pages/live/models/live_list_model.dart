@@ -7,21 +7,25 @@ class LiveListModel {
   int look;
   String goodsName;
   String mainPhotoUrl;
-  int praise;
   String originalPrice;
   String discountPrice;
+  int praise;
+  int isLive;
 
-  LiveListModel(
-      {this.title,
-      this.id,
-      this.cover,
-      this.nickname,
-      this.headImgUrl,
-      this.look,
-      this.goodsName,
-      this.mainPhotoUrl,
-      this.originalPrice,
-      this.discountPrice});
+  LiveListModel({
+    this.title,
+    this.id,
+    this.cover,
+    this.nickname,
+    this.headImgUrl,
+    this.look,
+    this.goodsName,
+    this.mainPhotoUrl,
+    this.originalPrice,
+    this.discountPrice,
+    this.praise,
+    this.isLive,
+  });
 
   LiveListModel.fromJson(Map<String, dynamic> json) {
     title = json['title'];
@@ -35,6 +39,7 @@ class LiveListModel {
     originalPrice = json['originalPrice'];
     discountPrice = json['discountPrice'];
     praise = json['praise'];
+    isLive = json['isLive'];
   }
 
   Map<String, dynamic> toJson() {
@@ -50,6 +55,7 @@ class LiveListModel {
     data['originalPrice'] = this.originalPrice;
     data['discountPrice'] = this.discountPrice;
     data['praise'] = this.praise;
+    data['isLive'] = this.isLive;
     return data;
   }
 }
