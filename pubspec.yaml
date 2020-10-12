@@ -189,7 +189,7 @@ dependencies:
   video_trimmer: ^0.2.7
 
   #点赞组件
-  many_like:
+  many_like: ^0.0.2
 
 dev_dependencies:
   flutter_test:

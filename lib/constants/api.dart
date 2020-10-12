@@ -451,4 +451,7 @@ class LiveAPI {
 
   ///搜索商品
   static const String goodsList = '/v1/live/goods/list';
+
+  ///直播列表
+  static const String liveList = '/v1/live/live/list';
 }

@@ -55,7 +55,7 @@ class _UserActivityViewState extends State<UserActivityView>
     );
   }
 
-  Future<List> getActivityModels() async {
+  Future<List<ActivityListModel>> getActivityModels() async {
     ResultData resultData = await HttpManager.post(LiveAPI.activityList, {
       'userId': widget.id,
       'page': _page,

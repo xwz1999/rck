@@ -169,6 +169,11 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                           width: rSize(32),
                           height: rSize(32),
                         ),
+                        popChild: Image.asset(
+                          R.ASSETS_LIVE_LIVE_LIKE_PNG,
+                          width: rSize(32),
+                          height: rSize(32),
+                        ),
                       ),
                       SizedBox(width: rSize(10)),
                       Image.asset(

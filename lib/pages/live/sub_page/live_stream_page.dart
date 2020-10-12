@@ -5,9 +5,11 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
 import 'package:recook/pages/live/models/follow_list_model.dart';
+import 'package:recook/pages/live/models/live_list_model.dart';
 import 'package:recook/pages/live/sub_page/user_attention_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 
 class LiveStreamPage extends StatefulWidget {
   LiveStreamPage({Key key}) : super(key: key);
@@ -19,6 +21,9 @@ class LiveStreamPage extends StatefulWidget {
 class _LiveStreamPageState extends State<LiveStreamPage>
     with AutomaticKeepAliveClientMixin {
   List<FollowListModel> followListModels = [];
+  List<LiveListModel> _liveListModels = [];
+  int _livePage = 1;
+  GSRefreshController _liveListController = GSRefreshController();
 
   @override
   void initState() {
@@ -131,28 +136,50 @@ class _LiveStreamPageState extends State<LiveStreamPage>
   }
 
   _buildLiveUsers() {
-    return GridView.builder(
-      padding: EdgeInsets.symmetric(
-        horizontal: rSize(16),
-        vertical: rSize(5),
-      ),
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 165 / 249,
-        crossAxisSpacing: rSize(15),
-        mainAxisSpacing: rSize(15),
-      ),
-      itemBuilder: (context, index) {
-        return _buildGridCard();
+    return RefreshWidget(
+      controller: _liveListController,
+      onRefresh: () {
+        _livePage = 1;
+        getLiveListModels().then((models) {
+          _liveListController.refreshCompleted();
+          setState(() {
+            _liveListModels = models;
+          });
+        });
       },
-      itemCount: 20,
+      onLoadMore: () {
+        _livePage++;
+        getLiveListModels().then((models) {
+          _liveListController.loadComplete();
+          setState(() {
+            _liveListModels.addAll(models);
+          });
+        });
+      },
+      body: GridView.builder(
+        padding: EdgeInsets.symmetric(
+          horizontal: rSize(16),
+          vertical: rSize(5),
+        ),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 165 / 249,
+          crossAxisSpacing: rSize(15),
+          mainAxisSpacing: rSize(15),
+        ),
+        itemBuilder: (context, index) {
+          return _buildGridCard(_liveListModels[index]);
+        },
+        itemCount: _liveListModels.length,
+      ),
     );
   }
 
-  _buildGridCard() {
+  _buildGridCard(LiveListModel model) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(rSize(10)),
-      child: CustomImageButton(
+      child: MaterialButton(
+        padding: EdgeInsets.zero,
         onPressed: () => CRoute.push(
           context,
           LiveStreamViewPage(),
@@ -164,12 +191,12 @@ class _LiveStreamPageState extends State<LiveStreamPage>
             children: [
               Stack(
                 children: [
-                  AspectRatio(
-                    aspectRatio: 1,
-                    child: Container(
-                      color: Colors.blueGrey,
-                      child: Placeholder(),
-                    ),
+                  FadeInImage.assetNetwork(
+                    placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                    image: Api.getImgUrl(model.cover),
+                    fit: BoxFit.cover,
+                    height: rSize(165),
+                    width: rSize(165),
                   ),
                   Positioned(
                     left: rSize(10),
@@ -185,7 +212,7 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                         children: [
                           Image.asset(R.ASSETS_LIVE_ON_STREAM_PNG),
                           Text(
-                            '1234人观看',
+                            '${model.look}人观看',
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: rSP(10),
@@ -208,7 +235,7 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                           height: rSize(10),
                         ),
                         Text(
-                          '334',
+                          model.praise.toString(),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: rSP(10),
@@ -230,7 +257,7 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                           children: [
                             Expanded(
                               child: Text(
-                                '年中厨具福利专场年中厨具福利专场…',
+                                model.title,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -242,8 +269,16 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                             ),
                             Row(
                               children: [
-                                CircleAvatar(
-                                  radius: rSize(10),
+                                ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.circular(rSize(10)),
+                                  child: FadeInImage.assetNetwork(
+                                    placeholder:
+                                        R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                    image: Api.getImgUrl(model.headImgUrl),
+                                    height: rSize(20),
+                                    width: rSize(20),
+                                  ),
                                 ),
                                 Expanded(
                                   child: Padding(
@@ -251,7 +286,7 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                                       horizontal: rSize(6),
                                     ),
                                     child: Text(
-                                      'NAME NAME NAME',
+                                      model.nickname,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -277,8 +312,12 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                               AspectRatio(
                                 aspectRatio: 1,
                                 child: Container(
-                                  color: Colors.blue,
-                                  child: Placeholder(),
+                                  color: Color(0xFFE2DFDB),
+                                  child: FadeInImage.assetNetwork(
+                                    placeholder:
+                                        R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                    image: Api.getImgUrl(model.mainPhotoUrl),
+                                  ),
                                 ),
                               ),
                               Expanded(
@@ -286,7 +325,7 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                                   alignment: Alignment.center,
                                   color: Color(0xFFF7F7F7),
                                   child: Text(
-                                    '¥244',
+                                    '¥${model.originalPrice}',
                                     style: TextStyle(
                                       color: Color(0xFF333333),
                                       fontSize: rSP(10),
@@ -320,6 +359,19 @@ class _LiveStreamPageState extends State<LiveStreamPage>
     else
       return (resultData?.data['data']['list'] as List)
           .map((e) => FollowListModel.fromJson(e))
+          .toList();
+  }
+
+  Future<List<LiveListModel>> getLiveListModels() async {
+    ResultData resultData = await HttpManager.post(LiveAPI.liveList, {
+      'page': _livePage,
+      'limit': 15,
+    });
+    if (resultData?.data['data'] == null)
+      return [];
+    else
+      return (resultData?.data['data'] as List)
+          .map((e) => LiveListModel.fromJson(e))
           .toList();
   }
 
