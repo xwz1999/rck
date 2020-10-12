@@ -19,6 +19,7 @@ import 'package:recook/utils/CommonLocalizationsDelegate.dart';
 import 'package:recook/utils/test.dart';
 import 'package:redux/redux.dart';
 import 'package:tencent_im_plugin/tencent_im_plugin.dart';
+import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 
 import 'constants/header.dart';
 import 'utils/app_router.dart';
@@ -37,6 +38,13 @@ void main() async {
 
   //初始化腾讯im
   TencentImPlugin.init(appid: '1400423961');
+
+  //初始化腾讯直播
+  TencentLive.instance.init(
+    licenseUrl:
+        'http://license.vod2.myqcloud.com/license/v1/9bc083b7b7c2101699499d193c40921b/TXLiveSDK.licence',
+    licenseKey: 'cf903ae78afbb05b5128f8961bf08f64',
+  );
 
   AppConfig.initial(useEncrypt: false
 

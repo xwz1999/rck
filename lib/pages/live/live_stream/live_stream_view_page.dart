@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:many_like/many_like.dart';
-import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/live/models/tencent_im_user_model.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
@@ -67,7 +63,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                   _livePlayer = await LivePlayer.create();
                   await _livePlayer.setPlayerView(controller);
                   _livePlayer
-                      .startPlay('rtmp://58.200.131.2:1935/livetv/cctv1');
+                      .startPlay('rtmp://play.reecook.cn/live/recook_1');
                 },
               ),
             ),

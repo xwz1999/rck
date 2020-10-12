@@ -105,7 +105,7 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                   setState(() {
                     _liveAttentionListModels.addAll(models);
                   });
-                  _liveAttentionController.refreshCompleted();
+                  _liveAttentionController.loadComplete();
                 });
               },
               body: ListView.separated(
