@@ -4,6 +4,7 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
+import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:tencent_im_plugin/tencent_im_plugin.dart';
 import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
@@ -62,8 +63,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                 onCloudVideoCreated: (controller) async {
                   _livePlayer = await LivePlayer.create();
                   await _livePlayer.setPlayerView(controller);
-                  _livePlayer
-                      .startPlay('rtmp://play.reecook.cn/live/recook_1');
+                  _livePlayer.startPlay('rtmp://play.reecook.cn/live/recook_1');
                 },
               ),
             ),
@@ -165,10 +165,26 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                         ),
                       ),
                       SizedBox(width: rSize(24)),
-                      Image.asset(
-                        R.ASSETS_LIVE_LIVE_MORE_PNG,
-                        width: rSize(32),
-                        height: rSize(32),
+                      CustomImageButton(
+                        onPressed: () {
+                          ActionSheet.show(
+                            context,
+                            items: ['举报'],
+                            listener: (index) {
+                              Navigator.pop(context);
+                              //fake
+                              Future.delayed(Duration(milliseconds: 1000), () {
+                                GSDialog.of(context)
+                                    .showSuccess(context, '举报成功');
+                              });
+                            },
+                          );
+                        },
+                        child: Image.asset(
+                          R.ASSETS_LIVE_LIVE_MORE_PNG,
+                          width: rSize(32),
+                          height: rSize(32),
+                        ),
                       ),
                       SizedBox(width: rSize(10)),
                       Image.asset(

@@ -40,13 +40,15 @@ class _LiveStreamPageState extends State<LiveStreamPage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Column(
-      children: [
-        _buildAttentions(),
-        Expanded(
-          child: _buildLiveUsers(),
-        ),
-      ],
+    return NestedScrollView(
+      headerSliverBuilder: (context, innerBoxIsScrolled) {
+        return [
+          SliverToBoxAdapter(
+            child: _buildAttentions(),
+          ),
+        ];
+      },
+      body: _buildLiveUsers(),
     );
   }
 

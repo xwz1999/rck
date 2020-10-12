@@ -455,6 +455,9 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/video_play.png)
   static const String ASSETS_LIVE_VIDEO_PLAY_PNG = 'assets/live/video_play.png';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/white_cart.png)
+  static const String ASSETS_LIVE_WHITE_CART_PNG = 'assets/live/white_cart.png';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/login_logo.png)
   static const String ASSETS_LOGIN_LOGO_PNG = 'assets/login_logo.png';
 

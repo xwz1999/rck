@@ -463,4 +463,6 @@ class LiveAPI {
 
   ///通过未登陆账号获取腾讯IM账号
   static const String tencentUserNotLogin = '/v1/live/live/im/no_login_info';
+
+  static const String startLive = '/v1/live/live/start';
 }
