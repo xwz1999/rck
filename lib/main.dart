@@ -18,6 +18,7 @@ import 'package:recook/third_party/bugly_helper.dart';
 import 'package:recook/utils/CommonLocalizationsDelegate.dart';
 import 'package:recook/utils/test.dart';
 import 'package:redux/redux.dart';
+import 'package:tencent_im_plugin/tencent_im_plugin.dart';
 
 import 'constants/header.dart';
 import 'utils/app_router.dart';
@@ -30,7 +31,13 @@ List<CameraDescription> cameras;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
+
+  //初始化AMap
   AmapLocation.instance.init(iosKey: 'e8a8057cfedcdcadcf4e8f2c7f8de982');
+
+  //初始化腾讯im
+  TencentImPlugin.init(appid: '1400423961');
+
   AppConfig.initial(useEncrypt: false
 
       /// 网络请求加密功能

@@ -179,6 +179,8 @@ dependencies:
 
   #腾讯直播
   tencent_live_fluttify: ^0.2.0+1
+  #腾讯IM
+  tencent_im_plugin: ^0.2.44
   #瀑布流
   waterfall_flow: 2.0.3
   #相机

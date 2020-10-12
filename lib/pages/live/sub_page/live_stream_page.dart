@@ -5,7 +5,6 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
-import 'package:recook/pages/live/models/follow_list_model.dart';
 import 'package:recook/pages/live/models/live_attention_list_model.dart';
 import 'package:recook/pages/live/models/live_list_model.dart';
 import 'package:recook/utils/custom_route.dart';

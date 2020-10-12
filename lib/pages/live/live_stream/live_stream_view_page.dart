@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:many_like/many_like.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/live/models/tencent_im_user_model.dart';
+import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:tencent_im_plugin/tencent_im_plugin.dart';
 import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 
 class LiveStreamViewPage extends StatefulWidget {
@@ -24,11 +30,23 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
     //   _livePlayer?.pausePlay();
     //   CRoute.transparent(context, LiveBlurPage());
     // });
+    //腾讯IM登陆
+    TencentIMTool.login().then((_) {
+      DPrint.printLongJson('用户登陆');
+      TencentImPlugin.addListener(parseMessage);
+    });
+  }
+
+  parseMessage(ListenerTypeEnum type, dynamic params) {
+    print(type.toString());
   }
 
   @override
   void dispose() {
     _livePlayer?.stopPlay();
+    TencentImPlugin.removeListener(parseMessage);
+    TencentImPlugin.logout();
+    DPrint.printLongJson('用户退出');
     super.dispose();
   }
 

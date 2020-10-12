@@ -457,4 +457,10 @@ class LiveAPI {
 
   ///直播关注列表
   static const String liveAttentionList = '/v1/live/live/follow_list';
+
+  ///通过已登陆账号获取腾讯IM账号
+  static const String tencentUser = '/v1/live/live/im/login_info';
+
+  ///通过未登陆账号获取腾讯IM账号
+  static const String tencentUserNotLogin = '/v1/live/live/im/no_login_info';
 }

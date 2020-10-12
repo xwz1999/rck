@@ -989,6 +989,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.1.0-nullsafety.1"
+  tencent_im_plugin:
+    dependency: "direct main"
+    description:
+      name: tencent_im_plugin
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.2.44"
   tencent_live_fluttify:
     dependency: "direct main"
     description:
