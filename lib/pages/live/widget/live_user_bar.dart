@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 
 class LiveUserBar extends StatefulWidget {
@@ -6,12 +7,14 @@ class LiveUserBar extends StatefulWidget {
   final VoidCallback onAttention;
   final String title;
   final String subTitle;
+  final String avatar;
   LiveUserBar({
     Key key,
     @required this.initAttention,
     @required this.onAttention,
     @required this.title,
     this.subTitle,
+    @required this.avatar,
   }) : super(key: key);
 
   @override
@@ -37,8 +40,14 @@ class _LiveUserBarState extends State<LiveUserBar> {
       ),
       child: Row(
         children: [
-          CircleAvatar(
-            radius: rSize(16),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(rSize(16)),
+            child: FadeInImage.assetNetwork(
+              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+              image: Api.getImgUrl(widget.avatar),
+              height: rSize(32),
+              width: rSize(32),
+            ),
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: rSize(8)),

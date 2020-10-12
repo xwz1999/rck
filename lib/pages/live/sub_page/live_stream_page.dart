@@ -4,6 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/live/live_stream/live_playback_view_page.dart';
 import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
 import 'package:recook/pages/live/models/live_attention_list_model.dart';
 import 'package:recook/pages/live/models/live_list_model.dart';
@@ -237,10 +238,15 @@ class _LiveStreamPageState extends State<LiveStreamPage>
       borderRadius: BorderRadius.circular(rSize(10)),
       child: MaterialButton(
         padding: EdgeInsets.zero,
-        onPressed: () => CRoute.push(
-          context,
-          LiveStreamViewPage(),
-        ),
+        onPressed: () {
+          if (isLive)
+            CRoute.push(
+              context,
+              LiveStreamViewPage(id: model.id),
+            );
+          else
+            CRoute.push(context, LivePlaybackViewPage(id: model.id));
+        },
         child: Container(
           color: Colors.white,
           child: Column(
@@ -426,7 +432,7 @@ class _LiveStreamPageState extends State<LiveStreamPage>
   Future<List<LiveListModel>> getLiveListModels() async {
     ResultData resultData = await HttpManager.post(LiveAPI.liveList, {
       'page': _livePage,
-      'limit': 15,
+      'limit': 10,
     });
     if (resultData?.data['data'] == null)
       return [];

@@ -3,43 +3,32 @@ import 'package:many_like/many_like.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/live/live_stream/show_goods_list.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
-import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:tencent_im_plugin/tencent_im_plugin.dart';
-import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 
-class LiveStreamViewPage extends StatefulWidget {
+class LivePlaybackViewPage extends StatefulWidget {
   final int id;
 
-  LiveStreamViewPage({Key key, @required this.id}) : super(key: key);
+  LivePlaybackViewPage({Key key, @required this.id}) : super(key: key);
 
   @override
-  _LiveStreamViewPageState createState() => _LiveStreamViewPageState();
+  _LivePlaybackViewPageState createState() => _LivePlaybackViewPageState();
 }
 
-class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
+class _LivePlaybackViewPageState extends State<LivePlaybackViewPage> {
   bool _showTools = true;
-  LivePlayer _livePlayer;
   LiveStreamInfoModel _streamInfoModel;
 
   @override
   void initState() {
     super.initState();
-    // Future.delayed(Duration(seconds: 10), () {
-    //   _livePlayer?.pausePlay();
-    //   CRoute.transparent(context, LiveBlurPage());
-    // });
-    //腾讯IM登陆
-    TencentIMTool.login().then((_) {
-      DPrint.printLongJson('用户登陆');
-      TencentImPlugin.addListener(parseMessage);
-    });
 
-    getLiveStreamModel().then((model) {
+    getPlaybackInfoModel().then((model) {
       if (model == null)
         Navigator.pop(context);
       else
@@ -49,9 +38,9 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
     });
   }
 
-  Future<LiveStreamInfoModel> getLiveStreamModel() async {
+  Future<LiveStreamInfoModel> getPlaybackInfoModel() async {
     ResultData resultData = await HttpManager.post(
-      LiveAPI.liveStreamInfo,
+      LiveAPI.livePlaybackInfo,
       {'id': widget.id},
     );
     if (resultData?.data['data'] == null)
@@ -66,10 +55,6 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
 
   @override
   void dispose() {
-    _livePlayer?.stopPlay();
-    TencentImPlugin.removeListener(parseMessage);
-    TencentImPlugin.logout();
-    DPrint.printLongJson('用户退出');
     super.dispose();
   }
 
@@ -84,16 +69,10 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                   top: 0,
                   left: 0,
                   right: 0,
+                  bottom: 0,
                   child: Container(
                     height: MediaQuery.of(context).size.height,
                     color: Colors.black54,
-                    child: CloudVideo(
-                      onCloudVideoCreated: (controller) async {
-                        _livePlayer = await LivePlayer.create();
-                        await _livePlayer.setPlayerView(controller);
-                        _livePlayer.startPlay(_streamInfoModel.playUrl);
-                      },
-                    ),
                   ),
                 ),
                 Positioned(
@@ -133,8 +112,6 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                           avatar: _streamInfoModel.headImgUrl,
                         ),
                         Spacer(),
-                        MorePeople(),
-                        SizedBox(width: rSize(54)),
                       ],
                     ),
                   ),
@@ -171,32 +148,6 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
-                            Expanded(
-                              child: Container(
-                                height: rSize(32),
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.1),
-                                  borderRadius:
-                                      BorderRadius.circular(rSize(16)),
-                                ),
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    isDense: true,
-                                    border: InputBorder.none,
-                                    hintText: '说点什么吧…',
-                                    hintStyle: TextStyle(
-                                      fontSize: rSP(12),
-                                      color: Colors.white,
-                                    ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                      horizontal: rSize(14),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: rSize(24)),
                             CustomImageButton(
                               onPressed: () {
                                 ActionSheet.show(
@@ -239,10 +190,33 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                               ),
                             ),
                             SizedBox(width: rSize(10)),
-                            Image.asset(
-                              R.ASSETS_LIVE_LIVE_GOOD_PNG,
-                              width: rSize(44),
-                              height: rSize(44),
+                            Spacer(),
+                            CustomImageButton(
+                              child: Container(
+                                alignment: Alignment.bottomCenter,
+                                width: rSize(44),
+                                height: rSize(44),
+                                child: Text(
+                                  _streamInfoModel.goodsLists.length.toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: rSP(13),
+                                    height: 28 / 13,
+                                  ),
+                                ),
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image:
+                                        AssetImage(R.ASSETS_LIVE_LIVE_GOOD_PNG),
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                showGoodsListDialog(
+                                  context,
+                                  models: _streamInfoModel.goodsLists,
+                                );
+                              },
                             ),
                           ],
                         )
