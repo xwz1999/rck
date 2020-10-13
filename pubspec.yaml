@@ -176,7 +176,8 @@ dependencies:
   #     ref: f07d8ed25b2776e28baddae105a64664cee2922c
 
   flip_card: ^0.4.4
-
+  #腾讯云点播上传SDK
+  flutter_txugcupload: ^0.0.1
   #腾讯直播
   tencent_live_fluttify: ^0.2.0+1
   #腾讯IM

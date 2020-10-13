@@ -27,6 +27,7 @@ class _LivePageState extends State<LivePage> {
   TopicListModel _topicModel;
   TextEditingController _editingController = TextEditingController();
   List<int> pickedIds = [];
+  int liveItemId = 0;
 
   @override
   void initState() {
@@ -39,6 +40,9 @@ class _LivePageState extends State<LivePage> {
     _livePusher?.stopPush();
     _livePusher?.stopPreview();
     _editingController?.dispose();
+    HttpManager.post(LiveAPI.exitLive, {
+      'liveItemId': liveItemId,
+    });
     super.dispose();
   }
 
@@ -168,6 +172,7 @@ class _LivePageState extends State<LivePage> {
                         'goodsIds': pickedIds,
                       }).then((resultData) {
                         GSDialog.of(context).dismiss(context);
+                        liveItemId = resultData.data['data']['liveItemId'];
                         _livePusher
                             .startPush(resultData.data['data']['pushUrl']);
                       });

@@ -7,6 +7,7 @@ class LiveStreamInfoModel {
   int isFollow;
   int isPraise;
   int praise;
+  String groupId;
   List<GoodsLists> goodsLists;
 
   LiveStreamInfoModel(
@@ -18,6 +19,7 @@ class LiveStreamInfoModel {
       this.isFollow,
       this.isPraise,
       this.praise,
+      this.groupId,
       this.goodsLists});
 
   LiveStreamInfoModel.fromJson(Map<String, dynamic> json) {
@@ -29,9 +31,10 @@ class LiveStreamInfoModel {
     isFollow = json['isFollow'];
     isPraise = json['isPraise'];
     praise = json['praise'];
-    if (json['GoodsLists'] != null) {
+    groupId = json['groupId'];
+    if (json['goodsLists'] != null) {
       goodsLists = new List<GoodsLists>();
-      json['GoodsLists'].forEach((v) {
+      json['goodsLists'].forEach((v) {
         goodsLists.add(new GoodsLists.fromJson(v));
       });
     }
@@ -47,8 +50,9 @@ class LiveStreamInfoModel {
     data['isFollow'] = this.isFollow;
     data['isPraise'] = this.isPraise;
     data['praise'] = this.praise;
+    data['groupId'] = this.groupId;
     if (this.goodsLists != null) {
-      data['GoodsLists'] = this.goodsLists.map((v) => v.toJson()).toList();
+      data['goodsLists'] = this.goodsLists.map((v) => v.toJson()).toList();
     }
     return data;
   }

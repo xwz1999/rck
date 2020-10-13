@@ -1,14 +1,20 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:many_like/many_like.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:tencent_im_plugin/entity/message_entity.dart';
+import 'package:tencent_im_plugin/entity/session_entity.dart';
+import 'package:tencent_im_plugin/message_node/text_message_node.dart';
 import 'package:tencent_im_plugin/tencent_im_plugin.dart';
 import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 
@@ -25,6 +31,10 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   bool _showTools = true;
   LivePlayer _livePlayer;
   LiveStreamInfoModel _streamInfoModel;
+  TencentGroupTool group;
+  List<MessageEntity> chatObjects = [];
+  ScrollController _scrollController = ScrollController();
+  TextEditingController _editingController = TextEditingController();
 
   @override
   void initState() {
@@ -36,16 +46,19 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
     //腾讯IM登陆
     TencentIMTool.login().then((_) {
       DPrint.printLongJson('用户登陆');
-      TencentImPlugin.addListener(parseMessage);
-    });
-
-    getLiveStreamModel().then((model) {
-      if (model == null)
-        Navigator.pop(context);
-      else
-        setState(() {
-          _streamInfoModel = model;
-        });
+      getLiveStreamModel().then((model) {
+        if (model == null)
+          Navigator.pop(context);
+        else {
+          setState(() {
+            _streamInfoModel = model;
+          });
+          TencentImPlugin.applyJoinGroup(
+              groupId: model.groupId, reason: 'enterLive');
+          TencentImPlugin.addListener(parseMessage);
+          group = TencentGroupTool.fromId(model.groupId);
+        }
+      });
     });
   }
 
@@ -60,15 +73,58 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
       return LiveStreamInfoModel.fromJson(resultData.data['data']);
   }
 
-  parseMessage(ListenerTypeEnum type, dynamic params) {
-    print(type.toString());
+  parseMessage(ListenerTypeEnum type, params) {
+    print('ListenerTypeEnum$type');
+    switch (type) {
+      case ListenerTypeEnum.ForceOffline:
+        break;
+      case ListenerTypeEnum.UserSigExpired:
+        break;
+      case ListenerTypeEnum.Connected:
+        break;
+      case ListenerTypeEnum.Disconnected:
+        break;
+      case ListenerTypeEnum.WifiNeedAuth:
+        break;
+      case ListenerTypeEnum.Refresh:
+        break;
+      case ListenerTypeEnum.RefreshConversation:
+        break;
+      case ListenerTypeEnum.MessageRevoked:
+        break;
+      case ListenerTypeEnum.NewMessages:
+        chatObjects.insertAll(0, params);
+        _scrollController.animateTo(
+          -50,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeInOutCubic,
+        );
+        setState(() {});
+        break;
+      case ListenerTypeEnum.GroupTips:
+        break;
+      case ListenerTypeEnum.RecvReceipt:
+        break;
+      case ListenerTypeEnum.ReConnFailed:
+        break;
+      case ListenerTypeEnum.ConnFailed:
+        break;
+      case ListenerTypeEnum.Connecting:
+        break;
+      case ListenerTypeEnum.UploadProgress:
+        break;
+      case ListenerTypeEnum.DownloadProgress:
+        break;
+    }
   }
 
   @override
   void dispose() {
     _livePlayer?.stopPlay();
+    TencentImPlugin.quitGroup(groupId: _streamInfoModel.groupId);
     TencentImPlugin.removeListener(parseMessage);
     TencentImPlugin.logout();
+    _scrollController?.dispose();
     DPrint.printLongJson('用户退出');
     super.dispose();
   }
@@ -157,7 +213,10 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                 AnimatedPositioned(
                   duration: Duration(milliseconds: 300),
                   curve: Curves.easeInOutCubic,
-                  bottom: _showTools ? 0 : -rSize(15 + 44.0),
+                  bottom: _showTools
+                      ? 0
+                      : -(rSize(15 + 44.0) +
+                          MediaQuery.of(context).size.height / 3),
                   left: 0,
                   right: 0,
                   child: Padding(
@@ -168,6 +227,20 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                     ),
                     child: Column(
                       children: [
+                        Container(
+                          height: MediaQuery.of(context).size.height / 3,
+                          child: ListView.builder(
+                            reverse: true,
+                            controller: _scrollController,
+                            physics: BouncingScrollPhysics(
+                                parent: AlwaysScrollableScrollPhysics()),
+                            itemBuilder: (context, index) {
+                              return _buildChatBox(chatObjects[index].sender,
+                                  chatObjects[index].note);
+                            },
+                            itemCount: chatObjects.length,
+                          ),
+                        ),
                         Row(
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
@@ -181,6 +254,30 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                       BorderRadius.circular(rSize(16)),
                                 ),
                                 child: TextField(
+                                  controller: _editingController,
+                                  onEditingComplete: () {
+                                    TencentImPlugin.sendMessage(
+                                      sessionId: _streamInfoModel.groupId,
+                                      sessionType: SessionType.Group,
+                                      node: TextMessageNode(
+                                          content: _editingController.text),
+                                    );
+                                    chatObjects.insert(
+                                      0,
+                                      MessageEntity(
+                                        note: _editingController.text,
+                                        sender: UserManager
+                                            .instance.user.info.nickname,
+                                      ),
+                                    );
+                                    _scrollController.animateTo(
+                                      -50,
+                                      duration: Duration(milliseconds: 300),
+                                      curve: Curves.easeInOutCubic,
+                                    );
+                                    setState(() {});
+                                    _editingController.clear();
+                                  },
                                   decoration: InputDecoration(
                                     isDense: true,
                                     border: InputBorder.none,
@@ -198,6 +295,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                             ),
                             SizedBox(width: rSize(24)),
                             CustomImageButton(
+                              padding: EdgeInsets.zero,
                               onPressed: () {
                                 ActionSheet.show(
                                   context,
@@ -219,12 +317,12 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                 height: rSize(32),
                               ),
                             ),
-                            SizedBox(width: rSize(10)),
-                            Image.asset(
-                              R.ASSETS_LIVE_LIVE_SHARE_PNG,
-                              width: rSize(32),
-                              height: rSize(32),
-                            ),
+                            // SizedBox(width: rSize(10)),
+                            // Image.asset(
+                            //   R.ASSETS_LIVE_LIVE_SHARE_PNG,
+                            //   width: rSize(32),
+                            //   height: rSize(32),
+                            // ),
                             SizedBox(width: rSize(10)),
                             ManyLikeButton(
                               child: Image.asset(
@@ -254,4 +352,55 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
             ),
     );
   }
+
+  _buildChatBox(String sender, String note) {
+    final Color color = Color.fromRGBO(
+      180 + Random().nextInt(55),
+      180 + Random().nextInt(55),
+      180 + Random().nextInt(55),
+      1,
+    );
+    return Align(
+      alignment: Alignment.centerLeft,
+      child: Container(
+        child: Text.rich(
+          TextSpan(children: [
+            TextSpan(
+              text: '$sender:',
+              style: TextStyle(
+                color: color,
+                fontSize: rSP(13),
+              ),
+            ),
+            TextSpan(
+              text: note,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: rSP(13),
+              ),
+            ),
+          ]),
+          maxLines: 5,
+        ),
+        margin: EdgeInsets.symmetric(vertical: rSize(5 / 2)),
+        padding: EdgeInsets.symmetric(
+          horizontal: rSize(10),
+          vertical: rSize(4),
+        ),
+        constraints: BoxConstraints(
+          maxWidth: rSize(200),
+        ),
+        decoration: BoxDecoration(
+          color: Colors.black.withOpacity(0.1),
+          borderRadius: BorderRadius.circular(rSize(16)),
+        ),
+      ),
+    );
+  }
+}
+
+class ChatObj {
+  String name;
+  String message;
+  ChatObj(this.name, this.message);
 }
