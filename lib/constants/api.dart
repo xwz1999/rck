@@ -472,4 +472,10 @@ class LiveAPI {
 
   ///直播回放信息
   static const String livePlaybackInfo = '/v1/live/live/video_info';
+
+  ///直播品牌列表
+  static const String liveBrandList = '/v1/live/goods/brandlist';
+
+  ///直播品牌商品列表
+  static const String liveBrandDetailList = '/v1/live/goods/brandgoodslist';
 }

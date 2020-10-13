@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/live/live_stream/pick_view/brand_goods_list_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/brand_goods_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/goods_window_view.dart';
+import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:recook/pages/live/models/goods_window_model.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
 
 class LivePickGoodsPage extends StatefulWidget {
-  LivePickGoodsPage({Key key}) : super(key: key);
+  final Function(List<int> ids) onPickGoods;
+  LivePickGoodsPage({Key key, @required this.onPickGoods}) : super(key: key);
 
   @override
   _LivePickGoodsPageState createState() => _LivePickGoodsPageState();
@@ -19,10 +22,15 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
     with TickerProviderStateMixin {
   int _goodsPage = 1;
   TabController _tabController;
+  TabController _parentTabController;
   @override
   void initState() {
     super.initState();
     _tabController = TabController(
+      vsync: this,
+      length: 2,
+    );
+    _parentTabController = TabController(
       vsync: this,
       length: 2,
     );
@@ -31,6 +39,7 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
   @override
   void dispose() {
     _tabController?.dispose();
+    PickCart.picked.clear();
     super.dispose();
   }
 
@@ -41,7 +50,14 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        leading: RecookBackButton.text(),
+        leading: _parentTabController.index == 0
+            ? RecookBackButton.text()
+            : RecookBackButton(
+                onTap: () {
+                  _parentTabController.animateTo(0);
+                  setState(() {});
+                },
+              ),
         leadingWidth: rSize(28 + 30.0),
         title: Text(
           '选择直播商品',
@@ -53,87 +69,262 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
         ),
         centerTitle: true,
       ),
-      body: NestedScrollView(
-        headerSliverBuilder: (context, _) {
-          return [
-            SliverToBoxAdapter(
-              child: Container(
-                alignment: Alignment.center,
-                margin: EdgeInsets.symmetric(horizontal: rSize(15)),
-                decoration: BoxDecoration(
-                  color: Color(0xFFF5F5F5),
-                  borderRadius: BorderRadius.circular(rSize(15)),
-                ),
-                height: rSize(30),
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.zero,
-                    prefixIcon: Padding(
-                      padding: EdgeInsets.only(
-                        left: rSize(12),
-                        right: rSize(4),
+      body: TabBarView(
+        controller: _parentTabController,
+        physics: NeverScrollableScrollPhysics(),
+        children: [
+          NestedScrollView(
+            headerSliverBuilder: (context, _) {
+              return [
+                SliverToBoxAdapter(
+                  child: Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.symmetric(horizontal: rSize(15)),
+                    decoration: BoxDecoration(
+                      color: Color(0xFFF5F5F5),
+                      borderRadius: BorderRadius.circular(rSize(15)),
+                    ),
+                    height: rSize(30),
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.zero,
+                        prefixIcon: Padding(
+                          padding: EdgeInsets.only(
+                            left: rSize(12),
+                            right: rSize(4),
+                          ),
+                          child: Icon(
+                            Icons.search,
+                            color: Color(0xFF999999),
+                            size: rSize(15),
+                          ),
+                        ),
+                        prefixIconConstraints: BoxConstraints(
+                          minWidth: rSize(15 + 12 + 4.0),
+                          minHeight: rSize(15),
+                        ),
+                        isDense: true,
+                        hintStyle: TextStyle(
+                          color: Color(0xFF999999),
+                          fontSize: rSP(13),
+                        ),
+                        hintText: '搜索你想要添加的商品',
                       ),
-                      child: Icon(
-                        Icons.search,
-                        color: Color(0xFF999999),
-                        size: rSize(15),
-                      ),
                     ),
-                    prefixIconConstraints: BoxConstraints(
-                      minWidth: rSize(15 + 12 + 4.0),
-                      minHeight: rSize(15),
-                    ),
-                    isDense: true,
-                    hintStyle: TextStyle(
-                      color: Color(0xFF999999),
-                      fontSize: rSP(13),
-                    ),
-                    hintText: '搜索你想要添加的商品',
                   ),
                 ),
-              ),
-            ),
-          ];
-        },
-        body: Column(
-          children: [
-            Container(
-              margin: EdgeInsets.symmetric(
-                horizontal: rSize(95),
-                vertical: rSize(15),
-              ),
-              height: rSize(32),
-              child: TabBar(
-                controller: _tabController,
-                tabs: [
-                  Tab(text: '商品橱窗'),
-                  Tab(text: '品牌'),
-                ],
-                labelStyle: TextStyle(
-                  fontSize: rSP(13),
-                  fontWeight: FontWeight.bold,
+              ];
+            },
+            body: Column(
+              children: [
+                Container(
+                  margin: EdgeInsets.symmetric(
+                    horizontal: rSize(95),
+                    vertical: rSize(15),
+                  ),
+                  height: rSize(32),
+                  child: TabBar(
+                    controller: _tabController,
+                    tabs: [
+                      Tab(text: '商品橱窗'),
+                      Tab(text: '品牌'),
+                    ],
+                    labelStyle: TextStyle(
+                      fontSize: rSP(13),
+                      fontWeight: FontWeight.bold,
+                    ),
+                    labelColor: Color(0xFF333333),
+                    unselectedLabelColor: Color(0xFF333333).withOpacity(0.3),
+                    indicatorSize: TabBarIndicatorSize.label,
+                    indicator: RecookIndicator(
+                        borderSide: BorderSide(
+                      width: rSize(3),
+                      color: Color(0xFFDB2D2D),
+                    )),
+                  ),
                 ),
-                labelColor: Color(0xFF333333),
-                unselectedLabelColor: Color(0xFF333333).withOpacity(0.3),
-                indicatorSize: TabBarIndicatorSize.label,
-                indicator: RecookIndicator(
-                    borderSide: BorderSide(
-                  width: rSize(3),
-                  color: Color(0xFFDB2D2D),
-                )),
-              ),
+                Expanded(
+                  child: TabBarView(
+                    controller: _tabController,
+                    children: [
+                      GoodsWindowView(
+                        onPick: () {
+                          setState(() {});
+                        },
+                      ),
+                      BrandGoodsView(
+                        controller: _parentTabController,
+                        onTapBrand: () {
+                          setState(() {});
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            Expanded(
-              child: TabBarView(
-                controller: _tabController,
+          ),
+          BrandGoodsListView(
+            onPick: () {
+              setState(() {});
+            },
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
+        child: Builder(
+          builder: (context) {
+            return Material(
+              color: Colors.white,
+              child: Stack(
                 children: [
-                  GoodsWindowView(),
-                  BrandGoodsView(),
+                  Row(
+                    children: [
+                      rWBox(15),
+                      Text(
+                        '已选${PickCart.picked.length}/50',
+                        style: TextStyle(
+                          color: Color(0xFF333333),
+                          fontSize: rSP(14),
+                        ),
+                      ),
+                      Spacer(),
+                      MaterialButton(
+                        height: rSize(28),
+                        minWidth: rSize(72),
+                        onPressed: () {
+                          widget.onPickGoods(PickCart.picked.keys.toList());
+                          Navigator.pop(context);
+                        },
+                        child: Text('完成'),
+                        color: Color(0xFFDB2D2D),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(rSize(14)),
+                        ),
+                      ),
+                      rWBox(15),
+                    ],
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    top: 0,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: MaterialButton(
+                        onPressed: () {
+                          showCustomModalBottomSheet(
+                            context: context,
+                            builder: (context) {
+                              return DraggableScrollableSheet(
+                                minChildSize: 0.5,
+                                maxChildSize: 0.9,
+                                builder: (BuildContext context,
+                                    ScrollController scrollController) {
+                                  return Material(
+                                    color: Colors.white,
+                                    child: ListView.builder(
+                                      itemBuilder: (context, index) {
+                                        final model = PickCart.picked.values
+                                            .toList()[index];
+                                        return SizedBox(
+                                          height: rSize(86 + 15.0),
+                                          child: Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: rSize(15),
+                                              vertical: rSize(15 / 2),
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  '${index + 1}',
+                                                  style: TextStyle(
+                                                    color: Color(0xFF595C5F),
+                                                    fontSize: rSP(14),
+                                                  ),
+                                                ),
+                                                rWBox(10),
+                                                FadeInImage.assetNetwork(
+                                                  placeholder: R
+                                                      .ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                                  image: Api.getImgUrl(
+                                                      model.mainPhotoUrl),
+                                                  height: rSize(86),
+                                                  width: rSize(86),
+                                                ),
+                                                rWBox(10),
+                                                Expanded(
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        model.goodsName,
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                          color:
+                                                              Color(0xFF333333),
+                                                          fontSize: rSP(14),
+                                                        ),
+                                                      ),
+                                                      Spacer(),
+                                                      Row(
+                                                        children: [
+                                                          Text(
+                                                            '¥${model.originalPrice}',
+                                                            style: TextStyle(
+                                                              color: Color(
+                                                                  0xFF333333),
+                                                              fontSize: rSP(14),
+                                                            ),
+                                                          ),
+                                                          Text(
+                                                            '/赚${model.commission}',
+                                                            style: TextStyle(
+                                                              color: Color(
+                                                                  0xFFC92219),
+                                                              fontSize: rSP(14),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      itemCount: PickCart.picked.length,
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          );
+                        },
+                        child: Text(
+                          '查看已选商品 ▼',
+                          style: TextStyle(
+                            color: Color(0xFF333333),
+                            fontSize: rSP(14),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
-            ),
-          ],
+            );
+          },
         ),
       ),
     );

@@ -26,6 +26,7 @@ class _LivePageState extends State<LivePage> {
   File _imageFile;
   TopicListModel _topicModel;
   TextEditingController _editingController = TextEditingController();
+  List<int> pickedIds = [];
 
   @override
   void initState() {
@@ -53,11 +54,11 @@ class _LivePageState extends State<LivePage> {
             right: 0,
             bottom: 0,
             child: CloudVideo(
-                onCloudVideoCreated: (controller) async {
-                  _livePusher = await LivePusher.create();
-                  _livePusher.startPreview(controller);
-                },
-              ),
+              onCloudVideoCreated: (controller) async {
+                _livePusher = await LivePusher.create();
+                _livePusher.startPreview(controller);
+              },
+            ),
           ),
           Positioned(
             right: 0,
@@ -151,14 +152,26 @@ class _LivePageState extends State<LivePage> {
                   minWidth: rSize(205),
                   height: rSize(40),
                   onPressed: () {
-                    HttpManager.post(LiveAPI.startLive, {
-                      'title': _editingController.text,
-                      'cover': '',
-                      'topic': _topicModel == null ? 0 : _topicModel.id,
-                      'goodsIds': [],
+                    GSDialog.of(context).showLoadingDialog(context, '上传图片中');
+                    HttpManager.uploadFile(
+                      url: CommonApi.upload,
+                      file: _imageFile,
+                      key: "photo",
+                    ).then((result) {
+                      GSDialog.of(context).dismiss(context);
+                      GSDialog.of(context)
+                          .showLoadingDialog(context, '准备开始直播中');
+                      HttpManager.post(LiveAPI.startLive, {
+                        'title': _editingController.text,
+                        'cover': result.url,
+                        'topic': _topicModel == null ? 0 : _topicModel.id,
+                        'goodsIds': pickedIds,
+                      }).then((resultData) {
+                        GSDialog.of(context).dismiss(context);
+                        _livePusher
+                            .startPush(resultData.data['data']['pushUrl']);
+                      });
                     });
-                    _livePusher.startPush(
-                        'rtmp://livepush.reecook.cn/live/recook_1?txSecret=9eab277c32fd7a1d8e1d7867dda0740b&txTime=5F83F127');
                   },
                   child: Text(
                     '开始直播',
@@ -186,7 +199,11 @@ class _LivePageState extends State<LivePage> {
                   _livePusher.switchCamera();
                 }),
                 _buildVerticalButton(R.ASSETS_LIVE_WHITE_CART_PNG, '商品', () {
-                  CRoute.push(context, LivePickGoodsPage());
+                  CRoute.push(context, LivePickGoodsPage(
+                    onPickGoods: (ids) {
+                      pickedIds = ids;
+                    },
+                  ));
                 }),
               ],
             ),

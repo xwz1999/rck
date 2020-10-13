@@ -6,10 +6,13 @@ import 'package:recook/constants/styles.dart';
 class RecookBackButton extends StatelessWidget {
   final bool white;
   final bool text;
-  const RecookBackButton({Key key, this.white = false, this.text = false})
+  final VoidCallback onTap;
+  const RecookBackButton(
+      {Key key, this.white = false, this.text = false, this.onTap})
       : super(key: key);
 
-  const RecookBackButton.text({Key key, this.white = false, this.text = true})
+  const RecookBackButton.text(
+      {Key key, this.white = false, this.text = true, this.onTap})
       : super(key: key);
 
   @override
@@ -28,7 +31,7 @@ class RecookBackButton extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                Navigator.maybePop(context);
+                onTap == null ? Navigator.maybePop(context) : onTap();
               },
             )
           : IconButton(
@@ -38,7 +41,7 @@ class RecookBackButton extends StatelessWidget {
                 color: white ? Colors.white : AppColor.blackColor,
               ),
               onPressed: () {
-                Navigator.maybePop(context);
+                onTap == null ? Navigator.maybePop(context) : onTap();
               });
     } else
       return SizedBox();

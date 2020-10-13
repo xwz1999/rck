@@ -66,7 +66,7 @@ class RefreshWidget extends StatefulWidget {
       this.loadingText: "正在加载中...",
       this.noDataText: "已经到底了",
       this.headerTriggerDistance,
-      this.header})
+      this.header, GridView child})
       : this.controller = controller ?? GSRefreshController();
 
   final Widget body;
