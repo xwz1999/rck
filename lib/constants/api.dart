@@ -478,4 +478,7 @@ class LiveAPI {
 
   ///直播品牌商品列表
   static const String liveBrandDetailList = '/v1/live/goods/brandgoodslist';
+
+  ///直播场次数据列表
+  static const String liveDataList = '/v1/live/live/data/list';
 }

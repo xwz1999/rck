@@ -8,6 +8,10 @@ class RecookDateUtil {
     dateTime = DateUtil.getDateTime(rawData);
   }
 
+  RecookDateUtil.fromMillsecond(int millsecond) {
+    dateTime = DateTime.fromMillisecondsSinceEpoch(millsecond);
+  }
+
   ///日期设置
   RecookDateUtil(this.dateTime);
 
