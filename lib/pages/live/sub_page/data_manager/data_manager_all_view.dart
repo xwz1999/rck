@@ -1,5 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/live/models/live_time_data_model.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 
 class DataManagerAllView extends StatefulWidget {
   DataManagerAllView({Key key}) : super(key: key);
@@ -11,6 +17,7 @@ class DataManagerAllView extends StatefulWidget {
 class _DataManagerAllViewState extends State<DataManagerAllView>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
+  GSRefreshController _refreshController = GSRefreshController();
   List<String> titles = [
     '收获点赞',
     '观众人数',
@@ -19,6 +26,8 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
     '销售金额',
     '预计收入',
   ];
+  int selectDay = 3;
+  LiveTimeDataModel _dataModel = LiveTimeDataModel.zero();
   @override
   void initState() {
     super.initState();
@@ -37,120 +46,141 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.all(rSize(15)),
-      children: [
-        Row(
-          children: [
-            PopupMenuButton(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(rSize(8)),
+    return RefreshWidget(
+      controller: _refreshController,
+      onRefresh: () {
+        getDataModel().then((model) {
+          setState(() {
+            _dataModel = model;
+          });
+          _refreshController.refreshCompleted();
+        });
+      },
+      body: ListView(
+        padding: EdgeInsets.all(rSize(15)),
+        children: [
+          Row(
+            children: [
+              PopupMenuButton(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(rSize(8)),
+                ),
+                color: Colors.white,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      '近$selectDay\天数据',
+                      style: TextStyle(
+                        color: Color(0xFF333333),
+                        fontSize: rSP(16),
+                      ),
+                    ),
+                    Icon(
+                      Icons.arrow_drop_down,
+                      color: Color(0xFFDB2D2D),
+                    ),
+                  ],
+                ),
+                initialValue: selectDay,
+                onSelected: (day) {
+                  setState(() {
+                    selectDay = day;
+                  });
+                },
+                itemBuilder: (context) {
+                  final List<int> days = [3, 7, 15, 30];
+                  return days
+                      .map(
+                        (e) => PopupMenuItem(
+                          value: e,
+                          child: Text(
+                            '近$e\天数据',
+                            style: TextStyle(
+                              color: Color(0xFF333333),
+                              fontSize: rSP(16),
+                            ),
+                          ),
+                        ),
+                      )
+                      .toList();
+                },
               ),
+            ],
+          ),
+          SizedBox(height: rSize(10)),
+          Text(
+            '累计开播${_dataModel.count}场，共${DateTime.fromMillisecondsSinceEpoch(_dataModel.duration)}小时',
+            style: TextStyle(
+              color: Color(0xFF666666),
+              fontSize: rSP(14),
+            ),
+          ),
+          SizedBox(height: rSize(15)),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(rSize(10)),
+            child: Container(
               color: Colors.white,
-              child: Row(
+              child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    '近7天数据',
-                    style: TextStyle(
-                      color: Color(0xFF333333),
-                      fontSize: rSP(16),
-                    ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      _buildChildBox('收获点赞', _dataModel.praise, 0),
+                      _vDivider(),
+                      _buildChildBox('观众人数', _dataModel.look, 1),
+                      _vDivider(),
+                      _buildChildBox('新增粉丝', _dataModel.fans, 2),
+                    ],
                   ),
-                  Icon(
-                    Icons.arrow_drop_down,
-                    color: Color(0xFFDB2D2D),
+                  Divider(
+                    color: Color(0xFFEEEEEE),
+                    height: rSize(0.5),
+                    thickness: rSize(0.5),
+                    indent: rSize(10),
+                    endIndent: rSize(10),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildChildBox('购买人数', _dataModel.buy, 3),
+                      _vDivider(),
+                      _buildChildBox('销售金额', _dataModel.salesVolume, 4),
+                      _vDivider(),
+                      _buildChildBox('预计收入', _dataModel.anticipatedRevenue, 5),
+                    ],
                   ),
                 ],
               ),
-              initialValue: '近7天数据',
-              itemBuilder: (context) {
-                return [
-                  PopupMenuItem(
-                      value: '近7天数据',
-                      child: Text(
-                        '近7天数据',
-                        style: TextStyle(
-                          color: Color(0xFF333333),
-                          fontSize: rSP(16),
-                        ),
-                      )),
-                  PopupMenuItem(
-                      value: '近30天数据',
-                      child: Text(
-                        '近30天数据',
-                        style: TextStyle(
-                          color: Color(0xFF333333),
-                          fontSize: rSP(16),
-                        ),
-                      )),
-                ];
-              },
-            ),
-          ],
-        ),
-        SizedBox(height: rSize(10)),
-        Text(
-          '累计开播7场，共14小时',
-          style: TextStyle(
-            color: Color(0xFF666666),
-            fontSize: rSP(14),
-          ),
-        ),
-        SizedBox(height: rSize(15)),
-        ClipRRect(
-          borderRadius: BorderRadius.circular(rSize(10)),
-          child: Container(
-            color: Colors.white,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    _buildChildBox('收获点赞', '3.7万', 0),
-                    _vDivider(),
-                    _buildChildBox('观众人数', '1114', 1),
-                    _vDivider(),
-                    _buildChildBox('新增粉丝', '434', 2),
-                  ],
-                ),
-                Divider(
-                  color: Color(0xFFEEEEEE),
-                  height: rSize(0.5),
-                  thickness: rSize(0.5),
-                  indent: rSize(10),
-                  endIndent: rSize(10),
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildChildBox('购买人数', '3.7万', 3),
-                    _vDivider(),
-                    _buildChildBox('销售金额', '1114', 4),
-                    _vDivider(),
-                    _buildChildBox('预计收入', '434', 5),
-                  ],
-                ),
-              ],
             ),
           ),
-        ),
-        SizedBox(height: rSize(15)),
-        AspectRatio(
-          aspectRatio: 345 / 231,
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(rSize(10)),
-            ),
-            child: TabBarView(
-              controller: _tabController,
-              children: titles.map((e) => _buildDataView(e)).toList(),
+          SizedBox(height: rSize(15)),
+          AspectRatio(
+            aspectRatio: 345 / 231,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(rSize(10)),
+              ),
+              child: TabBarView(
+                controller: _tabController,
+                physics: NeverScrollableScrollPhysics(),
+                children: titles
+                    .map((e) => _buildDataView(
+                          e,
+                          [
+                            DisplayScrollableList('1.1', 5),
+                            DisplayScrollableList('1.1', 5),
+                            DisplayScrollableList('1.1', 5),
+                          ],
+                        ))
+                    .toList(),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -162,7 +192,7 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
     );
   }
 
-  _buildChildBox(String title, String subTitle, int index) {
+  _buildChildBox(String title, dynamic subTitle, int index) {
     return Expanded(
       child: AspectRatio(
         aspectRatio: 1,
@@ -189,7 +219,7 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
               ),
               SizedBox(height: rSize(12)),
               Text(
-                subTitle,
+                '$subTitle',
                 style: TextStyle(
                   color: _tabController.index == index
                       ? Colors.white
@@ -204,7 +234,7 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
     );
   }
 
-  Widget _buildDataView(String title) {
+  Widget _buildDataView(String title, List<DisplayScrollableList> displayList) {
     return Padding(
       padding: EdgeInsets.all(rSize(10)),
       child: Column(
@@ -223,8 +253,53 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
             thickness: rSize(1),
             color: Color(0xFFEEEEEE),
           ),
+          Expanded(
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              reverse: true,
+              itemBuilder: (context, index) {
+                final model = displayList[index];
+                return Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: rSize(6),
+                  ),
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: Container(),
+                      ),
+                      Text(
+                        model.date,
+                        style: TextStyle(
+                          color: Color(0xFF666666),
+                          fontSize: rSP(12),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
+              itemCount: displayList.length,
+            ),
+          ),
         ],
       ),
     );
   }
+
+  Future<LiveTimeDataModel> getDataModel() async {
+    ResultData resultData = await HttpManager.post(LiveAPI.dataCount, {
+      'day': selectDay,
+    });
+    if (resultData?.data['data'] == null)
+      return LiveTimeDataModel.zero();
+    else
+      return LiveTimeDataModel.fromJson(resultData?.data['data']);
+  }
+}
+
+class DisplayScrollableList {
+  String date;
+  int count;
+  DisplayScrollableList(this.date, this.count);
 }

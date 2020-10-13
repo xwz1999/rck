@@ -482,5 +482,9 @@ class LiveAPI {
   ///直播场次数据列表
   static const String liveDataList = '/v1/live/live/data/list';
 
+  ///停止直播
   static const String exitLive = '/v1/live/live/stop';
+
+  ///多日累计数据
+  static const String dataCount = '/v1/live/live/data/count';
 }
