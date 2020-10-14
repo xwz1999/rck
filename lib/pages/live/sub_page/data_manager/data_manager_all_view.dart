@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class DataManagerAllView extends StatefulWidget {
 }
 
 class _DataManagerAllViewState extends State<DataManagerAllView>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   TabController _tabController;
   GSRefreshController _refreshController = GSRefreshController();
   List<String> titles = [
@@ -26,6 +27,7 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
     '销售金额',
     '预计收入',
   ];
+
   int selectDay = 3;
   LiveTimeDataModel _dataModel = LiveTimeDataModel.zero();
   @override
@@ -36,6 +38,9 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
       length: 6,
       initialIndex: 0,
     );
+    Future.delayed(Duration(milliseconds: 300), () {
+      _refreshController.requestRefresh();
+    });
   }
 
   @override
@@ -46,6 +51,7 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return RefreshWidget(
       controller: _refreshController,
       onRefresh: () {
@@ -87,6 +93,7 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
                   setState(() {
                     selectDay = day;
                   });
+                  _refreshController.requestRefresh();
                 },
                 itemBuilder: (context) {
                   final List<int> days = [3, 7, 15, 30];
@@ -110,7 +117,7 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
           ),
           SizedBox(height: rSize(10)),
           Text(
-            '累计开播${_dataModel.count}场，共${DateTime.fromMillisecondsSinceEpoch(_dataModel.duration)}小时',
+            '累计开播${_dataModel.count}场，共${Duration(seconds: _dataModel.duration).inHours}小时',
             style: TextStyle(
               color: Color(0xFF666666),
               fontSize: rSP(14),
@@ -166,16 +173,44 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
               child: TabBarView(
                 controller: _tabController,
                 physics: NeverScrollableScrollPhysics(),
-                children: titles
-                    .map((e) => _buildDataView(
-                          e,
-                          [
-                            DisplayScrollableList('1.1', 5),
-                            DisplayScrollableList('1.1', 5),
-                            DisplayScrollableList('1.1', 5),
-                          ],
-                        ))
-                    .toList(),
+                children: [
+                  _buildDataView(
+                    '收获点赞',
+                    _dataModel.datePrise
+                        .map((e) => DisplayScrollableList(e.date, e.count))
+                        .toList(),
+                  ),
+                  _buildDataView(
+                    '观众人数',
+                    _dataModel.dateLook
+                        .map((e) => DisplayScrollableList(e.date, e.count))
+                        .toList(),
+                  ),
+                  _buildDataView(
+                    '新增粉丝',
+                    _dataModel.dateFans
+                        .map((e) => DisplayScrollableList(e.date, e.count))
+                        .toList(),
+                  ),
+                  _buildDataView(
+                    '购买人数',
+                    _dataModel.dateBuy
+                        .map((e) => DisplayScrollableList(e.date, e.count))
+                        .toList(),
+                  ),
+                  _buildDataView(
+                    '销售金额',
+                    _dataModel.dateSalesVolume
+                        .map((e) => DisplayScrollableList(e.date, e.count))
+                        .toList(),
+                  ),
+                  _buildDataView(
+                    '预计收入',
+                    _dataModel.dateSalesVolume
+                        .map((e) => DisplayScrollableList(e.date, e.count))
+                        .toList(),
+                  ),
+                ],
               ),
             ),
           ),
@@ -235,6 +270,11 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
   }
 
   Widget _buildDataView(String title, List<DisplayScrollableList> displayList) {
+    int maxHeight() {
+      int maxNum = displayList.map((e) => e.calcCount).reduce(max);
+      return maxNum == 0 ? 1 : maxNum;
+    }
+
     return Padding(
       padding: EdgeInsets.all(rSize(10)),
       child: Column(
@@ -266,7 +306,13 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
                   child: Column(
                     children: [
                       Expanded(
-                        child: Container(),
+                        child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: _DataTapWidget(
+                            model: model,
+                            maxHeight: maxHeight(),
+                          ),
+                        ),
                       ),
                       Text(
                         model.date,
@@ -296,10 +342,92 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
     else
       return LiveTimeDataModel.fromJson(resultData?.data['data']);
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class DisplayScrollableList {
   String date;
-  int count;
+  dynamic count;
   DisplayScrollableList(this.date, this.count);
+  int get calcCount {
+    if (count is int)
+      return count;
+    else
+      return int.tryParse(count) ?? double.tryParse(count).toInt() ?? 0;
+  }
+}
+
+class _DataTapWidget extends StatefulWidget {
+  final int maxHeight;
+  final DisplayScrollableList model;
+  _DataTapWidget({Key key, this.maxHeight, this.model}) : super(key: key);
+
+  @override
+  __DataTapWidgetState createState() => __DataTapWidgetState();
+}
+
+class __DataTapWidgetState extends State<_DataTapWidget> {
+  bool onTap = false;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onLongPressStart: (detail) {
+        setState(() {
+          onTap = true;
+        });
+      },
+      onLongPressEnd: (detail) {
+        setState(() {
+          onTap = false;
+        });
+      },
+      onLongPressUp: () {
+        setState(() {
+          onTap = false;
+        });
+      },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AnimatedOpacity(
+            opacity: onTap ? 1 : 0,
+            duration: Duration(milliseconds: 300),
+            curve: Curves.easeInOutCubic,
+            child: Text(
+              '${widget.model.count}',
+              style: TextStyle(
+                fontSize: rSP(16),
+                color: Color(0xFFDB2D2D),
+              ),
+            ),
+          ),
+          Container(
+            color: Colors.transparent,
+            alignment: Alignment.bottomCenter,
+            width: rSize(36),
+            child: AnimatedContainer(
+              curve: Curves.easeInOutCubic,
+              duration: Duration(milliseconds: 300),
+              height: rSize(6) +
+                  rSize(90) * widget.model.calcCount / widget.maxHeight,
+              width: rSize(onTap ? 14 : 8),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(rSize(7)),
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0xFFC4143C).withOpacity(onTap ? 1 : 0.5),
+                    Color(0xFFFF3457).withOpacity(onTap ? 1 : 0.5),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

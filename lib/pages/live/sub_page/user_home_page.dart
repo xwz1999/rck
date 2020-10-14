@@ -9,6 +9,7 @@ import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/sub_page/live_host_center_page.dart';
 import 'package:recook/pages/live/sub_page/user_attention_page.dart';
 import 'package:recook/pages/live/sub_page/user_home/user_activity_view.dart';
+import 'package:recook/pages/live/sub_page/user_home/user_playback_view.dart';
 import 'package:recook/pages/live/widget/live_attention_button.dart';
 import 'package:recook/pages/live/widget/sliver_bottom_persistent_delegate.dart';
 import 'package:recook/pages/live/widget/user_live_playback_card.dart';
@@ -117,7 +118,7 @@ class _UserHomePageState extends State<UserHomePage>
                                   onPressed: () {
                                     CRoute.push(
                                       context,
-                                      LiveHostCenterPage(),
+                                      LiveHostCenterPage(model: model),
                                     );
                                   },
                                 )
@@ -201,9 +202,8 @@ class _UserHomePageState extends State<UserHomePage>
                 userModel: model,
                 initAttention: selfFlag ? true : widget.initAttention,
               ),
-              ListView.builder(itemBuilder: (context, index) {
-                return UserPlaybackCard();
-              })
+              UserPlaybackView(),
+              
             ],
           ),
         ),

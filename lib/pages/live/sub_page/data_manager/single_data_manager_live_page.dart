@@ -1,18 +1,40 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/live/models/live_data_detail_model.dart';
 import 'package:recook/widgets/custom_painters/pie_progress_painter.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
 class SingleDataManagerPage extends StatefulWidget {
-  SingleDataManagerPage({Key key}) : super(key: key);
+  final int id;
+  SingleDataManagerPage({Key key, @required this.id}) : super(key: key);
 
   @override
   _SingleDataManagerPageState createState() => _SingleDataManagerPageState();
 }
 
 class _SingleDataManagerPageState extends State<SingleDataManagerPage> {
+  LiveDataDetailModel model = LiveDataDetailModel.zero();
+  @override
+  void initState() {
+    super.initState();
+    HttpManager.post(LiveAPI.liveDataDetail, {
+      'id': widget.id,
+    }).then((resultData) {
+      if (resultData?.data['data'] != null) {
+        setState(() {
+          model = LiveDataDetailModel.fromJson(resultData?.data['data']);
+        });
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final startDate = DateTime.fromMillisecondsSinceEpoch(model.startAt * 1000);
+    final endDate = DateTime.fromMillisecondsSinceEpoch(model.endAt * 1000);
     return Scaffold(
       backgroundColor: Color(0xFFF9F9FB),
       appBar: AppBar(
@@ -44,7 +66,7 @@ class _SingleDataManagerPageState extends State<SingleDataManagerPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '07-30 14:28场',
+                      DateUtil.formatDate(startDate, format: 'MM-dd HH:mm场'),
                       style: TextStyle(
                         color: Color(0xFF333333),
                         fontSize: rSP(16),
@@ -53,7 +75,13 @@ class _SingleDataManagerPageState extends State<SingleDataManagerPage> {
                     ),
                     SizedBox(height: rSize(6)),
                     Text(
-                      '直播时间 14:28 - 17:12    共2小时44分',
+                      '直播时间 ${DateUtil.formatDate(
+                        startDate,
+                        format: 'HH:mm场',
+                      )} - ${DateUtil.formatDate(
+                        endDate,
+                        format: 'HH:mm场',
+                      )}    共${endDate.difference(startDate).inHours}小时${endDate.difference(startDate).inMinutes % 59}分钟',
                       style: TextStyle(
                         color: Color(0xFF333333).withOpacity(0.5),
                         fontSize: rSP(12),
@@ -78,12 +106,12 @@ class _SingleDataManagerPageState extends State<SingleDataManagerPage> {
                   childAspectRatio: 345.0 / 3.0 / (142.0 / 2.0),
                 ),
                 children: [
-                  _buildCard('1.6万', '收获点赞'),
-                  _buildCard('1244', '观众人数'),
-                  _buildCard('154', '新增粉丝'),
-                  _buildCard('123', '购买人数'),
-                  _buildCard('3.5万', '销售金额'),
-                  _buildCard('9812', '预计收入'),
+                  _buildCard('${model.praise}', '收获点赞'),
+                  _buildCard('${model.look}', '观众人数'),
+                  _buildCard('${model.fans}', '新增粉丝'),
+                  _buildCard('${model.buy}', '购买人数'),
+                  _buildCard('${model.salesVolume}', '销售金额'),
+                  _buildCard('${model.anticipatedRevenue}', '预计收入'),
                 ],
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
@@ -91,7 +119,7 @@ class _SingleDataManagerPageState extends State<SingleDataManagerPage> {
             ),
           ),
           SizedBox(height: rSize(15)),
-          _buildAudienceSource(),
+          // _buildAudienceSource(),
         ],
       ),
     );

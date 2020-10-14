@@ -24,6 +24,20 @@ class _VideoPageState extends State<VideoPage>
   int _page = 1;
   List<VideoListModel> _videoListModels = [];
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 300), () {
+      if(mounted)_controller.requestRefresh();
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     super.build(context);
     return RefreshWidget(

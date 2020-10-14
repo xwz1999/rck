@@ -1,3 +1,4 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -15,12 +16,28 @@ class DatamanagerLiveView extends StatefulWidget {
   _DatamanagerLiveViewState createState() => _DatamanagerLiveViewState();
 }
 
-class _DatamanagerLiveViewState extends State<DatamanagerLiveView> {
+class _DatamanagerLiveViewState extends State<DatamanagerLiveView>
+    with AutomaticKeepAliveClientMixin {
   int _page = 1;
   List<LiveDataListModel> _dataModels = [];
   GSRefreshController _controller = GSRefreshController();
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 500), () {
+      if (mounted) _controller.requestRefresh();
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return RefreshWidget(
       controller: _controller,
       onRefresh: () {
@@ -42,12 +59,14 @@ class _DatamanagerLiveViewState extends State<DatamanagerLiveView> {
   }
 
   _buildListColumn(LiveDataListModel model) {
+    final date = DateTime.fromMillisecondsSinceEpoch(model.startAt * 1000);
+    final endDate = DateTime.fromMillisecondsSinceEpoch(model.endAt * 1000);
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          RecookDateUtil.fromMillsecond(model.startAt).prefixDay,
+          RecookDateUtil(date).prefixDay,
           style: TextStyle(
             color: Color(0xFF666666),
             fontSize: rSP(14),
@@ -58,7 +77,11 @@ class _DatamanagerLiveViewState extends State<DatamanagerLiveView> {
           elevation: 0,
           color: Colors.white,
           onPressed: () {
-            CRoute.push(context, SingleDataManagerPage());
+            CRoute.push(
+                context,
+                SingleDataManagerPage(
+                  id: model.id,
+                ));
           },
           padding: EdgeInsets.all(rSize(10)),
           shape: RoundedRectangleBorder(
@@ -72,7 +95,10 @@ class _DatamanagerLiveViewState extends State<DatamanagerLiveView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '09:12场',
+                      '${DateUtil.formatDate(
+                        date,
+                        format: 'HH:mm',
+                      )}场',
                       style: TextStyle(
                         color: Color(0xFF333333),
                         fontSize: rSP(16),
@@ -80,7 +106,13 @@ class _DatamanagerLiveViewState extends State<DatamanagerLiveView> {
                     ),
                     SizedBox(height: rSize(6)),
                     Text(
-                      '直播时间 09:02 - 10:30',
+                      '直播时间 ${DateUtil.formatDate(
+                        date,
+                        format: 'HH:mm',
+                      )} - ${DateUtil.formatDate(
+                        endDate,
+                        format: 'HH:mm',
+                      )}',
                       style: TextStyle(
                         color: Color(0xFF333333).withOpacity(0.5),
                         fontSize: rSP(12),
@@ -113,4 +145,7 @@ class _DatamanagerLiveViewState extends State<DatamanagerLiveView> {
           .map((e) => LiveDataListModel.fromJson(e))
           .toList();
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }

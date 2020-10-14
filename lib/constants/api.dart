@@ -493,4 +493,7 @@ class LiveAPI {
 
   ///发布小视频
   static const String pushVideo = '/v1/live/short/publish';
+
+  ///直播单场详细数据
+  static const String liveDataDetail = '/v1/live/live/data/info';
 }

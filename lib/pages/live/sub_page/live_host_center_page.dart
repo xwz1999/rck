@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/live/models/live_base_info_model.dart';
+import 'package:recook/pages/live/models/live_time_data_model.dart';
 import 'package:recook/pages/live/pages/goods_window_page.dart';
 import 'package:recook/pages/live/sub_page/data_manager_page.dart';
 import 'package:recook/utils/custom_route.dart';
@@ -9,7 +12,8 @@ import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
 
 class LiveHostCenterPage extends StatefulWidget {
-  LiveHostCenterPage({Key key}) : super(key: key);
+  final LiveBaseInfoModel model;
+  LiveHostCenterPage({Key key, @required this.model}) : super(key: key);
 
   @override
   _LiveHostCenterPageState createState() => _LiveHostCenterPageState();
@@ -91,7 +95,7 @@ class _LiveHostCenterPageState extends State<LiveHostCenterPage>
                       ),
                     ),
                     Text(
-                      '累计获赞12.6万  粉丝5.2万',
+                      '累计获赞${widget.model.praise} 粉丝${widget.model.fans}',
                       style: TextStyle(
                         color: Color(0xFF999999),
                         fontSize: rSP(14),
@@ -150,9 +154,9 @@ class _LiveHostCenterPageState extends State<LiveHostCenterPage>
                   child: TabBarView(
                     controller: _tabController,
                     children: [
-                      _buildInfoCard(),
-                      _buildInfoCard(),
-                      _buildInfoCard(),
+                      _buildInfoCard(1),
+                      _buildInfoCard(7),
+                      _buildInfoCard(30),
                     ],
                   ),
                 ),
@@ -197,20 +201,41 @@ class _LiveHostCenterPageState extends State<LiveHostCenterPage>
     );
   }
 
-  _buildInfoCard() {
-    return GridView(
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      gridDelegate:
-          SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
-      children: [
-        _buildGridChild('16万', '收获点赞'),
-        _buildGridChild('9075', '观众人数'),
-        _buildGridChild('162', '新增粉丝'),
-        _buildGridChild('1928', '购买人数'),
-        _buildGridChild('4.5万', '销售金额'),
-        _buildGridChild('3248', '预计收入'),
-      ],
+  Future<LiveTimeDataModel> getDataModel(int selectDay) async {
+    ResultData resultData = await HttpManager.post(LiveAPI.dataCount, {
+      'day': selectDay,
+    });
+    if (resultData?.data['data'] == null)
+      return LiveTimeDataModel.zero();
+    else
+      return LiveTimeDataModel.fromJson(resultData?.data['data']);
+  }
+
+  _buildInfoCard(int day) {
+    return FutureBuilder<LiveTimeDataModel>(
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return GridView(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(),
+            gridDelegate:
+                SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
+            children: [
+              _buildGridChild('${snapshot.data.praise}', '收获点赞'),
+              _buildGridChild('${snapshot.data.look}', '观众人数'),
+              _buildGridChild('${snapshot.data.fans}', '新增粉丝'),
+              _buildGridChild('${snapshot.data.buy}', '购买人数'),
+              _buildGridChild('${snapshot.data.salesVolume}', '销售金额'),
+              _buildGridChild('${snapshot.data.anticipatedRevenue}', '预计收入'),
+            ],
+          );
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },
+      future: getDataModel(day),
     );
   }
 
