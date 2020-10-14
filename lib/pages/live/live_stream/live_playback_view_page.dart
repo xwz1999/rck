@@ -224,6 +224,7 @@ class _LivePlaybackViewPageState extends State<LivePlaybackViewPage> {
                                 showGoodsListDialog(
                                   context,
                                   models: _streamInfoModel.goodsLists,
+                                  onLive: false,
                                 );
                               },
                             ),

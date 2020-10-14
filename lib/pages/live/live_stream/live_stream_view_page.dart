@@ -367,6 +367,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                               onPressed: () {
                                 showGoodsListDialog(
                                   context,
+                                  onLive: true,
                                   models: _streamInfoModel.goodsLists,
                                 );
                               },

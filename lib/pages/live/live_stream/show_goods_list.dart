@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/pages/goods/small_coupon_widget.dart';
+import 'package:recook/pages/home/classify/commodity_detail_page.dart';
+import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:recook/pages/home/widget/plus_minus_view.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart'
     show GoodsLists;
 
 class GoodsListDialog extends StatefulWidget {
   final List<GoodsLists> models;
+  final bool onLive;
   final bool isLive;
   final Function(int explain) onExplain;
   final int initExplain;
@@ -17,6 +23,7 @@ class GoodsListDialog extends StatefulWidget {
     @required this.models,
     this.isLive = false,
     this.onExplain,
+    this.onLive,
     this.initExplain,
     this.id,
   }) : super(key: key);
@@ -306,7 +313,31 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
                               borderRadius: BorderRadius.circular(rSize(11)),
                             ),
                             padding: EdgeInsets.zero,
-                            onPressed: () {},
+                            onPressed: () {
+                              if (!widget.onLive)
+                                AppRouter.push(
+                                    context, RouteName.COMMODITY_PAGE,
+                                    arguments: CommodityDetailPage.setArguments(
+                                      model.id,
+                                    ));
+                              else {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(rSize(15)),
+                                          ),
+                                          color: Colors.white,
+                                        ),
+                                        height: rSize(480),
+                                        child:
+                                            InternalGoodsDetail(model: model),
+                                      );
+                                    });
+                              }
+                            },
                             child: Text('马上抢'),
                           ),
                   ],
@@ -324,6 +355,7 @@ showGoodsListDialog(
   BuildContext context, {
   @required List<GoodsLists> models,
   bool isLive = false,
+  bool onLive,
   Function(int onExplain) onExplain,
   int initExplain,
   int id,
@@ -339,6 +371,7 @@ showGoodsListDialog(
           onExplain: onExplain,
           initExplain: initExplain,
           id: id,
+          onLive: onLive,
         ),
       );
     },
@@ -354,4 +387,197 @@ showGoodsListDialog(
     barrierDismissible: true,
     transitionDuration: Duration(milliseconds: 500),
   );
+}
+
+/**
+ * INTERNAL GOODS DETAIL
+ */
+
+class InternalGoodsDetail extends StatefulWidget {
+  final GoodsLists model;
+
+  InternalGoodsDetail({Key key, this.model}) : super(key: key);
+
+  @override
+  _InternalGoodsDetailState createState() => _InternalGoodsDetailState();
+}
+
+class _InternalGoodsDetailState extends State<InternalGoodsDetail> {
+  GoodsDetailModel goodsModel;
+  Sku sku;
+  int _num = 1;
+  @override
+  void initState() {
+    super.initState();
+    GoodsDetailModelImpl.getDetailInfo(
+            widget.model.id, UserManager.instance.user.info.id)
+        .then((model) {
+      setState(() {
+        goodsModel = model;
+        sku = model.data.sku[0];
+      });
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return goodsModel == null
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : Column(
+            children: [
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.all(rSize(15)),
+                  children: [
+                    Row(
+                      children: [
+                        FadeInImage.assetNetwork(
+                          placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                          image: Api.getImgUrl(widget.model.mainPhotoUrl),
+                          height: rSize(100),
+                          width: rSize(100),
+                        ),
+                        rWBox(10),
+                        Expanded(
+                          child: SizedBox(
+                            height: rSize(100),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      '¥ ${sku.discountPrice} /',
+                                      style: TextStyle(
+                                        color: Color(0xFF333333),
+                                        fontSize: rSP(16),
+                                      ),
+                                    ),
+                                    Text(
+                                      '赚${sku.commission}',
+                                      style: TextStyle(
+                                        color: Color(0xFFC92219),
+                                        fontSize: rSP(10),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  '库存 ${sku.inventory}件',
+                                  style: TextStyle(
+                                    color: Color(0xFF999999),
+                                    fontSize: rSP(12),
+                                  ),
+                                ),
+                                Text(
+                                  '已选择：${sku.name}',
+                                  style: TextStyle(
+                                    color: Color(0xFF141414),
+                                    fontSize: rSP(12),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Divider(
+                      color: Color(0xFFE6E6E6),
+                      height: rSize(1),
+                      thickness: rSize(1),
+                    ),
+                    rHBox(15),
+                    Text(
+                      '尺寸',
+                      style: TextStyle(
+                        color: Color(0xFF141414),
+                        fontSize: rSP(14),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Wrap(
+                      children: goodsModel.data.sku
+                          .map((e) => MaterialButton(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: rSize(5)),
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                    color: sku.id == e.id
+                                        ? Color(0xFFC92219)
+                                        : Color(0xFF999999),
+                                  ),
+                                  borderRadius: BorderRadius.circular(rSize(2)),
+                                ),
+                                minWidth: 0,
+                                height: rSize(22),
+                                onPressed: () {
+                                  setState(() {
+                                    sku = e;
+                                  });
+                                },
+                                child: Text(
+                                  e.name,
+                                  style: TextStyle(
+                                    color: sku.id == e.id
+                                        ? Color(0xFFC92219)
+                                        : Color(0xFF999999),
+                                  ),
+                                ),
+                              ))
+                          .toList(),
+                    ),
+                    rHBox(15),
+                    Row(
+                      children: [
+                        Text(
+                          '数量',
+                          style: TextStyle(
+                            color: Color(0xFF141414),
+                            fontSize: rSP(14),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Spacer(),
+                        SizedBox(
+                          width: rSize(100),
+                          child: PlusMinusView(
+                            minValue: 1,
+                            maxValue: sku != null
+                                ? (sku.inventory < 50 ? sku.inventory : 50)
+                                : (goodsModel.data.inventory < 50
+                                    ? goodsModel.data.inventory
+                                    : 50),
+                            onInputComplete: (String getNum) {
+                              _num = int.parse(getNum);
+                            },
+                            onValueChanged: (int getNum) {
+                              _num = getNum;
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              MaterialButton(
+                minWidth: MediaQuery.of(context).size.width - rSize(30),
+                height: rSize(38),
+                child: Text('确认'),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(rSize(38 / 2)),
+                ),
+                color: Color(0xFFDB2D2D),
+                onPressed: () {},
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).viewPadding.bottom + rSize(10),
+              ),
+            ],
+          );
+  }
 }
