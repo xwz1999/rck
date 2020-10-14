@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/live/live_stream/live_playback_view_page.dart';
+import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
+import 'package:recook/pages/live/models/activity_video_list_model.dart';
 import 'package:recook/pages/live/widget/user_base_card.dart';
+import 'package:recook/utils/custom_route.dart';
+import 'package:recook/utils/date/recook_date_util.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 
 class UserPlaybackCard extends StatefulWidget {
-  UserPlaybackCard({Key key}) : super(key: key);
+  final ActivityVideoListModel model;
+  UserPlaybackCard({Key key, @required this.model}) : super(key: key);
 
   @override
   _UserPlaybackCardState createState() => _UserPlaybackCardState();
@@ -12,8 +20,10 @@ class UserPlaybackCard extends StatefulWidget {
 class _UserPlaybackCardState extends State<UserPlaybackCard> {
   @override
   Widget build(BuildContext context) {
+    final RecookDateUtil dateUtil =
+        RecookDateUtil.fromMillsecond(widget.model.startAt * 1000);
     return UserBaseCard(
-      date: '今天',
+      date: dateUtil.prefixDay,
       detailDate: '14:30',
       children: [
         SizedBox(height: rSize(35)),
@@ -29,10 +39,12 @@ class _UserPlaybackCardState extends State<UserPlaybackCard> {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset(R.ASSETS_LIVE_ON_STREAM_PNG),
+                  Image.asset(widget.model.isLive == 1
+                      ? R.ASSETS_LIVE_ON_STREAM_PNG
+                      : R.ASSETS_LIVE_STREAM_PLAY_BACK_PNG),
                   SizedBox(width: rSize(5)),
                   Text(
-                    '正在直播中',
+                    widget.model.isLive == 1 ? '正在直播中' : '回放',
                     style: TextStyle(
                       fontSize: rSP(12),
                       height: 1,
@@ -46,7 +58,7 @@ class _UserPlaybackCardState extends State<UserPlaybackCard> {
         Padding(
           padding: EdgeInsets.symmetric(vertical: rSize(5)),
           child: Text(
-            '一波清仓大福利来袭，请速速收下',
+            widget.model.title,
             style: TextStyle(
               color: Color(0xFF333333),
               fontSize: rSP(16),
@@ -55,7 +67,7 @@ class _UserPlaybackCardState extends State<UserPlaybackCard> {
           ),
         ),
         Text(
-          '999人观看 ｜ 24个宝贝',
+          '${widget.model.look}人观看 ｜ ${widget.model.goodsCount}个宝贝',
           style: TextStyle(
             color: Color(0xFF999999),
             fontSize: rSP(12),
@@ -64,23 +76,45 @@ class _UserPlaybackCardState extends State<UserPlaybackCard> {
         SizedBox(
           height: rSize(15),
         ),
-        Row(
-          children: [
-            Container(
-              alignment: Alignment.center,
-              child: Image.asset(
-                R.ASSETS_LIVE_VIDEO_PLAY_PNG,
-                height: rSize(34),
-                width: rSize(34),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(rSize(4)),
+          child: Stack(
+            alignment: Alignment.center,
+            children: [
+              FadeInImage.assetNetwork(
+                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                image: Api.getImgUrl(widget.model.cover),
               ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(rSize(4)),
-                color: Colors.blue,
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 0,
+                bottom: 0,
+                child: Material(
+                  color: Colors.black.withOpacity(0.35),
+                  child: InkWell(
+                    child: Center(
+                      child: Image.asset(
+                        R.ASSETS_LIVE_VIDEO_PLAY_PNG,
+                        height: rSize(34),
+                        width: rSize(34),
+                      ),
+                    ),
+                    onTap: () {
+                      if (widget.model.isLive == 1)
+                        CRoute.push(
+                          context,
+                          LiveStreamViewPage(id: widget.model.id),
+                        );
+                      else
+                        CRoute.push(
+                            context, LivePlaybackViewPage(id: widget.model.id));
+                    },
+                  ),
+                ),
               ),
-              height: rSize(234),
-              width: rSize(234),
-            )
-          ],
+            ],
+          ),
         ),
       ],
     );

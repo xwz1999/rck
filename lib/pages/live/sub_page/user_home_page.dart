@@ -202,8 +202,7 @@ class _UserHomePageState extends State<UserHomePage>
                 userModel: model,
                 initAttention: selfFlag ? true : widget.initAttention,
               ),
-              UserPlaybackView(),
-              
+              UserPlaybackView(userId: widget.userId),
             ],
           ),
         ),

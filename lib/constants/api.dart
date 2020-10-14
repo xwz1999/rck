@@ -496,4 +496,7 @@ class LiveAPI {
 
   ///直播单场详细数据
   static const String liveDataDetail = '/v1/live/live/data/info';
+
+  ///获取动态中直播的列表
+  static const String activityVideoList = '/v1/live/user/live/list';
 }
