@@ -59,7 +59,10 @@ class _UserActivityCardState extends State<UserActivityCard> {
                     shrinkWrap: true,
                   );
           else if (widget.model.trendType == 2)
-            return Image.asset(R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG);
+            return FadeInImage.assetNetwork(
+              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+              image: Api.getImgUrl(widget.model.short.coverUrl),
+            );
           else
             return SizedBox();
         }),

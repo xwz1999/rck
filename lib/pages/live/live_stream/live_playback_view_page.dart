@@ -1,3 +1,4 @@
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:many_like/many_like.dart';
 import 'package:recook/constants/api.dart';
@@ -6,10 +7,9 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
-import 'package:recook/pages/live/widget/more_people.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:tencent_im_plugin/tencent_im_plugin.dart';
+import 'package:video_player/video_player.dart';
 
 class LivePlaybackViewPage extends StatefulWidget {
   final int id;
@@ -23,7 +23,8 @@ class LivePlaybackViewPage extends StatefulWidget {
 class _LivePlaybackViewPageState extends State<LivePlaybackViewPage> {
   bool _showTools = true;
   LiveStreamInfoModel _streamInfoModel;
-
+  VideoPlayerController _videoPlayerController;
+  ChewieController _chewieController;
   @override
   void initState() {
     super.initState();
@@ -31,10 +32,22 @@ class _LivePlaybackViewPageState extends State<LivePlaybackViewPage> {
     getPlaybackInfoModel().then((model) {
       if (model == null)
         Navigator.pop(context);
-      else
+      else {
         setState(() {
           _streamInfoModel = model;
         });
+        _videoPlayerController = VideoPlayerController.network(model.playUrl);
+        _videoPlayerController.initialize().then((_) {
+          _chewieController = ChewieController(
+            videoPlayerController: _videoPlayerController,
+            aspectRatio: _videoPlayerController.value.aspectRatio,
+            autoPlay: true,
+            showControls: true,
+          );
+
+          setState(() {});
+        });
+      }
     });
   }
 
@@ -49,44 +62,34 @@ class _LivePlaybackViewPageState extends State<LivePlaybackViewPage> {
       return LiveStreamInfoModel.fromJson(resultData.data['data']);
   }
 
-  parseMessage(ListenerTypeEnum type, dynamic params) {
-    print(type.toString());
-  }
-
   @override
   void dispose() {
+    _videoPlayerController?.dispose();
+    _chewieController?.dispose();
+
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black87,
       body: _streamInfoModel == null
           ? Center(child: CircularProgressIndicator())
           : Stack(
               children: [
                 Positioned(
-                  top: 0,
+                  bottom: 0,
                   left: 0,
                   right: 0,
-                  bottom: 0,
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    color: Colors.black54,
-                  ),
-                ),
-                Positioned(
-                  left: 0,
                   top: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: InkWell(
-                    onTap: () {
-                      setState(() {
-                        _showTools = !_showTools;
-                      });
-                    },
-                  ),
+                  child: _chewieController == null
+                      ? Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : Chewie(
+                          controller: _chewieController,
+                        ),
                 ),
                 //头部工具栏
                 AnimatedPositioned(
@@ -170,12 +173,12 @@ class _LivePlaybackViewPageState extends State<LivePlaybackViewPage> {
                                 height: rSize(32),
                               ),
                             ),
-                            SizedBox(width: rSize(10)),
-                            Image.asset(
-                              R.ASSETS_LIVE_LIVE_SHARE_PNG,
-                              width: rSize(32),
-                              height: rSize(32),
-                            ),
+                            // SizedBox(width: rSize(10)),
+                            // Image.asset(
+                            //   R.ASSETS_LIVE_LIVE_SHARE_PNG,
+                            //   width: rSize(32),
+                            //   height: rSize(32),
+                            // ),
                             SizedBox(width: rSize(10)),
                             ManyLikeButton(
                               child: Image.asset(
@@ -219,7 +222,7 @@ class _LivePlaybackViewPageState extends State<LivePlaybackViewPage> {
                               },
                             ),
                           ],
-                        )
+                        ),
                       ],
                     ),
                   ),

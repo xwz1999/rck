@@ -392,6 +392,9 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/count_down.png)
   static const String ASSETS_LIVE_COUNT_DOWN_PNG = 'assets/live/count_down.png';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/fancy_cart.png)
+  static const String ASSETS_LIVE_FANCY_CART_PNG = 'assets/live/fancy_cart.png';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/favorite.png)
   static const String ASSETS_LIVE_FAVORITE_PNG = 'assets/live/favorite.png';
 

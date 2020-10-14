@@ -487,4 +487,10 @@ class LiveAPI {
 
   ///多日累计数据
   static const String dataCount = '/v1/live/live/data/count';
+
+  ///获取小视频上传签名
+  static const String uploadKey = '/v1/live/short/upload_sign';
+
+  ///发布小视频
+  static const String pushVideo = '/v1/live/short/publish';
 }

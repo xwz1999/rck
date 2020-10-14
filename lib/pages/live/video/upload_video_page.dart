@@ -1,10 +1,16 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_txugcupload/flutter_txugcupload.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/models/topic_list_model.dart';
 import 'package:recook/pages/live/models/video_goods_model.dart';
 import 'package:recook/pages/live/video/pick_topic_page.dart';
+import 'package:recook/pages/live/video/tencent_video_listener.dart';
 import 'package:recook/pages/live/video/video_goods_page.dart';
 import 'package:recook/pages/live/video/video_preview_page.dart';
 import 'package:recook/utils/custom_route.dart';
@@ -24,6 +30,22 @@ class UploadVideoPage extends StatefulWidget {
 class _UploadVideoPageState extends State<UploadVideoPage> {
   TopicListModel _topicListModel;
   VideoGoodsModel _videoGoodsModel;
+  TextEditingController _editingController = TextEditingController();
+  File uploadFile;
+  @override
+  void initState() {
+    super.initState();
+    uploadFile = widget.videoFile.renameSync(
+      widget.videoFile.path.replaceAll(':', ''),
+    );
+  }
+
+  @override
+  void dispose() {
+    _editingController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,6 +74,54 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
             ),
           ),
         ),
+        actions: [
+          MaterialButton(
+            color: Color(0xFFDB2D2D),
+            onPressed: () {
+              GSDialog.of(context).showLoadingDialog(context, '初始化');
+              TXUGCPublish txugcPublish = TXUGCPublish(
+                  customKey: '${UserManager.instance.user.info.id}');
+              HttpManager.post(LiveAPI.uploadKey, {}).then((resultData) {
+                GSDialog.of(context).dismiss(context);
+                if (resultData?.data['data'] == null)
+                  showToast(resultData?.data['msg']);
+                else {
+                  // GSDialog.of(context).showLoadingDialog(context, '上传视频中');
+                  String sign = resultData?.data['data']['sign'];
+                  txugcPublish.setVideoPublishListener(VideoPublishListener(
+                    onVideoPublishProgress: (uploadBytes, totalBytes) {
+                      int progress = ((uploadBytes / totalBytes) * 100).toInt();
+                      print(progress);
+                    },
+                    onVideoPublishComplete: (result) {
+                      // GSDialog.of(context).dismiss(context);
+                      if (result.retCode == 0) {
+                        // GSDialog.of(context).showLoadingDialog(context, '发布中');
+                        HttpManager.post(LiveAPI.pushVideo, {
+                          'content': _editingController.text,
+                          'fileId': result.videoId,
+                          'topicId': _topicListModel.id,
+                          'goodsId': _videoGoodsModel.id,
+                        }).then((resultData) {
+                          GSDialog.of(context).dismiss(context);
+                          Navigator.pop(context);
+                        });
+                      }
+                      // 当 result.errCode 为 0 时即为上传成功，更多错误码请查看下方链接
+                      // https://cloud.tencent.com/document/product/266/9539#.E9.94.99.E8.AF.AF.E7.A0.81
+                    },
+                  ));
+                  txugcPublish.publishVideo(TXPublishParam(
+                    signature: sign,
+                    videoPath: uploadFile.path,
+                    coverPath: widget.coverImageFile.path,
+                  ));
+                }
+              });
+            },
+            child: Text('发布'),
+          ),
+        ],
       ),
       body: ListView(
         padding: EdgeInsets.symmetric(horizontal: rSize(15)),
@@ -59,6 +129,7 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
           TextField(
             minLines: 5,
             maxLines: 99,
+            controller: _editingController,
             style: TextStyle(
               color: Color(0xFF404040),
               fontSize: rSP(14),

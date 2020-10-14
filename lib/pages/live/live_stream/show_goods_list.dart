@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/goods/small_coupon_widget.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart'
     show GoodsLists;
 
 class GoodsListDialog extends StatefulWidget {
   final List<GoodsLists> models;
-  GoodsListDialog({Key key, @required this.models}) : super(key: key);
+  final bool onLive;
+  GoodsListDialog({
+    Key key,
+    @required this.models,
+    this.onLive,
+  }) : super(key: key);
 
   @override
   _GoodsListDialogState createState() => _GoodsListDialogState();
@@ -19,29 +25,55 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
       minChildSize: 0.5,
       maxChildSize: 0.9,
       builder: (context, scrollController) {
-        return Material(
-          color: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(rSize(15)),
+        return Column(
+          children: [
+            Material(
+              color: Colors.transparent,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: rSize(15),
+                  vertical: rSize(10),
+                ),
+                child: Row(
+                  children: [
+                    Text('全部宝贝 ${widget.models.length}'),
+                    Spacer(),
+                    Image.asset(
+                      R.ASSETS_LIVE_FANCY_CART_PNG,
+                      height: rSize(40),
+                      width: rSize(40),
+                    )
+                  ],
+                ),
+              ),
             ),
-          ),
-          child: ListView.separated(
-            controller: scrollController,
-            itemBuilder: (context, index) {
-              return _buildGoodsCard(widget.models[index], index);
-            },
-            separatorBuilder: (context, index) {
-              return Divider(
-                height: rSize(0.5),
-                thickness: rSize(0.5),
-                color: Color(0xFFEEEEEE),
-                indent: rSize(15),
-                endIndent: rSize(15),
-              );
-            },
-            itemCount: widget.models.length,
-          ),
+            Expanded(
+              child: Material(
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(rSize(15)),
+                  ),
+                ),
+                child: ListView.separated(
+                  controller: scrollController,
+                  itemBuilder: (context, index) {
+                    return _buildGoodsCard(widget.models[index], index);
+                  },
+                  separatorBuilder: (context, index) {
+                    return Divider(
+                      height: rSize(0.5),
+                      thickness: rSize(0.5),
+                      color: Color(0xFFEEEEEE),
+                      indent: rSize(15),
+                      endIndent: rSize(15),
+                    );
+                  },
+                  itemCount: widget.models.length,
+                ),
+              ),
+            ),
+          ],
         );
       },
     );
@@ -50,6 +82,7 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
   _buildGoodsCard(GoodsLists model, int index) {
     return Container(
       padding: EdgeInsets.all(rSize(15)),
+      height: rSize(104 + 15 + 15.0),
       child: Row(
         children: [
           ClipRRect(
@@ -108,7 +141,107 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
           ),
           Expanded(
             child: Column(
-              children: [Text(model.goodsName)],
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  model.goodsName,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Color(0xFF0A0001),
+                    fontSize: rSP(14),
+                  ),
+                ),
+                Spacer(),
+                Row(
+                  children: [
+                    SmallCouponWidget(number: num.parse(model.coupon)),
+                    rWBox(4),
+                    Container(
+                      height: rSize(18),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(rSize(1)),
+                        border: Border.all(
+                          color: Color(0xFFCC1B4F),
+                          width: rSize(0.5),
+                        ),
+                      ),
+                      child: Text(
+                        '赚${model.commission}',
+                        style: TextStyle(
+                          color: Color(0xFFCC1B4F),
+                          fontSize: rSP(12),
+                          height: 1,
+                        ),
+                      ),
+                    ),
+                    Spacer(),
+                    Text(
+                      '剩余',
+                      style: TextStyle(
+                        color: Color(0xFF333333),
+                        fontSize: rSP(11),
+                      ),
+                    ),
+                    Text(
+                      '${model.inventory}件',
+                      style: TextStyle(
+                        color: Color(0xFFC91147),
+                        fontSize: rSP(11),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.baseline,
+                  textBaseline: TextBaseline.alphabetic,
+                  children: [
+                    Text(
+                      '券后',
+                      style: TextStyle(
+                        color: Color(0xFFFA6400),
+                        fontSize: rSP(12),
+                      ),
+                    ),
+                    Text(
+                      '¥',
+                      style: TextStyle(
+                        color: Color(0xFFC92219),
+                        fontSize: rSP(12),
+                      ),
+                    ),
+                    Text(
+                      '${model.discountPrice}',
+                      style: TextStyle(
+                        color: Color(0xFFC92219),
+                        fontSize: rSP(18),
+                      ),
+                    ),
+                    rWBox(14),
+                    Text(
+                      '¥${model.originalPrice}',
+                      style: TextStyle(
+                        decoration: TextDecoration.lineThrough,
+                        color: Color(0xFF898989),
+                        fontSize: rSP(12),
+                      ),
+                    ),
+                    Spacer(),
+                    MaterialButton(
+                      color: Color(0xFFDB2D2D),
+                      height: rSize(22),
+                      minWidth: rSize(58),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(rSize(11)),
+                      ),
+                      padding: EdgeInsets.zero,
+                      onPressed: () {},
+                      child: Text('马上抢'),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
         ],
