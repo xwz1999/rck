@@ -8,6 +8,7 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/live_stream/live_pick_goods_page.dart';
 import 'package:recook/pages/live/models/topic_list_model.dart';
 import 'package:recook/pages/live/video/pick_topic_page.dart';
+import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -28,6 +29,7 @@ class _LivePageState extends State<LivePage> {
   TextEditingController _editingController = TextEditingController();
   List<int> pickedIds = [];
   int liveItemId = 0;
+  bool _isStream = false;
 
   @override
   void initState() {
@@ -40,9 +42,10 @@ class _LivePageState extends State<LivePage> {
     _livePusher?.stopPush();
     _livePusher?.stopPreview();
     _editingController?.dispose();
-    HttpManager.post(LiveAPI.exitLive, {
-      'liveItemId': liveItemId,
-    });
+    if (_isStream)
+      HttpManager.post(LiveAPI.exitLive, {
+        'liveItemId': liveItemId,
+      });
     super.dispose();
   }
 
@@ -64,10 +67,11 @@ class _LivePageState extends State<LivePage> {
               },
             ),
           ),
-          Positioned(
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 200),
             right: 0,
             left: 0,
-            bottom: rSize(30),
+            bottom: _isStream ? -200 : rSize(30),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -156,27 +160,29 @@ class _LivePageState extends State<LivePage> {
                   minWidth: rSize(205),
                   height: rSize(40),
                   onPressed: () {
-                    GSDialog.of(context).showLoadingDialog(context, '上传图片中');
-                    HttpManager.uploadFile(
-                      url: CommonApi.upload,
-                      file: _imageFile,
-                      key: "photo",
-                    ).then((result) {
-                      GSDialog.of(context).dismiss(context);
-                      GSDialog.of(context)
-                          .showLoadingDialog(context, '准备开始直播中');
-                      HttpManager.post(LiveAPI.startLive, {
-                        'title': _editingController.text,
-                        'cover': result.url,
-                        'topic': _topicModel == null ? 0 : _topicModel.id,
-                        'goodsIds': pickedIds,
-                      }).then((resultData) {
-                        GSDialog.of(context).dismiss(context);
-                        liveItemId = resultData.data['data']['liveItemId'];
-                        _livePusher
-                            .startPush(resultData.data['data']['pushUrl']);
-                      });
-                    });
+                    _isStream = true;
+                    setState(() {});
+                    // GSDialog.of(context).showLoadingDialog(context, '上传图片中');
+                    // HttpManager.uploadFile(
+                    //   url: CommonApi.upload,
+                    //   file: _imageFile,
+                    //   key: "photo",
+                    // ).then((result) {
+                    //   GSDialog.of(context).dismiss(context);
+                    //   GSDialog.of(context)
+                    //       .showLoadingDialog(context, '准备开始直播中');
+                    //   HttpManager.post(LiveAPI.startLive, {
+                    //     'title': _editingController.text,
+                    //     'cover': result.url,
+                    //     'topic': _topicModel == null ? 0 : _topicModel.id,
+                    //     'goodsIds': pickedIds,
+                    //   }).then((resultData) {
+                    //     GSDialog.of(context).dismiss(context);
+                    //     liveItemId = resultData.data['data']['liveItemId'];
+                    //     _livePusher
+                    //         .startPush(resultData.data['data']['pushUrl']);
+                    //   });
+                    // });
                   },
                   child: Text(
                     '开始直播',
@@ -193,8 +199,9 @@ class _LivePageState extends State<LivePage> {
               ],
             ),
           ),
-          Positioned(
-            right: 0,
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 250),
+            right: _isStream ? -100 : 0,
             top: MediaQuery.of(context).viewPadding.top,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -210,6 +217,23 @@ class _LivePageState extends State<LivePage> {
                     },
                   ));
                 }),
+              ],
+            ),
+          ),
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 250),
+            right: 0,
+            left: 0,
+            top: _isStream ? -100 : MediaQuery.of(context).viewPadding.top,
+            child: Row(
+              children: [
+                LiveUserBar(
+                  initAttention: true,
+                  onAttention: () {},
+                  title: UserManager.instance.user.info.nickname,
+                  avatar:
+                      Api.getImgUrl(UserManager.instance.user.info.headImgUrl),
+                ),
               ],
             ),
           ),

@@ -9,6 +9,10 @@ class VideoListModel {
   int trendType;
   int praise;
   int isPraise;
+  Goods goods;
+  String mediaUrl;
+  int topicId;
+  String topicName;
 
   VideoListModel(
       {this.userId,
@@ -20,7 +24,11 @@ class VideoListModel {
       this.originId,
       this.trendType,
       this.praise,
-      this.isPraise});
+      this.isPraise,
+      this.goods,
+      this.mediaUrl,
+      this.topicId,
+      this.topicName});
 
   VideoListModel.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -33,6 +41,10 @@ class VideoListModel {
     trendType = json['trendType'];
     praise = json['praise'];
     isPraise = json['isPraise'];
+    goods = json['goods'] != null ? new Goods.fromJson(json['goods']) : null;
+    mediaUrl = json['mediaUrl'];
+    topicId = json['topicId'];
+    topicName = json['topicName'];
   }
 
   Map<String, dynamic> toJson() {
@@ -47,6 +59,37 @@ class VideoListModel {
     data['trendType'] = this.trendType;
     data['praise'] = this.praise;
     data['isPraise'] = this.isPraise;
+    if (this.goods != null) {
+      data['goods'] = this.goods.toJson();
+    }
+    data['mediaUrl'] = this.mediaUrl;
+    data['topicId'] = this.topicId;
+    data['topicName'] = this.topicName;
+    return data;
+  }
+}
+
+class Goods {
+  int id;
+  String mainPhotoURL;
+  String name;
+  String price;
+
+  Goods({this.id, this.mainPhotoURL, this.name, this.price});
+
+  Goods.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    mainPhotoURL = json['mainPhotoURL'];
+    name = json['name'];
+    price = json['price'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['mainPhotoURL'] = this.mainPhotoURL;
+    data['name'] = this.name;
+    data['price'] = this.price;
     return data;
   }
 }

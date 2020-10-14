@@ -3,7 +3,11 @@ import 'package:recook/const/resource.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/live/activity/activity_preview_page.dart';
+import 'package:recook/pages/live/models/activity_list_model.dart';
+import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/models/video_list_model.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 
@@ -56,80 +60,93 @@ class _VideoPageState extends State<VideoPage>
   }
 
   _buildVideoCard(VideoListModel model) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(rSize(10)),
-      child: Container(
-        color: Colors.white,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            FadeInImage.assetNetwork(
-              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-              image: Api.getImgUrl(model.coverUrl),
-            ),
-            Container(
-              padding: EdgeInsets.all(rSize(10)),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    model.content,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Color(0xFF333333),
-                      fontWeight: FontWeight.w600,
-                      fontSize: rSP(13),
-                    ),
-                  ),
-                  SizedBox(height: rSize(6)),
-                  Row(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(9),
-                        child: FadeInImage.assetNetwork(
-                          placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                          image: Api.getImgUrl(model.headImgUrl),
-                          height: rSize(18),
-                          width: rSize(18),
-                        ),
+    return GestureDetector(
+      onTap: () {
+        CRoute.push(
+          context,
+          ActivityPreviewPage(
+            model: ActivityListModel.fromVideoList(model),
+            userModel: LiveBaseInfoModel.fromVideoListModel(model),
+            initAttention: true,
+          ),
+        );
+        // CRoute.push(context, VideoPreviewPage.network(path: model.))
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(rSize(10)),
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              FadeInImage.assetNetwork(
+                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                image: Api.getImgUrl(model.coverUrl),
+              ),
+              Container(
+                padding: EdgeInsets.all(rSize(10)),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      model.content,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        color: Color(0xFF333333),
+                        fontWeight: FontWeight.w600,
+                        fontSize: rSP(13),
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: rSize(4),
+                    ),
+                    SizedBox(height: rSize(6)),
+                    Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(9),
+                          child: FadeInImage.assetNetwork(
+                            placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                            image: Api.getImgUrl(model.headImgUrl),
+                            height: rSize(18),
+                            width: rSize(18),
                           ),
-                          child: Text(
-                            model.nickname,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Color(0xFF666666),
-                              fontSize: rSP(12),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: rSize(4),
+                            ),
+                            child: Text(
+                              model.nickname,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Color(0xFF666666),
+                                fontSize: rSP(12),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Image.asset(
-                        R.ASSETS_LIVE_FAVORITE_BLACK_PNG,
-                        height: rSize(14),
-                        width: rSize(14),
-                      ),
-                      SizedBox(width: rSize(2)),
-                      Text(
-                        model.praise.toString(),
-                        style: TextStyle(
-                          color: Color(0xFF666666),
-                          fontSize: rSP(12),
+                        Image.asset(
+                          R.ASSETS_LIVE_FAVORITE_BLACK_PNG,
+                          height: rSize(14),
+                          width: rSize(14),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
+                        SizedBox(width: rSize(2)),
+                        Text(
+                          model.praise.toString(),
+                          style: TextStyle(
+                            color: Color(0xFF666666),
+                            fontSize: rSP(12),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

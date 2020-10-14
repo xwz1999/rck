@@ -2,11 +2,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:recook/pages/live/widget/local_file_video.dart';
+import 'package:recook/pages/live/widget/network_file_video.dart';
 
 class VideoPreviewPage extends StatefulWidget {
   final File file;
-  VideoPreviewPage({Key key, @required this.file}) : super(key: key);
-
+  final String path;
+  VideoPreviewPage({Key key, @required this.file, this.path}) : super(key: key);
+  VideoPreviewPage.network({Key key, this.file, @required this.path})
+      : super(key: key);
   @override
   _VideoPreviewPageState createState() => _VideoPreviewPageState();
 }
@@ -21,7 +24,9 @@ class _VideoPreviewPageState extends State<VideoPreviewPage> {
           Navigator.pop(context);
         },
         child: Hero(
-          child: LocalFileVideo(file: widget.file),
+          child: widget.file == null
+              ? NetworkFileVideo(path: widget.path)
+              : LocalFileVideo(file: widget.file),
           tag: 'preview_video',
         ),
       ),

@@ -1,3 +1,5 @@
+import 'package:recook/pages/live/models/video_list_model.dart';
+
 class LiveBaseInfoModel {
   int follows;
   int fans;
@@ -13,7 +15,14 @@ class LiveBaseInfoModel {
       this.userId,
       this.nickname,
       this.headImgUrl});
-
+  LiveBaseInfoModel.fromVideoListModel(VideoListModel model) {
+    this.follows = 0;
+    this.fans = 0;
+    this.praise = 0;
+    this.userId = model.userId;
+    this.nickname = model.nickname;
+    this.headImgUrl = model.headImgUrl;
+  }
   LiveBaseInfoModel.fromJson(Map<String, dynamic> json) {
     follows = json['follows'];
     fans = json['fans'];

@@ -1,3 +1,5 @@
+import 'package:recook/pages/live/models/video_list_model.dart';
+
 class ActivityListModel {
   String content;
   Goods goods;
@@ -26,6 +28,23 @@ class ActivityListModel {
     this.topicId,
     this.topicName,
   });
+
+  ActivityListModel.fromVideoList(VideoListModel model) {
+    this.content = model.content;
+    this.goods = Goods.fromJson(model.goods.toJson());
+    this.id = 0;
+    this.imgList = [];
+    this.originId = 0;
+    this.trendType = 2;
+    this.updatedAt = '';
+    this.short = Short(
+      mediaUrl: model.mediaUrl,
+      coverUrl: model.coverUrl,
+    );
+    this.isPraise = model.isPraise;
+    this.topicId = model.topicId;
+    this.topicName = model.topicName;
+  }
 
   ActivityListModel.fromJson(Map<String, dynamic> json) {
     //TODO 动态列表
