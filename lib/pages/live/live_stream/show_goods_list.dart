@@ -4,9 +4,12 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_detail_model.dart';
+import 'package:recook/models/order_preview_model.dart';
 import 'package:recook/pages/goods/small_coupon_widget.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:recook/pages/home/classify/order_preview_page.dart';
+import 'package:recook/pages/home/classify/sku_choose_page.dart';
 import 'package:recook/pages/home/widget/plus_minus_view.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart'
     show GoodsLists;
@@ -332,8 +335,10 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
                                           color: Colors.white,
                                         ),
                                         height: rSize(480),
-                                        child:
-                                            InternalGoodsDetail(model: model),
+                                        child: InternalGoodsDetail(
+                                          model: model,
+                                          liveId: widget.id,
+                                        ),
                                       );
                                     });
                               }
@@ -395,8 +400,10 @@ showGoodsListDialog(
 
 class InternalGoodsDetail extends StatefulWidget {
   final GoodsLists model;
+  final int liveId;
 
-  InternalGoodsDetail({Key key, this.model}) : super(key: key);
+  InternalGoodsDetail({Key key, this.model, @required this.liveId})
+      : super(key: key);
 
   @override
   _InternalGoodsDetailState createState() => _InternalGoodsDetailState();
@@ -572,7 +579,18 @@ class _InternalGoodsDetailState extends State<InternalGoodsDetail> {
                   borderRadius: BorderRadius.circular(rSize(38 / 2)),
                 ),
                 color: Color(0xFFDB2D2D),
-                onPressed: () {},
+                onPressed: () {
+                  GoodsDetailModelImpl.createOrderPreview(
+                    UserManager.instance.user.info.id,
+                    sku.id,
+                    sku.name,
+                    _num,
+                    liveId: widget.liveId,
+                  ).then((model) {
+                    AppRouter.push(context, RouteName.GOODS_ORDER_PAGE,
+                        arguments: GoodsOrderPage.setArguments(model));
+                  });
+                },
               ),
               SizedBox(
                 height: MediaQuery.of(context).viewPadding.bottom + rSize(10),
