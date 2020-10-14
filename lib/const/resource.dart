@@ -443,6 +443,9 @@ class R {
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/shop.png)
   static const String ASSETS_LIVE_SHOP_PNG = 'assets/live/shop.png';
 
+  /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/shutdown.png)
+  static const String ASSETS_LIVE_SHUTDOWN_PNG = 'assets/live/shutdown.png';
+
   /// ![preview](file:///Users/akufe/Desktop/recook_temp/assets/live/small_red_cart.png)
   static const String ASSETS_LIVE_SMALL_RED_CART_PNG = 'assets/live/small_red_cart.png';
 

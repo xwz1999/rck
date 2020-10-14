@@ -1,3 +1,4 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -24,7 +25,7 @@ class _UserPlaybackCardState extends State<UserPlaybackCard> {
         RecookDateUtil.fromMillsecond(widget.model.startAt * 1000);
     return UserBaseCard(
       date: dateUtil.prefixDay,
-      detailDate: '14:30',
+      detailDate: DateUtil.formatDate(dateUtil.dateTime, format: 'HH:mm'),
       children: [
         SizedBox(height: rSize(35)),
         Row(

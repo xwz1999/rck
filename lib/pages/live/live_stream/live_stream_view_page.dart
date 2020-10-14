@@ -336,6 +336,12 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                 width: rSize(32),
                                 height: rSize(32),
                               ),
+                              onTap: () {
+                                HttpManager.post(
+                                  LiveAPI.liveLike,
+                                  {'liveItemId': widget.id},
+                                );
+                              },
                             ),
                             SizedBox(width: rSize(10)),
                             CustomImageButton(

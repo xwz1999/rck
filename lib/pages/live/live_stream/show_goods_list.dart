@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/goods/small_coupon_widget.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart'
     show GoodsLists;
 
 class GoodsListDialog extends StatefulWidget {
   final List<GoodsLists> models;
-  final bool onLive;
+  final bool isLive;
+  final Function(int explain) onExplain;
+  final int initExplain;
+  final int id;
   GoodsListDialog({
     Key key,
     @required this.models,
-    this.onLive,
+    this.isLive = false,
+    this.onExplain,
+    this.initExplain,
+    this.id,
   }) : super(key: key);
 
   @override
@@ -19,6 +26,13 @@ class GoodsListDialog extends StatefulWidget {
 }
 
 class _GoodsListDialogState extends State<GoodsListDialog> {
+  int explain = 0;
+  @override
+  void initState() {
+    super.initState();
+    explain = widget.initExplain;
+  }
+
   @override
   Widget build(BuildContext context) {
     return DraggableScrollableSheet(
@@ -229,17 +243,72 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
                       ),
                     ),
                     Spacer(),
-                    MaterialButton(
-                      color: Color(0xFFDB2D2D),
-                      height: rSize(22),
-                      minWidth: rSize(58),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(rSize(11)),
-                      ),
-                      padding: EdgeInsets.zero,
-                      onPressed: () {},
-                      child: Text('马上抢'),
-                    ),
+                    widget.isLive
+                        ? explain == model.id
+                            ? SizedBox(
+                                height: rSize(22),
+                                width: rSize(58),
+                                child: OutlineButton(
+                                  onPressed: () {
+                                    explain = 0;
+                                    widget.onExplain(0);
+                                    setState(() {});
+                                    HttpManager.post(LiveAPI.liveStopExplain, {
+                                      'liveItemId': widget.id,
+                                      'goodsId': model.id,
+                                    });
+                                  },
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(rSize(11)),
+                                  ),
+                                  padding: EdgeInsets.zero,
+                                  child: Text(
+                                    '取消讲解',
+                                    softWrap: false,
+                                    overflow: TextOverflow.visible,
+                                    style: TextStyle(
+                                      color: Color(0xFFDB2D2D),
+                                      fontSize: rSP(12),
+                                    ),
+                                  ),
+                                  borderSide: BorderSide(
+                                    color: Color(0xFFDB2D2D),
+                                    width: rSize(1),
+                                  ),
+                                ),
+                              )
+                            : MaterialButton(
+                                color: Color(0xFFDB2D2D),
+                                height: rSize(22),
+                                minWidth: rSize(58),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(rSize(11)),
+                                ),
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  explain = model.id;
+                                  widget.onExplain(model.id);
+                                  setState(() {});
+                                  HttpManager.post(LiveAPI.liveStartExplain, {
+                                    'liveItemId': widget.id,
+                                    'goodsId': model.id,
+                                  });
+                                },
+                                child: Text('讲解'),
+                              )
+                        : MaterialButton(
+                            color: Color(0xFFDB2D2D),
+                            height: rSize(22),
+                            minWidth: rSize(58),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(rSize(11)),
+                            ),
+                            padding: EdgeInsets.zero,
+                            onPressed: () {},
+                            child: Text('马上抢'),
+                          ),
                   ],
                 ),
               ],
@@ -254,13 +323,23 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
 showGoodsListDialog(
   BuildContext context, {
   @required List<GoodsLists> models,
+  bool isLive = false,
+  Function(int onExplain) onExplain,
+  int initExplain,
+  int id,
 }) {
   showGeneralDialog(
     context: context,
     pageBuilder: (context, animation, secondaryAnimation) {
       return Align(
         alignment: Alignment.bottomCenter,
-        child: GoodsListDialog(models: models),
+        child: GoodsListDialog(
+          models: models,
+          isLive: isLive,
+          onExplain: onExplain,
+          initExplain: initExplain,
+          id: id,
+        ),
       );
     },
     transitionBuilder: (context, animation, secondaryAnimation, child) {

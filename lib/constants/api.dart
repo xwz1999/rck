@@ -499,4 +499,13 @@ class LiveAPI {
 
   ///获取动态中直播的列表
   static const String activityVideoList = '/v1/live/user/live/list';
+
+  ///直播点赞
+  static const String liveLike = '/v1/live/live/praise/add';
+
+  ///开始讲解
+  static const String liveStartExplain = '/v1/live/live/explain';
+
+  ///取消讲解
+  static const String liveStopExplain = '/v1/live/live/un_explain';
 }
