@@ -3,16 +3,26 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/live/activity/activity_preview_page.dart';
 import 'package:recook/pages/live/models/activity_list_model.dart';
+import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/widget/review_child_cards.dart';
 import 'package:recook/pages/live/widget/user_base_card.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/date/recook_date_util.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook/recook_like_button.dart';
 
 class UserActivityCard extends StatefulWidget {
   final ActivityListModel model;
-  UserActivityCard({Key key, @required this.model}) : super(key: key);
+  final LiveBaseInfoModel userModel;
+  final bool initAttention;
+  UserActivityCard({
+    Key key,
+    @required this.model,
+    @required this.userModel,
+    @required this.initAttention,
+  }) : super(key: key);
 
   @override
   _UserActivityCardState createState() => _UserActivityCardState();
@@ -39,33 +49,45 @@ class _UserActivityCardState extends State<UserActivityCard> {
       detailDate: recookDateUtil.detailDate,
       children: [
         SizedBox(height: rSize(35)),
-        Builder(builder: (context) {
-          if (widget.model.trendType == 1)
-            return widget.model.imgList.isEmpty
-                ? SizedBox()
-                : GridView(
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: axisCount,
-                      crossAxisSpacing: rSize(9),
-                      mainAxisSpacing: rSize(9),
-                    ),
-                    physics: NeverScrollableScrollPhysics(),
-                    children: widget.model.imgList
-                        .map((e) => FadeInImage.assetNetwork(
-                              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                              image: Api.getImgUrl(e.url),
-                            ))
-                        .toList(),
-                    shrinkWrap: true,
-                  );
-          else if (widget.model.trendType == 2)
-            return FadeInImage.assetNetwork(
-              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-              image: Api.getImgUrl(widget.model.short.coverUrl),
+        GestureDetector(
+          onTap: () {
+            CRoute.push(
+              context,
+              ActivityPreviewPage(
+                model: widget.model,
+                userModel: widget.userModel,
+                initAttention: widget.initAttention,
+              ),
             );
-          else
-            return SizedBox();
-        }),
+          },
+          child: Builder(builder: (context) {
+            if (widget.model.trendType == 1)
+              return widget.model.imgList.isEmpty
+                  ? SizedBox()
+                  : GridView(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: axisCount,
+                        crossAxisSpacing: rSize(9),
+                        mainAxisSpacing: rSize(9),
+                      ),
+                      physics: NeverScrollableScrollPhysics(),
+                      children: widget.model.imgList
+                          .map((e) => FadeInImage.assetNetwork(
+                                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                image: Api.getImgUrl(e.url),
+                              ))
+                          .toList(),
+                      shrinkWrap: true,
+                    );
+            else if (widget.model.trendType == 2)
+              return FadeInImage.assetNetwork(
+                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                image: Api.getImgUrl(widget.model.short.coverUrl),
+              );
+            else
+              return SizedBox();
+          }),
+        ),
         Padding(
           padding: EdgeInsets.symmetric(
             vertical: rSize(10),
@@ -152,7 +174,7 @@ class _UserActivityCardState extends State<UserActivityCard> {
               padding: EdgeInsets.only(top: rSize(10)),
               child: RecookLikeButton(
                 //TODO 赞字段
-                initValue: false,
+                initValue: widget.model.isPraise == 1,
                 size: 18,
                 onChange: (oldState) {
                   HttpManager.post(

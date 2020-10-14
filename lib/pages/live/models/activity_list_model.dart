@@ -4,21 +4,31 @@ class ActivityListModel {
   int id;
   List<ImgList> imgList;
   int originId;
+
+  ///动态类型 动态类型 1=图文 2=短视频
   int trendType;
   String updatedAt;
   Short short;
+  int isPraise;
+  int topicId;
+  String topicName;
 
-  ActivityListModel(
-      {this.content,
-      this.goods,
-      this.id,
-      this.imgList,
-      this.originId,
-      this.trendType,
-      this.updatedAt,
-      this.short});
+  ActivityListModel({
+    this.content,
+    this.goods,
+    this.id,
+    this.imgList,
+    this.originId,
+    this.trendType,
+    this.updatedAt,
+    this.short,
+    this.isPraise,
+    this.topicId,
+    this.topicName,
+  });
 
   ActivityListModel.fromJson(Map<String, dynamic> json) {
+    //TODO 动态列表
     content = json['content'];
     goods = json['goods'] != null ? new Goods.fromJson(json['goods']) : null;
     id = json['id'];
@@ -32,6 +42,9 @@ class ActivityListModel {
     trendType = json['trendType'];
     updatedAt = json['updatedAt'];
     short = json['short'] != null ? new Short.fromJson(json['short']) : null;
+    isPraise = json['isPraise'];
+    topicId = json['topicId'];
+    topicName = json['topicName'];
   }
 
   Map<String, dynamic> toJson() {
@@ -50,6 +63,9 @@ class ActivityListModel {
     if (this.short != null) {
       data['short'] = this.short.toJson();
     }
+    data['isPraise'] = this.isPraise;
+    data['topicId'] = this.topicId;
+    data['topicName'] = this.topicName;
     return data;
   }
 }

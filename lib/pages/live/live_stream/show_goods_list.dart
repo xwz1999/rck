@@ -56,6 +56,7 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
                   ),
                 ),
                 child: ListView.separated(
+                  padding: EdgeInsets.zero,
                   controller: scrollController,
                   itemBuilder: (context, index) {
                     return _buildGoodsCard(widget.models[index], index);

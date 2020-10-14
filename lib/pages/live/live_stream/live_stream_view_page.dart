@@ -6,6 +6,7 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/live/live_stream/show_goods_list.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
@@ -337,10 +338,32 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                               ),
                             ),
                             SizedBox(width: rSize(10)),
-                            Image.asset(
-                              R.ASSETS_LIVE_LIVE_GOOD_PNG,
-                              width: rSize(44),
-                              height: rSize(44),
+                            CustomImageButton(
+                              child: Container(
+                                width: rSize(44),
+                                height: rSize(44),
+                                alignment: Alignment.bottomCenter,
+                                child: Text(
+                                  _streamInfoModel.goodsLists.length.toString(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: rSP(13),
+                                    height: 28 / 13,
+                                  ),
+                                ),
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image:
+                                        AssetImage(R.ASSETS_LIVE_LIVE_GOOD_PNG),
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                showGoodsListDialog(
+                                  context,
+                                  models: _streamInfoModel.goodsLists,
+                                );
+                              },
                             ),
                           ],
                         )

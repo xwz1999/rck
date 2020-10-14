@@ -6,11 +6,15 @@ class RecookLikeButton extends StatefulWidget {
   final bool initValue;
   final Function(bool oldState) onChange;
   final double size;
+  final String likePath;
+  final String likeOnPath;
   RecookLikeButton({
     Key key,
     @required this.initValue,
     @required this.onChange,
     this.size = 14,
+    this.likePath,
+    this.likeOnPath,
   }) : super(key: key);
 
   @override
@@ -29,7 +33,9 @@ class _RecookLikeButtonState extends State<RecookLikeButton> {
   Widget build(BuildContext context) {
     return CustomImageButton(
       child: Image.asset(
-        _likeState ? R.ASSETS_LIVE_LIKE_ON_PNG : R.ASSETS_LIVE_LIKE_PNG,
+        _likeState
+            ? widget.likeOnPath ?? R.ASSETS_LIVE_LIKE_ON_PNG
+            : widget.likePath ?? R.ASSETS_LIVE_LIKE_PNG,
         height: rSize(widget.size),
         width: rSize(widget.size),
       ),

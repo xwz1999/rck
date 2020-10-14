@@ -11,7 +11,6 @@ import 'package:recook/pages/live/sub_page/user_attention_page.dart';
 import 'package:recook/pages/live/sub_page/user_home/user_activity_view.dart';
 import 'package:recook/pages/live/widget/live_attention_button.dart';
 import 'package:recook/pages/live/widget/sliver_bottom_persistent_delegate.dart';
-import 'package:recook/pages/live/widget/user_activity_card.dart';
 import 'package:recook/pages/live/widget/user_live_playback_card.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -197,7 +196,11 @@ class _UserHomePageState extends State<UserHomePage>
           child: TabBarView(
             controller: _tabController,
             children: [
-              UserActivityView(id: widget.userId),
+              UserActivityView(
+                id: widget.userId,
+                userModel: model,
+                initAttention: selfFlag ? true : widget.initAttention,
+              ),
               ListView.builder(itemBuilder: (context, index) {
                 return UserPlaybackCard();
               })

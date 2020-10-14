@@ -2,12 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/models/activity_list_model.dart';
+import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/widget/user_activity_card.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class UserActivityView extends StatefulWidget {
   final int id;
-  UserActivityView({Key key, @required this.id}) : super(key: key);
+  final LiveBaseInfoModel userModel;
+  final bool initAttention;
+  UserActivityView(
+      {Key key,
+      @required this.id,
+      @required this.userModel,
+      @required this.initAttention})
+      : super(key: key);
 
   @override
   _UserActivityViewState createState() => _UserActivityViewState();
@@ -48,7 +56,11 @@ class _UserActivityViewState extends State<UserActivityView>
       },
       body: ListView.builder(
         itemBuilder: (context, index) {
-          return UserActivityCard(model: activityListModels[index]);
+          return UserActivityCard(
+            model: activityListModels[index],
+            userModel: widget.userModel,
+            initAttention: widget.initAttention,
+          );
         },
         itemCount: activityListModels.length,
       ),
