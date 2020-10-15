@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -179,20 +180,14 @@ class _LivePageState extends State<LivePage> {
                   minWidth: rSize(205),
                   height: rSize(40),
                   onPressed: () {
-                    GSDialog.of(context).showLoadingDialog(context, '上传图片中');
-                    HttpManager.uploadFile(
-                      url: CommonApi.upload,
-                      file: _imageFile,
-                      key: "photo",
-                    ).then((result) {
-                      GSDialog.of(context).dismiss(context);
+                    upload(String path) {
                       GSDialog.of(context)
                           .showLoadingDialog(context, '准备开始直播中');
                       HttpManager.post(LiveAPI.startLive, {
                         'title': _editingController.text,
-                        'cover': result.url,
+                        'cover': path,
                         'topic': _topicModel == null ? 0 : _topicModel.id,
-                        'goodsIds': pickedIds,
+                        'goodsIds': pickedIds ?? [],
                       }).then((resultData) {
                         GSDialog.of(context).dismiss(context);
                         liveItemId = resultData.data['data']['liveItemId'];
@@ -216,8 +211,29 @@ class _LivePageState extends State<LivePage> {
                             }
                           });
                         });
+                      }).catchError((e) {
+                        GSDialog.of(context).dismiss(context);
                       });
-                    });
+                    }
+
+                    if (pickedIds.isEmpty) {
+                      showToast('必须选择一个商品');
+                    } else {
+                      if (_imageFile != null) {
+                        GSDialog.of(context)
+                            .showLoadingDialog(context, '上传图片中');
+                        HttpManager.uploadFile(
+                          url: CommonApi.upload,
+                          file: _imageFile,
+                          key: "photo",
+                        ).then((result) {
+                          GSDialog.of(context).dismiss(context);
+                          upload(result.url);
+                        });
+                      } else {
+                        upload(UserManager.instance.user.info.headImgUrl);
+                      }
+                    }
                   },
                   child: Text(
                     '开始直播',

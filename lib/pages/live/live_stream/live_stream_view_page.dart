@@ -380,6 +380,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                 showGoodsListDialog(
                                   context,
                                   onLive: true,
+                                  id: widget.id,
                                   models: _streamInfoModel.goodsLists,
                                 );
                               },
