@@ -15,6 +15,7 @@ import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:tencent_im_plugin/entity/message_entity.dart';
 import 'package:tencent_im_plugin/entity/session_entity.dart';
+import 'package:tencent_im_plugin/message_node/group_system_message_node.dart';
 import 'package:tencent_im_plugin/message_node/text_message_node.dart';
 import 'package:tencent_im_plugin/tencent_im_plugin.dart';
 import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
@@ -94,13 +95,24 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
       case ListenerTypeEnum.MessageRevoked:
         break;
       case ListenerTypeEnum.NewMessages:
-        chatObjects.insertAll(0, params);
-        _scrollController.animateTo(
-          -50,
-          duration: Duration(milliseconds: 300),
-          curve: Curves.easeInOutCubic,
-        );
-        setState(() {});
+        if (params is List<MessageEntity>) {
+          List<MessageEntity> messageEntities = params;
+          if (messageEntities[0].sessionType == SessionType.System) {
+            if (messageEntities[0].elemList[0] is GroupSystemMessageNode) {
+              String userData =
+                  (messageEntities[0].elemList[0] as GroupSystemMessageNode)
+                      .userData;
+            }
+          } else {
+            chatObjects.insertAll(0, messageEntities);
+            _scrollController.animateTo(
+              -50,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeInOutCubic,
+            );
+            setState(() {});
+          }
+        }
         break;
       case ListenerTypeEnum.GroupTips:
         break;

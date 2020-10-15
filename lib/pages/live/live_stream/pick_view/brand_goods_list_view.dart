@@ -22,6 +22,14 @@ class _BrandGoodsListViewState extends State<BrandGoodsListView> {
   GSRefreshController _controller = GSRefreshController();
   List<GoodsList> _goodsList = [];
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 300), () {
+      if (mounted) _controller.requestRefresh();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     LiveBrandModel model = PickCart.brandModel;
     return PickCart.brandModel == null

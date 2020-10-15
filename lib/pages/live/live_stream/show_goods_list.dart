@@ -4,12 +4,10 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_detail_model.dart';
-import 'package:recook/models/order_preview_model.dart';
 import 'package:recook/pages/goods/small_coupon_widget.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/classify/order_preview_page.dart';
-import 'package:recook/pages/home/classify/sku_choose_page.dart';
 import 'package:recook/pages/home/widget/plus_minus_view.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart'
     show GoodsLists;

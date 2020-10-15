@@ -42,25 +42,27 @@ class _DiscoveryPageState extends State<DiscoveryPage>
         backgroundColor: Colors.white,
         leading: SizedBox(
           width: rSize(50),
-          child: CustomImageButton(
-            padding: EdgeInsets.symmetric(
-              horizontal: rSize(16),
-              vertical: rSize(12),
-            ),
-            child: Image.asset(
-              R.ASSETS_LIVE_USER_PNG,
-              width: rSize(20),
-              height: rSize(20),
-            ),
-            onPressed: () {
-              CRoute.push(
-                context,
-                UserHomePage(
-                  userId: UserManager.instance.user.info.id,
-                ),
-              );
-            },
-          ),
+          child: UserManager.instance.haveLogin
+              ? CustomImageButton(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: rSize(16),
+                    vertical: rSize(12),
+                  ),
+                  child: Image.asset(
+                    R.ASSETS_LIVE_USER_PNG,
+                    width: rSize(20),
+                    height: rSize(20),
+                  ),
+                  onPressed: () {
+                    CRoute.push(
+                      context,
+                      UserHomePage(
+                        userId: UserManager.instance.user.info.id,
+                      ),
+                    );
+                  },
+                )
+              : SizedBox(),
         ),
         title: TabBar(
           controller: _tabController,

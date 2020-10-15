@@ -4,6 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/live_stream/live_playback_view_page.dart';
 import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
 import 'package:recook/pages/live/models/live_attention_list_model.dart';
@@ -45,7 +46,9 @@ class _LiveStreamPageState extends State<LiveStreamPage>
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
           SliverToBoxAdapter(
-            child: _buildAttentions(),
+            child: UserManager.instance.haveLogin
+                ? _buildAttentions()
+                : SizedBox(),
           ),
         ];
       },
