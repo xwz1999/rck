@@ -4,6 +4,7 @@ import 'package:many_like/many_like.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
@@ -108,8 +109,16 @@ class _LivePlaybackViewPageState extends State<LivePlaybackViewPage> {
                     child: Row(
                       children: [
                         LiveUserBar(
-                          initAttention: _streamInfoModel.isFollow == 1,
-                          onAttention: () {},
+                          initAttention: _streamInfoModel.userId ==
+                                  UserManager.instance.user.info.id
+                              ? true
+                              : _streamInfoModel.isFollow == 1,
+                          onAttention: () {
+                            HttpManager.post(
+                              LiveAPI.addFollow,
+                              {'followUserId': _streamInfoModel.userId},
+                            );
+                          },
                           title: _streamInfoModel.nickname,
                           subTitle: '点赞数 ${_streamInfoModel.praise}',
                           avatar: _streamInfoModel.headImgUrl,

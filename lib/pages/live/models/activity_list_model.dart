@@ -32,7 +32,7 @@ class ActivityListModel {
   ActivityListModel.fromVideoList(VideoListModel model) {
     this.content = model.content;
     this.goods = Goods.fromJson(model.goods.toJson());
-    this.id = 0;
+    this.id = model.trendId;
     this.imgList = [];
     this.originId = 0;
     this.trendType = 2;

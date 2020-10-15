@@ -195,8 +195,16 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                     child: Row(
                       children: [
                         LiveUserBar(
-                          initAttention: _streamInfoModel.isFollow == 1,
-                          onAttention: () {},
+                          initAttention: _streamInfoModel.userId ==
+                                  UserManager.instance.user.info.id
+                              ? true
+                              : _streamInfoModel.isFollow == 1,
+                          onAttention: () {
+                            HttpManager.post(
+                              LiveAPI.addFollow,
+                              {'followUserId': _streamInfoModel.userId},
+                            );
+                          },
                           title: _streamInfoModel.nickname,
                           subTitle: '点赞数 ${_streamInfoModel.praise}',
                           avatar: _streamInfoModel.headImgUrl,

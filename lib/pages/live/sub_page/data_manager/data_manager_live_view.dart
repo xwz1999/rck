@@ -51,26 +51,48 @@ class _DatamanagerLiveViewState extends State<DatamanagerLiveView>
       body: ListView.builder(
         padding: EdgeInsets.all(rSize(15)),
         itemBuilder: (contet, index) {
-          return _buildListColumn(_dataModels[index]);
+          return _buildListColumn(_dataModels, index);
         },
         itemCount: _dataModels.length,
       ),
     );
   }
 
-  _buildListColumn(LiveDataListModel model) {
-    final date = DateTime.fromMillisecondsSinceEpoch(model.startAt * 1000);
-    final endDate = DateTime.fromMillisecondsSinceEpoch(model.endAt * 1000);
+  _buildListColumn(List<LiveDataListModel> models, int index) {
+    final date =
+        DateTime.fromMillisecondsSinceEpoch(models[index].startAt * 1000);
+    final endDate =
+        DateTime.fromMillisecondsSinceEpoch(models[index].endAt * 1000);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          RecookDateUtil(date).prefixDay,
-          style: TextStyle(
-            color: Color(0xFF666666),
-            fontSize: rSP(14),
-          ),
+        Builder(
+          builder: (context) {
+            if (index == 0)
+              return Text(
+                RecookDateUtil(date).prefixDay,
+                style: TextStyle(
+                  color: Color(0xFF666666),
+                  fontSize: rSP(14),
+                ),
+              );
+            final beforeDate = DateTime.fromMillisecondsSinceEpoch(
+                models[index - 1].startAt * 1000);
+            if (beforeDate.year == date.year &&
+                beforeDate.month == date.month &&
+                beforeDate.day == date.day) {
+              return SizedBox();
+            } else
+              return Text(
+                RecookDateUtil(date).prefixDay,
+                style: TextStyle(
+                  color: Color(0xFF666666),
+                  fontSize: rSP(14),
+                ),
+              );
+          },
         ),
         SizedBox(height: rSize(10)),
         MaterialButton(
@@ -80,7 +102,7 @@ class _DatamanagerLiveViewState extends State<DatamanagerLiveView>
             CRoute.push(
                 context,
                 SingleDataManagerPage(
-                  id: model.id,
+                  id: models[index].id,
                 ));
           },
           padding: EdgeInsets.all(rSize(10)),
