@@ -22,6 +22,13 @@ class _BrandGoodsViewState extends State<BrandGoodsView>
   int _page = 1;
   GSRefreshController _controller = GSRefreshController();
   List<LiveBrandModel> _brandModels = [];
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 300), () {
+      if (mounted) _controller.requestRefresh();
+    });
+  }
 
   @override
   void dispose() {

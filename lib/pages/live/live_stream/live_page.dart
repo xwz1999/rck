@@ -1,13 +1,16 @@
 import 'dart:io';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/live/live_stream/live_blur_page.dart';
 import 'package:recook/pages/live/live_stream/live_pick_goods_page.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
+import 'package:recook/pages/live/models/live_exit_model.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
 import 'package:recook/pages/live/models/topic_list_model.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
@@ -17,6 +20,7 @@ import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:tencent_im_plugin/entity/message_entity.dart';
+import 'package:tencent_im_plugin/entity/session_entity.dart';
 import 'package:tencent_im_plugin/tencent_im_plugin.dart';
 import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 import 'package:image_picker/image_picker.dart';
@@ -243,7 +247,8 @@ class _LivePageState extends State<LivePage> {
                     child: ListView.builder(
                       reverse: true,
                       controller: _scrollController,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: AlwaysScrollableScrollPhysics(
+                          parent: BouncingScrollPhysics()),
                       itemBuilder: (context, index) {
                         return _buildChatBox(
                             chatObjects[index].sender, chatObjects[index].note);
@@ -332,7 +337,28 @@ class _LivePageState extends State<LivePage> {
                 Spacer(),
                 CustomImageButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    _livePusher?.stopPush();
+                    TencentImPlugin.quitGroup(
+                        groupId: _streamInfoModel.groupId);
+                    TencentImPlugin.removeListener(parseMessage);
+                    TencentImPlugin.logout();
+                    if (_isStream)
+                      HttpManager.post(LiveAPI.exitLive, {
+                        'liveItemId': liveItemId,
+                      }).then((resultData) {
+                        if (resultData?.data['data'] == null)
+                          Navigator.pop(context);
+                        else {
+                          CRoute.transparent(
+                              context,
+                              LiveBlurPage(
+                                context: context,
+                                isLive: true,
+                                exitModel: LiveExitModel.fromJson(
+                                    resultData.data['data']),
+                              ));
+                        }
+                      });
                   },
                   child: Image.asset(
                     R.ASSETS_LIVE_SHUTDOWN_PNG,
@@ -368,37 +394,42 @@ class _LivePageState extends State<LivePage> {
     );
     return Align(
       alignment: Alignment.centerLeft,
-      child: Container(
-        child: Text.rich(
-          TextSpan(children: [
-            TextSpan(
-              text: '$sender:',
-              style: TextStyle(
-                color: color,
-                fontSize: rSP(13),
-              ),
+      child: ClipRRect(
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+          child: Container(
+            child: Text.rich(
+              TextSpan(children: [
+                TextSpan(
+                  text: '$sender:',
+                  style: TextStyle(
+                    color: color,
+                    fontSize: rSP(13),
+                  ),
+                ),
+                TextSpan(
+                  text: note,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: rSP(13),
+                  ),
+                ),
+              ]),
+              maxLines: 5,
             ),
-            TextSpan(
-              text: note,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: rSP(13),
-              ),
+            margin: EdgeInsets.symmetric(vertical: rSize(5 / 2)),
+            padding: EdgeInsets.symmetric(
+              horizontal: rSize(10),
+              vertical: rSize(4),
             ),
-          ]),
-          maxLines: 5,
-        ),
-        margin: EdgeInsets.symmetric(vertical: rSize(5 / 2)),
-        padding: EdgeInsets.symmetric(
-          horizontal: rSize(10),
-          vertical: rSize(4),
-        ),
-        constraints: BoxConstraints(
-          maxWidth: rSize(200),
-        ),
-        decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(rSize(16)),
+            constraints: BoxConstraints(
+              maxWidth: rSize(200),
+            ),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(rSize(16)),
+            ),
+          ),
         ),
       ),
     );
@@ -406,6 +437,7 @@ class _LivePageState extends State<LivePage> {
 
   parseMessage(ListenerTypeEnum type, params) {
     print('ListenerTypeEnum$type');
+    print(params);
     switch (type) {
       case ListenerTypeEnum.ForceOffline:
         break;
@@ -424,13 +456,20 @@ class _LivePageState extends State<LivePage> {
       case ListenerTypeEnum.MessageRevoked:
         break;
       case ListenerTypeEnum.NewMessages:
-        chatObjects.insertAll(0, params);
-        _scrollController.animateTo(
-          -50,
-          duration: Duration(milliseconds: 300),
-          curve: Curves.easeInOutCubic,
-        );
-        setState(() {});
+        if (params is List<MessageEntity>) {
+          List<MessageEntity> messageEntities = params;
+          if (messageEntities[0].sessionType == SessionType.System) {
+          } else {
+            chatObjects.insertAll(0, messageEntities);
+            _scrollController.animateTo(
+              -50,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeInOutCubic,
+            );
+            setState(() {});
+          }
+        }
+
         break;
       case ListenerTypeEnum.GroupTips:
         break;

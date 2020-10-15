@@ -28,7 +28,8 @@ class RecookDateUtil {
   }
 
   String get detailDate => DateUtil.formatDate(dateTime, format: 'HH:mm');
-
+  String get detailDateWithSecond =>
+      DateUtil.formatDate(dateTime, format: 'HH:mm:ss');
   DateTime get now => DateTime.now();
 
   ///相同小时

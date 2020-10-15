@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/live_stream/pick_view/live_goods_card.dart';
-import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:recook/pages/live/models/goods_window_model.dart';
-import 'package:recook/pages/user/widget/recook_check_box.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class GoodsWindowView extends StatefulWidget {
@@ -21,6 +18,14 @@ class _GoodsWindowViewState extends State<GoodsWindowView>
   GSRefreshController _controller = GSRefreshController();
   List<GoodsList> _goodsModels = [];
   int _page = 1;
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(milliseconds: 300), () {
+     if(mounted) _controller.requestRefresh();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);

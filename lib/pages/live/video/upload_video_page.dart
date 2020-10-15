@@ -86,7 +86,7 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
                 if (resultData?.data['data'] == null)
                   showToast(resultData?.data['msg']);
                 else {
-                  // GSDialog.of(context).showLoadingDialog(context, '上传视频中');
+                  GSDialog.of(context).showLoadingDialog(context, '上传视频中');
                   String sign = resultData?.data['data']['sign'];
                   txugcPublish.setVideoPublishListener(VideoPublishListener(
                     onVideoPublishProgress: (uploadBytes, totalBytes) {
@@ -94,9 +94,9 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
                       print(progress);
                     },
                     onVideoPublishComplete: (result) {
-                      // GSDialog.of(context).dismiss(context);
+                      GSDialog.of(context).dismiss(context);
                       if (result.retCode == 0) {
-                        // GSDialog.of(context).showLoadingDialog(context, '发布中');
+                        GSDialog.of(context).showLoadingDialog(context, '发布中');
                         HttpManager.post(LiveAPI.pushVideo, {
                           'content': _editingController.text,
                           'fileId': result.videoId,

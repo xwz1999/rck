@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/live/live_stream/pick_search_goods_page.dart';
 import 'package:recook/pages/live/live_stream/pick_view/brand_goods_list_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/brand_goods_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/goods_window_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:recook/pages/live/models/goods_window_model.dart';
+import 'package:recook/utils/custom_route.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
 
@@ -77,39 +80,40 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
             headerSliverBuilder: (context, _) {
               return [
                 SliverToBoxAdapter(
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.symmetric(horizontal: rSize(15)),
-                    decoration: BoxDecoration(
-                      color: Color(0xFFF5F5F5),
-                      borderRadius: BorderRadius.circular(rSize(15)),
-                    ),
-                    height: rSize(30),
-                    child: TextField(
-                      decoration: InputDecoration(
-                        border: InputBorder.none,
-                        contentPadding: EdgeInsets.zero,
-                        prefixIcon: Padding(
-                          padding: EdgeInsets.only(
-                            left: rSize(12),
-                            right: rSize(4),
+                  child: CustomImageButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      CRoute.push(context, PickSearchGoodsPage());
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      margin: EdgeInsets.symmetric(horizontal: rSize(15)),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF5F5F5),
+                        borderRadius: BorderRadius.circular(rSize(15)),
+                      ),
+                      height: rSize(30),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                              left: rSize(12),
+                              right: rSize(4),
+                            ),
+                            child: Icon(
+                              Icons.search,
+                              color: Color(0xFF999999),
+                              size: rSize(15),
+                            ),
                           ),
-                          child: Icon(
-                            Icons.search,
-                            color: Color(0xFF999999),
-                            size: rSize(15),
+                          Text(
+                            '搜索你想要添加的商品',
+                            style: TextStyle(
+                              color: Color(0xFF999999),
+                              fontSize: rSP(13),
+                            ),
                           ),
-                        ),
-                        prefixIconConstraints: BoxConstraints(
-                          minWidth: rSize(15 + 12 + 4.0),
-                          minHeight: rSize(15),
-                        ),
-                        isDense: true,
-                        hintStyle: TextStyle(
-                          color: Color(0xFF999999),
-                          fontSize: rSP(13),
-                        ),
-                        hintText: '搜索你想要添加的商品',
+                        ],
                       ),
                     ),
                   ),
