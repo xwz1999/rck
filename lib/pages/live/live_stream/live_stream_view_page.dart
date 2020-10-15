@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:many_like/many_like.dart';
@@ -6,11 +7,13 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/live/live_stream/live_blur_page.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:tencent_im_plugin/entity/message_entity.dart';
@@ -102,6 +105,28 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
               String userData =
                   (messageEntities[0].elemList[0] as GroupSystemMessageNode)
                       .userData;
+              Map<String, dynamic> customParams = jsonDecode(userData);
+              print(customParams);
+              dynamic data = customParams['data'];
+              switch (customParams['type']) {
+                case 'UnExplain':
+                  break;
+                case 'Explain':
+                  break;
+                case 'LiveStop':
+                  _livePlayer?.stopPlay();
+                  TencentImPlugin.quitGroup(groupId: _streamInfoModel.groupId);
+                  TencentImPlugin.logout();
+                  CRoute.push(
+                      context,
+                      LiveBlurPage(
+                        context: context,
+                        praise: data['praise'],
+                        look: data['look'],
+                        streamModel: _streamInfoModel,
+                      ));
+                  break;
+              }
             }
           } else {
             chatObjects.insertAll(0, messageEntities);

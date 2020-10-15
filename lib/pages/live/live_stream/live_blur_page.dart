@@ -3,16 +3,27 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/models/live_exit_model.dart';
+import 'package:recook/pages/live/models/live_stream_info_model.dart';
 import 'package:recook/utils/date/recook_date_util.dart';
 
 class LiveBlurPage extends StatefulWidget {
   final bool isLive;
   final LiveExitModel exitModel;
   final BuildContext context;
+  final int look;
+  final int praise;
+  final LiveStreamInfoModel streamModel;
   LiveBlurPage(
-      {Key key, this.isLive = false, this.exitModel, @required this.context})
+      {Key key,
+      this.isLive = false,
+      this.exitModel,
+      @required this.context,
+      this.look,
+      this.praise,
+      this.streamModel})
       : super(key: key);
 
   @override
@@ -174,15 +185,17 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                       borderRadius: BorderRadius.circular(rSize(80 / 2)),
                       child: FadeInImage.assetNetwork(
                         placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                        image: Api.getImgUrl(
-                            UserManager.instance.user.info.headImgUrl),
+                        image: Api.getImgUrl(widget.streamModel.headImgUrl),
                         height: rSize(80),
                         width: rSize(80),
                       ),
                     ),
                     rHBox(55),
                     Row(
-                      children: [],
+                      children: [
+                        _buildColumn('${widget.look}', '观看人数'),
+                        _buildColumn('${widget.praise}', '获赞'),
+                      ],
                     ),
                     rHBox(50),
                     MaterialButton(
@@ -195,7 +208,12 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                           fontSize: rSP(18),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        HttpManager.post(
+                          LiveAPI.addFollow,
+                          {'followUserId': widget.streamModel.userId},
+                        );
+                      },
                       color: Color(0xFFDB2D2D),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(rSize(20)),

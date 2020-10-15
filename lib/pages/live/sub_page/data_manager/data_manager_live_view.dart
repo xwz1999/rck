@@ -41,11 +41,24 @@ class _DatamanagerLiveViewState extends State<DatamanagerLiveView>
     return RefreshWidget(
       controller: _controller,
       onRefresh: () {
+        _page = 1;
         getLiveListDataModels().then((models) {
           setState(() {
             _dataModels = models;
           });
           _controller.refreshCompleted();
+        });
+      },
+      onLoadMore: () {
+        _page++;
+        getLiveListDataModels().then((models) {
+          setState(() {
+            _dataModels.addAll(models);
+          });
+          if (models.isEmpty)
+            _controller.loadNoData();
+          else
+            _controller.loadComplete();
         });
       },
       body: ListView.builder(

@@ -46,10 +46,9 @@ class _LiveStreamPageState extends State<LiveStreamPage>
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
           SliverToBoxAdapter(
-            child: UserManager.instance.haveLogin ||
-                    _liveAttentionListModels.isEmpty
-                ? _buildAttentions()
-                : SizedBox(),
+            child: !UserManager.instance.haveLogin
+                ? SizedBox()
+                : _buildAttentions(),
           ),
         ];
       },

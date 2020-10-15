@@ -37,7 +37,7 @@ void main() async {
   AmapLocation.instance.init(iosKey: 'e8a8057cfedcdcadcf4e8f2c7f8de982');
 
   //初始化腾讯im
-  TencentImPlugin.init(appid: '1400423961');
+  TencentImPlugin.init(appid: '1400435566');
 
   //初始化腾讯直播
   TencentLive.instance.init(

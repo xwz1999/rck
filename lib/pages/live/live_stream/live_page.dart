@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 import 'dart:ui';
@@ -22,6 +23,7 @@ import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:tencent_im_plugin/entity/message_entity.dart';
 import 'package:tencent_im_plugin/entity/session_entity.dart';
+import 'package:tencent_im_plugin/message_node/group_system_message_node.dart';
 import 'package:tencent_im_plugin/tencent_im_plugin.dart';
 import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 import 'package:image_picker/image_picker.dart';
@@ -475,6 +477,20 @@ class _LivePageState extends State<LivePage> {
         if (params is List<MessageEntity>) {
           List<MessageEntity> messageEntities = params;
           if (messageEntities[0].sessionType == SessionType.System) {
+            if (messageEntities[0].elemList[0] is GroupSystemMessageNode) {
+              String userData =
+                  (messageEntities[0].elemList[0] as GroupSystemMessageNode)
+                      .userData;
+              Map<String, dynamic> customParams = jsonDecode(userData);
+              print(customParams);
+              switch (customParams['type']) {
+                case 'UnExplain':
+                break;
+                case 'Explain':
+                break;
+                case 'LiveStop':
+              }
+            }
           } else {
             chatObjects.insertAll(0, messageEntities);
             _scrollController.animateTo(
