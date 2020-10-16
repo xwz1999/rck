@@ -75,6 +75,7 @@ class _PickTopicPageState extends State<PickTopicPage> {
             right: rSize(15),
           ),
           child: TextField(
+            autofocus: true,
             onChanged: (text) {
               if (TextUtil.isEmpty(text)) {
                 setState(() {
