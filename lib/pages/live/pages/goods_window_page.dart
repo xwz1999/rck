@@ -233,11 +233,14 @@ class _GoodsWindowPageState extends State<GoodsWindowPage> {
                 ? RecookCheckBox(state: _selectedIds.contains(model.id))
                 : SizedBox(),
             _isManager ? rWBox(10) : SizedBox(),
-            FadeInImage.assetNetwork(
-              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-              image: Api.getImgUrl(model.mainPhotoUrl),
-              height: rSize(86),
-              width: rSize(86),
+            Container(
+              color: AppColor.frenchColor,
+              child: FadeInImage.assetNetwork(
+                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                image: Api.getImgUrl(model.mainPhotoUrl),
+                height: rSize(86),
+                width: rSize(86),
+              ),
             ),
             rWBox(10),
             Expanded(
@@ -249,6 +252,7 @@ class _GoodsWindowPageState extends State<GoodsWindowPage> {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
+                      fontWeight: FontWeight.bold,
                       color: Color(0xFF333333),
                       fontSize: rSP(14),
                     ),

@@ -65,6 +65,7 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
+                      fontWeight: FontWeight.bold,
                       color: Color(0xFF333333),
                       fontSize: rSP(14),
                     ),
