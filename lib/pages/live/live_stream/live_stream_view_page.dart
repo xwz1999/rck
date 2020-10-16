@@ -10,6 +10,7 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/live_stream/live_blur_page.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
+import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
@@ -223,6 +224,15 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                     child: Row(
                       children: [
                         LiveUserBar(
+                          onTapAvatar: () {
+                            CRoute.pushReplace(
+                              context,
+                              UserHomePage(
+                                userId: _streamInfoModel.userId,
+                                initAttention: _streamInfoModel.isFollow == 1,
+                              ),
+                            );
+                          },
                           initAttention: _streamInfoModel.userId ==
                                   UserManager.instance.user.info.id
                               ? true

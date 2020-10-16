@@ -8,6 +8,7 @@ class LiveUserBar extends StatefulWidget {
   final String title;
   final String subTitle;
   final String avatar;
+  final VoidCallback onTapAvatar;
   LiveUserBar({
     Key key,
     @required this.initAttention,
@@ -15,6 +16,7 @@ class LiveUserBar extends StatefulWidget {
     @required this.title,
     this.subTitle,
     @required this.avatar,
+    this.onTapAvatar,
   }) : super(key: key);
 
   @override
@@ -40,13 +42,16 @@ class _LiveUserBarState extends State<LiveUserBar> {
       ),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(rSize(16)),
-            child: FadeInImage.assetNetwork(
-              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-              image: Api.getImgUrl(widget.avatar),
-              height: rSize(32),
-              width: rSize(32),
+          GestureDetector(
+            onTap: widget.onTapAvatar,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(rSize(16)),
+              child: FadeInImage.assetNetwork(
+                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                image: Api.getImgUrl(widget.avatar),
+                height: rSize(32),
+                width: rSize(32),
+              ),
             ),
           ),
           Padding(

@@ -8,7 +8,9 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
+import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:video_player/video_player.dart';
@@ -125,6 +127,16 @@ class _LivePlaybackViewPageState extends State<LivePlaybackViewPage> {
                         child: Row(
                           children: [
                             LiveUserBar(
+                              onTapAvatar: () {
+                                CRoute.pushReplace(
+                                  context,
+                                  UserHomePage(
+                                    userId: _streamInfoModel.userId,
+                                    initAttention:
+                                        _streamInfoModel.isFollow == 1,
+                                  ),
+                                );
+                              },
                               initAttention: _streamInfoModel.userId ==
                                       UserManager.instance.user.info.id
                                   ? true
