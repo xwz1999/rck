@@ -27,6 +27,7 @@ import 'package:tencent_im_plugin/message_node/group_system_message_node.dart';
 import 'package:tencent_im_plugin/tencent_im_plugin.dart';
 import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:wakelock/wakelock.dart';
 
 class LivePage extends StatefulWidget {
   LivePage({Key key}) : super(key: key);
@@ -52,12 +53,13 @@ class _LivePageState extends State<LivePage> {
   @override
   void initState() {
     super.initState();
-
+    Wakelock.enable();
     _editingController.text = '${UserManager.instance.user.info.nickname}正在直播';
   }
 
   @override
   void dispose() {
+    Wakelock.disable();
     _livePusher?.stopPush();
     _livePusher?.stopPreview();
     _editingController?.dispose();
@@ -485,9 +487,9 @@ class _LivePageState extends State<LivePage> {
               print(customParams);
               switch (customParams['type']) {
                 case 'UnExplain':
-                break;
+                  break;
                 case 'Explain':
-                break;
+                  break;
                 case 'LiveStop':
               }
             }

@@ -181,6 +181,8 @@ dependencies:
   #腾讯直播
   tencent_live_fluttify: ^0.2.0+1
   #腾讯IM
+  #TODO 已经将错误提交到上游代码，后期请使用新版本
+  #more at https://github.com/JiangJuHong/FlutterTencentImPlugin/pull/101
   tencent_im_plugin:
     git:
       url: https://gitee.com/laiiihz/FlutterTencentImPlugin
@@ -195,6 +197,8 @@ dependencies:
 
   #点赞组件
   many_like: ^0.0.3
+
+  wakelock:
   
 
 dev_dependencies:

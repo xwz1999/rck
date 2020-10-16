@@ -22,6 +22,7 @@ import 'package:tencent_im_plugin/message_node/group_system_message_node.dart';
 import 'package:tencent_im_plugin/message_node/text_message_node.dart';
 import 'package:tencent_im_plugin/tencent_im_plugin.dart';
 import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
+import 'package:wakelock/wakelock.dart';
 
 class LiveStreamViewPage extends StatefulWidget {
   final int id;
@@ -44,6 +45,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   @override
   void initState() {
     super.initState();
+    Wakelock.enable();
     // Future.delayed(Duration(seconds: 10), () {
     //   _livePlayer?.pausePlay();
     //   CRoute.transparent(context, LiveBlurPage());
@@ -164,6 +166,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
     TencentImPlugin.logout();
     _scrollController?.dispose();
     DPrint.printLongJson('用户退出');
+    Wakelock.disable();
     super.dispose();
   }
 
