@@ -1,4 +1,19 @@
 PODS:
+  - AFNetworking (4.0.1):
+    - AFNetworking/NSURLSession (= 4.0.1)
+    - AFNetworking/Reachability (= 4.0.1)
+    - AFNetworking/Security (= 4.0.1)
+    - AFNetworking/Serialization (= 4.0.1)
+    - AFNetworking/UIKit (= 4.0.1)
+  - AFNetworking/NSURLSession (4.0.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (4.0.1)
+  - AFNetworking/Security (4.0.1)
+  - AFNetworking/Serialization (4.0.1)
+  - AFNetworking/UIKit (4.0.1):
+    - AFNetworking/NSURLSession
   - AlipaySDK-iOS (15.6.8)
   - AMap3DMap-NO-IDFA (7.6.0):
     - AMapFoundation-NO-IDFA (~> 1.6.3)
@@ -86,11 +101,15 @@ PODS:
     - Flutter
     - LBXScan
     - LBXZBarSDK
+  - flutter_txugcupload (0.0.1):
+    - AFNetworking
+    - Flutter
   - fluwx (0.0.1):
     - Flutter
     - mob_sharesdk/ShareSDKPlatforms/WeChatFull
   - foundation_fluttify (0.0.1):
     - Flutter
+  - HandyJSON (5.0.2)
   - image_cropper (0.0.2):
     - Flutter
     - TOCropViewController (~> 2.5.2)
@@ -209,6 +228,10 @@ PODS:
     - mob_sharesdk/ShareSDKRestoreScene
     - mob_sharesdk/ShareSDKUI
   - SwiftyGif (5.3.0)
+  - tencent_im_plugin (0.0.1):
+    - Flutter
+    - HandyJSON
+    - TXIMSDK_iOS (= 4.6.58)
   - tencent_live_fluttify (0.0.1):
     - Flutter
     - foundation_fluttify
@@ -217,6 +240,7 @@ PODS:
     - AlipaySDK-iOS (~> 15.6.8)
     - Flutter
   - TOCropViewController (2.5.4)
+  - TXIMSDK_iOS (4.6.58)
   - TXLiteAVSDK_Professional (7.2.8927)
   - url_launcher (0.0.1):
     - Flutter
@@ -243,6 +267,7 @@ DEPENDENCIES:
   - flutter_ffmpeg (from `.symlinks/plugins/flutter_ffmpeg/ios`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
   - flutter_qr_reader (from `.symlinks/plugins/flutter_qr_reader/ios`)
+  - flutter_txugcupload (from `.symlinks/plugins/flutter_txugcupload/ios`)
   - fluwx (from `.symlinks/plugins/fluwx/ios`)
   - foundation_fluttify (from `.symlinks/plugins/foundation_fluttify/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
@@ -256,6 +281,7 @@ DEPENDENCIES:
   - photo_manager (from `.symlinks/plugins/photo_manager/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sharesdk_plugin (from `.symlinks/plugins/sharesdk_plugin/ios`)
+  - tencent_im_plugin (from `.symlinks/plugins/tencent_im_plugin/ios`)
   - tencent_live_fluttify (from `.symlinks/plugins/tencent_live_fluttify/ios`)
   - tobias (from `.symlinks/plugins/tobias/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
@@ -266,6 +292,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AFNetworking
     - AlipaySDK-iOS
     - AMap3DMap-NO-IDFA
     - AMapFoundation-NO-IDFA
@@ -274,6 +301,7 @@ SPEC REPOS:
     - Bugly
     - DKImagePickerController
     - DKPhotoGallery
+    - HandyJSON
     - LBXScan
     - LBXZBarSDK
     - libOpenInstallSDK
@@ -286,6 +314,7 @@ SPEC REPOS:
     - SDWebImage
     - SwiftyGif
     - TOCropViewController
+    - TXIMSDK_iOS
     - TXLiteAVSDK_Professional
 
 EXTERNAL SOURCES:
@@ -313,6 +342,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_image_compress/ios"
   flutter_qr_reader:
     :path: ".symlinks/plugins/flutter_qr_reader/ios"
+  flutter_txugcupload:
+    :path: ".symlinks/plugins/flutter_txugcupload/ios"
   fluwx:
     :path: ".symlinks/plugins/fluwx/ios"
   foundation_fluttify:
@@ -339,6 +370,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences/ios"
   sharesdk_plugin:
     :path: ".symlinks/plugins/sharesdk_plugin/ios"
+  tencent_im_plugin:
+    :path: ".symlinks/plugins/tencent_im_plugin/ios"
   tencent_live_fluttify:
     :path: ".symlinks/plugins/tencent_live_fluttify/ios"
   tobias:
@@ -355,6 +388,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
+  AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   AlipaySDK-iOS: 703a55774a37f412410ab04af96c011b91ec58cb
   AMap3DMap-NO-IDFA: 5e5b483ef230d1bed6c8d989d36254a66c67a6fc
   amap_core_fluttify: 832331914f028c32aebf1dab23474a82aff828e8
@@ -375,8 +409,10 @@ SPEC CHECKSUMS:
   flutter_ffmpeg: cf0a6941ef67e88248c998cc3e34f8acb0b4e454
   flutter_image_compress: f69d0e0e078ce52b4810695593bc861ee319ae7d
   flutter_qr_reader: 1b4faf9032e9ddc738107fd3dc067d29bd5cc67d
+  flutter_txugcupload: 9923f4c1bceed4f9a6a69b1309ac7c60c21ad484
   fluwx: 13b180563982bf3149472d650e01fa0312236c3d
   foundation_fluttify: 0c45145e3fad1fb99188e4979daed5b24cd9b278
+  HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   image_cropper: 3c16d7651730ffe85897f5a1c4e2547e6b54989a
   image_gallery_saver: 259eab68fb271cfd57d599904f7acdc7832e7ef2
   image_picker: 9c3312491f862b28d21ecd8fdf0ee14e601b3f09
@@ -399,9 +435,11 @@ SPEC CHECKSUMS:
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
   sharesdk_plugin: 1afa172841a590314b6ecd37eee084dfbd18f725
   SwiftyGif: e466e86c660d343357ab944a819a101c4127cb40
+  tencent_im_plugin: a055ed155fd2cae7f006e756dbec96255b4aa0a3
   tencent_live_fluttify: 98821d3233cf13a47eadf1555ebd56b050e0a5ca
   tobias: b77cace96409ab4a1710403cd362bf6a9dd9c685
   TOCropViewController: 2a1ae1242600b1f2d996fd91a5268b2309a33b5c
+  TXIMSDK_iOS: d4231ccd8a045f54ca04d008dba46fdbf25687fb
   TXLiteAVSDK_Professional: 43ca7a2f8ad118c052162d961c8c02cd763d8467
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
   video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
