@@ -43,11 +43,17 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
           children: [
             RecookCheckBox(state: picked),
             rWBox(10),
-            FadeInImage.assetNetwork(
-              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-              image: Api.getImgUrl(widget.model.mainPhotoUrl),
-              height: rSize(86),
-              width: rSize(86),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(rSize(4)),
+              child: Container(
+                color: AppColor.frenchColor,
+                child: FadeInImage.assetNetwork(
+                  placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                  image: Api.getImgUrl(widget.model.mainPhotoUrl),
+                  height: rSize(86),
+                  width: rSize(86),
+                ),
+              ),
             ),
             rWBox(10),
             Expanded(

@@ -3,11 +3,13 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/live/live_stream/live_page.dart';
 import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/models/live_time_data_model.dart';
 import 'package:recook/pages/live/pages/goods_window_page.dart';
 import 'package:recook/pages/live/sub_page/data_manager_page.dart';
 import 'package:recook/utils/custom_route.dart';
+import 'package:recook/utils/permission_tool.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
 
@@ -56,7 +58,13 @@ class _LiveHostCenterPageState extends State<LiveHostCenterPage>
         actions: [
           FlatButton(
             splashColor: Color(0xFFDB2D2D).withOpacity(0.3),
-            onPressed: () {},
+            onPressed: () {
+              PermissionTool.haveCameraPermission().then((value) {
+                PermissionTool.haveAudioPermission().then((value) {
+                  CRoute.pushReplace(context, LivePage());
+                });
+              });
+            },
             child: Text(
               '去开播',
               style: TextStyle(

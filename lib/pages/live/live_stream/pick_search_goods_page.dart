@@ -91,7 +91,8 @@ class _PickSearchGoodsPageState extends State<PickSearchGoodsPage> {
           itemBuilder: (context, index) {
             return LiveGoodsCard(
                 onPick: () {
-                  Navigator.pop(context);
+                  setState(() {});
+                  // Navigator.pop(context);
                 },
                 model: _goodsModels[index]);
           },

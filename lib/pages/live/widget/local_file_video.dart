@@ -39,6 +39,7 @@ class _LocalFileVideoState extends State<LocalFileVideo> {
 
   @override
   void dispose() {
+    _videoPlayerController?.dispose();
     _chewieController?.dispose();
     super.dispose();
   }

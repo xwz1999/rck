@@ -144,8 +144,12 @@ class _TabBarWidgetState extends State<TabBarWidget>
                                         R.ASSETS_LIVE_ADD_STREAM_PNG,
                                         onTap: () {
                                           PermissionTool.haveCameraPermission()
-                                              .then((value) {});
-                                          CRoute.push(context, LivePage());
+                                              .then((value) {
+                                            PermissionTool.haveAudioPermission()
+                                                .then((value) {
+                                              CRoute.push(context, LivePage());
+                                            });
+                                          });
                                         },
                                       ),
                                       verticalButton(
