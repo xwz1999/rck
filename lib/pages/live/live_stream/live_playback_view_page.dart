@@ -2,6 +2,7 @@ import 'package:chewie/chewie.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:many_like/many_like.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -146,6 +147,7 @@ class _LivePlaybackViewPageState extends State<LivePlaybackViewPage> {
                                   LiveAPI.addFollow,
                                   {'followUserId': _streamInfoModel.userId},
                                 );
+                                showToast('关注成功');
                               },
                               title: _streamInfoModel.nickname,
                               subTitle: '点赞数 ${_streamInfoModel.praise}',
@@ -190,19 +192,68 @@ class _LivePlaybackViewPageState extends State<LivePlaybackViewPage> {
                               children: [
                                 CustomImageButton(
                                   onPressed: () {
-                                    ActionSheet.show(
-                                      context,
-                                      items: ['举报'],
-                                      listener: (index) {
-                                        Navigator.pop(context);
-                                        //fake
-                                        Future.delayed(
-                                            Duration(milliseconds: 1000), () {
-                                          GSDialog.of(context)
-                                              .showSuccess(context, '举报成功');
+                                    showModalBottomSheet(
+                                        context: context,
+                                        builder: (BuildContext) {
+                                          return Container(
+                                            width: rSize(200),
+                                            height: rSize(200),
+                                            color: Colors.black87,
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      Column(
+                                                        children: [
+                                                          SizedBox(
+                                                            width: rSize(60),
+                                                            height: rSize(60),
+                                                            child: Icon(
+                                                              
+                                                              Icons.clear_all,
+                                                              
+                                                              size: rSize(30),),
+                                                          ),
+                                                          Text('清屏'),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                    children: [
+                                                      Column(
+                                                        children: [
+                                                          SizedBox(
+                                                            width: rSize(60),
+                                                            height: rSize(60),
+                                                            child: Icon(Icons.report_problem,
+                                                            size: rSize(30),),
+                                                          ),
+                                                          Text('举报'),
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
                                         });
-                                      },
-                                    );
+                                    //ActionSheet.show(
+                                    //context,
+                                    //items: ['举报'],
+                                    //listener: (index) {
+                                    //Navigator.pop(context);
+                                    //fake
+                                    //Future.delayed(
+                                    //  Duration(milliseconds: 1000), () {
+                                    //GSDialog.of(context)
+                                    //  .showSuccess(context, '举报成功');
+                                    //});
+                                    //},
+                                    //);
                                   },
                                   child: Image.asset(
                                     R.ASSETS_LIVE_LIVE_MORE_PNG,
@@ -217,24 +268,7 @@ class _LivePlaybackViewPageState extends State<LivePlaybackViewPage> {
                                 //   height: rSize(32),
                                 // ),
                                 SizedBox(width: rSize(10)),
-                                ManyLikeButton(
-                                  child: Image.asset(
-                                    R.ASSETS_LIVE_LIVE_LIKE_PNG,
-                                    width: rSize(32),
-                                    height: rSize(32),
-                                  ),
-                                  popChild: Image.asset(
-                                    R.ASSETS_LIVE_LIVE_LIKE_PNG,
-                                    width: rSize(32),
-                                    height: rSize(32),
-                                  ),
-                                  onTap: () {
-                                    HttpManager.post(
-                                      LiveAPI.liveLike,
-                                      {'liveItemId': widget.id},
-                                    );
-                                  },
-                                ),
+
                                 SizedBox(width: rSize(10)),
                                 Spacer(),
                                 CustomImageButton(
