@@ -50,14 +50,17 @@ class _UserPlaybackViewState extends State<UserPlaybackView>
         _page++;
         getActivityVideoList().then((models) {
           setState(() {
-            _videoModels.addAll(models) ;
+            _videoModels.addAll(models);
           });
-          _controller.loadComplete();
+          if (models.isEmpty)
+            _controller.loadNoData();
+          else
+            _controller.loadComplete();
         });
       },
       body: ListView.builder(
         itemBuilder: (context, index) {
-          return UserPlaybackCard(model:_videoModels[index]);
+          return UserPlaybackCard(model: _videoModels[index]);
         },
         itemCount: _videoModels.length,
       ),

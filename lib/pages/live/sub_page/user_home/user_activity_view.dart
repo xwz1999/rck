@@ -46,12 +46,24 @@ class _UserActivityViewState extends State<UserActivityView>
     return RefreshWidget(
       controller: _controller,
       onRefresh: () {
+        _page = 1;
         getActivityModels().then((models) {
-          _page = 1;
           setState(() {
             activityListModels = models;
           });
           _controller.refreshCompleted();
+        });
+      },
+      onLoadMore: () {
+        _page++;
+        getActivityModels().then((models) {
+          setState(() {
+            activityListModels.addAll(models);
+          });
+          if (models.isEmpty)
+            _controller.loadNoData();
+          else
+            _controller.loadComplete();
         });
       },
       body: ListView.builder(
