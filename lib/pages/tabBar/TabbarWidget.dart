@@ -147,7 +147,8 @@ class _TabBarWidgetState extends State<TabBarWidget>
                                               .then((value) {
                                             PermissionTool.haveAudioPermission()
                                                 .then((value) {
-                                              CRoute.push(context, LivePage());
+                                              CRoute.pushReplace(
+                                                  context, LivePage());
                                             });
                                           });
                                         },
@@ -155,7 +156,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
                                       verticalButton(
                                         '视频',
                                         R.ASSETS_LIVE_ADD_VIDEO_PNG,
-                                        onTap: () => CRoute.push(
+                                        onTap: () => CRoute.pushReplace(
                                             context, AddVideoPage()),
                                       ),
                                       // verticalButton(

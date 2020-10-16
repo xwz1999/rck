@@ -53,7 +53,10 @@ class _UserAttentionViewState extends State<UserAttentionView>
         getUserModels().then((models) {
           followModels.addAll(models);
           if (mounted) setState(() {});
-          _controller.loadComplete();
+          if (models.isEmpty)
+            _controller.loadNoData();
+          else
+            _controller.loadComplete();
         });
       },
       body: ListView.builder(
