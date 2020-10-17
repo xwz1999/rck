@@ -462,10 +462,12 @@ packages:
   flutter_txugcupload:
     dependency: "direct main"
     description:
-      name: flutter_txugcupload
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.0.1"
+      path: "."
+      ref: HEAD
+      resolved-ref: "7ca623120fbccd0de75affb4d5cfa8a0dd334c82"
+      url: "https://github.com/leanflutter/flutter_txugcupload"
+    source: git
+    version: "0.0.2"
   flutter_web_plugins:
     dependency: transitive
     description: flutter

@@ -44,7 +44,7 @@ PODS:
     - AMapFoundation-NO-IDFA (~> 1.6.4)
   - AMapSearch-NO-IDFA (7.3.0):
     - AMapFoundation-NO-IDFA (~> 1.6.3)
-  - Bugly (2.5.5)
+  - Bugly (2.5.71)
   - camera (0.0.1):
     - Flutter
   - core_location_fluttify (0.0.1):
@@ -123,7 +123,7 @@ PODS:
     - LBXScan/Types (~> 2.2)
   - LBXScan/Types (2.5.1)
   - LBXZBarSDK (1.3.5)
-  - libOpenInstallSDK (2.3.1)
+  - libOpenInstallSDK (2.4.0)
   - libwebp (1.1.0):
     - libwebp/demux (= 1.1.0)
     - libwebp/mux (= 1.1.0)
@@ -133,9 +133,9 @@ PODS:
   - libwebp/mux (1.1.0):
     - libwebp/demux
   - libwebp/webp (1.1.0)
-  - Mantle (2.1.1):
-    - Mantle/extobjc (= 2.1.1)
-  - Mantle/extobjc (2.1.1)
+  - Mantle (2.1.5):
+    - Mantle/extobjc (= 2.1.5)
+  - Mantle/extobjc (2.1.5)
   - Meiqia (3.5.2):
     - Meiqia/MeiqiaSDK (= 3.5.2)
     - Meiqia/MQChatViewController (= 3.5.2)
@@ -145,54 +145,54 @@ PODS:
   - meiqia_plugin (0.0.1):
     - Flutter
     - Meiqia (~> 3.5.0)
-  - mob_sharesdk (4.3.9.1):
-    - mob_sharesdk/ShareSDK (= 4.3.9.1)
+  - mob_sharesdk (4.3.13.1):
+    - mob_sharesdk/ShareSDK (= 4.3.13.1)
     - MOBFoundation (>= 3.2.9)
-  - mob_sharesdk/ShareSDK (4.3.9.1):
+  - mob_sharesdk/ShareSDK (4.3.13.1):
     - MOBFoundation (>= 3.2.9)
-  - mob_sharesdk/ShareSDKExtension (4.3.9.1):
+  - mob_sharesdk/ShareSDKExtension (4.3.13.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation (>= 3.2.9)
-  - mob_sharesdk/ShareSDKPlatforms/Douyin (4.3.9.1):
+  - mob_sharesdk/ShareSDKPlatforms/Douyin (4.3.13.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation (>= 3.2.9)
-  - mob_sharesdk/ShareSDKPlatforms/Facebook (4.3.9.1):
+  - mob_sharesdk/ShareSDKPlatforms/Facebook (4.3.13.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation (>= 3.2.9)
-  - mob_sharesdk/ShareSDKPlatforms/KuaiShou (4.3.9.1):
+  - mob_sharesdk/ShareSDKPlatforms/KuaiShou (4.3.13.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation (>= 3.2.9)
-  - mob_sharesdk/ShareSDKPlatforms/Line (4.3.9.1):
+  - mob_sharesdk/ShareSDKPlatforms/Line (4.3.13.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation (>= 3.2.9)
-  - mob_sharesdk/ShareSDKPlatforms/Oasis (4.3.9.1):
+  - mob_sharesdk/ShareSDKPlatforms/Oasis (4.3.13.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation (>= 3.2.9)
-  - mob_sharesdk/ShareSDKPlatforms/QQ (4.3.9.1):
+  - mob_sharesdk/ShareSDKPlatforms/QQ (4.3.13.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation (>= 3.2.9)
-  - mob_sharesdk/ShareSDKPlatforms/SinaWeibo (4.3.9.1):
+  - mob_sharesdk/ShareSDKPlatforms/SinaWeibo (4.3.13.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation (>= 3.2.9)
-  - mob_sharesdk/ShareSDKPlatforms/SnapChat (4.3.9.1):
+  - mob_sharesdk/ShareSDKPlatforms/SnapChat (4.3.13.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation (>= 3.2.9)
-  - mob_sharesdk/ShareSDKPlatforms/Twitter (4.3.9.1):
+  - mob_sharesdk/ShareSDKPlatforms/Twitter (4.3.13.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation (>= 3.2.9)
-  - mob_sharesdk/ShareSDKPlatforms/WatermelonVideo (4.3.9.1):
+  - mob_sharesdk/ShareSDKPlatforms/WatermelonVideo (4.3.13.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation (>= 3.2.9)
-  - mob_sharesdk/ShareSDKPlatforms/WeChatFull (4.3.9.1):
+  - mob_sharesdk/ShareSDKPlatforms/WeChatFull (4.3.13.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation (>= 3.2.9)
-  - mob_sharesdk/ShareSDKRestoreScene (4.3.9.1):
+  - mob_sharesdk/ShareSDKRestoreScene (4.3.13.1):
     - mob_sharesdk/ShareSDKExtension
     - MOBFoundation (>= 3.2.9)
-  - mob_sharesdk/ShareSDKUI (4.3.9.1):
+  - mob_sharesdk/ShareSDKUI (4.3.13.1):
     - mob_sharesdk/ShareSDK
     - MOBFoundation (>= 3.2.9)
-  - MOBFoundation (3.2.17)
+  - MOBFoundation (3.2.19)
   - mobile-ffmpeg-https (4.3.1)
   - openinstall_flutter_plugin (0.0.1):
     - Flutter
@@ -205,9 +205,9 @@ PODS:
     - Flutter
   - photo_manager (0.0.1):
     - Flutter
-  - SDWebImage (5.9.2):
-    - SDWebImage/Core (= 5.9.2)
-  - SDWebImage/Core (5.9.2)
+  - SDWebImage (5.9.3):
+    - SDWebImage/Core (= 5.9.3)
+  - SDWebImage/Core (5.9.3)
   - shared_preferences (0.0.1):
     - Flutter
   - sharesdk_plugin (1.1.2):
@@ -239,7 +239,7 @@ PODS:
   - tobias (0.0.1):
     - AlipaySDK-iOS (~> 15.6.8)
     - Flutter
-  - TOCropViewController (2.5.4)
+  - TOCropViewController (2.5.5)
   - TXIMSDK_iOS (4.6.58)
   - TXLiteAVSDK_Professional (7.2.8927)
   - url_launcher (0.0.1):
@@ -398,7 +398,7 @@ SPEC CHECKSUMS:
   AMapFoundation-NO-IDFA: 68a24362b110b8e0a3677605d0fd36bdf521f2bb
   AMapLocation-NO-IDFA: 2a3edfee336b38481b892e1ecc85df0f6b365851
   AMapSearch-NO-IDFA: 85555dc9ba312949d39a259baa4ef4e0619fa944
-  Bugly: eded937bbb1f731cacf689c2d934ddbd9ab34f83
+  Bugly: fd066c75c4a0eca1440f9b6a84bd37d51bfc85ac
   camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
   core_location_fluttify: 9466a411ea7d22c6349c7e6a767ae4623f01eb1d
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
@@ -409,7 +409,7 @@ SPEC CHECKSUMS:
   flutter_ffmpeg: cf0a6941ef67e88248c998cc3e34f8acb0b4e454
   flutter_image_compress: f69d0e0e078ce52b4810695593bc861ee319ae7d
   flutter_qr_reader: 1b4faf9032e9ddc738107fd3dc067d29bd5cc67d
-  flutter_txugcupload: 9923f4c1bceed4f9a6a69b1309ac7c60c21ad484
+  flutter_txugcupload: 849cf5e9b0b1c340b6ac1c3b0fe2caa81e98bbee
   fluwx: 13b180563982bf3149472d650e01fa0312236c3d
   foundation_fluttify: 0c45145e3fad1fb99188e4979daed5b24cd9b278
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
@@ -418,27 +418,27 @@ SPEC CHECKSUMS:
   image_picker: 9c3312491f862b28d21ecd8fdf0ee14e601b3f09
   LBXScan: 90ca10d0c38fb4a5a6980d7782354f3f69f50093
   LBXZBarSDK: db826d1265fbb4fbdbb2f30d7d1e96142e32bfff
-  libOpenInstallSDK: a3b390cc1a514e33253a8eacf152661cfa94ce86
+  libOpenInstallSDK: 899cc7243599ccfd5d84384f27f4244d37b2b484
   libwebp: 946cb3063cea9236285f7e9a8505d806d30e07f3
-  Mantle: 35238ae6f2e2b2d474fa7b67fee82a59fea71915
+  Mantle: 863ddda5376b35174cd7676e381d448aa52cc5e7
   Meiqia: f4bb24e7a785e100957e6702d19853434dcb486e
   meiqia_plugin: bff6743de1eb5e1f7c6b2142a5953e18c4abbbe7
-  mob_sharesdk: 954db91c66f5460bc57940ac3fb144cc0304b6a4
-  MOBFoundation: 37e2c100051fd710976b1f8d00643d28f31fcaca
+  mob_sharesdk: a83dd0b129a3f954c9a639d5c33fd3d2cd41e887
+  MOBFoundation: 606bc4c10ff4c6ac573c09f5081a39c75316bc7b
   mobile-ffmpeg-https: c4a3c255163ddb1abc4b4dfc613c2d885f8c46eb
   openinstall_flutter_plugin: e6b8486f834eb60b336546442a8b747d4b664cf4
   package_info: 48b108e75b8802c2d5e126f208ef540561c98aef
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: 67637977b227d62d46bfbf524f335f8568de5a73
   photo_manager: f7c619c2cc8c2adb8d85c63363babac477de9c67
-  SDWebImage: 0b42b8719ab0c5257177d5894306e8a336b21cbb
+  SDWebImage: a31ee8e90a97303529e03fb0c333eae0eacb88e9
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
   sharesdk_plugin: 1afa172841a590314b6ecd37eee084dfbd18f725
   SwiftyGif: e466e86c660d343357ab944a819a101c4127cb40
   tencent_im_plugin: a055ed155fd2cae7f006e756dbec96255b4aa0a3
   tencent_live_fluttify: 98821d3233cf13a47eadf1555ebd56b050e0a5ca
   tobias: b77cace96409ab4a1710403cd362bf6a9dd9c685
-  TOCropViewController: 2a1ae1242600b1f2d996fd91a5268b2309a33b5c
+  TOCropViewController: da59f531f8ac8a94ef6d6c0fc34009350f9e8bfe
   TXIMSDK_iOS: d4231ccd8a045f54ca04d008dba46fdbf25687fb
   TXLiteAVSDK_Professional: 43ca7a2f8ad118c052162d961c8c02cd763d8467
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
@@ -447,6 +447,6 @@ SPEC CHECKSUMS:
   wakelock: 0d4a70faf8950410735e3f61fb15d517c8a6efc4
   webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
 
-PODFILE CHECKSUM: 7adbc9d59f05e1b01f554ea99b6c79e97f2214a2
+PODFILE CHECKSUM: 8c5ebae96969c5d3cd4ca0087e61d231762d8739
 
 COCOAPODS: 1.9.3
