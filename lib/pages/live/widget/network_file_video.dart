@@ -38,6 +38,7 @@ class _NetworkFileVideoState extends State<NetworkFileVideo> {
   @override
   void dispose() {
     _chewieController?.dispose();
+    _videoPlayerController?.dispose();
     super.dispose();
   }
 

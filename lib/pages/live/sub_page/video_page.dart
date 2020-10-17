@@ -4,6 +4,7 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/activity/activity_preview_page.dart';
+import 'package:recook/pages/live/activity/video_fall_through_page.dart';
 import 'package:recook/pages/live/models/activity_list_model.dart';
 import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/models/video_list_model.dart';
@@ -27,7 +28,7 @@ class _VideoPageState extends State<VideoPage>
   void initState() {
     super.initState();
     Future.delayed(Duration(milliseconds: 300), () {
-      if(mounted)_controller.requestRefresh();
+      if (mounted) _controller.requestRefresh();
     });
   }
 
@@ -66,24 +67,21 @@ class _VideoPageState extends State<VideoPage>
           mainAxisSpacing: rSize(15),
         ),
         itemBuilder: (context, index) {
-          return _buildVideoCard(_videoListModels[index]);
+          return _buildVideoCard(_videoListModels[index], index);
         },
         itemCount: _videoListModels.length,
       ),
     );
   }
 
-  _buildVideoCard(VideoListModel model) {
+  _buildVideoCard(VideoListModel model, int index) {
     return GestureDetector(
       onTap: () {
         CRoute.push(
           context,
-          ActivityPreviewPage(
-            model: ActivityListModel.fromVideoList(model),
-            userModel: LiveBaseInfoModel.fromVideoListModel(model),
-            initAttention: true,
-          ),
+          VideoFallThroughPage(models: _videoListModels, index: index),
         );
+
         // CRoute.push(context, VideoPreviewPage.network(path: model.))
       },
       child: ClipRRect(
