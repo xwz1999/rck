@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/models/activity_list_model.dart';
 import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/widget/user_activity_card.dart';
 import 'package:recook/widgets/refresh_widget.dart';
+import 'package:recook/const/resource.dart';
 
 class UserActivityView extends StatefulWidget {
   final int id;
@@ -26,6 +29,7 @@ class _UserActivityViewState extends State<UserActivityView>
   List<ActivityListModel> activityListModels = [];
   int _page = 1;
   GSRefreshController _controller = GSRefreshController();
+  bool get selfFlag => widget.id == UserManager.instance.user.info.id;
   @override
   void initState() {
     super.initState();
@@ -66,16 +70,32 @@ class _UserActivityViewState extends State<UserActivityView>
             _controller.loadComplete();
         });
       },
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          return UserActivityCard(
-            model: activityListModels[index],
-            userModel: widget.userModel,
-            initAttention: widget.initAttention,
-          );
-        },
-        itemCount: activityListModels.length,
-      ),
+      body: activityListModels.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(R.ASSETS_IMG_NO_DATA_PNG),
+                  Text(
+                    selfFlag ? '您还未发布过动态' : 'TA还未发布过动态',
+                    style: TextStyle(
+                      color: Color(0xFF333333),
+                      fontSize: rSP(16),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : ListView.builder(
+              itemBuilder: (context, index) {
+                return UserActivityCard(
+                  model: activityListModels[index],
+                  userModel: widget.userModel,
+                  initAttention: widget.initAttention,
+                );
+              },
+              itemCount: activityListModels.length,
+            ),
     );
   }
 

@@ -98,6 +98,20 @@ class _LivePageState extends State<LivePage> {
             ),
           ),
           AnimatedPositioned(
+            left: _isStream ? -100 : rSize(15),
+            child: IconButton(
+              icon: Icon(
+                Icons.clear,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            duration: Duration(milliseconds: 250),
+            top: MediaQuery.of(context).viewPadding.top + rSize(15),
+          ),
+          AnimatedPositioned(
             duration: Duration(milliseconds: 200),
             right: 0,
             left: 0,
@@ -114,7 +128,29 @@ class _LivePageState extends State<LivePage> {
                       elevation: 0,
                       padding: EdgeInsets.zero,
                       child: _imageFile == null
-                          ? Icon(Icons.camera_alt)
+                          ? Stack(
+                              children: [
+                                FadeInImage.assetNetwork(
+                                  placeholder:
+                                      R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                  image: Api.getImgUrl(UserManager
+                                      .instance.user.info.headImgUrl),
+                                  height: rSize(68),
+                                  width: rSize(68),
+                                ),
+                                Positioned(
+                                  left: 0,
+                                  right: 0,
+                                  top: 0,
+                                  bottom: 0,
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    color: Colors.black.withOpacity(0.1),
+                                    child: Icon(Icons.camera_alt),
+                                  ),
+                                ),
+                              ],
+                            )
                           : Image.file(
                               _imageFile,
                               height: rSize(68),
@@ -154,8 +190,17 @@ class _LivePageState extends State<LivePage> {
                         children: [
                           TextField(
                             controller: _editingController,
+                            style: TextStyle(
+                              color: Colors.white.withOpacity(0.8),
+                              fontSize: rSP(14),
+                            ),
                             decoration: InputDecoration(
                               border: InputBorder.none,
+                              suffixIcon: Icon(Icons.edit),
+                              suffixIconConstraints: BoxConstraints(
+                                minWidth: 0,
+                                minHeight: 0,
+                              ),
                             ),
                           ),
                           rHBox(8),

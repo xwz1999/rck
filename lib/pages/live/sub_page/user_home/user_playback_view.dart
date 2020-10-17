@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/models/activity_video_list_model.dart';
 import 'package:recook/pages/live/widget/user_live_playback_card.dart';
 import 'package:recook/widgets/refresh_widget.dart';
@@ -18,6 +20,8 @@ class _UserPlaybackViewState extends State<UserPlaybackView>
   GSRefreshController _controller = GSRefreshController();
   int _page = 1;
   List<ActivityVideoListModel> _videoModels = [];
+  bool get selfFlag => widget.userId == UserManager.instance.user.info.id;
+
   @override
   void initState() {
     super.initState();
@@ -58,12 +62,28 @@ class _UserPlaybackViewState extends State<UserPlaybackView>
             _controller.loadComplete();
         });
       },
-      body: ListView.builder(
-        itemBuilder: (context, index) {
-          return UserPlaybackCard(model: _videoModels[index]);
-        },
-        itemCount: _videoModels.length,
-      ),
+      body: _videoModels.isEmpty
+          ? Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Image.asset(R.ASSETS_IMG_NO_DATA_PNG),
+                  Text(
+                    selfFlag ? '您没有直播记录' : 'TA没有直播记录',
+                    style: TextStyle(
+                      color: Color(0xFF333333),
+                      fontSize: rSP(16),
+                    ),
+                  ),
+                ],
+              ),
+            )
+          : ListView.builder(
+              itemBuilder: (context, index) {
+                return UserPlaybackCard(model: _videoModels[index]);
+              },
+              itemCount: _videoModels.length,
+            ),
     );
   }
 

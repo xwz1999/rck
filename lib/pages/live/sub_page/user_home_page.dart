@@ -86,6 +86,7 @@ class _UserHomePageState extends State<UserHomePage>
                   padding: EdgeInsets.fromLTRB(
                       rSize(15), rSize(80), rSize(15), rSize(20)),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Row(
                         children: [
@@ -132,7 +133,7 @@ class _UserHomePageState extends State<UserHomePage>
                                 ),
                         ],
                       ),
-                      Spacer(),
+                      rHBox(20),
                       Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: rSize(70),
@@ -220,6 +221,7 @@ class _UserHomePageState extends State<UserHomePage>
             style: TextStyle(
               color: Color(0xFF333333),
               fontSize: rSP(18),
+              fontWeight: FontWeight.bold,
             ),
           ),
           SizedBox(height: rSize(6)),
