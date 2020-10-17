@@ -5,6 +5,7 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/pages/goods/small_coupon_widget.dart';
+import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/classify/order_preview_page.dart';
@@ -105,18 +106,21 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
   _buildGoodsCard(GoodsLists model, int index) {
     return Container(
       padding: EdgeInsets.all(rSize(15)),
-      height: rSize(104 + 15 + 15.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
             borderRadius: BorderRadius.circular(rSize(4)),
             child: Stack(
               children: [
-                FadeInImage.assetNetwork(
-                  placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                  image: Api.getImgUrl(model.mainPhotoUrl),
-                  height: rSize(104),
-                  width: rSize(104),
+                Container(
+                  color: AppColor.frenchColor,
+                  child: FadeInImage.assetNetwork(
+                    placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                    image: Api.getImgUrl(model.mainPhotoUrl),
+                    height: rSize(104),
+                    width: rSize(104),
+                  ),
                 ),
                 Positioned(
                   left: 0,
@@ -162,9 +166,11 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
               ],
             ),
           ),
+          rWBox(10),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
                   model.goodsName,
@@ -175,7 +181,40 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
                     fontSize: rSP(14),
                   ),
                 ),
-                Spacer(),
+                Text(
+                  model.description,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                      color: Colors.black54, fontWeight: FontWeight.w300),
+                ),
+                InkWell(
+                  onTap: () {
+                    AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
+                        arguments: BrandGoodsListPage.setArguments(
+                          model.brandId,
+                          model.brandName,
+                        ));
+                  },
+                  child: Row(
+                    children: [
+                      FadeInImage.assetNetwork(
+                        placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                        image: Api.getImgUrl(model.brandImg),
+                        width: rSize(13),
+                        height: rSize(13),
+                      ),
+                      rWBox(4),
+                      Text(
+                        model.brandName,
+                        style: TextStyle(
+                          color: Color(0xffc70404),
+                          fontSize: ScreenAdapterUtils.setSp(12),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 Row(
                   children: [
                     SmallCouponWidget(number: num.parse(model.coupon)),
