@@ -32,6 +32,8 @@ class _UserBaseCardState extends State<UserBaseCard> {
               children: [
                 Text(
                   widget.date,
+                  overflow: TextOverflow.visible,
+                  softWrap: false,
                   style: TextStyle(
                     color: Color(0xFF333333),
                     fontSize: rSP(18),

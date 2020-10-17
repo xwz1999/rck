@@ -42,7 +42,6 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
   @override
   void dispose() {
     _tabController?.dispose();
-    PickCart.picked.clear();
     super.dispose();
   }
 

@@ -11,6 +11,7 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/live_stream/live_blur_page.dart';
 import 'package:recook/pages/live/live_stream/live_pick_goods_page.dart';
+import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
 import 'package:recook/pages/live/models/live_exit_model.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
@@ -59,6 +60,7 @@ class _LivePageState extends State<LivePage> {
 
   @override
   void dispose() {
+    PickCart.picked.clear();
     Wakelock.disable();
     _livePusher?.stopPush();
     _livePusher?.stopPreview();

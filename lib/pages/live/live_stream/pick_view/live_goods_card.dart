@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/live/live_stream/pick_view/brand_goods_list_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:recook/pages/live/models/goods_window_model.dart';
+import 'package:recook/pages/live/models/live_brand_model.dart';
 import 'package:recook/pages/user/widget/recook_check_box.dart';
+import 'package:recook/utils/custom_route.dart';
+import 'package:recook/widgets/recook/recook_scaffold.dart';
 
 class LiveGoodsCard extends StatefulWidget {
   final VoidCallback onPick;
@@ -21,7 +25,6 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
   Widget build(BuildContext context) {
     final bool picked = PickCart.picked.containsKey(widget.model.id);
     return SizedBox(
-      height: rSize(86 + 15.0),
       child: MaterialButton(
         onPressed: () {
           if (picked)
@@ -70,7 +73,50 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
                       fontSize: rSP(14),
                     ),
                   ),
-                  Spacer(),
+                  Text(
+                    widget.model.description,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                        color: Colors.black54, fontWeight: FontWeight.w300),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      PickCart.brandModel = LiveBrandModel(
+                        id: widget.model.brandId,
+                        name: widget.model.brandName,
+                        logoUrl: widget.model.brandImg,
+                      );
+                      CRoute.push(
+                        context,
+                        RecookScaffold(
+                          title: '品牌馆',
+                          whiteBg: true,
+                          body: BrandGoodsListView(
+                            onPick: () {},
+                          ),
+                        ),
+                      );
+                    },
+                    child: Row(
+                      children: [
+                        FadeInImage.assetNetwork(
+                          placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                          image: Api.getImgUrl(widget.model.brandImg),
+                          width: rSize(13),
+                          height: rSize(13),
+                        ),
+                        rWBox(4),
+                        Text(
+                          widget.model.brandName,
+                          style: TextStyle(
+                            color: Color(0xffc70404),
+                            fontSize: ScreenAdapterUtils.setSp(12),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   Row(
                     children: [
                       Text(

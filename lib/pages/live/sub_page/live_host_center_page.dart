@@ -8,8 +8,10 @@ import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/models/live_time_data_model.dart';
 import 'package:recook/pages/live/pages/goods_window_page.dart';
 import 'package:recook/pages/live/sub_page/data_manager_page.dart';
+import 'package:recook/pages/live/sub_page/user_home/user_playback_view.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/permission_tool.dart';
+import 'package:recook/widgets/recook/recook_scaffold.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
 
@@ -191,7 +193,15 @@ class _LiveHostCenterPageState extends State<LiveHostCenterPage>
               width: rSize(20),
               height: rSize(20),
             ),
-            onTap: () {},
+            onTap: () {
+              CRoute.push(
+                context,
+                RecookScaffold(
+                  title: '直播回放',
+                  body: UserPlaybackView(userId: widget.model.userId),
+                ),
+              );
+            },
           ),
           _buildListTile(
             title: '商品橱窗',
