@@ -508,4 +508,10 @@ class LiveAPI {
 
   ///取消讲解
   static const String liveStopExplain = '/v1/live/live/un_explain';
+
+  ///举报类型
+  static const String reportType = '/v1/live/live/report/types';
+
+  ///举报
+  static const String report = '/v1/live/live/report/submit';
 }

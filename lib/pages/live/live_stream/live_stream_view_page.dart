@@ -8,6 +8,7 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/live_stream/live_blur_page.dart';
+import 'package:recook/pages/live/live_stream/live_report_view.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
 import 'package:recook/pages/live/sub_page/user_home_page.dart';
@@ -370,10 +371,81 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                   },
                                 );
                               },
-                              child: Image.asset(
-                                R.ASSETS_LIVE_LIVE_MORE_PNG,
-                                width: rSize(32),
-                                height: rSize(32),
+                              child: CustomImageButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) {
+                                        return Container(
+                                          width: rSize(200),
+                                          color: Colors.black87,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    CustomImageButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                        setState(() {
+                                                          chatObjects.clear();
+                                                        });
+                                                      },
+                                                      child: Column(
+                                                        children: [
+                                                          SizedBox(
+                                                            width: rSize(60),
+                                                            height: rSize(60),
+                                                            child: Icon(
+                                                              Icons.clear_all,
+                                                              size: rSize(30),
+                                                            ),
+                                                          ),
+                                                          Text('清屏'),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    CustomImageButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                        showModalBottomSheet(
+                                                          context: context,
+                                                          builder: (context) {
+                                                            return LiveReportView();
+                                                          },
+                                                        );
+                                                      },
+                                                      child: Column(
+                                                        children: [
+                                                          SizedBox(
+                                                            width: rSize(60),
+                                                            height: rSize(60),
+                                                            child: Icon(
+                                                              Icons
+                                                                  .report_problem,
+                                                              size: rSize(30),
+                                                            ),
+                                                          ),
+                                                          Text('举报'),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                },
+                                child: Image.asset(
+                                  R.ASSETS_LIVE_LIVE_MORE_PNG,
+                                  width: rSize(32),
+                                  height: rSize(32),
+                                ),
                               ),
                             ),
                             // SizedBox(width: rSize(10)),
