@@ -36,6 +36,7 @@ class _PickSearchGoodsPageState extends State<PickSearchGoodsPage> {
         leading: RecookBackButton(),
         actions: [rWBox(10)],
         title: TextField(
+          autofocus: true,
           controller: _editingController,
           style: TextStyle(
             color: Color(0xFF333333),
