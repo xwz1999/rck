@@ -11,6 +11,7 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/live_stream/live_blur_page.dart';
 import 'package:recook/pages/live/live_stream/live_pick_goods_page.dart';
+import 'package:recook/pages/live/live_stream/live_users_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
 import 'package:recook/pages/live/models/live_exit_model.dart';
@@ -19,9 +20,11 @@ import 'package:recook/pages/live/models/topic_list_model.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/live/video/pick_topic_page.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
+import 'package:recook/pages/live/widget/more_people.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:tencent_im_plugin/entity/group_member_entity.dart';
 import 'package:tencent_im_plugin/entity/message_entity.dart';
 import 'package:tencent_im_plugin/entity/session_entity.dart';
 import 'package:tencent_im_plugin/message_node/group_system_message_node.dart';
@@ -50,6 +53,7 @@ class _LivePageState extends State<LivePage> {
   List<MessageEntity> chatObjects = [];
   ScrollController _scrollController = ScrollController();
   int nowExplain = 0;
+  List<GroupMemberEntity> _groupMembers = [];
 
   @override
   void initState() {
@@ -358,6 +362,24 @@ class _LivePageState extends State<LivePage> {
                       Api.getImgUrl(UserManager.instance.user.info.headImgUrl),
                 ),
                 Spacer(),
+                MorePeople(
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return LiveUsersView(
+                          avatars: _groupMembers
+                              .map((e) => e.userProfile.faceUrl)
+                              .toList(),
+                          usersId: _groupMembers.map((e) => e.user).toList(),
+                        );
+                      },
+                    );
+                  },
+                  images:
+                      _groupMembers.map((e) => e.userProfile.faceUrl).toList(),
+                ),
+                rWBox(10),
                 CustomImageButton(
                   onPressed: () {
                     _livePusher?.stopPush();
@@ -509,6 +531,12 @@ class _LivePageState extends State<LivePage> {
 
         break;
       case ListenerTypeEnum.GroupTips:
+        TencentImPlugin.getGroupMembers(groupId: _streamInfoModel.groupId)
+            .then((models) {
+          setState(() {
+            _groupMembers = models;
+          });
+        });
         if (params is String) {
           dynamic parseParams = jsonDecode(params);
           if (parseParams['tipsType'] == 'Join') {

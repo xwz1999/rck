@@ -517,4 +517,7 @@ class LiveAPI {
 
   ///购买通知
   static const String buyGoodsInform = '/v1/live/live/im/buy_goods';
+
+  ///获取直播间用户
+  static const String getLiveUsers = '/v1/live/live/user_data';
 }
