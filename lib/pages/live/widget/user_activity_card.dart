@@ -80,9 +80,28 @@ class _UserActivityCardState extends State<UserActivityCard> {
                       shrinkWrap: true,
                     );
             else if (widget.model.trendType == 2)
-              return FadeInImage.assetNetwork(
-                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                image: Api.getImgUrl(widget.model.short.coverUrl),
+              return Stack(
+                children: [
+                  FadeInImage.assetNetwork(
+                    placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                    image: Api.getImgUrl(widget.model.short.coverUrl),
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    top: 0,
+                    child: Container(
+                      color: Colors.black.withOpacity(0.1),
+                      alignment: Alignment.center,
+                      child: Image.asset(
+                        R.ASSETS_LIVE_VIDEO_PLAY_PNG,
+                        height: rSize(34),
+                        width: rSize(34),
+                      ),
+                    ),
+                  ),
+                ],
               );
             else
               return SizedBox();

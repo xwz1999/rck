@@ -123,6 +123,7 @@ class _LivePageState extends State<LivePage> {
                           context,
                           items: ['相机', '相册'],
                           listener: (index) {
+                            Navigator.pop(context);
                             Future<PickedFile> getImage() {
                               if (index == 0)
                                 return ImagePicker()
@@ -508,7 +509,7 @@ class _LivePageState extends State<LivePage> {
 
         break;
       case ListenerTypeEnum.GroupTips:
-      if (params is String) {
+        if (params is String) {
           dynamic parseParams = jsonDecode(params);
           if (parseParams['tipsType'] == 'Join') {
             showToastWidget(

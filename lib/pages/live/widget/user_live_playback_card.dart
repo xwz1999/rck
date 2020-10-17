@@ -92,7 +92,7 @@ class _UserPlaybackCardState extends State<UserPlaybackCard> {
                 top: 0,
                 bottom: 0,
                 child: Material(
-                  color: Colors.black.withOpacity(0.35),
+                  color: Colors.black.withOpacity(0.1),
                   child: InkWell(
                     child: Center(
                       child: Image.asset(
