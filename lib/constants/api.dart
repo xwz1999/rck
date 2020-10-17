@@ -514,4 +514,7 @@ class LiveAPI {
 
   ///举报
   static const String report = '/v1/live/live/report/submit';
+
+  ///购买通知
+  static const String buyGoodsInform = '/v1/live/live/im/buy_goods';
 }

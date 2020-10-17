@@ -121,6 +121,28 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
               print(customParams);
               dynamic data = customParams['data'];
               switch (customParams['type']) {
+                case 'BuyGoods':
+                  showToastWidget(
+                    Container(
+                      margin: EdgeInsets.all(rSize(15)),
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.symmetric(horizontal: rSize(10)),
+                      height: rSize(26),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF4BC22),
+                        borderRadius: BorderRadius.circular(rSize(13)),
+                      ),
+                      child: Text(
+                        '${customParams['data']['content']}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: rSP(13),
+                        ),
+                      ),
+                    ),
+                    position: ToastPosition.top,
+                  );
+                  break;
                 case 'UnExplain':
                   setState(() {
                     showDetailWindow = false;
@@ -164,7 +186,30 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
       case ListenerTypeEnum.GroupTips:
         if (params is String) {
           dynamic parseParams = jsonDecode(params);
-          print(parseParams['tipsType']);
+          if (parseParams['tipsType'] == 'Join') {
+            showToastWidget(
+              Container(
+                margin: EdgeInsets.all(rSize(15)),
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(horizontal: rSize(10)),
+                height: rSize(26),
+                decoration: BoxDecoration(
+                  color: Color(0xFFDC5353),
+                  borderRadius: BorderRadius.circular(rSize(13)),
+                ),
+                child: Text(
+                  '${parseParams['opUser']}来了',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: rSP(13),
+                  ),
+                ),
+              ),
+              position: ToastPosition.top,
+            );
+          } else if (parseParams['tipsType'] == 'Quit') {
+            //exit
+          }
         }
 
         break;

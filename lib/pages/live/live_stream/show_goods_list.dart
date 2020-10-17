@@ -361,6 +361,10 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
                                       model.id,
                                     ));
                               else {
+                                HttpManager.post(LiveAPI.buyGoodsInform, {
+                                  "liveItemId": widget.id,
+                                  "goodsId": model.id,
+                                });
                                 showModalBottomSheet(
                                   context: context,
                                   builder: (context) {

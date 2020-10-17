@@ -508,6 +508,33 @@ class _LivePageState extends State<LivePage> {
 
         break;
       case ListenerTypeEnum.GroupTips:
+      if (params is String) {
+          dynamic parseParams = jsonDecode(params);
+          if (parseParams['tipsType'] == 'Join') {
+            showToastWidget(
+              Container(
+                margin: EdgeInsets.all(rSize(15)),
+                alignment: Alignment.center,
+                padding: EdgeInsets.symmetric(horizontal: rSize(10)),
+                height: rSize(26),
+                decoration: BoxDecoration(
+                  color: Color(0xFFDC5353),
+                  borderRadius: BorderRadius.circular(rSize(13)),
+                ),
+                child: Text(
+                  '${parseParams['opUser']}来了',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: rSP(13),
+                  ),
+                ),
+              ),
+              position: ToastPosition.top,
+            );
+          } else if (parseParams['tipsType'] == 'Quit') {
+            //exit
+          }
+        }
         break;
       case ListenerTypeEnum.RecvReceipt:
         break;

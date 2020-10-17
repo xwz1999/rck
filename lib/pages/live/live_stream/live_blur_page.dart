@@ -192,6 +192,7 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                     ),
                     rHBox(55),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         _buildColumn('${widget.look}', '观看人数'),
                         _buildColumn('${widget.praise}', '获赞'),
