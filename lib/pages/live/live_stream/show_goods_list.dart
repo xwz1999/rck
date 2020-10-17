@@ -362,22 +362,23 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
                                     ));
                               else {
                                 showModalBottomSheet(
-                                    context: context,
-                                    builder: (context) {
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.vertical(
-                                            top: Radius.circular(rSize(15)),
-                                          ),
-                                          color: Colors.white,
+                                  context: context,
+                                  builder: (context) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(rSize(15)),
                                         ),
-                                        height: rSize(480),
-                                        child: InternalGoodsDetail(
-                                          model: model,
-                                          liveId: widget.id,
-                                        ),
-                                      );
-                                    });
+                                        color: Colors.white,
+                                      ),
+                                      height: rSize(480),
+                                      child: InternalGoodsDetail(
+                                        model: model,
+                                        liveId: widget.id,
+                                      ),
+                                    );
+                                  },
+                                );
                               }
                             },
                             child: Text('马上抢'),

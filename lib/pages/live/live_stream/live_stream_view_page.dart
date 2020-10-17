@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:many_like/many_like.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -10,6 +11,7 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/live_stream/live_blur_page.dart';
 import 'package:recook/pages/live/live_stream/live_report_view.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
+import 'package:recook/pages/live/models/goods_window_model.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
 import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
@@ -43,6 +45,12 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   List<MessageEntity> chatObjects = [];
   ScrollController _scrollController = ScrollController();
   TextEditingController _editingController = TextEditingController();
+
+  ///正在讲解的物品
+  GoodsLists nowGoodList;
+
+  ///正在讲解的窗口
+  bool showDetailWindow = true;
 
   @override
   void initState() {
@@ -114,8 +122,18 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
               dynamic data = customParams['data'];
               switch (customParams['type']) {
                 case 'UnExplain':
+                  setState(() {
+                    showDetailWindow = false;
+                  });
                   break;
                 case 'Explain':
+                  int goodsId = customParams['data']['goodsId'];
+                  nowGoodList = _streamInfoModel.goodsLists.where((element) {
+                    return element.id == goodsId;
+                  }).first;
+                  setState(() {
+                    showDetailWindow = true;
+                  });
                   break;
                 case 'LiveStop':
                   _livePlayer?.stopPlay();
@@ -144,6 +162,11 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
         }
         break;
       case ListenerTypeEnum.GroupTips:
+        if (params is String) {
+          dynamic parseParams = jsonDecode(params);
+          print(parseParams['tipsType']);
+        }
+
         break;
       case ListenerTypeEnum.RecvReceipt:
         break;
@@ -466,10 +489,14 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                 width: rSize(32),
                                 height: rSize(32),
                               ),
-                              onTap: () {
+                              tapCallbackOnlyOnce: false,
+                              onTap: (index) {
                                 HttpManager.post(
                                   LiveAPI.liveLike,
-                                  {'liveItemId': widget.id},
+                                  {
+                                    'liveItemId': widget.id,
+                                    'praise': index,
+                                  },
                                 );
                               },
                             ),
@@ -508,6 +535,136 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                       ],
                     ),
                   ),
+                ),
+
+                AnimatedPositioned(
+                  curve: Curves.easeInOutCubic,
+                  child: nowGoodList == null
+                      ? SizedBox()
+                      : Stack(
+                          overflow: Overflow.visible,
+                          children: [
+                            CustomImageButton(
+                              onPressed: () {
+                                nowGoodList == null
+                                    ? showToast('未知错误')
+                                    : showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.vertical(
+                                                top: Radius.circular(rSize(15)),
+                                              ),
+                                              color: Colors.white,
+                                            ),
+                                            height: rSize(480),
+                                            child: InternalGoodsDetail(
+                                              model: nowGoodList,
+                                              liveId: widget.id,
+                                            ),
+                                          );
+                                        },
+                                      );
+                              },
+                              child: Container(
+                                height: rSize(155),
+                                width: rSize(110),
+                                margin: EdgeInsets.all(rSize(10)),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(rSize(4)),
+                                ),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: rSize(110),
+                                      height: rSize(24),
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        '宝贝正在讲解中',
+                                        style: TextStyle(
+                                          color: Color(0xFF0091FF),
+                                          fontSize: rSP(11),
+                                        ),
+                                      ),
+                                      decoration: BoxDecoration(
+                                        color: Color(0xFFDEF0FA),
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(rSize(4)),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: EdgeInsets.all(rSize(5)),
+                                        child: Column(
+                                          children: [
+                                            Container(
+                                              child: FadeInImage.assetNetwork(
+                                                placeholder: R
+                                                    .ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                                image: Api.getImgUrl(
+                                                  nowGoodList.mainPhotoUrl,
+                                                ),
+                                              ),
+                                              color: AppColor.frenchColor,
+                                            ),
+                                            Expanded(
+                                              child: Container(
+                                                alignment: Alignment.centerLeft,
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      '¥',
+                                                      style: TextStyle(
+                                                        color:
+                                                            Color(0xFFC92219),
+                                                        fontSize: rSP(10),
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      nowGoodList.discountPrice,
+                                                      style: TextStyle(
+                                                        color:
+                                                            Color(0xFFC92219),
+                                                        fontSize: rSP(14),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              top: 0,
+                              right: 0,
+                              child: CustomImageButton(
+                                onPressed: () {
+                                  setState(() {
+                                    showDetailWindow = false;
+                                  });
+                                },
+                                child: Image.asset(
+                                  R.ASSETS_LIVE_DETAIL_CLOSE_PNG,
+                                  height: rSize(20),
+                                  width: rSize(20),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                  bottom: rSize(67),
+                  right: showDetailWindow ? rSize(25) : -rSize(25 + 20 + 110.0),
+                  duration: Duration(milliseconds: 300),
                 ),
               ],
             ),
