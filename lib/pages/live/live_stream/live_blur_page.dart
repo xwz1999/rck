@@ -31,6 +31,7 @@ class LiveBlurPage extends StatefulWidget {
 }
 
 class _LiveBlurPageState extends State<LiveBlurPage> {
+  bool _isAttention = false;
   @override
   void dispose() {
     Navigator.pop(widget.context);
@@ -199,27 +200,32 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                       ],
                     ),
                     rHBox(50),
-                    MaterialButton(
-                      height: rSize(40),
-                      minWidth: rSize(209),
-                      child: Text(
-                        '关注',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: rSP(18),
-                        ),
-                      ),
-                      onPressed: () {
-                        HttpManager.post(
-                          LiveAPI.addFollow,
-                          {'followUserId': widget.streamModel.userId},
-                        );
-                      },
-                      color: Color(0xFFDB2D2D),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(rSize(20)),
-                      ),
-                    ),
+                    _isAttention
+                        ? SizedBox()
+                        : MaterialButton(
+                            height: rSize(40),
+                            minWidth: rSize(209),
+                            child: Text(
+                              '关注',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: rSP(18),
+                              ),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isAttention = true;
+                              });
+                              HttpManager.post(
+                                LiveAPI.addFollow,
+                                {'followUserId': widget.streamModel.userId},
+                              );
+                            },
+                            color: Color(0xFFDB2D2D),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(rSize(20)),
+                            ),
+                          ),
                     rHBox(16),
                     Text(
                       '关注主播，不错过更多精彩内容',

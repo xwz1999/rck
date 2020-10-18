@@ -332,7 +332,9 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                               context: context,
                               builder: (context) {
                                 return LiveUsersView(
-                                  avatars: _groupMembers.map((e) => e.userProfile.faceUrl).toList(),
+                                  avatars: _groupMembers
+                                      .map((e) => e.userProfile.faceUrl)
+                                      .toList(),
                                   usersId:
                                       _groupMembers.map((e) => e.user).toList(),
                                 );
@@ -561,6 +563,15 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                               ),
                               tapCallbackOnlyOnce: false,
                               onTap: (index) {
+                                HttpManager.post(
+                                  LiveAPI.liveLike,
+                                  {
+                                    'liveItemId': widget.id,
+                                    'praise': index,
+                                  },
+                                );
+                              },
+                              onLongPress: (index) {
                                 HttpManager.post(
                                   LiveAPI.liveLike,
                                   {

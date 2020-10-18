@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -219,99 +220,104 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
                       alignment: Alignment.center,
                       child: MaterialButton(
                         onPressed: () {
-                          showCustomModalBottomSheet(
-                            context: context,
-                            builder: (context) {
-                              return DraggableScrollableSheet(
-                                minChildSize: 0.5,
-                                maxChildSize: 0.9,
-                                builder: (BuildContext context,
-                                    ScrollController scrollController) {
-                                  return Material(
-                                    color: Colors.white,
-                                    child: ListView.builder(
-                                      itemBuilder: (context, index) {
-                                        final model = PickCart.picked.values
-                                            .toList()[index];
-                                        return SizedBox(
-                                          height: rSize(86 + 15.0),
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: rSize(15),
-                                              vertical: rSize(15 / 2),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  '${index + 1}',
-                                                  style: TextStyle(
-                                                    color: Color(0xFF595C5F),
-                                                    fontSize: rSP(14),
+                          if (PickCart.picked.isEmpty)
+                            showToast('未选择商品');
+                          else
+                            showCustomModalBottomSheet(
+                              context: context,
+                              builder: (context) {
+                                return DraggableScrollableSheet(
+                                  minChildSize: 0.5,
+                                  maxChildSize: 0.9,
+                                  builder: (BuildContext context,
+                                      ScrollController scrollController) {
+                                    return Material(
+                                      color: Colors.white,
+                                      child: ListView.builder(
+                                        itemBuilder: (context, index) {
+                                          final model = PickCart.picked.values
+                                              .toList()[index];
+                                          return SizedBox(
+                                            height: rSize(86 + 15.0),
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal: rSize(15),
+                                                vertical: rSize(15 / 2),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Text(
+                                                    '${index + 1}',
+                                                    style: TextStyle(
+                                                      color: Color(0xFF595C5F),
+                                                      fontSize: rSP(14),
+                                                    ),
                                                   ),
-                                                ),
-                                                rWBox(10),
-                                                FadeInImage.assetNetwork(
-                                                  placeholder: R
-                                                      .ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                                                  image: Api.getImgUrl(
-                                                      model.mainPhotoUrl),
-                                                  height: rSize(86),
-                                                  width: rSize(86),
-                                                ),
-                                                rWBox(10),
-                                                Expanded(
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        model.goodsName,
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: TextStyle(
-                                                          color:
-                                                              Color(0xFF333333),
-                                                          fontSize: rSP(14),
+                                                  rWBox(10),
+                                                  FadeInImage.assetNetwork(
+                                                    placeholder: R
+                                                        .ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                                    image: Api.getImgUrl(
+                                                        model.mainPhotoUrl),
+                                                    height: rSize(86),
+                                                    width: rSize(86),
+                                                  ),
+                                                  rWBox(10),
+                                                  Expanded(
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Text(
+                                                          model.goodsName,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: TextStyle(
+                                                            color: Color(
+                                                                0xFF333333),
+                                                            fontSize: rSP(14),
+                                                          ),
                                                         ),
-                                                      ),
-                                                      Spacer(),
-                                                      Row(
-                                                        children: [
-                                                          Text(
-                                                            '¥${model.originalPrice}',
-                                                            style: TextStyle(
-                                                              color: Color(
-                                                                  0xFF333333),
-                                                              fontSize: rSP(14),
+                                                        Spacer(),
+                                                        Row(
+                                                          children: [
+                                                            Text(
+                                                              '¥${model.originalPrice}',
+                                                              style: TextStyle(
+                                                                color: Color(
+                                                                    0xFF333333),
+                                                                fontSize:
+                                                                    rSP(14),
+                                                              ),
                                                             ),
-                                                          ),
-                                                          Text(
-                                                            '/赚${model.commission}',
-                                                            style: TextStyle(
-                                                              color: Color(
-                                                                  0xFFC92219),
-                                                              fontSize: rSP(14),
+                                                            Text(
+                                                              '/赚${model.commission}',
+                                                              style: TextStyle(
+                                                                color: Color(
+                                                                    0xFFC92219),
+                                                                fontSize:
+                                                                    rSP(14),
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        );
-                                      },
-                                      itemCount: PickCart.picked.length,
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                          );
+                                          );
+                                        },
+                                        itemCount: PickCart.picked.length,
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            );
                         },
                         child: Text(
                           '查看已选商品 ▼',
