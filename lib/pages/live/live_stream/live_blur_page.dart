@@ -16,6 +16,7 @@ class LiveBlurPage extends StatefulWidget {
   final int look;
   final int praise;
   final LiveStreamInfoModel streamModel;
+
   LiveBlurPage(
       {Key key,
       this.isLive = false,
@@ -32,6 +33,12 @@ class LiveBlurPage extends StatefulWidget {
 
 class _LiveBlurPageState extends State<LiveBlurPage> {
   bool _isAttention = false;
+  @override
+  void initState() {
+    super.initState();
+    _isAttention = widget.streamModel.isFollow == 1;
+  }
+
   @override
   void dispose() {
     Navigator.pop(widget.context);
