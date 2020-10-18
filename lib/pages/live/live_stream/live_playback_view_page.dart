@@ -13,6 +13,7 @@ import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/recook_back_button.dart';
 import 'package:video_player/video_player.dart';
 
 class LivePlaybackViewPage extends StatefulWidget {
@@ -84,12 +85,18 @@ class _LivePlaybackViewPageState extends State<LivePlaybackViewPage> {
     return Scaffold(
       backgroundColor: Colors.black87,
       body: upload
-          ? Center(
-              child: Text(
-                '录播上传中',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: rSP(20),
+          ? Scaffold(
+              appBar: AppBar(
+                  backgroundColor: Colors.black,
+                  leading: RecookBackButton(white: true)),
+              backgroundColor: Colors.black,
+              body: Center(
+                child: Text(
+                  '录播上传中,请稍后再试',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: rSP(20),
+                  ),
                 ),
               ),
             )

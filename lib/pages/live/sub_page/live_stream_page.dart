@@ -210,10 +210,14 @@ class _LiveStreamPageState extends State<LiveStreamPage>
       onLoadMore: () {
         _livePage++;
         getLiveListModels().then((models) {
-          _liveListController.loadComplete();
           setState(() {
             _liveListModels.addAll(models);
           });
+
+          if (models.isEmpty)
+            _liveListController.loadNoData();
+          else
+            _liveListController.loadComplete();
         });
       },
       body: GridView.builder(

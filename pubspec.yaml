@@ -198,7 +198,7 @@ dependencies:
   video_trimmer: ^0.2.7
 
   #点赞组件
-  many_like: ^0.0.4
+  many_like: ^0.0.6
 
   wakelock:
   

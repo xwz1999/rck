@@ -3,10 +3,7 @@ import 'package:recook/const/resource.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/live/activity/activity_preview_page.dart';
 import 'package:recook/pages/live/activity/video_fall_through_page.dart';
-import 'package:recook/pages/live/models/activity_list_model.dart';
-import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/models/video_list_model.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/refresh_widget.dart';
@@ -56,7 +53,10 @@ class _VideoPageState extends State<VideoPage>
         _getVideoList().then((models) {
           _videoListModels.addAll(models);
           if (mounted) setState(() {});
-          _controller.loadComplete();
+          if (models.isEmpty)
+            _controller.loadNoData();
+          else
+            _controller.loadComplete();
         });
       },
       body: WaterfallFlow.builder(
@@ -167,7 +167,7 @@ class _VideoPageState extends State<VideoPage>
   Future<List<VideoListModel>> _getVideoList() async {
     ResultData resultData = await HttpManager.post(LiveAPI.videoList, {
       'page': _page,
-      'limit': 12,
+      'limit': 16,
     });
     if (resultData?.data['data']['list'] == null)
       return [];
