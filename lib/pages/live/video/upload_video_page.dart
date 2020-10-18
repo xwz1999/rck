@@ -161,7 +161,7 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
                     child: InkWell(
                       onTap: () {
                         CRoute.push(
-                            context, VideoPreviewPage(file: widget.videoFile));
+                            context, VideoPreviewPage(file: uploadFile));
                       },
                       child: Container(
                         width: rSize(100),

@@ -7,6 +7,7 @@
  * ====================================================
  */
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/config.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
@@ -76,6 +77,94 @@ class _TabBarWidgetState extends State<TabBarWidget>
     setState(() {});
   }
 
+  _showBottomModalSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius:
+                BorderRadius.vertical(top: Radius.circular(rSize(15))),
+          ),
+          child: Builder(builder: (context) {
+            verticalButton(
+              String title,
+              String path, {
+              VoidCallback onTap,
+            }) {
+              return CustomImageButton(
+                onPressed: onTap,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: rSize(20)),
+                    Image.asset(
+                      path,
+                      height: rSize(44),
+                      width: rSize(44),
+                    ),
+                    SizedBox(height: rSize(10)),
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: rSP(14),
+                        color: Color(0xFF666666),
+                      ),
+                    ),
+                    SizedBox(height: rSize(20)),
+                  ],
+                ),
+              );
+            }
+
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    verticalButton(
+                      '直播',
+                      R.ASSETS_LIVE_ADD_STREAM_PNG,
+                      onTap: () {
+                        PermissionTool.haveCameraPermission().then((value) {
+                          PermissionTool.haveAudioPermission().then((value) {
+                            CRoute.pushReplace(context, LivePage());
+                          });
+                        });
+                      },
+                    ),
+                    verticalButton(
+                      '视频',
+                      R.ASSETS_LIVE_ADD_VIDEO_PNG,
+                      onTap: () => CRoute.pushReplace(context, AddVideoPage()),
+                    ),
+                    // verticalButton(
+                    //   '图文',
+                    //   R.ASSETS_LIVE_ADD_IMAGE_PNG,
+                    //   onTap: () {},
+                    // ),
+                  ],
+                ),
+                CustomImageButton(
+                  height: rSize(66),
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('取消',
+                      style: TextStyle(
+                        color: Color(0xFF333333),
+                        fontSize: rSP(14),
+                      )),
+                ),
+              ],
+            );
+          }),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_context == null) {
@@ -91,95 +180,19 @@ class _TabBarWidgetState extends State<TabBarWidget>
                 ),
                 child: CustomImageButton(
                   onPressed: () {
-                    showModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(rSize(15))),
-                            ),
-                            child: Builder(builder: (context) {
-                              verticalButton(
-                                String title,
-                                String path, {
-                                VoidCallback onTap,
-                              }) {
-                                return CustomImageButton(
-                                  onPressed: onTap,
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      SizedBox(height: rSize(20)),
-                                      Image.asset(
-                                        path,
-                                        height: rSize(44),
-                                        width: rSize(44),
-                                      ),
-                                      SizedBox(height: rSize(10)),
-                                      Text(
-                                        title,
-                                        style: TextStyle(
-                                          fontSize: rSP(14),
-                                          color: Color(0xFF666666),
-                                        ),
-                                      ),
-                                      SizedBox(height: rSize(20)),
-                                    ],
-                                  ),
-                                );
-                              }
-
-                              return Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.stretch,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      verticalButton(
-                                        '直播',
-                                        R.ASSETS_LIVE_ADD_STREAM_PNG,
-                                        onTap: () {
-                                          PermissionTool.haveCameraPermission()
-                                              .then((value) {
-                                            PermissionTool.haveAudioPermission()
-                                                .then((value) {
-                                              CRoute.pushReplace(
-                                                  context, LivePage());
-                                            });
-                                          });
-                                        },
-                                      ),
-                                      verticalButton(
-                                        '视频',
-                                        R.ASSETS_LIVE_ADD_VIDEO_PNG,
-                                        onTap: () => CRoute.pushReplace(
-                                            context, AddVideoPage()),
-                                      ),
-                                      // verticalButton(
-                                      //   '图文',
-                                      //   R.ASSETS_LIVE_ADD_IMAGE_PNG,
-                                      //   onTap: () {},
-                                      // ),
-                                    ],
-                                  ),
-                                  CustomImageButton(
-                                    height: rSize(66),
-                                    onPressed: () => Navigator.pop(context),
-                                    child: Text('取消',
-                                        style: TextStyle(
-                                          color: Color(0xFF333333),
-                                          fontSize: rSP(14),
-                                        )),
-                                  ),
-                                ],
-                              );
-                            }),
-                          );
-                        });
+                    if (!UserManager.instance.haveLogin) {
+                      showToast('未登陆，请先登陆');
+                      CRoute.push(context, UserPage());
+                    } else if (!UserManager.instance.user.info.realInfoStatus) {
+                      showToast('未实名，请先实名');
+                      AppRouter.push(
+                        context,
+                        RouteName.USER_VERIFY,
+                        arguments: {},
+                      );
+                    } else {
+                      _showBottomModalSheet();
+                    }
                   },
                   child: Container(
                     height: 40,

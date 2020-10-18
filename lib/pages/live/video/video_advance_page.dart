@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:recook/const/resource.dart';
 import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/pages/live/video/upload_video_page.dart';
 import 'package:recook/pages/live/widget/local_file_video.dart';
 import 'package:recook/utils/custom_route.dart';
@@ -37,13 +38,17 @@ class _VideoAdvancePageState extends State<VideoAdvancePage> {
                 borderRadius: BorderRadius.circular(rSize(14)),
               ),
               onPressed: () {
-                CRoute.pushReplace(
-                  context,
-                  UploadVideoPage(
-                    videoFile: widget.file,
-                    coverImageFile: _coverFile,
-                  ),
-                );
+                if (_coverFile == null) {
+                  GSDialog.of(context).showError(context, '未选择封面');
+                } else {
+                  CRoute.pushReplace(
+                    context,
+                    UploadVideoPage(
+                      videoFile: widget.file,
+                      coverImageFile: _coverFile,
+                    ),
+                  );
+                }
               },
               color: Color(0xFFFA3B3E),
             ),
@@ -64,15 +69,19 @@ class _VideoAdvancePageState extends State<VideoAdvancePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _buildButton(R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG, '封面', () {
-                  ImagePicker()
-                      .getImage(source: ImageSource.gallery)
-                      .then((file) {
-                    if (file != null) {
-                      _coverFile = File(file.path);
-                    }
-                  });
-                }),
+                _buildButton(
+                  '封面',
+                  () {
+                    ImagePicker()
+                        .getImage(source: ImageSource.gallery)
+                        .then((file) {
+                      if (file != null) {
+                        _coverFile = File(file.path);
+                      }
+                    });
+                  },
+                  icon: Icon(Icons.image),
+                ),
               ],
             ),
           ),
@@ -81,16 +90,22 @@ class _VideoAdvancePageState extends State<VideoAdvancePage> {
     );
   }
 
-  _buildButton(String path, String title, VoidCallback onTap) {
+  _buildButton(
+    String title,
+    VoidCallback onTap, {
+    String path,
+    Widget icon,
+  }) {
     return CustomImageButton(
       onPressed: onTap,
       child: Column(
         children: [
-          Image.asset(
-            path,
-            height: rSize(24),
-            width: rSize(24),
-          ),
+          icon ??
+              Image.asset(
+                path,
+                height: rSize(24),
+                width: rSize(24),
+              ),
           SizedBox(height: rSize(10)),
           Text(
             title,
