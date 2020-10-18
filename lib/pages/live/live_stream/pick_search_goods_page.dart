@@ -34,7 +34,16 @@ class _PickSearchGoodsPageState extends State<PickSearchGoodsPage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: RecookBackButton(),
-        actions: [rWBox(10)],
+        actions: [
+          rWBox(10),
+          MaterialButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.red,
+            child: Text('确定'),
+          ),
+        ],
         title: TextField(
           autofocus: true,
           controller: _editingController,
@@ -45,6 +54,11 @@ class _PickSearchGoodsPageState extends State<PickSearchGoodsPage> {
             _controller.requestRefresh();
           },
           decoration: InputDecoration(
+            hintText: '搜索你想要添加的商品',
+            hintStyle: TextStyle(
+              color: Color(0xFF999999),
+              fontSize: rSP(13),
+            ),
             fillColor: Colors.black.withOpacity(0.1),
             filled: true,
             isDense: true,
