@@ -15,6 +15,7 @@ import 'package:recook/pages/live/live_stream/live_users_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
 import 'package:recook/pages/live/models/live_exit_model.dart';
+import 'package:recook/pages/live/models/live_resume_model.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
 import 'package:recook/pages/live/models/topic_list_model.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
@@ -34,7 +35,11 @@ import 'package:image_picker/image_picker.dart';
 import 'package:wakelock/wakelock.dart';
 
 class LivePage extends StatefulWidget {
-  LivePage({Key key}) : super(key: key);
+  final bool resumeLive;
+
+  ///只在resumeLive 为`true`时可用
+  final LiveResumeModel model;
+  LivePage({Key key, this.resumeLive = false, this.model}) : super(key: key);
 
   @override
   _LivePageState createState() => _LivePageState();
@@ -94,6 +99,30 @@ class _LivePageState extends State<LivePage> {
               onCloudVideoCreated: (controller) async {
                 _livePusher = await LivePusher.create();
                 _livePusher.startPreview(controller);
+                if (widget.resumeLive) {
+                  _isStream = true;
+                  liveItemId = widget.model.liveItemId;
+                  _streamInfoModel =
+                      LiveStreamInfoModel.fromLiveResume(widget.model);
+                  _livePusher.startPush(widget.model.pushUrl);
+                  setState(() {});
+                  TencentIMTool.login().then((_) {
+                    DPrint.printLongJson('用户登陆');
+                    getLiveStreamModel(liveItemId).then((model) {
+                      if (model == null)
+                        Navigator.pop(context);
+                      else {
+                        setState(() {
+                          _streamInfoModel = model;
+                        });
+                        TencentImPlugin.applyJoinGroup(
+                            groupId: model.groupId, reason: 'enterLive');
+                        TencentImPlugin.addListener(parseMessage);
+                        group = TencentGroupTool.fromId(model.groupId);
+                      }
+                    });
+                  });
+                }
               },
             ),
           ),

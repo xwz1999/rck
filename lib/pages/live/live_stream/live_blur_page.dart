@@ -36,7 +36,7 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
   @override
   void initState() {
     super.initState();
-    _isAttention = widget.streamModel.isFollow == 1;
+    _isAttention = widget.streamModel?.isFollow == 1;
   }
 
   @override

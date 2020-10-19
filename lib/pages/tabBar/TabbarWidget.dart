@@ -8,13 +8,16 @@
  */
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/config.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/business/business_page.dart';
 import 'package:recook/pages/home/home_page.dart';
 import 'package:recook/pages/live/live_stream/live_page.dart';
+import 'package:recook/pages/live/models/live_resume_model.dart';
 import 'package:recook/pages/live/video/add_video_page.dart';
 import 'package:recook/pages/live/pages/discovery_page.dart';
 import 'package:recook/pages/live/widget/live_fab_location.dart';
@@ -27,6 +30,7 @@ import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/permission_tool.dart';
 import 'package:recook/utils/print_util.dart';
 import 'package:recook/utils/versionInfo/version_tool.dart';
+import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/tabbarWidget/ace_bottom_navigation_bar.dart';
@@ -78,6 +82,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
   }
 
   _showBottomModalSheet() {
+    BuildContext fatherContext = context;
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -131,7 +136,53 @@ class _TabBarWidgetState extends State<TabBarWidget>
                       onTap: () {
                         PermissionTool.haveCameraPermission().then((value) {
                           PermissionTool.haveAudioPermission().then((value) {
-                            CRoute.pushReplace(context, LivePage());
+                            GSDialog.of(context)
+                                .showLoadingDialog(context, '加载中');
+                            HttpManager.post(LiveAPI.getLiveInfo, {})
+                                .then((resultData) {
+                              GSDialog.of(context).dismiss(context);
+                              LiveResumeModel model = LiveResumeModel.fromJson(
+                                  resultData.data['data']);
+                              if (model.liveItemId == 0)
+                                CRoute.pushReplace(context, LivePage());
+                              else {
+                                Navigator.pop(context);
+                                showDialog(
+                                  context: context,
+                                  child: NormalTextDialog(
+                                    title: '有未完成的直播间',
+                                    content: '',
+                                    items: ['结束直播', '继续直播', '开始新直播'],
+                                    listener: (index) {
+                                      Navigator.pop(fatherContext);
+                                      switch (index) {
+                                        case 0:
+                                          HttpManager.post(LiveAPI.exitLive, {
+                                            'liveItemId': model.liveItemId,
+                                          });
+                                          break;
+                                        case 1:
+                                          CRoute.push(
+                                              fatherContext,
+                                              LivePage(
+                                                resumeLive: true,
+                                                model: model,
+                                              ));
+                                          break;
+                                        case 2:
+                                          HttpManager.post(LiveAPI.exitLive, {
+                                            'liveItemId': model.liveItemId,
+                                          }).then((_) {
+                                            CRoute.pushReplace(
+                                                context, LivePage());
+                                          });
+                                          break;
+                                      }
+                                    },
+                                  ),
+                                );
+                              }
+                            });
                           });
                         });
                       },

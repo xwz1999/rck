@@ -520,4 +520,7 @@ class LiveAPI {
 
   ///获取直播间用户
   static const String getLiveUsers = '/v1/live/live/user_data';
+
+  ///当前用户直播信息获取
+  static const String getLiveInfo = '/v1/live/live/info';
 }

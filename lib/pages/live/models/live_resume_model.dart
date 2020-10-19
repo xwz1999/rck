@@ -1,48 +1,31 @@
-import 'package:recook/pages/live/models/live_resume_model.dart';
-
-class LiveStreamInfoModel {
+class LiveResumeModel {
+  int liveItemId;
+  String pushUrl;
+  String groupId;
   String nickname;
   String headImgUrl;
-  String playUrl;
   int userId;
-  int id;
-  int isFollow;
-  int isPraise;
   int praise;
-  String groupId;
   List<GoodsLists> goodsLists;
 
-  LiveStreamInfoModel(
-      {this.nickname,
-      this.headImgUrl,
-      this.playUrl,
-      this.userId,
-      this.id,
-      this.isFollow,
-      this.isPraise,
-      this.praise,
+  LiveResumeModel(
+      {this.liveItemId,
+      this.pushUrl,
       this.groupId,
+      this.nickname,
+      this.headImgUrl,
+      this.userId,
+      this.praise,
       this.goodsLists});
 
-  LiveStreamInfoModel.fromLiveResume(LiveResumeModel model) {
-    this.nickname = model.nickname;
-    this.headImgUrl = model.headImgUrl;
-    this.groupId = model.groupId;
-    this.goodsLists =
-        model.goodsLists.map((e) => GoodsLists.fromJson(e.toJson())).toList();
-    this.id = model.liveItemId;
-  }
-
-  LiveStreamInfoModel.fromJson(Map<String, dynamic> json) {
+  LiveResumeModel.fromJson(Map<String, dynamic> json) {
+    liveItemId = json['liveItemId'];
+    pushUrl = json['pushUrl'];
+    groupId = json['groupId'];
     nickname = json['nickname'];
     headImgUrl = json['headImgUrl'];
-    playUrl = json['playUrl'];
     userId = json['userId'];
-    id = json['id'];
-    isFollow = json['isFollow'];
-    isPraise = json['isPraise'];
     praise = json['praise'];
-    groupId = json['groupId'];
     if (json['goodsLists'] != null) {
       goodsLists = new List<GoodsLists>();
       json['goodsLists'].forEach((v) {
@@ -53,15 +36,13 @@ class LiveStreamInfoModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['liveItemId'] = this.liveItemId;
+    data['pushUrl'] = this.pushUrl;
+    data['groupId'] = this.groupId;
     data['nickname'] = this.nickname;
     data['headImgUrl'] = this.headImgUrl;
-    data['playUrl'] = this.playUrl;
     data['userId'] = this.userId;
-    data['id'] = this.id;
-    data['isFollow'] = this.isFollow;
-    data['isPraise'] = this.isPraise;
     data['praise'] = this.praise;
-    data['groupId'] = this.groupId;
     if (this.goodsLists != null) {
       data['goodsLists'] = this.goodsLists.map((v) => v.toJson()).toList();
     }
