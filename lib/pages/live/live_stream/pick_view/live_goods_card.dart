@@ -80,42 +80,47 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
                     style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
                         color: Colors.black54, fontWeight: FontWeight.w300),
                   ),
-                  InkWell(
-                    onTap: () {
-                      PickCart.brandModel = LiveBrandModel(
-                        id: widget.model.brandId,
-                        name: widget.model.brandName,
-                        logoUrl: widget.model.brandImg,
-                      );
-                      CRoute.push(
-                        context,
-                        RecookScaffold(
-                          title: '品牌馆',
-                          whiteBg: true,
-                          body: BrandGoodsListView(
-                            onPick: () {},
-                          ),
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          PickCart.brandModel = LiveBrandModel(
+                            id: widget.model.brandId,
+                            name: widget.model.brandName,
+                            logoUrl: widget.model.brandImg,
+                          );
+                          CRoute.push(
+                            context,
+                            RecookScaffold(
+                              title: '品牌馆',
+                              whiteBg: true,
+                              body: BrandGoodsListView(
+                                onPick: () {},
+                              ),
+                            ),
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            FadeInImage.assetNetwork(
+                              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                              image: Api.getImgUrl(widget.model.brandImg),
+                              width: rSize(13),
+                              height: rSize(13),
+                            ),
+                            rWBox(4),
+                            Text(
+                              widget.model.brandName,
+                              style: TextStyle(
+                                color: Color(0xffc70404),
+                                fontSize: ScreenAdapterUtils.setSp(12),
+                              ),
+                            ),
+                          ],
                         ),
-                      );
-                    },
-                    child: Row(
-                      children: [
-                        FadeInImage.assetNetwork(
-                          placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                          image: Api.getImgUrl(widget.model.brandImg),
-                          width: rSize(13),
-                          height: rSize(13),
-                        ),
-                        rWBox(4),
-                        Text(
-                          widget.model.brandName,
-                          style: TextStyle(
-                            color: Color(0xffc70404),
-                            fontSize: ScreenAdapterUtils.setSp(12),
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                      Spacer(),
+                    ],
                   ),
                   Row(
                     children: [

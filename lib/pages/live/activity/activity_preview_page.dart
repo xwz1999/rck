@@ -5,9 +5,11 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/live/models/activity_list_model.dart';
 import 'package:recook/pages/live/models/live_base_info_model.dart';
+import 'package:recook/pages/live/sub_page/topic_page.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/network_file_video.dart';
 import 'package:recook/pages/live/widget/review_child_cards.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook/recook_like_button.dart';
 
@@ -67,11 +69,16 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    '#${widget.model.topicName}',
-                    style: TextStyle(
-                      color: Color(0xFFEB8A49),
-                      fontSize: rSP(14),
+                  InkWell(
+                    onTap: () {
+                       CRoute.push(context, TopicPage(topicId: widget.model.topicId,initAttention:false));
+                    },
+                    child: Text(
+                      '#${widget.model.topicName}',
+                      style: TextStyle(
+                        color: Color(0xFFEB8A49),
+                        fontSize: rSP(14),
+                      ),
                     ),
                   ),
                   rHBox(4),

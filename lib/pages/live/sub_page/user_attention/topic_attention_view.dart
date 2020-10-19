@@ -83,7 +83,7 @@ class _TopicAttentionViewState extends State<TopicAttentionView>
       subTitlePrefix: '共${model.substance}条内容',
       subTitleSuffix: '${model.partake}人参与',
       onTap: () {
-        CRoute.push(context, TopicPage(topicId: 1,initAttention:model.isFollow==1));
+        CRoute.push(context, TopicPage(topicId: model.id, initAttention:model.isFollow==1));
       },
       initAttention: model.isFollow == 1,
       onAttention: (bool oldState) {
