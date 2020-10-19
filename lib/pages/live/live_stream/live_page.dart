@@ -59,7 +59,7 @@ class _LivePageState extends State<LivePage> {
   void initState() {
     super.initState();
     Wakelock.enable();
-    _editingController.text = '${UserManager.instance.user.info.nickname}正在直播';
+    _editingController.text = '${UserManager.instance.user.info.nickname}的直播';
   }
 
   @override
