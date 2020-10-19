@@ -28,6 +28,7 @@ class _AddVideoPageState extends State<AddVideoPage> {
   CameraController _cameraController;
   File _tempFile;
   bool _videoDone = false;
+  int _startDate = 0;
 
   @override
   void initState() {
@@ -174,12 +175,20 @@ class _AddVideoPageState extends State<AddVideoPage> {
                 VideoRecordButton(
                   disabled: _videoDone,
                   onEnd: () {
-                    _cameraController.stopVideoRecording();
-                    setState(() {
-                      _videoDone = true;
-                    });
+                    if ((DateTime.now().millisecondsSinceEpoch - _startDate) >
+                        1000) {
+                      _cameraController.stopVideoRecording();
+                      setState(() {
+                        _videoDone = true;
+                      });
+                    } else {
+                      Future.delayed(Duration(seconds: 1), () {
+                        _cameraController.stopVideoRecording();
+                      });
+                    }
                   },
                   onStart: () {
+                    _startDate = DateTime.now().millisecondsSinceEpoch;
                     _cameraController.startVideoRecording(_tempFile.path);
                   },
                 ),
