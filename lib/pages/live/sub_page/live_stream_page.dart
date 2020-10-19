@@ -9,7 +9,9 @@ import 'package:recook/pages/live/live_stream/live_playback_view_page.dart';
 import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
 import 'package:recook/pages/live/models/live_attention_list_model.dart';
 import 'package:recook/pages/live/models/live_list_model.dart';
+import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/utils/custom_route.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class LiveStreamPage extends StatefulWidget {
@@ -156,42 +158,59 @@ class _LiveStreamPageState extends State<LiveStreamPage>
 
   _buildAttentionBox(LiveAttentionListModel model) {
     final bool isLive = model.isLive == 1;
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(rSize(52 / 2)),
-              child: FadeInImage.assetNetwork(
-                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                image: Api.getImgUrl(model.headImgUrl),
-                height: rSize(52),
-                width: rSize(52),
+    return CustomImageButton(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Stack(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(rSize(52 / 2)),
+                child: FadeInImage.assetNetwork(
+                  placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                  image: Api.getImgUrl(model.headImgUrl),
+                  height: rSize(52),
+                  width: rSize(52),
+                ),
               ),
-            ),
-            Positioned(
-              right: rSize(3),
-              bottom: 0,
-              child: Image.asset(
-                isLive
-                    ? R.ASSETS_LIVE_ON_STREAM_PNG
-                    : R.ASSETS_LIVE_STREAM_PLAY_BACK_PNG,
-                height: rSize(12),
-                width: rSize(12),
+              Positioned(
+                right: rSize(3),
+                bottom: 0,
+                child: Image.asset(
+                  isLive
+                      ? R.ASSETS_LIVE_ON_STREAM_PNG
+                      : R.ASSETS_LIVE_STREAM_PLAY_BACK_PNG,
+                  height: rSize(12),
+                  width: rSize(12),
+                ),
               ),
-            ),
-          ],
-        ),
-        SizedBox(height: rSize(4)),
-        Text(
-          model.nickname,
-          style: TextStyle(
-            color: Color(0xFF666666),
-            fontSize: rSP(11),
+            ],
           ),
-        ),
-      ],
+          SizedBox(height: rSize(4)),
+          Text(
+            model.nickname,
+            style: TextStyle(
+              color: Color(0xFF666666),
+              fontSize: rSP(11),
+            ),
+          ),
+        ],
+      ),
+      onPressed: () {
+        if (isLive)
+          CRoute.push(
+            context,
+            LiveStreamViewPage(id: model.id),
+          );
+        else
+          CRoute.push(
+            context,
+            UserHomePage(
+              userId: model.userId,
+              initAttention: true,
+            ),
+          );
+      },
     );
   }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 
 class MorePeople extends StatefulWidget {
@@ -54,7 +55,7 @@ class _MorePeopleState extends State<MorePeople> {
         borderRadius: BorderRadius.circular(rSize(14)),
         child: FadeInImage.assetNetwork(
           placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-          image: widget.images[index - 1],
+          image: Api.getImgUrl(widget.images[index - 1]),
           height: rSize(28),
           width: rSize(28),
         ),

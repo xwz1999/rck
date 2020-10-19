@@ -89,7 +89,7 @@ class _LivePageState extends State<LivePage> {
             top: 0,
             left: 0,
             right: 0,
-            bottom: 0,
+            height: MediaQuery.of(context).size.height,
             child: CloudVideo(
               onCloudVideoCreated: (controller) async {
                 _livePusher = await LivePusher.create();
@@ -240,7 +240,9 @@ class _LivePageState extends State<LivePage> {
                       GSDialog.of(context)
                           .showLoadingDialog(context, '准备开始直播中');
                       HttpManager.post(LiveAPI.startLive, {
-                        'title': _editingController.text,
+                        'title': (TextUtils.isEmpty(_editingController.text)
+                            ? '${UserManager.instance.user.info.nickname}正在直播'
+                            : _editingController.text),
                         'cover': path,
                         'topic': _topicModel == null ? 0 : _topicModel.id,
                         'goodsIds': pickedIds ?? [],
