@@ -97,7 +97,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
             ),
             decoration: InputDecoration(
               isDense: true,
-              hintText: '搜索你想参与的话题',
+              hintText: '搜索你想添加的商品',
               hintStyle: TextStyle(
                 color: Color(0xFF999999),
                 fontSize: rSP(13),

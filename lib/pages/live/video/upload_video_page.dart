@@ -78,46 +78,56 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
           MaterialButton(
             color: Color(0xFFDB2D2D),
             onPressed: () {
-              GSDialog.of(context).showLoadingDialog(context, '初始化');
-              TXUGCPublish txugcPublish = TXUGCPublish(
-                  customKey: '${UserManager.instance.user.info.id}');
-              HttpManager.post(LiveAPI.uploadKey, {}).then((resultData) {
-                GSDialog.of(context).dismiss(context);
-                if (resultData?.data['data'] == null)
-                  showToast(resultData?.data['msg']);
-                else {
-                  GSDialog.of(context).showLoadingDialog(context, '上传视频中');
-                  String sign = resultData?.data['data']['sign'];
-                  txugcPublish.setVideoPublishListener(VideoPublishListener(
-                    onVideoPublishProgress: (uploadBytes, totalBytes) {
-                      int progress = ((uploadBytes / totalBytes) * 100).toInt();
-                      print(progress);
-                    },
-                    onVideoPublishComplete: (result) {
-                      GSDialog.of(context).dismiss(context);
-                      if (result.retCode == 0) {
-                        GSDialog.of(context).showLoadingDialog(context, '发布中');
-                        HttpManager.post(LiveAPI.pushVideo, {
-                          'content': _editingController.text,
-                          'fileId': result.videoId,
-                          'topicId': _topicListModel.id,
-                          'goodsId': _videoGoodsModel.id,
-                        }).then((resultData) {
-                          GSDialog.of(context).dismiss(context);
-                          Navigator.pop(context);
-                        });
-                      }
-                      // 当 result.errCode 为 0 时即为上传成功，更多错误码请查看下方链接
-                      // https://cloud.tencent.com/document/product/266/9539#.E9.94.99.E8.AF.AF.E7.A0.81
-                    },
-                  ));
-                  txugcPublish.publishVideo(TXPublishParam(
-                    signature: sign,
-                    videoPath: uploadFile.path,
-                    coverPath: widget.coverImageFile.path,
-                  ));
-                }
-              });
+              if (TextUtils.isEmpty(_editingController.text)) {
+                GSDialog.of(context).showError(context, '说明不能为空');
+              } else if (_videoGoodsModel == null) {
+                GSDialog.of(context).showError(context, '需要选择一个商品');
+              } else {
+                GSDialog.of(context).showLoadingDialog(context, '初始化');
+                TXUGCPublish txugcPublish = TXUGCPublish(
+                    customKey: '${UserManager.instance.user.info.id}');
+                HttpManager.post(LiveAPI.uploadKey, {}).then((resultData) {
+                  GSDialog.of(context).dismiss(context);
+                  if (resultData?.data['data'] == null)
+                    showToast(resultData?.data['msg']);
+                  else {
+                    GSDialog.of(context).showLoadingDialog(context, '上传视频中');
+                    String sign = resultData?.data['data']['sign'];
+                    txugcPublish.setVideoPublishListener(VideoPublishListener(
+                      onVideoPublishProgress: (uploadBytes, totalBytes) {
+                        int progress =
+                            ((uploadBytes / totalBytes) * 100).toInt();
+                        print(progress);
+                      },
+                      onVideoPublishComplete: (result) {
+                        GSDialog.of(context).dismiss(context);
+                        if (result.retCode == 0) {
+                          GSDialog.of(context)
+                              .showLoadingDialog(context, '发布中');
+                          HttpManager.post(LiveAPI.pushVideo, {
+                            'content': _editingController.text,
+                            'fileId': result.videoId,
+                            'topicId': _topicListModel == null
+                                ? 0
+                                : _topicListModel.id,
+                            'goodsId': _videoGoodsModel.id,
+                          }).then((resultData) {
+                            GSDialog.of(context).dismiss(context);
+                            Navigator.pop(context);
+                          });
+                        }
+                        // 当 result.errCode 为 0 时即为上传成功，更多错误码请查看下方链接
+                        // https://cloud.tencent.com/document/product/266/9539#.E9.94.99.E8.AF.AF.E7.A0.81
+                      },
+                    ));
+                    txugcPublish.publishVideo(TXPublishParam(
+                      signature: sign,
+                      videoPath: uploadFile.path,
+                      coverPath: widget.coverImageFile.path,
+                    ));
+                  }
+                });
+              }
             },
             child: Text('发布'),
           ),
