@@ -87,6 +87,7 @@ class _UserPlaybackCardState extends State<UserPlaybackCard> {
                 child: FadeInImage.assetNetwork(
                   placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                   image: Api.getImgUrl(widget.model.cover),
+                  fit: BoxFit.cover,
                 ),
               ),
               Positioned(

@@ -24,6 +24,7 @@ import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/image_utils.dart';
+import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:tencent_im_plugin/entity/group_member_entity.dart';
@@ -462,28 +463,25 @@ class _LivePageState extends State<LivePage> {
                 rWBox(10),
                 CustomImageButton(
                   onPressed: () {
-                    _livePusher?.stopPush();
-                    TencentImPlugin.quitGroup(
-                        groupId: _streamInfoModel.groupId);
-                    TencentImPlugin.removeListener(parseMessage);
-                    TencentImPlugin.logout();
-                    if (_isStream)
-                      HttpManager.post(LiveAPI.exitLive, {
-                        'liveItemId': liveItemId,
-                      }).then((resultData) {
-                        if (resultData?.data['data'] == null)
-                          Navigator.pop(context);
-                        else {
-                          CRoute.transparent(
-                              context,
-                              LiveBlurPage(
-                                context: context,
-                                isLive: true,
-                                exitModel: LiveExitModel.fromJson(
-                                    resultData.data['data']),
-                              ));
-                        }
-                      });
+                    showDialog(
+                      context: context,
+                      child: NormalTextDialog(
+                        title: '确认关闭直播吗',
+                        content: ' ',
+                        items: ['取消', '确定'],
+                        listener: (index) {
+                          switch (index) {
+                            case 0:
+                              Navigator.pop(context);
+                              break;
+                            case 1:
+                              _stopLive();
+                              Navigator.pop(context);
+                              break;
+                          }
+                        },
+                      ),
+                    );
                   },
                   child: Image.asset(
                     R.ASSETS_LIVE_SHUTDOWN_PNG,
@@ -497,6 +495,29 @@ class _LivePageState extends State<LivePage> {
         ],
       ),
     );
+  }
+
+  _stopLive() {
+    _livePusher?.stopPush();
+    TencentImPlugin.quitGroup(groupId: _streamInfoModel.groupId);
+    TencentImPlugin.removeListener(parseMessage);
+    TencentImPlugin.logout();
+    if (_isStream)
+      HttpManager.post(LiveAPI.exitLive, {
+        'liveItemId': liveItemId,
+      }).then((resultData) {
+        if (resultData?.data['data'] == null)
+          Navigator.pop(context);
+        else {
+          CRoute.transparent(
+              context,
+              LiveBlurPage(
+                context: context,
+                isLive: true,
+                exitModel: LiveExitModel.fromJson(resultData.data['data']),
+              ));
+        }
+      });
   }
 
   Future<LiveStreamInfoModel> getLiveStreamModel(int id) async {
