@@ -207,19 +207,19 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                       ],
                     ),
                     rHBox(50),
-                    _isAttention
-                        ? SizedBox()
-                        : MaterialButton(
-                            height: rSize(40),
-                            minWidth: rSize(209),
-                            child: Text(
-                              '关注',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: rSP(18),
-                              ),
-                            ),
-                            onPressed: () {
+                    MaterialButton(
+                      height: rSize(40),
+                      minWidth: rSize(209),
+                      child: Text(
+                        _isAttention ? '已关注' : '关注',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: rSP(18),
+                        ),
+                      ),
+                      onPressed: _isAttention
+                          ? () {}
+                          : () {
                               setState(() {
                                 _isAttention = true;
                               });
@@ -228,19 +228,23 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                                 {'followUserId': widget.streamModel.userId},
                               );
                             },
-                            color: Color(0xFFDB2D2D),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(rSize(20)),
-                            ),
-                          ),
-                    rHBox(16),
-                    Text(
-                      '关注主播，不错过更多精彩内容',
-                      style: TextStyle(
-                        color: Color(0xFF999999),
-                        fontSize: rSP(12),
+                      color: _isAttention
+                          ? Colors.red.withOpacity(0.4)
+                          : Color(0xFFDB2D2D),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(rSize(20)),
                       ),
                     ),
+                    rHBox(16),
+                    _isAttention
+                        ? SizedBox()
+                        : Text(
+                            '关注主播，不错过更多精彩内容',
+                            style: TextStyle(
+                              color: Color(0xFF999999),
+                              fontSize: rSP(12),
+                            ),
+                          ),
                   ],
                 ),
               ),

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:tencent_im_plugin/entity/group_member_entity.dart';
 
 class LiveUsersView extends StatefulWidget {
+  final List<GroupMemberEntity> members;
   final List<String> usersId;
-  final List<String> avatars;
-  LiveUsersView({Key key, @required this.usersId, @required this.avatars})
+  LiveUsersView({Key key, @required this.members, @required this.usersId})
       : super(key: key);
 
   @override
@@ -66,7 +67,6 @@ class _LiveUsersViewState extends State<LiveUsersView> {
                       child: ListView.builder(
                         controller: controller,
                         itemBuilder: (BuildContext context, int index) {
-                          final name = users[index]['name'];
                           final fans = users[index]['fans'];
                           return Padding(
                             padding: EdgeInsets.symmetric(
@@ -81,14 +81,15 @@ class _LiveUsersViewState extends State<LiveUsersView> {
                                   child: FadeInImage.assetNetwork(
                                     placeholder:
                                         R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                                    image: widget.avatars[index],
+                                    image: Api.getImgUrl(widget
+                                        .members[index].userProfile.faceUrl),
                                     width: rSize(34),
                                     height: rSize(34),
                                   ),
                                 ),
                                 rWBox(10),
                                 Text(
-                                  '$name',
+                                  '${widget.members[index].userProfile.nickName}',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: rSP(14),

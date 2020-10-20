@@ -12,6 +12,7 @@ import 'package:recook/pages/live/live_stream/live_blur_page.dart';
 import 'package:recook/pages/live/live_stream/live_report_view.dart';
 import 'package:recook/pages/live/live_stream/live_users_view.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
+import 'package:recook/pages/live/live_stream/widget/live_chat_box.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
 import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
@@ -205,7 +206,8 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
           if (parseParams['tipsType'] == 'Join') {
             chatObjects.insert(
               0,
-              ChatObj(parseParams['opUser'], '来了', enterUser: true),
+              ChatObj(parseParams['opUserInfo']['nickName'], '来了',
+                  enterUser: true),
             );
 
             _scrollController.animateTo(
@@ -329,9 +331,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                               context: context,
                               builder: (context) {
                                 return LiveUsersView(
-                                  avatars: _groupMembers
-                                      .map((e) => e.userProfile.faceUrl)
-                                      .toList(),
+                                  members: _groupMembers,
                                   usersId:
                                       _groupMembers.map((e) => e.user).toList(),
                                 );
@@ -387,9 +387,10 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                             physics: BouncingScrollPhysics(
                                 parent: AlwaysScrollableScrollPhysics()),
                             itemBuilder: (context, index) {
-                              return _buildChatBox(
-                                chatObjects[index].name,
-                                chatObjects[index].message,
+                              return LiveChatBox(
+                                sender: chatObjects[index].name,
+                                note: chatObjects[index].message,
+                                userEnter: chatObjects[index].enterUser,
                               );
                             },
                             itemCount: chatObjects.length,
@@ -748,57 +749,6 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                 ),
               ],
             ),
-    );
-  }
-
-  _buildChatBox(
-    String sender,
-    String note, {
-    bool userEnter = false,
-  }) {
-    final Color color = Color.fromRGBO(
-      180 + Random().nextInt(55),
-      180 + Random().nextInt(55),
-      180 + Random().nextInt(55),
-      1,
-    );
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: Container(
-        child: Text.rich(
-          TextSpan(children: [
-            TextSpan(
-              text: '$sender:',
-              style: TextStyle(
-                color: color,
-                fontSize: rSP(13),
-              ),
-            ),
-            TextSpan(
-              text: note,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: rSP(13),
-              ),
-            ),
-          ]),
-          maxLines: 20,
-        ),
-        margin: EdgeInsets.symmetric(vertical: rSize(5 / 2)),
-        padding: EdgeInsets.symmetric(
-          horizontal: rSize(10),
-          vertical: rSize(4),
-        ),
-        constraints: BoxConstraints(
-          maxWidth: rSize(200),
-        ),
-        decoration: BoxDecoration(
-          color: userEnter
-              ? Colors.pink.withOpacity(0.5)
-              : Colors.black.withOpacity(0.1),
-          borderRadius: BorderRadius.circular(rSize(16)),
-        ),
-      ),
     );
   }
 }

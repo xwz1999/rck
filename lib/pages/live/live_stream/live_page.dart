@@ -11,9 +11,11 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/live_stream/live_blur_page.dart';
 import 'package:recook/pages/live/live_stream/live_pick_goods_page.dart';
+import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
 import 'package:recook/pages/live/live_stream/live_users_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
+import 'package:recook/pages/live/live_stream/widget/live_chat_box.dart';
 import 'package:recook/pages/live/models/live_exit_model.dart';
 import 'package:recook/pages/live/models/live_resume_model.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
@@ -57,7 +59,7 @@ class _LivePageState extends State<LivePage> {
   bool _isStream = false;
   LiveStreamInfoModel _streamInfoModel;
   TencentGroupTool group;
-  List<MessageEntity> chatObjects = [];
+  List<ChatObj> chatObjects = [];
   ScrollController _scrollController = ScrollController();
   int nowExplain = 0;
   List<GroupMemberEntity> _groupMembers = [];
@@ -358,8 +360,11 @@ class _LivePageState extends State<LivePage> {
                       physics: AlwaysScrollableScrollPhysics(
                           parent: BouncingScrollPhysics()),
                       itemBuilder: (context, index) {
-                        return _buildChatBox(
-                            chatObjects[index].sender, chatObjects[index].note);
+                        return LiveChatBox(
+                          sender: chatObjects[index].name,
+                          note: chatObjects[index].message,
+                          userEnter: chatObjects[index].enterUser,
+                        );
                       },
                       itemCount: chatObjects.length,
                     ),
@@ -449,9 +454,7 @@ class _LivePageState extends State<LivePage> {
                       context: context,
                       builder: (context) {
                         return LiveUsersView(
-                          avatars: _groupMembers
-                              .map((e) => e.userProfile.faceUrl)
-                              .toList(),
+                          members: _groupMembers,
                           usersId: _groupMembers.map((e) => e.user).toList(),
                         );
                       },
@@ -531,56 +534,6 @@ class _LivePageState extends State<LivePage> {
       return LiveStreamInfoModel.fromJson(resultData.data['data']);
   }
 
-  _buildChatBox(String sender, String note) {
-    final Color color = Color.fromRGBO(
-      180 + Random().nextInt(55),
-      180 + Random().nextInt(55),
-      180 + Random().nextInt(55),
-      1,
-    );
-    return Align(
-      alignment: Alignment.centerLeft,
-      child: ClipRRect(
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
-          child: Container(
-            child: Text.rich(
-              TextSpan(children: [
-                TextSpan(
-                  text: '$sender:',
-                  style: TextStyle(
-                    color: color,
-                    fontSize: rSP(13),
-                  ),
-                ),
-                TextSpan(
-                  text: note,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: rSP(13),
-                  ),
-                ),
-              ]),
-              maxLines: 5,
-            ),
-            margin: EdgeInsets.symmetric(vertical: rSize(5 / 2)),
-            padding: EdgeInsets.symmetric(
-              horizontal: rSize(10),
-              vertical: rSize(4),
-            ),
-            constraints: BoxConstraints(
-              maxWidth: rSize(200),
-            ),
-            decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(rSize(16)),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
   parseMessage(ListenerTypeEnum type, params) {
     print('ListenerTypeEnum$type');
     print(params);
@@ -620,7 +573,11 @@ class _LivePageState extends State<LivePage> {
               }
             }
           } else {
-            chatObjects.insertAll(0, messageEntities);
+            chatObjects.insertAll(
+                0,
+                messageEntities.map(
+                  (e) => ChatObj(e.userInfo.nickName, e.note),
+                ));
             _scrollController.animateTo(
               -50,
               duration: Duration(milliseconds: 300),
@@ -641,25 +598,15 @@ class _LivePageState extends State<LivePage> {
         if (params is String) {
           dynamic parseParams = jsonDecode(params);
           if (parseParams['tipsType'] == 'Join') {
-            showToastWidget(
-              Container(
-                margin: EdgeInsets.all(rSize(15)),
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: rSize(10)),
-                height: rSize(26),
-                decoration: BoxDecoration(
-                  color: Color(0xFFDC5353),
-                  borderRadius: BorderRadius.circular(rSize(13)),
-                ),
-                child: Text(
-                  '${parseParams['opUser']}来了',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: rSP(13),
-                  ),
-                ),
-              ),
-              position: ToastPosition.top,
+            chatObjects.insert(
+              0,
+              ChatObj(parseParams['opUserInfo']['nickName'], '来了',
+                  enterUser: true),
+            );
+            _scrollController.animateTo(
+              -50,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeInOutCubic,
             );
           } else if (parseParams['tipsType'] == 'Quit') {
             //exit
