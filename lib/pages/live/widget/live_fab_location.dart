@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:recook/constants/header.dart';
 
 class FabLocation {
   ///copy from material/floating_action_button_location.dart
@@ -22,13 +21,6 @@ mixin CustomDockedOffsetY on StandardFabLocation {
   double getOffsetY(
       ScaffoldPrelayoutGeometry scaffoldGeometry, double adjustment) {
     final double contentBottom = scaffoldGeometry.contentBottom;
-    final double contentMargin =
-        scaffoldGeometry.scaffoldSize.height - contentBottom;
-    final double bottomViewPadding = scaffoldGeometry.minViewPadding.bottom;
-    final double fabHeight = scaffoldGeometry.floatingActionButtonSize.height;
-    final double safeMargin =
-        bottomViewPadding > contentMargin ? bottomViewPadding : 0.0;
-
     double fabY = contentBottom;
     return fabY;
   }

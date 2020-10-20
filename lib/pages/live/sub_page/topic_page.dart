@@ -157,7 +157,10 @@ class _TopicPageState extends State<TopicPage> {
                 _getTopicContentModels().then((getModels) {
                   models.addAll(getModels);
                   if (mounted) setState(() {});
-                  _controller.loadComplete();
+                  if (getModels.isEmpty)
+                    _controller.loadNoData();
+                  else
+                    _controller.loadComplete();
                 });
               },
               body: WaterfallFlow.builder(

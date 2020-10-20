@@ -6,13 +6,13 @@ import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/models/live_base_info_model.dart';
+import 'package:recook/pages/live/num_tool/live_num_tool.dart';
 import 'package:recook/pages/live/sub_page/live_host_center_page.dart';
 import 'package:recook/pages/live/sub_page/user_attention_page.dart';
 import 'package:recook/pages/live/sub_page/user_home/user_activity_view.dart';
 import 'package:recook/pages/live/sub_page/user_home/user_playback_view.dart';
 import 'package:recook/pages/live/widget/live_attention_button.dart';
 import 'package:recook/pages/live/widget/sliver_bottom_persistent_delegate.dart';
-import 'package:recook/pages/live/widget/user_live_playback_card.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
@@ -211,13 +211,13 @@ class _UserHomePageState extends State<UserHomePage>
     );
   }
 
-  Widget _buildVerticalView(String title, int num, {VoidCallback onTap}) {
+  Widget _buildVerticalView(String title, int number, {VoidCallback onTap}) {
     return CustomImageButton(
       onPressed: onTap,
       child: Column(
         children: [
           Text(
-            num.toString(),
+            getParseNum(number),
             style: TextStyle(
               color: Color(0xFF333333),
               fontSize: rSP(18),

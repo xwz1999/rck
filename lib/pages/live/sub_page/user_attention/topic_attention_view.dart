@@ -48,6 +48,14 @@ class _TopicAttentionViewState extends State<TopicAttentionView>
           _topicController.refreshCompleted();
         });
       },
+      onLoadMore: () {
+        _page++;
+        getTopicModel().then((models) {
+          topicModels = models;
+          if (mounted) setState(() {});
+          _topicController.refreshCompleted();
+        });
+      },
       body: ListView.builder(
         itemBuilder: (context, index) {
           final model = topicModels[index];
@@ -83,7 +91,8 @@ class _TopicAttentionViewState extends State<TopicAttentionView>
       subTitlePrefix: '共${model.substance}条内容',
       subTitleSuffix: '${model.partake}人参与',
       onTap: () {
-        CRoute.push(context, TopicPage(topicId: model.id, initAttention:model.isFollow==1));
+        CRoute.push(context,
+            TopicPage(topicId: model.id, initAttention: model.isFollow == 1));
       },
       initAttention: model.isFollow == 1,
       onAttention: (bool oldState) {

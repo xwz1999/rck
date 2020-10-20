@@ -9,6 +9,7 @@ import 'package:recook/pages/live/live_stream/live_playback_view_page.dart';
 import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
 import 'package:recook/pages/live/models/live_attention_list_model.dart';
 import 'package:recook/pages/live/models/live_list_model.dart';
+import 'package:recook/pages/live/num_tool/live_num_tool.dart';
 import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -328,7 +329,7 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                           height: rSize(10),
                         ),
                         Text(
-                          model.praise.toString(),
+                          getParseNum(model.praise),
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: rSP(10),
