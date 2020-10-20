@@ -218,7 +218,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
   SCGridView buildGridView(
       double appbarHeight, double statusBarHeight, int index) {
     List<SecondCategory> secondCategories = widget.data[index].sub;
-    String first_title = widget.data[index].name;
+    String firstTitle = widget.data[index].name;
     return SCGridView(
         viewportHeight:
             DeviceInfo.screenHeight - appbarHeight - statusBarHeight + 5,
@@ -253,7 +253,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
             onPressed: () {
               AppRouter.push(context, RouteName.GOODS_LIST_PAGE,
                   arguments: GoodsListPage.setArguments(
-                      title: first_title,
+                      title: firstTitle,
                       index: indexIn,
                       secondCategoryList: secondCategories));
             },

@@ -13,24 +13,24 @@ import 'package:recook/utils/print_util.dart';
 class Api {
   static String host;
   static String domain;
-  static String cdn_domain;
+  static String cdnDomin;
 
-  static const String domain_pro = "https://api.reecook.cn";
-  static const String domain_dev = "https://testapi.reecook.cn";
-  // static const String domain_dev = "http://192.168.2.68:8080/";
-  // static const String domain_dev = "https://api.reecook.cn";
+  static const String domainPro = "https://api.reecook.cn";
+  static const String domainDev = "https://testapi.reecook.cn";
+  // static const String domainDev = "http://192.168.2.68:8080/";
+  // static const String domainDev = "https://api.reecook.cn";
 
-  static const String cdn_domain_pro = "https://cdn.reecook.cn";
-  static const String cdn_domain_dev = "https://testcdn.reecook.cn";
-  // static const String cdn_domain_dev = "https://cdn.reecook.cn";
+  static const String cdnDominPro = "https://cdn.reecook.cn";
+  static const String cdnDominDev = "https://testcdn.reecook.cn";
+  // static const String cdnDominDev = "https://cdn.reecook.cn";
 
   static toggleEnvironment(bool debug) {
     if (debug) {
-      domain = domain_dev;
-      cdn_domain = cdn_domain_dev;
+      domain = domainDev;
+      cdnDomin = cdnDominDev;
     } else {
-      domain = domain_pro;
-      cdn_domain = cdn_domain_pro;
+      domain = domainPro;
+      cdnDomin = cdnDominPro;
     }
     host = "$domain/api";
   }
@@ -41,10 +41,10 @@ class Api {
     }
     if (print) {
       // DPrint.printf("$domain/static$url");
-      DPrint.printf("$cdn_domain/static$url");
+      DPrint.printf("$cdnDomin/static$url");
     }
     // return "$domain/static$url";
-    return "$cdn_domain/static$url";
+    return "$cdnDomin/static$url";
   }
 
   static String getResizeImgUrl(String url, int width, {bool print = false}) {
@@ -52,7 +52,7 @@ class Api {
       return url;
     }
     String resizeUrl = "$domain/api/v1/static/photo/resize$url/$width";
-    // String resizeUrl = "$cdn_domain/static$url";
+    // String resizeUrl = "$cdnDomin/static$url";
     if (print) {
       DPrint.printf("resizeUrl --- $resizeUrl");
     }

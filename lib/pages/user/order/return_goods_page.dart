@@ -30,7 +30,6 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/image_picker.dart';
 import 'package:recook/widgets/image_selected_view.dart';
 import 'package:recook/widgets/input_view.dart';
-import 'package:recook/widgets/sc_tile.dart';
 import 'package:recook/widgets/toast.dart';
 
 class GoodsReturnPage extends StatefulWidget {
@@ -152,36 +151,36 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
     );
   }
 
-  _expressInfoView() {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: rSize(8), horizontal: rSize(10)),
-      padding: EdgeInsets.all(rSize(8)),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(rSize(8)))),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            "请填写快递信息:",
-            style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
-                fontWeight: FontWeight.w500),
-          ),
-          SCTile.normalTile("快递公司",
-              value: _expressCompany ?? "请选择快递公司",
-              padding: EdgeInsets.only(top: rSize(3), left: rSize(8)),
-              margin: EdgeInsets.symmetric(vertical: rSize(8)), listener: () {
-            _getExpressCompany();
-          }),
-          Padding(
-            padding: EdgeInsets.only(left: rSize(8)),
-            child: SCTile.editTile(_expressController, "快递单号", "顺丰",
-                hint: "请输入快递单号"),
-          )
-        ],
-      ),
-    );
-  }
+  // _expressInfoView() {
+  //   return Container(
+  //     margin: EdgeInsets.symmetric(vertical: rSize(8), horizontal: rSize(10)),
+  //     padding: EdgeInsets.all(rSize(8)),
+  //     decoration: BoxDecoration(
+  //         color: Colors.white,
+  //         borderRadius: BorderRadius.all(Radius.circular(rSize(8)))),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: <Widget>[
+  //         Text(
+  //           "请填写快递信息:",
+  //           style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+  //               fontWeight: FontWeight.w500),
+  //         ),
+  //         SCTile.normalTile("快递公司",
+  //             value: _expressCompany ?? "请选择快递公司",
+  //             padding: EdgeInsets.only(top: rSize(3), left: rSize(8)),
+  //             margin: EdgeInsets.symmetric(vertical: rSize(8)), listener: () {
+  //           _getExpressCompany();
+  //         }),
+  //         Padding(
+  //           padding: EdgeInsets.only(left: rSize(8)),
+  //           child: SCTile.editTile(_expressController, "快递单号", "顺丰",
+  //               hint: "请输入快递单号"),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 
   _selectReasonWidget() {
     return Container(

@@ -13,9 +13,9 @@ class AppColor {
   static const Color themeColor = Color.fromARGB(255, 206, 38, 40);
 //  static const Color themeColor = Color(0xFFFF2F10);
   static const Color pinkColor = Color.fromARGB(255, 254, 201, 198);
-  
+
   static const Color greenColor = Color.fromARGB(255, 37, 186, 114);
-  
+
   // 浅灰色
   static const Color frenchColor = Color(0xFFF8F7F8);
   static const Color blackColor = Color(0xff16182b);
@@ -34,10 +34,20 @@ class AppColor {
 
 class AppTextStyle {
   static const appBarTextStyle = TextStyle(color: Colors.white);
-  static const appBarItemTextStyle = TextStyle(color: Colors.white, fontSize: 13);
+  static const appBarItemTextStyle =
+      TextStyle(color: Colors.white, fontSize: 13);
 
-  static TextStyle generate(double fontSize,{FontWeight fontWeight, Color color = Colors.black, TextDecoration decoration,Paint background}) {
-    return TextStyle(color: color, fontSize: fontSize, fontWeight: fontWeight,decoration: decoration ,background: background);
+  static TextStyle generate(double fontSize,
+      {FontWeight fontWeight,
+      Color color = Colors.black,
+      TextDecoration decoration,
+      Paint background}) {
+    return TextStyle(
+        color: color,
+        fontSize: fontSize,
+        fontWeight: fontWeight,
+        decoration: decoration,
+        background: background);
   }
 }
 
@@ -54,8 +64,10 @@ class AppThemes {
         iconTheme: IconThemeData(color: Colors.grey[400]),
         color: AppColor.appBarGrey,
         textTheme: TextTheme(
-            title: TextStyle(
-                color: Colors.grey[900], fontSize: 17, fontWeight: FontWeight.w500))),
+            headline6: TextStyle(
+                color: Colors.grey[900],
+                fontSize: 17,
+                fontWeight: FontWeight.w500))),
     scaffoldBackgroundColor: Colors.white,
   );
 
@@ -69,11 +81,12 @@ class AppThemes {
         iconTheme: IconThemeData(color: Colors.white),
         color: AppColor.themeColor,
         textTheme: TextTheme(
-            title: TextStyle(
-                color: Colors.white, fontSize: 17, fontWeight: FontWeight.w500))),
+            headline6: TextStyle(
+                color: Colors.white,
+                fontSize: 17,
+                fontWeight: FontWeight.w500))),
     iconTheme: IconThemeData(color: AppColor.themeColor),
 //    textTheme: TextTheme(title: TextStyle(color: Colors.black)),
     scaffoldBackgroundColor: Colors.white,
   );
-
 }

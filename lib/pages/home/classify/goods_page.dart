@@ -31,13 +31,11 @@ import 'package:recook/pages/home/widget/goods_image_page_view.dart';
 import 'package:recook/pages/shopping_cart/mvp/shopping_cart_model_impl.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/utils/share_tool.dart';
-import 'package:recook/widgets/aspect_ratio_image.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/bottom_sheet/custom_bottom_sheet.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/empty_view.dart';
-import 'package:recook/widgets/pic_swiper.dart';
 import 'package:recook/widgets/selected_list.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:recook/widgets/video_view.dart';
@@ -546,20 +544,20 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     );
   }
 
-  _showAuthImage() {
-    if (widget.goodsDetail == null ||
-        TextUtils.isEmpty(widget.goodsDetail.data.brand.showUrl)) return;
-    AppRouter.fade(
-      context,
-      RouteName.PIC_SWIPER,
-      arguments: PicSwiper.setArguments(
-        index: 0,
-        pics: [
-          PicSwiperItem(Api.getImgUrl(widget.goodsDetail.data.brand.showUrl))
-        ],
-      ),
-    );
-  }
+  // _showAuthImage() {
+  //   if (widget.goodsDetail == null ||
+  //       TextUtils.isEmpty(widget.goodsDetail.data.brand.showUrl)) return;
+  //   AppRouter.fade(
+  //     context,
+  //     RouteName.PIC_SWIPER,
+  //     arguments: PicSwiper.setArguments(
+  //       index: 0,
+  //       pics: [
+  //         PicSwiperItem(Api.getImgUrl(widget.goodsDetail.data.brand.showUrl))
+  //       ],
+  //     ),
+  //   );
+  // }
 
   List _coupons() {
     List<Widget> coupons = [

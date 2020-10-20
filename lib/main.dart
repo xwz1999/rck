@@ -95,7 +95,6 @@ void main() async {
   return FlutterBugly.postCatchedException(() {
     runApp(MyApp(store));
   });
-  runApp(MyApp(store));
 }
 
 class MyApp extends StatefulWidget {
