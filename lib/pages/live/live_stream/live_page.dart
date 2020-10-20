@@ -355,6 +355,7 @@ class _LivePageState extends State<LivePage> {
                   child: Container(
                     height: 300,
                     child: ListView.builder(
+                      padding: EdgeInsets.only(bottom:50),
                       reverse: true,
                       controller: _scrollController,
                       physics: AlwaysScrollableScrollPhysics(
