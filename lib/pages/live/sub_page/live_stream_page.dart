@@ -92,12 +92,13 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                   color: Color(0xff555555),
                 ),
                 spacing: rSize(5),
-                refreshingText: '加载中',
-                completeText: '加载完成',
+                refreshingText: '',
+                completeText: '',
                 failedText: '网络错误',
-                idleText: '右拉刷新',
-                releaseText: '刷新',
+                idleText: '',
+                releaseText: '',
               ),
+              noDataText: '｜',
               controller: _liveAttentionController,
               onRefresh: () {
                 _attentionPage = 1;
@@ -114,7 +115,10 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                   setState(() {
                     _liveAttentionListModels.addAll(models);
                   });
-                  _liveAttentionController.loadComplete();
+                  if (models.isEmpty)
+                    _liveAttentionController.loadNoData();
+                  else
+                    _liveAttentionController.loadComplete();
                 });
               },
               body: ListView.separated(
