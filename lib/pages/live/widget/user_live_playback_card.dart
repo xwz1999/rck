@@ -82,9 +82,12 @@ class _UserPlaybackCardState extends State<UserPlaybackCard> {
           child: Stack(
             alignment: Alignment.center,
             children: [
-              FadeInImage.assetNetwork(
-                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                image: Api.getImgUrl(widget.model.cover),
+              AspectRatio(
+                aspectRatio: 1,
+                child: FadeInImage.assetNetwork(
+                  placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                  image: Api.getImgUrl(widget.model.cover),
+                ),
               ),
               Positioned(
                 left: 0,

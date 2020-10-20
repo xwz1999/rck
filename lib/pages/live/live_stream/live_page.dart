@@ -23,6 +23,7 @@ import 'package:recook/pages/live/video/pick_topic_page.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
 import 'package:recook/utils/custom_route.dart';
+import 'package:recook/utils/image_utils.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:tencent_im_plugin/entity/group_member_entity.dart';
@@ -205,8 +206,11 @@ class _LivePageState extends State<LivePage> {
 
                             getImage().then((pickedFile) {
                               if (pickedFile != null)
-                                _imageFile = File(pickedFile.path);
-                              setState(() {});
+                                ImageUtils.cropImage(File(pickedFile.path))
+                                    .then((file) {
+                                  _imageFile = file;
+                                  setState(() {});
+                                });
                             });
                           },
                         );
