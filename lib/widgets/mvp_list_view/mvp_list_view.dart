@@ -93,7 +93,7 @@ class MvpListView<T> extends StatefulWidget {
   final SlidableController slidableController;
   const MvpListView(
       {@required this.delegate,
-      @required this.itemBuilder,
+      this.itemBuilder,
       this.refreshCallback,
       this.loadMoreCallback,
       this.autoRefresh = true,
@@ -115,7 +115,8 @@ class MvpListView<T> extends StatefulWidget {
   }
 }
 
-class _MvpListViewState<T> extends State<MvpListView> implements MvpRefreshViewI<T> {
+class _MvpListViewState<T> extends State<MvpListView>
+    implements MvpRefreshViewI<T> {
   MvpListViewController<T> _mvpController;
   SlidableController _slidableController;
 
@@ -126,7 +127,7 @@ class _MvpListViewState<T> extends State<MvpListView> implements MvpRefreshViewI
   void initState() {
     if (widget.slidableController == null) {
       _slidableController = SlidableController();
-    }else{
+    } else {
       _slidableController = widget.slidableController;
     }
 
@@ -134,7 +135,8 @@ class _MvpListViewState<T> extends State<MvpListView> implements MvpRefreshViewI
         GSRefreshController(initialRefresh: widget.autoRefresh);
 
     if (widget.controller == null) {
-      _mvpController = MvpListViewController(controller: gsRefreshController, data: List<T>());
+      _mvpController = MvpListViewController(
+          controller: gsRefreshController, data: List<T>());
     } else {
       _mvpController = widget.controller;
       if (_mvpController.refreshController == null) {
@@ -165,16 +167,18 @@ class _MvpListViewState<T> extends State<MvpListView> implements MvpRefreshViewI
       child: RefreshWidget(
         controller: _mvpController.refreshController,
         onRefresh: widget.refreshCallback,
-        onLoadMore:
-            widget.loadMoreCallback == null || _mvpController.getData().length < widget.pageSize
-                ? null
-                : () {
-                    _page++;
-                    widget.loadMoreCallback(_page);
-                  },
+        onLoadMore: widget.loadMoreCallback == null ||
+                _mvpController.getData().length < widget.pageSize
+            ? null
+            : () {
+                _page++;
+                widget.loadMoreCallback(_page);
+              },
         body: _mvpController.getData().length == 0 && widget.noDataView != null
             ? widget.noDataView
-            : widget.type == ListViewType.list ? _buildListView() : _gridView(),
+            : widget.type == ListViewType.list
+                ? _buildListView()
+                : _gridView(),
       ),
     );
   }
@@ -213,8 +217,12 @@ class _MvpListViewState<T> extends State<MvpListView> implements MvpRefreshViewI
       actionExtentRatio: widget.swipeItemWidthRatio,
       child: widget.itemBuilder(context, index),
       actionPane: SlidableDrawerActionPane(),
-      actions: widget.swipeLeadingItems == null ? null : widget.swipeLeadingItems(index),
-      secondaryActions: widget.swipeTrailingItems == null ? null : widget.swipeTrailingItems(index),
+      actions: widget.swipeLeadingItems == null
+          ? null
+          : widget.swipeLeadingItems(index),
+      secondaryActions: widget.swipeTrailingItems == null
+          ? null
+          : widget.swipeTrailingItems(index),
     );
   }
 
@@ -262,14 +270,10 @@ class _MvpListViewState<T> extends State<MvpListView> implements MvpRefreshViewI
   }
 
   @override
-  void onAttach() {
-
-  }
+  void onAttach() {}
 
   @override
-  void onDetach() {
-    
-  }
+  void onDetach() {}
 
   @override
   @mustCallSuper
@@ -305,7 +309,7 @@ class MvpListViewController<T> {
     refreshController = controller;
   }
 
-  stopRefresh(){
+  stopRefresh() {
     assert(refreshController != null, "清先设置controller");
     refreshController.refreshCompleted();
   }
