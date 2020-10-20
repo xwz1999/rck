@@ -217,7 +217,7 @@ class GoodsItemWidget extends StatelessWidget {
                 width: 13 * 1.5,
                 height: 13 * 1.5,
                 child: TextUtils.isEmpty(brandPictureUrl)
-                    ? SizedBox
+                    ? SizedBox()
                     : ExtendedImage.network(
                         Api.getImgUrl(brandPictureUrl),
                         fit: BoxFit.fill,

@@ -43,7 +43,10 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   LivePlayer _livePlayer;
   LiveStreamInfoModel _streamInfoModel;
   TencentGroupTool group;
-  List<MessageEntity> chatObjects = [];
+  List<ChatObj> chatObjects = [
+    ChatObj('系统消息',
+        '欢迎来到直播间，瑞库客禁止未成年人进行直播，请大家共同遵守、监督。直播间内严禁出现违法违规、低俗色情、吸烟酗酒等问内容，如有违规行为请及时举报。请大家注意财产安全、谨防网络诈骗。'),
+  ];
   ScrollController _scrollController = ScrollController();
   TextEditingController _editingController = TextEditingController();
 
@@ -176,7 +179,11 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
               }
             }
           } else {
-            chatObjects.insertAll(0, messageEntities);
+            chatObjects.insertAll(
+                0,
+                messageEntities.map(
+                  (e) => ChatObj(e.userInfo.nickName, e.note),
+                ));
             _scrollController.animateTo(
               -50,
               duration: Duration(milliseconds: 300),
@@ -196,25 +203,15 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
         if (params is String) {
           dynamic parseParams = jsonDecode(params);
           if (parseParams['tipsType'] == 'Join') {
-            showToastWidget(
-              Container(
-                margin: EdgeInsets.all(rSize(15)),
-                alignment: Alignment.center,
-                padding: EdgeInsets.symmetric(horizontal: rSize(10)),
-                height: rSize(26),
-                decoration: BoxDecoration(
-                  color: Color(0xFFDC5353),
-                  borderRadius: BorderRadius.circular(rSize(13)),
-                ),
-                child: Text(
-                  '${parseParams['opUser']}来了',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: rSP(13),
-                  ),
-                ),
-              ),
-              position: ToastPosition.top,
+            chatObjects.insert(
+              0,
+              ChatObj(parseParams['opUser'], '来了', enterUser: true),
+            );
+
+            _scrollController.animateTo(
+              -50,
+              duration: Duration(milliseconds: 300),
+              curve: Curves.easeInOutCubic,
             );
           } else if (parseParams['tipsType'] == 'Quit') {
             //exit
@@ -390,8 +387,10 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                             physics: BouncingScrollPhysics(
                                 parent: AlwaysScrollableScrollPhysics()),
                             itemBuilder: (context, index) {
-                              return _buildChatBox(chatObjects[index].sender,
-                                  chatObjects[index].note);
+                              return _buildChatBox(
+                                chatObjects[index].name,
+                                chatObjects[index].message,
+                              );
                             },
                             itemCount: chatObjects.length,
                           ),
@@ -418,13 +417,12 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                           content: _editingController.text),
                                     );
                                     chatObjects.insert(
-                                      0,
-                                      MessageEntity(
-                                        note: _editingController.text,
-                                        sender: UserManager
-                                            .instance.user.info.nickname,
-                                      ),
-                                    );
+                                        0,
+                                        ChatObj(
+                                          UserManager
+                                              .instance.user.info.nickname,
+                                          _editingController.text,
+                                        ));
                                     _scrollController.animateTo(
                                       -50,
                                       duration: Duration(milliseconds: 300),
@@ -753,7 +751,11 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
     );
   }
 
-  _buildChatBox(String sender, String note) {
+  _buildChatBox(
+    String sender,
+    String note, {
+    bool userEnter = false,
+  }) {
     final Color color = Color.fromRGBO(
       180 + Random().nextInt(55),
       180 + Random().nextInt(55),
@@ -780,7 +782,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
               ),
             ),
           ]),
-          maxLines: 5,
+          maxLines: 20,
         ),
         margin: EdgeInsets.symmetric(vertical: rSize(5 / 2)),
         padding: EdgeInsets.symmetric(
@@ -791,7 +793,9 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
           maxWidth: rSize(200),
         ),
         decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.1),
+          color: userEnter
+              ? Colors.pink.withOpacity(0.5)
+              : Colors.black.withOpacity(0.1),
           borderRadius: BorderRadius.circular(rSize(16)),
         ),
       ),
@@ -802,5 +806,6 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
 class ChatObj {
   String name;
   String message;
-  ChatObj(this.name, this.message);
+  bool enterUser = false;
+  ChatObj(this.name, this.message, {this.enterUser});
 }
