@@ -25,6 +25,8 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
   Widget build(BuildContext context) {
     final bool picked = PickCart.picked.containsKey(widget.model.id);
     return SizedBox(
+      width: rSize(200),
+      height: rSize(91),
       child: MaterialButton(
         onPressed: () {
           if (picked)
@@ -70,16 +72,17 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Color(0xFF333333),
-                      fontSize: rSP(14),
+                      fontSize: rSP(15),
                     ),
                   ),
-                  Text(
-                    widget.model.description,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                        color: Colors.black54, fontWeight: FontWeight.w300),
-                  ),
+                  // Text(
+                  //   widget.model.description,
+                  //   maxLines: 1,
+                  //   overflow: TextOverflow.ellipsis,
+                  //   style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                  //       color: Colors.black54, fontWeight: FontWeight.w300),
+                  // ),
+                  Spacer(),
                   Row(
                     children: [
                       InkWell(
