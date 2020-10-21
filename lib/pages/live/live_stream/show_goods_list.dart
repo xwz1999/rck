@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -10,6 +11,7 @@ import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/classify/order_preview_page.dart';
 import 'package:recook/pages/home/widget/plus_minus_view.dart';
+import 'package:recook/pages/live/live_stream/live_sku_widget.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart'
     show GoodsLists;
 
@@ -540,44 +542,24 @@ class _InternalGoodsDetailState extends State<InternalGoodsDetail> {
                       thickness: rSize(1),
                     ),
                     rHBox(15),
-                    Text(
-                      '尺寸',
-                      style: TextStyle(
-                        color: Color(0xFF141414),
-                        fontSize: rSP(14),
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Wrap(
-                      children: goodsModel.data.sku
-                          .map((e) => MaterialButton(
-                                padding:
-                                    EdgeInsets.symmetric(horizontal: rSize(5)),
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    color: sku.id == e.id
-                                        ? Color(0xFFC92219)
-                                        : Color(0xFF999999),
-                                  ),
-                                  borderRadius: BorderRadius.circular(rSize(2)),
-                                ),
-                                minWidth: 0,
-                                height: rSize(22),
-                                onPressed: () {
-                                  setState(() {
-                                    sku = e;
-                                  });
-                                },
-                                child: Text(
-                                  e.name,
-                                  style: TextStyle(
-                                    color: sku.id == e.id
-                                        ? Color(0xFFC92219)
-                                        : Color(0xFF999999),
-                                  ),
-                                ),
-                              ))
-                          .toList(),
+                    LiveSKUWidget(
+                      attributes: goodsModel.data.attributes,
+                      skus: goodsModel.data.sku,
+                      onPick: (children) {
+                        List<int> selected = children.map((e) => e.id).toList()
+                          ..sort((itemA, itemB) => itemA.compareTo(itemB));
+                        String tempSku = '';
+                        selected.forEach((element) {
+                          tempSku += ',$element';
+                        });
+                        int index = goodsModel.data.sku.indexWhere(
+                            (element) => (element.combineId) == tempSku.substring(1));
+                        if (index == -1) {
+                          showToast('没有该物品');
+                        } else {
+                          sku = goodsModel.data.sku[index];
+                        }
+                      },
                     ),
                     rHBox(15),
                     Row(

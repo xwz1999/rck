@@ -4,8 +4,10 @@ publish_to: "none"
 
 version: 1.2.10-dev+173
 
+# sdk min version to 2.2.2
+# to support ... feature
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 module:
   androidX: true
