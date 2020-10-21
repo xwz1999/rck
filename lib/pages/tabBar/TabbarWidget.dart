@@ -14,7 +14,6 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/business/business_page.dart';
 import 'package:recook/pages/home/home_page.dart';
 import 'package:recook/pages/live/live_stream/live_page.dart';
 import 'package:recook/pages/live/models/live_resume_model.dart';
