@@ -50,7 +50,7 @@ class _LiveStreamPageState extends State<LiveStreamPage>
         return [
           SliverToBoxAdapter(
             child: !UserManager.instance.haveLogin
-                ? SizedBox()
+                ? SizedBox(height: 10)
                 : _buildAttentions(),
           ),
         ];

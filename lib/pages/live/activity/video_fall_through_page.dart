@@ -39,7 +39,6 @@ class _VideoFallThroughPageState extends State<VideoFallThroughPage> {
             model: ActivityListModel.fromVideoList(widget.models[index]),
             userModel:
                 LiveBaseInfoModel.fromVideoListModel(widget.models[index]),
-            initAttention: true,
           );
         },
         itemCount: widget.models.length,

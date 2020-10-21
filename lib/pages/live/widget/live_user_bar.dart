@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/user_manager.dart';
 
 class LiveUserBar extends StatefulWidget {
   final bool initAttention;
@@ -78,7 +79,7 @@ class _LiveUserBarState extends State<LiveUserBar> {
               ],
             ),
           ),
-          _internalAttention
+          _internalAttention || !UserManager.instance.haveLogin
               ? SizedBox()
               : SizedBox(
                   width: rSize(56),
