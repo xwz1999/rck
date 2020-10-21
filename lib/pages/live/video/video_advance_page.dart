@@ -107,7 +107,7 @@ class _VideoAdvancePageState extends State<VideoAdvancePage> {
               ),
           SizedBox(height: rSize(10)),
           Text(
-            title,
+            '设置封面',
             style: TextStyle(
               color: Colors.white,
               fontSize: rSP(11),
