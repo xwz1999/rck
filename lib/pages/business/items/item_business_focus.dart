@@ -194,20 +194,20 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
             ],
           ),
         ),
-        widget.model.isOfficial
-            ? Container()
-            : CustomImageButton(
-                title: widget.model.isAttention ? "已关注" : "关注",
-                color: focusedColor,
-                padding: EdgeInsets.symmetric(horizontal: rSize(8)),
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-                border: Border.all(color: focusedColor, width: 0.8),
-                onPressed: () {
-                  setState(() {
-                    widget.focusListener();
-                  });
-                },
-              )
+        // widget.model.isOfficial
+        //     ? Container()
+        //     : CustomImageButton(
+        //         title: widget.model.isAttention ? "已关注" : "关注",
+        //         color: focusedColor,
+        //         padding: EdgeInsets.symmetric(horizontal: rSize(8)),
+        //         borderRadius: BorderRadius.all(Radius.circular(5)),
+        //         border: Border.all(color: focusedColor, width: 0.8),
+        //         onPressed: () {
+        //           setState(() {
+        //             widget.focusListener();
+        //           });
+        //         },
+        //       )
       ],
     );
   }
