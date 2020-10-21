@@ -124,24 +124,21 @@ class _LiveHostCenterPageState extends State<LiveHostCenterPage>
                 Row(
                   children: [
                     Expanded(
-                      child: SizedBox(
-                        height: rSize(36),
-                        child: TabBar(
-                          isScrollable: true,
-                          controller: _tabController,
-                          labelColor: Color(0xFF333333),
-                          indicator: RecookIndicator(
-                              borderSide: BorderSide(
-                            color: Color(0xFFDB2D2D),
-                            width: rSize(3),
-                          )),
-                          indicatorSize: TabBarIndicatorSize.label,
-                          tabs: [
-                            Tab(text: '今日'),
-                            Tab(text: '近7天'),
-                            Tab(text: '近30天'),
-                          ],
-                        ),
+                      child: TabBar(
+                        isScrollable: true,
+                        controller: _tabController,
+                        labelColor: Color(0xFF333333),
+                        indicator: RecookIndicator(
+                            borderSide: BorderSide(
+                          color: Color(0xFFDB2D2D),
+                          width: rSize(3),
+                        )),
+                        indicatorSize: TabBarIndicatorSize.label,
+                        tabs: [
+                          Tab(text: '今日'),
+                          Tab(text: '近7天'),
+                          Tab(text: '近30天'),
+                        ],
                       ),
                     ),
                     MaterialButton(

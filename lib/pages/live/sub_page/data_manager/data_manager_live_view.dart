@@ -125,19 +125,34 @@ class _DatamanagerLiveViewState extends State<DatamanagerLiveView>
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              rWBox(10 + 16.0),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      '${DateUtil.formatDate(
-                        date,
-                        format: 'HH:mm',
-                      )}场',
-                      style: TextStyle(
-                        color: Color(0xFF333333),
-                        fontSize: rSP(16),
-                      ),
+                    Stack(
+                      overflow: Overflow.visible,
+                      children: [
+                        Text(
+                          '${DateUtil.formatDate(
+                            date,
+                            format: 'HH:mm',
+                          )}场',
+                          style: TextStyle(
+                            color: Color(0xFF333333),
+                            fontSize: rSP(16),
+                          ),
+                        ),
+                        Positioned(
+                          left: -rSize(16 + 10.0),
+                          top: rSize(3),
+                          child: Image.asset(
+                            R.ASSETS_LIVE_LIVE_DETAIL_PNG,
+                            width: rSize(16),
+                            height: rSize(16),
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: rSize(6)),
                     Text(
