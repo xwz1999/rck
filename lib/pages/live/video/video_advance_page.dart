@@ -79,7 +79,11 @@ class _VideoAdvancePageState extends State<VideoAdvancePage> {
                       }
                     });
                   },
-                  icon: Icon(Icons.image),
+                  icon: Image.asset(
+                    R.ASSETS_LIVE_COVER_PNG,
+                    height: rSize(24),
+                    width: rSize(24),
+                  ),
                 ),
               ],
             ),

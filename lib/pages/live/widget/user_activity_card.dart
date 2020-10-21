@@ -56,7 +56,6 @@ class _UserActivityCardState extends State<UserActivityCard> {
               ActivityPreviewPage(
                 model: widget.model,
                 userModel: widget.userModel,
-                initAttention: widget.initAttention,
               ),
             );
           },

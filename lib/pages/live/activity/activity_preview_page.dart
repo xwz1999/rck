@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -16,12 +17,10 @@ import 'package:recook/widgets/recook/recook_like_button.dart';
 class ActivityPreviewPage extends StatefulWidget {
   final ActivityListModel model;
   final LiveBaseInfoModel userModel;
-  final bool initAttention;
   ActivityPreviewPage({
     Key key,
     @required this.model,
     @required this.userModel,
-    @required this.initAttention,
   }) : super(key: key);
 
   @override
@@ -71,7 +70,11 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                 children: [
                   InkWell(
                     onTap: () {
-                       CRoute.push(context, TopicPage(topicId: widget.model.topicId,initAttention:false));
+                      CRoute.push(
+                          context,
+                          TopicPage(
+                              topicId: widget.model.topicId,
+                              initAttention: false));
                     },
                     child: Text(
                       '#${widget.model.topicName}',
@@ -226,8 +229,14 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
             child: Row(
               children: [
                 LiveUserBar(
-                  initAttention: widget.initAttention,
-                  onAttention: () {},
+                  initAttention: widget.model.isPraise == 1,
+                  onAttention: () {
+                    HttpManager.post(
+                      LiveAPI.addFollow,
+                      {'followUserId': widget.userModel.userId},
+                    );
+                    showToast('关注成功');
+                  },
                   title: widget.userModel.nickname,
                   subTitle: '点赞数 ${widget.userModel.praise}',
                   avatar: widget.userModel.headImgUrl,

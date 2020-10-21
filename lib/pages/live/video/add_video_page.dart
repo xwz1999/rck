@@ -223,18 +223,12 @@ class _AddVideoPageState extends State<AddVideoPage> {
                             });
                           },
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-                              Container(
-                                height: rSize(36),
-                                width: rSize(36),
-                                decoration: BoxDecoration(
-                                  color: Colors.blue,
-                                  borderRadius: BorderRadius.circular(rSize(2)),
-                                ),
-                                child: Icon(
-                                  Icons.image,
-                                  color: Colors.white,
-                                ),
+                              Image.asset(
+                                R.ASSETS_LIVE_VIDEO_UPLOAD_PNG,
+                                height: rSize(40),
+                                width: rSize(40),
                               ),
                               Text(
                                 '上传',
