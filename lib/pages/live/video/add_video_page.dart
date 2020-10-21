@@ -252,7 +252,7 @@ class _AddVideoPageState extends State<AddVideoPage> {
   _flipCamera() {
     _cameraController?.dispose()?.then((value) {
       _cameraController = CameraController(
-        frontCam ? cameras[1] : cameras[0],
+        frontCam ? cameras[0] : cameras[1],
         ResolutionPreset.medium,
         enableAudio: true,
       );
