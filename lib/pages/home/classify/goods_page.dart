@@ -294,8 +294,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                     goodsPrice: widget.goodsDetail.data.getPriceString(),
                     goodsName: widget.goodsDetail.data.goodsName,
                     goodsDescription: widget.goodsDetail.data.description,
-                    miniPicurl: widget.goodsDetail.data.mainPhotos.length > 0
-                        ? widget.goodsDetail.data.mainPhotos[0].url
+                    miniPicurl: widget.goodsDetail.data.mainPhotos.length >= 1
+                        ? widget.goodsDetail.data.mainPhotos[1].url
                         : "",
                     miniTitle:
                         "￥${widget.goodsDetail.data.getPriceString()} | ${widget.goodsDetail.data.goodsName} | ${widget.goodsDetail.data.description}",
