@@ -65,6 +65,7 @@ class _DiscoveryPageState extends State<DiscoveryPage>
               : SizedBox(),
         ),
         title: TabBar(
+          isScrollable: true,
           controller: _tabController,
           labelColor: Color(0xFF333333),
           unselectedLabelColor: Color(0xFF333333).withOpacity(0.3),
@@ -76,7 +77,6 @@ class _DiscoveryPageState extends State<DiscoveryPage>
             fontSize: rSP(18),
             fontWeight: FontWeight.w400,
           ),
-          labelPadding: EdgeInsets.zero,
           indicatorSize: TabBarIndicatorSize.label,
           indicator: RecookIndicator(
             borderSide: BorderSide(

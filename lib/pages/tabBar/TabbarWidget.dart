@@ -224,12 +224,13 @@ class _TabBarWidgetState extends State<TabBarWidget>
     return Scaffold(
         floatingActionButton: _tabController.index == 2
             ? Container(
-                padding: EdgeInsets.all(4),
+                padding: EdgeInsets.all(rSize(4)),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: CustomImageButton(
+                  padding: EdgeInsets.zero,
                   onPressed: () {
                     if (!UserManager.instance.haveLogin) {
                       showToast('未登陆，请先登陆');
@@ -246,8 +247,8 @@ class _TabBarWidgetState extends State<TabBarWidget>
                     }
                   },
                   child: Container(
-                    height: 40,
-                    width: 40,
+                    height: rSize(40),
+                    width: rSize(40),
                     child: Image.asset(R.ASSETS_LIVE_RECOOK_FAB_PNG),
                   ),
                 ),

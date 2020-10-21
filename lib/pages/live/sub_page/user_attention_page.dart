@@ -44,27 +44,25 @@ class _UserAttentionPageState extends State<UserAttentionPage>
       whiteBg: true,
       appBarBottom: PreferredSize(
         preferredSize: Size.fromHeight(rSize(38)),
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: rSize(110)),
-          child: TabBar(
-            tabs: [
-              Tab(text: '用户'),
-              Tab(text: '话题'),
-            ],
-            indicatorPadding: EdgeInsets.symmetric(
-              horizontal: 0,
-            ),
-            indicator: RecookIndicator(
-              borderSide: BorderSide(
-                color: Color(0xFFDB2D2D),
-                width: rSize(3),
-              ),
-            ),
-            indicatorSize: TabBarIndicatorSize.label,
-            labelColor: Color(0xFF333333),
-            unselectedLabelColor: Color(0xFF666666),
-            controller: _tabController,
+        child: TabBar(
+          isScrollable: true,
+          tabs: [
+            Tab(text: '用户'),
+            Tab(text: '话题'),
+          ],
+          indicatorPadding: EdgeInsets.symmetric(
+            horizontal: 0,
           ),
+          indicator: RecookIndicator(
+            borderSide: BorderSide(
+              color: Color(0xFFDB2D2D),
+              width: rSize(3),
+            ),
+          ),
+          indicatorSize: TabBarIndicatorSize.label,
+          labelColor: Color(0xFF333333),
+          unselectedLabelColor: Color(0xFF666666),
+          controller: _tabController,
         ),
       ),
       body: TabBarView(
