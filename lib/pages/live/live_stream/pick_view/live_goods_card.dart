@@ -23,15 +23,17 @@ class LiveGoodsCard extends StatefulWidget {
 class _LiveGoodsCardState extends State<LiveGoodsCard> {
   @override
   Widget build(BuildContext context) {
-    final bool picked = PickCart.picked.containsKey(widget.model.id);
+    final bool picked = PickCart.picked
+            .indexWhere((element) => element.id == widget.model.id) !=
+        -1;
     return SizedBox(
       child: MaterialButton(
         onPressed: () {
           if (picked)
-            PickCart.picked.remove(widget.model.id);
+            PickCart.picked.removeWhere((e) => e.id == widget.model.id);
           else {
             if (PickCart.picked.length < 50)
-              PickCart.picked.putIfAbsent(widget.model.id, () => widget.model);
+              PickCart.picked.add(widget.model);
             else
               showToast('最多只能选择50个商品');
           }

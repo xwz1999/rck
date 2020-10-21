@@ -199,7 +199,8 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
                         height: rSize(28),
                         minWidth: rSize(72),
                         onPressed: () {
-                          widget.onPickGoods(PickCart.picked.keys.toList());
+                          widget.onPickGoods(
+                              PickCart.picked.map((e) => e.id).toList());
                           Navigator.pop(context);
                         },
                         child: Text('完成'),
@@ -231,89 +232,7 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
                                   maxChildSize: 0.9,
                                   builder: (BuildContext context,
                                       ScrollController scrollController) {
-                                    return Material(
-                                      color: Colors.white,
-                                      child: ListView.builder(
-                                        itemBuilder: (context, index) {
-                                          final model = PickCart.picked.values
-                                              .toList()[index];
-                                          return SizedBox(
-                                            height: rSize(86 + 15.0),
-                                            child: Container(
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: rSize(15),
-                                                vertical: rSize(15 / 2),
-                                              ),
-                                              child: Row(
-                                                children: [
-                                                  Text(
-                                                    '${index + 1}',
-                                                    style: TextStyle(
-                                                      color: Color(0xFF595C5F),
-                                                      fontSize: rSP(14),
-                                                    ),
-                                                  ),
-                                                  rWBox(10),
-                                                  FadeInImage.assetNetwork(
-                                                    placeholder: R
-                                                        .ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                                                    image: Api.getImgUrl(
-                                                        model.mainPhotoUrl),
-                                                    height: rSize(86),
-                                                    width: rSize(86),
-                                                  ),
-                                                  rWBox(10),
-                                                  Expanded(
-                                                    child: Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          model.goodsName,
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style: TextStyle(
-                                                            color: Color(
-                                                                0xFF333333),
-                                                            fontSize: rSP(14),
-                                                          ),
-                                                        ),
-                                                        Spacer(),
-                                                        Row(
-                                                          children: [
-                                                            Text(
-                                                              '¥${model.originalPrice}',
-                                                              style: TextStyle(
-                                                                color: Color(
-                                                                    0xFF333333),
-                                                                fontSize:
-                                                                    rSP(14),
-                                                              ),
-                                                            ),
-                                                            Text(
-                                                              '/赚${model.commission}',
-                                                              style: TextStyle(
-                                                                color: Color(
-                                                                    0xFFC92219),
-                                                                fontSize:
-                                                                    rSP(14),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                        itemCount: PickCart.picked.length,
-                                      ),
-                                    );
+                                    return ReorderLiveGoodsListView();
                                   },
                                 );
                               },
@@ -348,5 +267,104 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
       return null;
     else
       return GoodsWindowModel.fromJson(resultData.data['data']);
+  }
+}
+
+class ReorderLiveGoodsListView extends StatefulWidget {
+  ReorderLiveGoodsListView({Key key}) : super(key: key);
+
+  @override
+  _ReorderLiveGoodsListViewState createState() =>
+      _ReorderLiveGoodsListViewState();
+}
+
+class _ReorderLiveGoodsListViewState extends State<ReorderLiveGoodsListView> {
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.white,
+      child: ReorderableListView(
+        children: PickCart.picked.map((e) {
+          return Container(
+            color: Colors.white,
+            key: ObjectKey(e),
+            height: rSize(86 + 15.0),
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: rSize(15),
+                vertical: rSize(15 / 2),
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    '${PickCart.picked.indexOf(e) + 1}',
+                    style: TextStyle(
+                      color: Color(0xFF595C5F),
+                      fontSize: rSP(14),
+                    ),
+                  ),
+                  rWBox(10),
+                  Container(
+                    color: AppColor.frenchColor,
+                    child: FadeInImage.assetNetwork(
+                      placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                      image: Api.getImgUrl(e.mainPhotoUrl),
+                      height: rSize(86),
+                      width: rSize(86),
+                    ),
+                  ),
+                  rWBox(10),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          e.goodsName,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            color: Color(0xFF333333),
+                            fontSize: rSP(14),
+                          ),
+                        ),
+                        Spacer(),
+                        Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(text: '¥${e.originalPrice}'),
+                              TextSpan(
+                                  text: '/赚${e.commission}',
+                                  style: TextStyle(
+                                    color: Color(0xFFC92219),
+                                  )),
+                            ],
+                          ),
+                          style: TextStyle(
+                            color: Color(0xFF333333),
+                            fontSize: rSP(14),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Icon(
+                    Icons.menu,
+                    color: Colors.black26,
+                  ),
+                ],
+              ),
+            ),
+          );
+        }).toList(),
+        onReorder: (oldIndex, newIndex) {
+          if (newIndex > oldIndex) {
+            newIndex -= 1;
+          }
+          var model = PickCart.picked.removeAt(oldIndex);
+          PickCart.picked.insert(newIndex, model);
+          setState(() {});
+        },
+      ),
+    );
   }
 }
