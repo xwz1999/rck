@@ -88,12 +88,9 @@ PODS:
   - flutter_bugly (0.0.1):
     - Bugly
     - Flutter
-  - flutter_ffmpeg (0.2.10):
+  - flutter_ffmpeg/min-lts (0.2.10):
     - Flutter
-    - flutter_ffmpeg/https (= 0.2.10)
-  - flutter_ffmpeg/https (0.2.10):
-    - Flutter
-    - mobile-ffmpeg-https (= 4.3.1)
+    - mobile-ffmpeg-min (= 4.3.1.LTS)
   - flutter_image_compress (0.0.1):
     - Flutter
     - Mantle
@@ -193,7 +190,7 @@ PODS:
     - mob_sharesdk/ShareSDK
     - MOBFoundation (>= 3.2.9)
   - MOBFoundation (3.2.19)
-  - mobile-ffmpeg-https (4.3.1)
+  - mobile-ffmpeg-min (4.3.1.LTS)
   - openinstall_flutter_plugin (0.0.1):
     - Flutter
     - libOpenInstallSDK
@@ -264,7 +261,7 @@ DEPENDENCIES:
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
   - flutter_bugly (from `.symlinks/plugins/flutter_bugly/ios`)
-  - flutter_ffmpeg (from `.symlinks/plugins/flutter_ffmpeg/ios`)
+  - flutter_ffmpeg/min-lts (from `.symlinks/plugins/flutter_ffmpeg/ios`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
   - flutter_qr_reader (from `.symlinks/plugins/flutter_qr_reader/ios`)
   - flutter_txugcupload (from `.symlinks/plugins/flutter_txugcupload/ios`)
@@ -310,7 +307,7 @@ SPEC REPOS:
     - Meiqia
     - mob_sharesdk
     - MOBFoundation
-    - mobile-ffmpeg-https
+    - mobile-ffmpeg-min
     - SDWebImage
     - SwiftyGif
     - TOCropViewController
@@ -409,7 +406,7 @@ SPEC CHECKSUMS:
   flutter_ffmpeg: cf0a6941ef67e88248c998cc3e34f8acb0b4e454
   flutter_image_compress: f69d0e0e078ce52b4810695593bc861ee319ae7d
   flutter_qr_reader: 1b4faf9032e9ddc738107fd3dc067d29bd5cc67d
-  flutter_txugcupload: 849cf5e9b0b1c340b6ac1c3b0fe2caa81e98bbee
+  flutter_txugcupload: fd4f7a2a99e5fe30e608bf6f4acf0e7408339816
   fluwx: 13b180563982bf3149472d650e01fa0312236c3d
   foundation_fluttify: 0c45145e3fad1fb99188e4979daed5b24cd9b278
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
@@ -425,7 +422,7 @@ SPEC CHECKSUMS:
   meiqia_plugin: bff6743de1eb5e1f7c6b2142a5953e18c4abbbe7
   mob_sharesdk: a83dd0b129a3f954c9a639d5c33fd3d2cd41e887
   MOBFoundation: 606bc4c10ff4c6ac573c09f5081a39c75316bc7b
-  mobile-ffmpeg-https: c4a3c255163ddb1abc4b4dfc613c2d885f8c46eb
+  mobile-ffmpeg-min: d5d22dcef5c8ec56f771258f1f5be245d914f193
   openinstall_flutter_plugin: e6b8486f834eb60b336546442a8b747d4b664cf4
   package_info: 48b108e75b8802c2d5e126f208ef540561c98aef
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
@@ -447,6 +444,6 @@ SPEC CHECKSUMS:
   wakelock: 0d4a70faf8950410735e3f61fb15d517c8a6efc4
   webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
 
-PODFILE CHECKSUM: 2923ff0bf261e19bfa61b00434b8d4f34b4e4501
+PODFILE CHECKSUM: 92b158b51b335be17f029808df79886222d2ae9c
 
 COCOAPODS: 1.9.3
