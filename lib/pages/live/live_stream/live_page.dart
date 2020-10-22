@@ -353,7 +353,7 @@ class _LivePageState extends State<LivePage> {
                   child: Container(
                     height: 300,
                     child: ListView.builder(
-                      padding: EdgeInsets.only(bottom:50),
+                      padding: EdgeInsets.only(bottom: 50),
                       reverse: true,
                       controller: _scrollController,
                       physics: AlwaysScrollableScrollPhysics(
@@ -469,7 +469,7 @@ class _LivePageState extends State<LivePage> {
                       context: context,
                       child: NormalTextDialog(
                         title: '确认关闭直播吗',
-                        content: ' ',
+                        content: '当前直播间还有${_groupMembers.length}人',
                         items: ['取消', '确定'],
                         listener: (index) {
                           switch (index) {
