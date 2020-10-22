@@ -16,6 +16,7 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/agreements/live_agreement_page.dart';
 import 'package:recook/pages/home/home_page.dart';
+import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
 import 'package:recook/pages/live/live_stream/live_page.dart';
 import 'package:recook/pages/live/models/live_resume_model.dart';
 import 'package:recook/pages/live/video/add_video_page.dart';
@@ -55,8 +56,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
       // _getVersionInfo();
       VersionTool.checkVersionInfo(_context);
     });
-    _tabController = TabController(
-        length: !AppConfig.getShowCommission() ? 4 : 5, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
     _bottomBarController = BottomBarController();
     _tabController.addListener(_tabListener);
 
@@ -298,6 +298,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
               !AppConfig.getShowCommission()
                   ? <Widget>[
                       HomePage(),
+                      GoodsHotListPage(),
                       DiscoveryPage(),
                       // BusinessPage(),
                       ShoppingCartPage(),
@@ -408,6 +409,11 @@ class _BottomBarState extends State<BottomBar> {
                 textStr: '特卖',
                 image: AssetImage("assets/tabbar_sale_normal.png"),
                 imageSelected: AssetImage("assets/tabbar_sale_selected.png"),
+              ),
+              NavigationItemBean(
+                textStr: '排行榜',
+                image: AssetImage("assets/tabbar_shop_normal.png"),
+                imageSelected: AssetImage("assets/tabbar_shop_selected.png"),
               ),
               NavigationItemBean(
                 textStr: '发现',
