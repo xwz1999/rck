@@ -18,6 +18,7 @@ import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
 import 'package:recook/utils/custom_route.dart';
+import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:tencent_im_plugin/entity/group_member_entity.dart';
@@ -541,12 +542,62 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                 ),
                               ),
                             ),
-                            // SizedBox(width: rSize(10)),
-                            // Image.asset(
-                            //   R.ASSETS_LIVE_LIVE_SHARE_PNG,
-                            //   width: rSize(32),
-                            //   height: rSize(32),
-                            // ),
+                            SizedBox(width: rSize(10)),
+                            CustomImageButton(
+                              padding: EdgeInsets.zero,
+                              onPressed: () {
+                                showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return Material(
+                                        color: Colors.black,
+                                        child: Row(
+                                          children: [
+                                            CustomImageButton(
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                                ShareTool().liveShare(
+                                                  context,
+                                                  liveId: widget.id,
+                                                  title:
+                                                      '${_streamInfoModel.nickname}的直播',
+                                                  des: '',
+                                                  headUrl: _streamInfoModel
+                                                      .headImgUrl,
+                                                );
+                                              },
+                                              padding:
+                                                  EdgeInsets.all(rSize(15)),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Image.asset(
+                                                    R.ASSETS_SHARE_BOTTOM_SHARE_BOTTOM_WECHAT_PNG,
+                                                    height: rSize(40),
+                                                    width: rSize(40),
+                                                  ),
+                                                  rHBox(10),
+                                                  Text(
+                                                    '微信分享',
+                                                    style: TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: rSP(14),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    });
+                              },
+                              child: Image.asset(
+                                R.ASSETS_LIVE_LIVE_SHARE_PNG,
+                                width: rSize(32),
+                                height: rSize(32),
+                              ),
+                            ),
                             SizedBox(width: rSize(10)),
                             ManyLikeButton(
                               child: Image.asset(

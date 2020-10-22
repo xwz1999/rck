@@ -322,6 +322,12 @@ class WebApi {
   // static const String iOSUrl = "https://apps.apple.com/app/id1477928534";
   static const String androidUrl =
       "https://a.app.qq.com/o/simple.jsp?pkgname=com.akuhome.recook";
+
+  ///直播分享链接（正式服务器）
+  static const String liveUrl = 'https://h5.reecook.cn/#/live/item/';
+
+  ///直播分享链接（测试服务器）
+  static const String testLiveUrl = 'https://testh5.reecook.cn/#/live/item/';
 }
 
 class InvoiceApi {
