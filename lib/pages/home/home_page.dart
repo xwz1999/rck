@@ -986,7 +986,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                 ),
                 _buttonTitleRow(
                     AppConfig.getShowCommission()
-                        ? R.ASSETS_HOME_INVITE_WEBP
+                        ? R.ASSETS_HOME_INVITE_WEBP_S_PNG
                         : R.ASSETS_LISTTEMP_HOMEAPPLIANCES_ICON_PNG,
                     AppConfig.getShowCommission()
                         // ? "升级店主"
