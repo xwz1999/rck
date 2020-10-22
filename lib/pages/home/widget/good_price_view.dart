@@ -13,7 +13,6 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/pages/goods/small_coupon_widget.dart';
-import 'package:recook/pages/home/promotion_time_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
 
 import 'package:recook/widgets/custom_image_button.dart';
@@ -130,98 +129,44 @@ class _GoodPriceViewState extends State<GoodPriceView> {
     return Container(
       margin: EdgeInsets.only(top: 5, left: 15),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Row(
             children: <Widget>[
-              Container(
-                width: rSize(97),
-                height: rSize(23),
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                            R.ASSETS_GOODS_DETAILS_BOTTOM_GOLD_PNG))),
-                            child: Padding(
-                              padding: EdgeInsets.only(left:rSize(12),top: rSize(1),right: rSize(12),bottom: rSize(1)),
-                              child: Text('20元优惠券',
-                              style: TextStyle(
-                                fontSize:ScreenAdapterUtils.setSp(14),
-                                color: Color(0xFFFFFFFF),
-                              ),),
-              ),),
-              // RichText(
-              //     text: TextSpan(children: [
-              //   TextSpan(
-              //     text: "券后",
-              //     style: TextStyle(
-              //         color: Colors.yellow,
-              //         fontSize: ScreenAdapterUtils.setSp(9)),
-              //   ),
-              //   TextSpan(
-              //       text: "￥",
-              //       style: AppTextStyle.generate(
-              //         ScreenAdapterUtils.setSp(
-              //           14,
-              //         ),
-              //         color: Colors.white,
-              //         fontWeight: FontWeight.w500,
-              //       )),
-              //   TextSpan(
-              //       text: "$price ",
-              //       style: TextStyle(
-              //         color: Colors.white,
-              //         fontSize: ScreenAdapterUtils.setSp(23),
-              //         fontWeight: FontWeight.w500,
-              //         letterSpacing: 0,
-              //       )),
-              //   TextSpan(
-              //     text: (UserLevelTool.currentRoleLevelEnum() ==
-              //                 UserRoleLevel.None ||
-              //             UserLevelTool.currentRoleLevelEnum() ==
-              //                 UserRoleLevel.Vip)
-              //         ? ""
-              //         : isTwoPrice
-              //             ? "/ "
-              //             : " / ",
-              //     style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
-              //         color: Colors.white, fontWeight: FontWeight.w500),
-              //   ),
-              //   TextSpan(
-              //     text: (UserLevelTool.currentRoleLevelEnum() ==
-              //                 UserRoleLevel.None ||
-              //             UserLevelTool.currentRoleLevelEnum() ==
-              //                 UserRoleLevel.Vip)
-              //         ? ""
-              //         : "赚",
-              //     style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
-              //         color: Colors.white),
-              //   ),
-              //   TextSpan(
-              //     text: (UserLevelTool.currentRoleLevelEnum() ==
-              //                 UserRoleLevel.None ||
-              //             UserLevelTool.currentRoleLevelEnum() ==
-              //                 UserRoleLevel.Vip)
-              //         ? ""
-              //         : "$commission",
-              //     style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
-              //         color: Colors.white),
-              //   ),
-              // ])),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
               (coupon != null && coupon != 0)
-                  ? Padding(
-                      padding: EdgeInsets.only(right: 10),
-                      child: SmallCouponWidget(
-                        couponType: SmallCouponType.white,
-                        number: coupon,
+                  ? Container(
+                      width: rSize(97),
+                      height: rSize(23),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                              R.ASSETS_GOODS_DETAILS_BOTTOM_GOLD_PNG),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            left: rSize(12),
+                            top: rSize(1),
+                            right: rSize(12),
+                            bottom: rSize(1)),
+                        child: Text(
+                          '$coupon\元优惠券',
+                          style: TextStyle(
+                            shadows: [
+                              Shadow(
+                                color: Colors.black26,
+                                blurRadius: rSize(1),
+                                offset: Offset(0, rSize(1)),
+                              ),
+                            ],
+                            fontSize: ScreenAdapterUtils.setSp(14),
+                            color: Color(0xFFFFFFFF),
+                          ),
+                        ),
                       ),
                     )
                   : SizedBox(),
+              rWBox(10),
               Text(
                 "$originPrice",
                 style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
@@ -231,6 +176,81 @@ class _GoodPriceViewState extends State<GoodPriceView> {
               ),
             ],
           ),
+          Spacer(),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              // (coupon != null && coupon != 0)
+              //     ? Padding(
+              //         padding: EdgeInsets.only(right: 10),
+              //         child: SmallCouponWidget(
+              //           couponType: SmallCouponType.white,
+              //           number: coupon,
+              //         ),
+              //       )
+              //     : SizedBox(),
+              RichText(
+                text: TextSpan(children: [
+                  TextSpan(
+                    text: "券后价",
+                    style: TextStyle(
+                        color: Colors.yellow,
+                        fontSize: ScreenAdapterUtils.setSp(9)),
+                  ),
+                  TextSpan(
+                      text: "￥",
+                      style: AppTextStyle.generate(
+                        ScreenAdapterUtils.setSp(
+                          14,
+                        ),
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                      )),
+                  TextSpan(
+                      text: "$price ",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: ScreenAdapterUtils.setSp(23),
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 0,
+                      )),
+                  TextSpan(
+                    text: (UserLevelTool.currentRoleLevelEnum() ==
+                                UserRoleLevel.None ||
+                            UserLevelTool.currentRoleLevelEnum() ==
+                                UserRoleLevel.Vip)
+                        ? ""
+                        : isTwoPrice
+                            ? "/ "
+                            : " / ",
+                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                        color: Colors.white, fontWeight: FontWeight.w500),
+                  ),
+                  TextSpan(
+                    text: (UserLevelTool.currentRoleLevelEnum() ==
+                                UserRoleLevel.None ||
+                            UserLevelTool.currentRoleLevelEnum() ==
+                                UserRoleLevel.Vip)
+                        ? ""
+                        : "赚",
+                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+                        color: Colors.white),
+                  ),
+                  TextSpan(
+                    text: (UserLevelTool.currentRoleLevelEnum() ==
+                                UserRoleLevel.None ||
+                            UserLevelTool.currentRoleLevelEnum() ==
+                                UserRoleLevel.Vip)
+                        ? ""
+                        : "$commission",
+                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                        color: Colors.white),
+                  ),
+                ]),
+              ),
+            ],
+          ),
+          rHBox(10),
         ],
       ),
     );
@@ -241,7 +261,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
       height: 75,
       width: MediaQuery.of(context).size.width,
       child: Stack(
-        overflow:Overflow.visible,
+        overflow: Overflow.visible,
         alignment: AlignmentDirectional.center,
         children: <Widget>[
           Positioned(
