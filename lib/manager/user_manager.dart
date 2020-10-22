@@ -46,6 +46,8 @@ class UserManager {
   ValueNotifier<bool> selectTabbar = ValueNotifier(false);
   //从webview扫描返回通知
   ValueNotifier<bool> openInstallGoodsId = ValueNotifier(false);
+
+  ValueNotifier<bool> openInstallLive = ValueNotifier(false);
   int selectTabbarIndex;
 
   bool get haveLogin => login.value;

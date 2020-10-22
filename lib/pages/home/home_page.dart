@@ -40,6 +40,7 @@ import 'package:recook/pages/home/widget/goods_list_temp_page.dart';
 import 'package:recook/pages/home/widget/home_countdown_widget.dart';
 import 'package:recook/pages/home/widget/home_sliver_app_bar.dart';
 import 'package:recook/pages/home/widget/home_weather_view.dart';
+import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
 import 'package:recook/pages/noticeList/notice_list_model.dart';
 import 'package:recook/pages/noticeList/notice_list_tool.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
@@ -150,6 +151,27 @@ class _HomePageState extends BaseStoreState<HomePage>
 
     UserManager.instance.openInstallGoodsId
         .addListener(_openInstallGoodsIdListener);
+
+    UserManager.instance.openInstallLive.addListener(() {
+      if (getStore().state.openinstall.type == 'live') {
+        CRoute.push(
+            context,
+            LiveStreamViewPage(
+                id: int.parse(getStore().state.openinstall.itemId)));
+      }
+      if (!TextUtils.isEmpty(getStore().state.openinstall.type)) {
+        int goodsid = 0;
+        try {
+          goodsid = int.parse(getStore().state.openinstall.goodsid);
+        } catch (e) {
+          getStore().state.openinstall.goodsid = "";
+          return;
+        }
+        AppRouter.push(context, RouteName.COMMODITY_PAGE,
+            arguments: CommodityDetailPage.setArguments(goodsid));
+        getStore().state.openinstall.goodsid = "";
+      }
+    });
     _updateSource();
     _sliverListController = ScrollController();
     _gsRefreshController = GSRefreshController();

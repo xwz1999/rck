@@ -167,6 +167,12 @@ class MyAppState extends State<MyApp> {
             UserManager.instance.openInstallGoodsId.value =
                 !UserManager.instance.openInstallGoodsId.value;
           }
+          if (decode.containsKey("type")) {
+            store.state.openinstall.type = decode['type'];
+            store.state.openinstall.itemId = decode['itemId'];
+            UserManager.instance.openInstallLive.value =
+                !UserManager.instance.openInstallLive.value;
+          }
         } catch (e) {}
       }
       store.state.openinstall.channelCode = data['channelCode'];
