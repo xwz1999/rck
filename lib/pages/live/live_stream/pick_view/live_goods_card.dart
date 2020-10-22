@@ -28,7 +28,7 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
         -1;
     return SizedBox(
       width: rSize(200),
-      height: rSize(91),
+      height: rSize(100 + 15.0),
       child: MaterialButton(
         onPressed: () {
           if (picked)
@@ -57,8 +57,8 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
                 child: FadeInImage.assetNetwork(
                   placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                   image: Api.getImgUrl(widget.model.mainPhotoUrl),
-                  height: rSize(86),
-                  width: rSize(86),
+                  height: rSize(100),
+                  width: rSize(100),
                 ),
               ),
             ),
@@ -127,23 +127,21 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
                       Spacer(),
                     ],
                   ),
-                  Row(
-                    children: [
-                      Text(
-                        '¥${widget.model.originalPrice}',
-                        style: TextStyle(
-                          color: Color(0xFF333333),
-                          fontSize: rSP(14),
-                        ),
-                      ),
-                      Text(
-                        '/赚${widget.model.commission}',
-                        style: TextStyle(
-                          color: Color(0xFFC92219),
-                          fontSize: rSP(14),
-                        ),
-                      ),
-                    ],
+                  Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(text: '¥${widget.model.originalPrice}'),
+                        TextSpan(
+                            text: '/赚${widget.model.commission}',
+                            style: TextStyle(
+                              color: Color(0xFFC92219),
+                            )),
+                      ],
+                    ),
+                    style: TextStyle(
+                      color: Color(0xFF333333),
+                      fontSize: rSP(14),
+                    ),
                   ),
                 ],
               ),
