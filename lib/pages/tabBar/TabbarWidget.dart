@@ -14,6 +14,7 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/agreements/live_agreement_page.dart';
 import 'package:recook/pages/home/home_page.dart';
 import 'package:recook/pages/live/live_stream/live_page.dart';
 import 'package:recook/pages/live/models/live_resume_model.dart';
@@ -142,7 +143,41 @@ class _TabBarWidgetState extends State<TabBarWidget>
                               GSDialog.of(context).dismiss(context);
                               LiveResumeModel model = LiveResumeModel.fromJson(
                                   resultData.data['data']);
-                              if (model.liveItemId == 0)
+                              //第一次直播
+                              if (model.isFirst == 1) {
+                                showDialog(
+                                    context: context,
+                                    child: NormalContentDialog(
+                                      title: '瑞库客直播服务申明',
+                                      items: ['拒绝', '同意'],
+                                      content: FlatButton(
+                                        splashColor:
+                                            Colors.blue.withOpacity(0.2),
+                                        child: Text(
+                                          '瑞库客直播服务申明',
+                                          style: TextStyle(
+                                            color: Colors.blue,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          CRoute.push(
+                                              context, LiveAgreementPage());
+                                        },
+                                      ),
+                                      listener: (index) {
+                                        switch (index) {
+                                          case 0:
+                                            Navigator.pop(context);
+                                            break;
+                                          case 1:
+                                            Navigator.pop(context);
+                                            CRoute.pushReplace(
+                                                context, LivePage());
+                                            break;
+                                        }
+                                      },
+                                    ));
+                              } else if (model.liveItemId == 0)
                                 CRoute.pushReplace(context, LivePage());
                               else {
                                 Navigator.pop(context);

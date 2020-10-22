@@ -5,8 +5,10 @@ class LiveResumeModel {
   String nickname;
   String headImgUrl;
   int userId;
+
   int praise;
   List<GoodsLists> goodsLists;
+  int isFirst;
 
   LiveResumeModel(
       {this.liveItemId,
@@ -16,7 +18,8 @@ class LiveResumeModel {
       this.headImgUrl,
       this.userId,
       this.praise,
-      this.goodsLists});
+      this.goodsLists,
+      this.isFirst});
 
   LiveResumeModel.fromJson(Map<String, dynamic> json) {
     liveItemId = json['liveItemId'];
@@ -26,6 +29,7 @@ class LiveResumeModel {
     headImgUrl = json['headImgUrl'];
     userId = json['userId'];
     praise = json['praise'];
+    isFirst = json['isFirst'];
     if (json['goodsLists'] != null) {
       goodsLists = new List<GoodsLists>();
       json['goodsLists'].forEach((v) {
@@ -43,6 +47,7 @@ class LiveResumeModel {
     data['headImgUrl'] = this.headImgUrl;
     data['userId'] = this.userId;
     data['praise'] = this.praise;
+    data['isFirst'] = this.isFirst;
     if (this.goodsLists != null) {
       data['goodsLists'] = this.goodsLists.map((v) => v.toJson()).toList();
     }
