@@ -81,11 +81,13 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage> {
               'assets/goods_hot_list_title_bg.png',
               fit: BoxFit.fill,
             ),
-            Positioned(
-              child: _backButton(context),
-              left: 0,
-              top: ScreenUtil.statusBarHeight,
-            )
+            Navigator.canPop(context)
+                ? Positioned(
+                    child: _backButton(context),
+                    left: 0,
+                    top: ScreenUtil.statusBarHeight,
+                  )
+                : SizedBox(),
           ],
         ));
   }
