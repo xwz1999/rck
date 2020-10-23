@@ -569,6 +569,20 @@ class _LivePageState extends State<LivePage> {
                 case 'Explain':
                   break;
                 case 'LiveStop':
+                  break;
+                case 'Notice':
+                  chatObjects.insertAll(
+                      0,
+                      messageEntities.map(
+                        (e) => ChatObj("", customParams['content']),
+                      ));
+                  _scrollController.animateTo(
+                    -50,
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeInOutCubic,
+                  );
+                  setState(() {});
+                  break;
               }
             }
           } else {

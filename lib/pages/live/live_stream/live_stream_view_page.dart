@@ -182,7 +182,19 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                           isFansWhenLive: isAttention,
                         ));
                   }
-
+                  break;
+                case 'Notice':
+                  chatObjects.insertAll(
+                      0,
+                      messageEntities.map(
+                        (e) => ChatObj("", data['content']),
+                      ));
+                  _scrollController.animateTo(
+                    -50,
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeInOutCubic,
+                  );
+                  setState(() {});
                   break;
               }
             }
@@ -325,7 +337,10 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                             isAttention = true;
                             HttpManager.post(
                               LiveAPI.addFollow,
-                              {'followUserId': _streamInfoModel.userId},
+                              {
+                                'followUserId': _streamInfoModel.userId,
+                                'liveItemId': widget.id,
+                              },
                             );
                           },
                           title: _streamInfoModel.nickname,

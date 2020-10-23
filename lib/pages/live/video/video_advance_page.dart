@@ -72,7 +72,11 @@ class _VideoAdvancePageState extends State<VideoAdvancePage> {
                   '封面',
                   () {
                     ImagePicker()
-                        .getImage(source: ImageSource.gallery)
+                        .getImage(
+                      source: ImageSource.gallery,
+                      maxWidth: 500,
+                      maxHeight: 500,
+                    )
                         .then((file) {
                       if (file != null) {
                         _coverFile = File(file.path);

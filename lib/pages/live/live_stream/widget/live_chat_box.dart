@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 
@@ -30,7 +31,7 @@ class LiveChatBox extends StatelessWidget {
             child: Text.rich(
               TextSpan(children: [
                 TextSpan(
-                  text: '$sender:',
+                  text: '$sender${TextUtil.isEmpty(sender) ? '' :':'}',
                   style: TextStyle(
                     color: color,
                     fontSize: rSP(13),
