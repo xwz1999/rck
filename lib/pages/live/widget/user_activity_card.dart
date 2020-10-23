@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/activity/activity_preview_page.dart';
 import 'package:recook/pages/live/models/activity_list_model.dart';
 import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/widget/review_child_cards.dart';
 import 'package:recook/pages/live/widget/user_base_card.dart';
+import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/date/recook_date_util.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -168,15 +171,15 @@ class _UserActivityCardState extends State<UserActivityCard> {
         ),
         Row(
           children: [
-            CustomImageButton(
-              padding: EdgeInsets.only(top: rSize(10)),
-              child: Image.asset(
-                R.ASSETS_LIVE_MORE_PNG,
-                width: rSize(18),
-                height: rSize(18),
-              ),
-              onPressed: () {},
-            ),
+            // CustomImageButton(
+            //   padding: EdgeInsets.only(top: rSize(10)),
+            //   child: Image.asset(
+            //     R.ASSETS_LIVE_MORE_PNG,
+            //     width: rSize(18),
+            //     height: rSize(18),
+            //   ),
+            //   onPressed: () {},
+            // ),
             Spacer(),
             CustomImageButton(
               padding: EdgeInsets.only(top: rSize(10)),
@@ -191,14 +194,18 @@ class _UserActivityCardState extends State<UserActivityCard> {
             Padding(
               padding: EdgeInsets.only(top: rSize(10)),
               child: RecookLikeButton(
-                //TODO 赞字段
                 initValue: widget.model.isPraise == 1,
                 size: 18,
                 onChange: (oldState) {
-                  HttpManager.post(
-                    oldState ? LiveAPI.dislikeActivity : LiveAPI.likeActivity,
-                    {'trendId': widget.model.id},
-                  );
+                  if (UserManager.instance.haveLogin)
+                    HttpManager.post(
+                      oldState ? LiveAPI.dislikeActivity : LiveAPI.likeActivity,
+                      {'trendId': widget.model.id},
+                    );
+                  else {
+                    showToast('未登陆，请先登陆');
+                    CRoute.push(context, UserPage());
+                  }
                 },
               ),
             ),
@@ -209,23 +216,28 @@ class _UserActivityCardState extends State<UserActivityCard> {
   }
 
   _showReviewDialog() {
-    showGeneralDialog(
-      context: context,
-      barrierDismissible: true,
-      barrierColor: Colors.black.withOpacity(0.55),
-      barrierLabel: '',
-      transitionBuilder: (context, animation, secondaryAnimation, child) {
-        final value = Curves.easeInOutCubic.transform(animation.value);
-        return Transform.translate(
-          offset: Offset(0, (1 - value) * 400),
-          child: child,
-        );
-      },
-      transitionDuration: Duration(milliseconds: 300),
-      pageBuilder: (BuildContext context, Animation<double> animation,
-          Animation<double> secondaryAnimation) {
-        return ReviewChildCards(trendId: widget.model.id);
-      },
-    );
+    if (UserManager.instance.haveLogin)
+      showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierColor: Colors.black.withOpacity(0.55),
+        barrierLabel: '',
+        transitionBuilder: (context, animation, secondaryAnimation, child) {
+          final value = Curves.easeInOutCubic.transform(animation.value);
+          return Transform.translate(
+            offset: Offset(0, (1 - value) * 400),
+            child: child,
+          );
+        },
+        transitionDuration: Duration(milliseconds: 300),
+        pageBuilder: (BuildContext context, Animation<double> animation,
+            Animation<double> secondaryAnimation) {
+          return ReviewChildCards(trendId: widget.model.id);
+        },
+      );
+    else {
+      showToast('未登陆，请先登陆');
+      CRoute.push(context, UserPage());
+    }
   }
 }

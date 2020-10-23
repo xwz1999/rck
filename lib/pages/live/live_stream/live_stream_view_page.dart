@@ -17,6 +17,7 @@ import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
+import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
@@ -528,12 +529,19 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                                     CustomImageButton(
                                                       onPressed: () {
                                                         Navigator.pop(context);
-                                                        showModalBottomSheet(
-                                                          context: context,
-                                                          builder: (context) {
-                                                            return LiveReportView();
-                                                          },
-                                                        );
+                                                        if (UserManager.instance
+                                                            .haveLogin) {
+                                                          showModalBottomSheet(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return LiveReportView();
+                                                            },
+                                                          );
+                                                        } else {
+                                                          showToast('未登陆，请先登陆');
+                                                          CRoute.push(context,
+                                                              UserPage());
+                                                        }
                                                       },
                                                       child: Column(
                                                         children: [
@@ -578,16 +586,23 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                           children: [
                                             CustomImageButton(
                                               onPressed: () {
-                                                Navigator.pop(context);
-                                                ShareTool().liveShare(
-                                                  context,
-                                                  liveId: widget.id,
-                                                  title:
-                                                      '${_streamInfoModel.nickname}的直播',
-                                                  des: '',
-                                                  headUrl: _streamInfoModel
-                                                      .headImgUrl,
-                                                );
+                                                if (UserManager
+                                                    .instance.haveLogin) {
+                                                  Navigator.pop(context);
+                                                  ShareTool().liveShare(
+                                                    context,
+                                                    liveId: widget.id,
+                                                    title:
+                                                        '${_streamInfoModel.nickname}的直播',
+                                                    des: '',
+                                                    headUrl: _streamInfoModel
+                                                        .headImgUrl,
+                                                  );
+                                                } else {
+                                                  showToast('未登陆，请先登陆');
+                                                  CRoute.push(
+                                                      context, UserPage());
+                                                }
                                               },
                                               padding:
                                                   EdgeInsets.all(rSize(15)),
@@ -636,13 +651,18 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                               ),
                               tapCallbackOnlyOnce: false,
                               onTap: (index) {
-                                HttpManager.post(
-                                  LiveAPI.liveLike,
-                                  {
-                                    'liveItemId': widget.id,
-                                    'praise': index,
-                                  },
-                                );
+                                if (UserManager.instance.haveLogin) {
+                                  HttpManager.post(
+                                    LiveAPI.liveLike,
+                                    {
+                                      'liveItemId': widget.id,
+                                      'praise': index,
+                                    },
+                                  );
+                                } else {
+                                  showToast('未登陆，请先登陆');
+                                  CRoute.push(context, UserPage());
+                                }
                               },
                               onLongPress: (index) {
                                 HttpManager.post(

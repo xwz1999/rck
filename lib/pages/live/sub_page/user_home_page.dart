@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
@@ -13,6 +14,7 @@ import 'package:recook/pages/live/sub_page/user_home/user_activity_view.dart';
 import 'package:recook/pages/live/sub_page/user_home/user_playback_view.dart';
 import 'package:recook/pages/live/widget/live_attention_button.dart';
 import 'package:recook/pages/live/widget/sliver_bottom_persistent_delegate.dart';
+import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
@@ -130,12 +132,17 @@ class _UserHomePageState extends State<UserHomePage>
                                   width: rSize(68),
                                   height: rSize(30),
                                   onAttention: (bool oldState) {
-                                    HttpManager.post(
-                                      oldState
-                                          ? LiveAPI.cancelFollow
-                                          : LiveAPI.addFollow,
-                                      {'followUserId': model.userId},
-                                    );
+                                    if (UserManager.instance.haveLogin)
+                                      HttpManager.post(
+                                        oldState
+                                            ? LiveAPI.cancelFollow
+                                            : LiveAPI.addFollow,
+                                        {'followUserId': model.userId},
+                                      );
+                                    else {
+                                      showToast('未登陆，请先登陆');
+                                      CRoute.push(context, UserPage());
+                                    }
                                   },
                                 ),
                         ],

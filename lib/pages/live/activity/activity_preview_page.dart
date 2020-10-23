@@ -3,6 +3,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/live/models/activity_list_model.dart';
 import 'package:recook/pages/live/models/live_base_info_model.dart';
@@ -10,6 +11,7 @@ import 'package:recook/pages/live/sub_page/topic_page.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/network_file_video.dart';
 import 'package:recook/pages/live/widget/review_child_cards.dart';
+import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook/recook_like_button.dart';
@@ -174,27 +176,33 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                       // rWBox(22),
                       CustomImageButton(
                         onPressed: () {
-                          showGeneralDialog(
-                            context: context,
-                            barrierDismissible: true,
-                            barrierColor: Colors.black.withOpacity(0.55),
-                            barrierLabel: '',
-                            transitionBuilder: (context, animation,
-                                secondaryAnimation, child) {
-                              final value = Curves.easeInOutCubic
-                                  .transform(animation.value);
-                              return Transform.translate(
-                                offset: Offset(0, (1 - value) * 400),
-                                child: child,
-                              );
-                            },
-                            transitionDuration: Duration(milliseconds: 300),
-                            pageBuilder: (BuildContext context,
-                                Animation<double> animation,
-                                Animation<double> secondaryAnimation) {
-                              return ReviewChildCards(trendId: widget.model.id);
-                            },
-                          );
+                          if (UserManager.instance.haveLogin)
+                            showGeneralDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              barrierColor: Colors.black.withOpacity(0.55),
+                              barrierLabel: '',
+                              transitionBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                final value = Curves.easeInOutCubic
+                                    .transform(animation.value);
+                                return Transform.translate(
+                                  offset: Offset(0, (1 - value) * 400),
+                                  child: child,
+                                );
+                              },
+                              transitionDuration: Duration(milliseconds: 300),
+                              pageBuilder: (BuildContext context,
+                                  Animation<double> animation,
+                                  Animation<double> secondaryAnimation) {
+                                return ReviewChildCards(
+                                    trendId: widget.model.id);
+                              },
+                            );
+                          else {
+                            showToast('未登陆，请先登陆');
+                            CRoute.push(context, UserPage());
+                          }
                         },
                         child: Image.asset(
                           R.ASSETS_LIVE_VIDEO_COMMENT_PNG,
@@ -208,12 +216,17 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                         likePath: R.ASSETS_LIVE_VIDEO_LIKE_PNG,
                         size: rSize(20),
                         onChange: (oldState) {
-                          HttpManager.post(
-                            oldState
-                                ? LiveAPI.dislikeActivity
-                                : LiveAPI.likeActivity,
-                            {'trendId': widget.model.id},
-                          );
+                          if (UserManager.instance.haveLogin)
+                            HttpManager.post(
+                              oldState
+                                  ? LiveAPI.dislikeActivity
+                                  : LiveAPI.likeActivity,
+                              {'trendId': widget.model.id},
+                            );
+                          else {
+                            showToast('未登陆，请先登陆');
+                            CRoute.push(context, UserPage());
+                          }
                         },
                       ),
                     ],

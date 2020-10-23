@@ -14,6 +14,8 @@ import 'package:recook/pages/home/widget/plus_minus_view.dart';
 import 'package:recook/pages/live/live_stream/live_sku_widget.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart'
     show GoodsLists;
+import 'package:recook/pages/user/user_page.dart';
+import 'package:recook/utils/custom_route.dart';
 
 class GoodsListDialog extends StatefulWidget {
   final List<GoodsLists> models;
@@ -356,35 +358,41 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
                             ),
                             padding: EdgeInsets.zero,
                             onPressed: () {
-                              if (!widget.onLive)
-                                AppRouter.push(
-                                    context, RouteName.COMMODITY_PAGE,
-                                    arguments: CommodityDetailPage.setArguments(
-                                      model.id,
-                                    ));
-                              else {
-                                HttpManager.post(LiveAPI.buyGoodsInform, {
-                                  "liveItemId": widget.id,
-                                  "goodsId": model.id,
-                                });
-                                showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) {
-                                    return Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(rSize(15)),
+                              if (UserManager.instance.haveLogin) {
+                                if (!widget.onLive)
+                                  AppRouter.push(
+                                      context, RouteName.COMMODITY_PAGE,
+                                      arguments:
+                                          CommodityDetailPage.setArguments(
+                                        model.id,
+                                      ));
+                                else {
+                                  HttpManager.post(LiveAPI.buyGoodsInform, {
+                                    "liveItemId": widget.id,
+                                    "goodsId": model.id,
+                                  });
+                                  showModalBottomSheet(
+                                    context: context,
+                                    builder: (context) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(rSize(15)),
+                                          ),
+                                          color: Colors.white,
                                         ),
-                                        color: Colors.white,
-                                      ),
-                                      height: rSize(480),
-                                      child: InternalGoodsDetail(
-                                        model: model,
-                                        liveId: widget.id,
-                                      ),
-                                    );
-                                  },
-                                );
+                                        height: rSize(480),
+                                        child: InternalGoodsDetail(
+                                          model: model,
+                                          liveId: widget.id,
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }
+                              } else {
+                                showToast('未登陆，请先登陆');
+                                CRoute.push(context, UserPage());
                               }
                             },
                             child: Text('马上抢'),
@@ -552,8 +560,8 @@ class _InternalGoodsDetailState extends State<InternalGoodsDetail> {
                         selected.forEach((element) {
                           tempSku += ',$element';
                         });
-                        int index = goodsModel.data.sku.indexWhere(
-                            (element) => (element.combineId) == tempSku.substring(1));
+                        int index = goodsModel.data.sku.indexWhere((element) =>
+                            (element.combineId) == tempSku.substring(1));
                         if (index == -1) {
                           showToast('没有该物品');
                         } else {

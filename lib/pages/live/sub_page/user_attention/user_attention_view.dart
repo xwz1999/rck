@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/models/follow_list_model.dart';
 import 'package:recook/pages/live/sub_page/user_attention_page.dart';
 import 'package:recook/pages/live/sub_page/user_home_page.dart';
+import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
@@ -108,10 +111,15 @@ class _UserAttentionViewState extends State<UserAttentionView>
         );
       },
       onAttention: (bool oldState) {
-        HttpManager.post(
-          oldState ? LiveAPI.cancelFollow : LiveAPI.addFollow,
-          {'followUserId': model.userId},
-        );
+        if (UserManager.instance.haveLogin)
+          HttpManager.post(
+            oldState ? LiveAPI.cancelFollow : LiveAPI.addFollow,
+            {'followUserId': model.userId},
+          );
+        else {
+          showToast('未登陆，请先登陆');
+          CRoute.push(context, UserPage());
+        }
       },
     );
   }
