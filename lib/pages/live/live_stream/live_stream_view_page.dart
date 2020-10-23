@@ -593,7 +593,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                                     context,
                                                     liveId: widget.id,
                                                     title:
-                                                        '${_streamInfoModel.nickname}的直播',
+                                                        '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘',
                                                     des: '',
                                                     headUrl: _streamInfoModel
                                                         .headImgUrl,
