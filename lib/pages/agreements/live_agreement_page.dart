@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:recook/constants/header.dart';
@@ -12,6 +14,9 @@ class LiveAgreementPage extends StatefulWidget {
 }
 
 class _LiveAgreementPageState extends State<LiveAgreementPage> {
+  TextStyle get black => TextStyle(
+        color: Color(0xFF333333),
+      );
   @override
   Widget build(BuildContext context) {
     return RecookScaffold(
@@ -20,7 +25,19 @@ class _LiveAgreementPageState extends State<LiveAgreementPage> {
         padding: EdgeInsets.all(rSize(15)),
         child: MarkdownBody(
           styleSheet: MarkdownStyleSheet(
-            p: TextStyle(
+            h1: black,
+            h2: black.copyWith(
+              fontWeight: FontWeight.bold,
+              fontSize: rSP(18),
+            ),
+            h3: black,
+            h4: black,
+            p: black,
+            codeblockDecoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            code: TextStyle(
+              backgroundColor: Colors.white,
               color: Color(0xFF333333),
             ),
           ),
