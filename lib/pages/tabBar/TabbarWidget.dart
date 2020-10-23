@@ -6,6 +6,7 @@
  * remark    : 
  * ====================================================
  */
+import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
@@ -158,30 +159,53 @@ class _TabBarWidgetState extends State<TabBarWidget>
                                       context: context,
                                       child: NormalContentDialog(
                                         title: '瑞库客直播服务申明',
-                                        items: ['拒绝', '同意'],
-                                        content: FlatButton(
-                                          splashColor:
-                                              Colors.blue.withOpacity(0.2),
-                                          child: Text(
-                                            '瑞库客直播服务申明',
-                                            style: TextStyle(
-                                              color: Colors.blue,
-                                            ),
+                                        type: NormalTextDialogType.delete,
+                                        deleteItem: '同意授权',
+                                        items: ['以后再说'],
+                                        content: ExtendedText.rich(
+                                          TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text:
+                                                    '为更好地维护平台直播环境，维护广大用户的权益，请您在操作前务必审慎阅读并充分理解',
+                                                style: TextStyle(
+                                                  color: Color(0xFF333333),
+                                                ),
+                                              ),
+                                              ExtendedWidgetSpan(
+                                                child: InkWell(
+                                                  splashColor: Colors.blue
+                                                      .withOpacity(0.2),
+                                                  child: Text(
+                                                    '《瑞库客直播服务申明》',
+                                                    style: TextStyle(
+                                                      color: Colors.blue,
+                                                    ),
+                                                  ),
+                                                  onTap: () {
+                                                    CRoute.push(context,
+                                                        LiveAgreementPage());
+                                                  },
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: '的各项规定。',
+                                                style: TextStyle(
+                                                  color: Color(0xFF333333),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          onPressed: () {
-                                            CRoute.push(
-                                                context, LiveAgreementPage());
-                                          },
                                         ),
+                                        deleteListener: () {
+                                          Navigator.pop(context);
+                                          CRoute.pushReplace(
+                                              context, LivePage());
+                                        },
                                         listener: (index) {
                                           switch (index) {
                                             case 0:
                                               Navigator.pop(context);
-                                              break;
-                                            case 1:
-                                              Navigator.pop(context);
-                                              CRoute.pushReplace(
-                                                  context, LivePage());
                                               break;
                                           }
                                         },

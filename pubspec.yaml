@@ -200,6 +200,8 @@ dependencies:
   #点赞组件
   many_like: ^0.0.6
 
+  flutter_markdown:
+
   wakelock:
   
 
