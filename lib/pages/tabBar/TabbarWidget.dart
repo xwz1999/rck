@@ -134,91 +134,101 @@ class _TabBarWidgetState extends State<TabBarWidget>
                       '直播',
                       R.ASSETS_LIVE_ADD_STREAM_PNG,
                       onTap: () {
-                        PermissionTool.haveCameraPermission().then((value) {
-                          PermissionTool.haveAudioPermission().then((value) {
-                            GSDialog.of(context)
-                                .showLoadingDialog(context, '加载中');
-                            HttpManager.post(LiveAPI.getLiveInfo, {})
-                                .then((resultData) {
-                              GSDialog.of(context).dismiss(context);
-                              LiveResumeModel model = LiveResumeModel.fromJson(
-                                  resultData.data['data']);
-                              //第一次直播
-                              if (model.isFirst == 1) {
-                                showDialog(
-                                    context: context,
-                                    child: NormalContentDialog(
-                                      title: '瑞库客直播服务申明',
-                                      items: ['拒绝', '同意'],
-                                      content: FlatButton(
-                                        splashColor:
-                                            Colors.blue.withOpacity(0.2),
-                                        child: Text(
-                                          '瑞库客直播服务申明',
-                                          style: TextStyle(
-                                            color: Colors.blue,
+                        if (!UserManager.instance.user.info.realInfoStatus) {
+                          showToast('未实名，请先实名');
+                          AppRouter.push(
+                            context,
+                            RouteName.USER_VERIFY,
+                            arguments: {},
+                          );
+                        } else {
+                          PermissionTool.haveCameraPermission().then((value) {
+                            PermissionTool.haveAudioPermission().then((value) {
+                              GSDialog.of(context)
+                                  .showLoadingDialog(context, '加载中');
+                              HttpManager.post(LiveAPI.getLiveInfo, {})
+                                  .then((resultData) {
+                                GSDialog.of(context).dismiss(context);
+                                LiveResumeModel model =
+                                    LiveResumeModel.fromJson(
+                                        resultData.data['data']);
+                                //第一次直播
+                                if (model.isFirst == 1) {
+                                  showDialog(
+                                      context: context,
+                                      child: NormalContentDialog(
+                                        title: '瑞库客直播服务申明',
+                                        items: ['拒绝', '同意'],
+                                        content: FlatButton(
+                                          splashColor:
+                                              Colors.blue.withOpacity(0.2),
+                                          child: Text(
+                                            '瑞库客直播服务申明',
+                                            style: TextStyle(
+                                              color: Colors.blue,
+                                            ),
                                           ),
+                                          onPressed: () {
+                                            CRoute.push(
+                                                context, LiveAgreementPage());
+                                          },
                                         ),
-                                        onPressed: () {
-                                          CRoute.push(
-                                              context, LiveAgreementPage());
+                                        listener: (index) {
+                                          switch (index) {
+                                            case 0:
+                                              Navigator.pop(context);
+                                              break;
+                                            case 1:
+                                              Navigator.pop(context);
+                                              CRoute.pushReplace(
+                                                  context, LivePage());
+                                              break;
+                                          }
                                         },
-                                      ),
+                                      ));
+                                } else if (model.liveItemId == 0)
+                                  CRoute.pushReplace(context, LivePage());
+                                else {
+                                  Navigator.pop(context);
+                                  showDialog(
+                                    context: context,
+                                    child: NormalTextDialog(
+                                      title: '有未完成的直播间',
+                                      content: '',
+                                      items: ['结束直播', '继续直播', '开始新直播'],
                                       listener: (index) {
+                                        Navigator.pop(fatherContext);
                                         switch (index) {
                                           case 0:
-                                            Navigator.pop(context);
+                                            HttpManager.post(LiveAPI.exitLive, {
+                                              'liveItemId': model.liveItemId,
+                                            });
                                             break;
                                           case 1:
-                                            Navigator.pop(context);
-                                            CRoute.pushReplace(
-                                                context, LivePage());
+                                            CRoute.push(
+                                                fatherContext,
+                                                LivePage(
+                                                  resumeLive: true,
+                                                  model: model,
+                                                ));
+                                            break;
+                                          case 2:
+                                            HttpManager.post(LiveAPI.exitLive, {
+                                              'liveItemId': model.liveItemId,
+                                            }).then((_) {
+                                              CRoute.pushReplace(
+                                                  context, LivePage());
+                                            });
                                             break;
                                         }
                                       },
-                                    ));
-                              } else if (model.liveItemId == 0)
-                                CRoute.pushReplace(context, LivePage());
-                              else {
-                                Navigator.pop(context);
-                                showDialog(
-                                  context: context,
-                                  child: NormalTextDialog(
-                                    title: '有未完成的直播间',
-                                    content: '',
-                                    items: ['结束直播', '继续直播', '开始新直播'],
-                                    listener: (index) {
-                                      Navigator.pop(fatherContext);
-                                      switch (index) {
-                                        case 0:
-                                          HttpManager.post(LiveAPI.exitLive, {
-                                            'liveItemId': model.liveItemId,
-                                          });
-                                          break;
-                                        case 1:
-                                          CRoute.push(
-                                              fatherContext,
-                                              LivePage(
-                                                resumeLive: true,
-                                                model: model,
-                                              ));
-                                          break;
-                                        case 2:
-                                          HttpManager.post(LiveAPI.exitLive, {
-                                            'liveItemId': model.liveItemId,
-                                          }).then((_) {
-                                            CRoute.pushReplace(
-                                                context, LivePage());
-                                          });
-                                          break;
-                                      }
-                                    },
-                                  ),
-                                );
-                              }
+                                    ),
+                                  );
+                                }
+                              });
                             });
                           });
-                        });
+                        }
                       },
                     ),
                     verticalButton(
@@ -269,13 +279,6 @@ class _TabBarWidgetState extends State<TabBarWidget>
                     if (!UserManager.instance.haveLogin) {
                       showToast('未登陆，请先登陆');
                       CRoute.push(context, UserPage());
-                    } else if (!UserManager.instance.user.info.realInfoStatus) {
-                      showToast('未实名，请先实名');
-                      AppRouter.push(
-                        context,
-                        RouteName.USER_VERIFY,
-                        arguments: {},
-                      );
                     } else {
                       _showBottomModalSheet();
                     }

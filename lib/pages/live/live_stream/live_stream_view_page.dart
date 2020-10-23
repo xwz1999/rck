@@ -44,6 +44,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   LivePlayer _livePlayer;
   LiveStreamInfoModel _streamInfoModel;
   TencentGroupTool group;
+  bool isAttention;
   List<ChatObj> chatObjects = [
     ChatObj('系统消息',
         '欢迎来到直播间，瑞库客禁止未成年人进行直播，请大家共同遵守、监督。直播间内严禁出现违法违规、低俗色情、吸烟酗酒等问内容，如有违规行为请及时举报。请大家注意财产安全、谨防网络诈骗。'),
@@ -76,6 +77,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
         else {
           setState(() {
             _streamInfoModel = model;
+            isAttention = _streamInfoModel.isFollow == 1;
           });
           TencentImPlugin.applyJoinGroup(
               groupId: model.groupId, reason: 'enterLive');
@@ -165,17 +167,22 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                   });
                   break;
                 case 'LiveStop':
-                  _livePlayer?.stopPlay();
-                  TencentImPlugin.quitGroup(groupId: _streamInfoModel.groupId);
-                  TencentImPlugin.logout();
-                  CRoute.push(
-                      context,
-                      LiveBlurPage(
-                        context: context,
-                        praise: data['praise'],
-                        look: data['look'],
-                        streamModel: _streamInfoModel,
-                      ));
+                  if (data['liveItemId'] == widget.id) {
+                    _livePlayer?.stopPlay();
+                    TencentImPlugin.quitGroup(
+                        groupId: _streamInfoModel.groupId);
+                    TencentImPlugin.logout();
+                    CRoute.push(
+                        context,
+                        LiveBlurPage(
+                          context: context,
+                          praise: data['praise'],
+                          look: data['look'],
+                          streamModel: _streamInfoModel,
+                          isFansWhenLive: isAttention,
+                        ));
+                  }
+
                   break;
               }
             }
@@ -315,6 +322,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                               ? true
                               : _streamInfoModel.isFollow == 1,
                           onAttention: () {
+                            isAttention = true;
                             HttpManager.post(
                               LiveAPI.addFollow,
                               {'followUserId': _streamInfoModel.userId},

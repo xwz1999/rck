@@ -15,6 +15,7 @@ class LiveBlurPage extends StatefulWidget {
   final BuildContext context;
   final int look;
   final int praise;
+  final bool isFansWhenLive;
   final LiveStreamInfoModel streamModel;
 
   LiveBlurPage(
@@ -24,7 +25,8 @@ class LiveBlurPage extends StatefulWidget {
       @required this.context,
       this.look,
       this.praise,
-      this.streamModel})
+      this.streamModel,
+      this.isFansWhenLive = false})
       : super(key: key);
 
   @override
@@ -36,7 +38,7 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
   @override
   void initState() {
     super.initState();
-    _isAttention = widget.streamModel?.isFollow == 1;
+    _isAttention = widget.isFansWhenLive;
   }
 
   @override
