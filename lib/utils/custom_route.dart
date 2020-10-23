@@ -16,6 +16,10 @@ class CRoute {
     await Navigator.push(context, _cPageRoute(context, page));
   }
 
+  static Future pushReplace(BuildContext context, Widget page) async {
+    await Navigator.pushReplacement(context, _cPageRoute(context, page));
+  }
+
   ///路由到根
   static popBottom(BuildContext context) {
     if (Navigator.canPop(context)) {
@@ -24,5 +28,17 @@ class CRoute {
     } else {
       return;
     }
+  }
+
+  ///透明路由
+  static transparent(BuildContext context, Widget child) {
+    Navigator.push(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondAnimation) {
+            return FadeTransition(opacity: animation, child: child);
+          },
+          opaque: false,
+        ));
   }
 }

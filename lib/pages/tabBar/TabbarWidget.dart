@@ -6,21 +6,35 @@
  * remark    : 
  * ====================================================
  */
+import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/config.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/business/business_page.dart';
+import 'package:recook/pages/agreements/live_agreement_page.dart';
 import 'package:recook/pages/home/home_page.dart';
+import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
+import 'package:recook/pages/live/live_stream/live_page.dart';
+import 'package:recook/pages/live/models/live_resume_model.dart';
+import 'package:recook/pages/live/video/add_video_page.dart';
+import 'package:recook/pages/live/pages/discovery_page.dart';
+import 'package:recook/pages/live/widget/live_fab_location.dart';
 import 'package:recook/pages/shop/widget/normal_shop_page.dart';
 import 'package:recook/pages/shopping_cart/shopping_cart_page.dart';
 import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/third_party/bugly_helper.dart';
 import 'package:recook/utils/app_router.dart';
+import 'package:recook/utils/custom_route.dart';
+import 'package:recook/utils/permission_tool.dart';
 import 'package:recook/utils/print_util.dart';
-import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/utils/versionInfo/version_tool.dart';
+import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/tabbarWidget/ace_bottom_navigation_bar.dart';
 
 class TabBarWidget extends StatefulWidget {
@@ -43,9 +57,9 @@ class _TabBarWidgetState extends State<TabBarWidget>
       // _getVersionInfo();
       VersionTool.checkVersionInfo(_context);
     });
-    _tabController = TabController(
-        length: !AppConfig.getShowCommission() ? 4 : 5, vsync: this);
+    _tabController = TabController(length: 5, vsync: this);
     _bottomBarController = BottomBarController();
+    _tabController.addListener(_tabListener);
 
     UserManager.instance.login.addListener(_loginListener);
     UserManager.instance.selectTabbar.addListener(_selectTabbar);
@@ -64,12 +78,244 @@ class _TabBarWidgetState extends State<TabBarWidget>
     _tabController.index = UserManager.instance.selectTabbarIndex;
   }
 
+  _tabListener() {
+    setState(() {});
+  }
+
+  _showBottomModalSheet() {
+    BuildContext fatherContext = context;
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius:
+                BorderRadius.vertical(top: Radius.circular(rSize(15))),
+          ),
+          child: Builder(builder: (context) {
+            verticalButton(
+              String title,
+              String path, {
+              VoidCallback onTap,
+            }) {
+              return CustomImageButton(
+                onPressed: onTap,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: rSize(20)),
+                    Image.asset(
+                      path,
+                      height: rSize(44),
+                      width: rSize(44),
+                    ),
+                    SizedBox(height: rSize(10)),
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: rSP(14),
+                        color: Color(0xFF666666),
+                      ),
+                    ),
+                    SizedBox(height: rSize(20)),
+                  ],
+                ),
+              );
+            }
+
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    verticalButton(
+                      '直播',
+                      R.ASSETS_LIVE_ADD_STREAM_PNG,
+                      onTap: () {
+                        if (!UserManager.instance.user.info.realInfoStatus) {
+                          showToast('未实名，请先实名');
+                          AppRouter.push(
+                            context,
+                            RouteName.USER_VERIFY,
+                            arguments: {},
+                          );
+                        } else {
+                          PermissionTool.haveCameraPermission().then((value) {
+                            PermissionTool.haveAudioPermission().then((value) {
+                              GSDialog.of(context)
+                                  .showLoadingDialog(context, '加载中');
+                              HttpManager.post(LiveAPI.getLiveInfo, {})
+                                  .then((resultData) {
+                                GSDialog.of(context).dismiss(context);
+                                LiveResumeModel model =
+                                    LiveResumeModel.fromJson(
+                                        resultData.data['data']);
+                                //第一次直播
+                                if (model.isFirst == 1) {
+                                  showDialog(
+                                      context: context,
+                                      child: NormalContentDialog(
+                                        title: '瑞库客直播服务申明',
+                                        type: NormalTextDialogType.delete,
+                                        deleteItem: '同意授权',
+                                        items: ['以后再说'],
+                                        content: ExtendedText.rich(
+                                          TextSpan(
+                                            children: [
+                                              TextSpan(
+                                                text:
+                                                    '为更好地维护平台直播环境，维护广大用户的权益，请您在操作前务必审慎阅读并充分理解',
+                                                style: TextStyle(
+                                                  color: Color(0xFF333333),
+                                                ),
+                                              ),
+                                              ExtendedWidgetSpan(
+                                                child: InkWell(
+                                                  splashColor: Colors.blue
+                                                      .withOpacity(0.2),
+                                                  child: Text(
+                                                    '《瑞库客直播服务申明》',
+                                                    style: TextStyle(
+                                                      color: Colors.blue,
+                                                    ),
+                                                  ),
+                                                  onTap: () {
+                                                    CRoute.push(context,
+                                                        LiveAgreementPage());
+                                                  },
+                                                ),
+                                              ),
+                                              TextSpan(
+                                                text: '的各项规定。',
+                                                style: TextStyle(
+                                                  color: Color(0xFF333333),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        deleteListener: () {
+                                          Navigator.pop(context);
+                                          CRoute.pushReplace(
+                                              context, LivePage());
+                                        },
+                                        listener: (index) {
+                                          switch (index) {
+                                            case 0:
+                                              Navigator.pop(context);
+                                              break;
+                                          }
+                                        },
+                                      ));
+                                } else if (model.liveItemId == 0)
+                                  CRoute.pushReplace(context, LivePage());
+                                else {
+                                  Navigator.pop(context);
+                                  showDialog(
+                                    context: context,
+                                    child: NormalTextDialog(
+                                      title: '有未完成的直播间',
+                                      content: '',
+                                      items: ['结束直播', '继续直播', '开始新直播'],
+                                      listener: (index) {
+                                        Navigator.pop(fatherContext);
+                                        switch (index) {
+                                          case 0:
+                                            HttpManager.post(LiveAPI.exitLive, {
+                                              'liveItemId': model.liveItemId,
+                                            });
+                                            break;
+                                          case 1:
+                                            CRoute.push(
+                                                fatherContext,
+                                                LivePage(
+                                                  resumeLive: true,
+                                                  model: model,
+                                                ));
+                                            break;
+                                          case 2:
+                                            HttpManager.post(LiveAPI.exitLive, {
+                                              'liveItemId': model.liveItemId,
+                                            }).then((_) {
+                                              CRoute.pushReplace(
+                                                  context, LivePage());
+                                            });
+                                            break;
+                                        }
+                                      },
+                                    ),
+                                  );
+                                }
+                              });
+                            });
+                          });
+                        }
+                      },
+                    ),
+                    verticalButton(
+                      '视频',
+                      R.ASSETS_LIVE_ADD_VIDEO_PNG,
+                      onTap: () => CRoute.pushReplace(context, AddVideoPage()),
+                    ),
+                    // verticalButton(
+                    //   '图文',
+                    //   R.ASSETS_LIVE_ADD_IMAGE_PNG,
+                    //   onTap: () {},
+                    // ),
+                  ],
+                ),
+                CustomImageButton(
+                  height: rSize(66),
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('取消',
+                      style: TextStyle(
+                        color: Color(0xFF333333),
+                        fontSize: rSP(14),
+                      )),
+                ),
+              ],
+            );
+          }),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_context == null) {
       _context = context;
     }
     return Scaffold(
+        floatingActionButton: _tabController.index == 2
+            ? Container(
+                padding: EdgeInsets.all(rSize(4)),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(24),
+                ),
+                child: CustomImageButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    if (!UserManager.instance.haveLogin) {
+                      showToast('未登陆，请先登陆');
+                      CRoute.push(context, UserPage());
+                    } else {
+                      _showBottomModalSheet();
+                    }
+                  },
+                  child: Container(
+                    height: rSize(40),
+                    width: rSize(40),
+                    child: Image.asset(R.ASSETS_LIVE_RECOOK_FAB_PNG),
+                  ),
+                ),
+              )
+            : null,
+        floatingActionButtonLocation: FabLocation.recook,
         body: CacheTabBarView(
           physics: NeverScrollableScrollPhysics(),
           needAnimation: false,
@@ -79,14 +325,17 @@ class _TabBarWidgetState extends State<TabBarWidget>
               !AppConfig.getShowCommission()
                   ? <Widget>[
                       HomePage(),
-                      BusinessPage(),
+                      GoodsHotListPage(),
+                      DiscoveryPage(),
+                      // BusinessPage(),
                       ShoppingCartPage(),
                       UserPage()
                     ]
                   : <Widget>[
                       HomePage(),
-                      BusinessPage(),
                       NormalShopPage(),
+                      DiscoveryPage(),
+                      // BusinessPage(),
                       ShoppingCartPage(),
                       UserPage()
                     ],
@@ -108,7 +357,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
                 !UserManager.instance.refreshUserPage.value;
           }
         } else {
-          if (index == 2) {
+          if (index == 1) {
             UserManager.instance.refreshShopPage.value =
                 !UserManager.instance.refreshShopPage.value;
           }
@@ -132,6 +381,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
     _bottomBarController.dispose();
     UserManager.instance.login?.removeListener(_loginListener);
     UserManager.instance.selectTabbar.removeListener(_selectTabbar);
+    _tabController?.removeListener(_tabListener);
     super.dispose();
   }
 
@@ -188,6 +438,11 @@ class _BottomBarState extends State<BottomBar> {
                 imageSelected: AssetImage("assets/tabbar_sale_selected.png"),
               ),
               NavigationItemBean(
+                textStr: '排行榜',
+                image: AssetImage("assets/tabbar_shop_normal.png"),
+                imageSelected: AssetImage("assets/tabbar_shop_selected.png"),
+              ),
+              NavigationItemBean(
                 textStr: '发现',
                 image: AssetImage("assets/tabbar_find_normal.png"),
                 imageSelected: AssetImage("assets/tabbar_find_selected.png"),
@@ -212,14 +467,14 @@ class _BottomBarState extends State<BottomBar> {
                 imageSelected: AssetImage("assets/tabbar_sale_selected.png"),
               ),
               NavigationItemBean(
-                textStr: '发现',
-                image: AssetImage("assets/tabbar_find_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_find_selected.png"),
-              ),
-              NavigationItemBean(
                 textStr: '店铺',
                 image: AssetImage("assets/tabbar_shop_normal.png"),
                 imageSelected: AssetImage("assets/tabbar_shop_selected.png"),
+              ),
+              NavigationItemBean(
+                textStr: '发现',
+                image: AssetImage("assets/tabbar_find_normal.png"),
+                imageSelected: AssetImage("assets/tabbar_find_selected.png"),
               ),
               NavigationItemBean(
                 textStr: '购物车',

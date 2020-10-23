@@ -13,7 +13,6 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/pages/goods/small_coupon_widget.dart';
-import 'package:recook/pages/home/promotion_time_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
 
 import 'package:recook/widgets/custom_image_button.dart';
@@ -76,13 +75,13 @@ class _GoodPriceViewState extends State<GoodPriceView> {
     minOriginPrice = detailModel.data.price.min.originalPrice;
     maxOriginPrice = detailModel.data.price.max.originalPrice;
 
-    if(detailModel.data.sku!=null&&detailModel.data.sku.length>0){
+    if (detailModel.data.sku != null && detailModel.data.sku.length > 0) {
       coupon = detailModel.data.sku[0].coupon;
       detailModel.data.sku.forEach((element) {
-        if(coupon>element.coupon)coupon = element.coupon;
+        if (coupon > element.coupon) coupon = element.coupon;
       });
-    }else{
-      coupon =0;
+    } else {
+      coupon = 0;
     }
 
 //    if (hasPromotion) {
@@ -113,7 +112,8 @@ class _GoodPriceViewState extends State<GoodPriceView> {
       commission =
           "${_getDoubleText(minCommission)}-${_getDoubleText(maxCommission)}";
     }
-    return _normalPriceWidget(price, commission, originPrice, isTwoPrice,coupon);
+    return _normalPriceWidget(
+        price, commission, originPrice, isTwoPrice, coupon);
   }
 
   _getDoubleText(double number) {
@@ -124,75 +124,49 @@ class _GoodPriceViewState extends State<GoodPriceView> {
     }
   }
 
-  _promotionPrice(price, commission, originPrice,coupon, {isTwoPrice = false}) {
+  _promotionPrice(price, commission, originPrice, coupon,
+      {isTwoPrice = false}) {
     return Container(
       margin: EdgeInsets.only(top: 5, left: 15),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Row(
             children: <Widget>[
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "券后",
-                      style: TextStyle(
-                          color: Colors.yellow,
-                          fontSize: ScreenAdapterUtils.setSp(9)),
-                    ),
-                    TextSpan(
-                      text: "￥",
-                      style: AppTextStyle.generate(
-                        ScreenAdapterUtils.setSp(
-                          14,
+              (coupon != null && coupon != 0)
+                  ? Container(
+                      width: rSize(97),
+                      height: rSize(23),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(
+                              R.ASSETS_GOODS_DETAILS_BOTTOM_GOLD_PNG),
                         ),
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                      )
-                    ),
-                    TextSpan(
-                        text: "$price ",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: ScreenAdapterUtils.setSp(23),
-                          fontWeight: FontWeight.w500,
-                          letterSpacing: 0,
-                        )),
-                    
-                    TextSpan(
-                      text: (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.None || UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip)
-                          ? ""
-                          : isTwoPrice ? "/ " : " / ",
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
-                          color: Colors.white, fontWeight: FontWeight.w500),
-                    ),
-                    TextSpan(
-                      text: (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.None || UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip) ? "" : "赚",
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
-                          color: Colors.white),
-                    ),
-                    TextSpan(
-                      text: (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.None || UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip) ? "" : "$commission",
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
-                          color: Colors.white),
-                    ),
-                ])),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              ( coupon!=null && coupon!=0)
-              ? Padding(
-                padding: EdgeInsets.only(right: 10),
-                child: SmallCouponWidget(
-                  couponType: SmallCouponType.white,
-                  number:coupon,
-                ),
-              )
-              : SizedBox(),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            left: rSize(12),
+                            top: rSize(1),
+                            right: rSize(12),
+                            bottom: rSize(1)),
+                        child: Text(
+                          '$coupon\元优惠券',
+                          style: TextStyle(
+                            shadows: [
+                              Shadow(
+                                color: Colors.black26,
+                                blurRadius: rSize(1),
+                                offset: Offset(0, rSize(1)),
+                              ),
+                            ],
+                            fontSize: ScreenAdapterUtils.setSp(14),
+                            color: Color(0xFFFFFFFF),
+                          ),
+                        ),
+                      ),
+                    )
+                  : SizedBox(),
+              rWBox(10),
               Text(
                 "$originPrice",
                 style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
@@ -202,40 +176,110 @@ class _GoodPriceViewState extends State<GoodPriceView> {
               ),
             ],
           ),
+          Spacer(),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              // (coupon != null && coupon != 0)
+              //     ? Padding(
+              //         padding: EdgeInsets.only(right: 10),
+              //         child: SmallCouponWidget(
+              //           couponType: SmallCouponType.white,
+              //           number: coupon,
+              //         ),
+              //       )
+              //     : SizedBox(),
+              RichText(
+                text: TextSpan(children: [
+                  TextSpan(
+                    text: "券后价",
+                    style: TextStyle(
+                        color: Colors.yellow,
+                        fontSize: ScreenAdapterUtils.setSp(9)),
+                  ),
+                  TextSpan(
+                      text: "￥",
+                      style: AppTextStyle.generate(
+                        ScreenAdapterUtils.setSp(
+                          14,
+                        ),
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                      )),
+                  TextSpan(
+                      text: "$price ",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: ScreenAdapterUtils.setSp(23),
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 0,
+                      )),
+                  TextSpan(
+                    text: (UserLevelTool.currentRoleLevelEnum() ==
+                                UserRoleLevel.None ||
+                            UserLevelTool.currentRoleLevelEnum() ==
+                                UserRoleLevel.Vip)
+                        ? ""
+                        : isTwoPrice
+                            ? "/ "
+                            : " / ",
+                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                        color: Colors.white, fontWeight: FontWeight.w500),
+                  ),
+                  TextSpan(
+                    text: (UserLevelTool.currentRoleLevelEnum() ==
+                                UserRoleLevel.None ||
+                            UserLevelTool.currentRoleLevelEnum() ==
+                                UserRoleLevel.Vip)
+                        ? ""
+                        : "赚",
+                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+                        color: Colors.white),
+                  ),
+                  TextSpan(
+                    text: (UserLevelTool.currentRoleLevelEnum() ==
+                                UserRoleLevel.None ||
+                            UserLevelTool.currentRoleLevelEnum() ==
+                                UserRoleLevel.Vip)
+                        ? ""
+                        : "$commission",
+                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                        color: Colors.white),
+                  ),
+                ]),
+              ),
+            ],
+          ),
+          rHBox(10),
         ],
       ),
     );
   }
 
-  _normalPriceWidget(price, commission, originPrice, isTwoPrice,coupon) {
+  _normalPriceWidget(price, commission, originPrice, isTwoPrice, coupon) {
     return Container(
       height: 75,
       width: MediaQuery.of(context).size.width,
       child: Stack(
+        overflow: Overflow.visible,
         alignment: AlignmentDirectional.center,
         children: <Widget>[
           Positioned(
             child: Image.asset(
-              'assets/goods_price_view_bg_all.png',
-              fit: BoxFit.fill,
+              R.ASSETS_GOODS_DETAILS_BOTTOM_ANIMAL_PNG,
+              fit: BoxFit.fitWidth,
             ),
             left: 0,
             right: 0,
-            top: 0,
             bottom: 0,
           ),
-          Positioned(
-            child: Image.asset(
-              'assets/recook_mascot.png',
-              fit: BoxFit.fill,
-            ),
-            width: 43,
-            right: 40,
-            height: 60,
-            bottom: 0,
+          _promotionPrice(
+            price,
+            commission,
+            originPrice,
+            coupon,
+            isTwoPrice: isTwoPrice,
           ),
-          _promotionPrice(price, commission, originPrice,coupon,
-              isTwoPrice: isTwoPrice,),
         ],
       ),
     );

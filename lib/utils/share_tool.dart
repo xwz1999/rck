@@ -77,6 +77,22 @@ class ShareTool {
     }
   }
 
+  liveShare(
+    BuildContext context, {
+    @required int liveId,
+    @required String title,
+    @required String des,
+    @required String headUrl,
+  }) {
+    String baseUrl = "${AppConfig.debug ? WebApi.testLiveUrl : WebApi.liveUrl}";
+    WeChatUtils.shareUrl(
+      url: '$baseUrl$liveId',
+      title: title,
+      description: des,
+      netWorkThumbnail: Api.getImgUrl(headUrl),
+    );
+  }
+
   goodsShare(BuildContext context,
       {String goodsName = "",
       String goodsDescription = "",

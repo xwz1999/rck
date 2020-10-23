@@ -16,7 +16,7 @@ import 'package:recook/models/coupon_list_model.dart';
 import 'package:recook/pages/home/classify/mvp/coupon_list_model_impl.dart';
 import 'package:recook/pages/home/items/item_coupon.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/widgets/text_button.dart';
+import 'package:recook/widgets/text_button.dart' as TButton;
 import 'package:recook/widgets/toast.dart';
 
 class CouponListPage extends StatefulWidget {
@@ -80,7 +80,7 @@ class _CouponListPageState extends BaseStoreState<CouponListPage> {
                       );
                     }),
               ),
-              TextButton(
+              TButton.TextButton(
                 margin: EdgeInsets.only(top: 8, left: 20, right: 20),
                 radius: BorderRadius.all(Radius.circular(30)),
                 height: rSize(35),

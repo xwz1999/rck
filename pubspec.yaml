@@ -2,10 +2,12 @@ name: recook
 description: Recook Market App.
 publish_to: "none"
 
-version: 1.2.4+165
+version: 1.2.15-dev+178
 
+# sdk min version to 2.2.2
+# to support ... feature
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 module:
   androidX: true
@@ -19,7 +21,7 @@ dependencies:
 
   timeline_tile: 0.1.2
   # 高德定位
-  amap_location_fluttify: 0.13.0
+  amap_map_fluttify:
   # icons
   flutter_icons: 1.1.0
   # 拼音
@@ -30,7 +32,7 @@ dependencies:
   lunar_calendar_converter:
     1.0.4+1
     # 进度条
-  percent_indicator: 2.1.3
+  percent_indicator: ^2.1.7+4
   # 头部滚动视图下拉刷新
   # extended_nested_scroll_view: ^0.3.6
   # 声音播放
@@ -59,7 +61,7 @@ dependencies:
   url_launcher: ^5.1.3
   # 视频组件
   video_player: ^0.10.11+1
-  chewie: ^0.9.8
+  chewie: ^0.9.10
 
   # 权限组件
   permission_handler: 3.3.0
@@ -81,7 +83,7 @@ dependencies:
 
   # 路径
   path_provider: ^1.6.11
-  path: 1.7.0
+  path:
 
   # 网络请求
   dio: ^3.0.9
@@ -113,7 +115,7 @@ dependencies:
   #
   #    现版本将smart_refresher.dart 中的enableOverScroll 去掉了，手动加上，具体代码在refresh_widget.dart中  #########################3
   #
-  pull_to_refresh: ^1.6.1
+  pull_to_refresh: ^1.6.2
   flutter_gifimage: ^1.0.0
 
   # 微信登录 支付等
@@ -176,6 +178,32 @@ dependencies:
   #     ref: f07d8ed25b2776e28baddae105a64664cee2922c
 
   flip_card: ^0.4.4
+  #腾讯云点播上传SDK
+  flutter_txugcupload: ^0.0.2
+  #腾讯直播
+  tencent_live_fluttify: ^0.2.0+1
+  #腾讯IM
+  #TODO 已经将错误提交到上游代码，后期请使用新版本
+  #more at https://github.com/JiangJuHong/FlutterTencentImPlugin/pull/101
+  tencent_im_plugin:
+    git:
+      url: https://gitee.com/laiiihz/FlutterTencentImPlugin
+  #瀑布流
+  waterfall_flow: 2.0.3
+  #相机
+  camera: ^0.5.8+7
+  #工具类库
+  common_utils: ^1.2.1
+  #视频剪辑
+  video_trimmer: ^0.2.7
+
+  #点赞组件
+  many_like: ^0.0.6
+
+  flutter_markdown:
+
+  wakelock:
+  
 
 dev_dependencies:
   flutter_test:
@@ -207,6 +235,7 @@ flutter:
     - assets/lottery_redeem/
     - assets/shop/
     - assets/header/
+    - assets/live/
   fonts:
     - family: AppIcons
       fonts:

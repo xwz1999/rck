@@ -9,7 +9,7 @@ import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/login/wechat_input_invitecode_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/text_button.dart';
+import 'package:recook/widgets/text_button.dart' as TButton;
 import 'package:recook/widgets/toast.dart';
 
 class WeChatBindPage extends StatefulWidget {
@@ -227,7 +227,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
                     ),
                   ),
                 ),
-                TextButton(
+                TButton.TextButton(
                   title: _countDownStr,
                   // title: '获取验证码',
                   // width: rSize(120),
@@ -367,7 +367,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
 
   _loginBtnWidget() {
     return Container(
-      child: TextButton(
+      child: TButton.TextButton(
         title: '登录',
         textColor: Colors.white,
         unableBackgroundColor: Colors.grey[300],

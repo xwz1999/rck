@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/user/review/add_review_page.dart';
 import 'package:recook/pages/user/review/models/order_review_list_model.dart';
 import 'package:recook/pages/user/review/review_detail_page.dart';

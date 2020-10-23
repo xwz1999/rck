@@ -8,14 +8,11 @@ import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
-import 'package:recook/models/base_model.dart';
 import 'package:recook/models/goods_hot_sell_list_model.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/utils/app_router.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/goods_item.dart';
 
 class GoodsHotListPage extends StatefulWidget {
@@ -84,11 +81,13 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage> {
               'assets/goods_hot_list_title_bg.png',
               fit: BoxFit.fill,
             ),
-            Positioned(
-              child: _backButton(context),
-              left: 0,
-              top: ScreenUtil.statusBarHeight,
-            )
+            Navigator.canPop(context)
+                ? Positioned(
+                    child: _backButton(context),
+                    left: 0,
+                    top: ScreenUtil.statusBarHeight,
+                  )
+                : SizedBox(),
           ],
         ));
   }

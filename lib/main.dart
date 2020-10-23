@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:amap_map_fluttify/amap_map_fluttify.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bugly/flutter_bugly.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -16,6 +18,8 @@ import 'package:recook/third_party/bugly_helper.dart';
 import 'package:recook/utils/CommonLocalizationsDelegate.dart';
 import 'package:recook/utils/test.dart';
 import 'package:redux/redux.dart';
+import 'package:tencent_im_plugin/tencent_im_plugin.dart';
+import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 
 import 'constants/header.dart';
 import 'utils/app_router.dart';
@@ -24,12 +28,29 @@ import 'utils/app_router.dart';
 
 import 'package:openinstall_flutter_plugin/openinstall_flutter_plugin.dart';
 
+List<CameraDescription> cameras;
 void main() async {
-  AppConfig.initial(
-    useEncrypt: false
-    /// 网络请求加密功能
-    // useEncrypt: true
+  WidgetsFlutterBinding.ensureInitialized();
+  cameras = await availableCameras();
+
+  //初始化AMap
+  AmapLocation.instance.init(iosKey: 'e8a8057cfedcdcadcf4e8f2c7f8de982');
+
+  //初始化腾讯im
+  TencentImPlugin.init(appid: '1400435566');
+
+  //初始化腾讯直播
+  TencentLive.instance.init(
+    licenseUrl:
+        'http://license.vod2.myqcloud.com/license/v1/9bc083b7b7c2101699499d193c40921b/TXLiveSDK.licence',
+    licenseKey: 'cf903ae78afbb05b5128f8961bf08f64',
   );
+
+  AppConfig.initial(useEncrypt: false
+
+      /// 网络请求加密功能
+      // useEncrypt: true
+      );
   // 设置当前是否为测试环境
   bool isDebug = false;
   AppConfig.setDebug(isDebug);
@@ -74,7 +95,6 @@ void main() async {
   return FlutterBugly.postCatchedException(() {
     runApp(MyApp(store));
   });
-  runApp(MyApp(store));
 }
 
 class MyApp extends StatefulWidget {
@@ -146,6 +166,12 @@ class MyAppState extends State<MyApp> {
             store.state.openinstall.goodsid = decode['goodsid'];
             UserManager.instance.openInstallGoodsId.value =
                 !UserManager.instance.openInstallGoodsId.value;
+          }
+          if (decode.containsKey("type")) {
+            store.state.openinstall.type = decode['type'];
+            store.state.openinstall.itemId = decode['itemId'];
+            UserManager.instance.openInstallLive.value =
+                !UserManager.instance.openInstallLive.value;
           }
         } catch (e) {}
       }

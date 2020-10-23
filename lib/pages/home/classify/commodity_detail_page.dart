@@ -238,7 +238,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
 
 
 
-  _showShare(BuildContext context, {Widget customTitle}) {
+  _showShare(BuildContext context) {
     if (UserLevelTool.currentRoleLevelEnum() ==  UserRoleLevel.Vip || UserLevelTool.currentRoleLevelEnum() ==  UserRoleLevel.None){
       //跳到分享邀请
       // _showInviteShare(context);

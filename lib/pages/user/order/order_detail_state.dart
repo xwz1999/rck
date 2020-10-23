@@ -513,6 +513,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
       }
     }
     if (goods.refundStatus != 0) canRefund = false;
+    if (orderDetail.status != 1) canRefund = false; 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[

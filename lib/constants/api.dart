@@ -13,24 +13,24 @@ import 'package:recook/utils/print_util.dart';
 class Api {
   static String host;
   static String domain;
-  static String cdn_domain;
+  static String cdnDomin;
 
-  static const String domain_pro = "https://api.reecook.cn";
-  static const String domain_dev = "https://testapi.reecook.cn";
-  // static const String domain_dev = "http://192.168.2.68:8080/";
-  // static const String domain_dev = "https://api.reecook.cn";
+  static const String domainPro = "https://api.reecook.cn";
+  static const String domainDev = "https://testapi.reecook.cn";
+  // static const String domainDev = "http://192.168.2.68:8080/";
+  // static const String domainDev = "https://api.reecook.cn";
 
-  static const String cdn_domain_pro = "https://cdn.reecook.cn";
-  static const String cdn_domain_dev = "https://testcdn.reecook.cn";
-  // static const String cdn_domain_dev = "https://cdn.reecook.cn";
+  static const String cdnDominPro = "https://cdn.reecook.cn";
+  static const String cdnDominDev = "https://testcdn.reecook.cn";
+  // static const String cdnDominDev = "https://cdn.reecook.cn";
 
   static toggleEnvironment(bool debug) {
     if (debug) {
-      domain = domain_dev;
-      cdn_domain = cdn_domain_dev;
+      domain = domainDev;
+      cdnDomin = cdnDominDev;
     } else {
-      domain = domain_pro;
-      cdn_domain = cdn_domain_pro;
+      domain = domainPro;
+      cdnDomin = cdnDominPro;
     }
     host = "$domain/api";
   }
@@ -41,10 +41,10 @@ class Api {
     }
     if (print) {
       // DPrint.printf("$domain/static$url");
-      DPrint.printf("$cdn_domain/static$url");
+      DPrint.printf("$cdnDomin/static$url");
     }
     // return "$domain/static$url";
-    return "$cdn_domain/static$url";
+    return "$cdnDomin/static$url";
   }
 
   static String getResizeImgUrl(String url, int width, {bool print = false}) {
@@ -52,7 +52,7 @@ class Api {
       return url;
     }
     String resizeUrl = "$domain/api/v1/static/photo/resize$url/$width";
-    // String resizeUrl = "$cdn_domain/static$url";
+    // String resizeUrl = "$cdnDomin/static$url";
     if (print) {
       DPrint.printf("resizeUrl --- $resizeUrl");
     }
@@ -322,6 +322,12 @@ class WebApi {
   // static const String iOSUrl = "https://apps.apple.com/app/id1477928534";
   static const String androidUrl =
       "https://a.app.qq.com/o/simple.jsp?pkgname=com.akuhome.recook";
+
+  ///直播分享链接（正式服务器）
+  static const String liveUrl = 'https://h5.reecook.cn/#/live/item/';
+
+  ///直播分享链接（测试服务器）
+  static const String testLiveUrl = 'https://testh5.reecook.cn/#/live/item/';
 }
 
 class InvoiceApi {
@@ -378,4 +384,149 @@ class LotteryAPI {
 
   ///彩票订单详情
   static const String lottery_order_detail = "/v1/ticket/order/info";
+}
+
+///直播接口
+class LiveAPI {
+  ///商品橱窗
+  static const String shopWindow = '/v1/live/cupboard/list';
+
+  ///删除商品橱窗
+  static const String deleteShopWindow = '/v1/live/cupboard/delete';
+
+  ///会员基础信息
+  static const String baseInfo = '/v1/live/user/baseinfo';
+
+  ///关注列表
+  static const String followList = '/v1/live/user/follow/list';
+
+  ///添加关注
+  static const String addFollow = '/v1/live/user/follow/add';
+
+  ///取消关注
+  static const String cancelFollow = '/v1/live/user/follow/cancel';
+
+  ///话题基础信息
+  static const String topicBaseInfo = '/v1/live/topic/info';
+
+  ///话题列表
+  static const String topicList = '/v1/live/topic/follow/list';
+
+  ///关注话题
+  static const String addTopic = '/v1/live/topic/follow/add';
+
+  /// 取消关注话题
+  static const String cancelTopic = '/v1/live/topic/follow/cancel';
+
+  ///话题详情列表
+  static const String topicContentList = '/v1/live/topic/content/list';
+
+  ///视频列表
+  static const String videoList = '/v1/live/short/list';
+
+  ///用户动态
+  static const String activityList = '/v1/live/user/trend/list';
+
+  ///用户动态评论
+  static const String activityReview = '/v1/live/user/trend/comment/list';
+
+  ///添加用户动态评论
+  static const String addActivityReview = '/v1/live/user/trend/comment/add';
+
+  ///用户动态点赞
+  static const String likeActivity = '/v1/live/user/trend/praise/add';
+
+  ///用户动态取消点赞
+  static const String dislikeActivity = '/v1/live/user/trend/praise/cancel';
+
+  ///用户评论点赞
+  static const String likeComment = '/v1/live/user/trend/comment/praise/add';
+
+  ///用户评论取消点赞
+  static const String dislikeComment =
+      '/v1/live/user/trend/comment/praise/cancel';
+
+  ///热门话题
+  static const String hotTopics = '/v1/live/topic/hot';
+
+  ///搜索话题或话题列表
+  static const String topicSearchList = '/v1/live/topic/list';
+
+  ///历史购买
+  static const String historyGoods = '/v1/live/order/history';
+
+  ///搜索商品
+  static const String goodsList = '/v1/live/goods/list';
+
+  ///直播列表
+  static const String liveList = '/v1/live/live/list';
+
+  ///直播关注列表
+  static const String liveAttentionList = '/v1/live/live/follow_list';
+
+  ///通过已登陆账号获取腾讯IM账号
+  static const String tencentUser = '/v1/live/live/im/login_info';
+
+  ///通过未登陆账号获取腾讯IM账号
+  static const String tencentUserNotLogin = '/v1/live/live/im/no_login_info';
+
+  ///设置开始直播信息
+  static const String startLive = '/v1/live/live/start';
+
+  ///直播间信息
+  static const String liveStreamInfo = '/v1/live/live/live_info';
+
+  ///直播回放信息
+  static const String livePlaybackInfo = '/v1/live/live/video_info';
+
+  ///直播品牌列表
+  static const String liveBrandList = '/v1/live/goods/brandlist';
+
+  ///直播品牌商品列表
+  static const String liveBrandDetailList = '/v1/live/goods/brandgoodslist';
+
+  ///直播场次数据列表
+  static const String liveDataList = '/v1/live/live/data/list';
+
+  ///停止直播
+  static const String exitLive = '/v1/live/live/stop';
+
+  ///多日累计数据
+  static const String dataCount = '/v1/live/live/data/count';
+
+  ///获取小视频上传签名
+  static const String uploadKey = '/v1/live/short/upload_sign';
+
+  ///发布小视频
+  static const String pushVideo = '/v1/live/short/publish';
+
+  ///直播单场详细数据
+  static const String liveDataDetail = '/v1/live/live/data/info';
+
+  ///获取动态中直播的列表
+  static const String activityVideoList = '/v1/live/user/live/list';
+
+  ///直播点赞
+  static const String liveLike = '/v1/live/live/praise/add';
+
+  ///开始讲解
+  static const String liveStartExplain = '/v1/live/live/explain';
+
+  ///取消讲解
+  static const String liveStopExplain = '/v1/live/live/un_explain';
+
+  ///举报类型
+  static const String reportType = '/v1/live/live/report/types';
+
+  ///举报
+  static const String report = '/v1/live/live/report/submit';
+
+  ///购买通知
+  static const String buyGoodsInform = '/v1/live/live/im/buy_goods';
+
+  ///获取直播间用户
+  static const String getLiveUsers = '/v1/live/live/user_data';
+
+  ///当前用户直播信息获取
+  static const String getLiveInfo = '/v1/live/live/info';
 }

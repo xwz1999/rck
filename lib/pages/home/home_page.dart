@@ -10,13 +10,12 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
-import 'package:amap_location_fluttify/amap_location_fluttify.dart';
+import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -41,6 +40,7 @@ import 'package:recook/pages/home/widget/goods_list_temp_page.dart';
 import 'package:recook/pages/home/widget/home_countdown_widget.dart';
 import 'package:recook/pages/home/widget/home_sliver_app_bar.dart';
 import 'package:recook/pages/home/widget/home_weather_view.dart';
+import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
 import 'package:recook/pages/noticeList/notice_list_model.dart';
 import 'package:recook/pages/noticeList/notice_list_tool.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
@@ -141,8 +141,6 @@ class _HomePageState extends BaseStoreState<HomePage>
     super.initState();
     // 分享注册
     _mobShareInit();
-    // 高德定位注册
-    _amapInit();
     // 判断微信是否登录
     WeChatUtils.initial();
     // meiqia注册
@@ -153,6 +151,27 @@ class _HomePageState extends BaseStoreState<HomePage>
 
     UserManager.instance.openInstallGoodsId
         .addListener(_openInstallGoodsIdListener);
+
+    UserManager.instance.openInstallLive.addListener(() {
+      if (getStore().state.openinstall.type == 'live') {
+        CRoute.push(
+            context,
+            LiveStreamViewPage(
+                id: int.parse(getStore().state.openinstall.itemId)));
+      }
+      if (!TextUtils.isEmpty(getStore().state.openinstall.type)) {
+        int goodsid = 0;
+        try {
+          goodsid = int.parse(getStore().state.openinstall.goodsid);
+        } catch (e) {
+          getStore().state.openinstall.goodsid = "";
+          return;
+        }
+        AppRouter.push(context, RouteName.COMMODITY_PAGE,
+            arguments: CommodityDetailPage.setArguments(goodsid));
+        getStore().state.openinstall.goodsid = "";
+      }
+    });
     _updateSource();
     _sliverListController = ScrollController();
     _gsRefreshController = GSRefreshController();
@@ -989,7 +1008,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                 ),
                 _buttonTitleRow(
                     AppConfig.getShowCommission()
-                        ? R.ASSETS_HOME_INVITE_WEBP
+                        ? R.ASSETS_HOME_INVITE_WEBP_S_PNG
                         : R.ASSETS_LISTTEMP_HOMEAPPLIANCES_ICON_PNG,
                     AppConfig.getShowCommission()
                         // ? "升级店主"
@@ -1087,8 +1106,9 @@ class _HomePageState extends BaseStoreState<HomePage>
               scrollDirection: Axis.horizontal,
               children: [
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_DEPARTMENT_PNG, '日用百货'),
-                _buildSingleGoodsCard(R.ASSETS_HOME_IC_WINE_PNG, '美食酒水'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_WINE_PNG, '酒饮冲调'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_IMPORT_PNG, '进口专区'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_TEA_PNG, '休闲美食'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_FOOD_PNG, '有机食品'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_VEGETABLES_PNG, '蔬果生鲜'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_RICE_PNG, '柴米油盐'),
@@ -1096,10 +1116,11 @@ class _HomePageState extends BaseStoreState<HomePage>
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_PHONE_PNG, '手机数码'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_BABY_PNG, '母婴用品'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_SPORT_PNG, '运动旅行'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_MEDICALBOX_PNG, '医疗保健'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_HAIR_PNG, '美妆护肤'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_CLEAN_PNG, '个护清洁'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_BOOK_PNG, '图文教育'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_FURNITURE_PNG, '家具饰品'),
-                _buildSingleGoodsCard(R.ASSETS_HOME_IC_BOOK_PNG, '图书教育'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_CLOTHES_PNG, '服饰内衣'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_BAG_PNG, '鞋靴箱包'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_MEMBERS_PNG, '会员专享'),
@@ -1305,7 +1326,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     // if (_weatherLocation==null)
 
     if (await requestPermission())
-      _weatherLocation = await AmapLocation.fetchLocation();
+      _weatherLocation = await AmapLocation.instance.fetchLocation();
 
     String url =
         "https://tianqiapi.com/api?version=v61&appid=81622428&appsecret=AxKzYWq3";
@@ -1337,10 +1358,6 @@ class _HomePageState extends BaseStoreState<HomePage>
         "https://www.reecook.cn");
     register.setupQQ("101876843", "6f367bfad98978e22c2e11897dd74f00");
     SharesdkPlugin.regist(register);
-  }
-
-  _amapInit() {
-    AmapCore.init("e8a8057cfedcdcadcf4e8f2c7f8de982");
   }
 
   Future<bool> requestPermission() async {

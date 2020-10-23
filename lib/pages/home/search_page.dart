@@ -341,6 +341,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
             ),
             Expanded(
               child: CupertinoTextField(
+                autofocus: true,
                 keyboardType: TextInputType.text,
                 controller: _textEditController,
                 textInputAction: TextInputAction.search,
