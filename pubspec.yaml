@@ -2,7 +2,7 @@ name: recook
 description: Recook Market App.
 publish_to: "none"
 
-version: 1.2.13-dev+176
+version: 1.2.15-dev+178
 
 # sdk min version to 2.2.2
 # to support ... feature

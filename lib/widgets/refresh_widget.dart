@@ -62,11 +62,13 @@ class RefreshWidget extends StatefulWidget {
       this.completeText: "刷新完成",
       this.failedText: "网络出了一点问题呢",
       this.idleText: "下拉刷新",
+      this.upIdleText: "上拉加载更多",
       this.releaseText: "松开刷新",
       this.loadingText: "正在加载中...",
       this.noDataText: "已经到底了",
       this.headerTriggerDistance,
-      this.header, GridView child})
+      this.header,
+      GridView child})
       : this.controller = controller ?? GSRefreshController();
 
   final Widget body;
@@ -82,6 +84,7 @@ class RefreshWidget extends StatefulWidget {
   final String completeText;
   final String failedText;
   final String idleText;
+  final String upIdleText;
   final String releaseText;
 
   final String loadingText;
@@ -145,7 +148,7 @@ class _RefreshWidgetState extends State<RefreshWidget> {
         footer: ClassicFooter(
           textStyle: TextStyle(
               fontSize: ScreenAdapterUtils.setSp(14), color: Color(0xff555555)),
-          idleText: "上拉加载更多",
+          idleText: widget.upIdleText,
           idleIcon: Icon(
             Icons.arrow_upward,
             size: ScreenAdapterUtils.setSp(20),
@@ -154,6 +157,7 @@ class _RefreshWidgetState extends State<RefreshWidget> {
           loadingText: widget.loadingText,
           failedText: "网络出了一点问题呢",
           noDataText: widget.noDataText,
+          canLoadingText: '',
         ),
         controller: widget.controller._controller,
         onRefresh: widget.onRefresh,

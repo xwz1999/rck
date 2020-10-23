@@ -61,11 +61,11 @@ class _LiveStreamPageState extends State<LiveStreamPage>
 
   _buildAttentions() {
     return Container(
-      height: rSize(102),
+      height: _liveAttentionListModels.isEmpty ? rSize(10) : rSize(102),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          rHBox(rSize(102)),
+          // rHBox(rSize(102)),
           Expanded(
             child: RefreshWidget(
               header: ClassicHeader(
@@ -99,6 +99,8 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                 releaseText: '',
               ),
               noDataText: '',
+              refreshingText: '',
+              upIdleText: '',
               controller: _liveAttentionController,
               onRefresh: () {
                 _attentionPage = 1;
@@ -131,9 +133,13 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                 },
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
+                  if (_liveAttentionListModels.isEmpty)
+                    return SizedBox(height: rSize(10));
                   return _buildAttentionBox(_liveAttentionListModels[index]);
                 },
-                itemCount: _liveAttentionListModels.length,
+                itemCount: _liveAttentionListModels.isEmpty
+                    ? 1
+                    : _liveAttentionListModels.length,
               ),
             ),
           ),
