@@ -98,7 +98,7 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                 idleText: '',
                 releaseText: '',
               ),
-              noDataText: '｜',
+              noDataText: '',
               controller: _liveAttentionController,
               onRefresh: () {
                 _attentionPage = 1;
