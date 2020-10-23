@@ -129,7 +129,14 @@ class _UserHomePageState extends State<UserHomePage>
                                   initAttention: widget.initAttention,
                                   width: rSize(68),
                                   height: rSize(30),
-                                  onAttention: (oldAttentionState) {},
+                                  onAttention: (bool oldState) {
+                                    HttpManager.post(
+                                      oldState
+                                          ? LiveAPI.cancelFollow
+                                          : LiveAPI.addFollow,
+                                      {'followUserId': model.userId},
+                                    );
+                                  },
                                 ),
                         ],
                       ),
