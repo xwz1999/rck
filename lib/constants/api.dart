@@ -529,4 +529,6 @@ class LiveAPI {
 
   ///当前用户直播信息获取
   static const String getLiveInfo = '/v1/live/live/info';
+
+  static const String liveLicense = '/v1/live/live/license';
 }
