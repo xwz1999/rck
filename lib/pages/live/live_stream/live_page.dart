@@ -112,9 +112,9 @@ class _LivePageState extends State<LivePage> {
                 _livePusher.startPreview(controller);
                 _livePusher.setBeautyFilter(
                   BeautyFilter.NATURE,
-                  whiteningLevel: 0,
-                  beautyLevel: 0,
-                  ruddyLevel: 0,
+                  whiteningLevel: 6,
+                  beautyLevel: 6,
+                  ruddyLevel: 6,
                 );
                 if (widget.resumeLive) {
                   _isStream = true;
@@ -553,6 +553,56 @@ class _LivePageState extends State<LivePage> {
                       pickedIds = ids;
                     },
                   ));
+                }),
+                _buildVerticalButton(R.ASSETS_LIVE_ALL_SHARE_PNG, '分享', () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (context) {
+                        return Material(
+                          color: Colors.black,
+                          child: Row(
+                            children: [
+                              CustomImageButton(
+                                onPressed: () {
+                                  if (UserManager.instance.haveLogin) {
+                                    Navigator.pop(context);
+                                    ShareTool().liveShare(
+                                      context,
+                                      liveId: liveItemId,
+                                      title:
+                                          '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘',
+                                      des: '',
+                                      headUrl: _streamInfoModel.headImgUrl,
+                                    );
+                                  } else {
+                                    showToast('未登陆，请先登陆');
+                                    CRoute.push(context, UserPage());
+                                  }
+                                },
+                                padding: EdgeInsets.all(rSize(15)),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Image.asset(
+                                      R.ASSETS_SHARE_BOTTOM_SHARE_BOTTOM_WECHAT_PNG,
+                                      height: rSize(40),
+                                      width: rSize(40),
+                                    ),
+                                    rHBox(10),
+                                    Text(
+                                      '微信分享',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: rSP(14),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      });
                 }),
               ],
             ),
