@@ -101,6 +101,12 @@ class _LivePageState extends State<LivePage> {
               onCloudVideoCreated: (controller) async {
                 _livePusher = await LivePusher.create();
                 _livePusher.startPreview(controller);
+                _livePusher.setBeautyFilter(
+                  BeautyFilter.NATURE,
+                  whiteningLevel: 0,
+                  beautyLevel: 0,
+                  ruddyLevel: 0,
+                );
                 if (widget.resumeLive) {
                   _isStream = true;
                   liveItemId = widget.model.liveItemId;

@@ -181,7 +181,9 @@ dependencies:
   #腾讯云点播上传SDK
   flutter_txugcupload: ^0.0.2
   #腾讯直播
-  tencent_live_fluttify: ^0.2.0+1
+  tencent_live_fluttify:
+    git:
+      url: http://test.akuhotel.com:8099/laiiihz/tencent_live_fluttify.git
   #腾讯IM
   #TODO 已经将错误提交到上游代码，后期请使用新版本
   #more at https://github.com/JiangJuHong/FlutterTencentImPlugin/pull/101
