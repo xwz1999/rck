@@ -3,6 +3,7 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/live/functions/live_function.dart';
 import 'package:recook/pages/live/live_stream/live_page.dart';
 import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/models/live_time_data_model.dart';
@@ -61,11 +62,7 @@ class _LiveHostCenterPageState extends State<LiveHostCenterPage>
           FlatButton(
             splashColor: Color(0xFFDB2D2D).withOpacity(0.3),
             onPressed: () {
-              PermissionTool.haveCameraPermission().then((value) {
-                PermissionTool.haveAudioPermission().then((value) {
-                  CRoute.pushReplace(context, LivePage());
-                });
-              });
+              checkStartLive(context, context);
             },
             child: Text(
               '去开播',

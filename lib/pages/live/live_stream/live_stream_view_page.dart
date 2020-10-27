@@ -296,7 +296,8 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                       onCloudVideoCreated: (controller) async {
                         _livePlayer = await LivePlayer.create();
                         await _livePlayer.setPlayerView(controller);
-                        _livePlayer.startPlay(_streamInfoModel.playUrl);
+                        _livePlayer.startPlay(_streamInfoModel.playUrl,
+                            type: PlayType.RTMP);
                       },
                     ),
                   ),

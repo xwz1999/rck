@@ -530,5 +530,9 @@ class LiveAPI {
   ///当前用户直播信息获取
   static const String getLiveInfo = '/v1/live/live/info';
 
+  ///直播证书
   static const String liveLicense = '/v1/live/live/license';
+
+  ///直播同意协议
+  static const String liveAgree = '/v1/live/live/agree';
 }
