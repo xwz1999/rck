@@ -1022,10 +1022,12 @@ packages:
   tencent_live_fluttify:
     dependency: "direct main"
     description:
-      name: tencent_live_fluttify
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.2.0+1"
+      path: "."
+      ref: HEAD
+      resolved-ref: cc34f13777b2eff58523fef3a96a827dc3bfda86
+      url: "http://test.akuhotel.com:8099/laiiihz/tencent_live_fluttify.git"
+    source: git
+    version: "1.0.0"
   term_glyph:
     dependency: transitive
     description:

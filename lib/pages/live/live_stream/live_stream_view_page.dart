@@ -61,6 +61,8 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
 
   List<GroupMemberEntity> _groupMembers = [];
 
+  int _praise = 0;
+
   @override
   void initState() {
     super.initState();
@@ -78,6 +80,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
         else {
           setState(() {
             _streamInfoModel = model;
+            _praise = model.praise;
             isAttention = _streamInfoModel.isFollow == 1;
           });
           TencentImPlugin.applyJoinGroup(
@@ -158,6 +161,12 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                     showDetailWindow = false;
                   });
                   break;
+                case 'Praise':
+                  int extra = customParams['data']['addPraise'];
+                  // int nowPraise = customParams['data']['praise'];
+                  _praise += extra;
+                  setState(() {});
+                  break;
                 case 'Explain':
                   int goodsId = customParams['data']['goodsId'];
                   nowGoodList = _streamInfoModel.goodsLists.where((element) {
@@ -184,6 +193,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                         ));
                   }
                   break;
+
                 case 'Notice':
                   chatObjects.insertAll(
                       0,
@@ -345,7 +355,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                             );
                           },
                           title: _streamInfoModel.nickname,
-                          subTitle: '点赞数 ${_streamInfoModel.praise}',
+                          subTitle: '点赞数 $_praise',
                           avatar: _streamInfoModel.headImgUrl,
                         ),
                         Spacer(),

@@ -51,8 +51,11 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
     return DraggableScrollableSheet(
       minChildSize: 0.5,
       maxChildSize: 0.9,
+      initialChildSize: 0.5,
+      expand: false,
       builder: (context, scrollController) {
         return Column(
+          mainAxisSize: MainAxisSize.max,
           children: [
             Material(
               color: Colors.transparent,
@@ -85,6 +88,7 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
                 child: ListView.separated(
                   padding: EdgeInsets.zero,
                   controller: scrollController,
+                  physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
                     return _buildGoodsCard(widget.models[index], index);
                   },
@@ -417,33 +421,46 @@ showGoodsListDialog(
   int initExplain,
   int id,
 }) {
-  showGeneralDialog(
+  showModalBottomSheet(
     context: context,
-    pageBuilder: (context, animation, secondaryAnimation) {
-      return Align(
-        alignment: Alignment.bottomCenter,
-        child: GoodsListDialog(
-          models: models,
-          isLive: isLive,
-          onExplain: onExplain,
-          initExplain: initExplain,
-          id: id,
-          onLive: onLive,
-        ),
+    builder: (context) {
+      return GoodsListDialog(
+        models: models,
+        isLive: isLive,
+        onExplain: onExplain,
+        initExplain: initExplain,
+        id: id,
+        onLive: onLive,
       );
     },
-    transitionBuilder: (context, animation, secondaryAnimation, child) {
-      return Transform.translate(
-        offset: Offset(
-            0, (1 - Curves.easeInOutCubic.transform(animation.value)) * 500),
-        child: child,
-      );
-    },
-    barrierColor: Colors.black26,
-    barrierLabel: 'label',
-    barrierDismissible: true,
-    transitionDuration: Duration(milliseconds: 500),
   );
+  // showGeneralDialog(
+  //   context: context,
+  //   pageBuilder: (context, animation, secondaryAnimation) {
+  //     return Align(
+  //       alignment: Alignment.bottomCenter,
+  //       child: GoodsListDialog(
+  //         models: models,
+  //         isLive: isLive,
+  //         onExplain: onExplain,
+  //         initExplain: initExplain,
+  //         id: id,
+  //         onLive: onLive,
+  //       ),
+  //     );
+  //   },
+  //   transitionBuilder: (context, animation, secondaryAnimation, child) {
+  //     return Transform.translate(
+  //       offset: Offset(
+  //           0, (1 - Curves.easeInOutCubic.transform(animation.value)) * 500),
+  //       child: child,
+  //     );
+  //   },
+  //   barrierColor: Colors.black26,
+  //   barrierLabel: 'label',
+  //   barrierDismissible: true,
+  //   transitionDuration: Duration(milliseconds: 500),
+  // );
 }
 
 /**

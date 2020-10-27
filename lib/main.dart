@@ -8,6 +8,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:oktoast/oktoast.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/user_brief_info_model.dart';
 import 'package:recook/models/user_model.dart';
@@ -38,13 +40,6 @@ void main() async {
 
   //初始化腾讯im
   TencentImPlugin.init(appid: '1400435566');
-
-  //初始化腾讯直播
-  TencentLive.instance.init(
-    licenseUrl:
-        'http://license.vod2.myqcloud.com/license/v1/9bc083b7b7c2101699499d193c40921b/TXLiveSDK.licence',
-    licenseKey: 'cf903ae78afbb05b5128f8961bf08f64',
-  );
 
   AppConfig.initial(useEncrypt: false
 
@@ -122,6 +117,16 @@ class MyAppState extends State<MyApp> {
     // ShareSDKRegister register = ShareSDKRegister();
     // register.setupQQ("1109724223", "UGWklum7WWI03ll9");
     // SharesdkPlugin.regist(register);
+
+    HttpManager.post(LiveAPI.liveLicense, {}).then((resultData) {
+      String key = resultData.data['data']['key'];
+      String licenseURL = resultData.data['data']['licenseUrl'];
+      //初始化腾讯直播
+      TencentLive.instance.init(
+        licenseUrl: licenseURL,
+        licenseKey: key,
+      );
+    });
   }
 
   Future<void> initPlatformState() async {
