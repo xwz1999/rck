@@ -11,6 +11,7 @@ import 'package:recook/pages/live/live_stream/live_blur_page.dart';
 import 'package:recook/pages/live/live_stream/live_report_view.dart';
 import 'package:recook/pages/live/live_stream/live_users_view.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
+import 'package:recook/pages/live/live_stream/widget/live_buying_widget.dart';
 import 'package:recook/pages/live/live_stream/widget/live_chat_box.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
 import 'package:recook/pages/live/sub_page/user_home_page.dart';
@@ -62,6 +63,9 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   List<GroupMemberEntity> _groupMembers = [];
 
   int _praise = 0;
+
+  GlobalKey<LiveBuyingWidgetState> _globalBuyingWidgetKey =
+      GlobalKey<LiveBuyingWidgetState>();
 
   @override
   void initState() {
@@ -136,26 +140,28 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
               dynamic data = customParams['data'];
               switch (customParams['type']) {
                 case 'BuyGoods':
-                  showToastWidget(
-                    Container(
-                      margin: EdgeInsets.all(rSize(15)),
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.symmetric(horizontal: rSize(10)),
-                      height: rSize(26),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF4BC22),
-                        borderRadius: BorderRadius.circular(rSize(13)),
-                      ),
-                      child: Text(
-                        '${customParams['data']['content']}',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: rSP(13),
-                        ),
-                      ),
-                    ),
-                    position: ToastPosition.top,
-                  );
+                  // showToastWidget(
+                  //   Container(
+                  //     margin: EdgeInsets.all(rSize(15)),
+                  //     alignment: Alignment.center,
+                  //     padding: EdgeInsets.symmetric(horizontal: rSize(10)),
+                  //     height: rSize(26),
+                  //     decoration: BoxDecoration(
+                  //       color: Color(0xFFF4BC22),
+                  //       borderRadius: BorderRadius.circular(rSize(13)),
+                  //     ),
+                  //     child: Text(
+                  //       '${customParams['data']['content']}',
+                  //       style: TextStyle(
+                  //         color: Colors.white,
+                  //         fontSize: rSP(13),
+                  //       ),
+                  //     ),
+                  //   ),
+                  //   position: ToastPosition.top,
+                  // );
+                  _globalBuyingWidgetKey.currentState
+                      .updateChild(customParams['data']['content']);
                   break;
                 case 'UnExplain':
                   setState(() {
@@ -415,6 +421,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                     ),
                     child: Column(
                       children: [
+                        LiveBuyingWidget(key: _globalBuyingWidgetKey),
                         Container(
                           height: MediaQuery.of(context).size.height / 3,
                           child: ListView.builder(
@@ -427,6 +434,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                 sender: chatObjects[index].name,
                                 note: chatObjects[index].message,
                                 userEnter: chatObjects[index].enterUser,
+                                type: chatObjects[index].type,
                               );
                             },
                             itemCount: chatObjects.length,
@@ -862,5 +870,6 @@ class ChatObj {
   String name;
   String message;
   bool enterUser = false;
-  ChatObj(this.name, this.message, {this.enterUser});
+  ChatType type = ChatType.NORMAL;
+  ChatObj(this.name, this.message, {this.enterUser, this.type});
 }

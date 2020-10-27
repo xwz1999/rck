@@ -13,6 +13,7 @@ import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
 import 'package:recook/pages/live/live_stream/live_users_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
+import 'package:recook/pages/live/live_stream/widget/live_buying_widget.dart';
 import 'package:recook/pages/live/live_stream/widget/live_chat_box.dart';
 import 'package:recook/pages/live/models/live_exit_model.dart';
 import 'package:recook/pages/live/models/live_resume_model.dart';
@@ -66,6 +67,9 @@ class _LivePageState extends State<LivePage> {
   int nowExplain = 0;
   List<GroupMemberEntity> _groupMembers = [];
   int _praise = 0;
+
+  GlobalKey<LiveBuyingWidgetState> _globalBuyingWidgetKey =
+      GlobalKey<LiveBuyingWidgetState>();
 
   @override
   void initState() {
@@ -367,6 +371,7 @@ class _LivePageState extends State<LivePage> {
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      LiveBuyingWidget(key: _globalBuyingWidgetKey),
                       Container(
                         height: 300,
                         child: ListView.builder(
@@ -688,6 +693,10 @@ class _LivePageState extends State<LivePage> {
               Map<String, dynamic> customParams = jsonDecode(userData);
               print(customParams);
               switch (customParams['type']) {
+                case 'BuyGoods':
+                  _globalBuyingWidgetKey.currentState
+                      .updateChild(customParams['data']['content']);
+                  break;
                 case 'UnExplain':
                   break;
                 case 'Explain':

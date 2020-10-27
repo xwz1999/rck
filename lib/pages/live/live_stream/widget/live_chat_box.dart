@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
@@ -5,13 +6,30 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 
-class LiveChatBox extends StatelessWidget {
+enum ChatType {
+  NORMAL,
+  ENTER_LIVE,
+  BUYING,
+}
+
+class LiveChatBox extends StatefulWidget {
   final String sender;
   final String note;
   final bool userEnter;
-  const LiveChatBox({Key key, this.sender, this.note, this.userEnter = false})
-      : super(key: key);
+  final ChatType type;
+  const LiveChatBox({
+    Key key,
+    this.sender,
+    this.note,
+    this.userEnter = false,
+    this.type = ChatType.NORMAL,
+  }) : super(key: key);
 
+  @override
+  _LiveChatBoxState createState() => _LiveChatBoxState();
+}
+
+class _LiveChatBoxState extends State<LiveChatBox> {
   @override
   Widget build(BuildContext context) {
     final Color color = Color.fromRGBO(
@@ -31,14 +49,15 @@ class LiveChatBox extends StatelessWidget {
             child: Text.rich(
               TextSpan(children: [
                 TextSpan(
-                  text: '$sender${TextUtil.isEmpty(sender) ? '' :':'}',
+                  text:
+                      '${widget.sender}${TextUtil.isEmpty(widget.sender) ? '' : ':'}',
                   style: TextStyle(
                     color: color,
                     fontSize: rSP(13),
                   ),
                 ),
                 TextSpan(
-                  text: note,
+                  text: widget.note,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: rSP(13),
@@ -54,7 +73,7 @@ class LiveChatBox extends StatelessWidget {
             constraints: BoxConstraints(
               maxWidth: rSize(200),
             ),
-            color: userEnter ?? false
+            color: widget.userEnter ?? false
                 ? Colors.pink.withOpacity(0.3)
                 : Colors.black.withOpacity(0.1),
           ),
