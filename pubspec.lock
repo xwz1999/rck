@@ -260,6 +260,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.10"
+  dropdown_search:
+    dependency: "direct main"
+    description:
+      name: dropdown_search
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.4.5"
   encrypt:
     dependency: "direct main"
     description:
