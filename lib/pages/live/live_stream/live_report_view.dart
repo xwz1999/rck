@@ -18,7 +18,7 @@ class LiveReportView extends StatefulWidget {
 
 class _LiveReportViewState extends State<LiveReportView> {
   int type = 1;
-  List<LiveReportModel> models = [];
+  List<LiveReportModel> models;
   File _imageFile;
   TextEditingController _textController = TextEditingController();
   @override
@@ -63,7 +63,7 @@ class _LiveReportViewState extends State<LiveReportView> {
                       fontSize: rSP(13),
                     ),
                   ),
-                  models.isEmpty
+                  models == null
                       ? Center(child: CircularProgressIndicator())
                       : Wrap(
                           children: models

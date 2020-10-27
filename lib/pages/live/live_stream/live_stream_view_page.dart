@@ -109,6 +109,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
       case ListenerTypeEnum.ForceOffline:
         break;
       case ListenerTypeEnum.UserSigExpired:
+        TencentIMTool.login();
         break;
       case ListenerTypeEnum.Connected:
         break;

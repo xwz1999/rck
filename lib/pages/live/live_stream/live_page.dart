@@ -22,8 +22,10 @@ import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/live/video/pick_topic_page.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
+import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/image_utils.dart';
+import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -31,6 +33,7 @@ import 'package:tencent_im_plugin/entity/group_member_entity.dart';
 import 'package:tencent_im_plugin/entity/message_entity.dart';
 import 'package:tencent_im_plugin/entity/session_entity.dart';
 import 'package:tencent_im_plugin/message_node/group_system_message_node.dart';
+import 'package:tencent_im_plugin/message_node/text_message_node.dart';
 import 'package:tencent_im_plugin/tencent_im_plugin.dart';
 import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 import 'package:image_picker/image_picker.dart';
@@ -52,6 +55,7 @@ class _LivePageState extends State<LivePage> {
   File _imageFile;
   TopicListModel _topicModel;
   TextEditingController _editingController = TextEditingController();
+  TextEditingController _messageController = TextEditingController();
   List<int> pickedIds = [];
   int liveItemId = 0;
   bool _isStream = false;
@@ -61,6 +65,7 @@ class _LivePageState extends State<LivePage> {
   ScrollController _scrollController = ScrollController();
   int nowExplain = 0;
   List<GroupMemberEntity> _groupMembers = [];
+  int _praise = 0;
 
   @override
   void initState() {
@@ -113,6 +118,7 @@ class _LivePageState extends State<LivePage> {
                   _streamInfoModel =
                       LiveStreamInfoModel.fromLiveResume(widget.model);
                   _livePusher.startPush(widget.model.pushUrl);
+                  _praise = _streamInfoModel.praise;
                   setState(() {});
                   TencentIMTool.login().then((_) {
                     DPrint.printLongJson('用户登陆');
@@ -301,6 +307,7 @@ class _LivePageState extends State<LivePage> {
                             else {
                               setState(() {
                                 _streamInfoModel = model;
+                                _praise = model.praise;
                               });
                               TencentImPlugin.applyJoinGroup(
                                   groupId: model.groupId, reason: 'enterLive');
@@ -349,32 +356,141 @@ class _LivePageState extends State<LivePage> {
             ),
           ),
           AnimatedPositioned(
-            bottom: _isStream ? 0 : -300,
-            left: 0,
-            right: 0,
+            bottom: _isStream ? rSize(15) : -300,
+            left: rSize(15),
+            right: rSize(15),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Expanded(
-                  child: Container(
-                    height: 300,
-                    child: ListView.builder(
-                      padding: EdgeInsets.only(bottom: 50),
-                      reverse: true,
-                      controller: _scrollController,
-                      physics: AlwaysScrollableScrollPhysics(
-                          parent: BouncingScrollPhysics()),
-                      itemBuilder: (context, index) {
-                        return LiveChatBox(
-                          sender: chatObjects[index].name,
-                          note: chatObjects[index].message,
-                          userEnter: chatObjects[index].enterUser,
-                        );
-                      },
-                      itemCount: chatObjects.length,
-                    ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: 300,
+                        child: ListView.builder(
+                          reverse: true,
+                          controller: _scrollController,
+                          physics: AlwaysScrollableScrollPhysics(
+                              parent: BouncingScrollPhysics()),
+                          itemBuilder: (context, index) {
+                            return LiveChatBox(
+                              sender: chatObjects[index].name,
+                              note: chatObjects[index].message,
+                              userEnter: chatObjects[index].enterUser,
+                            );
+                          },
+                          itemCount: chatObjects.length,
+                        ),
+                      ),
+                      Container(
+                        height: rSize(32),
+                        width: rSize(150),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(rSize(16)),
+                        ),
+                        child: TextField(
+                          controller: _messageController,
+                          onEditingComplete: () {
+                            TencentImPlugin.sendMessage(
+                              sessionId: _streamInfoModel.groupId,
+                              sessionType: SessionType.Group,
+                              node: TextMessageNode(
+                                  content: _messageController.text),
+                            );
+                            chatObjects.insert(
+                                0,
+                                ChatObj(
+                                  UserManager.instance.user.info.nickname,
+                                  _messageController.text,
+                                ));
+                            _scrollController.animateTo(
+                              -50,
+                              duration: Duration(milliseconds: 300),
+                              curve: Curves.easeInOutCubic,
+                            );
+                            setState(() {});
+                            _messageController.clear();
+                          },
+                          decoration: InputDecoration(
+                            isDense: true,
+                            border: InputBorder.none,
+                            hintText: '说点什么吧…',
+                            hintStyle: TextStyle(
+                              fontSize: rSP(12),
+                              color: Colors.white,
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: rSize(14),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+                CustomImageButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return Material(
+                            color: Colors.black,
+                            child: Row(
+                              children: [
+                                CustomImageButton(
+                                  onPressed: () {
+                                    if (UserManager.instance.haveLogin) {
+                                      Navigator.pop(context);
+                                      ShareTool().liveShare(
+                                        context,
+                                        liveId: liveItemId,
+                                        title:
+                                            '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘',
+                                        des: '',
+                                        headUrl: _streamInfoModel.headImgUrl,
+                                      );
+                                    } else {
+                                      showToast('未登陆，请先登陆');
+                                      CRoute.push(context, UserPage());
+                                    }
+                                  },
+                                  padding: EdgeInsets.all(rSize(15)),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        R.ASSETS_SHARE_BOTTOM_SHARE_BOTTOM_WECHAT_PNG,
+                                        height: rSize(40),
+                                        width: rSize(40),
+                                      ),
+                                      rHBox(10),
+                                      Text(
+                                        '微信分享',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: rSP(14),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        });
+                  },
+                  child: Image.asset(
+                    R.ASSETS_LIVE_LIVE_SHARE_PNG,
+                    width: rSize(32),
+                    height: rSize(32),
+                  ),
+                ),
+                SizedBox(width: rSize(10)),
                 CustomImageButton(
                   child: Container(
                     alignment: Alignment.bottomCenter,
@@ -449,6 +565,7 @@ class _LivePageState extends State<LivePage> {
                   initAttention: true,
                   onAttention: () {},
                   title: UserManager.instance.user.info.nickname,
+                  subTitle: '点赞数$_praise',
                   avatar:
                       Api.getImgUrl(UserManager.instance.user.info.headImgUrl),
                 ),
@@ -546,6 +663,7 @@ class _LivePageState extends State<LivePage> {
       case ListenerTypeEnum.ForceOffline:
         break;
       case ListenerTypeEnum.UserSigExpired:
+        TencentIMTool.login();
         break;
       case ListenerTypeEnum.Connected:
         break;
@@ -576,11 +694,17 @@ class _LivePageState extends State<LivePage> {
                   break;
                 case 'LiveStop':
                   break;
+                case 'Praise':
+                  int extra = customParams['data']['addPraise'];
+                  // int nowPraise = customParams['data']['praise'];
+                  _praise += extra;
+                  setState(() {});
+                  break;
                 case 'Notice':
                   chatObjects.insertAll(
                       0,
                       messageEntities.map(
-                        (e) => ChatObj("", customParams['content']),
+                        (e) => ChatObj("", customParams['data']['content']),
                       ));
                   _scrollController.animateTo(
                     -50,
