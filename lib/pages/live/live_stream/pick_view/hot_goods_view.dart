@@ -8,15 +8,15 @@ import 'package:recook/pages/live/models/goods_window_model.dart';
 import 'package:recook/pages/user/widget/recook_check_box.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
-class GoodsWindowView extends StatefulWidget {
+class HotGoodsView extends StatefulWidget {
   final VoidCallback onPick;
-  GoodsWindowView({Key key, this.onPick}) : super(key: key);
+  HotGoodsView({Key key, this.onPick}) : super(key: key);
 
   @override
-  _GoodsWindowViewState createState() => _GoodsWindowViewState();
+  _HotGoodsViewState createState() => _HotGoodsViewState();
 }
 
-class _GoodsWindowViewState extends State<GoodsWindowView>
+class _HotGoodsViewState extends State<HotGoodsView>
     with AutomaticKeepAliveClientMixin {
   GSRefreshController _controller = GSRefreshController();
   List<GoodsList> _goodsModels = [];
@@ -119,7 +119,7 @@ class _GoodsWindowViewState extends State<GoodsWindowView>
   }
 
   Future<List<GoodsList>> getGoodsWindowModels() async {
-    ResultData resultData = await HttpManager.post(LiveAPI.shopWindow, {
+    ResultData resultData = await HttpManager.post(LiveAPI.hotGoods, {
       'page': _page,
       'limit': 15,
     });

@@ -540,4 +540,7 @@ class LiveAPI {
   static const String liveAgree = '/v1/live/live/agree';
 
   static const String recordLive = '/v1/live/live/transcribe';
+
+  ///热门商品列表
+  static const String hotGoods = '/v1/live/goods/hot';
 }

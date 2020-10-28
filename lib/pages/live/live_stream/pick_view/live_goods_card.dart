@@ -88,23 +88,6 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
                   Row(
                     children: [
                       InkWell(
-                        onTap: () {
-                          PickCart.brandModel = LiveBrandModel(
-                            id: widget.model.brandId,
-                            name: widget.model.brandName,
-                            logoUrl: widget.model.brandImg,
-                          );
-                          CRoute.push(
-                            context,
-                            RecookScaffold(
-                              title: '品牌馆',
-                              whiteBg: true,
-                              body: BrandGoodsListView(
-                                onPick: () {},
-                              ),
-                            ),
-                          );
-                        },
                         child: Row(
                           children: [
                             FadeInImage.assetNetwork(
