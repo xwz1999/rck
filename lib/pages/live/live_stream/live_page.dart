@@ -637,8 +637,13 @@ class _LivePageState extends State<LivePage> {
                       },
                     );
                   },
-                  images:
-                      _groupMembers.map((e) => e.userProfile.faceUrl).toList(),
+                  images: (_groupMembers
+                        ..removeWhere((element) {
+                          return element.userProfile.nickName ==
+                              _streamInfoModel.nickname;
+                        }))
+                      .map((e) => e.userProfile.faceUrl)
+                      .toList(),
                 ),
                 rWBox(10),
                 CustomImageButton(

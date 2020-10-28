@@ -246,14 +246,16 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
               ChatObj(parseParams['opUserInfo']['nickName'], '来了',
                   enterUser: true),
             );
-
+            group = TencentGroupTool.fromId(_streamInfoModel.groupId);
+            setState(() {});
             _scrollController.animateTo(
               -50,
               duration: Duration(milliseconds: 300),
               curve: Curves.easeInOutCubic,
             );
           } else if (parseParams['tipsType'] == 'Quit') {
-            //exit
+            group = TencentGroupTool.fromId(_streamInfoModel.groupId);
+            setState(() {});
           }
         }
 
@@ -380,7 +382,11 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                               },
                             );
                           },
-                          images: _groupMembers
+                          images: (_groupMembers
+                                ..removeWhere((element) {
+                                  return element.userProfile.nickName ==
+                                      _streamInfoModel.nickname;
+                                }))
                               .map((e) => e.userProfile.faceUrl)
                               .toList(),
                         ),
