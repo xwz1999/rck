@@ -535,4 +535,6 @@ class LiveAPI {
 
   ///直播同意协议
   static const String liveAgree = '/v1/live/live/agree';
+
+  static const String recordLive = '/v1/live/live/transcribe';
 }

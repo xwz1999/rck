@@ -689,12 +689,13 @@ class _LivePageState extends State<LivePage> {
         if (resultData?.data['data'] == null)
           Navigator.pop(context);
         else {
-          CRoute.transparent(
+          CRoute.pushReplace(
               context,
               LiveBlurPage(
                 context: context,
                 isLive: true,
                 exitModel: LiveExitModel.fromJson(resultData.data['data']),
+                streamModel: _streamInfoModel,
               ));
         }
       });
