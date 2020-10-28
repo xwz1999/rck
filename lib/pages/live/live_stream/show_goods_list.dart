@@ -69,7 +69,7 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
                     Text('全部宝贝 ${widget.models.length}'),
                     Spacer(),
                     Image.asset(
-                      R.ASSETS_LIVE_FANCY_CART_PNG,
+                      R.ASSETS_LIVE_FANCY_CART_RED_PNG,
                       height: rSize(40),
                       width: rSize(40),
                     )
