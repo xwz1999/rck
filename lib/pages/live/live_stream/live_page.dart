@@ -7,6 +7,7 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/live/functions/live_function.dart';
 import 'package:recook/pages/live/live_stream/live_blur_page.dart';
 import 'package:recook/pages/live/live_stream/live_pick_goods_page.dart';
 import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
@@ -15,6 +16,7 @@ import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
 import 'package:recook/pages/live/live_stream/widget/live_buying_widget.dart';
 import 'package:recook/pages/live/live_stream/widget/live_chat_box.dart';
+import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/models/live_exit_model.dart';
 import 'package:recook/pages/live/models/live_resume_model.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
@@ -67,6 +69,7 @@ class _LivePageState extends State<LivePage> {
   int nowExplain = 0;
   List<GroupMemberEntity> _groupMembers = [];
   int _praise = 0;
+  LiveBaseInfoModel _liveBaseInfoModel;
 
   GlobalKey<LiveBuyingWidgetState> _globalBuyingWidgetKey =
       GlobalKey<LiveBuyingWidgetState>();
@@ -130,6 +133,14 @@ class _LivePageState extends State<LivePage> {
                       if (model == null)
                         Navigator.pop(context);
                       else {
+                        HttpManager.post(LiveAPI.baseInfo, {
+                          'findUserId': _streamInfoModel.userId,
+                        }).then((resultData) {
+                          if (resultData?.data['data'] != null) {
+                            _liveBaseInfoModel = LiveBaseInfoModel.fromJson(
+                                resultData.data['data']);
+                          }
+                        });
                         setState(() {
                           _streamInfoModel = model;
                         });
@@ -621,6 +632,17 @@ class _LivePageState extends State<LivePage> {
                   onAttention: () {},
                   title: UserManager.instance.user.info.nickname,
                   subTitle: '点赞数$_praise',
+                  onTapAvatar: () {
+                    showLiveChild(
+                      context,
+                      initAttention: _streamInfoModel.isFollow == 1,
+                      title: _streamInfoModel.nickname,
+                      fans: _liveBaseInfoModel.fans,
+                      follows: _liveBaseInfoModel.follows,
+                      headImg: _liveBaseInfoModel.headImgUrl,
+                      id: _liveBaseInfoModel.userId,
+                    );
+                  },
                   avatar:
                       Api.getImgUrl(UserManager.instance.user.info.headImgUrl),
                 ),

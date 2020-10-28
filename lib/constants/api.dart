@@ -412,6 +412,9 @@ class LiveAPI {
   ///话题列表
   static const String topicList = '/v1/live/topic/follow/list';
 
+  ///添加话题
+  static const String topicAddNew = '/v1/live/topic/add';
+
   ///关注话题
   static const String addTopic = '/v1/live/topic/follow/add';
 

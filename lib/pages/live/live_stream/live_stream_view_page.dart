@@ -13,8 +13,8 @@ import 'package:recook/pages/live/live_stream/live_users_view.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
 import 'package:recook/pages/live/live_stream/widget/live_buying_widget.dart';
 import 'package:recook/pages/live/live_stream/widget/live_chat_box.dart';
+import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
-import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
@@ -23,6 +23,7 @@ import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/pages/live/functions/live_function.dart';
 import 'package:tencent_im_plugin/entity/group_member_entity.dart';
 import 'package:tencent_im_plugin/entity/message_entity.dart';
 import 'package:tencent_im_plugin/entity/session_entity.dart';
@@ -53,6 +54,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   ];
   ScrollController _scrollController = ScrollController();
   TextEditingController _editingController = TextEditingController();
+  LiveBaseInfoModel _liveBaseInfoModel;
 
   ///正在讲解的物品
   GoodsLists nowGoodList;
@@ -86,6 +88,16 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
             _streamInfoModel = model;
             _praise = model.praise;
             isAttention = _streamInfoModel.isFollow == 1;
+          });
+          HttpManager.post(LiveAPI.baseInfo, {
+            'findUserId': _streamInfoModel.userId,
+          }).then((resultData) {
+            if (resultData?.data['data'] != null) {
+              setState(() {
+                _liveBaseInfoModel =
+                    LiveBaseInfoModel.fromJson(resultData.data['data']);
+              });
+            }
           });
           TencentImPlugin.applyJoinGroup(
               groupId: model.groupId, reason: 'enterLive');
@@ -342,12 +354,22 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                       children: [
                         LiveUserBar(
                           onTapAvatar: () {
-                            CRoute.pushReplace(
+                            // CRoute.pushReplace(
+                            //   context,
+                            //   UserHomePage(
+                            //     userId: _streamInfoModel.userId,
+                            //     initAttention: _streamInfoModel.isFollow == 1,
+                            //   ),
+                            // );
+
+                            showLiveChild(
                               context,
-                              UserHomePage(
-                                userId: _streamInfoModel.userId,
-                                initAttention: _streamInfoModel.isFollow == 1,
-                              ),
+                              initAttention: _streamInfoModel.isFollow == 1,
+                              title: _streamInfoModel.nickname,
+                              fans: _liveBaseInfoModel.fans,
+                              follows: _liveBaseInfoModel.follows,
+                              headImg: _liveBaseInfoModel.headImgUrl,
+                              id: _liveBaseInfoModel.userId,
                             );
                           },
                           initAttention: _streamInfoModel.userId ==

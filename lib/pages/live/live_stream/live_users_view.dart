@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/live/functions/live_function.dart';
 import 'package:tencent_im_plugin/entity/group_member_entity.dart';
 
 class LiveUsersView extends StatefulWidget {
@@ -29,7 +30,9 @@ class _LiveUsersViewState extends State<LiveUsersView> {
           return {
             'name': e['identifier'],
             'fans': e['fans'],
-            'follow': e['isFollow'],
+            'isFollow': e['isFollow'] == 1,
+            'userId': e['userId'],
+            'follow': e['follow'],
           };
         }).toList();
       });
@@ -41,6 +44,7 @@ class _LiveUsersViewState extends State<LiveUsersView> {
     return DraggableScrollableSheet(
       minChildSize: 0.5,
       maxChildSize: 0.9,
+      expand: false,
       builder: (context, controller) {
         return Material(
           color: Colors.black.withOpacity(0.55),
@@ -68,42 +72,60 @@ class _LiveUsersViewState extends State<LiveUsersView> {
                         controller: controller,
                         itemBuilder: (BuildContext context, int index) {
                           final fans = users[index]['fans'];
+                          final follow = users[index]['follow'];
+                          final isFollow = users[index]['isFollow'];
+                          final userId = users[index]['userId'];
                           return Padding(
                             padding: EdgeInsets.symmetric(
                               horizontal: rSize(15),
                               vertical: rSize(15 / 2),
                             ),
-                            child: Row(
-                              children: [
-                                ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.circular(rSize(34 / 2)),
-                                  child: FadeInImage.assetNetwork(
-                                    placeholder:
-                                        R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                                    image: Api.getImgUrl(widget
-                                        .members[index].userProfile.faceUrl),
-                                    width: rSize(34),
-                                    height: rSize(34),
+                            child: InkWell(
+                              onTap: () {
+                                showLiveChild(
+                                  context,
+                                  initAttention: isFollow,
+                                  title: widget
+                                      .members[index].userProfile.nickName,
+                                  fans: fans,
+                                  follows: follow,
+                                  headImg:
+                                      widget.members[index].userProfile.faceUrl,
+                                  id: userId,
+                                );
+                              },
+                              child: Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius:
+                                        BorderRadius.circular(rSize(34 / 2)),
+                                    child: FadeInImage.assetNetwork(
+                                      placeholder:
+                                          R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                      image: Api.getImgUrl(widget
+                                          .members[index].userProfile.faceUrl),
+                                      width: rSize(34),
+                                      height: rSize(34),
+                                    ),
                                   ),
-                                ),
-                                rWBox(10),
-                                Text(
-                                  '${widget.members[index].userProfile.nickName}',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: rSP(14),
+                                  rWBox(10),
+                                  Text(
+                                    '${widget.members[index].userProfile.nickName}',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: rSP(14),
+                                    ),
                                   ),
-                                ),
-                                rWBox(10),
-                                Text(
-                                  '粉丝数$fans',
-                                  style: TextStyle(
-                                    color: Color(0xFFEEEEEE),
-                                    fontSize: rSP(12),
+                                  rWBox(10),
+                                  Text(
+                                    '粉丝数$fans',
+                                    style: TextStyle(
+                                      color: Color(0xFFEEEEEE),
+                                      fontSize: rSP(12),
+                                    ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           );
                         },

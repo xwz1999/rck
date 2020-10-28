@@ -122,29 +122,29 @@ class _AddVideoPageState extends State<AddVideoPage> {
                   ),
                 ),
                 SizedBox(height: rSize(30)),
-                MaterialButton(
-                  minWidth: rSize(60),
-                  padding: EdgeInsets.zero,
-                  onPressed: () {},
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        R.ASSETS_LIVE_COUNT_DOWN_PNG,
-                        height: rSize(24),
-                        width: rSize(24),
-                      ),
-                      SizedBox(height: rSize(6)),
-                      Text(
-                        '倒计时',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: rSP(11),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                // MaterialButton(
+                //   minWidth: rSize(60),
+                //   padding: EdgeInsets.zero,
+                //   onPressed: () {},
+                //   child: Column(
+                //     mainAxisSize: MainAxisSize.min,
+                //     children: [
+                //       Image.asset(
+                //         R.ASSETS_LIVE_COUNT_DOWN_PNG,
+                //         height: rSize(24),
+                //         width: rSize(24),
+                //       ),
+                //       SizedBox(height: rSize(6)),
+                //       Text(
+                //         '倒计时',
+                //         style: TextStyle(
+                //           color: Colors.white,
+                //           fontSize: rSP(11),
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
           ),

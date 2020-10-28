@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/goods/small_coupon_widget.dart';
+import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/live/models/video_goods_model.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
@@ -228,11 +230,14 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
       padding: EdgeInsets.all(rSize(15)),
       child: Row(
         children: [
-          FadeInImage.assetNetwork(
-            placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-            image: Api.getImgUrl(model.mainPhotoUrl),
-            height: rSize(80),
-            width: rSize(80),
+          Container(
+            color: AppColor.frenchColor,
+            child: FadeInImage.assetNetwork(
+              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+              image: Api.getImgUrl(model.mainPhotoUrl),
+              height: rSize(100),
+              width: rSize(100),
+            ),
           ),
           rWBox(10),
           Expanded(
@@ -249,6 +254,80 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                       color: Color(0xFF0A0001),
                       fontSize: rSP(14),
                     ),
+                  ),
+                  Text(
+                    model.description,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                        color: Colors.black54, fontWeight: FontWeight.w300),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
+                          arguments: BrandGoodsListPage.setArguments(
+                            model.brandId,
+                            model.brandName,
+                          ));
+                    },
+                    child: Row(
+                      children: [
+                        FadeInImage.assetNetwork(
+                          placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                          image: Api.getImgUrl(model.brandImg),
+                          width: rSize(13),
+                          height: rSize(13),
+                        ),
+                        rWBox(4),
+                        Text(
+                          model.brandName,
+                          style: TextStyle(
+                            color: Color(0xffc70404),
+                            fontSize: ScreenAdapterUtils.setSp(12),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      SmallCouponWidget(number: num.parse(model.coupon)),
+                      rWBox(4),
+                      Container(
+                        height: rSize(18),
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(rSize(1)),
+                          border: Border.all(
+                            color: Color(0xFFCC1B4F),
+                            width: rSize(0.5),
+                          ),
+                        ),
+                        child: Text(
+                          '赚${model.commission}',
+                          style: TextStyle(
+                            color: Color(0xFFCC1B4F),
+                            fontSize: rSP(12),
+                            height: 1,
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Text(
+                        '剩余',
+                        style: TextStyle(
+                          color: Color(0xFF333333),
+                          fontSize: rSP(11),
+                        ),
+                      ),
+                      Text(
+                        '${model.inventory}件',
+                        style: TextStyle(
+                          color: Color(0xFFC91147),
+                          fontSize: rSP(11),
+                        ),
+                      ),
+                    ],
                   ),
                   Spacer(),
                   Row(
