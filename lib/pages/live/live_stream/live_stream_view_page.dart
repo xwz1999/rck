@@ -319,6 +319,27 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                         await _livePlayer.setPlayerView(controller);
                         _livePlayer.startPlay(_streamInfoModel.playUrl,
                             type: PlayType.RTMP);
+                        _livePlayer
+                          ..setOnEventListener(
+                            onEventPlayEnd: () {
+                              print('end');
+                            },
+                            onEventPlayBegin: () {
+                              print('begin');
+                            },
+                            onWarningServerConnFail: () {
+                              print('server conn fail');
+                            },
+                            onWarningReconnect: () {
+                              print('reconn');
+                            },
+                            onWarningVideoPlayLag: () {
+                              print('video');
+                            },
+                            onWarningRecvDataLag: () {
+                              print('data');
+                            },
+                          );
                       },
                     ),
                   ),

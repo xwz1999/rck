@@ -78,6 +78,7 @@ class _LivePageState extends State<LivePage> {
   void initState() {
     super.initState();
     Wakelock.enable();
+
     _editingController.text = '${UserManager.instance.user.info.nickname}的直播';
   }
 
@@ -124,6 +125,14 @@ class _LivePageState extends State<LivePage> {
                   liveItemId = widget.model.liveItemId;
                   _streamInfoModel =
                       LiveStreamInfoModel.fromLiveResume(widget.model);
+                  HttpManager.post(LiveAPI.baseInfo, {
+                    'findUserId': _streamInfoModel.userId,
+                  }).then((resultData) {
+                    if (resultData?.data['data'] != null) {
+                      _liveBaseInfoModel =
+                          LiveBaseInfoModel.fromJson(resultData.data['data']);
+                    }
+                  });
                   _livePusher.startPush(widget.model.pushUrl);
                   _praise = _streamInfoModel.praise;
                   setState(() {});
@@ -143,6 +152,14 @@ class _LivePageState extends State<LivePage> {
                         });
                         setState(() {
                           _streamInfoModel = model;
+                          HttpManager.post(LiveAPI.baseInfo, {
+                            'findUserId': _streamInfoModel.userId,
+                          }).then((resultData) {
+                            if (resultData?.data['data'] != null) {
+                              _liveBaseInfoModel = LiveBaseInfoModel.fromJson(
+                                  resultData.data['data']);
+                            }
+                          });
                         });
                         TencentImPlugin.applyJoinGroup(
                             groupId: model.groupId, reason: 'enterLive');
@@ -309,6 +326,7 @@ class _LivePageState extends State<LivePage> {
                         'goodsIds': pickedIds ?? [],
                       }).then((resultData) {
                         GSDialog.of(context).dismiss(context);
+
                         liveItemId = resultData.data['data']['liveItemId'];
                         _livePusher
                             .startPush(resultData.data['data']['pushUrl']);
@@ -322,6 +340,15 @@ class _LivePageState extends State<LivePage> {
                             else {
                               setState(() {
                                 _streamInfoModel = model;
+                                HttpManager.post(LiveAPI.baseInfo, {
+                                  'findUserId': _streamInfoModel.userId,
+                                }).then((resultData) {
+                                  if (resultData?.data['data'] != null) {
+                                    _liveBaseInfoModel =
+                                        LiveBaseInfoModel.fromJson(
+                                            resultData.data['data']);
+                                  }
+                                });
                                 _praise = model.praise;
                               });
                               TencentImPlugin.applyJoinGroup(
@@ -635,7 +662,7 @@ class _LivePageState extends State<LivePage> {
                   onTapAvatar: () {
                     showLiveChild(
                       context,
-                      initAttention: _streamInfoModel.isFollow == 1,
+                      initAttention: true,
                       title: _streamInfoModel.nickname,
                       fans: _liveBaseInfoModel.fans,
                       follows: _liveBaseInfoModel.follows,
@@ -713,9 +740,10 @@ class _LivePageState extends State<LivePage> {
       HttpManager.post(LiveAPI.exitLive, {
         'liveItemId': liveItemId,
       }).then((resultData) {
-        if (resultData?.data['data'] == null)
+        if (resultData?.data['data'] == null) {
+          showToast('直播开启失败');
           Navigator.pop(context);
-        else {
+        } else {
           CRoute.pushReplace(
               context,
               LiveBlurPage(
