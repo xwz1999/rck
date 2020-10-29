@@ -69,6 +69,8 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   GlobalKey<LiveBuyingWidgetState> _globalBuyingWidgetKey =
       GlobalKey<LiveBuyingWidgetState>();
 
+  FocusNode _focusNode = FocusNode();
+
   @override
   void initState() {
     super.initState();
@@ -414,6 +416,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                         Spacer(),
                         MorePeople(
                           onTap: () {
+                            _focusNode.unfocus();
                             showModalBottomSheet(
                               context: context,
                               builder: (context) {
@@ -503,6 +506,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                 ),
                                 child: TextField(
                                   controller: _editingController,
+                                  focusNode: _focusNode,
                                   onEditingComplete: () {
                                     TencentImPlugin.sendMessage(
                                       sessionId: _streamInfoModel.groupId,
@@ -765,6 +769,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                 ),
                               ),
                               onPressed: () {
+                                _focusNode.unfocus();
                                 showGoodsListDialog(
                                   context,
                                   onLive: true,
