@@ -1,6 +1,6 @@
 class GoodsWindowModel {
   List<GoodsList> list;
-  int total;
+  num total;
 
   GoodsWindowModel({this.list, this.total});
 
@@ -25,21 +25,21 @@ class GoodsWindowModel {
 }
 
 class GoodsList {
-  int id;
+  num id;
   String goodsName;
   String brandImg;
   String brandName;
-  int brandId;
+  num brandId;
   String description;
-  int inventory;
-  int salesVolume;
+  num inventory;
+  num salesVolume;
   String mainPhotoUrl;
   String promotionName;
   String originalPrice;
   String discountPrice;
   String commission;
   List<String> tags;
-  int percent;
+  num percent;
   String startTime;
   String endTime;
   String coupon;

@@ -5,4 +5,15 @@ class PickCart {
   static List<GoodsList> picked = [];
 
   static LiveBrandModel brandModel;
+
+  static List<String> history = [];
+
+  static addHistory(String text) {
+    if (history.length < 8) {
+      history.insert(0, text);
+    } else {
+      history.removeLast();
+      history.insert(0, text);
+    }
+  }
 }
