@@ -16,7 +16,7 @@ import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
 
 class LivePickGoodsPage extends StatefulWidget {
-  final Function(List<int> ids) onPickGoods;
+  final Function(List<num> ids) onPickGoods;
   LivePickGoodsPage({Key key, @required this.onPickGoods}) : super(key: key);
 
   @override

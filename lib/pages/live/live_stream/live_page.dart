@@ -59,7 +59,7 @@ class _LivePageState extends State<LivePage> {
   TopicListModel _topicModel;
   TextEditingController _editingController = TextEditingController();
   TextEditingController _messageController = TextEditingController();
-  List<int> pickedIds = [];
+  List<num> pickedIds = [];
   int liveItemId = 0;
   bool _isStream = false;
   LiveStreamInfoModel _streamInfoModel;
