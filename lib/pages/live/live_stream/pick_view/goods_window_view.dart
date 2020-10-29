@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/live_stream/pick_view/live_goods_card.dart';
 import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
@@ -44,36 +45,38 @@ class _GoodsWindowViewState extends State<GoodsWindowView>
     super.build(context);
     return Column(
       children: [
-        MaterialButton(
-          onPressed: () {
-            if (_selectAll) {
-              PickCart.picked.removeWhere((picked) {
-                return _goodsModels
-                        .indexWhere((element) => element.id == picked.id) !=
-                    -1;
-              });
-            } else
-              _goodsModels.forEach((element) {
-                if (PickCart.picked.length < 50) {
-                  PickCart.picked.add(element);
-                }
-              });
-            widget.onPick();
-          },
-          child: Row(
-            children: [
-              RecookCheckBox(state: _selectAll),
-              rWBox(10),
-              Text(
-                '全选',
-                style: TextStyle(
-                  color: Color(0xFF333333),
-                  fontSize: rSP(14),
+        _goodsModels.isEmpty
+            ? SizedBox()
+            : MaterialButton(
+                onPressed: () {
+                  if (_selectAll) {
+                    PickCart.picked.removeWhere((picked) {
+                      return _goodsModels.indexWhere(
+                              (element) => element.id == picked.id) !=
+                          -1;
+                    });
+                  } else
+                    _goodsModels.forEach((element) {
+                      if (PickCart.picked.length < 50) {
+                        PickCart.picked.add(element);
+                      }
+                    });
+                  widget.onPick();
+                },
+                child: Row(
+                  children: [
+                    RecookCheckBox(state: _selectAll),
+                    rWBox(10),
+                    Text(
+                      '全选',
+                      style: TextStyle(
+                        color: Color(0xFF333333),
+                        fontSize: rSP(14),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
         Expanded(
           child: RefreshWidget(
             controller: _controller,
@@ -98,20 +101,37 @@ class _GoodsWindowViewState extends State<GoodsWindowView>
                   _controller.loadComplete();
               });
             },
-            body: ListView.builder(
-              itemBuilder: (context, index) {
-                final model = _goodsModels[index];
-                return LiveGoodsCard(
-                  onPick: () {
-                    setState(() {
-                      widget.onPick();
-                    });
-                  },
-                  model: model,
-                );
-              },
-              itemCount: _goodsModels.length,
-            ),
+            body: _goodsModels.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(R.ASSETS_IMG_NO_DATA_PNG),
+                        rHBox(10),
+                        Text(
+                          '您没有历史记录',
+                          style: TextStyle(
+                            color: Color(0xFF333333),
+                            fontSize: rSP(16),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : ListView.builder(
+                    itemBuilder: (context, index) {
+                      final model = _goodsModels[index];
+                      return LiveGoodsCard(
+                        onPick: () {
+                          setState(() {
+                            widget.onPick();
+                          });
+                        },
+                        model: model,
+                      );
+                    },
+                    itemCount: _goodsModels.length,
+                  ),
           ),
         ),
       ],

@@ -68,6 +68,7 @@ class _UserPlaybackViewState extends State<UserPlaybackView>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Image.asset(R.ASSETS_IMG_NO_DATA_PNG),
+                  rHBox(10),
                   Text(
                     selfFlag ? '您没有直播记录' : 'TA没有直播记录',
                     style: TextStyle(

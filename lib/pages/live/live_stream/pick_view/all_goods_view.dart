@@ -5,7 +5,6 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/category_model.dart';
 import 'package:recook/pages/live/live_stream/pick_view/brand_goods_list_view.dart';
-import 'package:recook/pages/live/live_stream/pick_view/brand_goods_view.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
@@ -154,8 +153,10 @@ class _AllGoodsViewState extends State<AllGoodsView>
                                         ),
                                         Text(
                                           e.sub[index].name,
+                                          textAlign: TextAlign.center,
                                           style: TextStyle(
                                             color: Color(0xFF333333),
+                                            height: 1,
                                           ),
                                         ),
                                       ],

@@ -76,6 +76,7 @@ class _UserActivityViewState extends State<UserActivityView>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Image.asset(R.ASSETS_IMG_NO_DATA_PNG),
+                  rHBox(10),
                   Text(
                     selfFlag ? '您还未发布过动态' : 'TA还未发布过动态',
                     style: TextStyle(

@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 
 import 'package:recook/redux/recook_state.dart';
@@ -126,7 +127,7 @@ abstract class BaseStoreState<T extends StatefulWidget> extends State<T>
         children: <Widget>[
           icon ??
               Image.asset(
-                "assets/nodata.png",
+                R.ASSETS_NODATA_PNG,
                 width: rSize(80),
                 height: rSize(80),
               ),

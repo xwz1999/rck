@@ -47,6 +47,7 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        brightness: Brightness.light,
         elevation: 0,
         backgroundColor: Colors.white,
         leading: RecookBackButton.text(),
@@ -116,8 +117,8 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
                 controller: _tabController,
                 isScrollable: true,
                 tabs: [
-                  Tab(text: '历史直播'),
                   Tab(text: '热门商品'),
+                  Tab(text: '历史直播'),
                   Tab(text: '全部商品'),
                 ],
                 labelStyle: TextStyle(
@@ -138,12 +139,12 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  GoodsWindowView(
+                  HotGoodsView(
                     onPick: () {
                       setState(() {});
                     },
                   ),
-                  HotGoodsView(
+                  GoodsWindowView(
                     onPick: () {
                       setState(() {});
                     },

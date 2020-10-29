@@ -44,36 +44,38 @@ class _HotGoodsViewState extends State<HotGoodsView>
     super.build(context);
     return Column(
       children: [
-        MaterialButton(
-          onPressed: () {
-            if (_selectAll) {
-              PickCart.picked.removeWhere((picked) {
-                return _goodsModels
-                        .indexWhere((element) => element.id == picked.id) !=
-                    -1;
-              });
-            } else
-              _goodsModels.forEach((element) {
-                if (PickCart.picked.length < 50) {
-                  PickCart.picked.add(element);
-                }
-              });
-            widget.onPick();
-          },
-          child: Row(
-            children: [
-              RecookCheckBox(state: _selectAll),
-              rWBox(10),
-              Text(
-                '全选',
-                style: TextStyle(
-                  color: Color(0xFF333333),
-                  fontSize: rSP(14),
+        _goodsModels.isEmpty
+            ? SizedBox()
+            : MaterialButton(
+                onPressed: () {
+                  if (_selectAll) {
+                    PickCart.picked.removeWhere((picked) {
+                      return _goodsModels.indexWhere(
+                              (element) => element.id == picked.id) !=
+                          -1;
+                    });
+                  } else
+                    _goodsModels.forEach((element) {
+                      if (PickCart.picked.length < 50) {
+                        PickCart.picked.add(element);
+                      }
+                    });
+                  widget.onPick();
+                },
+                child: Row(
+                  children: [
+                    RecookCheckBox(state: _selectAll),
+                    rWBox(10),
+                    Text(
+                      '全选',
+                      style: TextStyle(
+                        color: Color(0xFF333333),
+                        fontSize: rSP(14),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
         Expanded(
           child: RefreshWidget(
             controller: _controller,

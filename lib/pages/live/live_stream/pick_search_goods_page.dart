@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/live/live_stream/pick_view/hot_goods_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/live_goods_card.dart';
 import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:recook/pages/live/models/goods_window_model.dart';
@@ -193,16 +194,10 @@ class _PickSearchGoodsPageState extends State<PickSearchGoodsPage> {
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      return LiveGoodsCard(
-                        onPick: () {
-                          setState(() {});
-                        },
-                        model: _hotList[index],
-                      );
+                  child: HotGoodsView(
+                    onPick: () {
+                      setState(() {});
                     },
-                    itemCount: _hotList.length,
                   ),
                 ),
               ],

@@ -130,11 +130,19 @@ class _BrandGoodsListViewState extends State<BrandGoodsListView> {
                 padding: EdgeInsets.all(rSize(15)),
                 child: Row(
                   children: [
-                    FadeInImage.assetNetwork(
-                      placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                      image: Api.getImgUrl(widget.logo),
-                      height: rSize(64),
-                      width: rSize(64),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: Colors.black.withOpacity(0.2),
+                          width: rSize(1),
+                        ),
+                      ),
+                      child: FadeInImage.assetNetwork(
+                        placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                        image: Api.getImgUrl(widget.logo),
+                        height: rSize(64),
+                        width: rSize(64),
+                      ),
                     ),
                     rWBox(12),
                     Column(
@@ -193,18 +201,35 @@ class _BrandGoodsListViewState extends State<BrandGoodsListView> {
               _controller.loadComplete();
             });
           },
-          body: ListView.builder(
-            itemBuilder: (context, index) {
-              return LiveGoodsCard(
-                onPick: () {
-                  setState(() {});
-                  widget.onPick();
-                },
-                model: _goodsList[index],
-              );
-            },
-            itemCount: _goodsList.length,
-          ),
+          body: _goodsList.isEmpty
+              ? Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(R.ASSETS_IMG_NO_DATA_PNG),
+                      rHBox(10),
+                      Text(
+                        '该类别没有商品',
+                        style: TextStyle(
+                          color: Color(0xFF333333),
+                          fontSize: rSP(16),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : ListView.builder(
+                  itemBuilder: (context, index) {
+                    return LiveGoodsCard(
+                      onPick: () {
+                        setState(() {});
+                        widget.onPick();
+                      },
+                      model: _goodsList[index],
+                    );
+                  },
+                  itemCount: _goodsList.length,
+                ),
         ),
       ),
     );
