@@ -133,7 +133,7 @@ class _BrandGoodsListViewState extends State<BrandGoodsListView> {
                     Container(
                       decoration: BoxDecoration(
                         border: Border.all(
-                          color: Colors.black.withOpacity(0.2),
+                          color: Colors.black.withOpacity(0.1),
                           width: rSize(1),
                         ),
                       ),
