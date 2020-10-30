@@ -117,7 +117,7 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
           ),
           SizedBox(height: rSize(10)),
           Text(
-            '累计开播${_dataModel.count}场，共${Duration(seconds: _dataModel.duration).inHours}小时',
+            '累计开播${_dataModel.count}场，已直播${Duration(seconds: _dataModel.duration).inHours < 1 ? '小于1' : Duration(seconds: _dataModel.duration).inHours}小时',
             style: TextStyle(
               color: Color(0xFF666666),
               fontSize: rSP(14),
