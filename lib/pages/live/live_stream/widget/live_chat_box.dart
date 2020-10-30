@@ -32,12 +32,7 @@ class LiveChatBox extends StatefulWidget {
 class _LiveChatBoxState extends State<LiveChatBox> {
   @override
   Widget build(BuildContext context) {
-    final Color color = Color.fromRGBO(
-      180 + Random().nextInt(55),
-      180 + Random().nextInt(55),
-      180 + Random().nextInt(55),
-      1,
-    );
+    final Color color = Colors.white;
     return Container(
       padding: EdgeInsets.symmetric(vertical: rSize(5 / 2)),
       alignment: Alignment.centerLeft,
@@ -61,6 +56,7 @@ class _LiveChatBoxState extends State<LiveChatBox> {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: rSP(13),
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ]),

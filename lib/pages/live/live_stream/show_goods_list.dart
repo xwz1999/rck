@@ -227,25 +227,27 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
                   children: [
                     SmallCouponWidget(number: num.parse(model.coupon)),
                     rWBox(4),
-                    Container(
-                      height: rSize(18),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(rSize(1)),
-                        border: Border.all(
-                          color: Color(0xFFCC1B4F),
-                          width: rSize(0.5),
-                        ),
-                      ),
-                      child: Text(
-                        '赚${model.commission}',
-                        style: TextStyle(
-                          color: Color(0xFFCC1B4F),
-                          fontSize: rSP(12),
-                          height: 1,
-                        ),
-                      ),
-                    ),
+                    AppConfig.getShowCommission()
+                        ? Container(
+                            height: rSize(18),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(rSize(1)),
+                              border: Border.all(
+                                color: Color(0xFFCC1B4F),
+                                width: rSize(0.5),
+                              ),
+                            ),
+                            child: Text(
+                              '赚${model.commission}',
+                              style: TextStyle(
+                                color: Color(0xFFCC1B4F),
+                                fontSize: rSP(12),
+                                height: 1,
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
                     Spacer(),
                     Text(
                       '剩余',

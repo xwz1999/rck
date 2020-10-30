@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/business/focus/child_focus_page.dart';
 import 'package:recook/pages/business/recommend/child_recommend_page.dart';
 import 'package:recook/pages/live/sub_page/live_stream_page.dart';
 import 'package:recook/pages/live/sub_page/user_home_page.dart';
@@ -104,7 +105,7 @@ class _DiscoveryPageState extends State<DiscoveryPage>
             children: [
               LiveStreamPage(),
               VideoPage(),
-              RecommendPage(),
+              FocusPage(),
             ],
           )),
         ],

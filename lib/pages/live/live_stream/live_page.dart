@@ -568,7 +568,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                         context: context,
                         builder: (context) {
                           return Material(
-                            color: Colors.black,
+                            color: Colors.white,
                             child: Row(
                               children: [
                                 CustomImageButton(
@@ -580,7 +580,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                                         liveId: liveItemId,
                                         title:
                                             '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘',
-                                        des: '',
+                                        des: '让消费服务生活，让生活充满精致',
                                         headUrl: _streamInfoModel.headImgUrl,
                                       );
                                     } else {
@@ -601,7 +601,30 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                                       Text(
                                         '微信分享',
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: Color(0xFF333333),
+                                          fontSize: rSP(14),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                CustomImageButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    ShareTool().clipBoard(liveId: liveItemId);
+                                  },
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Image.asset(
+                                        ShareToolIcon.copyurl,
+                                        width: rSize(40),
+                                        height: rSize(40),
+                                      ),
+                                      Text(
+                                        '复制链接',
+                                        style: TextStyle(
+                                          color: Color(0xFF333333),
                                           fontSize: rSP(14),
                                         ),
                                       ),
@@ -679,56 +702,56 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                     },
                   ));
                 }),
-                _buildVerticalButton(R.ASSETS_LIVE_ALL_SHARE_PNG, '分享', () {
-                  showModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return Material(
-                          color: Colors.black,
-                          child: Row(
-                            children: [
-                              CustomImageButton(
-                                onPressed: () {
-                                  if (UserManager.instance.haveLogin) {
-                                    Navigator.pop(context);
-                                    ShareTool().liveShare(
-                                      context,
-                                      liveId: liveItemId,
-                                      title:
-                                          '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘',
-                                      des: '',
-                                      headUrl: _streamInfoModel.headImgUrl,
-                                    );
-                                  } else {
-                                    showToast('未登陆，请先登陆');
-                                    CRoute.push(context, UserPage());
-                                  }
-                                },
-                                padding: EdgeInsets.all(rSize(15)),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Image.asset(
-                                      R.ASSETS_SHARE_BOTTOM_SHARE_BOTTOM_WECHAT_PNG,
-                                      height: rSize(40),
-                                      width: rSize(40),
-                                    ),
-                                    rHBox(10),
-                                    Text(
-                                      '微信分享',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: rSP(14),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      });
-                }),
+                // _buildVerticalButton(R.ASSETS_LIVE_ALL_SHARE_PNG, '分享', () {
+                //   showModalBottomSheet(
+                //       context: context,
+                //       builder: (context) {
+                //         return Material(
+                //           color: Colors.black,
+                //           child: Row(
+                //             children: [
+                //               CustomImageButton(
+                //                 onPressed: () {
+                //                   if (UserManager.instance.haveLogin) {
+                //                     Navigator.pop(context);
+                //                     ShareTool().liveShare(
+                //                       context,
+                //                       liveId: liveItemId,
+                //                       title:
+                //                           '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘',
+                //                       des: '',
+                //                       headUrl: _streamInfoModel.headImgUrl,
+                //                     );
+                //                   } else {
+                //                     showToast('未登陆，请先登陆');
+                //                     CRoute.push(context, UserPage());
+                //                   }
+                //                 },
+                //                 padding: EdgeInsets.all(rSize(15)),
+                //                 child: Column(
+                //                   mainAxisSize: MainAxisSize.min,
+                //                   children: [
+                //                     Image.asset(
+                //                       R.ASSETS_SHARE_BOTTOM_SHARE_BOTTOM_WECHAT_PNG,
+                //                       height: rSize(40),
+                //                       width: rSize(40),
+                //                     ),
+                //                     rHBox(10),
+                //                     Text(
+                //                       '微信分享',
+                //                       style: TextStyle(
+                //                         color: Colors.white,
+                //                         fontSize: rSP(14),
+                //                       ),
+                //                     ),
+                //                   ],
+                //                 ),
+                //               ),
+                //             ],
+                //           ),
+                //         );
+                //       });
+                // }),
               ],
             ),
           ),
@@ -747,15 +770,23 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                   title: UserManager.instance.user.info.nickname,
                   subTitle: '点赞数$_praise',
                   onTapAvatar: () {
-                    showLiveChild(
-                      context,
-                      initAttention: true,
-                      title: _streamInfoModel.nickname,
-                      fans: _liveBaseInfoModel.fans,
-                      follows: _liveBaseInfoModel.follows,
-                      headImg: _liveBaseInfoModel.headImgUrl,
-                      id: _liveBaseInfoModel.userId,
-                    );
+                    HttpManager.post(LiveAPI.baseInfo, {
+                      'findUserId': _streamInfoModel.userId,
+                    }).then((resultData) {
+                      if (resultData?.data['data'] != null) {
+                        _liveBaseInfoModel =
+                            LiveBaseInfoModel.fromJson(resultData.data['data']);
+                      }
+                      showLiveChild(
+                        context,
+                        initAttention: true,
+                        title: _streamInfoModel.nickname,
+                        fans: _liveBaseInfoModel.fans,
+                        follows: _liveBaseInfoModel.follows,
+                        headImg: _liveBaseInfoModel.headImgUrl,
+                        id: _liveBaseInfoModel.userId,
+                      );
+                    });
                   },
                   avatar:
                       Api.getImgUrl(UserManager.instance.user.info.headImgUrl),

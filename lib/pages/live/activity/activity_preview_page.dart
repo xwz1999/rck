@@ -241,7 +241,10 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
             child: Row(
               children: [
                 LiveUserBar(
-                  initAttention: widget.model.isPraise == 1,
+                  initAttention: widget.userModel.userId ==
+                          UserManager.instance.user.info.id
+                      ? true
+                      : widget.model.isPraise == 1,
                   onAttention: () {
                     HttpManager.post(
                       LiveAPI.addFollow,

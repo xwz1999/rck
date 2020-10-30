@@ -93,6 +93,19 @@ class ShareTool {
     );
   }
 
+  clipBoard({
+    BuildContext context,
+    @required int liveId,
+  }) {
+    String baseUrl = "${AppConfig.debug ? WebApi.testLiveUrl : WebApi.liveUrl}";
+    ClipboardData data = new ClipboardData(text: '$baseUrl$liveId');
+    Clipboard.setData(data);
+    Toast.showCustomSuccess(
+      '链接复制成功',
+      delayedDuration: Duration(seconds: 0),
+    );
+  }
+
   goodsShare(BuildContext context,
       {String goodsName = "",
       String goodsDescription = "",

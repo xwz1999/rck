@@ -307,12 +307,11 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   reconnectToLive() {
     _liveTimer?.cancel();
     _liveTimer = Timer(Duration(milliseconds: 5000), () {
-      _livePlayer.isPlaying().then((value) {
-        setState(() {
-          _waitSignal = !value;
-        });
+      setState(() {
+        _waitSignal = true;
       });
       // _livePlayer.push
+      _livePlayer.stopPlay();
       _livePlayer.startPlay(_streamInfoModel.playUrl, type: PlayType.RTMP);
     });
   }
@@ -426,7 +425,9 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                             print('');
                           },
                           onEventPlayBegin: () {
-                            print('1');
+                            setState(() {
+                              _waitSignal = false;
+                            });
                           },
                           onEventPlayEnd: () {
                             print('`');

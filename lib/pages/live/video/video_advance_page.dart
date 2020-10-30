@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/live/video/upload_video_page.dart';
@@ -80,6 +81,9 @@ class _VideoAdvancePageState extends State<VideoAdvancePage> {
                         .then((file) {
                       if (file != null) {
                         _coverFile = File(file.path);
+                        showToast('封面选择完成');
+                      } else {
+                        showToast('未选择封面');
                       }
                     });
                   },
