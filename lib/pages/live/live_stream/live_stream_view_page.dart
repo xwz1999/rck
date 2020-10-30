@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:many_like/many_like.dart';
@@ -71,9 +73,14 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
 
   FocusNode _focusNode = FocusNode();
 
+  Timer _liveTimer;
+  bool _waitSignal = false;
+  int _livePauseTimeStamp = 0;
+
   @override
   void initState() {
     super.initState();
+
     Wakelock.enable();
     // Future.delayed(Duration(seconds: 10), () {
     //   _livePlayer?.pausePlay();
@@ -228,6 +235,14 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                   );
                   setState(() {});
                   break;
+                case 'Play':
+                  int holdTimeStamp = data['time'];
+                  if (holdTimeStamp > _livePauseTimeStamp) {
+                    setState(() {
+                      _waitSignal = data['type'] == 'pause';
+                    });
+                  }
+                  break;
               }
             }
           } else {
@@ -289,8 +304,22 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
     }
   }
 
+  reconnectToLive() {
+    _liveTimer?.cancel();
+    _liveTimer = Timer(Duration(milliseconds: 5000), () {
+      _livePlayer.isPlaying().then((value) {
+        setState(() {
+          _waitSignal = !value;
+        });
+      });
+      // _livePlayer.push
+      _livePlayer.startPlay(_streamInfoModel.playUrl, type: PlayType.RTMP);
+    });
+  }
+
   @override
   void dispose() {
+    _liveTimer?.cancel();
     _livePlayer?.stopPlay();
     TencentImPlugin.quitGroup(groupId: _streamInfoModel.groupId);
     TencentImPlugin.removeListener(parseMessage);
@@ -299,6 +328,47 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
     DPrint.printLongJson('用户退出');
     Wakelock.disable();
     super.dispose();
+  }
+
+  _buildWait() {
+    return _waitSignal
+        ? BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 5,
+              sigmaY: 5,
+            ),
+            child: Container(
+              color: Colors.black54,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    R.ASSETS_LIVE_LIVE_ANIMAL_PNG,
+                    height: rSize(107),
+                    width: rSize(35),
+                  ),
+                  rHBox(15),
+                  Text(
+                    '主播暂时离开',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: rSP(20),
+                    ),
+                  ),
+                  rHBox(10),
+                  Text(
+                    '休息片刻，阿库陪你一起等待精彩',
+                    style: TextStyle(
+                      color: Color(0xFF999999),
+                      fontSize: rSP(14),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        : SizedBox();
   }
 
   @override
@@ -321,30 +391,57 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                         await _livePlayer.setPlayerView(controller);
                         _livePlayer.startPlay(_streamInfoModel.playUrl,
                             type: PlayType.RTMP);
-                        _livePlayer
-                          ..setOnEventListener(
-                            onEventPlayEnd: () {
-                              print('end');
-                            },
-                            onEventPlayBegin: () {
-                              print('begin');
-                            },
-                            onWarningServerConnFail: () {
-                              print('server conn fail');
-                            },
-                            onWarningReconnect: () {
-                              print('reconn');
-                            },
-                            onWarningVideoPlayLag: () {
-                              print('video');
-                            },
-                            onWarningRecvDataLag: () {
-                              print('data');
-                            },
-                          );
+                        _livePlayer.setOnEventListener(
+                          onWarningReconnect: () {
+                            reconnectToLive();
+                          },
+                          onWarningVideoDecodeFail: () {
+                            print('');
+                          },
+                          onWarningAudioDecodeFail: () {
+                            print('');
+                          },
+                          onWarningRecvDataLag: () {
+                            print('');
+                          },
+                          onWarningVideoPlayLag: () {
+                            print('');
+                          },
+                          onWarningHwAccelerationFail: () {
+                            print('');
+                          },
+                          onWarningVideoDiscontinuity: () {
+                            print('');
+                          },
+                          onWarningDNSFail: () {
+                            print('');
+                          },
+                          onWarningServerConnFail: () {
+                            print('');
+                          },
+                          onWarningShakeFail: () {
+                            print('');
+                          },
+                          onEventRcvFirstIFrame: () {
+                            print('');
+                          },
+                          onEventPlayBegin: () {
+                            print('1');
+                          },
+                          onEventPlayEnd: () {
+                            print('`');
+                          },
+                        );
                       },
                     ),
                   ),
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  top: 0,
+                  child: _buildWait(),
                 ),
                 Positioned(
                   left: 0,

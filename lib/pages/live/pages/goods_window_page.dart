@@ -19,7 +19,7 @@ class _GoodsWindowPageState extends State<GoodsWindowPage> {
   List<GoodsWindowModel> models = [];
   List<GoodsList> displayModels = [];
 
-  List<int> _selectedIds = [];
+  List<num> _selectedIds = [];
 
   int page = 1;
   bool _isManager = false;
@@ -129,12 +129,16 @@ class _GoodsWindowPageState extends State<GoodsWindowPage> {
                 });
               },
               onLoadMore: () {
+                page++;
                 getGoodsWindowModels().then((model) {
                   setState(() {
                     models.add(model);
                     displayModels.addAll(model.list);
                   });
-                  _controller.loadComplete();
+                  if (model.list.isEmpty)
+                    _controller.loadNoData();
+                  else
+                    _controller.loadComplete();
                 }).catchError((_) {
                   _controller.loadFailed();
                 });

@@ -13,11 +13,13 @@ class UserActivityView extends StatefulWidget {
   final int id;
   final LiveBaseInfoModel userModel;
   final bool initAttention;
+  final VoidCallback onRefresh;
   UserActivityView(
       {Key key,
       @required this.id,
       @required this.userModel,
-      @required this.initAttention})
+      @required this.initAttention,
+      this.onRefresh})
       : super(key: key);
 
   @override
@@ -51,6 +53,7 @@ class _UserActivityViewState extends State<UserActivityView>
       controller: _controller,
       onRefresh: () {
         _page = 1;
+        widget.onRefresh();
         getActivityModels().then((models) {
           setState(() {
             activityListModels = models;

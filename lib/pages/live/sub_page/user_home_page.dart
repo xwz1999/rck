@@ -216,8 +216,34 @@ class _UserHomePageState extends State<UserHomePage>
                 id: widget.userId,
                 userModel: model,
                 initAttention: selfFlag ? true : widget.initAttention,
+                onRefresh: () {
+                  HttpManager.post(LiveAPI.baseInfo, {
+                    'findUserId': widget.userId,
+                  }).then((resultData) {
+                    if (resultData?.data['data'] != null) {
+                      setState(() {
+                        model =
+                            LiveBaseInfoModel.fromJson(resultData.data['data']);
+                      });
+                    }
+                  });
+                },
               ),
-              UserPlaybackView(userId: widget.userId),
+              UserPlaybackView(
+                userId: widget.userId,
+                onRefresh: () {
+                  HttpManager.post(LiveAPI.baseInfo, {
+                    'findUserId': widget.userId,
+                  }).then((resultData) {
+                    if (resultData?.data['data'] != null) {
+                      setState(() {
+                        model =
+                            LiveBaseInfoModel.fromJson(resultData.data['data']);
+                      });
+                    }
+                  });
+                },
+              ),
             ],
           ),
         ),

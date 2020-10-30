@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -53,7 +54,7 @@ class LivePage extends StatefulWidget {
   _LivePageState createState() => _LivePageState();
 }
 
-class _LivePageState extends State<LivePage> {
+class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
   LivePusher _livePusher;
   File _imageFile;
   TopicListModel _topicModel;
@@ -79,13 +80,42 @@ class _LivePageState extends State<LivePage> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     Wakelock.enable();
 
     _editingController.text = '${UserManager.instance.user.info.nickname}的直播';
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (_isStream)
+      switch (state) {
+        case AppLifecycleState.inactive:
+          _livePusher.setPauseConfig(
+            300,
+            5,
+            AssetImage(R.ASSETS_LIVE_LIVE_ANIMAL_PNG),
+            ImageConfiguration(),
+          );
+          _livePusher.pausePush();
+
+          break;
+        case AppLifecycleState.resumed:
+          _livePusher.resumePush();
+          break;
+        case AppLifecycleState.paused:
+          print('paused');
+          break;
+        case AppLifecycleState.detached:
+          print('detached');
+          break;
+      }
+    super.didChangeAppLifecycleState(state);
+  }
+
+  @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     PickCart.picked.clear();
     Wakelock.disable();
     _livePusher?.stopPush();
@@ -116,6 +146,59 @@ class _LivePageState extends State<LivePage> {
               onCloudVideoCreated: (controller) async {
                 _livePusher = await LivePusher.create();
                 _livePusher.startPreview(controller);
+                _livePusher.setOnEventListener(
+                  onWaringNetBusy: () {
+                    print('');
+                  },
+                  onWaringReconnect: () {
+                    print('');
+                  },
+                  onWaringHardwareAccelerationFail: () {
+                    print('');
+                  },
+                  onWaringDNSFail: () {
+                    print('');
+                  },
+                  onWaringServerConnFail: () {
+                    print('');
+                  },
+                  onWaringShakeFail: () {
+                    print('');
+                  },
+                  onWaringServerDisconnect: () {
+                    print('');
+                  },
+                  onEventConnectSucc: () {
+                    print('');
+                  },
+                  onEventPushBegin: () {
+                    print('');
+                  },
+                  onEventOpenCameraSuccess: () {
+                    print('');
+                  },
+                  onErrorOpenCameraFail: () {
+                    showToast('相机打开失败');
+                  },
+                  onErrorOpenMicFail: () {
+                    print('');
+                  },
+                  onErrorVideoEncodeFail: () {
+                    print('');
+                  },
+                  onErrorAudioEncodeFail: () {
+                    print('');
+                  },
+                  onErrorUnsupportedResolution: () {
+                    print('');
+                  },
+                  onErrorUnsupportedSampleRate: () {
+                    print('');
+                  },
+                  onErrorNetDisconnect: () {
+                    print('');
+                  },
+                );
                 _livePusher.setBeautyFilter(
                   BeautyFilter.NATURE,
                   whiteningLevel: 6,
