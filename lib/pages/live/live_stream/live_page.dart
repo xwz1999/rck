@@ -80,6 +80,9 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
+    Future.delayed(Duration.zero, () {
+      precacheImage(AssetImage(R.ASSETS_LIVE_LIVE_ANIMAL_PNG), context);
+    });
     WidgetsBinding.instance.addObserver(this);
     Wakelock.enable();
 
@@ -91,12 +94,6 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
     if (_isStream)
       switch (state) {
         case AppLifecycleState.inactive:
-          _livePusher.setPauseConfig(
-            300,
-            5,
-            AssetImage(R.ASSETS_LIVE_LIVE_ANIMAL_PNG),
-            ImageConfiguration(),
-          );
           _livePusher.pausePush();
 
           break;
@@ -104,7 +101,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
           _livePusher.resumePush();
           break;
         case AppLifecycleState.paused:
-          print('paused');
+          _livePusher.pausePush();
           break;
         case AppLifecycleState.detached:
           print('detached');
@@ -146,6 +143,12 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
               onCloudVideoCreated: (controller) async {
                 _livePusher = await LivePusher.create();
                 _livePusher.startPreview(controller);
+                _livePusher.setPauseConfig(
+                  300,
+                  5,
+                  AssetImage(R.ASSETS_LIVE_LIVE_HOLD_PLACEHOLDER_PNG),
+                  ImageConfiguration(),
+                );
                 _livePusher.setOnEventListener(
                   onWaringNetBusy: () {
                     print('');
