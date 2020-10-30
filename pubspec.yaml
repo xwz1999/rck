@@ -207,6 +207,8 @@ dependencies:
   wakelock:
 
   dropdown_search: ^0.4.5
+
+  image:
   
 
 dev_dependencies:
