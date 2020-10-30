@@ -15,6 +15,7 @@ import 'package:recook/constants/constants.dart';
 import 'package:recook/models/home_weather_model.dart';
 import 'package:recook/models/user_brief_info_model.dart';
 import 'package:recook/models/user_model.dart';
+import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/user/mvp/user_presenter_impl.dart';
 import 'package:recook/redux/user_brief_redux.dart';
 import 'package:recook/redux/user_redux.dart';
@@ -90,6 +91,7 @@ class UserManager {
 
   static logout() async {
     DPrint.printf("退出登录了 -- ${instance.login.value}");
+    TencentIMTool.model = null;
     instance.user = User.empty();
     instance.login.value = false;
     await SharePreferenceUtils.remove(AppStrings.key_user);

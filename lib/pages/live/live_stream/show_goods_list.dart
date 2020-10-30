@@ -528,19 +528,30 @@ class _InternalGoodsDetailState extends State<InternalGoodsDetail> {
                                 Row(
                                   children: [
                                     Text(
-                                      '¥ ${sku.discountPrice} /',
+                                      '¥ ${sku.discountPrice} ',
                                       style: TextStyle(
                                         color: Color(0xFF333333),
                                         fontSize: rSP(16),
                                       ),
                                     ),
-                                    Text(
-                                      '赚${sku.commission}',
-                                      style: TextStyle(
-                                        color: Color(0xFFC92219),
-                                        fontSize: rSP(10),
-                                      ),
-                                    ),
+                                    AppConfig.getShowCommission()
+                                        ? Text(
+                                            '/',
+                                            style: TextStyle(
+                                              color: Color(0xFF333333),
+                                              fontSize: rSP(16),
+                                            ),
+                                          )
+                                        : SizedBox(),
+                                    AppConfig.getShowCommission()
+                                        ? Text(
+                                            '赚${sku.commission}',
+                                            style: TextStyle(
+                                              color: Color(0xFFC92219),
+                                              fontSize: rSP(10),
+                                            ),
+                                          )
+                                        : SizedBox(),
                                   ],
                                 ),
                                 Text(

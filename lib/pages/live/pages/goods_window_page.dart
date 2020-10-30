@@ -1,5 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -193,10 +194,11 @@ class _GoodsWindowPageState extends State<GoodsWindowPage> {
                         ),
                         onPressed: () {
                           HttpManager.post(LiveAPI.deleteShopWindow, {
-                            "ids": _selectedIds,
-                          }).then((_) {
+                            "ids": _selectedIds.map((e) => e.toInt()).toList(),
+                          }).then((resultData) {
                             _selectedIds.clear();
                             _selectAll = false;
+                            showToast(resultData.data['msg']);
                             _controller.requestRefresh();
                             setState(() {});
                           });

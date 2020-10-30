@@ -47,7 +47,7 @@ class _LiveChatBoxState extends State<LiveChatBox> {
                   text:
                       '${widget.sender}${TextUtil.isEmpty(widget.sender) ? '' : ':'}',
                   style: TextStyle(
-                    color: color,
+                    color: Color(0xFF98EDFF),
                     fontSize: rSP(13),
                   ),
                 ),

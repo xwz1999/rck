@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -23,17 +24,24 @@ class LiveStreamPage extends StatefulWidget {
 }
 
 class _LiveStreamPageState extends State<LiveStreamPage>
-    with AutomaticKeepAliveClientMixin {
+    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
   List<LiveAttentionListModel> _liveAttentionListModels = [];
   List<LiveListModel> _liveListModels = [];
   int _livePage = 1;
   int _attentionPage = 1;
   GSRefreshController _liveListController = GSRefreshController();
   GSRefreshController _liveAttentionController = GSRefreshController();
+  GifController _gifController;
 
   @override
   void initState() {
     super.initState();
+    _gifController = GifController(vsync: this)
+      ..repeat(
+        min: 0,
+        max: 20,
+        period: Duration(milliseconds: 700),
+      );
     Future.delayed(Duration(milliseconds: 300), () {
       if (mounted) {
         _liveListController.requestRefresh();
@@ -187,13 +195,18 @@ class _LiveStreamPageState extends State<LiveStreamPage>
               Positioned(
                 right: rSize(3),
                 bottom: 0,
-                child: Image.asset(
-                  isLive
-                      ? R.ASSETS_LIVE_ON_STREAM_PNG
-                      : R.ASSETS_LIVE_STREAM_PLAY_BACK_PNG,
-                  height: rSize(12),
-                  width: rSize(12),
-                ),
+                child: isLive
+                    ? GifImage(
+                        controller: _gifController,
+                        image: AssetImage(R.ASSETS_LIVE_PLAY_GIF),
+                        height: rSize(12),
+                        width: rSize(12),
+                      )
+                    : Image.asset(
+                        R.ASSETS_LIVE_STREAM_PLAY_BACK_PNG,
+                        height: rSize(12),
+                        width: rSize(12),
+                      ),
               ),
             ],
           ),
@@ -310,11 +323,16 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Image.asset(
-                            isLive
-                                ? R.ASSETS_LIVE_ON_STREAM_PNG
-                                : R.ASSETS_LIVE_STREAM_PLAY_BACK_PNG,
-                          ),
+                          isLive
+                              ? GifImage(
+                                  controller: _gifController,
+                                  image: AssetImage(R.ASSETS_LIVE_PLAY_GIF),
+                                  height: rSize(15),
+                                  width: rSize(15),
+                                )
+                              : Image.asset(
+                                  R.ASSETS_LIVE_STREAM_PLAY_BACK_PNG,
+                                ),
                           Text(
                             '${model.look}人${isLive ? '观看' : '看过'}',
                             style: TextStyle(
