@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:many_like/many_like.dart';
 import 'package:oktoast/oktoast.dart';
@@ -606,26 +607,29 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                   controller: _editingController,
                                   focusNode: _focusNode,
                                   onEditingComplete: () {
-                                    TencentImPlugin.sendMessage(
-                                      sessionId: _streamInfoModel.groupId,
-                                      sessionType: SessionType.Group,
-                                      node: TextMessageNode(
-                                          content: _editingController.text),
-                                    );
-                                    chatObjects.insert(
-                                        0,
-                                        ChatObj(
-                                          UserManager
-                                              .instance.user.info.nickname,
-                                          _editingController.text,
-                                        ));
-                                    _scrollController.animateTo(
-                                      -50,
-                                      duration: Duration(milliseconds: 300),
-                                      curve: Curves.easeInOutCubic,
-                                    );
-                                    setState(() {});
-                                    _editingController.clear();
+                                    if (!TextUtil.isEmpty(
+                                        _editingController.text)) {
+                                      TencentImPlugin.sendMessage(
+                                        sessionId: _streamInfoModel.groupId,
+                                        sessionType: SessionType.Group,
+                                        node: TextMessageNode(
+                                            content: _editingController.text),
+                                      );
+                                      chatObjects.insert(
+                                          0,
+                                          ChatObj(
+                                            UserManager
+                                                .instance.user.info.nickname,
+                                            _editingController.text,
+                                          ));
+                                      _scrollController.animateTo(
+                                        -50,
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.easeInOutCubic,
+                                      );
+                                      setState(() {});
+                                      _editingController.clear();
+                                    }
                                   },
                                   decoration: InputDecoration(
                                     isDense: true,

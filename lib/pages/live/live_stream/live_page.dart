@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
@@ -526,25 +527,27 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                           controller: _messageController,
                           focusNode: _focusNode,
                           onEditingComplete: () {
-                            TencentImPlugin.sendMessage(
-                              sessionId: _streamInfoModel.groupId,
-                              sessionType: SessionType.Group,
-                              node: TextMessageNode(
-                                  content: _messageController.text),
-                            );
-                            chatObjects.insert(
-                                0,
-                                ChatObj(
-                                  UserManager.instance.user.info.nickname,
-                                  _messageController.text,
-                                ));
-                            _scrollController.animateTo(
-                              -50,
-                              duration: Duration(milliseconds: 300),
-                              curve: Curves.easeInOutCubic,
-                            );
-                            setState(() {});
-                            _messageController.clear();
+                            if (!TextUtil.isEmpty(_messageController.text)) {
+                              TencentImPlugin.sendMessage(
+                                sessionId: _streamInfoModel.groupId,
+                                sessionType: SessionType.Group,
+                                node: TextMessageNode(
+                                    content: _messageController.text),
+                              );
+                              chatObjects.insert(
+                                  0,
+                                  ChatObj(
+                                    UserManager.instance.user.info.nickname,
+                                    _messageController.text,
+                                  ));
+                              _scrollController.animateTo(
+                                -50,
+                                duration: Duration(milliseconds: 300),
+                                curve: Curves.easeInOutCubic,
+                              );
+                              setState(() {});
+                              _messageController.clear();
+                            }
                           },
                           decoration: InputDecoration(
                             isDense: true,
