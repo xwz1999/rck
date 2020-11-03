@@ -23,6 +23,8 @@ enum GoodsItemType {
 }
 
 class GoodsItemWidget extends StatelessWidget {
+  final bool isSingleDayGoods;
+
   final String goodsName;
   final String description;
   final String mainPhotoUrl;
@@ -44,6 +46,7 @@ class GoodsItemWidget extends StatelessWidget {
   final Function onBrandClick;
   const GoodsItemWidget(
       {Key key,
+      this.isSingleDayGoods = false,
       this.goodsName,
       this.description,
       this.mainPhotoUrl,
@@ -68,6 +71,7 @@ class GoodsItemWidget extends StatelessWidget {
   /// Normal Goods Item
   GoodsItemWidget.normalGoodsItem({
     Key key,
+    this.isSingleDayGoods = false,
     this.buildCtx,
     this.shareClick,
     this.buyClick,
@@ -97,6 +101,7 @@ class GoodsItemWidget extends StatelessWidget {
     this.shareClick,
     this.buyClick,
     this.onBrandClick,
+    this.isSingleDayGoods = false,
     GoodsHotSellListModel.Data data,
   })  : goodsName = data.goodsName,
         brandName = data.brandName,
@@ -123,6 +128,7 @@ class GoodsItemWidget extends StatelessWidget {
     this.buildCtx,
     this.shareClick,
     this.onBrandClick,
+    this.isSingleDayGoods = false,
     @required this.buyClick,
     PromotionGoodsModel model,
   })  : goodsName = model.goodsName,
@@ -352,7 +358,17 @@ class GoodsItemWidget extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
+          isSingleDayGoods
+              ? Positioned(
+                  left: 0,
+                  top: 0,
+                  child: Image.asset(
+                    R.ASSETS_HOME_SINGLE_DAY_PNG,
+                    height: rSize(20),
+                  ),
+                )
+              : SizedBox(),
         ]),
       ),
     );
