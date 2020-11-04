@@ -76,6 +76,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
       GlobalKey<LiveBuyingWidgetState>();
 
   FocusNode _focusNode = FocusNode();
+  FocusNode _focusNodeB = FocusNode();
 
   @override
   void initState() {
@@ -260,6 +261,17 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
               },
             ),
           ),
+          Positioned(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: GestureDetector(
+              child: Container(color: Colors.transparent),
+              onTap: () {
+                _focusNode.unfocus();
+                _focusNodeB.unfocus();
+              },
+            ),
+          ),
           AnimatedPositioned(
             left: _isStream ? -100 : rSize(15),
             child: IconButton(
@@ -355,6 +367,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           TextField(
+                            focusNode: _focusNodeB,
                             controller: _editingController,
                             style: TextStyle(
                               color: Colors.white.withOpacity(0.8),
@@ -381,6 +394,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                               ),
                             ),
                             onTap: () {
+                              _focusNodeB.unfocus();
                               CRoute.push(
                                 context,
                                 PickTopicPage(onPick: (model) {
@@ -402,6 +416,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                   minWidth: rSize(205),
                   height: rSize(40),
                   onPressed: () {
+                    _focusNodeB.unfocus();
                     upload(String path) {
                       GSDialog.of(context)
                           .showLoadingDialog(context, '准备开始直播中');
@@ -569,6 +584,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                 CustomImageButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {
+                    _focusNode.unfocus();
                     showModalBottomSheet(
                         context: context,
                         builder: (context) {
@@ -775,6 +791,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                   title: UserManager.instance.user.info.nickname,
                   subTitle: '点赞数$_praise',
                   onTapAvatar: () {
+                    _focusNode.unfocus();
                     HttpManager.post(LiveAPI.baseInfo, {
                       'findUserId': _streamInfoModel.userId,
                     }).then((resultData) {
@@ -821,6 +838,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                 rWBox(10),
                 CustomImageButton(
                   onPressed: () {
+                    _focusNode.unfocus();
                     showDialog(
                       context: context,
                       child: NormalTextDialog(

@@ -244,7 +244,7 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                   initAttention: widget.userModel.userId ==
                           UserManager.instance.user.info.id
                       ? true
-                      : widget.model.isPraise == 1,
+                      : widget.model.isFollow == 1,
                   onAttention: () {
                     HttpManager.post(
                       LiveAPI.addFollow,

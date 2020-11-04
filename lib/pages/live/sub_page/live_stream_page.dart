@@ -182,6 +182,7 @@ class _LiveStreamPageState extends State<LiveStreamPage>
         mainAxisSize: MainAxisSize.min,
         children: [
           Stack(
+            alignment: Alignment.bottomCenter,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(rSize(52 / 2)),
@@ -193,20 +194,37 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                 ),
               ),
               Positioned(
-                right: rSize(3),
                 bottom: 0,
-                child: isLive
-                    ? GifImage(
-                        controller: _gifController,
-                        image: AssetImage(R.ASSETS_LIVE_PLAY_GIF),
-                        height: rSize(12),
-                        width: rSize(12),
-                      )
-                    : Image.asset(
-                        R.ASSETS_LIVE_STREAM_PLAY_BACK_PNG,
-                        height: rSize(12),
-                        width: rSize(12),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: rSize(2)),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(rSize(4)),
+                    color: isLive ? Color(0xFFDB2D2D) : Color(0xFF8A8382),
+                  ),
+                  child: Row(
+                    children: [
+                      isLive
+                          ? GifImage(
+                              controller: _gifController,
+                              image: AssetImage(R.ASSETS_LIVE_PLAY_GIF),
+                              height: rSize(12),
+                              width: rSize(12),
+                            )
+                          : Image.asset(
+                              R.ASSETS_LIVE_STREAM_PLAY_BACK_PNG,
+                              height: rSize(12),
+                              width: rSize(12),
+                            ),
+                      Text(
+                        '已关注',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: rSP(9),
+                        ),
                       ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),

@@ -137,6 +137,7 @@ showLiveChild(
   @required num follows,
   @required int id,
   @required bool initAttention,
+  Function(bool state) callback,
 }) {
   showModalBottomSheet(
       context: context,
@@ -203,6 +204,7 @@ showLiveChild(
                         height: rSize(40),
                         width: rSize(300),
                         onAttention: (oldState) {
+                          callback(!oldState);
                           HttpManager.post(
                             oldState ? LiveAPI.cancelFollow : LiveAPI.addFollow,
                             {'followUserId': id},

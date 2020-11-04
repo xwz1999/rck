@@ -21,11 +21,17 @@ class LiveUserBar extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _LiveUserBarState createState() => _LiveUserBarState();
+  LiveUserBarState createState() => LiveUserBarState();
 }
 
-class _LiveUserBarState extends State<LiveUserBar> {
+class LiveUserBarState extends State<LiveUserBar> {
   bool _internalAttention = false;
+
+  updateAttention(bool state) {
+    _internalAttention = state;
+    setState(() {});
+  }
+
   @override
   void initState() {
     super.initState();

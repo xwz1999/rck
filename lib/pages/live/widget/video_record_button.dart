@@ -24,10 +24,12 @@ class _VideoRecordButtonState extends State<VideoRecordButton> {
   bool _isOnTap = false;
   Timer _timer;
   int _seconds = 0;
+  Timer _timer60;
 
   @override
   void dispose() {
     _timer?.cancel();
+    _timer60?.cancel();
     super.dispose();
   }
 
@@ -76,13 +78,15 @@ class _VideoRecordButtonState extends State<VideoRecordButton> {
             child: CircularPercentIndicator(
               radius: rSize(104),
               lineWidth: rSize(4),
-              percent: (_seconds / 60.0),
+              percent: _seconds >= 60 ? 1 : (_seconds / 60.0),
               addAutomaticKeepAlive: false,
               animation: true,
               animateFromLastPercent: true,
               progressColor: Colors.white,
               backgroundColor: Colors.transparent,
               circularStrokeCap: CircularStrokeCap.round,
+              curve: Curves.linear,
+              animationDuration: 1000,
             ),
           ),
         ),
@@ -94,6 +98,9 @@ class _VideoRecordButtonState extends State<VideoRecordButton> {
                     _isOnTap = true;
                   });
                   _startTimer();
+                  _timer60 = Timer(Duration(seconds: 60), () {
+                    widget.onEnd();
+                  });
                   widget.onStart();
                 },
           onTapUp: widget.disabled
@@ -141,7 +148,8 @@ class _VideoRecordButtonState extends State<VideoRecordButton> {
   }
 
   _cancelTimer() {
-    _timer.cancel();
+    _timer?.cancel();
+    _timer60?.cancel();
     _seconds = 0;
   }
 }

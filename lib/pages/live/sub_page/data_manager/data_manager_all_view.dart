@@ -391,34 +391,27 @@ class __DataTapWidgetState extends State<_DataTapWidget> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          AnimatedOpacity(
-            opacity: onTap ? 1 : 0,
-            duration: Duration(milliseconds: 300),
-            curve: Curves.easeInOutCubic,
-            child: Text(
-              '${widget.model.count}',
-              style: TextStyle(
-                fontSize: rSP(16),
-                color: Color(0xFFDB2D2D),
-              ),
+          Text(
+            '${widget.model.count}',
+            style: TextStyle(
+              fontSize: rSP(16),
+              color: Color(0xFFDB2D2D),
             ),
           ),
           Container(
             color: Colors.transparent,
             alignment: Alignment.bottomCenter,
             width: rSize(36),
-            child: AnimatedContainer(
-              curve: Curves.easeInOutCubic,
-              duration: Duration(milliseconds: 300),
+            child: Container(
               height: rSize(6) +
                   rSize(90) * widget.model.calcCount / widget.maxHeight,
-              width: rSize(onTap ? 14 : 8),
+              width: rSize(8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(rSize(7)),
                 gradient: LinearGradient(
                   colors: [
-                    Color(0xFFC4143C).withOpacity(onTap ? 1 : 0.5),
-                    Color(0xFFFF3457).withOpacity(onTap ? 1 : 0.5),
+                    Color(0xFFC4143C),
+                    Color(0xFFFF3457),
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,

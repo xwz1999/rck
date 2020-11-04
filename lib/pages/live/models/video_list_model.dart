@@ -13,22 +13,25 @@ class VideoListModel {
   String mediaUrl;
   int topicId;
   String topicName;
+  int isFollow;
 
-  VideoListModel(
-      {this.userId,
-      this.nickname,
-      this.headImgUrl,
-      this.content,
-      this.coverUrl,
-      this.trendId,
-      this.originId,
-      this.trendType,
-      this.praise,
-      this.isPraise,
-      this.goods,
-      this.mediaUrl,
-      this.topicId,
-      this.topicName});
+  VideoListModel({
+    this.userId,
+    this.nickname,
+    this.headImgUrl,
+    this.content,
+    this.coverUrl,
+    this.trendId,
+    this.originId,
+    this.trendType,
+    this.praise,
+    this.isPraise,
+    this.goods,
+    this.mediaUrl,
+    this.topicId,
+    this.topicName,
+    this.isFollow,
+  });
 
   VideoListModel.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -45,6 +48,7 @@ class VideoListModel {
     mediaUrl = json['mediaUrl'];
     topicId = json['topicId'];
     topicName = json['topicName'];
+    isFollow = json['isFollow'];
   }
 
   Map<String, dynamic> toJson() {
@@ -65,6 +69,7 @@ class VideoListModel {
     data['mediaUrl'] = this.mediaUrl;
     data['topicId'] = this.topicId;
     data['topicName'] = this.topicName;
+    data['isFollow'] = this.isFollow;
     return data;
   }
 }

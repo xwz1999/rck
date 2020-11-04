@@ -14,6 +14,7 @@ import 'package:recook/pages/live/live_stream/live_blur_page.dart';
 import 'package:recook/pages/live/live_stream/live_report_view.dart';
 import 'package:recook/pages/live/live_stream/live_users_view.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
+import 'package:recook/pages/live/live_stream/widget/live_avatar_with_dialog.dart';
 import 'package:recook/pages/live/live_stream/widget/live_buying_widget.dart';
 import 'package:recook/pages/live/live_stream/widget/live_chat_box.dart';
 import 'package:recook/pages/live/models/live_base_info_model.dart';
@@ -452,6 +453,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                   bottom: 0,
                   child: InkWell(
                     onTap: () {
+                      _focusNode.unfocus();
                       setState(() {
                         _showTools = !_showTools;
                       });
@@ -474,44 +476,57 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                     ),
                     child: Row(
                       children: [
-                        LiveUserBar(
-                          onTapAvatar: () {
-                            // CRoute.pushReplace(
-                            //   context,
-                            //   UserHomePage(
-                            //     userId: _streamInfoModel.userId,
-                            //     initAttention: _streamInfoModel.isFollow == 1,
-                            //   ),
-                            // );
+                        // LiveUserBar(
+                        //   onTapAvatar: () {
+                        //     // CRoute.pushReplace(
+                        //     //   context,
+                        //     //   UserHomePage(
+                        //     //     userId: _streamInfoModel.userId,
+                        //     //     initAttention: _streamInfoModel.isFollow == 1,
+                        //     //   ),
+                        //     // );
+                        //     _focusNode.unfocus();
 
-                            showLiveChild(
-                              context,
-                              initAttention: _streamInfoModel.isFollow == 1,
-                              title: _streamInfoModel.nickname,
-                              fans: _liveBaseInfoModel.fans,
-                              follows: _liveBaseInfoModel.follows,
-                              headImg: _liveBaseInfoModel.headImgUrl,
-                              id: _liveBaseInfoModel.userId,
-                            );
-                          },
-                          initAttention: _streamInfoModel.userId ==
-                                  UserManager.instance.user.info.id
-                              ? true
-                              : _streamInfoModel.isFollow == 1,
-                          onAttention: () {
-                            isAttention = true;
-                            HttpManager.post(
-                              LiveAPI.addFollow,
-                              {
-                                'followUserId': _streamInfoModel.userId,
-                                'liveItemId': widget.id,
-                              },
-                            );
-                          },
-                          title: _streamInfoModel.nickname,
-                          subTitle: '点赞数 $_praise',
-                          avatar: _streamInfoModel.headImgUrl,
-                        ),
+                        //     showLiveChild(
+                        //       context,
+                        //       initAttention: _streamInfoModel.isFollow == 1,
+                        //       title: _streamInfoModel.nickname,
+                        //       fans: _liveBaseInfoModel.fans,
+                        //       follows: _liveBaseInfoModel.follows,
+                        //       headImg: _liveBaseInfoModel.headImgUrl,
+                        //       id: _liveBaseInfoModel.userId,
+                        //     );
+                        //   },
+                        //   initAttention: _streamInfoModel.userId ==
+                        //           UserManager.instance.user.info.id
+                        //       ? true
+                        //       : _streamInfoModel.isFollow == 1,
+                        //   onAttention: () {
+                        //     isAttention = true;
+                        //     HttpManager.post(
+                        //       LiveAPI.addFollow,
+                        //       {
+                        //         'followUserId': _streamInfoModel.userId,
+                        //         'liveItemId': widget.id,
+                        //       },
+                        //     );
+                        //   },
+                        //   title: _streamInfoModel.nickname,
+                        //   subTitle: '点赞数 $_praise',
+                        //   avatar: _streamInfoModel.headImgUrl,
+                        // ),
+                        LiveAvatarWithDialog(
+                            onTapAvatar: () {
+                              _focusNode.unfocus();
+                            },
+                            initAttention: _streamInfoModel.userId ==
+                                    UserManager.instance.user.info.id
+                                ? true
+                                : _streamInfoModel.isFollow == 1,
+                            model: _streamInfoModel,
+                            liveBaseModel: _liveBaseInfoModel,
+                            liveId: widget.id,
+                            praise: _praise),
                         Spacer(),
                         MorePeople(
                           onTap: () {
@@ -650,6 +665,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                             CustomImageButton(
                               padding: EdgeInsets.zero,
                               onPressed: () {
+                                _focusNode.unfocus();
                                 ActionSheet.show(
                                   context,
                                   items: ['举报'],
@@ -667,6 +683,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                               child: CustomImageButton(
                                 padding: EdgeInsets.zero,
                                 onPressed: () {
+                                  _focusNode.unfocus();
                                   showModalBottomSheet(
                                       context: context,
                                       builder: (context) {
@@ -752,6 +769,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                             CustomImageButton(
                               padding: EdgeInsets.zero,
                               onPressed: () {
+                                _focusNode.unfocus();
                                 showModalBottomSheet(
                                     context: context,
                                     builder: (context) {
@@ -826,6 +844,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                               ),
                               tapCallbackOnlyOnce: false,
                               onTap: (index) {
+                                _focusNode.unfocus();
                                 if (UserManager.instance.haveLogin) {
                                   HttpManager.post(
                                     LiveAPI.liveLike,
@@ -896,6 +915,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                           children: [
                             CustomImageButton(
                               onPressed: () {
+                                _focusNode.unfocus();
                                 nowGoodList == null
                                     ? showToast('未知错误')
                                     : showModalBottomSheet(
@@ -999,6 +1019,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                               right: 0,
                               child: CustomImageButton(
                                 onPressed: () {
+                                  _focusNode.unfocus();
                                   setState(() {
                                     showDetailWindow = false;
                                   });
