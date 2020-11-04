@@ -1,4 +1,5 @@
 import 'package:common_utils/common_utils.dart';
+import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
@@ -83,16 +84,21 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                           rHBox(11),
                           ClipRRect(
                             borderRadius: BorderRadius.circular(rSize(4)),
-                            child: Material(
-                              color: AppColor.frenchColor,
-                              child: FadeInImage.assetNetwork(
-                                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                                image: Api.getImgUrl(
-                                  widget.model.goods.mainPhotoURL,
+                            child: Column(
+                              children: [
+                                Material(
+                                  color: AppColor.frenchColor,
+                                  child: FadeInImage.assetNetwork(
+                                    placeholder:
+                                        R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                    image: Api.getImgUrl(
+                                      widget.model.goods.mainPhotoURL,
+                                    ),
+                                    width: rSize(100),
+                                    height: rSize(100),
+                                  ),
                                 ),
-                                width: rSize(100),
-                                height: rSize(100),
-                              ),
+                              ],
                             ),
                           ),
                           rHBox(3),
@@ -135,100 +141,98 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                   // rWBox(22),
                   rWBox(15),
                   Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        InkWell(
-                          onTap: () {
-                            CRoute.push(
-                                context,
-                                TopicPage(
-                                    topicId: widget.model.topicId,
-                                    initAttention: false));
-                          },
-                          child: TextUtil.isEmpty(widget.model.topicName)
-                              ? SizedBox()
-                              : Text(
-                                  '#${widget.model.topicName}',
-                                  style: TextStyle(
-                                    color: Color(0xFFEB8A49),
-                                    fontSize: rSP(14),
-                                  ),
-                                ),
-                        ),
-                        rHBox(4),
-                        Text(
-                          widget.model.content,
-                          style: TextStyle(
-                            color: Color(0xFFE4E4E4),
-                            fontSize: rSP(14),
+                    child: ExtendedText.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: widget.model.content,
+                            style: TextStyle(
+                              color: Color(0xFFE4E4E4),
+                              fontSize: rSP(14),
+                            ),
                           ),
-                        ),
-                        rHBox(15),
-                        Row(
-                          children: [
-                            Spacer(),
-                            CustomImageButton(
-                              onPressed: () {
-                                if (UserManager.instance.haveLogin)
-                                  showGeneralDialog(
-                                    context: context,
-                                    barrierDismissible: true,
-                                    barrierColor:
-                                        Colors.black.withOpacity(0.55),
-                                    barrierLabel: '',
-                                    transitionBuilder: (context, animation,
-                                        secondaryAnimation, child) {
-                                      final value = Curves.easeInOutCubic
-                                          .transform(animation.value);
-                                      return Transform.translate(
-                                        offset: Offset(0, (1 - value) * 400),
-                                        child: child,
-                                      );
-                                    },
-                                    transitionDuration:
-                                        Duration(milliseconds: 300),
-                                    pageBuilder: (BuildContext context,
-                                        Animation<double> animation,
-                                        Animation<double> secondaryAnimation) {
-                                      return ReviewChildCards(
-                                          trendId: widget.model.id);
-                                    },
-                                  );
-                                else {
-                                  showToast('未登陆，请先登陆');
-                                  CRoute.push(context, UserPage());
-                                }
+                          ExtendedWidgetSpan(
+                            child: InkWell(
+                              onTap: () {
+                                CRoute.push(
+                                    context,
+                                    TopicPage(
+                                        topicId: widget.model.topicId,
+                                        initAttention: false));
                               },
-                              child: Image.asset(
-                                R.ASSETS_LIVE_VIDEO_COMMENT_PNG,
-                                height: rSize(20),
-                                width: rSize(20),
-                              ),
+                              child: TextUtil.isEmpty(widget.model.topicName)
+                                  ? SizedBox()
+                                  : Text(
+                                      '#${widget.model.topicName}',
+                                      style: TextStyle(
+                                        color: Color(0xFFEB8A49),
+                                        fontSize: rSP(14),
+                                      ),
+                                    ),
                             ),
-                            rWBox(22),
-                            RecookLikeButton(
-                              initValue: widget.model.isPraise == 1,
-                              likePath: R.ASSETS_LIVE_VIDEO_LIKE_PNG,
-                              size: rSize(20),
-                              onChange: (oldState) {
-                                if (UserManager.instance.haveLogin)
-                                  HttpManager.post(
-                                    oldState
-                                        ? LiveAPI.dislikeActivity
-                                        : LiveAPI.likeActivity,
-                                    {'trendId': widget.model.id},
-                                  );
-                                else {
-                                  showToast('未登陆，请先登陆');
-                                  CRoute.push(context, UserPage());
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
+                  ),
+                  Column(
+                    children: [
+                      CustomImageButton(
+                        onPressed: () {
+                          if (UserManager.instance.haveLogin)
+                            showGeneralDialog(
+                              context: context,
+                              barrierDismissible: true,
+                              barrierColor: Colors.black.withOpacity(0.55),
+                              barrierLabel: '',
+                              transitionBuilder: (context, animation,
+                                  secondaryAnimation, child) {
+                                final value = Curves.easeInOutCubic
+                                    .transform(animation.value);
+                                return Transform.translate(
+                                  offset: Offset(0, (1 - value) * 400),
+                                  child: child,
+                                );
+                              },
+                              transitionDuration: Duration(milliseconds: 300),
+                              pageBuilder: (BuildContext context,
+                                  Animation<double> animation,
+                                  Animation<double> secondaryAnimation) {
+                                return ReviewChildCards(
+                                    trendId: widget.model.id);
+                              },
+                            );
+                          else {
+                            showToast('未登陆，请先登陆');
+                            CRoute.push(context, UserPage());
+                          }
+                        },
+                        child: Image.asset(
+                          R.ASSETS_LIVE_VIDEO_COMMENT_PNG,
+                          height: rSize(20),
+                          width: rSize(20),
+                        ),
+                      ),
+                      rHBox(22),
+                      RecookLikeButton(
+                        initValue: widget.model.isPraise == 1,
+                        likePath: R.ASSETS_LIVE_VIDEO_LIKE_PNG,
+                        size: rSize(20),
+                        onChange: (oldState) {
+                          if (UserManager.instance.haveLogin)
+                            HttpManager.post(
+                              oldState
+                                  ? LiveAPI.dislikeActivity
+                                  : LiveAPI.likeActivity,
+                              {'trendId': widget.model.id},
+                            );
+                          else {
+                            showToast('未登陆，请先登陆');
+                            CRoute.push(context, UserPage());
+                          }
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),

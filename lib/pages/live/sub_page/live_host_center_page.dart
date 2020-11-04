@@ -8,6 +8,7 @@ import 'package:recook/pages/live/live_stream/live_page.dart';
 import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/models/live_time_data_model.dart';
 import 'package:recook/pages/live/pages/goods_window_page.dart';
+import 'package:recook/pages/live/pages/live_goods_cart_page.dart';
 import 'package:recook/pages/live/sub_page/data_manager_page.dart';
 import 'package:recook/pages/live/sub_page/user_home/user_playback_view.dart';
 import 'package:recook/utils/custom_route.dart';
@@ -206,6 +207,17 @@ class _LiveHostCenterPageState extends State<LiveHostCenterPage>
             ),
             onTap: () {
               CRoute.push(context, GoodsWindowPage());
+            },
+          ),
+          _buildListTile(
+            title: '直播车',
+            leading: Image.asset(
+              R.ASSETS_LIVE_LIVE_CART_PNG,
+              width: rSize(20),
+              height: rSize(20),
+            ),
+            onTap: () {
+              CRoute.push(context, LiveGoodsCartPage());
             },
           ),
         ],

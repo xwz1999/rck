@@ -543,4 +543,13 @@ class LiveAPI {
 
   ///热门商品列表
   static const String hotGoods = '/v1/live/goods/hot';
+
+  ///直播车接口
+  static const String cartList = '/v1/live/car/list';
+
+  ///直播车添加商品
+  static const String addToCart = '/v1/live/car/add';
+
+  ///直播车删除商品
+  static const String removeFromCart = '/v1/live/car/delete';
 }

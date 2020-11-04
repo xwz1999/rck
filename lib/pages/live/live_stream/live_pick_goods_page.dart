@@ -6,6 +6,7 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/live_stream/pick_search_goods_page.dart';
 import 'package:recook/pages/live/live_stream/pick_view/all_goods_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/brand_goods_view.dart';
+import 'package:recook/pages/live/live_stream/pick_view/goods_cart_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/goods_window_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/hot_goods_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
@@ -32,7 +33,7 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
     super.initState();
     _tabController = TabController(
       vsync: this,
-      length: 3,
+      length: 4,
     );
   }
 
@@ -117,6 +118,7 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
                 controller: _tabController,
                 isScrollable: true,
                 tabs: [
+                  Tab(text: '直播车'),
                   Tab(text: '热门商品'),
                   Tab(text: '历史直播'),
                   Tab(text: '全部商品'),
@@ -139,6 +141,11 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
               child: TabBarView(
                 controller: _tabController,
                 children: [
+                  GoodsCartView(
+                    onPick: () {
+                      setState(() {});
+                    },
+                  ),
                   HotGoodsView(
                     onPick: () {
                       setState(() {});
