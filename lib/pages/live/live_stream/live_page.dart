@@ -20,7 +20,7 @@ import 'package:recook/pages/live/live_stream/widget/live_chat_box.dart';
 import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/models/live_exit_model.dart';
 import 'package:recook/pages/live/models/live_resume_model.dart';
-import 'package:recook/pages/live/models/live_stream_info_model.dart';
+import 'package:recook/pages/live/models/live_stream_info_model.dart' as LSI;
 import 'package:recook/pages/live/models/topic_list_model.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/live/video/pick_topic_page.dart';
@@ -63,7 +63,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
   List<num> pickedIds = [];
   int liveItemId = 0;
   bool _isStream = false;
-  LiveStreamInfoModel _streamInfoModel;
+  LSI.LiveStreamInfoModel _streamInfoModel;
   TencentGroupTool group;
   List<ChatObj> chatObjects = [];
   ScrollController _scrollController = ScrollController();
@@ -77,6 +77,12 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
 
   FocusNode _focusNode = FocusNode();
   FocusNode _focusNodeB = FocusNode();
+
+  ///正在讲解的物品
+  LSI.GoodsLists nowGoodList;
+
+  ///正在讲解的窗口
+  bool showDetailWindow = true;
 
   @override
   void initState() {
@@ -213,7 +219,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                   _isStream = true;
                   liveItemId = widget.model.liveItemId;
                   _streamInfoModel =
-                      LiveStreamInfoModel.fromLiveResume(widget.model);
+                      LSI.LiveStreamInfoModel.fromLiveResume(widget.model);
                   HttpManager.post(LiveAPI.baseInfo, {
                     'findUserId': _streamInfoModel.userId,
                   }).then((resultData) {
@@ -868,6 +874,109 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
               ],
             ),
           ),
+          AnimatedPositioned(
+            curve: Curves.easeInOutCubic,
+            child: nowGoodList == null
+                ? SizedBox()
+                : Stack(
+                    overflow: Overflow.visible,
+                    children: [
+                      Container(
+                        height: rSize(155),
+                        width: rSize(110),
+                        margin: EdgeInsets.all(rSize(10)),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(rSize(4)),
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: rSize(110),
+                              height: rSize(24),
+                              alignment: Alignment.center,
+                              child: Text(
+                                '宝贝正在讲解中',
+                                style: TextStyle(
+                                  color: Color(0xFF0091FF),
+                                  fontSize: rSP(11),
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                color: Color(0xFFDEF0FA),
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(rSize(4)),
+                                ),
+                              ),
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: EdgeInsets.all(rSize(5)),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      child: FadeInImage.assetNetwork(
+                                        placeholder:
+                                            R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                        image: Api.getImgUrl(
+                                          nowGoodList.mainPhotoUrl,
+                                        ),
+                                      ),
+                                      color: AppColor.frenchColor,
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        alignment: Alignment.centerLeft,
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              '¥',
+                                              style: TextStyle(
+                                                color: Color(0xFFC92219),
+                                                fontSize: rSP(10),
+                                              ),
+                                            ),
+                                            Text(
+                                              nowGoodList.discountPrice,
+                                              style: TextStyle(
+                                                color: Color(0xFFC92219),
+                                                fontSize: rSP(14),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Positioned(
+                        top: 0,
+                        right: 0,
+                        child: CustomImageButton(
+                          onPressed: () {
+                            _focusNode.unfocus();
+                            setState(() {
+                              showDetailWindow = false;
+                            });
+                          },
+                          child: Image.asset(
+                            R.ASSETS_LIVE_DETAIL_CLOSE_PNG,
+                            height: rSize(20),
+                            width: rSize(20),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+            bottom: rSize(67),
+            right: showDetailWindow ? rSize(25) : -rSize(25 + 20 + 110.0),
+            duration: Duration(milliseconds: 300),
+          ),
         ],
       ),
     );
@@ -898,7 +1007,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
       });
   }
 
-  Future<LiveStreamInfoModel> getLiveStreamModel(int id) async {
+  Future<LSI.LiveStreamInfoModel> getLiveStreamModel(int id) async {
     ResultData resultData = await HttpManager.post(
       LiveAPI.liveStreamInfo,
       {'id': id},
@@ -906,7 +1015,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
     if (resultData?.data['data'] == null)
       return null;
     else
-      return LiveStreamInfoModel.fromJson(resultData.data['data']);
+      return LSI.LiveStreamInfoModel.fromJson(resultData.data['data']);
   }
 
   parseMessage(ListenerTypeEnum type, params) {
@@ -946,8 +1055,18 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                       .updateChild(customParams['data']['content']);
                   break;
                 case 'UnExplain':
+                  setState(() {
+                    showDetailWindow = false;
+                  });
                   break;
                 case 'Explain':
+                  int goodsId = customParams['data']['goodsId'];
+                  nowGoodList = _streamInfoModel.goodsLists.where((element) {
+                    return element.id == goodsId;
+                  }).first;
+                  setState(() {
+                    showDetailWindow = true;
+                  });
                   break;
                 case 'LiveStop':
                   break;

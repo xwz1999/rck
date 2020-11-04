@@ -20,7 +20,6 @@ import 'package:recook/pages/live/live_stream/widget/live_chat_box.dart';
 import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
-import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
 import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/utils/custom_route.dart';

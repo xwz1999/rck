@@ -212,7 +212,7 @@ class _LiveHostCenterPageState extends State<LiveHostCenterPage>
           _buildListTile(
             title: '直播车',
             leading: Image.asset(
-              R.ASSETS_LIVE_LIVE_CART_PNG,
+              R.ASSETS_LIVE_LIVE_CART_ROUND_PNG,
               width: rSize(20),
               height: rSize(20),
             ),
