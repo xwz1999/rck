@@ -81,30 +81,50 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          rHBox(11),
                           ClipRRect(
                             borderRadius: BorderRadius.circular(rSize(4)),
                             child: Column(
                               children: [
-                                Material(
-                                  color: AppColor.frenchColor,
-                                  child: FadeInImage.assetNetwork(
-                                    placeholder:
-                                        R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                                    image: Api.getImgUrl(
-                                      widget.model.goods.mainPhotoURL,
+                                Stack(
+                                  children: [
+                                    Material(
+                                      color: AppColor.frenchColor,
+                                      child: FadeInImage.assetNetwork(
+                                        placeholder:
+                                            R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                        image: Api.getImgUrl(
+                                          widget.model.goods.mainPhotoURL,
+                                        ),
+                                        width: rSize(110),
+                                        height: rSize(110),
+                                      ),
                                     ),
-                                    width: rSize(100),
-                                    height: rSize(100),
-                                  ),
+                                    Positioned(
+                                      bottom: 0,
+                                      left: 0,
+                                      right: 0,
+                                      child: Container(
+                                        color: Colors.black.withOpacity(0.4),
+                                        alignment: Alignment.center,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: rSize(8)),
+                                        child: Text(
+                                          widget.model.goods.name,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
                           ),
                           rHBox(3),
                           Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              rWBox(5),
                               Text(
                                 '¥',
                                 style: TextStyle(
@@ -141,40 +161,46 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                   // rWBox(22),
                   rWBox(15),
                   Expanded(
-                    child: ExtendedText.rich(
-                      TextSpan(
-                        children: [
-                          TextSpan(
-                            text: widget.model.content,
-                            style: TextStyle(
-                              color: Color(0xFFE4E4E4),
-                              fontSize: rSP(14),
+                    child: Container(
+                      height: rSize(130),
+                      child: ExtendedText.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: widget.model.content,
+                              style: TextStyle(
+                                color: Color(0xFFE4E4E4),
+                                fontSize: rSP(14),
+                              ),
                             ),
-                          ),
-                          ExtendedWidgetSpan(
-                            child: InkWell(
-                              onTap: () {
-                                CRoute.push(
-                                    context,
-                                    TopicPage(
-                                        topicId: widget.model.topicId,
-                                        initAttention: false));
-                              },
-                              child: TextUtil.isEmpty(widget.model.topicName)
-                                  ? SizedBox()
-                                  : Text(
-                                      '#${widget.model.topicName}',
-                                      style: TextStyle(
-                                        color: Color(0xFFEB8A49),
-                                        fontSize: rSP(14),
+                            ExtendedWidgetSpan(
+                              child: InkWell(
+                                onTap: () {
+                                  CRoute.push(
+                                      context,
+                                      TopicPage(
+                                          topicId: widget.model.topicId,
+                                          initAttention: false));
+                                },
+                                child: TextUtil.isEmpty(widget.model.topicName)
+                                    ? SizedBox()
+                                    : Text(
+                                        '#${widget.model.topicName}',
+                                        style: TextStyle(
+                                          color: Color(0xFFEB8A49),
+                                          fontSize: rSP(14),
+                                        ),
                                       ),
-                                    ),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ),
+                  rWBox(15),
                   Column(
                     children: [
                       CustomImageButton(
