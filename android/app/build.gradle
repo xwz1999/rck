@@ -38,7 +38,7 @@ MobSDK {
             SinaWeibo {
                 appKey "3484799074"
                 appSecret "0cc08d31b4d63dc81fbb7a2559999fb3"
-                callbackUri "https://www.reecook.cn"
+                callbackUri "https://reecook.cn"
             }
             QZone {
                 appId "101876843"

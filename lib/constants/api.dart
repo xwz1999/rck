@@ -297,7 +297,7 @@ class AttentionApi {
 }
 
 class WebApi {
-  static const String recookHttp = "https://www.reecook.cn/";
+  static const String recookHttp = "https://reecook.cn/";
   // static const String inviteRegist = "${recookHttp}download.html?code=";
   static const String goodsDetail = "https://h5.reecook.cn/#/goods/detail/";
   static const String inviteRegist =

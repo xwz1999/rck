@@ -519,21 +519,26 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       LiveBuyingWidget(key: _globalBuyingWidgetKey),
-                      Container(
-                        height: 300,
-                        child: ListView.builder(
-                          reverse: true,
-                          controller: _scrollController,
-                          physics: AlwaysScrollableScrollPhysics(
-                              parent: BouncingScrollPhysics()),
-                          itemBuilder: (context, index) {
-                            return LiveChatBox(
-                              sender: chatObjects[index].name,
-                              note: chatObjects[index].message,
-                              userEnter: chatObjects[index].enterUser,
-                            );
-                          },
-                          itemCount: chatObjects.length,
+                      GestureDetector(
+                        onTap: () {
+                          _focusNode.unfocus();
+                        },
+                        child: Container(
+                          height: 300,
+                          child: ListView.builder(
+                            reverse: true,
+                            controller: _scrollController,
+                            physics: AlwaysScrollableScrollPhysics(
+                                parent: BouncingScrollPhysics()),
+                            itemBuilder: (context, index) {
+                              return LiveChatBox(
+                                sender: chatObjects[index].name,
+                                note: chatObjects[index].message,
+                                userEnter: chatObjects[index].enterUser,
+                              );
+                            },
+                            itemCount: chatObjects.length,
+                          ),
                         ),
                       ),
                       Container(

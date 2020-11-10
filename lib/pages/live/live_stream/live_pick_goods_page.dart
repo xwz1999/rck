@@ -118,8 +118,8 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
                 controller: _tabController,
                 isScrollable: true,
                 tabs: [
-                  Tab(text: '直播车'),
                   Tab(text: '热门商品'),
+                  Tab(text: '直播车'),
                   Tab(text: '历史直播'),
                   Tab(text: '全部商品'),
                 ],
@@ -141,12 +141,12 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
               child: TabBarView(
                 controller: _tabController,
                 children: [
-                  GoodsCartView(
+                  HotGoodsView(
                     onPick: () {
                       setState(() {});
                     },
                   ),
-                  HotGoodsView(
+                  GoodsCartView(
                     onPick: () {
                       setState(() {});
                     },

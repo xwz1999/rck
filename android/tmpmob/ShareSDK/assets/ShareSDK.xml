@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <DevInfor>
-<SinaWeibo AppKey="3484799074" AppSecret="0cc08d31b4d63dc81fbb7a2559999fb3" RedirectUrl="https://www.reecook.cn" />
+<SinaWeibo AppKey="3484799074" AppSecret="0cc08d31b4d63dc81fbb7a2559999fb3" RedirectUrl="https://reecook.cn" />
 <TencentWeibo Enable="false" />
 <Douban Enable="false" />
 <QZone AppId="101876843" AppKey="6f367bfad98978e22c2e11897dd74f00" />

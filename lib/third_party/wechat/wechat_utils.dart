@@ -112,7 +112,7 @@ class WeChatUtils {
       var userId = UserManager.instance.user.info.id;
       var model = fluwx.WeChatShareMiniProgramModel(
                 path: "pages/goods/detail?goods_id=$goodsId&code=$invitationNo&userId=$userId",
-                webPageUrl: "www.reecook.cn",
+                webPageUrl: "reecook.cn",
                 miniProgramType: _wxType,
                 userName: AppConfig.WX_APP_MINIPRO_USERNAME,
                 // scene: fluWX.WeChatScene.SESSION,
