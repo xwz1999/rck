@@ -123,6 +123,62 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                 physics: AlwaysScrollableScrollPhysics(),
                 slivers: <Widget>[
                   SliverToBoxAdapter(
+                    child: _orderModel.data.hasAuth
+                        ? UserManager.instance.user.info.realInfoStatus
+                            ? SizedBox()
+                            : CustomImageButton(
+                                onPressed: () {
+                                  AppRouter.push(
+                                    context,
+                                    RouteName.USER_VERIFY,
+                                    arguments: {},
+                                  ).then((value) {
+                                    setState(() {});
+                                  });
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: Color.fromRGBO(255, 243, 203, 1),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(10))),
+                                  margin: EdgeInsets.fromLTRB(
+                                      rSize(13), rSize(10), rSize(13), 0),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 10),
+                                  child: Row(
+                                    children: [
+                                      Image.asset(
+                                        R.ASSETS_ORDER_ALERT_PNG,
+                                        width: rSize(20),
+                                        height: rSize(20),
+                                      ),
+                                      rWBox(10),
+                                      Expanded(
+                                        child: Text(
+                                          '政策提醒：如果跨境订单订购人和支付人信息不一致，将会影响订单通关。',
+                                          style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(210, 137, 64, 1),
+                                            fontSize: rSP(13),
+                                          ),
+                                        ),
+                                      ),
+                                      rWBox(10),
+                                      Text(
+                                        '去认证 >',
+                                        style: TextStyle(
+                                          fontSize: rSP(13),
+                                          color:
+                                              Color.fromRGBO(210, 137, 64, 1),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                        : SizedBox(),
+                  ),
+                  SliverToBoxAdapter(
                     child: _orderModel.data.shippingMethod == 1
                         ? Container(
                             height: 10,
@@ -903,8 +959,11 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   _submit(BuildContext context) async {
     GSDialog.of(context).showLoadingDialog(context, "");
     HttpResultModel<OrderPrepayModel> resultModel = await _presenterImpl
-        .submitOrder(_orderModel.data.id, UserManager.instance.user.info.id);
-    GSDialog.of(context).dismiss(context);
+        .submitOrder(_orderModel.data.id, UserManager.instance.user.info.id)
+        .then((_) {
+      GSDialog.of(context).dismiss(context);
+      return;
+    });
     if (!resultModel.result) {
       GSDialog.of(context).showError(context, resultModel.msg);
       return;

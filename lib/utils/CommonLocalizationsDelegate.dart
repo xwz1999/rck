@@ -152,4 +152,13 @@ class _DefaultCupertinoLocalizations extends CupertinoLocalizations {
   String tabSemanticsLabel({int tabIndex, int tabCount}) {
     return "";
   }
+
+  @override
+  List<String> get timerPickerHourLabels => [];
+
+  @override
+  List<String> get timerPickerMinuteLabels => [];
+
+  @override
+  List<String> get timerPickerSecondLabels => [];
 }

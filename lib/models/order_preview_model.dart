@@ -190,6 +190,9 @@ class OrderDetail extends Object {
   Addr addr;
   List<Brands> brands;
   CoinStatus coinStatus;
+
+  ///海外订单
+  bool hasAuth;
   // Balance balance;
 
   OrderDetail(
@@ -211,7 +214,8 @@ class OrderDetail extends Object {
       this.addr,
       this.brands,
       this.userRole,
-      this.coinStatus);
+      this.coinStatus,
+      this.hasAuth);
 
   factory OrderDetail.fromJson(Map<String, dynamic> srcJson) =>
       _$OrderDetailFromJson(srcJson);
