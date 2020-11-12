@@ -959,11 +959,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   _submit(BuildContext context) async {
     GSDialog.of(context).showLoadingDialog(context, "");
     HttpResultModel<OrderPrepayModel> resultModel = await _presenterImpl
-        .submitOrder(_orderModel.data.id, UserManager.instance.user.info.id)
-        .then((_) {
-      GSDialog.of(context).dismiss(context);
-      return;
-    });
+        .submitOrder(_orderModel.data.id, UserManager.instance.user.info.id);
+    GSDialog.of(context).dismiss(context);
     if (!resultModel.result) {
       GSDialog.of(context).showError(context, resultModel.msg);
       return;
