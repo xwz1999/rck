@@ -86,7 +86,7 @@ dependencies:
   path:
 
   # 网络请求
-  dio: ^3.0.9
+  dio: ^3.0.10
 
   # loading界面
   flutter_spinkit: ^3.1.0
@@ -204,7 +204,6 @@ dependencies:
 
   flutter_markdown:
 
-  wakelock:
 
   dropdown_search: ^0.4.5
   

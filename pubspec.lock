@@ -1162,7 +1162,7 @@ packages:
     source: hosted
     version: "0.2.7"
   wakelock:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: wakelock
       url: "https://pub.flutter-io.cn"
