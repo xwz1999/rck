@@ -63,8 +63,8 @@ class _CropVideoPageState extends State<CropVideoPage> {
                       .saveTrimmedVideo(
                     startValue: _startValue,
                     endValue: _endValue,
-                    outputFormat: FileFormat.mp4,
-                    applyVideoEncoding: true,
+                    customVideoFormat: '.mp4',
+                    ffmpegCommand: '-qscale "0"',
                   )
                       .then((path) {
                     GSDialog.of(context).dismiss(context);
