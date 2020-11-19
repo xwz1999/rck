@@ -12,6 +12,7 @@ import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/classify/order_preview_page.dart';
 import 'package:recook/pages/home/widget/plus_minus_view.dart';
 import 'package:recook/pages/live/live_stream/live_sku_widget.dart';
+import 'package:recook/pages/live/live_stream/small_window/small_window_page.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart'
     show GoodsLists;
 import 'package:recook/pages/user/user_page.dart';
@@ -116,11 +117,7 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
       onTap: () {
         CRoute.push(
           context,
-          CommodityDetailPage(
-            arguments: CommodityDetailPage.setArguments(model.id),
-            liveId: widget.id,
-            isLive: true,
-          ),
+          SmallWindowPage(liveId: widget.id, id: model.id),
         );
       },
       child: Container(
