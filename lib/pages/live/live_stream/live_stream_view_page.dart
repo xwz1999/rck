@@ -26,7 +26,6 @@ import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/pages/live/functions/live_function.dart';
 import 'package:tencent_im_plugin/entity/group_member_entity.dart';
 import 'package:tencent_im_plugin/entity/message_entity.dart';
 import 'package:tencent_im_plugin/entity/session_entity.dart';
@@ -895,6 +894,8 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                   onLive: true,
                                   id: widget.id,
                                   models: _streamInfoModel.goodsLists,
+                                  player: _livePlayer,
+                                  url: _streamInfoModel.playUrl,
                                 );
                               },
                             ),

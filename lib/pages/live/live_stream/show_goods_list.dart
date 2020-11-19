@@ -17,6 +17,7 @@ import 'package:recook/pages/live/models/live_stream_info_model.dart'
     show GoodsLists;
 import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/utils/custom_route.dart';
+import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 
 class GoodsListDialog extends StatefulWidget {
   final List<GoodsLists> models;
@@ -25,6 +26,8 @@ class GoodsListDialog extends StatefulWidget {
   final Function(int explain) onExplain;
   final int initExplain;
   final int id;
+  final LivePlayer player;
+  final String url;
   GoodsListDialog({
     Key key,
     @required this.models,
@@ -33,6 +36,8 @@ class GoodsListDialog extends StatefulWidget {
     this.onLive,
     this.initExplain,
     this.id,
+    this.player,
+    this.url,
   }) : super(key: key);
 
   @override
@@ -114,11 +119,17 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
 
   _buildGoodsCard(GoodsLists model, int index) {
     return GestureDetector(
-      onTap: () {
-        CRoute.push(
+      onTap: () async {
+        widget.player.pausePlay();
+        await CRoute.pushReplace(
           context,
-          SmallWindowPage(liveId: widget.id, id: model.id),
+          SmallWindowPage(
+            liveId: widget.id,
+            id: model.id,
+            url: widget.url,
+          ),
         );
+        widget.player.resumePlay();
       },
       child: Container(
         padding: EdgeInsets.all(rSize(15)),
@@ -432,6 +443,8 @@ showGoodsListDialog(
   Function(int onExplain) onExplain,
   int initExplain,
   int id,
+  LivePlayer player,
+  String url,
 }) {
   showModalBottomSheet(
     context: context,
@@ -443,6 +456,8 @@ showGoodsListDialog(
         initExplain: initExplain,
         id: id,
         onLive: onLive,
+        player: player,
+        url: url,
       );
     },
   );

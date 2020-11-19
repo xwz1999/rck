@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 
 class SmallWindowWidget extends StatefulWidget {
-  SmallWindowWidget({Key key}) : super(key: key);
+  final String url;
+  SmallWindowWidget({Key key, @required this.url}) : super(key: key);
 
   @override
   _SmallWindowWidgetState createState() => _SmallWindowWidgetState();
 }
 
 class _SmallWindowWidgetState extends State<SmallWindowWidget> {
-  double get _bottomSafe => 55 + ScreenUtil.statusBarHeight;
   double _topPos = 0;
   double _leftPos = 0;
   bool _isMoving = false;
@@ -18,11 +19,19 @@ class _SmallWindowWidgetState extends State<SmallWindowWidget> {
   double _height = 160;
   double get _subHeight => _height / 2;
   bool _isHide = false;
+
+  LivePlayer _livePlayer;
   @override
   void initState() {
     super.initState();
     _topPos = ScreenUtil.statusBarHeight + 20;
     _leftPos = 20;
+  }
+
+  @override
+  void dispose() {
+    _livePlayer?.stopPlay();
+    super.dispose();
   }
 
   @override
@@ -32,7 +41,23 @@ class _SmallWindowWidgetState extends State<SmallWindowWidget> {
       top: _topPos,
       child: Stack(
         children: [
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            bottom: 0,
+            child: CloudVideo(
+              onCloudVideoCreated: (controller) async {
+                _livePlayer = await LivePlayer.create();
+                await _livePlayer.setPlayerView(controller);
+                _livePlayer.startPlay(widget.url, type: PlayType.RTMP);
+              },
+            ),
+          ),
           GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
             onPanUpdate: (detail) {
               setState(() {
                 _topPos = detail.globalPosition.dy - _subHeight;
@@ -58,7 +83,7 @@ class _SmallWindowWidgetState extends State<SmallWindowWidget> {
             child: Container(
               height: _height,
               width: _width,
-              color: Colors.blueAccent,
+              color: Colors.transparent,
             ),
           ),
           Positioned(
