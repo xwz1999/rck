@@ -24,7 +24,7 @@ class LiveStreamPage extends StatefulWidget {
 }
 
 class _LiveStreamPageState extends State<LiveStreamPage>
-    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
+    with TickerProviderStateMixin {
   List<LiveAttentionListModel> _liveAttentionListModels = [];
   List<LiveListModel> _liveListModels = [];
   int _livePage = 1;
@@ -52,7 +52,6 @@ class _LiveStreamPageState extends State<LiveStreamPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
@@ -311,9 +310,16 @@ class _LiveStreamPageState extends State<LiveStreamPage>
             CRoute.push(
               context,
               LiveStreamViewPage(id: model.id),
-            );
+            ).then((value) {
+              _liveListController.requestRefresh();
+              _liveAttentionController.requestRefresh();
+            });
           else
-            CRoute.push(context, LivePlaybackViewPage(id: model.id));
+            CRoute.push(context, LivePlaybackViewPage(id: model.id))
+                .then((value) {
+              _liveListController.requestRefresh();
+              _liveAttentionController.requestRefresh();
+            });
         },
         child: Container(
           color: Colors.white,
@@ -514,7 +520,4 @@ class _LiveStreamPageState extends State<LiveStreamPage>
           .map((e) => LiveListModel.fromJson(e))
           .toList();
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
