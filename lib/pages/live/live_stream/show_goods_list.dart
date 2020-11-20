@@ -207,33 +207,36 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
                     style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
                         color: Colors.black54, fontWeight: FontWeight.w300),
                   ),
-                  InkWell(
-                    onTap: () {
-                      AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
-                          arguments: BrandGoodsListPage.setArguments(
-                            model.brandId,
-                            model.brandName,
-                          ));
-                    },
-                    child: Row(
-                      children: [
-                        FadeInImage.assetNetwork(
-                          placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                          image: Api.getImgUrl(model.brandImg),
-                          width: rSize(13),
-                          height: rSize(13),
-                        ),
-                        rWBox(4),
-                        Text(
-                          model.brandName,
-                          style: TextStyle(
-                            color: Color(0xffc70404),
-                            fontSize: ScreenAdapterUtils.setSp(12),
+                  AppConfig.getShowCommission()
+                      ? InkWell(
+                          onTap: () {
+                            AppRouter.push(
+                                context, RouteName.BRANDGOODS_LIST_PAGE,
+                                arguments: BrandGoodsListPage.setArguments(
+                                  model.brandId,
+                                  model.brandName,
+                                ));
+                          },
+                          child: Row(
+                            children: [
+                              FadeInImage.assetNetwork(
+                                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                image: Api.getImgUrl(model.brandImg),
+                                width: rSize(13),
+                                height: rSize(13),
+                              ),
+                              rWBox(4),
+                              Text(
+                                model.brandName,
+                                style: TextStyle(
+                                  color: Color(0xffc70404),
+                                  fontSize: ScreenAdapterUtils.setSp(12),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
+                        )
+                      : SizedBox(),
                   Row(
                     children: [
                       SmallCouponWidget(number: num.parse(model.coupon)),

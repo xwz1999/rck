@@ -328,22 +328,26 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           color: Colors.white,
           padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
           child: _userEvaluation()),
-      Container(
-        color: Colors.white,
-        margin: EdgeInsets.only(top: 13, bottom: 1),
-        padding: const EdgeInsets.all(10.0),
-        child: GestureDetector(
-          child: _storeName(),
-          onTap: () {
-            if (widget.openbrandList != null) widget.openbrandList();
-          },
-        ),
-      ),
-      Container(
-        //  padding: EdgeInsets.only(left: 10, top: 10, bottom: 5),
-        color: Colors.white,
-        child: _recommendsWidget(),
-      ),
+      AppConfig.getShowCommission()
+          ? Container(
+              color: Colors.white,
+              margin: EdgeInsets.only(top: 13, bottom: 1),
+              padding: const EdgeInsets.all(10.0),
+              child: GestureDetector(
+                child: _storeName(),
+                onTap: () {
+                  if (widget.openbrandList != null) widget.openbrandList();
+                },
+              ),
+            )
+          : SizedBox(),
+      AppConfig.getShowCommission()
+          ? Container(
+              //  padding: EdgeInsets.only(left: 10, top: 10, bottom: 5),
+              color: Colors.white,
+              child: _recommendsWidget(),
+            )
+          : SizedBox(),
 //            _usersLikeGrid(),
     ];
   }

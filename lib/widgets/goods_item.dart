@@ -288,7 +288,7 @@ class GoodsItemWidget extends StatelessWidget {
             //   // offstage: !(model.getPromotionStatus() == PromotionStatus.start || model.getPromotionStatus() == PromotionStatus.ready),
             //   child: _priceView(),
             // ),
-            _brandWidget(),
+            AppConfig.getShowCommission() ? _brandWidget() : SizedBox(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
