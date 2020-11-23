@@ -85,31 +85,34 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
                   //       color: Colors.black54, fontWeight: FontWeight.w300),
                   // ),
                   Spacer(),
-                  Row(
-                    children: [
-                      InkWell(
-                        child: Row(
+                  AppConfig.getShowCommission()
+                      ? Row(
                           children: [
-                            FadeInImage.assetNetwork(
-                              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                              image: Api.getImgUrl(widget.model.brandImg),
-                              width: rSize(13),
-                              height: rSize(13),
-                            ),
-                            rWBox(4),
-                            Text(
-                              widget.model.brandName,
-                              style: TextStyle(
-                                color: Color(0xffc70404),
-                                fontSize: ScreenAdapterUtils.setSp(12),
+                            InkWell(
+                              child: Row(
+                                children: [
+                                  FadeInImage.assetNetwork(
+                                    placeholder:
+                                        R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                    image: Api.getImgUrl(widget.model.brandImg),
+                                    width: rSize(13),
+                                    height: rSize(13),
+                                  ),
+                                  rWBox(4),
+                                  Text(
+                                    widget.model.brandName,
+                                    style: TextStyle(
+                                      color: Color(0xffc70404),
+                                      fontSize: ScreenAdapterUtils.setSp(12),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
+                            Spacer(),
                           ],
-                        ),
-                      ),
-                      Spacer(),
-                    ],
-                  ),
+                        )
+                      : SizedBox(),
                   Text.rich(
                     TextSpan(
                       children: [
