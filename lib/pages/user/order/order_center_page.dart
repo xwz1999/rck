@@ -38,7 +38,7 @@ class OrderCenterPage extends StatefulWidget {
 
 class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
     with TickerProviderStateMixin {
-  bool _showAlert = false;
+  bool _showAlert = true;
   TitleSwitchController _titleSwitchController = TitleSwitchController();
   final String _alertMessage =
       "重要提醒：请谨防网络及客服诈骗！瑞库客不会以订单异常、系统维护等情况为由，要求你进行退款操作。";
@@ -197,6 +197,7 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
                       return _item(index);
                     },
                   )),
+              _showAlert ? _alertWidget() : Container(),
               Expanded(
                 child: CacheTabBarView(
                   controller: _tabController,

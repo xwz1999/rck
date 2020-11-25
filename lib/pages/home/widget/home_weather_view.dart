@@ -105,9 +105,8 @@ class HomeWeatherWidgetState extends State<HomeWeatherWidget>
                                 ),
                                 Spacer(),
                                 Text(
-                                  RecookLunar(lunar).toString(),
-                                  style: textStyle,
-                                ),
+                                    "${nowDateTime.year}.${nowDateTime.month}.${nowDateTime.day}${_normalText(widget.homeWeatherModel.week)}",
+                                    style: textStyle),
                               ],
                             ),
                             Flex(
@@ -147,8 +146,9 @@ class HomeWeatherWidgetState extends State<HomeWeatherWidget>
                                     child: Container(
                                   alignment: Alignment.centerRight,
                                   child: Text(
-                                      "${nowDateTime.year}.${nowDateTime.month}.${nowDateTime.day}${_normalText(widget.homeWeatherModel.week)}",
-                                      style: textStyle),
+                                    RecookLunar(lunar).toString(),
+                                    style: textStyle,
+                                  ),
                                 )),
                               ],
                             ),
