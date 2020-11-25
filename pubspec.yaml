@@ -40,7 +40,7 @@ dependencies:
   ## 暂时关闭声音播放
   #flutter_audio_player: 0.1.2
   # 第三方分享功能
-  sharesdk_plugin: 1.2.5
+  sharesdk_plugin: 1.2.8
 
   # 展示二维码
   qr_flutter: ^3.2.0

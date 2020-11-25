@@ -948,7 +948,7 @@ packages:
       name: sharesdk_plugin
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.2.5"
+    version: "1.2.8"
   shelf:
     dependency: transitive
     description:
