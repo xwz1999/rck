@@ -263,7 +263,7 @@ class GoodsItemWidget extends StatelessWidget {
                   this.goodsName,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(16),
+                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
                       fontWeight: FontWeight.w600),
                 ),
                 Container(

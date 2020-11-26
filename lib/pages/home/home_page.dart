@@ -1009,7 +1009,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     if (AppConfig.getShowCommission()) {
                       bool value = UserManager.instance.selectTabbar.value;
                       UserManager.instance.selectTabbar.value = !value;
-                      UserManager.instance.selectTabbarIndex = 2;
+                      UserManager.instance.selectTabbarIndex = 1;
                     } else {
                       AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
                           arguments: GoodsListTempPage.setArguments(
