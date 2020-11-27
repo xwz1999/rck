@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -9,6 +10,7 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/models/live_exit_model.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
 import 'package:recook/utils/date/recook_date_util.dart';
+import 'package:recook/widgets/toast.dart';
 
 class LiveBlurPage extends StatefulWidget {
   final bool isLive;
@@ -180,7 +182,11 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                         rWBox(20),
                         CupertinoSwitch(
                           value: _saveVideo,
-                          onChanged: (state) {
+                          onChanged: widget.exitModel.duration<60?
+                          (state){
+                            Toast.showError('直播时长过短，禁止录制');
+                          }
+                          :(state) {
                             setState(() {
                               _saveVideo = !_saveVideo;
                             });

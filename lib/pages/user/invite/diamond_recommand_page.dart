@@ -59,13 +59,30 @@ class _DiamondRecommandPageState extends State<DiamondRecommandPage> {
             });
           });
         },
-        body: ListView.builder(
-          padding: EdgeInsets.symmetric(vertical: rSize(5)),
-          itemBuilder: (context, index) {
-            return _buildCard(models[index]);
-          },
-          itemCount: models.length,
-        ),
+        body: models.isEmpty
+            ? Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Image.asset(R.ASSETS_IMG_NO_DATA_PNG),
+                    rHBox(10),
+                    Text(
+                      '还没有任何推荐喔～',
+                      style: TextStyle(
+                        color: Color(0xFF333333),
+                        fontSize: rSP(16),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            : ListView.builder(
+                padding: EdgeInsets.symmetric(vertical: rSize(5)),
+                itemBuilder: (context, index) {
+                  return _buildCard(models[index]);
+                },
+                itemCount: models.length,
+              ),
       ),
     );
   }

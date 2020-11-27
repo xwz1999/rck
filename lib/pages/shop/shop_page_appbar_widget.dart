@@ -37,7 +37,7 @@ class _ShopPageAppbarWidgetState extends BaseStoreState<ShopPageAppbarWidget> {
       color: blackBGColor,
       child: Container(
         width: double.infinity,
-        margin: EdgeInsets.only(top: ScreenUtil.statusBarHeight),
+        // margin: EdgeInsets.only(top: ScreenUtil.statusBarHeight),
         child: Column(
           children: <Widget>[
             _headWidget(),
