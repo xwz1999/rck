@@ -21,10 +21,13 @@ import 'package:recook/widgets/recook/recook_like_button.dart';
 class ActivityPreviewPage extends StatefulWidget {
   final ActivityListModel model;
   final LiveBaseInfoModel userModel;
+  final PageController controller;
+  final int page;
   ActivityPreviewPage({
     Key key,
     @required this.model,
     @required this.userModel,
+    this.controller, this.page,
   }) : super(key: key);
 
   @override
@@ -306,7 +309,11 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
   }
 
   _buildVideo() {
-    return NetworkFileVideo(path: widget.model.short.mediaUrl);
+    return NetworkFileVideo(
+      path: widget.model.short.mediaUrl,
+      pageController: widget.controller,
+      page: widget.page,
+    );
   }
 
   _buildImages() {
