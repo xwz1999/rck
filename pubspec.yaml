@@ -40,7 +40,9 @@ dependencies:
   ## 暂时关闭声音播放
   #flutter_audio_player: 0.1.2
   # 第三方分享功能
-  sharesdk_plugin: 1.2.8
+  sharesdk_plugin:
+    git:
+      url: http://test.akuhotel.com:8099/laiiihz/sharesdk_plugin.git
 
   # 展示二维码
   qr_flutter: ^3.2.0
@@ -119,7 +121,9 @@ dependencies:
   flutter_gifimage: ^1.0.0
 
   # 微信登录 支付等
-  fluwx: 2.0.7
+  fluwx:
+    git:
+      url: http://test.akuhotel.com:8099/laiiihz/fluwx.git
 
   #
   # 源码 TobiasPlugin.m
