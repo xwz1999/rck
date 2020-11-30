@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:recook/pages/aftersale/choose_after_sale_type_page.dart';
 import 'package:recook/pages/business/publish_business_district_page.dart';
 import 'package:recook/pages/business/selling_point/selling_point_page.dart';
@@ -102,6 +103,7 @@ import 'package:recook/pages/welcome/welcome_widget.dart';
 import 'package:recook/utils/navigator_utils.dart';
 import 'package:recook/pages/tabBar/TabbarWidget.dart';
 import 'package:recook/widgets/barcodeScan.dart';
+import 'package:recook/widgets/bussiness_cooperation_page.dart';
 import 'package:recook/widgets/custom_route.dart';
 //图片预览
 import 'package:recook/widgets/pic_swiper.dart';
@@ -314,6 +316,9 @@ class RouteName {
 
   ///彩票订单历史
   static const String LOTTERY_ORDER_PAGE = "/LotteryOrderPage";
+
+  ///商务合作
+ static const  String BUSSINESS_COOPERATION_PAGE="/BussinessCooperationPage";
 }
 
 typedef RouteBuilder = Widget Function(BuildContext context,
@@ -619,6 +624,8 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.LOTTERY_HELP_PAGE: (context, {arguments}) =>
       LotteryHelpPage(arguments: arguments),
   RouteName.LOTTERY_ORDER_PAGE: (context, {arguments}) => LotteryOrderPage(),
+
+  RouteName.BUSSINESS_COOPERATION_PAGE:(context,{arguments}) =>BussinessCooperationPage(),
 };
 
 ///  应用中路由跳转
