@@ -140,7 +140,9 @@ class _VideoPageState extends State<VideoPage>
                           ),
                         ),
                         Image.asset(
-                          R.ASSETS_LIVE_FAVORITE_BLACK_PNG,
+                          model.isPraise == 1
+                              ? R.ASSETS_LIVE_LIKE_ON_PNG
+                              : R.ASSETS_LIVE_FAVORITE_BLACK_PNG,
                           height: rSize(14),
                           width: rSize(14),
                         ),

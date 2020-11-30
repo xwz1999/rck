@@ -19,15 +19,18 @@ typedef VoidListener = Function();
 typedef FavoriteListener = Function(bool favorite);
 
 class DetailBottomBar extends StatefulWidget {
-  DetailBottomBar(
-      {this.addToShopCartListener,
-      this.collectListener,
-      this.buyListener,
-      this.shareListener,
-      this.collected = true,
-      this.shopCartNum = "",
-      this.controller,
-      this.goodsDetail});
+  DetailBottomBar({
+    this.addToShopCartListener,
+    this.collectListener,
+    this.buyListener,
+    this.shareListener,
+    this.collected = true,
+    this.shopCartNum = "",
+    this.controller,
+    this.goodsDetail,
+    this.isLive = false,
+    this.liveId = 0,
+  });
 
   final VoidListener addToShopCartListener;
   final FavoriteListener collectListener;
@@ -38,6 +41,9 @@ class DetailBottomBar extends StatefulWidget {
   final BottomBarController controller;
   // final String commission;
   final GoodsDetailModel goodsDetail;
+
+  final bool isLive;
+  final int liveId;
 
   @override
   State<StatefulWidget> createState() {

@@ -104,8 +104,8 @@ class _InviteViewState extends State<InviteView> {
         R.ASSETS_SHOP_UPGRADE_PNG,
         fit: BoxFit.cover,
       ),
-      title: '升级财富圈',
-      subTitle: '邀请好友·福利双赢',
+      title: '推荐钻石店铺',
+      subTitle: '推荐好友·福利双赢',
       onTap: () =>
           AppRouter.push(context, RouteName.SHOP_RECOMMEND_UPGRADE_PAGE),
     );
@@ -119,7 +119,7 @@ class _InviteViewState extends State<InviteView> {
             : R.ASSETS_SHOP_INVITE_OPEN_STORE_PNG,
         fit: BoxFit.cover,
       ),
-      title: '邀请开店',
+      title: '团队扩招',
       subTitle: '0元创业·轻松赚',
       onTap: () {
         if (widget.shareListener != null) widget.shareListener();
@@ -133,7 +133,7 @@ class _InviteViewState extends State<InviteView> {
         small ? R.ASSETS_SHOP_MY_INVITE_SMALL_PNG : R.ASSETS_SHOP_MY_INVITE_PNG,
         fit: BoxFit.cover,
       ),
-      title: '我的邀请',
+      title: '我的团队',
       subTitle: '有福同享·真壕友',
       onTap: () => AppRouter.push(
         context,

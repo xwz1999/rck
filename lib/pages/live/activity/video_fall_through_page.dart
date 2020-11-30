@@ -36,6 +36,8 @@ class _VideoFallThroughPageState extends State<VideoFallThroughPage> {
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
           return ActivityPreviewPage(
+            controller: _pageController,
+            page: index,
             model: ActivityListModel.fromVideoList(widget.models[index]),
             userModel:
                 LiveBaseInfoModel.fromVideoListModel(widget.models[index]),

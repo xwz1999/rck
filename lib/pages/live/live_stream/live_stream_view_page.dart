@@ -1,5 +1,8 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:ui';
 
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:many_like/many_like.dart';
 import 'package:oktoast/oktoast.dart';
@@ -11,17 +14,19 @@ import 'package:recook/pages/live/live_stream/live_blur_page.dart';
 import 'package:recook/pages/live/live_stream/live_report_view.dart';
 import 'package:recook/pages/live/live_stream/live_users_view.dart';
 import 'package:recook/pages/live/live_stream/show_goods_list.dart';
+import 'package:recook/pages/live/live_stream/widget/live_avatar_with_dialog.dart';
+import 'package:recook/pages/live/live_stream/widget/live_buying_widget.dart';
 import 'package:recook/pages/live/live_stream/widget/live_chat_box.dart';
+import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
-import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
-import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/pages/live/widget/more_people.dart';
 import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/pages/live/functions/live_function.dart';
 import 'package:tencent_im_plugin/entity/group_member_entity.dart';
 import 'package:tencent_im_plugin/entity/message_entity.dart';
 import 'package:tencent_im_plugin/entity/session_entity.dart';
@@ -52,6 +57,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   ];
   ScrollController _scrollController = ScrollController();
   TextEditingController _editingController = TextEditingController();
+  LiveBaseInfoModel _liveBaseInfoModel;
 
   ///正在讲解的物品
   GoodsLists nowGoodList;
@@ -63,9 +69,19 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
 
   int _praise = 0;
 
+  GlobalKey<LiveBuyingWidgetState> _globalBuyingWidgetKey =
+      GlobalKey<LiveBuyingWidgetState>();
+
+  FocusNode _focusNode = FocusNode();
+
+  Timer _liveTimer;
+  bool _waitSignal = false;
+  int _livePauseTimeStamp = 0;
+
   @override
   void initState() {
     super.initState();
+
     Wakelock.enable();
     // Future.delayed(Duration(seconds: 10), () {
     //   _livePlayer?.pausePlay();
@@ -82,6 +98,16 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
             _streamInfoModel = model;
             _praise = model.praise;
             isAttention = _streamInfoModel.isFollow == 1;
+          });
+          HttpManager.post(LiveAPI.baseInfo, {
+            'findUserId': _streamInfoModel.userId,
+          }).then((resultData) {
+            if (resultData?.data['data'] != null) {
+              setState(() {
+                _liveBaseInfoModel =
+                    LiveBaseInfoModel.fromJson(resultData.data['data']);
+              });
+            }
           });
           TencentImPlugin.applyJoinGroup(
               groupId: model.groupId, reason: 'enterLive');
@@ -109,6 +135,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
       case ListenerTypeEnum.ForceOffline:
         break;
       case ListenerTypeEnum.UserSigExpired:
+        TencentIMTool.login();
         break;
       case ListenerTypeEnum.Connected:
         break;
@@ -135,26 +162,28 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
               dynamic data = customParams['data'];
               switch (customParams['type']) {
                 case 'BuyGoods':
-                  showToastWidget(
-                    Container(
-                      margin: EdgeInsets.all(rSize(15)),
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.symmetric(horizontal: rSize(10)),
-                      height: rSize(26),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF4BC22),
-                        borderRadius: BorderRadius.circular(rSize(13)),
-                      ),
-                      child: Text(
-                        '${customParams['data']['content']}',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: rSP(13),
-                        ),
-                      ),
-                    ),
-                    position: ToastPosition.top,
-                  );
+                  // showToastWidget(
+                  //   Container(
+                  //     margin: EdgeInsets.all(rSize(15)),
+                  //     alignment: Alignment.center,
+                  //     padding: EdgeInsets.symmetric(horizontal: rSize(10)),
+                  //     height: rSize(26),
+                  //     decoration: BoxDecoration(
+                  //       color: Color(0xFFF4BC22),
+                  //       borderRadius: BorderRadius.circular(rSize(13)),
+                  //     ),
+                  //     child: Text(
+                  //       '${customParams['data']['content']}',
+                  //       style: TextStyle(
+                  //         color: Colors.white,
+                  //         fontSize: rSP(13),
+                  //       ),
+                  //     ),
+                  //   ),
+                  //   position: ToastPosition.top,
+                  // );
+                  _globalBuyingWidgetKey.currentState
+                      .updateChild(customParams['data']['content']);
                   break;
                 case 'UnExplain':
                   setState(() {
@@ -207,6 +236,14 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                   );
                   setState(() {});
                   break;
+                case 'Play':
+                  int holdTimeStamp = data['time'];
+                  if (holdTimeStamp > _livePauseTimeStamp) {
+                    setState(() {
+                      _waitSignal = data['type'] == 'pause';
+                    });
+                  }
+                  break;
               }
             }
           } else {
@@ -239,14 +276,16 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
               ChatObj(parseParams['opUserInfo']['nickName'], '来了',
                   enterUser: true),
             );
-
+            group = TencentGroupTool.fromId(_streamInfoModel.groupId);
+            setState(() {});
             _scrollController.animateTo(
               -50,
               duration: Duration(milliseconds: 300),
               curve: Curves.easeInOutCubic,
             );
           } else if (parseParams['tipsType'] == 'Quit') {
-            //exit
+            group = TencentGroupTool.fromId(_streamInfoModel.groupId);
+            setState(() {});
           }
         }
 
@@ -266,8 +305,21 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
     }
   }
 
+  reconnectToLive() {
+    _liveTimer?.cancel();
+    _liveTimer = Timer(Duration(milliseconds: 5000), () {
+      setState(() {
+        _waitSignal = true;
+      });
+      // _livePlayer.push
+      _livePlayer.stopPlay();
+      _livePlayer.startPlay(_streamInfoModel.playUrl, type: PlayType.RTMP);
+    });
+  }
+
   @override
   void dispose() {
+    _liveTimer?.cancel();
     _livePlayer?.stopPlay();
     TencentImPlugin.quitGroup(groupId: _streamInfoModel.groupId);
     TencentImPlugin.removeListener(parseMessage);
@@ -276,6 +328,47 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
     DPrint.printLongJson('用户退出');
     Wakelock.disable();
     super.dispose();
+  }
+
+  _buildWait() {
+    return _waitSignal
+        ? BackdropFilter(
+            filter: ImageFilter.blur(
+              sigmaX: 5,
+              sigmaY: 5,
+            ),
+            child: Container(
+              color: Colors.black54,
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(
+                    R.ASSETS_LIVE_LIVE_ANIMAL_PNG,
+                    height: rSize(107),
+                    width: rSize(35),
+                  ),
+                  rHBox(15),
+                  Text(
+                    '主播暂时离开',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: rSP(20),
+                    ),
+                  ),
+                  rHBox(10),
+                  Text(
+                    '休息片刻，阿库陪你一起等待精彩',
+                    style: TextStyle(
+                      color: Color(0xFF999999),
+                      fontSize: rSP(14),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        : SizedBox();
   }
 
   @override
@@ -296,10 +389,61 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                       onCloudVideoCreated: (controller) async {
                         _livePlayer = await LivePlayer.create();
                         await _livePlayer.setPlayerView(controller);
-                        _livePlayer.startPlay(_streamInfoModel.playUrl);
+                        _livePlayer.startPlay(_streamInfoModel.playUrl,
+                            type: PlayType.RTMP);
+                        _livePlayer.setOnEventListener(
+                          onWarningReconnect: () {
+                            reconnectToLive();
+                          },
+                          onWarningVideoDecodeFail: () {
+                            print('');
+                          },
+                          onWarningAudioDecodeFail: () {
+                            print('');
+                          },
+                          onWarningRecvDataLag: () {
+                            print('');
+                          },
+                          onWarningVideoPlayLag: () {
+                            print('');
+                          },
+                          onWarningHwAccelerationFail: () {
+                            print('');
+                          },
+                          onWarningVideoDiscontinuity: () {
+                            print('');
+                          },
+                          onWarningDNSFail: () {
+                            print('');
+                          },
+                          onWarningServerConnFail: () {
+                            print('');
+                          },
+                          onWarningShakeFail: () {
+                            print('');
+                          },
+                          onEventRcvFirstIFrame: () {
+                            print('');
+                          },
+                          onEventPlayBegin: () {
+                            setState(() {
+                              _waitSignal = false;
+                            });
+                          },
+                          onEventPlayEnd: () {
+                            print('`');
+                          },
+                        );
                       },
                     ),
                   ),
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  top: 0,
+                  child: _buildWait(),
                 ),
                 Positioned(
                   left: 0,
@@ -308,6 +452,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                   bottom: 0,
                   child: InkWell(
                     onTap: () {
+                      _focusNode.unfocus();
                       setState(() {
                         _showTools = !_showTools;
                       });
@@ -330,37 +475,61 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                     ),
                     child: Row(
                       children: [
-                        LiveUserBar(
-                          onTapAvatar: () {
-                            CRoute.pushReplace(
-                              context,
-                              UserHomePage(
-                                userId: _streamInfoModel.userId,
-                                initAttention: _streamInfoModel.isFollow == 1,
-                              ),
-                            );
-                          },
-                          initAttention: _streamInfoModel.userId ==
-                                  UserManager.instance.user.info.id
-                              ? true
-                              : _streamInfoModel.isFollow == 1,
-                          onAttention: () {
-                            isAttention = true;
-                            HttpManager.post(
-                              LiveAPI.addFollow,
-                              {
-                                'followUserId': _streamInfoModel.userId,
-                                'liveItemId': widget.id,
-                              },
-                            );
-                          },
-                          title: _streamInfoModel.nickname,
-                          subTitle: '点赞数 $_praise',
-                          avatar: _streamInfoModel.headImgUrl,
-                        ),
+                        // LiveUserBar(
+                        //   onTapAvatar: () {
+                        //     // CRoute.pushReplace(
+                        //     //   context,
+                        //     //   UserHomePage(
+                        //     //     userId: _streamInfoModel.userId,
+                        //     //     initAttention: _streamInfoModel.isFollow == 1,
+                        //     //   ),
+                        //     // );
+                        //     _focusNode.unfocus();
+
+                        //     showLiveChild(
+                        //       context,
+                        //       initAttention: _streamInfoModel.isFollow == 1,
+                        //       title: _streamInfoModel.nickname,
+                        //       fans: _liveBaseInfoModel.fans,
+                        //       follows: _liveBaseInfoModel.follows,
+                        //       headImg: _liveBaseInfoModel.headImgUrl,
+                        //       id: _liveBaseInfoModel.userId,
+                        //     );
+                        //   },
+                        //   initAttention: _streamInfoModel.userId ==
+                        //           UserManager.instance.user.info.id
+                        //       ? true
+                        //       : _streamInfoModel.isFollow == 1,
+                        //   onAttention: () {
+                        //     isAttention = true;
+                        //     HttpManager.post(
+                        //       LiveAPI.addFollow,
+                        //       {
+                        //         'followUserId': _streamInfoModel.userId,
+                        //         'liveItemId': widget.id,
+                        //       },
+                        //     );
+                        //   },
+                        //   title: _streamInfoModel.nickname,
+                        //   subTitle: '点赞数 $_praise',
+                        //   avatar: _streamInfoModel.headImgUrl,
+                        // ),
+                        LiveAvatarWithDialog(
+                            onTapAvatar: () {
+                              _focusNode.unfocus();
+                            },
+                            initAttention: _streamInfoModel.userId ==
+                                    UserManager.instance.user.info.id
+                                ? true
+                                : _streamInfoModel.isFollow == 1,
+                            model: _streamInfoModel,
+                            liveBaseModel: _liveBaseInfoModel,
+                            liveId: widget.id,
+                            praise: _praise),
                         Spacer(),
                         MorePeople(
                           onTap: () {
+                            _focusNode.unfocus();
                             showModalBottomSheet(
                               context: context,
                               builder: (context) {
@@ -372,7 +541,11 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                               },
                             );
                           },
-                          images: _groupMembers
+                          images: (_groupMembers
+                                ..removeWhere((element) {
+                                  return element.userProfile.nickName ==
+                                      _streamInfoModel.nickname;
+                                }))
                               .map((e) => e.userProfile.faceUrl)
                               .toList(),
                         ),
@@ -413,6 +586,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                     ),
                     child: Column(
                       children: [
+                        LiveBuyingWidget(key: _globalBuyingWidgetKey),
                         Container(
                           height: MediaQuery.of(context).size.height / 3,
                           child: ListView.builder(
@@ -425,6 +599,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                 sender: chatObjects[index].name,
                                 note: chatObjects[index].message,
                                 userEnter: chatObjects[index].enterUser,
+                                type: chatObjects[index].type,
                               );
                             },
                             itemCount: chatObjects.length,
@@ -444,27 +619,31 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                 ),
                                 child: TextField(
                                   controller: _editingController,
+                                  focusNode: _focusNode,
                                   onEditingComplete: () {
-                                    TencentImPlugin.sendMessage(
-                                      sessionId: _streamInfoModel.groupId,
-                                      sessionType: SessionType.Group,
-                                      node: TextMessageNode(
-                                          content: _editingController.text),
-                                    );
-                                    chatObjects.insert(
-                                        0,
-                                        ChatObj(
-                                          UserManager
-                                              .instance.user.info.nickname,
-                                          _editingController.text,
-                                        ));
-                                    _scrollController.animateTo(
-                                      -50,
-                                      duration: Duration(milliseconds: 300),
-                                      curve: Curves.easeInOutCubic,
-                                    );
-                                    setState(() {});
-                                    _editingController.clear();
+                                    if (!TextUtil.isEmpty(
+                                        _editingController.text)) {
+                                      TencentImPlugin.sendMessage(
+                                        sessionId: _streamInfoModel.groupId,
+                                        sessionType: SessionType.Group,
+                                        node: TextMessageNode(
+                                            content: _editingController.text),
+                                      );
+                                      chatObjects.insert(
+                                          0,
+                                          ChatObj(
+                                            UserManager
+                                                .instance.user.info.nickname,
+                                            _editingController.text,
+                                          ));
+                                      _scrollController.animateTo(
+                                        -50,
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.easeInOutCubic,
+                                      );
+                                      setState(() {});
+                                      _editingController.clear();
+                                    }
                                   },
                                   decoration: InputDecoration(
                                     isDense: true,
@@ -485,6 +664,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                             CustomImageButton(
                               padding: EdgeInsets.zero,
                               onPressed: () {
+                                _focusNode.unfocus();
                                 ActionSheet.show(
                                   context,
                                   items: ['举报'],
@@ -502,6 +682,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                               child: CustomImageButton(
                                 padding: EdgeInsets.zero,
                                 onPressed: () {
+                                  _focusNode.unfocus();
                                   showModalBottomSheet(
                                       context: context,
                                       builder: (context) {
@@ -587,6 +768,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                             CustomImageButton(
                               padding: EdgeInsets.zero,
                               onPressed: () {
+                                _focusNode.unfocus();
                                 showModalBottomSheet(
                                     context: context,
                                     builder: (context) {
@@ -661,6 +843,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                               ),
                               tapCallbackOnlyOnce: false,
                               onTap: (index) {
+                                _focusNode.unfocus();
                                 if (UserManager.instance.haveLogin) {
                                   HttpManager.post(
                                     LiveAPI.liveLike,
@@ -706,6 +889,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                 ),
                               ),
                               onPressed: () {
+                                _focusNode.unfocus();
                                 showGoodsListDialog(
                                   context,
                                   onLive: true,
@@ -730,6 +914,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                           children: [
                             CustomImageButton(
                               onPressed: () {
+                                _focusNode.unfocus();
                                 nowGoodList == null
                                     ? showToast('未知错误')
                                     : showModalBottomSheet(
@@ -833,6 +1018,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                               right: 0,
                               child: CustomImageButton(
                                 onPressed: () {
+                                  _focusNode.unfocus();
                                   setState(() {
                                     showDetailWindow = false;
                                   });
@@ -860,5 +1046,6 @@ class ChatObj {
   String name;
   String message;
   bool enterUser = false;
-  ChatObj(this.name, this.message, {this.enterUser});
+  ChatType type = ChatType.NORMAL;
+  ChatObj(this.name, this.message, {this.enterUser, this.type});
 }

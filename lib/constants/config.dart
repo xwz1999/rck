@@ -62,6 +62,7 @@ class AppConfig {
   ///
   ///其次未登陆和一般会员用户无法显示该值
   static bool getShowCommission() {
+    // return true;
     if (showExtraCommission) {
       return true;
     } else {

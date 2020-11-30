@@ -4,9 +4,11 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/live_stream/pick_search_goods_page.dart';
-import 'package:recook/pages/live/live_stream/pick_view/brand_goods_list_view.dart';
+import 'package:recook/pages/live/live_stream/pick_view/all_goods_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/brand_goods_view.dart';
+import 'package:recook/pages/live/live_stream/pick_view/goods_cart_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/goods_window_view.dart';
+import 'package:recook/pages/live/live_stream/pick_view/hot_goods_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:recook/pages/live/models/goods_window_model.dart';
 import 'package:recook/utils/custom_route.dart';
@@ -15,7 +17,7 @@ import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
 
 class LivePickGoodsPage extends StatefulWidget {
-  final Function(List<int> ids) onPickGoods;
+  final Function(List<num> ids) onPickGoods;
   LivePickGoodsPage({Key key, @required this.onPickGoods}) : super(key: key);
 
   @override
@@ -26,17 +28,12 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
     with TickerProviderStateMixin {
   int _goodsPage = 1;
   TabController _tabController;
-  TabController _parentTabController;
   @override
   void initState() {
     super.initState();
     _tabController = TabController(
       vsync: this,
-      length: 2,
-    );
-    _parentTabController = TabController(
-      vsync: this,
-      length: 2,
+      length: 4,
     );
   }
 
@@ -51,16 +48,10 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        brightness: Brightness.light,
         elevation: 0,
         backgroundColor: Colors.white,
-        leading: _parentTabController.index == 0
-            ? RecookBackButton.text()
-            : RecookBackButton(
-                onTap: () {
-                  _parentTabController.animateTo(0);
-                  setState(() {});
-                },
-              ),
+        leading: RecookBackButton.text(),
         leadingWidth: rSize(28 + 30.0),
         title: Text(
           '选择直播商品',
@@ -72,109 +63,105 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
         ),
         centerTitle: true,
       ),
-      body: TabBarView(
-        controller: _parentTabController,
-        physics: NeverScrollableScrollPhysics(),
-        children: [
-          NestedScrollView(
-            headerSliverBuilder: (context, _) {
-              return [
-                SliverToBoxAdapter(
-                  child: CustomImageButton(
-                    padding: EdgeInsets.zero,
-                    onPressed: () {
-                      CRoute.push(context, PickSearchGoodsPage());
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      margin: EdgeInsets.symmetric(horizontal: rSize(15)),
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF5F5F5),
-                        borderRadius: BorderRadius.circular(rSize(15)),
-                      ),
-                      height: rSize(30),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              left: rSize(12),
-                              right: rSize(4),
-                            ),
-                            child: Icon(
-                              Icons.search,
-                              color: Color(0xFF999999),
-                              size: rSize(15),
-                            ),
-                          ),
-                          Text(
-                            '搜索你想要添加的商品',
-                            style: TextStyle(
-                              color: Color(0xFF999999),
-                              fontSize: rSP(13),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, _) {
+          return [
+            SliverToBoxAdapter(
+              child: CustomImageButton(
+                padding: EdgeInsets.zero,
+                onPressed: () {
+                  CRoute.push(context, PickSearchGoodsPage());
+                },
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.symmetric(horizontal: rSize(15)),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF5F5F5),
+                    borderRadius: BorderRadius.circular(rSize(15)),
                   ),
-                ),
-              ];
-            },
-            body: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.symmetric(
-                    horizontal: rSize(95),
-                    vertical: rSize(15),
-                  ),
-                  height: rSize(32),
-                  child: TabBar(
-                    controller: _tabController,
-                    tabs: [
-                      Tab(text: '商品橱窗'),
-                      Tab(text: '品牌'),
-                    ],
-                    labelStyle: TextStyle(
-                      fontSize: rSP(13),
-                      fontWeight: FontWeight.bold,
-                    ),
-                    labelColor: Color(0xFF333333),
-                    unselectedLabelColor: Color(0xFF333333).withOpacity(0.3),
-                    indicatorSize: TabBarIndicatorSize.label,
-                    indicator: RecookIndicator(
-                        borderSide: BorderSide(
-                      width: rSize(3),
-                      color: Color(0xFFDB2D2D),
-                    )),
-                  ),
-                ),
-                Expanded(
-                  child: TabBarView(
-                    controller: _tabController,
+                  height: rSize(30),
+                  child: Row(
                     children: [
-                      GoodsWindowView(
-                        onPick: () {
-                          setState(() {});
-                        },
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: rSize(12),
+                          right: rSize(4),
+                        ),
+                        child: Icon(
+                          Icons.search,
+                          color: Color(0xFF999999),
+                          size: rSize(15),
+                        ),
                       ),
-                      BrandGoodsView(
-                        controller: _parentTabController,
-                        onTapBrand: () {
-                          setState(() {});
-                        },
+                      Text(
+                        '搜索你想要添加的商品',
+                        style: TextStyle(
+                          color: Color(0xFF999999),
+                          fontSize: rSP(13),
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-          BrandGoodsListView(
-            onPick: () {
-              setState(() {});
-            },
-          ),
-        ],
+          ];
+        },
+        body: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.symmetric(
+                vertical: rSize(15),
+              ),
+              height: rSize(32),
+              child: TabBar(
+                controller: _tabController,
+                isScrollable: true,
+                tabs: [
+                  Tab(text: '热门商品'),
+                  Tab(text: '直播车'),
+                  Tab(text: '历史直播'),
+                  Tab(text: '全部商品'),
+                ],
+                labelStyle: TextStyle(
+                  fontSize: rSP(13),
+                  fontWeight: FontWeight.bold,
+                ),
+                labelColor: Color(0xFF333333),
+                unselectedLabelColor: Color(0xFF333333).withOpacity(0.3),
+                indicatorSize: TabBarIndicatorSize.label,
+                indicator: RecookIndicator(
+                    borderSide: BorderSide(
+                  width: rSize(3),
+                  color: Color(0xFFDB2D2D),
+                )),
+              ),
+            ),
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  HotGoodsView(
+                    onPick: () {
+                      setState(() {});
+                    },
+                  ),
+                  GoodsCartView(
+                    onPick: () {
+                      setState(() {});
+                    },
+                  ),
+                  GoodsWindowView(
+                    onPick: () {
+                      setState(() {});
+                    },
+                  ),
+                  AllGoodsView(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomAppBar(
         color: Colors.white,

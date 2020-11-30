@@ -14,6 +14,7 @@ class ActivityListModel {
   int isPraise;
   int topicId;
   String topicName;
+  int isFollow;
 
   ActivityListModel({
     this.content,
@@ -27,6 +28,7 @@ class ActivityListModel {
     this.isPraise,
     this.topicId,
     this.topicName,
+    this.isFollow,
   });
 
   ActivityListModel.fromVideoList(VideoListModel model) {
@@ -44,6 +46,7 @@ class ActivityListModel {
     this.isPraise = model.isPraise;
     this.topicId = model.topicId;
     this.topicName = model.topicName;
+    this.isFollow = model.isFollow;
   }
 
   ActivityListModel.fromJson(Map<String, dynamic> json) {

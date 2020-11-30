@@ -28,8 +28,15 @@ import 'package:recook/widgets/toast.dart';
 
 class CommodityDetailPage extends StatefulWidget {
   final Map arguments;
+  final bool isLive;
+  final int liveId;
 
-  const CommodityDetailPage({Key key, this.arguments}) : super(key: key);
+  const CommodityDetailPage({
+    Key key,
+    this.arguments,
+    this.isLive = false,
+    this.liveId = 0,
+  }) : super(key: key);
 
   static setArguments(int goodsID) {
     return {"goodsID": goodsID};
@@ -66,15 +73,17 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
       }
     });
     _getDetail();
-    UserManager.instance.refreshShoppingCartNumberWithPage.addListener(_refreshShoppingCartNumberWithPageListener);
-    UserManager.instance.refreshGoodsDetailPromotionState.addListener(_refreshPromotionState);
+    UserManager.instance.refreshShoppingCartNumberWithPage
+        .addListener(_refreshShoppingCartNumberWithPageListener);
+    UserManager.instance.refreshGoodsDetailPromotionState
+        .addListener(_refreshPromotionState);
   }
 
-  _refreshPromotionState(){
+  _refreshPromotionState() {
     _getDetail();
   }
 
-  _refreshShoppingCartNumberWithPageListener()  {
+  _refreshShoppingCartNumberWithPageListener() {
     _updateShoppingCartNum();
   }
 
@@ -83,8 +92,10 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
     _tabController?.dispose();
     _bottomBarController?.dispose();
     _appBarController?.dispose();
-    UserManager.instance.refreshShoppingCartNumberWithPage.removeListener(_refreshShoppingCartNumberWithPageListener);
-    UserManager.instance.refreshGoodsDetailPromotionState.removeListener(_refreshPromotionState);
+    UserManager.instance.refreshShoppingCartNumberWithPage
+        .removeListener(_refreshShoppingCartNumberWithPageListener);
+    UserManager.instance.refreshGoodsDetailPromotionState
+        .removeListener(_refreshPromotionState);
     super.dispose();
   }
 
@@ -95,25 +106,24 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
   }
 
   _updateShoppingCartNum() async {
-    if (UserManager.instance.refreshShoppingCartNumber.value || UserManager.instance.refreshShoppingCartNumberWithPage.value) {
+    if (UserManager.instance.refreshShoppingCartNumber.value ||
+        UserManager.instance.refreshShoppingCartNumberWithPage.value) {
       UserManager.instance.refreshShoppingCartNumber.value = false;
       UserManager.instance.refreshShoppingCartNumberWithPage.value = false;
-      GoodsDetailModel model = await GoodsDetailModelImpl.getDetailInfo(_goodsId, UserManager.instance.user.info.id);
+      GoodsDetailModel model = await GoodsDetailModelImpl.getDetailInfo(
+          _goodsId, UserManager.instance.user.info.id);
       if (model.code != HttpStatus.SUCCESS) {
         return;
       }
       _goodsDetail.data.shoppingTrolleyCount = model.data.shoppingTrolleyCount;
       setState(() {});
-    }else{
-      
-    }
+    } else {}
   }
 
   @override
   Widget buildContext(BuildContext context, {store}) {
-    
-      Scaffold scaffold = Scaffold(
-    // return Scaffold(
+    Scaffold scaffold = Scaffold(
+      // return Scaffold(
       // backgroundColor: AppColor.frenchColor,
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -122,41 +132,51 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
         child: Stack(
           children: <Widget>[
             Positioned(
-                top: 0,left: 0,right: 0,bottom: 0,
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
                 child: Column(
                   children: <Widget>[
                     Expanded(
                       flex: 1,
-                      child: CacheTabBarView(controller: _tabController, children: [
-                          GoodsPage(
-                            openbrandList: (){
-                              // _goodsDetail.data.brandId;
-                              AppRouter.push(
-                                context, 
-                                RouteName.BRANDGOODS_LIST_PAGE,
-                                arguments: BrandGoodsListPage.setArguments(_goodsDetail.data.brand.id, _goodsDetail.data.brand.name));
-                            },
-                            goodsId: _goodsId,
-                            openSkuChoosePage: _openSkuChoosePage,
-                            goodsDetail: _goodsDetail,
-                            onScroll: (notification) {
-                              // double maxScroll = notification.metrics.maxScrollExtent;
-                              double offset = notification.metrics.pixels;
-                              double scale = offset / 180;
-                              scale = scale.clamp(0.0, 1.0);
+                      child: CacheTabBarView(
+                          controller: _tabController,
+                          children: [
+                            GoodsPage(
+                              isLive:widget.isLive,
+                              liveId:widget.liveId,
+                              openbrandList: () {
+                                // _goodsDetail.data.brandId;
+                                AppRouter.push(
+                                    context, RouteName.BRANDGOODS_LIST_PAGE,
+                                    arguments: BrandGoodsListPage.setArguments(
+                                        _goodsDetail.data.brand.id,
+                                        _goodsDetail.data.brand.name));
+                              },
+                              goodsId: _goodsId,
+                              openSkuChoosePage: _openSkuChoosePage,
+                              goodsDetail: _goodsDetail,
+                              onScroll: (notification) {
+                                // double maxScroll = notification.metrics.maxScrollExtent;
+                                double offset = notification.metrics.pixels;
+                                double scale = offset / 180;
+                                scale = scale.clamp(0.0, 1.0);
 
-                              _appBarController.scale.value = scale;
+                                _appBarController.scale.value = scale;
 
-                              // if (offset > maxScroll + 5) {
-                              //   _tabController.animateTo(1);
-                              // }
-                            },
-                          ),
-                        // DetailPage(
-                        //   goodsID: _goodsId,
-                        // ),
-                        MP.MaterialPage(goodsID: _goodsId,),
-                      ]),
+                                // if (offset > maxScroll + 5) {
+                                //   _tabController.animateTo(1);
+                                // }
+                              },
+                            ),
+                            // DetailPage(
+                            //   goodsID: _goodsId,
+                            // ),
+                            MP.MaterialPage(
+                              goodsID: _goodsId,
+                            ),
+                          ]),
                     ),
                     _bottomBar()
                   ],
@@ -175,7 +195,10 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
     //黑色
     // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
     // return scaffold;
-    return AnnotatedRegion<SystemUiOverlayStyle>(value: SystemUiOverlayStyle.dark, child: scaffold,);
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,
+      child: scaffold,
+    );
   }
 
   _buildCustomAppBar(BuildContext context) {
@@ -210,7 +233,13 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
       goodsDetail: _goodsDetail,
       controller: _bottomBarController,
       collected: _goodsDetail == null ? false : _goodsDetail.data.isFavorite,
-      shopCartNum: _goodsDetail?.data==null ? '': _goodsDetail.data.shoppingTrolleyCount > 99 ? "99+":_goodsDetail.data.shoppingTrolleyCount == 0 ? "":_goodsDetail.data.shoppingTrolleyCount.toString(),
+      shopCartNum: _goodsDetail?.data == null
+          ? ''
+          : _goodsDetail.data.shoppingTrolleyCount > 99
+              ? "99+"
+              : _goodsDetail.data.shoppingTrolleyCount == 0
+                  ? ""
+                  : _goodsDetail.data.shoppingTrolleyCount.toString(),
       addToShopCartListener: () {
         AppRouter.push(context, RouteName.GOODS_SHOPPING_CART);
       },
@@ -236,33 +265,33 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
     );
   }
 
-
-
   _showShare(BuildContext context) {
-    if (UserLevelTool.currentRoleLevelEnum() ==  UserRoleLevel.Vip || UserLevelTool.currentRoleLevelEnum() ==  UserRoleLevel.None){
+    if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
+        UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.None) {
       //跳到分享邀请
       // _showInviteShare(context);
       ShareTool().inviteShare(context);
       return;
     }
-    String goodsTitle = "${_goodsDetail.data.getPriceString()} | ${_goodsDetail.data.goodsName} | ${_goodsDetail.data.description}";
-    ShareTool().goodsShare(
-      context, 
-      goodsPrice: _goodsDetail.data.getPriceString(),
-      miniTitle: goodsTitle,
-      goodsName: _goodsDetail.data.goodsName,
-      goodsDescription: _goodsDetail.data.description,
-      miniPicurl: _goodsDetail.data.mainPhotos.length > 0 ? _goodsDetail.data.mainPhotos[0].url : "",
-      goodsId: _goodsDetail.data.id.toString(), 
-      amount: _goodsDetail.data.price.min.commission > 0 ?
-        _goodsDetail.data.price.min.commission.toString()
-        : ""
-    );
+    String goodsTitle =
+        "${_goodsDetail.data.getPriceString()} | ${_goodsDetail.data.goodsName} | ${_goodsDetail.data.description}";
+    ShareTool().goodsShare(context,
+        goodsPrice: _goodsDetail.data.getPriceString(),
+        miniTitle: goodsTitle,
+        goodsName: _goodsDetail.data.goodsName,
+        goodsDescription: _goodsDetail.data.description,
+        miniPicurl: _goodsDetail.data.mainPhotos.length > 0
+            ? _goodsDetail.data.mainPhotos[0].url
+            : "",
+        goodsId: _goodsDetail.data.id.toString(),
+        amount: _goodsDetail.data.price.min.commission > 0
+            ? _goodsDetail.data.price.min.commission.toString()
+            : "");
   }
 
   _getDetail() async {
-    _goodsDetail =
-        await GoodsDetailModelImpl.getDetailInfo(_goodsId, UserManager.instance.user.info.id);
+    _goodsDetail = await GoodsDetailModelImpl.getDetailInfo(
+        _goodsId, UserManager.instance.user.info.id);
     if (_goodsDetail.code != HttpStatus.SUCCESS) {
       Toast.showError(_goodsDetail.msg);
       return;
@@ -272,8 +301,9 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
   }
 
   _addFavorite() async {
-    HttpResultModel<BaseModel> resultModel = await GoodsDetailModelImpl.favoriteAdd(
-        UserManager.instance.user.info.id, _goodsDetail.data.id);
+    HttpResultModel<BaseModel> resultModel =
+        await GoodsDetailModelImpl.favoriteAdd(
+            UserManager.instance.user.info.id, _goodsDetail.data.id);
     if (!resultModel.result) {
       Toast.showInfo(resultModel.msg);
       return;
@@ -282,8 +312,9 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
   }
 
   _cancelFavorite() async {
-    HttpResultModel<BaseModel> resultModel = await GoodsDetailModelImpl.favoriteCancel(
-        UserManager.instance.user.info.id, _goodsDetail.data.id);
+    HttpResultModel<BaseModel> resultModel =
+        await GoodsDetailModelImpl.favoriteCancel(
+            UserManager.instance.user.info.id, _goodsDetail.data.id);
     if (!resultModel.result) {
       Toast.showInfo(resultModel.msg);
       return;

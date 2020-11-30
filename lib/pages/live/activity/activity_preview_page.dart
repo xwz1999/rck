@@ -1,3 +1,5 @@
+import 'package:common_utils/common_utils.dart';
+import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
@@ -19,10 +21,13 @@ import 'package:recook/widgets/recook/recook_like_button.dart';
 class ActivityPreviewPage extends StatefulWidget {
   final ActivityListModel model;
   final LiveBaseInfoModel userModel;
+  final PageController controller;
+  final int page;
   ActivityPreviewPage({
     Key key,
     @required this.model,
     @required this.userModel,
+    this.controller, this.page,
   }) : super(key: key);
 
   @override
@@ -54,7 +59,6 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                 horizontal: rSize(15),
               ),
               alignment: Alignment.bottomCenter,
-              height: rSize(150),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [
@@ -66,114 +70,142 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                   end: Alignment.bottomCenter,
                 ),
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   InkWell(
                     onTap: () {
-                      CRoute.push(
-                          context,
-                          TopicPage(
-                              topicId: widget.model.topicId,
-                              initAttention: false));
+                      AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                          arguments: CommodityDetailPage.setArguments(
+                              widget.model.goods.id));
                     },
-                    child: Text(
-                      '#${widget.model.topicName}',
-                      style: TextStyle(
-                        color: Color(0xFFEB8A49),
-                        fontSize: rSP(14),
-                      ),
-                    ),
-                  ),
-                  rHBox(4),
-                  Text(
-                    widget.model.content,
-                    style: TextStyle(
-                      color: Color(0xFFE4E4E4),
-                      fontSize: rSP(14),
-                    ),
-                  ),
-                  rHBox(6),
-                  Row(
-                    children: [
-                      MaterialButton(
-                        color: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(rSize(4)),
-                        ),
-                        padding: EdgeInsets.all(rSize(4)),
-                        minWidth: rSize(165),
-                        onPressed: () {
-                          AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                              arguments: CommodityDetailPage.setArguments(
-                                  widget.model.goods.id));
-                        },
-                        child: SizedBox(
-                          width: rSize(165),
-                          child: Row(
-                            children: [
-                              FadeInImage.assetNetwork(
-                                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                                image: Api.getImgUrl(
-                                  widget.model.goods.mainPhotoURL,
-                                ),
-                                width: rSize(47),
-                                height: rSize(47),
-                              ),
-                              Expanded(
-                                child: Column(
+                    child: Container(
+                      width: rSize(110),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(rSize(4)),
+                            child: Column(
+                              children: [
+                                Stack(
                                   children: [
-                                    Text(
-                                      widget.model.goods.name,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        fontSize: rSP(12),
-                                        color: Color(0xFF333333),
+                                    Material(
+                                      color: AppColor.frenchColor,
+                                      child: FadeInImage.assetNetwork(
+                                        placeholder:
+                                            R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                        image: Api.getImgUrl(
+                                          widget.model.goods.mainPhotoURL,
+                                        ),
+                                        width: rSize(110),
+                                        height: rSize(110),
                                       ),
                                     ),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          '¥',
-                                          style: TextStyle(
-                                            fontSize: rSP(10),
-                                            color: Color(0xFFC92219),
-                                          ),
+                                    Positioned(
+                                      bottom: 0,
+                                      left: 0,
+                                      right: 0,
+                                      child: Container(
+                                        color: Colors.black.withOpacity(0.4),
+                                        alignment: Alignment.center,
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: rSize(8)),
+                                        child: Text(
+                                          widget.model.goods.name,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
                                         ),
-                                        Text(
-                                          widget.model.goods.price,
-                                          style: TextStyle(
-                                            fontSize: rSP(12),
-                                            color: Color(0xFFC92219),
-                                          ),
-                                        ),
-                                        Spacer(),
-                                        Image.asset(
-                                          R.ASSETS_LIVE_SMALL_RED_CART_PNG,
-                                          height: rSize(12),
-                                          width: rSize(12),
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          rHBox(3),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                '¥',
+                                style: TextStyle(
+                                  fontSize: rSP(10),
+                                  color: Color(0xFFC92219),
+                                ),
+                              ),
+                              Text(
+                                widget.model.goods.price,
+                                style: TextStyle(
+                                  fontSize: rSP(14),
+                                  color: Color(0xFFC92219),
                                 ),
                               ),
                             ],
                           ),
-                        ),
+                          rHBox(3),
+                        ],
                       ),
-                      Spacer(),
-                      // CustomImageButton(
-                      //   onPressed: () {},
-                      //   child: Image.asset(
-                      //     R.ASSETS_LIVE_VIDEO_SHARE_PNG,
-                      //     height: rSize(20),
-                      //     width: rSize(20),
-                      //   ),
-                      // ),
-                      // rWBox(22),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(rSize(4)),
+                      ),
+                    ),
+                  ),
+                  // CustomImageButton(
+                  //   onPressed: () {},
+                  //   child: Image.asset(
+                  //     R.ASSETS_LIVE_VIDEO_SHARE_PNG,
+                  //     height: rSize(20),
+                  //     width: rSize(20),
+                  //   ),
+                  // ),
+                  // rWBox(22),
+                  rWBox(15),
+                  Expanded(
+                    child: Container(
+                      height: rSize(130),
+                      child: ExtendedText.rich(
+                        TextSpan(
+                          children: [
+                            TextSpan(
+                              text: widget.model.content,
+                              style: TextStyle(
+                                color: Color(0xFFE4E4E4),
+                                fontSize: rSP(14),
+                              ),
+                            ),
+                            ExtendedWidgetSpan(
+                              child: InkWell(
+                                onTap: () {
+                                  CRoute.push(
+                                      context,
+                                      TopicPage(
+                                          topicId: widget.model.topicId,
+                                          initAttention: false));
+                                },
+                                child: TextUtil.isEmpty(widget.model.topicName)
+                                    ? SizedBox()
+                                    : Text(
+                                        '#${widget.model.topicName}',
+                                        style: TextStyle(
+                                          color: Color(0xFFEB8A49),
+                                          fontSize: rSP(14),
+                                        ),
+                                      ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ),
+                  rWBox(15),
+                  Column(
+                    children: [
                       CustomImageButton(
                         onPressed: () {
                           if (UserManager.instance.haveLogin)
@@ -210,7 +242,7 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                           width: rSize(20),
                         ),
                       ),
-                      rWBox(22),
+                      rHBox(22),
                       RecookLikeButton(
                         initValue: widget.model.isPraise == 1,
                         likePath: R.ASSETS_LIVE_VIDEO_LIKE_PNG,
@@ -230,7 +262,7 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                         },
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
@@ -242,7 +274,10 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
             child: Row(
               children: [
                 LiveUserBar(
-                  initAttention: widget.model.isPraise == 1,
+                  initAttention: widget.userModel.userId ==
+                          UserManager.instance.user.info.id
+                      ? true
+                      : widget.model.isFollow == 1,
                   onAttention: () {
                     HttpManager.post(
                       LiveAPI.addFollow,
@@ -274,7 +309,11 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
   }
 
   _buildVideo() {
-    return NetworkFileVideo(path: widget.model.short.mediaUrl);
+    return NetworkFileVideo(
+      path: widget.model.short.mediaUrl,
+      pageController: widget.controller,
+      page: widget.page,
+    );
   }
 
   _buildImages() {

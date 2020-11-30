@@ -1,7 +1,10 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/goods/small_coupon_widget.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/live/models/goods_window_model.dart';
 import 'package:recook/pages/user/widget/recook_check_box.dart';
@@ -19,7 +22,7 @@ class _GoodsWindowPageState extends State<GoodsWindowPage> {
   List<GoodsWindowModel> models = [];
   List<GoodsList> displayModels = [];
 
-  List<int> _selectedIds = [];
+  List<num> _selectedIds = [];
 
   int page = 1;
   bool _isManager = false;
@@ -43,6 +46,7 @@ class _GoodsWindowPageState extends State<GoodsWindowPage> {
   @override
   Widget build(BuildContext context) {
     return RecookScaffold(
+      whiteBg: true,
       title: '商品橱窗',
       body: Column(
         children: [
@@ -129,12 +133,16 @@ class _GoodsWindowPageState extends State<GoodsWindowPage> {
                 });
               },
               onLoadMore: () {
+                page++;
                 getGoodsWindowModels().then((model) {
                   setState(() {
                     models.add(model);
                     displayModels.addAll(model.list);
                   });
-                  _controller.loadComplete();
+                  if (model.list.isEmpty)
+                    _controller.loadNoData();
+                  else
+                    _controller.loadComplete();
                 }).catchError((_) {
                   _controller.loadFailed();
                 });
@@ -186,10 +194,11 @@ class _GoodsWindowPageState extends State<GoodsWindowPage> {
                         ),
                         onPressed: () {
                           HttpManager.post(LiveAPI.deleteShopWindow, {
-                            "ids": _selectedIds,
-                          }).then((_) {
+                            "ids": _selectedIds.map((e) => e.toInt()).toList(),
+                          }).then((resultData) {
                             _selectedIds.clear();
                             _selectAll = false;
+                            showToast(resultData.data['msg']);
                             _controller.requestRefresh();
                             setState(() {});
                           });
@@ -207,7 +216,7 @@ class _GoodsWindowPageState extends State<GoodsWindowPage> {
   _buildGoodsCard(GoodsList model) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: rSize(15 / 2)),
-      height: rSize(86 + 15.0),
+      height: rSize(120 + 15.0),
       child: FlatButton(
         splashColor: Colors.black26,
         onPressed: _isManager
@@ -238,8 +247,8 @@ class _GoodsWindowPageState extends State<GoodsWindowPage> {
               child: FadeInImage.assetNetwork(
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                 image: Api.getImgUrl(model.mainPhotoUrl),
-                height: rSize(86),
-                width: rSize(86),
+                height: rSize(120),
+                width: rSize(120),
               ),
             ),
             rWBox(10),
@@ -257,6 +266,113 @@ class _GoodsWindowPageState extends State<GoodsWindowPage> {
                       fontSize: rSP(14),
                     ),
                   ),
+                  Container(
+                    width: double.infinity,
+                    height: 25,
+                    color: Colors.white,
+                    child: Row(
+                      children: <Widget>[
+                        Container(
+                          width: 13 * 1.5,
+                          height: 13 * 1.5,
+                          child: TextUtils.isEmpty(model.brandImg)
+                              ? SizedBox()
+                              : ExtendedImage.network(
+                                  Api.getImgUrl(model.brandImg),
+                                  fit: BoxFit.fill,
+                                ),
+                        ),
+                        SizedBox(
+                          width: 4,
+                        ),
+                        Text(
+                          TextUtils.isEmpty(model.brandName)
+                              ? ""
+                              : model.brandName,
+                          style: TextStyle(
+                            color: Color(0xffc70404),
+                            fontSize: ScreenAdapterUtils.setSp(12),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Stack(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            (model.coupon != null && model.coupon != '0')
+                                ? Container(
+                                    margin: EdgeInsets.only(right: 5),
+                                    child: SmallCouponWidget(
+                                      height: 18,
+                                      number: num.parse(model.coupon),
+                                    ),
+                                  )
+                                : SizedBox(),
+                            AppConfig.commissionByRoleLevel
+                                ? Container(
+                                    child: Stack(
+                                      alignment: Alignment.center,
+                                      children: <Widget>[
+                                        Container(
+                                          margin:
+                                              EdgeInsets.symmetric(vertical: 2),
+                                          alignment: Alignment.center,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(2),
+                                              border: Border.all(
+                                                color: Color(0xffec294d),
+                                                width: 0.5,
+                                              )),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 3),
+                                          child: Text(
+                                            "赚" + model.commission,
+                                            style: TextStyle(
+                                              color: Colors.white.withAlpha(0),
+                                              fontSize:
+                                                  ScreenAdapterUtils.setSp(12),
+                                            ),
+                                          ),
+                                        ),
+                                        AppConfig.getShowCommission()
+                                            ? Container(
+                                                alignment: Alignment.center,
+                                                child: Text(
+                                                  "赚" + model.commission,
+                                                  style: TextStyle(
+                                                    color: Color(0xffeb0045),
+                                                    fontSize: ScreenAdapterUtils
+                                                        .setSp(12),
+                                                  ),
+                                                ),
+                                              )
+                                            : SizedBox(),
+                                      ],
+                                    ),
+                                  )
+                                : SizedBox(),
+                            Spacer(),
+                          ],
+                        ),
+                        Positioned(
+                          right: 0,
+                          bottom: 0,
+                          top: 0,
+                          child: Text(
+                            "已售${model.salesVolume}件",
+                            style: TextStyle(
+                              color: Color(0xff595757),
+                              fontSize: ScreenAdapterUtils.setSp(12),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                   Spacer(),
                   Row(
                     children: [
@@ -267,15 +383,17 @@ class _GoodsWindowPageState extends State<GoodsWindowPage> {
                           fontSize: rSP(14),
                         ),
                       ),
-                      model.commission == '0'
-                          ? SizedBox()
-                          : Text(
-                              '/赚${model.commission}',
-                              style: TextStyle(
-                                color: Color(0xFFC92219),
-                                fontSize: rSP(14),
-                              ),
-                            ),
+                      AppConfig.getShowCommission()
+                          ? model.commission == '0'
+                              ? SizedBox()
+                              : Text(
+                                  '/赚${model.commission}',
+                                  style: TextStyle(
+                                    color: Color(0xFFC92219),
+                                    fontSize: rSP(14),
+                                  ),
+                                )
+                          : SizedBox(),
                     ],
                   ),
                 ],

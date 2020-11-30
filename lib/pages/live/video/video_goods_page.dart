@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/goods/small_coupon_widget.dart';
 import 'package:recook/pages/live/models/video_goods_model.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
@@ -197,21 +198,38 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                           _recentController.loadComplete();
                       });
                     },
-                    body: ListView.separated(
-                      separatorBuilder: (context, index) {
-                        return Divider(
-                          height: rSize(0.5),
-                          thickness: rSize(0.5),
-                          color: Color(0xFFD6D6D6),
-                          indent: rSize(15),
-                          endIndent: rSize(15),
-                        );
-                      },
-                      itemBuilder: (context, index) {
-                        return _buildGoodsCard(recentGoods[index]);
-                      },
-                      itemCount: recentGoods.length,
-                    ),
+                    body: recentGoods.isEmpty
+                        ? Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(R.ASSETS_IMG_NO_DATA_PNG),
+                                rHBox(10),
+                                Text(
+                                  '最近没有购买商品',
+                                  style: TextStyle(
+                                    color: Color(0xFF333333),
+                                    fontSize: rSP(16),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                        : ListView.separated(
+                            separatorBuilder: (context, index) {
+                              return Divider(
+                                height: rSize(0.5),
+                                thickness: rSize(0.5),
+                                color: Color(0xFFD6D6D6),
+                                indent: rSize(15),
+                                endIndent: rSize(15),
+                              );
+                            },
+                            itemBuilder: (context, index) {
+                              return _buildGoodsCard(recentGoods[index]);
+                            },
+                            itemCount: recentGoods.length,
+                          ),
                   ),
                 ),
               ],
@@ -220,6 +238,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
   }
 
   _buildGoodsCard(VideoGoodsModel model) {
+    final _height = (MediaQuery.of(context).size.width - 20) * 150.0 / 350.0;
     return MaterialButton(
       onPressed: () {
         widget.onPick(model);
@@ -228,28 +247,133 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
       padding: EdgeInsets.all(rSize(15)),
       child: Row(
         children: [
-          FadeInImage.assetNetwork(
-            placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-            image: Api.getImgUrl(model.mainPhotoUrl),
-            height: rSize(80),
-            width: rSize(80),
+          Container(
+            color: AppColor.frenchColor,
+            child: FadeInImage.assetNetwork(
+              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+              image: Api.getImgUrl(model.mainPhotoUrl),
+              height: _height,
+              width: _height,
+            ),
           ),
           rWBox(10),
           Expanded(
             child: SizedBox(
-              height: rSize(110),
+              height: _height,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // Text(
+                  //   model.goodsName,
+                  //   maxLines: 2,
+                  //   overflow: TextOverflow.ellipsis,
+                  //   style: TextStyle(
+                  //     color: Color(0xFF0A0001),
+                  //     fontSize: rSP(14),
+                  //   ),
+                  // ),
+                  // Text(
+                  //   model.description,
+                  //   maxLines: 1,
+                  //   overflow: TextOverflow.ellipsis,
+                  //   style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                  //       color: Colors.black54, fontWeight: FontWeight.w300),
+                  // ),
+                  // InkWell(
+                  //   onTap: () {
+                  //     AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
+                  //         arguments: BrandGoodsListPage.setArguments(
+                  //           model.brandId,
+                  //           model.brandName,
+                  //         ));
+                  //   },
+                  //   child: Row(
+                  //     children: [
+                  //       FadeInImage.assetNetwork(
+                  //         placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                  //         image: Api.getImgUrl(model.brandImg),
+                  //         width: rSize(13),
+                  //         height: rSize(13),
+                  //       ),
+                  //       rWBox(4),
+                  //       Text(
+                  //         model.brandName,
+                  //         style: TextStyle(
+                  //           color: Color(0xffc70404),
+                  //           fontSize: ScreenAdapterUtils.setSp(12),
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     SmallCouponWidget(number: num.parse(model.coupon)),
+                  //     rWBox(4),
+                  //     Container(
+                  //       height: rSize(18),
+                  //       alignment: Alignment.center,
+                  //       decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.circular(rSize(1)),
+                  //         border: Border.all(
+                  //           color: Color(0xFFCC1B4F),
+                  //           width: rSize(0.5),
+                  //         ),
+                  //       ),
+                  //       child: Text(
+                  //         '赚${model.commission}',
+                  //         style: TextStyle(
+                  //           color: Color(0xFFCC1B4F),
+                  //           fontSize: rSP(12),
+                  //           height: 1,
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     Spacer(),
+                  //     Text(
+                  //       '剩余',
+                  //       style: TextStyle(
+                  //         color: Color(0xFF333333),
+                  //         fontSize: rSP(11),
+                  //       ),
+                  //     ),
+                  //     Text(
+                  //       '${model.inventory}件',
+                  //       style: TextStyle(
+                  //         color: Color(0xFFC91147),
+                  //         fontSize: rSP(11),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // Spacer(),
+                  Container(
+                    height: 2,
+                  ),
                   Text(
                     model.goodsName,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Color(0xFF0A0001),
-                      fontSize: rSP(14),
-                    ),
+                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(16),
+                        fontWeight: FontWeight.w600),
                   ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: EdgeInsets.only(top: 2),
+                    child: model.description == null
+                        ? Container()
+                        : Text(
+                            model.description,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyle.generate(
+                                ScreenAdapterUtils.setSp(14),
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w300),
+                          ),
+                  ),
+                  _brandWidget(model),
+                  _saleNumberWidget(model),
                   Spacer(),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -280,6 +404,113 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                     ],
                   ),
                 ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _brandWidget(VideoGoodsModel model) {
+    return GestureDetector(
+        onTap: () {},
+        child: Container(
+          width: double.infinity,
+          height: 25,
+          color: Colors.white,
+          child: Row(
+            children: <Widget>[
+              Container(
+                width: 13 * 1.5,
+                height: 13 * 1.5,
+                child: FadeInImage.assetNetwork(
+                  placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                  image: Api.getImgUrl(model.brandImg),
+                  fit: BoxFit.fill,
+                ),
+              ),
+              SizedBox(
+                width: 4,
+              ),
+              Text(
+                TextUtils.isEmpty(model.brandName) ? "" : model.brandName,
+                style: TextStyle(
+                  color: Color(0xffc70404),
+                  fontSize: ScreenAdapterUtils.setSp(12),
+                ),
+              ),
+            ],
+          ),
+        ));
+  }
+
+  _saleNumberWidget(VideoGoodsModel model) {
+    return Container(
+      child: Stack(
+        children: <Widget>[
+          Row(
+            children: <Widget>[
+              (model.coupon != null && model.coupon != "0")
+                  ? Container(
+                      margin: EdgeInsets.only(right: 5),
+                      child: SmallCouponWidget(
+                        height: 18,
+                        number: num.parse(model.coupon),
+                      ),
+                    )
+                  : SizedBox(),
+              AppConfig.commissionByRoleLevel
+                  ? Container(
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: <Widget>[
+                          Container(
+                            margin: EdgeInsets.symmetric(vertical: 2),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(2),
+                                border: Border.all(
+                                  color: Color(0xffec294d),
+                                  width: 0.5,
+                                )),
+                            padding: EdgeInsets.symmetric(horizontal: 3),
+                            child: Text(
+                              "赚" + model.commission,
+                              style: TextStyle(
+                                color: Colors.white.withAlpha(0),
+                                fontSize: ScreenAdapterUtils.setSp(12),
+                              ),
+                            ),
+                          ),
+                          AppConfig.getShowCommission()
+                              ? Container(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "赚" + model.commission,
+                                    style: TextStyle(
+                                      color: Color(0xffeb0045),
+                                      fontSize: ScreenAdapterUtils.setSp(12),
+                                    ),
+                                  ),
+                                )
+                              : SizedBox(),
+                        ],
+                      ),
+                    )
+                  : SizedBox(),
+              Spacer(),
+            ],
+          ),
+          Positioned(
+            right: 0,
+            bottom: 0,
+            top: 0,
+            child: Text(
+              "已售${model.salesVolume}件",
+              style: TextStyle(
+                color: Color(0xff595757),
+                fontSize: ScreenAdapterUtils.setSp(12),
               ),
             ),
           ),

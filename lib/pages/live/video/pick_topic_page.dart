@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/models/topic_list_model.dart';
-import 'package:recook/widgets/refresh_widget.dart';
 
 class PickTopicPage extends StatefulWidget {
   final Function(TopicListModel model) onPick;
@@ -16,13 +17,13 @@ class PickTopicPage extends StatefulWidget {
 
 class _PickTopicPageState extends State<PickTopicPage> {
   bool onSearch = false;
-  String _keyword = '';
-  int _page = 1;
+  Timer _inputTimer;
+  bool _showSearchResult = false;
+  TextEditingController _editingController = TextEditingController();
 
   List<TopicListModel> hotTopics = [];
   List<TopicListModel> searchResultModels = [];
 
-  GSRefreshController _controller = GSRefreshController();
   @override
   void initState() {
     super.initState();
@@ -37,7 +38,7 @@ class _PickTopicPageState extends State<PickTopicPage> {
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _editingController?.dispose();
     super.dispose();
   }
 
@@ -65,113 +66,160 @@ class _PickTopicPageState extends State<PickTopicPage> {
           ),
         ),
         centerTitle: true,
-        title: Container(
-          decoration: BoxDecoration(
-            color: Color(0xFFF5F5F5),
-            borderRadius: BorderRadius.circular(rSize(16)),
-          ),
-          margin: EdgeInsets.only(
-            left: rSize(5),
-            right: rSize(15),
-          ),
-          child: TextField(
-            autofocus: true,
-            onChanged: (text) {
-              if (TextUtil.isEmpty(text)) {
-                setState(() {
-                  onSearch = false;
-                });
-              }
-            },
-            onSubmitted: (text) {
-              setState(() {
-                onSearch = true;
-                _keyword = text;
-              });
-              Future.delayed(Duration(milliseconds: 100), () {
-                if (mounted) _controller.requestRefresh();
-              });
-            },
-            style: TextStyle(
-              color: Color(0xFF333333),
-              fontSize: rSP(13),
-            ),
-            decoration: InputDecoration(
-              isDense: true,
-              hintText: '搜索你想参与的话题',
-              hintStyle: TextStyle(
-                color: Color(0xFF999999),
-                fontSize: rSP(13),
-              ),
-              prefixIcon: Padding(
-                padding: EdgeInsets.only(left: rSize(13), right: rSize(3)),
-                child: Image.asset(
-                  R.ASSETS_SEARCH_PNG,
-                  height: rSize(16),
-                  width: rSize(16),
-                ),
-              ),
-              prefixIconConstraints: BoxConstraints(
-                minWidth: 0,
-                minHeight: 0,
-              ),
-              border: InputBorder.none,
-            ),
+        title: Text(
+          '自定义话题',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Color(0xFF333333),
           ),
         ),
-      ),
-      body: onSearch
-          ? RefreshWidget(
-              controller: _controller,
-              onRefresh: () {
-                _page = 1;
-                getSearchTopicList().then((models) {
-                  setState(() {
-                    searchResultModels = models;
+        actions: [
+          Center(
+            child: MaterialButton(
+              color: Color(0xFFFFDB2D2D),
+              height: rSize(28),
+              minWidth: rSize(60),
+              onPressed: () {
+                if (TextUtil.isEmpty(_editingController.text)) {
+                  GSDialog.of(context).showError(context, '话题不能为空');
+                } else {
+                  GSDialog.of(context).showLoadingDialog(context, '创建话题');
+                  HttpManager.post(
+                    LiveAPI.topicAddNew,
+                    {'title': _editingController.text},
+                  ).then((resultData) {
+                    GSDialog.of(context).dismiss(context);
+                    if (resultData.data['data']['topicId'] is int)
+                      widget.onPick(TopicListModel(
+                        title: _editingController.text,
+                        id: resultData.data['data']['topicId'],
+                      ));
+                    Navigator.pop(context);
+                  }).catchError((e) {
+                    GSDialog.of(context).dismiss(context);
+                    GSDialog.of(context).showError(context, '创建失败');
                   });
-                  _controller.refreshCompleted();
-                });
+                }
               },
-              onLoadMore: () {
-                _page++;
-                getSearchTopicList().then((models) {
-                  setState(() {
-                    searchResultModels.addAll(models);
-                  });
-                  _controller.loadComplete();
-                });
-              },
-              body: ListView.builder(
-                itemBuilder: (context, index) {
-                  return _buildTopicCard(searchResultModels[index]);
-                },
-                itemCount: searchResultModels.length,
+              child: Text('提交'),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(rSize(14)),
               ),
-            )
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(rSize(15)),
-                  child: Text(
-                    '热门搜索',
-                    style: TextStyle(
-                      color: Color(0xFF333333),
-                      fontSize: rSP(14),
-                      fontWeight: FontWeight.bold,
+            ),
+          ),
+          rWBox(15),
+        ],
+      ),
+      body:
+          // onSearch
+          //     ? RefreshWidget(
+          //         controller: _controller,
+          //         onRefresh: () {
+          //           _page = 1;
+          //           getSearchTopicList().then((models) {
+          //             setState(() {
+          //               searchResultModels = models;
+          //             });
+          //             _controller.refreshCompleted();
+          //           });
+          //         },
+          //         onLoadMore: () {
+          //           _page++;
+          //           getSearchTopicList().then((models) {
+          //             setState(() {
+          //               searchResultModels.addAll(models);
+          //             });
+          //             _controller.loadComplete();
+          //           });
+          //         },
+          //         body: ListView.builder(
+          //           itemBuilder: (context, index) {
+          //             return _buildTopicCard(searchResultModels[index]);
+          //           },
+          //           itemCount: searchResultModels.length,
+          //         ),
+          //       )
+          //     :
+          Stack(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              rHBox(50),
+              Padding(
+                padding: EdgeInsets.all(rSize(15)),
+                child: Text(
+                  '热门搜索',
+                  style: TextStyle(
+                    color: Color(0xFF333333),
+                    fontSize: rSP(14),
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return _buildTopicCard(hotTopics[index]);
+                  },
+                  itemCount: hotTopics.length,
+                ),
+              ),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              rHBox(15),
+              Row(
+                children: [
+                  rWBox(15),
+                  Image.asset(
+                    R.ASSETS_LIVE_TOPIC_PNG,
+                    height: rSize(16),
+                    width: rSize(16),
+                  ),
+                  rWBox(15),
+                  Expanded(
+                    child: TextField(
+                      controller: _editingController,
+                      autofocus: true,
+                      onChanged: (text) {
+                        _inputTimer?.cancel();
+                        _inputTimer = Timer(Duration(milliseconds: 500), () {});
+                        searchResultModels = null;
+                        setState(() {
+                          _showSearchResult = !TextUtil.isEmpty(text);
+                        });
+                        getSearchTopicList().then((models) {
+                          setState(() {
+                            searchResultModels = models;
+                          });
+                        });
+                      },
+                      style: TextStyle(
+                        color: Color(0xFF333333),
+                        fontSize: rSP(13),
+                      ),
+                      decoration: InputDecoration(
+                        isDense: true,
+                        hintText: '请输入话题名称',
+                        hintStyle: TextStyle(
+                          color: Color(0xFF999999),
+                          fontSize: rSP(13),
+                        ),
+                        border: UnderlineInputBorder(),
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      return _buildTopicCard(hotTopics[index]);
-                    },
-                    itemCount: hotTopics.length,
-                  ),
-                ),
-              ],
-            ),
+                  rWBox(15),
+                ],
+              ),
+              _showSearchResult ? _buildSearchData() : SizedBox(),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -222,10 +270,65 @@ class _PickTopicPageState extends State<PickTopicPage> {
     );
   }
 
+  _buildSearchData() {
+    return Container(
+      margin: EdgeInsets.only(left: rSize(45)),
+      width: rSize(293),
+      child: searchResultModels == null
+          ? Center(child: CircularProgressIndicator())
+          : searchResultModels.isEmpty
+              ? Padding(
+                  padding: EdgeInsets.all(rSize(15)),
+                  child: Text(
+                    '点击提交新建话题',
+                    style: TextStyle(
+                      color: Color(0xFF333333),
+                    ),
+                  ),
+                )
+              : ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return MaterialButton(
+                      height: rSize(22 + 18.0),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          searchResultModels[index].title,
+                          style: TextStyle(
+                            color: Color(0xFF333333),
+                            fontSize: rSP(14),
+                          ),
+                        ),
+                      ),
+                      onPressed: () {
+                        widget.onPick(searchResultModels[index]);
+                        Navigator.pop(context);
+                      },
+                    );
+                  },
+                  itemCount: searchResultModels.length,
+                ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(rSize(4)),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0, rSize(2)),
+            blurRadius: rSize(8),
+            spreadRadius: 0,
+            color: Color(0xFF26000000),
+          )
+        ],
+      ),
+    );
+  }
+
   Future<List<TopicListModel>> getSearchTopicList() async {
     ResultData resultData = await HttpManager.post(LiveAPI.topicSearchList, {
-      'keyword': _keyword,
-      'page': _page,
+      'keyword': _editingController.text,
+      'page': 1,
       'limit': 15,
     });
 

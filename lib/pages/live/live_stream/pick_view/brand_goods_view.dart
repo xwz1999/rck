@@ -8,10 +8,8 @@ import 'package:recook/pages/live/models/live_brand_model.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class BrandGoodsView extends StatefulWidget {
-  final TabController controller;
   final VoidCallback onTapBrand;
-  BrandGoodsView({Key key, @required this.controller, this.onTapBrand})
-      : super(key: key);
+  BrandGoodsView({Key key, this.onTapBrand}) : super(key: key);
 
   @override
   _BrandGoodsViewState createState() => _BrandGoodsViewState();
@@ -66,7 +64,6 @@ class _BrandGoodsViewState extends State<BrandGoodsView>
     return MaterialButton(
       padding: EdgeInsets.zero,
       onPressed: () {
-        widget.controller.animateTo(1);
         PickCart.brandModel = model;
         widget.onTapBrand();
       },

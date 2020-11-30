@@ -297,7 +297,7 @@ class AttentionApi {
 }
 
 class WebApi {
-  static const String recookHttp = "https://www.reecook.cn/";
+  static const String recookHttp = "https://reecook.cn/";
   // static const String inviteRegist = "${recookHttp}download.html?code=";
   static const String goodsDetail = "https://h5.reecook.cn/#/goods/detail/";
   static const String inviteRegist =
@@ -411,6 +411,9 @@ class LiveAPI {
 
   ///话题列表
   static const String topicList = '/v1/live/topic/follow/list';
+
+  ///添加话题
+  static const String topicAddNew = '/v1/live/topic/add';
 
   ///关注话题
   static const String addTopic = '/v1/live/topic/follow/add';
@@ -530,5 +533,23 @@ class LiveAPI {
   ///当前用户直播信息获取
   static const String getLiveInfo = '/v1/live/live/info';
 
+  ///直播证书
   static const String liveLicense = '/v1/live/live/license';
+
+  ///直播同意协议
+  static const String liveAgree = '/v1/live/live/agree';
+
+  static const String recordLive = '/v1/live/live/transcribe';
+
+  ///热门商品列表
+  static const String hotGoods = '/v1/live/goods/hot';
+
+  ///直播车接口
+  static const String cartList = '/v1/live/car/list';
+
+  ///直播车添加商品
+  static const String addToCart = '/v1/live/car/add';
+
+  ///直播车删除商品
+  static const String removeFromCart = '/v1/live/car/delete';
 }

@@ -135,10 +135,10 @@ class _GoodPriceViewState extends State<GoodPriceView> {
             children: <Widget>[
               (coupon != null && coupon != 0)
                   ? Container(
-                      width: rSize(97),
                       height: rSize(23),
                       decoration: BoxDecoration(
                         image: DecorationImage(
+                          fit: BoxFit.fill,
                           image: AssetImage(
                               R.ASSETS_GOODS_DETAILS_BOTTOM_GOLD_PNG),
                         ),

@@ -52,9 +52,11 @@ class RecookDateUtil {
   bool get isYesterday => isSameMonth && now.day == (dateTime.day + 1);
 
   String get humanDate {
-    if (isSameMinute)
-      return '${now.second - dateTime.second}秒前';
-    else if (isSameHour)
+    // if (isSameMinute)
+    //   return '${now.second - dateTime.second}秒前';
+    // else
+    if (isSameMinute && dateTime.second < 60) return '刚刚';
+    if (isSameHour)
       return '${now.minute - dateTime.minute}分钟前';
     else if (isToday)
       return '${now.hour - dateTime.hour}小时前';

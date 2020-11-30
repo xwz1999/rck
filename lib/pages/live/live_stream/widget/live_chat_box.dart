@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
@@ -5,21 +6,33 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 
-class LiveChatBox extends StatelessWidget {
+enum ChatType {
+  NORMAL,
+  ENTER_LIVE,
+  BUYING,
+}
+
+class LiveChatBox extends StatefulWidget {
   final String sender;
   final String note;
   final bool userEnter;
-  const LiveChatBox({Key key, this.sender, this.note, this.userEnter = false})
-      : super(key: key);
+  final ChatType type;
+  const LiveChatBox({
+    Key key,
+    this.sender,
+    this.note,
+    this.userEnter = false,
+    this.type = ChatType.NORMAL,
+  }) : super(key: key);
 
   @override
+  _LiveChatBoxState createState() => _LiveChatBoxState();
+}
+
+class _LiveChatBoxState extends State<LiveChatBox> {
+  @override
   Widget build(BuildContext context) {
-    final Color color = Color.fromRGBO(
-      180 + Random().nextInt(55),
-      180 + Random().nextInt(55),
-      180 + Random().nextInt(55),
-      1,
-    );
+    final Color color = Colors.white;
     return Container(
       padding: EdgeInsets.symmetric(vertical: rSize(5 / 2)),
       alignment: Alignment.centerLeft,
@@ -31,17 +44,19 @@ class LiveChatBox extends StatelessWidget {
             child: Text.rich(
               TextSpan(children: [
                 TextSpan(
-                  text: '$sender${TextUtil.isEmpty(sender) ? '' :':'}',
+                  text:
+                      '${widget.sender}${TextUtil.isEmpty(widget.sender) ? '' : ':'}',
                   style: TextStyle(
-                    color: color,
+                    color: Color(0xFF98EDFF),
                     fontSize: rSP(13),
                   ),
                 ),
                 TextSpan(
-                  text: note,
+                  text: widget.note,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: rSP(13),
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ]),
@@ -54,7 +69,7 @@ class LiveChatBox extends StatelessWidget {
             constraints: BoxConstraints(
               maxWidth: rSize(200),
             ),
-            color: userEnter ?? false
+            color: widget.userEnter ?? false
                 ? Colors.pink.withOpacity(0.3)
                 : Colors.black.withOpacity(0.1),
           ),

@@ -57,14 +57,19 @@ class GoodsPage extends StatefulWidget {
   final int goodsId;
   final ValueNotifier<bool> openSkuChoosePage;
   final void Function() openbrandList; //打开商家页面
-  const GoodsPage(
-      {Key key,
-      this.onScroll,
-      this.goodsId,
-      this.openSkuChoosePage,
-      this.goodsDetail,
-      this.openbrandList})
-      : super(key: key);
+
+  final bool isLive;
+  final int liveId;
+  const GoodsPage({
+    Key key,
+    this.onScroll,
+    this.goodsId,
+    this.openSkuChoosePage,
+    this.goodsDetail,
+    this.openbrandList,
+    this.isLive = false,
+    this.liveId = 0,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -323,22 +328,26 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           color: Colors.white,
           padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
           child: _userEvaluation()),
-      Container(
-        color: Colors.white,
-        margin: EdgeInsets.only(top: 13, bottom: 1),
-        padding: const EdgeInsets.all(10.0),
-        child: GestureDetector(
-          child: _storeName(),
-          onTap: () {
-            if (widget.openbrandList != null) widget.openbrandList();
-          },
-        ),
-      ),
-      Container(
-        //  padding: EdgeInsets.only(left: 10, top: 10, bottom: 5),
-        color: Colors.white,
-        child: _recommendsWidget(),
-      ),
+      AppConfig.getShowCommission()
+          ? Container(
+              color: Colors.white,
+              margin: EdgeInsets.only(top: 13, bottom: 1),
+              padding: const EdgeInsets.all(10.0),
+              child: GestureDetector(
+                child: _storeName(),
+                onTap: () {
+                  if (widget.openbrandList != null) widget.openbrandList();
+                },
+              ),
+            )
+          : SizedBox(),
+      AppConfig.getShowCommission()
+          ? Container(
+              //  padding: EdgeInsets.only(left: 10, top: 10, bottom: 5),
+              color: Colors.white,
+              child: _recommendsWidget(),
+            )
+          : SizedBox(),
 //            _usersLikeGrid(),
     ];
   }
@@ -961,7 +970,16 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               }
               if (skuModel.selectedIndex == 1) {
                 GSDialog.of(context).showLoadingDialog(context, "");
-                _createOrder(skuModel, context);
+                HttpManager.post(LiveAPI.buyGoodsInform, {
+                  "liveItemId": widget.liveId,
+                  "goodsId": widget.goodsId,
+                });
+                _createOrder(
+                  skuModel,
+                  context,
+                  isLive: widget.isLive,
+                  liveId: widget.liveId,
+                );
                 return;
               } else {
                 GoodsDetailModel detailModel = widget.goodsDetail;
@@ -1013,13 +1031,15 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         .showSuccess(myGlobals.scaffoldKey.currentContext, model.msg);
   }
 
-  Future<dynamic> _createOrder(
-      SkuChooseModel skuModel, BuildContext context) async {
+  Future<dynamic> _createOrder(SkuChooseModel skuModel, BuildContext context,
+      {bool isLive = false, int liveId = 0}) async {
     OrderPreviewModel order = await GoodsDetailModelImpl.createOrderPreview(
-        UserManager.instance.user.info.id,
-        skuModel.sku.id,
-        skuModel.des,
-        skuModel.num);
+      UserManager.instance.user.info.id,
+      skuModel.sku.id,
+      skuModel.des,
+      skuModel.num,
+      liveId: isLive ? liveId : null,
+    );
     GSDialog.of(context).dismiss(context);
     Navigator.pop(context);
     if (order.code != HttpStatus.SUCCESS) {

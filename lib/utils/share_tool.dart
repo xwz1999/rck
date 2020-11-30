@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluwx/fluwx.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/widgets/bottom_sheet/bottom_share_dialog.dart';
@@ -90,6 +92,19 @@ class ShareTool {
       title: title,
       description: des,
       netWorkThumbnail: Api.getImgUrl(headUrl),
+    );
+  }
+
+  clipBoard({
+    BuildContext context,
+    @required int liveId,
+  }) {
+    String baseUrl = "${AppConfig.debug ? WebApi.testLiveUrl : WebApi.liveUrl}";
+    ClipboardData data = new ClipboardData(text: '$baseUrl$liveId');
+    Clipboard.setData(data);
+    Toast.showCustomSuccess(
+      '链接复制成功',
+      delayedDuration: Duration(seconds: 0),
     );
   }
 
@@ -249,17 +264,34 @@ class ShareTool {
             arguments: ShareGoodsPosterPage.setArguments(goodsId: goodsId));
       });
     });
+    PlatformItem addToLiveGoodsCart = PlatformItem(
+      '加到直播车',
+      Image.asset(
+        R.ASSETS_LIVE_LIVE_CART_PNG,
+        width: 36,
+        height: 36,
+      ),
+      itemClick: () {
+        HttpManager.post(LiveAPI.addToCart, {
+          'goodsIds': [int.parse(goodsId)],
+        }).then((result) {
+          showToast(result.data['msg']);
+        });
+        Navigator.pop(context);
+      },
+    );
     List<PlatformItem> itemList = [
       // miniItem,
       wechatItem,
       // weiboItem,
       // qqItem,
       copyurl,
-      qrcode
+      qrcode,
     ];
     if (ShareTool.qqInstalled) {
       itemList.add(qqItem);
     }
+    itemList.add(addToLiveGoodsCart);
     // if (ShareTool.weiboInstalled){
     //   itemList.add(weiboItem);
     // }

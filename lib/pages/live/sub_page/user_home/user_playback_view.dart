@@ -9,7 +9,9 @@ import 'package:recook/widgets/refresh_widget.dart';
 
 class UserPlaybackView extends StatefulWidget {
   final int userId;
-  UserPlaybackView({Key key, @required this.userId}) : super(key: key);
+  final VoidCallback onRefresh;
+  UserPlaybackView({Key key, @required this.userId, this.onRefresh})
+      : super(key: key);
 
   @override
   _UserPlaybackViewState createState() => _UserPlaybackViewState();
@@ -43,6 +45,7 @@ class _UserPlaybackViewState extends State<UserPlaybackView>
       controller: _controller,
       onRefresh: () {
         _page = 1;
+        widget.onRefresh();
         getActivityVideoList().then((models) {
           setState(() {
             _videoModels = models;
@@ -68,6 +71,7 @@ class _UserPlaybackViewState extends State<UserPlaybackView>
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Image.asset(R.ASSETS_IMG_NO_DATA_PNG),
+                  rHBox(10),
                   Text(
                     selfFlag ? '您没有直播记录' : 'TA没有直播记录',
                     style: TextStyle(

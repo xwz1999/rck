@@ -10,6 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/widgets/bussiness_cooperation_page.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/manager/meiqia_manager.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -82,14 +83,7 @@ class OtherItemView extends StatelessWidget {
                 color: Colors.grey[700],
                 contentSpacing: 8,
                 onPressed: () {
-                  AppRouter.push(
-                    context,
-                    RouteName.WEB_VIEW_PAGE,
-                    arguments: WebViewPage.setArguments(
-                        url: WebApi.businessCooperation,
-                        title: "商务合作",
-                        hideBar: true),
-                  );
+                  AppRouter.push(context, RouteName.BUSSINESS_COOPERATION_PAGE);
                 },
               ),
             ),

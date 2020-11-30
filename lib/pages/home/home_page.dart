@@ -243,11 +243,21 @@ class _HomePageState extends BaseStoreState<HomePage>
     super.dispose();
   }
 
+  bool _updateTag = false;
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) _updateTag = true;
     if (state == AppLifecycleState.resumed) {
-      DPrint.printf("后台返回前台");
-      _updateSource();
+      //TODO 修复订单无法下单的问题，该问题只在华为设备中发生，
+      //  Set native info: isAppForeground(true)
+      // Set native info: isAppForeground(false)
+      // 不停的在前后台切换，原因未知
+      if (_updateTag) {
+        _updateSource();
+        _updateTag = false;
+      }
+
       // _handleOpenInstallEvents();
     }
   }
@@ -596,6 +606,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                   padding: EdgeInsets.only(bottom: 5),
                   color: AppColor.frenchColor,
                   child: GoodsItemWidget.rowGoods(
+                    isSingleDayGoods: false,
                     onBrandClick: () {
                       AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                           arguments: BrandGoodsListPage.setArguments(
@@ -998,7 +1009,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     if (AppConfig.getShowCommission()) {
                       bool value = UserManager.instance.selectTabbar.value;
                       UserManager.instance.selectTabbar.value = !value;
-                      UserManager.instance.selectTabbarIndex = 2;
+                      UserManager.instance.selectTabbarIndex = 1;
                     } else {
                       AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
                           arguments: GoodsListTempPage.setArguments(
@@ -1354,8 +1365,8 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   _mobShareInit() {
     ShareSDKRegister register = ShareSDKRegister();
-    register.setupSinaWeibo("3484799074", "0cc08d31b4d63dc81fbb7a2559999fb3",
-        "https://www.reecook.cn");
+    register.setupSinaWeibo(
+        "3484799074", "0cc08d31b4d63dc81fbb7a2559999fb3", "https://reecook.cn");
     register.setupQQ("101876843", "6f367bfad98978e22c2e11897dd74f00");
     SharesdkPlugin.regist(register);
   }

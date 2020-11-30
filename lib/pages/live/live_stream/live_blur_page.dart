@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -8,6 +10,7 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/models/live_exit_model.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart';
 import 'package:recook/utils/date/recook_date_util.dart';
+import 'package:recook/widgets/toast.dart';
 
 class LiveBlurPage extends StatefulWidget {
   final bool isLive;
@@ -35,6 +38,7 @@ class LiveBlurPage extends StatefulWidget {
 
 class _LiveBlurPageState extends State<LiveBlurPage> {
   bool _isAttention = false;
+  bool _saveVideo = false;
   @override
   void initState() {
     super.initState();
@@ -142,7 +146,8 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                       endIndent: rSize(16),
                     ),
                     GridView(
-                      padding: EdgeInsets.symmetric(horizontal: rSize(54)),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: rSize(54), vertical: 0),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3),
                       children: [
@@ -157,7 +162,42 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                     ),
-                    rHBox(82),
+                    Divider(
+                      height: rSize(40),
+                      thickness: rSize(1),
+                      color: Colors.white.withOpacity(0.06),
+                      indent: rSize(16),
+                      endIndent: rSize(16),
+                    ),
+                    Row(
+                      children: [
+                        Spacer(),
+                        Text(
+                          '直播保存',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: rSP(16),
+                          ),
+                        ),
+                        rWBox(20),
+                        CupertinoSwitch(
+                          value: _saveVideo,
+                          onChanged: widget.exitModel.duration<60?
+                          (state){
+                            Toast.showError('直播时长过短，禁止录制');
+                          }
+                          :(state) {
+                            setState(() {
+                              _saveVideo = !_saveVideo;
+                            });
+                          },
+                          activeColor: Color(0xFFDB2D2D),
+                          trackColor: Color(0x99D8D8D8),
+                        ),
+                        rWBox(45),
+                      ],
+                    ),
+                    rHBox(32),
                     MaterialButton(
                       height: rSize(40),
                       minWidth: rSize(209),
@@ -169,6 +209,12 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                         ),
                       ),
                       onPressed: () {
+                        if (_saveVideo)
+                          HttpManager.post(LiveAPI.recordLive, {
+                            'liveItemId': widget.streamModel.id,
+                          }).then((result) {
+                            print(result);
+                          });
                         Navigator.pop(context);
                       },
                       color: Color(0xFFDB2D2D),
@@ -256,6 +302,7 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
 
   _buildColumn(String title, String subTitle) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           title,

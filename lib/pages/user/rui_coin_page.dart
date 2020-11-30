@@ -60,7 +60,9 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
       appBar: CustomAppBar(
-        actions: <Widget>[_listModel == null ? Container() : _goToBalance()],
+        actions: AppConfig.getShowCommission()
+            ? <Widget>[_listModel == null ? Container() : _goToBalance()]
+            : [],
         appBackground: Colors.white,
         elevation: 0,
         title: "我的瑞币",

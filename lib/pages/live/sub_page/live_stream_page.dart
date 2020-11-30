@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -23,17 +24,24 @@ class LiveStreamPage extends StatefulWidget {
 }
 
 class _LiveStreamPageState extends State<LiveStreamPage>
-    with AutomaticKeepAliveClientMixin {
+    with TickerProviderStateMixin {
   List<LiveAttentionListModel> _liveAttentionListModels = [];
   List<LiveListModel> _liveListModels = [];
   int _livePage = 1;
   int _attentionPage = 1;
   GSRefreshController _liveListController = GSRefreshController();
   GSRefreshController _liveAttentionController = GSRefreshController();
+  GifController _gifController;
 
   @override
   void initState() {
     super.initState();
+    _gifController = GifController(vsync: this)
+      ..repeat(
+        min: 0,
+        max: 20,
+        period: Duration(milliseconds: 700),
+      );
     Future.delayed(Duration(milliseconds: 300), () {
       if (mounted) {
         _liveListController.requestRefresh();
@@ -44,7 +52,6 @@ class _LiveStreamPageState extends State<LiveStreamPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
@@ -174,6 +181,7 @@ class _LiveStreamPageState extends State<LiveStreamPage>
         mainAxisSize: MainAxisSize.min,
         children: [
           Stack(
+            alignment: Alignment.bottomCenter,
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(rSize(52 / 2)),
@@ -185,14 +193,36 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                 ),
               ),
               Positioned(
-                right: rSize(3),
                 bottom: 0,
-                child: Image.asset(
-                  isLive
-                      ? R.ASSETS_LIVE_ON_STREAM_PNG
-                      : R.ASSETS_LIVE_STREAM_PLAY_BACK_PNG,
-                  height: rSize(12),
-                  width: rSize(12),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: rSize(2)),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(rSize(4)),
+                    color: isLive ? Color(0xFFDB2D2D) : Color(0xFF8A8382),
+                  ),
+                  child: Row(
+                    children: [
+                      isLive
+                          ? GifImage(
+                              controller: _gifController,
+                              image: AssetImage(R.ASSETS_LIVE_PLAY_GIF),
+                              height: rSize(12),
+                              width: rSize(12),
+                            )
+                          : Image.asset(
+                              R.ASSETS_LIVE_STREAM_PLAY_BACK_PNG,
+                              height: rSize(12),
+                              width: rSize(12),
+                            ),
+                      Text(
+                        '已关注',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: rSP(9),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -280,9 +310,16 @@ class _LiveStreamPageState extends State<LiveStreamPage>
             CRoute.push(
               context,
               LiveStreamViewPage(id: model.id),
-            );
+            ).then((value) {
+              _liveListController.requestRefresh();
+              _liveAttentionController.requestRefresh();
+            });
           else
-            CRoute.push(context, LivePlaybackViewPage(id: model.id));
+            CRoute.push(context, LivePlaybackViewPage(id: model.id))
+                .then((value) {
+              _liveListController.requestRefresh();
+              _liveAttentionController.requestRefresh();
+            });
         },
         child: Container(
           color: Colors.white,
@@ -310,11 +347,16 @@ class _LiveStreamPageState extends State<LiveStreamPage>
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Image.asset(
-                            isLive
-                                ? R.ASSETS_LIVE_ON_STREAM_PNG
-                                : R.ASSETS_LIVE_STREAM_PLAY_BACK_PNG,
-                          ),
+                          isLive
+                              ? GifImage(
+                                  controller: _gifController,
+                                  image: AssetImage(R.ASSETS_LIVE_PLAY_GIF),
+                                  height: rSize(15),
+                                  width: rSize(15),
+                                )
+                              : Image.asset(
+                                  R.ASSETS_LIVE_STREAM_PLAY_BACK_PNG,
+                                ),
                           Text(
                             '${model.look}人${isLive ? '观看' : '看过'}',
                             style: TextStyle(
@@ -478,7 +520,4 @@ class _LiveStreamPageState extends State<LiveStreamPage>
           .map((e) => LiveListModel.fromJson(e))
           .toList();
   }
-
-  @override
-  bool get wantKeepAlive => true;
 }
