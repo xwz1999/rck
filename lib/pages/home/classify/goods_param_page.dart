@@ -49,44 +49,28 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
           child: Column(
             children: <Widget>[
               Container(
-                  margin: EdgeInsets.only(bottom: 10),
                   child: Text(
-                    "产品参数",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(16),
-                        fontWeight: FontWeight.w400),
-                  )),
-              Container(
-                height: 20,
-              ),
+                "产品参数",
+                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(16),
+                    fontWeight: FontWeight.w400),
+              )),
+              rHBox(30),
               Row(
                 children: <Widget>[
+                  rWBox(20),
                   Container(
-                    width: 20,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        width: 60,
-                        height: 23,
-                        alignment: Alignment.topLeft,
-                        child: Text(
-                          '品牌',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: ScreenAdapterUtils.setSp(16),
-                          ),
-                        ),
+                    width: rSize(60),
+                    child: Text(
+                      '品牌',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: ScreenAdapterUtils.setSp(13),
                       ),
-                    ],
+                    ),
                   ),
-                  Container(
-                    width: 20,
-                  ),
+                  rWBox(20),
                   Expanded(
                       child: Container(
-                    margin: EdgeInsets.only(bottom: 0),
-                    height: 23,
                     child: Text(
                       model.data.brand.name,
                       style: TextStyle(
@@ -96,57 +80,52 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
                   )),
                 ],
               ),
-              Container(
-                height: 10,
-              ),
-              Expanded(
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      width: 20,
+              rHBox(10),
+              Row(
+                children: <Widget>[
+                  rWBox(20),
+                  Container(
+                    width: rSize(60),
+                    child: Text(
+                      '条形码',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: ScreenAdapterUtils.setSp(13),
+                      ),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          width: 60,
-                          height: 23,
-                          alignment: Alignment.topLeft,
-                          child: Text(
-                            '条形码',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: ScreenAdapterUtils.setSp(16),
+                  ),
+                  rWBox(20),
+                  Container(
+                    child: Text(
+                      '${model.data.sku[0].name}  ${model.data.sku[0].code}',
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: ScreenAdapterUtils.setSp(13)),
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  rWBox(100),
+                  Column(
+                    children: model.data.sku
+                        .sublist(1)
+                        .map(
+                          (e) => Container(
+                            child: Text(
+                              '${e.name}  ${e.code}',
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: ScreenAdapterUtils.setSp(13)),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      width: 20,
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                          itemCount: model.data.sku.length,
-                          itemBuilder: (_, index) {
-                            return Container(
-                              margin: EdgeInsets.only(bottom: 0),
-                              height: 23,
-                              child: Text(
-                                model.data.sku[index].name +
-                                    "  " +
-                                    model.data.sku[index].code,
-                                style: TextStyle(
-                                    color: Colors.grey,
-                                    fontSize: ScreenAdapterUtils.setSp(13)),
-                              ),
-                            );
-                            // return CouponItem(coupon: _coupons[index],);
-                          }),
-                    ),
-                  ],
-                ),
+                        )
+                        .toList(),
+                  ),
+                ],
               ),
+              Spacer(),
               TButton.TextButton(
                 margin: EdgeInsets.only(top: 8, left: 20, right: 20),
                 radius: BorderRadius.all(Radius.circular(30)),
