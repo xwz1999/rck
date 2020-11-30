@@ -7,7 +7,7 @@ version: 1.3.16+209
 # sdk min version to 2.2.2
 # to support ... feature
 environment:
-  sdk: ">=2.2.2 <3.0.0"
+  sdk: ">=2.10.0 <3.0.0"
 
 module:
   androidX: true
@@ -53,8 +53,8 @@ dependencies:
       url: https://gitee.com/laiiihz/flutter_qr_reader
       ref: 3e4824752f4fa50c30ecd415341a3a779db01922
 
+  webview_flutter: ^1.0.7
   # 网页组件
-  webview_flutter: ^0.3.15+1
   # webview_flutter:
   #   git:
   #     url: https://github.com/haysuperman/webview_flutter.git
