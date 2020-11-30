@@ -488,9 +488,11 @@ packages:
   fluwx:
     dependency: "direct main"
     description:
-      name: fluwx
-      url: "https://pub.flutter-io.cn"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "06d208b51f96efbbc4f42013c20001df8497d38e"
+      url: "http://test.akuhotel.com:8099/laiiihz/fluwx.git"
+    source: git
     version: "2.0.7"
   foundation_fluttify:
     dependency: transitive
@@ -945,9 +947,11 @@ packages:
   sharesdk_plugin:
     dependency: "direct main"
     description:
-      name: sharesdk_plugin
-      url: "https://pub.flutter-io.cn"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "7e5ac4829491e386321f8533223211c1c865cf52"
+      url: "http://test.akuhotel.com:8099/laiiihz/sharesdk_plugin.git"
+    source: git
     version: "1.2.8"
   shelf:
     dependency: transitive
