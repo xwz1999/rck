@@ -228,26 +228,25 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
                   //           ),
                   //         ],
                   //       ),
-                  Text(
-                    "￥ ${goods.unitPrice.toStringAsFixed(2)}",
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                        fontWeight: FontWeight.w300),
-                  ),
+                  Row(children: [
+                    Text(
+                      "￥ ${goods.unitPrice.toStringAsFixed(2)}",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                          fontWeight: FontWeight.w300),
+                    ),
+                    Spacer(),
+                    Text(
+                      "x${goods.quantity}",
+                      style: AppTextStyle.generate(13,
+                          color: Colors.grey, fontWeight: FontWeight.w300),
+                    ),
+                  ]),
                 ],
               ),
             ),
           ),
-          Container(
-            alignment: Alignment.center,
-            height: rSize(80),
-            child: Text(
-              "x${goods.quantity}",
-              style: AppTextStyle.generate(13,
-                  color: Colors.grey, fontWeight: FontWeight.w300),
-            ),
-          )
         ],
       ),
     );

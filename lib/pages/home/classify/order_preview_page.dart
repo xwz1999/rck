@@ -760,7 +760,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                                 ScreenAdapterUtils.setSp(15),
                               )),
                           TextSpan(
-                              text: "￥${_orderModel.data.actualTotalAmount}",
+                              text: "￥${_orderModel.data.actualTotalAmount.toStringAsFixed(2)}",
                               style: AppTextStyle.generate(
                                 ScreenAdapterUtils.setSp(16),
                                 color: Color.fromARGB(255, 249, 62, 13),

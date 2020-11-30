@@ -204,7 +204,7 @@ class _ShopPageAppbarWidgetState extends BaseStoreState<ShopPageAppbarWidget> {
             right: rSize(10),
             bottom: rSize(15),
             child: Image.asset(
-              UserLevelTool.cardImagePath(_roleLevel),
+              UserLevelTool.appBarBGImagePath(_roleLevel),
               fit: BoxFit.cover,
               height:
                   (MediaQuery.of(context).size.width - rSize(20)) / 1052 * 469,
