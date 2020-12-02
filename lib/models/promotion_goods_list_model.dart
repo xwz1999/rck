@@ -27,10 +27,7 @@ class PromotionGoodsListModel extends Object {
 class PromotionModel extends Object {
   List<PromotionGoodsModel> goodsList;
   List<PromotionActivityModel> activityList;
-  PromotionModel(
-    this.goodsList,
-    this.activityList
-  );
+  PromotionModel(this.goodsList, this.activityList);
   factory PromotionModel.fromJson(Map<String, dynamic> srcJson) =>
       _$PromotionModelFromJson(srcJson);
 
@@ -43,13 +40,8 @@ class PromotionActivityModel extends Object {
   String activityUrl;
   String logoUrl;
   String topUrl;
-  
-  PromotionActivityModel(
-    this.id,
-    this.activityUrl,
-    this.logoUrl,
-    this.topUrl
-  );
+
+  PromotionActivityModel(this.id, this.activityUrl, this.logoUrl, this.topUrl);
   factory PromotionActivityModel.fromJson(Map<String, dynamic> srcJson) =>
       _$PromotionActivityModelFromJson(srcJson);
 
@@ -58,7 +50,6 @@ class PromotionActivityModel extends Object {
 
 @JsonSerializable()
 class PromotionGoodsModel extends Object {
-
   /*
   {
     "goodsName":"左家右厨丰子恺清代古画",
@@ -107,6 +98,10 @@ class PromotionGoodsModel extends Object {
   String brandName;
   String brandImg;
   num brandId;
+  num isImport;
+  num isFerme;
+  num storehouse;
+
   PromotionGoodsModel(
     this.goodsId,
     this.goodsName,
@@ -130,7 +125,10 @@ class PromotionGoodsModel extends Object {
     this.coupon,
     this.brandName,
     this.brandImg,
-    this.brandId
+    this.brandId,
+    this.isImport,
+    this.isFerme,
+    this.storehouse,
   );
 
   factory PromotionGoodsModel.fromJson(Map<String, dynamic> srcJson) =>
@@ -138,7 +136,7 @@ class PromotionGoodsModel extends Object {
 
   Map<String, dynamic> toJson() => _$PromotionGoodsModelToJson(this);
 
-  getPromotionStatus(){
+  getPromotionStatus() {
     return PromotionTimeTool.getPromotionStatusWithPGModel(this);
   }
 
