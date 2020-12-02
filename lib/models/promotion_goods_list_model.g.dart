@@ -24,35 +24,35 @@ Map<String, dynamic> _$PromotionGoodsListModelToJson(
       'msg': instance.msg
     };
 
-PromotionModel _$PromotionModelFromJson(
-    Map<String, dynamic> json) {
+PromotionModel _$PromotionModelFromJson(Map<String, dynamic> json) {
   return PromotionModel(
-      (json['goodsList'] as List)
-            ?.map((e) =>
-                e == null ? null : PromotionGoodsModel.fromJson(e as Map<String, dynamic>))
-            ?.toList(),
-      (json['activityList'] as List)
-          ?.map((e) =>
-              e == null ? null : PromotionActivityModel.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
-      );
+    (json['goodsList'] as List)
+        ?.map((e) => e == null
+            ? null
+            : PromotionGoodsModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+    (json['activityList'] as List)
+        ?.map((e) => e == null
+            ? null
+            : PromotionActivityModel.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
+  );
 }
 
-Map<String, dynamic> _$PromotionModelToJson(
-        PromotionModel instance) =>
+Map<String, dynamic> _$PromotionModelToJson(PromotionModel instance) =>
     <String, dynamic>{
       'goodsList': instance.goodsList,
       'activityList': instance.activityList,
     };
 
-
-PromotionActivityModel _$PromotionActivityModelFromJson(Map<String, dynamic> json) {
+PromotionActivityModel _$PromotionActivityModelFromJson(
+    Map<String, dynamic> json) {
   return PromotionActivityModel(
-      json['id'] as num,
-      json['activityUrl'] as String,
-      json['logoUrl'] as String,
-      json['topUrl'] as String,
-      );
+    json['id'] as num,
+    json['activityUrl'] as String,
+    json['logoUrl'] as String,
+    json['topUrl'] as String,
+  );
 }
 
 Map<String, dynamic> _$PromotionActivityModelToJson(
@@ -64,35 +64,37 @@ Map<String, dynamic> _$PromotionActivityModelToJson(
       'topUrl': instance.topUrl,
     };
 
-
 PromotionGoodsModel _$PromotionGoodsModelFromJson(Map<String, dynamic> json) {
   return PromotionGoodsModel(
-      json['goodsId'] as int,
-      json['goodsName'] as String,
-      json['description'] as String,
-      (json['price'] as num)?.toDouble(),
-      json['priceDesc'] as String,
-      (json['commission'] as num)?.toDouble(),
-      json['commissionDesc'] as String,
-      json['inventory'] as int,
-      json['inventoryDesc'] as String,
-      json['totalInventory'] as int,
-      json['totalInventoryDesc'] as String,
-      json['totalSalesVolume'] as int,
-      json['salesVolumeDesc'] as String,
-      json['startTime'] as String,
-      json['endTime'] as String,
-      json['percentageDesc'] as String,
-      (json['percentage'] as num)?.toDouble(),
-      json['picture'] == null
-          ? null
-          : Picture.fromJson(json['picture'] as Map<String, dynamic>),
-      json["primePrice"] as num,
-      json["coupon"] as num,
-      json['brandName'] as String,
-      json['brandImg'] as String,
-      json['brandId'] as num
-      );
+    json['goodsId'] as int,
+    json['goodsName'] as String,
+    json['description'] as String,
+    (json['price'] as num)?.toDouble(),
+    json['priceDesc'] as String,
+    (json['commission'] as num)?.toDouble(),
+    json['commissionDesc'] as String,
+    json['inventory'] as int,
+    json['inventoryDesc'] as String,
+    json['totalInventory'] as int,
+    json['totalInventoryDesc'] as String,
+    json['totalSalesVolume'] as int,
+    json['salesVolumeDesc'] as String,
+    json['startTime'] as String,
+    json['endTime'] as String,
+    json['percentageDesc'] as String,
+    (json['percentage'] as num)?.toDouble(),
+    json['picture'] == null
+        ? null
+        : Picture.fromJson(json['picture'] as Map<String, dynamic>),
+    json["primePrice"] as num,
+    json["coupon"] as num,
+    json['brandName'] as String,
+    json['brandImg'] as String,
+    json['brandId'] as num,
+    json['isImport'] as num,
+    json['isFerme'] as num,
+    json['storehouse'] as num,
+  );
 }
 
 Map<String, dynamic> _$PromotionGoodsModelToJson(
