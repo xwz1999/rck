@@ -138,11 +138,13 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
-                                      color: Color.fromRGBO(255, 243, 203, 1),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
+                                    color: Color.fromRGBO(255, 243, 203, 1),
+                                    borderRadius: BorderRadius.horizontal(
+                                      right: Radius.circular(100),
+                                    ),
+                                  ),
                                   margin: EdgeInsets.fromLTRB(
-                                      rSize(13), rSize(10), rSize(13), 0),
+                                      0, rSize(10), rSize(13), 0),
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 10),
                                   child: Row(
@@ -155,7 +157,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                                       rWBox(10),
                                       Expanded(
                                         child: Text(
-                                          '政策提醒：如果跨境订单订购人和支付人信息不一致，将会影响订单通关。',
+                                          '海关提醒：跨境订单订购人和支付人信息不一致，可能会影响订单通关，请务必认证！',
                                           style: TextStyle(
                                             color:
                                                 Color.fromRGBO(210, 137, 64, 1),
@@ -760,7 +762,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                                 ScreenAdapterUtils.setSp(15),
                               )),
                           TextSpan(
-                              text: "￥${_orderModel.data.actualTotalAmount.toStringAsFixed(2)}",
+                              text:
+                                  "￥${_orderModel.data.actualTotalAmount.toStringAsFixed(2)}",
                               style: AppTextStyle.generate(
                                 ScreenAdapterUtils.setSp(16),
                                 color: Color.fromARGB(255, 249, 62, 13),
