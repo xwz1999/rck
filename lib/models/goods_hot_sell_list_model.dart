@@ -43,6 +43,9 @@ class Data {
   String brandName;
   String brandImg;
   num brandId;
+  int isImport;
+  int isFerme;
+  int storehouse;
   Data(
       {this.id,
       this.goodsName,
@@ -58,7 +61,10 @@ class Data {
       this.index = 0,
       this.brandName,
       this.brandImg,
-      this.brandId
+      this.brandId,
+       this.isFerme,
+      this.isImport,
+      this.storehouse,
     });
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -76,6 +82,9 @@ class Data {
     brandName = json['brandName'];
     brandImg = json['brandImg'];
     brandId = json['brandId'];
+    isImport=json['isImport'];
+    isFerme=json['isFerme'];
+    storehouse=json['storehouse'];
   }
 
   Map<String, dynamic> toJson() {
@@ -91,6 +100,9 @@ class Data {
     data['originalPrice'] = this.originalPrice;
     data['commission'] = this.commission;
     data['coupon'] = this.coupon;
+    data['isImport']=this.isImport;
+    data['isFerme']=this.isFerme;
+    data['storehouse']=this.storehouse;
     return data;
   }
 }

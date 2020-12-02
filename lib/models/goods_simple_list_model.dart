@@ -7,7 +7,6 @@ class GoodsSimpleListModel {
   List<GoodsSimple> data;
 
   GoodsSimpleListModel({this.code, this.msg, this.data});
-
   GoodsSimpleListModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     msg = json['msg'];
@@ -49,6 +48,9 @@ class GoodsSimple {
   String brandName;
   String brandImg;
   num brandId;
+  int isImport;
+  int isFerme;
+  int storehouse;
   GoodsSimple(
       {this.id,
       this.goodsName,
@@ -68,6 +70,9 @@ class GoodsSimple {
       this.brandName,
       this.brandImg,
       this.brandId,
+      this.isFerme,
+      this.isImport,
+      this.storehouse,
     });
 
   GoodsSimple.fromJson(Map<String, dynamic> json) {
@@ -91,6 +96,9 @@ class GoodsSimple {
     brandName = json['brandName'];
     brandImg = json['brandImg'];
     brandId = json['brandId'];
+    isImport=json['isImport'];
+    isFerme=json['isFerme'];
+    storehouse=json['storehouse'];
   }
 
   Map<String, dynamic> toJson() {
@@ -109,6 +117,9 @@ class GoodsSimple {
     data['percent'] = this.percent;
     data['startTime'] = this.startTime;
     data['endTime'] = this.endTime;
+    data['isImport']=this.isImport;
+    data['isFerme']=this.isFerme;
+    data['storehouse']=this.storehouse;
     return data;
   }
 

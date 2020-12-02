@@ -14,6 +14,7 @@ import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 enum GoodsItemType {
   NONE,
@@ -259,12 +260,44 @@ class GoodsItemWidget extends StatelessWidget {
                 Container(
                   height: 2,
                 ),
-                Text(
-                  this.goodsName,
+                ExtendedText.rich(
+                  TextSpan(
+                    children: [
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: Container(
+                          alignment: Alignment.center,
+                          width: 24,
+                          height: 15,
+                          decoration: BoxDecoration(
+                            color: Color(0xFFCC1B4F),
+                            borderRadius: BorderRadius.circular(
+                                ScreenAdapterUtils.setWidth(3)),
+                          ),
+                          child: Text(
+                            '进口',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: ScreenAdapterUtils.setSp(10),
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                      WidgetSpan(
+                          child: Container(
+                        width: ScreenAdapterUtils.setWidth(5),
+                      )),
+                      TextSpan(
+                        text: this.goodsName,
+                        style: AppTextStyle.generate(
+                            ScreenAdapterUtils.setSp(15),
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
-                      fontWeight: FontWeight.w600),
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
