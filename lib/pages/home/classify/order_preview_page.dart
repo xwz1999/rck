@@ -21,7 +21,10 @@ import 'package:recook/models/self_pickup_store_list_model.dart';
 import 'package:recook/pages/home/classify/mvp/order_mvp/order_presenter_impl.dart';
 import 'package:recook/pages/home/classify/order_prepay_page.dart';
 import 'package:recook/pages/home/items/goods_item_order.dart';
+import 'package:recook/pages/home/items/oversea_accept_license_page.dart';
 import 'package:recook/pages/user/address/receiving_address_page.dart';
+import 'package:recook/pages/user/widget/recook_check_box.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/bottom_sheet/bottom_list.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -51,6 +54,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   FocusNode _focusNode = FocusNode();
   List<SelfPickupStoreModel> _storeList;
   String _selectedStoreName;
+
+  bool _accept = false;
 
   @override
   void initState() {
@@ -138,11 +143,13 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(
-                                      color: Color.fromRGBO(255, 243, 203, 1),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(10))),
+                                    color: Color.fromRGBO(255, 243, 203, 1),
+                                    borderRadius: BorderRadius.horizontal(
+                                      right: Radius.circular(100),
+                                    ),
+                                  ),
                                   margin: EdgeInsets.fromLTRB(
-                                      rSize(13), rSize(10), rSize(13), 0),
+                                      0, rSize(10), rSize(13), 0),
                                   padding: EdgeInsets.symmetric(
                                       horizontal: 8, vertical: 10),
                                   child: Row(
@@ -155,7 +162,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                                       rWBox(10),
                                       Expanded(
                                         child: Text(
-                                          '政策提醒：如果跨境订单订购人和支付人信息不一致，将会影响订单通关。',
+                                          '海关提醒：跨境订单订购人和支付人信息不一致，可能会影响订单通关，请务必认证！',
                                           style: TextStyle(
                                             color:
                                                 Color.fromRGBO(210, 137, 64, 1),
@@ -204,6 +211,9 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                   ),
                   SliverToBoxAdapter(
                     child: _bottomInfoTitle(),
+                  ),
+                  SliverToBoxAdapter(
+                    child: _buildOverseaTitle(),
                   ),
                   SliverToBoxAdapter(
                     child: SizedBox(
@@ -582,6 +592,21 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
           _titleRow("运费", "",
               "+￥${_orderModel.data.expressTotalFee.toStringAsFixed(2)}",
               rightTitleColor: Colors.black),
+          Builder(
+            builder: (context) {
+              bool isOversea = false;
+              for (var item in _orderModel.data.brands) {
+                for (var childItem in item.goods) {
+                  if (childItem.isImport == 1) isOversea = true;
+                }
+              }
+
+              return isOversea
+                  ? _titleRow("进口税", "", "+￥${(0).toStringAsFixed(2)}",
+                      rightTitleColor: Colors.black)
+                  : SizedBox();
+            },
+          ),
           _titleRow(
             "优惠券",
             "",
@@ -595,6 +620,53 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
         ],
       ),
     );
+  }
+
+  _buildOverseaTitle() {
+    bool isOversea = false;
+    for (var item in _orderModel.data.brands) {
+      for (var childItem in item.goods) {
+        if (childItem.isImport == 1) isOversea = true;
+      }
+    }
+    return isOversea
+        ? Container(
+            margin: EdgeInsets.only(top: rSize(16), bottom: rSize(42)),
+            child: GestureDetector(
+              onTap: () {
+                _accept = !_accept;
+                setState(() {});
+              },
+              child: Row(
+                children: [
+                  rWBox(15),
+                  RecookCheckBox(state: _accept),
+                  rWBox(10),
+                  Text(
+                    '同意并接受',
+                    style: TextStyle(
+                      color: AppColor.blackColor,
+                      fontSize: rSP(13),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () => CRoute.push(
+                      context,
+                      OverseaAcceptLicensePage(),
+                    ),
+                    child: Text(
+                      '《跨境商品用户购买须知》',
+                      style: TextStyle(
+                        color: Color(0xFF007AFF),
+                        fontSize: rSP(13),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          )
+        : SizedBox();
   }
 
   _titleRow(title, subTitle, rightTitle,
@@ -760,7 +832,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                                 ScreenAdapterUtils.setSp(15),
                               )),
                           TextSpan(
-                              text: "￥${_orderModel.data.actualTotalAmount.toStringAsFixed(2)}",
+                              text:
+                                  "￥${_orderModel.data.actualTotalAmount.toStringAsFixed(2)}",
                               style: AppTextStyle.generate(
                                 ScreenAdapterUtils.setSp(16),
                                 color: Color.fromARGB(255, 249, 62, 13),
