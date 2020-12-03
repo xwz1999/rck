@@ -28,7 +28,8 @@ class BrandDetailGridItem extends StatelessWidget {
   final VoidCallback buyClick;
   final Function onBrandClick;
 
-  const BrandDetailGridItem({Key key, this.goods, this.buyClick, this.onBrandClick})
+  const BrandDetailGridItem(
+      {Key key, this.goods, this.buyClick, this.onBrandClick})
       : super(key: key);
   static final Color colorGrey = Color(0xff999999);
   @override
@@ -68,52 +69,51 @@ class BrandDetailGridItem extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(top: ScreenAdapterUtils.setWidth(4)),
               child: ExtendedText.rich(
-                  TextSpan(
-                    children: [
-                      this.goods.isImport == 1
-                          ? WidgetSpan(
-                              alignment: PlaceholderAlignment.middle,
-                              child: Container(
-                                alignment: Alignment.center,
-                                width: 24,
-                                height: 15,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFCC1B4F),
-                                  borderRadius: BorderRadius.circular(
-                                      ScreenAdapterUtils.setWidth(3)),
-                                ),
-                                child: Text(
-                                  '进口',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: ScreenAdapterUtils.setSp(10),
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                TextSpan(
+                  children: [
+                    this.goods.isImport == 1
+                        ? WidgetSpan(
+                            alignment: PlaceholderAlignment.middle,
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: 24,
+                              height: 15,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFCC1B4F),
+                                borderRadius: BorderRadius.circular(
+                                    ScreenAdapterUtils.setWidth(3)),
+                              ),
+                              child: Text(
+                                '进口',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ScreenAdapterUtils.setSp(10),
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
-                            )
-                          : WidgetSpan(child: SizedBox()),
-                      this.goods.isImport == 1
-                          ? WidgetSpan(
-                              child: Container(
-                              width: ScreenAdapterUtils.setWidth(5),
-                            ))
-                          : WidgetSpan(child: SizedBox()),
-                      TextSpan(
-                        text: this.goods.goodsName,
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(15),
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
+                            ),
+                          )
+                        : WidgetSpan(child: SizedBox()),
+                    this.goods.isImport == 1
+                        ? WidgetSpan(
+                            child: Container(
+                            width: ScreenAdapterUtils.setWidth(5),
+                          ))
+                        : WidgetSpan(child: SizedBox()),
+                    TextSpan(
+                      text: this.goods.goodsName,
+                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
                 ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             Container(
               alignment: Alignment.centerLeft,
-              padding:
+              margin:
                   const EdgeInsets.only(left: 0, right: 0, top: 5, bottom: 5),
               child: this.goods.description == null
                   ? Container()
@@ -125,13 +125,17 @@ class BrandDetailGridItem extends StatelessWidget {
                           color: Colors.black54, fontWeight: FontWeight.w300),
                     ),
             ),
-            AppConfig.getShowCommission() ? _brandWidget() : Spacer(),
+            Spacer(),
+            AppConfig.getShowCommission() ? _brandWidget() : SizedBox(),
+            Spacer(),
             _saleNumberWidget(this.goods),
-            SizedBox(height: ScreenAdapterUtils.setWidth(4),),
+            SizedBox(
+              height: ScreenAdapterUtils.setWidth(4),
+            ),
             Row(
               children: [
                 Text(
-                  '¥${this.goods.originalPrice.toStringAsFixed(0)}',
+                  '¥${this.goods.originalPrice.toStringAsFixed(2)}',
                   style: TextStyle(
                       decoration: TextDecoration.lineThrough,
                       decorationColor: Color(0xff898989),
@@ -149,7 +153,9 @@ class BrandDetailGridItem extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: ScreenAdapterUtils.setWidth(2),),
+            SizedBox(
+              height: ScreenAdapterUtils.setWidth(2),
+            ),
             Container(
               width: double.infinity,
               child: Row(
@@ -341,7 +347,7 @@ class BrandDetailGridItem extends StatelessWidget {
     }
   }
 
-   _brandWidget() {
+  _brandWidget() {
     return GestureDetector(
         onTap: () {
           if (onBrandClick != null) onBrandClick();
@@ -366,7 +372,9 @@ class BrandDetailGridItem extends StatelessWidget {
                 width: 4,
               ),
               Text(
-                TextUtils.isEmpty(this.goods.brandName) ? "" : this.goods.brandName,
+                TextUtils.isEmpty(this.goods.brandName)
+                    ? ""
+                    : this.goods.brandName,
                 style: TextStyle(
                   color: Color(0xffc70404),
                   fontSize: ScreenAdapterUtils.setSp(12),

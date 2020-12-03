@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -217,12 +218,48 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      goods.goodsName,
+                    ExtendedText.rich(
+                      TextSpan(
+                        children: [
+                          goods.isImport == 1
+                              ? WidgetSpan(
+                                  alignment: PlaceholderAlignment.middle,
+                                  child: Container(
+                                    alignment: Alignment.center,
+                                    width: 24,
+                                    height: 15,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFCC1B4F),
+                                      borderRadius: BorderRadius.circular(
+                                          ScreenAdapterUtils.setWidth(3)),
+                                    ),
+                                    child: Text(
+                                      '进口',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: ScreenAdapterUtils.setSp(10),
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : WidgetSpan(child: SizedBox()),
+                          goods.isImport == 1
+                              ? WidgetSpan(
+                                  child: Container(
+                                  width: ScreenAdapterUtils.setWidth(5),
+                                ))
+                              : WidgetSpan(child: SizedBox()),
+                          TextSpan(
+                            text: goods.goodsName,
+                            style: AppTextStyle.generate(
+                                ScreenAdapterUtils.setSp(15),
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ],
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                          fontWeight: FontWeight.w300),
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 5),
@@ -242,8 +279,44 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                             fontWeight: FontWeight.w300),
                       ),
                     ),
-                    Container(
-                      height: 10,
+                    SizedBox(
+                      height: ScreenAdapterUtils.setWidth(2),
+                    ),
+                    goods.isFerme==1
+                        ? Row(
+                            children: [
+                              Container(
+                                width: ScreenAdapterUtils.setWidth(32),
+                                height: ScreenAdapterUtils.setWidth(14),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFFFE5ED),
+                                  borderRadius: BorderRadius.circular(
+                                      ScreenAdapterUtils.setWidth(7.5)),
+                                ),
+                                child: Text(
+                                  '包税',
+                                  style: TextStyle(
+                                    color: Color(0xFFCC1B4F),
+                                    fontSize: ScreenAdapterUtils.setSp(10),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: ScreenAdapterUtils.setWidth(2),
+                              ),
+                              Text(
+                                '进口税¥${(goods.price * 1.2 * 9.1 / 100).toDouble().toStringAsFixed(2)},由瑞库客承担',
+                                style: TextStyle(
+                                    color: Color(0xFF666666),
+                                    fontSize: ScreenAdapterUtils.setSp(10)),
+                              ),
+                            ],
+                          )
+                        : SizedBox(),
+
+                    SizedBox(
+                      height: ScreenAdapterUtils.setWidth(7),
                     ),
                     Row(
                       children: <Widget>[
@@ -285,7 +358,6 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                         // ),
                       ],
                     ),
-
                     Container(
                       height: 7,
                     ),

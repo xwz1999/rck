@@ -141,6 +141,9 @@ class ShoppingCartGoodsModel extends Object {
   Promotion promotion;
   num commission;
   num originalPrice;
+  int isImport;
+  int isFerme;
+  int storehouse;
   ShoppingCartGoodsModel(
       this.shoppingTrolleyId,
       this.goodsId,
@@ -156,6 +159,9 @@ class ShoppingCartGoodsModel extends Object {
       this.promotion,
       this.commission,
       this.originalPrice,
+      this.isImport,
+      this.isFerme,
+      this.storehouse,
       ) {
     this.selected = false;
   }
