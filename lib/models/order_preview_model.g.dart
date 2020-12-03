@@ -180,6 +180,9 @@ OrderGoods _$OrderGoodsFromJson(Map<String, dynamic> json) {
     (json['goodsAmount'] as num)?.toDouble(),
     (json['expressFee'] as num)?.toDouble(),
     (json['actualAmount'] as num)?.toDouble(),
+    json['isImport']as num,
+    json['isFerme']as num,
+    json['storehouse']as num,
   );
 }
 

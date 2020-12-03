@@ -361,6 +361,9 @@ class OrderGoods extends Object {
   double goodsAmount; //商品总金额 单价x数量，不含其他费用减除
   double expressFee; //快递费
   double actualAmount; //实际支付的金额
+  num isImport;
+  num isFerme;
+  num storehouse;
 
   OrderGoods(
     this.goodsId,
@@ -379,6 +382,9 @@ class OrderGoods extends Object {
     this.goodsAmount,
     this.expressFee,
     this.actualAmount,
+    this.isImport,
+    this.isFerme,
+    this.storehouse,
   );
 
   factory OrderGoods.fromJson(Map<String, dynamic> srcJson) =>

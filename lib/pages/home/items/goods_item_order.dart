@@ -186,28 +186,55 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
                     style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
                         fontWeight: FontWeight.w400),
                   ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 15,
+                  rHBox(5),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(2),
+                      color: Color(0xffeff1f6),
                     ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(2),
-                        color: Color(0xffeff1f6),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 3, horizontal: 6),
-                      child: Text(
-                        goods.skuName,
-                        maxLines: 3,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(11),
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.w300),
-                      ),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 3, horizontal: 6),
+                    child: Text(
+                      goods.skuName,
+                      maxLines: 3,
+                      overflow: TextOverflow.ellipsis,
+                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(11),
+                          color: Colors.grey[600], fontWeight: FontWeight.w300),
                     ),
                   ),
+                  rHBox(2),
+                  goods.isImport == 0
+                      ? SizedBox()
+                      : Row(
+                          children: [
+                            goods.isFerme == 1
+                                ? Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: rSize(3)),
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFFFE5ED),
+                                      borderRadius:
+                                          BorderRadius.circular(rSize(2)),
+                                    ),
+                                    child: Text(
+                                      '包税',
+                                      style: TextStyle(
+                                        color: Color(0xFFCC1B4F),
+                                        fontSize: rSP(10),
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox(),
+                            rWBox(4),
+                            Text(
+                              '此商品不支持7天无理由退换',
+                              style: TextStyle(
+                                color: Color(0xFFEF7115),
+                                fontSize: rSP(10),
+                              ),
+                            ),
+                          ],
+                        ),
                   // TextUtils.isEmpty(goods.promotionName)
                   //     ? Spacer()
                   //     : Row(
