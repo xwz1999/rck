@@ -71,6 +71,9 @@ ShoppingCartGoodsModel _$ShoppingCartGoodsModelFromJson(
           : Promotion.fromJson(json['promotion'] as Map<String, dynamic>),
       json['commission'] as num,
       json['originalPrice'] as num,
+      json['isImport'] as num,
+      json['isFerme'] as num,
+      json['storehouse'] as int,
       );
 }
 
