@@ -144,6 +144,7 @@ class ShoppingCartGoodsModel extends Object {
   int isImport;
   int isFerme;
   int storehouse;
+  num ferme;
   ShoppingCartGoodsModel(
       this.shoppingTrolleyId,
       this.goodsId,
@@ -162,6 +163,7 @@ class ShoppingCartGoodsModel extends Object {
       this.isImport,
       this.isFerme,
       this.storehouse,
+      this.ferme,
       ) {
     this.selected = false;
   }

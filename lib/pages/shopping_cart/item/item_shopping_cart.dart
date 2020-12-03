@@ -306,7 +306,7 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                                 width: ScreenAdapterUtils.setWidth(2),
                               ),
                               Text(
-                                '进口税¥${(goods.price * 1.2 * 9.1 / 100.0).toStringAsFixed(2)},由瑞库客承担',
+                                '进口税¥${goods.ferme.toStringAsFixed(2)},由瑞库客承担',
                                 style: TextStyle(
                                     color: Color(0xFF666666),
                                     fontSize: ScreenAdapterUtils.setSp(10)),

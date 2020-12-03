@@ -74,6 +74,7 @@ ShoppingCartGoodsModel _$ShoppingCartGoodsModelFromJson(
       json['isImport'] as num,
       json['isFerme'] as num,
       json['storehouse'] as int,
+      json['ferme'] as num,
       );
 }
 
