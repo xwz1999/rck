@@ -839,7 +839,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                             break;
                         }
                         return Image.asset(
-                          _address?.city == null ? text : text2,
+                          _address?.city == '' ? text : text2,
                           height: rSize(26),
                           width: rSize(26),
                         );
@@ -891,7 +891,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 Column(
                   children: [
                     Image.asset(
-                      _address?.city == null
+                      _address?.city == ''
                           ? R.ASSETS_STATIC_OVERSEA_LOCATION_PNG
                           : R.ASSETS_STATIC_OVERSEA_LOCATION_ON_PNG,
                       height: rSize(26),
