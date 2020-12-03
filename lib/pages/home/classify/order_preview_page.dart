@@ -778,10 +778,19 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   }
 
   Container _bottomBar(BuildContext context, int totalNum) {
+    bool isOversea = false;
+    for (var item in _orderModel.data.brands) {
+      for (var childItem in item.goods) {
+        if (childItem.isImport == 1) isOversea = true;
+      }
+    }
     // bool canDeliver = _orderModel.data.addr?.isDeliveryArea == 1 ||
     // (_orderModel.data.addr?.isDeliveryArea == 0 && _orderModel.data.shippingMethod == 1);
     bool canDeliver = _orderModel.data.addr?.isDeliveryArea == 1 ||
         (_orderModel.data.shippingMethod == 1);
+    if (isOversea) {
+      if (!_accept) canDeliver = false;
+    }
     double ruiCoin = 0;
     _orderModel.data.brands.forEach((brand) {
       brand.goods.forEach((good) {

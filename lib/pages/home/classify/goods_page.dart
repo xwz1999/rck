@@ -663,7 +663,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         widget.goodsDetail.data.isFerme == 1 ? rWBox(10) : SizedBox(),
         widget.goodsDetail.data.isFerme == 1
             ? Text(
-                '预计¥${(widget.goodsDetail.data.price.min.originalPrice * 1.2 * 0.091).toStringAsFixed(2)}由瑞库客承担',
+                '预计¥${widget.goodsDetail.data.price.min.ferme.toStringAsFixed(2)}由瑞库客承担',
                 style: TextStyle(
                   fontSize: rSP(13),
                   color: Color(0xFF535353),
@@ -839,7 +839,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                             break;
                         }
                         return Image.asset(
-                          _address?.city == null ? text : text2,
+                          _address?.city == '' ? text : text2,
                           height: rSize(26),
                           width: rSize(26),
                         );
@@ -891,7 +891,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 Column(
                   children: [
                     Image.asset(
-                      _address?.city == null
+                      _address?.city == ''
                           ? R.ASSETS_STATIC_OVERSEA_LOCATION_PNG
                           : R.ASSETS_STATIC_OVERSEA_LOCATION_ON_PNG,
                       height: rSize(26),
