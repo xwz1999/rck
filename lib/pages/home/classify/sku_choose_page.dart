@@ -200,6 +200,38 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
                                 // fontWeight: FontWeight.w300,
                                 color: Colors.grey),
                       ),
+                      widget.model.data.isFerme == 1
+                          ? Row(
+                              children: [
+                                Container(
+                                  width: ScreenAdapterUtils.setWidth(32),
+                                  height: ScreenAdapterUtils.setWidth(14),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFFFE5ED),
+                                    borderRadius: BorderRadius.circular(
+                                        ScreenAdapterUtils.setWidth(7.5)),
+                                  ),
+                                  child: Text(
+                                    '包税',
+                                    style: TextStyle(
+                                      color: Color(0xFFCC1B4F),
+                                      fontSize: ScreenAdapterUtils.setSp(10),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: ScreenAdapterUtils.setWidth(10),
+                                ),
+                                Text(
+                                  '进口税¥${widget.model.data.price.min.ferme.toStringAsFixed(2)},由瑞库客承担',
+                                  style: TextStyle(
+                                      color: Color(0xFF141414),
+                                      fontSize: ScreenAdapterUtils.setSp(12)),
+                                ),
+                              ],
+                            )
+                          : SizedBox(),
                       Text(
                         "${_stringBuffer.toString()}",
                         maxLines: 2,
