@@ -663,7 +663,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         widget.goodsDetail.data.isFerme == 1 ? rWBox(10) : SizedBox(),
         widget.goodsDetail.data.isFerme == 1
             ? Text(
-                '预计¥${(widget.goodsDetail.data.price.min.originalPrice * 1.2 * 0.091).toStringAsFixed(2)}由瑞库客承担',
+                '预计¥${widget.goodsDetail.data.price.min.ferme.toStringAsFixed(2)}由瑞库客承担',
                 style: TextStyle(
                   fontSize: rSP(13),
                   color: Color(0xFF535353),

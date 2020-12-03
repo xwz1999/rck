@@ -21,9 +21,11 @@ Map<String, dynamic> _$PriceToJson(Price instance) =>
 
 Min _$MinFromJson(Map<String, dynamic> json) {
   return Min(
-      (json['originalPrice'] as num)?.toDouble(),
-      (json['discountPrice'] as num)?.toDouble(),
-      (json['commission'] as num)?.toDouble());
+    (json['originalPrice'] as num)?.toDouble(),
+    (json['discountPrice'] as num)?.toDouble(),
+    (json['commission'] as num)?.toDouble(),
+    (json['ferme'] as num)?.toDouble(),
+  );
 }
 
 Map<String, dynamic> _$MinToJson(Min instance) => <String, dynamic>{
