@@ -11,7 +11,7 @@ class ItemTagWidget {
         childAspectRatio: _displayList
             ? MediaQuery.of(context).size.width /
                 ((MediaQuery.of(context).size.width - 20) * 150.0 / 350.0)
-            : 0.57,
+            : 174/320,
         crossAxisCount: _displayList ? 1 : 2);
   }
 

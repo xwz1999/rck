@@ -14,6 +14,7 @@ import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 enum GoodsItemType {
   NONE,
@@ -38,6 +39,7 @@ class GoodsItemWidget extends StatelessWidget {
   final num id;
   final String brandName;
   final String brandPictureUrl;
+  final int isImport;
 
   final GoodsItemType widgetType;
 
@@ -64,7 +66,8 @@ class GoodsItemWidget extends StatelessWidget {
       this.buyClick,
       this.brandName = "",
       this.brandPictureUrl = "",
-      this.onBrandClick})
+      this.onBrandClick,
+      this.isImport})
       : widgetType = GoodsItemType.NONE,
         super(key: key);
 
@@ -92,6 +95,7 @@ class GoodsItemWidget extends StatelessWidget {
         id = model.id,
         promotionStatus = model.getPromotionStatus(),
         widgetType = GoodsItemType.NORMAL,
+        isImport=model.isImport,
         super(key: key);
 
   ///Hot List
@@ -120,6 +124,7 @@ class GoodsItemWidget extends StatelessWidget {
         //TODO hot list unset promotion status;
         promotionStatus = PromotionStatus.none,
         widgetType = GoodsItemType.HOT_LIST,
+        isImport=data.isImport,
         super(key: key);
 
   /// 活动列表
@@ -146,6 +151,7 @@ class GoodsItemWidget extends StatelessWidget {
         id = model.goodsId,
         promotionStatus = model.getPromotionStatus(),
         widgetType = GoodsItemType.ROW_GOODS,
+        isImport=model.isImport,
         super(key: key);
   final BuildContext buildCtx;
   final VoidCallback shareClick;
@@ -259,12 +265,48 @@ class GoodsItemWidget extends StatelessWidget {
                 Container(
                   height: 2,
                 ),
-                Text(
-                  this.goodsName,
+                ExtendedText.rich(
+                  TextSpan(
+                    children: [
+                      this.isImport == 1
+                          ? WidgetSpan(
+                              alignment: PlaceholderAlignment.middle,
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: 24,
+                                height: 15,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFCC1B4F),
+                                  borderRadius: BorderRadius.circular(
+                                      ScreenAdapterUtils.setWidth(3)),
+                                ),
+                                child: Text(
+                                  '进口',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: ScreenAdapterUtils.setSp(10),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : WidgetSpan(child: SizedBox()),
+                      this.isImport == 1
+                          ? WidgetSpan(
+                              child: Container(
+                              width: ScreenAdapterUtils.setWidth(5),
+                            ))
+                          : WidgetSpan(child: SizedBox()),
+                      TextSpan(
+                        text: this.goodsName,
+                        style: AppTextStyle.generate(
+                            ScreenAdapterUtils.setSp(15),
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
-                      fontWeight: FontWeight.w600),
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
