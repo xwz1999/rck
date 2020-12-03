@@ -7,16 +7,20 @@
  * ====================================================
  */
 
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/address_list_model.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/models/goods_detail_images_model.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/models/order_preview_model.dart';
+import 'package:recook/models/province_city_model.dart';
 import 'package:recook/pages/home/classify/coupon_list_page.dart';
 import 'package:recook/pages/home/classify/evaluation_list_page.dart';
 import 'package:recook/pages/home/classify/goods_param_page.dart';
@@ -29,9 +33,12 @@ import 'package:recook/pages/home/items/item_users_like.dart';
 import 'package:recook/pages/home/widget/good_price_view.dart';
 import 'package:recook/pages/home/widget/goods_image_page_view.dart';
 import 'package:recook/pages/shopping_cart/mvp/shopping_cart_model_impl.dart';
+import 'package:recook/pages/user/address/mvp/address_model_impl.dart';
+import 'package:recook/utils/file_utils.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
+import 'package:recook/widgets/bottom_sheet/address_selector.dart';
 import 'package:recook/widgets/bottom_sheet/custom_bottom_sheet.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -86,6 +93,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   BuildContext _context;
   ShoppingCartModelImpl _shoppingCartModelImpl;
   GoodsDetailImagesModel _model;
+
+  ProvinceCityModel _overseaCityModel;
+  Address _address = Address.empty();
 
   @override
   bool get wantKeepAlive => true;
@@ -318,6 +328,22 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         color: Colors.white,
         child: _discountContent(context),
       ),
+      widget.goodsDetail.data.isImport == 1
+          ? Container(
+              margin: EdgeInsets.only(bottom: 13),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              color: Colors.white,
+              child: _buildOverseaTax(),
+            )
+          : SizedBox(),
+      widget.goodsDetail.data.isImport == 1
+          ? Container(
+              margin: EdgeInsets.only(bottom: 13),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              color: Colors.white,
+              child: _buildOverseaCityPicker(),
+            )
+          : SizedBox(),
       Container(
         margin: EdgeInsets.only(bottom: 13),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -468,19 +494,10 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         ),
         Container(
           margin: EdgeInsets.only(top: 10),
-          child: GestureDetector(
-              onTap: () {
-                // _showAuthImage();
-                showCustomModalBottomSheet(
-                    context: context,
-                    builder: (context) {
-                      return GoodsServiceGuarantee();
-                    });
-              },
-              child: Container(
-                color: Colors.white,
-                child: Row(
-                  children: <Widget>[
+          child: widget.goodsDetail.data.isImport == 1
+              ? Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
                       "服务",
                       style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
@@ -491,36 +508,82 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                       width: 20,
                     ),
                     Expanded(
-                        child: Row(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          widget.goodsDetail.data.storehouse == 2
+                              ? Text(
+                                  "跨境商品不支持开发票",
+                                  style: AppTextStyle.generate(
+                                      ScreenAdapterUtils.setSp(13),
+                                      color: Color(0xff373737)),
+                                )
+                              : SizedBox(),
+                          Text(
+                            "不支持7天无理由退换货",
+                            style: AppTextStyle.generate(
+                                ScreenAdapterUtils.setSp(13),
+                                color: Color(0xff373737)),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              : GestureDetector(
+                  onTap: () {
+                    // _showAuthImage();
+                    showCustomModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return GoodsServiceGuarantee();
+                        });
+                  },
+                  child: Container(
+                    color: Colors.white,
+                    child: Row(
                       children: <Widget>[
                         Text(
-                          "正品保证",
+                          "服务",
                           style: AppTextStyle.generate(
                               ScreenAdapterUtils.setSp(13),
-                              color: Color(0xff373737)),
+                              color: Color(0xff828282),
+                              fontWeight: FontWeight.w300),
                         ),
-                        Text(
-                          " | ",
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(13),
-                              color: Colors.grey.withOpacity(0.3)),
+                        Container(
+                          width: 20,
                         ),
-                        Text(
-                          "售后无忧",
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(13),
-                              color: Color(0xff373737)),
-                        ),
+                        Expanded(
+                            child: Row(
+                          children: <Widget>[
+                            Text(
+                              "正品保证",
+                              style: AppTextStyle.generate(
+                                  ScreenAdapterUtils.setSp(13),
+                                  color: Color(0xff373737)),
+                            ),
+                            Text(
+                              " | ",
+                              style: AppTextStyle.generate(
+                                  ScreenAdapterUtils.setSp(13),
+                                  color: Colors.grey.withOpacity(0.3)),
+                            ),
+                            Text(
+                              "售后无忧",
+                              style: AppTextStyle.generate(
+                                  ScreenAdapterUtils.setSp(13),
+                                  color: Color(0xff373737)),
+                            ),
+                          ],
+                        )),
+                        Icon(
+                          AppIcons.icon_next,
+                          color: Colors.grey[400],
+                          size: ScreenAdapterUtils.setSp(16),
+                        )
                       ],
-                    )),
-                    Icon(
-                      AppIcons.icon_next,
-                      color: Colors.grey[400],
-                      size: ScreenAdapterUtils.setSp(16),
-                    )
-                  ],
-                ),
-              )),
+                    ),
+                  )),
         ),
         // Container(
         //   margin: EdgeInsets.only(top: 10),
@@ -567,6 +630,291 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   //     ),
   //   );
   // }
+
+  _buildOverseaTax() {
+    return Row(
+      children: [
+        Text(
+          '进口税',
+          style: TextStyle(
+            color: Color(0xFFA4A4A4),
+            fontSize: rSP(13),
+          ),
+        ),
+        rWBox(7),
+        widget.goodsDetail.data.isFerme == 1
+            ? Container(
+                alignment: Alignment.center,
+                height: rSize(14),
+                width: rSize(32),
+                decoration: BoxDecoration(
+                  color: Color(0xFFFFE5ED),
+                  borderRadius: BorderRadius.circular(rSize(7)),
+                ),
+                child: Text(
+                  '包税',
+                  style: TextStyle(
+                    color: Color(0xFFCC1B4F),
+                    fontSize: rSP(10),
+                  ),
+                ),
+              )
+            : SizedBox(),
+        widget.goodsDetail.data.isFerme == 1 ? rWBox(10) : SizedBox(),
+        widget.goodsDetail.data.isFerme == 1
+            ? Text(
+                '预计¥${(widget.goodsDetail.data.price.min.originalPrice * 1.2 * 0.091).toStringAsFixed(2)}由瑞库客承担',
+                style: TextStyle(
+                  fontSize: rSP(13),
+                  color: Color(0xFF535353),
+                ),
+              )
+            : SizedBox(),
+      ],
+    );
+  }
+
+  Future<bool> _getAddress() async {
+    FileOperationResult result =
+        await FileUtils.readJSON(AppPaths.path_province_city_json);
+    if (result.success &&
+        result.data != null &&
+        result.data.toString().length > 0) {
+      _overseaCityModel = ProvinceCityModel.fromJson(json.decode(result.data));
+      return true;
+    }
+    ResultData res = await AddressModelImpl().fetchWholeProvince();
+    if (!res.result) {
+      Toast.showError(res.msg);
+      return false;
+    }
+    _overseaCityModel = ProvinceCityModel.fromJson(res.data);
+    FileUtils.writeJSON(
+        AppPaths.path_province_city_json, json.encode(res.data));
+    return true;
+  }
+
+  _selectAddress(BuildContext context) {
+    AddressSelectorHelper.show(
+      context,
+      model: _overseaCityModel,
+      city: _address.city,
+      province: _address.province,
+      district: _address.district,
+      callback: (
+        String province,
+        String city,
+        String district,
+      ) {
+        _address.city = city;
+        _address.province = province;
+        _address.district = district;
+        setState(() {});
+      },
+    );
+  }
+
+  _buildOverseaCityPicker() {
+    return GestureDetector(
+      onTap: () {
+        if (_overseaCityModel == null) {
+          GSDialog.of(context).showLoadingDialog(context, "");
+          _getAddress().then((success) {
+            GSDialog.of(context).dismiss(context);
+            if (success) {
+              _selectAddress(context);
+            }
+          });
+          return;
+        }
+        _selectAddress(context);
+      },
+      child: Container(
+        color: Colors.transparent,
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Text(
+                  '送至',
+                  style: TextStyle(
+                    color: Color(0xFFA4A4A4),
+                    fontSize: rSP(13),
+                  ),
+                ),
+                Container(
+                  width: 20,
+                ),
+                ..._overseaCityModel == null
+                    ? [
+                        Text(
+                          '请选择',
+                          style: TextStyle(
+                            color: Color(0xFFCC1B4F),
+                            fontSize: rSP(13),
+                          ),
+                        ),
+                        Text(
+                          '收货地址',
+                          style: TextStyle(
+                            color: Color(0xFF525252),
+                            fontSize: rSP(13),
+                          ),
+                        ),
+                      ]
+                    : [
+                        Text(
+                          '${_address.province}-${_address.city}-${_address.district}',
+                          style: TextStyle(
+                            color: Color(0xFF525252),
+                            fontSize: rSP(13),
+                          ),
+                        ),
+                      ],
+                Spacer(),
+                Icon(
+                  AppIcons.icon_next,
+                  color: Colors.grey[400],
+                  size: ScreenAdapterUtils.setSp(16),
+                ),
+              ],
+            ),
+            rHBox(14),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                rWBox(41),
+                Column(
+                  children: [
+                    Image.asset(
+                      R.ASSETS_STATIC_OVERSEA_ZHENG_PNG,
+                      height: rSize(26),
+                      width: rSize(26),
+                    ),
+                    rHBox(5),
+                    Text(
+                      '真品保障',
+                      style: TextStyle(
+                        color: Color(0xFFCCCCCC),
+                        fontSize: rSP(12),
+                      ),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      '- - - - - - -',
+                      style: TextStyle(
+                        color: Color(0xFFCCCCCC),
+                        fontSize: rSP(15),
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                ),
+                Column(
+                  children: [
+                    Builder(
+                      builder: (context) {
+                        String text = '';
+                        String text2 = '';
+                        switch (widget.goodsDetail.data.storehouse) {
+                          case 0:
+                            text = '';
+                            break;
+                          case 1:
+                            text = R.ASSETS_STATIC_OVERSEA_BOX_PNG;
+                            text2 = R.ASSETS_STATIC_OVERSEA_BOX_ON_PNG;
+                            break;
+                          case 2:
+                            text = R.ASSETS_STATIC_OVERSEA_FLIGHT_PNG;
+                            text2 = R.ASSETS_STATIC_OVERSEA_FLIGHT_ON_PNG;
+                            break;
+                          case 3:
+                            text = R.ASSETS_STATIC_OVERSEA_BOX_G_PNG;
+                            text2 = R.ASSETS_STATIC_OVERSEA_BOX_G_ON_PNG;
+                            break;
+                          default:
+                            break;
+                        }
+                        return Image.asset(
+                          _address?.city == null ? text : text2,
+                          height: rSize(26),
+                          width: rSize(26),
+                        );
+                      },
+                    ),
+                    rHBox(5),
+                    Builder(
+                      builder: (context) {
+                        String text = '';
+                        switch (widget.goodsDetail.data.storehouse) {
+                          case 0:
+                            text = '';
+                            break;
+                          case 1:
+                            text = '国内仓';
+                            break;
+                          case 2:
+                            text = '海外直邮';
+                            break;
+                          case 3:
+                            text = '保税仓';
+                            break;
+                          default:
+                            break;
+                        }
+                        return Text(
+                          text,
+                          style: TextStyle(
+                            color: Color(0xFFCCCCCC),
+                            fontSize: rSP(12),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: Center(
+                    child: Text(
+                      '- - - - - - -',
+                      style: TextStyle(
+                        color: Color(0xFFCCCCCC),
+                        fontSize: rSP(15),
+                        height: 1,
+                      ),
+                    ),
+                  ),
+                ),
+                Column(
+                  children: [
+                    Image.asset(
+                      _address?.city == null
+                          ? R.ASSETS_STATIC_OVERSEA_LOCATION_PNG
+                          : R.ASSETS_STATIC_OVERSEA_LOCATION_ON_PNG,
+                      height: rSize(26),
+                      width: rSize(26),
+                    ),
+                    rHBox(5),
+                    Text(
+                      _address.city,
+                      style: TextStyle(
+                        color: Color(0xFFCCCCCC),
+                        fontSize: rSP(12),
+                      ),
+                    ),
+                  ],
+                ),
+                rWBox(27),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   List _coupons() {
     List<Widget> coupons = [

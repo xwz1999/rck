@@ -68,6 +68,9 @@ Data _$DataFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : Recommends.fromJson(e as Map<String, dynamic>))
         ?.toList(),
+    json['isImport'],
+    json['isFerme'],
+    json['storehouse'],
   );
 }
 

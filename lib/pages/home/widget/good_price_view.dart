@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/header.dart';
@@ -295,11 +296,49 @@ class _GoodPriceViewState extends State<GoodPriceView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  detailModel.data.goodsName,
+                ExtendedText.rich(
+                  TextSpan(
+                    children: [
+                      detailModel.data.isImport == 1
+                          ? ExtendedWidgetSpan(
+                              alignment: PlaceholderAlignment.bottom,
+                              child: Container(
+                                margin: EdgeInsets.only(bottom: 3),
+                                alignment: Alignment.center,
+                                width: 24,
+                                height: 15,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFCC1B4F),
+                                  borderRadius: BorderRadius.circular(
+                                      ScreenAdapterUtils.setWidth(3)),
+                                ),
+                                child: Text(
+                                  '进口',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: ScreenAdapterUtils.setSp(10),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : WidgetSpan(child: SizedBox()),
+                      detailModel.data.isImport == 1
+                          ? WidgetSpan(
+                              child: Container(
+                              width: ScreenAdapterUtils.setWidth(5),
+                            ))
+                          : WidgetSpan(child: SizedBox()),
+                      TextSpan(
+                        text: detailModel.data.goodsName,
+                        style: AppTextStyle.generate(
+                            ScreenAdapterUtils.setSp(18),
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xff333333)),
+                      ),
+                    ],
+                  ),
                   maxLines: 2,
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(18),
-                      fontWeight: FontWeight.w600, color: Color(0xff333333)),
                 ),
               ],
             ),

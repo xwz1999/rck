@@ -112,21 +112,18 @@ part 'goods_detail_model.g.dart';
 
 @JsonSerializable()
 class GoodsDetailModel extends BaseModel {
-
   Data data;
 
-  GoodsDetailModel(code,this.data,msg) : super(code, msg);
+  GoodsDetailModel(code, this.data, msg) : super(code, msg);
 
-  factory GoodsDetailModel.fromJson(Map<String, dynamic> srcJson) => _$GoodsDetailModelFromJson(srcJson);
+  factory GoodsDetailModel.fromJson(Map<String, dynamic> srcJson) =>
+      _$GoodsDetailModelFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$GoodsDetailModelToJson(this);
-
 }
-
 
 @JsonSerializable()
 class Data extends Object {
-
   int id;
 
   int brandId;
@@ -164,15 +161,44 @@ class Data extends Object {
   bool isFavorite;
 
   int shoppingTrolleyCount; //购物车数量
-  
+
   List<Recommends> recommends;
 
-  Data(this.id,this.brandId,this.goodsName,this.description,this.firstCategoryId,this.secondCategoryId,this.inventory,this.salesVolume, this.price, this.video,this.mainPhotos,this.attributes,this.sku,this.promotion,this.brand,this.evaluations,this.coupons,this.isFavorite,this.shoppingTrolleyCount, this.recommends,);
+  num isImport;
+  num isFerme;
+  num storehouse;
 
-  factory Data.fromJson(Map<String, dynamic> srcJson) => _$DataFromJson(srcJson);
+  Data(
+    this.id,
+    this.brandId,
+    this.goodsName,
+    this.description,
+    this.firstCategoryId,
+    this.secondCategoryId,
+    this.inventory,
+    this.salesVolume,
+    this.price,
+    this.video,
+    this.mainPhotos,
+    this.attributes,
+    this.sku,
+    this.promotion,
+    this.brand,
+    this.evaluations,
+    this.coupons,
+    this.isFavorite,
+    this.shoppingTrolleyCount,
+    this.recommends,
+    this.isImport,
+    this.isFerme,
+    this.storehouse,
+  );
+
+  factory Data.fromJson(Map<String, dynamic> srcJson) =>
+      _$DataFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$DataToJson(this);
-  getPriceString(){
+  getPriceString() {
     if (price == null) {
       return "";
     }
@@ -182,16 +208,15 @@ class Data extends Object {
     if (minPrice == maxPrice) {
       returnPrice = maxPrice.toStringAsFixed(2);
     } else {
-      returnPrice = "${minPrice.toStringAsFixed(2)}-${maxPrice.toStringAsFixed(2)}";
+      returnPrice =
+          "${minPrice.toStringAsFixed(2)}-${maxPrice.toStringAsFixed(2)}";
     }
     return returnPrice;
   }
 }
 
-
 @JsonSerializable()
 class MainPhotos extends Object {
-
   int id;
 
   int goodsId;
@@ -209,50 +234,52 @@ class MainPhotos extends Object {
   bool isSelect;
   int isSelectNumber;
 
-  MainPhotos(this.id,this.goodsId,this.url,this.isMaster,this.orderNo,this.width,this.height,{this.isSelect = false, this.isSelectNumber=0});
+  MainPhotos(this.id, this.goodsId, this.url, this.isMaster, this.orderNo,
+      this.width, this.height,
+      {this.isSelect = false, this.isSelectNumber = 0});
 
-  factory MainPhotos.fromJson(Map<String, dynamic> srcJson) => _$MainPhotosFromJson(srcJson);
+  factory MainPhotos.fromJson(Map<String, dynamic> srcJson) =>
+      _$MainPhotosFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$MainPhotosToJson(this);
-  
 }
-
 
 @JsonSerializable()
 class Attributes extends Object {
-
   String name;
 
   List<Children> children;
 
-  Attributes(this.name,this.children,);
+  Attributes(
+    this.name,
+    this.children,
+  );
 
-  factory Attributes.fromJson(Map<String, dynamic> srcJson) => _$AttributesFromJson(srcJson);
+  factory Attributes.fromJson(Map<String, dynamic> srcJson) =>
+      _$AttributesFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$AttributesToJson(this);
-
 }
-
 
 @JsonSerializable()
 class Children extends Object {
-
   int id;
 
   String value;
 
-  Children(this.id,this.value,);
+  Children(
+    this.id,
+    this.value,
+  );
 
-  factory Children.fromJson(Map<String, dynamic> srcJson) => _$ChildrenFromJson(srcJson);
+  factory Children.fromJson(Map<String, dynamic> srcJson) =>
+      _$ChildrenFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$ChildrenToJson(this);
-
 }
-
 
 @JsonSerializable()
 class Sku extends Object {
-
   int id;
 
   int goodsId;
@@ -276,18 +303,27 @@ class Sku extends Object {
   String name;
   num coupon;
 
-  Sku(this.id,this.goodsId,this.combineId,this.picUrl,this.code,this.originalPrice,this.discountPrice,this.commission,this.salesVolume,this.inventory,this.name, this.coupon);
+  Sku(
+      this.id,
+      this.goodsId,
+      this.combineId,
+      this.picUrl,
+      this.code,
+      this.originalPrice,
+      this.discountPrice,
+      this.commission,
+      this.salesVolume,
+      this.inventory,
+      this.name,
+      this.coupon);
 
   factory Sku.fromJson(Map<String, dynamic> srcJson) => _$SkuFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$SkuToJson(this);
-
 }
-
 
 @JsonSerializable()
 class Promotion extends Object {
-
   int id;
   int promotionId;
   String promotionName;
@@ -295,8 +331,7 @@ class Promotion extends Object {
   int goodsId;
   String startTime;
   String endTime;
-  int totalInventory;//库存
-  
+  int totalInventory; //库存
 
   // String name;
 
@@ -304,13 +339,15 @@ class Promotion extends Object {
 
   // double discount;
 
-  Promotion(this.id,this.promotionId,this.promotionName,this.date,this.goodsId,this.startTime,this.endTime,this.totalInventory);
+  Promotion(this.id, this.promotionId, this.promotionName, this.date,
+      this.goodsId, this.startTime, this.endTime, this.totalInventory);
 
-  factory Promotion.fromJson(Map<String, dynamic> srcJson) => _$PromotionFromJson(srcJson);
+  factory Promotion.fromJson(Map<String, dynamic> srcJson) =>
+      _$PromotionFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$PromotionToJson(this);
 
-  bool isWaitPromotionStart(){
+  bool isWaitPromotionStart() {
     if (TextUtils.isEmpty(this.startTime)) {
       return false;
     }
@@ -320,13 +357,10 @@ class Promotion extends Object {
     }
     return false;
   }
-
 }
-
 
 @JsonSerializable()
 class Brand extends Object {
-
   int id;
 
   String name;
@@ -348,34 +382,34 @@ class Brand extends Object {
 
   String showUrl;
 
-  Brand(this.id,this.name,this.desc,this.tel,this.web,this.goodsCount,this.logoUrl,this.showUrl,this.firstImg, this.lastImg);
+  Brand(this.id, this.name, this.desc, this.tel, this.web, this.goodsCount,
+      this.logoUrl, this.showUrl, this.firstImg, this.lastImg);
 
-  factory Brand.fromJson(Map<String, dynamic> srcJson) => _$BrandFromJson(srcJson);
+  factory Brand.fromJson(Map<String, dynamic> srcJson) =>
+      _$BrandFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$BrandToJson(this);
-
 }
-
 
 @JsonSerializable()
 class Evaluations extends Object {
-
   int total;
 
   List<Evaluation> children;
 
-  Evaluations(this.total,this.children,);
+  Evaluations(
+    this.total,
+    this.children,
+  );
 
-  factory Evaluations.fromJson(Map<String, dynamic> srcJson) => _$EvaluationsFromJson(srcJson);
+  factory Evaluations.fromJson(Map<String, dynamic> srcJson) =>
+      _$EvaluationsFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$EvaluationsToJson(this);
-
 }
-
 
 @JsonSerializable()
 class Evaluation extends Object {
-
   int id;
 
   int userId;
@@ -390,18 +424,24 @@ class Evaluation extends Object {
 
   String content;
 
-  Evaluation(this.id,this.userId,this.orderId,this.goodsId,this.nickname,this.headImgUrl,this.content,);
+  Evaluation(
+    this.id,
+    this.userId,
+    this.orderId,
+    this.goodsId,
+    this.nickname,
+    this.headImgUrl,
+    this.content,
+  );
 
-  factory Evaluation.fromJson(Map<String, dynamic> srcJson) => _$EvaluationFromJson(srcJson);
+  factory Evaluation.fromJson(Map<String, dynamic> srcJson) =>
+      _$EvaluationFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$EvaluationToJson(this);
-
 }
-
 
 @JsonSerializable()
 class Coupons extends Object {
-
   int id;
 
   String name;
@@ -428,18 +468,30 @@ class Coupons extends Object {
 
   String explanation;
 
-  Coupons(this.id,this.name,this.quantity,this.cash,this.threshold,this.discount,this.limit,this.scope,this.type,this.brandId,this.startTime,this.endTime,this.explanation,);
+  Coupons(
+    this.id,
+    this.name,
+    this.quantity,
+    this.cash,
+    this.threshold,
+    this.discount,
+    this.limit,
+    this.scope,
+    this.type,
+    this.brandId,
+    this.startTime,
+    this.endTime,
+    this.explanation,
+  );
 
-  factory Coupons.fromJson(Map<String, dynamic> srcJson) => _$CouponsFromJson(srcJson);
+  factory Coupons.fromJson(Map<String, dynamic> srcJson) =>
+      _$CouponsFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$CouponsToJson(this);
-
 }
-
 
 @JsonSerializable()
 class Video extends Object {
-
   int id;
 
   String url;
@@ -447,15 +499,15 @@ class Video extends Object {
   int duration;
 
   double size;
-  
+
   String thumbnail;
 
   Video(this.id, this.url, this.duration, this.size, this.thumbnail);
 
-  factory Video.fromJson(Map<String, dynamic> srcJson) => _$VideoFromJson(srcJson);
+  factory Video.fromJson(Map<String, dynamic> srcJson) =>
+      _$VideoFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$VideoToJson(this);
-
 }
 
 @JsonSerializable()
@@ -467,8 +519,7 @@ class Recommends extends Object {
 
   Recommends(this.goodsName, this.goodsId, this.price, this.mainPhotoUrl);
 
-  factory Recommends.fromJson(Map<String, dynamic> srcJson) => _$RecommendsFromJson(srcJson);
+  factory Recommends.fromJson(Map<String, dynamic> srcJson) =>
+      _$RecommendsFromJson(srcJson);
   Map<String, dynamic> toJson() => _$RecommendsToJson(this);
 }
-
-
