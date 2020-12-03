@@ -68,43 +68,48 @@ class BrandDetailGridItem extends StatelessWidget {
             Container(
               margin: EdgeInsets.only(top: ScreenAdapterUtils.setWidth(4)),
               child: ExtendedText.rich(
-                TextSpan(
-                  children: [
-                    WidgetSpan(
-                      alignment: PlaceholderAlignment.middle,
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: 24,
-                        height: 15,
-                        decoration: BoxDecoration(
-                          color: Color(0xFFCC1B4F),
-                          borderRadius: BorderRadius.circular(
-                              ScreenAdapterUtils.setWidth(3)),
-                        ),
-                        child: Text(
-                          '进口',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: ScreenAdapterUtils.setSp(10),
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                  TextSpan(
+                    children: [
+                      this.goods.isImport == 1
+                          ? WidgetSpan(
+                              alignment: PlaceholderAlignment.middle,
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: 24,
+                                height: 15,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFCC1B4F),
+                                  borderRadius: BorderRadius.circular(
+                                      ScreenAdapterUtils.setWidth(3)),
+                                ),
+                                child: Text(
+                                  '进口',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: ScreenAdapterUtils.setSp(10),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : WidgetSpan(child: SizedBox()),
+                      this.goods.isImport == 1
+                          ? WidgetSpan(
+                              child: Container(
+                              width: ScreenAdapterUtils.setWidth(5),
+                            ))
+                          : WidgetSpan(child: SizedBox()),
+                      TextSpan(
+                        text: this.goods.goodsName,
+                        style: AppTextStyle.generate(
+                            ScreenAdapterUtils.setSp(15),
+                            fontWeight: FontWeight.w600),
                       ),
-                    ),
-                    WidgetSpan(
-                        child: Container(
-                      width: ScreenAdapterUtils.setWidth(5),
-                    )),
-                    TextSpan(
-                      text: this.goods.goodsName,
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ],
+                    ],
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
             ),
             Container(
               alignment: Alignment.centerLeft,

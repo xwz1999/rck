@@ -39,6 +39,7 @@ class GoodsItemWidget extends StatelessWidget {
   final num id;
   final String brandName;
   final String brandPictureUrl;
+  final int isImport;
 
   final GoodsItemType widgetType;
 
@@ -65,7 +66,8 @@ class GoodsItemWidget extends StatelessWidget {
       this.buyClick,
       this.brandName = "",
       this.brandPictureUrl = "",
-      this.onBrandClick})
+      this.onBrandClick,
+      this.isImport})
       : widgetType = GoodsItemType.NONE,
         super(key: key);
 
@@ -93,6 +95,7 @@ class GoodsItemWidget extends StatelessWidget {
         id = model.id,
         promotionStatus = model.getPromotionStatus(),
         widgetType = GoodsItemType.NORMAL,
+        isImport=model.isImport,
         super(key: key);
 
   ///Hot List
@@ -121,6 +124,7 @@ class GoodsItemWidget extends StatelessWidget {
         //TODO hot list unset promotion status;
         promotionStatus = PromotionStatus.none,
         widgetType = GoodsItemType.HOT_LIST,
+        isImport=data.isImport,
         super(key: key);
 
   /// 活动列表
@@ -147,6 +151,7 @@ class GoodsItemWidget extends StatelessWidget {
         id = model.goodsId,
         promotionStatus = model.getPromotionStatus(),
         widgetType = GoodsItemType.ROW_GOODS,
+        isImport=model.isImport,
         super(key: key);
   final BuildContext buildCtx;
   final VoidCallback shareClick;
@@ -263,31 +268,35 @@ class GoodsItemWidget extends StatelessWidget {
                 ExtendedText.rich(
                   TextSpan(
                     children: [
-                      WidgetSpan(
-                        alignment: PlaceholderAlignment.middle,
-                        child: Container(
-                          alignment: Alignment.center,
-                          width: 24,
-                          height: 15,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFCC1B4F),
-                            borderRadius: BorderRadius.circular(
-                                ScreenAdapterUtils.setWidth(3)),
-                          ),
-                          child: Text(
-                            '进口',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: ScreenAdapterUtils.setSp(10),
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                      WidgetSpan(
-                          child: Container(
-                        width: ScreenAdapterUtils.setWidth(5),
-                      )),
+                      this.isImport == 1
+                          ? WidgetSpan(
+                              alignment: PlaceholderAlignment.middle,
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: 24,
+                                height: 15,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFCC1B4F),
+                                  borderRadius: BorderRadius.circular(
+                                      ScreenAdapterUtils.setWidth(3)),
+                                ),
+                                child: Text(
+                                  '进口',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: ScreenAdapterUtils.setSp(10),
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                              ),
+                            )
+                          : WidgetSpan(child: SizedBox()),
+                      this.isImport == 1
+                          ? WidgetSpan(
+                              child: Container(
+                              width: ScreenAdapterUtils.setWidth(5),
+                            ))
+                          : WidgetSpan(child: SizedBox()),
                       TextSpan(
                         text: this.goodsName,
                         style: AppTextStyle.generate(
