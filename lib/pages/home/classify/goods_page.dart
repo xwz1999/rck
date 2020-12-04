@@ -511,7 +511,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          widget.goodsDetail.data.storehouse == 2 | 3
+                          (widget.goodsDetail.data.storehouse == 2 ||widget.goodsDetail.data.storehouse==3)
                               ? Text(
                                   "跨境商品不支持开发票",
                                   style: AppTextStyle.generate(
@@ -519,7 +519,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                                       color: Color(0xff373737)),
                                 )
                               : SizedBox(),
-                          widget.goodsDetail.data.storehouse == 2 | 3
+                          (widget.goodsDetail.data.storehouse == 2 ||widget.goodsDetail.data.storehouse==3)
                               ? rHBox(rSize(4))
                               : SizedBox(),
                           Text(
