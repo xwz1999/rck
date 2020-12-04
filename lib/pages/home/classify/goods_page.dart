@@ -328,7 +328,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         color: Colors.white,
         child: _discountContent(context),
       ),
-      widget.goodsDetail.data.storehouse != 1
+      widget.goodsDetail.data.storehouse==2||widget.goodsDetail.data.storehouse==3
           ? Container(
               margin: EdgeInsets.only(bottom: 13),
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
