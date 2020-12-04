@@ -184,7 +184,7 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                           value: _saveVideo,
                           onChanged: widget.exitModel.duration<60?
                           (state){
-                            Toast.showError('直播时长过短，禁止录制');
+                            Toast.showError('直播时长过短，禁止录制',align: Alignment.center);
                           }
                           :(state) {
                             setState(() {

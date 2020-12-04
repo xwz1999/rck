@@ -19,14 +19,14 @@ enum Gravity {
 }
 
 class Toast {
-  static showError(msg, {int millisecond = 2500, offset = 0.0 }) {
+  static showError(msg, {int millisecond = 2500, offset = 0.0, AlignmentGeometry align=Alignment.bottomCenter} ) {
     showToast(
         msg,
         textStyle: TextStyle(fontSize: ScreenAdapterUtils.setSp(14)),
         textPadding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
         backgroundColor: Colors.red,
         duration: Duration(milliseconds: millisecond),
-        position: ToastPosition(align: Alignment.bottomCenter, offset: offset),
+        position: ToastPosition(align: align, offset: offset),
         dismissOtherToast: true
     );
   }

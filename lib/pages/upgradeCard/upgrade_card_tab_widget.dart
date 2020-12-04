@@ -84,7 +84,7 @@ class _UpgradeCardTabWidgetState extends BaseStoreState<UpgradeCardTabWidget> {
                             codeId: model.codeId);
                       },
                     )
-                  : _noDataWidget("暂无升级卡可赠送,快去邀请吧~"),
+                  : _noDataWidget("暂无晋升卡可赠送,快去邀请吧~"),
             ),
           )
         ],
@@ -164,7 +164,7 @@ class _UpgradeCardTabWidgetState extends BaseStoreState<UpgradeCardTabWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        isUpgrade ? "升级卡" : "保级卡",
+                        isUpgrade ? "晋升卡" : "保障卡",
                         style: TextStyle(
                             color: textColor,
                             fontSize: 18,
@@ -191,8 +191,8 @@ class _UpgradeCardTabWidgetState extends BaseStoreState<UpgradeCardTabWidget> {
                           // 会员不能送也不能保级
                           if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip) {
                             Alert.show(context, NormalTextDialog(
-                              title: isUpgrade ? "升级卡" : "保级卡",
-                              content: isUpgrade ? "会员角色无法使用升级卡" : "会员角色无法使用保级卡",
+                              title: isUpgrade ? "晋升卡" : "保障卡",
+                              content: isUpgrade ? "会员角色无法使用晋升卡" : "会员角色无法使用保障卡",
                               items: ["确认"],
                               listener: (index){
                                 Alert.dismiss(context);
@@ -200,11 +200,11 @@ class _UpgradeCardTabWidgetState extends BaseStoreState<UpgradeCardTabWidget> {
                             ));
                             return;
                           }
-                          // 店主不能用保级卡
+                          // 店主不能用保障卡
                           if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Master && !isUpgrade) {
                             Alert.show(context, NormalTextDialog(
-                              title:"保级卡",
-                              content: "店主无须使用保级卡",
+                              title:"保障卡",
+                              content: "店主无须使用保障卡",
                               items: ["确认"],
                               listener: (index){
                                 Alert.dismiss(context);
@@ -212,11 +212,11 @@ class _UpgradeCardTabWidgetState extends BaseStoreState<UpgradeCardTabWidget> {
                             ));
                             return;
                           }
-                          // 黄金店铺不能用升级卡
+                          // 黄金店铺不能用晋升卡
                           if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Gold && isUpgrade) {
                             Alert.show(context, NormalTextDialog(
-                              title:"升级卡",
-                              content: "黄金店铺无法使用升级卡",
+                              title:"晋升卡",
+                              content: "黄金店铺无法使用晋升卡",
                               items: ["确认"],
                               listener: (index){
                                 Alert.dismiss(context);
@@ -234,7 +234,7 @@ class _UpgradeCardTabWidgetState extends BaseStoreState<UpgradeCardTabWidget> {
                                 isUpgrade?TextSpan(
                                   style: TextStyle(color: Colors.black, fontSize: 15,),
                                   children: [
-                                    TextSpan(text:'使用升级卡您将由\n',),
+                                    TextSpan(text:'使用晋升卡您将由\n',),
                                     TextSpan(text: "【${UserLevelTool.roleLevelWithEnum(roleLevel)}】", style: TextStyle(color: Colors.red)),
                                     TextSpan(text:'升至',),
                                     TextSpan(text: "【${UserLevelTool.roleLevelWithEnum(nextRoleLevel)}】", style: TextStyle(color: Colors.red)),
@@ -243,7 +243,7 @@ class _UpgradeCardTabWidgetState extends BaseStoreState<UpgradeCardTabWidget> {
                                 : TextSpan(
                                   style: TextStyle(color: Colors.black, fontSize: 15,),
                                   children: [
-                                    TextSpan(text:'使用保级卡您的',),
+                                    TextSpan(text:'使用保障卡您的',),
                                     TextSpan(text: "【${UserLevelTool.roleLevelWithEnum(roleLevel)}】\n", style: TextStyle(color: Colors.red)),
                                     TextSpan(text:'考核期将会延至',),
                                     TextSpan(text: _upgradeCardModel.data.nextAssessTime, style: TextStyle(color: Colors.red)),

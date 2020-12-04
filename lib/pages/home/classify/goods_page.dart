@@ -328,7 +328,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         color: Colors.white,
         child: _discountContent(context),
       ),
-      widget.goodsDetail.data.isImport == 1
+      widget.goodsDetail.data.storehouse != 1
           ? Container(
               margin: EdgeInsets.only(bottom: 13),
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -511,13 +511,16 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          widget.goodsDetail.data.storehouse == 2
+                          widget.goodsDetail.data.storehouse == 2 | 3
                               ? Text(
                                   "跨境商品不支持开发票",
                                   style: AppTextStyle.generate(
                                       ScreenAdapterUtils.setSp(13),
                                       color: Color(0xff373737)),
                                 )
+                              : SizedBox(),
+                          widget.goodsDetail.data.storehouse == 2 | 3
+                              ? rHBox(rSize(4))
                               : SizedBox(),
                           Text(
                             "不支持7天无理由退换货",
@@ -793,7 +796,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                     ),
                     rHBox(5),
                     Text(
-                      '真品保障',
+                      '正品保障',
                       style: TextStyle(
                         color: Color(0xFFCCCCCC),
                         fontSize: rSP(12),

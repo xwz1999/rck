@@ -1414,7 +1414,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   _getNoticeList() async {
-    // // await NoticeListTool.diamondRecommendation(context, title: "您成功推荐了X位大咖,恭喜获得X张升级卡和保级卡");
+    // // await NoticeListTool.diamondRecommendation(context, title: "您成功推荐了X位大咖,恭喜获得X张晋升卡和保障卡");
     // // await NoticeListTool.vipAlert(context);
     // await NoticeListTool.perfectInformation(context, getStore());
     // // await NoticeListTool.inputExpressInformation(context);

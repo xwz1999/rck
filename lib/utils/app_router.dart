@@ -590,7 +590,7 @@ final Map<String, RouteBuilder> _routes = {
   // 结果展示界面
   RouteName.RESULT_PAGE: (context, {arguments}) =>
       ResultPage(arguments: arguments),
-  // 升级卡包 权益卡
+  // 晋升卡包 权益卡
   RouteName.UPGRADE_CARD_PAGE: (context, {arguments}) => UpgradeCardPage(),
   RouteName.UPGRADE_CARD_SEND_USER_LIST_PAGE: (context, {arguments}) =>
       UpgradeCardSendUserListPage(

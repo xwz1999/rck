@@ -27,13 +27,13 @@ class _LotteryPageState extends State<LotteryPage> {
               cardFaceBack: Image.asset('assets/lottery/fail.png'),
               cardFaceFront: cardFace,
             ),
-            //保级卡
+            //保障卡
             BingoCardModel(
               isBingo: 1 == widget.cardIndex,
               cardFaceBack: Image.asset('assets/lottery/keep_level.png'),
               cardFaceFront: cardFace,
             ),
-            //升级卡
+            //晋升卡
             BingoCardModel(
               isBingo: 2 == widget.cardIndex,
               cardFaceBack: Image.asset('assets/lottery/upgrade.png'),

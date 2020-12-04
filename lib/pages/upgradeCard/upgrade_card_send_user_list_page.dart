@@ -86,7 +86,7 @@ class _UpgradeCardSendUserListPageState
                     TextSpan(
                       style: TextStyle(color: Colors.black, fontSize: 15,),
                       children: [
-                        TextSpan(text:isUpCard?'将赠送一张升级卡给\n':'将赠送一张保级卡给\n',),
+                        TextSpan(text:isUpCard?'将赠送一张晋升卡给\n':'将赠送一张保障卡给\n',),
                         TextSpan(text: inviteMode.nickname, style: TextStyle(color: Colors.red)),
                       ]
                     ),
