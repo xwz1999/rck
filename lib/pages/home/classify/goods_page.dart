@@ -807,12 +807,13 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 Expanded(
                   child: Center(
                     child: Text(
-                      '- - - - - - -',
+                      '- - - - - -',
                       style: TextStyle(
                         color: Color(0xFFCCCCCC),
                         fontSize: rSP(15),
                         height: 1,
                       ),
+                      maxLines: 1,
                     ),
                   ),
                 ),
@@ -882,12 +883,13 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 Expanded(
                   child: Center(
                     child: Text(
-                      '- - - - - - -',
+                      '- - - - - -',
                       style: TextStyle(
                         color: Color(0xFFCCCCCC),
                         fontSize: rSP(15),
                         height: 1,
                       ),
+                      maxLines: 1,
                     ),
                   ),
                 ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:recook/constants/header.dart';
 import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 
 class SmallWindowWidget extends StatefulWidget {
@@ -24,8 +25,8 @@ class _SmallWindowWidgetState extends State<SmallWindowWidget> {
   @override
   void initState() {
     super.initState();
-    _topPos = ScreenUtil.statusBarHeight + 20;
-    _leftPos = 20;
+    _topPos = ScreenUtil.screenHeightDp - 20 - _height - 55;
+    _leftPos = _leftPos = ScreenUtil.screenWidthDp - 20 - _width;
   }
 
   @override
@@ -39,78 +40,83 @@ class _SmallWindowWidgetState extends State<SmallWindowWidget> {
     return AnimatedPositioned(
       left: _isHide ? -_width : _leftPos,
       top: _topPos,
-      child: Stack(
-        children: [
-          Positioned(
-            left: 0,
-            right: 0,
-            top: 0,
-            bottom: 0,
-            child: CloudVideo(
-              onCloudVideoCreated: (controller) async {
-                _livePlayer = await LivePlayer.create();
-                await _livePlayer.setPlayerView(controller);
-                _livePlayer.startPlay(widget.url, type: PlayType.RTMP);
-              },
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.white,width: rSize(1)),
+        ),
+        child: Stack(
+          children: [
+            Positioned(
+              left: 0,
+              right: 0,
+              top: 0,
+              bottom: 0,
+              child: CloudVideo(
+                onCloudVideoCreated: (controller) async {
+                  _livePlayer = await LivePlayer.create();
+                  await _livePlayer.setPlayerView(controller);
+                  _livePlayer.startPlay(widget.url, type: PlayType.RTMP);
+                },
+              ),
             ),
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            onPanUpdate: (detail) {
-              setState(() {
-                _topPos = detail.globalPosition.dy - _subHeight;
-                _leftPos = detail.globalPosition.dx - _subWidth;
-              });
-            },
-            onPanStart: (detail) {
-              setState(() {
-                _isMoving = true;
-              });
-            },
-            onPanEnd: (detail) {
-              _isMoving = false;
-              if (_leftPos < 20) _leftPos = 20;
-              if (_topPos < ScreenUtil.statusBarHeight + 20)
-                _topPos = (20 + ScreenUtil.statusBarHeight);
-              if ((_leftPos + _width + 20) > ScreenUtil.screenWidthDp)
-                _leftPos = ScreenUtil.screenWidthDp - 20 - _width;
-              if ((_topPos + _height + 55 + 20) > ScreenUtil.screenHeightDp)
-                _topPos = ScreenUtil.screenHeightDp - 20 - _height - 55;
-              setState(() {});
-            },
-            child: Container(
-              height: _height,
-              width: _width,
-              color: Colors.transparent,
-            ),
-          ),
-          Positioned(
-            right: 10,
-            top: 10,
-            child: GestureDetector(
+            GestureDetector(
               onTap: () {
+                Navigator.pop(context);
+              },
+              onPanUpdate: (detail) {
                 setState(() {
-                  _isHide = true;
+                  _topPos = detail.globalPosition.dy - _subHeight;
+                  _leftPos = detail.globalPosition.dx - _subWidth;
                 });
               },
+              onPanStart: (detail) {
+                setState(() {
+                  _isMoving = true;
+                });
+              },
+              onPanEnd: (detail) {
+                _isMoving = false;
+                if (_leftPos < 20) _leftPos = 20;
+                if (_topPos < ScreenUtil.statusBarHeight + 20)
+                  _topPos = (20 + ScreenUtil.statusBarHeight);
+                if ((_leftPos + _width + 20) > ScreenUtil.screenWidthDp)
+                  _leftPos = ScreenUtil.screenWidthDp - 20 - _width;
+                if ((_topPos + _height + 55 + 20) > ScreenUtil.screenHeightDp)
+                  _topPos = ScreenUtil.screenHeightDp - 20 - _height - 55;
+                setState(() {});
+              },
               child: Container(
-                height: 20,
-                width: 20,
-                child: Icon(
-                  Icons.clear,
-                  size: 16,
-                  color: Colors.black,
-                ),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(10),
+                height: _height,
+                width: _width,
+                color: Colors.transparent,
+              ),
+            ),
+            Positioned(
+              right: 5,
+              top: 5,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    _isHide = true;
+                  });
+                },
+                child: Container(
+                  height: 20,
+                  width: 20,
+                  child: Icon(
+                    Icons.clear,
+                    size: 16,
+                    color: Colors.black,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       curve: Curves.easeInOutCubic,
       duration: _isMoving ? Duration.zero : Duration(milliseconds: 300),

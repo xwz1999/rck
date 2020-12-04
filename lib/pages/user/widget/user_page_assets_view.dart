@@ -96,7 +96,7 @@ class _UserPageAssetsViewState extends BaseStoreState<UserPageAssetsView> {
         children: <Widget>[
           Image.asset(icon, width: 28, height: 28,),
           Container(width: 3,),
-          Text(title, style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.w500),),
+          Text(title, style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),),
           Spacer(),
           CustomImageButton(
             title: "查看明细",
