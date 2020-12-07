@@ -16,10 +16,12 @@ class ShopRecommendUpgradePage extends StatefulWidget {
   ShopRecommendUpgradePage({Key key}) : super(key: key);
 
   @override
-  _ShopRecommendUpgradePageState createState() => _ShopRecommendUpgradePageState();
+  _ShopRecommendUpgradePageState createState() =>
+      _ShopRecommendUpgradePageState();
 }
 
-class _ShopRecommendUpgradePageState extends BaseStoreState<ShopRecommendUpgradePage> {
+class _ShopRecommendUpgradePageState
+    extends BaseStoreState<ShopRecommendUpgradePage> {
   double _width;
   double _height;
   final double _uiWidth = 375;
@@ -37,7 +39,7 @@ class _ShopRecommendUpgradePageState extends BaseStoreState<ShopRecommendUpgrade
   @override
   Widget buildContext(BuildContext context, {store}) {
     _width = MediaQuery.of(context).size.width;
-    _height = _width/_uiWidth*_uiHeight;
+    _height = _width / _uiWidth * _uiHeight;
 
     return Scaffold(
       appBar: CustomAppBar(
@@ -122,7 +124,9 @@ class _ShopRecommendUpgradePageState extends BaseStoreState<ShopRecommendUpgrade
             top: rSize(1200),
             child: FlatButton(
               onPressed: () {
-                ShareTool().inviteShare(context, customTitle: Container());
+                ShareTool().diamondsInviteShare(
+                    code: UserManager.instance.user.info.introCode);
+                // ShareTool().inviteShare(context, customTitle: Container());
               },
               child: Text(''),
               minWidth: rSize(300),
@@ -132,25 +136,38 @@ class _ShopRecommendUpgradePageState extends BaseStoreState<ShopRecommendUpgrade
     );
   }
 
-  _backgroundImageWidget(){
+  _backgroundImageWidget() {
     return Container(
-      width: _width, height: _height,
-      child: Image.asset("assets/shop_recommend_upgrade_bg.png", fit: BoxFit.fill,),
+      width: _width,
+      height: _height,
+      child: Image.asset(
+        "assets/shop_recommend_upgrade_bg.png",
+        fit: BoxFit.fill,
+      ),
     );
   }
-  _methodWidget(){
+
+  _methodWidget() {
     return Container(
-      width: _width, height: _height,
+      width: _width,
+      height: _height,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
-          Container(height: 660/_uiWidth*_width, width: _width,),
+          Container(
+            height: 660 / _uiWidth * _width,
+            width: _width,
+          ),
           FlatButton(
-            onPressed: (){
+            onPressed: () {
               // DPrint.printf("查看详细规则");
               _pushToRoleMessagePage();
-            }, 
-            child: Container(height: 30/_uiHeight*_height, width: _width,),),
+            },
+            child: Container(
+              height: 30 / _uiHeight * _height,
+              width: _width,
+            ),
+          ),
           // Container(height: 80/_uiHeight*_height,),
           // Container(
           //   padding: EdgeInsets.symmetric(horizontal: 30/_uiWidth*_width),
@@ -169,7 +186,7 @@ class _ShopRecommendUpgradePageState extends BaseStoreState<ShopRecommendUpgrade
           //       GestureDetector(
           //         onTap: (){
           //           // DPrint.printf("查看升级邀请码");
-          //           AppRouter.push(context, RouteName.SHOP_UPGRADE_CODE_PAGE, 
+          //           AppRouter.push(context, RouteName.SHOP_UPGRADE_CODE_PAGE,
           //             arguments: ShopUpgradeCodePage.setArguments(shopUpgradeCodeModel: _shopUpgradeCodeModel));
           //         },
           //         child: Row(
@@ -183,27 +200,34 @@ class _ShopRecommendUpgradePageState extends BaseStoreState<ShopRecommendUpgrade
           //   ),
           // ),
           // Container(height: 35/_uiHeight*_height,),
-          Container(height: 10/_uiHeight*_height,),
+          Container(
+            height: 10 / _uiHeight * _height,
+          ),
           GestureDetector(
-            onTap: (){
+            onTap: () {
               // ShareTool().inviteShare(context, code: UserManager.instance.user.info.introCode);
-              ShareTool().diamondsInviteShare(code: UserManager.instance.user.info.introCode);
+              ShareTool().diamondsInviteShare(
+                  code: UserManager.instance.user.info.introCode);
             },
             child: Container(
               alignment: Alignment.center,
-              child: Text("推荐好友入驻", style: TextStyle(color: Colors.white, fontSize: 17),),
-              decoration: BoxDecoration(
-                color: Color(0xffd5101a),
-                borderRadius: BorderRadius.circular(6),
-                boxShadow: [
-                  BoxShadow(
-                    color: Color(0xffd5101a),
-                    blurRadius: 1,
-                  )
-                ]
+              child: Text(
+                "推荐好友入驻",
+                style: TextStyle(color: Colors.white, fontSize: 17),
               ),
-              margin: EdgeInsets.symmetric(horizontal: 15/_uiWidth*_width),
-              height: 44/_uiHeight*_height, width: _width,),
+              decoration: BoxDecoration(
+                  color: Color(0xffd5101a),
+                  borderRadius: BorderRadius.circular(6),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xffd5101a),
+                      blurRadius: 1,
+                    )
+                  ]),
+              margin: EdgeInsets.symmetric(horizontal: 15 / _uiWidth * _width),
+              height: 44 / _uiHeight * _height,
+              width: _width,
+            ),
           ),
           Spacer(),
         ],
@@ -212,7 +236,7 @@ class _ShopRecommendUpgradePageState extends BaseStoreState<ShopRecommendUpgrade
   }
 
   _getUpCode() async {
-    ResultData resultData = await HttpManager.post(ShopApi.role_query_up_code , {
+    ResultData resultData = await HttpManager.post(ShopApi.role_query_up_code, {
       "userId": UserManager.instance.user.info.id,
       // "userId": 1000004
     });
@@ -230,17 +254,20 @@ class _ShopRecommendUpgradePageState extends BaseStoreState<ShopRecommendUpgrade
     // _shopSummaryModel = model;
     // setState(() {});
   }
-  _pushToRoleMessagePage(){
+
+  _pushToRoleMessagePage() {
     if (_roleMessageModel == null) {
       _getRule();
       return;
     }
-    AppRouter.push(context, RouteName.TEXTPAGE, arguments: TextPage.setArguments(title: "详细规则", info: _roleMessageModel.data));
+    AppRouter.push(context, RouteName.TEXTPAGE,
+        arguments:
+            TextPage.setArguments(title: "详细规则", info: _roleMessageModel.data));
   }
 
   _getRule() async {
     showLoading("");
-    ResultData resultData = await HttpManager.post(ShopApi.role_query_rule , {
+    ResultData resultData = await HttpManager.post(ShopApi.role_query_rule, {
       "level": UserManager.instance.user.info.userLevel,
       // "level": 10
     });
@@ -249,13 +276,15 @@ class _ShopRecommendUpgradePageState extends BaseStoreState<ShopRecommendUpgrade
       showError(resultData.msg);
       return;
     }
-    ShopUpgradeRoleMessageModel model = ShopUpgradeRoleMessageModel.fromJson(resultData.data);
+    ShopUpgradeRoleMessageModel model =
+        ShopUpgradeRoleMessageModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
       showError(model.msg);
       return;
     }
     _roleMessageModel = model;
-    AppRouter.push(context, RouteName.TEXTPAGE, arguments: TextPage.setArguments(title: "详细规则", info: _roleMessageModel.data));
+    AppRouter.push(context, RouteName.TEXTPAGE,
+        arguments:
+            TextPage.setArguments(title: "详细规则", info: _roleMessageModel.data));
   }
-
 }
