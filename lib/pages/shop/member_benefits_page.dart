@@ -167,7 +167,7 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
             top: rSize(1200),
             child: FlatButton(
               onPressed: () {
-                ShareTool().diamondsInviteShare(code: UserManager.instance.user.info.introCode);
+                ShareTool().inviteShare(context, customTitle: Container());
               },
               child: Text(''),
               minWidth: rSize(300),
