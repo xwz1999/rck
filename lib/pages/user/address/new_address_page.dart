@@ -26,9 +26,11 @@ import 'package:recook/widgets/edit_tile.dart';
 import 'package:recook/widgets/toast.dart';
 
 class NewAddressPage extends StatefulWidget {
+  final bool isFirstAdd;
   final Map arguments;
 
-  const NewAddressPage({Key key, this.arguments}) : super(key: key);
+  const NewAddressPage({Key key, this.arguments, this.isFirstAdd})
+      : super(key: key);
 
   static setArguments(Address address) {
     return {"address": address};
@@ -217,6 +219,8 @@ class _NewAddressPageState extends BaseStoreState<NewAddressPage> {
   }
 
   _defaultAddressTile() {
+    if (widget.isFirstAdd != null)
+      widget.isFirstAdd ? _address.isDefault = 1 : _address.isDefault = 0;
     return StatefulBuilder(
       builder: (context, setSta) {
         return GestureDetector(

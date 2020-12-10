@@ -597,7 +597,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
               bool isOversea = false;
               for (var item in _orderModel.data.brands) {
                 for (var childItem in item.goods) {
-                  if (childItem.storehouse == 1) isOversea = true;
+                  if (childItem.storehouse == 2||childItem.storehouse==3) isOversea = true;
                 }
               }
 

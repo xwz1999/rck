@@ -17,6 +17,7 @@ import 'package:recook/pages/user/address/mvp/address_mvp_contact.dart';
 import 'package:recook/pages/user/address/mvp/address_presenter_impl.dart';
 import 'package:recook/pages/user/address/new_address_page.dart';
 import 'package:recook/pages/user/address/widgets/item_my_address.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/mvp.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -81,7 +82,8 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
               return;
             }
             // 这是预览订单有地址时  跳转过来添加地址后，如果改变了地址信息，再返回是需要更新地址信息
-            Navigator.pop(globalContext,
+            Navigator.pop(
+                globalContext,
                 Address(
                     _originAddr.addressId,
                     _originAddr.receiverName,
@@ -101,14 +103,20 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
             padding: EdgeInsets.symmetric(horizontal: 10),
             fontSize: ScreenAdapterUtils.setSp(14),
             onPressed: () {
-              AppRouter.push(_context, RouteName.NEW_ADDRESS_PAGE).then((newAddress) {
+              CRoute.push(
+                  context,
+                  NewAddressPage(
+                    isFirstAdd: _controller.getData().isEmpty,
+                  )).then((newAddress) {
                 if ((newAddress is Address)) {
                   if (_originAddr == null) {
                     _shouldUpdated = true;
                   }
                   GSDialog.of(context).showSuccess(context, "添加地址成功");
-                  _presenterImpl.fetchAddressList(UserManager.instance.user.info.id);
+                  _presenterImpl
+                      .fetchAddressList(UserManager.instance.user.info.id);
                 }
+                setState(() {});
               });
             },
           )
@@ -163,7 +171,8 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
                 },
                 deleteListener: () {
                   Alert.dismiss(context);
-                  _presenterImpl.deleteAddress(UserManager.instance.user.info.id, address);
+                  _presenterImpl.deleteAddress(
+                      UserManager.instance.user.info.id, address);
                 },
               ));
         },
@@ -173,16 +182,18 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
               .then((newAddress) {
             if (newAddress != null) {
               // if ((newAddress as Address).id == _originAddr.addressId) {
-                _shouldUpdated = true;
+              _shouldUpdated = true;
               // }
               GSDialog.of(context).showSuccess(context, "更新地址成功");
-              _presenterImpl.fetchAddressList(UserManager.instance.user.info.id);
+              _presenterImpl
+                  .fetchAddressList(UserManager.instance.user.info.id);
             }
           });
         },
         setDefaultListener: () {
           if (_defaultAddress == address) return;
-          _presenterImpl.setDefaultAddress(UserManager.instance.user.info.id, address);
+          _presenterImpl.setDefaultAddress(
+              UserManager.instance.user.info.id, address);
         },
       ),
     );
