@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'package:flutter/material.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
 import 'goods_list_contact.dart';
@@ -71,8 +72,9 @@ class GoodsListPresenterImpl extends GoodsListPresenterI {
   }
 
   @override
-  fetchList(int categoryID, int page, SortType type, {String keyword}) {
-    getModel()
+  fetchList(int categoryID, int page, SortType type,
+      {String keyword, VoidCallback onLoadDone}) async {
+    return await getModel()
         .fetchList(categoryID, page, type, keyword: keyword)
         .then((ResultData response) {
       if (!response.result) {
@@ -95,6 +97,7 @@ class GoodsListPresenterImpl extends GoodsListPresenterI {
           }
         }
       }
+      if (onLoadDone != null) onLoadDone();
     });
   }
 }

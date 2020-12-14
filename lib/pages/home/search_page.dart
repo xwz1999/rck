@@ -11,10 +11,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/styles.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/goods_hot_sell_list_model.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
+import 'package:recook/models/promotion_list_model.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_list_presenter_impl.dart';
@@ -30,6 +34,7 @@ import 'package:recook/widgets/goods_item.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:recook/widgets/no_data_view.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:recook/pages/home/classify/mvp/goods_list_contact.dart';
 import 'package:recook/constants/app_image_resources.dart';
@@ -62,6 +67,28 @@ class _SearchPageState extends BaseStoreState<SearchPage>
   SortType _sortType = SortType.comprehensive;
   int _filterIndex = 0;
 
+  GSRefreshController _refreshController = GSRefreshController();
+  GoodsHotSellListModel _listModel;
+
+  _getGoodsHotSellList() async {
+    ResultData resultData = await HttpManager.post(HomeApi.hot_sell_list, {});
+    if (!resultData.result) {
+      showError(resultData.msg);
+      return;
+    }
+    GoodsHotSellListModel model =
+        GoodsHotSellListModel.fromJson(resultData.data);
+    if (model.code != HttpStatus.SUCCESS) {
+      showError(model.msg);
+      return;
+    }
+    for (Data data in model.data) {
+      data.index = model.data.indexOf(data);
+    }
+    _listModel = model;
+    if (mounted) setState(() {});
+  }
+
   @override
   void initState() {
     getSearchListFromSharedPreferences();
@@ -69,7 +96,8 @@ class _SearchPageState extends BaseStoreState<SearchPage>
     _filterController = FilterToolBarController();
     super.initState();
     _presenter = GoodsListPresenterImpl();
-    _listViewController = MvpListViewController();
+    _listViewController = MvpListViewController(controller: _refreshController);
+    _getGoodsHotSellList();
   }
 
   @override
@@ -255,9 +283,72 @@ class _SearchPageState extends BaseStoreState<SearchPage>
           page,
           _sortType,
           keyword: _searchText,
+          onLoadDone: () {
+            Future.delayed(Duration(milliseconds: 100), () {
+              if (mounted) setState(() {});
+            });
+          },
         );
       },
-      gridViewBuilder: () => _buildGridView(),
+      gridViewBuilder: () => _buildNewGridView(),
+    );
+  }
+
+  _buildNewGridView() {
+    return CustomScrollView(
+      slivers: [
+        SliverGrid(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              GoodsSimple goods = _listViewController.getData()[index];
+              return MaterialButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                        arguments: CommodityDetailPage.setArguments(goods.id));
+                  },
+                  child: _displayList
+                      // ? BrandDetailListItem(goods: goods)
+                      // ? NormalGoodsItem(model: goods, buildCtx: context,)
+                      ? GoodsItemWidget.normalGoodsItem(
+                          onBrandClick: () {
+                            AppRouter.push(
+                                context, RouteName.BRANDGOODS_LIST_PAGE,
+                                arguments: BrandGoodsListPage.setArguments(
+                                    goods.brandId, goods.brandName));
+                          },
+                          buildCtx: context,
+                          model: goods,
+                        )
+                      : BrandDetailGridItem(goods: goods));
+            },
+            childCount: _listViewController.getData().length,
+          ),
+          gridDelegate:
+              ItemTagWidget.getSliverGridDelegate(_displayList, context),
+        ),
+        SliverToBoxAdapter(
+            child: _refreshController.isNoData
+                ? ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      return GoodsItemWidget.hotList(
+                        onBrandClick: () {
+                          AppRouter.push(
+                              context, RouteName.BRANDGOODS_LIST_PAGE,
+                              arguments: BrandGoodsListPage.setArguments(
+                                  _listModel.data[index].brandId,
+                                  _listModel.data[index].brandName));
+                        },
+                        buildCtx: context,
+                        data: _listModel.data[index],
+                      );
+                    },
+                    itemCount: _listModel?.data?.length ?? 0,
+                  )
+                : SizedBox()),
+      ],
     );
   }
 
