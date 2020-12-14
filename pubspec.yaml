@@ -210,6 +210,8 @@ dependencies:
 
   dropdown_search: ^0.4.5
 
+  flutter_union_pay : ^0.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
