@@ -44,7 +44,7 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
     if (_gsRefreshController.isRefresh()) {
       _gsRefreshController.refreshCompleted();
     }
-    if (!resultData.result) {
+    if (!resultData.result) { 
       if (mounted) showError(resultData.msg);
       return;
     }
@@ -99,15 +99,15 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
       ));
     }
     if (_inviteCount == 0) {
-      listWidget.add(_imageBgWidgetS());
-      // listWidget.add(_imageBgWidget());
-      // listWidget.add(GestureDetector(
-      //   onTap: (){
-      //     ShareTool().inviteShare(context,customTitle: Container());
-      //   },
-      //   child: _buttonWidget(),
-      // ));
-      // listWidget.add(Expanded(child: Container(),));
+      // listWidget.add(_imageBgWidgetS());
+      listWidget.add(_imageBgWidget());
+      listWidget.add(GestureDetector(
+        onTap: (){
+          ShareTool().inviteShare(context,customTitle: Container());
+        },
+        child: _buttonWidget(),
+      ));
+      listWidget.add(Expanded(child: Container(),));
     }
     return listWidget;
   }
