@@ -101,6 +101,8 @@ PODS:
   - flutter_txugcupload (0.0.1):
     - AFNetworking
     - Flutter
+  - flutter_union_pay (0.0.1):
+    - Flutter
   - fluwx (0.0.1):
     - Flutter
     - mob_sharesdk/ShareSDKPlatforms/WeChatFull
@@ -265,6 +267,7 @@ DEPENDENCIES:
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
   - flutter_qr_reader (from `.symlinks/plugins/flutter_qr_reader/ios`)
   - flutter_txugcupload (from `.symlinks/plugins/flutter_txugcupload/ios`)
+  - flutter_union_pay (from `.symlinks/plugins/flutter_union_pay/ios`)
   - fluwx (from `.symlinks/plugins/fluwx/ios`)
   - foundation_fluttify (from `.symlinks/plugins/foundation_fluttify/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
@@ -341,6 +344,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_qr_reader/ios"
   flutter_txugcupload:
     :path: ".symlinks/plugins/flutter_txugcupload/ios"
+  flutter_union_pay:
+    :path: ".symlinks/plugins/flutter_union_pay/ios"
   fluwx:
     :path: ".symlinks/plugins/fluwx/ios"
   foundation_fluttify:
@@ -407,6 +412,7 @@ SPEC CHECKSUMS:
   flutter_image_compress: f69d0e0e078ce52b4810695593bc861ee319ae7d
   flutter_qr_reader: 1b4faf9032e9ddc738107fd3dc067d29bd5cc67d
   flutter_txugcupload: fd4f7a2a99e5fe30e608bf6f4acf0e7408339816
+  flutter_union_pay: 47a7bf5a4e987745d4378a8b9fb522d0a434793f
   fluwx: 13b180563982bf3149472d650e01fa0312236c3d
   foundation_fluttify: 0c45145e3fad1fb99188e4979daed5b24cd9b278
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
@@ -446,4 +452,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 92b158b51b335be17f029808df79886222d2ae9c
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

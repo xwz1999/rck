@@ -7,11 +7,12 @@
  * ====================================================
  */
 
-import 'dart:io';
-
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_union_pay/flutter_union_pay.dart';
 import 'package:recook/base/base_store_state.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/PayInfoModel.dart';
 import 'package:recook/models/alipay_order_model.dart';
@@ -29,6 +30,7 @@ import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/keyboard/bottom_keyboard_widget.dart';
+import 'package:recook/widgets/toast.dart';
 
 class OrderPrepayPage extends StatefulWidget {
   final Map arguments;
@@ -69,6 +71,19 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
   @override
   void initState() {
     super.initState();
+    FlutterUnionPay.listen((result) {
+      switch (result.status) {
+        case PaymentStatus.CANCEL:
+          Toast.showError('银联取消支付');
+          break;
+        case PaymentStatus.SUCCESS:
+          Toast.showSuccess('支付成功');
+          break;
+        case PaymentStatus.FAIL:
+          Toast.showError('银联支付失败');
+          break;
+      }
+    });
     UserManager.instance.setPassword.addListener(_setPassword);
     WidgetsBinding.instance.addObserver(this);
     _presenter = OrderPresenterImpl();
@@ -205,6 +220,13 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
               color: Color.fromARGB(255, 17, 142, 228),
             ),
             2),
+        _payTile(
+            "云闪付支付",
+            Image.asset(
+              R.ASSETS_UNION_PAY_PNG,
+              height: rSize(30),
+            ),
+            3),
         Container(
           margin:
               EdgeInsets.symmetric(horizontal: rSize(40), vertical: rSize(150)),
@@ -316,6 +338,9 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
       case 2:
         _aliPay(context);
         break;
+      case 3:
+        _unionPay(context);
+        break;
     }
   }
 
@@ -362,6 +387,22 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         timeStamp: int.parse(wxPayModel.payInfo.timestamp),
         sign: wxPayModel.payInfo.sign,
         listener: (WXPayResult result) {});
+  }
+
+  _unionPay(BuildContext context) async {
+    ResultData resultData =
+        await HttpManager.post("/v1/pay/unionpay/order/create", {
+      "orderId": _model.data.id,
+      "userId": UserManager.instance.user.info.id,
+    });
+    dismissLoading();
+    if (!TextUtil.isEmpty(resultData?.data['data']['tn'] ?? null)) {
+      FlutterUnionPay.pay(
+        tn: resultData?.data['data']['tn'],
+        mode: AppConfig.debug ? PaymentEnv.DEVELOPMENT : PaymentEnv.PRODUCT,
+        scheme: "RecookUnionPay",
+      );
+    }
   }
 
   // 密码支付
