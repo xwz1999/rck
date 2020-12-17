@@ -18,14 +18,17 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_hot_sell_list_model.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
+import 'package:recook/models/promotion_goods_list_model.dart';
 import 'package:recook/models/promotion_list_model.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_list_presenter_impl.dart';
 import 'package:recook/pages/home/items/item_brand_detail_grid.dart';
 import 'package:recook/pages/home/items/item_tag_widget.dart';
+import 'package:recook/pages/home/promotion_time_tool.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/mvp.dart';
+import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/text_utils.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -97,7 +100,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
     super.initState();
     _presenter = GoodsListPresenterImpl();
     _listViewController = MvpListViewController(controller: _refreshController);
-    _getGoodsHotSellList();
+    _getPromotionList();
   }
 
   @override
@@ -248,9 +251,85 @@ class _SearchPageState extends BaseStoreState<SearchPage>
 
   _buildList(BuildContext context) {
     return MvpListView<GoodsSimple>(
-      noDataView: NoDataView(
-        title: "换个关键词搜索一下吧~",
-        height: 500,
+      noDataView: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: NoDataView(
+              title: "换个关键词搜索一下吧~",
+              height: 300,
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.only(top: rSize(40), bottom: rSize(10)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    height: rSize(2),
+                    color: Color(0xFFB8B8B8),
+                    width: rSize(40),
+                  ),
+                  rWBox(10),
+                  Text(
+                    '猜你喜欢',
+                    style: TextStyle(
+                      fontSize: rSP(15),
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  rWBox(10),
+                  Container(
+                    height: rSize(2),
+                    color: Color(0xFFB8B8B8),
+                    width: rSize(40),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: ListView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                PromotionGoodsModel model = _promotionGoodsList[index];
+                return Container(
+                  padding: EdgeInsets.only(bottom: 5),
+                  color: AppColor.frenchColor,
+                  child: GoodsItemWidget.rowGoods(
+                    isSingleDayGoods: false,
+                    onBrandClick: () {
+                      AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
+                          arguments: BrandGoodsListPage.setArguments(
+                              model.brandId, model.brandName));
+                    },
+                    model: model,
+                    shareClick: () {
+                      String goodsTitle =
+                          "${model.priceDesc} | ${model.goodsName} | ${model.description}";
+                      ShareTool().goodsShare(context,
+                          goodsPrice: model.price.toStringAsFixed(2),
+                          goodsName: model.goodsName,
+                          goodsDescription: model.description,
+                          miniTitle: goodsTitle,
+                          miniPicurl: model.picture.url,
+                          amount: model.commission.toString(),
+                          goodsId: model.goodsId.toString());
+                    },
+                    buyClick: () {
+                      AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                          arguments:
+                              CommodityDetailPage.setArguments(model.goodsId));
+                    },
+                  ),
+                );
+              },
+              itemCount: _promotionGoodsList.length,
+            ),
+          ),
+        ],
       ),
       autoRefresh: false,
       delegate: this,
@@ -294,6 +373,79 @@ class _SearchPageState extends BaseStoreState<SearchPage>
     );
   }
 
+//copy from home_page.dart()
+
+  List<Promotion> _promotionList = [];
+  List<dynamic> _promotionGoodsList = [];
+  _getPromotionList() async {
+    ResultData resultData = await HttpManager.post(HomeApi.promotion_list, {});
+
+    if (!resultData.result) {
+      showError(resultData.msg);
+      return;
+    }
+    PromotionListModel model = PromotionListModel.fromJson(resultData.data);
+    if (model.code != HttpStatus.SUCCESS) {
+      showError(model.msg);
+      return;
+    }
+    _promotionList = model.data;
+    if (_promotionList == null || _promotionList.length == 0) {
+      _promotionGoodsList = [];
+      setState(() {});
+      return;
+    }
+    int _index = 0;
+    for (Promotion item in _promotionList) {
+      PromotionStatus processStatus = PromotionTimeTool.getPromotionStatus(
+          item.startTime, item.getTrueEndTime());
+      // DateTime time = DateTime.parse("2020-03-18 23:00:00");
+      DateTime time = DateTime.now();
+      if (time.hour >= 22 &&
+          DateTime.parse(item.startTime).hour == 20 &&
+          time.day == DateTime.parse(item.startTime).day) {
+        //10点以后定位到8点
+        _index = _promotionList.indexOf(item);
+      } else if (processStatus == PromotionStatus.start) {
+        _index = _promotionList.indexOf(item);
+      }
+    }
+    _getPromotionGoodsList(_promotionList[_index].id);
+  }
+
+  _getPromotionGoodsList(int promotionId) async {
+    ResultData resultData =
+        await HttpManager.post(HomeApi.promotion_goods_list, {
+      "timeItemID": promotionId,
+    });
+    if (!resultData.result) {
+      showError(resultData.msg);
+      return;
+    }
+    PromotionGoodsListModel model =
+        PromotionGoodsListModel.fromJson(resultData.data);
+    if (model.code != HttpStatus.SUCCESS) {
+      showError(model.msg);
+      return;
+    }
+    List array = [];
+    if (model.data.goodsList == null) {
+      model.data.goodsList = [];
+    } else {
+      array.addAll(model.data.goodsList);
+    }
+    if (model.data.activityList != null && model.data.activityList.length > 0) {
+      if (array.length > 3) {
+        array.insert(3, model.data.activityList.first);
+      } else {
+        array.add(model.data.activityList.first);
+      }
+    }
+    // _promotionGoodsList = model.data.goodsList;
+    _promotionGoodsList = array;
+    if (mounted) setState(() {});
+  }
+
   _buildNewGridView() {
     return CustomScrollView(
       slivers: [
@@ -328,24 +480,77 @@ class _SearchPageState extends BaseStoreState<SearchPage>
               ItemTagWidget.getSliverGridDelegate(_displayList, context),
         ),
         SliverToBoxAdapter(
+          child: _refreshController.isNoData
+              ? Padding(
+                  padding: EdgeInsets.only(top: rSize(40), bottom: rSize(10)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: rSize(2),
+                        color: Color(0xFFB8B8B8),
+                        width: rSize(40),
+                      ),
+                      rWBox(10),
+                      Text(
+                        '猜你喜欢',
+                        style: TextStyle(
+                          fontSize: rSP(15),
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      rWBox(10),
+                      Container(
+                        height: rSize(2),
+                        color: Color(0xFFB8B8B8),
+                        width: rSize(40),
+                      ),
+                    ],
+                  ),
+                )
+              : SizedBox(),
+        ),
+        SliverToBoxAdapter(
             child: _refreshController.isNoData
                 ? ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      return GoodsItemWidget.hotList(
-                        onBrandClick: () {
-                          AppRouter.push(
-                              context, RouteName.BRANDGOODS_LIST_PAGE,
-                              arguments: BrandGoodsListPage.setArguments(
-                                  _listModel.data[index].brandId,
-                                  _listModel.data[index].brandName));
-                        },
-                        buildCtx: context,
-                        data: _listModel.data[index],
+                      PromotionGoodsModel model = _promotionGoodsList[index];
+                      return Container(
+                        padding: EdgeInsets.only(bottom: 5),
+                        color: AppColor.frenchColor,
+                        child: GoodsItemWidget.rowGoods(
+                          isSingleDayGoods: false,
+                          onBrandClick: () {
+                            AppRouter.push(
+                                context, RouteName.BRANDGOODS_LIST_PAGE,
+                                arguments: BrandGoodsListPage.setArguments(
+                                    model.brandId, model.brandName));
+                          },
+                          model: model,
+                          shareClick: () {
+                            String goodsTitle =
+                                "${model.priceDesc} | ${model.goodsName} | ${model.description}";
+                            ShareTool().goodsShare(context,
+                                goodsPrice: model.price.toStringAsFixed(2),
+                                goodsName: model.goodsName,
+                                goodsDescription: model.description,
+                                miniTitle: goodsTitle,
+                                miniPicurl: model.picture.url,
+                                amount: model.commission.toString(),
+                                goodsId: model.goodsId.toString());
+                          },
+                          buyClick: () {
+                            AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                                arguments: CommodityDetailPage.setArguments(
+                                    model.goodsId));
+                          },
+                        ),
                       );
                     },
-                    itemCount: _listModel?.data?.length ?? 0,
+                    itemCount: _promotionGoodsList.length,
                   )
                 : SizedBox()),
       ],

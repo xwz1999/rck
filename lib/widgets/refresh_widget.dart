@@ -231,6 +231,7 @@ class GSRefreshController {
   bool get isNoData =>
       (_controller?.footerStatus ?? LoadStatus.canLoading) == LoadStatus.noMore;
 
+
   void dispose() {
     _controller.dispose();
   }
