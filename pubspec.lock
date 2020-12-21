@@ -479,7 +479,7 @@ packages:
       path: "/Users/akufe/AndroidStudioProjects/flutter_union_pay"
       relative: false
     source: path
-    version: "0.0.3"
+    version: "0.0.4"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
