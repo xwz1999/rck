@@ -260,13 +260,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "3.0.10"
-  dropdown_search:
-    dependency: "direct main"
-    description:
-      name: dropdown_search
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.4.5"
   encrypt:
     dependency: "direct main"
     description:
@@ -483,10 +476,10 @@ packages:
   flutter_union_pay:
     dependency: "direct main"
     description:
-      name: flutter_union_pay
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.0.1"
+      path: "/Users/akufe/AndroidStudioProjects/flutter_union_pay"
+      relative: false
+    source: path
+    version: "0.0.3"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
