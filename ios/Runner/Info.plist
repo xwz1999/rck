@@ -111,6 +111,11 @@
 			<string>mqqopensdkapiV3</string>
 			<string>mqqopensdkapiV2</string>
 			<string>mqqOpensdkSSoLogin</string>
+			<string>uppaysdk</string>
+			<string>uppaywallet</string>
+			<string>uppayx1</string>
+			<string>uppayx2</string>
+			<string>uppayx3</string>
 		</array>
 	</dict>
 	<key>LSApplicationQueriesSchemes</key>
