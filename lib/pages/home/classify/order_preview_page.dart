@@ -597,7 +597,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
               bool isOversea = false;
               for (var item in _orderModel.data.brands) {
                 for (var childItem in item.goods) {
-                  if (childItem.storehouse == 2||childItem.storehouse==3) isOversea = true;
+                  if (childItem.storehouse == 2 || childItem.storehouse == 3)
+                    isOversea = true;
                 }
               }
 
@@ -737,6 +738,17 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
     );
   }
 
+  bool get _overseaNeedIdentifier {
+    for (var item in _orderModel.data.brands) {
+      for (var good in item.goods) {
+        if (good.storehouse == 2 || good.storehouse == 3) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
   _allAmountTitle() {
     return Container(
       height: 55,
@@ -873,7 +885,15 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                       onPressed: !canDeliver
                           ? null
                           : () {
-                              _submit(context);
+                              if (_overseaNeedIdentifier &&
+                                  (!UserManager
+                                      .instance.user.info.realInfoStatus)) {
+                                AppRouter.push(
+                                  context,
+                                  RouteName.USER_VERIFY,
+                                );
+                              } else
+                                _submit(context);
                             },
                     ),
                   )

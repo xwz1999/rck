@@ -11,12 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/order_preview_model.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
-import 'package:recook/widgets/bottom_sheet/bottom_textfield_dialog.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/input_view.dart';
 
 class GoodsOrderItem extends StatefulWidget {
   final Brands brand;
