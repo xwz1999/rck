@@ -183,7 +183,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                     width: 30,
                     height: 30,
                   ),
-                  title: "待评价",
+                  title: "评价",
                   color: Colors.grey[700],
                   fontSize: _fontSize,
                   contentSpacing: 8,

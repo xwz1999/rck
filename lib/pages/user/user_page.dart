@@ -29,7 +29,10 @@ import 'package:recook/pages/user/widget/capital_view.dart';
 import 'package:recook/pages/user/widget/money_view.dart';
 import 'package:recook/pages/user/widget/order_central_view.dart';
 import 'package:recook/pages/user/widget/other_item_view.dart';
+import 'package:recook/pages/user/widget/other_item_view_v2.dart';
+import 'package:recook/pages/user/widget/shop_manager_view.dart';
 import 'package:recook/pages/user/widget/user_app_bar.dart';
+import 'package:recook/pages/user/widget/user_app_bar_v2.dart';
 import 'package:recook/pages/user/widget/user_page_assets_view.dart';
 import 'package:recook/redux/recook_state.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
@@ -102,29 +105,38 @@ class _UserPageState extends BaseStoreState<UserPage> {
 
   Widget _buildNestedScrollView(
       BuildContext context, Store<RecookState> store) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            height: 160 + ScreenUtil.statusBarHeight,
-            child: UserAppBar(
-              withdrawListener: () {
-                AppRouter.push(context, RouteName.USER_CASH_WITHDRAW_PAGE,
-                    arguments: UserCashWithdrawPage.setArguments(
-                        amount: getStore().state.userBrief.balance.toDouble()));
-              },
-              userListener: () {
-                push(RouteName.USER_INFO_PAGE);
-              },
-            ),
-          ),
-          Expanded(
-            child: _buildRefreshScrollView(context, store),
-          ),
-        ],
-      ),
+    return NestedScrollView(
+      headerSliverBuilder: (context, innerBoxIsScrolled) {
+        return [
+          SliverToBoxAdapter(child: UserAppBarV2()),
+        ];
+      },
+      body: _buildRefreshScrollView(context, store),
     );
+    // return Container(
+    //   child: Column(
+    //     mainAxisAlignment: MainAxisAlignment.start,
+    //     children: <Widget>[
+    //       UserAppBarV2(),
+    //       // Container(
+    //       //   height: 160 + ScreenUtil.statusBarHeight,
+    //       //   child: UserAppBar(
+    //       //     withdrawListener: () {
+    //       //       AppRouter.push(context, RouteName.USER_CASH_WITHDRAW_PAGE,
+    //       //           arguments: UserCashWithdrawPage.setArguments(
+    //       //               amount: getStore().state.userBrief.balance.toDouble()));
+    //       //     },
+    //       //     userListener: () {
+    //       //       push(RouteName.USER_INFO_PAGE);
+    //       //     },
+    //       //   ),
+    //       // ),
+    //       Expanded(
+    //         child: _buildRefreshScrollView(context, store),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 
   _updateUserBriefInfo() {
@@ -180,6 +192,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 height: AppConfig.getShowCommission() ? 10 : 0,
               ),
               UserPageAssetsView(),
+              ShopManagerView(),
               OrderCentralView(
                 clickListener: (int index) {
                   if (index == 4) {
@@ -197,7 +210,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                       arguments: OrderCenterPage.setArguments(index));
                 },
               ),
-              OtherItemView(),
+              // OtherItemView(),
+              OtherItemViewV2(),
             ],
           ),
         ),

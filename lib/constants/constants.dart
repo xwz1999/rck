@@ -87,3 +87,13 @@ class DeviceInfo {
     devicePixelRatio = data.devicePixelRatio;
   }
 }
+
+extension NumExt on num {
+  double get w => ScreenAdapterUtils.setWidth(this+.0);
+
+  double get sp => ScreenAdapterUtils.setSp(this+.0);
+
+  Widget get hb => SizedBox(height: this.w);
+
+  Widget get wb => SizedBox(width: this.w);
+}

@@ -6,21 +6,15 @@
  * remark    : 
  * ====================================================
  */
-import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:recook/constants/api.dart';
 import 'package:recook/constants/config.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
-import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/agreements/live_agreement_page.dart';
 import 'package:recook/pages/home/home_page.dart';
 import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
 import 'package:recook/pages/live/functions/live_function.dart';
-import 'package:recook/pages/live/live_stream/live_page.dart';
-import 'package:recook/pages/live/models/live_resume_model.dart';
 import 'package:recook/pages/live/video/add_video_page.dart';
 import 'package:recook/pages/live/pages/discovery_page.dart';
 import 'package:recook/pages/live/widget/live_fab_location.dart';
@@ -30,10 +24,8 @@ import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/third_party/bugly_helper.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/custom_route.dart';
-import 'package:recook/utils/permission_tool.dart';
 import 'package:recook/utils/print_util.dart';
 import 'package:recook/utils/versionInfo/version_tool.dart';
-import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/tabbarWidget/ace_bottom_navigation_bar.dart';

@@ -103,17 +103,17 @@ class _CapitalViewState extends BaseStoreState<CapitalView> {
             height: 65,
             child: Row(
               children: <Widget>[
-                _otherItem(
-                    "优惠券(张)",
-                    getStore()
-                        .state
-                        .userBrief
-                        .myAssets
-                        .couponNum
-                        .toInt()
-                        .toString(), onTap: () {
-                  push(RouteName.MY_COUPON_PAGE);
-                }),
+                // _otherItem(
+                //     "优惠券(张)",
+                //     getStore()
+                //         .state
+                //         .userBrief
+                //         .myAssets
+                //         .couponNum
+                //         .toInt()
+                //         .toString(), onTap: () {
+                //   push(RouteName.MY_COUPON_PAGE);
+                // }),
                 _otherItem(
                     ExtendedText.rich(TextSpan(children: [
                       TextSpan(
@@ -152,6 +152,12 @@ class _CapitalViewState extends BaseStoreState<CapitalView> {
                         .toStringAsFixed(2), onTap: () {
                   AppRouter.push(context, RouteName.RUI_COIN_PAGE);
                 }),
+                _otherItem(
+                  "余额（元）",
+                  (getStore().state.userBrief.balance ?? 0.0)
+                      .toDouble()
+                      .toStringAsFixed(2),
+                ),
                 _otherItem(
                     "权益卡(张)",
                     getStore()

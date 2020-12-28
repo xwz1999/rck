@@ -208,6 +208,8 @@ dependencies:
   flutter_union_pay :
     path: /Users/akufe/AndroidStudioProjects/flutter_union_pay
 
+  velocity_x: ^1.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
