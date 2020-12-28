@@ -11,6 +11,8 @@ import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/user/banlance/user_balance_page.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
@@ -157,6 +159,7 @@ class _CapitalViewState extends BaseStoreState<CapitalView> {
                   (getStore().state.userBrief.balance ?? 0.0)
                       .toDouble()
                       .toStringAsFixed(2),
+                  onTap: () => CRoute.push(context, UserBalancePage()),
                 ),
                 _otherItem(
                     "权益卡(张)",

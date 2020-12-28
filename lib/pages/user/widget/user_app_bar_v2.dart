@@ -42,26 +42,29 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
           mainAxisAlignment: MainAxisAlignment.end,
           mainAxisSize: MainAxisSize.max,
           children: [
-            DecoratedBox(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30.w),
-                border: Border.all(
-                  width: 1.w,
-                  color: Color(0x8F979797),
+            CustomImageButton(
+              onPressed: () => push(RouteName.USER_INFO_PAGE),
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.w),
+                  border: Border.all(
+                    width: 1.w,
+                    color: Color(0x8F979797),
+                  ),
                 ),
-              ),
-              position: DecorationPosition.foreground,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(30.w),
-                child: FadeInImage.assetNetwork(
-                  height: 60.w,
-                  width: 60.w,
-                  placeholder: AppImageName.placeholder_1x1,
-                  image: TextUtils.isEmpty(
-                          UserManager.instance.user.info.headImgUrl)
-                      ? ""
-                      : Api.getImgUrl(
-                          UserManager.instance.user.info.headImgUrl),
+                position: DecorationPosition.foreground,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(30.w),
+                  child: FadeInImage.assetNetwork(
+                    height: 60.w,
+                    width: 60.w,
+                    placeholder: AppImageName.placeholder_1x1,
+                    image: TextUtils.isEmpty(
+                            UserManager.instance.user.info.headImgUrl)
+                        ? ""
+                        : Api.getImgUrl(
+                            UserManager.instance.user.info.headImgUrl),
+                  ),
                 ),
               ),
             ),
