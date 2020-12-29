@@ -260,8 +260,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     fit: BoxFit.cover,
                   )),
               AppConfig.getShowCommission()
-                  ? GestureDetector(
-                      onTap: () {
+                  ? CustomImageButton(
+                      onPressed: () {
                         push(RouteName.CUMULATIVE_INCOME);
                       },
                       child: Container(

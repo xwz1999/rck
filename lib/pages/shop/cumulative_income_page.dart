@@ -8,9 +8,12 @@ import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/team_income_model.dart';
+import 'package:recook/pages/user/user_page_sub_income_page.dart';
 import 'package:recook/utils/user_level_tool.dart';
+import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/bottom_time_picker.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/dashed_rect.dart';
 import 'package:intl/intl.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -198,77 +201,88 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
                     ),
                   ),
                   20.hb,
-                  Container(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        _textColumn(
-                          titleAligment: Alignment.centerLeft,
-                          titleText: "自购收益",
-                          infoText: _teamIncomeModel == null
-                              ? "0.00"
-                              : _teamIncomeModel
-                                  .data.accumulateIncome.selfShopping
-                                  ?.toStringAsFixed(2),
-                        ),
-                        Spacer(),
-                        _textColumn(
-                          titleText: "导购收益",
-                          infoText: _teamIncomeModel == null
-                              ? "0.00"
-                              : _teamIncomeModel.data.accumulateIncome.share
-                                  ?.toStringAsFixed(2),
-                        ),
-                        _teamIncomeModel != null &&
-                                _teamIncomeModel.data.roleVisable
-                            ? Spacer()
-                            : Container(),
-                        _teamIncomeModel != null &&
-                                _teamIncomeModel.data.roleVisable
-                            ? _textColumn(
-                                titleText: "团队收益",
-                                infoText: _teamIncomeModel == null
-                                    ? "0.00"
-                                    : _teamIncomeModel
-                                        .data.accumulateIncome.team
-                                        ?.toStringAsFixed(2),
-                                infoColor: UserLevelTool.roleLevelEnum(
-                                            _teamIncomeModel
-                                                ?.data?.roleLevel) ==
-                                        UserRoleLevel.Master
-                                    ? Colors.black26
-                                    : Colors.black)
-                            : Container(),
-                      ],
+                  GridView(
+                    padding: EdgeInsets.zero,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3,
+                      crossAxisSpacing: 10.w,
+                      mainAxisSpacing: 5.w,
+                      childAspectRatio: 110 / 70,
                     ),
-                  ),
-                  <Widget>[
-                    _textColumn(
-                      titleText: "推荐收益",
-                      infoText: "0.00X",
-                    ),
-                    _textColumn(
-                      titleText: "平台奖励",
-                      infoText: "0.00X",
-                    ),
-                    SizedBox(),
-                  ].row(
-                      alignment: MainAxisAlignment.spaceBetween,
-                      axisSize: MainAxisSize.max),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      _textColumn(
-                        titleText: "推荐收益",
-                        infoText: "0.00X",
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    children: [
+                      _buildGridColumn(
+                        context,
+                        title: '自购收益',
+                        value: _teamIncomeModel
+                                ?.data?.accumulateIncome?.selfShopping
+                                ?.toStringAsFixed(2) ??
+                            '0.00',
+                        index: 0,
                       ),
-                      _textColumn(
-                        titleText: "平台奖励",
-                        infoText: "0.00X",
+                      _buildGridColumn(
+                        context,
+                        title: '导购收益',
+                        value: _teamIncomeModel?.data?.accumulateIncome?.share
+                                ?.toStringAsFixed(2) ??
+                            '0.00',
+                        index: 1,
                       ),
-                      SizedBox(),
+                      ..._teamIncomeModel?.data?.roleVisable ?? false
+                          ? [
+                              _buildGridColumn(
+                                context,
+                                title: '团队收益',
+                                value: _teamIncomeModel
+                                        ?.data?.accumulateIncome?.team
+                                        ?.toStringAsFixed(2) ??
+                                    '0.00',
+                                index: 2,
+                              )
+                            ]
+                          : [],
+                      _buildGridColumn(
+                        context,
+                        title: "推荐收益",
+                        value: "0.00X",
+                        index: 3,
+                      ),
+                      _buildGridColumn(
+                        context,
+                        title: "平台奖励",
+                        value: "0.00X",
+                        index: 4,
+                      ),
                     ],
                   ),
+                  // Container(
+                  //   child: Row(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: <Widget>[
+                  //       _teamIncomeModel != null &&
+                  //               _teamIncomeModel.data.roleVisable
+                  //           ? Spacer()
+                  //           : Container(),
+                  //       _teamIncomeModel != null &&
+                  //               _teamIncomeModel.data.roleVisable
+                  //           ? _textColumn(
+                  //               titleText: "团队收益",
+                  //               infoText: _teamIncomeModel == null
+                  //                   ? "0.00"
+                  //                   : _teamIncomeModel
+                  //                       .data.accumulateIncome.team
+                  //                       ?.toStringAsFixed(2),
+                  //               infoColor: UserLevelTool.roleLevelEnum(
+                  //                           _teamIncomeModel
+                  //                               ?.data?.roleLevel) ==
+                  //                       UserRoleLevel.Master
+                  //                   ? Colors.black26
+                  //                   : Colors.black)
+                  //           : Container(),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -543,7 +557,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
 
   _textColumn(
       {String titleText = "",
-      Color titleColor = Colors.black26,
+      Color titleColor = Colors.black54,
       double titleFontSize = 14,
       Alignment titleAligment = Alignment.centerLeft,
       String infoText = "",
@@ -571,7 +585,87 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
       ],
     );
   }
+}
 
+_buildGridColumn(
+  BuildContext context, {
+  String title,
+  String value,
+  int index,
+}) {
+  return CustomImageButton(
+    padding: EdgeInsets.zero,
+    onPressed: () {
+      _goToNextPage(index, context);
+    },
+    child: <Widget>[
+      [
+        title.text.color(Color(0xff3a3943)).size(14.sp).make(),
+        CustomImageButton(
+          child:
+              Image.asset(R.ASSETS_SHOP_HELPER_PNG, width: 12.w, height: 12.w),
+          onPressed: () => _openQuestDialog(index, title, context),
+        ),
+      ].row(),
+      3.hb,
+      value.text.color(Color(0xFF333333)).size(20.sp).make(),
+    ].column(
+      crossAlignment: CrossAxisAlignment.start,
+      alignment: MainAxisAlignment.center,
+    ),
+  );
+}
+
+_goToNextPage(int index, BuildContext context) {
+  switch (index) {
+    case 0:
+      break;
+    case 1:
+      break;
+    case 2:
+      AppRouter.push(context, RouteName.USER_PAGE_SUB_INCOME_PAGE,
+          arguments: UserPageSubIncomesPage.setArguments(
+              UserPageSubIncomesPageType.UserPageTeamIncome));
+      break;
+    case 3:
+      break;
+  }
+}
+
+_openQuestDialog(int index, String title, BuildContext context) {
+  String content = '';
+  switch (index) {
+    case 0:
+      content = '您本人下单并确认收货后，您获得的佣金。';
+      break;
+    case 1:
+      content = '''您的直属会员下单并确认收货后，您获得的佣金。
+
+
+直属会员：您的团队成员中，若某个会员与您之间的链路没有店主或店铺角色，则该会员称为您的直属会员。''';
+      break;
+    case 2:
+      content = '每月22日结算您团队上一个自然月确认收货的订单，按团队销售额的3%计算收益。';
+      break;
+    case 3:
+      content = '每月22日结算您推荐的团队上一个自然月确认收货的订单，按团队销售额的4%计算收益。';
+      break;
+    case 4:
+      content = '每月22日结算您可获取平台奖励的团队的上一个自然月确认收货的订单，按团队销售额的5%计算收益。';
+      break;
+  }
+  showDialog(
+    context: context,
+    child: NormalContentDialog(
+      title: title,
+      content: content.text.color(Color(0xFF333333)).make(),
+      items: [],
+      deleteItem: '确定',
+      type: NormalTextDialogType.delete,
+      listener: (_) => Navigator.pop(context),
+      deleteListener: () => Navigator.pop(context),
+    ),
+  );
 }
 
 /*

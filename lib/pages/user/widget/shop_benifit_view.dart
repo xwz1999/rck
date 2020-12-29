@@ -20,7 +20,7 @@ class ShopBenifitView extends StatelessWidget {
                 .size(16.sp)
                 .bold
                 .make()
-                .pSymmetric(v: 10.w, h: 5.w),
+                .p(10.w),
             Spacer(),
             Icon(Icons.keyboard_arrow_right,
                 size: 22, color: Color(0xff999999)),

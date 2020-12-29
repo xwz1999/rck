@@ -50,8 +50,8 @@ class _UserSetPasswordState extends BaseStoreState<UserSetPassword>{
   }
 
   _varCodeWidget(){
-    TextStyle redStyle = TextStyle(color: AppColor.themeColor, fontSize: ScreenAdapterUtils.setSp(15));
-    TextStyle greyStyle = TextStyle(color: Color(0xff777777), fontSize: ScreenAdapterUtils.setSp(15));
+    // TextStyle redStyle = TextStyle(color: AppColor.themeColor, fontSize: ScreenAdapterUtils.setSp(15));
+    // TextStyle greyStyle = TextStyle(color: Color(0xff777777), fontSize: ScreenAdapterUtils.setSp(15));
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
