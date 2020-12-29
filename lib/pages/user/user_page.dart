@@ -31,6 +31,7 @@ import 'package:recook/pages/user/widget/order_central_view.dart';
 import 'package:recook/pages/user/widget/other_item_view.dart';
 import 'package:recook/pages/user/widget/other_item_view_v2.dart';
 import 'package:recook/pages/user/widget/shop_benifit_view.dart';
+import 'package:recook/pages/user/widget/shop_check_view.dart';
 import 'package:recook/pages/user/widget/shop_manager_view.dart';
 import 'package:recook/pages/user/widget/user_app_bar.dart';
 import 'package:recook/pages/user/widget/user_app_bar_v2.dart';
@@ -194,6 +195,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
               ),
               UserPageAssetsView(),
               ShopBenifitView(),
+              ShopCheckView(),
               ShopManagerView(),
               OrderCentralView(
                 clickListener: (int index) {
