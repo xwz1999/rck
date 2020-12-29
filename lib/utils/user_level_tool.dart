@@ -162,6 +162,23 @@ class UserLevelTool {
     }
   }
 
+  static String get userCardBackground{
+    switch (UserLevelTool.currentRoleLevelEnum()) {
+      case UserRoleLevel.Diamond:
+        return R.ASSETS_USER_DIAMOND_WEBP;
+        break;
+      case UserRoleLevel.Gold:
+        return R.ASSETS_USER_GOLD_WEBP;
+        break;
+      case UserRoleLevel.Silver:
+        return R.ASSETS_USER_SLIVER_WEBP;
+        break;
+      default:
+        return R.ASSETS_USER_NORMAL_WEBP;
+        break;
+    }
+  }
+
   static String cardBarPath(UserRoleLevel roleLevel) {
     switch (roleLevel) {
       case UserRoleLevel.Diamond:

@@ -17,23 +17,6 @@ class UserAppBarV2 extends StatefulWidget {
 }
 
 class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
-  String get _foregroundImage {
-    switch (UserLevelTool.currentRoleLevelEnum()) {
-      case UserRoleLevel.Diamond:
-        return R.ASSETS_USER_DIAMOND_WEBP;
-        break;
-      case UserRoleLevel.Gold:
-        return R.ASSETS_USER_GOLD_WEBP;
-        break;
-      case UserRoleLevel.Silver:
-        return R.ASSETS_USER_SLIVER_WEBP;
-        break;
-      default:
-        return R.ASSETS_USER_NORMAL_WEBP;
-        break;
-    }
-  }
-
   _buildInnerInfo() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.end,
@@ -194,7 +177,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
           right: 6.w,
           bottom: 5.w,
           child: Image.asset(
-            _foregroundImage,
+            UserLevelTool.userCardBackground,
             fit: BoxFit.cover,
           ),
         ),
