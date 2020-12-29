@@ -11,12 +11,10 @@ import 'package:flutter/material.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/pages/home/widget/plus_minus_view.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/utils/custom_route.dart';
-import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/selected_list.dart';

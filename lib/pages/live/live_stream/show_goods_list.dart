@@ -493,9 +493,9 @@ showGoodsListDialog(
   // );
 }
 
-/**
- * INTERNAL GOODS DETAIL
- */
+// /**
+//  * INTERNAL GOODS DETAIL
+//  */
 
 class InternalGoodsDetail extends StatefulWidget {
   final GoodsLists model;

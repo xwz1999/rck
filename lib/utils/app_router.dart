@@ -8,7 +8,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:recook/pages/aftersale/choose_after_sale_type_page.dart';
 import 'package:recook/pages/business/publish_business_district_page.dart';
 import 'package:recook/pages/business/selling_point/selling_point_page.dart';

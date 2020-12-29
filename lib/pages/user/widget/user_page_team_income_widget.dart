@@ -5,7 +5,6 @@ import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/shop/widget/shop_page_bar_card_widget.dart';
 import 'package:recook/pages/shop/widget/shop_page_income_widget.dart';
 import 'package:recook/pages/user/model/user_team_income_model.dart';
 import 'package:recook/utils/text_utils.dart';

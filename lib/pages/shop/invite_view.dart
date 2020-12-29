@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/invite/diamond_recommand_page.dart';
