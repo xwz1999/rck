@@ -118,8 +118,8 @@ class ShopCheckPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeCap = StrokeCap.round;
     var headlen = 7; // length of head in pixels
-    double pointX = radius - (radius - 2.5) * cos(pi);
-    double pointY = radius + (radius - 2.5) * sin(pi);
+    double pointX = radius + (radius - 2.5) * sin(rotate);
+    double pointY = radius - (radius - 2.5) * cos(rotate);
     Path path = Path();
     path.moveTo(pointX, pointY);
     path.lineTo(pointX - headlen * cos(rotate - pi / 4),
@@ -138,7 +138,8 @@ class ShopCheckPainter extends CustomPainter {
     _drawProgress(canvas, radius);
     _drawTagBackground(canvas, radius);
     done ? _buildDownTag(canvas, radius) : _buildUpgradeTag(canvas, radius);
-    _drawArrow(canvas, radius, percentValue * 2 * pi);
+    if (percentValue >= 0.1 && percentValue <= 0.9)
+      _drawArrow(canvas, radius, percentValue * 2 * pi);
   }
 
   @override

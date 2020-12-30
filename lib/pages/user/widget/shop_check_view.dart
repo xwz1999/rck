@@ -24,7 +24,7 @@ class _ShopCheckViewState extends State<ShopCheckView> {
               themeColor: Color(0xFFE2B56B).withOpacity(0.5),
               beginColor: Color(0xFFECD5A7),
               endColor: Color(0xFFE0AE5C),
-              percentage: 25.0,
+              percentage: 95.0,
             ),
           ),
         ),

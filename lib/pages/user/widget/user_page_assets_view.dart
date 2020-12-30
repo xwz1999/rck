@@ -65,7 +65,7 @@ class _UserPageAssetsViewState extends BaseStoreState<UserPageAssetsView> {
     return <Widget>[item0, item1, item2];
   }
 
-  _itemWidget({icon = "", title = "", Function click, row1Title="", row1Info="",List<String> titles, List<String> infos,}){
+  _itemWidget({icon = "", title = "", Function click,List<String> titles, List<String> infos,}){
     return Container(
       margin: EdgeInsets.only(left: 10, right: 10, bottom: 10),
       height: 111,

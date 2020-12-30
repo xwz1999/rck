@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:recook/pages/user/user_benifit_page.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:recook/constants/constants.dart';
@@ -10,7 +12,7 @@ class ShopBenifitView extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomImageButton(
       padding: EdgeInsets.zero,
-      onPressed: () {},
+      onPressed: () => CRoute.push(context, UserBenifitPage()),
       child: VxBox(
         child: <Widget>[
           <Widget>[
