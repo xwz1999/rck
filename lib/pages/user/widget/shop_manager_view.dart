@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/pages/shop/get_platform_award_page.dart';
 import 'package:recook/pages/user/invite/diamond_recommand_page.dart';
+import 'package:recook/pages/user/invite/my_group_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -70,7 +71,7 @@ class ShopManagerView extends StatelessWidget {
               _buildGridItem(
                 title: '我的团队',
                 subTitle: '有福同享·真壕友',
-                onTap: () => AppRouter.push(context, RouteName.USER_INVITE),
+                onTap: () => CRoute.push(context,MyGroupPage()),
                 path: R.ASSETS_SHOP_MY_GROUP_WEBP,
               ),
               _buildGridItem(

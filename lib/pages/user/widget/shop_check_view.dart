@@ -56,9 +56,6 @@ class _ShopCheckViewState extends State<ShopCheckView> {
           6.wb,
           '白银店铺考核'.text.bold.size(16.sp).black.make(),
           Spacer(),
-          '查看规则'.text.color(Colors.black45).size(12.sp).make(),
-          Icon(Icons.arrow_forward_ios, size: 16.w, color: Colors.black26),
-          16.wb,
         ].row(),
         CustomImageButton(
           onPressed: () {},
