@@ -26,6 +26,17 @@ class _ShopCheckViewState extends State<ShopCheckView> {
   final Color goldBegin = Color(0xFFECD5A7);
   final Color goldEnd = Color(0xFFE0AE5C);
 
+  Color _themeColor;
+  Color _beginColor;
+  Color _endColor;
+  @override
+  void initState() {
+    super.initState();
+    _themeColor = sliverTheme;
+    _beginColor = sliverBegin;
+    _endColor = sliverEnd;
+  }
+
   @override
   Widget build(BuildContext context) {
     return VxBox(
@@ -70,10 +81,16 @@ class _ShopCheckViewState extends State<ShopCheckView> {
           height: 68.w,
           width: 68.w,
           child: CustomPaint(
+            child: Image.asset(
+              R.ASSETS_SHOP_PAGE_PROGRESS_ICON_MASTER_SALE_PNG,
+              height: 16.w,
+              width: 16.w,
+              color: _themeColor,
+            ).centered(),
             painter: ShopCheckPainter(
-              themeColor: sliverTheme.withOpacity(0.5),
-              beginColor: sliverBegin,
-              endColor: sliverEnd,
+              themeColor: _themeColor.withOpacity(0.5),
+              beginColor: _beginColor,
+              endColor: _endColor,
               percentage: 65.0,
             ),
           ),

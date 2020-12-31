@@ -100,6 +100,32 @@ class _BenefitViewGenState extends State<BenefitViewGen>
     );
   }
 
+  Widget noMoreDataView({String text, Widget icon}) {
+    return Container(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      width: double.infinity,
+      alignment: Alignment.center,
+      child: Column(
+        children: <Widget>[
+          icon != null
+              ? icon
+              : Image.asset(
+                  ShopImageName.shop_page_smile,
+                  width: 22,
+                  height: 12,
+                ),
+          Container(
+            height: 10,
+          ),
+          Text(
+            TextUtils.isEmpty(text) ? "这是我最后的底线" : text,
+            style: TextStyle(color: Color(0xff666666), fontSize: 12),
+          )
+        ],
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -158,21 +184,24 @@ class _BenefitViewGenState extends State<BenefitViewGen>
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(
                     parent: BouncingScrollPhysics()),
-                child: VxBox()
-                    .withDecoration(BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5.w),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.10),
-                          blurRadius: 4.w,
-                          offset: Offset(0, 2.w),
-                        ),
-                      ],
-                    ))
-                    .margin(EdgeInsets.only(bottom: 100))
-                    .height(1000)
-                    .make(),
+                child: [
+                  VxBox()
+                      .withDecoration(BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5.w),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.10),
+                            blurRadius: 4.w,
+                            offset: Offset(0, 2.w),
+                          ),
+                        ],
+                      ))
+                      .margin(EdgeInsets.only(bottom: 100))
+                      .height(1000)
+                      .make(),
+                  noMoreDataView(),
+                ].column(),
               ),
             ),
           ].stack().expand(),
