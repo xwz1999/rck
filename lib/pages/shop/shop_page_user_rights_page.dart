@@ -216,7 +216,7 @@ class _ShopPageUserRightsPageState
   _masterLevel23() {
     return Container(
       child: Image.asset(
-        "assets/shop_page_user_rights_master23.png",
+        R.ASSETS_SHOP_PAGE_USER_RIGHTS_MASTER23_PNG_WEBP,
         fit: BoxFit.fill,
       ),
     );
@@ -225,7 +225,7 @@ class _ShopPageUserRightsPageState
   _masterLevel4() {
     return Container(
       child: Image.asset(
-        "assets/shop_page_user_rights_master4.png",
+        R.ASSETS_SHOP_PAGE_USER_RIGHTS_MASTER4_PNG_WEBP,
         fit: BoxFit.fill,
       ),
     );
@@ -234,7 +234,7 @@ class _ShopPageUserRightsPageState
   _vip23() {
     return Container(
       child: Image.asset(
-        "assets/shop_page_user_rights_vip.png",
+        R.ASSETS_SHOP_PAGE_USER_RIGHTS_VIP_PNG_WEBP,
         fit: BoxFit.fill,
       ),
     );
@@ -243,7 +243,7 @@ class _ShopPageUserRightsPageState
   _vip4() {
     return Container(
       child: Image.asset(
-        "assets/shop_page_user_rights_vip4.png",
+        R.ASSETS_SHOP_PAGE_USER_RIGHTS_VIP4_PNG_WEBP,
         fit: BoxFit.fill,
       ),
     );
@@ -252,7 +252,7 @@ class _ShopPageUserRightsPageState
   _silver() {
     return Container(
       child: Image.asset(
-        "assets/shop_page_user_rights_silver.png",
+        R.ASSETS_SHOP_PAGE_USER_RIGHTS_SILVER_PNG_WEBP,
         fit: BoxFit.fill,
       ),
     );
@@ -261,7 +261,7 @@ class _ShopPageUserRightsPageState
   _gold() {
     return Container(
       child: Image.asset(
-        "assets/shop_page_user_rights_gold.png",
+        R.ASSETS_SHOP_PAGE_USER_RIGHTS_GOLD_PNG_WEBP,
         fit: BoxFit.fill,
       ),
     );
@@ -270,7 +270,7 @@ class _ShopPageUserRightsPageState
   _diamond() {
     return Container(
       child: Image.asset(
-        "assets/shop_page_user_rights_diamond.png",
+        R.ASSETS_SHOP_PAGE_USER_RIGHTS_DIAMOND_PNG_WEBP,
         fit: BoxFit.fill,
       ),
     );
