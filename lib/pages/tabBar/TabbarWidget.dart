@@ -253,11 +253,11 @@ class _TabBarWidgetState extends State<TabBarWidget>
   @override
   void dispose() {
     DPrint.printf("- - - - - - dispose");
+    _tabController?.removeListener(_tabListener);
     _tabController.dispose();
     _bottomBarController.dispose();
     UserManager.instance.login?.removeListener(_loginListener);
     UserManager.instance.selectTabbar.removeListener(_selectTabbar);
-    _tabController?.removeListener(_tabListener);
     super.dispose();
   }
 
