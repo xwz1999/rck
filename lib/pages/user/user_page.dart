@@ -27,7 +27,7 @@ import 'package:recook/pages/user/widget/capital_view.dart';
 import 'package:recook/pages/user/widget/money_view.dart';
 import 'package:recook/pages/user/widget/order_central_view.dart';
 import 'package:recook/pages/user/widget/other_item_view_v2.dart';
-import 'package:recook/pages/user/widget/shop_benifit_view.dart';
+import 'package:recook/pages/user/widget/shop_benefit_view.dart';
 import 'package:recook/pages/user/widget/shop_check_view.dart';
 import 'package:recook/pages/user/widget/shop_manager_view.dart';
 import 'package:recook/pages/user/widget/user_app_bar_v2.dart';
@@ -190,7 +190,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 height: AppConfig.getShowCommission() ? 10 : 0,
               ),
               UserPageAssetsView(),
-              ShopBenifitView(),
+              ShopBenefitView(),
               ShopCheckView(),
               ShopManagerView(),
               OrderCentralView(

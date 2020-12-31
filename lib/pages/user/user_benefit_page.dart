@@ -1,5 +1,6 @@
-import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:flutter/material.dart';
+import 'package:recook/pages/user/benefit_view_gen.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -9,14 +10,14 @@ import 'package:recook/widgets/custom_painters/round_background_painter.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
 
-class UserBenifitPage extends StatefulWidget {
-  UserBenifitPage({Key key}) : super(key: key);
+class UserBenefitPage extends StatefulWidget {
+  UserBenefitPage({Key key}) : super(key: key);
 
   @override
-  _UserBenifitPageState createState() => _UserBenifitPageState();
+  _UserBenefitPageState createState() => _UserBenefitPageState();
 }
 
-class _UserBenifitPageState extends State<UserBenifitPage>
+class _UserBenefitPageState extends State<UserBenefitPage>
     with TickerProviderStateMixin {
   List<String> tabs = ['今日', '昨日', '本月', '上月'];
   TabController _tabController;
@@ -142,7 +143,7 @@ class _UserBenifitPageState extends State<UserBenifitPage>
   List<Widget> _buildBottomItems() {
     return [
       _buildItem(
-        onTap: () {},
+        onTap: () => CRoute.push(context, BenefitViewGen()),
         path: R.ASSETS_USER_PINK_BUYER_PNG,
         title: '自购收益',
         firstItem: _ItemClass(title: '订单(笔)', value: '151X'),

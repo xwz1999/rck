@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recook/pages/shop/get_platform_award_page.dart';
 import 'package:recook/pages/user/invite/diamond_recommand_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/share_tool.dart';
@@ -88,7 +89,7 @@ class ShopManagerView extends StatelessWidget {
               _buildGridItem(
                 title: '获取平台奖励',
                 subTitle: '平台可靠·奖励多',
-                onTap: () {},
+                onTap: () => CRoute.push(context, GetPlatformAwardPage()),
                 path: R.ASSETS_SHOP_PLATFORM_AWARD_WEBP,
               ),
               _buildGridItem(

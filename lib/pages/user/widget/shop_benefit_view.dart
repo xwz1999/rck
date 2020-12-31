@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:recook/pages/user/user_benifit_page.dart';
+import 'package:recook/pages/user/user_benefit_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:recook/constants/constants.dart';
 
-class ShopBenifitView extends StatelessWidget {
-  const ShopBenifitView({Key key}) : super(key: key);
+class ShopBenefitView extends StatelessWidget {
+  const ShopBenefitView({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CustomImageButton(
       padding: EdgeInsets.zero,
-      onPressed: () => CRoute.push(context, UserBenifitPage()),
+      onPressed: () => CRoute.push(context, UserBenefitPage()),
       child: VxBox(
         child: <Widget>[
           <Widget>[

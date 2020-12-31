@@ -112,70 +112,70 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
     return listWidget;
   }
 
-  _imageBgWidgetS() {
-    double width = MediaQuery.of(context).size.width;
-    return Stack(
-      children: [
-        Container(
-          width: width,
-          child: Image.asset(
-            'assets/memberBenefitsPage_bg_s.jpg',
-            fit: BoxFit.fill,
-          ),
-        ),
-        Positioned(
-          top: rSize(1148),
-          // right: 0,
-          left: rSize(120),
-          child: FlatButton(
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(
-                              rSize(28), rSize(36), rSize(28), 0),
-                          child: Image.asset(
-                            'assets/memberBenefitsPage_dialog.jpg',
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        rHBox(10),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Icon(
-                            CupertinoIcons.clear_circled,
-                            color: Colors.grey,
-                            size: rSize(40),
-                          ),
-                        ),
-                      ],
-                    );
-                  });
-            },
-            child: Text(''),
-            minWidth: rSize(150),
-            height: rSize(35),
-          ),
-        ),
-        Positioned(
-            left: rSize(40),
-            top: rSize(1200),
-            child: FlatButton(
-              onPressed: () {
-                ShareTool().inviteShare(context, customTitle: Container());
-              },
-              child: Text(''),
-              minWidth: rSize(300),
-              height: rSize(70),
-            ))
-      ],
-    );
-  }
+  // _imageBgWidgetS() {
+  //   double width = MediaQuery.of(context).size.width;
+  //   return Stack(
+  //     children: [
+  //       Container(
+  //         width: width,
+  //         child: Image.asset(
+  //           'assets/memberBenefitsPage_bg_s.jpg',
+  //           fit: BoxFit.fill,
+  //         ),
+  //       ),
+  //       Positioned(
+  //         top: rSize(1148),
+  //         // right: 0,
+  //         left: rSize(120),
+  //         child: FlatButton(
+  //           onPressed: () {
+  //             showDialog(
+  //                 context: context,
+  //                 builder: (BuildContext context) {
+  //                   return Column(
+  //                     children: [
+  //                       Padding(
+  //                         padding: EdgeInsets.fromLTRB(
+  //                             rSize(28), rSize(36), rSize(28), 0),
+  //                         child: Image.asset(
+  //                           'assets/memberBenefitsPage_dialog.jpg',
+  //                           fit: BoxFit.fill,
+  //                         ),
+  //                       ),
+  //                       rHBox(10),
+  //                       GestureDetector(
+  //                         onTap: () {
+  //                           Navigator.pop(context);
+  //                         },
+  //                         child: Icon(
+  //                           CupertinoIcons.clear_circled,
+  //                           color: Colors.grey,
+  //                           size: rSize(40),
+  //                         ),
+  //                       ),
+  //                     ],
+  //                   );
+  //                 });
+  //           },
+  //           child: Text(''),
+  //           minWidth: rSize(150),
+  //           height: rSize(35),
+  //         ),
+  //       ),
+  //       Positioned(
+  //           left: rSize(40),
+  //           top: rSize(1200),
+  //           child: FlatButton(
+  //             onPressed: () {
+  //               ShareTool().inviteShare(context, customTitle: Container());
+  //             },
+  //             child: Text(''),
+  //             minWidth: rSize(300),
+  //             height: rSize(70),
+  //           ))
+  //     ],
+  //   );
+  // }
 
   _imageBgWidget() {
     double width = MediaQuery.of(context).size.width;
@@ -301,7 +301,7 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
                 ),
                 Container(
                   child: Text(
-                    '已邀请人数:${_inviteCount}',
+                    '已邀请人数:$_inviteCount',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: ScreenAdapterUtils.setSp(16)),

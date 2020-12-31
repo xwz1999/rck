@@ -11,6 +11,7 @@ import 'package:recook/models/shop_upgrade_role_message_model.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/text_page.dart';
+import 'package:recook/constants/constants.dart';
 
 class ShopRecommendUpgradePage extends StatefulWidget {
   ShopRecommendUpgradePage({Key key}) : super(key: key);
@@ -76,7 +77,7 @@ class _ShopRecommendUpgradePageState
         Container(
           width: width,
           child: Image.asset(
-            'assets/memberBenefitsPage_bg_s.jpg',
+            R.ASSETS_MEMBERBENEFITSPAGE_BG_S_WEBP,
             fit: BoxFit.fill,
           ),
         ),

@@ -19,6 +19,17 @@ class Constants {
   }
 }
 
+extension SeparateExt on List<Widget> {
+  List<Widget> sepWidget({Widget separate}) {
+    return List.generate(this.length * 2 - 1, (index) {
+      if (index.isEven)
+        return this[index ~/ 2];
+      else
+        return separate ?? 10.wb;
+    });
+  }
+}
+
 // 屏幕适配
 class ScreenAdapterUtils {
   static initial(BuildContext context) {
