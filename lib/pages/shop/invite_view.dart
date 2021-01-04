@@ -5,6 +5,7 @@ import 'package:recook/pages/user/invite/diamond_recommand_page.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/custom_route.dart';
 
+@Deprecated("this page is deprecated.")
 class InviteView extends StatefulWidget {
   final bool isDiamond; // 只显示单行
   final Function() shareListener;
@@ -99,6 +100,7 @@ class _InviteViewState extends State<InviteView> {
 
   _buildUpgrade() {
     return _buildCard(
+      //TODO remove unused images
       background: Image.asset(
         R.ASSETS_SHOP_UPGRADE_PNG,
         fit: BoxFit.cover,
@@ -110,6 +112,8 @@ class _InviteViewState extends State<InviteView> {
     );
   }
 
+  @Deprecated("deprecated.")
+  //TODO remove unused images
   _buildInvite({bool small = false}) {
     return _buildCard(
       background: Image.asset(
@@ -127,6 +131,7 @@ class _InviteViewState extends State<InviteView> {
   }
 
   _buildMyInvite({bool small = false}) {
+    //TODO remove unused images
     return _buildCard(
       background: Image.asset(
         small ? R.ASSETS_SHOP_MY_INVITE_SMALL_PNG : R.ASSETS_SHOP_MY_INVITE_PNG,
