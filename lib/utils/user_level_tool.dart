@@ -162,7 +162,7 @@ class UserLevelTool {
     }
   }
 
-  static String get userCardBackground{
+  static String get userCardBackground {
     switch (UserLevelTool.currentRoleLevelEnum()) {
       case UserRoleLevel.Diamond:
         return R.ASSETS_USER_DIAMOND_WEBP;
@@ -432,4 +432,25 @@ class UserLevelTool {
     }
     return UserRoleLevel.Vip;
   }
+
+  ///获取用户的名片的角色 icon
+  static String getRoleLevelIcon(UserRoleLevel level) {
+    switch (level) {
+      case UserRoleLevel.Diamond:
+        return R.ASSETS_USER_ICON_DIAMOND_PNG;
+      case UserRoleLevel.Gold:
+        return R.ASSETS_USER_ICON_GOLD_PNG;
+      case UserRoleLevel.Silver:
+        return R.ASSETS_USER_ICON_SLIVER_PNG;
+      case UserRoleLevel.Master:
+        return R.ASSETS_USER_ICON_MASTER_PNG;
+      case UserRoleLevel.Vip:
+        return R.ASSETS_USER_ICON_VIP_PNG;
+      default:
+        return R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG;
+    }
+  }
+
+  ///当前用户的名片角色
+  static String get roleLevelIcon => getRoleLevelIcon(currentRoleLevelEnum());
 }

@@ -79,7 +79,8 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
                 children: <Widget>[
                   _barWidget(),
                   _selectTimeWidget(),
-                  _infoWidget()
+                  _infoWidgetV2(),
+                  _infoWidget(),
                 ],
               ))
         ],
@@ -296,6 +297,96 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
         ],
       ),
     );
+  }
+
+  _infoWidgetV2() {
+    return Container(
+      constraints: BoxConstraints(minHeight: 200),
+      decoration: BoxDecoration(
+          image: DecorationImage(
+        // centerSlice: Rect.fromLTRB(30, 90, 30, 30),
+        centerSlice: Rect.fromLTWH(30, 100, 30, 1),
+        image: AssetImage(R.ASSETS_SHOP_PAGE_INCOME_PAGE_BG_PNG),
+      )),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          10.hb,
+          [
+            64.hb,
+            30.wb,
+            '月度收益'.text.size(14).black.bold.make(),
+            Spacer(),
+            '共${3}期收益'.text.size(14).color(Colors.black38).make(),
+            30.wb,
+          ].row(),
+          DashedRect(
+            color: Color(0xFFE6E6E6),
+          ).pSymmetric(h: 15.w),
+          20.hb,
+          ...<Widget>[
+            _buildInfoItem(isFirst: true),
+            _buildInfoItem(),
+            _buildInfoItem(),
+            _buildInfoItem(),
+            _buildInfoItem(),
+          ].sepWidget(separate: 20.hb),
+          30.hb,
+        ],
+      ),
+    );
+  }
+
+  _buildInfoItem({
+    int month,
+    int benefit,
+    bool isFirst = false,
+  }) {
+    return [
+      VxBox(
+        child: Column(
+          children: [
+            Row(),
+          ],
+        ),
+      )
+          //TODO unknown height
+          .height(168.w)
+          .color(Color(0xFFF7F8FA))
+          .padding(EdgeInsets.all(15.w))
+          .margin(EdgeInsets.symmetric(horizontal: 30.w))
+          .withRounded(value: 5.w)
+          .make(),
+      isFirst
+          ? SizedBox()
+          : Positioned(
+              left: 40.w,
+              top: -30.w,
+              child: Container(
+                height: 40.w,
+                width: 3.w,
+                decoration: BoxDecoration(
+                  color: Color(0xFFD5101A),
+                  borderRadius: BorderRadius.circular(3.w),
+                ),
+              ),
+            ),
+      isFirst
+          ? SizedBox()
+          : Positioned(
+              right: 40.w,
+              top: -30.w,
+              child: Container(
+                height: 40.w,
+                width: 3.w,
+                decoration: BoxDecoration(
+                  color: Color(0xFFD5101A),
+                  borderRadius: BorderRadius.circular(3.w),
+                ),
+              ),
+            ),
+    ].stack(clip: Clip.none);
   }
 
   _infoWidget() {

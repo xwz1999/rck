@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:recook/pages/user/widget/user_group_card.dart';
+import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -91,6 +93,24 @@ class _MyGroupPageState extends State<MyGroupPage> {
     );
   }
 
+  _buildGroupCards() {
+    return ListView.separated(
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
+      separatorBuilder: (_, __) => 10.hb,
+      itemBuilder: (context, index) {
+        //TODO
+        return UserGroupCard(
+          name: 'TESTNAME(TEST)',
+          groupCount: 6,
+          phone: '18291010101',
+          shopRole: UserRoleLevel.Vip,
+          wechatId: 'TEST',
+        );
+      },
+      itemCount: 10,
+    ).expand();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,6 +125,8 @@ class _MyGroupPageState extends State<MyGroupPage> {
         children: [
           _buildSearchButton(),
           _buildTitleBar(),
+          10.hb,
+          _buildGroupCards(),
         ],
       ),
     );
