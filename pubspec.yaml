@@ -205,8 +205,14 @@ dependencies:
 
   flutter_markdown:
 
-  flutter_union_pay :
-    path: /Users/akufe/AndroidStudioProjects/flutter_union_pay
+  flutter_union_pay:
+
+  package_signature:
+    git:
+      url: git@192.168.2.201:aku_fe/package_signature.git
+  
+  raw_toast: ^0.0.1
+
 
 dev_dependencies:
   flutter_test:

@@ -476,9 +476,9 @@ packages:
   flutter_union_pay:
     dependency: "direct main"
     description:
-      path: "/Users/akufe/AndroidStudioProjects/flutter_union_pay"
-      relative: false
-    source: path
+      name: flutter_union_pay
+      url: "https://pub.flutter-io.cn"
+    source: hosted
     version: "0.0.4"
   flutter_web_plugins:
     dependency: transitive
@@ -748,6 +748,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.10"
+  package_signature:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "6f0afe035501bea664f5668a935aae0b31949069"
+      url: "git@192.168.2.201:aku_fe/package_signature.git"
+    source: git
+    version: "0.0.1"
   path:
     dependency: "direct main"
     description:
@@ -930,6 +939,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.3.8"
+  raw_toast:
+    dependency: "direct main"
+    description:
+      name: raw_toast
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.1"
   redux:
     dependency: transitive
     description:

@@ -1,13 +1,17 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bugly/flutter_bugly.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
 import 'package:oktoast/oktoast.dart';
+import 'package:package_signature/package_signature.dart';
+import 'package:raw_toast/raw_toast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -113,6 +117,7 @@ class MyAppState extends State<MyApp> {
     super.initState();
     initPlatformState();
     BuglyHelper.initialSDK();
+    checkSignature();
     // BuglyHelper.setUserInfo();
     // ShareSDKRegister register = ShareSDKRegister();
     // register.setupQQ("1109724223", "UGWklum7WWI03ll9");
@@ -127,6 +132,25 @@ class MyAppState extends State<MyApp> {
         licenseKey: key,
       );
     });
+
+    //签名验证
+    //----------
+    //使用SHA256计算签名
+    //仅验证Android 端的签名
+  }
+
+  Future checkSignature() async {
+    if (Platform.isAndroid) {
+      Signature signature = await PackageSignature.signature;
+      bool signPass =
+          'kzOk4i5opDSCXXjbA9SSrws9a5fytdFFUsumV5DHz2o=' == signature.sha256;
+      if (!signPass) {
+        RawToast.toast('请从官方渠道下载本应用,即将退出');
+        Future.delayed(Duration(milliseconds: 300), () {
+          SystemNavigator.pop();
+        });
+      }
+    }
   }
 
   Future<void> initPlatformState() async {
