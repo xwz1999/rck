@@ -231,8 +231,6 @@ flutter:
 
     - assets/activityImage/
     - assets/recook_launch_image/
-    - assets/keys/server_rsa_public_key.pem
-    - assets/keys/app_rsa_private_key.pem
     - assets/svg/
     - assets/icon/
     - assets/sound/recook_scan.mp3
