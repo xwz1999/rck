@@ -1,6 +1,8 @@
 
 # recook
 
+![recook](./assets/icon/recook_icon_120.png)
+
 ## 瑞库客 商城应用 📦
 
 ## 在运行和构建应用前请详细阅读本文档
@@ -24,6 +26,24 @@
 `./lib/utils/sc_encrypt_util.dart`  17,27行
 
 ## Getting Started
+
+### 打包apk
+
+```bash
+flutter pub run grinder build-apk
+```
+
+`with verbose`
+
+```bash
+flutter pub run grinder build-apk --v
+```
+
+### 加固应用后签名
+
+```bash
+flutter pub run grinder sign --input=xxx.apk
+```
 
 ### 预安装软件包
 

@@ -35,6 +35,7 @@ Future buildApk() async {
 
   stdout.write("opening downloadPath 🛠\n");
   await Process.run('open', ['${Config.downloadPath}/builds']);
+  await Process.run('open', ['${Config.downloadPath}']);
   stdout.write("opening tencent reinforce 🛠\n");
   await Process.run(
       'open', ['https://console.cloud.tencent.com/ms/reinforce/upload']);
@@ -49,6 +50,8 @@ rawBuild({bool verbose = false}) async {
 ///签名
 @Task()
 sign() async {
+  TaskArgs args = context.invocation.arguments;
+  String input = args.getOption('input');
   stdout.write('start SIGN 🔑\n');
   ProcessResult process = await Process.run(
     Config.apksignerPath,
@@ -64,7 +67,7 @@ sign() async {
       'pass:${Config.recookPassword}',
       '--out',
       '${Config.downloadPath}/builds/${Config.packageName}_release_signed.apk',
-      '${Config.downloadPath}/builds/${Config.packageName}_release.apk',
+      input,
     ],
   );
   stdout.write(process.stdout);

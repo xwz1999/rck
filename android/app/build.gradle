@@ -59,7 +59,6 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.akuhome.recook"
         minSdkVersion 23
         targetSdkVersion 28
@@ -94,7 +93,6 @@ android {
         debug {
             keyAlias 'alias'
             keyPassword 'recook'
-            // storeFile file('/Users/nansi/Desktop/Flutter/Project/recook/jks/recook.keystore')
             storeFile file('../../jks/recook.keystore');
             storePassword 'recook'
         } 
