@@ -14,15 +14,11 @@ test() => new TestRunner().testAsync();
 ///打包APK
 @Task()
 Future buildApk() async {
-  TaskArgs args = context.invocation.arguments;
-  bool verbose = args.getFlag('v');
   stdout.write("Build APK 📦\n");
-  stdout.write("BUILDINGAPK");
+  stdout.write("BUILDINGAPK\n");
   await Process.start('flutter', ['build', 'apk']).then((proc) async {
-    if (verbose) {
-      await stdout.addStream(proc.stdout);
-      await stderr.addStream(proc.stderr);
-    }
+    await stdout.addStream(proc.stdout);
+    await stderr.addStream(proc.stderr);
   });
   stdout.write("\rBuild APK DONE 📦\n");
   stdout.write("copy build to download 🛠\n");
