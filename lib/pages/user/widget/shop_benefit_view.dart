@@ -1,12 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:recook/pages/user/functions/user_benefit_func.dart';
+import 'package:recook/pages/user/model/user_benefit_model.dart';
 import 'package:recook/pages/user/user_benefit_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:recook/constants/constants.dart';
 
-class ShopBenefitView extends StatelessWidget {
-  const ShopBenefitView({Key key}) : super(key: key);
+class ShopBenefitView extends StatefulWidget {
+  ShopBenefitView({Key key}) : super(key: key);
+
+  @override
+  ShopBenefitViewState createState() => ShopBenefitViewState();
+}
+
+class ShopBenefitViewState extends State<ShopBenefitView> {
+  UserBenefitModel _model = UserBenefitModel.zero();
+
+  Future updateBenefit() async {
+    _model = await UserBenefitFunc.update();
+    if (mounted) setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    updateBenefit();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +58,12 @@ class ShopBenefitView extends StatelessWidget {
             child: Row(
               children: [
                 <Widget>[
-                  '1223.56X'.text.size(18.sp).color(Color(0xFF333333)).make(),
+                  _model.data.monthExpect
+                      .toStringAsFixed(2)
+                      .text
+                      .size(18.sp)
+                      .color(Color(0xFF333333))
+                      .make(),
                   6.hb,
                   '本月预估'.text.size(12.sp).color(Color(0xFF333333)).make(),
                 ].column().expand(),
@@ -50,7 +75,12 @@ class ShopBenefitView extends StatelessWidget {
                   endIndent: 16.w,
                 ),
                 <Widget>[
-                  '1223.56X'.text.size(18.sp).color(Color(0xFF333333)).make(),
+                  _model.data.dayExpect
+                      .toStringAsFixed(2)
+                      .text
+                      .size(18.sp)
+                      .color(Color(0xFF333333))
+                      .make(),
                   6.hb,
                   '今日预估'.text.size(12.sp).color(Color(0xFF333333)).make(),
                 ].column().expand(),
@@ -69,7 +99,11 @@ class ShopBenefitView extends StatelessWidget {
                 textBaseline: TextBaseline.alphabetic,
                 children: <Widget>[
                   '上月结算'.text.size(12.sp).color(Color(0xFF666666)).make(),
-                  '¥1234.12X'.text.size(12.sp).color(Color(0xFFD7BE8E)).make(),
+                  '¥${_model.data.lastMonthIncome.toStringAsFixed(2)}'
+                      .text
+                      .size(12.sp)
+                      .color(Color(0xFFD7BE8E))
+                      .make(),
                 ]).expand(),
             30.hb,
             Row(
@@ -78,7 +112,11 @@ class ShopBenefitView extends StatelessWidget {
                 textBaseline: TextBaseline.alphabetic,
                 children: <Widget>[
                   '上月预估'.text.size(12.sp).color(Color(0xFF666666)).make(),
-                  '¥1234.12X'.text.size(12.sp).color(Color(0xFFD7BE8E)).make(),
+                  '¥${_model.data.lastMonthExpect.toStringAsFixed(2)}'
+                      .text
+                      .size(12.sp)
+                      .color(Color(0xFFD7BE8E))
+                      .make(),
                 ]).expand(),
           ].row(),
         ].column(crossAlignment: CrossAxisAlignment.start),

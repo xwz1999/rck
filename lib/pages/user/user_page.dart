@@ -56,6 +56,9 @@ class _UserPageState extends BaseStoreState<UserPage> {
   String _capital; //提现金额
   bool _isFirstLoad = true;
 
+  GlobalKey<ShopBenefitViewState> _shopBenefitKey =
+      GlobalKey<ShopBenefitViewState>();
+
   @override
   bool get wantKeepAlive => true;
 
@@ -167,6 +170,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
           refreshingText: "正在更新个人数据...",
           onRefresh: () {
             VersionTool.checkVersionInfo(context);
+            _shopBenefitKey.currentState.updateBenefit();
             _updateUserBriefInfo();
           },
           body: ListView(
@@ -190,7 +194,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 height: AppConfig.getShowCommission() ? 10 : 0,
               ),
               UserPageAssetsView(),
-              ShopBenefitView(),
+              ShopBenefitView(key: _shopBenefitKey),
               ShopCheckView(),
               ShopManagerView(),
               OrderCentralView(
