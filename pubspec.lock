@@ -536,6 +536,20 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.8.6"
+  hive:
+    dependency: "direct main"
+    description:
+      name: hive
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.4.4+1"
+  hive_flutter:
+    dependency: "direct main"
+    description:
+      name: hive_flutter
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.3.1"
   html:
     dependency: transitive
     description:

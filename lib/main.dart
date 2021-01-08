@@ -8,6 +8,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bugly/flutter_bugly.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:oktoast/oktoast.dart';
 import 'package:package_signature/package_signature.dart';
@@ -22,6 +24,7 @@ import 'package:recook/redux/openinstall_state.dart';
 import 'package:recook/redux/recook_state.dart';
 import 'package:recook/third_party/bugly_helper.dart';
 import 'package:recook/utils/CommonLocalizationsDelegate.dart';
+import 'package:recook/utils/storage/hive_store.dart';
 import 'package:recook/utils/test.dart';
 import 'package:redux/redux.dart';
 import 'package:tencent_im_plugin/tencent_im_plugin.dart';
@@ -53,6 +56,9 @@ void main() async {
   // 设置当前是否为测试环境
   bool isDebug = true;
   AppConfig.setDebug(isDebug);
+
+  await Hive.initFlutter();
+  await HiveStore.initBox();
 
   bool inTest = Test.test();
   if (inTest) {
@@ -118,6 +124,7 @@ class MyAppState extends State<MyApp> {
     initPlatformState();
     BuglyHelper.initialSDK();
     checkSignature();
+
     // BuglyHelper.setUserInfo();
     // ShareSDKRegister register = ShareSDKRegister();
     // register.setupQQ("1109724223", "UGWklum7WWI03ll9");

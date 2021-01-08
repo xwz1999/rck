@@ -4,6 +4,8 @@ import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/welcome/privacy_page_v2.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/sc_tile.dart';
@@ -66,12 +68,13 @@ class _SettingItemListViewState extends BaseStoreState<SettingItemListView> {
                         // context, RouteName.WEB_VIEW_PAGE, arguments: WebViewPage.setArguments(url: WebApi.aboutUs, title: "关于我们"), );
                       }),
                       SCTile.normalTile("隐私政策", listener: () {
-                        AppRouter.push(
-                          context,
-                          RouteName.WEB_VIEW_PAGE,
-                          arguments: WebViewPage.setArguments(
-                              url: WebApi.privacy, title: "隐私政策"),
-                        );
+                        // AppRouter.push(
+                        //   context,
+                        //   RouteName.WEB_VIEW_PAGE,
+                        //   arguments: WebViewPage.setArguments(
+                        //       url: WebApi.privacy, title: "隐私政策"),
+                        // );
+                        CRoute.push(context, PrivacyPageV2());
                       }),
                       getEmptyBox(),
                       SCTile.normalTile("退出登录", listener: () {

@@ -213,6 +213,8 @@ dependencies:
   
   raw_toast: ^0.0.1
 
+  hive: ^1.4.4+1
+  hive_flutter: ^0.3.1
 
 dev_dependencies:
   flutter_test:

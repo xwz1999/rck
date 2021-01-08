@@ -16,7 +16,9 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/login/wechat_bind_page.dart';
+import 'package:recook/pages/welcome/privacy_page_v2.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/progress/sc_dialog.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:recook/widgets/webView.dart';
@@ -239,12 +241,13 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
     final TapGestureRecognizer recognizer = new TapGestureRecognizer();
     recognizer.onTap = () {
       // print("点击协议了");
-      AppRouter.push(
-        context,
-        RouteName.WEB_VIEW_PAGE,
-        arguments: WebViewPage.setArguments(
-            url: WebApi.privacy, title: "用户使用协议", hideBar: true),
-      );
+      // AppRouter.push(
+      //   context,
+      //   RouteName.WEB_VIEW_PAGE,
+      //   arguments: WebViewPage.setArguments(
+      //       url: WebApi.privacy, title: "用户使用协议", hideBar: true),
+      // );
+      CRoute.push(context, PrivacyPageV2());
     };
     return recognizer;
   }
