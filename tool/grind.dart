@@ -69,6 +69,10 @@ sign() async {
   stdout.write(process.stdout);
   stderr.write(process.stderr);
   stdout.write('end SIGN 🔑\n');
+  Process.run('adb', [
+    'install',
+    '${Config.downloadPath}/builds/${Config.packageName}_release_signed.apk',
+  ]);
 }
 
 @DefaultTask()
