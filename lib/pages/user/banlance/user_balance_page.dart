@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/user/functions/user_balance_func.dart';
+import 'package:recook/pages/user/model/user_balance_info_model.dart';
 import 'package:recook/pages/user/user_cash_withdraw_page.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
@@ -15,6 +17,13 @@ class UserBalancePage extends StatefulWidget {
 }
 
 class _UserBalancePageState extends State<UserBalancePage> {
+  UserBalanceInfoModel _model = UserBalanceInfoModel.zero();
+  @override
+  void initState() {
+    super.initState();
+    UserBalanceFunc.info().then((model) => setState(() => _model = model));
+  }
+
   @override
   Widget build(BuildContext context) {
     return RecookScaffold(
@@ -51,13 +60,23 @@ class _UserBalancePageState extends State<UserBalancePage> {
               [
                 '可使用(元)'.text.size(14.sp).color(Color(0xFF333333)).make(),
                 4.hb,
-                '680.00X'.text.size(30).color(Color(0xFFD40000)).make(),
+                _model.data.balance
+                    .toStringAsFixed(2)
+                    .text
+                    .size(30)
+                    .color(Color(0xFFD40000))
+                    .make(),
               ].column(crossAlignment: CrossAxisAlignment.start),
               Spacer(),
               [
                 '累计提现(元)'.text.size(14.sp).color(Color(0xFF333333)).make(),
                 4.hb,
-                '680.00X'.text.size(30).black.make(),
+                _model.data.totalWithdraw
+                    .toStringAsFixed(2)
+                    .text
+                    .size(30)
+                    .black
+                    .make(),
               ].column(crossAlignment: CrossAxisAlignment.end),
               16.wb,
             ].row(),

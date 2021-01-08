@@ -210,6 +210,8 @@ dependencies:
 
   velocity_x: ^1.0.1
 
+  animations:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
