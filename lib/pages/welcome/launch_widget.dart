@@ -56,12 +56,12 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
           bool secondAgree =
               (await launchPrivacySecondDialog(context)) ?? false;
           //第2次不同意
-          if (!secondAgree) SystemNavigator.pop();
-          // else
-          //   HiveStore.appBox.put('privacy_init', true);
-        }
-        // else
-        //   HiveStore.appBox.put('privacy_init', true);
+          if (!secondAgree)
+            SystemNavigator.pop();
+          else
+            HiveStore.appBox.put('privacy_init', true);
+        } else
+          HiveStore.appBox.put('privacy_init', true);
       }
       AppRouter.fadeAndReplaced(globalContext, RouteName.WELCOME_PAGE);
     });
