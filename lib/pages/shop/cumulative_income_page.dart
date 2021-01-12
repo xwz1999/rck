@@ -8,6 +8,8 @@ import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/team_income_model.dart';
+import 'package:recook/pages/user/functions/user_benefit_func.dart';
+import 'package:recook/pages/user/model/user_accumulate_model.dart';
 import 'package:recook/pages/user/user_page_sub_income_page.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/alert.dart';
@@ -27,15 +29,39 @@ class CumulativeIncomePage extends StatefulWidget {
 
 class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
     with TickerProviderStateMixin {
+  //user new api
+  //
   TeamIncomeModel _teamIncomeModel;
   bool _noData = false;
 
   String _selectYear;
 
+  ///累计收益
+  ///
+  UserAccumulateModel _model = UserAccumulateModel.zero();
+
+  ///自购收益
+  double get _purchase => _model?.data?.purchaseAmount ?? 0;
+
+  ///导购收益
+  double get _guide => _model?.data?.guideAmount ?? 0;
+
+  ///团队收益
+  double get _team => _model?.data?.teamAmount ?? 0;
+
+  ///推荐奖励
+  double get _recommand => _model?.data?.recommendAmount ?? 0;
+
+  ///平台奖励收益
+  double get _reward => _model?.data?.rewardAmount ?? 0;
+
+  double get _allAmount => _purchase + _guide + _team + _recommand + _reward;
+
   @override
   void initState() {
     _selectYear = DateTime.now().year.toString();
     _getShopIncome();
+    _getAccumulate();
     super.initState();
   }
 
@@ -194,10 +220,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
                     alignment: Alignment.centerLeft,
                     child: _textColumn(
                       titleText: "累计收益",
-                      infoText: _teamIncomeModel == null
-                          ? "0.00"
-                          : _teamIncomeModel.data.accumulateIncome.all
-                              ?.toStringAsFixed(2),
+                      infoText: _allAmount.toStringAsFixed(2),
                       infoFontSize: 24,
                     ),
                   ),
@@ -216,18 +239,13 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
                       _buildGridColumn(
                         context,
                         title: '自购收益',
-                        value: _teamIncomeModel
-                                ?.data?.accumulateIncome?.selfShopping
-                                ?.toStringAsFixed(2) ??
-                            '0.00',
+                        value: _purchase.toStringAsFixed(2),
                         index: 0,
                       ),
                       _buildGridColumn(
                         context,
                         title: '导购收益',
-                        value: _teamIncomeModel?.data?.accumulateIncome?.share
-                                ?.toStringAsFixed(2) ??
-                            '0.00',
+                        value: _guide.toStringAsFixed(2),
                         index: 1,
                       ),
                       ..._teamIncomeModel?.data?.roleVisable ?? false
@@ -235,10 +253,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
                               _buildGridColumn(
                                 context,
                                 title: '团队收益',
-                                value: _teamIncomeModel
-                                        ?.data?.accumulateIncome?.team
-                                        ?.toStringAsFixed(2) ??
-                                    '0.00',
+                                value: _team.toStringAsFixed(2),
                                 index: 2,
                               )
                             ]
@@ -246,13 +261,13 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
                       _buildGridColumn(
                         context,
                         title: "推荐收益",
-                        value: "0.00X",
+                        value: _recommand.toStringAsFixed(2),
                         index: 3,
                       ),
                       _buildGridColumn(
                         context,
                         title: "平台奖励",
-                        value: "0.00X",
+                        value: _reward.toStringAsFixed(2),
                         index: 4,
                       ),
                     ],
@@ -646,6 +661,11 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
     setState(() {});
   }
 
+  _getAccumulate() async {
+    _model = await UserBenefitFunc.accmulate();
+    setState(() {});
+  }
+
   _textColumn(
       {String titleText = "",
       Color titleColor = Colors.black54,
@@ -684,25 +704,29 @@ _buildGridColumn(
   String value,
   int index,
 }) {
-  return CustomImageButton(
+  return MaterialButton(
+    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     padding: EdgeInsets.zero,
     onPressed: () {
       _goToNextPage(index, context);
     },
-    child: <Widget>[
-      [
-        title.text.color(Color(0xff3a3943)).size(14.sp).make(),
-        CustomImageButton(
-          child:
-              Image.asset(R.ASSETS_SHOP_HELPER_PNG, width: 12.w, height: 12.w),
-          onPressed: () => _openQuestDialog(index, title, context),
-        ),
-      ].row(),
-      3.hb,
-      value.text.color(Color(0xFF333333)).size(20.sp).make(),
-    ].column(
-      crossAlignment: CrossAxisAlignment.start,
-      alignment: MainAxisAlignment.center,
+    child: Align(
+      child: <Widget>[
+        [
+          title.text.color(Color(0xff3a3943)).size(14.sp).make(),
+          CustomImageButton(
+            child: Image.asset(R.ASSETS_SHOP_HELPER_PNG,
+                width: 12.w, height: 12.w),
+            onPressed: () => _openQuestDialog(index, title, context),
+          ),
+        ].row(),
+        3.hb,
+        value.text.color(Color(0xFF333333)).size(20.sp).make(),
+      ].column(
+        crossAlignment: CrossAxisAlignment.start,
+        alignment: MainAxisAlignment.center,
+      ),
+      alignment: Alignment.centerLeft,
     ),
   );
 }
