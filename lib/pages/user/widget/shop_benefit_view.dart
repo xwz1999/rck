@@ -58,12 +58,13 @@ class ShopBenefitViewState extends State<ShopBenefitView> {
             child: Row(
               children: [
                 <Widget>[
-                  _model.data.monthExpect
-                      .toStringAsFixed(2)
-                      .text
-                      .size(18.sp)
-                      .color(Color(0xFF333333))
-                      .make(),
+                  _model?.data?.monthExpect ??
+                      0
+                          .toStringAsFixed(2)
+                          .text
+                          .size(18.sp)
+                          .color(Color(0xFF333333))
+                          .make(),
                   6.hb,
                   '本月预估'.text.size(12.sp).color(Color(0xFF333333)).make(),
                 ].column().expand(),
@@ -75,12 +76,13 @@ class ShopBenefitViewState extends State<ShopBenefitView> {
                   endIndent: 16.w,
                 ),
                 <Widget>[
-                  _model.data.dayExpect
-                      .toStringAsFixed(2)
-                      .text
-                      .size(18.sp)
-                      .color(Color(0xFF333333))
-                      .make(),
+                  _model?.data?.dayExpect ??
+                      0
+                          .toStringAsFixed(2)
+                          .text
+                          .size(18.sp)
+                          .color(Color(0xFF333333))
+                          .make(),
                   6.hb,
                   '今日预估'.text.size(12.sp).color(Color(0xFF333333)).make(),
                 ].column().expand(),
@@ -99,7 +101,7 @@ class ShopBenefitViewState extends State<ShopBenefitView> {
                 textBaseline: TextBaseline.alphabetic,
                 children: <Widget>[
                   '上月结算'.text.size(12.sp).color(Color(0xFF666666)).make(),
-                  '¥${_model.data.lastMonthIncome.toStringAsFixed(2)}'
+                  '¥${_model?.data?.lastMonthIncome ?? 0.toStringAsFixed(2)}'
                       .text
                       .size(12.sp)
                       .color(Color(0xFFD7BE8E))
@@ -112,7 +114,7 @@ class ShopBenefitViewState extends State<ShopBenefitView> {
                 textBaseline: TextBaseline.alphabetic,
                 children: <Widget>[
                   '上月预估'.text.size(12.sp).color(Color(0xFF666666)).make(),
-                  '¥${_model.data.lastMonthExpect.toStringAsFixed(2)}'
+                  '¥${_model?.data?.lastMonthExpect ?? 0.toStringAsFixed(2)}'
                       .text
                       .size(12.sp)
                       .color(Color(0xFFD7BE8E))

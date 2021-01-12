@@ -15,11 +15,13 @@ class UserBenefitFunc {
     return UserAccumulateModel.fromJson(result.data);
   }
 
-  static Future<UserMonthIncomeModel> monthIncome({int month}) async {
+  static Future<List<UserMonthIncomeModel>> monthIncome({int year}) async {
     ResultData result = await HttpManager.post(
       APIV2.userAPI.monthIncome,
-      {'year': month},
+      {'year': year},
     );
-    return UserMonthIncomeModel.fromJson(result.data);
+    return (result.data['data'] as List)
+        .map((e) => UserMonthIncomeModel.fromJson(e))
+        .toList();
   }
 }

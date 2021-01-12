@@ -21,6 +21,7 @@ import 'package:recook/models/base_model.dart';
 import 'package:recook/models/shop_summary_model.dart';
 import 'package:recook/models/user_brief_info_model.dart';
 import 'package:recook/models/user_model.dart';
+import 'package:recook/pages/user/functions/user_benefit_func.dart';
 import 'package:recook/pages/user/order/order_after_sale_page.dart';
 import 'package:recook/pages/user/order/order_center_page.dart';
 import 'package:recook/pages/user/widget/capital_view.dart';
@@ -55,6 +56,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
   GSRefreshController _refreshController;
   String _capital; //提现金额
   bool _isFirstLoad = true;
+  double _allBenefitAmount = 0;
 
   GlobalKey<ShopBenefitViewState> _shopBenefitKey =
       GlobalKey<ShopBenefitViewState>();
@@ -71,7 +73,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
   void initState() {
     super.initState();
     _refreshController = GSRefreshController();
-
+    _updateAllAmount();
     WidgetsBinding.instance.addPostFrameCallback((callback) {
       if (_isFirstLoad) {
         _isFirstLoad = false;
@@ -156,6 +158,14 @@ class _UserPageState extends BaseStoreState<UserPage> {
     });
   }
 
+  ///更新累计收益
+  _updateAllAmount() {
+    UserBenefitFunc.accmulate().then((value) {
+      _allBenefitAmount = value.data.allAmount;
+      setState(() {});
+    });
+  }
+
   Widget _buildRefreshScrollView(
       BuildContext context, Store<RecookState> store) {
     return Stack(
@@ -172,6 +182,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
             VersionTool.checkVersionInfo(context);
             _shopBenefitKey.currentState.updateBenefit();
             _updateUserBriefInfo();
+            _updateAllAmount();
           },
           body: ListView(
             physics: AlwaysScrollableScrollPhysics(),
@@ -282,22 +293,9 @@ class _UserPageState extends BaseStoreState<UserPage> {
                                       color: Colors.black87, fontSize: 10))
                             ])),
                             Spacer(),
-                            FutureBuilder(
-                              future: _getShopSummary(),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.done) {
-                                  ShopSummaryModel model = snapshot.data;
-                                  return Text(
-                                      model.data.accumulateIncome.all
-                                          .toStringAsFixed(2),
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 18));
-                                } else {
-                                  return Text('');
-                                }
-                              },
-                            ),
+                            Text(_allBenefitAmount.toStringAsFixed(2),
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18)),
                             Icon(Icons.keyboard_arrow_right,
                                 size: 22, color: Color(0xff999999)),
                           ],

@@ -10,6 +10,7 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/team_income_model.dart';
 import 'package:recook/pages/user/functions/user_benefit_func.dart';
 import 'package:recook/pages/user/model/user_accumulate_model.dart';
+import 'package:recook/pages/user/model/user_month_income_model.dart';
 import 'package:recook/pages/user/user_page_sub_income_page.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/alert.dart';
@@ -34,11 +35,24 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
   TeamIncomeModel _teamIncomeModel;
   bool _noData = false;
 
-  String _selectYear;
+  ///选择的日期
+  DateTime _selectYear;
+
+  ///选择的年份
+  String get _selectYearValue => _selectYear.year.toString();
+
+  double get _yearIncome {
+    double result = 0;
+    _models.forEach((element) {
+      result += element?.amount ?? 0;
+    });
+    return result;
+  }
 
   ///累计收益
   ///
   UserAccumulateModel _model = UserAccumulateModel.zero();
+  List<UserMonthIncomeModel> _models = [];
 
   ///自购收益
   double get _purchase => _model?.data?.purchaseAmount ?? 0;
@@ -59,9 +73,10 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
 
   @override
   void initState() {
-    _selectYear = DateTime.now().year.toString();
+    _selectYear = DateTime.now();
     _getShopIncome();
     _getAccumulate();
+    _getMonthIncome(DateTime.now().year);
     super.initState();
   }
 
@@ -128,7 +143,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
               },
               submit: (time, type) {
                 Navigator.maybePop(context);
-                _selectYear = time.year.toString();
+                _selectYear = time;
                 setState(() {});
                 _getShopIncome();
               },
@@ -146,7 +161,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
       child: Row(
         children: <Widget>[
           TimeSelectTitleWidget(
-            title: _selectYear,
+            title: _selectYearValue,
             click: () {
               _showTimePickerBottomSheet();
             },
@@ -163,9 +178,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
                 ),
               ),
               TextSpan(
-                  text: _teamIncomeModel == null
-                      ? "0.00"
-                      : _teamIncomeModel.data.yearIncome?.toStringAsFixed(2),
+                  text: _yearIncome.toStringAsFixed(2),
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: AppColor.redColor,
@@ -333,7 +346,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
             30.wb,
             '月度收益'.text.size(14).black.bold.make(),
             Spacer(),
-            '共${3}期收益'.text.size(14).color(Colors.black38).make(),
+            '共${_models.length}期收益'.text.size(14).color(Colors.black38).make(),
             30.wb,
           ].row(),
           DashedRect(
@@ -644,7 +657,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
   _getShopIncome() async {
     ResultData resultData = await HttpManager.post(ShopApi.shop_addup_income, {
       "userId": UserManager.instance.user.info.id,
-      "year": TextUtils.isEmpty(_selectYear)
+      "year": TextUtils.isEmpty(_selectYearValue)
           ? DateTime.now().year.toString()
           : _selectYear,
     });
@@ -663,6 +676,11 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
 
   _getAccumulate() async {
     _model = await UserBenefitFunc.accmulate();
+    setState(() {});
+  }
+
+  _getMonthIncome(int year) async {
+    _models = await UserBenefitFunc.monthIncome(year: year);
     setState(() {});
   }
 
