@@ -108,14 +108,17 @@ class ShareTool {
     );
   }
 
-  goodsShare(BuildContext context,
-      {String goodsName = "",
-      String goodsDescription = "",
-      String goodsPrice = "",
-      String amount = "",
-      String miniTitle = "",
-      String miniPicurl = "",
-      String goodsId = ""}) {
+  goodsShare(
+    BuildContext context, {
+    String goodsName = "",
+    String goodsDescription = "",
+    String goodsPrice = "",
+    String amount = "",
+    String miniTitle = "",
+    String miniPicurl = "",
+    String goodsId = "",
+    String secondPic = "",
+  }) {
     // !!!!
     String goodsUrl =
         "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}$goodsId/${UserManager.instance.user.info.invitationNo}";
@@ -257,7 +260,7 @@ class ShareTool {
       );
     });
     PlatformItem qrcode = PlatformItem(
-        "二维码海报",
+        "小程序海报",
         Image.asset(
           ShareToolIcon.poster,
           width: 36,
@@ -287,11 +290,11 @@ class ShareTool {
     );
     List<PlatformItem> itemList = [
       // miniItem,
+      qrcode,
       wechatItem,
       // weiboItem,
       // qqItem,
       copyurl,
-      qrcode,
     ];
     if (ShareTool.qqInstalled) {
       itemList.add(qqItem);

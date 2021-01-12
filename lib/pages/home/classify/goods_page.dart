@@ -305,18 +305,20 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             GoodPriceView(
               detailModel: widget.goodsDetail,
               shareCallback: () {
-                ShareTool().goodsShare(context,
-                    goodsPrice: widget.goodsDetail.data.getPriceString(),
-                    goodsName: widget.goodsDetail.data.goodsName,
-                    goodsDescription: widget.goodsDetail.data.description,
-                    miniPicurl: widget.goodsDetail.data.mainPhotos.length >= 1
-                        ? widget.goodsDetail.data.mainPhotos[1].url
-                        : "",
-                    miniTitle:
-                        "￥${widget.goodsDetail.data.getPriceString()} | ${widget.goodsDetail.data.goodsName} | ${widget.goodsDetail.data.description}",
-                    amount:
-                        widget.goodsDetail.data.price.min.commission.toString(),
-                    goodsId: widget.goodsDetail.data.id.toString());
+                ShareTool().goodsShare(
+                  context,
+                  goodsPrice: widget.goodsDetail.data.getPriceString(),
+                  goodsName: widget.goodsDetail.data.goodsName,
+                  goodsDescription: widget.goodsDetail.data.description,
+                  miniPicurl: widget.goodsDetail.data.mainPhotos.length >= 1
+                      ? widget.goodsDetail.data.mainPhotos[1].url
+                      : "",
+                  miniTitle:
+                      "￥${widget.goodsDetail.data.getPriceString()} | ${widget.goodsDetail.data.goodsName} | ${widget.goodsDetail.data.description}",
+                  amount:
+                      widget.goodsDetail.data.price.min.commission.toString(),
+                  goodsId: widget.goodsDetail.data.id.toString(),
+                );
               },
             ),
           ],
@@ -328,7 +330,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         color: Colors.white,
         child: _discountContent(context),
       ),
-      widget.goodsDetail.data.storehouse==2||widget.goodsDetail.data.storehouse==3
+      widget.goodsDetail.data.storehouse == 2 ||
+              widget.goodsDetail.data.storehouse == 3
           ? Container(
               margin: EdgeInsets.only(bottom: 13),
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -511,7 +514,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          (widget.goodsDetail.data.storehouse == 2 ||widget.goodsDetail.data.storehouse==3)
+                          (widget.goodsDetail.data.storehouse == 2 ||
+                                  widget.goodsDetail.data.storehouse == 3)
                               ? Text(
                                   "跨境商品不支持开发票",
                                   style: AppTextStyle.generate(
@@ -519,7 +523,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                                       color: Color(0xff373737)),
                                 )
                               : SizedBox(),
-                          (widget.goodsDetail.data.storehouse == 2 ||widget.goodsDetail.data.storehouse==3)
+                          (widget.goodsDetail.data.storehouse == 2 ||
+                                  widget.goodsDetail.data.storehouse == 3)
                               ? rHBox(rSize(4))
                               : SizedBox(),
                           Text(
