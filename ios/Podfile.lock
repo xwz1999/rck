@@ -204,6 +204,9 @@ PODS:
     - Flutter
   - photo_manager (0.0.1):
     - Flutter
+  - raw_toast (0.0.1):
+    - Flutter
+    - Toaster
   - SDWebImage (5.9.3):
     - SDWebImage/Core (= 5.9.3)
   - SDWebImage/Core (5.9.3)
@@ -235,6 +238,7 @@ PODS:
     - Flutter
     - foundation_fluttify
     - TXLiteAVSDK_Professional (= 7.2.8927)
+  - Toaster (2.3.0)
   - tobias (0.0.1):
     - AlipaySDK-iOS (~> 15.6.8)
     - Flutter
@@ -279,6 +283,7 @@ DEPENDENCIES:
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - photo_manager (from `.symlinks/plugins/photo_manager/ios`)
+  - raw_toast (from `.symlinks/plugins/raw_toast/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sharesdk_plugin (from `.symlinks/plugins/sharesdk_plugin/ios`)
   - tencent_im_plugin (from `.symlinks/plugins/tencent_im_plugin/ios`)
@@ -313,6 +318,7 @@ SPEC REPOS:
     - mobile-ffmpeg-min
     - SDWebImage
     - SwiftyGif
+    - Toaster
     - TOCropViewController
     - TXIMSDK_iOS
     - TXLiteAVSDK_Professional
@@ -368,6 +374,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
   photo_manager:
     :path: ".symlinks/plugins/photo_manager/ios"
+  raw_toast:
+    :path: ".symlinks/plugins/raw_toast/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
   sharesdk_plugin:
@@ -434,12 +442,14 @@ SPEC CHECKSUMS:
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: 67637977b227d62d46bfbf524f335f8568de5a73
   photo_manager: f7c619c2cc8c2adb8d85c63363babac477de9c67
+  raw_toast: 24d3af32bd83848a73a4a9f8edeed98ff5c469c4
   SDWebImage: a31ee8e90a97303529e03fb0c333eae0eacb88e9
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
   sharesdk_plugin: 1afa172841a590314b6ecd37eee084dfbd18f725
   SwiftyGif: e466e86c660d343357ab944a819a101c4127cb40
   tencent_im_plugin: a055ed155fd2cae7f006e756dbec96255b4aa0a3
   tencent_live_fluttify: 98821d3233cf13a47eadf1555ebd56b050e0a5ca
+  Toaster: c3473963c78e8cabbf6ea6f11ad0fdaae6f54987
   tobias: b77cace96409ab4a1710403cd362bf6a9dd9c685
   TOCropViewController: da59f531f8ac8a94ef6d6c0fc34009350f9e8bfe
   TXIMSDK_iOS: d4231ccd8a045f54ca04d008dba46fdbf25687fb
