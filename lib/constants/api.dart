@@ -308,6 +308,15 @@ class WebApi {
 
   static const String testGoodsDetail =
       "http://testh5.reecook.cn/#/goods/detail/";
+
+  ///小程序二维码测试服
+  static const String testMiniQrcodeGoodsDetail =
+      'http://testh5.reecook.cn/goods/detail';
+
+  ///小程序二维码
+  static const String miniQrcodeGoodsDetail =
+      'https://h5.reecook.cn/goods/detail';
+
   static const String testInviteRegist =
       "http://testh5.reecook.cn/#/user/appRegister/";
   static const String testDiamondsInviteRegist =

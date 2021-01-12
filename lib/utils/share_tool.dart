@@ -135,19 +135,24 @@ class ShareTool {
     PlatformItem wechatItem = PlatformItem(
         "微信",
         Image.asset(
-          ShareToolIcon.wechat,
+          ShareToolIcon.wechatmini,
           width: 36,
           height: 36,
         ), itemClick: () {
       Navigator.maybePop(context);
       WeChatScene scene = WeChatScene.SESSION;
-      WeChatUtils.shareUrl(
-          url: goodsUrl,
-          netWorkThumbnail: Api.getImgUrl(miniPicurl),
-          // netWorkThumbnail: AppImageName.web_app_icon,
-          title: "仅$goodsPrice元 | $goodsName",
-          description: goodsDescription,
-          scene: scene);
+      // WeChatUtils.shareUrl(
+      //     url: goodsUrl,
+      //     netWorkThumbnail: Api.getImgUrl(miniPicurl),
+      //     // netWorkThumbnail: AppImageName.web_app_icon,
+      //     title: "仅$goodsPrice元 | $goodsName",
+      //     description: goodsDescription,
+      //     scene: scene);
+      WeChatUtils.miniProgramShare(
+        id: goodsId,
+        netWorkThumbnail: Api.getImgUrl(miniPicurl),
+        des: miniTitle,
+      );
     });
     PlatformItem weiboItem = PlatformItem(
         "微博",
