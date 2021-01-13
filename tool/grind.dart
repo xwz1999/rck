@@ -38,9 +38,13 @@ Future buildApk() async {
 }
 
 @Task()
-rawBuild({bool verbose = false}) async {
-  String getLine = stdin.readLineSync();
-  stdout.write(getLine);
+Future buildDev() async {
+  stdout.write("Build Dev APK 📦\n");
+  stdout.write("BUILDINGAPK\n");
+  await Process.start('flutter', ['build', 'apk']).then((proc) async {
+    await stdout.addStream(proc.stdout);
+    await stderr.addStream(proc.stderr);
+  });
 }
 
 ///签名
