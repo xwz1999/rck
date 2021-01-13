@@ -58,13 +58,12 @@ class ShopBenefitViewState extends State<ShopBenefitView> {
             child: Row(
               children: [
                 <Widget>[
-                  _model?.data?.monthExpect ??
-                      0
-                          .toStringAsFixed(2)
-                          .text
-                          .size(18.sp)
-                          .color(Color(0xFF333333))
-                          .make(),
+                  (_model?.data?.monthExpect ?? 0)
+                      .toStringAsFixed(2)
+                      .text
+                      .size(18.sp)
+                      .color(Color(0xFF333333))
+                      .make(),
                   6.hb,
                   '本月预估'.text.size(12.sp).color(Color(0xFF333333)).make(),
                 ].column().expand(),
