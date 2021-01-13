@@ -107,7 +107,6 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
         },
         child: _buttonWidget(),
       ));
-      listWidget.add(Expanded(child: Container(),));
     }
     return listWidget;
   }
