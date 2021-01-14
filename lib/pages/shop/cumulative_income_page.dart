@@ -69,12 +69,12 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
   ///平台奖励收益
   double get _reward => _model?.data?.rewardAmount ?? 0;
 
-  double get _allAmount => _purchase + _guide + _team + _recommand + _reward;
+  double get _allAmount => _model?.data?.allAmount;
 
   @override
   void initState() {
     _selectYear = DateTime.now();
-    _getShopIncome();
+    // _getShopIncome();
     _getAccumulate();
     _getMonthIncome(DateTime.now().year);
     super.initState();
@@ -145,7 +145,8 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
                 Navigator.maybePop(context);
                 _selectYear = time;
                 setState(() {});
-                _getShopIncome();
+                // _getShopIncome();
+                _getMonthIncome(_selectYear.year);
               },
             ));
       },
@@ -261,16 +262,12 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
                         value: _guide.toStringAsFixed(2),
                         index: 1,
                       ),
-                      ..._teamIncomeModel?.data?.roleVisable ?? false
-                          ? [
-                              _buildGridColumn(
-                                context,
-                                title: '团队收益',
-                                value: _team.toStringAsFixed(2),
-                                index: 2,
-                              )
-                            ]
-                          : [],
+                      _buildGridColumn(
+                        context,
+                        title: '团队收益',
+                        value: _team.toStringAsFixed(2),
+                        index: 2,
+                      ),
                       _buildGridColumn(
                         context,
                         title: "推荐收益",
@@ -352,30 +349,115 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
           DashedRect(
             color: Color(0xFFE6E6E6),
           ).pSymmetric(h: 15.w),
+          _models.isEmpty
+              ? Container(
+                  width: 140,
+                  height: 130,
+                  child: Image.asset(ShopImageName.income_nodata),
+                  margin: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+                )
+              : SizedBox(),
           20.hb,
-          ...<Widget>[
-            _buildInfoItem(isFirst: true),
-            _buildInfoItem(),
-            _buildInfoItem(),
-            _buildInfoItem(),
-            _buildInfoItem(),
-          ].sepWidget(separate: 20.hb),
+          ...List.generate(_models.length, (index) {
+            return _buildInfoItem(isFirst: index == 0);
+          }).sepWidget(separate: 20.hb),
           30.hb,
         ],
       ),
     );
   }
 
-  _buildInfoItem({
-    int month,
-    int benefit,
+  Widget _buildMonthTile({
+    String title,
+    String value,
+    bool isSettlement = false,
+  }) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        title.text.size(12.sp).color(Color(0xFF666666)).make(),
+        4.hb,
+        isSettlement
+            ? '未结算'.text.size(14.sp).color(Color(0xFFD5101A)).make()
+            : value.text.size(12.sp).color(Color(0xFF666666)).make(),
+      ],
+    );
+  }
+
+  Widget _rowStack([
+    Widget prefix,
+    Widget mid,
+    Widget suffix,
+  ]) {
+    return Stack(
+      children: [
+        mid?.centered() ?? SizedBox(),
+        Positioned(
+          left: 0,
+          top: 0,
+          bottom: 0,
+          child: prefix ?? SizedBox(),
+        ),
+        Positioned(
+          right: 0,
+          top: 0,
+          bottom: 0,
+          child: suffix ?? SizedBox(),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildInfoItem({
+    UserMonthIncomeModel model,
     bool isFirst = false,
   }) {
     return [
       VxBox(
         child: Column(
           children: [
-            Row(),
+            Row(
+              // textBaseline: TextBaseline.ideographic,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                model.date.month.text.black.bold.size(14.sp).make(),
+                '月'.text.black.size(10.sp).make(),
+                Spacer(),
+                '总收益:'.text.color(Color(0xFF999999)).size(12.sp).make(),
+                '1234.12X'.text.color(Color(0xFFD5101A)).size(12.sp).make(),
+              ],
+            ),
+            20.hb,
+            _rowStack(
+              _buildMonthTile(
+                title: '自购收益',
+                value: '111.23X',
+                isSettlement: true,
+              ),
+              _buildMonthTile(
+                title: '导购收益',
+                value: '111.23X',
+                isSettlement: true,
+              ),
+              _buildMonthTile(
+                title: '团队收益',
+                value: '111.23X',
+                isSettlement: true,
+              ),
+            ),
+            16.hb,
+            _rowStack(
+              _buildMonthTile(
+                title: '推荐收益',
+                value: '111.23X',
+                isSettlement: true,
+              ),
+              _buildMonthTile(
+                title: '平台收益',
+                value: '111.23X',
+                isSettlement: true,
+              ),
+            ),
           ],
         ),
       )

@@ -21,6 +21,7 @@ class Constants {
 
 extension SeparateExt on List<Widget> {
   List<Widget> sepWidget({Widget separate}) {
+    if (this.length <= 1) return this;
     return List.generate(this.length * 2 - 1, (index) {
       if (index.isEven)
         return this[index ~/ 2];
@@ -100,9 +101,9 @@ class DeviceInfo {
 }
 
 extension NumExt on num {
-  double get w => ScreenAdapterUtils.setWidth(this+.0);
+  double get w => ScreenAdapterUtils.setWidth(this + .0);
 
-  double get sp => ScreenAdapterUtils.setSp(this+.0);
+  double get sp => ScreenAdapterUtils.setSp(this + .0);
 
   Widget get hb => SizedBox(height: this.w);
 

@@ -75,13 +75,12 @@ class ShopBenefitViewState extends State<ShopBenefitView> {
                   endIndent: 16.w,
                 ),
                 <Widget>[
-                  _model?.data?.dayExpect ??
-                      0
-                          .toStringAsFixed(2)
-                          .text
-                          .size(18.sp)
-                          .color(Color(0xFF333333))
-                          .make(),
+                  (_model?.data?.dayExpect ?? 0)
+                      .toStringAsFixed(2)
+                      .text
+                      .size(18.sp)
+                      .color(Color(0xFF333333))
+                      .make(),
                   6.hb,
                   '今日预估'.text.size(12.sp).color(Color(0xFF333333)).make(),
                 ].column().expand(),

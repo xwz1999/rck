@@ -204,7 +204,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
               SizedBox(
                 height: AppConfig.getShowCommission() ? 10 : 0,
               ),
-              UserPageAssetsView(),
+              // UserPageAssetsView(),
               ShopBenefitView(key: _shopBenefitKey),
               ShopCheckView(),
               ShopManagerView(),
