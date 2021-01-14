@@ -70,9 +70,9 @@ class TeamIncome {
   TeamIncome({this.teamAmount, this.historyIncome, this.memberNum});
 
   TeamIncome.fromJson(Map<String, dynamic> json) {
-    teamAmount = json['teamAmount'];
-    historyIncome = json['historyIncome'];
-    memberNum = json['memberNum'];
+    teamAmount = json['teamAmount'] ?? 0;
+    historyIncome = json['historyIncome'] ?? 0;
+    memberNum = json['memberNum'] ?? 0;
   }
 
   Map<String, dynamic> toJson() {
@@ -93,15 +93,15 @@ class IncomeDetail {
   num income;
   // Null createdAt;
 
-  IncomeDetail(
-      {this.id,
-      this.userId,
-      // this.period,
-      this.percent,
-      this.amount,
-      this.income,
-      // this.createdAt
-      });
+  IncomeDetail({
+    this.id,
+    this.userId,
+    // this.period,
+    this.percent,
+    this.amount,
+    this.income,
+    // this.createdAt
+  });
 
   IncomeDetail.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -134,7 +134,12 @@ class Billboard {
   num amount;
   String headImgUrl;
   Billboard(
-      {this.userId, this.username, this.mobile, this.roleLevel, this.amount, this.headImgUrl});
+      {this.userId,
+      this.username,
+      this.mobile,
+      this.roleLevel,
+      this.amount,
+      this.headImgUrl});
 
   Billboard.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];

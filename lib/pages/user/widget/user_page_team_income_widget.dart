@@ -26,6 +26,7 @@ class _UserPageTeamIncomeWidgetState
     extends ShopPageIncomeWidgetState<UserPageTeamIncomeWidget> {
   String _selectTime = "";
   UserTeamIncomeModel _incomeModel;
+  
   @override
   void initState() {
     super.initState();

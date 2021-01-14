@@ -17,4 +17,19 @@ class UserAPI {
 
   ///年度月收益
   String get monthIncome => '/v2/app/user/income/month_income';
+
+  ///累计自购收益
+  String get selfIncome => '/v2/app/user/income/purchase_accumulate';
+
+  ///累计导购收益
+  String get guideIncome => '/v2/app/user/income/guide_accumulate';
+
+  ///累计团队收益
+  String get teamIncome => '/v2/app/user/income/team_income';
+
+  ///累计推荐收益
+  String get recommandIncome => '/v2/app/user/income/recommend_income';
+
+  ///累计平台奖励
+  String get platformIncome => '/v2/app/user/income/reward_income';
 }

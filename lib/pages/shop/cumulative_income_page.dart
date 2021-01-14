@@ -11,7 +11,9 @@ import 'package:recook/models/team_income_model.dart';
 import 'package:recook/pages/user/functions/user_benefit_func.dart';
 import 'package:recook/pages/user/model/user_accumulate_model.dart';
 import 'package:recook/pages/user/model/user_month_income_model.dart';
+import 'package:recook/pages/user/user_benefit_sub_page.dart';
 import 'package:recook/pages/user/user_page_sub_income_page.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/bottom_time_picker.dart';
@@ -835,19 +837,15 @@ _buildGridColumn(
 }
 
 _goToNextPage(int index, BuildContext context) {
-  switch (index) {
-    case 0:
-      break;
-    case 1:
-      break;
-    case 2:
-      AppRouter.push(context, RouteName.USER_PAGE_SUB_INCOME_PAGE,
-          arguments: UserPageSubIncomesPage.setArguments(
-              UserPageSubIncomesPageType.UserPageTeamIncome));
-      break;
-    case 3:
-      break;
-  }
+  if (index == 0)
+    AppRouter.push(context, RouteName.USER_PAGE_SUB_INCOME_PAGE,
+        arguments: UserPageSubIncomesPage.setArguments(
+            UserPageSubIncomesPageType.UserPageTeamIncome));
+  else
+    CRoute.push(
+      context,
+      UserBenefitSubPage(type: UserBenefitPageType.values[index]),
+    );
 }
 
 _openQuestDialog(int index, String title, BuildContext context) {
