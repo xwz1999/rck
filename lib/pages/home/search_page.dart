@@ -41,6 +41,7 @@ import 'package:recook/widgets/refresh_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:recook/pages/home/classify/mvp/goods_list_contact.dart';
 import 'package:recook/constants/app_image_resources.dart';
+import 'package:waterfall_flow/waterfall_flow.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -449,7 +450,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
   _buildNewGridView() {
     return CustomScrollView(
       slivers: [
-        SliverGrid(
+        SliverWaterfallFlow(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
               GoodsSimple goods = _listViewController.getData()[index];
@@ -476,8 +477,12 @@ class _SearchPageState extends BaseStoreState<SearchPage>
             },
             childCount: _listViewController.getData().length,
           ),
-          gridDelegate:
-              ItemTagWidget.getSliverGridDelegate(_displayList, context),
+          gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
+            crossAxisCount: _displayList ? 1 : 2,
+            crossAxisSpacing: _displayList ? 5 : 10,
+            mainAxisSpacing: _displayList ? 5 : 10,
+          ),
+          // ItemTagWidget.getSliverGridDelegate(_displayList, context),
         ),
         SliverToBoxAdapter(
           child: _refreshController.isNoData
