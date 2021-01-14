@@ -32,7 +32,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
     with TickerProviderStateMixin {
   //user new api
   //
-  TeamIncomeModel _teamIncomeModel;
+  // TeamIncomeModel _teamIncomeModel;
   bool _noData = false;
 
   ///选择的日期
@@ -121,7 +121,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
                   _barWidget(),
                   _selectTimeWidget(),
                   _infoWidgetV2(),
-                  _infoWidget(),
+                  // _infoWidget(),
                 ],
               ))
         ],
@@ -354,7 +354,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
                   width: 140,
                   height: 130,
                   child: Image.asset(ShopImageName.income_nodata),
-                  margin: EdgeInsets.symmetric(horizontal: 30,vertical: 10),
+                  margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 )
               : SizedBox(),
           20.hb,
@@ -420,49 +420,52 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
               // textBaseline: TextBaseline.ideographic,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                model.date.month.text.black.bold.size(14.sp).make(),
+                model.date.month.toString().text.black.bold.size(14.sp).make(),
                 '月'.text.black.size(10.sp).make(),
                 Spacer(),
                 '总收益:'.text.color(Color(0xFF999999)).size(12.sp).make(),
-                '1234.12X'.text.color(Color(0xFFD5101A)).size(12.sp).make(),
+                model.amount
+                    .toStringAsFixed(2)
+                    .text
+                    .color(Color(0xFFD5101A))
+                    .size(12.sp)
+                    .make(),
               ],
             ),
             20.hb,
             _rowStack(
               _buildMonthTile(
                 title: '自购收益',
-                value: '111.23X',
-                isSettlement: true,
+                value: model.purchaseAmount.toStringAsFixed(2),
+                isSettlement: model.isSettlement,
               ),
               _buildMonthTile(
                 title: '导购收益',
-                value: '111.23X',
-                isSettlement: true,
+                value: model.guideAmount.toStringAsFixed(2),
+                isSettlement: model.isSettlement,
               ),
               _buildMonthTile(
                 title: '团队收益',
-                value: '111.23X',
-                isSettlement: true,
+                value: model.teamAmount.toStringAsFixed(2),
+                isSettlement: model.isSettlement,
               ),
             ),
             16.hb,
             _rowStack(
               _buildMonthTile(
                 title: '推荐收益',
-                value: '111.23X',
-                isSettlement: true,
+                value: model.recommendAmount.toStringAsFixed(2),
+                isSettlement: model.isSettlement,
               ),
               _buildMonthTile(
                 title: '平台收益',
-                value: '111.23X',
-                isSettlement: true,
+                value: model.rewardAmount.toStringAsFixed(2),
+                isSettlement: model.isSettlement,
               ),
             ),
           ],
         ),
       )
-          //TODO unknown height
-          .height(168.w)
           .color(Color(0xFFF7F8FA))
           .padding(EdgeInsets.all(15.w))
           .margin(EdgeInsets.symmetric(horizontal: 30.w))
@@ -498,263 +501,263 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
             ),
     ].stack(clip: Clip.none);
   }
+  //TODO remove bottom code
+  // _infoWidget() {
+  //   double width = ScreenUtil.screenWidthDp;
+  //   double height = 140 * width / 375;
+  //   return Container(
+  //     constraints: BoxConstraints(
+  //       minHeight: height,
+  //       minWidth: width,
+  //     ),
+  //     decoration: BoxDecoration(
+  //         image: DecorationImage(
+  //       // centerSlice: Rect.fromLTRB(30, 90, 30, 30),
+  //       centerSlice: Rect.fromLTWH(30, 100, 30, 1),
+  //       image: AssetImage(R.ASSETS_SHOP_PAGE_INCOME_PAGE_BG_PNG),
+  //     )),
+  //     child: Container(
+  //       margin: EdgeInsets.only(top: 30, bottom: 30),
+  //       child: Column(
+  //         children: <Widget>[
+  //           Container(
+  //             margin: EdgeInsets.symmetric(horizontal: 30),
+  //             height: 60,
+  //             child: Row(
+  //               children: <Widget>[
+  //                 Text(
+  //                   "月度收益",
+  //                   style: TextStyle(
+  //                       fontSize: 14,
+  //                       color: Colors.black,
+  //                       fontWeight: FontWeight.w500),
+  //                 ),
+  //                 Spacer(),
+  //                 Text(
+  //                   _teamIncomeModel == null
+  //                       ? ""
+  //                       : "共${_teamIncomeModel.data.incomes.length}期收益",
+  //                   style: TextStyle(
+  //                     fontSize: 14,
+  //                     color: Colors.black26,
+  //                   ),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //           Container(
+  //             margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
+  //             width: double.infinity,
+  //             child: DashedRect(
+  //               color: Color(0xffe6e6e6),
+  //               strokeWidth: 2,
+  //               gap: 5,
+  //             ),
+  //           ),
+  //           _teamIncomeModel == null ||
+  //                   !(_teamIncomeModel.data.incomes != null &&
+  //                       _teamIncomeModel.data.incomes.length > 0)
+  //               ? Container(
+  //                   width: 140,
+  //                   height: 130,
+  //                   child: Image.asset(ShopImageName.income_nodata),
+  //                   margin: EdgeInsets.symmetric(horizontal: 30),
+  //                 )
+  //               : Container(
+  //                   child: Column(children: _itemList()),
+  //                 )
+  //         ],
+  //       ),
+  //       // height: height+500,
+  //     ),
+  //   );
+  // }
 
-  _infoWidget() {
-    double width = ScreenUtil.screenWidthDp;
-    double height = 140 * width / 375;
-    return Container(
-      constraints: BoxConstraints(
-        minHeight: height,
-        minWidth: width,
-      ),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-        // centerSlice: Rect.fromLTRB(30, 90, 30, 30),
-        centerSlice: Rect.fromLTWH(30, 100, 30, 1),
-        image: AssetImage(R.ASSETS_SHOP_PAGE_INCOME_PAGE_BG_PNG),
-      )),
-      child: Container(
-        margin: EdgeInsets.only(top: 30, bottom: 30),
-        child: Column(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 30),
-              height: 60,
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    "月度收益",
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500),
-                  ),
-                  Spacer(),
-                  Text(
-                    _teamIncomeModel == null
-                        ? ""
-                        : "共${_teamIncomeModel.data.incomes.length}期收益",
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.black26,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-              width: double.infinity,
-              child: DashedRect(
-                color: Color(0xffe6e6e6),
-                strokeWidth: 2,
-                gap: 5,
-              ),
-            ),
-            _teamIncomeModel == null ||
-                    !(_teamIncomeModel.data.incomes != null &&
-                        _teamIncomeModel.data.incomes.length > 0)
-                ? Container(
-                    width: 140,
-                    height: 130,
-                    child: Image.asset(ShopImageName.income_nodata),
-                    margin: EdgeInsets.symmetric(horizontal: 30),
-                  )
-                : Container(
-                    child: Column(children: _itemList()),
-                  )
-          ],
-        ),
-        // height: height+500,
-      ),
-    );
-  }
+  // _itemList() {
+  //   List<Widget> widgetList = [];
+  //   for (var i = 0; i < _teamIncomeModel.data.incomes.length; i++) {
+  //     widgetList.add(_itemWidget(_teamIncomeModel.data.incomes[i],
+  //         isFirst: i == 0,
+  //         isLast: i == _teamIncomeModel.data.incomes.length - 1));
+  //   }
+  //   return widgetList;
+  // }
 
-  _itemList() {
-    List<Widget> widgetList = [];
-    for (var i = 0; i < _teamIncomeModel.data.incomes.length; i++) {
-      widgetList.add(_itemWidget(_teamIncomeModel.data.incomes[i],
-          isFirst: i == 0,
-          isLast: i == _teamIncomeModel.data.incomes.length - 1));
-    }
-    return widgetList;
-  }
+  // _itemWidget(Incomes income, {bool isFirst = false, bool isLast = false}) {
+  //   // DateTime time = DateTime.parse(income.month);
+  //   DateFormat sourceFormat = DateFormat("yyyy-MM");
+  //   DateTime time = sourceFormat.parse(income.month);
+  //   return Container(
+  //     margin: EdgeInsets.symmetric(horizontal: 30),
+  //     height: 130,
+  //     child: Stack(
+  //       children: <Widget>[
+  //         Positioned(
+  //           left: 0,
+  //           right: 0,
+  //           top: 10,
+  //           bottom: 10,
+  //           child: Container(
+  //             padding: EdgeInsets.all(13),
+  //             decoration: BoxDecoration(
+  //                 color: Color(0xfff7f8fa),
+  //                 borderRadius: BorderRadius.circular(5)),
+  //             child: Column(
+  //               children: <Widget>[
+  //                 Row(
+  //                   children: <Widget>[
+  //                     RichText(
+  //                         text: TextSpan(children: [
+  //                       TextSpan(
+  //                         text: time.month.toString(),
+  //                         style: TextStyle(color: Colors.black, fontSize: 18),
+  //                       ),
+  //                       TextSpan(
+  //                         text: "月",
+  //                         style: TextStyle(color: Colors.black, fontSize: 13),
+  //                       )
+  //                     ])),
+  //                     Spacer(),
+  //                     RichText(
+  //                         text: TextSpan(children: [
+  //                       TextSpan(
+  //                         text: "总收益:",
+  //                         style: TextStyle(color: Colors.black26, fontSize: 14),
+  //                       ),
+  //                       TextSpan(
+  //                         text: income.totalIncome.toStringAsFixed(2),
+  //                         style:
+  //                             TextStyle(color: AppColor.redColor, fontSize: 14),
+  //                       )
+  //                     ])),
+  //                   ],
+  //                 ),
+  //                 Spacer(),
+  //                 Row(
+  //                   children: <Widget>[
+  //                     _textColumn(
+  //                       titleColor: Color(0xff666666),
+  //                       titleAligment: Alignment.centerLeft,
+  //                       titleText: "自购收益",
+  //                       infoText: income.myIncome.toStringAsFixed(2),
+  //                     ),
+  //                     Spacer(),
+  //                     _textColumn(
+  //                       titleColor: Color(0xff666666),
+  //                       titleAligment: Alignment.centerLeft,
+  //                       titleText: "导购收益",
+  //                       infoText: income.shareIncome.toStringAsFixed(2),
+  //                     ),
+  //                     _teamIncomeModel.data.roleVisable
+  //                         ? Spacer()
+  //                         : Container(),
+  //                     _teamIncomeModel.data.roleVisable
+  //                         ? _textColumn(
+  //                             titleColor: UserLevelTool.roleLevelEnum(
+  //                                         _teamIncomeModel?.data?.roleLevel) ==
+  //                                     UserRoleLevel.Master
+  //                                 ? Colors.black26
+  //                                 : Color(0xff666666),
+  //                             titleAligment: Alignment.centerLeft,
+  //                             titleText: "团队收益",
+  //                             infoText: income.teamIncome < 0
+  //                                 ? "未结算"
+  //                                 : income.teamIncome.toStringAsFixed(2),
+  //                             infoColor: UserLevelTool.roleLevelEnum(
+  //                                         _teamIncomeModel?.data?.roleLevel) ==
+  //                                     UserRoleLevel.Master
+  //                                 ? Colors.black26
+  //                                 : income.teamIncome < 0
+  //                                     ? AppColor.redColor
+  //                                     : Colors.black,
+  //                             infoFontSize: income.teamIncome < 0 ? 12 : 16)
+  //                         : Container()
+  //                   ],
+  //                 )
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //         Positioned(
+  //             left: 10,
+  //             top: 0,
+  //             width: 3,
+  //             height: 19,
+  //             child: Offstage(
+  //                 offstage: isFirst,
+  //                 child: Container(
+  //                   decoration: BoxDecoration(
+  //                       borderRadius: BorderRadius.only(
+  //                           bottomLeft: Radius.circular(2),
+  //                           bottomRight: Radius.circular(2)),
+  //                       color: AppColor.redColor),
+  //                 ))),
+  //         Positioned(
+  //             right: 10,
+  //             top: 0,
+  //             width: 3,
+  //             height: 19,
+  //             child: Offstage(
+  //                 offstage: isFirst,
+  //                 child: Container(
+  //                   decoration: BoxDecoration(
+  //                       borderRadius: BorderRadius.only(
+  //                           bottomLeft: Radius.circular(2),
+  //                           bottomRight: Radius.circular(2)),
+  //                       color: AppColor.redColor),
+  //                 ))),
+  //         Positioned(
+  //             left: 10,
+  //             bottom: 0,
+  //             width: 3,
+  //             height: 19,
+  //             child: Offstage(
+  //                 offstage: isLast,
+  //                 child: Container(
+  //                   decoration: BoxDecoration(
+  //                       borderRadius: BorderRadius.only(
+  //                           topLeft: Radius.circular(2),
+  //                           topRight: Radius.circular(2)),
+  //                       color: AppColor.redColor),
+  //                 ))),
+  //         Positioned(
+  //             right: 10,
+  //             bottom: 0,
+  //             width: 3,
+  //             height: 19,
+  //             child: Offstage(
+  //                 offstage: isLast,
+  //                 child: Container(
+  //                   decoration: BoxDecoration(
+  //                       borderRadius: BorderRadius.only(
+  //                           topLeft: Radius.circular(2),
+  //                           topRight: Radius.circular(2)),
+  //                       color: AppColor.redColor),
+  //                 ))),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  _itemWidget(Incomes income, {bool isFirst = false, bool isLast = false}) {
-    // DateTime time = DateTime.parse(income.month);
-    DateFormat sourceFormat = DateFormat("yyyy-MM");
-    DateTime time = sourceFormat.parse(income.month);
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30),
-      height: 130,
-      child: Stack(
-        children: <Widget>[
-          Positioned(
-            left: 0,
-            right: 0,
-            top: 10,
-            bottom: 10,
-            child: Container(
-              padding: EdgeInsets.all(13),
-              decoration: BoxDecoration(
-                  color: Color(0xfff7f8fa),
-                  borderRadius: BorderRadius.circular(5)),
-              child: Column(
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                          text: time.month.toString(),
-                          style: TextStyle(color: Colors.black, fontSize: 18),
-                        ),
-                        TextSpan(
-                          text: "月",
-                          style: TextStyle(color: Colors.black, fontSize: 13),
-                        )
-                      ])),
-                      Spacer(),
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                          text: "总收益:",
-                          style: TextStyle(color: Colors.black26, fontSize: 14),
-                        ),
-                        TextSpan(
-                          text: income.totalIncome.toStringAsFixed(2),
-                          style:
-                              TextStyle(color: AppColor.redColor, fontSize: 14),
-                        )
-                      ])),
-                    ],
-                  ),
-                  Spacer(),
-                  Row(
-                    children: <Widget>[
-                      _textColumn(
-                        titleColor: Color(0xff666666),
-                        titleAligment: Alignment.centerLeft,
-                        titleText: "自购收益",
-                        infoText: income.myIncome.toStringAsFixed(2),
-                      ),
-                      Spacer(),
-                      _textColumn(
-                        titleColor: Color(0xff666666),
-                        titleAligment: Alignment.centerLeft,
-                        titleText: "导购收益",
-                        infoText: income.shareIncome.toStringAsFixed(2),
-                      ),
-                      _teamIncomeModel.data.roleVisable
-                          ? Spacer()
-                          : Container(),
-                      _teamIncomeModel.data.roleVisable
-                          ? _textColumn(
-                              titleColor: UserLevelTool.roleLevelEnum(
-                                          _teamIncomeModel?.data?.roleLevel) ==
-                                      UserRoleLevel.Master
-                                  ? Colors.black26
-                                  : Color(0xff666666),
-                              titleAligment: Alignment.centerLeft,
-                              titleText: "团队收益",
-                              infoText: income.teamIncome < 0
-                                  ? "未结算"
-                                  : income.teamIncome.toStringAsFixed(2),
-                              infoColor: UserLevelTool.roleLevelEnum(
-                                          _teamIncomeModel?.data?.roleLevel) ==
-                                      UserRoleLevel.Master
-                                  ? Colors.black26
-                                  : income.teamIncome < 0
-                                      ? AppColor.redColor
-                                      : Colors.black,
-                              infoFontSize: income.teamIncome < 0 ? 12 : 16)
-                          : Container()
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-              left: 10,
-              top: 0,
-              width: 3,
-              height: 19,
-              child: Offstage(
-                  offstage: isFirst,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(2),
-                            bottomRight: Radius.circular(2)),
-                        color: AppColor.redColor),
-                  ))),
-          Positioned(
-              right: 10,
-              top: 0,
-              width: 3,
-              height: 19,
-              child: Offstage(
-                  offstage: isFirst,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(2),
-                            bottomRight: Radius.circular(2)),
-                        color: AppColor.redColor),
-                  ))),
-          Positioned(
-              left: 10,
-              bottom: 0,
-              width: 3,
-              height: 19,
-              child: Offstage(
-                  offstage: isLast,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(2),
-                            topRight: Radius.circular(2)),
-                        color: AppColor.redColor),
-                  ))),
-          Positioned(
-              right: 10,
-              bottom: 0,
-              width: 3,
-              height: 19,
-              child: Offstage(
-                  offstage: isLast,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(2),
-                            topRight: Radius.circular(2)),
-                        color: AppColor.redColor),
-                  ))),
-        ],
-      ),
-    );
-  }
-
-  _getShopIncome() async {
-    ResultData resultData = await HttpManager.post(ShopApi.shop_addup_income, {
-      "userId": UserManager.instance.user.info.id,
-      "year": TextUtils.isEmpty(_selectYearValue)
-          ? DateTime.now().year.toString()
-          : _selectYear,
-    });
-    if (!resultData.result) {
-      showError(resultData.msg);
-      return;
-    }
-    TeamIncomeModel model = TeamIncomeModel.fromJson(resultData.data);
-    if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
-      return;
-    }
-    _teamIncomeModel = model;
-    setState(() {});
-  }
+  // _getShopIncome() async {
+  //   ResultData resultData = await HttpManager.post(ShopApi.shop_addup_income, {
+  //     "userId": UserManager.instance.user.info.id,
+  //     "year": TextUtils.isEmpty(_selectYearValue)
+  //         ? DateTime.now().year.toString()
+  //         : _selectYear,
+  //   });
+  //   if (!resultData.result) {
+  //     showError(resultData.msg);
+  //     return;
+  //   }
+  //   TeamIncomeModel model = TeamIncomeModel.fromJson(resultData.data);
+  //   if (model.code != HttpStatus.SUCCESS) {
+  //     showError(model.msg);
+  //     return;
+  //   }
+  //   _teamIncomeModel = model;
+  //   setState(() {});
+  // }
 
   _getAccumulate() async {
     _model = await UserBenefitFunc.accmulate();
