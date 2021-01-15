@@ -15,6 +15,7 @@ import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/base/base_store_state.dart';
@@ -278,16 +279,15 @@ class _HomePageState extends BaseStoreState<HomePage>
           Alert.show(
               context,
               NormalTextDialog(
-                type: NormalTextDialogType.delete,
+                type: NormalTextDialogType.normal,
                 title: "提示",
                 content: "是否要跳转到桌面?",
-                items: ["确认"],
+                items: ["取消", "确认"],
                 listener: (index) {
-                  AndroidBackTop.backDeskTop(); //设置为返回不退出app
-                  Alert.dismiss(context);
-                },
-                deleteItem: "取消",
-                deleteListener: () {
+                  switch (index) {
+                    case 0:
+                      AndroidBackTop.backDeskTop();
+                  }
                   Alert.dismiss(context);
                 },
               ));

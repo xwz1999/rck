@@ -30,6 +30,7 @@
 /dev/docs/pubspec.yaml
 /packages/flutter/coverage/
 version
+--obfuscate
 
 # packages file containing multi-root paths
 .packages.generated
