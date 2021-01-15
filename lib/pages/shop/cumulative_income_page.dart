@@ -836,17 +836,10 @@ _buildGridColumn(
   );
 }
 
-_goToNextPage(int index, BuildContext context) {
-  if (index == 0)
-    AppRouter.push(context, RouteName.USER_PAGE_SUB_INCOME_PAGE,
-        arguments: UserPageSubIncomesPage.setArguments(
-            UserPageSubIncomesPageType.UserPageTeamIncome));
-  else
-    CRoute.push(
+_goToNextPage(int index, BuildContext context) => CRoute.push(
       context,
       UserBenefitSubPage(type: UserBenefitPageType.values[index]),
     );
-}
 
 _openQuestDialog(int index, String title, BuildContext context) {
   String content = '';
