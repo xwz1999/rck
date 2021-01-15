@@ -2,6 +2,7 @@ import 'package:common_utils/common_utils.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/user/model/user_accumulate_model.dart';
+import 'package:recook/pages/user/model/user_benefit_extra_detail_model.dart';
 import 'package:recook/pages/user/model/user_benefit_model.dart';
 import 'package:recook/pages/user/model/user_benefit_month_detail_model.dart';
 import 'package:recook/pages/user/model/user_benefit_sub_model.dart';
@@ -64,5 +65,30 @@ class UserBenefitFunc {
       return (result.data['data'] as List)
           .map((e) => UserBenefitMonthDetailModel.fromJson(e))
           .toList();
+  }
+
+  static Future<UserBenefitExtraDetailModel> extraDetail({
+    UserBenefitPageType type,
+    DateTime date,
+  }) async {
+    String path = '';
+    switch (type) {
+      case UserBenefitPageType.TEAM:
+        path = APIV2.userAPI.groupDetail;
+        break;
+      case UserBenefitPageType.RECOMMEND:
+        path = APIV2.userAPI.recommendDetail;
+        break;
+      case UserBenefitPageType.PLATFORM:
+        path = APIV2.userAPI.platformDetail;
+        break;
+      default:
+        break;
+    }
+    ResultData result = await HttpManager.post(
+      path,
+      {'month': DateUtil.formatDate(date, format: 'yyyy-MM')},
+    );
+    return UserBenefitExtraDetailModel.fromJson(result.data);
   }
 }

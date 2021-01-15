@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -10,6 +11,7 @@ class UserGroupCard extends StatefulWidget {
   final String phone;
   final UserRoleLevel shopRole;
   final int groupCount;
+  final String headImg;
 
   //options
   final bool flat;
@@ -20,6 +22,7 @@ class UserGroupCard extends StatefulWidget {
     @required this.phone,
     @required this.shopRole,
     @required this.groupCount,
+    @required this.headImg,
   })  : flat = false,
         super(key: key);
 
@@ -30,6 +33,7 @@ class UserGroupCard extends StatefulWidget {
     @required this.phone,
     @required this.shopRole,
     @required this.groupCount,
+    @required this.headImg,
   })  : flat = true,
         super(key: key);
 
@@ -59,8 +63,14 @@ class _UserGroupCardState extends State<UserGroupCard> {
       onPressed: () {},
       child: VxBox(
         child: [
-          CircleAvatar(
-            radius: 20.w,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(20.w),
+            child: FadeInImage.assetNetwork(
+              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+              image: Api.getImgUrl(widget.headImg),
+              height: 40.w,
+              width: 40.w,
+            ),
           ),
           10.wb,
           <Widget>[
@@ -68,27 +78,31 @@ class _UserGroupCardState extends State<UserGroupCard> {
               child: [
                 widget.name.text.black.make(),
                 6.wb,
-                Image.asset(
-                  R.ASSETS_INVITE_DETAIL_EDIT_PNG,
-                  height: 12.w,
-                  width: 12.w,
-                ),
+                // Image.asset(
+                //   R.ASSETS_INVITE_DETAIL_EDIT_PNG,
+                //   height: 12.w,
+                //   width: 12.w,
+                // ),
                 Spacer(),
               ].row(),
               onTap: () {},
             ),
             4.hb,
             [
-              _buildTile(R.ASSETS_USER_ICON_WECHAT_PNG, 'WEIXINXXXX').expand(),
-              _buildTile(R.ASSETS_USER_ICON_PHONE_PNG, '18295849102X').expand(),
+              _buildTile(R.ASSETS_USER_ICON_WECHAT_PNG, widget.wechatId)
+                  .expand(),
+              _buildTile(R.ASSETS_USER_ICON_PHONE_PNG, widget.phone).expand(),
             ].row(),
             4.hb,
             [
               _buildTile(
-                UserLevelTool.getRoleLevelIcon(UserRoleLevel.Gold),
-                'WEIXINXXXX',
+                UserLevelTool.getRoleLevelIcon(widget.shopRole),
+                UserLevelTool.roleLevelWithEnum(widget.shopRole),
               ).expand(),
-              _buildTile(R.ASSETS_USER_ICON_GROUP_PNG, '9').expand(),
+              _buildTile(
+                R.ASSETS_USER_ICON_GROUP_PNG,
+                widget.groupCount.toString(),
+              ).expand(),
             ].row(),
           ].column().expand(),
         ].row(crossAlignment: CrossAxisAlignment.start),

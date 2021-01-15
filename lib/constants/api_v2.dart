@@ -37,4 +37,13 @@ class UserAPI {
   ///
   ///包含`自购收益`和`导购收益`
   String get monthDetail => '/v2/app/user/income/day_income';
+
+  ///团队月收益详情
+  String get groupDetail => '/v2/app/user/income/team_month_income';
+
+  ///月推荐收益详情
+  String get recommendDetail => '/v2/app/user/income/recommend_month_income';
+
+  ///月平台奖励收益详情
+  String get platformDetail => '/v2/app/user/income/reward_month_income';
 }

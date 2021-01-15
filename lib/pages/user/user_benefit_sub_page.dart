@@ -1,10 +1,15 @@
+import 'dart:math';
+
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/functions/user_benefit_func.dart';
+import 'package:recook/pages/user/model/user_benefit_extra_detail_model.dart';
 import 'package:recook/pages/user/model/user_benefit_month_detail_model.dart';
 import 'package:recook/pages/user/model/user_benefit_sub_model.dart';
+import 'package:recook/pages/user/widget/user_group_card.dart';
 import 'package:recook/utils/user_level_tool.dart';
+import 'package:recook/widgets/animated_rotate.dart';
 import 'package:recook/widgets/bottom_time_picker.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_painters/round_background_painter.dart';
@@ -56,10 +61,13 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
   String _salesVolume = '';
   String _count = '';
 
+  bool _itemReverse = false;
+
   GSRefreshController _refreshController = GSRefreshController();
 
   ///仅在自购和导购收益中可用
   List<UserBenefitMonthDetailModel> _models = [];
+  UserBenefitExtraDetailModel _extraDetailModel;
 
   ///头部卡片
   Widget _buildCard() {
@@ -167,25 +175,37 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
   }
 
   ///中间的按钮
-  Widget _buildMidCard({
-    String slot1 = '0',
-    String slot2 = '0',
-    String slot3 = '0',
-  }) {
+  Widget _buildMidCard() {
+    if (_extraDetailModel == null) return SizedBox();
     return VxBox(
       child: [
         '$_title\(元)'.text.color(Colors.black54).size(18).make(),
-        slot1.text.color(Color(0xFF333333)).size(24).make(),
+        _extraDetailModel.data.amount
+            .toStringAsFixed(2)
+            .text
+            .color(Color(0xFF333333))
+            .size(24)
+            .make(),
         36.hb,
         [
           [
             '销售额(元)'.text.color(Colors.black54).size(14).make(),
-            slot2.text.color(Color(0xFF333333)).size(16).make(),
+            _extraDetailModel.data.salesVolume
+                .toStringAsFixed(2)
+                .text
+                .color(Color(0xFF333333))
+                .size(16)
+                .make(),
           ].column(crossAlignment: CrossAxisAlignment.start),
           Spacer(),
           [
             '提成比例(%)'.text.color(Colors.black54).size(14).make(),
-            slot3.text.color(Color(0xFF333333)).size(16).make(),
+            _extraDetailModel.data.ratio
+                .toStringAsFixed(2)
+                .text
+                .color(Color(0xFF333333))
+                .size(16)
+                .make(),
           ].column(),
         ].row(),
       ].column(crossAlignment: CrossAxisAlignment.start),
@@ -311,6 +331,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
   }
 
   Widget _buildGroupItems() {
+    if (_extraDetailModel == null) return SizedBox();
     return Stack(
       children: [
         _buildBackBar(),
@@ -323,24 +344,54 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
                 15.wb,
                 '团队贡献榜'.text.size(14.sp).color(Color(0xFF333333)).bold.make(),
                 Spacer(),
-                '团队人数:12'.text.size(14.sp).color(Color(0xFF333333)).bold.make(),
+                '团队人数:${_extraDetailModel.data.count}'
+                    .text
+                    .size(14.sp)
+                    .color(Color(0xFF333333))
+                    .bold
+                    .make(),
                 10.wb,
                 MaterialButton(
                   minWidth: 0,
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onPressed: () {},
-                  child: Image.asset(
-                    R.ASSETS_ASCSORT_PNG,
-                    height: 15.w,
-                    width: 15.w,
+                  onPressed: () {
+                    setState(() {
+                      _itemReverse = !_itemReverse;
+                    });
+                  },
+                  child: AnimatedRotate(
+                    child: Image.asset(
+                      R.ASSETS_ASCSORT_PNG,
+                      height: 15.w,
+                      width: 15.w,
+                    ),
+                    angle: _itemReverse ? 0 : pi,
                   ),
                   padding: EdgeInsets.symmetric(horizontal: 15.w),
                 ),
               ],
             ),
+            10.hb,
+            ListView(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              reverse: _itemReverse,
+              children: _extraDetailModel.data.userIncome.map((e) {
+                bool hasExtraName = TextUtil.isEmpty(e.remarkName);
+                return UserGroupCard(
+                  shopRole: UserLevelTool.roleLevelEnum(e.roleLevel),
+                  wechatId: e.wechatNo ?? '',
+                  name: '${e.nickname}${hasExtraName ? '' : e.remarkName}',
+                  groupCount: e.count,
+                  phone: e.phone ?? '',
+                  headImg: e.headImgUrl ?? '',
+                );
+              }).toList(),
+            ),
           ].column(),
           decoration: BoxDecoration(
             color: Colors.white,
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(5.w)),
             boxShadow: [
               BoxShadow(
                 offset: Offset(0, 2.w),
@@ -411,6 +462,11 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
           _count = model.data.count.toStringAsFixed(2);
           if (!_notSelfNotGUide) {
             _models = await UserBenefitFunc.monthDetail(_date);
+          } else {
+            _extraDetailModel = await UserBenefitFunc.extraDetail(
+              type: widget.type,
+              date: _date,
+            );
           }
           setState(() {});
           _refreshController.refreshCompleted();
