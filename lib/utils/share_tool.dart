@@ -136,9 +136,9 @@ class ShareTool {
           thumbnail: Api.getImgUrl(miniPicurl));
     });
     PlatformItem wechatItem = PlatformItem(
-        "微信",
+        "小程序",
         Image.asset(
-          ShareToolIcon.wechatmini,
+          R.ASSETS_SHARE_BOTTOM_WECHAT_MINI_P_PNG,
           width: 36,
           height: 36,
         ), itemClick: () {
@@ -213,7 +213,7 @@ class ShareTool {
     PlatformItem qqItem = PlatformItem(
         "QQ",
         Image.asset(
-          ShareToolIcon.qq,
+          R.ASSETS_SHARE_BOTTOM_QQ_PNG,
           width: 36,
           height: 36,
         ), itemClick: () {
@@ -247,7 +247,7 @@ class ShareTool {
     PlatformItem copyurl = PlatformItem(
         "复制链接",
         Image.asset(
-          ShareToolIcon.copyurl,
+          R.ASSETS_SHARE_BOTTOM_LINK_PNG,
           width: 36,
           height: 36,
         ), itemClick: () {
@@ -262,7 +262,7 @@ class ShareTool {
     PlatformItem qrcode = PlatformItem(
         "小程序海报",
         Image.asset(
-          ShareToolIcon.poster,
+          R.ASSETS_SHARE_BOTTOM_BANNER_PNG,
           width: 36,
           height: 36,
         ), itemClick: () {
@@ -275,7 +275,7 @@ class ShareTool {
     PlatformItem addToLiveGoodsCart = PlatformItem(
       '加到直播车',
       Image.asset(
-        R.ASSETS_LIVE_LIVE_CART_PNG,
+        R.ASSETS_SHARE_BOTTOM_LIVE_CART_PNG,
         width: 36,
         height: 36,
       ),
