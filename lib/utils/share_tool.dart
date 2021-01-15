@@ -136,7 +136,7 @@ class ShareTool {
           thumbnail: Api.getImgUrl(miniPicurl));
     });
     PlatformItem wechatItem = PlatformItem(
-        "微信",
+        "小程序",
         Image.asset(
           R.ASSETS_SHARE_BOTTOM_WECHAT_MINI_P_PNG,
           width: 36,
