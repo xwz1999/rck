@@ -1,7 +1,9 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/user/model/user_accumulate_model.dart';
 import 'package:recook/pages/user/model/user_benefit_model.dart';
+import 'package:recook/pages/user/model/user_benefit_month_detail_model.dart';
 import 'package:recook/pages/user/model/user_benefit_sub_model.dart';
 import 'package:recook/pages/user/model/user_month_income_model.dart';
 import 'package:recook/pages/user/user_benefit_sub_page.dart';
@@ -48,5 +50,19 @@ class UserBenefitFunc {
     }
     ResultData result = await HttpManager.post(path, {});
     return UserBenefitSubModel.fromJson(result.data, type);
+  }
+
+  static Future<List<UserBenefitMonthDetailModel>> monthDetail(
+      DateTime date) async {
+    ResultData result = await HttpManager.post(
+      APIV2.userAPI.monthDetail,
+      {'month': DateUtil.formatDate(date, format: 'yyyy-MM')},
+    );
+    if (result.data['data'] == null)
+      return [];
+    else
+      return (result.data['data'] as List)
+          .map((e) => UserBenefitMonthDetailModel.fromJson(e))
+          .toList();
   }
 }

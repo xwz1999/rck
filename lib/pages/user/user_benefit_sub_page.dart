@@ -2,6 +2,8 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/functions/user_benefit_func.dart';
+import 'package:recook/pages/user/model/user_benefit_month_detail_model.dart';
+import 'package:recook/pages/user/model/user_benefit_sub_model.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/bottom_time_picker.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -55,6 +57,9 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
   String _count = '';
 
   GSRefreshController _refreshController = GSRefreshController();
+
+  ///仅在自购和导购收益中可用
+  List<UserBenefitMonthDetailModel> _models = [];
 
   ///头部卡片
   Widget _buildCard() {
@@ -212,21 +217,24 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
   TableRow _buildTableRow({
     DateTime date,
     double volume,
-    int amount,
+    int count,
     double benefit,
   }) {
     return TableRow(
       children: [
         _buildTableItem(DateUtil.formatDate(date, format: 'M月dd日')),
         _buildTableItem(volume.toStringAsFixed(2)),
-        _buildTableItem(amount.toString()),
+        _buildTableItem(count.toString()),
         _buildTableItem(benefit.toStringAsFixed(2), true),
       ],
     );
   }
 
   ///表格
+  ///
+  ///自购收益和导购收益的列表
   _buildTable() {
+    if (_models.isEmpty) return SizedBox();
     return Table(
       border: TableBorder(
         horizontalInside: BorderSide(color: Color(0xFFEEEEEE), width: 1.w),
@@ -240,12 +248,28 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
             _buildTableTitle('结算收益'),
           ],
         ),
-        _buildTableRow(
-          date: DateTime.now(),
-          volume: 100,
-          amount: 1,
-          benefit: 40,
-        ),
+        ..._models.map((e) {
+          double amount = 0;
+          double salesVolume = 0;
+          int count = 0;
+          if (widget.type == UserBenefitPageType.SELF) {
+            amount = e.purchaseAmount;
+            salesVolume = e.purchaseSalesVolume;
+            count = e.purchaseCount;
+          }
+          if (widget.type == UserBenefitPageType.GUIDE) {
+            amount = e.guideAmount;
+            salesVolume = e.guideSalesVolume;
+            count = e.guideCount;
+          }
+
+          return _buildTableRow(
+            date: e.day,
+            volume: salesVolume,
+            count: count,
+            benefit: amount,
+          );
+        }).toList(),
       ],
     ).material(color: Colors.white).pSymmetric(v: 10.w);
   }
@@ -330,6 +354,21 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
     );
   }
 
+  Widget _buildTag() {
+    // if(_models.isEmpty)return SizedBox()
+    double benefitValue = 0;
+    if (widget.type == UserBenefitPageType.SELF) {
+      _models.forEach((element) => benefitValue += element.purchaseAmount);
+    }
+    if (widget.type == UserBenefitPageType.GUIDE)
+      _models.forEach((element) => benefitValue += element.guideAmount);
+    return '当月收益(瑞币)：${benefitValue.toStringAsFixed(2)}'
+        .text
+        .color(Color(0xFF999999))
+        .size(16.sp)
+        .make();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -364,13 +403,16 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
       body: RefreshWidget(
         controller: _refreshController,
         color: Colors.white,
-        onRefresh: () {
-          UserBenefitFunc.subInfo(widget.type).then((model) {
-            _amount = model.data.amount.toStringAsFixed(2);
-            _salesVolume = model.data.salesVolume.toStringAsFixed(2);
-            _count = model.data.count.toStringAsFixed(2);
-            setState(() {});
-          });
+        onRefresh: () async {
+          UserBenefitSubModel model =
+              await UserBenefitFunc.subInfo(widget.type);
+          _amount = model.data.amount.toStringAsFixed(2);
+          _salesVolume = model.data.salesVolume.toStringAsFixed(2);
+          _count = model.data.count.toStringAsFixed(2);
+          if (!_notSelfNotGUide) {
+            _models = await UserBenefitFunc.monthDetail(_date);
+          }
+          setState(() {});
           _refreshController.refreshCompleted();
         },
         body: ListView(
@@ -398,6 +440,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
                         submit: (time, type) {
                           Navigator.maybePop(context);
                           _date = time;
+                          _refreshController.requestRefresh();
                           setState(() {});
                         },
                         timePickerTypes: [
@@ -421,6 +464,8 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 Spacer(),
+                _notSelfNotGUide ? SizedBox() : _buildTag(),
+                15.wb,
               ],
             ),
             _notSelfNotGUide ? _buildMidCard() : SizedBox(),

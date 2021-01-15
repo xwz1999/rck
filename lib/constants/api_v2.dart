@@ -32,4 +32,9 @@ class UserAPI {
 
   ///累计平台奖励
   String get platformIncome => '/v2/app/user/income/reward_income';
+
+  ///月度日收益
+  ///
+  ///包含`自购收益`和`导购收益`
+  String get monthDetail => '/v2/app/user/income/day_income';
 }
