@@ -12,7 +12,6 @@ class AboutUsPage extends StatefulWidget {
 }
 
 class _AboutUsPageState extends BaseStoreState<AboutUsPage> {
-
   @override
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
@@ -21,14 +20,13 @@ class _AboutUsPageState extends BaseStoreState<AboutUsPage> {
         title: "关于我们",
         elevation: 0,
       ),
-      body: ListView(
-        physics: AlwaysScrollableScrollPhysics(),
-        children: <Widget>[
-          Container(
-            // padding: EdgeInsets.symmetric(vertical: 10),
-            child: Image.asset("assets/recook_about_us.jpg", fit: BoxFit.fill,),
-          )
-        ],
+      body: SingleChildScrollView(
+        child: Container(
+          child: Image.asset(
+            "assets/recook_about_us.webp",
+            fit: BoxFit.fill,
+          ),
+        ),
       ),
     );
   }

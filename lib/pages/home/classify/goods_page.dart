@@ -9,6 +9,7 @@
 
 import 'dart:convert';
 
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -276,7 +277,33 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     //             ],
     //           ),
     //         ));
+    insertFirst() {
+      if (!TextUtil.isEmpty(widget.goodsDetail.data.notice.img))
+        children.insert(
+          0,
+          FadeInImage.assetNetwork(
+            placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+            image: Api.getImgUrl(widget.goodsDetail.data.notice.img),
+          ),
+        );
+    }
 
+    insertLast() {
+      if (!TextUtil.isEmpty(widget.goodsDetail.data.notice.img))
+        children.add(
+          FadeInImage.assetNetwork(
+            placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+            image: Api.getImgUrl(widget.goodsDetail.data.notice.img),
+          ),
+        );
+    }
+
+    if (widget?.goodsDetail?.data?.notice?.type == 1) insertFirst();
+    if (widget?.goodsDetail?.data?.notice?.type == 2) insertLast();
+    if (widget?.goodsDetail?.data?.notice?.type == 3) {
+      insertFirst();
+      insertLast();
+    }
     return children;
   }
 
