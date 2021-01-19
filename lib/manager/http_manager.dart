@@ -118,14 +118,14 @@ class HttpManager {
     }
     header.putIfAbsent(
         "X-Recook-System", () => Platform.isIOS ? "ios" : "android");
-    header.putIfAbsent(
-        "X-Recook-version", () => "${AppConfig.versionNumber}");
+    header.putIfAbsent("X-Recook-version", () => "${AppConfig.versionNumber}");
     if (UserManager.instance.user.auth != null) {
       header.putIfAbsent(
           "X-Recook-ID", () => UserManager.instance.user.auth.id.toString());
       header.putIfAbsent(
           "X-Recook-Token", () => UserManager.instance.user.auth.token);
     }
+    header.putIfAbsent('Device-Type', () => Platform.isIOS ? "ios" : "android");
     DPrint.printf(header);
     return await netFetch(url, params, header, option);
   }

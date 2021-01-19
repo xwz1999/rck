@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'package:common_utils/common_utils.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,7 @@ class BrandDetailGridItem extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
+            rHBox(5),
             Container(
               width: width,
               height: width,
@@ -51,11 +53,14 @@ class BrandDetailGridItem extends StatelessWidget {
                 children: <Widget>[
                   AspectRatio(
                       aspectRatio: 1,
-                      child: CustomCacheImage(
-                          fit: BoxFit.cover,
-                          placeholder: AppImageName.placeholder_1x1,
-                          imageUrl:
-                              Api.getResizeImgUrl(goods.mainPhotoUrl, 300))),
+                      child: Material(
+                        color: AppColor.frenchColor,
+                        child: CustomCacheImage(
+                            fit: BoxFit.cover,
+                            placeholder: AppImageName.placeholder_1x1,
+                            imageUrl:
+                                Api.getResizeImgUrl(goods.mainPhotoUrl, 300)),
+                      )),
                   Positioned(
                     child: isSoldOut
                         ? ItemTagWidget.imageMaskWidget(
@@ -110,23 +115,27 @@ class BrandDetailGridItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin:
-                  const EdgeInsets.only(left: 0, right: 0, top: 5, bottom: 5),
-              child: this.goods.description == null
-                  ? Container()
-                  : Text(
-                      this.goods.description,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(10),
-                          color: Colors.black54, fontWeight: FontWeight.w300),
-                    ),
-            ),
-            Spacer(),
+            TextUtil.isEmpty(this.goods.description)
+                ? SizedBox()
+                : Container(
+                    alignment: Alignment.centerLeft,
+                    margin: const EdgeInsets.only(
+                        left: 0, right: 0, top: 5, bottom: 5),
+                    child: this.goods.description == null
+                        ? Container()
+                        : Text(
+                            this.goods.description,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyle.generate(
+                                ScreenAdapterUtils.setSp(10),
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w300),
+                          ),
+                  ),
+            // Spacer(),
             AppConfig.getShowCommission() ? _brandWidget() : SizedBox(),
-            Spacer(),
+            // Spacer(),
             _saleNumberWidget(this.goods),
             SizedBox(
               height: ScreenAdapterUtils.setWidth(4),
@@ -353,7 +362,6 @@ class BrandDetailGridItem extends StatelessWidget {
         },
         child: Container(
           width: double.infinity,
-          height: 25,
           color: Colors.white,
           child: Row(
             children: <Widget>[
@@ -370,13 +378,16 @@ class BrandDetailGridItem extends StatelessWidget {
               SizedBox(
                 width: 4,
               ),
-              Text(
-                TextUtils.isEmpty(this.goods.brandName)
-                    ? ""
-                    : this.goods.brandName,
-                style: TextStyle(
-                  color: Color(0xffc70404),
-                  fontSize: ScreenAdapterUtils.setSp(12),
+              Expanded(
+                child: Text(
+                  TextUtils.isEmpty(this.goods.brandName)
+                      ? ""
+                      : this.goods.brandName,
+                  maxLines: 2,
+                  style: TextStyle(
+                    color: Color(0xffc70404),
+                    fontSize: ScreenAdapterUtils.setSp(12),
+                  ),
                 ),
               ),
             ],

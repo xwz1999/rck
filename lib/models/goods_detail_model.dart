@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
+
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/models/price_model.dart';
@@ -162,6 +165,8 @@ class Data extends Object {
 
   int shoppingTrolleyCount; //购物车数量
 
+  Notice notice;
+
   List<Recommends> recommends;
 
   num isImport;
@@ -192,6 +197,7 @@ class Data extends Object {
     this.isImport,
     this.isFerme,
     this.storehouse,
+    this.notice,
   );
 
   factory Data.fromJson(Map<String, dynamic> srcJson) =>
@@ -522,4 +528,39 @@ class Recommends extends Object {
   factory Recommends.fromJson(Map<String, dynamic> srcJson) =>
       _$RecommendsFromJson(srcJson);
   Map<String, dynamic> toJson() => _$RecommendsToJson(this);
+}
+
+class Notice {
+  String title;
+  String img;
+
+  ///type: 1头显示，2尾显示，3头尾显示
+  int type;
+  Notice({
+    this.title,
+    this.img,
+    this.type,
+  });
+
+  Map<String, dynamic> toMap() {
+    return {
+      'title': title,
+      'img': img,
+      'type': type,
+    };
+  }
+
+  factory Notice.fromMap(Map<String, dynamic> map) {
+    if (map == null) return null;
+
+    return Notice(
+      title: map['title'],
+      img: map['img'],
+      type: map['type'],
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory Notice.fromJson(dynamic source) => Notice.fromMap(source);
 }

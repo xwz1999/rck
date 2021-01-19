@@ -23,6 +23,7 @@ import 'package:recook/widgets/filter_tool_bar.dart';
 import 'package:recook/widgets/goods_item.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:waterfall_flow/waterfall_flow.dart';
 import 'mvp/goods_list_contact.dart';
 import 'mvp/goods_list_presenter_impl.dart';
 
@@ -277,12 +278,19 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
   }
 
   _buildGridView() {
-    return GridView.builder(
+    // return WaterfallFlow.builder(
+
+    //       itemBuilder: ,
+    // );
+    return WaterfallFlow.builder(
         padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight),
         physics: AlwaysScrollableScrollPhysics(),
         itemCount: _listViewController.getData().length,
-        gridDelegate:
-            ItemTagWidget.getSliverGridDelegate(_displayList, context),
+        gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
+          crossAxisCount: _displayList ? 1 : 2,
+          crossAxisSpacing: _displayList ? 5 : 10,
+          mainAxisSpacing: _displayList ? 5 : 10,
+        ),
         itemBuilder: (context, index) {
           GoodsSimple goods = _listViewController.getData()[index];
           // goods.inventory = 0;

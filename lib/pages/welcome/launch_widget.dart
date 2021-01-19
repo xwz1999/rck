@@ -9,9 +9,13 @@
 
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:raw_toast/raw_toast.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/constants.dart';
+import 'package:recook/pages/welcome/launch_privacy_dialog.dart';
 import 'package:recook/utils/app_router.dart';
+import 'package:recook/utils/storage/hive_store.dart';
 import 'package:sprintf/sprintf.dart';
 
 class LaunchWidget extends StatefulWidget {
@@ -41,11 +45,25 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
             "assets/recook_launch_image/recook_launch_image_$i.png");
       });
     }
-    WidgetsBinding.instance.addPostFrameCallback((callback) {
+    WidgetsBinding.instance.addPostFrameCallback((callback) async {
       // _gifController.repeat(min: 0, max:59, period: Duration(milliseconds: 1500));
-      Future.delayed(Duration(milliseconds: 2000), () {
-        AppRouter.fadeAndReplaced(globalContext, RouteName.WELCOME_PAGE);
-      });
+      await Future.delayed(Duration(milliseconds: 2000));
+      if (HiveStore.appBox.get('privacy_init') == null) {
+        // if (true) {
+        bool agreeResult = (await launchPrivacyDialog(context)) ?? false;
+        if (!agreeResult) {
+          //第1次不同意
+          bool secondAgree =
+              (await launchPrivacySecondDialog(context)) ?? false;
+          //第2次不同意
+          if (!secondAgree)
+            SystemNavigator.pop();
+          else
+            HiveStore.appBox.put('privacy_init', true);
+        } else
+          HiveStore.appBox.put('privacy_init', true);
+      }
+      AppRouter.fadeAndReplaced(globalContext, RouteName.WELCOME_PAGE);
     });
   }
 

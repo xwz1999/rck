@@ -80,7 +80,7 @@ class LogisticItem extends StatelessWidget {
                 crossAxisCount: 4),
             itemBuilder: (_, index) {
               return CustomCacheImage(
-                imageUrl: Api.getResizeImgUrl(model.picUrls[index], 150),
+                imageUrl: Api.getImgUrl(model.picUrls[index]),
                 fit: BoxFit.cover,
               );
             })

@@ -73,7 +73,7 @@ class _LogisticDetailPageState extends BaseStoreState<LogisticDetailPage> {
                   width: rSize(84),
                   height: rSize(84),
                   fit: BoxFit.cover,
-                  imageUrl: Api.getResizeImgUrl(_model.picUrls[0], 100),
+                  imageUrl: Api.getImgUrl(_model.picUrls[0]),
                 ),
                 SizedBox(
                   width: 8,

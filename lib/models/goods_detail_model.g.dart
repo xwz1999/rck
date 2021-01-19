@@ -71,6 +71,9 @@ Data _$DataFromJson(Map<String, dynamic> json) {
     json['isImport'],
     json['isFerme'],
     json['storehouse'],
+    json['notice'] == null
+        ? null
+        : Notice.fromJson(json['notice'] as Map<String, dynamic>),
   );
 }
 

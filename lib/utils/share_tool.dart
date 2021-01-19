@@ -108,14 +108,17 @@ class ShareTool {
     );
   }
 
-  goodsShare(BuildContext context,
-      {String goodsName = "",
-      String goodsDescription = "",
-      String goodsPrice = "",
-      String amount = "",
-      String miniTitle = "",
-      String miniPicurl = "",
-      String goodsId = ""}) {
+  goodsShare(
+    BuildContext context, {
+    String goodsName = "",
+    String goodsDescription = "",
+    String goodsPrice = "",
+    String amount = "",
+    String miniTitle = "",
+    String miniPicurl = "",
+    String goodsId = "",
+    String secondPic = "",
+  }) {
     // !!!!
     String goodsUrl =
         "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}$goodsId/${UserManager.instance.user.info.invitationNo}";
@@ -133,21 +136,26 @@ class ShareTool {
           thumbnail: Api.getImgUrl(miniPicurl));
     });
     PlatformItem wechatItem = PlatformItem(
-        "微信",
+        "小程序",
         Image.asset(
-          ShareToolIcon.wechat,
+          R.ASSETS_SHARE_BOTTOM_WECHAT_MINI_P_PNG,
           width: 36,
           height: 36,
         ), itemClick: () {
       Navigator.maybePop(context);
       WeChatScene scene = WeChatScene.SESSION;
-      WeChatUtils.shareUrl(
-          url: goodsUrl,
-          netWorkThumbnail: Api.getImgUrl(miniPicurl),
-          // netWorkThumbnail: AppImageName.web_app_icon,
-          title: "仅$goodsPrice元 | $goodsName",
-          description: goodsDescription,
-          scene: scene);
+      // WeChatUtils.shareUrl(
+      //     url: goodsUrl,
+      //     netWorkThumbnail: Api.getImgUrl(miniPicurl),
+      //     // netWorkThumbnail: AppImageName.web_app_icon,
+      //     title: "仅$goodsPrice元 | $goodsName",
+      //     description: goodsDescription,
+      //     scene: scene);
+      WeChatUtils.miniProgramShare(
+        id: goodsId,
+        netWorkThumbnail: Api.getImgUrl(miniPicurl),
+        des: miniTitle,
+      );
     });
     PlatformItem weiboItem = PlatformItem(
         "微博",
@@ -205,7 +213,7 @@ class ShareTool {
     PlatformItem qqItem = PlatformItem(
         "QQ",
         Image.asset(
-          ShareToolIcon.qq,
+          R.ASSETS_SHARE_BOTTOM_QQ_PNG,
           width: 36,
           height: 36,
         ), itemClick: () {
@@ -239,7 +247,7 @@ class ShareTool {
     PlatformItem copyurl = PlatformItem(
         "复制链接",
         Image.asset(
-          ShareToolIcon.copyurl,
+          R.ASSETS_SHARE_BOTTOM_LINK_PNG,
           width: 36,
           height: 36,
         ), itemClick: () {
@@ -252,9 +260,9 @@ class ShareTool {
       );
     });
     PlatformItem qrcode = PlatformItem(
-        "二维码海报",
+        "小程序海报",
         Image.asset(
-          ShareToolIcon.poster,
+          R.ASSETS_SHARE_BOTTOM_BANNER_PNG,
           width: 36,
           height: 36,
         ), itemClick: () {
@@ -267,7 +275,7 @@ class ShareTool {
     PlatformItem addToLiveGoodsCart = PlatformItem(
       '加到直播车',
       Image.asset(
-        R.ASSETS_LIVE_LIVE_CART_PNG,
+        R.ASSETS_SHARE_BOTTOM_LIVE_CART_PNG,
         width: 36,
         height: 36,
       ),
@@ -282,11 +290,11 @@ class ShareTool {
     );
     List<PlatformItem> itemList = [
       // miniItem,
+      qrcode,
       wechatItem,
       // weiboItem,
       // qqItem,
       copyurl,
-      qrcode,
     ];
     if (ShareTool.qqInstalled) {
       itemList.add(qqItem);

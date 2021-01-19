@@ -21,18 +21,14 @@ class _AboutUsPageState extends BaseStoreState<AboutUsPage> {
         title: "关于我们",
         elevation: 0,
       ),
-      body: ListView(
-        physics: AlwaysScrollableScrollPhysics(),
-        children: <Widget>[
-          Container(
-            // padding: EdgeInsets.symmetric(vertical: 10),
-            child: Image.asset(
-              R.ASSETS_RECOOK_ABOUT_US_JPG_WEBP,
-              fit: BoxFit.fill,
-            ),
-          )
-        ],
-      ),
+      body: SingleChildScrollView(
+          child: Container(
+        // padding: EdgeInsets.symmetric(vertical: 10),
+        child: Image.asset(
+          R.ASSETS_RECOOK_ABOUT_US_JPG_WEBP,
+          fit: BoxFit.fill,
+        ),
+      )),
     );
   }
 }

@@ -9,6 +9,7 @@
 
 import 'dart:convert';
 
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -276,7 +277,33 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     //             ],
     //           ),
     //         ));
+    insertFirst() {
+      if (!TextUtil.isEmpty(widget.goodsDetail.data.notice.img))
+        children.insert(
+          0,
+          FadeInImage.assetNetwork(
+            placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+            image: Api.getImgUrl(widget.goodsDetail.data.notice.img),
+          ),
+        );
+    }
 
+    insertLast() {
+      if (!TextUtil.isEmpty(widget.goodsDetail.data.notice.img))
+        children.add(
+          FadeInImage.assetNetwork(
+            placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+            image: Api.getImgUrl(widget.goodsDetail.data.notice.img),
+          ),
+        );
+    }
+
+    if (widget?.goodsDetail?.data?.notice?.type == 1) insertFirst();
+    if (widget?.goodsDetail?.data?.notice?.type == 2) insertLast();
+    if (widget?.goodsDetail?.data?.notice?.type == 3) {
+      insertFirst();
+      insertLast();
+    }
     return children;
   }
 
@@ -305,18 +332,20 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             GoodPriceView(
               detailModel: widget.goodsDetail,
               shareCallback: () {
-                ShareTool().goodsShare(context,
-                    goodsPrice: widget.goodsDetail.data.getPriceString(),
-                    goodsName: widget.goodsDetail.data.goodsName,
-                    goodsDescription: widget.goodsDetail.data.description,
-                    miniPicurl: widget.goodsDetail.data.mainPhotos.length >= 1
-                        ? widget.goodsDetail.data.mainPhotos[1].url
-                        : "",
-                    miniTitle:
-                        "￥${widget.goodsDetail.data.getPriceString()} | ${widget.goodsDetail.data.goodsName} | ${widget.goodsDetail.data.description}",
-                    amount:
-                        widget.goodsDetail.data.price.min.commission.toString(),
-                    goodsId: widget.goodsDetail.data.id.toString());
+                ShareTool().goodsShare(
+                  context,
+                  goodsPrice: widget.goodsDetail.data.getPriceString(),
+                  goodsName: widget.goodsDetail.data.goodsName,
+                  goodsDescription: widget.goodsDetail.data.description,
+                  miniPicurl: widget.goodsDetail.data.mainPhotos.length >= 1
+                      ? widget.goodsDetail.data.mainPhotos[1].url
+                      : "",
+                  miniTitle:
+                      "￥${widget.goodsDetail.data.getPriceString()} | ${widget.goodsDetail.data.goodsName} | ${widget.goodsDetail.data.description}",
+                  amount:
+                      widget.goodsDetail.data.price.min.commission.toString(),
+                  goodsId: widget.goodsDetail.data.id.toString(),
+                );
               },
             ),
           ],
@@ -328,7 +357,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         color: Colors.white,
         child: _discountContent(context),
       ),
-      widget.goodsDetail.data.storehouse==2||widget.goodsDetail.data.storehouse==3
+      widget.goodsDetail.data.storehouse == 2 ||
+              widget.goodsDetail.data.storehouse == 3
           ? Container(
               margin: EdgeInsets.only(bottom: 13),
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -511,7 +541,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          (widget.goodsDetail.data.storehouse == 2 ||widget.goodsDetail.data.storehouse==3)
+                          (widget.goodsDetail.data.storehouse == 2 ||
+                                  widget.goodsDetail.data.storehouse == 3)
                               ? Text(
                                   "跨境商品不支持开发票",
                                   style: AppTextStyle.generate(
@@ -519,7 +550,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                                       color: Color(0xff373737)),
                                 )
                               : SizedBox(),
-                          (widget.goodsDetail.data.storehouse == 2 ||widget.goodsDetail.data.storehouse==3)
+                          (widget.goodsDetail.data.storehouse == 2 ||
+                                  widget.goodsDetail.data.storehouse == 3)
                               ? rHBox(rSize(4))
                               : SizedBox(),
                           Text(
