@@ -379,6 +379,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
               children: _extraDetailModel.data.userIncome.map((e) {
                 bool hasExtraName = TextUtil.isEmpty(e.remarkName);
                 return UserGroupCard(
+                  id: e.userId,
                   shopRole: UserLevelTool.roleLevelEnum(e.roleLevel),
                   wechatId: e.wechatNo ?? '',
                   name: '${e.nickname}${hasExtraName ? '' : e.remarkName}',

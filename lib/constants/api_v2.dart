@@ -46,4 +46,16 @@ class UserAPI {
 
   ///月平台奖励收益详情
   String get platformDetail => '/v2/app/user/income/reward_month_income';
+
+  ///我的团队列表
+  String get myGroup => '/v2/app/user/team';
+
+  ///我的推荐列表
+  String get myRecommend => '/v2/app/user/recommend';
+
+  ///我的奖励列表
+  String get myReward => '/v2/app/user/reward';
+
+  ///推荐升级钻石
+  String get recommendDiamond => '/v2/app/user/recommend_diamond';
 }

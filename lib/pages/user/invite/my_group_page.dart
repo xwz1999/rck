@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:recook/pages/user/functions/user_func.dart';
+import 'package:recook/pages/user/model/user_common_model.dart';
 import 'package:recook/pages/user/widget/user_group_card.dart';
-import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:recook/constants/header.dart';
 
@@ -15,6 +17,17 @@ class MyGroupPage extends StatefulWidget {
 
 class _MyGroupPageState extends State<MyGroupPage> {
   bool _filterRecommand = false;
+  GSRefreshController _refreshController = GSRefreshController();
+  List<UserCommonModel> _models = [];
+  int get _myGroupNumber => _models.length;
+  int get _allGroupCount {
+    int value = 0;
+    _models.forEach((element) {
+      value += element.count;
+    });
+    return value;
+  }
+
   _buildSearchButton() {
     return CustomImageButton(
       child: VxBox(
@@ -44,9 +57,9 @@ class _MyGroupPageState extends State<MyGroupPage> {
     return Row(
       children: [
         25.wb,
-        '我的团队数:${12}'.text.color(Color(0xFF333333)).size(12).make(),
+        '我的团队:$_myGroupNumber'.text.color(Color(0xFF333333)).size(12).make(),
         Spacer(),
-        '总团队数:${23}'.text.color(Color(0xFF333333)).size(12).make(),
+        '总团队人数:$_allGroupCount'.text.color(Color(0xFF333333)).size(12).make(),
         12.wb,
         CustomImageButton(
           onPressed: () {
@@ -59,7 +72,7 @@ class _MyGroupPageState extends State<MyGroupPage> {
             width: 58.w,
             curve: Curves.easeInOutCubic,
             alignment:
-                _filterRecommand ? Alignment.centerLeft : Alignment.centerRight,
+                _filterRecommand ? Alignment.centerRight : Alignment.centerLeft,
             duration: Duration(milliseconds: 300),
             decoration: BoxDecoration(
               color: Color(0xFFF1F1F1),
@@ -72,12 +85,12 @@ class _MyGroupPageState extends State<MyGroupPage> {
               duration: Duration(milliseconds: 300),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.w),
-                color: _filterRecommand ? Color(0xFF9C9C9C) : Color(0xFFFD6661),
+                color: _filterRecommand ? Color(0xFFFD6661) : Color(0xFF9C9C9C),
               ),
               child: AnimatedSwitcher(
                 duration: Duration(milliseconds: 300),
                 child: Text(
-                  _filterRecommand ? '筛选' : '推荐',
+                  _filterRecommand ? '推荐' : '筛选',
                   key: ValueKey(_filterRecommand),
                   style: TextStyle(
                     color: Colors.white,
@@ -94,21 +107,43 @@ class _MyGroupPageState extends State<MyGroupPage> {
   }
 
   _buildGroupCards() {
-    return ListView.separated(
-      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
-      separatorBuilder: (_, __) => 10.hb,
-      itemBuilder: (context, index) {
-        //TODO
-        return UserGroupCard(
-          name: 'TESTNAME(TEST)',
-          groupCount: 6,
-          phone: '18291010101',
-          shopRole: UserRoleLevel.Vip,
-          wechatId: 'TEST',
-        );
+    return RefreshWidget(
+      controller: _refreshController,
+      onRefresh: () async {
+        _models = await UserFunc.usersList(UsersMode.MY_GROUP);
+        _refreshController.refreshCompleted();
+        setState(() {});
       },
-      itemCount: 10,
+      body: ListView.separated(
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
+        separatorBuilder: (_, __) => 10.hb,
+        itemBuilder: (context, index) {
+          final model = _models[index];
+          if (_filterRecommand && !model.isRecommand) {
+            return SizedBox();
+          }
+          return UserGroupCard(
+            id: model.userId,
+            name: model.nickname,
+            groupCount: model.count,
+            phone: model.phone,
+            shopRole: model.roleLevelEnum,
+            wechatId: model.wechatNo,
+            headImg: model.headImgUrl,
+          );
+        },
+        itemCount: _models.length,
+      ),
     ).expand();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(
+      Duration(milliseconds: 300),
+      () => _refreshController.requestRefresh(),
+    );
   }
 
   @override
