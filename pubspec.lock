@@ -9,26 +9,12 @@ packages:
     source: hosted
     version: "0.12.0"
   amap_location_fluttify:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: amap_location_fluttify
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.18.0"
-  amap_map_fluttify:
-    dependency: "direct main"
-    description:
-      name: amap_map_fluttify
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.29.0"
-  amap_search_fluttify:
-    dependency: transitive
-    description:
-      name: amap_search_fluttify
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.14.0"
   analyzer:
     dependency: transitive
     description:
@@ -483,9 +469,11 @@ packages:
   flutter_union_pay:
     dependency: "direct main"
     description:
-      name: flutter_union_pay
-      url: "https://pub.flutter-io.cn"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "3b534e78f5448c518be3024f08cd73d27fe11f90"
+      url: "https://github.com/laiiihz/flutter_union_pay"
+    source: git
     version: "0.0.4"
   flutter_web_plugins:
     dependency: transitive

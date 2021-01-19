@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:amap_map_fluttify/amap_map_fluttify.dart';
+import 'package:amap_location_fluttify/amap_location_fluttify.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
