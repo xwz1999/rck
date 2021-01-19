@@ -380,6 +380,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
                 bool hasExtraName = TextUtil.isEmpty(e.remarkName);
                 return UserGroupCard(
                   id: e.userId,
+                  isRecommend: false,
                   shopRole: UserLevelTool.roleLevelEnum(e.roleLevel),
                   wechatId: e.wechatNo ?? '',
                   name: '${e.nickname}${hasExtraName ? '' : e.remarkName}',

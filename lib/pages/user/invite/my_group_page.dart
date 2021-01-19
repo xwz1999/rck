@@ -123,6 +123,7 @@ class _MyGroupPageState extends State<MyGroupPage> {
             return SizedBox();
           }
           return UserGroupCard(
+            isRecommend: model.isRecommand,
             id: model.userId,
             name: model.nickname,
             groupCount: model.count,

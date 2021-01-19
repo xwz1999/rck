@@ -78,6 +78,13 @@ class _UserGroupCardState extends State<UserGroupCard> {
             headImg: widget.headImg,
             role: widget.shopRole,
             nickName: widget.name,
+            phone: widget.phone,
+            wechat: widget.wechatId,
+            //TODO
+            comment: '',
+            //TODO 对接数据
+            signDate: DateTime.now(),
+            diamondDate: DateTime.now(),
           )),
       child: VxBox(
         child: [
@@ -102,100 +109,103 @@ class _UserGroupCardState extends State<UserGroupCard> {
                   width: 12.w,
                 ),
                 Spacer(),
-                GestureDetector(
-                  onTap: () async {
-                    bool result = await showDialog(
-                        context: context,
-                        child: NormalContentDialog(
-                          title: '推荐提示',
-                          content: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              '确定推荐${widget.name}为钻石店铺么 ？'
-                                  .text
-                                  .size(15.sp)
-                                  .color(Color(0xFF333333))
-                                  .center
-                                  .make(),
-                              '确认提拔后您将获得被推荐团队销售额提成比例的3%增加到4%'
-                                  .text
-                                  .center
-                                  .size(12.sp)
-                                  .color(Color(0xFF666666))
-                                  .make(),
-                            ],
-                          ),
-                          items: ['放弃', '确定'],
-                          listener: (index) async {
-                            switch (index) {
-                              case 0:
-                                Navigator.pop(context, false);
-                                break;
-                              case 1:
-                                GSDialog.of(context)
-                                    .showLoadingDialog(context, '推荐中');
-                                await HttpManager.post(
-                                  APIV2.userAPI.recommendDiamond,
-                                  {'userId': widget.id},
-                                );
-                                GSDialog.of(context).dismiss(context);
-                                Navigator.pop(context, true);
-                                break;
-                            }
-                          },
-                        ));
-
-                    if (result) {
-                      showDialog(
-                        context: context,
-                        child: Center(
-                          child: GestureDetector(
-                            onTap: () => Navigator.pop(context),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: Stack(
-                                children: [
-                                  Image.asset(
-                                    R.ASSETS_USER_GROUP_RECOMMEND_BG_PNG,
-                                    height: 306.w,
-                                    width: 344.w,
-                                  ),
-                                  Positioned(
-                                    left: 0,
-                                    right: 0,
-                                    top: 62.w,
-                                    child:
-                                        '恭喜！ ${UserManager.instance.user.info.nickname}'
-                                            .text
-                                            .white
-                                            .size(16.sp)
-                                            .make()
-                                            .centered(),
-                                  ),
-                                  Positioned(
-                                    left: 60.w,
-                                    right: 60.w,
-                                    top: 111.w,
-                                    child: '您从${widget.name}团队销售额获得提成比例将增至4%'
+                widget.isRecommend ?? false
+                    ? GestureDetector(
+                        onTap: () async {
+                          bool result = await showDialog(
+                              context: context,
+                              child: NormalContentDialog(
+                                title: '推荐提示',
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    '确定推荐${widget.name}为钻石店铺么 ？'
                                         .text
+                                        .size(15.sp)
                                         .color(Color(0xFF333333))
-                                        .size(16.sp)
-                                        .make()
-                                        .centered(),
+                                        .center
+                                        .make(),
+                                    '确认提拔后您将获得被推荐团队销售额提成比例的3%增加到4%'
+                                        .text
+                                        .center
+                                        .size(12.sp)
+                                        .color(Color(0xFF666666))
+                                        .make(),
+                                  ],
+                                ),
+                                items: ['放弃', '确定'],
+                                listener: (index) async {
+                                  switch (index) {
+                                    case 0:
+                                      Navigator.pop(context, false);
+                                      break;
+                                    case 1:
+                                      GSDialog.of(context)
+                                          .showLoadingDialog(context, '推荐中');
+                                      await HttpManager.post(
+                                        APIV2.userAPI.recommendDiamond,
+                                        {'userId': widget.id},
+                                      );
+                                      GSDialog.of(context).dismiss(context);
+                                      Navigator.pop(context, true);
+                                      break;
+                                  }
+                                },
+                              ));
+
+                          if (result) {
+                            showDialog(
+                              context: context,
+                              child: Center(
+                                child: GestureDetector(
+                                  onTap: () => Navigator.pop(context),
+                                  child: Material(
+                                    color: Colors.transparent,
+                                    child: Stack(
+                                      children: [
+                                        Image.asset(
+                                          R.ASSETS_USER_GROUP_RECOMMEND_BG_PNG,
+                                          height: 306.w,
+                                          width: 344.w,
+                                        ),
+                                        Positioned(
+                                          left: 0,
+                                          right: 0,
+                                          top: 62.w,
+                                          child:
+                                              '恭喜！ ${UserManager.instance.user.info.nickname}'
+                                                  .text
+                                                  .white
+                                                  .size(16.sp)
+                                                  .make()
+                                                  .centered(),
+                                        ),
+                                        Positioned(
+                                          left: 60.w,
+                                          right: 60.w,
+                                          top: 111.w,
+                                          child:
+                                              '您从${widget.name}团队销售额获得提成比例将增至4%'
+                                                  .text
+                                                  .color(Color(0xFF333333))
+                                                  .size(16.sp)
+                                                  .make()
+                                                  .centered(),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
+                            );
+                          }
+                        },
+                        child: Image.asset(
+                          R.ASSETS_USER_USER_RECOMMEND_PNG,
+                          height: 17.w,
                         ),
-                      );
-                    }
-                  },
-                  child: Image.asset(
-                    R.ASSETS_USER_USER_RECOMMEND_PNG,
-                    height: 17.w,
-                  ),
-                ),
+                      )
+                    : SizedBox(),
               ].row(),
               onTap: () {},
             ),
