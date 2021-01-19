@@ -1,5 +1,6 @@
 class APIV2 {
   static UserAPI userAPI = UserAPI();
+  static BenefitAPI benefitAPI = BenefitAPI();
 }
 
 class UserAPI {
@@ -58,4 +59,12 @@ class UserAPI {
 
   ///推荐升级钻石
   String get recommendDiamond => '/v2/app/user/recommend_diamond';
+}
+
+class BenefitAPI {
+  ///日收益详情
+  String get dayIncome => '/v2/app/user/income/day_incomes';
+
+  ///月收益详情
+  String get monthIncome => '/v2/app/user/income/month_incomes';
 }

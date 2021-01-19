@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/pages/user/benefit_view_gen.dart';
+import 'package:recook/pages/user/functions/user_benefit_func.dart';
+import 'package:recook/pages/user/model/user_benefit_common_model.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -21,10 +23,57 @@ class _UserBenefitPageState extends State<UserBenefitPage>
     with TickerProviderStateMixin {
   List<String> tabs = ['今日', '昨日', '本月', '上月'];
   TabController _tabController;
-  Widget _buildTabView(String value) {
+  UserBenefitCommonModel _displayModel = UserBenefitCommonModel.zero();
+  UserBenefitCommonModel _todayModel = UserBenefitCommonModel.zero();
+  UserBenefitCommonModel _yestodayModel = UserBenefitCommonModel.zero();
+  UserBenefitCommonModel _thisMonthModel = UserBenefitCommonModel.zero();
+  UserBenefitCommonModel _lastMonthModel = UserBenefitCommonModel.zero();
+
+  Future getData() async {
+    _todayModel = await UserBenefitFunc.getCommonModel(
+      BenefitDateType.DAY,
+      DateTime.now(),
+    );
+    _yestodayModel = await UserBenefitFunc.getCommonModel(
+      BenefitDateType.DAY,
+      DateTime.now().subtract(Duration(days: 1)),
+    );
+    _thisMonthModel = await UserBenefitFunc.getCommonModel(
+      BenefitDateType.MONTH,
+      DateTime.now(),
+    );
+    _thisMonthModel = await UserBenefitFunc.getCommonModel(
+      BenefitDateType.MONTH,
+      DateTime(DateTime.now().year, DateTime.now().month - 1),
+    );
+    _displayModel = _todayModel;
+    setState(() {});
+  }
+
+  Widget _buildTabView(int index) {
+    double allCount = 0;
+    switch (index) {
+      case 0:
+        allCount = _todayModel.allAmount;
+        break;
+      case 1:
+        allCount = _yestodayModel.allAmount;
+        break;
+      case 2:
+        allCount = _thisMonthModel.allAmount;
+        break;
+      case 3:
+        allCount = _lastMonthModel.allAmount;
+        break;
+    }
     return <Widget>[
       '预估收益'.text.color(Colors.black54).size(18.sp).make(),
-      value.text.color(Color(0xFF333333)).size(28.sp).make(),
+      allCount
+          .toStringAsFixed(2)
+          .text
+          .color(Color(0xFF333333))
+          .size(28.sp)
+          .make(),
     ].column(
       alignment: MainAxisAlignment.center,
     );
@@ -50,7 +99,8 @@ class _UserBenefitPageState extends State<UserBenefitPage>
             ),
           ),
           TabBarView(
-            children: tabs.map((e) => _buildTabView(e)).toList(),
+            children:
+                List.generate(tabs.length, (index) => _buildTabView(index)),
             controller: _tabController,
           ).expand(),
         ].column(),
@@ -146,11 +196,17 @@ class _UserBenefitPageState extends State<UserBenefitPage>
         onTap: () => CRoute.push(context, BenefitViewGen()),
         path: R.ASSETS_USER_PINK_BUYER_PNG,
         title: '自购收益',
-        firstItem: _ItemClass(title: '订单(笔)', value: '151X'),
-        secondItem: _ItemClass(title: '销售额(元)', value: '1111.11X'),
+        firstItem: _ItemClass(
+          title: '订单(笔)',
+          value: _displayModel.purchase.count.toString(),
+        ),
+        secondItem: _ItemClass(
+          title: '销售额(元)',
+          value: _displayModel.purchase.salesVolume.toStringAsFixed(2),
+        ),
         thirdItem: _ItemClass(
           title: '预估收益(瑞币)',
-          value: '124.12X',
+          value: _displayModel.purchase.amount.toStringAsFixed(2),
           onHelper: () {},
         ),
       ),
@@ -158,11 +214,17 @@ class _UserBenefitPageState extends State<UserBenefitPage>
         onTap: () {},
         path: R.ASSETS_USER_PINK_SHARE_PNG,
         title: '导购收益',
-        firstItem: _ItemClass(title: '订单(笔)', value: '151X'),
-        secondItem: _ItemClass(title: '销售额(元)', value: '1111.11X'),
+        firstItem: _ItemClass(
+          title: '订单(笔)',
+          value: _displayModel.guide.count.toString(),
+        ),
+        secondItem: _ItemClass(
+          title: '销售额(元)',
+          value: _displayModel.guide.salesVolume.toStringAsFixed(2),
+        ),
         thirdItem: _ItemClass(
           title: '预估收益(瑞币)',
-          value: '124.12X',
+          value: _displayModel.guide.amount.toStringAsFixed(2),
           onHelper: () {},
         ),
       ),
@@ -172,13 +234,16 @@ class _UserBenefitPageState extends State<UserBenefitPage>
         title: '团队收益',
         firstItem: _ItemClass(
           title: '团队销售额(元)',
-          value: '151.00X',
+          value: _displayModel.team.salesVolume.toStringAsFixed(2),
           onHelper: () {},
         ),
-        secondItem: _ItemClass(title: '提成比例(%)', value: '3X'),
+        secondItem: _ItemClass(
+          title: '提成比例(%)',
+          value: _displayModel.team.ratio.toString(),
+        ),
         thirdItem: _ItemClass(
           title: '预估收益(瑞币)',
-          value: '124.12X',
+          value: _displayModel.team.amount.toStringAsFixed(2),
           onHelper: () {},
         ),
       ),
@@ -188,13 +253,16 @@ class _UserBenefitPageState extends State<UserBenefitPage>
         title: '推荐收益',
         firstItem: _ItemClass(
           title: '团队销售额(元)',
-          value: '151.00X',
+          value: _displayModel.recommend.salesVolume.toStringAsFixed(2),
           onHelper: () {},
         ),
-        secondItem: _ItemClass(title: '提成比例(%)', value: '3X'),
+        secondItem: _ItemClass(
+          title: '提成比例(%)',
+          value: _displayModel.recommend.ratio.toString(),
+        ),
         thirdItem: _ItemClass(
           title: '预估收益(瑞币)',
-          value: '124.12X',
+          value: _displayModel.recommend.amount.toStringAsFixed(2),
           onHelper: () {},
         ),
       ),
@@ -204,13 +272,16 @@ class _UserBenefitPageState extends State<UserBenefitPage>
         title: '平台奖励',
         firstItem: _ItemClass(
           title: '团队销售额(元)',
-          value: '151.00X',
+          value: _displayModel.reward.salesVolume.toStringAsFixed(2),
           onHelper: () {},
         ),
-        secondItem: _ItemClass(title: '提成比例(%)', value: '3X'),
+        secondItem: _ItemClass(
+          title: '提成比例(%)',
+          value: _displayModel.reward.ratio.toString(),
+        ),
         thirdItem: _ItemClass(
           title: '预估收益(瑞币)',
-          value: '124.12X',
+          value: _displayModel.reward.amount.toStringAsFixed(2),
           onHelper: () {},
         ),
       ),
@@ -220,7 +291,25 @@ class _UserBenefitPageState extends State<UserBenefitPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 4, vsync: this)
+      ..addListener(() {
+        switch (_tabController.index) {
+          case 0:
+            _displayModel = _todayModel;
+            break;
+          case 1:
+            _displayModel = _yestodayModel;
+            break;
+          case 2:
+            _displayModel = _thisMonthModel;
+            break;
+          case 3:
+            _displayModel = _lastMonthModel;
+            break;
+        }
+        setState(() {});
+      });
+    getData();
   }
 
   @override

@@ -2,12 +2,18 @@ import 'package:common_utils/common_utils.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/user/model/user_accumulate_model.dart';
+import 'package:recook/pages/user/model/user_benefit_common_model.dart';
 import 'package:recook/pages/user/model/user_benefit_extra_detail_model.dart';
 import 'package:recook/pages/user/model/user_benefit_model.dart';
 import 'package:recook/pages/user/model/user_benefit_month_detail_model.dart';
 import 'package:recook/pages/user/model/user_benefit_sub_model.dart';
 import 'package:recook/pages/user/model/user_month_income_model.dart';
 import 'package:recook/pages/user/user_benefit_sub_page.dart';
+
+enum BenefitDateType {
+  DAY,
+  MONTH,
+}
 
 class UserBenefitFunc {
   static Future<UserBenefitModel> update() async {
@@ -90,5 +96,32 @@ class UserBenefitFunc {
       {'month': DateUtil.formatDate(date, format: 'yyyy-MM')},
     );
     return UserBenefitExtraDetailModel.fromJson(result.data);
+  }
+
+  static Future<UserBenefitCommonModel> getCommonModel(
+    BenefitDateType type,
+    DateTime date,
+  ) async {
+    String path = '';
+    Map<String, dynamic> params = {};
+    switch (type) {
+      case BenefitDateType.DAY:
+        path = APIV2.benefitAPI.dayIncome;
+        params.putIfAbsent(
+          'day',
+          () => DateUtil.formatDate(date, format: 'yyyy-MM-dd'),
+        );
+        break;
+      case BenefitDateType.MONTH:
+        path = APIV2.benefitAPI.monthIncome;
+        params.putIfAbsent(
+          'month',
+          () => DateUtil.formatDate(date, format: 'yyyy-MM'),
+        );
+        break;
+    }
+
+    ResultData result = await HttpManager.post(path, params);
+    return UserBenefitCommonModel.fromJson(result.data['data']);
   }
 }
