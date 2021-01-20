@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/pages/user/model/user_benefit_day_expect_model.dart';
@@ -5,6 +7,8 @@ import 'package:recook/pages/user/model/user_benefit_expect_extra_model.dart';
 import 'package:recook/pages/user/model/user_benefit_month_detail_model.dart';
 import 'package:recook/pages/user/model/user_benefit_month_expect_model.dart';
 import 'package:recook/pages/user/user_benefit_sub_page.dart';
+import 'package:recook/pages/user/widget/user_group_card.dart';
+import 'package:recook/widgets/animated_rotate.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'package:recook/constants/header.dart';
@@ -42,6 +46,7 @@ class _BenefitViewGenState extends State<BenefitViewGen>
   dynamic _yestodayModel;
   dynamic _thisMonthModel;
   dynamic _lastMonthModel;
+  bool _itemReverse = false;
   Widget _buildCard(DisplayCard card) {
     return VxBox(
       child: [
@@ -256,80 +261,127 @@ class _BenefitViewGenState extends State<BenefitViewGen>
   }
 
   Widget _buildTeamRecommendPlatformCard() {
-    return SizedBox();
-    // final model = UserBenefitExpectExtraModel
-    // return <Widget>[
-    //   _buildBackBar(),
-    //   Positioned(
-    //     top: 6.w,
-    //     left: 16.w,
-    //     right: 16.w,
-    //     bottom: 0,
-    //     child: SingleChildScrollView(
-    //       child: [
-    //         VxBox(
-    //           child: Column(
-    //             children: [
-    //               20.hb,
-    //               Row(
-    //                 children: [
-    //                   15.wb,
-    //                   '团队贡献榜'
-    //                       .text
-    //                       .size(14.sp)
-    //                       .color(Color(0xFF333333))
-    //                       .bold
-    //                       .make(),
-    //                   Spacer(),
-    //                   '团队人数:${_extraDetailModel.data.count}'
-    //                       .text
-    //                       .size(14.sp)
-    //                       .color(Color(0xFF333333))
-    //                       .bold
-    //                       .make(),
-    //                   10.wb,
-    //                   MaterialButton(
-    //                     minWidth: 0,
-    //                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-    //                     onPressed: () {
-    //                       setState(() {
-    //                         _itemReverse = !_itemReverse;
-    //                       });
-    //                     },
-    //                     child: AnimatedRotate(
-    //                       child: Image.asset(
-    //                         R.ASSETS_ASCSORT_PNG,
-    //                         height: 15.w,
-    //                         width: 15.w,
-    //                       ),
-    //                       angle: _itemReverse ? 0 : pi,
-    //                     ),
-    //                     padding: EdgeInsets.symmetric(horizontal: 15.w),
-    //                   ),
-    //                 ],
-    //               ),
-    //             ],
-    //           ),
-    //         )
-    //             .withDecoration(BoxDecoration(
-    //               color: Colors.white,
-    //               borderRadius: BorderRadius.circular(5.w),
-    //               boxShadow: [
-    //                 BoxShadow(
-    //                   color: Colors.black.withOpacity(0.10),
-    //                   blurRadius: 4.w,
-    //                   offset: Offset(0, 2.w),
-    //                 ),
-    //               ],
-    //             ))
-    //             .margin(EdgeInsets.only(bottom: 100))
-    //             .height(1000)
-    //             .make(),
-    //         noMoreDataView(),
-    //       ].column(),
-    //     ),
-    //   ),
-    // ].stack().expand();
+    UserBenefitExpectExtraModel model;
+    switch (_tabController.index) {
+      case 0:
+        model = _todayModel;
+        break;
+      case 1:
+        model = _yestodayModel;
+        break;
+      case 2:
+        model = _thisMonthModel;
+        break;
+      case 3:
+        model = _lastMonthModel;
+        break;
+    }
+    if (model == null) return SizedBox();
+    List<TeamList> team = [];
+    switch (widget.type) {
+      case UserBenefitPageType.TEAM:
+        team = model.teamList;
+        break;
+      case UserBenefitPageType.RECOMMEND:
+        team = model.recommendList;
+        break;
+      case UserBenefitPageType.PLATFORM:
+        team = model.rewardList;
+        break;
+      default:
+        team = [];
+    }
+    return <Widget>[
+      _buildBackBar(),
+      Positioned(
+        top: 6.w,
+        left: 16.w,
+        right: 16.w,
+        bottom: 0,
+        child: SingleChildScrollView(
+          child: [
+            VxBox(
+              child: Column(
+                children: [
+                  20.hb,
+                  Row(
+                    children: [
+                      15.wb,
+                      '团队贡献榜'
+                          .text
+                          .size(14.sp)
+                          .color(Color(0xFF333333))
+                          .bold
+                          .make(),
+                      Spacer(),
+                      '团队人数:${team?.length ?? 0}'
+                          .text
+                          .size(14.sp)
+                          .color(Color(0xFF333333))
+                          .bold
+                          .make(),
+                      10.wb,
+                      MaterialButton(
+                        minWidth: 0,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        onPressed: () {
+                          setState(() {
+                            _itemReverse = !_itemReverse;
+                          });
+                        },
+                        child: AnimatedRotate(
+                          child: Image.asset(
+                            R.ASSETS_ASCSORT_PNG,
+                            height: 15.w,
+                            width: 15.w,
+                          ),
+                          angle: _itemReverse ? 0 : pi,
+                        ),
+                        padding: EdgeInsets.symmetric(horizontal: 15.w),
+                      ),
+                    ],
+                  ),
+                  10.hb,
+                  ListView.builder(
+                    shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
+                    reverse: _itemReverse,
+                    itemBuilder: (context, index) {
+                      final _ = team[index];
+                      return UserGroupCard.flat(
+                        name: _.nickname,
+                        wechatId: _.wechatNo,
+                        phone: _.phone,
+                        shopRole: UserLevelTool.roleLevelEnum(_.roleLevel),
+                        groupCount: _.count,
+                        headImg: _.headImgUrl,
+                        id: _.userId,
+                        isRecommend: false,
+                      );
+                    },
+                    itemCount: team?.length ?? 0,
+                  ),
+                ],
+              ),
+            )
+                .withDecoration(BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5.w),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.10),
+                      blurRadius: 4.w,
+                      offset: Offset(0, 2.w),
+                    ),
+                  ],
+                ))
+                .margin(EdgeInsets.only(bottom: 100))
+                .make(),
+            noMoreDataView(),
+          ].column(),
+        ),
+      ),
+    ].stack().expand();
   }
 
   _buildTable(UserBenefitMonthExpectModel model) {
