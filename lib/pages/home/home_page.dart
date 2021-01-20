@@ -284,7 +284,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                 items: ["取消", "确认"],
                 listener: (index) {
                   switch (index) {
-                    case 0:
+                    case 1:
                       AndroidBackTop.backDeskTop();
                   }
                   Alert.dismiss(context);
