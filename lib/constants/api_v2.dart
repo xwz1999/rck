@@ -67,4 +67,16 @@ class BenefitAPI {
 
   ///月收益详情
   String get monthIncome => '/v2/app/user/income/month_incomes';
+
+  ///日自购导购预估收益
+  String get dayExpect => '/v2/app/user/income/day_expect';
+
+  ///月自购导购预估收益
+  String get monthExpect => '/v2/app/user/income/month_expect';
+
+  ///日团队推荐平台预估收益
+  String get dayExpectExtra => '/v2/app/user/income/day_expect_team';
+
+  ///月团队推荐平台预估收益
+  String get monthExpectExtra => '/v2/app/user/income/month_expect_team';
 }

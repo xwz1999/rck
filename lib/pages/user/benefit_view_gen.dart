@@ -1,13 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:recook/pages/user/model/user_benefit_day_expect_model.dart';
+import 'package:recook/pages/user/model/user_benefit_expect_extra_model.dart';
+import 'package:recook/pages/user/model/user_benefit_month_detail_model.dart';
+import 'package:recook/pages/user/model/user_benefit_month_expect_model.dart';
+import 'package:recook/pages/user/user_benefit_sub_page.dart';
+import 'package:velocity_x/velocity_x.dart';
+
+import 'package:recook/constants/header.dart';
+import 'package:recook/pages/user/functions/user_benefit_func.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/custom_painters/round_background_painter.dart';
 import 'package:recook/widgets/recook_back_button.dart';
-import 'package:velocity_x/velocity_x.dart';
-import 'package:recook/constants/header.dart';
+
+class DisplayCard {
+  num benefit = 0;
+  num sales = 0;
+  int count = 0;
+  DisplayCard({
+    this.benefit,
+    this.sales,
+    this.count,
+  });
+}
 
 class BenefitViewGen extends StatefulWidget {
-  BenefitViewGen({Key key}) : super(key: key);
+  final UserBenefitPageType type;
+  BenefitViewGen({Key key, @required this.type}) : super(key: key);
 
   @override
   _BenefitViewGenState createState() => _BenefitViewGenState();
@@ -17,8 +36,12 @@ class _BenefitViewGenState extends State<BenefitViewGen>
     with TickerProviderStateMixin {
   TabController _tabController;
   List<String> _tabs = ['今日', '昨日', '本月', '上月'];
-
-  Widget _buildCard() {
+  List<DisplayCard> _cardItems = List.generate(4, (index) => DisplayCard());
+  dynamic _todayModel;
+  dynamic _yestodayModel;
+  dynamic _thisMonthModel;
+  dynamic _lastMonthModel;
+  Widget _buildCard(DisplayCard card) {
     return VxBox(
       child: [
         Row(
@@ -27,7 +50,13 @@ class _BenefitViewGenState extends State<BenefitViewGen>
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 '预估收益(瑞币)'.text.color(Colors.black45).size(16.sp).make(),
-                '1231.12X'.text.black.size(34.sp).bold.make(),
+                (card.benefit ?? 0.0)
+                    .toStringAsFixed(2)
+                    .text
+                    .black
+                    .size(34.sp)
+                    .bold
+                    .make(),
               ],
             ).expand(),
             Image.asset(
@@ -41,12 +70,17 @@ class _BenefitViewGenState extends State<BenefitViewGen>
         <Widget>[
           <Widget>[
             '销售额'.text.color(Colors.black45).size(16.sp).make(),
-            '2123.11X'.text.black.size(24.sp).make(),
+            (card.sales ?? 0.0)
+                .toStringAsFixed(2)
+                .text
+                .black
+                .size(24.sp)
+                .make(),
           ].column(crossAlignment: CrossAxisAlignment.start),
           Spacer(),
           <Widget>[
             '订单数(笔)'.text.color(Colors.black45).size(16.sp).make(),
-            '212X'.text.black.size(24.sp).make(),
+            (card.count ?? 0).toString().text.black.size(24.sp).make(),
           ].column(),
         ].row(),
       ].column(),
@@ -126,10 +160,105 @@ class _BenefitViewGenState extends State<BenefitViewGen>
     );
   }
 
+  Future loadData() async {
+    DateTime _now = DateTime.now();
+    GSDialog.of(context).showLoadingDialog(
+      context,
+      '加载中',
+    );
+    if (widget.type == UserBenefitPageType.GUIDE ||
+        widget.type == UserBenefitPageType.SELF) {
+      _todayModel = await UserBenefitFunc.getBenefitDayExpect(DateTime.now());
+      _yestodayModel = await UserBenefitFunc.getBenefitDayExpect(
+          DateTime.now().subtract(Duration(days: 1)));
+
+      _thisMonthModel = await UserBenefitFunc.getBenefitMonthExpect(_now);
+      _lastMonthModel = await UserBenefitFunc.getBenefitMonthExpect(
+          DateTime(_now.year, _now.month - 1));
+    } else {
+      _todayModel = await UserBenefitFunc.getBenefitExpectExtra(
+        BenefitDateType.DAY,
+        DateTime.now(),
+      );
+      _yestodayModel = await UserBenefitFunc.getBenefitExpectExtra(
+        BenefitDateType.DAY,
+        DateTime.now().subtract(Duration(days: 1)),
+      );
+
+      _thisMonthModel = await UserBenefitFunc.getBenefitExpectExtra(
+        BenefitDateType.MONTH,
+        _now,
+      );
+      _lastMonthModel = await UserBenefitFunc.getBenefitExpectExtra(
+        BenefitDateType.MONTH,
+        DateTime(_now.year, _now.month - 1),
+      );
+    }
+    _cardItems[0] = _getCard(_todayModel);
+    _cardItems[1] = _getCard(_yestodayModel);
+    _cardItems[2] = _getCard(_thisMonthModel);
+    _cardItems[3] = _getCard(_lastMonthModel);
+
+    GSDialog.of(context).dismiss(context);
+    setState(() {});
+  }
+
+  DisplayCard _getCard(dynamic model) {
+    if (model is UserBenefitDayExpectModel) {
+      return widget.type == UserBenefitPageType.SELF
+          ? model.purchase.card
+          : model.guide.card;
+    }
+    if (model is UserBenefitMonthExpectModel) {
+      return widget.type == UserBenefitPageType.SELF
+          ? model.purchase.card
+          : model.guide.card;
+    }
+
+    if (model is UserBenefitExpectExtraModel) {
+      switch (widget.type) {
+        case UserBenefitPageType.TEAM:
+          return model.team.card;
+          break;
+        case UserBenefitPageType.RECOMMEND:
+          return model.recommend.card;
+          break;
+        case UserBenefitPageType.PLATFORM:
+          return model.reward.card;
+          break;
+        default:
+          return DisplayCard();
+      }
+    }
+    return DisplayCard();
+  }
+
+  String get title {
+    switch (widget.type) {
+      case UserBenefitPageType.SELF:
+        return '自购收益';
+        break;
+      case UserBenefitPageType.GUIDE:
+        return '导购收益';
+        break;
+      case UserBenefitPageType.TEAM:
+        return '团队收益';
+        break;
+      case UserBenefitPageType.RECOMMEND:
+        return '推荐收益';
+        break;
+      case UserBenefitPageType.PLATFORM:
+        return '平台收益';
+        break;
+    }
+    return '';
+  }
+
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 4, vsync: this);
+    Future.delayed(Duration(milliseconds: 300), loadData);
   }
 
   @override
@@ -144,7 +273,7 @@ class _BenefitViewGenState extends State<BenefitViewGen>
       backgroundColor: Color(0xFFF5F5F5),
       appBar: AppBar(
         leading: RecookBackButton(white: true),
-        title: '推荐收益'.text.make(),
+        title: title.text.make(),
         centerTitle: true,
         backgroundColor: Color(0xFF16182B),
       ),
@@ -165,7 +294,10 @@ class _BenefitViewGenState extends State<BenefitViewGen>
                       tabController: _tabController,
                     ),
                     TabBarView(
-                      children: _tabs.map((index) => _buildCard()).toList(),
+                      children: List.generate(
+                        4,
+                        (index) => _buildCard(_cardItems[index]),
+                      ),
                       controller: _tabController,
                     ).expand(),
                   ],

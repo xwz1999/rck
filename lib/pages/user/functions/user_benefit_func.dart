@@ -3,9 +3,12 @@ import 'package:recook/constants/api_v2.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/user/model/user_accumulate_model.dart';
 import 'package:recook/pages/user/model/user_benefit_common_model.dart';
+import 'package:recook/pages/user/model/user_benefit_day_expect_model.dart';
+import 'package:recook/pages/user/model/user_benefit_expect_extra_model.dart';
 import 'package:recook/pages/user/model/user_benefit_extra_detail_model.dart';
 import 'package:recook/pages/user/model/user_benefit_model.dart';
 import 'package:recook/pages/user/model/user_benefit_month_detail_model.dart';
+import 'package:recook/pages/user/model/user_benefit_month_expect_model.dart';
 import 'package:recook/pages/user/model/user_benefit_sub_model.dart';
 import 'package:recook/pages/user/model/user_month_income_model.dart';
 import 'package:recook/pages/user/user_benefit_sub_page.dart';
@@ -123,5 +126,57 @@ class UserBenefitFunc {
 
     ResultData result = await HttpManager.post(path, params);
     return UserBenefitCommonModel.fromJson(result.data['data']);
+  }
+
+  static Future<UserBenefitDayExpectModel> getBenefitDayExpect(
+      DateTime date) async {
+    String path = '';
+    Map<String, dynamic> params = {};
+    path = APIV2.benefitAPI.dayExpect;
+    params.putIfAbsent(
+      'day',
+      () => DateUtil.formatDate(date, format: 'yyyy-MM-dd'),
+    );
+    ResultData result = await HttpManager.post(path, params);
+    return UserBenefitDayExpectModel.fromJson(result.data['data']);
+  }
+
+  static Future<UserBenefitMonthExpectModel> getBenefitMonthExpect(
+      DateTime date) async {
+    String path = '';
+    Map<String, dynamic> params = {};
+    path = APIV2.benefitAPI.monthExpect;
+    params.putIfAbsent(
+      'month',
+      () => DateUtil.formatDate(date, format: 'yyyy-MM'),
+    );
+    ResultData result = await HttpManager.post(path, params);
+    return UserBenefitMonthExpectModel.fromJson(result.data['data']);
+  }
+
+  static Future<UserBenefitExpectExtraModel> getBenefitExpectExtra(
+    BenefitDateType type,
+    DateTime date,
+  ) async {
+    String path = '';
+    Map<String, dynamic> params = {};
+    switch (type) {
+      case BenefitDateType.DAY:
+        path = APIV2.benefitAPI.dayExpectExtra;
+        params.putIfAbsent(
+          'day',
+          () => DateUtil.formatDate(date, format: 'yyyy-MM-dd'),
+        );
+        break;
+      case BenefitDateType.MONTH:
+        path = APIV2.benefitAPI.monthExpectExtra;
+        params.putIfAbsent(
+          'month',
+          () => DateUtil.formatDate(date, format: 'yyyy-MM'),
+        );
+        break;
+    }
+    ResultData result = await HttpManager.post(path, params);
+    return UserBenefitExpectExtraModel.fromJson(result.data['data']);
   }
 }

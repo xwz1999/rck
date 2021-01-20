@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recook/pages/user/benefit_view_gen.dart';
 import 'package:recook/pages/user/functions/user_benefit_func.dart';
 import 'package:recook/pages/user/model/user_benefit_common_model.dart';
+import 'package:recook/pages/user/user_benefit_sub_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -30,6 +31,8 @@ class _UserBenefitPageState extends State<UserBenefitPage>
   UserBenefitCommonModel _lastMonthModel = UserBenefitCommonModel.zero();
 
   Future getData() async {
+    await Future.delayed(Duration(milliseconds: 300));
+    GSDialog.of(context).showLoadingDialog(context, '加载中');
     _todayModel = await UserBenefitFunc.getCommonModel(
       BenefitDateType.DAY,
       DateTime.now(),
@@ -47,6 +50,7 @@ class _UserBenefitPageState extends State<UserBenefitPage>
       DateTime(DateTime.now().year, DateTime.now().month - 1),
     );
     _displayModel = _todayModel;
+    GSDialog.of(context).dismiss(context);
     setState(() {});
   }
 
@@ -193,7 +197,10 @@ class _UserBenefitPageState extends State<UserBenefitPage>
   List<Widget> _buildBottomItems() {
     return [
       _buildItem(
-        onTap: () => CRoute.push(context, BenefitViewGen()),
+        onTap: () => CRoute.push(
+          context,
+          BenefitViewGen(type: UserBenefitPageType.SELF),
+        ),
         path: R.ASSETS_USER_PINK_BUYER_PNG,
         title: '自购收益',
         firstItem: _ItemClass(
@@ -211,7 +218,10 @@ class _UserBenefitPageState extends State<UserBenefitPage>
         ),
       ),
       _buildItem(
-        onTap: () {},
+        onTap: () => CRoute.push(
+          context,
+          BenefitViewGen(type: UserBenefitPageType.GUIDE),
+        ),
         path: R.ASSETS_USER_PINK_SHARE_PNG,
         title: '导购收益',
         firstItem: _ItemClass(
@@ -229,7 +239,10 @@ class _UserBenefitPageState extends State<UserBenefitPage>
         ),
       ),
       _buildItem(
-        onTap: () {},
+        onTap: () => CRoute.push(
+          context,
+          BenefitViewGen(type: UserBenefitPageType.TEAM),
+        ),
         path: R.ASSETS_USER_PINK_GROUP_PNG,
         title: '团队收益',
         firstItem: _ItemClass(
@@ -248,7 +261,10 @@ class _UserBenefitPageState extends State<UserBenefitPage>
         ),
       ),
       _buildItem(
-        onTap: () {},
+        onTap: () => CRoute.push(
+          context,
+          BenefitViewGen(type: UserBenefitPageType.RECOMMEND),
+        ),
         path: R.ASSETS_USER_PINK_GREAT_PNG,
         title: '推荐收益',
         firstItem: _ItemClass(
@@ -267,7 +283,10 @@ class _UserBenefitPageState extends State<UserBenefitPage>
         ),
       ),
       _buildItem(
-        onTap: () {},
+        onTap: () => CRoute.push(
+          context,
+          BenefitViewGen(type: UserBenefitPageType.PLATFORM),
+        ),
         path: R.ASSETS_USER_PINK_PLATFORM_PNG,
         title: '平台奖励',
         firstItem: _ItemClass(
