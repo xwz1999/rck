@@ -19,13 +19,15 @@ class UserBenefitMonthExpectModel {
       json['purchaseList'].forEach((v) {
         purchaseList.add(new PurchaseList.fromJson(v));
       });
-    }
+    } else
+      purchaseList = [];
     if (json['guideList'] != null) {
       guideList = new List<PurchaseList>();
       json['guideList'].forEach((v) {
         guideList.add(new PurchaseList.fromJson(v));
       });
-    }
+    } else
+      guideList = [];
   }
 
   Map<String, dynamic> toJson() {

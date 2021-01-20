@@ -1,3 +1,4 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/pages/user/model/user_benefit_day_expect_model.dart';
 import 'package:recook/pages/user/model/user_benefit_expect_extra_model.dart';
@@ -254,10 +255,151 @@ class _BenefitViewGenState extends State<BenefitViewGen>
     return '';
   }
 
+  Widget _buildTeamRecommendPlatformCard() {
+    return SizedBox();
+    // final model = UserBenefitExpectExtraModel
+    // return <Widget>[
+    //   _buildBackBar(),
+    //   Positioned(
+    //     top: 6.w,
+    //     left: 16.w,
+    //     right: 16.w,
+    //     bottom: 0,
+    //     child: SingleChildScrollView(
+    //       child: [
+    //         VxBox(
+    //           child: Column(
+    //             children: [
+    //               20.hb,
+    //               Row(
+    //                 children: [
+    //                   15.wb,
+    //                   '团队贡献榜'
+    //                       .text
+    //                       .size(14.sp)
+    //                       .color(Color(0xFF333333))
+    //                       .bold
+    //                       .make(),
+    //                   Spacer(),
+    //                   '团队人数:${_extraDetailModel.data.count}'
+    //                       .text
+    //                       .size(14.sp)
+    //                       .color(Color(0xFF333333))
+    //                       .bold
+    //                       .make(),
+    //                   10.wb,
+    //                   MaterialButton(
+    //                     minWidth: 0,
+    //                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    //                     onPressed: () {
+    //                       setState(() {
+    //                         _itemReverse = !_itemReverse;
+    //                       });
+    //                     },
+    //                     child: AnimatedRotate(
+    //                       child: Image.asset(
+    //                         R.ASSETS_ASCSORT_PNG,
+    //                         height: 15.w,
+    //                         width: 15.w,
+    //                       ),
+    //                       angle: _itemReverse ? 0 : pi,
+    //                     ),
+    //                     padding: EdgeInsets.symmetric(horizontal: 15.w),
+    //                   ),
+    //                 ],
+    //               ),
+    //             ],
+    //           ),
+    //         )
+    //             .withDecoration(BoxDecoration(
+    //               color: Colors.white,
+    //               borderRadius: BorderRadius.circular(5.w),
+    //               boxShadow: [
+    //                 BoxShadow(
+    //                   color: Colors.black.withOpacity(0.10),
+    //                   blurRadius: 4.w,
+    //                   offset: Offset(0, 2.w),
+    //                 ),
+    //               ],
+    //             ))
+    //             .margin(EdgeInsets.only(bottom: 100))
+    //             .height(1000)
+    //             .make(),
+    //         noMoreDataView(),
+    //       ].column(),
+    //     ),
+    //   ),
+    // ].stack().expand();
+  }
+
+  _buildTable(UserBenefitMonthExpectModel model) {
+    _buildTitle(String title, {bool red = false, bool bold = false}) {
+      return title.text
+          .size(14.sp)
+          .color(red ? Color(0xFFD5101A) : Color(0xFF333333))
+          .fontWeight(bold ? FontWeight.bold : FontWeight.normal)
+          .make()
+          .centered()
+          .box
+          .height(45.w)
+          .make();
+    }
+
+    return Table(
+      children: [
+        TableRow(
+          children: [
+            _buildTitle('日期', bold: true),
+            _buildTitle('销售额', bold: true),
+            _buildTitle('订单数', bold: true),
+            _buildTitle('预估收益', bold: true),
+          ],
+        ),
+        ...widget.type == UserBenefitPageType.SELF
+            ? model.purchaseList.map((e) {
+                return TableRow(
+                  children: [
+                    _buildTitle(DateUtil.formatDate(e.date, format: 'M月dd日')),
+                    _buildTitle(e.salesVolume.toStringAsFixed(2)),
+                    _buildTitle(e.amount.toString()),
+                    _buildTitle(e.amount.toString()),
+                  ],
+                );
+              }).toList()
+            : model.guideList.map((e) {
+                return TableRow(
+                  children: [
+                    _buildTitle(DateUtil.formatDate(e.date, format: 'M月dd日')),
+                    _buildTitle(e.salesVolume.toStringAsFixed(2)),
+                    _buildTitle(e.amount.toString()),
+                    _buildTitle(e.amount.toString()),
+                  ],
+                );
+              }).toList(),
+      ],
+    ).material(color: Colors.white);
+  }
+
+  _parseBottomCard() {
+    if (widget.type == UserBenefitPageType.SELF ||
+        widget.type == UserBenefitPageType.GUIDE) {
+      if (_tabController.index == 0 || _tabController.index == 1)
+        return SizedBox();
+      else
+        return _buildTable(
+          _tabController.index == 2 ? _thisMonthModel : _lastMonthModel,
+        );
+    } else
+      return _buildTeamRecommendPlatformCard();
+  }
+
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+    _tabController = TabController(length: 4, vsync: this)
+      ..addListener(() {
+        setState(() {});
+      });
     Future.delayed(Duration(milliseconds: 300), loadData);
   }
 
@@ -306,37 +448,7 @@ class _BenefitViewGenState extends State<BenefitViewGen>
             ),
           ),
           10.hb,
-          <Widget>[
-            _buildBackBar(),
-            Positioned(
-              top: 6.w,
-              left: 16.w,
-              right: 16.w,
-              bottom: 0,
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(
-                    parent: BouncingScrollPhysics()),
-                child: [
-                  VxBox()
-                      .withDecoration(BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5.w),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.10),
-                            blurRadius: 4.w,
-                            offset: Offset(0, 2.w),
-                          ),
-                        ],
-                      ))
-                      .margin(EdgeInsets.only(bottom: 100))
-                      .height(1000)
-                      .make(),
-                  noMoreDataView(),
-                ].column(),
-              ),
-            ),
-          ].stack().expand(),
+          _parseBottomCard(),
         ],
       ),
     );
