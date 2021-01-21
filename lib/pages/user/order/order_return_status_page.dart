@@ -428,7 +428,7 @@ class _OrderReturnStatusPageState
             borderRadius: BorderRadius.all(Radius.circular(3)),
           ),
           child: Text(
-            '查看退货地址',
+            '上传退货单号',
             style: TextStyle(
                 fontWeight: FontWeight.w400,
                 color: Colors.white,
