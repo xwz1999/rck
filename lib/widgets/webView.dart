@@ -91,7 +91,7 @@ class _WebViewState extends BaseStoreState<WebViewPage> {
       //   title: Text(widget.arguments['title']),
       // ),
       body: SafeArea(
-        top: false,
+        top: true,
         bottom: false,
         child: Stack(
           children: <Widget>[
