@@ -98,7 +98,7 @@ dependencies:
 
   #缓存图片
   #  cached_network_image: ^1.1.0
-  extended_text: 4.0.0
+  extended_text: 4.1.0
   extended_image: 0.9.0
   date_format: 1.0.8
   # image_gallery_saver: ^1.2.1
@@ -114,7 +114,7 @@ dependencies:
   #
   #    现版本将smart_refresher.dart 中的enableOverScroll 去掉了，手动加上，具体代码在refresh_widget.dart中  #########################3
   #
-  pull_to_refresh: ^1.6.2
+  pull_to_refresh: 1.6.3
   flutter_gifimage: ^1.0.0
 
   # 微信登录 支付等
