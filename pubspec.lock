@@ -391,6 +391,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.1"
+  flutter_highlight:
+    dependency: transitive
+    description:
+      name: flutter_highlight
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.6.0"
   flutter_icons:
     dependency: "direct main"
     description:
@@ -538,6 +545,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.8.6"
+  highlight:
+    dependency: transitive
+    description:
+      name: highlight
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.6.0"
   hive:
     dependency: "direct main"
     description:
@@ -911,6 +925,22 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.4.0"
+  power_logger:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: c972545147e812d192795a56b33357aefd60d479
+      url: "http://192.168.2.201:8099/aku_fe/power_logger.git"
+    source: git
+    version: "0.0.1"
+  pretty_json:
+    dependency: transitive
+    description:
+      name: pretty_json
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.1.0"
   process:
     dependency: transitive
     description:

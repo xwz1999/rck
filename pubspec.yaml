@@ -220,6 +220,11 @@ dependencies:
 
   animations:
 
+  power_logger:
+    git:
+      url: http://192.168.2.201:8099/aku_fe/power_logger.git
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

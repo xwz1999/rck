@@ -10,6 +10,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:power_logger/power_logger.dart';
 import 'package:raw_toast/raw_toast.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/constants.dart';
@@ -48,6 +49,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
     WidgetsBinding.instance.addPostFrameCallback((callback) async {
       // _gifController.repeat(min: 0, max:59, period: Duration(milliseconds: 1500));
       await Future.delayed(Duration(milliseconds: 2000));
+      PowerLogger.init(context);
       if (HiveStore.appBox.get('privacy_init') == null) {
         // if (true) {
         bool agreeResult = (await launchPrivacyDialog(context)) ?? false;

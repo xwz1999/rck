@@ -1355,10 +1355,11 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               }
               if (skuModel.selectedIndex == 1) {
                 GSDialog.of(context).showLoadingDialog(context, "");
-                HttpManager.post(LiveAPI.buyGoodsInform, {
-                  "liveItemId": widget.liveId,
-                  "goodsId": widget.goodsId,
-                });
+                if (widget.liveId != 0)
+                  HttpManager.post(LiveAPI.buyGoodsInform, {
+                    "liveItemId": widget.liveId,
+                    "goodsId": widget.goodsId,
+                  });
                 _createOrder(
                   skuModel,
                   context,

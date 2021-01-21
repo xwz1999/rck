@@ -16,6 +16,7 @@ import 'package:async/async.dart';
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:path/path.dart';
+import 'package:power_logger/power_logger.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/config.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -179,6 +180,7 @@ class HttpManager {
       response =
           await dio.request<String>(url, data: encryptParams, options: option);
     } on DioError catch (e) {
+      LoggerData.addData(e);
       Response errorResponse;
       if (e.response != null) {
         errorResponse = e.response;
@@ -196,7 +198,8 @@ class HttpManager {
       // return new ResultData(null, false, HttpStatus.ERROR, "网络崩溃了");
 //      return new ResultData(null, false, HttpStatus.ERROR, "请求出错，请稍后再试");
     }
-
+    // ignore: unnecessary_cast
+    LoggerData.addData(response as Response);
     String responseStr = response.data;
     if (AppConfig.needEncrypt) {
       responseStr = await responseDecrypt(response.data);
