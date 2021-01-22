@@ -60,7 +60,7 @@ android {
 
     defaultConfig {
         applicationId "com.akuhome.recook"
-        minSdkVersion 23
+        minSdkVersion 22
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

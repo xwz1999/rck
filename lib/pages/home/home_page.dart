@@ -10,12 +10,11 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
-import 'package:amap_map_fluttify/amap_map_fluttify.dart';
+import 'package:amap_location_fluttify/amap_location_fluttify.dart';
 import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/base/base_store_state.dart';
@@ -285,7 +284,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                 items: ["取消", "确认"],
                 listener: (index) {
                   switch (index) {
-                    case 0:
+                    case 1:
                       AndroidBackTop.backDeskTop();
                   }
                   Alert.dismiss(context);
