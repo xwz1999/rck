@@ -13,6 +13,7 @@ import 'package:flutter/rendering.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -646,16 +647,18 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                 keyboardType: TextInputType.text,
                 controller: _textEditController,
                 textInputAction: TextInputAction.search,
-                onSubmitted: (_submitted) {
+                onSubmitted: (_submitted) async {
+                  GSDialog.of(context).showLoadingDialog(context, '马上就好，请稍等～');
                   _startSearch = true;
                   _contentFocusNode.unfocus();
                   // _presenter.fetchSearchList(_searchText, 0);
-                  _presenter.fetchList(
+                  await _presenter.fetchList(
                     -99,
                     0,
                     _sortType,
                     keyword: _searchText,
                   );
+                  GSDialog.of(context).dismiss(context);
                   setState(() {});
                 },
                 focusNode: _contentFocusNode,
@@ -747,13 +750,15 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                 fontSize: ScreenAdapterUtils.setSp(15), color: Colors.black),
             labelPadding: EdgeInsets.only(left: 20, right: 20),
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            onSelected: (bool value) {
+            onSelected: (bool value) async {
+              GSDialog.of(context).showLoadingDialog(context, '马上就好，请稍等～');
               _startSearch = true;
               _textEditController.text = text;
               _searchText = text;
               setState(() {});
               // _presenter.fetchSearchList(text, 0);
-              _presenter.fetchList(-99, 0, _sortType, keyword: text);
+              await _presenter.fetchList(-99, 0, _sortType, keyword: text);
+              GSDialog.of(context).dismiss(context);
             },
             label: Text(text),
             selected: false,
