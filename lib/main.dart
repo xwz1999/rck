@@ -54,7 +54,7 @@ void main() async {
       // useEncrypt: true
       );
   // 设置当前是否为测试环境
-  bool isDebug = true;
+  bool isDebug = false;
   AppConfig.setDebug(isDebug);
 
   await Hive.initFlutter();

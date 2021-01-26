@@ -871,6 +871,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.5.8"
+  pin_input_text_field:
+    dependency: "direct main"
+    description:
+      name: pin_input_text_field
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.3.0"
   platform:
     dependency: transitive
     description:
