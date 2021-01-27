@@ -179,24 +179,6 @@ class UserLevelTool {
     }
   }
 
-  static String cardBarPath(UserRoleLevel roleLevel) {
-    switch (roleLevel) {
-      case UserRoleLevel.Diamond:
-        return R.ASSETS_SHOP_DIAMOND_BAR_PNG;
-        break;
-      case UserRoleLevel.Gold:
-        return R.ASSETS_SHOP_GOLD_BAR_PNG;
-        break;
-      case UserRoleLevel.Silver:
-        return R.ASSETS_SHOP_SILVER_BAR_PNG;
-        break;
-
-      default:
-        return R.ASSETS_SHOP_MASTER_BAR_PNG;
-        break;
-    }
-  }
-
   static Color cardTitleColor(UserRoleLevel roleLevel) {
     switch (roleLevel) {
       case UserRoleLevel.Silver:
