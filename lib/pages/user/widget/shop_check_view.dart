@@ -1,3 +1,4 @@
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/widget/shop_check_painter.dart';
@@ -7,7 +8,10 @@ import 'package:velocity_x/velocity_x.dart';
 import 'package:recook/constants/constants.dart';
 
 class ShopCheckView extends StatefulWidget {
-  ShopCheckView({Key key}) : super(key: key);
+  final double target;
+  final double amount;
+  ShopCheckView({Key key, @required this.target, @required this.amount})
+      : super(key: key);
 
   @override
   _ShopCheckViewState createState() => _ShopCheckViewState();
@@ -37,8 +41,25 @@ class _ShopCheckViewState extends State<ShopCheckView> {
     _endColor = sliverEnd;
   }
 
+  double get _target => widget.target ?? 100;
+  double get _amount => widget.amount ?? 0;
+
+  DateTime get _now => DateTime.now();
+
+  String get title => _target <= _amount
+      ? '还需团队销售额\n${_target - _amount}元'
+      : '已满足${UserLevelTool.currentRoleLevel()}考核标准';
+  double get percent {
+    if (_amount == 0)
+      return 100;
+    else
+      return _amount / _target * 100;
+  }
+
   @override
   Widget build(BuildContext context) {
+    DateTime date = DateTime(_now.year, _now.month + 1, -1);
+    DateTime limitDate = DateTime(_now.year, _now.month + 1, 22);
     return VxBox(
         child: Column(
       children: [
@@ -54,13 +75,24 @@ class _ShopCheckViewState extends State<ShopCheckView> {
             ),
           ),
           6.wb,
-          '白银店铺考核'.text.bold.size(16.sp).black.make(),
+          '${UserLevelTool.currentRoleLevel()}考核'
+              .text
+              .bold
+              .size(16.sp)
+              .black
+              .make(),
           Spacer(),
         ].row(),
         CustomImageButton(
           onPressed: () {},
           child: [
-            '本考核期截止至2020-05-31，将于2020-06-22进行考核'
+            '本考核期截止至${DateUtil.formatDate(
+              date,
+              format: 'yyyy-MM-dd',
+            )},将于${DateUtil.formatDate(
+              limitDate,
+              format: 'yyyy-MM-dd',
+            )}进行考核'
                 .text
                 .color(Colors.black45)
                 .size(12.sp)
@@ -88,12 +120,12 @@ class _ShopCheckViewState extends State<ShopCheckView> {
               themeColor: _themeColor.withOpacity(0.5),
               beginColor: _beginColor,
               endColor: _endColor,
-              percentage: 65.0,
+              percentage: percent,
             ),
           ),
         ),
         5.hb,
-        '还需团队销售额\n10053元'.text.size(12.sp).black.center.make(),
+        title.text.size(12.sp).black.center.make(),
         15.hb,
       ],
     )).color(Colors.white).margin(EdgeInsets.only(bottom: 10)).make();

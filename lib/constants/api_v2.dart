@@ -65,6 +65,8 @@ class UserAPI {
 
   ///确认角色变动
   String get agreeLottery => '/v2/app/user/lottery_agree';
+
+  String get userCheck => '/v2/app/user/check';
 }
 
 class BenefitAPI {

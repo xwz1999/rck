@@ -9,11 +9,13 @@
 
 import 'dart:io';
 
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
+import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -32,7 +34,6 @@ import 'package:recook/pages/user/widget/shop_benefit_view.dart';
 import 'package:recook/pages/user/widget/shop_check_view.dart';
 import 'package:recook/pages/user/widget/shop_manager_view.dart';
 import 'package:recook/pages/user/widget/user_app_bar_v2.dart';
-import 'package:recook/pages/user/widget/user_page_assets_view.dart';
 import 'package:recook/redux/recook_state.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/utils/user_level_tool.dart';
@@ -58,6 +59,9 @@ class _UserPageState extends BaseStoreState<UserPage> {
   bool _isFirstLoad = true;
   double _allBenefitAmount = 0;
 
+  double _target = 100;
+  double _amount = 0;
+
   GlobalKey<ShopBenefitViewState> _shopBenefitKey =
       GlobalKey<ShopBenefitViewState>();
 
@@ -74,6 +78,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
     super.initState();
     _refreshController = GSRefreshController();
     _updateAllAmount();
+    _updateCheck();
     WidgetsBinding.instance.addPostFrameCallback((callback) {
       if (_isFirstLoad) {
         _isFirstLoad = false;
@@ -166,6 +171,19 @@ class _UserPageState extends BaseStoreState<UserPage> {
     });
   }
 
+  _updateCheck() async {
+    ///yeah, this is sh*t code,but its a simple way.
+    ResultData result = await HttpManager.post(
+      APIV2.userAPI.userCheck,
+      {'month': DateUtil.formatDate(DateTime.now(), format: 'yyyy-MM')},
+    );
+    if (result.data != null && result.data['data'] != null) {
+      _amount = result.data['amount'] ?? 0;
+      _target = result.data['need_amount'] ?? 100;
+    }
+    setState(() {});
+  }
+
   Widget _buildRefreshScrollView(
       BuildContext context, Store<RecookState> store) {
     return Stack(
@@ -183,6 +201,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
             _shopBenefitKey.currentState.updateBenefit();
             _updateUserBriefInfo();
             _updateAllAmount();
+            _updateCheck();
           },
           body: ListView(
             physics: AlwaysScrollableScrollPhysics(),
@@ -206,7 +225,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
               ),
               // UserPageAssetsView(),
               ShopBenefitView(key: _shopBenefitKey),
-              ShopCheckView(),
+              ShopCheckView(target: _target, amount: _amount),
               ShopManagerView(),
               OrderCentralView(
                 clickListener: (int index) {
