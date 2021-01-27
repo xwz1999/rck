@@ -180,7 +180,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
     return VxBox(
       child: [
         '$_title\(元)'.text.color(Colors.black54).size(18).make(),
-        _extraDetailModel.data.amount
+        (_extraDetailModel.data.amount ?? 0.0)
             .toStringAsFixed(2)
             .text
             .color(Color(0xFF333333))
@@ -190,7 +190,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
         [
           [
             '销售额(元)'.text.color(Colors.black54).size(14).make(),
-            _extraDetailModel.data.salesVolume
+            (_extraDetailModel.data.salesVolume ?? 0.0)
                 .toStringAsFixed(2)
                 .text
                 .color(Color(0xFF333333))
@@ -200,7 +200,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
           Spacer(),
           [
             '提成比例(%)'.text.color(Colors.black54).size(14).make(),
-            _extraDetailModel.data.ratio
+            (_extraDetailModel.data.ratio ?? 0.0)
                 .toStringAsFixed(2)
                 .text
                 .color(Color(0xFF333333))
