@@ -199,7 +199,7 @@ class HttpManager {
 //      return new ResultData(null, false, HttpStatus.ERROR, "请求出错，请稍后再试");
     }
     // ignore: unnecessary_cast
-    LoggerData.addData(response as Response);
+    LoggerData.addData((response as Response)..request.data = params);
     String responseStr = response.data;
     if (AppConfig.needEncrypt) {
       responseStr = await responseDecrypt(response.data);

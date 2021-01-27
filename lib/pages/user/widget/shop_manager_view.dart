@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recook/pages/shop/get_platform_award_page.dart';
+import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:recook/pages/user/invite/diamond_recommand_page.dart';
 import 'package:recook/pages/user/invite/my_group_page.dart';
 import 'package:recook/utils/custom_route.dart';
@@ -71,7 +72,8 @@ class ShopManagerView extends StatelessWidget {
               _buildGridItem(
                 title: '我的团队',
                 subTitle: '有福同享·真壕友',
-                onTap: () => CRoute.push(context,MyGroupPage()),
+                onTap: () =>
+                    CRoute.push(context, MyGroupPage(type: UsersMode.MY_GROUP)),
                 path: R.ASSETS_SHOP_MY_GROUP_WEBP,
               ),
               _buildGridItem(
@@ -84,7 +86,8 @@ class ShopManagerView extends StatelessWidget {
               _buildGridItem(
                 title: '我的推荐',
                 subTitle: '呼朋唤友·享收益',
-                onTap: () => CRoute.push(context, DiamondRecommandPage()),
+                onTap: () => CRoute.push(
+                    context, MyGroupPage(type: UsersMode.MY_RECOMMEND)),
                 path: R.ASSETS_SHOP_MY_RECOMMAND_WEBP,
               ),
               _buildGridItem(
@@ -96,7 +99,8 @@ class ShopManagerView extends StatelessWidget {
               _buildGridItem(
                 title: '我的奖励',
                 subTitle: '积少成多·奖励丰厚',
-                onTap: () {},
+                onTap: () => CRoute.push(
+                    context, MyGroupPage(type: UsersMode.MY_REWARD)),
                 path: R.ASSETS_SHOP_MY_AWARD_WEBP,
               ),
             ],

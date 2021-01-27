@@ -23,8 +23,8 @@ class UserFunc {
         path = APIV2.userAPI.myReward;
         break;
     }
-    Map<String, dynamic> params = {'keyword':''};
-    // if (keyword != null) params.putIfAbsent('keyword', () => keyword);
+    Map<String, dynamic> params = {};
+    if (keyword != null) params.putIfAbsent('keyword', () => keyword);
     ResultData result = await HttpManager.post(path, params);
     if (result?.data['data'] == null) return [];
     return (result.data['data'] as List)

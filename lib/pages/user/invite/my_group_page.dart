@@ -9,7 +9,8 @@ import 'package:velocity_x/velocity_x.dart';
 import 'package:recook/constants/header.dart';
 
 class MyGroupPage extends StatefulWidget {
-  MyGroupPage({Key key}) : super(key: key);
+  final UsersMode type;
+  MyGroupPage({Key key, @required this.type}) : super(key: key);
 
   @override
   _MyGroupPageState createState() => _MyGroupPageState();
@@ -18,6 +19,7 @@ class MyGroupPage extends StatefulWidget {
 class _MyGroupPageState extends State<MyGroupPage> {
   bool _filterRecommand = false;
   GSRefreshController _refreshController = GSRefreshController();
+  TextEditingController _textController = TextEditingController();
   List<UserCommonModel> _models = [];
   int get _myGroupNumber => _models.length;
   int get _allGroupCount {
@@ -28,14 +30,32 @@ class _MyGroupPageState extends State<MyGroupPage> {
     return value;
   }
 
+  bool get _isGroup => widget.type == UsersMode.MY_GROUP;
+
   _buildSearchButton() {
     return CustomImageButton(
       child: VxBox(
         child: [
           34.hb,
           20.wb,
-          '请输入昵称/备注/手机号/微信号'.text.color(Colors.black45).size(12.sp).make(),
-          Spacer(),
+          TextField(
+            controller: _textController,
+            onEditingComplete: () {
+              _refreshController?.requestRefresh();
+            },
+            style: TextStyle(
+              color: Colors.black,
+            ),
+            decoration: InputDecoration(
+              isDense: true,
+              border: InputBorder.none,
+              hintText: '请输入昵称/备注/手机号/微信号',
+              hintStyle: TextStyle(
+                color: Colors.black45,
+                fontSize: 12.sp,
+              ),
+            ),
+          ).expand(),
           Image.asset(
             R.ASSETS_HOME_TAB_SEARCH_PNG,
             color: Color(0xFF999999),
@@ -61,46 +81,51 @@ class _MyGroupPageState extends State<MyGroupPage> {
         Spacer(),
         '总团队人数:$_allGroupCount'.text.color(Color(0xFF333333)).size(12).make(),
         12.wb,
-        CustomImageButton(
-          onPressed: () {
-            setState(() {
-              _filterRecommand = !_filterRecommand;
-            });
-          },
-          child: AnimatedContainer(
-            height: 16.w,
-            width: 58.w,
-            curve: Curves.easeInOutCubic,
-            alignment:
-                _filterRecommand ? Alignment.centerRight : Alignment.centerLeft,
-            duration: Duration(milliseconds: 300),
-            decoration: BoxDecoration(
-              color: Color(0xFFF1F1F1),
-              borderRadius: BorderRadius.circular(8.w),
-            ),
-            child: AnimatedContainer(
-              width: 36.w,
-              height: 16.w,
-              curve: Curves.easeInOutCubic,
-              duration: Duration(milliseconds: 300),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.w),
-                color: _filterRecommand ? Color(0xFFFD6661) : Color(0xFF9C9C9C),
-              ),
-              child: AnimatedSwitcher(
-                duration: Duration(milliseconds: 300),
-                child: Text(
-                  _filterRecommand ? '推荐' : '筛选',
-                  key: ValueKey(_filterRecommand),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10.sp,
+        _isGroup
+            ? CustomImageButton(
+                onPressed: () {
+                  setState(() {
+                    _filterRecommand = !_filterRecommand;
+                  });
+                },
+                child: AnimatedContainer(
+                  height: 16.w,
+                  width: 58.w,
+                  curve: Curves.easeInOutCubic,
+                  alignment: _filterRecommand
+                      ? Alignment.centerRight
+                      : Alignment.centerLeft,
+                  duration: Duration(milliseconds: 300),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFF1F1F1),
+                    borderRadius: BorderRadius.circular(8.w),
+                  ),
+                  child: AnimatedContainer(
+                    width: 36.w,
+                    height: 16.w,
+                    curve: Curves.easeInOutCubic,
+                    duration: Duration(milliseconds: 300),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.w),
+                      color: _filterRecommand
+                          ? Color(0xFFFD6661)
+                          : Color(0xFF9C9C9C),
+                    ),
+                    child: AnimatedSwitcher(
+                      duration: Duration(milliseconds: 300),
+                      child: Text(
+                        _filterRecommand ? '推荐' : '筛选',
+                        key: ValueKey(_filterRecommand),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 10.sp,
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-          ),
-        ),
+              )
+            : SizedBox(),
         22.wb,
       ],
     );
@@ -110,7 +135,10 @@ class _MyGroupPageState extends State<MyGroupPage> {
     return RefreshWidget(
       controller: _refreshController,
       onRefresh: () async {
-        _models = await UserFunc.usersList(UsersMode.MY_GROUP);
+        _models = await UserFunc.usersList(
+          widget.type,
+          keyword: _textController.text,
+        );
         _refreshController.refreshCompleted();
         setState(() {});
       },
