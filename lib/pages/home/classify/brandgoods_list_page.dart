@@ -14,7 +14,6 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/items/item_brand_detail_grid.dart';
-import 'package:recook/pages/home/items/item_tag_widget.dart';
 import 'package:recook/utils/mvp.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/filter_tool_bar.dart';
