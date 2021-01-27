@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:common_utils/common_utils.dart';
 import 'package:grinder/grinder.dart';
 
 import 'config.dart';
@@ -39,12 +40,21 @@ Future buildApk() async {
 
 @Task()
 Future buildDev() async {
+  TaskArgs args = context.invocation.arguments;
+  String input = args.getOption('type') ?? 'dev';
+
   stdout.write("Build Dev APK 📦\n");
   stdout.write("BUILDINGAPK\n");
   await Process.start('flutter', ['build', 'apk']).then((proc) async {
     await stdout.addStream(proc.stdout);
     await stderr.addStream(proc.stderr);
   });
+  String date = DateUtil.formatDate(DateTime.now(), format: 'yyyy.MM.dd_HH_mm');
+  await Process.run('cp', [
+    Config.buildPath,
+    '${Config.downloadPath}/builds/${Config.packageName}_$input\_$date\.apk'
+  ]);
+  await Process.run('open', ['${Config.downloadPath}/builds']);
 }
 
 ///签名
