@@ -59,6 +59,12 @@ class UserAPI {
 
   ///推荐升级钻石
   String get recommendDiamond => '/v2/app/user/recommend_diamond';
+
+  ///用户角色变动
+  String get userLottery => '/v2/app/user/lottery';
+
+  ///确认角色变动
+  String get agreeLottery => '/v2/app/user/lottery_agree';
 }
 
 class BenefitAPI {

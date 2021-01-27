@@ -19,6 +19,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
+import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/daos/home_dao.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -50,6 +51,7 @@ import 'package:recook/utils/color_util.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/permission_tool.dart';
 import 'package:recook/utils/share_tool.dart';
+import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/banner.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -1380,36 +1382,98 @@ class _HomePageState extends BaseStoreState<HomePage>
     }
   }
 
-  _userLottery() {
-    //抽奖功能
-    HttpManager.post(
+  //抽奖功能
+  _userLottery() async {
+    ResultData resultData = await HttpManager.post(
       UserApi.user_lottery,
       {'userID': UserManager.instance.user.info.id},
-    ).then((value) {
-      if (value.data != null) {
-        Map map = value.data;
-        if (!map.containsKey("data")) return;
-        if (value.data['data']['result'] == 0) {
-          HttpManager.post(UserApi.user_do_lottery,
-              {'userID': UserManager.instance.user.info.id}).then((result) {
-            Future.delayed(Duration(milliseconds: 500), () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                    opaque: false,
-                    pageBuilder: (BuildContext context,
-                        Animation<double> animation,
-                        Animation<double> secondaryAnimation) {
-                      return LotteryPage(
-                        cardIndex: result.data['data']['result'],
-                      );
-                    }),
-              );
-            });
-          });
+    );
+    if (resultData.data != null && resultData.data['data'] != null) {
+      if (resultData.data['data']['result'] == 0) {
+        ResultData lottery = await HttpManager.post(UserApi.user_do_lottery,
+            {'userID': UserManager.instance.user.info.id});
+        await Future.delayed(Duration(milliseconds: 500));
+        await Navigator.push(
+          context,
+          PageRouteBuilder(
+              opaque: false,
+              pageBuilder: (BuildContext context, Animation<double> animation,
+                  Animation<double> secondaryAnimation) {
+                return LotteryPage(
+                  cardIndex: lottery.data['data']['result'],
+                );
+              }),
+        );
+      }
+    }
+
+    //店铺角色变动
+    ResultData shopLevel = await HttpManager.post(
+      APIV2.userAPI.userLottery,
+      {'userID': UserManager.instance.user.info.id},
+    );
+    if (shopLevel.data != null &&
+        shopLevel.data['data'] != null &&
+        shopLevel.data['code'] == 'SUCCESS') {
+      int oldLevel = shopLevel.data['data']['oldRoleLevel'];
+      int nowLevel = shopLevel.data['data']['nowRoleLevel'];
+      
+      if (oldLevel == 0 && nowLevel < 500) {
+        await showDialog(
+          context: context,
+          child: Center(
+            child: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Image.asset(R.ASSETS_USER_BE_THE_MASTER_WEBP),
+            ),
+          ),
+        );
+        await HttpManager.post(APIV2.userAPI.agreeLottery, {});
+      }
+      String img;
+      if (oldLevel < nowLevel) {
+        switch (UserLevelTool.roleLevelEnum(nowLevel)) {
+          case UserRoleLevel.Diamond:
+            img = R.ASSETS_USER_UPGRADE_DIAMOND_PNG_WEBP;
+            break;
+          case UserRoleLevel.Gold:
+            img = R.ASSETS_USER_UPGRADE_GOLD_PNG_WEBP;
+            break;
+          case UserRoleLevel.Silver:
+            img = R.ASSETS_USER_UPGRADE_SILVER_PNG_WEBP;
+            break;
+          default:
+            break;
         }
       }
-    });
+      if (oldLevel > nowLevel) {
+        switch (UserLevelTool.roleLevelEnum(nowLevel)) {
+          case UserRoleLevel.Silver:
+            img = R.ASSETS_USER_DOWNGRADE_SILVER_PNG_WEBP;
+            break;
+          case UserRoleLevel.Master:
+            img = R.ASSETS_USER_DOWNGRADE_MASTER_PNG_WEBP;
+            break;
+          default:
+            break;
+        }
+      }
+      if (img != null) {
+        await showDialog(
+          context: context,
+          child: Center(
+            child: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Padding(
+                padding: const EdgeInsets.all(40),
+                child: Image.asset(img),
+              ),
+            ),
+          ),
+        );
+        await HttpManager.post(APIV2.userAPI.agreeLottery, {});
+      }
+    }
   }
 
   _getNoticeList() async {

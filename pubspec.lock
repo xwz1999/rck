@@ -937,7 +937,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: c972545147e812d192795a56b33357aefd60d479
+      resolved-ref: f83acd0016573a2397929137e3e256a6f346cf60
       url: "http://192.168.2.201:8099/aku_fe/power_logger.git"
     source: git
     version: "0.0.1"
