@@ -52,7 +52,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   bool isAttention;
   List<ChatObj> chatObjects = [
     ChatObj('系统消息',
-        '欢迎来到直播间，瑞库客禁止未成年人进行直播，请大家共同遵守、监督。直播间内严禁出现违法违规、低俗色情、吸烟酗酒等问内容，如有违规行为请及时举报。请大家注意财产安全、谨防网络诈骗。'),
+        '欢迎来到直播间，瑞库客禁止未成年人进行直播，请大家共同遵守、监督。直播间内严禁出现违法违规、低俗色情、吸烟酗酒等内容，如有违规行为请及时举报。请大家注意财产安全，谨防网络诈骗。'),
   ];
   ScrollController _scrollController = ScrollController();
   TextEditingController _editingController = TextEditingController();
@@ -88,16 +88,19 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
     // });
     //腾讯IM登陆
     TencentIMTool.login().then((_) {
-      DPrint.printLongJson('用户登陆');
       getLiveStreamModel().then((model) {
         if (model == null)
           Navigator.pop(context);
         else {
-          setState(() {
-            _streamInfoModel = model;
-            _praise = model.praise;
-            isAttention = _streamInfoModel.isFollow == 1;
+          _streamInfoModel = model;
+          _praise = model.praise;
+          isAttention = _streamInfoModel.isFollow == 1;
+          nowGoodList = _streamInfoModel?.goodsLists
+              ?.firstWhere((element) => element.isExplain == 1, orElse: () {
+            return null;
           });
+          if (nowGoodList != null) showDetailWindow = true;
+          setState(() {});
           HttpManager.post(LiveAPI.baseInfo, {
             'findUserId': _streamInfoModel.userId,
           }).then((resultData) {
@@ -161,26 +164,6 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
               dynamic data = customParams['data'];
               switch (customParams['type']) {
                 case 'BuyGoods':
-                  // showToastWidget(
-                  //   Container(
-                  //     margin: EdgeInsets.all(rSize(15)),
-                  //     alignment: Alignment.center,
-                  //     padding: EdgeInsets.symmetric(horizontal: rSize(10)),
-                  //     height: rSize(26),
-                  //     decoration: BoxDecoration(
-                  //       color: Color(0xFFF4BC22),
-                  //       borderRadius: BorderRadius.circular(rSize(13)),
-                  //     ),
-                  //     child: Text(
-                  //       '${customParams['data']['content']}',
-                  //       style: TextStyle(
-                  //         color: Colors.white,
-                  //         fontSize: rSP(13),
-                  //       ),
-                  //     ),
-                  //   ),
-                  //   position: ToastPosition.top,
-                  // );
                   _globalBuyingWidgetKey.currentState
                       .updateChild(customParams['data']['content']);
                   break;
@@ -320,6 +303,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   void dispose() {
     _liveTimer?.cancel();
     _livePlayer?.stopPlay();
+    _livePlayer?.dispose();
     TencentImPlugin.quitGroup(groupId: _streamInfoModel.groupId);
     TencentImPlugin.removeListener(parseMessage);
     TencentImPlugin.logout();
@@ -626,7 +610,8 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                         sessionId: _streamInfoModel.groupId,
                                         sessionType: SessionType.Group,
                                         node: TextMessageNode(
-                                            content: _editingController.text),
+                                          content: _editingController.text,
+                                        ),
                                       );
                                       chatObjects.insert(
                                           0,
@@ -642,6 +627,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                       );
                                       setState(() {});
                                       _editingController.clear();
+                                      _focusNode.unfocus();
                                     }
                                   },
                                   decoration: InputDecoration(
