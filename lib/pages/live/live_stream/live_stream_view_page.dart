@@ -570,22 +570,25 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                     child: Column(
                       children: [
                         LiveBuyingWidget(key: _globalBuyingWidgetKey),
-                        Container(
-                          height: MediaQuery.of(context).size.height / 3,
-                          child: ListView.builder(
-                            reverse: true,
-                            controller: _scrollController,
-                            physics: BouncingScrollPhysics(
-                                parent: AlwaysScrollableScrollPhysics()),
-                            itemBuilder: (context, index) {
-                              return LiveChatBox(
-                                sender: chatObjects[index].name,
-                                note: chatObjects[index].message,
-                                userEnter: chatObjects[index].enterUser,
-                                type: chatObjects[index].type,
-                              );
-                            },
-                            itemCount: chatObjects.length,
+                        GestureDetector(
+                          onTap: () => _focusNode.unfocus(),
+                          child: Container(
+                            height: MediaQuery.of(context).size.height / 3,
+                            child: ListView.builder(
+                              reverse: true,
+                              controller: _scrollController,
+                              physics: BouncingScrollPhysics(
+                                  parent: AlwaysScrollableScrollPhysics()),
+                              itemBuilder: (context, index) {
+                                return LiveChatBox(
+                                  sender: chatObjects[index].name,
+                                  note: chatObjects[index].message,
+                                  userEnter: chatObjects[index].enterUser,
+                                  type: chatObjects[index].type,
+                                );
+                              },
+                              itemCount: chatObjects.length,
+                            ),
                           ),
                         ),
                         Row(
@@ -715,7 +718,8 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                                           );
                                                         } else {
                                                           showToast('未登陆，请先登陆');
-                                                          CRoute.push(context,
+                                                          CRoute.pushReplace(
+                                                              context,
                                                               UserPage());
                                                         }
                                                       },
@@ -777,7 +781,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                                   );
                                                 } else {
                                                   showToast('未登陆，请先登陆');
-                                                  CRoute.push(
+                                                  CRoute.pushReplace(
                                                       context, UserPage());
                                                 }
                                               },
@@ -839,7 +843,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                   );
                                 } else {
                                   showToast('未登陆，请先登陆');
-                                  CRoute.push(context, UserPage());
+                                  CRoute.pushReplace(context, UserPage());
                                 }
                               },
                               onLongPress: (index) {
