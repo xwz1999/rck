@@ -2,6 +2,7 @@ import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -26,7 +27,7 @@ class _VerifyResultPageState extends BaseStoreState<VerifyResultPage> {
   void initState() {
     super.initState();
     _isSuccess = widget.arguments["isSuccess"];
-    _isCashWithdraw = widget.arguments['isCashWithdraw']??false;
+    _isCashWithdraw = widget.arguments['isCashWithdraw'] ?? false;
     if (_isCashWithdraw && _isSuccess) {
       Future.delayed(Duration(milliseconds: 2000), () {
         AppRouter.pushAndReplaced(
@@ -77,6 +78,15 @@ class _VerifyResultPageState extends BaseStoreState<VerifyResultPage> {
               style: TextStyle(color: Colors.black, fontSize: 18),
             ),
           ),
+          Spacer(),
+          MaterialButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            color: Colors.red,
+            child: Text('认证完成'),
+          ),
+          rHBox(30),
         ],
       ),
     );
