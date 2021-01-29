@@ -33,7 +33,9 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
   TextEditingController _amountTextEditController;
   FocusNode _amountContentFocusNode = FocusNode();
 
+  ///支付宝账号
   TextEditingController _accountTextEditController;
+  TextEditingController _bankAccountTextEditController;
   FocusNode _accountFocusNodeController = FocusNode();
   BottomKeyBoardController _bottomKeyBoardController =
       BottomKeyBoardController();
@@ -46,6 +48,15 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
     _isNeedUserVerify = !UserManager.instance.user.info.realInfoStatus;
     _amountTextEditController = TextEditingController();
     _accountTextEditController = TextEditingController();
+    _bankAccountTextEditController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _amountTextEditController?.dispose();
+    _accountTextEditController?.dispose();
+    _bankAccountTextEditController?.dispose();
+    super.dispose();
   }
 
   @override
@@ -348,7 +359,9 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
             child: CupertinoTextField(
               padding: EdgeInsets.all(0),
               keyboardType: TextInputType.text,
-              controller: _accountTextEditController,
+              controller: _isCashToAlipay
+                  ? _accountTextEditController
+                  : _bankAccountTextEditController,
               textInputAction: TextInputAction.done,
               onSubmitted: (_submitted) {
                 _accountFocusNodeController.unfocus();
@@ -437,8 +450,12 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
           ),
           CustomImageButton(
             onPressed: !_isAgreeTheProtocol ||
-                    TextUtils.isEmpty(_accountTextEditController.text) ||
-                    TextUtils.isEmpty(_amountTextEditController.text)
+                    TextUtils.isEmpty(_isCashToAlipay
+                        ? _accountTextEditController.text
+                        : _bankAccountTextEditController.text) ||
+                    TextUtils.isEmpty(_isCashToAlipay
+                        ? _amountTextEditController.text
+                        : _bankAccountTextEditController.text)
                 ? null
                 : () {
                     if (_isNeedUserVerify) {
