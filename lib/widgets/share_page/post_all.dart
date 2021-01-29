@@ -350,7 +350,7 @@ class PostBottomWidget extends StatelessWidget {
     String price = goodsDetailModel.data.getPriceString();
 
     return Container(
-      height: 75,
+      height: 95,
       width: double.infinity,
       child: Row(
         children: <Widget>[
@@ -402,8 +402,8 @@ class PostBottomWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Container(
-                  height: 60,
-                  width: 60,
+                  height: 75,
+                  width: 75,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(R.ASSETS_SHOP_QR_BOX_PNG),
@@ -430,7 +430,7 @@ class PostBottomWidget extends StatelessWidget {
                       ).createShader(bounds);
                     },
                     child: Transform.scale(
-                      scale: 0.65,
+                      scale: 0.83,
                       child: QrImage(
                         padding: EdgeInsets.all(0),
                         data: qrCode,
