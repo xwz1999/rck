@@ -38,6 +38,7 @@ import 'package:recook/widgets/goods_item.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:recook/widgets/no_data_view.dart';
+import 'package:recook/widgets/progress/loading_dialog.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:recook/pages/home/classify/mvp/goods_list_contact.dart';
@@ -648,8 +649,22 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                 controller: _textEditController,
                 textInputAction: TextInputAction.search,
                 onSubmitted: (_submitted) async {
-                  GSDialog.of(context).showLoadingDialog(context, '马上就好，请稍等～',
-                      color: Colors.transparent);
+                  showDialog(
+                      context: context,
+                      barrierDismissible: false,
+                      barrierColor: Colors.transparent,
+                      builder: (BuildContext context) {
+                        return Container(
+                          margin: EdgeInsets.only(
+                              top: MediaQuery.of(context).padding.top + 48),
+                          color: Colors.white,
+                          alignment: Alignment.center,
+                          child: LoadingDialog(
+                            //调用对话框
+                            text: '马上就好，请稍等～',
+                          ),
+                        );
+                      });
                   _startSearch = true;
                   _contentFocusNode.unfocus();
                   // _presenter.fetchSearchList(_searchText, 0);
@@ -752,8 +767,22 @@ class _SearchPageState extends BaseStoreState<SearchPage>
             labelPadding: EdgeInsets.only(left: 20, right: 20),
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onSelected: (bool value) async {
-              GSDialog.of(context).showLoadingDialog(context, '马上就好，请稍等～',
-                  color: Colors.transparent);
+              showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  barrierColor: Colors.transparent,
+                  builder: (BuildContext context) {
+                    return Container(
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).padding.top + 48),
+                      color: Colors.white,
+                      alignment: Alignment.center,
+                      child: LoadingDialog(
+                        //调用对话框
+                        text: '马上就好，请稍等～',
+                      ),
+                    );
+                  });
               _startSearch = true;
               _textEditController.text = text;
               _searchText = text;
