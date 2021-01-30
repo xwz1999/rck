@@ -648,7 +648,8 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                 controller: _textEditController,
                 textInputAction: TextInputAction.search,
                 onSubmitted: (_submitted) async {
-                  GSDialog.of(context).showLoadingDialog(context, '马上就好，请稍等～');
+                  GSDialog.of(context).showLoadingDialog(context, '马上就好，请稍等～',
+                      color: Colors.transparent);
                   _startSearch = true;
                   _contentFocusNode.unfocus();
                   // _presenter.fetchSearchList(_searchText, 0);
@@ -751,7 +752,8 @@ class _SearchPageState extends BaseStoreState<SearchPage>
             labelPadding: EdgeInsets.only(left: 20, right: 20),
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onSelected: (bool value) async {
-              GSDialog.of(context).showLoadingDialog(context, '马上就好，请稍等～');
+              GSDialog.of(context).showLoadingDialog(context, '马上就好，请稍等～',
+                  color: Colors.transparent);
               _startSearch = true;
               _textEditController.text = text;
               _searchText = text;

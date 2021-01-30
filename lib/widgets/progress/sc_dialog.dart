@@ -17,17 +17,17 @@ class GSDialog {
   bool hasLongTimeLoading = false;
 
   static GSDialog of(BuildContext context) {
-
     GSDialog dialog = dialogs[context];
     if (dialog != null) {
       return dialog;
     }
     dialog = GSDialog();
-    dialogs.putIfAbsent(context,() => dialog);
+    dialogs.putIfAbsent(context, () => dialog);
     return dialog;
   }
 
-  Future<Null> showLoadingDialog(BuildContext context, String text) {
+  Future<Null> showLoadingDialog(BuildContext context, String text,
+      {Color color = Colors.black38}) {
     if (hasLoading) {
       dismiss(context);
     }
@@ -35,6 +35,7 @@ class GSDialog {
     return showDialog(
         context: context,
         barrierDismissible: false,
+        barrierColor: color,
         builder: (BuildContext context) {
           return new LoadingDialog(
             //调用对话框
@@ -76,7 +77,8 @@ class GSDialog {
   }
 
   Future<Null> showError(BuildContext context, String text,
-      {Duration duration = const Duration(milliseconds: 1000), bool dismissLoading = false}) {
+      {Duration duration = const Duration(milliseconds: 1000),
+      bool dismissLoading = false}) {
     print("hasLoading ====== $hasLoading");
     if (hasLoading) {
       dismiss(context);
@@ -94,7 +96,8 @@ class GSDialog {
   }
 
   Future<Null> showWarning(BuildContext context, String text,
-      {Duration duration = const Duration(milliseconds: 1000), bool dismissLoading = false}) {
+      {Duration duration = const Duration(milliseconds: 1000),
+      bool dismissLoading = false}) {
     if (hasLoading) {
       dismiss(context);
     }
@@ -145,8 +148,11 @@ class GSDialog {
     return null;
   }
 
-  static Widget _buildMaterialDialogTransitions(BuildContext context, Animation<double> animation,
-      Animation<double> secondaryAnimation, Widget child) {
+  static Widget _buildMaterialDialogTransitions(
+      BuildContext context,
+      Animation<double> animation,
+      Animation<double> secondaryAnimation,
+      Widget child) {
     return FadeTransition(
       opacity: CurvedAnimation(
         parent: animation,
