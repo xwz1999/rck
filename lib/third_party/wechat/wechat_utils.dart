@@ -120,7 +120,8 @@ class WeChatUtils {
     var model = fluwx.WeChatShareMiniProgramModel(
       userName: 'gh_530bd0866836',
       webPageUrl: 'https://h5.reecook.cn/',
-      path: 'pages/goodsDetail/goodsDetail?type=share&id=$id',
+      path:
+          'pages/goodsDetail/goodsDetail?type=share&id=$id&invite=${UserManager.instance.user.info.invitationNo}',
       thumbnail: fluwx.WeChatImage.network(netWorkThumbnail),
       title: des,
     );
