@@ -2,7 +2,7 @@ name: recook
 description: Recook Market App.
 publish_to: "none"
 
-version: 1.4.5+245
+version: 1.4.6+246
 environment:
   sdk: ">=2.10.0 <3.0.0"
 

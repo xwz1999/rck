@@ -126,6 +126,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     DPrint.printf(state);
+    //TODO 每次应用进入后台返回前台都会进行订单验证操作，这里需要重写
     if (state == AppLifecycleState.resumed && !_lifecycleLock) {
       DPrint.printf("app 进入前台了");
       _verifyPayStatus();

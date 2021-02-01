@@ -649,22 +649,31 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                 controller: _textEditController,
                 textInputAction: TextInputAction.search,
                 onSubmitted: (_submitted) async {
-                  showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      barrierColor: Colors.transparent,
-                      builder: (BuildContext context) {
-                        return Container(
-                          margin: EdgeInsets.only(
-                              top: MediaQuery.of(context).padding.top + 48),
-                          color: Colors.white,
-                          alignment: Alignment.center,
-                          child: LoadingDialog(
-                            //调用对话框
-                            text: '马上就好，请稍等～',
-                          ),
-                        );
-                      });
+                  //TODO 讲道理应该需要重写整个Dialog 组件，或改用第三方Dialog组件
+                  showGeneralDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    barrierColor: Colors.black26,
+                    transitionDuration: Duration.zero,
+                    transitionBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      return child;
+                    },
+                    pageBuilder: (BuildContext context,
+                        Animation<double> animation,
+                        Animation<double> secondaryAnimation) {
+                      return Container(
+                        margin: EdgeInsets.only(
+                            top: MediaQuery.of(context).padding.top + 48),
+                        color: Color(0xFFAAAAAA),
+                        alignment: Alignment.center,
+                        child: LoadingDialog(
+                          //调用对话框
+                          text: '马上就好，请稍等～',
+                        ),
+                      );
+                    },
+                  );
                   _startSearch = true;
                   _contentFocusNode.unfocus();
                   // _presenter.fetchSearchList(_searchText, 0);
@@ -767,22 +776,29 @@ class _SearchPageState extends BaseStoreState<SearchPage>
             labelPadding: EdgeInsets.only(left: 20, right: 20),
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onSelected: (bool value) async {
-              showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  barrierColor: Colors.transparent,
-                  builder: (BuildContext context) {
-                    return Container(
-                      margin: EdgeInsets.only(
-                          top: MediaQuery.of(context).padding.top + 48),
-                      color: Colors.white,
-                      alignment: Alignment.center,
-                      child: LoadingDialog(
-                        //调用对话框
-                        text: '马上就好，请稍等～',
-                      ),
-                    );
-                  });
+              showGeneralDialog(
+                context: context,
+                barrierDismissible: false,
+                barrierColor: Colors.black26,
+                transitionDuration: Duration.zero,
+                transitionBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  return child;
+                },
+                pageBuilder: (BuildContext context, Animation<double> animation,
+                    Animation<double> secondaryAnimation) {
+                  return Container(
+                    margin: EdgeInsets.only(
+                        top: MediaQuery.of(context).padding.top + 48),
+                    color: Color(0xFFAAAAAA),
+                    alignment: Alignment.center,
+                    child: LoadingDialog(
+                      //调用对话框
+                      text: '马上就好，请稍等～',
+                    ),
+                  );
+                },
+              );
               _startSearch = true;
               _textEditController.text = text;
               _searchText = text;
