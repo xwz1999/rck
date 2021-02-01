@@ -604,17 +604,41 @@ class _SearchPageState extends BaseStoreState<SearchPage>
           // buttonSize: 60,
           color: TextUtils.isEmpty(_searchText) ? Colors.grey : Colors.black,
           fontSize: ScreenAdapterUtils.setSp(15),
-          onPressed: () {
+          onPressed: () async {
             if (TextUtils.isEmpty(_searchText)) return;
             _startSearch = true;
             _contentFocusNode.unfocus();
             // _presenter.fetchSearchList(_searchText, 0);
-            _presenter.fetchList(
+            showGeneralDialog(
+              context: context,
+              barrierDismissible: false,
+              barrierColor: Colors.black26,
+              transitionDuration: Duration.zero,
+              transitionBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return child;
+              },
+              pageBuilder: (BuildContext context, Animation<double> animation,
+                  Animation<double> secondaryAnimation) {
+                return Container(
+                  margin: EdgeInsets.only(
+                      top: MediaQuery.of(context).padding.top + 48),
+                  color: Color(0xFFAAAAAA),
+                  alignment: Alignment.center,
+                  child: LoadingDialog(
+                    //调用对话框
+                    text: '马上就好，请稍等～',
+                  ),
+                );
+              },
+            );
+            await _presenter.fetchList(
               -99,
               0,
               _sortType,
               keyword: _searchText,
             );
+            GSDialog.of(context).dismiss(context);
             setState(() {});
           },
         ),
