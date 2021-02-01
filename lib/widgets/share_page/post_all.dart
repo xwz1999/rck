@@ -341,8 +341,6 @@ class PostBottomWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String qrCode =
         "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}${goodsDetailModel.data.id}/${UserManager.instance.user.info.invitationNo}";
-    // String qrCode =
-    //     "${AppConfig.debug ? WebApi.testMiniQrcodeGoodsDetail : WebApi.miniQrcodeGoodsDetail}?type=share&id=${goodsDetailModel.data.id}";
 
     String info = goodsDetailModel.data.goodsName;
     String crossedPrice =
@@ -430,7 +428,7 @@ class PostBottomWidget extends StatelessWidget {
                       ).createShader(bounds);
                     },
                     child: Transform.scale(
-                      scale: 0.83,
+                      scale: 0.79,
                       child: QrImage(
                         padding: EdgeInsets.all(0),
                         data: qrCode,
