@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -142,18 +143,23 @@ class _UserGroupCardState extends State<UserGroupCard> {
                                     case 1:
                                       GSDialog.of(context)
                                           .showLoadingDialog(context, '推荐中');
-                                      await HttpManager.post(
+                                      ResultData result =
+                                          await HttpManager.post(
                                         APIV2.userAPI.recommendDiamond,
                                         {'userId': widget.id},
                                       );
                                       GSDialog.of(context).dismiss(context);
-                                      Navigator.pop(context, true);
+                                      if (result.data['code'] == 'FAIL') {
+                                        Navigator.pop(context, false);
+                                        showToast('${result.data['msg']}');
+                                      } else
+                                        Navigator.pop(context, true);
                                       break;
                                   }
                                 },
                               ));
 
-                          if (result) {
+                          if (result == true) {
                             showDialog(
                               context: context,
                               child: Center(
