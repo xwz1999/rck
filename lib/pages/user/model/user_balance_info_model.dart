@@ -28,14 +28,14 @@ class UserBalanceInfoModel {
 }
 
 class Data {
-  double balance;
-  double totalWithdraw;
+  num balance;
+  num totalWithdraw;
 
   Data({this.balance, this.totalWithdraw});
 
   Data.fromJson(Map<String, dynamic> json) {
-    balance = json['balance'] ?? 0 + .0;
-    totalWithdraw = json['totalWithdraw'] ?? .0 + .0;
+    balance = json['balance'] ?? 0;
+    totalWithdraw = json['totalWithdraw'] ?? 0;
   }
 
   Data.zero() {
