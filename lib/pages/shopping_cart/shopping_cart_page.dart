@@ -93,7 +93,9 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
       case UserRoleLevel.None:
         return Color(0xFFdca3ab);
         break;
-      case UserRoleLevel.Diamond:
+      case UserRoleLevel.Diamond_1:
+      case UserRoleLevel.Diamond_2:
+      case UserRoleLevel.Diamond_3:
         return Color(0xFFa27cc9);
         break;
       case UserRoleLevel.Gold:

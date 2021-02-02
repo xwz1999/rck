@@ -1433,7 +1433,9 @@ class _HomePageState extends BaseStoreState<HomePage>
       String img;
       if (oldLevel < nowLevel) {
         switch (UserLevelTool.roleLevelEnum(nowLevel)) {
-          case UserRoleLevel.Diamond:
+          case UserRoleLevel.Diamond_1:
+          case UserRoleLevel.Diamond_2:
+          case UserRoleLevel.Diamond_3:
             img = R.ASSETS_USER_UPGRADE_DIAMOND_PNG_WEBP;
             break;
           case UserRoleLevel.Gold:

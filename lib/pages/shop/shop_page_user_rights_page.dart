@@ -300,7 +300,9 @@ class _ShopPageUserRightsPageState
   }
 
   _webViewUrl() {
-    if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond) {
+    if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_1 &&
+        UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_2 &&
+        UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_3) {
       return "r1";
     } else if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Gold) {
       return "r2";
@@ -325,7 +327,9 @@ class _ShopPageUserRightsPageState
   }
 
   _contextWidget() {
-    if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond) {
+    if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_1 &&
+        UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_2 &&
+        UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_3) {
       return _diamond();
     } else if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Gold) {
       return _gold();

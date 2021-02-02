@@ -19,7 +19,8 @@ class UpgardeCardWidgetModel {
   bool isUpCode;
   String codeId;
 
-  UpgardeCardWidgetModel({this.code = "", this.isUpCode = true, this.codeId = ""});
+  UpgardeCardWidgetModel(
+      {this.code = "", this.isUpCode = true, this.codeId = ""});
 }
 
 class UpgradeCardTabWidget extends StatefulWidget {
@@ -121,14 +122,30 @@ class _UpgradeCardTabWidgetState extends BaseStoreState<UpgradeCardTabWidget> {
     );
   }
 
-  _itemWidget({bool isUpgrade = true, bool isUsed = false, String code = "", String codeId=""}) {
+  _itemWidget(
+      {bool isUpgrade = true,
+      bool isUsed = false,
+      String code = "",
+      String codeId = ""}) {
     UserRoleLevel nextRoleLevel = UserRoleLevel.Vip;
     UserRoleLevel roleLevel = UserLevelTool.currentRoleLevelEnum();
-    nextRoleLevel = roleLevel == UserRoleLevel.Vip?UserRoleLevel.Master:roleLevel==UserRoleLevel.Master?UserRoleLevel.Silver:roleLevel==UserRoleLevel.Silver?UserRoleLevel.Gold:roleLevel==UserRoleLevel.Gold?UserRoleLevel.Diamond:UserRoleLevel.None;
+    nextRoleLevel = roleLevel == UserRoleLevel.Vip
+        ? UserRoleLevel.Master
+        : roleLevel == UserRoleLevel.Master
+            ? UserRoleLevel.Silver
+            : roleLevel == UserRoleLevel.Silver
+                ? UserRoleLevel.Gold
+                : roleLevel == UserRoleLevel.Gold
+                    ? UserRoleLevel.Diamond_1
+                    : UserRoleLevel.None;
     double screenWidth = MediaQuery.of(context).size.width;
     double cardWidth = screenWidth - 30;
     double cardHeight = 190 * (345 / cardWidth);
-    Color textColor = isUsed ? greyColor : isUpgrade ? redColor : blueColor;
+    Color textColor = isUsed
+        ? greyColor
+        : isUpgrade
+            ? redColor
+            : blueColor;
     Container con = Container(
       color: Colors.white,
       width: double.infinity,
@@ -178,118 +195,175 @@ class _UpgradeCardTabWidgetState extends BaseStoreState<UpgradeCardTabWidget> {
                             fontWeight: FontWeight.w400),
                       ),
                       Spacer(),
-                      
                     ],
                   ),
                   Spacer(),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      UserLevelTool.currentUserLevelEnum() == UserLevel.First || UserLevelTool.currentUserLevelEnum() == UserLevel.Second
-                        ? CustomImageButton(
-                        onPressed: () {
-                          // 会员不能送也不能保级
-                          if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip) {
-                            Alert.show(context, NormalTextDialog(
-                              title: isUpgrade ? "晋升卡" : "保障卡",
-                              content: isUpgrade ? "会员角色无法使用晋升卡" : "会员角色无法使用保障卡",
-                              items: ["确认"],
-                              listener: (index){
-                                Alert.dismiss(context);
-                              },
-                            ));
-                            return;
-                          }
-                          // 店主不能用保障卡
-                          if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Master && !isUpgrade) {
-                            Alert.show(context, NormalTextDialog(
-                              title:"保障卡",
-                              content: "店主无须使用保障卡",
-                              items: ["确认"],
-                              listener: (index){
-                                Alert.dismiss(context);
-                              },
-                            ));
-                            return;
-                          }
-                          // 黄金店铺不能用晋升卡
-                          if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Gold && isUpgrade) {
-                            Alert.show(context, NormalTextDialog(
-                              title:"晋升卡",
-                              content: "黄金店铺无法使用晋升卡",
-                              items: ["确认"],
-                              listener: (index){
-                                Alert.dismiss(context);
-                              },
-                            ));
-                            return;
-                          }
-                          // 对自己使用
-                          Alert.show(
-                            context,
-                            NormalContentDialog(
-                              type: NormalTextDialogType.delete,
-                              title: "提示",
-                              content: Text.rich(
-                                isUpgrade?TextSpan(
-                                  style: TextStyle(color: Colors.black, fontSize: 15,),
-                                  children: [
-                                    TextSpan(text:'使用晋升卡您将由\n',),
-                                    TextSpan(text: "【${UserLevelTool.roleLevelWithEnum(roleLevel)}】", style: TextStyle(color: Colors.red)),
-                                    TextSpan(text:'升至',),
-                                    TextSpan(text: "【${UserLevelTool.roleLevelWithEnum(nextRoleLevel)}】", style: TextStyle(color: Colors.red)),
-                                  ]
-                                )
-                                : TextSpan(
-                                  style: TextStyle(color: Colors.black, fontSize: 15,),
-                                  children: [
-                                    TextSpan(text:'使用保障卡您的',),
-                                    TextSpan(text: "【${UserLevelTool.roleLevelWithEnum(roleLevel)}】\n", style: TextStyle(color: Colors.red)),
-                                    TextSpan(text:'考核期将会延至',),
-                                    TextSpan(text: _upgradeCardModel.data.nextAssessTime, style: TextStyle(color: Colors.red)),
-                                  ]
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              items: ["确认"],
-                              listener: (index) {
-                                Alert.dismiss(context);
-                                if (isUpgrade) {
-                                  _upgradeByCode(int.parse(codeId));
-                                }else{
-                                  _keepByCode(int.parse(codeId));
-                                }
-                              },
-                              deleteItem: "取消",
-                              deleteListener: () {
-                                Alert.dismiss(context);
-                              },
-                            ));
-                        },
-                        width: 80,
-                        height: 33,
-                        title: isUsed ? "已使用" : "使用",
-                        style: TextStyle(color: Colors.white, fontSize: 14),
-                        border: Border.all(color: Colors.white, width: 1),
-                        borderRadius: BorderRadius.circular(17),
-                      ) : Container(),
-                      Container(
-                        height: UserLevelTool.currentUserLevelEnum() == UserLevel.Top
-                                  || UserLevelTool.currentUserLevelEnum() == UserLevel.First ? 6 : 0,
-                      ),
-                      UserLevelTool.currentUserLevelEnum() == UserLevel.Top 
-                      || UserLevelTool.currentUserLevelEnum() == UserLevel.First 
+                      UserLevelTool.currentUserLevelEnum() == UserLevel.First ||
+                              UserLevelTool.currentUserLevelEnum() ==
+                                  UserLevel.Second
                           ? CustomImageButton(
                               onPressed: () {
-                                AppRouter.push(context,
-                                    RouteName.UPGRADE_CARD_SEND_USER_LIST_PAGE,
-                                    arguments: UpgradeCardSendUserListPage
-                                        .setArguments(
-                                            isUpCard: isUpgrade, code: codeId)).then((onValue){
-                                              if (onValue != null && onValue is bool && onValue) {
-                                                _refreshController.requestRefresh();
-                                              }
-                                            });
+                                // 会员不能送也不能保级
+                                if (UserLevelTool.currentRoleLevelEnum() ==
+                                    UserRoleLevel.Vip) {
+                                  Alert.show(
+                                      context,
+                                      NormalTextDialog(
+                                        title: isUpgrade ? "晋升卡" : "保障卡",
+                                        content: isUpgrade
+                                            ? "会员角色无法使用晋升卡"
+                                            : "会员角色无法使用保障卡",
+                                        items: ["确认"],
+                                        listener: (index) {
+                                          Alert.dismiss(context);
+                                        },
+                                      ));
+                                  return;
+                                }
+                                // 店主不能用保障卡
+                                if (UserLevelTool.currentRoleLevelEnum() ==
+                                        UserRoleLevel.Master &&
+                                    !isUpgrade) {
+                                  Alert.show(
+                                      context,
+                                      NormalTextDialog(
+                                        title: "保障卡",
+                                        content: "店主无须使用保障卡",
+                                        items: ["确认"],
+                                        listener: (index) {
+                                          Alert.dismiss(context);
+                                        },
+                                      ));
+                                  return;
+                                }
+                                // 黄金店铺不能用晋升卡
+                                if (UserLevelTool.currentRoleLevelEnum() ==
+                                        UserRoleLevel.Gold &&
+                                    isUpgrade) {
+                                  Alert.show(
+                                      context,
+                                      NormalTextDialog(
+                                        title: "晋升卡",
+                                        content: "黄金店铺无法使用晋升卡",
+                                        items: ["确认"],
+                                        listener: (index) {
+                                          Alert.dismiss(context);
+                                        },
+                                      ));
+                                  return;
+                                }
+                                // 对自己使用
+                                Alert.show(
+                                    context,
+                                    NormalContentDialog(
+                                      type: NormalTextDialogType.delete,
+                                      title: "提示",
+                                      content: Text.rich(
+                                        isUpgrade
+                                            ? TextSpan(
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 15,
+                                                ),
+                                                children: [
+                                                    TextSpan(
+                                                      text: '使用晋升卡您将由\n',
+                                                    ),
+                                                    TextSpan(
+                                                        text:
+                                                            "【${UserLevelTool.roleLevelWithEnum(roleLevel)}】",
+                                                        style: TextStyle(
+                                                            color: Colors.red)),
+                                                    TextSpan(
+                                                      text: '升至',
+                                                    ),
+                                                    TextSpan(
+                                                        text:
+                                                            "【${UserLevelTool.roleLevelWithEnum(nextRoleLevel)}】",
+                                                        style: TextStyle(
+                                                            color: Colors.red)),
+                                                  ])
+                                            : TextSpan(
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 15,
+                                                ),
+                                                children: [
+                                                    TextSpan(
+                                                      text: '使用保障卡您的',
+                                                    ),
+                                                    TextSpan(
+                                                        text:
+                                                            "【${UserLevelTool.roleLevelWithEnum(roleLevel)}】\n",
+                                                        style: TextStyle(
+                                                            color: Colors.red)),
+                                                    TextSpan(
+                                                      text: '考核期将会延至',
+                                                    ),
+                                                    TextSpan(
+                                                        text: _upgradeCardModel
+                                                            .data
+                                                            .nextAssessTime,
+                                                        style: TextStyle(
+                                                            color: Colors.red)),
+                                                  ]),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                      items: ["确认"],
+                                      listener: (index) {
+                                        Alert.dismiss(context);
+                                        if (isUpgrade) {
+                                          _upgradeByCode(int.parse(codeId));
+                                        } else {
+                                          _keepByCode(int.parse(codeId));
+                                        }
+                                      },
+                                      deleteItem: "取消",
+                                      deleteListener: () {
+                                        Alert.dismiss(context);
+                                      },
+                                    ));
+                              },
+                              width: 80,
+                              height: 33,
+                              title: isUsed ? "已使用" : "使用",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 14),
+                              border: Border.all(color: Colors.white, width: 1),
+                              borderRadius: BorderRadius.circular(17),
+                            )
+                          : Container(),
+                      Container(
+                        height: UserLevelTool.currentUserLevelEnum() ==
+                                    UserLevel.Top ||
+                                UserLevelTool.currentUserLevelEnum() ==
+                                    UserLevel.First
+                            ? 6
+                            : 0,
+                      ),
+                      UserLevelTool.currentUserLevelEnum() == UserLevel.Top ||
+                              UserLevelTool.currentUserLevelEnum() ==
+                                  UserLevel.First
+                          ? CustomImageButton(
+                              onPressed: () {
+                                AppRouter.push(
+                                        context,
+                                        RouteName
+                                            .UPGRADE_CARD_SEND_USER_LIST_PAGE,
+                                        arguments: UpgradeCardSendUserListPage
+                                            .setArguments(
+                                                isUpCard: isUpgrade,
+                                                code: codeId))
+                                    .then((onValue) {
+                                  if (onValue != null &&
+                                      onValue is bool &&
+                                      onValue) {
+                                    _refreshController.requestRefresh();
+                                  }
+                                });
                               },
                               width: 80,
                               height: 33,
@@ -299,7 +373,7 @@ class _UpgradeCardTabWidgetState extends BaseStoreState<UpgradeCardTabWidget> {
                               border: Border.all(color: Colors.white, width: 1),
                               borderRadius: BorderRadius.circular(17),
                             )
-                            : Container(),
+                          : Container(),
                     ],
                   ),
                 ],
@@ -353,30 +427,44 @@ class _UpgradeCardTabWidgetState extends BaseStoreState<UpgradeCardTabWidget> {
     if (widget.used) {
       if (model.data.upCode.usedCode != null) {
         for (UnusedCode codeModel in model.data.upCode.usedCode) {
-          _dataList.add(UpgardeCardWidgetModel(isUpCode: true, code: codeModel.code, codeId: codeModel.id.toString()));
+          _dataList.add(UpgardeCardWidgetModel(
+              isUpCode: true,
+              code: codeModel.code,
+              codeId: codeModel.id.toString()));
         }
       }
       if (model.data.keepCode.usedCode != null) {
         for (UnusedCode codeModel in model.data.keepCode.usedCode) {
-          _dataList.add(UpgardeCardWidgetModel(isUpCode: false, code: codeModel.code, codeId: codeModel.id.toString()));
+          _dataList.add(UpgardeCardWidgetModel(
+              isUpCode: false,
+              code: codeModel.code,
+              codeId: codeModel.id.toString()));
         }
       }
     } else {
       if (model.data.upCode.unusedCode != null) {
         for (UnusedCode codeModel in model.data.upCode.unusedCode) {
-          _dataList.add(UpgardeCardWidgetModel(isUpCode: true, code: codeModel.code, codeId: codeModel.id.toString()));
+          _dataList.add(UpgardeCardWidgetModel(
+              isUpCode: true,
+              code: codeModel.code,
+              codeId: codeModel.id.toString()));
         }
       }
       if (model.data.keepCode.unusedCode != null) {
         for (UnusedCode codeModel in model.data.keepCode.unusedCode) {
-          _dataList.add(UpgardeCardWidgetModel(isUpCode: false, code: codeModel.code, codeId: codeModel.id.toString()));
+          _dataList.add(UpgardeCardWidgetModel(
+              isUpCode: false,
+              code: codeModel.code,
+              codeId: codeModel.id.toString()));
         }
       }
     }
     setState(() {});
   }
 
-  _keepByCode(num codeId,) async {
+  _keepByCode(
+    num codeId,
+  ) async {
     ResultData resultData = await HttpManager.post(UserApi.keep_by_code, {
       "userId": UserManager.instance.user.info.id,
       "codeId": codeId,
@@ -396,7 +484,9 @@ class _UpgradeCardTabWidgetState extends BaseStoreState<UpgradeCardTabWidget> {
     _refreshController.requestRefresh();
   }
 
-  _upgradeByCode(num codeId,) async {
+  _upgradeByCode(
+    num codeId,
+  ) async {
     ResultData resultData = await HttpManager.post(UserApi.upgrade_by_code, {
       "userId": UserManager.instance.user.info.id,
       "introCodeId": codeId,
