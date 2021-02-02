@@ -227,13 +227,13 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
             ),
             2),
         //TODO 由于退款原因，暂时隐藏该支付方式
-        // _payTile(
-        //     "云闪付支付",
-        //     Image.asset(
-        //       R.ASSETS_UNION_PAY_PNG,
-        //       height: rSize(30),
-        //     ),
-        //     3),
+        _payTile(
+            "云闪付支付",
+            Image.asset(
+              R.ASSETS_UNION_PAY_PNG,
+              height: rSize(30),
+            ),
+            3),
         Container(
           margin:
               EdgeInsets.symmetric(horizontal: rSize(40), vertical: rSize(150)),
