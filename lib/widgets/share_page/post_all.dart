@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
@@ -339,8 +341,6 @@ class PostBottomWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     String qrCode =
         "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}${goodsDetailModel.data.id}/${UserManager.instance.user.info.invitationNo}";
-    // String qrCode =
-    //     "${AppConfig.debug ? WebApi.testMiniQrcodeGoodsDetail : WebApi.miniQrcodeGoodsDetail}?type=share&id=${goodsDetailModel.data.id}";
 
     String info = goodsDetailModel.data.goodsName;
     String crossedPrice =
@@ -348,7 +348,7 @@ class PostBottomWidget extends StatelessWidget {
     String price = goodsDetailModel.data.getPriceString();
 
     return Container(
-      height: 75,
+      height: 95,
       width: double.infinity,
       child: Row(
         children: <Widget>[
@@ -399,22 +399,55 @@ class PostBottomWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                QrImage(
-                  padding: EdgeInsets.all(0),
-                  data: qrCode,
-                  size: 50,
-                  gapless: false,
+                Container(
+                  height: 75,
+                  width: 75,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage(R.ASSETS_SHOP_QR_BOX_PNG),
+                    ),
+                  ),
+                  alignment: Alignment.center,
+                  child: ShaderMask(
+                    blendMode: BlendMode.srcATop,
+                    shaderCallback: (bounds) {
+                      return SweepGradient(
+                        colors: [
+                          Color.fromRGBO(177, 14, 19, 1),
+                          Color.fromRGBO(177, 14, 19, 1),
+                          Color.fromRGBO(234, 94, 87, 1),
+                          Color.fromRGBO(234, 94, 87, 1),
+                          Color.fromRGBO(62, 100, 93, 1),
+                          Color.fromRGBO(62, 100, 93, 1),
+                          Color.fromRGBO(252, 185, 73, 1),
+                          Color.fromRGBO(252, 185, 73, 1),
+                          Color.fromRGBO(177, 14, 19, 1),
+                        ],
+                        stops: [0, 0.25, 0.25, 0.5, 0.5, 0.75, 0.75, 1, 1],
+                        transform: GradientRotation(pi / 4.1),
+                      ).createShader(bounds);
+                    },
+                    child: Transform.scale(
+                      scale: 0.79,
+                      child: QrImage(
+                        padding: EdgeInsets.all(0),
+                        data: qrCode,
+                        size: 60,
+                        gapless: true,
+                      ),
+                    ),
+                  ),
                 ),
                 Container(
-                    margin: EdgeInsets.only(top: 5),
+                    // margin: EdgeInsets.only(top: 5),
                     child: Text(
-                      "长按二维码立购",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 8,
-                        color: Color(0xff333333),
-                      ),
-                    ))
+                  "长按二维码立购",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 8,
+                    color: Color(0xff333333),
+                  ),
+                ))
               ],
             ),
           )

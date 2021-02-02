@@ -802,9 +802,11 @@ packages:
   package_signature:
     dependency: "direct main"
     description:
-      name: package_signature
-      url: "https://pub.flutter-io.cn"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "9650c1b225ee5edab3b7845711933c8a7a89a91d"
+      url: "git@192.168.2.201:aku_fe/package_signature.git"
+    source: git
     version: "0.0.1"
   path:
     dependency: "direct main"
@@ -904,6 +906,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.5.8"
+  pin_input_text_field:
+    dependency: "direct main"
+    description:
+      name: pin_input_text_field
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.3.0"
   platform:
     dependency: transitive
     description:

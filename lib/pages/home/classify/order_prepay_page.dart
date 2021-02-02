@@ -68,6 +68,11 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
 //    return true;
 //  }
 
+  ///生命周期锁
+  ///
+  ///防止在复制验证码阶段中被生命周期检测
+  bool _lifecycleLock = false;
+
   @override
   void initState() {
     super.initState();
@@ -121,7 +126,8 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     DPrint.printf(state);
-    if (state == AppLifecycleState.resumed) {
+    //TODO 每次应用进入后台返回前台都会进行订单验证操作，这里需要重写
+    if (state == AppLifecycleState.resumed && !_lifecycleLock) {
       DPrint.printf("app 进入前台了");
       _verifyPayStatus();
       _clickPay = false;
@@ -408,6 +414,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
 
   // 密码支付
   _submitPassword() {
+    _lifecycleLock = true;
     dismissLoading();
     if (!_recookFundModel.data.havePassword) {
       // if (true) {
@@ -421,6 +428,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
             content: "您当前未设置支付密码,请先设置 支付密码,或更换支付方式。",
             items: ["更换支付方式"],
             listener: (index) {
+              _lifecycleLock = false;
               Alert.dismiss(context);
             },
             deleteItem: "设置密码",

@@ -31,7 +31,7 @@ class __PrivacyDialogState extends State<_PrivacyDialog> {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        height: rSize(510),
+        height: rSize(400),
         margin: EdgeInsets.symmetric(horizontal: rSize(36)),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -70,7 +70,7 @@ class __PrivacyDialogState extends State<_PrivacyDialog> {
                         fontSize: rSP(12),
                       ),
                     ),
-                    rHBox(50),
+                    rHBox(20),
                     GestureDetector(
                       onTap: () {
                         CRoute.push(context, PrivacyPageV2());
