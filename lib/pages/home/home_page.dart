@@ -1418,7 +1418,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       int oldLevel = shopLevel.data['data']['oldRoleLevel'];
       int nowLevel = shopLevel.data['data']['nowRoleLevel'];
 
-      if (oldLevel == 0 && nowLevel < 500) {
+      if (oldLevel == 0 && nowLevel <= 500) {
         await showDialog(
           context: context,
           child: Center(
