@@ -3,6 +3,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/lottery/lottery_history_page.dart';
 import 'package:recook/pages/lottery/lottery_picker_page.dart';
 import 'package:recook/pages/lottery/models/lottery_list_model.dart';
 import 'package:recook/pages/lottery/tools/lottery_tool.dart';
@@ -47,20 +48,20 @@ class _RedeemLotteryPageState extends State<RedeemLotteryPage> {
   @override
   Widget build(BuildContext context) {
     return LotteryScaffold(
-      title: '彩票兑换',
-      actions: [
-        MaterialButton(
-          padding: EdgeInsets.symmetric(horizontal: rSize(16)),
-          minWidth: rSize(52),
-          onPressed: () =>
-              AppRouter.push(context, RouteName.LOTTERY_ORDER_PAGE),
-          child: Image.asset(
-            R.ASSETS_LOTTERY_REDEEM_LOTTERY_LIST_PNG,
-            width: rSize(20),
-            height: rSize(20),
-          ),
-        ),
-      ],
+      title: '彩票频道',
+      // actions: [
+      //   MaterialButton(
+      //     padding: EdgeInsets.symmetric(horizontal: rSize(16)),
+      //     minWidth: rSize(52),
+      //     onPressed: () =>
+      //         AppRouter.push(context, RouteName.LOTTERY_ORDER_PAGE),
+      //     child: Image.asset(
+      //       R.ASSETS_LOTTERY_REDEEM_LOTTERY_LIST_PNG,
+      //       width: rSize(20),
+      //       height: rSize(20),
+      //     ),
+      //   ),
+      // ],
       body: _models == null
           ? Center(
               child: CircularProgressIndicator(),
@@ -95,12 +96,16 @@ class _RedeemLotteryPageState extends State<RedeemLotteryPage> {
 
     return CustomImageButton(
       onPressed: () {
+        // CRoute.push(
+        //     context,
+        //     LotteryPickerPage(
+        //       isDouble: model.id == 1,
+        //       lotteryListModel: model,
+        //     ));
         CRoute.push(
-            context,
-            LotteryPickerPage(
-              isDouble: model.id == 1,
-              lotteryListModel: model,
-            ));
+          context,
+          LotteryHistoryPage(id: model.id),
+        );
       },
       child: Container(
         padding: EdgeInsets.all(rSize(16)),
