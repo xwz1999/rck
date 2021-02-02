@@ -225,7 +225,11 @@ class _UserPageState extends BaseStoreState<UserPage> {
               ),
               // UserPageAssetsView(),
               ShopBenefitView(key: _shopBenefitKey),
-              ShopCheckView(target: _target, amount: _amount),
+              UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Gold ||
+                      UserLevelTool.currentRoleLevelEnum() ==
+                          UserRoleLevel.Silver
+                  ? ShopCheckView(target: _target, amount: _amount)
+                  : SizedBox(),
               ShopManagerView(),
               OrderCentralView(
                 clickListener: (int index) {

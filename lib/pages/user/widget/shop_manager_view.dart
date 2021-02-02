@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:recook/pages/shop/get_platform_award_page.dart';
 import 'package:recook/pages/user/functions/user_func.dart';
-import 'package:recook/pages/user/invite/diamond_recommand_page.dart';
 import 'package:recook/pages/user/invite/my_group_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/share_tool.dart';
+import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:recook/constants/constants.dart';
@@ -18,7 +18,9 @@ class ShopManagerView extends StatelessWidget {
     @required String subTitle,
     @required String path,
     VoidCallback onTap,
+    bool show = false,
   }) {
+    if (!show) return null;
     return CustomImageButton(
       padding: EdgeInsets.zero,
       onPressed: onTap,
@@ -45,6 +47,13 @@ class ShopManagerView extends StatelessWidget {
     );
   }
 
+  bool get showTop => true;
+  bool get showMid =>
+      UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_1 ||
+      UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_2;
+  bool get showBottom =>
+      UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_1;
+
   @override
   Widget build(BuildContext context) {
     return VxBox(
@@ -68,6 +77,7 @@ class ShopManagerView extends StatelessWidget {
                 path: R.ASSETS_SHOP_GROUP_EXPAND_WEBP,
                 onTap: () =>
                     ShareTool().inviteShare(context, customTitle: Container()),
+                show: showTop,
               ),
               _buildGridItem(
                 title: '我的团队',
@@ -75,6 +85,7 @@ class ShopManagerView extends StatelessWidget {
                 onTap: () =>
                     CRoute.push(context, MyGroupPage(type: UsersMode.MY_GROUP)),
                 path: R.ASSETS_SHOP_MY_GROUP_WEBP,
+                show: showTop,
               ),
               _buildGridItem(
                 title: '推荐钻石店铺',
@@ -82,6 +93,7 @@ class ShopManagerView extends StatelessWidget {
                 onTap: () => AppRouter.push(
                     context, RouteName.SHOP_RECOMMEND_UPGRADE_PAGE),
                 path: R.ASSETS_SHOP_RECOMMAND_DIAMOND_WEBP,
+                show: showMid,
               ),
               _buildGridItem(
                 title: '我的推荐',
@@ -89,12 +101,14 @@ class ShopManagerView extends StatelessWidget {
                 onTap: () => CRoute.push(
                     context, MyGroupPage(type: UsersMode.MY_RECOMMEND)),
                 path: R.ASSETS_SHOP_MY_RECOMMAND_WEBP,
+                show: showMid,
               ),
               _buildGridItem(
                 title: '获取平台奖励',
                 subTitle: '平台可靠·奖励多',
                 onTap: () => CRoute.push(context, GetPlatformAwardPage()),
                 path: R.ASSETS_SHOP_PLATFORM_AWARD_WEBP,
+                show: showBottom,
               ),
               _buildGridItem(
                 title: '我的奖励',
@@ -102,8 +116,9 @@ class ShopManagerView extends StatelessWidget {
                 onTap: () => CRoute.push(
                     context, MyGroupPage(type: UsersMode.MY_REWARD)),
                 path: R.ASSETS_SHOP_MY_AWARD_WEBP,
+                show: showBottom,
               ),
-            ],
+            ]..removeWhere((element) => element == null),
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,
           ),

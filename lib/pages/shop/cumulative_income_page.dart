@@ -73,6 +73,9 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
 
   double get _allAmount => _model?.data?.allAmount;
 
+
+  bool get _purchaseShow => true; 
+
   @override
   void initState() {
     _selectYear = DateTime.now();
