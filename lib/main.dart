@@ -48,11 +48,11 @@ void main() async {
   //初始化腾讯im
   TencentImPlugin.init(appid: '1400435566');
 
-  AppConfig.initial(useEncrypt: false
-
-      /// 网络请求加密功能
-      // useEncrypt: true
-      );
+  AppConfig.initial(
+    useEncrypt: false,
+    // 网络请求加密功能
+    // useEncrypt: true
+  );
   // 设置当前是否为测试环境
   bool isDebug = false;
   AppConfig.setDebug(isDebug);
