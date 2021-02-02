@@ -74,12 +74,29 @@ class _MyGroupPageState extends State<MyGroupPage> {
   }
 
   _buildTitleBar() {
+    String title = '';
+    String subTitle = '';
+    switch (widget.type) {
+      case UsersMode.MY_GROUP:
+        title = '我的团队数';
+        subTitle = '总团队人数';
+        break;
+      case UsersMode.MY_RECOMMEND:
+      case UsersMode.MY_REWARD:
+        title = '推荐的团队数';
+        subTitle = '总团队人数';
+        break;
+    }
     return Row(
       children: [
         25.wb,
-        '我的团队:$_myGroupNumber'.text.color(Color(0xFF333333)).size(12).make(),
+        '$title:$_myGroupNumber'.text.color(Color(0xFF333333)).size(12).make(),
         Spacer(),
-        '总团队人数:$_allGroupCount'.text.color(Color(0xFF333333)).size(12).make(),
+        '$subTitle:$_allGroupCount'
+            .text
+            .color(Color(0xFF333333))
+            .size(12)
+            .make(),
         12.wb,
         _isGroup
             ? CustomImageButton(
@@ -177,13 +194,25 @@ class _MyGroupPageState extends State<MyGroupPage> {
 
   @override
   Widget build(BuildContext context) {
+    String title = '';
+    switch (widget.type) {
+      case UsersMode.MY_GROUP:
+        title = '我的团队';
+        break;
+      case UsersMode.MY_RECOMMEND:
+        title = '我的推荐';
+        break;
+      case UsersMode.MY_REWARD:
+        title = '我的奖励';
+        break;
+    }
     return Scaffold(
       backgroundColor: Color(0xFFF5F5F5),
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: RecookBackButton(),
         centerTitle: true,
-        title: '我的团队'.text.black.bold.make(),
+        title: title.text.black.bold.make(),
       ),
       body: Column(
         children: [
