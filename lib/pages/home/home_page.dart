@@ -996,27 +996,27 @@ class _HomePageState extends BaseStoreState<HomePage>
                   // AppRouter.push(context, RouteName.NEW_USER_DISCOUNT_PAGE);
                 }),
                 _buttonTitleRow(
-                  // R.ASSETS_LOTTERY_REDEEM_LOTTERY_ICON_PNG,
-                  AppConfig.getShowCommission()
-                      ? R.ASSETS_HOME_MENU_BB_PNG
-                      : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
-                  AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
+                  R.ASSETS_LOTTERY_REDEEM_LOTTERY_ICON_PNG,
+                  // AppConfig.getShowCommission()
+                  //     ? R.ASSETS_HOME_MENU_BB_PNG
+                  //     : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
+                  // AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
                   // '彩票兑换',
-                  onPressed:
-                      //  () {
-                      //   AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
-                      // },
-                      () {
-                    if (AppConfig.getShowCommission()) {
-                      bool value = UserManager.instance.selectTabbar.value;
-                      UserManager.instance.selectTabbar.value = !value;
-                      UserManager.instance.selectTabbarIndex = 1;
-                    } else {
-                      AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
-                          arguments: GoodsListTempPage.setArguments(
-                              title: "家居生活", type: GoodsListTempType.homeLife));
-                    }
+                  '彩票频道',
+                  onPressed: () {
+                    AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
                   },
+                  //   () {
+                  // if (AppConfig.getShowCommission()) {
+                  //   bool value = UserManager.instance.selectTabbar.value;
+                  //   UserManager.instance.selectTabbar.value = !value;
+                  //   UserManager.instance.selectTabbarIndex = 1;
+                  // } else {
+                  //   AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
+                  //       arguments: GoodsListTempPage.setArguments(
+                  //           title: "家居生活", type: GoodsListTempType.homeLife));
+                  // }
+                  // },
                 ),
                 _buttonTitleRow(
                     AppConfig.getShowCommission()
@@ -1417,7 +1417,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         shopLevel.data['code'] == 'SUCCESS') {
       int oldLevel = shopLevel.data['data']['oldRoleLevel'];
       int nowLevel = shopLevel.data['data']['nowRoleLevel'];
-      
+
       if (oldLevel == 0 && nowLevel < 500) {
         await showDialog(
           context: context,
