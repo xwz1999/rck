@@ -6,7 +6,9 @@ FirstLevel   = 20  一级
 SecondLevel  = 30  二级
 OthersLevel  = 40  其他
 // ----- 角色等级(role level )
-DiamondLevel = 100    钻石店铺
+Diamond1Level = 100    钻一店铺
+Diamond2Level = 130    钻二店铺
+Diamond3Level = 160    钻三店铺
 GoldLevel    = 200    黄金店铺
 SilverLevel  = 300    白银店铺
 MasterLevel  = 400    店主 
@@ -23,7 +25,31 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:redux/redux.dart';
 
 enum UserLevel { None, Partner, Top, First, Second, Others }
-enum UserRoleLevel { None, Diamond, Gold, Silver, Master, Vip }
+enum UserRoleLevel {
+  ///无
+  None,
+
+  ///钻1
+  Diamond_1,
+
+  ///钻2
+  Diamond_2,
+
+  ///钻3
+  Diamond_3,
+
+  ///黄金
+  Gold,
+
+  ///白银
+  Silver,
+
+  ///店主
+  Master,
+
+  ///会员
+  Vip
+}
 
 class UserLevelTool {
   static showUpgradeWidget(UserRoleUpgradeModel model, BuildContext context,
@@ -80,19 +106,19 @@ class UserLevelTool {
   static String upgradeRoleLevelIcon(UserRoleLevel roleLevel) {
     switch (roleLevel) {
       case UserRoleLevel.Silver:
-        return "assets/upgrade_icon_silver.png";
+        return R.ASSETS_UPGRADE_ICON_SILVER_PNG;
         break;
       case UserRoleLevel.Gold:
-        return "assets/upgrade_icon_gold.png";
+        return R.ASSETS_UPGRADE_ICON_GOLD_PNG;
         break;
       // case UserRoleLevel.Diamond:
       //   return "assets/upgrade_icon_diamond.png";
       //   break;
       case UserRoleLevel.Master:
-        return "assets/upgrade_icon_master.png";
+        return R.ASSETS_UPGRADE_ICON_MASTER_PNG;
         break;
       default:
-        return "assets/upgrade_icon_vip.png";
+        return R.ASSETS_UPGRADE_ICON_VIP_PNG;
     }
   }
 
@@ -103,19 +129,21 @@ class UserLevelTool {
   static String userLevelIcon(UserRoleLevel roleLevel) {
     switch (roleLevel) {
       case UserRoleLevel.Silver:
-        return "assets/user_level_icon_silver.png";
+        return R.ASSETS_USER_LEVEL_ICON_SILVER_PNG;
         break;
       case UserRoleLevel.Gold:
-        return "assets/user_level_icon_gold.png";
+        return R.ASSETS_USER_LEVEL_ICON_GOLD_PNG;
         break;
-      case UserRoleLevel.Diamond:
-        return "assets/user_level_icon_diamond.png";
+      case UserRoleLevel.Diamond_1:
+      case UserRoleLevel.Diamond_2:
+      case UserRoleLevel.Diamond_3:
+        return R.ASSETS_USER_LEVEL_ICON_DIAMOND_PNG;
         break;
       case UserRoleLevel.Master:
-        return "assets/user_level_icon_master.png";
+        return R.ASSETS_USER_LEVEL_ICON_MASTER_PNG;
         break;
       default:
-        return "assets/user_level_icon_vip.png";
+        return R.ASSETS_USER_LEVEL_ICON_VIP_PNG;
     }
   }
 
@@ -135,7 +163,9 @@ class UserLevelTool {
       case UserRoleLevel.Gold:
         return R.ASSETS_SHOP_GOLD_BADGE_PNG;
         break;
-      case UserRoleLevel.Diamond:
+      case UserRoleLevel.Diamond_1:
+      case UserRoleLevel.Diamond_2:
+      case UserRoleLevel.Diamond_3:
         return R.ASSETS_SHOP_DIAMOND_BADGE_PNG;
         break;
       case UserRoleLevel.Master:
@@ -154,7 +184,9 @@ class UserLevelTool {
       case UserRoleLevel.Gold:
         return R.ASSETS_SHOP_GOLD_BG_WEBP;
         break;
-      case UserRoleLevel.Diamond:
+      case UserRoleLevel.Diamond_1:
+      case UserRoleLevel.Diamond_2:
+      case UserRoleLevel.Diamond_3:
         return R.ASSETS_SHOP_DIAMOND_BG_WEBP;
         break;
       default:
@@ -164,7 +196,9 @@ class UserLevelTool {
 
   static String get userCardBackground {
     switch (UserLevelTool.currentRoleLevelEnum()) {
-      case UserRoleLevel.Diamond:
+      case UserRoleLevel.Diamond_1:
+      case UserRoleLevel.Diamond_2:
+      case UserRoleLevel.Diamond_3:
         return R.ASSETS_USER_DIAMOND_WEBP;
         break;
       case UserRoleLevel.Gold:
@@ -186,7 +220,9 @@ class UserLevelTool {
         break;
       case UserRoleLevel.Gold:
         return Color(0xFF5F431E);
-      case UserRoleLevel.Diamond:
+      case UserRoleLevel.Diamond_1:
+      case UserRoleLevel.Diamond_2:
+      case UserRoleLevel.Diamond_3:
         return Color(0xFF2B2B31);
       default:
         return Color(0xFF52383D);
@@ -208,7 +244,9 @@ class UserLevelTool {
       case UserRoleLevel.Gold:
         return R.ASSETS_HEADER_GOLD_HEADER_PNG;
         break;
-      case UserRoleLevel.Diamond:
+      case UserRoleLevel.Diamond_1:
+      case UserRoleLevel.Diamond_2:
+      case UserRoleLevel.Diamond_3:
         return R.ASSETS_HEADER_SILVER_HEADER_PNG;
         break;
       default:
@@ -224,19 +262,21 @@ class UserLevelTool {
   static String appBarIconImagePath(UserRoleLevel roleLevel) {
     switch (roleLevel) {
       case UserRoleLevel.Master:
-        return "assets/user_page_appbar_icon_master.png";
+        return R.ASSETS_USER_PAGE_APPBAR_ICON_MASTER_PNG;
         break;
       case UserRoleLevel.Silver:
-        return "assets/user_page_appbar_icon_silver.png";
+        return R.ASSETS_USER_PAGE_APPBAR_ICON_SILVER_PNG;
         break;
       case UserRoleLevel.Gold:
-        return "assets/user_page_appbar_icon_gold.png";
+        return R.ASSETS_USER_PAGE_APPBAR_ICON_GOLD_PNG;
         break;
-      case UserRoleLevel.Diamond:
-        return "assets/user_page_appbar_icon_diamond.png";
+      case UserRoleLevel.Diamond_1:
+      case UserRoleLevel.Diamond_2:
+      case UserRoleLevel.Diamond_3:
+        return R.ASSETS_USER_PAGE_APPBAR_ICON_DIAMOND_PNG;
         break;
       default:
-        return "assets/user_page_appbar_icon_vip.png";
+        return R.ASSETS_USER_PAGE_APPBAR_ICON_VIP_PNG;
         break;
     }
   }
@@ -311,8 +351,11 @@ class UserLevelTool {
     String roleLevel = "";
     switch (level) {
       case 100:
+      case 130:
+      case 160:
         roleLevel = "钻石店铺";
         break;
+
       case 200:
         roleLevel = "黄金店铺";
         break;
@@ -336,7 +379,9 @@ class UserLevelTool {
     }
     String roleLevel = "";
     switch (level) {
-      case UserRoleLevel.Diamond:
+      case UserRoleLevel.Diamond_1:
+      case UserRoleLevel.Diamond_2:
+      case UserRoleLevel.Diamond_3:
         roleLevel = "钻石店铺";
         break;
       case UserRoleLevel.Gold:
@@ -367,7 +412,13 @@ class UserLevelTool {
     String roleLevel = "";
     switch (level) {
       case 100:
-        roleLevel = "钻石";
+        roleLevel = "钻一";
+        break;
+      case 130:
+        roleLevel = "钻二";
+        break;
+      case 160:
+        roleLevel = "钻三";
         break;
       case 200:
         roleLevel = "黄金";
@@ -396,7 +447,13 @@ class UserLevelTool {
     }
     switch (level) {
       case 100:
-        return UserRoleLevel.Diamond;
+        return UserRoleLevel.Diamond_1;
+        break;
+      case 130:
+        return UserRoleLevel.Diamond_2;
+        break;
+      case 160:
+        return UserRoleLevel.Diamond_3;
         break;
       case 200:
         return UserRoleLevel.Gold;
@@ -418,7 +475,9 @@ class UserLevelTool {
   ///获取用户的名片的角色 icon
   static String getRoleLevelIcon(UserRoleLevel level) {
     switch (level) {
-      case UserRoleLevel.Diamond:
+      case UserRoleLevel.Diamond_1:
+      case UserRoleLevel.Diamond_2:
+      case UserRoleLevel.Diamond_3:
         return R.ASSETS_USER_ICON_DIAMOND_PNG;
       case UserRoleLevel.Gold:
         return R.ASSETS_USER_ICON_GOLD_PNG;
