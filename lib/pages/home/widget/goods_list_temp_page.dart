@@ -12,18 +12,17 @@ import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/widgets/goods_item.dart';
 
-enum GoodsListTempType {recookMake, homeAppliances, homeLife}
+enum GoodsListTempType { recookMake, homeAppliances, homeLife }
 
 class GoodsListTempPage extends StatefulWidget {
   final Map arguments;
 
   const GoodsListTempPage({Key key, this.arguments}) : super(key: key);
-  static setArguments({String title, GoodsListTempType type=GoodsListTempType.recookMake}){
-    return {
-      "title": title,
-      "type": type
-    };
+  static setArguments(
+      {String title, GoodsListTempType type = GoodsListTempType.recookMake}) {
+    return {"title": title, "type": type};
   }
+
   @override
   State<StatefulWidget> createState() {
     return _GoodsListTempPageState();
@@ -46,7 +45,7 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> {
   Widget buildContext(BuildContext context, {store}) {
     Scaffold scaffold = Scaffold(
         // appBar: AppBar(
-        //   title: Image.asset(_goodsListTempType == GoodsListTempType.recookMake 
+        //   title: Image.asset(_goodsListTempType == GoodsListTempType.recookMake
         //    ? "assets/listtemp_recookmaketitle.png"
         //    : _goodsListTempType == GoodsListTempType.homeAppliances
         //    ? "assets/listtemp_homeappliances.png"
@@ -64,6 +63,7 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> {
       child: scaffold,
     );
   }
+
   _bodyWidget() {
     return Container(
       child: Stack(
@@ -85,6 +85,7 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> {
       ),
     );
   }
+
   _titleWidget() {
     //1125 603
     double width = MediaQuery.of(context).size.width;
@@ -95,25 +96,25 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> {
         child: Stack(
           children: <Widget>[
             Image.asset(
-              _goodsListTempType == GoodsListTempType.recookMake 
-              ? "assets/listtemp_recookmaketitle_bg.png"
-              : _goodsListTempType == GoodsListTempType.homeAppliances
-              ? "assets/listtemp_homeappliancestitle_bg.png"
-              : "assets/listtemp_homelifetitle_bg.png",
+              _goodsListTempType == GoodsListTempType.recookMake
+                  ? R.ASSETS_LIST_TEMP_MARKET_TITLE_BG_WEBP
+                  : _goodsListTempType == GoodsListTempType.homeAppliances
+                      ? R.ASSETS_LIST_TEMP_HOME_APP_BG_WEBP
+                      : R.ASSETS_LIST_TEMP_HOME_LIFE_TITLE_WEBP,
               fit: BoxFit.fill,
             ),
             Positioned(
-              top: ScreenUtil.statusBarHeight+(kToolbarHeight-24)/2,
-              left: (ScreenUtil.screenWidthDp-117)/2,
+              top: ScreenUtil.statusBarHeight + (kToolbarHeight - 24) / 2,
+              left: (ScreenUtil.screenWidthDp - 117) / 2,
               child: Container(
-                width: 117, height: 24,
+                width: 117,
+                height: 24,
                 child: Image.asset(
-                  _goodsListTempType == GoodsListTempType.recookMake 
-                  ? "assets/listtemp_recookmaketitle.png"
-                  : _goodsListTempType == GoodsListTempType.homeAppliances
-                  ? "assets/listtemp_homeappliances.png"
-                  : "assets/listtemp_homelifetitle.png"
-                ),
+                    _goodsListTempType == GoodsListTempType.recookMake
+                        ? "assets/listtemp_recookmaketitle.png"
+                        : _goodsListTempType == GoodsListTempType.homeAppliances
+                            ? "assets/listtemp_homeappliances.png"
+                            : "assets/listtemp_homelifetitle.png"),
               ),
             ),
             Positioned(
@@ -168,8 +169,10 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> {
       child: Stack(
         children: <Widget>[
           GoodsItemWidget.hotList(
-            onBrandClick: (){
-              AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE, arguments: BrandGoodsListPage.setArguments(data.brandId, data.brandName));
+            onBrandClick: () {
+              AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
+                  arguments: BrandGoodsListPage.setArguments(
+                      data.brandId, data.brandName));
             },
             buildCtx: context,
             data: data,
@@ -181,12 +184,12 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> {
 
   _getGoodsHotSellList() async {
     ResultData resultData = await HttpManager.post(
-      _goodsListTempType == GoodsListTempType.recookMake 
-                  ? HomeApi.recook_make
-                  : _goodsListTempType == GoodsListTempType.homeAppliances
-                  ? HomeApi.digital_list
-                  : HomeApi.home_live_list, 
-      {});
+        _goodsListTempType == GoodsListTempType.recookMake
+            ? HomeApi.recook_make
+            : _goodsListTempType == GoodsListTempType.homeAppliances
+                ? HomeApi.digital_list
+                : HomeApi.home_live_list,
+        {});
     if (!resultData.result) {
       showError(resultData.msg);
       return;

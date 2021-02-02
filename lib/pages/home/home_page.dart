@@ -1479,12 +1479,6 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   _getNoticeList() async {
-    // // await NoticeListTool.diamondRecommendation(context, title: "您成功推荐了X位大咖,恭喜获得X张晋升卡和保障卡");
-    // // await NoticeListTool.vipAlert(context);
-    // await NoticeListTool.perfectInformation(context, getStore());
-    // // await NoticeListTool.inputExpressInformation(context);
-    // return;
-
     if (!UserManager.instance.haveLogin) return;
     ResultData resultData = await HttpManager.post(
         HomeApi.notice_list, {"uid": UserManager.instance.user.info.id});
@@ -1497,7 +1491,6 @@ class _HomePageState extends BaseStoreState<HomePage>
           await NoticeListTool.diamondRecommendation(context,
               title: noticeData.content);
         if (noticeData.type == 2 && (AppConfig.getShowCommission()))
-        //await NoticeListTool.vipAlert(context);
         if (noticeData.type == 3)
           await NoticeListTool.perfectInformation(context, getStore());
         if (noticeData.type == 4)
