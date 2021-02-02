@@ -15,6 +15,8 @@ import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:recook/widgets/toast.dart';
 
+//TODO CLEAN BOTTOM CODES.
+@Deprecated("member_benefits_page deprecated.")
 class MemberBenefitsPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -44,7 +46,7 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
     if (_gsRefreshController.isRefresh()) {
       _gsRefreshController.refreshCompleted();
     }
-    if (!resultData.result) { 
+    if (!resultData.result) {
       if (mounted) showError(resultData.msg);
       return;
     }
@@ -102,8 +104,8 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
       // listWidget.add(_imageBgWidgetS());
       listWidget.add(_imageBgWidget());
       listWidget.add(GestureDetector(
-        onTap: (){
-          ShareTool().inviteShare(context,customTitle: Container());
+        onTap: () {
+          ShareTool().inviteShare(context, customTitle: Container());
         },
         child: _buttonWidget(),
       ));
@@ -115,13 +117,6 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
   //   double width = MediaQuery.of(context).size.width;
   //   return Stack(
   //     children: [
-  //       Container(
-  //         width: width,
-  //         child: Image.asset(
-  //           'assets/memberBenefitsPage_bg_s.jpg',
-  //           fit: BoxFit.fill,
-  //         ),
-  //       ),
   //       Positioned(
   //         top: rSize(1148),
   //         // right: 0,
@@ -176,16 +171,14 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
   //   );
   // }
 
+//TODO CLEAN BOTTOM CODES.
+  @Deprecated("member_benefits_page,_imageBgWidget")
   _imageBgWidget() {
     double width = MediaQuery.of(context).size.width;
     double height = width / 750 * 1085;
     return Container(
       width: width,
       height: height,
-      child: Image.asset(
-        'assets/MemberBenefitsPage_bg.png',
-        fit: BoxFit.fill,
-      ),
     );
   }
 
@@ -476,10 +469,6 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
     return Container(
       height: height,
       width: width,
-      child: Image.asset(
-        'assets/MemberBenefitsPage_content.png',
-        fit: BoxFit.fill,
-      ),
     );
   }
 

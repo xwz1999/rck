@@ -1,3 +1,5 @@
+//TODO CLEAN BOTTOM CODES.
+@Deprecated("shop_upgrade_code_model need to be cleaned.")
 class ShopUpgradeCodeModel {
   String code;
   String msg;
@@ -29,8 +31,9 @@ class Data {
   Data({this.usedCode, this.unusedCode});
 
   Data.fromJson(Map<String, dynamic> json) {
-    usedCode = json['usedCode']!=null?json['usedCode'].cast<String>():[];
-    unusedCode = json['unusedCode'] != null ? json['unusedCode'].cast<String>():[];
+    usedCode = json['usedCode'] != null ? json['usedCode'].cast<String>() : [];
+    unusedCode =
+        json['unusedCode'] != null ? json['unusedCode'].cast<String>() : [];
   }
 
   Map<String, dynamic> toJson() {
