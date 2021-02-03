@@ -4,6 +4,7 @@ import 'package:recook/pages/user/functions/user_benefit_func.dart';
 import 'package:recook/pages/user/model/user_benefit_common_model.dart';
 import 'package:recook/pages/user/user_benefit_sub_page.dart';
 import 'package:recook/utils/custom_route.dart';
+import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -29,6 +30,17 @@ class _UserBenefitPageState extends State<UserBenefitPage>
   UserBenefitCommonModel _yestodayModel = UserBenefitCommonModel.zero();
   UserBenefitCommonModel _thisMonthModel = UserBenefitCommonModel.zero();
   UserBenefitCommonModel _lastMonthModel = UserBenefitCommonModel.zero();
+
+  UserRoleLevel get _role => UserLevelTool.currentRoleLevelEnum();
+
+  bool get _purchaseShow => true;
+  bool get _guideShow =>
+      _role != UserRoleLevel.None && _role != UserRoleLevel.Vip;
+  bool get _teamShow =>
+      _role != UserRoleLevel.None && _role != UserRoleLevel.Vip;
+  bool get _recommendShow =>
+      _role == UserRoleLevel.Diamond_1 || _role == UserRoleLevel.Diamond_2;
+  bool get _rewardShow => _role == UserRoleLevel.Diamond_1;
 
   Future getData() async {
     await Future.delayed(Duration(milliseconds: 300));
@@ -131,7 +143,9 @@ class _UserBenefitPageState extends State<UserBenefitPage>
     @required _ItemClass secondItem,
     @required _ItemClass thirdItem,
     @required VoidCallback onTap,
+    bool show = false,
   }) {
+    if (!show) return null;
     Widget getColumnItem(_ItemClass item) {
       Widget helper = CustomImageButton(
         onPressed: item.onHelper,
@@ -216,6 +230,7 @@ class _UserBenefitPageState extends State<UserBenefitPage>
           value: _displayModel.purchase.amount.toStringAsFixed(2),
           onHelper: () {},
         ),
+        show: _purchaseShow,
       ),
       _buildItem(
         onTap: () => CRoute.push(
@@ -237,6 +252,7 @@ class _UserBenefitPageState extends State<UserBenefitPage>
           value: _displayModel.guide.amount.toStringAsFixed(2),
           onHelper: () {},
         ),
+        show: _guideShow,
       ),
       _buildItem(
         onTap: () => CRoute.push(
@@ -259,6 +275,7 @@ class _UserBenefitPageState extends State<UserBenefitPage>
           value: _displayModel.team.amount.toStringAsFixed(2),
           onHelper: () {},
         ),
+        show: _teamShow,
       ),
       _buildItem(
         onTap: () => CRoute.push(
@@ -281,6 +298,7 @@ class _UserBenefitPageState extends State<UserBenefitPage>
           value: _displayModel.recommend.amount.toStringAsFixed(2),
           onHelper: () {},
         ),
+        show: _recommendShow,
       ),
       _buildItem(
         onTap: () => CRoute.push(
@@ -303,8 +321,9 @@ class _UserBenefitPageState extends State<UserBenefitPage>
           value: _displayModel.reward.amount.toStringAsFixed(2),
           onHelper: () {},
         ),
+        show: _rewardShow,
       ),
-    ];
+    ]..removeWhere((element) => element == null);
   }
 
   @override

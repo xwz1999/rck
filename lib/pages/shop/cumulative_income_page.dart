@@ -1,18 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
 import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/team_income_model.dart';
 import 'package:recook/pages/user/functions/user_benefit_func.dart';
 import 'package:recook/pages/user/model/user_accumulate_model.dart';
 import 'package:recook/pages/user/model/user_month_income_model.dart';
 import 'package:recook/pages/user/user_benefit_sub_page.dart';
-import 'package:recook/pages/user/user_page_sub_income_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/alert.dart';
@@ -20,7 +15,6 @@ import 'package:recook/widgets/bottom_time_picker.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/dashed_rect.dart';
-import 'package:intl/intl.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class CumulativeIncomePage extends StatefulWidget {
@@ -73,8 +67,16 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
 
   double get _allAmount => _model?.data?.allAmount;
 
+  UserRoleLevel get _role => UserLevelTool.currentRoleLevelEnum();
 
-  bool get _purchaseShow => true; 
+  bool get _purchaseShow => true;
+  bool get _guideShow =>
+      _role != UserRoleLevel.None && _role != UserRoleLevel.Vip;
+  bool get _teamShow =>
+      _role != UserRoleLevel.None && _role != UserRoleLevel.Vip;
+  bool get _recommendShow =>
+      _role == UserRoleLevel.Diamond_1 || _role == UserRoleLevel.Diamond_2;
+  bool get _rewardShow => _role == UserRoleLevel.Diamond_1;
 
   @override
   void initState() {
@@ -260,32 +262,37 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
                         title: '自购收益',
                         value: _purchase.toStringAsFixed(2),
                         index: 0,
+                        show: _purchaseShow,
                       ),
                       _buildGridColumn(
                         context,
                         title: '导购收益',
                         value: _guide.toStringAsFixed(2),
                         index: 1,
+                        show: _guideShow,
                       ),
                       _buildGridColumn(
                         context,
                         title: '团队收益',
                         value: _team.toStringAsFixed(2),
                         index: 2,
+                        show: _teamShow,
                       ),
                       _buildGridColumn(
                         context,
                         title: "推荐收益",
                         value: _recommand.toStringAsFixed(2),
                         index: 3,
+                        show: _recommendShow,
                       ),
                       _buildGridColumn(
                         context,
                         title: "平台奖励",
                         value: _reward.toStringAsFixed(2),
                         index: 4,
+                        show: _rewardShow,
                       ),
-                    ],
+                    ]..removeWhere((element) => element == null),
                   ),
                   // Container(
                   //   child: Row(
@@ -811,7 +818,9 @@ _buildGridColumn(
   String title,
   String value,
   int index,
+  bool show = false,
 }) {
+  if (!show) return null;
   return MaterialButton(
     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
     padding: EdgeInsets.zero,
