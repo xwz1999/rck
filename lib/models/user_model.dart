@@ -51,7 +51,7 @@ part 'user_model.g.dart';
  */
 
 @JsonSerializable()
-class UserModel extends BaseModel{
+class UserModel extends BaseModel {
   User data;
   UserModel(this.data, String code, String msg) : super(code, msg);
 
@@ -63,15 +63,13 @@ class UserModel extends BaseModel{
 
 @JsonSerializable()
 class User {
-
   Tkn auth;
   Info info;
   int status;
 
   User(this.auth, this.info, this.status);
 
-  factory User.fromJson(Map<String, dynamic> json) =>
-      _$UserFromJson(json);
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
 
   Map<String, dynamic> toJson() => _$UserToJson(this);
 
@@ -80,7 +78,6 @@ class User {
     info = Info.empty();
   }
 }
-
 
 //   "id": 2,
 //   "nickname": "",
@@ -146,7 +143,7 @@ class Info {
   String updatedAt;
   String deletedAt;
   bool isVerified;
-  
+
   int role;
 
   String addr;
@@ -159,19 +156,52 @@ class Info {
   int roleId;
   int roleLevel;
   int userLevel;
-  bool isSetPayPwd;   //是否设置过支付密码 支付和提现需要用到
+  bool isSetPayPwd; //是否设置过支付密码 支付和提现需要用到
   bool realInfoStatus; // 是否实名认证
   String realName;
   String idCard;
-  Info(this.id, this.nickname, this.headImgUrl, this.wxOpenId, this.wxUnionId,
-      this.mobile, this.identityCardName, this.identityCardNo, this.gender,
-      this.birthday, this.invitationNo, this.offlineStoreId, this.level,
-      this.balance, this.coin, this.createdAt, this.updatedAt, this.deletedAt, 
-      this.isVerified, this.role, this.addr, this.phone, this.wechatNo,this.remarkName,
-      this.introCode, this.upgradeCode, this.roleId, this.roleLevel, this.userLevel, this.isSetPayPwd, this.realInfoStatus, this.realName, this.idCard);
 
-  //紧急提交修复 
-  Info.empty(){
+  ///导师微信号
+  String teacherWechatNo;
+  Info(
+    this.id,
+    this.nickname,
+    this.headImgUrl,
+    this.wxOpenId,
+    this.wxUnionId,
+    this.mobile,
+    this.identityCardName,
+    this.identityCardNo,
+    this.gender,
+    this.birthday,
+    this.invitationNo,
+    this.offlineStoreId,
+    this.level,
+    this.balance,
+    this.coin,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
+    this.isVerified,
+    this.role,
+    this.addr,
+    this.phone,
+    this.wechatNo,
+    this.remarkName,
+    this.introCode,
+    this.upgradeCode,
+    this.roleId,
+    this.roleLevel,
+    this.userLevel,
+    this.isSetPayPwd,
+    this.realInfoStatus,
+    this.realName,
+    this.idCard,
+    this.teacherWechatNo,
+  );
+
+  //紧急提交修复
+  Info.empty() {
     this.id = 0;
     this.nickname = "游客";
     this.role = 0;
@@ -180,8 +210,7 @@ class Info {
     // this.headImgUrl = "";
   }
 
-  factory Info.fromJson(Map<String, dynamic> json) =>
-      _$InfoFromJson(json);
+  factory Info.fromJson(Map<String, dynamic> json) => _$InfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$InfoToJson(this);
 }
@@ -193,11 +222,7 @@ class Tkn {
 
   Tkn(this.id, this.token);
 
-  factory Tkn.fromJson(Map<String, dynamic> json) =>
-      _$TknFromJson(json);
+  factory Tkn.fromJson(Map<String, dynamic> json) => _$TknFromJson(json);
 
   Map<String, dynamic> toJson() => _$TknToJson(this);
-
-
-
 }

@@ -73,6 +73,7 @@ Info _$InfoFromJson(Map<String, dynamic> json) {
       json['realInfoStatus'] as bool,
       json['realName'] as String,
       json['idCard'] as String,
+      json['teacherWechatNo']as String,
       );
 }
 
