@@ -970,9 +970,10 @@ class _HomePageState extends BaseStoreState<HomePage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 _buttonTitleRow(
-                    AppConfig.getShowCommission()
-                        ? R.ASSETS_HOME_MENU_A_PNG
-                        : R.ASSETS_LISTTEMP_RECOOKMAKE_ICON_PNG,
+                    // AppConfig.getShowCommission()
+                    //     ? R.ASSETS_HOME_MENU_A_PNG
+                    //     : R.ASSETS_LISTTEMP_RECOOKMAKE_ICON_PNG,
+                    R.ASSETS_HOME_HAPPY_00_GIF,
                     AppConfig.getShowCommission() ? "我的权益" : "瑞库制品",
                     onPressed: () {
                   if (AppConfig.getShowCommission()) {
@@ -995,31 +996,38 @@ class _HomePageState extends BaseStoreState<HomePage>
                 }),
                 _buttonTitleRow(
                   // R.ASSETS_LOTTERY_REDEEM_LOTTERY_ICON_PNG,
-                  AppConfig.getShowCommission()
-                      ? R.ASSETS_HOME_MENU_BB_PNG
-                      : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
-                  AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
+                  // AppConfig.getShowCommission()
+                  //     ? R.ASSETS_HOME_MENU_BB_PNG
+                  //     : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
+                  R.ASSETS_HOME_HAPPY_01_GIF,
+                  // AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
+                  // R.ASSETS_LOTTERY_REDEEM_LOTTERY_ICON_PNG,
+                  // AppConfig.getShowCommission()
+                  //     ? R.ASSETS_HOME_MENU_BB_PNG
+                  //     : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
+                  // AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
                   // '彩票兑换',
-                  onPressed:
-                      //  () {
-                      //   AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
-                      // },
-                      () {
-                    if (AppConfig.getShowCommission()) {
-                      bool value = UserManager.instance.selectTabbar.value;
-                      UserManager.instance.selectTabbar.value = !value;
-                      UserManager.instance.selectTabbarIndex = 1;
-                    } else {
-                      AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
-                          arguments: GoodsListTempPage.setArguments(
-                              title: "家居生活", type: GoodsListTempType.homeLife));
-                    }
+                  '彩票频道',
+                  onPressed: () {
+                    AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
                   },
+                  //   () {
+                  // if (AppConfig.getShowCommission()) {
+                  //   bool value = UserManager.instance.selectTabbar.value;
+                  //   UserManager.instance.selectTabbar.value = !value;
+                  //   UserManager.instance.selectTabbarIndex = 1;
+                  // } else {
+                  //   AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
+                  //       arguments: GoodsListTempPage.setArguments(
+                  //           title: "家居生活", type: GoodsListTempType.homeLife));
+                  // }
+                  // },
                 ),
                 _buttonTitleRow(
-                    AppConfig.getShowCommission()
-                        ? R.ASSETS_HOME_INVITE_WEBP_S_PNG
-                        : R.ASSETS_LISTTEMP_HOMEAPPLIANCES_ICON_PNG,
+                    // AppConfig.getShowCommission()
+                    //     ? R.ASSETS_HOME_INVITE_WEBP_S_PNG
+                    //     : R.ASSETS_LISTTEMP_HOMEAPPLIANCES_ICON_PNG,
+                    R.ASSETS_HOME_HAPPY_02_GIF,
                     AppConfig.getShowCommission()
                         // ? "升级店主"
                         ? "一键邀请"
@@ -1034,22 +1042,35 @@ class _HomePageState extends BaseStoreState<HomePage>
                     // AppRouter.push(context, RouteName.Member_BENEFITS_PAGE,);
                   }
                 }),
-                _buttonTitleRow(R.ASSETS_HOME_MENU_DD_PNG, "热销榜单",
-                    onPressed: () {
-                  AppRouter.push(context, RouteName.GOODS_HOT_LIST);
-                }),
-                _buttonTitleRow(R.ASSETS_HOME_MENU_EE_PNG, "全部分类",
-                    onPressed: () {
-                  HomeDao.getCategories(success: (data, code, msg) {
-                    CRoute.push(
-                        context,
-                        ClassifyPage(
-                          data: data,
-                        ));
-                  }, failure: (code, msg) {
-                    Toast.showError(msg);
-                  });
-                }),
+                _buttonTitleRow(
+                  // R.ASSETS_HOME_MENU_DD_PNG,
+                  R.ASSETS_HOME_HAPPY_03_GIF,
+
+                  "热销榜单",
+                  onPressed: () {
+                    AppRouter.push(context, RouteName.GOODS_HOT_LIST);
+                  },
+                ),
+                _buttonTitleRow(
+                  // R.ASSETS_HOME_MENU_EE_PNG,
+                  R.ASSETS_HOME_HAPPY_04_GIF,
+
+                  "全部分类",
+                  onPressed: () {
+                    HomeDao.getCategories(
+                      success: (data, code, msg) {
+                        CRoute.push(
+                            context,
+                            ClassifyPage(
+                              data: data,
+                            ));
+                      },
+                      failure: (code, msg) {
+                        Toast.showError(msg);
+                      },
+                    );
+                  },
+                ),
               ],
             ),
           ),
