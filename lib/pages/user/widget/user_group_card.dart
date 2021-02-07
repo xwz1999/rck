@@ -85,7 +85,7 @@ class _UserGroupCardState extends State<UserGroupCard> {
             phone: widget.phone,
             wechat: widget.wechatId,
             comment: widget.remarkName,
-            //TODO 对接数据
+            id: widget.id,
             signDate: DateTime.now(),
             diamondDate: DateTime.now(),
           )),

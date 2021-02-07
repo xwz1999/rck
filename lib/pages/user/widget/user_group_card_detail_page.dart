@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recook/constants/api.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
 import 'package:recook/constants/header.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class UserGroupCardDetailPage extends StatefulWidget {
+  final int id;
   final String headImg;
   final UserRoleLevel role;
   final String nickName;
@@ -24,7 +26,8 @@ class UserGroupCardDetailPage extends StatefulWidget {
       this.signDate,
       this.diamondDate,
       this.phone,
-      this.wechat})
+      this.wechat,
+      @required this.id})
       : super(key: key);
 
   @override
@@ -112,7 +115,15 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
               title: '备注',
               // suffix: (widget.comment ?? '').text.make(),
               suffix: TextField(
-                onEditingComplete: () {},
+                onEditingComplete: () async {
+                  GSDialog.of(context).showLoadingDialog(context, '修改中');
+                  await HttpManager.post(UserApi.invite_remark_name, {
+                    "userId": widget.id,
+                    "remarkName": _editingController.text
+                  });
+                  setState(() {});
+                  GSDialog.of(context).dismiss(context);
+                },
                 controller: _editingController,
                 textAlign: TextAlign.end,
                 style: TextStyle(
