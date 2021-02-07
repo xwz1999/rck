@@ -21,6 +21,7 @@ class UserGroupCard extends StatefulWidget {
   final String headImg;
   final int id;
   final bool isRecommend;
+  final String remarkName;
 
   //options
   final bool flat;
@@ -34,20 +35,22 @@ class UserGroupCard extends StatefulWidget {
     @required this.headImg,
     @required this.id,
     @required this.isRecommend,
+    @required this.remarkName,
   })  : flat = false,
         super(key: key);
 
-  UserGroupCard.flat({
-    Key key,
-    @required this.name,
-    @required this.wechatId,
-    @required this.phone,
-    @required this.shopRole,
-    @required this.groupCount,
-    @required this.headImg,
-    @required this.id,
-    @required this.isRecommend,
-  })  : flat = true,
+  UserGroupCard.flat(
+      {Key key,
+      @required this.name,
+      @required this.wechatId,
+      @required this.phone,
+      @required this.shopRole,
+      @required this.groupCount,
+      @required this.headImg,
+      @required this.id,
+      @required this.isRecommend,
+      @required this.remarkName})
+      : flat = true,
         super(key: key);
 
   @override
@@ -81,8 +84,7 @@ class _UserGroupCardState extends State<UserGroupCard> {
             nickName: widget.name,
             phone: widget.phone,
             wechat: widget.wechatId,
-            //TODO
-            comment: '',
+            comment: widget.remarkName,
             //TODO 对接数据
             signDate: DateTime.now(),
             diamondDate: DateTime.now(),

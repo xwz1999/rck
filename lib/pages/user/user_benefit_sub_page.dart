@@ -387,6 +387,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
                   groupCount: e.count,
                   phone: e.phone ?? '',
                   headImg: e.headImgUrl ?? '',
+                  remarkName: e.remarkName ?? '',
                 );
               }).toList(),
             ),

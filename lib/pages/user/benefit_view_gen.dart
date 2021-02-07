@@ -357,6 +357,7 @@ class _BenefitViewGenState extends State<BenefitViewGen>
                         headImg: _.headImgUrl,
                         id: _.userId,
                         isRecommend: false,
+                        remarkName: _.remarkName,
                       );
                     },
                     itemCount: team?.length ?? 0,

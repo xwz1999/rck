@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/api_v2.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
 import 'package:recook/constants/header.dart';
@@ -34,6 +33,7 @@ class UserGroupCardDetailPage extends StatefulWidget {
 }
 
 class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
+  TextEditingController _editingController;
   Widget _buildTile({String title, Widget suffix, Widget trailing}) {
     return Row(
       children: [
@@ -53,6 +53,12 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
         15.wb,
       ],
     ).material(color: Colors.white);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _editingController = TextEditingController(text: widget.comment);
   }
 
   @override
@@ -104,7 +110,18 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
             ),
             _buildTile(
               title: '备注',
-              suffix: (widget.comment ?? '').text.make(),
+              // suffix: (widget.comment ?? '').text.make(),
+              suffix: TextField(
+                onEditingComplete: () {},
+                controller: _editingController,
+                textAlign: TextAlign.end,
+                style: TextStyle(
+                  color: Colors.black,
+                ),
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                ),
+              ).expand(),
             ),
           ].sepWidget(
               separate: Divider(

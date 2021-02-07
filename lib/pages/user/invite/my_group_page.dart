@@ -176,6 +176,7 @@ class _MyGroupPageState extends State<MyGroupPage> {
             shopRole: model.roleLevelEnum,
             wechatId: model.wechatNo,
             headImg: model.headImgUrl,
+            remarkName: model.remarkName,
           );
         },
         itemCount: _models.length,
