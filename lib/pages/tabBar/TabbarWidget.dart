@@ -18,7 +18,6 @@ import 'package:recook/pages/live/functions/live_function.dart';
 import 'package:recook/pages/live/video/add_video_page.dart';
 import 'package:recook/pages/live/pages/discovery_page.dart';
 import 'package:recook/pages/live/widget/live_fab_location.dart';
-import 'package:recook/pages/shop/widget/normal_shop_page.dart';
 import 'package:recook/pages/shopping_cart/shopping_cart_page.dart';
 import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/third_party/bugly_helper.dart';
@@ -196,25 +195,14 @@ class _TabBarWidgetState extends State<TabBarWidget>
           physics: NeverScrollableScrollPhysics(),
           needAnimation: false,
           controller: _tabController,
-          children:
-              // AppConfig.getShowCommission()
-              !AppConfig.getShowCommission()
-                  ? <Widget>[
-                      HomePage(),
-                      GoodsHotListPage(),
-                      DiscoveryPage(),
-                      // BusinessPage(),
-                      ShoppingCartPage(),
-                      UserPage()
-                    ]
-                  : <Widget>[
-                      HomePage(),
-                      NormalShopPage(),
-                      DiscoveryPage(),
-                      // BusinessPage(),
-                      ShoppingCartPage(),
-                      UserPage()
-                    ],
+          children: <Widget>[
+            HomePage(),
+            GoodsHotListPage(),
+            DiscoveryPage(),
+            // BusinessPage(),
+            ShoppingCartPage(),
+            UserPage()
+          ],
         ),
         bottomNavigationBar: _changeBottomBar(context));
   }
@@ -306,65 +294,34 @@ class _BottomBarState extends State<BottomBar> {
       iconUnSelectedColor: unSelectedColor,
       protrudingColor: selectedColor,
       // items: AppConfig.getShowCommission()
-      items: !AppConfig.getShowCommission()
-          ? [
-              NavigationItemBean(
-                textStr: '特卖',
-                image: AssetImage("assets/tabbar_sale_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_sale_selected.png"),
-              ),
-              NavigationItemBean(
-                textStr: '排行榜',
-                image: AssetImage("assets/tabbar_shop_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_shop_selected.png"),
-              ),
-              NavigationItemBean(
-                textStr: '发现',
-                image: AssetImage("assets/tabbar_find_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_find_selected.png"),
-              ),
-              NavigationItemBean(
-                textStr: '购物车',
-                image: AssetImage("assets/tabbar_cart_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_cart_selected.png"),
+      items: [
+        NavigationItemBean(
+          textStr: '特卖',
+          image: AssetImage("assets/tabbar_sale_normal.png"),
+          imageSelected: AssetImage("assets/tabbar_sale_selected.png"),
+        ),
+        NavigationItemBean(
+          textStr: '排行榜',
+          image: AssetImage("assets/tabbar_shop_normal.png"),
+          imageSelected: AssetImage("assets/tabbar_shop_selected.png"),
+        ),
+        NavigationItemBean(
+          textStr: '发现',
+          image: AssetImage("assets/tabbar_find_normal.png"),
+          imageSelected: AssetImage("assets/tabbar_find_selected.png"),
+        ),
+        NavigationItemBean(
+          textStr: '购物车',
+          image: AssetImage("assets/tabbar_cart_normal.png"),
+          imageSelected: AssetImage("assets/tabbar_cart_selected.png"),
 //              protrudingIcon: Icons.add
-              ),
-              NavigationItemBean(
-                textStr: '我的',
-                image: AssetImage("assets/tabbar_mine_normal_new.png"),
-                imageSelected:
-                    AssetImage("assets/tabbar_mine_selected_new.png"),
-              )
-            ]
-          : [
-              NavigationItemBean(
-                textStr: '特卖',
-                image: AssetImage("assets/tabbar_sale_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_sale_selected.png"),
-              ),
-              NavigationItemBean(
-                textStr: '店铺',
-                image: AssetImage("assets/tabbar_shop_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_shop_selected.png"),
-              ),
-              NavigationItemBean(
-                textStr: '发现',
-                image: AssetImage("assets/tabbar_find_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_find_selected.png"),
-              ),
-              NavigationItemBean(
-                textStr: '购物车',
-                image: AssetImage("assets/tabbar_cart_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_cart_selected.png"),
-//              protrudingIcon: Icons.add
-              ),
-              NavigationItemBean(
-                textStr: '我的',
-                image: AssetImage("assets/tabbar_mine_normal_new.png"),
-                imageSelected:
-                    AssetImage("assets/tabbar_mine_selected_new.png"),
-              )
-            ],
+        ),
+        NavigationItemBean(
+          textStr: '我的',
+          image: AssetImage("assets/tabbar_mine_normal_new.png"),
+          imageSelected: AssetImage("assets/tabbar_mine_selected_new.png"),
+        )
+      ],
       onTabChangedListener: (index) {
         print(" $index");
         if (widget.tabChangeListener != null) {
