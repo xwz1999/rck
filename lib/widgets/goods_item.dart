@@ -43,32 +43,35 @@ class GoodsItemWidget extends StatelessWidget {
 
   final GoodsItemType widgetType;
 
+  final bool notShowAmount;
+
   // model.getPromotionStatus()
   final PromotionStatus promotionStatus;
   final Function onBrandClick;
-  const GoodsItemWidget(
-      {Key key,
-      this.isSingleDayGoods = false,
-      this.goodsName,
-      this.description,
-      this.mainPhotoUrl,
-      this.inventory,
-      this.discountPrice,
-      this.originalPrice,
-      this.percent,
-      this.coupon,
-      this.commission,
-      this.salesVolume,
-      this.id,
-      this.promotionStatus,
-      this.buildCtx,
-      this.shareClick,
-      this.buyClick,
-      this.brandName = "",
-      this.brandPictureUrl = "",
-      this.onBrandClick,
-      this.isImport})
-      : widgetType = GoodsItemType.NONE,
+  const GoodsItemWidget({
+    Key key,
+    this.isSingleDayGoods = false,
+    this.goodsName,
+    this.description,
+    this.mainPhotoUrl,
+    this.inventory,
+    this.discountPrice,
+    this.originalPrice,
+    this.percent,
+    this.coupon,
+    this.commission,
+    this.salesVolume,
+    this.id,
+    this.promotionStatus,
+    this.buildCtx,
+    this.shareClick,
+    this.buyClick,
+    this.brandName = "",
+    this.brandPictureUrl = "",
+    this.onBrandClick,
+    this.isImport,
+    this.notShowAmount = false,
+  })  : widgetType = GoodsItemType.NONE,
         super(key: key);
 
   /// Normal Goods Item
@@ -80,6 +83,7 @@ class GoodsItemWidget extends StatelessWidget {
     this.buyClick,
     this.onBrandClick,
     GoodsSimple model,
+    this.notShowAmount = false,
   })  : goodsName = model.goodsName,
         brandName = model.brandName,
         brandPictureUrl = model.brandImg,
@@ -95,7 +99,7 @@ class GoodsItemWidget extends StatelessWidget {
         id = model.id,
         promotionStatus = model.getPromotionStatus(),
         widgetType = GoodsItemType.NORMAL,
-        isImport=model.isImport,
+        isImport = model.isImport,
         super(key: key);
 
   ///Hot List
@@ -107,6 +111,7 @@ class GoodsItemWidget extends StatelessWidget {
     this.onBrandClick,
     this.isSingleDayGoods = false,
     GoodsHotSellListModel.Data data,
+    this.notShowAmount = false,
   })  : goodsName = data.goodsName,
         brandName = data.brandName,
         brandPictureUrl = data.brandImg,
@@ -124,7 +129,7 @@ class GoodsItemWidget extends StatelessWidget {
         //TODO hot list unset promotion status;
         promotionStatus = PromotionStatus.none,
         widgetType = GoodsItemType.HOT_LIST,
-        isImport=data.isImport,
+        isImport = data.isImport,
         super(key: key);
 
   /// 活动列表
@@ -136,6 +141,7 @@ class GoodsItemWidget extends StatelessWidget {
     this.isSingleDayGoods = false,
     @required this.buyClick,
     PromotionGoodsModel model,
+    this.notShowAmount = false,
   })  : goodsName = model.goodsName,
         brandName = model.brandName,
         brandPictureUrl = model.brandImg,
@@ -151,7 +157,7 @@ class GoodsItemWidget extends StatelessWidget {
         id = model.goodsId,
         promotionStatus = model.getPromotionStatus(),
         widgetType = GoodsItemType.ROW_GOODS,
-        isImport=model.isImport,
+        isImport = model.isImport,
         super(key: key);
   final BuildContext buildCtx;
   final VoidCallback shareClick;
@@ -238,11 +244,15 @@ class GoodsItemWidget extends StatelessWidget {
               SizedBox(
                 width: 4,
               ),
-              Text(
-                TextUtils.isEmpty(brandName) ? "" : brandName,
-                style: TextStyle(
-                  color: Color(0xffc70404),
-                  fontSize: ScreenAdapterUtils.setSp(12),
+              Expanded(
+                child: Text(
+                  TextUtils.isEmpty(brandName) ? "" : brandName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Color(0xffc70404),
+                    fontSize: ScreenAdapterUtils.setSp(12),
+                  ),
                 ),
               ),
             ],
@@ -681,13 +691,15 @@ class GoodsItemWidget extends StatelessWidget {
             right: 0,
             bottom: 0,
             top: 0,
-            child: Text(
-              "已售${this.salesVolume}件",
-              style: TextStyle(
-                color: Color(0xff595757),
-                fontSize: ScreenAdapterUtils.setSp(12),
-              ),
-            ),
+            child: notShowAmount
+                ? SizedBox()
+                : Text(
+                    "已售${this.salesVolume}件",
+                    style: TextStyle(
+                      color: Color(0xff595757),
+                      fontSize: ScreenAdapterUtils.setSp(12),
+                    ),
+                  ),
           ),
         ],
       ),

@@ -145,6 +145,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage> {
       child: Stack(
         children: <Widget>[
           GoodsItemWidget.hotList(
+            notShowAmount: true,
             onBrandClick: () {
               AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                   arguments: BrandGoodsListPage.setArguments(
