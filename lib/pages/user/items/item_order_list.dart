@@ -6,6 +6,7 @@
  * remark    : 
  * ====================================================
  */
+import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -427,12 +428,58 @@ class _OrderListItemState extends State<OrderListItem> {
                 children: <Widget>[
                   Container(
                     alignment: Alignment.centerLeft,
-                    child: Text(
-                      goods.goodsName,
+                    child: ExtendedText.rich(
+                      TextSpan(
+                        children: [
+                          ExtendedWidgetSpan(
+                            child: widget.orderModel.shippingMethod == 1
+                                ? Container(
+                                    margin: EdgeInsets.only(right: 2.w),
+                                    height: 14.w,
+                                    width: 24.w,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFCC1B4F),
+                                      borderRadius: BorderRadius.circular(3.w),
+                                    ),
+                                    child: Text(
+                                      '自提',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10.sp,
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox(),
+                          ),
+                          ExtendedWidgetSpan(
+                            child:goods.importValue? Container(
+                              margin: EdgeInsets.only(right: 2.w),
+                              height: 14.w,
+                              width: 24.w,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFCC1B4F),
+                                borderRadius: BorderRadius.circular(3.w),
+                              ),
+                              child: Text(
+                                '进口',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10.sp,
+                                ),
+                              ),
+                            ):SizedBox(),
+                          ),
+                          TextSpan(text: goods.goodsName),
+                        ],
+                      ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                          fontWeight: FontWeight.w500),
+                      style: AppTextStyle.generate(
+                        ScreenAdapterUtils.setSp(14),
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                   Container(

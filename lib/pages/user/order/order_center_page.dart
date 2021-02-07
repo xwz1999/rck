@@ -108,7 +108,6 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
     return Scaffold(
       backgroundColor: AppColor.frenchColor,
       appBar: CustomAppBar(
-        // title: "订单中心",
         title: _titleView(),
         themeData: AppThemes.themeDataGrey.appBarTheme,
         appBackground: Colors.white,
@@ -140,7 +139,7 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
         controller: _titleSwitchController,
         height: 30,
         index: 0,
-        titles: ["线上订单", "门店订单"],
+        titles: ["线上订单", "导购订单"],
         selectIndexBlock: (index) {
           if (index == 0) {
             _positionType = OrderPositionType.onlineOrder;
@@ -222,12 +221,6 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
                       type: OrderListType.receipt,
                       positionType: _positionType,
                     ),
-                    // Container()
-                    // OrderListPage(
-                    //   controller: _orderListControllers[4],
-                    //   type: OrderListType.afterSale,
-                    //   positionType: _positionType,
-                    // ),
                   ],
                 ),
               )
