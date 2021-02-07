@@ -1,6 +1,7 @@
 class APIV2 {
   static UserAPI userAPI = UserAPI();
   static BenefitAPI benefitAPI = BenefitAPI();
+  static _OrderAPI orderAPI = _OrderAPI();
 }
 
 class UserAPI {
@@ -87,4 +88,9 @@ class BenefitAPI {
 
   ///月团队推荐平台预估收益
   String get monthExpectExtra => '/v2/app/user/income/month_expect_team';
+}
+
+class _OrderAPI {
+  ///导购订单列表
+  String get guideOrderList => '/v2/app/order/guide_lists';
 }

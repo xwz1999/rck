@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/user/order/guide_order_view.dart';
 import 'package:recook/pages/user/order/order_list_controller.dart';
 import 'package:recook/pages/user/order/order_list_page.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
@@ -44,19 +45,13 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
       "重要提醒：请谨防网络及客服诈骗！瑞库客不会以订单异常、系统维护等情况为由，要求你进行退款操作。";
   // List<String> _items = ["全部", "未付款", "待发货", "待收货", "售后/退款"];
   List<String> _items = ["全部", "未付款", "待发货", "待收货"];
-  List<String> _storeItems = ["全部", "未付款", "待自提", "待评价"];
+  List<String> _storeItems = ["全部", "待发货", "已发货", "已收货"];
   TabController _allTabController;
   TabController _tabController;
   TabController _storeTabController;
   OrderPositionType _positionType = OrderPositionType.onlineOrder;
   List<OrderListController> _orderListControllers = [
     OrderListController(),
-    OrderListController(),
-    OrderListController(),
-    OrderListController(),
-    OrderListController()
-  ];
-  List<OrderListController> _storeOrderListControllers = [
     OrderListController(),
     OrderListController(),
     OrderListController(),
@@ -247,28 +242,32 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
                 child: CacheTabBarView(
                   controller: _storeTabController,
                   children: <Widget>[
-                    OrderListPage(
-                      controller: _storeOrderListControllers[0],
-                      type: OrderListType.all,
-                      positionType: _positionType,
-                    ),
-                    OrderListPage(
-                      controller: _storeOrderListControllers[1],
-                      type: OrderListType.unpaid,
-                      positionType: _positionType,
-                    ),
-                    OrderListPage(
-                      controller: _storeOrderListControllers[2],
-                      type: OrderListType.undelivered,
-                      positionType: _positionType,
-                    ),
-                    // OrderListPage(controller: _storeOrderListControllers[3], type: OrderListType.receipt, positionType: _positionType,),
-                    // Container()
-                    OrderListPage(
-                      controller: _storeOrderListControllers[3],
-                      type: OrderListType.afterSale,
-                      positionType: _positionType,
-                    ),
+                    GuideOrderView(type: GuideOrderType.ALL),
+                    GuideOrderView(type: GuideOrderType.DELIVER),
+                    GuideOrderView(type: GuideOrderType.CHECKOUT),
+                    GuideOrderView(type: GuideOrderType.RECEIPT),
+                    // OrderListPage(
+                    //   controller: _storeOrderListControllers[0],
+                    //   type: OrderListType.all,
+                    //   positionType: _positionType,
+                    // ),
+                    // OrderListPage(
+                    //   controller: _storeOrderListControllers[1],
+                    //   type: OrderListType.unpaid,
+                    //   positionType: _positionType,
+                    // ),
+                    // OrderListPage(
+                    //   controller: _storeOrderListControllers[2],
+                    //   type: OrderListType.undelivered,
+                    //   positionType: _positionType,
+                    // ),
+                    // // OrderListPage(controller: _storeOrderListControllers[3], type: OrderListType.receipt, positionType: _positionType,),
+                    // // Container()
+                    // OrderListPage(
+                    //   controller: _storeOrderListControllers[3],
+                    //   type: OrderListType.afterSale,
+                    //   positionType: _positionType,
+                    // ),
                   ],
                 ),
               )
@@ -279,141 +278,141 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
     );
   }
 
-  _buildBody() {
-    return Column(
-      children: <Widget>[
-        Container(
-          color: Colors.white,
-          child: _positionType == OrderPositionType.onlineOrder
-              ? SCTabBar(
-                  labelColor: Colors.white,
-                  needRefresh: true,
-                  labelPadding: EdgeInsets.zero,
-                  controller: _tabController,
-                  indicatorSize: TabBarIndicatorSize.label,
-                  indicatorColor: AppColor.themeColor,
-                  indicatorPadding: EdgeInsets.symmetric(horizontal: rSize(20)),
-                  itemBuilder: (int index) {
-                    return _item(index);
-                  },
-                )
-              : SCTabBar(
-                  labelColor: Colors.white,
-                  needRefresh: true,
-                  labelPadding: EdgeInsets.zero,
-                  controller: _storeTabController,
-                  indicatorSize: TabBarIndicatorSize.label,
-                  indicatorColor: AppColor.themeColor,
-                  indicatorPadding: EdgeInsets.symmetric(horizontal: rSize(20)),
-                  itemBuilder: (int index) {
-                    return _storeItem(index);
-                  },
-                ),
-        ),
-        _showAlert ? _alertWidget() : Container(),
-        Expanded(
-          child: Container(
-            child: Stack(
-              children: <Widget>[
-                Expanded(
-                  child: Offstage(
-                    offstage: _positionType != OrderPositionType.onlineOrder,
-                    child: CacheTabBarView(
-                      controller: _tabController,
-                      children: <Widget>[
-                        OrderListPage(
-                          controller: _orderListControllers[0],
-                          type: OrderListType.all,
-                          positionType: _positionType,
-                        ),
-                        OrderListPage(
-                          controller: _orderListControllers[1],
-                          type: OrderListType.unpaid,
-                          positionType: _positionType,
-                        ),
-                        OrderListPage(
-                          controller: _orderListControllers[2],
-                          type: OrderListType.undelivered,
-                          positionType: _positionType,
-                        ),
-                        OrderListPage(
-                          controller: _orderListControllers[3],
-                          type: OrderListType.receipt,
-                          positionType: _positionType,
-                        ),
-                        // Container()
-                        OrderListPage(
-                          controller: _orderListControllers[4],
-                          type: OrderListType.afterSale,
-                          positionType: _positionType,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Offstage(
-                      offstage: _positionType != OrderPositionType.storeOrder,
-                      child: CacheTabBarView(
-                        controller: _storeTabController,
-                        children: <Widget>[
-                          OrderListPage(
-                            controller: _storeOrderListControllers[0],
-                            type: OrderListType.all,
-                            positionType: _positionType,
-                          ),
-                          OrderListPage(
-                            controller: _storeOrderListControllers[1],
-                            type: OrderListType.unpaid,
-                            positionType: _positionType,
-                          ),
-                          OrderListPage(
-                            controller: _storeOrderListControllers[2],
-                            type: OrderListType.undelivered,
-                            positionType: _positionType,
-                          ),
-                          // OrderListPage(controller: _storeOrderListControllers[3], type: OrderListType.receipt, positionType: _positionType,),
-                          // Container()
-                          OrderListPage(
-                            controller: _storeOrderListControllers[3],
-                            type: OrderListType.afterSale,
-                            positionType: _positionType,
-                          ),
-                        ],
-                      )),
-                ),
-              ],
-            ),
-          ),
-        ),
-        // Expanded(
-        //   child: _positionType == OrderPositionType.onlineOrder
-        //    ? CacheTabBarView(
-        //     controller: _tabController,
-        //     children: <Widget>[
-        //       OrderListPage(controller: _orderListControllers[0], type: OrderListType.all, positionType: _positionType,),
-        //       OrderListPage(controller: _orderListControllers[1], type: OrderListType.unpaid, positionType: _positionType,),
-        //       OrderListPage(controller: _orderListControllers[2], type: OrderListType.undelivered, positionType: _positionType,),
-        //       OrderListPage(controller: _orderListControllers[3], type: OrderListType.receipt, positionType: _positionType,),
-        //       // Container()
-        //       OrderListPage(controller: _orderListControllers[4], type: OrderListType.afterSale, positionType: _positionType,),
-        //     ],
-        //   )
-        //   : CacheTabBarView(
-        //     controller: _storeTabController,
-        //     children: <Widget>[
-        //       OrderListPage(controller: _storeOrderListControllers[0], type: OrderListType.all, positionType: _positionType,),
-        //       OrderListPage(controller: _storeOrderListControllers[1], type: OrderListType.unpaid, positionType: _positionType,),
-        //       OrderListPage(controller: _storeOrderListControllers[2], type: OrderListType.undelivered, positionType: _positionType,),
-        //       // OrderListPage(controller: _storeOrderListControllers[3], type: OrderListType.receipt, positionType: _positionType,),
-        //       // Container()
-        //       OrderListPage(controller: _storeOrderListControllers[3], type: OrderListType.afterSale, positionType: _positionType,),
-        //     ],
-        //   ),
-        // )
-      ],
-    );
-  }
+  // _buildBody() {
+  //   return Column(
+  //     children: <Widget>[
+  //       Container(
+  //         color: Colors.white,
+  //         child: _positionType == OrderPositionType.onlineOrder
+  //             ? SCTabBar(
+  //                 labelColor: Colors.white,
+  //                 needRefresh: true,
+  //                 labelPadding: EdgeInsets.zero,
+  //                 controller: _tabController,
+  //                 indicatorSize: TabBarIndicatorSize.label,
+  //                 indicatorColor: AppColor.themeColor,
+  //                 indicatorPadding: EdgeInsets.symmetric(horizontal: rSize(20)),
+  //                 itemBuilder: (int index) {
+  //                   return _item(index);
+  //                 },
+  //               )
+  //             : SCTabBar(
+  //                 labelColor: Colors.white,
+  //                 needRefresh: true,
+  //                 labelPadding: EdgeInsets.zero,
+  //                 controller: _storeTabController,
+  //                 indicatorSize: TabBarIndicatorSize.label,
+  //                 indicatorColor: AppColor.themeColor,
+  //                 indicatorPadding: EdgeInsets.symmetric(horizontal: rSize(20)),
+  //                 itemBuilder: (int index) {
+  //                   return _storeItem(index);
+  //                 },
+  //               ),
+  //       ),
+  //       _showAlert ? _alertWidget() : Container(),
+  //       Expanded(
+  //         child: Container(
+  //           child: Stack(
+  //             children: <Widget>[
+  //               Expanded(
+  //                 child: Offstage(
+  //                   offstage: _positionType != OrderPositionType.onlineOrder,
+  //                   child: CacheTabBarView(
+  //                     controller: _tabController,
+  //                     children: <Widget>[
+  //                       OrderListPage(
+  //                         controller: _orderListControllers[0],
+  //                         type: OrderListType.all,
+  //                         positionType: _positionType,
+  //                       ),
+  //                       OrderListPage(
+  //                         controller: _orderListControllers[1],
+  //                         type: OrderListType.unpaid,
+  //                         positionType: _positionType,
+  //                       ),
+  //                       OrderListPage(
+  //                         controller: _orderListControllers[2],
+  //                         type: OrderListType.undelivered,
+  //                         positionType: _positionType,
+  //                       ),
+  //                       OrderListPage(
+  //                         controller: _orderListControllers[3],
+  //                         type: OrderListType.receipt,
+  //                         positionType: _positionType,
+  //                       ),
+  //                       // Container()
+  //                       OrderListPage(
+  //                         controller: _orderListControllers[4],
+  //                         type: OrderListType.afterSale,
+  //                         positionType: _positionType,
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ),
+  //               Expanded(
+  //                 child: Offstage(
+  //                     offstage: _positionType != OrderPositionType.storeOrder,
+  //                     child: CacheTabBarView(
+  //                       controller: _storeTabController,
+  //                       children: <Widget>[
+  //                         OrderListPage(
+  //                           controller: _storeOrderListControllers[0],
+  //                           type: OrderListType.all,
+  //                           positionType: _positionType,
+  //                         ),
+  //                         OrderListPage(
+  //                           controller: _storeOrderListControllers[1],
+  //                           type: OrderListType.unpaid,
+  //                           positionType: _positionType,
+  //                         ),
+  //                         OrderListPage(
+  //                           controller: _storeOrderListControllers[2],
+  //                           type: OrderListType.undelivered,
+  //                           positionType: _positionType,
+  //                         ),
+  //                         // OrderListPage(controller: _storeOrderListControllers[3], type: OrderListType.receipt, positionType: _positionType,),
+  //                         // Container()
+  //                         OrderListPage(
+  //                           controller: _storeOrderListControllers[3],
+  //                           type: OrderListType.afterSale,
+  //                           positionType: _positionType,
+  //                         ),
+  //                       ],
+  //                     )),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //       // Expanded(
+  //       //   child: _positionType == OrderPositionType.onlineOrder
+  //       //    ? CacheTabBarView(
+  //       //     controller: _tabController,
+  //       //     children: <Widget>[
+  //       //       OrderListPage(controller: _orderListControllers[0], type: OrderListType.all, positionType: _positionType,),
+  //       //       OrderListPage(controller: _orderListControllers[1], type: OrderListType.unpaid, positionType: _positionType,),
+  //       //       OrderListPage(controller: _orderListControllers[2], type: OrderListType.undelivered, positionType: _positionType,),
+  //       //       OrderListPage(controller: _orderListControllers[3], type: OrderListType.receipt, positionType: _positionType,),
+  //       //       // Container()
+  //       //       OrderListPage(controller: _orderListControllers[4], type: OrderListType.afterSale, positionType: _positionType,),
+  //       //     ],
+  //       //   )
+  //       //   : CacheTabBarView(
+  //       //     controller: _storeTabController,
+  //       //     children: <Widget>[
+  //       //       OrderListPage(controller: _storeOrderListControllers[0], type: OrderListType.all, positionType: _positionType,),
+  //       //       OrderListPage(controller: _storeOrderListControllers[1], type: OrderListType.unpaid, positionType: _positionType,),
+  //       //       OrderListPage(controller: _storeOrderListControllers[2], type: OrderListType.undelivered, positionType: _positionType,),
+  //       //       // OrderListPage(controller: _storeOrderListControllers[3], type: OrderListType.receipt, positionType: _positionType,),
+  //       //       // Container()
+  //       //       OrderListPage(controller: _storeOrderListControllers[3], type: OrderListType.afterSale, positionType: _positionType,),
+  //       //     ],
+  //       //   ),
+  //       // )
+  //     ],
+  //   );
+  // }
 
   _alertWidget() {
     return Container(
