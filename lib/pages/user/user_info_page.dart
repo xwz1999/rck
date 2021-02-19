@@ -48,7 +48,7 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
     DPrint.printf("---------------------------------------- ");
     return Scaffold(
       appBar: CustomAppBar(
-        title: "个人资料",
+        title: "个人信息",
         themeData: AppThemes.themeDataGrey.appBarTheme,
       ),
       body: _listView(),
@@ -224,7 +224,8 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
                   showToast('已经复制到粘贴板');
                 },
               ),
-        (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
+        (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_1 ||
+                    UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
                     (Platform.isIOS)) &&
                 !AppConfig.showExtraCommission
             ? SizedBox()
