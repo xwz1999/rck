@@ -462,7 +462,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
               await UserBenefitFunc.subInfo(widget.type);
           _amount = model.data.amount.toStringAsFixed(2);
           _salesVolume = model.data.salesVolume.toStringAsFixed(2);
-          _count = model.data.count.toStringAsFixed(2);
+          _count = model.data.count.toStringAsFixed(0);
           if (!_notSelfNotGUide) {
             _models = await UserBenefitFunc.monthDetail(_date);
           } else {
