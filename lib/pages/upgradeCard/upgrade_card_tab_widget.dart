@@ -312,18 +312,18 @@ class _UpgradeCardTabWidgetState extends BaseStoreState<UpgradeCardTabWidget> {
                                                   ]),
                                         textAlign: TextAlign.center,
                                       ),
-                                      items: ["确认"],
+                                      items: ['取消'],
                                       listener: (index) {
+                                        Alert.dismiss(context);
+                                      },
+                                      deleteItem: "确认",
+                                      deleteListener: () {
                                         Alert.dismiss(context);
                                         if (isUpgrade) {
                                           _upgradeByCode(int.parse(codeId));
                                         } else {
                                           _keepByCode(int.parse(codeId));
                                         }
-                                      },
-                                      deleteItem: "取消",
-                                      deleteListener: () {
-                                        Alert.dismiss(context);
                                       },
                                     ));
                               },
