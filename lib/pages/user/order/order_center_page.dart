@@ -134,7 +134,7 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
         controller: _titleSwitchController,
         height: 30,
         index: 0,
-        titles: ["线上订单", "导购订单"],
+        titles: ["自购订单", "导购订单"],
         selectIndexBlock: (index) {
           if (index == 0) {
             _positionType = OrderPositionType.onlineOrder;

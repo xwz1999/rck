@@ -327,8 +327,8 @@ class _ShopPageUserRightsPageState
   }
 
   _contextWidget() {
-    if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_1 &&
-        UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_2 &&
+    if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_1 ||
+        UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_2 ||
         UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_3) {
       return _diamond();
     } else if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Gold) {
