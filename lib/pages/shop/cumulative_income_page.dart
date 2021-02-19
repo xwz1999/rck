@@ -857,7 +857,7 @@ _openQuestDialog(int index, String title, BuildContext context) {
   String content = '';
   switch (index) {
     case 0:
-      content = '您本人下单并确认收货后，您获得的佣金。';
+      content = '自购并确认收货后获得的商品佣金。';
       break;
     case 1:
       content = '''您的直属会员下单并确认收货后，您获得的佣金。
@@ -879,7 +879,7 @@ _openQuestDialog(int index, String title, BuildContext context) {
     context: context,
     child: NormalContentDialog(
       title: title,
-      content: content.text.color(Color(0xFF333333)).make(),
+      content: content.text.color(Color(0xFF333333)).center.make(),
       items: [],
       deleteItem: '确定',
       type: NormalTextDialogType.delete,
