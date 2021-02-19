@@ -53,19 +53,10 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
             child: Row(
               children: <Widget>[
                 Expanded(
-                  child: Container(
-                    child: ExtendedText.rich(TextSpan(children: [
-                      TextSpan(
-                        text: '订单中心  ',
-                        style: AppTextStyle.generate(16,
-                            fontWeight: FontWeight.w700),
-                      ),
-                      TextSpan(
-                        text: '(自购)',
-                        style: AppTextStyle.generate(14,
-                            fontWeight: FontWeight.w400),
-                      ),
-                    ])),
+                  child: Text(
+                    '订单中心',
+                    style:
+                        AppTextStyle.generate(16, fontWeight: FontWeight.w700),
                   ),
                   // child: Text(
                   //   "订单中心",
@@ -73,7 +64,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                   // ),
                 ),
                 CustomImageButton(
-                  title: "查看全部",
+                  title: "查看明细",
                   fontSize: ScreenAdapterUtils.setSp(12),
                   color: Colors.black45,
                   onPressed: () {

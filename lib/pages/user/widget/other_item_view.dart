@@ -70,11 +70,7 @@ class OtherItemView extends StatelessWidget {
             ),
             Expanded(
               child: CustomImageButton(
-                icon: Icon(
-                  AppIcons.icon_business_cooperation,
-                  color: _itemColor,
-                  size: _iconSize,
-                ),
+                icon: Image.asset(R.ASSETS_SHOP_BUSINESS_CORP_PNG),
                 title: "商务合作",
                 fontSize: _fontSize,
                 color: Colors.grey[700],

@@ -11,16 +11,12 @@ class OtherItemViewV2 extends StatelessWidget {
   final Color _itemColor = Colors.grey[500];
   final double _iconSize = rSize(30);
 
-  Widget _buildItem(IconData icon, String title, VoidCallback onTap) {
+  Widget _buildItem(Widget icon, String title, VoidCallback onTap) {
     return CustomImageButton(
       padding: EdgeInsets.zero,
       onPressed: onTap,
       child: <Widget>[
-        Icon(
-          icon,
-          color: _itemColor,
-          size: _iconSize,
-        ),
+        icon,
         title.text.color(Color(0xFF666666)).size(12.sp).make(),
       ].column(),
     ).expand();
@@ -33,12 +29,20 @@ class OtherItemViewV2 extends StatelessWidget {
       children: [
         70.hb,
         _buildItem(
-          AppIcons.icon_address,
+          Icon(
+            AppIcons.icon_address,
+            color: _itemColor,
+            size: _iconSize,
+          ),
           '地址',
           () => AppRouter.push(context, RouteName.RECEIVING_ADDRESS_PAGE),
         ),
         _buildItem(
-          AppIcons.icon_help,
+          Icon(
+            AppIcons.icon_help,
+            color: _itemColor,
+            size: _iconSize,
+          ),
           '帮助',
           () => MQManager.goToChat(
               userId: UserManager.instance.user.info.id.toString(),
@@ -50,12 +54,20 @@ class OtherItemViewV2 extends StatelessWidget {
               }),
         ),
         _buildItem(
-          AppIcons.icon_business_cooperation,
+          Image.asset(
+            R.ASSETS_SHOP_BUSINESS_CORP_PNG,
+            width: 30.w,
+            height: 30.w,
+          ),
           '商务合作',
           () => AppRouter.push(context, RouteName.BUSSINESS_COOPERATION_PAGE),
         ),
         _buildItem(
-          AppIcons.icon_setting,
+          Icon(
+            AppIcons.icon_setting,
+            color: _itemColor,
+            size: _iconSize,
+          ),
           '设置',
           () => AppRouter.push(context, RouteName.SETTING_PAGE),
         ),

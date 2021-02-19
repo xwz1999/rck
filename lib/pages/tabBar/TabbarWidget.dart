@@ -296,7 +296,7 @@ class _BottomBarState extends State<BottomBar> {
       // items: AppConfig.getShowCommission()
       items: [
         NavigationItemBean(
-          textStr: '特卖',
+          textStr: '特推',
           image: AssetImage("assets/tabbar_sale_normal.png"),
           imageSelected: AssetImage("assets/tabbar_sale_selected.png"),
         ),
