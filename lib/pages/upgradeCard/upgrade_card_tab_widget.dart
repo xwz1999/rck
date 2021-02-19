@@ -367,7 +367,7 @@ class _UpgradeCardTabWidgetState extends BaseStoreState<UpgradeCardTabWidget> {
                               },
                               width: 80,
                               height: 33,
-                              title: isUsed ? "已赠送" : "赠送",
+                              title: isUsed ? "已赠送" : "去赠送",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 14),
                               border: Border.all(color: Colors.white, width: 1),

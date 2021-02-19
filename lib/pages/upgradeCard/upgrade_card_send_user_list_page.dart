@@ -46,7 +46,7 @@ class _UpgradeCardSendUserListPageState
     return Scaffold(
         appBar: CustomAppBar(
           themeData: AppThemes.themeDataGrey.appBarTheme,
-          title: "团队赠送",
+          title: "权益卡赠送",
           elevation: 0,
         ),
         backgroundColor: AppColor.frenchColor,
