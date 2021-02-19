@@ -74,6 +74,7 @@ class Team {
         count: ratio,
         sales: salesVolume,
         benefit: amount,
+        isPercent: true,
       );
 
   Team({this.salesVolume, this.amount, this.ratio});

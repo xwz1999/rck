@@ -4,7 +4,6 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/pages/user/model/user_benefit_day_expect_model.dart';
 import 'package:recook/pages/user/model/user_benefit_expect_extra_model.dart';
-import 'package:recook/pages/user/model/user_benefit_month_detail_model.dart';
 import 'package:recook/pages/user/model/user_benefit_month_expect_model.dart';
 import 'package:recook/pages/user/user_benefit_sub_page.dart';
 import 'package:recook/pages/user/widget/user_group_card.dart';
@@ -22,10 +21,12 @@ class DisplayCard {
   num benefit = 0;
   num sales = 0;
   int count = 0;
+  bool isPercent = false;
   DisplayCard({
     this.benefit,
     this.sales,
     this.count,
+    this.isPercent = false,
   });
 }
 
@@ -85,7 +86,11 @@ class _BenefitViewGenState extends State<BenefitViewGen>
           ].column(crossAlignment: CrossAxisAlignment.start),
           Spacer(),
           <Widget>[
-            '订单数(笔)'.text.color(Colors.black45).size(16.sp).make(),
+            (card.isPercent ? '提成比例(%)' : '订单数(笔)')
+                .text
+                .color(Colors.black45)
+                .size(16.sp)
+                .make(),
             (card.count ?? 0).toString().text.black.size(24.sp).make(),
           ].column(),
         ].row(),
