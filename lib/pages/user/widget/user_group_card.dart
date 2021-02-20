@@ -25,6 +25,8 @@ class UserGroupCard extends StatefulWidget {
 
   //options
   final bool flat;
+
+  final VoidCallback onTap;
   UserGroupCard({
     Key key,
     @required this.name,
@@ -36,6 +38,7 @@ class UserGroupCard extends StatefulWidget {
     @required this.id,
     @required this.isRecommend,
     @required this.remarkName,
+    this.onTap,
   })  : flat = false,
         super(key: key);
 
@@ -49,7 +52,8 @@ class UserGroupCard extends StatefulWidget {
       @required this.headImg,
       @required this.id,
       @required this.isRecommend,
-      @required this.remarkName})
+      @required this.remarkName,
+      this.onTap})
       : flat = true,
         super(key: key);
 
@@ -76,19 +80,20 @@ class _UserGroupCardState extends State<UserGroupCard> {
   Widget build(BuildContext context) {
     return CustomImageButton(
       color: Colors.white,
-      onPressed: () => CRoute.push(
-          context,
-          UserGroupCardDetailPage(
-            headImg: widget.headImg,
-            role: widget.shopRole,
-            nickName: widget.name,
-            phone: widget.phone,
-            wechat: widget.wechatId,
-            comment: widget.remarkName,
-            id: widget.id,
-            signDate: DateTime.now(),
-            diamondDate: DateTime.now(),
-          )),
+      onPressed: widget.onTap ??
+          () => CRoute.push(
+              context,
+              UserGroupCardDetailPage(
+                headImg: widget.headImg,
+                role: widget.shopRole,
+                nickName: widget.name,
+                phone: widget.phone,
+                wechat: widget.wechatId,
+                comment: widget.remarkName,
+                id: widget.id,
+                signDate: DateTime.now(),
+                diamondDate: DateTime.now(),
+              )),
       child: VxBox(
         child: [
           ClipRRect(
