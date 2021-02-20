@@ -1429,6 +1429,8 @@ class _HomePageState extends BaseStoreState<HomePage>
     }
 
     //店铺角色变动
+
+    bool firstTag = false;
     ResultData shopLevel = await HttpManager.post(
       APIV2.userAPI.userLottery,
       {'userID': UserManager.instance.user.info.id},
@@ -1439,7 +1441,8 @@ class _HomePageState extends BaseStoreState<HomePage>
       int oldLevel = shopLevel.data['data']['oldRoleLevel'];
       int nowLevel = shopLevel.data['data']['nowRoleLevel'];
 
-      if (oldLevel == 0 && nowLevel <= 500) {
+      if ((oldLevel == 0 || oldLevel == 500) && nowLevel == 400) {
+        firstTag = true;
         await showDialog(
           context: context,
           child: Center(
@@ -1481,7 +1484,7 @@ class _HomePageState extends BaseStoreState<HomePage>
             break;
         }
       }
-      if (img != null) {
+      if (img != null && !firstTag) {
         await showDialog(
           context: context,
           child: Center(
@@ -1511,8 +1514,8 @@ class _HomePageState extends BaseStoreState<HomePage>
         if (noticeData.type == 1)
           await NoticeListTool.diamondRecommendation(context,
               title: noticeData.content);
-        if (noticeData.type == 2 && (AppConfig.getShowCommission()))
-        if (noticeData.type == 3)
+        if (noticeData.type == 2 &&
+            (AppConfig.getShowCommission())) if (noticeData.type == 3)
           await NoticeListTool.perfectInformation(context, getStore());
         if (noticeData.type == 4)
           await NoticeListTool.inputExpressInformation(context);
