@@ -541,7 +541,7 @@ class _InternalGoodsDetailState extends State<InternalGoodsDetail> {
                       children: [
                         FadeInImage.assetNetwork(
                           placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                          image: Api.getImgUrl(widget.model.mainPhotoUrl),
+                          image: Api.getImgUrl(sku.picUrl),
                           height: rSize(100),
                           width: rSize(100),
                         ),
@@ -624,6 +624,7 @@ class _InternalGoodsDetailState extends State<InternalGoodsDetail> {
                           showToast('没有该物品');
                         } else {
                           sku = goodsModel.data.sku[index];
+                          setState(() {});
                         }
                       },
                     ),
