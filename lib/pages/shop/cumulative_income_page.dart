@@ -371,7 +371,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
               : SizedBox(),
           20.hb,
           ...List.generate(_models.length, (index) {
-            return _buildInfoItem(isFirst: index == 0);
+            return _buildInfoItem(isFirst: index == 0,model:_models[index] );
           }).sepWidget(separate: 20.hb),
           30.hb,
         ],
@@ -432,11 +432,17 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
               // textBaseline: TextBaseline.ideographic,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
-                model.date.month.toString().text.black.bold.size(14.sp).make(),
+                (model?.date?.month ?? '')
+                    .toString()
+                    .text
+                    .black
+                    .bold
+                    .size(14.sp)
+                    .make(),
                 '月'.text.black.size(10.sp).make(),
                 Spacer(),
                 '总收益:'.text.color(Color(0xFF999999)).size(12.sp).make(),
-                model.amount
+                (model?.amount ?? 0)
                     .toStringAsFixed(2)
                     .text
                     .color(Color(0xFFD5101A))
