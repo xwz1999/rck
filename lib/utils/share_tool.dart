@@ -9,11 +9,13 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
+import 'package:recook/utils/rui_code_util.dart';
 import 'package:recook/widgets/bottom_sheet/bottom_share_dialog.dart';
 import 'package:recook/widgets/share_page/share_goods_poster_page.dart';
 import 'package:recook/widgets/share_page/share_url_poster_page.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
+import 'package:fluwx/fluwx.dart' as Fluwx;
 
 class ShareTool {
   static bool qqInstalled = true;
@@ -288,6 +290,83 @@ class ShareTool {
         Navigator.pop(context);
       },
     );
+
+    PlatformItem ruiCode = PlatformItem(
+      '瑞口令',
+      Image.asset(
+        R.ASSETS_SHARE_BOTTOM_RUI_CODE_PNG,
+        width: 36,
+        height: 36,
+      ),
+      itemClick: () async {
+        Navigator.pop(context);
+        String code = '【$miniTitle】复制这段描述，打开瑞库客，购全球好物${RUICodeUtil.encrypt(
+          int.parse(goodsId),
+          UserManager.instance.user.info.id,
+        )}瑞库客。\n让消费服务生活，让生活充满精致';
+        Clipboard.setData(ClipboardData(text: code));
+        bool needWechat = await showDialog(
+          context: context,
+          child: Center(
+            child: Material(
+              color: Colors.transparent,
+              child: Container(
+                clipBehavior: Clip.antiAlias,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(rSize(6)),
+                  color: Colors.white,
+                ),
+                margin: EdgeInsets.symmetric(horizontal: rSize(40)),
+                padding: EdgeInsets.symmetric(
+                    horizontal: rSize(28), vertical: rSize(20)),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      '瑞口令复制成功',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: rSP(16),
+                      ),
+                    ),
+                    rHBox(10),
+                    Text(
+                      code,
+                      style: TextStyle(
+                        color: Color(0xFF666666),
+                        fontSize: rSP(14),
+                      ),
+                    ),
+                    rHBox(20),
+                    MaterialButton(
+                      color: Color(0xFFF82F33),
+                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      height: rSize(33),
+                      minWidth: rSize(119),
+                      padding: EdgeInsets.zero,
+                      elevation: 0,
+                      shape: StadiumBorder(),
+                      onPressed: () => Navigator.pop(context, true),
+                      child: Text(
+                        '去微信分享粘贴',
+                        style: TextStyle(
+                          fontSize: rSP(12),
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+        if (needWechat == true) {
+          await Fluwx.openWeChatApp();
+        }
+      },
+    );
     List<PlatformItem> itemList = [
       // miniItem,
       qrcode,
@@ -300,6 +379,7 @@ class ShareTool {
       itemList.add(qqItem);
     }
     itemList.add(addToLiveGoodsCart);
+    itemList.add(ruiCode);
     // if (ShareTool.weiboInstalled){
     //   itemList.add(weiboItem);
     // }
