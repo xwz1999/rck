@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:package_info/package_info.dart';
@@ -22,37 +23,51 @@ class VersionTool {
     _showUpDateAlert(context, model);
   }
 
-  static _showUpDateAlert(context,VersionInfoModel model) async {
+  static _showUpDateAlert(context, VersionInfoModel model) async {
     VersionInfo versionInfo = model.data.versionInfo;
     // VersionInfo versionInfo = getStore().state.userBrief.versionInfo;
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
-    if (versionInfo==null) {
+    String _appStoreURL = '';
+
+    if (versionInfo == null) {
       return;
     }
+    if (Platform.isAndroid) _appStoreURL = await _getAndroidURL();
+    if (Platform.isIOS) _appStoreURL = WebApi.iOSUrl;
     //当前版本小于服务器版本
     if (int.parse(packageInfo.buildNumber) < versionInfo.build) {
       Alert.show(
-        context, 
-        NormalTextDialog(
-          title: "发现新版本",
-          content: "${versionInfo.desc}",
-          items: ["确认","取消"],
-          listener: (int index) async {
-            Alert.dismiss(context);
+          context,
+          NormalTextDialog(
+            title: "发现新版本",
+            content: "${versionInfo.desc}",
+            items: ["确认", "取消"],
+            listener: (int index) async {
+              Alert.dismiss(context);
               if (index == 0) {
-                String _url = WebApi.androidUrl;
-                if (Platform.isIOS) _url = WebApi.iOSUrl;
-                if (await canLaunch(_url)){
-                  launch(_url);
+                if (await canLaunch(_appStoreURL)) {
+                  launch(_appStoreURL);
                   if (Theme.of(context).platform == TargetPlatform.iOS) {
-                    Future.delayed(const Duration(seconds: 3), () => closeWebView());
+                    Future.delayed(
+                        const Duration(seconds: 3), () => closeWebView());
                   }
                 }
               }
             },
-          )
-      );
+          ));
     }
   }
 
+  static Future<String> _getAndroidURL() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    String brand = androidInfo.brand.toLowerCase();
+    print(brand);
+    bool safeMarket = ['xiaomi', 'oneplus', 'oppo', 'vivo', 'huawei']
+        .any((element) => brand.contains(element));
+    if (safeMarket)
+      return 'market://details?id=com.akuhome.recook';
+    else
+      return WebApi.androidUrl;
+  }
 }
