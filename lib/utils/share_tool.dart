@@ -300,6 +300,7 @@ class ShareTool {
       ),
       itemClick: () async {
         Navigator.pop(context);
+        print(goodsId);
         String code = '【$miniTitle】复制这段描述，打开瑞库客，购全球好物${RUICodeUtil.encrypt(
           int.parse(goodsId),
           UserManager.instance.user.info.id,

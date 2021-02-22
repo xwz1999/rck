@@ -19,12 +19,12 @@ class RUICodeUtil {
   }
 
   static bool isCode(String value) {
-    return value.contains(RegExp('¥¥[a-zA-z0-9]*¥¥瑞库客'));
+    return value.contains(RegExp('¥¥[a-zA-z0-9]*¥¥'));
   }
 
   ///瑞口令解密
   static RUICodeModel decrypt(String value) {
-    String temp = value.split('¥¥')[value.indexOf('¥¥') + 1];
+    String temp = value.split('¥¥')[1];
     List<String> raw = temp.split(RegExp('(Z|X|C|V|B|N|M)'));
     int goodsId = _string2Num(raw[0]);
     int userId = _string2Num(raw[1]);
@@ -54,8 +54,8 @@ class RUICodeUtil {
     List<String> tempList = value.split('');
     int count = 0;
     while (tempList.isNotEmpty) {
+      result += secureStr.indexOf(tempList.last) * pow(secureStr.length, count);
       count++;
-      result += secureStr.indexOf(tempList.last) * count * secureStr.length;
       tempList.removeLast();
     }
     return result;

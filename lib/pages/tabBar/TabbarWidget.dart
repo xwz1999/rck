@@ -7,7 +7,9 @@
  * ====================================================
  */
 import 'package:extended_text/extended_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/config.dart';
@@ -15,7 +17,10 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/pages/agreements/live_agreement_page.dart';
+import 'package:recook/pages/home/classify/commodity_detail_page.dart';
+import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/home_page.dart';
 import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
 import 'package:recook/pages/live/functions/live_function.dart';
@@ -32,11 +37,13 @@ import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/permission_tool.dart';
 import 'package:recook/utils/print_util.dart';
+import 'package:recook/utils/rui_code_util.dart';
 import 'package:recook/utils/versionInfo/version_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/tabbarWidget/ace_bottom_navigation_bar.dart';
+import 'package:recook/widgets/toast.dart';
 
 class TabBarWidget extends StatefulWidget {
   @override
@@ -294,6 +301,186 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   Color selectedColor = AppColor.themeColor;
   Color unSelectedColor = Colors.black;
+  Future<GoodsDetailModel> _getDetail(int goodsId) async {
+    GoodsDetailModel _goodsDetail = await GoodsDetailModelImpl.getDetailInfo(
+        goodsId, UserManager.instance.user.info.id);
+    if (_goodsDetail.code != HttpStatus.SUCCESS) {
+      Toast.showError(_goodsDetail.msg);
+      return null;
+    }
+    return _goodsDetail;
+  }
+
+  Future<ResultData> _getUserInfo(int id) async {
+    return await HttpManager.post(UserApi.userInfo, {'userId': id});
+  }
+
+  _clipboardListener() async {
+    String rawData = (await Clipboard.getData(Clipboard.kTextPlain)).text;
+    bool isRUICode = RUICodeUtil.isCode(rawData);
+    GoodsDetailModel goodsDetailModel;
+
+    //瑞口令
+    if (isRUICode) {
+      RUICodeModel model = RUICodeUtil.decrypt(rawData);
+
+      goodsDetailModel = await _getDetail(model.goodsId);
+      //user info
+      String userImg = '';
+      String userName = '';
+      ResultData resultData = await _getUserInfo(model.userId);
+      if (resultData.data != null && resultData.data['data'] != null) {
+        userImg = resultData.data['data']['headImgUrl'];
+        userName = resultData.data['data']['nickname'];
+      }
+      if (goodsDetailModel != null)
+        showDialog(
+          context: context,
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Material(
+                  color: Colors.transparent,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(rSize(9)),
+                    ),
+                    margin: EdgeInsets.symmetric(horizontal: rSize(50)),
+                    padding: EdgeInsets.all(rSize(10)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Row(
+                          children: [
+                            Material(
+                              clipBehavior: Clip.antiAlias,
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(rSize(17)),
+                              child: FadeInImage.assetNetwork(
+                                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                image: Api.getImgUrl(userImg),
+                                height: rSize(34),
+                                width: rSize(34),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            rWBox(8),
+                            Expanded(
+                              child: Text(
+                                userName ?? '',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: rSP(14),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        rHBox(4),
+                        Text(
+                          '给你分享了商品',
+                          style: TextStyle(
+                            color: Color(0xFF666666),
+                            fontSize: rSP(12),
+                          ),
+                        ),
+                        rHBox(4),
+                        Material(
+                          color: Colors.black12,
+                          borderRadius: BorderRadius.circular(rSize(8)),
+                          child: FadeInImage.assetNetwork(
+                            placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                            image: Api.getImgUrl(
+                                goodsDetailModel.data.mainPhotos.first.url),
+                            height: rSize(256),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        rHBox(10),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.baseline,
+                          textBaseline: TextBaseline.alphabetic,
+                          children: [
+                            Text(
+                              '¥',
+                              style: TextStyle(
+                                color: Color(0xFFE13327),
+                                fontSize: rSP(14),
+                              ),
+                            ),
+                            Text(
+                              '${goodsDetailModel.data.price.max.discountPrice.toStringAsFixed(2)}',
+                              style: TextStyle(
+                                color: Color(0xFFE13327),
+                                fontSize: rSP(18),
+                              ),
+                            ),
+                            Text(
+                              '/赚${goodsDetailModel.data.price.max.commission.toStringAsFixed(1)}',
+                              style: TextStyle(
+                                color: Color(0xFFE13327),
+                                fontSize: rSP(10),
+                              ),
+                            ),
+                          ],
+                        ),
+                        rHBox(4),
+                        Text(
+                          goodsDetailModel.data.goodsName,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(),
+                        ),
+                        Center(
+                          child: MaterialButton(
+                            elevation: 0,
+                            shape: StadiumBorder(),
+                            onPressed: () {
+                              CRoute.pushReplace(
+                                  context,
+                                  CommodityDetailPage(
+                                    arguments: CommodityDetailPage.setArguments(
+                                      model.goodsId,
+                                    ),
+                                  ));
+                            },
+                            height: rSize(36),
+                            minWidth: rSize(235),
+                            padding: EdgeInsets.zero,
+                            color: Color(0xFFDB2D2D),
+                            child: Text(
+                              '查看详情',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                rHBox(30),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: Icon(
+                      CupertinoIcons.clear_circled,
+                      size: rSize(40),
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+    }
+  }
 
   @override
   void initState() {
@@ -374,6 +561,9 @@ class _BottomBarState extends State<BottomBar> {
               )
             ],
       onTabChangedListener: (index) {
+        if (index == 0) {
+          _clipboardListener();
+        }
         print(" $index");
         if (widget.tabChangeListener != null) {
           // if ((index == 4 || index == 5) && !UserManager.instance.haveLogin) {

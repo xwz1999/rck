@@ -11,10 +11,12 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'package:amap_location_fluttify/amap_location_fluttify.dart';
+import 'package:clipboard_listener/clipboard_listener.dart';
 import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/base/base_store_state.dart';
@@ -49,6 +51,7 @@ import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/color_util.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/permission_tool.dart';
+import 'package:recook/utils/rui_code_util.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/banner.dart';
@@ -136,6 +139,81 @@ class _HomePageState extends BaseStoreState<HomePage>
     _handleOpenInstallEvents();
   }
 
+  ///监听剪切板
+  _clipboardListener() async {
+    String rawData = (await Clipboard.getData(Clipboard.kTextPlain)).text;
+    bool isRUICode = RUICodeUtil.isCode(rawData);
+    RUICodeModel model = RUICodeUtil.decrypt(rawData);
+    //瑞口令
+    if (isRUICode) {
+      showDialog(
+        context: context,
+        child: Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Material(
+                color: Colors.transparent,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(rSize(9)),
+                  ),
+                  margin: EdgeInsets.symmetric(horizontal: rSize(50)),
+                  padding: EdgeInsets.all(rSize(10)),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        children: [],
+                      ),
+                      // FadeInImage.assetNetwork(
+                      //   placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                      //   image: '',
+                      //   height: rSize(256),
+                      //   fit: BoxFit.cover,
+                      // ),
+                      Text(
+                        '给你分享了商品',
+                        style: TextStyle(
+                          color: Color(0xFF666666),
+                          fontSize: rSP(12),
+                        ),
+                      ),
+                      MaterialButton(
+                        shape: StadiumBorder(),
+                        onPressed: () {
+                          CRoute.pushReplace(
+                              context,
+                              CommodityDetailPage(
+                                arguments: CommodityDetailPage.setArguments(
+                                  model.goodsId,
+                                ),
+                              ));
+                        },
+                        height: rSize(36),
+                        minWidth: rSize(235),
+                        padding: EdgeInsets.zero,
+                        color: Color(0xFFDB2D2D),
+                        child: Text(
+                          '查看详情',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Icon(CupertinoIcons.clear_circled),
+            ],
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -146,6 +224,8 @@ class _HomePageState extends BaseStoreState<HomePage>
     // meiqia注册
     MQManager.initial();
     ShareTool.init();
+    //监听剪切板
+    ClipboardListener.addListener(_clipboardListener);
     // _backgroundColor = AppColor.themeColor;
     _homeCountdownController = HomeCountdownController();
 
@@ -240,6 +320,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   void dispose() {
     _tabController.dispose();
     WidgetsBinding.instance.removeObserver(this);
+    ClipboardListener.removeListener(_clipboardListener);
     super.dispose();
   }
 

@@ -221,6 +221,7 @@ dependencies:
   pin_input_text_field: ^3.3.0
 
   device_info: ^1.0.0
+  clipboard_listener: ^1.0.0
 
 dev_dependencies:
   flutter_test:
