@@ -81,19 +81,7 @@ class _UserGroupCardState extends State<UserGroupCard> {
     return CustomImageButton(
       color: Colors.white,
       onPressed: widget.onTap ??
-          () => CRoute.push(
-              context,
-              UserGroupCardDetailPage(
-                headImg: widget.headImg,
-                role: widget.shopRole,
-                nickName: widget.name,
-                phone: widget.phone,
-                wechat: widget.wechatId,
-                comment: widget.remarkName,
-                id: widget.id,
-                signDate: DateTime.now(),
-                diamondDate: DateTime.now(),
-              )),
+          () => CRoute.push(context, UserGroupCardDetailPage(id: widget.id)),
       child: VxBox(
         child: [
           ClipRRect(

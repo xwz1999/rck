@@ -68,6 +68,8 @@ class UserAPI {
   String get agreeLottery => '/v2/app/user/lottery_agree';
 
   String get userCheck => '/v2/app/user/check';
+
+  String get memberInfo => '/v2/app/user/member/info';
 }
 
 class BenefitAPI {
