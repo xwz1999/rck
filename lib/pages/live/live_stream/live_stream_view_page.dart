@@ -24,6 +24,7 @@ import 'package:recook/pages/live/widget/more_people.dart';
 import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/share_tool.dart';
+import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:tencent_im_plugin/entity/group_member_entity.dart';
@@ -52,7 +53,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   bool isAttention;
   List<ChatObj> chatObjects = [
     ChatObj('系统消息',
-        '欢迎来到直播间，瑞库客禁止未成年人进行直播，请大家共同遵守、监督。直播间内严禁出现违法违规、低俗色情、吸烟酗酒等问内容，如有违规行为请及时举报。请大家注意财产安全、谨防网络诈骗。'),
+        '欢迎来到直播间，瑞库客禁止未成年人进行直播，请大家共同遵守、监督。直播间内严禁出现违法违规、低俗色情、吸烟酗酒等内容，如有违规行为请及时举报。请大家注意财产安全，谨防网络诈骗。'),
   ];
   ScrollController _scrollController = ScrollController();
   TextEditingController _editingController = TextEditingController();
@@ -77,6 +78,22 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   bool _waitSignal = false;
   int _livePauseTimeStamp = 0;
 
+  /*ALL THE FUNCTION */
+  Future<bool> checkPop() async {
+    return await showDialog(
+      context: context,
+      child: NormalTextDialog(
+        title: '确认退出直播间吗',
+        content: '',
+        items: ['确认'],
+        deleteItem: '取消',
+        type: NormalTextDialogType.delete,
+        listener: (_) => Navigator.pop(context, true),
+        deleteListener: () => Navigator.pop(context),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -88,16 +105,19 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
     // });
     //腾讯IM登陆
     TencentIMTool.login().then((_) {
-      DPrint.printLongJson('用户登陆');
       getLiveStreamModel().then((model) {
         if (model == null)
           Navigator.pop(context);
         else {
-          setState(() {
-            _streamInfoModel = model;
-            _praise = model.praise;
-            isAttention = _streamInfoModel.isFollow == 1;
+          _streamInfoModel = model;
+          _praise = model.praise;
+          isAttention = _streamInfoModel.isFollow == 1;
+          nowGoodList = _streamInfoModel?.goodsLists
+              ?.firstWhere((element) => element.isExplain == 1, orElse: () {
+            return null;
           });
+          if (nowGoodList != null) showDetailWindow = true;
+          setState(() {});
           HttpManager.post(LiveAPI.baseInfo, {
             'findUserId': _streamInfoModel.userId,
           }).then((resultData) {
@@ -161,26 +181,6 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
               dynamic data = customParams['data'];
               switch (customParams['type']) {
                 case 'BuyGoods':
-                  // showToastWidget(
-                  //   Container(
-                  //     margin: EdgeInsets.all(rSize(15)),
-                  //     alignment: Alignment.center,
-                  //     padding: EdgeInsets.symmetric(horizontal: rSize(10)),
-                  //     height: rSize(26),
-                  //     decoration: BoxDecoration(
-                  //       color: Color(0xFFF4BC22),
-                  //       borderRadius: BorderRadius.circular(rSize(13)),
-                  //     ),
-                  //     child: Text(
-                  //       '${customParams['data']['content']}',
-                  //       style: TextStyle(
-                  //         color: Colors.white,
-                  //         fontSize: rSP(13),
-                  //       ),
-                  //     ),
-                  //   ),
-                  //   position: ToastPosition.top,
-                  // );
                   _globalBuyingWidgetKey.currentState
                       .updateChild(customParams['data']['content']);
                   break;
@@ -320,6 +320,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   void dispose() {
     _liveTimer?.cancel();
     _livePlayer?.stopPlay();
+    _livePlayer?.dispose();
     TencentImPlugin.quitGroup(groupId: _streamInfoModel.groupId);
     TencentImPlugin.removeListener(parseMessage);
     TencentImPlugin.logout();
@@ -372,478 +373,480 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _streamInfoModel == null
-          ? Center(child: CircularProgressIndicator())
-          : Stack(
-              children: [
-                Positioned(
-                  top: 0,
-                  left: 0,
-                  right: 0,
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    color: Colors.black54,
-                    child: CloudVideo(
-                      onCloudVideoCreated: (controller) async {
-                        _livePlayer = await LivePlayer.create();
-                        await _livePlayer.setPlayerView(controller);
-                        _livePlayer.startPlay(_streamInfoModel.playUrl,
-                            type: PlayType.RTMP);
-                        _livePlayer.setOnEventListener(
-                          onWarningReconnect: () {
-                            reconnectToLive();
-                          },
-                          onWarningVideoDecodeFail: () {
-                            print('');
-                          },
-                          onWarningAudioDecodeFail: () {
-                            print('');
-                          },
-                          onWarningRecvDataLag: () {
-                            print('');
-                          },
-                          onWarningVideoPlayLag: () {
-                            print('');
-                          },
-                          onWarningHwAccelerationFail: () {
-                            print('');
-                          },
-                          onWarningVideoDiscontinuity: () {
-                            print('');
-                          },
-                          onWarningDNSFail: () {
-                            print('');
-                          },
-                          onWarningServerConnFail: () {
-                            print('');
-                          },
-                          onWarningShakeFail: () {
-                            print('');
-                          },
-                          onEventRcvFirstIFrame: () {
-                            print('');
-                          },
-                          onEventPlayBegin: () {
-                            setState(() {
-                              _waitSignal = false;
-                            });
-                          },
-                          onEventPlayEnd: () {
-                            print('`');
-                          },
-                        );
+    return WillPopScope(
+      onWillPop: () async => (await checkPop()) == true,
+      child: Scaffold(
+        body: _streamInfoModel == null
+            ? Center(child: CircularProgressIndicator())
+            : Stack(
+                children: [
+                  // Cloud Video view
+                  Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height,
+                      color: Colors.black54,
+                      child: CloudVideo(
+                        onCloudVideoCreated: (controller) async {
+                          _livePlayer = await LivePlayer.create();
+                          await _livePlayer.setPlayerView(controller);
+                          _livePlayer.startPlay(_streamInfoModel.playUrl,
+                              type: PlayType.RTMP);
+                          _livePlayer.setOnEventListener(
+                            onWarningReconnect: () {
+                              reconnectToLive();
+                            },
+                            onEventPlayBegin: () {
+                              setState(() {
+                                _waitSignal = false;
+                              });
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+
+                  // waiting viewe
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    top: 0,
+                    child: _buildWait(),
+                  ),
+                  //tool tap view
+                  Positioned(
+                    left: 0,
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    child: InkWell(
+                      onTap: () {
+                        _focusNode.unfocus();
+                        setState(() {
+                          _showTools = !_showTools;
+                        });
                       },
                     ),
                   ),
-                ),
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  bottom: 0,
-                  top: 0,
-                  child: _buildWait(),
-                ),
-                Positioned(
-                  left: 0,
-                  top: 0,
-                  right: 0,
-                  bottom: 0,
-                  child: InkWell(
-                    onTap: () {
-                      _focusNode.unfocus();
-                      setState(() {
-                        _showTools = !_showTools;
-                      });
-                    },
-                  ),
-                ),
-                //头部工具栏
-                AnimatedPositioned(
-                  top: _showTools
-                      ? MediaQuery.of(context).padding.top
-                      : -rSize(52),
-                  left: 0,
-                  right: 0,
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.easeInOutCubic,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: rSize(15),
-                      top: rSize(15),
-                    ),
-                    child: Row(
-                      children: [
-                        // LiveUserBar(
-                        //   onTapAvatar: () {
-                        //     // CRoute.pushReplace(
-                        //     //   context,
-                        //     //   UserHomePage(
-                        //     //     userId: _streamInfoModel.userId,
-                        //     //     initAttention: _streamInfoModel.isFollow == 1,
-                        //     //   ),
-                        //     // );
-                        //     _focusNode.unfocus();
+                  //头部工具栏
+                  AnimatedPositioned(
+                    top: _showTools
+                        ? MediaQuery.of(context).padding.top
+                        : -rSize(52),
+                    left: 0,
+                    right: 0,
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeInOutCubic,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: rSize(15),
+                        top: rSize(15),
+                      ),
+                      child: Row(
+                        children: [
+                          // LiveUserBar(
+                          //   onTapAvatar: () {
+                          //     // CRoute.pushReplace(
+                          //     //   context,
+                          //     //   UserHomePage(
+                          //     //     userId: _streamInfoModel.userId,
+                          //     //     initAttention: _streamInfoModel.isFollow == 1,
+                          //     //   ),
+                          //     // );
+                          //     _focusNode.unfocus();
 
-                        //     showLiveChild(
-                        //       context,
-                        //       initAttention: _streamInfoModel.isFollow == 1,
-                        //       title: _streamInfoModel.nickname,
-                        //       fans: _liveBaseInfoModel.fans,
-                        //       follows: _liveBaseInfoModel.follows,
-                        //       headImg: _liveBaseInfoModel.headImgUrl,
-                        //       id: _liveBaseInfoModel.userId,
-                        //     );
-                        //   },
-                        //   initAttention: _streamInfoModel.userId ==
-                        //           UserManager.instance.user.info.id
-                        //       ? true
-                        //       : _streamInfoModel.isFollow == 1,
-                        //   onAttention: () {
-                        //     isAttention = true;
-                        //     HttpManager.post(
-                        //       LiveAPI.addFollow,
-                        //       {
-                        //         'followUserId': _streamInfoModel.userId,
-                        //         'liveItemId': widget.id,
-                        //       },
-                        //     );
-                        //   },
-                        //   title: _streamInfoModel.nickname,
-                        //   subTitle: '点赞数 $_praise',
-                        //   avatar: _streamInfoModel.headImgUrl,
-                        // ),
-                        LiveAvatarWithDialog(
-                            onTapAvatar: () {
-                              _focusNode.unfocus();
-                            },
-                            initAttention: _streamInfoModel.userId ==
-                                    UserManager.instance.user.info.id
-                                ? true
-                                : _streamInfoModel.isFollow == 1,
-                            model: _streamInfoModel,
-                            liveBaseModel: _liveBaseInfoModel,
-                            liveId: widget.id,
-                            praise: _praise),
-                        Spacer(),
-                        MorePeople(
-                          onTap: () {
-                            _focusNode.unfocus();
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (context) {
-                                return LiveUsersView(
-                                  members: _groupMembers,
-                                  usersId:
-                                      _groupMembers.map((e) => e.user).toList(),
-                                );
+                          //     showLiveChild(
+                          //       context,
+                          //       initAttention: _streamInfoModel.isFollow == 1,
+                          //       title: _streamInfoModel.nickname,
+                          //       fans: _liveBaseInfoModel.fans,
+                          //       follows: _liveBaseInfoModel.follows,
+                          //       headImg: _liveBaseInfoModel.headImgUrl,
+                          //       id: _liveBaseInfoModel.userId,
+                          //     );
+                          //   },
+                          //   initAttention: _streamInfoModel.userId ==
+                          //           UserManager.instance.user.info.id
+                          //       ? true
+                          //       : _streamInfoModel.isFollow == 1,
+                          //   onAttention: () {
+                          //     isAttention = true;
+                          //     HttpManager.post(
+                          //       LiveAPI.addFollow,
+                          //       {
+                          //         'followUserId': _streamInfoModel.userId,
+                          //         'liveItemId': widget.id,
+                          //       },
+                          //     );
+                          //   },
+                          //   title: _streamInfoModel.nickname,
+                          //   subTitle: '点赞数 $_praise',
+                          //   avatar: _streamInfoModel.headImgUrl,
+                          // ),
+                          LiveAvatarWithDialog(
+                              onTapAvatar: () {
+                                _focusNode.unfocus();
                               },
-                            );
-                          },
-                          images: (_groupMembers
-                                ..removeWhere((element) {
-                                  return element.userProfile.nickName ==
-                                      _streamInfoModel.nickname;
-                                }))
-                              .map((e) => e.userProfile.faceUrl)
-                              .toList(),
-                        ),
-                        SizedBox(width: rSize(54)),
-                      ],
-                    ),
-                  ),
-                ),
-//关闭
-                Positioned(
-                  top: MediaQuery.of(context).padding.top + rSize(24),
-                  right: 0,
-                  child: CustomImageButton(
-                    padding: EdgeInsets.symmetric(horizontal: rSize(15)),
-                    icon: Icon(
-                      Icons.clear,
-                      color: Colors.white,
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                  ),
-                ),
-
-                //底部工具栏
-                AnimatedPositioned(
-                  duration: Duration(milliseconds: 300),
-                  curve: Curves.easeInOutCubic,
-                  bottom: _showTools
-                      ? 0
-                      : -(rSize(15 + 44.0) +
-                          MediaQuery.of(context).size.height / 3),
-                  left: 0,
-                  right: 0,
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: rSize(15),
-                      right: rSize(15),
-                      bottom: rSize(15),
-                    ),
-                    child: Column(
-                      children: [
-                        LiveBuyingWidget(key: _globalBuyingWidgetKey),
-                        Container(
-                          height: MediaQuery.of(context).size.height / 3,
-                          child: ListView.builder(
-                            reverse: true,
-                            controller: _scrollController,
-                            physics: BouncingScrollPhysics(
-                                parent: AlwaysScrollableScrollPhysics()),
-                            itemBuilder: (context, index) {
-                              return LiveChatBox(
-                                sender: chatObjects[index].name,
-                                note: chatObjects[index].message,
-                                userEnter: chatObjects[index].enterUser,
-                                type: chatObjects[index].type,
+                              initAttention: _streamInfoModel.userId ==
+                                      UserManager.instance.user.info.id
+                                  ? true
+                                  : _streamInfoModel.isFollow == 1,
+                              model: _streamInfoModel,
+                              liveBaseModel: _liveBaseInfoModel,
+                              liveId: widget.id,
+                              praise: _praise),
+                          Spacer(),
+                          MorePeople(
+                            onTap: () {
+                              _focusNode.unfocus();
+                              showModalBottomSheet(
+                                context: context,
+                                builder: (context) {
+                                  return LiveUsersView(
+                                    members: _groupMembers,
+                                    usersId: _groupMembers
+                                        .map((e) => e.user)
+                                        .toList(),
+                                  );
+                                },
                               );
                             },
-                            itemCount: chatObjects.length,
+                            images: (_groupMembers
+                                  ..removeWhere((element) {
+                                    return element.userProfile.nickName ==
+                                        _streamInfoModel.nickname;
+                                  }))
+                                .map((e) => e.userProfile.faceUrl)
+                                .toList(),
                           ),
-                        ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                height: rSize(32),
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.1),
-                                  borderRadius:
-                                      BorderRadius.circular(rSize(16)),
-                                ),
-                                child: TextField(
-                                  controller: _editingController,
-                                  focusNode: _focusNode,
-                                  onEditingComplete: () {
-                                    if (!TextUtil.isEmpty(
-                                        _editingController.text)) {
-                                      TencentImPlugin.sendMessage(
-                                        sessionId: _streamInfoModel.groupId,
-                                        sessionType: SessionType.Group,
-                                        node: TextMessageNode(
-                                            content: _editingController.text),
-                                      );
-                                      chatObjects.insert(
-                                          0,
-                                          ChatObj(
-                                            UserManager
-                                                .instance.user.info.nickname,
-                                            _editingController.text,
-                                          ));
-                                      _scrollController.animateTo(
-                                        -50,
-                                        duration: Duration(milliseconds: 300),
-                                        curve: Curves.easeInOutCubic,
-                                      );
-                                      setState(() {});
-                                      _editingController.clear();
-                                    }
-                                  },
-                                  decoration: InputDecoration(
-                                    isDense: true,
-                                    border: InputBorder.none,
-                                    hintText: '说点什么吧…',
-                                    hintStyle: TextStyle(
-                                      fontSize: rSP(12),
-                                      color: Colors.white,
-                                    ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                      horizontal: rSize(14),
+                          SizedBox(width: rSize(54)),
+                        ],
+                      ),
+                    ),
+                  ),
+//关闭
+                  Positioned(
+                    top: MediaQuery.of(context).padding.top + rSize(24),
+                    right: 0,
+                    child: CustomImageButton(
+                      padding: EdgeInsets.symmetric(horizontal: rSize(15)),
+                      icon: Icon(
+                        Icons.clear,
+                        color: Colors.white,
+                      ),
+                      onPressed: () async {
+                        bool result = await checkPop();
+                        if (result == true) Navigator.pop(context);
+                      },
+                    ),
+                  ),
+
+                  //底部工具栏
+                  AnimatedPositioned(
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeInOutCubic,
+                    bottom: _showTools
+                        ? 0
+                        : -(rSize(15 + 44.0) +
+                            MediaQuery.of(context).size.height / 3),
+                    left: 0,
+                    right: 0,
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                        left: rSize(15),
+                        right: rSize(15),
+                        bottom: rSize(15),
+                      ),
+                      child: Column(
+                        children: [
+                          LiveBuyingWidget(key: _globalBuyingWidgetKey),
+                          GestureDetector(
+                            onTap: () => _focusNode.unfocus(),
+                            child: Container(
+                              height: MediaQuery.of(context).size.height / 3,
+                              child: ListView.builder(
+                                reverse: true,
+                                controller: _scrollController,
+                                physics: BouncingScrollPhysics(
+                                    parent: AlwaysScrollableScrollPhysics()),
+                                itemBuilder: (context, index) {
+                                  return LiveChatBox(
+                                    sender: chatObjects[index].name,
+                                    note: chatObjects[index].message,
+                                    userEnter: chatObjects[index].enterUser,
+                                    type: chatObjects[index].type,
+                                  );
+                                },
+                                itemCount: chatObjects.length,
+                              ),
+                            ),
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  height: rSize(32),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.1),
+                                    borderRadius:
+                                        BorderRadius.circular(rSize(16)),
+                                  ),
+                                  child: TextField(
+                                    controller: _editingController,
+                                    focusNode: _focusNode,
+                                    onEditingComplete: () {
+                                      if (!TextUtil.isEmpty(
+                                          _editingController.text)) {
+                                        TencentImPlugin.sendMessage(
+                                          sessionId: _streamInfoModel.groupId,
+                                          sessionType: SessionType.Group,
+                                          node: TextMessageNode(
+                                            content: _editingController.text,
+                                          ),
+                                        );
+                                        chatObjects.insert(
+                                            0,
+                                            ChatObj(
+                                              UserManager
+                                                  .instance.user.info.nickname,
+                                              _editingController.text,
+                                            ));
+                                        _scrollController.animateTo(
+                                          -50,
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.easeInOutCubic,
+                                        );
+                                        setState(() {});
+                                        _editingController.clear();
+                                        _focusNode.unfocus();
+                                      }
+                                    },
+                                    decoration: InputDecoration(
+                                      isDense: true,
+                                      border: InputBorder.none,
+                                      hintText: '说点什么吧…',
+                                      hintStyle: TextStyle(
+                                        fontSize: rSP(12),
+                                        color: Colors.white,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                        horizontal: rSize(14),
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            SizedBox(width: rSize(24)),
-                            CustomImageButton(
-                              padding: EdgeInsets.zero,
-                              onPressed: () {
-                                _focusNode.unfocus();
-                                ActionSheet.show(
-                                  context,
-                                  items: ['举报'],
-                                  listener: (index) {
-                                    Navigator.pop(context);
-                                    //fake
-                                    Future.delayed(Duration(milliseconds: 1000),
-                                        () {
-                                      GSDialog.of(context)
-                                          .showSuccess(context, '举报成功');
-                                    });
+                              SizedBox(width: rSize(24)),
+                              CustomImageButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  _focusNode.unfocus();
+                                  ActionSheet.show(
+                                    context,
+                                    items: ['举报'],
+                                    listener: (index) {
+                                      Navigator.pop(context);
+                                      //fake
+                                      Future.delayed(
+                                          Duration(milliseconds: 1000), () {
+                                        GSDialog.of(context)
+                                            .showSuccess(context, '举报成功');
+                                      });
+                                    },
+                                  );
+                                },
+                                child: CustomImageButton(
+                                  padding: EdgeInsets.zero,
+                                  onPressed: () {
+                                    _focusNode.unfocus();
+                                    showModalBottomSheet(
+                                        context: context,
+                                        builder: (context) {
+                                          return Container(
+                                            width: rSize(200),
+                                            color: Colors.black87,
+                                            child: Padding(
+                                              padding: EdgeInsets.all(8.0),
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      CustomImageButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                          setState(() {
+                                                            chatObjects.clear();
+                                                          });
+                                                        },
+                                                        child: Column(
+                                                          children: [
+                                                            SizedBox(
+                                                              width: rSize(60),
+                                                              height: rSize(60),
+                                                              child: Icon(
+                                                                Icons.clear_all,
+                                                                size: rSize(30),
+                                                              ),
+                                                            ),
+                                                            Text('清屏'),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      CustomImageButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                          if (UserManager
+                                                              .instance
+                                                              .haveLogin) {
+                                                            showModalBottomSheet(
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return LiveReportView();
+                                                              },
+                                                            );
+                                                          } else {
+                                                            showToast(
+                                                                '未登陆，请先登陆');
+                                                            CRoute.pushReplace(
+                                                                context,
+                                                                UserPage());
+                                                          }
+                                                        },
+                                                        child: Column(
+                                                          children: [
+                                                            SizedBox(
+                                                              width: rSize(60),
+                                                              height: rSize(60),
+                                                              child: Icon(
+                                                                Icons
+                                                                    .report_problem,
+                                                                size: rSize(30),
+                                                              ),
+                                                            ),
+                                                            Text('举报'),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        });
                                   },
-                                );
-                              },
-                              child: CustomImageButton(
+                                  child: Image.asset(
+                                    R.ASSETS_LIVE_LIVE_MORE_PNG,
+                                    width: rSize(32),
+                                    height: rSize(32),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: rSize(10)),
+                              CustomImageButton(
                                 padding: EdgeInsets.zero,
                                 onPressed: () {
                                   _focusNode.unfocus();
                                   showModalBottomSheet(
                                       context: context,
                                       builder: (context) {
-                                        return Container(
-                                          width: rSize(200),
-                                          color: Colors.black87,
-                                          child: Padding(
-                                            padding: EdgeInsets.all(8.0),
-                                            child: Column(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Row(
+                                        return Material(
+                                          color: Colors.black,
+                                          child: Row(
+                                            children: [
+                                              CustomImageButton(
+                                                onPressed: () {
+                                                  if (UserManager
+                                                      .instance.haveLogin) {
+                                                    Navigator.pop(context);
+                                                    ShareTool().liveShare(
+                                                      context,
+                                                      liveId: widget.id,
+                                                      title:
+                                                          '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘',
+                                                      des: '',
+                                                      headUrl: _streamInfoModel
+                                                          .headImgUrl,
+                                                    );
+                                                  } else {
+                                                    showToast('未登陆，请先登陆');
+                                                    CRoute.pushReplace(
+                                                        context, UserPage());
+                                                  }
+                                                },
+                                                padding:
+                                                    EdgeInsets.all(rSize(15)),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
                                                   children: [
-                                                    CustomImageButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                        setState(() {
-                                                          chatObjects.clear();
-                                                        });
-                                                      },
-                                                      child: Column(
-                                                        children: [
-                                                          SizedBox(
-                                                            width: rSize(60),
-                                                            height: rSize(60),
-                                                            child: Icon(
-                                                              Icons.clear_all,
-                                                              size: rSize(30),
-                                                            ),
-                                                          ),
-                                                          Text('清屏'),
-                                                        ],
-                                                      ),
+                                                    Image.asset(
+                                                      R.ASSETS_SHARE_BOTTOM_SHARE_BOTTOM_WECHAT_PNG,
+                                                      height: rSize(40),
+                                                      width: rSize(40),
                                                     ),
-                                                    CustomImageButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                        if (UserManager.instance
-                                                            .haveLogin) {
-                                                          showModalBottomSheet(
-                                                            context: context,
-                                                            builder: (context) {
-                                                              return LiveReportView();
-                                                            },
-                                                          );
-                                                        } else {
-                                                          showToast('未登陆，请先登陆');
-                                                          CRoute.push(context,
-                                                              UserPage());
-                                                        }
-                                                      },
-                                                      child: Column(
-                                                        children: [
-                                                          SizedBox(
-                                                            width: rSize(60),
-                                                            height: rSize(60),
-                                                            child: Icon(
-                                                              Icons
-                                                                  .report_problem,
-                                                              size: rSize(30),
-                                                            ),
-                                                          ),
-                                                          Text('举报'),
-                                                        ],
+                                                    rHBox(10),
+                                                    Text(
+                                                      '微信分享',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: rSP(14),
                                                       ),
                                                     ),
                                                   ],
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
                                         );
                                       });
                                 },
                                 child: Image.asset(
-                                  R.ASSETS_LIVE_LIVE_MORE_PNG,
+                                  R.ASSETS_LIVE_LIVE_SHARE_PNG,
                                   width: rSize(32),
                                   height: rSize(32),
                                 ),
                               ),
-                            ),
-                            SizedBox(width: rSize(10)),
-                            CustomImageButton(
-                              padding: EdgeInsets.zero,
-                              onPressed: () {
-                                _focusNode.unfocus();
-                                showModalBottomSheet(
-                                    context: context,
-                                    builder: (context) {
-                                      return Material(
-                                        color: Colors.black,
-                                        child: Row(
-                                          children: [
-                                            CustomImageButton(
-                                              onPressed: () {
-                                                if (UserManager
-                                                    .instance.haveLogin) {
-                                                  Navigator.pop(context);
-                                                  ShareTool().liveShare(
-                                                    context,
-                                                    liveId: widget.id,
-                                                    title:
-                                                        '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘',
-                                                    des: '',
-                                                    headUrl: _streamInfoModel
-                                                        .headImgUrl,
-                                                  );
-                                                } else {
-                                                  showToast('未登陆，请先登陆');
-                                                  CRoute.push(
-                                                      context, UserPage());
-                                                }
-                                              },
-                                              padding:
-                                                  EdgeInsets.all(rSize(15)),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Image.asset(
-                                                    R.ASSETS_SHARE_BOTTOM_SHARE_BOTTOM_WECHAT_PNG,
-                                                    height: rSize(40),
-                                                    width: rSize(40),
-                                                  ),
-                                                  rHBox(10),
-                                                  Text(
-                                                    '微信分享',
-                                                    style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontSize: rSP(14),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    });
-                              },
-                              child: Image.asset(
-                                R.ASSETS_LIVE_LIVE_SHARE_PNG,
-                                width: rSize(32),
-                                height: rSize(32),
-                              ),
-                            ),
-                            SizedBox(width: rSize(10)),
-                            ManyLikeButton(
-                              child: Image.asset(
-                                R.ASSETS_LIVE_LIVE_LIKE_PNG,
-                                width: rSize(32),
-                                height: rSize(32),
-                              ),
-                              duration: Duration(milliseconds: 1000),
-                              popChild: Image.asset(
-                                R.ASSETS_LIVE_LIVE_LIKE_PNG,
-                                width: rSize(32),
-                                height: rSize(32),
-                              ),
-                              tapCallbackOnlyOnce: false,
-                              onTap: (index) {
-                                _focusNode.unfocus();
-                                if (UserManager.instance.haveLogin) {
+                              SizedBox(width: rSize(10)),
+                              ManyLikeButton(
+                                child: Image.asset(
+                                  R.ASSETS_LIVE_LIVE_LIKE_PNG,
+                                  width: rSize(32),
+                                  height: rSize(32),
+                                ),
+                                duration: Duration(milliseconds: 1000),
+                                popChild: Image.asset(
+                                  R.ASSETS_LIVE_LIVE_LIKE_PNG,
+                                  width: rSize(32),
+                                  height: rSize(32),
+                                ),
+                                tapCallbackOnlyOnce: false,
+                                onTap: (index) {
+                                  _focusNode.unfocus();
+                                  if (UserManager.instance.haveLogin) {
+                                    HttpManager.post(
+                                      LiveAPI.liveLike,
+                                      {
+                                        'liveItemId': widget.id,
+                                        'praise': index,
+                                      },
+                                    );
+                                  } else {
+                                    showToast('未登陆，请先登陆');
+                                    CRoute.pushReplace(context, UserPage());
+                                  }
+                                },
+                                onLongPress: (index) {
                                   HttpManager.post(
                                     LiveAPI.liveLike,
                                     {
@@ -851,194 +854,188 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                       'praise': index,
                                     },
                                   );
-                                } else {
-                                  showToast('未登陆，请先登陆');
-                                  CRoute.push(context, UserPage());
-                                }
-                              },
-                              onLongPress: (index) {
-                                HttpManager.post(
-                                  LiveAPI.liveLike,
-                                  {
-                                    'liveItemId': widget.id,
-                                    'praise': index,
-                                  },
-                                );
-                              },
-                            ),
-                            SizedBox(width: rSize(10)),
-                            CustomImageButton(
-                              child: Container(
-                                width: rSize(44),
-                                height: rSize(44),
-                                alignment: Alignment.bottomCenter,
-                                child: Text(
-                                  _streamInfoModel.goodsLists.length.toString(),
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: rSP(13),
-                                    height: 28 / 13,
+                                },
+                              ),
+                              SizedBox(width: rSize(10)),
+                              CustomImageButton(
+                                child: Container(
+                                  width: rSize(44),
+                                  height: rSize(44),
+                                  alignment: Alignment.bottomCenter,
+                                  child: Text(
+                                    _streamInfoModel.goodsLists.length
+                                        .toString(),
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: rSP(13),
+                                      height: 28 / 13,
+                                    ),
+                                  ),
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: AssetImage(
+                                          R.ASSETS_LIVE_LIVE_GOOD_PNG),
+                                    ),
                                   ),
                                 ),
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image:
-                                        AssetImage(R.ASSETS_LIVE_LIVE_GOOD_PNG),
-                                  ),
-                                ),
-                              ),
-                              onPressed: () {
-                                _focusNode.unfocus();
-                                showGoodsListDialog(
-                                  context,
-                                  onLive: true,
-                                  id: widget.id,
-                                  models: _streamInfoModel.goodsLists,
-                                  player: _livePlayer,
-                                  url: _streamInfoModel.playUrl,
-                                );
-                              },
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-
-                AnimatedPositioned(
-                  curve: Curves.easeInOutCubic,
-                  child: nowGoodList == null
-                      ? SizedBox()
-                      : Stack(
-                          overflow: Overflow.visible,
-                          children: [
-                            CustomImageButton(
-                              onPressed: () {
-                                _focusNode.unfocus();
-                                nowGoodList == null
-                                    ? showToast('未知错误')
-                                    : showModalBottomSheet(
-                                        context: context,
-                                        builder: (context) {
-                                          return Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.vertical(
-                                                top: Radius.circular(rSize(15)),
-                                              ),
-                                              color: Colors.white,
-                                            ),
-                                            height: rSize(480),
-                                            child: InternalGoodsDetail(
-                                              model: nowGoodList,
-                                              liveId: widget.id,
-                                            ),
-                                          );
-                                        },
-                                      );
-                              },
-                              child: Container(
-                                height: rSize(155),
-                                width: rSize(110),
-                                margin: EdgeInsets.all(rSize(10)),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(rSize(4)),
-                                ),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: rSize(110),
-                                      height: rSize(24),
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        '宝贝正在讲解中',
-                                        style: TextStyle(
-                                          color: Color(0xFF0091FF),
-                                          fontSize: rSP(11),
-                                        ),
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFDEF0FA),
-                                        borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(rSize(4)),
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.all(rSize(5)),
-                                        child: Column(
-                                          children: [
-                                            Container(
-                                              child: FadeInImage.assetNetwork(
-                                                placeholder: R
-                                                    .ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                                                image: Api.getImgUrl(
-                                                  nowGoodList.mainPhotoUrl,
-                                                ),
-                                              ),
-                                              color: AppColor.frenchColor,
-                                            ),
-                                            Expanded(
-                                              child: Container(
-                                                alignment: Alignment.centerLeft,
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      '¥',
-                                                      style: TextStyle(
-                                                        color:
-                                                            Color(0xFFC92219),
-                                                        fontSize: rSP(10),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      nowGoodList.discountPrice,
-                                                      style: TextStyle(
-                                                        color:
-                                                            Color(0xFFC92219),
-                                                        fontSize: rSP(14),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            Positioned(
-                              top: 0,
-                              right: 0,
-                              child: CustomImageButton(
                                 onPressed: () {
                                   _focusNode.unfocus();
-                                  setState(() {
-                                    showDetailWindow = false;
-                                  });
+                                  showGoodsListDialog(
+                                    context,
+                                    onLive: true,
+                                    id: widget.id,
+                                    models: _streamInfoModel.goodsLists,
+                                    player: _livePlayer,
+                                    url: _streamInfoModel.playUrl,
+                                  );
                                 },
-                                child: Image.asset(
-                                  R.ASSETS_LIVE_DETAIL_CLOSE_PNG,
-                                  height: rSize(20),
-                                  width: rSize(20),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+
+                  AnimatedPositioned(
+                    curve: Curves.easeInOutCubic,
+                    child: nowGoodList == null
+                        ? SizedBox()
+                        : Stack(
+                            overflow: Overflow.visible,
+                            children: [
+                              CustomImageButton(
+                                onPressed: () {
+                                  _focusNode.unfocus();
+                                  nowGoodList == null
+                                      ? showToast('未知错误')
+                                      : showModalBottomSheet(
+                                          context: context,
+                                          builder: (context) {
+                                            return Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                  top: Radius.circular(
+                                                      rSize(15)),
+                                                ),
+                                                color: Colors.white,
+                                              ),
+                                              height: rSize(480),
+                                              child: InternalGoodsDetail(
+                                                model: nowGoodList,
+                                                liveId: widget.id,
+                                              ),
+                                            );
+                                          },
+                                        );
+                                },
+                                child: Container(
+                                  height: rSize(155),
+                                  width: rSize(110),
+                                  margin: EdgeInsets.all(rSize(10)),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius:
+                                        BorderRadius.circular(rSize(4)),
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      Container(
+                                        width: rSize(110),
+                                        height: rSize(24),
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          '宝贝正在讲解中',
+                                          style: TextStyle(
+                                            color: Color(0xFF0091FF),
+                                            fontSize: rSP(11),
+                                          ),
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: Color(0xFFDEF0FA),
+                                          borderRadius: BorderRadius.vertical(
+                                            top: Radius.circular(rSize(4)),
+                                          ),
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: EdgeInsets.all(rSize(5)),
+                                          child: Column(
+                                            children: [
+                                              Container(
+                                                child: FadeInImage.assetNetwork(
+                                                  placeholder: R
+                                                      .ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                                  image: Api.getImgUrl(
+                                                    nowGoodList.mainPhotoUrl,
+                                                  ),
+                                                ),
+                                                color: AppColor.frenchColor,
+                                              ),
+                                              Expanded(
+                                                child: Container(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Row(
+                                                    children: [
+                                                      Text(
+                                                        '¥',
+                                                        style: TextStyle(
+                                                          color:
+                                                              Color(0xFFC92219),
+                                                          fontSize: rSP(10),
+                                                        ),
+                                                      ),
+                                                      Text(
+                                                        nowGoodList
+                                                            .discountPrice,
+                                                        style: TextStyle(
+                                                          color:
+                                                              Color(0xFFC92219),
+                                                          fontSize: rSP(14),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                  bottom: rSize(67),
-                  right: showDetailWindow ? rSize(25) : -rSize(25 + 20 + 110.0),
-                  duration: Duration(milliseconds: 300),
-                ),
-              ],
-            ),
+                              Positioned(
+                                top: 0,
+                                right: 0,
+                                child: CustomImageButton(
+                                  onPressed: () {
+                                    _focusNode.unfocus();
+                                    setState(() {
+                                      showDetailWindow = false;
+                                    });
+                                  },
+                                  child: Image.asset(
+                                    R.ASSETS_LIVE_DETAIL_CLOSE_PNG,
+                                    height: rSize(20),
+                                    width: rSize(20),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                    bottom: rSize(67),
+                    right:
+                        showDetailWindow ? rSize(25) : -rSize(25 + 20 + 110.0),
+                    duration: Duration(milliseconds: 300),
+                  ),
+                ],
+              ),
+      ),
     );
   }
 }
