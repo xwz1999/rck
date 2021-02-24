@@ -94,7 +94,7 @@ dependencies:
   oktoast: 2.3.2
 
   # 应用信息
-  package_info: 0.4.0+16
+  package_info: 
 
   #缓存图片
   #  cached_network_image: ^1.1.0
@@ -222,9 +222,7 @@ dependencies:
 
   animations:
 
-  power_logger:
-    git:
-      url: http://192.168.2.201:8099/aku_fe/power_logger.git
+  power_logger: ^0.1.1
 
   pin_input_text_field: ^3.3.0
 
