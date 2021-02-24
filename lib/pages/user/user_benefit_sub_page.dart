@@ -236,9 +236,9 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
       _buildTableTitle(value, red, false);
   TableRow _buildTableRow({
     DateTime date,
-    double volume,
+    num volume,
     int count,
-    double benefit,
+    num benefit,
   }) {
     return TableRow(
       children: [
@@ -269,8 +269,8 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
           ],
         ),
         ..._models.map((e) {
-          double amount = 0;
-          double salesVolume = 0;
+          num amount = 0;
+          num salesVolume = 0;
           int count = 0;
           if (widget.type == UserBenefitPageType.SELF) {
             amount = e.purchaseAmount;
