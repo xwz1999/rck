@@ -591,9 +591,13 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
             passwordReturn: (password) {
               Navigator.pop(context);
               String account = _accountTextEditController.text;
-              withdraw(_amountTextEditController.text, password,
-                  alipay: _isCashToAlipay ? account : "",
-                  bankAccount: _isCashToAlipay ? "" : account);
+              String bankAccount = _bankAccountTextEditController.text;
+              withdraw(
+                _amountTextEditController.text,
+                password,
+                alipay: _isCashToAlipay ? account : "",
+                bankAccount: _isCashToAlipay ? "" : bankAccount,
+              );
 
               if (_isCashToAlipay) {
                 HiveStore.appBox
