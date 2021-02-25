@@ -28,12 +28,14 @@ import 'package:recook/manager/meiqia_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/banner_list_model.dart';
 import 'package:recook/models/base_model.dart';
+import 'package:recook/models/goods_detail_model.dart' as GDM;
 import 'package:recook/models/home_weather_model.dart';
 import 'package:recook/models/promotion_goods_list_model.dart';
 import 'package:recook/models/promotion_list_model.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/home/classify/classify_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
+import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/home_page_tabbar.dart';
 import 'package:recook/pages/home/items/item_row_acitivity.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
@@ -45,6 +47,7 @@ import 'package:recook/pages/home/widget/home_weather_view.dart';
 import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
 import 'package:recook/pages/noticeList/notice_list_model.dart';
 import 'package:recook/pages/noticeList/notice_list_tool.dart';
+import 'package:recook/pages/tabBar/rui_code_listener.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/utils/android_back_desktop.dart';
 import 'package:recook/utils/app_router.dart';
@@ -85,6 +88,10 @@ class HomePage extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _HomePageState();
   }
+}
+
+class ClipboardListenerValue {
+  static bool canListen = true;
 }
 
 class _HomePageState extends BaseStoreState<HomePage>
@@ -140,79 +147,6 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   ///监听剪切板
-  _clipboardListener() async {
-    String rawData = (await Clipboard.getData(Clipboard.kTextPlain)).text;
-    bool isRUICode = RUICodeUtil.isCode(rawData);
-    RUICodeModel model = RUICodeUtil.decrypt(rawData);
-    //瑞口令
-    if (isRUICode) {
-      showDialog(
-        context: context,
-        child: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Material(
-                color: Colors.transparent,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(rSize(9)),
-                  ),
-                  margin: EdgeInsets.symmetric(horizontal: rSize(50)),
-                  padding: EdgeInsets.all(rSize(10)),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Row(
-                        children: [],
-                      ),
-                      // FadeInImage.assetNetwork(
-                      //   placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                      //   image: '',
-                      //   height: rSize(256),
-                      //   fit: BoxFit.cover,
-                      // ),
-                      Text(
-                        '给你分享了商品',
-                        style: TextStyle(
-                          color: Color(0xFF666666),
-                          fontSize: rSP(12),
-                        ),
-                      ),
-                      MaterialButton(
-                        shape: StadiumBorder(),
-                        onPressed: () {
-                          CRoute.pushReplace(
-                              context,
-                              CommodityDetailPage(
-                                arguments: CommodityDetailPage.setArguments(
-                                  model.goodsId,
-                                ),
-                              ));
-                        },
-                        height: rSize(36),
-                        minWidth: rSize(235),
-                        padding: EdgeInsets.zero,
-                        color: Color(0xFFDB2D2D),
-                        child: Text(
-                          '查看详情',
-                          style: TextStyle(
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Icon(CupertinoIcons.clear_circled),
-            ],
-          ),
-        ),
-      );
-    }
-  }
 
   @override
   void initState() {
@@ -224,8 +158,6 @@ class _HomePageState extends BaseStoreState<HomePage>
     // meiqia注册
     MQManager.initial();
     ShareTool.init();
-    //监听剪切板
-    ClipboardListener.addListener(_clipboardListener);
     // _backgroundColor = AppColor.themeColor;
     _homeCountdownController = HomeCountdownController();
 
@@ -320,7 +252,6 @@ class _HomePageState extends BaseStoreState<HomePage>
   void dispose() {
     _tabController.dispose();
     WidgetsBinding.instance.removeObserver(this);
-    ClipboardListener.removeListener(_clipboardListener);
     super.dispose();
   }
 
@@ -1315,6 +1246,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   _getPromotionList() async {
+    RUICodeListener(context).clipboardListener();
     ResultData resultData = await HttpManager.post(HomeApi.promotion_list, {});
 
     if (_gsRefreshController.isRefresh()) {

@@ -8,6 +8,7 @@ import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/home/home_page.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/utils/rui_code_util.dart';
 import 'package:recook/widgets/bottom_sheet/bottom_share_dialog.dart';
@@ -299,6 +300,7 @@ class ShareTool {
         height: 36,
       ),
       itemClick: () async {
+        ClipboardListenerValue.canListen = false;
         Navigator.pop(context);
         print(goodsId);
         String code = '【$miniTitle】复制这段描述，打开瑞库客，购全球好物${RUICodeUtil.encrypt(
@@ -366,6 +368,7 @@ class ShareTool {
         if (needWechat == true) {
           await Fluwx.openWeChatApp();
         }
+        ClipboardListenerValue.canListen = true;
       },
     );
     List<PlatformItem> itemList = [
