@@ -11,6 +11,7 @@ import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/home_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/rui_code_util.dart';
+import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/toast.dart';
 
 class RUICodeListener {
@@ -133,13 +134,18 @@ class RUICodeListener {
                                 fontSize: rSP(18),
                               ),
                             ),
-                            Text(
-                              '/赚${goodsDetailModel.data.price.max.commission.toStringAsFixed(1)}',
-                              style: TextStyle(
-                                color: Color(0xFFE13327),
-                                fontSize: rSP(10),
-                              ),
-                            ),
+                            !(UserLevelTool.currentRoleLevelEnum() ==
+                                        UserRoleLevel.Vip ||
+                                    UserLevelTool.currentRoleLevelEnum() ==
+                                        UserRoleLevel.None)
+                                ? Text(
+                                    '/赚${goodsDetailModel.data.price.max.commission.toStringAsFixed(1)}',
+                                    style: TextStyle(
+                                      color: Color(0xFFE13327),
+                                      fontSize: rSP(10),
+                                    ),
+                                  )
+                                : SizedBox(),
                           ],
                         ),
                         rHBox(4),
