@@ -17,6 +17,7 @@ import 'package:recook/pages/live/models/live_stream_info_model.dart'
     show GoodsLists;
 import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/utils/custom_route.dart';
+import 'package:recook/widgets/toast.dart';
 import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 
 class GoodsListDialog extends StatefulWidget {
@@ -678,8 +679,11 @@ class _InternalGoodsDetailState extends State<InternalGoodsDetail> {
                     _num,
                     liveId: widget.liveId,
                   ).then((model) {
-                    AppRouter.push(context, RouteName.GOODS_ORDER_PAGE,
-                        arguments: GoodsOrderPage.setArguments(model));
+                    if (model.code == 'FAIL') {
+                      Toast.showError(model.msg);
+                    } else
+                      AppRouter.push(context, RouteName.GOODS_ORDER_PAGE,
+                          arguments: GoodsOrderPage.setArguments(model));
                   });
                 },
               ),
