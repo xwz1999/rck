@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -52,156 +53,177 @@ class RUICodeListener {
       if (goodsDetailModel != null)
         showDialog(
           context: context,
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Material(
-                  color: Colors.transparent,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(rSize(9)),
-                    ),
-                    margin: EdgeInsets.symmetric(horizontal: rSize(50)),
-                    padding: EdgeInsets.all(rSize(10)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          children: [
-                            Material(
-                              clipBehavior: Clip.antiAlias,
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(rSize(17)),
-                              child: FadeInImage.assetNetwork(
-                                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                                image: Api.getImgUrl(userImg),
-                                height: rSize(34),
-                                width: rSize(34),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            rWBox(8),
-                            Expanded(
-                              child: Text(
-                                userName ?? '',
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontSize: rSP(14),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        rHBox(4),
-                        Text(
-                          '给你分享了商品',
-                          style: TextStyle(
-                            color: Color(0xFF666666),
-                            fontSize: rSP(12),
-                          ),
-                        ),
-                        rHBox(4),
-                        Material(
-                          color: Colors.black12,
-                          borderRadius: BorderRadius.circular(rSize(8)),
-                          child: FadeInImage.assetNetwork(
-                            placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                            image: Api.getImgUrl(
-                                goodsDetailModel.data.mainPhotos.first.url),
-                            height: rSize(256),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        rHBox(10),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.baseline,
-                          textBaseline: TextBaseline.alphabetic,
-                          children: [
-                            Text(
-                              '¥',
-                              style: TextStyle(
-                                color: Color(0xFFE13327),
-                                fontSize: rSP(14),
-                              ),
-                            ),
-                            Text(
-                              '${goodsDetailModel.data.price.max.discountPrice.toStringAsFixed(2)}',
-                              style: TextStyle(
-                                color: Color(0xFFE13327),
-                                fontSize: rSP(18),
-                              ),
-                            ),
-                            !(UserLevelTool.currentRoleLevelEnum() ==
-                                        UserRoleLevel.Vip ||
-                                    UserLevelTool.currentRoleLevelEnum() ==
-                                        UserRoleLevel.None)
-                                ? Text(
-                                    '/赚${goodsDetailModel.data.price.max.commission.toStringAsFixed(1)}',
-                                    style: TextStyle(
-                                      color: Color(0xFFE13327),
-                                      fontSize: rSP(10),
-                                    ),
-                                  )
-                                : SizedBox(),
-                          ],
-                        ),
-                        rHBox(4),
-                        Text(
-                          goodsDetailModel.data.goodsName,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(),
-                        ),
-                        Center(
-                          child: MaterialButton(
-                            elevation: 0,
-                            shape: StadiumBorder(),
-                            onPressed: () {
-                              CRoute.pushReplace(
-                                  context,
-                                  CommodityDetailPage(
-                                    arguments: CommodityDetailPage.setArguments(
-                                      model.goodsId,
-                                    ),
-                                  ));
-                            },
-                            height: rSize(36),
-                            minWidth: rSize(235),
-                            padding: EdgeInsets.zero,
-                            color: Color(0xFFDB2D2D),
-                            child: Text(
-                              '查看详情',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                rHBox(30),
-                GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: Icon(
-                      CupertinoIcons.clear_circled,
-                      size: rSize(40),
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          child: _RUICodeDialog(
+            userName: userName,
+            userImg: userImg,
+            model: goodsDetailModel,
           ),
         );
 
       Clipboard.setData(ClipboardData(text: ''));
     }
+  }
+}
+
+class _RUICodeDialog extends StatefulWidget {
+  final String userImg;
+  final String userName;
+  final GoodsDetailModel model;
+  _RUICodeDialog({Key key, this.userImg, this.userName, this.model})
+      : super(key: key);
+
+  @override
+  __RUICodeDialogState createState() => __RUICodeDialogState();
+}
+
+class __RUICodeDialogState extends State<_RUICodeDialog> {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Material(
+            color: Colors.transparent,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(rSize(9)),
+              ),
+              margin: EdgeInsets.symmetric(horizontal: rSize(50)),
+              padding: EdgeInsets.all(rSize(10)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      Material(
+                        clipBehavior: Clip.antiAlias,
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(rSize(17)),
+                        child: ExtendedImage.network(
+                          Api.getImgUrl(widget.userImg),
+                          height: rSize(34),
+                          width: rSize(34),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      rWBox(8),
+                      Expanded(
+                        child: Text(
+                          widget.userName ?? '',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: rSP(14),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  rHBox(4),
+                  Text(
+                    '给你分享了商品',
+                    style: TextStyle(
+                      color: Color(0xFF666666),
+                      fontSize: rSP(12),
+                    ),
+                  ),
+                  rHBox(4),
+                  Material(
+                    color: Colors.black12,
+                    borderRadius: BorderRadius.circular(rSize(8)),
+                    child: ExtendedImage.network(
+                      Api.getImgUrl(
+                        widget.model.data.mainPhotos.first.url,
+                      ),
+                      height: rSize(256),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  rHBox(10),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: [
+                      Text(
+                        '¥',
+                        style: TextStyle(
+                          color: Color(0xFFE13327),
+                          fontSize: rSP(14),
+                        ),
+                      ),
+                      Text(
+                        '${widget.model.data.price.max.discountPrice.toStringAsFixed(2)}',
+                        style: TextStyle(
+                          color: Color(0xFFE13327),
+                          fontSize: rSP(18),
+                        ),
+                      ),
+                      !(UserLevelTool.currentRoleLevelEnum() ==
+                                  UserRoleLevel.Vip ||
+                              UserLevelTool.currentRoleLevelEnum() ==
+                                  UserRoleLevel.None)
+                          ? Text(
+                              '/赚${widget.model.data.price.max.commission.toStringAsFixed(1)}',
+                              style: TextStyle(
+                                color: Color(0xFFE13327),
+                                fontSize: rSP(10),
+                              ),
+                            )
+                          : SizedBox(),
+                    ],
+                  ),
+                  rHBox(4),
+                  Text(
+                    widget.model.data.goodsName,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(),
+                  ),
+                  Center(
+                    child: MaterialButton(
+                      elevation: 0,
+                      shape: StadiumBorder(),
+                      onPressed: () {
+                        CRoute.pushReplace(
+                            context,
+                            CommodityDetailPage(
+                              arguments: CommodityDetailPage.setArguments(
+                                widget.model.data.id,
+                              ),
+                            ));
+                      },
+                      height: rSize(36),
+                      minWidth: rSize(235),
+                      padding: EdgeInsets.zero,
+                      color: Color(0xFFDB2D2D),
+                      child: Text(
+                        '查看详情',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          rHBox(30),
+          GestureDetector(
+            onTap: () => Navigator.pop(context),
+            child: Material(
+              color: Colors.transparent,
+              child: Icon(
+                CupertinoIcons.clear_circled,
+                size: rSize(40),
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
