@@ -61,7 +61,7 @@ class RUICodeListener {
           ),
         );
 
-      if (userName == UserManager.instance.user.info.nickname)
+      if (userName != UserManager.instance.user.info.nickname)
         Clipboard.setData(ClipboardData(text: ''));
     }
   }
