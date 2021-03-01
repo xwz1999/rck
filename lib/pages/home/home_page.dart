@@ -1162,8 +1162,10 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   Widget _buildSingleGoodsCard(String path, String name) {
     return InkWell(
-      onTap: () {
-        HomeDao.getCategories(success: (data, code, msg) {
+      onTap: () async {
+        GSDialog.of(context).showLoadingDialog(context, '');
+        await HomeDao.getCategories(success: (data, code, msg) {
+          GSDialog.of(context).dismiss(context);
           CRoute.push(
               context,
               ClassifyPage(
