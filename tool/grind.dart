@@ -31,7 +31,6 @@ Future buildApk() async {
 
   stdout.write("opening downloadPath 🛠\n");
   await Process.run('open', ['${Config.downloadPath}/builds']);
-  await Process.run('open', ['${Config.downloadPath}']);
   stdout.write("opening tencent reinforce 🛠\n");
   await Process.run(
       'open', ['https://console.cloud.tencent.com/ms/reinforce/upload']);
