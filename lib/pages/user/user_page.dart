@@ -76,9 +76,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
   @override
   void initState() {
     super.initState();
-    _refreshController = GSRefreshController();
-    _updateAllAmount();
-    _updateCheck();
+    _refreshController = GSRefreshController(initialRefresh: true);
     WidgetsBinding.instance.addPostFrameCallback((callback) {
       if (_isFirstLoad) {
         _isFirstLoad = false;
@@ -88,13 +86,6 @@ class _UserPageState extends BaseStoreState<UserPage> {
       // VersionTool.checkVersionInfo(context);
       // _showUpDateAlert();
     });
-    if (UserManager.instance.haveLogin) {
-      UserManager.instance.refreshUserPage.addListener(() {
-        Future.delayed(Duration(seconds: 2), () {
-          if (mounted) _updateUserBriefInfo();
-        });
-      });
-    }
   }
 
   @override

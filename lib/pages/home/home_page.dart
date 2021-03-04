@@ -1453,6 +1453,7 @@ class _HomePageState extends BaseStoreState<HomePage>
           ),
         );
         await HttpManager.post(APIV2.userAPI.agreeLottery, {});
+        await UserManager.instance.updateUserBriefInfo(getStore());
       }
       String img;
       if (oldLevel < nowLevel) {
