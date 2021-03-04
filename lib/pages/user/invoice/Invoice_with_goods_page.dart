@@ -8,7 +8,6 @@ import 'package:recook/pages/user/invoice/invoice_scaffold_widget.dart';
 import 'package:recook/pages/user/widget/recook_check_box.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
-
 class InvoiceWithGoodsPage extends StatefulWidget {
   InvoiceWithGoodsPage({Key key}) : super(key: key);
 
@@ -17,19 +16,13 @@ class InvoiceWithGoodsPage extends StatefulWidget {
 }
 
 class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
-  GSRefreshController _refreshController = GSRefreshController();
+  GSRefreshController _refreshController =
+      GSRefreshController(initialRefresh: true);
   InvoicePresenter _invoicePresenter = InvoicePresenter();
   List<InvoiceGetBillModel> _models = [];
   List<int> _selectedIds = [];
   double _price = 0.0;
   int _page = 0;
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration(milliseconds: 300), () {
-      if (mounted) _refreshController.requestRefresh();
-    });
-  }
 
   @override
   void dispose() {

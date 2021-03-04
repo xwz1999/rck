@@ -19,14 +19,7 @@ class LotteryHistoryPage extends StatefulWidget {
 class _LotteryHistoryPageState extends State<LotteryHistoryPage> {
   List<LotteryHistoryModel> _models = [];
   int page = 1;
-  GSRefreshController _refreshController = GSRefreshController();
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () {
-      _refreshController.requestRefresh();
-    });
-  }
+  GSRefreshController _refreshController = GSRefreshController(initialRefresh: true);
 
   @override
   Widget build(BuildContext context) {
