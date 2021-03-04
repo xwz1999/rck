@@ -55,7 +55,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      child: NormalTextDialog(
+                      builder: (context) => NormalTextDialog(
                         title: '注销提示',
                         content: '确定注销账户？',
                         items: ['取消'],

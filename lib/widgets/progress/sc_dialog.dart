@@ -61,7 +61,8 @@ class GSDialog {
   }
 
   Future<Null> showSuccess(BuildContext context, String text,
-      {Duration duration = const Duration(milliseconds: 1000), bool dismissLoading = false}) {
+      {Duration duration = const Duration(milliseconds: 1000),
+      bool dismissLoading = false}) {
     if (hasLoading) {
       dismiss(context);
     }
@@ -124,7 +125,7 @@ class GSDialog {
       WidgetBuilder builder,
       Duration duration = const Duration(milliseconds: 1000),
       bool barrierDismissible = true}) async {
-    final ThemeData theme = Theme.of(context, shadowThemeOnly: true);
+    final ThemeData theme = Theme.of(context);
     showGeneralDialog(
       context: context,
       pageBuilder: (BuildContext buildContext, Animation<double> animation,
@@ -132,7 +133,9 @@ class GSDialog {
         final Widget pageChild = Builder(builder: builder);
         return SafeArea(
           child: Builder(builder: (BuildContext context) {
-            return theme != null ? Theme(data: theme, child: pageChild) : pageChild;
+            return theme != null
+                ? Theme(data: theme, child: pageChild)
+                : pageChild;
           }),
         );
       },

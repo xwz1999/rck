@@ -82,7 +82,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   Future<bool> checkPop() async {
     return await showDialog(
       context: context,
-      child: NormalTextDialog(
+      builder: (context) => NormalTextDialog(
         title: '确认退出直播间吗',
         content: '',
         items: ['确认'],

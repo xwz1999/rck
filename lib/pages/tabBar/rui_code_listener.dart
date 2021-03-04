@@ -54,7 +54,7 @@ class RUICodeListener {
           userName != UserManager.instance.user.info.nickname)
         showDialog(
           context: context,
-          child: _RUICodeDialog(
+          builder: (context) => _RUICodeDialog(
             userName: userName,
             userImg: userImg,
             model: goodsDetailModel,

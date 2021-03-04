@@ -195,15 +195,15 @@ class _ShopPageState extends BaseStoreState<ShopPage> {
   _showUpgradeAlert() {
     showDialog(
         context: context,
-        child: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: ShopPageUpgradeAlert(
-            width: MediaQuery.of(context).size.width,
-            userRoleLevel:
-                UserLevelTool.roleLevelEnum(_shopSummaryModel.data.roleLevel),
-          ),
-        ));
+        builder: (context) => GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: ShopPageUpgradeAlert(
+                width: MediaQuery.of(context).size.width,
+                userRoleLevel: UserLevelTool.roleLevelEnum(
+                    _shopSummaryModel.data.roleLevel),
+              ),
+            ));
   }
 }

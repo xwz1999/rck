@@ -127,7 +127,7 @@ class _LotteryCartPageState extends State<LotteryCartPage> {
                       onPressed: () {
                         showDialog(
                           context: context,
-                          child: NormalContentDialog(
+                          builder: (context) => NormalContentDialog(
                             title: '兑换彩票',
                             content: Column(
                               mainAxisSize: MainAxisSize.min,

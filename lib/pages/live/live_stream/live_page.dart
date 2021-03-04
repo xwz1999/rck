@@ -139,7 +139,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
   Future<bool> checkPop() async {
     return await showDialog(
       context: context,
-      child: NormalTextDialog(
+      builder: (context) => NormalTextDialog(
         title: '确认停止直播间吗',
         content: '',
         items: ['确认'],
@@ -882,7 +882,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                       _focusNode.unfocus();
                       showDialog(
                         context: context,
-                        child: NormalTextDialog(
+                        builder: (context) => NormalTextDialog(
                           title: '确认关闭直播吗',
                           content: '当前直播间还有${_groupMembers.length}人',
                           items: ['取消', '确定'],

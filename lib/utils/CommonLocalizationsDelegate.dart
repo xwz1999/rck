@@ -161,4 +161,7 @@ class _DefaultCupertinoLocalizations extends CupertinoLocalizations {
 
   @override
   List<String> get timerPickerSecondLabels => [];
+
+  @override
+  String get searchTextFieldPlaceholderLabel => '搜索';
 }

@@ -6,7 +6,7 @@ import 'package:recook/utils/custom_route.dart';
 Future<bool> launchPrivacyDialog(BuildContext context) async {
   return await showDialog(
     context: context,
-    child: _PrivacyDialog(),
+    builder: (context) => _PrivacyDialog(),
     barrierDismissible: false,
   );
 }
@@ -14,7 +14,7 @@ Future<bool> launchPrivacyDialog(BuildContext context) async {
 Future launchPrivacySecondDialog(BuildContext context) async {
   return await showDialog(
     context: context,
-    child: _PrivacySecondDialog(),
+    builder: (context) => _PrivacySecondDialog(),
     barrierDismissible: false,
   );
 }

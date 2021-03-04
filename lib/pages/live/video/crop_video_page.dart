@@ -7,10 +7,7 @@ import 'package:recook/pages/live/video/video_advance_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/recook_back_button.dart';
-import 'package:video_trimmer/file_formats.dart';
-import 'package:video_trimmer/trim_editor.dart';
 import 'package:video_trimmer/video_trimmer.dart';
-import 'package:video_trimmer/video_viewer.dart';
 
 class CropVideoPage extends StatefulWidget {
   final File file;

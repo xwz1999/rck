@@ -567,7 +567,7 @@ class _LotteryPickerPageState extends State<LotteryPickerPage> {
     } else {
       showDialog(
         context: context,
-        child: NormalTextDialog(
+        builder: (context) => NormalTextDialog(
           title: '请先完成实名认证',
           content: '',
           items: ['取消', '去认证'],

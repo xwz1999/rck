@@ -46,7 +46,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
   Widget buildContext(BuildContext context, {store}) {
     if (_context == null) _context = context;
     return Scaffold(
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
         body: Stack(
           children: <Widget>[
             Positioned(

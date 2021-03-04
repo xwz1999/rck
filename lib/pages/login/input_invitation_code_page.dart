@@ -69,7 +69,7 @@ class _InvitationCodePageState extends BaseStoreState<InvitationCodePage> {
   Widget buildContext(BuildContext context, {store}) {
     bool phoneLogin = widget.argument[InvitationCodePage.KEY_MODE] == 0;
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: "绑定登录",
         elevation: 0.2,

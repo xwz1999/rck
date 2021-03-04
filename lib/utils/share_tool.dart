@@ -310,7 +310,7 @@ class ShareTool {
         Clipboard.setData(ClipboardData(text: code));
         bool needWechat = await showDialog(
           context: context,
-          child: Center(
+          builder: (context) => Center(
             child: Material(
               color: Colors.transparent,
               child: Container(

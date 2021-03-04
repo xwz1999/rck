@@ -51,7 +51,7 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
   @override
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         appBackground: Colors.white,
         title: "选择城市",

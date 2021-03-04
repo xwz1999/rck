@@ -36,16 +36,17 @@ class UserLevelTool {
       UserManager.updateUserInfo(store);
       showDialog(
           context: context,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: RoleLevelUpgradeAlert(
-              userLevel: UserLevelTool.userLevelEnum(model.data.userLevel),
-              width: MediaQuery.of(context).size.width,
-              userRoleLevel: UserLevelTool.roleLevelEnum(model.data.roleLevel),
-            ),
-          ));
+          builder: (context) => GestureDetector(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: RoleLevelUpgradeAlert(
+                  userLevel: UserLevelTool.userLevelEnum(model.data.userLevel),
+                  width: MediaQuery.of(context).size.width,
+                  userRoleLevel:
+                      UserLevelTool.roleLevelEnum(model.data.roleLevel),
+                ),
+              ));
     }
   }
 
