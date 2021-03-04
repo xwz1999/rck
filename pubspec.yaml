@@ -198,7 +198,7 @@ dependencies:
   #工具类库
   common_utils: ^1.2.1
   #视频剪辑
-  video_trimmer: ^0.2.7
+  video_trimmer: 0.2.7
 
   #点赞组件
   many_like: ^0.0.6
