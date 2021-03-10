@@ -958,9 +958,11 @@ packages:
   power_logger:
     dependency: "direct main"
     description:
-      name: power_logger
-      url: "https://pub.flutter-io.cn"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "0436e0b02d1673ee828a757413a86999cd25603c"
+      url: "http://159.75.73.143:8080/laiiihz/power_logger.git"
+    source: git
     version: "0.1.1"
   pretty_json:
     dependency: transitive
