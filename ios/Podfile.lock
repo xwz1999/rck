@@ -33,6 +33,8 @@ PODS:
   - core_location_fluttify (0.0.1):
     - Flutter
     - foundation_fluttify
+  - device_info (0.0.1):
+    - Flutter
   - DKImagePickerController/Core (4.3.2):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
@@ -245,6 +247,7 @@ DEPENDENCIES:
   - amap_location_fluttify (from `.symlinks/plugins/amap_location_fluttify/ios`)
   - camera (from `.symlinks/plugins/camera/ios`)
   - core_location_fluttify (from `.symlinks/plugins/core_location_fluttify/ios`)
+  - device_info (from `.symlinks/plugins/device_info/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
   - flutter_bugly (from `.symlinks/plugins/flutter_bugly/ios`)
@@ -311,6 +314,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/camera/ios"
   core_location_fluttify:
     :path: ".symlinks/plugins/core_location_fluttify/ios"
+  device_info:
+    :path: ".symlinks/plugins/device_info/ios"
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
@@ -382,6 +387,7 @@ SPEC CHECKSUMS:
   Bugly: fd066c75c4a0eca1440f9b6a84bd37d51bfc85ac
   camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
   core_location_fluttify: 9466a411ea7d22c6349c7e6a767ae4623f01eb1d
+  device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
@@ -409,7 +415,7 @@ SPEC CHECKSUMS:
   MOBFoundation: 7b690d8d42c2c08e33bb3e4d38411bf761bf9f5f
   mobile-ffmpeg-min: d5d22dcef5c8ec56f771258f1f5be245d914f193
   openinstall_flutter_plugin: e6b8486f834eb60b336546442a8b747d4b664cf4
-  package_info: 48b108e75b8802c2d5e126f208ef540561c98aef
+  package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: 67637977b227d62d46bfbf524f335f8568de5a73
   photo_manager: f7c619c2cc8c2adb8d85c63363babac477de9c67
