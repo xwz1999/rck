@@ -43,6 +43,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.5.0-nullsafety.1"
+  auto_size_text:
+    dependency: transitive
+    description:
+      name: auto_size_text
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.1.0"
   azlistview:
     dependency: "direct main"
     description:
@@ -398,6 +405,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.1"
+  flutter_highlight:
+    dependency: transitive
+    description:
+      name: flutter_highlight
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.6.0"
   flutter_icons:
     dependency: "direct main"
     description:
@@ -545,6 +559,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.8.6"
+  highlight:
+    dependency: transitive
+    description:
+      name: highlight
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.6.0"
   hive:
     dependency: "direct main"
     description:
@@ -777,7 +798,7 @@ packages:
       name: package_info
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.4.0+16"
+    version: "0.4.3+4"
   package_resolver:
     dependency: transitive
     description:
@@ -927,6 +948,22 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.4.0"
+  power_logger:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "0436e0b02d1673ee828a757413a86999cd25603c"
+      url: "http://159.75.73.143:8080/laiiihz/power_logger.git"
+    source: git
+    version: "0.1.1"
+  pretty_json:
+    dependency: transitive
+    description:
+      name: pretty_json
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.1.0"
   process:
     dependency: transitive
     description:

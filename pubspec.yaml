@@ -94,7 +94,7 @@ dependencies:
   oktoast: 2.3.2
 
   # 应用信息
-  package_info: 0.4.0+16
+  package_info: ^0.4.0+16
 
   #缓存图片
   #  cached_network_image: ^1.1.0
@@ -222,6 +222,9 @@ dependencies:
 
   device_info: ^1.0.0
   clipboard_listener: ^1.0.0
+  power_logger:
+    git:
+      url: http://159.75.73.143:8080/laiiihz/power_logger.git
 
 dev_dependencies:
   flutter_test:
