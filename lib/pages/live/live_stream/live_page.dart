@@ -126,9 +126,11 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
     _livePusher?.stopPush();
     _livePusher?.stopPreview();
     _editingController?.dispose();
-    TencentImPlugin.quitGroup(groupId: _streamInfoModel.groupId);
-    TencentImPlugin.removeListener(parseMessage);
-    TencentImPlugin.logout();
+    if (_streamInfoModel != null) {
+      TencentImPlugin.quitGroup(groupId: _streamInfoModel?.groupId ?? '');
+      TencentImPlugin.removeListener(parseMessage);
+      TencentImPlugin.logout();
+    }
     if (_isStream)
       HttpManager.post(LiveAPI.exitLive, {
         'liveItemId': liveItemId,
@@ -1017,19 +1019,24 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
       ),
       onWillPop: () async {
         bool result = (await checkPop()) == true;
-        if (result) _stopLive();
+        if (result) {
+          _stopLive();
+          return true;
+        }
         return false;
       },
     );
   }
 
-  _stopLive() {
+  _stopLive() async {
     _livePusher?.stopPush();
-    TencentImPlugin.quitGroup(groupId: _streamInfoModel.groupId);
-    TencentImPlugin.removeListener(parseMessage);
-    TencentImPlugin.logout();
+    if (_streamInfoModel != null) {
+      await TencentImPlugin.quitGroup(groupId: _streamInfoModel.groupId);
+      TencentImPlugin.removeListener(parseMessage);
+      await TencentImPlugin.logout();
+    }
     if (_isStream)
-      HttpManager.post(LiveAPI.exitLive, {
+      await HttpManager.post(LiveAPI.exitLive, {
         'liveItemId': liveItemId,
       }).then((resultData) {
         if (resultData?.data['data'] == null) {
