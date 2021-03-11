@@ -10,6 +10,13 @@ class UserMonthIncomeModel {
   double recommendAmount;
   double rewardAmount;
 
+  double get allAmount =>
+      (purchaseAmount ?? 0) +
+      (guideAmount ?? 0) +
+      (teamAmount ?? 0) +
+      (recommendAmount ?? 0) +
+      (rewardAmount ?? 0);
+
   UserMonthIncomeModel(
       {this.id,
       this.userId,

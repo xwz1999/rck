@@ -40,7 +40,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
   double get _yearIncome {
     double result = 0;
     _models.forEach((element) {
-      result += element?.amount ?? 0;
+      result += element?.allAmount ?? 0;
     });
     return result;
   }
@@ -371,7 +371,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
               : SizedBox(),
           20.hb,
           ...List.generate(_models.length, (index) {
-            return _buildInfoItem(isFirst: index == 0,model:_models[index] );
+            return _buildInfoItem(isFirst: index == 0, model: _models[index]);
           }).sepWidget(separate: 20.hb),
           30.hb,
         ],
@@ -442,7 +442,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
                 '月'.text.black.size(10.sp).make(),
                 Spacer(),
                 '总收益:'.text.color(Color(0xFF999999)).size(12.sp).make(),
-                (model?.amount ?? 0)
+                (model?.allAmount ?? 0)
                     .toStringAsFixed(2)
                     .text
                     .color(Color(0xFFD5101A))
