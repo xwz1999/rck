@@ -1456,7 +1456,8 @@ class _HomePageState extends BaseStoreState<HomePage>
         await UserManager.instance.updateUserBriefInfo(getStore());
       }
       String img;
-      if (oldLevel < nowLevel) {
+      //用户升级
+      if (oldLevel > nowLevel) {
         switch (UserLevelTool.roleLevelEnum(nowLevel)) {
           case UserRoleLevel.Diamond_1:
           case UserRoleLevel.Diamond_2:
@@ -1473,7 +1474,8 @@ class _HomePageState extends BaseStoreState<HomePage>
             break;
         }
       }
-      if (oldLevel > nowLevel) {
+      //用户降级
+      if (oldLevel < nowLevel) {
         switch (UserLevelTool.roleLevelEnum(nowLevel)) {
           case UserRoleLevel.Silver:
             img = R.ASSETS_USER_DOWNGRADE_SILVER_PNG_WEBP;

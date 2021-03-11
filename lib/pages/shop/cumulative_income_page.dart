@@ -37,6 +37,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
   ///选择的年份
   String get _selectYearValue => _selectYear.year.toString();
 
+  /// 年度收益
   double get _yearIncome {
     double result = 0;
     _models.forEach((element) {

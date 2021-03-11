@@ -15,7 +15,8 @@ class UserMonthIncomeModel {
       (guideAmount ?? 0) +
       (teamAmount ?? 0) +
       (recommendAmount ?? 0) +
-      (rewardAmount ?? 0);
+      (rewardAmount ?? 0) +
+      .0;
 
   UserMonthIncomeModel(
       {this.id,
