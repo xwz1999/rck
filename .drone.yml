@@ -12,6 +12,6 @@ steps:
     path: /drone/src/.git
 
 volumes:
-- name: git
+- name: cache
   host:
-    path: /home/ubuntu/drone_repo
+    path: /home/ubuntu/drone_repo/test_drone
