@@ -9,7 +9,7 @@ steps:
   - echo ashegvfaywefywaegfkuawf
   volumes:
   - name: git
-    path: /drone/src/.git
+    path: /tmp/cache
 
 volumes:
 - name: git
