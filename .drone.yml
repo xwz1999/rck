@@ -7,3 +7,11 @@ steps:
   image: alpine
   commands:
   - echo ashegvfaywefywaegfkuawf
+  volumes:
+  - name: git
+    path: /drone/src/.git
+
+volumes:
+- name: cache
+  host:
+    path: /home/ubuntu/drone_repo
