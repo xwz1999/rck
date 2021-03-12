@@ -1079,7 +1079,8 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   _buttonTitleRow(icon, title, {onPressed}) {
     return Expanded(
-      child: GestureDetector(
+      child: CupertinoButton(
+        padding: EdgeInsets.zero,
         child: Column(
           children: <Widget>[
             Container(
@@ -1106,7 +1107,7 @@ class _HomePageState extends BaseStoreState<HomePage>
             )
           ],
         ),
-        onTap: () {
+        onPressed: () {
           if (onPressed != null) {
             onPressed();
           }
