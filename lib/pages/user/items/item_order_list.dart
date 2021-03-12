@@ -232,7 +232,10 @@ class _OrderListItemState extends State<OrderListItem> {
         }
         break;
     }
-    if (widget.orderModel.canConfirm) {
+    if (widget.orderModel.canConfirm &&
+        widget.orderModel.goodsList
+                .indexWhere((element) => element.rStatus == '退款审核中') ==
+            -1) {
       children
         ..add(Container(
           width: rSize(8),

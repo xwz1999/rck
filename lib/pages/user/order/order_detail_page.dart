@@ -342,8 +342,14 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
           height: 1,
         ));
     }
-
-    if (orderDetail.canConfirm) {
+    // 确认收货按钮显示控制
+    // 当订单中包含‘退款审核中’的状态时，不显示确认收货
+    if (orderDetail.canConfirm &&
+        orderDetail.brands.indexWhere((element) =>
+                element.goods
+                    .indexWhere((element) => element.rStatus == '退款审核中') !=
+                -1) ==
+            -1) {
       items
             ..add(CustomImageButton(
               width: buttonWidth,
