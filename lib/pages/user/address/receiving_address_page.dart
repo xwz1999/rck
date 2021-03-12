@@ -102,8 +102,8 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
             title: "添加收货地址",
             padding: EdgeInsets.symmetric(horizontal: 10),
             fontSize: ScreenAdapterUtils.setSp(14),
-            onPressed: () {
-              CRoute.push(
+            onPressed: () async {
+              await CRoute.push(
                   context,
                   NewAddressPage(
                     isFirstAdd: _controller.getData().isEmpty,
@@ -118,6 +118,7 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
                 }
                 setState(() {});
               });
+              _controller.requestRefresh();
             },
           )
         ],

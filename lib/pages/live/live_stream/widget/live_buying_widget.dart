@@ -18,7 +18,7 @@ class LiveBuyingWidgetState extends State<LiveBuyingWidget> {
     showEmpty = false;
     key = value;
     _timer?.cancel();
-    _timer = Timer(Duration(milliseconds: 3000), () {
+    _timer = Timer(Duration(milliseconds: 5000), () {
       setState(() {
         showEmpty = true;
       });
@@ -39,6 +39,7 @@ class LiveBuyingWidgetState extends State<LiveBuyingWidget> {
       child: showEmpty
           ? SizedBox(width: 40, key: ValueKey('default'))
           : Align(
+              key: ValueKey(key),
               alignment: Alignment.centerLeft,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: rSize(10)),

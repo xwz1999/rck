@@ -11,10 +11,12 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'package:amap_location_fluttify/amap_location_fluttify.dart';
+import 'package:clipboard_listener/clipboard_listener.dart';
 import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/base/base_store_state.dart';
@@ -27,12 +29,14 @@ import 'package:recook/manager/meiqia_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/banner_list_model.dart';
 import 'package:recook/models/base_model.dart';
+import 'package:recook/models/goods_detail_model.dart' as GDM;
 import 'package:recook/models/home_weather_model.dart';
 import 'package:recook/models/promotion_goods_list_model.dart';
 import 'package:recook/models/promotion_list_model.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/home/classify/classify_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
+import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/home_page_tabbar.dart';
 import 'package:recook/pages/home/items/item_row_acitivity.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
@@ -44,12 +48,14 @@ import 'package:recook/pages/home/widget/home_weather_view.dart';
 import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
 import 'package:recook/pages/noticeList/notice_list_model.dart';
 import 'package:recook/pages/noticeList/notice_list_tool.dart';
+import 'package:recook/pages/tabBar/rui_code_listener.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/utils/android_back_desktop.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/color_util.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/permission_tool.dart';
+import 'package:recook/utils/rui_code_util.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/alert.dart';
@@ -84,6 +90,10 @@ class HomePage extends StatefulWidget {
   State<StatefulWidget> createState() {
     return _HomePageState();
   }
+}
+
+class ClipboardListenerValue {
+  static bool canListen = true;
 }
 
 class _HomePageState extends BaseStoreState<HomePage>
@@ -137,6 +147,8 @@ class _HomePageState extends BaseStoreState<HomePage>
   _openInstallGoodsIdListener() {
     _handleOpenInstallEvents();
   }
+
+  ///监听剪切板
 
   @override
   void initState() {
@@ -972,10 +984,9 @@ class _HomePageState extends BaseStoreState<HomePage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 _buttonTitleRow(
-                    // AppConfig.getShowCommission()
-                    //     ? R.ASSETS_HOME_MENU_A_PNG
-                    //     : R.ASSETS_LISTTEMP_RECOOKMAKE_ICON_PNG,
-                    R.ASSETS_HOME_HAPPY_00_GIF,
+                    AppConfig.getShowCommission()
+                        ? R.ASSETS_HOME_MENU_A_PNG
+                        : R.ASSETS_LISTTEMP_RECOOKMAKE_ICON_PNG,
                     AppConfig.getShowCommission() ? "我的权益" : "瑞库制品",
                     onPressed: () {
                   if (AppConfig.getShowCommission()) {
@@ -998,15 +1009,9 @@ class _HomePageState extends BaseStoreState<HomePage>
                 }),
                 _buttonTitleRow(
                   // R.ASSETS_LOTTERY_REDEEM_LOTTERY_ICON_PNG,
-                  // AppConfig.getShowCommission()
-                  //     ? R.ASSETS_HOME_MENU_BB_PNG
-                  //     : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
-                  R.ASSETS_HOME_HAPPY_01_GIF,
-                  // AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
-                  // R.ASSETS_LOTTERY_REDEEM_LOTTERY_ICON_PNG,
-                  // AppConfig.getShowCommission()
-                  //     ? R.ASSETS_HOME_MENU_BB_PNG
-                  //     : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
+                  AppConfig.getShowCommission()
+                      ? R.ASSETS_HOME_MENU_BB_PNG
+                      : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
                   // AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
                   // '彩票兑换',
                   '彩票频道',
@@ -1026,10 +1031,9 @@ class _HomePageState extends BaseStoreState<HomePage>
                   // },
                 ),
                 _buttonTitleRow(
-                    // AppConfig.getShowCommission()
-                    //     ? R.ASSETS_HOME_INVITE_WEBP_S_PNG
-                    //     : R.ASSETS_LISTTEMP_HOMEAPPLIANCES_ICON_PNG,
-                    R.ASSETS_HOME_HAPPY_02_GIF,
+                    AppConfig.getShowCommission()
+                        ? R.ASSETS_HOME_INVITE_WEBP_S_PNG
+                        : R.ASSETS_LISTTEMP_HOMEAPPLIANCES_ICON_PNG,
                     AppConfig.getShowCommission()
                         // ? "升级店主"
                         ? "一键邀请"
@@ -1044,35 +1048,22 @@ class _HomePageState extends BaseStoreState<HomePage>
                     // AppRouter.push(context, RouteName.Member_BENEFITS_PAGE,);
                   }
                 }),
-                _buttonTitleRow(
-                  // R.ASSETS_HOME_MENU_DD_PNG,
-                  R.ASSETS_HOME_HAPPY_03_GIF,
-
-                  "热销榜单",
-                  onPressed: () {
-                    AppRouter.push(context, RouteName.GOODS_HOT_LIST);
-                  },
-                ),
-                _buttonTitleRow(
-                  // R.ASSETS_HOME_MENU_EE_PNG,
-                  R.ASSETS_HOME_HAPPY_04_GIF,
-
-                  "全部分类",
-                  onPressed: () {
-                    HomeDao.getCategories(
-                      success: (data, code, msg) {
-                        CRoute.push(
-                            context,
-                            ClassifyPage(
-                              data: data,
-                            ));
-                      },
-                      failure: (code, msg) {
-                        Toast.showError(msg);
-                      },
-                    );
-                  },
-                ),
+                _buttonTitleRow(R.ASSETS_HOME_MENU_DD_PNG, "热销榜单",
+                    onPressed: () {
+                  AppRouter.push(context, RouteName.GOODS_HOT_LIST);
+                }),
+                _buttonTitleRow(R.ASSETS_HOME_MENU_EE_PNG, "全部分类",
+                    onPressed: () {
+                  HomeDao.getCategories(success: (data, code, msg) {
+                    CRoute.push(
+                        context,
+                        ClassifyPage(
+                          data: data,
+                        ));
+                  }, failure: (code, msg) {
+                    Toast.showError(msg);
+                  });
+                }),
               ],
             ),
           ),
@@ -1090,7 +1081,8 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   _buttonTitleRow(icon, title, {onPressed}) {
     return Expanded(
-      child: GestureDetector(
+      child: CupertinoButton(
+        padding: EdgeInsets.zero,
         child: Column(
           children: <Widget>[
             Container(
@@ -1117,7 +1109,7 @@ class _HomePageState extends BaseStoreState<HomePage>
             )
           ],
         ),
-        onTap: () {
+        onPressed: () {
           if (onPressed != null) {
             onPressed();
           }
@@ -1161,8 +1153,22 @@ class _HomePageState extends BaseStoreState<HomePage>
             ),
           ),
           Container(
-            width: rSize(48),
             height: rSize(62),
+            decoration: BoxDecoration(
+              color: AppColor.frenchColor,
+              boxShadow: [
+                //使用多层阴影的方式实现单边boxShadow
+                /// more at [stackoverflow](https://stackoverflow.com/a/65296931/7963151)
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 10,
+                  offset: Offset(-5, 0),
+                ),
+                BoxShadow(color: AppColor.frenchColor, offset: Offset(0, -16)),
+                BoxShadow(color: AppColor.frenchColor, offset: Offset(0, 16)),
+                BoxShadow(color: AppColor.frenchColor, offset: Offset(16, 0)),
+              ],
+            ),
             child: _buildSingleGoodsCard(
                 R.ASSETS_HOME_IC_CLASSIFICATION_PNG, '分类'),
           ),
@@ -1172,9 +1178,15 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   Widget _buildSingleGoodsCard(String path, String name) {
-    return InkWell(
-      onTap: () {
-        HomeDao.getCategories(success: (data, code, msg) {
+    return MaterialButton(
+      minWidth: rSize(54),
+      padding: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      onPressed: () async {
+        GSDialog.of(context).showLoadingDialog(context, '');
+        await HomeDao.getCategories(success: (data, code, msg) {
+          GSDialog.of(context).dismiss(context);
           CRoute.push(
               context,
               ClassifyPage(
@@ -1185,26 +1197,22 @@ class _HomePageState extends BaseStoreState<HomePage>
           Toast.showError(msg);
         });
       },
-      child: Container(
-        alignment: Alignment.center,
-        margin: EdgeInsets.only(right: rSize(14)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              path,
-              height: rSize(28),
-              width: rSize(28),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            path,
+            height: rSize(28),
+            width: rSize(28),
+          ),
+          Text(
+            name,
+            style: TextStyle(
+              color: Color(0xFF333333),
+              fontSize: rSize(10),
             ),
-            Text(
-              name,
-              style: TextStyle(
-                color: Color(0xFF333333),
-                fontSize: rSize(10),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -1257,6 +1265,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   _getPromotionList() async {
+    RUICodeListener(context).clipboardListener();
     ResultData resultData = await HttpManager.post(HomeApi.promotion_list, {});
 
     if (_gsRefreshController.isRefresh()) {

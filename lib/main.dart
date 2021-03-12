@@ -57,6 +57,7 @@ void main() async {
   bool isDebug = true;
   AppConfig.setDebug(isDebug);
 
+  //持久化存储
   await Hive.initFlutter();
   await HiveStore.initBox();
 

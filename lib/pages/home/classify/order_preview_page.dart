@@ -65,7 +65,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
     _controller = ScrollController();
     _controller.addListener(() {});
     _editController =
-        TextEditingController(text: _orderModel.data.buyerMessage);
+        TextEditingController(text: _orderModel.data?.buyerMessage??'');
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
         String text = _editController.text;

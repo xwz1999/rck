@@ -166,6 +166,9 @@ class UserApi {
 
   ///注销账号
   static const String deleteAccount = "/v1/users/profile/userDestroy";
+
+  ///会员信息
+  static const String userInfo = '/v2/app/command/user/info';
 }
 
 class GoodsApi {

@@ -30,6 +30,8 @@ PODS:
   - Bugly (2.5.71)
   - camera (0.0.1):
     - Flutter
+  - clipboard_listener (0.0.1):
+    - Flutter
   - core_location_fluttify (0.0.1):
     - Flutter
     - foundation_fluttify
@@ -246,6 +248,7 @@ DEPENDENCIES:
   - amap_core_fluttify (from `.symlinks/plugins/amap_core_fluttify/ios`)
   - amap_location_fluttify (from `.symlinks/plugins/amap_location_fluttify/ios`)
   - camera (from `.symlinks/plugins/camera/ios`)
+  - clipboard_listener (from `.symlinks/plugins/clipboard_listener/ios`)
   - core_location_fluttify (from `.symlinks/plugins/core_location_fluttify/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
@@ -312,6 +315,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/amap_location_fluttify/ios"
   camera:
     :path: ".symlinks/plugins/camera/ios"
+  clipboard_listener:
+    :path: ".symlinks/plugins/clipboard_listener/ios"
   core_location_fluttify:
     :path: ".symlinks/plugins/core_location_fluttify/ios"
   device_info:
@@ -386,6 +391,7 @@ SPEC CHECKSUMS:
   AMapLocation-NO-IDFA: 2a3edfee336b38481b892e1ecc85df0f6b365851
   Bugly: fd066c75c4a0eca1440f9b6a84bd37d51bfc85ac
   camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
+  clipboard_listener: 5bdabc3b4ebabf4b4055ca17aa97b9b4b55160e2
   core_location_fluttify: 9466a411ea7d22c6349c7e6a767ae4623f01eb1d
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d

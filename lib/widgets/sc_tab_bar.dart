@@ -57,7 +57,6 @@ class _SCTabBarState<T> extends State<SCTabBar> {
 
   int _selectedIndex;
 
-
   @override
   void initState() {
     super.initState();
@@ -69,7 +68,6 @@ class _SCTabBarState<T> extends State<SCTabBar> {
         _selectedIndex = index;
       });
     };
-
   }
 
   @override
@@ -88,16 +86,19 @@ class _SCTabBarState<T> extends State<SCTabBar> {
               color: Colors.white,
               padding: _itemSpaceEdge(),
               child: Container(
-                  height: widget.height,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      _indicatorBorder(index),
-                      Expanded(
-                          child:
-                              itemBuilder(context, index, widget.items[index])),
-                    ],
-                  )),
+                height: widget.height,
+                child: Stack(
+                  children: [
+                    itemBuilder(context, index, widget.items[index]),
+                    Positioned(
+                      left: 0,
+                      top: 0,
+                      bottom: 0,
+                      child: _indicatorBorder(index),
+                    ),
+                  ],
+                ),
+              ),
             ),
             onTap: () {
               if (widget.itemClick != null) {

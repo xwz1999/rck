@@ -15,6 +15,7 @@ import 'package:raw_toast/raw_toast.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/config.dart';
 import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/pages/welcome/launch_privacy_dialog.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/storage/hive_store.dart';

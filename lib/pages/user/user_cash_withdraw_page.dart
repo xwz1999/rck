@@ -9,6 +9,7 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/utils/amount_format.dart';
+import 'package:recook/utils/storage/hive_store.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -47,8 +48,11 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
     super.initState();
     _isNeedUserVerify = !UserManager.instance.user.info.realInfoStatus;
     _amountTextEditController = TextEditingController();
-    _accountTextEditController = TextEditingController();
-    _bankAccountTextEditController = TextEditingController();
+    String lastAlipayAccount = HiveStore.appBox.get('last_alipay') ?? '';
+    String lastBankAccount = HiveStore.appBox.get('last_bank_ccount') ?? '';
+    _accountTextEditController = TextEditingController(text: lastAlipayAccount);
+    _bankAccountTextEditController =
+        TextEditingController(text: lastBankAccount);
   }
 
   @override
@@ -587,9 +591,21 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
             passwordReturn: (password) {
               Navigator.pop(context);
               String account = _accountTextEditController.text;
-              withdraw(_amountTextEditController.text, password,
-                  alipay: _isCashToAlipay ? account : "",
-                  bankAccount: _isCashToAlipay ? "" : account);
+              String bankAccount = _bankAccountTextEditController.text;
+              withdraw(
+                _amountTextEditController.text,
+                password,
+                alipay: _isCashToAlipay ? account : "",
+                bankAccount: _isCashToAlipay ? "" : bankAccount,
+              );
+
+              if (_isCashToAlipay) {
+                HiveStore.appBox
+                    .put('last_alipay', _accountTextEditController.text);
+              } else {
+                HiveStore.appBox.put(
+                    'last_bank_ccount', _bankAccountTextEditController.text);
+              }
             },
             forgetPassword: () {
               Navigator.pop(context);
