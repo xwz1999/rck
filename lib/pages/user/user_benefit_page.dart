@@ -57,7 +57,7 @@ class _UserBenefitPageState extends State<UserBenefitPage>
       BenefitDateType.MONTH,
       DateTime.now(),
     );
-    _thisMonthModel = await UserBenefitFunc.getCommonModel(
+    _lastMonthModel = await UserBenefitFunc.getCommonModel(
       BenefitDateType.MONTH,
       DateTime(DateTime.now().year, DateTime.now().month - 1),
     );
