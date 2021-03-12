@@ -20,7 +20,7 @@ import 'package:recook/widgets/recook_back_button.dart';
 class DisplayCard {
   num benefit = 0;
   num sales = 0;
-  int count = 0;
+  num count = 0;
   bool isPercent = false;
   DisplayCard({
     this.benefit,
@@ -91,7 +91,12 @@ class _BenefitViewGenState extends State<BenefitViewGen>
                 .color(Colors.black45)
                 .size(16.sp)
                 .make(),
-            (card.count ?? 0).toString().text.black.size(24.sp).make(),
+            (card.isPercent ? ((card.count ?? 0) * 100) : (card.count ?? 0))
+                .toString()
+                .text
+                .black
+                .size(24.sp)
+                .make(),
           ].column(),
         ].row(),
       ].column(),
@@ -419,7 +424,7 @@ class _BenefitViewGenState extends State<BenefitViewGen>
                   children: [
                     _buildTitle(DateUtil.formatDate(e.date, format: 'M月dd日')),
                     _buildTitle(e.salesVolume.toStringAsFixed(2)),
-                    _buildTitle(e.amount.toString()),
+                    _buildTitle(e.count.toString()),
                     _buildTitle(e.amount.toString()),
                   ],
                 );
@@ -429,7 +434,7 @@ class _BenefitViewGenState extends State<BenefitViewGen>
                   children: [
                     _buildTitle(DateUtil.formatDate(e.date, format: 'M月dd日')),
                     _buildTitle(e.salesVolume.toStringAsFixed(2)),
-                    _buildTitle(e.amount.toString()),
+                    _buildTitle(e.count.toString()),
                     _buildTitle(e.amount.toString()),
                   ],
                 );

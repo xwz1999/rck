@@ -69,7 +69,7 @@ class UserBenefitExpectExtraModel {
 class Team {
   num salesVolume;
   num amount;
-  int ratio;
+  num ratio;
   DisplayCard get card => DisplayCard(
         count: ratio,
         sales: salesVolume,
