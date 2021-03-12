@@ -1150,8 +1150,22 @@ class _HomePageState extends BaseStoreState<HomePage>
             ),
           ),
           Container(
-            width: rSize(48),
             height: rSize(62),
+            decoration: BoxDecoration(
+              color: AppColor.frenchColor,
+              boxShadow: [
+                //使用多层阴影的方式实现单边boxShadow
+                /// more at [stackoverflow](https://stackoverflow.com/a/65296931/7963151)
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 10,
+                  offset: Offset(-5, 0),
+                ),
+                BoxShadow(color: AppColor.frenchColor, offset: Offset(0, -16)),
+                BoxShadow(color: AppColor.frenchColor, offset: Offset(0, 16)),
+                BoxShadow(color: AppColor.frenchColor, offset: Offset(16, 0)),
+              ],
+            ),
             child: _buildSingleGoodsCard(
                 R.ASSETS_HOME_IC_CLASSIFICATION_PNG, '分类'),
           ),
@@ -1161,8 +1175,12 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   Widget _buildSingleGoodsCard(String path, String name) {
-    return InkWell(
-      onTap: () async {
+    return MaterialButton(
+      minWidth: rSize(54),
+      padding: EdgeInsets.zero,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      onPressed: () async {
         GSDialog.of(context).showLoadingDialog(context, '');
         await HomeDao.getCategories(success: (data, code, msg) {
           GSDialog.of(context).dismiss(context);
@@ -1176,26 +1194,22 @@ class _HomePageState extends BaseStoreState<HomePage>
           Toast.showError(msg);
         });
       },
-      child: Container(
-        alignment: Alignment.center,
-        margin: EdgeInsets.only(right: rSize(14)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              path,
-              height: rSize(28),
-              width: rSize(28),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(
+            path,
+            height: rSize(28),
+            width: rSize(28),
+          ),
+          Text(
+            name,
+            style: TextStyle(
+              color: Color(0xFF333333),
+              fontSize: rSize(10),
             ),
-            Text(
-              name,
-              style: TextStyle(
-                color: Color(0xFF333333),
-                fontSize: rSize(10),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
