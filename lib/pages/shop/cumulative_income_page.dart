@@ -391,8 +391,8 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
         title.text.size(12.sp).color(Color(0xFF666666)).make(),
         4.hb,
         isSettlement
-            ? '未结算'.text.size(14.sp).color(Color(0xFFD5101A)).make()
-            : value.text.size(12.sp).color(Color(0xFF666666)).make(),
+            ? value.text.size(12.sp).color(Color(0xFF666666)).make()
+            : '未结算'.text.size(14.sp).color(Color(0xFFD5101A)).make(),
       ],
     );
   }
@@ -443,8 +443,9 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
                 '月'.text.black.size(10.sp).make(),
                 Spacer(),
                 '总收益:'.text.color(Color(0xFF999999)).size(12.sp).make(),
-                (model?.allAmount ?? 0)
-                    .toStringAsFixed(2)
+                ((model?.isSettlement ?? true)
+                        ? ((model?.allAmount ?? 0).toStringAsFixed(2))
+                        : '未结算')
                     .text
                     .color(Color(0xFFD5101A))
                     .size(12.sp)
