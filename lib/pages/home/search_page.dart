@@ -39,6 +39,7 @@ import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/progress/loading_dialog.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:recook/pages/home/classify/mvp/goods_list_contact.dart';
@@ -595,6 +596,28 @@ class _SearchPageState extends BaseStoreState<SearchPage>
         });
   }
 
+  Future _callRefresh() async {
+    final cancel = ReToast.raw(Container(
+      margin: EdgeInsets.only(top: 48),
+      color: Color(0xFFAAAAAA),
+      alignment: Alignment.center,
+      child: LoadingDialog(
+        //调用对话框
+        text: '马上就好，请稍等～',
+      ),
+    ));
+
+    await _presenter.fetchList(
+      -99,
+      0,
+      _sortType,
+      keyword: _searchText,
+    );
+    cancel();
+    _startSearch = true;
+    setState(() {});
+  }
+
   List<Widget> _rightActions(store) {
     return <Widget>[
       Container(
@@ -608,38 +631,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
             if (TextUtils.isEmpty(_searchText)) return;
             _startSearch = true;
             _contentFocusNode.unfocus();
-            // _presenter.fetchSearchList(_searchText, 0);
-            showGeneralDialog(
-              context: context,
-              barrierDismissible: false,
-              barrierColor: Colors.black26,
-              transitionDuration: Duration.zero,
-              transitionBuilder:
-                  (context, animation, secondaryAnimation, child) {
-                return child;
-              },
-              pageBuilder: (BuildContext context, Animation<double> animation,
-                  Animation<double> secondaryAnimation) {
-                return Container(
-                  margin: EdgeInsets.only(
-                      top: MediaQuery.of(context).padding.top + 48),
-                  color: Color(0xFFAAAAAA),
-                  alignment: Alignment.center,
-                  child: LoadingDialog(
-                    //调用对话框
-                    text: '马上就好，请稍等～',
-                  ),
-                );
-              },
-            );
-            await _presenter.fetchList(
-              -99,
-              0,
-              _sortType,
-              keyword: _searchText,
-            );
-            GSDialog.of(context).dismiss(context);
-            setState(() {});
+            await _callRefresh();
           },
         ),
       )
@@ -673,42 +665,8 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                 controller: _textEditController,
                 textInputAction: TextInputAction.search,
                 onSubmitted: (_submitted) async {
-                  //TODO 讲道理应该需要重写整个Dialog 组件，或改用第三方Dialog组件
-                  showGeneralDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    barrierColor: Colors.black26,
-                    transitionDuration: Duration.zero,
-                    transitionBuilder:
-                        (context, animation, secondaryAnimation, child) {
-                      return child;
-                    },
-                    pageBuilder: (BuildContext context,
-                        Animation<double> animation,
-                        Animation<double> secondaryAnimation) {
-                      return Container(
-                        margin: EdgeInsets.only(
-                            top: MediaQuery.of(context).padding.top + 48),
-                        color: Color(0xFFAAAAAA),
-                        alignment: Alignment.center,
-                        child: LoadingDialog(
-                          //调用对话框
-                          text: '马上就好，请稍等～',
-                        ),
-                      );
-                    },
-                  );
-                  _startSearch = true;
+                  _callRefresh();
                   _contentFocusNode.unfocus();
-                  // _presenter.fetchSearchList(_searchText, 0);
-                  await _presenter.fetchList(
-                    -99,
-                    0,
-                    _sortType,
-                    keyword: _searchText,
-                  );
-                  GSDialog.of(context).dismiss(context);
-                  setState(() {});
                 },
                 focusNode: _contentFocusNode,
                 onChanged: (text) {
@@ -800,36 +758,11 @@ class _SearchPageState extends BaseStoreState<SearchPage>
             labelPadding: EdgeInsets.only(left: 20, right: 20),
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onSelected: (bool value) async {
-              showGeneralDialog(
-                context: context,
-                barrierDismissible: false,
-                barrierColor: Colors.black26,
-                transitionDuration: Duration.zero,
-                transitionBuilder:
-                    (context, animation, secondaryAnimation, child) {
-                  return child;
-                },
-                pageBuilder: (BuildContext context, Animation<double> animation,
-                    Animation<double> secondaryAnimation) {
-                  return Container(
-                    margin: EdgeInsets.only(
-                        top: MediaQuery.of(context).padding.top + 48),
-                    color: Color(0xFFAAAAAA),
-                    alignment: Alignment.center,
-                    child: LoadingDialog(
-                      //调用对话框
-                      text: '马上就好，请稍等～',
-                    ),
-                  );
-                },
-              );
-              _startSearch = true;
-              _textEditController.text = text;
               _searchText = text;
+              _textEditController.text = text;
+              _startSearch = true;
+              _callRefresh();
               setState(() {});
-              // _presenter.fetchSearchList(text, 0);
-              await _presenter.fetchList(-99, 0, _sortType, keyword: text);
-              GSDialog.of(context).dismiss(context);
             },
             label: Text(text),
             selected: false,
