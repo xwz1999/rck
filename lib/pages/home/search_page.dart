@@ -629,7 +629,6 @@ class _SearchPageState extends BaseStoreState<SearchPage>
           fontSize: ScreenAdapterUtils.setSp(15),
           onPressed: () async {
             if (TextUtils.isEmpty(_searchText)) return;
-            _startSearch = true;
             _contentFocusNode.unfocus();
             await _callRefresh();
           },
@@ -760,7 +759,6 @@ class _SearchPageState extends BaseStoreState<SearchPage>
             onSelected: (bool value) async {
               _searchText = text;
               _textEditController.text = text;
-              _startSearch = true;
               _callRefresh();
               setState(() {});
             },
