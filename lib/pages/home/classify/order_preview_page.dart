@@ -1098,7 +1098,10 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
     UserManager.instance.refreshShoppingCart.value = true;
     UserManager.instance.refreshShoppingCartNumber.value = true;
     AppRouter.pushAndReplaced(context, RouteName.ORDER_PREPAY_PAGE,
-        arguments:
-            OrderPrepayPage.setArguments(resultModel.data, goToOrder: true));
+        arguments: OrderPrepayPage.setArguments(
+          resultModel.data,
+          goToOrder: true,
+          canUseBalance: !_checkSwitchEnabled,
+        ));
   }
 }
