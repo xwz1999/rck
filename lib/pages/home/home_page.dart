@@ -1163,7 +1163,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                   blurRadius: 10,
                   offset: Offset(-5, 0),
                 ),
-                BoxShadow(color: AppColor.frenchColor, offset: Offset(0, -16)),
+                // BoxShadow(color: AppColor.frenchColor, offset: Offset(0, -16)),
                 BoxShadow(color: AppColor.frenchColor, offset: Offset(0, 16)),
                 BoxShadow(color: AppColor.frenchColor, offset: Offset(16, 0)),
               ],
