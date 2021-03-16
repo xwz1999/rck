@@ -12,6 +12,7 @@ import 'dart:io';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:package_info/package_info.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -26,6 +27,7 @@ import 'package:recook/models/user_model.dart';
 import 'package:recook/pages/user/functions/user_benefit_func.dart';
 import 'package:recook/pages/user/order/order_after_sale_page.dart';
 import 'package:recook/pages/user/order/order_center_page.dart';
+import 'package:recook/pages/user/user_history_benefit_page.dart';
 import 'package:recook/pages/user/widget/capital_view.dart';
 import 'package:recook/pages/user/widget/money_view.dart';
 import 'package:recook/pages/user/widget/order_central_view.dart';
@@ -289,23 +291,41 @@ class _UserPageState extends BaseStoreState<UserPage> {
               AppConfig.getShowCommission()
                   ? CustomImageButton(
                       onPressed: () {
-                        push(RouteName.CUMULATIVE_INCOME);
+                        Get.to(UserHistoryBenefitPage());
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         height: 40,
                         child: Row(
                           children: <Widget>[
-                            Text.rich(TextSpan(children: [
-                              TextSpan(
-                                  text: "累计收益",
-                                  style: AppTextStyle.generate(16,
-                                      fontWeight: FontWeight.w700)),
-                              TextSpan(
-                                  text: "(瑞币)",
-                                  style: TextStyle(
-                                      color: Colors.black87, fontSize: 10))
-                            ])),
+                            Text(
+                              "累计收益",
+                              style: AppTextStyle.generate(16,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            MaterialButton(
+                              padding: EdgeInsets.all(4.w),
+                              minWidth: 0,
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              child: Icon(
+                                Icons.help_outline,
+                                size: 12.w,
+                                color: Color(0xFFA5A5A5),
+                              ),
+                              onPressed: () {
+                                Alert.show(
+                                    context,
+                                    NormalTextDialog(
+                                      title: "累计收益",
+                                      content: "您的账户使用至今所有已到账收益之和",
+                                      items: ["确认"],
+                                      listener: (index) {
+                                        Alert.dismiss(context);
+                                      },
+                                    ));
+                              },
+                            ),
                             Spacer(),
                             Text(_allBenefitAmount.toStringAsFixed(2),
                                 style: TextStyle(
