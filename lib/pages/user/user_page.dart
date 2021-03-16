@@ -291,7 +291,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
               AppConfig.getShowCommission()
                   ? CustomImageButton(
                       onPressed: () {
-                        Get.to(UserHistoryBenefitPage());
+                        Get.to(() => UserHistoryBenefitPage());
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 15),
