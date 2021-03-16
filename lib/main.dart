@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:amap_location_fluttify/amap_location_fluttify.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -224,6 +225,8 @@ class MyAppState extends State<MyApp> {
         child: StoreBuilder<RecookState>(builder: (context, store) {
           return OKToast(
             child: MaterialApp(
+              builder: BotToastInit(),
+              navigatorObservers: [BotToastNavigatorObserver()],
               localizationsDelegates: [
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,

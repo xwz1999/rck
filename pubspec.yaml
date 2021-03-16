@@ -226,6 +226,8 @@ dependencies:
     git:
       url: http://159.75.73.143:8080/laiiihz/power_logger.git
 
+  bot_toast: ^3.0.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
