@@ -46,6 +46,7 @@ import 'package:recook/widgets/refresh_widget.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class UserPage extends StatefulWidget {
   @override
@@ -217,6 +218,25 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 height: AppConfig.getShowCommission() ? 10 : 0,
               ),
               // UserPageAssetsView(),
+              ...[
+                _renderBenefitCard(
+                  leadingPath: R.ASSETS_USER_PINK_BUYER_PNG,
+                  title: '自购收益',
+                  alertTitle: '自购收益',
+                  alertContent: '您本人下单并确认收货后，您获得的佣金。',
+                ),
+                _renderBenefitCard(
+                  leadingPath: R.ASSETS_USER_PINK_SHARE_PNG,
+                  title: '导购收益',
+                  alertTitle: '会员通过您导购的商品链接，购买并确认收货的佣金收益',
+                ),
+                _renderBenefitCard(
+                  leadingPath: R.ASSETS_USER_PINK_GROUP_PNG,
+                  title: '店铺补贴',
+                  alertTitle: 'TODO',
+                ),
+              ].sepWidget(separate: 10.hb),
+              10.hb,
               ShopBenefitView(key: _shopBenefitKey),
               UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Gold ||
                       UserLevelTool.currentRoleLevelEnum() ==
@@ -269,6 +289,59 @@ class _UserPageState extends BaseStoreState<UserPage> {
       return null;
     }
     return model;
+  }
+
+  Widget _renderBenefitCard({
+    @required String leadingPath,
+    @required String title,
+    @required String alertTitle,
+    @required String alertContent,
+    @required String title1,
+    @required String title2,
+    @required String title3,
+    @required String title4,
+  }) {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          Row(
+            children: [
+              46.hb,
+              Image.asset(
+                leadingPath,
+                width: 22.w,
+                height: 22.w,
+              ),
+              10.wb,
+              title.text.size(16.sp).black.make(),
+              MaterialButton(
+                padding: EdgeInsets.all(4.w),
+                minWidth: 0,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                child: Icon(
+                  Icons.help_outline,
+                  size: 12.w,
+                  color: Color(0xFFA5A5A5),
+                ),
+                onPressed: () {
+                  Alert.show(
+                      context,
+                      NormalTextDialog(
+                        title: alertTitle,
+                        content: alertContent,
+                        items: ["确认"],
+                        listener: (index) {
+                          Alert.dismiss(context);
+                        },
+                      ));
+                },
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
   _buildDetailReward() {
