@@ -85,6 +85,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.0-nullsafety.1"
+  bot_toast:
+    dependency: "direct main"
+    description:
+      name: bot_toast
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.0.5"
   build:
     dependency: transitive
     description:
@@ -552,6 +559,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.1.19"
+  get:
+    dependency: "direct main"
+    description:
+      name: get
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.26.0"
   glob:
     dependency: transitive
     description:

@@ -647,109 +647,85 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                 padding: EdgeInsets.zero,
                                 onPressed: () {
                                   _focusNode.unfocus();
-                                  ActionSheet.show(
-                                    context,
-                                    items: ['举报'],
-                                    listener: (index) {
-                                      Navigator.pop(context);
-                                      //fake
-                                      Future.delayed(
-                                          Duration(milliseconds: 1000), () {
-                                        GSDialog.of(context)
-                                            .showSuccess(context, '举报成功');
-                                      });
-                                    },
-                                  );
-                                },
-                                child: CustomImageButton(
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () {
-                                    _focusNode.unfocus();
-                                    showModalBottomSheet(
-                                        context: context,
-                                        builder: (context) {
-                                          return Container(
-                                            width: rSize(200),
-                                            color: Colors.black87,
-                                            child: Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      CustomImageButton(
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                          setState(() {
-                                                            chatObjects.clear();
-                                                          });
-                                                        },
-                                                        child: Column(
-                                                          children: [
-                                                            SizedBox(
-                                                              width: rSize(60),
-                                                              height: rSize(60),
-                                                              child: Icon(
-                                                                Icons.clear_all,
-                                                                size: rSize(30),
-                                                              ),
+                                  showModalBottomSheet(
+                                      context: context,
+                                      builder: (context) {
+                                        return Container(
+                                          width: rSize(200),
+                                          color: Colors.black87,
+                                          child: Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    CustomImageButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                        setState(() {
+                                                          chatObjects.clear();
+                                                        });
+                                                      },
+                                                      child: Column(
+                                                        children: [
+                                                          SizedBox(
+                                                            width: rSize(60),
+                                                            height: rSize(60),
+                                                            child: Icon(
+                                                              Icons.clear_all,
+                                                              size: rSize(30),
                                                             ),
-                                                            Text('清屏'),
-                                                          ],
-                                                        ),
+                                                          ),
+                                                          Text('清屏'),
+                                                        ],
                                                       ),
-                                                      CustomImageButton(
-                                                        onPressed: () {
-                                                          Navigator.pop(
-                                                              context);
-                                                          if (UserManager
-                                                              .instance
-                                                              .haveLogin) {
-                                                            showModalBottomSheet(
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return LiveReportView();
-                                                              },
-                                                            );
-                                                          } else {
-                                                            showToast(
-                                                                '未登陆，请先登陆');
-                                                            CRoute.pushReplace(
-                                                                context,
-                                                                UserPage());
-                                                          }
-                                                        },
-                                                        child: Column(
-                                                          children: [
-                                                            SizedBox(
-                                                              width: rSize(60),
-                                                              height: rSize(60),
-                                                              child: Icon(
-                                                                Icons
-                                                                    .report_problem,
-                                                                size: rSize(30),
-                                                              ),
+                                                    ),
+                                                    CustomImageButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                        if (UserManager.instance
+                                                            .haveLogin) {
+                                                          showModalBottomSheet(
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return LiveReportView();
+                                                            },
+                                                          );
+                                                        } else {
+                                                          showToast('未登陆，请先登陆');
+                                                          CRoute.pushReplace(
+                                                              context,
+                                                              UserPage());
+                                                        }
+                                                      },
+                                                      child: Column(
+                                                        children: [
+                                                          SizedBox(
+                                                            width: rSize(60),
+                                                            height: rSize(60),
+                                                            child: Icon(
+                                                              Icons
+                                                                  .report_problem,
+                                                              size: rSize(30),
                                                             ),
-                                                            Text('举报'),
-                                                          ],
-                                                        ),
+                                                          ),
+                                                          Text('举报'),
+                                                        ],
                                                       ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
                                             ),
-                                          );
-                                        });
-                                  },
-                                  child: Image.asset(
-                                    R.ASSETS_LIVE_LIVE_MORE_PNG,
-                                    width: rSize(32),
-                                    height: rSize(32),
-                                  ),
+                                          ),
+                                        );
+                                      });
+                                },
+                                child: Image.asset(
+                                  R.ASSETS_LIVE_LIVE_MORE_PNG,
+                                  width: rSize(32),
+                                  height: rSize(32),
                                 ),
                               ),
                               SizedBox(width: rSize(10)),

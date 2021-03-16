@@ -5,9 +5,11 @@ import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/models/media_model.dart';
 import 'package:recook/pages/live/models/live_report_model.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 
 class LiveReportView extends StatefulWidget {
   LiveReportView({Key key}) : super(key: key);
@@ -54,13 +56,14 @@ class _LiveReportViewState extends State<LiveReportView> {
           children: [
             Expanded(
               child: ListView(
+                padding: EdgeInsets.all(10),
                 controller: controller,
                 children: [
                   Text(
                     '请选择举报类型',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: rSP(13),
+                      fontSize: rSP(20),
                     ),
                   ),
                   models == null
@@ -125,29 +128,27 @@ class _LiveReportViewState extends State<LiveReportView> {
               ),
             ),
             MaterialButton(
-              onPressed: () {
-                if (_imageFile == null)
+              onPressed: () async {
+                if (_imageFile == null) {
                   showToast('图片不能为空');
-                else {
-                  GSDialog.of(context).showLoadingDialog(context, '上传图片中');
-                  HttpManager.uploadFile(
-                    url: CommonApi.upload,
-                    file: _imageFile,
-                    key: "photo",
-                  ).then((result) {
-                    GSDialog.of(context).dismiss(context);
-                    GSDialog.of(context).showLoadingDialog(context, '举报中');
-                    HttpManager.post(LiveAPI.report, {
-                      "type": type,
-                      'content': _textController.text,
-                      'imgUrl': result.url,
-                    }).then((_) {
-                      GSDialog.of(context).dismiss(context);
-                      showToast('举报成功');
-                      Navigator.pop(context);
-                    });
-                  });
+                  return;
                 }
+                final loadingCancel = ReToast.loading(text: '上传图片中');
+                UploadResult uploadResult = await HttpManager.uploadFile(
+                  url: CommonApi.upload,
+                  file: _imageFile,
+                  key: "photo",
+                );
+                loadingCancel();
+                final reportLoadingCancel = ReToast.loading(text: '举报中');
+                ResultData resultData = await HttpManager.post(LiveAPI.report, {
+                  "type": type,
+                  'content': _textController.text,
+                  'imgUrl': uploadResult.url,
+                });
+                reportLoadingCancel();
+                showToast(resultData.data['msg']);
+                Navigator.pop(context);
               },
               color: Colors.red,
               child: Text('举报'),

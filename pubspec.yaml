@@ -227,9 +227,10 @@ dependencies:
       url: http://159.75.73.143:8080/laiiihz/power_logger.git
 
   pin_input_text_field: ^3.3.0
-
   device_info: ^1.0.0
   clipboard_listener: ^1.0.0
+  bot_toast: ^3.0.5
+  get: ^3.26.0
 
 dev_dependencies:
   flutter_test:

@@ -59,6 +59,7 @@ import 'package:recook/widgets/banner.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/goods_item.dart';
 import 'package:recook/widgets/home_gif_header.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:recook/widgets/weather_page/weather_city_model.dart';
@@ -1160,7 +1161,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                   blurRadius: 10,
                   offset: Offset(-5, 0),
                 ),
-                BoxShadow(color: AppColor.frenchColor, offset: Offset(0, -16)),
+                // BoxShadow(color: AppColor.frenchColor, offset: Offset(0, -16)),
                 BoxShadow(color: AppColor.frenchColor, offset: Offset(0, 16)),
                 BoxShadow(color: AppColor.frenchColor, offset: Offset(16, 0)),
               ],
@@ -1180,9 +1181,9 @@ class _HomePageState extends BaseStoreState<HomePage>
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       onPressed: () async {
-        GSDialog.of(context).showLoadingDialog(context, '');
+        final loadingCancel = ReToast.loading();
         await HomeDao.getCategories(success: (data, code, msg) {
-          GSDialog.of(context).dismiss(context);
+          loadingCancel();
           CRoute.push(
               context,
               ClassifyPage(

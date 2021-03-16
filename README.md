@@ -75,3 +75,7 @@ rSize(`value`) `value` is design `pt`
 ### 使用自动生成的图片
 
 假设你有一张图片`assets/live/user.png`,你只需要使用`R.ASSETS_LIVE_USER_PNG`即可使用该图片
+
+## TODO LIST
+
+* [ ] 迁移GSDialog 到 BotToast

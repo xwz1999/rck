@@ -1,11 +1,13 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/live/video/video_advance_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:video_trimmer/trim_editor.dart';
 import 'package:video_trimmer/video_trimmer.dart';
@@ -57,7 +59,7 @@ class _CropVideoPageState extends State<CropVideoPage> {
                   borderRadius: BorderRadius.circular(rSize(14)),
                 ),
                 onPressed: () {
-                  GSDialog.of(context).showLoadingDialog(context, '保存视频中');
+                  final cropLoadingCancel = ReToast.loading(text: '保存视频中');
                   _trimmer
                       .saveTrimmedVideo(
                     startValue: _startValue,
@@ -66,11 +68,8 @@ class _CropVideoPageState extends State<CropVideoPage> {
                     ffmpegCommand: '-qscale "0"',
                   )
                       .then((path) {
-                    GSDialog.of(context).dismiss(context);
-                    CRoute.pushReplace(
-                      context,
-                      VideoAdvancePage(file: File(path)),
-                    );
+                    cropLoadingCancel();
+                    Get.to(VideoAdvancePage(file: File(path)));
                   });
                 },
                 color: Color(0xFFFA3B3E),
