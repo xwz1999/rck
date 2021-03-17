@@ -9,8 +9,10 @@
 
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/upgradeCard/upgrade_card_page_v2.dart';
 import 'package:recook/pages/user/banlance/user_balance_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/alert.dart';
@@ -170,8 +172,7 @@ class _CapitalViewState extends BaseStoreState<CapitalView> {
                         .cards
                         .toInt()
                         .toString(), onTap: () {
-                  // push(RouteName.MY_FAVORITE_PAGE);
-                  push(RouteName.UPGRADE_CARD_PAGE);
+                  Get.to(() => UpgradeCardPageV2());
                 }),
               ],
             ),
