@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:recook/pages/upgradeCard/upgrade_card_use_result_page.dart';
+import 'package:recook/widgets/alert.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:recook/constants/header.dart';
@@ -66,9 +70,44 @@ class _UpgradeUnusedViewState extends State<UpgradeUnusedView> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _renderButton(title: '使用', onTap: () {}),
+              _renderButton(
+                  title: '使用',
+                  onTap: () async {
+                    DateTime now = DateTime.now();
+                    DateTime nextMonth = DateTime(now.year, now.month + 1);
+
+                    bool result = await _openUseCardDialog(
+                      confirmTitle: '使用黄金卡',
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          '黄金卡使用后将于${nextMonth.month}月1日考核时生效'
+                              .text
+                              .black
+                              .size(15.sp)
+                              .make(),
+                          '您使用了黄金卡，将于下月1日生效，若店铺考核未达到黄金店铺考核标准，则消耗一张黄金卡成为黄金店铺，享受黄金店铺权益；若店铺考核达到黄金店铺标准，则黄金卡将返还至您的卡包。'
+                              .text
+                              .color(Color(0xFFDE180C))
+                              .size(15.sp)
+                              .make(),
+                        ],
+                      ),
+                    );
+                    if (result) {
+                      final cancel = ReToast.loading(text: '使用中');
+                      //TODO 请求使用权益卡接口
+                      await Future.delayed(Duration(seconds: 2));
+                      cancel();
+                      await Get.to(() => UpgradeUseResultPage(
+                            result: true,
+                            content: '恭喜',
+                          ));
+                      _refreshController.requestRefresh();
+                    }
+                  }),
               16.hb,
-              _renderButton(title: '赠送', onTap: () {}),
+              _renderButton(title: '赠送', onTap: () async {}),
             ],
           ),
         ],
@@ -111,7 +150,31 @@ class _UpgradeUnusedViewState extends State<UpgradeUnusedView> {
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              _renderButton(title: '使用', onTap: () {}),
+              _renderButton(
+                  title: '使用',
+                  onTap: () async {
+                    DateTime now = DateTime.now();
+                    DateTime nextMonth = DateTime(now.year, now.month + 1);
+
+                    bool result = await _openUseCardDialog(
+                      confirmTitle: '使用白银卡',
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          '白银卡使用后将于${nextMonth.month}月1日考核时生效'
+                              .text
+                              .black
+                              .size(15.sp)
+                              .make(),
+                          '您使用了白银卡，将于下月1日生效，若店铺考核未达到白银店铺考核标准，则消耗一张白银卡成为白银店铺，享受白银店铺权益；若店铺考核达到白银店铺标准，则白银卡将返还至您的卡包。'
+                              .text
+                              .color(Color(0xFFDE180C))
+                              .size(15.sp)
+                              .make(),
+                        ],
+                      ),
+                    );
+                  }),
               16.hb,
               _renderButton(title: '赠送', onTap: () {}),
             ],
@@ -124,6 +187,19 @@ class _UpgradeUnusedViewState extends State<UpgradeUnusedView> {
         ),
       ),
     );
+  }
+
+  Future<bool> _openUseCardDialog({String confirmTitle, Widget child}) async {
+    return (await Get.dialog(NormalContentDialog(
+          title: '提示',
+          content: child,
+          type: NormalTextDialogType.delete,
+          items: ['取消'],
+          deleteItem: confirmTitle,
+          listener: (_) => Get.back(),
+          deleteListener: () => Get.back(result: true),
+        ))) ==
+        true;
   }
 
   @override
