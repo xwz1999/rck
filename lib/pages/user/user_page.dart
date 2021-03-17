@@ -224,16 +224,36 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   title: '自购收益',
                   alertTitle: '自购收益',
                   alertContent: '您本人下单并确认收货后，您获得的佣金。',
+                  title1: '累计未到账收益',
+                  title3: '累计已到账收益',
+                  content1: '1514.1',
+                  content2: '12',
+                  content3: '12312.1',
+                  content4: '123',
                 ),
                 _renderBenefitCard(
                   leadingPath: R.ASSETS_USER_PINK_SHARE_PNG,
                   title: '导购收益',
-                  alertTitle: '会员通过您导购的商品链接，购买并确认收货的佣金收益',
+                  alertTitle: '导购收益',
+                  alertContent: '会员通过您导购的商品链接，购买并确认收货的佣金收益',
+                  title1: '累计未到账收益',
+                  title3: '累计已到账收益',
+                  content1: '',
+                  content2: '',
+                  content3: '',
+                  content4: '',
                 ),
                 _renderBenefitCard(
                   leadingPath: R.ASSETS_USER_PINK_GROUP_PNG,
                   title: '店铺补贴',
-                  alertTitle: 'TODO',
+                  alertTitle: '店铺补贴',
+                  alertContent: 'TODO',
+                  title1: '累计未到账补贴',
+                  title3: '累计已到账补贴',
+                  content1: '',
+                  content2: '',
+                  content3: '',
+                  content4: '',
                 ),
               ].sepWidget(separate: 10.hb),
               10.hb,
@@ -297,9 +317,11 @@ class _UserPageState extends BaseStoreState<UserPage> {
     @required String alertTitle,
     @required String alertContent,
     @required String title1,
-    @required String title2,
     @required String title3,
-    @required String title4,
+    @required String content1,
+    @required String content2,
+    @required String content3,
+    @required String content4,
   }) {
     return Container(
       color: Colors.white,
@@ -308,6 +330,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
           Row(
             children: [
               46.hb,
+              24.wb,
               Image.asset(
                 leadingPath,
                 width: 22.w,
@@ -337,6 +360,70 @@ class _UserPageState extends BaseStoreState<UserPage> {
                       ));
                 },
               ),
+              Spacer(),
+            ],
+          ),
+          Divider(
+            indent: 16.w,
+            endIndent: 16.w,
+            color: Color(0xFFEEEEEE),
+            height: 1.w,
+            thickness: 1.w,
+          ),
+          Row(
+            children: [
+              74.hb,
+              Row(
+                children: [
+                  24.wb,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      title1.text.color(Color(0xFF999999)).size(12.sp).make(),
+                      10.hb,
+                      content1.text.black.size(16.sp).make(),
+                    ],
+                  ),
+                  Spacer(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      '订单数'.text.color(Color(0xFF999999)).size(12.sp).make(),
+                      10.hb,
+                      content2.text.black.size(16.sp).make(),
+                    ],
+                  ),
+                  16.wb,
+                ],
+              ).expand(),
+              Container(
+                height: 28.w,
+                width: 1.w,
+                color: Color(0xFFEEEEEE),
+              ),
+              Row(
+                children: [
+                  16.wb,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      title3.text.color(Color(0xFF999999)).size(12.sp).make(),
+                      10.hb,
+                      content3.text.black.size(16.sp).make(),
+                    ],
+                  ),
+                  Spacer(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      '订单数'.text.color(Color(0xFF999999)).size(12.sp).make(),
+                      10.hb,
+                      content4.text.black.size(16.sp).make(),
+                    ],
+                  ),
+                  24.wb,
+                ],
+              ).expand(),
             ],
           ),
         ],
