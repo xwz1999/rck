@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/sc_tile.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -13,6 +14,7 @@ class AccountAndSafetyPage extends StatefulWidget {
 }
 
 class _AccountAndSafetyPageState extends State<AccountAndSafetyPage> {
+  bool switchTest = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,7 +46,14 @@ class _AccountAndSafetyPageState extends State<AccountAndSafetyPage> {
             elevation: 0,
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.w),
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            onPressed: () {},
+            onPressed: () async {
+              final cancel = ReToast.loading(text: '修改中');
+              await Future.delayed(Duration(seconds: 2));
+              cancel();
+              setState(() {
+                switchTest = !switchTest;
+              });
+            },
             child: Row(
               children: [
                 Column(
@@ -59,9 +68,16 @@ class _AccountAndSafetyPageState extends State<AccountAndSafetyPage> {
                   ],
                 ).expand(),
                 CupertinoSwitch(
-                  value: false,
+                  value: switchTest,
                   trackColor: Color(0xFFDB2D2D),
-                  onChanged: (state) {},
+                  onChanged: (state) async {
+                    final cancel = ReToast.loading(text: '修改中');
+                    await Future.delayed(Duration(seconds: 2));
+                    cancel();
+                    setState(() {
+                      switchTest = !switchTest;
+                    });
+                  },
                 ),
               ],
             ),
