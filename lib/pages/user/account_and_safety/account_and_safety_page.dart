@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/sc_tile.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class AccountAndSafetyPage extends StatefulWidget {
   AccountAndSafetyPage({Key key}) : super(key: key);
@@ -34,9 +36,36 @@ class _AccountAndSafetyPageState extends State<AccountAndSafetyPage> {
             AppRouter.push(context, RouteName.USER_SET_PASSWORD_VARCODE);
           }),
           SCTile.normalTile("注销账户", listener: () {
-            // push(RouteName.USER_SET_PASSWORD);
             AppRouter.push(context, RouteName.USER_DELETE_ACCOUNT_PAGE);
           }),
+          16.hb,
+          MaterialButton(
+            color: Colors.white,
+            elevation: 0,
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.w),
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            onPressed: () {},
+            child: Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    '手机号显示开关'.text.black.size(15.sp).make(),
+                    '关闭后，其他人将无法看到您的手机号'
+                        .text
+                        .size(12.sp)
+                        .color(Color(0xFF666666))
+                        .make(),
+                  ],
+                ).expand(),
+                CupertinoSwitch(
+                  value: false,
+                  trackColor: Color(0xFFDB2D2D),
+                  onChanged: (state) {},
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
