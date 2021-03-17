@@ -1447,6 +1447,8 @@ class _HomePageState extends BaseStoreState<HomePage>
       int oldLevel = shopLevel.data['data']['oldRoleLevel'];
       int nowLevel = shopLevel.data['data']['nowRoleLevel'];
 
+      if (oldLevel == 400 && nowLevel == 400) return;
+
       if ((oldLevel == 0 || oldLevel == 500) && nowLevel == 400) {
         firstTag = true;
         await showDialog(
@@ -1468,13 +1470,19 @@ class _HomePageState extends BaseStoreState<HomePage>
           case UserRoleLevel.Diamond_1:
           case UserRoleLevel.Diamond_2:
           case UserRoleLevel.Diamond_3:
-            img = R.ASSETS_USER_UPGRADE_DIAMOND_PNG_WEBP;
+            // img = R.ASSETS_USER_UPGRADE_DIAMOND_PNG_WEBP;
+            img = R.ASSETS_USER_UPGRADABLE_DIAMOND_PNG_WEBP;
             break;
           case UserRoleLevel.Gold:
-            img = R.ASSETS_USER_UPGRADE_GOLD_PNG_WEBP;
+            // img = R.ASSETS_USER_UPGRADE_GOLD_PNG_WEBP;
+            img = R.ASSETS_USER_UPGRADABLE_GOLD_PNG_WEBP;
             break;
           case UserRoleLevel.Silver:
-            img = R.ASSETS_USER_UPGRADE_SILVER_PNG_WEBP;
+            // img = R.ASSETS_USER_UPGRADE_SILVER_PNG_WEBP;
+            img = R.ASSETS_USER_UPGRADABLE_SILVER_PNG_WEBP;
+            break;
+          case UserRoleLevel.Master:
+            img = R.ASSETS_USER_UPGRADABLE_MASTER_PNG_WEBP;
             break;
           default:
             break;
