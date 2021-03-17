@@ -13,7 +13,8 @@ class UserHistoryBenefitPage extends StatefulWidget {
 }
 
 class _UserHistoryBenefitPageState extends State<UserHistoryBenefitPage> {
-  GSRefreshController _refreshController = GSRefreshController();
+  GSRefreshController _refreshController =
+      GSRefreshController(initialRefresh: true);
   _renderColumn(String title, String subTitle) {
     return Column(
       children: [
