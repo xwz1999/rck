@@ -87,37 +87,37 @@ class ShopManagerView extends StatelessWidget {
                 path: R.ASSETS_SHOP_MY_GROUP_WEBP,
                 show: showTop,
               ),
-              _buildGridItem(
-                title: '推荐钻石店铺',
-                subTitle: '推荐好友·福利双赢',
-                onTap: () => AppRouter.push(
-                    context, RouteName.SHOP_RECOMMEND_UPGRADE_PAGE),
-                path: R.ASSETS_SHOP_RECOMMAND_DIAMOND_WEBP,
-                show: showMid,
-              ),
-              _buildGridItem(
-                title: '我的推荐',
-                subTitle: '呼朋唤友·享收益',
-                onTap: () => CRoute.push(
-                    context, MyGroupPage(type: UsersMode.MY_RECOMMEND)),
-                path: R.ASSETS_SHOP_MY_RECOMMAND_WEBP,
-                show: showMid,
-              ),
-              _buildGridItem(
-                title: '获取平台奖励',
-                subTitle: '平台可靠·奖励多',
-                onTap: () => CRoute.push(context, GetPlatformAwardPage()),
-                path: R.ASSETS_SHOP_PLATFORM_AWARD_WEBP,
-                show: showBottom,
-              ),
-              _buildGridItem(
-                title: '我的奖励',
-                subTitle: '积少成多·奖励丰厚',
-                onTap: () => CRoute.push(
-                    context, MyGroupPage(type: UsersMode.MY_REWARD)),
-                path: R.ASSETS_SHOP_MY_AWARD_WEBP,
-                show: showBottom,
-              ),
+              // _buildGridItem(
+              //   title: '推荐钻石店铺',
+              //   subTitle: '推荐好友·福利双赢',
+              //   onTap: () => AppRouter.push(
+              //       context, RouteName.SHOP_RECOMMEND_UPGRADE_PAGE),
+              //   path: R.ASSETS_SHOP_RECOMMAND_DIAMOND_WEBP,
+              //   show: showMid,
+              // ),
+              // _buildGridItem(
+              //   title: '我的推荐',
+              //   subTitle: '呼朋唤友·享收益',
+              //   onTap: () => CRoute.push(
+              //       context, MyGroupPage(type: UsersMode.MY_RECOMMEND)),
+              //   path: R.ASSETS_SHOP_MY_RECOMMAND_WEBP,
+              //   show: showMid,
+              // ),
+              // _buildGridItem(
+              //   title: '获取平台奖励',
+              //   subTitle: '平台可靠·奖励多',
+              //   onTap: () => CRoute.push(context, GetPlatformAwardPage()),
+              //   path: R.ASSETS_SHOP_PLATFORM_AWARD_WEBP,
+              //   show: showBottom,
+              // ),
+              // _buildGridItem(
+              //   title: '我的奖励',
+              //   subTitle: '积少成多·奖励丰厚',
+              //   onTap: () => CRoute.push(
+              //       context, MyGroupPage(type: UsersMode.MY_REWARD)),
+              //   path: R.ASSETS_SHOP_MY_AWARD_WEBP,
+              //   show: showBottom,
+              // ),
             ]..removeWhere((element) => element == null),
             physics: NeverScrollableScrollPhysics(),
             shrinkWrap: true,

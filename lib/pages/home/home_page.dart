@@ -51,7 +51,6 @@ import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/color_util.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/permission_tool.dart';
-import 'package:recook/utils/rui_code_util.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/alert.dart';
