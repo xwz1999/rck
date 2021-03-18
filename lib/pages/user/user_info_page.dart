@@ -194,10 +194,18 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
             }
           });
         }),
+        (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_1 ||
+                    UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
+                    (Platform.isIOS)) &&
+                !AppConfig.showExtraCommission
+            ? SizedBox()
+            : SCTile.normalTile("我的注册码", needDivide: true, listener: () {
+                push(RouteName.USER_INFO_QRCODE_PAGE);
+              }),
         UserManager?.instance?.user?.info?.teacherWechatNo?.isEmpty ?? true
             ? SizedBox()
             : SCTile.normalTile(
-                "导师微信号",
+                "我的服务商",
                 value: '',
                 needDivide: true,
                 needArrow: false,
@@ -224,14 +232,6 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
                   showToast('已经复制到粘贴板');
                 },
               ),
-        (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_1 ||
-                    UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
-                    (Platform.isIOS)) &&
-                !AppConfig.showExtraCommission
-            ? SizedBox()
-            : SCTile.normalTile("我的邀请码", needDivide: true, listener: () {
-                push(RouteName.USER_INFO_QRCODE_PAGE);
-              }),
       ],
     );
   }
