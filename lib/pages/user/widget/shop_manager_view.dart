@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/pages/shop/get_platform_award_page.dart';
 import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:recook/pages/user/invite/my_group_page.dart';
+import 'package:recook/pages/user/invite/my_group_page_v2.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
@@ -80,10 +82,10 @@ class ShopManagerView extends StatelessWidget {
                 show: showTop,
               ),
               _buildGridItem(
-                title: '我的团队',
+                title: '我的店铺',
                 subTitle: '有福同享·真壕友',
-                onTap: () =>
-                    CRoute.push(context, MyGroupPage(type: UsersMode.MY_GROUP)),
+                onTap: () => Get.to(MyGroupPageV2()),
+                // CRoute.push(context, MyGroupPage(type: UsersMode.MY_GROUP)),
                 path: R.ASSETS_SHOP_MY_GROUP_WEBP,
                 show: showTop,
               ),

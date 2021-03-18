@@ -8,6 +8,8 @@ import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:recook/constants/header.dart';
 
+//TODO CLEAN BOTTOM CODES.
+@Deprecated(" my_group_page need to be cleaned.")
 class MyGroupPage extends StatefulWidget {
   final UsersMode type;
   MyGroupPage({Key key, @required this.type}) : super(key: key);

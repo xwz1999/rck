@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-//TODO 路由重构计划
+
+//TODO CLEAN BOTTOM CODES.
+@Deprecated("move CRoute to GetX")
 class CRoute {
   static get isIOS => Platform.isIOS;
   static Route _cPageRoute(BuildContext context, Widget child) {
