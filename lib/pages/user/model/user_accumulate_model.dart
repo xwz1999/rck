@@ -42,6 +42,19 @@ class Data {
       (rewardAmount ?? 0) +
       .0;
 
+  String get purchaseAmountValue => (purchaseAmount ?? 0.0).toStringAsFixed(2);
+  String get guideAmountValue => (guideAmount ?? 0.0).toStringAsFixed(2);
+  String get teamAmountValue => (teamAmount ?? 0.0).toStringAsFixed(2);
+  String get recommendAmountValue =>
+      (recommendAmount ?? 0.0).toStringAsFixed(2);
+  String get rewardAmountValue => (rewardAmount ?? 0.0).toStringAsFixed(2);
+  String get allAmountValue => allAmount.toStringAsFixed(2);
+
+  ///推荐收益+ 导购收益 + 平台奖励
+  double get trr =>
+      (teamAmount ?? 0) + (recommendAmount ?? 0) + (rewardAmount ?? 0) + .0;
+  String get trrValue => trr.toStringAsFixed(2);
+
   Data(
       {this.purchaseAmount,
       this.guideAmount,

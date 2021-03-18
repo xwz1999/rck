@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/user/functions/user_benefit_func.dart';
+import 'package:recook/pages/user/model/user_accumulate_model.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
@@ -15,6 +17,11 @@ class UserHistoryBenefitPage extends StatefulWidget {
 class _UserHistoryBenefitPageState extends State<UserHistoryBenefitPage> {
   GSRefreshController _refreshController =
       GSRefreshController(initialRefresh: true);
+
+  ///累计收益
+  ///
+  UserAccumulateModel _model = UserAccumulateModel.zero();
+
   _renderColumn(String title, String subTitle) {
     return Column(
       children: [
@@ -64,7 +71,7 @@ class _UserHistoryBenefitPageState extends State<UserHistoryBenefitPage> {
                   children: [
                     '累计总收益(瑞币)'.text.black.make(),
                     8.hb,
-                    '10000.00'.text.black.size(34.sp).make(),
+                    _model.data.allAmount.text.black.size(34.sp).make(),
                   ],
                 ).expand(),
                 Image.asset(
@@ -79,11 +86,11 @@ class _UserHistoryBenefitPageState extends State<UserHistoryBenefitPage> {
             padding: EdgeInsets.symmetric(vertical: 8.w),
             child: Row(
               children: [
-                _renderColumn('自购收益', '1000.00'),
+                _renderColumn('自购收益', _model.data.purchaseAmountValue),
                 _renderDivider(),
-                _renderColumn('导购收益', '1000.00'),
+                _renderColumn('导购收益', _model.data.guideAmountValue),
                 _renderDivider(),
-                _renderColumn('店铺补贴', '1000.00'),
+                _renderColumn('店铺补贴', _model.data.trrValue),
               ],
             ),
           ),
@@ -111,6 +118,8 @@ class _UserHistoryBenefitPageState extends State<UserHistoryBenefitPage> {
       body: RefreshWidget(
         controller: _refreshController,
         onRefresh: () async {
+          _model = await UserBenefitFunc.accmulate();
+          setState(() {});
           _refreshController.refreshCompleted();
         },
         body: ListView(
