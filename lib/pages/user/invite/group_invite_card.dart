@@ -185,17 +185,17 @@ class GroupInviteCard extends StatelessWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            // if (model.isRecommand)
-            MaterialButton(
-              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-              minWidth: 0,
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.w),
-              child: Image.asset(
-                R.ASSETS_USER_USER_RECOMMEND_SINGLE_PNG,
-                height: 17.w,
+            if (model.isRecommand)
+              MaterialButton(
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                minWidth: 0,
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.w),
+                child: Image.asset(
+                  R.ASSETS_USER_USER_RECOMMEND_SINGLE_PNG,
+                  height: 17.w,
+                ),
+                onPressed: upgradeFunc,
               ),
-              onPressed: upgradeFunc,
-            ),
             44.hb,
           ],
         ),
