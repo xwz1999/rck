@@ -90,6 +90,9 @@ class BenefitAPI {
 
   ///月团队推荐平台预估收益
   String get monthExpectExtra => '/v2/app/user/income/month_expect_team';
+
+  ///会员收益数据
+  String get incomeData => '/v2/app/user/member/income_data';
 }
 
 class _OrderAPI {

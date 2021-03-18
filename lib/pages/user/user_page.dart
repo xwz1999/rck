@@ -25,6 +25,7 @@ import 'package:recook/models/shop_summary_model.dart';
 import 'package:recook/models/user_brief_info_model.dart';
 import 'package:recook/models/user_model.dart';
 import 'package:recook/pages/user/functions/user_benefit_func.dart';
+import 'package:recook/pages/user/model/user_income_data_model.dart';
 import 'package:recook/pages/user/order/order_after_sale_page.dart';
 import 'package:recook/pages/user/order/order_center_page.dart';
 import 'package:recook/pages/user/user_history_benefit_page.dart';
@@ -67,7 +68,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
 
   GlobalKey<ShopBenefitViewState> _shopBenefitKey =
       GlobalKey<ShopBenefitViewState>();
-
+  UseerIncomeDataModel _userIncomeDataModel;
   @override
   bool get wantKeepAlive => true;
 
@@ -161,7 +162,6 @@ class _UserPageState extends BaseStoreState<UserPage> {
   _updateAllAmount() {
     UserBenefitFunc.accmulate().then((value) {
       _allBenefitAmount = value.data.allAmount;
-      setState(() {});
     });
   }
 
@@ -175,7 +175,13 @@ class _UserPageState extends BaseStoreState<UserPage> {
       _amount = result.data['amount'] ?? 0;
       _target = result.data['need_amount'] ?? 100;
     }
-    setState(() {});
+  }
+
+  _updateNewBenefit() async {
+    ResultData result = await HttpManager.post(APIV2.benefitAPI.incomeData, {});
+    if (result.data != null && result.data['data'] != null) {
+      _userIncomeDataModel = UseerIncomeDataModel.fromJson(result.data['data']);
+    }
   }
 
   Widget _buildRefreshScrollView(
@@ -190,12 +196,14 @@ class _UserPageState extends BaseStoreState<UserPage> {
           releaseText: "松开更新个人数据",
           idleText: "下拉更新个人数据",
           refreshingText: "正在更新个人数据...",
-          onRefresh: () {
+          onRefresh: () async {
             VersionTool.checkVersionInfo(context);
-            _shopBenefitKey.currentState.updateBenefit();
+            // _shopBenefitKey.currentState.updateBenefit();
             _updateUserBriefInfo();
             _updateAllAmount();
             _updateCheck();
+            await _updateNewBenefit();
+            setState(() {});
           },
           body: ListView(
             physics: AlwaysScrollableScrollPhysics(),
@@ -226,10 +234,12 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   alertContent: '您本人下单并确认收货后，您获得的佣金。',
                   title1: '未到账收益(瑞币)',
                   title3: '已到账收益(瑞币)',
-                  content1: '1514.1',
-                  content2: '12',
-                  content3: '12312.1',
-                  content4: '123',
+                  content1:
+                      _userIncomeDataModel?.purchase?.expectAmountValue ?? '0',
+                  content2:
+                      _userIncomeDataModel?.purchase?.expectCountValue ?? '0',
+                  content3: _userIncomeDataModel?.purchase?.amountValue ?? '0',
+                  content4: _userIncomeDataModel?.purchase?.countValue ?? '0',
                 ),
                 _renderBenefitCard(
                   leadingPath: R.ASSETS_USER_PINK_SHARE_PNG,
@@ -238,26 +248,31 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   alertContent: '会员通过您导购的商品链接，购买并确认收货的佣金收益',
                   title1: '未到账收益(瑞币)',
                   title3: '已到账收益(瑞币)',
-                  content1: '1514.1',
-                  content2: '12',
-                  content3: '12312.1',
-                  content4: '123',
+                  content1:
+                      _userIncomeDataModel?.guide?.expectAmountValue ?? '0',
+                  content2:
+                      _userIncomeDataModel?.guide?.expectCountValue ?? '0',
+                  content3: _userIncomeDataModel?.guide?.amountValue ?? '0',
+                  content4: _userIncomeDataModel?.guide?.countValue ?? '0',
                 ),
-                _renderBenefitCard(
-                  leadingPath: R.ASSETS_USER_PINK_GROUP_PNG,
-                  title: '店铺补贴',
-                  alertTitle: '店铺补贴',
-                  alertContent: 'TODO',
-                  title1: '未到账补贴(瑞币)',
-                  title3: '已到账补贴(瑞币)',
-                  content1: '1514.1',
-                  content2: '12',
-                  content3: '12312.1',
-                  content4: '123',
-                ),
+                if (_userIncomeDataModel?.hasTeamValue ?? false)
+                  _renderBenefitCard(
+                    leadingPath: R.ASSETS_USER_PINK_GROUP_PNG,
+                    title: '店铺补贴',
+                    alertTitle: '店铺补贴',
+                    alertContent: 'TODO',
+                    title1: '未到账补贴(瑞币)',
+                    title3: '已到账补贴(瑞币)',
+                    content1:
+                        _userIncomeDataModel?.team?.expectAmountValue ?? '0',
+                    content2:
+                        _userIncomeDataModel?.team?.expectCountValue ?? '0',
+                    content3: _userIncomeDataModel?.team?.amountValue ?? '0',
+                    content4: _userIncomeDataModel?.team?.countValue ?? '0',
+                  ),
               ].sepWidget(separate: 10.hb),
               10.hb,
-              ShopBenefitView(key: _shopBenefitKey),
+              // ShopBenefitView(key: _shopBenefitKey),
               UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Gold ||
                       UserLevelTool.currentRoleLevelEnum() ==
                           UserRoleLevel.Silver
