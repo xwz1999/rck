@@ -44,6 +44,7 @@ import 'package:recook/widgets/bottom_sheet/custom_bottom_sheet.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/empty_view.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/selected_list.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:recook/widgets/video_view.dart';
@@ -751,16 +752,14 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
 
   _buildOverseaCityPicker() {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         if (_overseaCityModel == null) {
-          GSDialog.of(context).showLoadingDialog(context, "");
-          _getAddress().then((success) {
-            GSDialog.of(context).dismiss(context);
-            if (success) {
-              _selectAddress(context);
-            }
-          });
-          return;
+          final cancel = ReToast.loading();
+          bool result = await _getAddress();
+          cancel();
+          if (result) {
+            _selectAddress(context);
+          }
         }
         _selectAddress(context);
       },
