@@ -26,6 +26,7 @@ class GSDialog {
     return dialog;
   }
 
+  @Deprecated("mark sc_dialog's loading need to be cleaned.")
   Future<Null> showLoadingDialog(BuildContext context, String text,
       {Color color = Colors.black38}) {
     if (hasLoading) {
@@ -61,7 +62,8 @@ class GSDialog {
   }
 
   Future<Null> showSuccess(BuildContext context, String text,
-      {Duration duration = const Duration(milliseconds: 1000), bool dismissLoading = false}) {
+      {Duration duration = const Duration(milliseconds: 1000),
+      bool dismissLoading = false}) {
     if (hasLoading) {
       dismiss(context);
     }
@@ -132,7 +134,9 @@ class GSDialog {
         final Widget pageChild = Builder(builder: builder);
         return SafeArea(
           child: Builder(builder: (BuildContext context) {
-            return theme != null ? Theme(data: theme, child: pageChild) : pageChild;
+            return theme != null
+                ? Theme(data: theme, child: pageChild)
+                : pageChild;
           }),
         );
       },
