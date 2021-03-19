@@ -41,7 +41,9 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
     ClassifyType(name: '转出', sortType: "transfer"),
     ClassifyType(name: '导购收益', sortType: "share"),
     ClassifyType(name: '自购收益', sortType: "shopping"),
-    ClassifyType(name: '团队收益', sortType: "team"),
+    ClassifyType(name: '自营补贴', sortType: "team"),
+    ClassifyType(name: '分销补贴', sortType: "recommend"),
+    ClassifyType(name: '代理补贴', sortType: "reward"),
     ClassifyType(name: '瑞币退回', sortType: "coin_refund"),
   ];
   ClassifyType _selectType;

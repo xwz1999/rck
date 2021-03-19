@@ -174,8 +174,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
       {'month': DateUtil.formatDate(DateTime.now(), format: 'yyyy-MM')},
     );
     if (result.data != null && result.data['data'] != null) {
-      _amount = result.data['amount'] ?? 0;
-      _target = result.data['need_amount'] ?? 100;
+      _amount = (result.data['data']['amount'] ?? 0) + .0;
+      _target = (result.data['data']['needAmount'] ?? 100) + .0;
     }
   }
 
@@ -203,7 +203,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
             // _shopBenefitKey.currentState.updateBenefit();
             _updateUserBriefInfo();
             _updateAllAmount();
-            _updateCheck();
+            await _updateCheck();
             _cardCount = await UserCardFunction.count();
             await _updateNewBenefit();
             setState(() {});

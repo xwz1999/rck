@@ -36,9 +36,15 @@ class _ShopCheckViewState extends State<ShopCheckView> {
   @override
   void initState() {
     super.initState();
-    _themeColor = sliverTheme;
-    _beginColor = sliverBegin;
-    _endColor = sliverEnd;
+    if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Gold) {
+      _themeColor = goldTheme;
+      _beginColor = goldBegin;
+      _endColor = goldEnd;
+    } else {
+      _themeColor = sliverTheme;
+      _beginColor = sliverBegin;
+      _endColor = sliverEnd;
+    }
   }
 
   double get _target => widget.target ?? 100;
@@ -46,22 +52,23 @@ class _ShopCheckViewState extends State<ShopCheckView> {
 
   DateTime get _now => DateTime.now();
 
-  String get title => _target <= _amount
-      ? '还需团队销售额\n${_target - _amount}元'
+  String get title => _amount <= _target
+      ? '还需团队销售额${_target - _amount}元'
       : '已满足${UserLevelTool.currentRoleLevel()}考核标准';
   double get percent {
-    if (_amount == 0)
-      return 100;
-    else
-      return _amount / _target * 100;
+    if (_target == 0) return 100;
+    if (_amount == 0) return 0;
+    return _amount / _target * 100;
   }
 
   @override
   Widget build(BuildContext context) {
-    DateTime date = DateTime(_now.year, _now.month + 1, -1);
-    DateTime limitDate = DateTime(_now.year, _now.month + 1, 22);
+    DateTime date = DateTime(_now.year, _now.month, 1);
+    DateTime limitDate = DateTime(_now.year, _now.month + 1, -1);
+    DateTime checkDate = DateTime(_now.year, _now.month + 1, 1);
     return VxBox(
         child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         <Widget>[
           15.wb,
@@ -84,19 +91,24 @@ class _ShopCheckViewState extends State<ShopCheckView> {
           Spacer(),
         ].row(),
         CustomImageButton(
+          padding: EdgeInsets.zero,
           onPressed: () {},
           child: [
-            '本考核期截止至${DateUtil.formatDate(
+            '本考核期${DateUtil.formatDate(
               date,
-              format: 'yyyy-MM-dd',
-            )},将于${DateUtil.formatDate(
+              format: 'MM月dd日',
+            )}至${DateUtil.formatDate(
               limitDate,
-              format: 'yyyy-MM-dd',
-            )}进行考核'
+              format: 'MM月dd日',
+            )},将于${DateUtil.formatDate(
+              checkDate,
+              format: 'MM月dd日',
+            )}考核。'
                 .text
                 .color(Colors.black45)
                 .size(12.sp)
-                .make(),
+                .make()
+                .pOnly(left: 16.w),
             2.wb,
             Image.asset(
               R.ASSETS_SHOP_HELPER_PNG,
@@ -105,6 +117,12 @@ class _ShopCheckViewState extends State<ShopCheckView> {
             ),
           ].row(),
         ),
+        '考核目标：店铺销售额${widget.target.toStringAsFixed(0)}元'
+            .text
+            .color(Colors.black45)
+            .size(12.sp)
+            .make()
+            .pSymmetric(h: 16.w),
         10.hb,
         Container(
           height: 68.w,
@@ -123,9 +141,9 @@ class _ShopCheckViewState extends State<ShopCheckView> {
               percentage: percent,
             ),
           ),
-        ),
+        ).centered(),
         5.hb,
-        title.text.size(12.sp).black.center.make(),
+        title.text.size(12.sp).black.center.make().centered(),
         15.hb,
       ],
     )).color(Colors.white).margin(EdgeInsets.only(bottom: 10)).make();
