@@ -1,5 +1,7 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api_v2.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:recook/constants/header.dart';
@@ -79,6 +81,20 @@ class _UpgradeUsedViewState extends State<UpgradeUsedView> {
     );
   }
 
+  ///// 0=未使用 1=已使用
+  Future<List> _fetchList(int index, int type) async {
+    ResultData resultData = await HttpManager.post(APIV2.userAPI.userCard, {
+      'page': index,
+      'type': type,
+    });
+    if (resultData == null ||
+        resultData.data == null ||
+        resultData.data['data'] == null ||
+        resultData.data['data']['list'] == null) return [];
+    //TODO
+    return [];
+  }
+
   @override
   void dispose() {
     _refreshController?.dispose();
@@ -90,6 +106,7 @@ class _UpgradeUsedViewState extends State<UpgradeUsedView> {
     return RefreshWidget(
       controller: _refreshController,
       onRefresh: () async {
+        print((await _fetchList(1, 0)));
         _refreshController.refreshCompleted();
       },
       body: ListView(

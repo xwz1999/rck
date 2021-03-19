@@ -70,6 +70,9 @@ class UserAPI {
   String get userCheck => '/v2/app/user/check';
 
   String get memberInfo => '/v2/app/user/member/info';
+
+  ///角色卡列表
+  String get userCard => '/v2/app/user/welfare/lists';
 }
 
 class BenefitAPI {
