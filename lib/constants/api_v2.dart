@@ -73,6 +73,12 @@ class UserAPI {
 
   ///角色卡列表
   String get userCard => '/v2/app/user/welfare/lists';
+
+  ///使用角色卡
+  String get useCard => '/v2/app/user/welfare/use';
+
+  ///赠送角色卡
+  String get giveCard => '/v2/app/user/welfare/give';
 }
 
 class BenefitAPI {
