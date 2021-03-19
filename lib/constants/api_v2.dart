@@ -79,6 +79,12 @@ class UserAPI {
 
   ///赠送角色卡
   String get giveCard => '/v2/app/user/welfare/give';
+
+  ///角色卡通知列表
+  String get userCardNoticeList => '/v2/app/user/welfare/notice/list';
+
+  ///确认角色卡变动
+  String get confirmUserCardChange => '/v2/app/user/welfare/notice/look';
 }
 
 class BenefitAPI {

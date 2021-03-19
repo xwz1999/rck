@@ -16,6 +16,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart' hide Response;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -45,6 +46,7 @@ import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
 import 'package:recook/pages/noticeList/notice_list_model.dart';
 import 'package:recook/pages/noticeList/notice_list_tool.dart';
 import 'package:recook/pages/tabBar/rui_code_listener.dart';
+import 'package:recook/pages/upgradeCard/upgrade_card_page_v2.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/utils/android_back_desktop.dart';
 import 'package:recook/utils/app_router.dart';
@@ -221,6 +223,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     // 抽奖功能
     _userLottery();
     _getNoticeList();
+    _userCardNoticeList();
   }
 
   // 获取当前页面需要刷新的数据
@@ -1535,6 +1538,45 @@ class _HomePageState extends BaseStoreState<HomePage>
           await NoticeListTool.perfectInformation(context, getStore());
         if (noticeData.type == 4)
           await NoticeListTool.inputExpressInformation(context);
+      }
+    }
+  }
+
+  _userCardNoticeList() async {
+    ResultData resultData =
+        await HttpManager.post(APIV2.userAPI.userCardNoticeList, {});
+    if (resultData.data != null && resultData.data['data'] != null) {
+      List<dynamic> noticeList = resultData.data['data'];
+      for (var item in noticeList) {
+        final int gold = item['gold'];
+        final int silver = item['silver'];
+        String goldValue = '';
+        String silverValue = '';
+        if (gold != null && gold != 0) goldValue = '$gold张黄金卡';
+        if (silver != null && silver != 0) silverValue = '$silver张白银卡';
+        String result = '';
+        if (goldValue.isNotEmpty && silverValue.isNotEmpty)
+          result = '$goldValue,$silverValue';
+        else {
+          result = '$goldValue$silverValue';
+        }
+        await Get.dialog(Center(
+            child: GestureDetector(
+          onTap: () async {
+            await HttpManager.post(APIV2.userAPI.confirmUserCardChange, {});
+            await Get.to(UpgradeCardPageV2());
+            Get.back();
+          },
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: 50.w),
+            child: Center(child: Text('您有$result已退至您的卡包')),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(R.ASSETS_USER_NOTICE_CARD_PNG),
+              ),
+            ),
+          ),
+        )));
       }
     }
   }
