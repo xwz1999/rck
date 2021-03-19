@@ -133,6 +133,14 @@ class GroupInviteCard extends StatelessWidget {
     }
   }
 
+  String get itemName {
+    String item = model.nickname;
+    if (model?.remarkName?.isNotEmpty ?? false) {
+      item += '(${model.remarkName})';
+    }
+    return item;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -163,7 +171,7 @@ class GroupInviteCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             12.hb,
-            model.nickname.text.black.size(14.sp).make(),
+            itemName.text.black.size(14.sp).make(),
             8.hb,
             Row(
               children: [
