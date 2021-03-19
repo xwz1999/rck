@@ -164,16 +164,13 @@ class _CapitalViewState extends BaseStoreState<CapitalView> {
                   onTap: () => CRoute.push(context, UserBalancePage()),
                 ),
                 _otherItem(
-                    "权益卡(张)",
-                    getStore()
-                        .state
-                        .userBrief
-                        .myAssets
-                        .cards
-                        .toInt()
-                        .toString(), onTap: () {
-                  Get.to(() => UpgradeCardPageV2());
-                }),
+                  "权益卡(张)",
+                  getStore().state.userBrief.myAssets.cards.toInt().toString(),
+                  onTap: () {
+                    push(RouteName.UPGRADE_CARD_PAGE);
+                    Get.to(() => UpgradeCardPageV2());
+                  },
+                ),
               ],
             ),
           ),

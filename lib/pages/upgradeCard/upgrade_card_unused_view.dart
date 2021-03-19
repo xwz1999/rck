@@ -5,6 +5,7 @@ import 'package:recook/constants/api_v2.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/upgradeCard/function/user_card_function.dart';
 import 'package:recook/pages/upgradeCard/model/user_card_%20model.dart';
+import 'package:recook/pages/upgradeCard/upgrade_card_send_page_v2.dart';
 import 'package:recook/pages/upgradeCard/upgrade_card_use_result_page.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/refresh_widget.dart';
@@ -195,22 +196,45 @@ class _UserCard extends StatelessWidget {
                       );
                       if (resultData.data['code'] == 'FAIL') {
                         showToast(resultData.data['msg']);
-                        await Get.to(UpgradeUseResultPage(
-                          result: false,
-                          content: '使用失败，您已经使用了一张权益卡',
-                        ));
+                        await Get.to(() => UpgradeUseResultPage(
+                              result: false,
+                              content: '使用失败，您已经使用了一张权益卡',
+                            ));
                       } else
-                        await Get.to(UpgradeUseResultPage(
-                          result: true,
-                          content: '恭喜您，使用成功！',
-                        ));
+                        await Get.to(() => UpgradeUseResultPage(
+                              result: true,
+                              content: '恭喜您，使用成功！',
+                            ));
                       refreshController.requestRefresh();
                     }
                   }),
               16.hb,
               _renderButton(
                 title: '赠送',
-                onTap: () async {},
+                onTap: () async {
+                  int id = await Get.to(() => UpgradeeCardSendPageV2());
+                  if (id != null) {
+                    ResultData resultData = await HttpManager.post(
+                      APIV2.userAPI.giveCard,
+                      {
+                        'cardId': model.id,
+                        'giveUserId': id,
+                      },
+                    );
+                    if (resultData.data['code'] == 'FAIL') {
+                      showToast(resultData.data['msg']);
+                      await Get.to(() => UpgradeUseResultPage(
+                            result: false,
+                            content: '使用失败，您已经使用了一张权益卡',
+                          ));
+                    } else
+                      await Get.to(() => UpgradeUseResultPage(
+                            result: true,
+                            content: '恭喜您，使用成功！',
+                          ));
+                    refreshController.requestRefresh();
+                  }
+                },
               ),
             ],
           ),
