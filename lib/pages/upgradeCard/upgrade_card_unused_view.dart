@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:recook/constants/api_v2.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/upgradeCard/function/user_card_function.dart';
 import 'package:recook/pages/upgradeCard/model/user_card_%20model.dart';
+import 'package:recook/pages/upgradeCard/upgrade_card_use_result_page.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -36,18 +40,22 @@ class _UpgradeUnusedViewState extends State<UpgradeUnusedView> {
         _page = 1;
         _cards = await UserCardFunction.fetchList(_page, 0);
         _refreshController.refreshCompleted();
+        setState(() {});
       },
       onLoadMore: () async {
         _page++;
         _cards.addAll(await UserCardFunction.fetchList(_page, 0));
-        _refreshController.refreshCompleted();
+        _refreshController.loadComplete();
         setState(() {});
       },
       body: ListView.separated(
         separatorBuilder: (_, __) => 10.hb,
         itemBuilder: (context, index) {
           final item = _cards[index];
-          return _UserCard(model: item);
+          return _UserCard(
+            model: item,
+            refreshController: _refreshController,
+          );
         },
         itemCount: _cards.length,
         padding: EdgeInsets.symmetric(
@@ -61,7 +69,9 @@ class _UpgradeUnusedViewState extends State<UpgradeUnusedView> {
 
 class _UserCard extends StatelessWidget {
   final UserCardModel model;
-  const _UserCard({Key key, this.model}) : super(key: key);
+  final GSRefreshController refreshController;
+  const _UserCard({Key key, this.model, this.refreshController})
+      : super(key: key);
 
   Future<bool> _openUseCardDialog({String confirmTitle, Widget child}) async {
     return (await Get.dialog(NormalContentDialog(
@@ -143,7 +153,11 @@ class _UserCard extends StatelessWidget {
                   .size(16.sp)
                   .bold
                   .make(),
-              '系统赠送'.text.color(Color(0xFFDD2C4E)).size(12.sp).make(),
+              (model?.sourceName ?? '')
+                  .text
+                  .color(Color(0xFFDD2C4E))
+                  .size(12.sp)
+                  .make(),
             ],
           ).expand(),
           Column(
@@ -175,11 +189,29 @@ class _UserCard extends StatelessWidget {
                       ),
                     );
                     if (result) {
-
+                      ResultData resultData = await HttpManager.post(
+                        APIV2.userAPI.useCard,
+                        {'cardId': model.id},
+                      );
+                      if (resultData.data['code'] == 'FAIL') {
+                        showToast(resultData.data['msg']);
+                        await Get.to(UpgradeUseResultPage(
+                          result: false,
+                          content: '使用失败，您已经使用了一张权益卡',
+                        ));
+                      } else
+                        await Get.to(UpgradeUseResultPage(
+                          result: true,
+                          content: '恭喜您，使用成功！',
+                        ));
+                      refreshController.requestRefresh();
                     }
                   }),
               16.hb,
-              _renderButton(title: '赠送', onTap: () {}),
+              _renderButton(
+                title: '赠送',
+                onTap: () async {},
+              ),
             ],
           ),
         ],

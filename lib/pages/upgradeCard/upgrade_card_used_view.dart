@@ -41,7 +41,7 @@ class _UpgradeUsedViewState extends State<UpgradeUsedView> {
       onLoadMore: () async {
         _page++;
         _cards.addAll(await UserCardFunction.fetchList(_page, 1));
-        _refreshController.refreshCompleted();
+        _refreshController.loadComplete();
         setState(() {});
       },
       body: ListView.separated(

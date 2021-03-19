@@ -3,6 +3,7 @@ class UserCardModel {
   String code;
   int type;
   int source;
+  String sourceName;
   int status;
   int giveUserId;
   String giveUserNickname;
@@ -14,6 +15,7 @@ class UserCardModel {
       this.code,
       this.type,
       this.source,
+      this.sourceName,
       this.status,
       this.giveUserId,
       this.giveUserNickname,
@@ -25,6 +27,7 @@ class UserCardModel {
     code = json['code'];
     type = json['type'];
     source = json['source'];
+    sourceName = json['scourceName'];
     status = json['status'];
     giveUserId = json['giveUserId'];
     giveUserNickname = json['giveUserNickname'];
