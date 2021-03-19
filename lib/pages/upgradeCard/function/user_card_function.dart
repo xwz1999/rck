@@ -18,4 +18,17 @@ class UserCardFunction {
         .map((e) => UserCardModel.fromJson(e))
         .toList();
   }
+
+  static Future<int> count() async {
+    ResultData resultData = await HttpManager.post(
+      APIV2.userAPI.userCard,
+      {'page': 1, 'type': 0, 'limit': 10},
+    );
+    if (resultData == null ||
+        resultData.data == null ||
+        resultData.data['data'] == null ||
+        resultData.data['data']['total'] == null) return 0;
+
+    return resultData.data['data']['total'];
+  }
 }

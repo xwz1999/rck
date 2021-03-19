@@ -24,6 +24,7 @@ import 'package:recook/models/base_model.dart';
 import 'package:recook/models/shop_summary_model.dart';
 import 'package:recook/models/user_brief_info_model.dart';
 import 'package:recook/models/user_model.dart';
+import 'package:recook/pages/upgradeCard/function/user_card_function.dart';
 import 'package:recook/pages/user/functions/user_benefit_func.dart';
 import 'package:recook/pages/user/model/user_income_data_model.dart';
 import 'package:recook/pages/user/order/order_after_sale_page.dart';
@@ -65,6 +66,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
 
   double _target = 100;
   double _amount = 0;
+  int _cardCount = 0;
 
   GlobalKey<ShopBenefitViewState> _shopBenefitKey =
       GlobalKey<ShopBenefitViewState>();
@@ -202,6 +204,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
             _updateUserBriefInfo();
             _updateAllAmount();
             _updateCheck();
+            _cardCount = await UserCardFunction.count();
             await _updateNewBenefit();
             setState(() {});
           },
@@ -213,7 +216,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 listener: _moneyViewListener,
                 wechatListener: _wechatBindinghandle,
               ),
-              CapitalView(),
+              CapitalView(cardCount: _cardCount),
               UserLevelTool.currentRoleLevelEnum() != UserRoleLevel.Vip
                   ? Padding(
                       padding: EdgeInsets.symmetric(

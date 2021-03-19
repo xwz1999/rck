@@ -20,7 +20,9 @@ import 'package:recook/widgets/custom_image_button.dart';
 
 class CapitalView extends StatefulWidget {
   final Function() listener;
-  const CapitalView({Key key, this.listener}) : super(key: key);
+  final int cardCount;
+  const CapitalView({Key key, this.listener, @required this.cardCount})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -165,9 +167,8 @@ class _CapitalViewState extends BaseStoreState<CapitalView> {
                 ),
                 _otherItem(
                   "权益卡(张)",
-                  getStore().state.userBrief.myAssets.cards.toInt().toString(),
+                  widget.cardCount.toString(),
                   onTap: () {
-                    push(RouteName.UPGRADE_CARD_PAGE);
                     Get.to(() => UpgradeCardPageV2());
                   },
                 ),
