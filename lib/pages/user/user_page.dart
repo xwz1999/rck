@@ -186,6 +186,19 @@ class _UserPageState extends BaseStoreState<UserPage> {
     }
   }
 
+  String get shopContent {
+    UserRoleLevel role = UserLevelTool.currentRoleLevelEnum();
+    if (role == UserRoleLevel.Diamond_1 ||
+        role == UserRoleLevel.Diamond_2 ||
+        role == UserRoleLevel.Diamond_3) {
+      return '自营店铺补贴：每月1日结算您自营店铺上一个自然月确认收货的订单，按自营店铺销售额的3%计算补贴。\n分销店铺补贴：每月1日结算您分销店铺上一个自然月确认收货的订单，按分销店铺销售额的4%计算补贴。\n代理店铺补贴：每月1日结算您代理店铺上一个自然月确认收货的订单，按代理店铺销售额的5%计算补贴。';
+    }
+    if (role == UserRoleLevel.Gold || role == UserRoleLevel.Silver) {
+      return '自营店铺补贴：每月1日结算您自营店铺上一个自然月确认收货的订单，按自营店铺销售额的3%计算补贴。\n分销店铺补贴：每月1日结算您分销店铺上一个自然月确认收货的订单，按分销店铺销售额的4%计算补贴。';
+    } else
+      return '自营店铺补贴：每月1日结算您自营店铺上一个自然月确认收货的订单，按自营店铺销售额的3%计算补贴。';
+  }
+
   Widget _buildRefreshScrollView(
       BuildContext context, Store<RecookState> store) {
     return Stack(
@@ -263,7 +276,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     leadingPath: R.ASSETS_USER_PINK_GROUP_PNG,
                     title: '店铺补贴',
                     alertTitle: '店铺补贴',
-                    alertContent: 'TODO',
+                    alertContent: shopContent,
                     title1: '未到账补贴(瑞币)',
                     title3: '已到账补贴(瑞币)',
                     content1:
