@@ -222,9 +222,7 @@ dependencies:
 
   animations:
 
-  power_logger:
-    git:
-      url: http://159.75.73.143:8080/laiiihz/power_logger.git
+  power_logger: ^0.1.2
 
   pin_input_text_field: ^3.3.0
   device_info: ^1.0.0
