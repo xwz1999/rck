@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -15,7 +16,7 @@ import 'package:recook/pages/live/live_stream/live_sku_widget.dart';
 import 'package:recook/pages/live/live_stream/small_window/small_window_page.dart';
 import 'package:recook/pages/live/models/live_stream_info_model.dart'
     show GoodsLists;
-import 'package:recook/pages/user/user_page.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
@@ -58,7 +59,7 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
     return DraggableScrollableSheet(
       minChildSize: 0.5,
       maxChildSize: 0.9,
-      initialChildSize: 0.5,
+      initialChildSize: 0.7,
       expand: false,
       builder: (context, scrollController) {
         return Column(
@@ -422,7 +423,9 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
                                   }
                                 } else {
                                   showToast('未登陆，请先登陆');
-                                  CRoute.push(context, UserPage());
+                                  Get.back();
+                                  Get.back();
+                                  Get.to(LoginPage());
                                 }
                               },
                               child: Text('马上抢'),

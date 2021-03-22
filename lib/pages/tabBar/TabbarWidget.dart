@@ -144,7 +144,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
                       '直播',
                       R.ASSETS_LIVE_ADD_STREAM_PNG,
                       onTap: () {
-                        checkStartLive(context, fatherContext);
+                        checkStartLive();
                       },
                     ),
                     verticalButton(

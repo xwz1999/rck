@@ -43,6 +43,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.5.0"
+  auto_size_text:
+    dependency: transitive
+    description:
+      name: auto_size_text
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.1.0"
   azlistview:
     dependency: "direct main"
     description:
@@ -64,6 +71,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.1.0"
+  bot_toast:
+    dependency: "direct main"
+    description:
+      name: bot_toast
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.0.5"
   build:
     dependency: transitive
     description:
@@ -391,6 +405,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.1"
+  flutter_highlight:
+    dependency: transitive
+    description:
+      name: flutter_highlight
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.6.0"
   flutter_icons:
     dependency: "direct main"
     description:
@@ -517,6 +538,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.1.19"
+  get:
+    dependency: "direct main"
+    description:
+      name: get
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.26.0"
   glob:
     dependency: transitive
     description:
@@ -538,6 +566,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.8.6"
+  highlight:
+    dependency: transitive
+    description:
+      name: highlight
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.6.0"
   hive:
     dependency: "direct main"
     description:
@@ -770,7 +805,7 @@ packages:
       name: package_info
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.4.0+16"
+    version: "0.4.3+4"
   package_resolver:
     dependency: transitive
     description:
@@ -920,6 +955,20 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.4.0"
+  power_logger:
+    dependency: "direct main"
+    description:
+      name: power_logger
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.3"
+  pretty_json:
+    dependency: transitive
+    description:
+      name: pretty_json
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.1.0"
   process:
     dependency: transitive
     description:

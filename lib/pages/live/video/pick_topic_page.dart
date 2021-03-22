@@ -6,6 +6,7 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/models/topic_list_model.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 
 class PickTopicPage extends StatefulWidget {
   final Function(TopicListModel model) onPick;
@@ -79,27 +80,31 @@ class _PickTopicPageState extends State<PickTopicPage> {
               color: Color(0xFFFFDB2D2D),
               height: rSize(28),
               minWidth: rSize(60),
-              onPressed: () {
+              onPressed: () async {
                 if (TextUtil.isEmpty(_editingController.text)) {
-                  GSDialog.of(context).showError(context, '话题不能为空');
-                } else {
-                  GSDialog.of(context).showLoadingDialog(context, '创建话题');
-                  HttpManager.post(
+                  ReToast.err(text: '话题不能为空');
+                  return;
+                }
+                final cancel = ReToast.loading(text: '创建话题');
+                try {
+                  ResultData result = await HttpManager.post(
                     LiveAPI.topicAddNew,
                     {'title': _editingController.text},
-                  ).then((resultData) {
-                    GSDialog.of(context).dismiss(context);
-                    if (resultData.data['data']['topicId'] is int)
-                      widget.onPick(TopicListModel(
-                        title: _editingController.text,
-                        id: resultData.data['data']['topicId'],
-                      ));
-                    Navigator.pop(context);
-                  }).catchError((e) {
-                    GSDialog.of(context).dismiss(context);
-                    GSDialog.of(context).showError(context, '创建失败');
-                  });
+                  );
+                  cancel();
+                  if (result.data['data']['topicId'] is int) {
+                    widget.onPick(TopicListModel(
+                      title: _editingController.text,
+                      id: result.data['data']['topicId'],
+                    ));
+                    return;
+                  }
+                } catch (e) {
+                  cancel();
+                  ReToast.err(text: '创建失败');
                 }
+
+                Navigator.pop(context);
               },
               child: Text('提交'),
               shape: RoundedRectangleBorder(

@@ -33,7 +33,8 @@ class RUICodeListener {
   }
 
   clipboardListener() async {
-    String rawData = (await Clipboard.getData(Clipboard.kTextPlain)).text;
+    String rawData =
+        (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? '';
     bool isRUICode = RUICodeUtil.isCode(rawData);
     GoodsDetailModel goodsDetailModel;
 

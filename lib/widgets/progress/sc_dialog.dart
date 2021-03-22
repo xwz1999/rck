@@ -26,6 +26,7 @@ class GSDialog {
     return dialog;
   }
 
+  @Deprecated("mark sc_dialog's loading need to be cleaned.")
   Future<Null> showLoadingDialog(BuildContext context, String text,
       {Color color = Colors.black38}) {
     if (hasLoading) {

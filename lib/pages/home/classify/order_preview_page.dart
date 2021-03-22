@@ -29,6 +29,7 @@ import 'package:recook/widgets/bottom_sheet/bottom_list.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/input_view.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 
 class GoodsOrderPage extends StatefulWidget {
   final Map arguments;
@@ -65,7 +66,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
     _controller = ScrollController();
     _controller.addListener(() {});
     _editController =
-        TextEditingController(text: _orderModel.data?.buyerMessage??'');
+        TextEditingController(text: _orderModel.data?.buyerMessage ?? '');
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
         String text = _editController.text;
@@ -976,13 +977,16 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   }
 
   Future _changeAddress(Address address) async {
-    GSDialog.of(context).showLoadingDialog(context, "");
+    final cancel = ReToast.loading();
     HttpResultModel<OrderPreviewModel> model =
         await _presenterImpl.changeAddress(
-            UserManager.instance.user.info.id, _orderModel.data.id, address.id);
-    GSDialog.of(context).dismiss(context);
+      UserManager.instance.user.info.id,
+      _orderModel.data.id,
+      address.id,
+    );
+    cancel();
     if (!model.result) {
-      GSDialog.of(context).showError(globalContext, model.msg);
+      ReToast.err(text: model.msg);
       return;
     }
     _orderModel = model.data;
@@ -990,15 +994,15 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   }
 
   Future _changeOrderCoinOnOff() async {
-    GSDialog.of(context).showLoadingDialog(context, "");
+    final cancel = ReToast.loading();
     HttpResultModel<OrderPreviewModel> model =
         await _presenterImpl.changeCoinOnOff(
       UserManager.instance.user.info.id,
       _orderModel.data.id,
     );
-    GSDialog.of(context).dismiss(context);
+    cancel();
     if (!model.result) {
-      GSDialog.of(context).showError(globalContext, model.msg);
+      ReToast.err(text: model.msg);
       return;
     }
     _orderModel = model.data;
@@ -1045,26 +1049,26 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   }
 
   _changeBuyerMessage(String msg) async {
-    GSDialog.of(context).showLoadingDialog(context, "");
+    final cancel = ReToast.loading();
     HttpResultModel<BaseModel> resultModel =
         await _presenterImpl.changeBuyerMessage(
             UserManager.instance.user.info.id, _orderModel.data.id, msg);
     // GSDialog.of(context).dismiss(context);
-    GSDialog.of(context).dismiss(context);
+    cancel();
     if (!resultModel.result) {
-      GSDialog.of(context).showError(globalContext, resultModel.code);
+      ReToast.err(text: resultModel.code);
       return;
     }
     _orderModel.data.buyerMessage = msg;
   }
 
   _submit(BuildContext context) async {
-    GSDialog.of(context).showLoadingDialog(context, "");
+    final cancel = ReToast.loading();
     HttpResultModel<OrderPrepayModel> resultModel = await _presenterImpl
         .submitOrder(_orderModel.data.id, UserManager.instance.user.info.id);
-    GSDialog.of(context).dismiss(context);
+    cancel();
     if (!resultModel.result) {
-      GSDialog.of(context).showError(context, resultModel.msg);
+      ReToast.err(text: resultModel.msg);
       return;
     }
     UserManager.instance.refreshShoppingCart.value = true;

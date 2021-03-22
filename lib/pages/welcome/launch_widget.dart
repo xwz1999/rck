@@ -10,9 +10,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:power_logger/power_logger.dart';
 import 'package:raw_toast/raw_toast.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/pages/welcome/launch_privacy_dialog.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/storage/hive_store.dart';
@@ -38,6 +40,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
     // _gifController = GifController(vsync: this);
 
     super.initState();
+    PowerLogger.start(context, debug: AppConfig.debug);
     //0-59
     for (var i = 0; i <= 104; i++) {
       _imageMap.putIfAbsent(i, () {
@@ -48,6 +51,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
     WidgetsBinding.instance.addPostFrameCallback((callback) async {
       // _gifController.repeat(min: 0, max:59, period: Duration(milliseconds: 1500));
       await Future.delayed(Duration(milliseconds: 2000));
+      
       if (HiveStore.appBox.get('privacy_init') == null) {
         // if (true) {
         bool agreeResult = (await launchPrivacyDialog(context)) ?? false;

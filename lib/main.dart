@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:amap_location_fluttify/amap_location_fluttify.dart';
+import 'package:bot_toast/bot_toast.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bugly/flutter_bugly.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -223,7 +225,9 @@ class MyAppState extends State<MyApp> {
         store: store,
         child: StoreBuilder<RecookState>(builder: (context, store) {
           return OKToast(
-            child: MaterialApp(
+            child: GetMaterialApp(
+              builder: BotToastInit(),
+              navigatorObservers: [BotToastNavigatorObserver()],
               localizationsDelegates: [
                 GlobalMaterialLocalizations.delegate,
                 GlobalWidgetsLocalizations.delegate,

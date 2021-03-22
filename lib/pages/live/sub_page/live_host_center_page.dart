@@ -62,9 +62,7 @@ class _LiveHostCenterPageState extends State<LiveHostCenterPage>
         actions: [
           FlatButton(
             splashColor: Color(0xFFDB2D2D).withOpacity(0.3),
-            onPressed: () {
-              checkStartLive(context, context);
-            },
+            onPressed: () => checkStartLive(),
             child: Text(
               '去开播',
               style: TextStyle(
