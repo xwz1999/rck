@@ -364,20 +364,19 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                             items: ['相机', '相册'],
                             listener: (index) {
                               Navigator.pop(context);
-                              Future<PickedFile> getImage() {
+                              Future<File> getImage() {
                                 if (index == 0)
-                                  return ImagePicker()
-                                      .getImage(source: ImageSource.camera);
+                                  return ImagePicker.pickImage(
+                                      source: ImageSource.camera);
                                 if (index == 1)
-                                  return ImagePicker()
-                                      .getImage(source: ImageSource.gallery);
+                                  return ImagePicker.pickImage(
+                                      source: ImageSource.gallery);
                                 return null;
                               }
 
-                              getImage().then((pickedFile) {
-                                if (pickedFile != null)
-                                  ImageUtils.cropImage(File(pickedFile.path))
-                                      .then((file) {
+                              getImage().then((file) {
+                                if (file != null)
+                                  ImageUtils.cropImage(file).then((file) {
                                     _imageFile = file;
                                     setState(() {});
                                   });

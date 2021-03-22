@@ -208,16 +208,14 @@ class _AddVideoPageState extends State<AddVideoPage> {
                         )
                       : CustomImageButton(
                           onPressed: () {
-                            ImagePicker()
-                                .getVideo(source: ImageSource.gallery)
+                            ImagePicker.pickImage(source: ImageSource.gallery)
                                 .then((file) {
-                              if (file == null ||
-                                  TextUtils.isEmpty(file.path)) {
+                              if (file == null) {
                                 showToast('没有选择文件');
                               } else {
                                 CRoute.pushReplace(
                                   context,
-                                  CropVideoPage(file: File(file.path)),
+                                  CropVideoPage(file: file),
                                 );
                               }
                             });

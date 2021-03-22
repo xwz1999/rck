@@ -72,15 +72,13 @@ class _VideoAdvancePageState extends State<VideoAdvancePage> {
                 _buildButton(
                   '封面',
                   () {
-                    ImagePicker()
-                        .getImage(
+                    ImagePicker.pickImage(
                       source: ImageSource.gallery,
                       maxWidth: 500,
                       maxHeight: 500,
-                    )
-                        .then((file) {
+                    ).then((file) {
                       if (file != null) {
-                        _coverFile = File(file.path);
+                        _coverFile = file;
                         showToast('封面选择完成');
                       } else {
                         showToast('未选择封面');

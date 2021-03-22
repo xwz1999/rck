@@ -103,12 +103,11 @@ class _LiveReportViewState extends State<LiveReportView> {
                   ),
                   CustomImageButton(
                     onPressed: () {
-                      ImagePicker()
-                          .getImage(source: ImageSource.gallery)
+                      ImagePicker.pickImage(source: ImageSource.gallery)
                           .then((value) {
                         if (value != null) {
                           setState(() {
-                            _imageFile = File(value.path);
+                            _imageFile = value;
                           });
                         }
                       });

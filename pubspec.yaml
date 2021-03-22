@@ -59,8 +59,8 @@ dependencies:
   #
   url_launcher: ^5.1.3
   # 视频组件
-  video_player: ^1.0.1
-  chewie: ^0.10.1
+  video_player: ^2.0.2
+  chewie: ^1.0.0
 
   # 权限组件
   permission_handler: 3.3.0
@@ -69,7 +69,7 @@ dependencies:
   openinstall_flutter_plugin: ^1.0.1
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
+  cupertino_icons: ^1.0.2
 
   sprintf: 4.0.2
   # 分享sdk
@@ -78,14 +78,14 @@ dependencies:
   flutter_redux: ^0.7.0
 
   # json解析
-  json_annotation: ^2.0.0
+  json_annotation: ^4.0.1
 
   # 路径
-  path_provider: ^1.6.11
+  path_provider: ^2.0.1
   path:
 
   # 网络请求
-  dio: ^3.0.10
+  dio: ^4.0.0-prev3
 
   # loading界面
   flutter_spinkit: ^3.1.0
@@ -98,8 +98,8 @@ dependencies:
 
   #缓存图片
   #  cached_network_image: ^1.1.0
-  extended_text: 4.1.0
-  extended_image: 0.9.0
+  extended_text: ^5.0.4
+  extended_image: ^3.0.0
   date_format: 1.0.8
   # image_gallery_saver: ^1.2.1
 
@@ -108,7 +108,7 @@ dependencies:
   image_cropper: 1.1.2
 
   # svg
-  flutter_svg: 0.18.1
+  flutter_svg: ^0.21.0-nullsafety.0
 
   # 下拉刷新
   #
@@ -150,7 +150,7 @@ dependencies:
   encrypt: 3.2.0
 
   # 时间选择器
-  flutter_datetime_picker: ^1.3.8
+  flutter_datetime_picker: ^1.5.0
 
   # 侧滑item
   flutter_slidable: 0.5.7
@@ -160,7 +160,10 @@ dependencies:
   #     ref: 4073e1ff7db967aad4f97f0eee5909c5f8f339b5
 
   # 图片选择
-  photo: 0.5.0-dev.3
+  photo:
+    git:
+      url: http://159.75.73.143:8080/laiiihz/flutter_photo
+      ref: patch-1
   # wechat_assets_picker: ^2.2.0+2
 
   image_gallery_saver: 1.5.0
@@ -214,17 +217,21 @@ dependencies:
   package_signature:
     git:
       url: git@192.168.2.201:aku_fe/package_signature.git
+      ref: null-safety
 
   raw_toast: ^0.0.1
 
-  hive: ^1.4.4+1
-  hive_flutter: ^0.3.1
+  hive: ^2.0.0
+  hive_flutter: ^1.0.0
 
   pin_input_text_field: ^3.3.0
 
   device_info: ^1.0.0
   clipboard_listener: ^1.0.0
-  power_logger: ^0.1.3
+  power_logger:
+    git:
+      url: http://159.75.73.143:8080/laiiihz/power_logger
+      ref: null-safety
 
   bot_toast: ^3.0.5
   get: ^3.26.0
@@ -233,7 +240,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   build_runner: ^1.0.0
-  json_serializable: ^2.0.0
+  json_serializable: ^4.1.0
   grinder:
 
 flutter:

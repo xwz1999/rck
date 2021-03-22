@@ -185,9 +185,10 @@ class HttpManager {
       if (e.response != null) {
         errorResponse = e.response;
       } else {
-        errorResponse = new Response(statusCode: 666);
+        errorResponse = new Response(
+            statusCode: 666, requestOptions: RequestOptions(path: ''));
       }
-      if (e.type == DioErrorType.CONNECT_TIMEOUT) {
+      if (e.type == DioErrorType.connectTimeout) {
         errorResponse.statusCode = HttpCode.ERROR;
       }
       if (AppConfig.debug) {
@@ -198,7 +199,7 @@ class HttpManager {
       // return new ResultData(null, false, HttpStatus.ERROR, "网络崩溃了");
 //      return new ResultData(null, false, HttpStatus.ERROR, "请求出错，请稍后再试");
     }
-    LoggerData.addData((response)..request.data = params);
+    LoggerData.addData((response)..requestOptions.data = params);
     String responseStr = response.data;
     if (AppConfig.needEncrypt) {
       responseStr = await responseDecrypt(response.data);
@@ -276,9 +277,10 @@ class HttpManager {
       if (e.response != null) {
         errorResponse = e.response;
       } else {
-        errorResponse = new Response(statusCode: 666);
+        errorResponse = new Response(
+            statusCode: 666, requestOptions: RequestOptions(path: ''));
       }
-      if (e.type == DioErrorType.CONNECT_TIMEOUT) {
+      if (e.type == DioErrorType.connectTimeout) {
         errorResponse.statusCode = HttpCode.ERROR;
       }
       if (AppConfig.debug) {
