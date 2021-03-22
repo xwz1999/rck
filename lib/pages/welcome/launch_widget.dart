@@ -40,6 +40,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
     // _gifController = GifController(vsync: this);
 
     super.initState();
+    PowerLogger.start(context, debug: AppConfig.debug);
     //0-59
     for (var i = 0; i <= 104; i++) {
       _imageMap.putIfAbsent(i, () {
@@ -50,7 +51,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
     WidgetsBinding.instance.addPostFrameCallback((callback) async {
       // _gifController.repeat(min: 0, max:59, period: Duration(milliseconds: 1500));
       await Future.delayed(Duration(milliseconds: 2000));
-      PowerLogger.init(context, debug: AppConfig.debug);
+      
       if (HiveStore.appBox.get('privacy_init') == null) {
         // if (true) {
         bool agreeResult = (await launchPrivacyDialog(context)) ?? false;
