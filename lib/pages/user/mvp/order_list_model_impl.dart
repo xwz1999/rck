@@ -54,10 +54,11 @@ class OrderListModelImpl extends OrderListModelI {
         url = OrderApi.order_list_aftersale;
         break;
     }
-    String position = '0'; // OrderPositionType.onlineOrder = 0
-    if (positionType == OrderPositionType.storeOrder) {
-      position = '1';
-    }
+    // String position = '0'; // OrderPositionType.onlineOrder = 0
+    // if (positionType == OrderPositionType.storeOrder) {
+    //   position = '1';
+    // }
+    String position = '';
     ResultData resultData = await HttpManager.post(url, {"userId": userId, "page": page, "orderType": position});
     return resultData;
   }

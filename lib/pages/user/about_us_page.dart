@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 
@@ -21,13 +22,13 @@ class _AboutUsPageState extends BaseStoreState<AboutUsPage> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-        child: Container(
-          child: Image.asset(
-            "assets/recook_about_us.webp",
-            fit: BoxFit.fill,
-          ),
+          child: Container(
+        // padding: EdgeInsets.symmetric(vertical: 10),
+        child: Image.asset(
+          R.ASSETS_RECOOK_ABOUT_US_JPG_WEBP,
+          fit: BoxFit.fill,
         ),
-      ),
+      )),
     );
   }
 }

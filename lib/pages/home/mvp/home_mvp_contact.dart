@@ -9,7 +9,6 @@
 
 
 import 'package:recook/models/banner_list_model.dart';
-import 'package:recook/models/home_model.dart';
 import 'package:recook/models/promotion_goods_list_model.dart';
 import 'package:recook/models/promotion_list_model.dart';
 import 'package:recook/utils/mvp.dart';

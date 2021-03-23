@@ -19,6 +19,18 @@ class Constants {
   }
 }
 
+extension SeparateExt on List<Widget> {
+  List<Widget> sepWidget({Widget separate}) {
+    if (this.length <= 1) return this;
+    return List.generate(this.length * 2 - 1, (index) {
+      if (index.isEven)
+        return this[index ~/ 2];
+      else
+        return separate ?? 10.wb;
+    });
+  }
+}
+
 // 屏幕适配
 class ScreenAdapterUtils {
   static initial(BuildContext context) {
@@ -86,4 +98,14 @@ class DeviceInfo {
     bottomBarHeight = data.padding.bottom;
     devicePixelRatio = data.devicePixelRatio;
   }
+}
+
+extension NumExt on num {
+  double get w => ScreenAdapterUtils.setWidth(this + .0);
+
+  double get sp => ScreenAdapterUtils.setSp(this + .0);
+
+  Widget get hb => SizedBox(height: this.w);
+
+  Widget get wb => SizedBox(width: this.w);
 }

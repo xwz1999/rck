@@ -10,7 +10,6 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/promotion_goods_list_model.dart';
 import 'package:recook/pages/goods/small_coupon_widget.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';

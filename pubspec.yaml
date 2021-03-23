@@ -2,7 +2,7 @@ name: recook
 description: Recook Market App.
 publish_to: "none"
 
-version: 1.5.7-dev+257
+version: 1.6.0-vip+270
 environment:
   sdk: ">=2.10.0 <3.0.0"
 
@@ -225,8 +225,10 @@ dependencies:
   hive: ^2.0.0
   hive_flutter: ^1.0.0
 
-  pin_input_text_field: ^3.3.0
+  pin_input_text_field: ^4.0.0
+  velocity_x: ^2.6.0
 
+  animations:
   device_info: ^2.0.0
   clipboard_listener: ^1.0.0
   power_logger:

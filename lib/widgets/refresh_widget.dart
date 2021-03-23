@@ -178,6 +178,10 @@ class GSRefreshController {
     _controller = RefreshController(initialRefresh: initialRefresh);
   }
 
+  GSRefreshController.auto() {
+    _controller = RefreshController(initialRefresh: true);
+  }
+
   void requestRefresh() {
     _controller.requestRefresh();
   }
@@ -230,7 +234,6 @@ class GSRefreshController {
 
   bool get isNoData =>
       (_controller?.footerStatus ?? LoadStatus.canLoading) == LoadStatus.noMore;
-
 
   void dispose() {
     _controller.dispose();

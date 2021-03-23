@@ -65,7 +65,6 @@ class AppImageName {
   static const String coupon_overall_common = 'assets/coupon_overall_common.png';
 
   static const String diamond_recommendation_success = "assets/diamond_recommendation_success.png";
-  static const String master_right_remind = "assets/master_right_remind.png";
 
 }
 

@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/live/video/video_advance_page.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook_back_button.dart';

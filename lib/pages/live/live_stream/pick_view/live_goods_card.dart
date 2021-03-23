@@ -2,13 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/pages/live/live_stream/pick_view/brand_goods_list_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:recook/pages/live/models/goods_window_model.dart';
-import 'package:recook/pages/live/models/live_brand_model.dart';
 import 'package:recook/pages/user/widget/recook_check_box.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/widgets/recook/recook_scaffold.dart';
 
 class LiveGoodsCard extends StatefulWidget {
   final VoidCallback onPick;

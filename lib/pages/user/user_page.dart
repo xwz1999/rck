@@ -9,12 +9,14 @@
 
 import 'dart:io';
 
+import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:package_info/package_info.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
+import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -22,15 +24,20 @@ import 'package:recook/models/base_model.dart';
 import 'package:recook/models/shop_summary_model.dart';
 import 'package:recook/models/user_brief_info_model.dart';
 import 'package:recook/models/user_model.dart';
+import 'package:recook/pages/upgradeCard/function/user_card_function.dart';
+import 'package:recook/pages/user/functions/user_benefit_func.dart';
+import 'package:recook/pages/user/model/user_income_data_model.dart';
 import 'package:recook/pages/user/order/order_after_sale_page.dart';
 import 'package:recook/pages/user/order/order_center_page.dart';
-import 'package:recook/pages/user/user_cash_withdraw_page.dart';
+import 'package:recook/pages/user/user_history_benefit_page.dart';
 import 'package:recook/pages/user/widget/capital_view.dart';
 import 'package:recook/pages/user/widget/money_view.dart';
 import 'package:recook/pages/user/widget/order_central_view.dart';
-import 'package:recook/pages/user/widget/other_item_view.dart';
-import 'package:recook/pages/user/widget/user_app_bar.dart';
-import 'package:recook/pages/user/widget/user_page_assets_view.dart';
+import 'package:recook/pages/user/widget/other_item_view_v2.dart';
+import 'package:recook/pages/user/widget/shop_benefit_view.dart';
+import 'package:recook/pages/user/widget/shop_check_view.dart';
+import 'package:recook/pages/user/widget/shop_manager_view.dart';
+import 'package:recook/pages/user/widget/user_app_bar_v2.dart';
 import 'package:recook/redux/recook_state.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/utils/user_level_tool.dart';
@@ -41,6 +48,7 @@ import 'package:recook/widgets/refresh_widget.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class UserPage extends StatefulWidget {
   @override
@@ -54,7 +62,15 @@ class _UserPageState extends BaseStoreState<UserPage> {
   GSRefreshController _refreshController;
   String _capital; //提现金额
   bool _isFirstLoad = true;
+  double _allBenefitAmount = 0;
 
+  double _target = 100;
+  double _amount = 0;
+  int _cardCount = 0;
+
+  GlobalKey<ShopBenefitViewState> _shopBenefitKey =
+      GlobalKey<ShopBenefitViewState>();
+  UseerIncomeDataModel _userIncomeDataModel;
   @override
   bool get wantKeepAlive => true;
 
@@ -66,8 +82,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
   @override
   void initState() {
     super.initState();
-    _refreshController = GSRefreshController();
-
+    _refreshController = GSRefreshController(initialRefresh: true);
     WidgetsBinding.instance.addPostFrameCallback((callback) {
       if (_isFirstLoad) {
         _isFirstLoad = false;
@@ -77,13 +92,6 @@ class _UserPageState extends BaseStoreState<UserPage> {
       // VersionTool.checkVersionInfo(context);
       // _showUpDateAlert();
     });
-    if (UserManager.instance.haveLogin) {
-      UserManager.instance.refreshUserPage.addListener(() {
-        Future.delayed(Duration(seconds: 2), () {
-          if (mounted) _updateUserBriefInfo();
-        });
-      });
-    }
   }
 
   @override
@@ -102,29 +110,38 @@ class _UserPageState extends BaseStoreState<UserPage> {
 
   Widget _buildNestedScrollView(
       BuildContext context, Store<RecookState> store) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            height: 160 + ScreenUtil.statusBarHeight,
-            child: UserAppBar(
-              withdrawListener: () {
-                AppRouter.push(context, RouteName.USER_CASH_WITHDRAW_PAGE,
-                    arguments: UserCashWithdrawPage.setArguments(
-                        amount: getStore().state.userBrief.balance.toDouble()));
-              },
-              userListener: () {
-                push(RouteName.USER_INFO_PAGE);
-              },
-            ),
-          ),
-          Expanded(
-            child: _buildRefreshScrollView(context, store),
-          ),
-        ],
-      ),
+    return NestedScrollView(
+      headerSliverBuilder: (context, innerBoxIsScrolled) {
+        return [
+          SliverToBoxAdapter(child: UserAppBarV2()),
+        ];
+      },
+      body: _buildRefreshScrollView(context, store),
     );
+    // return Container(
+    //   child: Column(
+    //     mainAxisAlignment: MainAxisAlignment.start,
+    //     children: <Widget>[
+    //       UserAppBarV2(),
+    //       // Container(
+    //       //   height: 160 + ScreenUtil.statusBarHeight,
+    //       //   child: UserAppBar(
+    //       //     withdrawListener: () {
+    //       //       AppRouter.push(context, RouteName.USER_CASH_WITHDRAW_PAGE,
+    //       //           arguments: UserCashWithdrawPage.setArguments(
+    //       //               amount: getStore().state.userBrief.balance.toDouble()));
+    //       //     },
+    //       //     userListener: () {
+    //       //       push(RouteName.USER_INFO_PAGE);
+    //       //     },
+    //       //   ),
+    //       // ),
+    //       Expanded(
+    //         child: _buildRefreshScrollView(context, store),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 
   _updateUserBriefInfo() {
@@ -143,6 +160,45 @@ class _UserPageState extends BaseStoreState<UserPage> {
     });
   }
 
+  ///更新累计收益
+  _updateAllAmount() {
+    UserBenefitFunc.accmulate().then((value) {
+      _allBenefitAmount = value.data.allAmount;
+    });
+  }
+
+  _updateCheck() async {
+    ///yeah, this is sh*t code,but its a simple way.
+    ResultData result = await HttpManager.post(
+      APIV2.userAPI.userCheck,
+      {'month': DateUtil.formatDate(DateTime.now(), format: 'yyyy-MM')},
+    );
+    if (result.data != null && result.data['data'] != null) {
+      _amount = (result.data['data']['amount'] ?? 0) + .0;
+      _target = (result.data['data']['needAmount'] ?? 100) + .0;
+    }
+  }
+
+  _updateNewBenefit() async {
+    ResultData result = await HttpManager.post(APIV2.benefitAPI.incomeData, {});
+    if (result.data != null && result.data['data'] != null) {
+      _userIncomeDataModel = UseerIncomeDataModel.fromJson(result.data['data']);
+    }
+  }
+
+  String get shopContent {
+    UserRoleLevel role = UserLevelTool.currentRoleLevelEnum();
+    if (role == UserRoleLevel.Diamond_1 ||
+        role == UserRoleLevel.Diamond_2 ||
+        role == UserRoleLevel.Diamond_3) {
+      return '自营店铺补贴：每月1日结算您自营店铺上一个自然月确认收货的订单，按自营店铺销售额的3%计算补贴。\n分销店铺补贴：每月1日结算您分销店铺上一个自然月确认收货的订单，按分销店铺销售额的4%计算补贴。\n代理店铺补贴：每月1日结算您代理店铺上一个自然月确认收货的订单，按代理店铺销售额的5%计算补贴。';
+    }
+    if (role == UserRoleLevel.Gold || role == UserRoleLevel.Silver) {
+      return '自营店铺补贴：每月1日结算您自营店铺上一个自然月确认收货的订单，按自营店铺销售额的3%计算补贴。\n分销店铺补贴：每月1日结算您分销店铺上一个自然月确认收货的订单，按分销店铺销售额的4%计算补贴。';
+    } else
+      return '自营店铺补贴：每月1日结算您自营店铺上一个自然月确认收货的订单，按自营店铺销售额的3%计算补贴。';
+  }
+
   Widget _buildRefreshScrollView(
       BuildContext context, Store<RecookState> store) {
     return Stack(
@@ -155,9 +211,15 @@ class _UserPageState extends BaseStoreState<UserPage> {
           releaseText: "松开更新个人数据",
           idleText: "下拉更新个人数据",
           refreshingText: "正在更新个人数据...",
-          onRefresh: () {
+          onRefresh: () async {
             VersionTool.checkVersionInfo(context);
+            // _shopBenefitKey.currentState.updateBenefit();
             _updateUserBriefInfo();
+            _updateAllAmount();
+            await _updateCheck();
+            _cardCount = await UserCardFunction.count();
+            await _updateNewBenefit();
+            setState(() {});
           },
           body: ListView(
             physics: AlwaysScrollableScrollPhysics(),
@@ -167,7 +229,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 listener: _moneyViewListener,
                 wechatListener: _wechatBindinghandle,
               ),
-              CapitalView(),
+              CapitalView(cardCount: _cardCount),
               UserLevelTool.currentRoleLevelEnum() != UserRoleLevel.Vip
                   ? Padding(
                       padding: EdgeInsets.symmetric(
@@ -179,7 +241,60 @@ class _UserPageState extends BaseStoreState<UserPage> {
               SizedBox(
                 height: AppConfig.getShowCommission() ? 10 : 0,
               ),
-              UserPageAssetsView(),
+              // UserPageAssetsView(),
+              ...[
+                _renderBenefitCard(
+                  leadingPath: R.ASSETS_USER_PINK_BUYER_PNG,
+                  title: '自购收益',
+                  alertTitle: '自购收益',
+                  alertContent: '您本人下单并确认收货后，您获得的佣金。',
+                  title1: '未到账收益(瑞币)',
+                  title3: '已到账收益(瑞币)',
+                  content1:
+                      _userIncomeDataModel?.purchase?.expectAmountValue ?? '0',
+                  content2:
+                      _userIncomeDataModel?.purchase?.expectCountValue ?? '0',
+                  content3: _userIncomeDataModel?.purchase?.amountValue ?? '0',
+                  content4: _userIncomeDataModel?.purchase?.countValue ?? '0',
+                ),
+                _renderBenefitCard(
+                  leadingPath: R.ASSETS_USER_PINK_SHARE_PNG,
+                  title: '导购收益',
+                  alertTitle: '导购收益',
+                  alertContent: '会员通过您导购的商品链接，购买并确认收货的佣金收益',
+                  title1: '未到账收益(瑞币)',
+                  title3: '已到账收益(瑞币)',
+                  content1:
+                      _userIncomeDataModel?.guide?.expectAmountValue ?? '0',
+                  content2:
+                      _userIncomeDataModel?.guide?.expectCountValue ?? '0',
+                  content3: _userIncomeDataModel?.guide?.amountValue ?? '0',
+                  content4: _userIncomeDataModel?.guide?.countValue ?? '0',
+                ),
+                if (_userIncomeDataModel?.hasTeamValue ?? false)
+                  _renderBenefitCard(
+                    leadingPath: R.ASSETS_USER_PINK_GROUP_PNG,
+                    title: '店铺补贴',
+                    alertTitle: '店铺补贴',
+                    alertContent: shopContent,
+                    title1: '未到账补贴(瑞币)',
+                    title3: '已到账补贴(瑞币)',
+                    content1:
+                        _userIncomeDataModel?.team?.expectAmountValue ?? '0',
+                    content2:
+                        _userIncomeDataModel?.team?.expectCountValue ?? '0',
+                    content3: _userIncomeDataModel?.team?.amountValue ?? '0',
+                    content4: _userIncomeDataModel?.team?.countValue ?? '0',
+                  ),
+              ].sepWidget(separate: 10.hb),
+              10.hb,
+              // ShopBenefitView(key: _shopBenefitKey),
+              UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Gold ||
+                      UserLevelTool.currentRoleLevelEnum() ==
+                          UserRoleLevel.Silver
+                  ? ShopCheckView(target: _target, amount: _amount)
+                  : SizedBox(),
+              ShopManagerView(),
               OrderCentralView(
                 clickListener: (int index) {
                   if (index == 4) {
@@ -197,7 +312,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                       arguments: OrderCenterPage.setArguments(index));
                 },
               ),
-              OtherItemView(),
+              // OtherItemView(),
+              OtherItemViewV2(),
             ],
           ),
         ),
@@ -226,6 +342,126 @@ class _UserPageState extends BaseStoreState<UserPage> {
     return model;
   }
 
+  Widget _renderBenefitCard({
+    @required String leadingPath,
+    @required String title,
+    @required String alertTitle,
+    @required String alertContent,
+    @required String title1,
+    @required String title3,
+    @required String content1,
+    @required String content2,
+    @required String content3,
+    @required String content4,
+  }) {
+    return Container(
+      color: Colors.white,
+      child: Column(
+        children: [
+          Row(
+            children: [
+              46.hb,
+              24.wb,
+              Image.asset(
+                leadingPath,
+                width: 22.w,
+                height: 22.w,
+              ),
+              10.wb,
+              title.text.size(16.sp).black.make(),
+              MaterialButton(
+                padding: EdgeInsets.all(4.w),
+                minWidth: 0,
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                child: Icon(
+                  Icons.help_outline,
+                  size: 12.w,
+                  color: Color(0xFFA5A5A5),
+                ),
+                onPressed: () {
+                  Alert.show(
+                      context,
+                      NormalTextDialog(
+                        title: alertTitle,
+                        content: alertContent,
+                        items: ["确认"],
+                        listener: (index) {
+                          Alert.dismiss(context);
+                        },
+                      ));
+                },
+              ),
+              Spacer(),
+            ],
+          ),
+          Divider(
+            indent: 16.w,
+            endIndent: 16.w,
+            color: Color(0xFFEEEEEE),
+            height: 1.w,
+            thickness: 1.w,
+          ),
+          Row(
+            children: [
+              74.hb,
+              Row(
+                children: [
+                  24.wb,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      title1.text.color(Color(0xFF999999)).size(12.sp).make(),
+                      10.hb,
+                      content1.text.black.size(16.sp).make(),
+                    ],
+                  ),
+                  Spacer(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      '订单数'.text.color(Color(0xFF999999)).size(12.sp).make(),
+                      10.hb,
+                      content2.text.black.size(16.sp).make(),
+                    ],
+                  ),
+                  16.wb,
+                ],
+              ).expand(),
+              Container(
+                height: 28.w,
+                width: 1.w,
+                color: Color(0xFFEEEEEE),
+              ),
+              Row(
+                children: [
+                  16.wb,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      title3.text.color(Color(0xFF999999)).size(12.sp).make(),
+                      10.hb,
+                      content3.text.black.size(16.sp).make(),
+                    ],
+                  ),
+                  Spacer(),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      '订单数'.text.color(Color(0xFF999999)).size(12.sp).make(),
+                      10.hb,
+                      content4.text.black.size(16.sp).make(),
+                    ],
+                  ),
+                  24.wb,
+                ],
+              ).expand(),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
   _buildDetailReward() {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
@@ -244,42 +480,47 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     fit: BoxFit.cover,
                   )),
               AppConfig.getShowCommission()
-                  ? GestureDetector(
-                      onTap: () {
-                        push(RouteName.CUMULATIVE_INCOME);
+                  ? CustomImageButton(
+                      onPressed: () {
+                        Get.to(() => UserHistoryBenefitPage());
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 15),
                         height: 40,
                         child: Row(
                           children: <Widget>[
-                            Text.rich(TextSpan(children: [
-                              TextSpan(
-                                  text: "累计收益",
-                                  style: AppTextStyle.generate(16,
-                                      fontWeight: FontWeight.w700)),
-                              TextSpan(
-                                  text: "(瑞币)",
-                                  style: TextStyle(
-                                      color: Colors.black87, fontSize: 10))
-                            ])),
-                            Spacer(),
-                            FutureBuilder(
-                              future: _getShopSummary(),
-                              builder: (context, snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.done) {
-                                  ShopSummaryModel model = snapshot.data;
-                                  return Text(
-                                      model.data.accumulateIncome.all
-                                          .toStringAsFixed(2),
-                                      style: TextStyle(
-                                          color: Colors.black, fontSize: 18));
-                                } else {
-                                  return Text('');
-                                }
+                            Text(
+                              "累计收益",
+                              style: AppTextStyle.generate(16,
+                                  fontWeight: FontWeight.w700),
+                            ),
+                            MaterialButton(
+                              padding: EdgeInsets.all(4.w),
+                              minWidth: 0,
+                              materialTapTargetSize:
+                                  MaterialTapTargetSize.shrinkWrap,
+                              child: Icon(
+                                Icons.help_outline,
+                                size: 12.w,
+                                color: Color(0xFFA5A5A5),
+                              ),
+                              onPressed: () {
+                                Alert.show(
+                                    context,
+                                    NormalTextDialog(
+                                      title: "累计收益",
+                                      content: "您的账户使用至今所有已到账收益之和",
+                                      items: ["确认"],
+                                      listener: (index) {
+                                        Alert.dismiss(context);
+                                      },
+                                    ));
                               },
                             ),
+                            Spacer(),
+                            Text(_allBenefitAmount.toStringAsFixed(2),
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 18)),
                             Icon(Icons.keyboard_arrow_right,
                                 size: 22, color: Color(0xff999999)),
                           ],

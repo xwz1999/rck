@@ -18,7 +18,8 @@ class DataManagerAllView extends StatefulWidget {
 class _DataManagerAllViewState extends State<DataManagerAllView>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   TabController _tabController;
-  GSRefreshController _refreshController = GSRefreshController();
+  GSRefreshController _refreshController =
+      GSRefreshController(initialRefresh: true);
   List<String> titles = [
     '收获点赞',
     '观众人数',
@@ -38,9 +39,6 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
       length: 6,
       initialIndex: 0,
     );
-    Future.delayed(Duration(milliseconds: 300), () {
-      _refreshController.requestRefresh();
-    });
   }
 
   @override
