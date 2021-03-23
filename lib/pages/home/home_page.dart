@@ -10,7 +10,8 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
-import 'package:amap_location_fluttify/amap_location_fluttify.dart';
+import 'package:amap_flutter_location/amap_flutter_location.dart';
+import 'package:amap_flutter_location/amap_location_option.dart';
 import 'package:clipboard_listener/clipboard_listener.dart';
 import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
@@ -97,7 +98,7 @@ class ClipboardListenerValue {
 
 class _HomePageState extends BaseStoreState<HomePage>
     with TickerProviderStateMixin, WidgetsBindingObserver {
-  Location _weatherLocation;
+  Map<String, Object> _weatherLocation;
   TabController _tabController;
   int _tabIndex = 0;
 
@@ -152,6 +153,16 @@ class _HomePageState extends BaseStoreState<HomePage>
   @override
   void initState() {
     super.initState();
+    requestPermission().then((value) {
+      if (value) {
+        AMapFlutterLocation().setLocationOption(AMapLocationOption());
+        AMapFlutterLocation().startLocation();
+        AMapFlutterLocation().onLocationChanged().listen((event) {
+          _weatherLocation = event;
+        });
+      }
+    });
+
     // 分享注册
     _mobShareInit();
     // 判断微信是否登录
@@ -252,6 +263,8 @@ class _HomePageState extends BaseStoreState<HomePage>
   @override
   void dispose() {
     _tabController.dispose();
+    AMapFlutterLocation().stopLocation();
+    AMapFlutterLocation().destroy();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -458,8 +471,8 @@ class _HomePageState extends BaseStoreState<HomePage>
       },
     );
     String locationCityName =
-        _weatherLocation != null && !TextUtils.isEmpty(_weatherLocation.city)
-            ? _weatherLocation.city
+        _weatherLocation != null && !TextUtils.isEmpty(_weatherLocation['city'])
+            ? _weatherLocation['city']
             : "";
     try {
       locationCityName = locationCityName.replaceAll("区", "");
@@ -1365,10 +1378,6 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   _getWeather() async {
     // if (_weatherLocation==null)
-
-    if (await requestPermission())
-      _weatherLocation = await AmapLocation.instance.fetchLocation();
-
     String url =
         "https://tianqiapi.com/api?version=v61&appid=81622428&appsecret=AxKzYWq3";
     if (_weatherCityModel != null && !TextUtils.isEmpty(_weatherCityModel.id)) {
@@ -1377,9 +1386,9 @@ class _HomePageState extends BaseStoreState<HomePage>
         !TextUtils.isEmpty(_weatherCityModel.cityZh)) {
       url = "$url&city=${_weatherCityModel.cityZh}";
     } else if (_weatherLocation != null &&
-        !TextUtils.isEmpty(_weatherLocation.city)) {
+        !TextUtils.isEmpty(_weatherLocation['city'])) {
       // url = "$url&point=gaode&lng=${_weatherLocation.latLng.longitude.toString()}&lat=${_weatherLocation.latLng.latitude.toString()}";
-      String city = _weatherLocation.city.replaceAll("区", "");
+      String city = (_weatherLocation['city'] as String).replaceAll("区", "");
       city = city.replaceAll("市", "");
       url = "$url&city=$city";
     }

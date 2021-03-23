@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:amap_location_fluttify/amap_location_fluttify.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -44,8 +43,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
 
+  //TODO ios settings
   //初始化AMap
-  AmapLocation.instance.init(iosKey: 'e8a8057cfedcdcadcf4e8f2c7f8de982');
+  // AmapLocation.instance.init(iosKey: 'e8a8057cfedcdcadcf4e8f2c7f8de982');
 
   //初始化腾讯im
   TencentImPlugin.init(appid: '1400435566');

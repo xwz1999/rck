@@ -18,7 +18,8 @@ dependencies:
 
   timeline_tile: 0.1.2
   # 高德定位
-  amap_location_fluttify:
+  # amap_location_fluttify: ^0.18.0
+  amap_flutter_location: ^1.0.1
   # icons
   flutter_icons: 1.1.0
   # 拼音
@@ -94,7 +95,7 @@ dependencies:
   oktoast: 2.3.2
 
   # 应用信息
-  package_info: ^0.4.0+16
+  package_info: ^2.0.0
 
   #缓存图片
   #  cached_network_image: ^1.1.0
@@ -126,10 +127,10 @@ dependencies:
   # 源码 TobiasPlugin.m
   # 判断支付宝是否安装时  源码不正确  应将 alipays 改为 alipay #########################3
   #
-  tobias: 1.6.0+1
+  tobias: 2.0.0-nullsafety.3
 
   # 小数据缓存
-  shared_preferences: 0.5.3+4
+  shared_preferences: ^2.0.5
 
   # 屏幕适配
   flutter_screenutil: ^0.5.3
@@ -203,7 +204,7 @@ dependencies:
   #视频剪辑
   video_trimmer:
     git:
-      url: http://192.168.2.201:8099/aku_fe/video_trimmer.git
+      url: http://159.75.73.143:8080/laiiihz/video_trimmer
 
   #点赞组件
   many_like: ^0.0.6
@@ -226,7 +227,7 @@ dependencies:
 
   pin_input_text_field: ^3.3.0
 
-  device_info: ^1.0.0
+  device_info: ^2.0.0
   clipboard_listener: ^1.0.0
   power_logger:
     git:
