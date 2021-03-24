@@ -16,10 +16,15 @@ class GroupInviteCard extends StatelessWidget {
   final UserCommonModel model;
   const GroupInviteCard({Key key, @required this.model}) : super(key: key);
   _renderItem(String asset, String value) {
+    String displayValue = value;
+    if (displayValue?.isEmpty ?? true) {
+      displayValue = ' —';
+    }
     return Row(
       children: [
         Image.asset(asset, width: 10.w, height: 10.w),
-        value.text.size(11.sp).color(Color(0xFF999999)).make().expand(),
+        2.wb,
+        displayValue.text.size(11.sp).color(Color(0xFF999999)).make().expand(),
       ],
     ).expand();
   }
@@ -184,7 +189,10 @@ class GroupInviteCard extends StatelessWidget {
               children: [
                 _renderItem(
                     R.ASSETS_USER_ICON_GROUP_PNG, model.count.toString()),
-                _renderItem(R.ASSETS_USER_ICON_MONEY_PNG, 'TODO 销售额'),
+                _renderItem(
+                  R.ASSETS_USER_ICON_MONEY_PNG,
+                  model.amount.toStringAsFixed(2),
+                ),
               ],
             ),
             16.hb,

@@ -10,21 +10,24 @@ class UserCommonModel {
   int count;
   int roleLevel;
   int flag;
+  num amount;
 
   UserRoleLevel get roleLevelEnum => UserLevelTool.roleLevelEnum(roleLevel);
 
   bool get isRecommand => flag == 1;
 
-  UserCommonModel(
-      {this.userId,
-      this.headImgUrl,
-      this.nickname,
-      this.phone,
-      this.wechatNo,
-      this.remarkName,
-      this.count,
-      this.roleLevel,
-      this.flag});
+  UserCommonModel({
+    this.userId,
+    this.headImgUrl,
+    this.nickname,
+    this.phone,
+    this.wechatNo,
+    this.remarkName,
+    this.count,
+    this.roleLevel,
+    this.flag,
+    this.amount,
+  });
 
   UserCommonModel.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
@@ -36,6 +39,7 @@ class UserCommonModel {
     count = json['count'];
     roleLevel = json['roleLevel'];
     flag = json['flag'];
+    amount = json['amount'];
   }
 
   Map<String, dynamic> toJson() {

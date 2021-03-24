@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/sc_tile.dart';
@@ -14,7 +16,13 @@ class AccountAndSafetyPage extends StatefulWidget {
 }
 
 class _AccountAndSafetyPageState extends State<AccountAndSafetyPage> {
-  bool switchTest = false;
+  bool secureValue = false;
+  @override
+  void initState() {
+    super.initState();
+    //TODO 初始化手机号显示开关数值
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,11 +56,11 @@ class _AccountAndSafetyPageState extends State<AccountAndSafetyPage> {
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onPressed: () async {
               final cancel = ReToast.loading(text: '修改中');
-              await Future.delayed(Duration(seconds: 2));
+              secureValue = !secureValue;
+              await HttpManager.post(
+                  APIV2.userAPI.securePhone, {'secure': secureValue ? 1 : 0});
               cancel();
-              setState(() {
-                switchTest = !switchTest;
-              });
+              setState(() {});
             },
             child: Row(
               children: [
@@ -68,15 +76,15 @@ class _AccountAndSafetyPageState extends State<AccountAndSafetyPage> {
                   ],
                 ).expand(),
                 CupertinoSwitch(
-                  value: switchTest,
+                  value: secureValue,
                   trackColor: Color(0xFFDB2D2D),
                   onChanged: (state) async {
                     final cancel = ReToast.loading(text: '修改中');
-                    await Future.delayed(Duration(seconds: 2));
+                    secureValue = !secureValue;
+                    await HttpManager.post(APIV2.userAPI.securePhone,
+                        {'secure': secureValue ? 1 : 0});
                     cancel();
-                    setState(() {
-                      switchTest = !switchTest;
-                    });
+                    setState(() {});
                   },
                 ),
               ],
