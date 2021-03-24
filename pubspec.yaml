@@ -231,10 +231,7 @@ dependencies:
   animations:
   device_info: ^2.0.0
   clipboard_listener: ^1.0.0
-  power_logger:
-    git:
-      url: http://159.75.73.143:8080/laiiihz/power_logger
-      ref: null-safety
+  power_logger: ^1.0.1-nullsafety.1
 
   bot_toast: ^3.0.5
   get: ^3.26.0

@@ -85,6 +85,9 @@ class UserAPI {
 
   ///确认角色卡变动
   String get confirmUserCardChange => '/v2/app/user/welfare/notice/look';
+
+  ///会员隐私开关
+  String get securePhone => '/v2/app/user/secret';
 }
 
 class BenefitAPI {
