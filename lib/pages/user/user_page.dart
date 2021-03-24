@@ -66,10 +66,18 @@ class _UserPageState extends BaseStoreState<UserPage> {
 
   double _target = 100;
   double _amount = 0;
+  int _cardType = 0;
   int _cardCount = 0;
+  bool get _fullCheck {
+    // bool isGold = UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Gold;
+    // bool isSilver = UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Silver;
 
-  GlobalKey<ShopBenefitViewState> _shopBenefitKey =
-      GlobalKey<ShopBenefitViewState>();
+    if (_cardType == 1 || _cardType == 2) return true;
+    return false;
+  }
+
+  // GlobalKey<ShopBenefitViewState> _shopBenefitKey =
+  //     GlobalKey<ShopBenefitViewState>();
   UseerIncomeDataModel _userIncomeDataModel;
   @override
   bool get wantKeepAlive => true;
@@ -292,7 +300,10 @@ class _UserPageState extends BaseStoreState<UserPage> {
               UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Gold ||
                       UserLevelTool.currentRoleLevelEnum() ==
                           UserRoleLevel.Silver
-                  ? ShopCheckView(target: _target, amount: _amount)
+                  ? ShopCheckView(
+                      target: _fullCheck ? _amount : _target,
+                      amount: _amount,
+                    )
                   : SizedBox(),
               ShopManagerView(),
               OrderCentralView(
