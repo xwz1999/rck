@@ -1494,10 +1494,10 @@ class _HomePageState extends BaseStoreState<HomePage>
       if (oldLevel < nowLevel) {
         switch (UserLevelTool.roleLevelEnum(nowLevel)) {
           case UserRoleLevel.Silver:
-            img = R.ASSETS_USER_DOWNGRADE_SILVER_PNG_WEBP;
+            img = R.ASSETS_USER_DOWNGRADE_SILVER_WEBP;
             break;
           case UserRoleLevel.Master:
-            img = R.ASSETS_USER_DOWNGRADE_MASTER_PNG_WEBP;
+            img = R.ASSETS_USER_DOWNGRADE_MASTER_WEBP;
             break;
           default:
             break;
