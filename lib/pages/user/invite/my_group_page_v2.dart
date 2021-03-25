@@ -204,13 +204,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
               20.wb,
             ],
           ),
-          ..._models.map((e) => GroupInviteCard(model: e)).toList().sepWidget(
-                  separate: Divider(
-                indent: 65.w,
-                endIndent: 15.w,
-                height: 1.w,
-                thickness: 1.w,
-              )),
+          ..._models.map((e) => GroupInviteCard(model: e)).toList(),
         ],
       ),
       margin: EdgeInsets.symmetric(horizontal: 16.w),

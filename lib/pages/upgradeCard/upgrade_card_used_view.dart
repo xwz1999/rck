@@ -99,7 +99,7 @@ class _userCard extends StatelessWidget {
     String typeValue = '';
     if (type == 1) typeValue = '黄金卡';
     if (type == 2) typeValue = '白银卡';
-    bool used = status == 1;
+    bool used = status != 2;
     return Material(
       color: Colors.white,
       borderRadius: BorderRadius.circular(5.w),

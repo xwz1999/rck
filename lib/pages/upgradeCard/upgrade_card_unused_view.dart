@@ -130,6 +130,12 @@ class _UserCard extends StatelessWidget {
       return '';
   }
 
+  String get _cardFace {
+    if (model.type == 1) return R.ASSETS_USER_UPGRADE_GOLD_CARD_WEBP;
+    if (model.type == 2) return R.ASSETS_USER_UPGRADE_SILVER_CARD_WEBP;
+    return '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -242,7 +248,7 @@ class _UserCard extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage(R.ASSETS_USER_UPGRADE_SILVER_CARD_WEBP),
+          image: AssetImage(_cardFace),
         ),
       ),
     );
