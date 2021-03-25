@@ -47,6 +47,17 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
     ).expand();
   }
 
+  String get _renderTitle {
+    switch (usersMode) {
+      case UsersMode.MY_GROUP:
+        return '我的自营店铺';
+      case UsersMode.MY_RECOMMEND:
+        return '我的分销店铺';
+      case UsersMode.MY_REWARD:
+        return '我的代理店铺';
+    }
+  }
+
   Widget get _renderShitVerticalLine => Container(
         height: 20.w,
         width: 1.w,
@@ -161,7 +172,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
             children: [
               54.hb,
               16.wb,
-              '我的自营店铺'.text.bold.size(14.sp).black.make(),
+              _renderTitle.text.bold.size(14.sp).black.make(),
               MaterialButton(
                 padding: EdgeInsets.all(4.w),
                 minWidth: 0,
