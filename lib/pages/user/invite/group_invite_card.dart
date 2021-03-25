@@ -6,6 +6,7 @@ import 'package:recook/constants/api_v2.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/user/model/user_common_model.dart';
+import 'package:recook/pages/user/widget/user_group_card_detail_page.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/alert.dart';
@@ -14,7 +15,9 @@ import 'package:velocity_x/velocity_x.dart';
 
 class GroupInviteCard extends StatelessWidget {
   final UserCommonModel model;
-  const GroupInviteCard({Key key, @required this.model}) : super(key: key);
+  final bool canTap;
+  const GroupInviteCard({Key key, @required this.model, this.canTap = false})
+      : super(key: key);
   _renderItem(String asset, String value) {
     String displayValue = value;
     if (displayValue?.isEmpty ?? true) {
@@ -148,7 +151,7 @@ class GroupInviteCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    final widget = Row(
       children: [
         16.wb,
         Column(
@@ -187,11 +190,10 @@ class GroupInviteCard extends StatelessWidget {
             5.hb,
             Row(
               children: [
-                _renderItem(
-                    R.ASSETS_USER_ICON_GROUP_PNG, model.count.toString()),
+                _renderItem(R.ASSETS_USER_ICON_GROUP_PNG, model.countValue),
                 _renderItem(
                   R.ASSETS_USER_ICON_MONEY_PNG,
-                  model.amount.toStringAsFixed(2),
+                  model.amountValue,
                 ),
               ],
             ),
@@ -201,21 +203,30 @@ class GroupInviteCard extends StatelessWidget {
         Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            if (model.isRecommand)
-              MaterialButton(
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                minWidth: 0,
-                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.w),
-                child: Image.asset(
-                  R.ASSETS_USER_USER_RECOMMEND_SINGLE_PNG,
-                  height: 17.w,
-                ),
-                onPressed: upgradeFunc,
-              ),
+            model.isRecommand
+                ? MaterialButton(
+                    materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    minWidth: 0,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.w),
+                    child: Image.asset(
+                      R.ASSETS_USER_USER_RECOMMEND_SINGLE_PNG,
+                      height: 17.w,
+                      width: 17.w,
+                    ),
+                    onPressed: upgradeFunc,
+                  )
+                : 57.wb,
             44.hb,
           ],
         ),
       ],
+    );
+    return GestureDetector(
+      onTap: () {
+        if (canTap) Get.to(() => UserGroupCardDetailPage(id: model.userId));
+      },
+      child: widget,
     );
   }
 }
