@@ -13,6 +13,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:oktoast/oktoast.dart';
+import 'package:package_info/package_info.dart';
 import 'package:package_signature/package_signature.dart';
 import 'package:raw_toast/raw_toast.dart';
 import 'package:recook/constants/api.dart';
@@ -44,6 +45,8 @@ void main() async {
   cameras = await availableCameras();
 
   //TODO ios settings
+  PackageInfo _packageInfo = await PackageInfo.fromPlatform();
+  AppConfig.versionNumber = _packageInfo.buildNumber;
   //初始化AMap
   // AmapLocation.instance.init(iosKey: 'e8a8057cfedcdcadcf4e8f2c7f8de982');
 

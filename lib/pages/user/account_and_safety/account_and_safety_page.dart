@@ -58,7 +58,9 @@ class _AccountAndSafetyPageState extends State<AccountAndSafetyPage> {
               final cancel = ReToast.loading(text: '修改中');
               secureValue = !secureValue;
               await HttpManager.post(
-                  APIV2.userAPI.securePhone, {'secure': secureValue ? 1 : 0});
+                APIV2.userAPI.securePhone,
+                {'secure': secureValue ? 1 : 0},
+              );
               cancel();
               setState(() {});
             },

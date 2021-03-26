@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:recook/pages/user/invite/group_invite_card.dart';
 import 'package:recook/pages/user/model/user_common_model.dart';
@@ -45,6 +46,17 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
         setState(() {});
       },
     ).expand();
+  }
+
+  String get _renderTitle {
+    switch (usersMode) {
+      case UsersMode.MY_GROUP:
+        return '我的自营店铺';
+      case UsersMode.MY_RECOMMEND:
+        return '我的分销店铺';
+      case UsersMode.MY_REWARD:
+        return '我的代理店铺';
+    }
   }
 
   Widget get _renderShitVerticalLine => Container(
@@ -161,7 +173,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
             children: [
               54.hb,
               16.wb,
-              '我的自营店铺'.text.bold.size(14.sp).black.make(),
+              _renderTitle.text.bold.size(14.sp).black.make(),
               MaterialButton(
                 padding: EdgeInsets.all(4.w),
                 minWidth: 0,
@@ -193,13 +205,34 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
               20.wb,
             ],
           ),
-          ..._models.map((e) => GroupInviteCard(model: e)).toList().sepWidget(
-                  separate: Divider(
-                indent: 65.w,
-                endIndent: 15.w,
-                height: 1.w,
-                thickness: 1.w,
-              )),
+          ..._models
+              .map((e) => GroupInviteCard(
+                  model: e, canTap: usersMode == UsersMode.MY_GROUP))
+              .toList()
+                ..insertAll(
+                    0,
+                    usersMode == UsersMode.MY_GROUP
+                        ? [
+                            GroupInviteCard(
+                                model: UserCommonModel(
+                                  remarkName: '本人',
+                                  nickname:
+                                      UserManager.instance.user.info.nickname,
+                                  phone: UserManager.instance.user.info.mobile,
+                                  headImgUrl:
+                                      UserManager.instance.user.info.headImgUrl,
+                                  wechatNo:
+                                      UserManager.instance.user.info.wechatNo,
+                                  userId: UserManager.instance.user.info.id,
+                                  flag: 0,
+                                  amount: -1,
+                                  count: -1,
+                                  roleLevel:
+                                      UserManager.instance.user.info.roleLevel,
+                                ),
+                                canTap: false)
+                          ]
+                        : []),
         ],
       ),
       margin: EdgeInsets.symmetric(horizontal: 16.w),

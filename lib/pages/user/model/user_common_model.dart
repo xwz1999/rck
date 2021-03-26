@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:recook/utils/user_level_tool.dart';
 
 class UserCommonModel {
@@ -16,17 +17,31 @@ class UserCommonModel {
 
   bool get isRecommand => flag == 1;
 
+  String get countValue {
+    if (count == -1)
+      return '—';
+    else
+      return (count ?? 0).toString();
+  }
+
+  String get amountValue {
+    if (amount == -1)
+      return '—';
+    else
+      return (amount ?? 0.0).toStringAsFixed(2);
+  }
+
   UserCommonModel({
-    this.userId,
-    this.headImgUrl,
-    this.nickname,
-    this.phone,
-    this.wechatNo,
-    this.remarkName,
-    this.count,
-    this.roleLevel,
-    this.flag,
-    this.amount,
+    @required this.userId,
+    @required this.headImgUrl,
+    @required this.nickname,
+    @required this.phone,
+    @required this.wechatNo,
+    @required this.remarkName,
+    @required this.count,
+    @required this.roleLevel,
+    @required this.flag,
+    @required this.amount,
   });
 
   UserCommonModel.fromJson(Map<String, dynamic> json) {

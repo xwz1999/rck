@@ -1504,10 +1504,10 @@ class _HomePageState extends BaseStoreState<HomePage>
       if (oldLevel < nowLevel) {
         switch (UserLevelTool.roleLevelEnum(nowLevel)) {
           case UserRoleLevel.Silver:
-            img = R.ASSETS_USER_DOWNGRADE_SILVER_PNG_WEBP;
+            img = R.ASSETS_USER_DOWNGRADE_SILVER_WEBP;
             break;
           case UserRoleLevel.Master:
-            img = R.ASSETS_USER_DOWNGRADE_MASTER_PNG_WEBP;
+            img = R.ASSETS_USER_DOWNGRADE_MASTER_WEBP;
             break;
           default:
             break;
@@ -1560,6 +1560,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       for (var item in noticeList) {
         final int gold = item['gold'];
         final int silver = item['silver'];
+        final int id = item['id'];
         String goldValue = '';
         String silverValue = '';
         if (gold != null && gold != 0) goldValue = '$gold张黄金卡';
@@ -1573,13 +1574,30 @@ class _HomePageState extends BaseStoreState<HomePage>
         await Get.dialog(Center(
             child: GestureDetector(
           onTap: () async {
-            await HttpManager.post(APIV2.userAPI.confirmUserCardChange, {});
+            await HttpManager.post(
+              APIV2.userAPI.confirmUserCardChange,
+              {"noticeId": id},
+            );
             await Get.to(UpgradeCardPageV2());
             Get.back();
           },
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 50.w),
-            child: Center(child: Text('您有$result已退至您的卡包')),
+            child: Center(
+                child: Material(
+              color: Colors.transparent,
+              child: Transform.translate(
+                offset: Offset(0, 20.w),
+                child: Text(
+                  '您有$result已退至您的卡包',
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            )),
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(R.ASSETS_USER_NOTICE_CARD_PNG),
