@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api_v2.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:recook/pages/user/invite/group_invite_card.dart';
@@ -22,12 +24,14 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
   List<UserCommonModel> _models = [];
   UsersMode usersMode = UsersMode.MY_GROUP;
   int get _allGroupCount {
-    int value = 0;
+    int value = 1;
     _models.forEach((element) {
       value += element.count;
     });
     return value;
   }
+
+  num _myPeopleCount = -1;
 
   GSRefreshController _refreshController = GSRefreshController.auto();
 
@@ -57,6 +61,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
       case UsersMode.MY_REWARD:
         return '我的代理店铺';
     }
+    return '';
   }
 
   Widget get _renderShitVerticalLine => Container(
@@ -225,8 +230,8 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
                                       UserManager.instance.user.info.wechatNo,
                                   userId: UserManager.instance.user.info.id,
                                   flag: 0,
-                                  amount: -1,
-                                  count: -1,
+                                  amount: _myPeopleCount,
+                                  count: 1,
                                   roleLevel:
                                       UserManager.instance.user.info.roleLevel,
                                 ),
@@ -248,6 +253,19 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    HttpManager.post(APIV2.userAPI.userSaleAmount, {}).then((resultData) {
+      if (resultData?.data != null &&
+          resultData.data['data'] != null &&
+          resultData.data['data'] != null) {
+        _myPeopleCount = resultData.data['data']['amount'];
+        setState(() {});
+      }
+    });
   }
 
   @override

@@ -1423,28 +1423,29 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   //抽奖功能
   _userLottery() async {
-    ResultData resultData = await HttpManager.post(
-      UserApi.user_lottery,
-      {'userID': UserManager.instance.user.info.id},
-    );
-    if (resultData.data != null && resultData.data['data'] != null) {
-      if (resultData.data['data']['result'] == 0) {
-        ResultData lottery = await HttpManager.post(UserApi.user_do_lottery,
-            {'userID': UserManager.instance.user.info.id});
-        await Future.delayed(Duration(milliseconds: 500));
-        await Navigator.push(
-          context,
-          PageRouteBuilder(
-              opaque: false,
-              pageBuilder: (BuildContext context, Animation<double> animation,
-                  Animation<double> secondaryAnimation) {
-                return LotteryPage(
-                  cardIndex: lottery.data['data']['result'],
-                );
-              }),
-        );
-      }
-    }
+    //TODO 暂时移除抽奖功能（大概率以后用不到）
+    // ResultData resultData = await HttpManager.post(
+    //   UserApi.user_lottery,
+    //   {'userID': UserManager.instance.user.info.id},
+    // );
+    // if (resultData.data != null && resultData.data['data'] != null) {
+    //   if (resultData.data['data']['result'] == 0) {
+    //     ResultData lottery = await HttpManager.post(UserApi.user_do_lottery,
+    //         {'userID': UserManager.instance.user.info.id});
+    //     await Future.delayed(Duration(milliseconds: 500));
+    //     await Navigator.push(
+    //       context,
+    //       PageRouteBuilder(
+    //           opaque: false,
+    //           pageBuilder: (BuildContext context, Animation<double> animation,
+    //               Animation<double> secondaryAnimation) {
+    //             return LotteryPage(
+    //               cardIndex: lottery.data['data']['result'],
+    //             );
+    //           }),
+    //     );
+    //   }
+    // }
 
     //店铺角色变动
 
@@ -1553,6 +1554,8 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   _userCardNoticeList() async {
+    await Future.delayed(Duration(milliseconds: 300));
+
     ResultData resultData =
         await HttpManager.post(APIV2.userAPI.userCardNoticeList, {});
     if (resultData.data != null && resultData.data['data'] != null) {
@@ -1572,39 +1575,40 @@ class _HomePageState extends BaseStoreState<HomePage>
           result = '$goldValue$silverValue';
         }
         await Get.dialog(Center(
-            child: GestureDetector(
-          onTap: () async {
-            await HttpManager.post(
-              APIV2.userAPI.confirmUserCardChange,
-              {"noticeId": id},
-            );
-            await Get.to(UpgradeCardPageV2());
-            Get.back();
-          },
-          child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 50.w),
-            child: Center(
-                child: Material(
-              color: Colors.transparent,
-              child: Transform.translate(
-                offset: Offset(0, 20.w),
-                child: Text(
-                  '您有$result已退至您的卡包',
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
+          child: GestureDetector(
+            onTap: () async {
+              await HttpManager.post(
+                APIV2.userAPI.confirmUserCardChange,
+                {"noticeId": id},
+              );
+              await Get.to(UpgradeCardPageV2());
+              Get.back();
+            },
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 50.w),
+              child: Center(
+                  child: Material(
+                color: Colors.transparent,
+                child: Transform.translate(
+                  offset: Offset(0, 20.w),
+                  child: Text(
+                    '您有$result已退至您的卡包',
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-              ),
-            )),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(R.ASSETS_USER_NOTICE_CARD_PNG),
+              )),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(R.ASSETS_USER_NOTICE_CARD_PNG),
+                ),
               ),
             ),
           ),
-        )));
+        ));
       }
     }
   }
