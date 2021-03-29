@@ -84,7 +84,7 @@ class ShopManagerView extends StatelessWidget {
               _buildGridItem(
                 title: '我的店铺',
                 subTitle: '有福同享·真壕友',
-                onTap: () => Get.to(MyGroupPageV2()),
+                onTap: () => Get.to(() => MyGroupPageV2()),
                 // CRoute.push(context, MyGroupPage(type: UsersMode.MY_GROUP)),
                 path: R.ASSETS_SHOP_MY_GROUP_WEBP,
                 show: showTop,

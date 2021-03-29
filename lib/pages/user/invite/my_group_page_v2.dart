@@ -57,6 +57,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
       case UsersMode.MY_REWARD:
         return '我的代理店铺';
     }
+    return '';
   }
 
   Widget get _renderShitVerticalLine => Container(
@@ -226,7 +227,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
                                   userId: UserManager.instance.user.info.id,
                                   flag: 0,
                                   amount: -1,
-                                  count: -1,
+                                  count: 1,
                                   roleLevel:
                                       UserManager.instance.user.info.roleLevel,
                                 ),
