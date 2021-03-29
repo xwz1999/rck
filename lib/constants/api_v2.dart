@@ -88,6 +88,8 @@ class UserAPI {
 
   ///会员隐私开关
   String get securePhone => '/v2/app/user/secret';
+
+  String get userSaleAmount => '/v2/app/user/sale';
 }
 
 class BenefitAPI {
