@@ -9,9 +9,10 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -21,7 +22,6 @@ import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/progress/sc_dialog.dart';
 import 'package:recook/widgets/toast.dart';
-import 'package:recook/widgets/webView.dart';
 
 class LoginPage extends StatefulWidget {
   @override

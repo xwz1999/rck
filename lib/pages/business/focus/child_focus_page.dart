@@ -9,6 +9,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -16,6 +17,7 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/models/material_list_model.dart';
 import 'package:recook/pages/business/focus/mvp/focus_mvp_contact.dart';
+import 'package:recook/pages/business/focus/mvp/focus_presenter_implementation.dart';
 import 'package:recook/pages/business/items/item_business_focus.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
@@ -23,7 +25,6 @@ import 'package:recook/utils/image_utils.dart';
 import 'package:recook/utils/mvp.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
-import 'package:recook/pages/business/focus/mvp/focus_presenter_implementation.dart';
 import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/pic_swiper.dart';
 import 'package:recook/widgets/toast.dart';

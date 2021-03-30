@@ -11,13 +11,16 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart' as flutterImagePicker;
 import 'package:oktoast/oktoast.dart';
 import 'package:photo/photo.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/media_model.dart';
@@ -27,11 +30,9 @@ import 'package:recook/utils/image_utils.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/image_picker.dart';
 import 'package:recook/widgets/sc_tile.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class UserInfoPage extends StatefulWidget {
   @override

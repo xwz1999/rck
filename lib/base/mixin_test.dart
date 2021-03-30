@@ -9,7 +9,6 @@
 
 import 'package:encrypt/encrypt.dart';
 
-
 mixin TestMixin on BaseClass {
   void init() {
     print('TestMixin init start');

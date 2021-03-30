@@ -1,16 +1,18 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
+import 'package:video_trimmer/trim_editor.dart';
+import 'package:video_trimmer/video_trimmer.dart';
+import 'package:video_trimmer/video_viewer.dart';
+
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/live/video/video_advance_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook_back_button.dart';
-import 'package:video_trimmer/trim_editor.dart';
-import 'package:video_trimmer/video_trimmer.dart';
-import 'package:video_trimmer/video_viewer.dart';
 
 class CropVideoPage extends StatefulWidget {
   final File file;

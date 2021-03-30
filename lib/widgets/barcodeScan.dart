@@ -1,10 +1,11 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-// import 'package:flutter_audio_player/flutter_audio_player.dart';
+
 import 'package:flutter_qr_reader/flutter_qr_reader.dart';
 import 'package:flutter_qr_reader/qrcode_reader_view.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -15,7 +16,8 @@ import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/utils/text_utils.dart';
-import 'package:image_picker/image_picker.dart';
+
+// import 'package:flutter_audio_player/flutter_audio_player.dart';
 
 class BarcodeScanPage extends StatefulWidget {
 

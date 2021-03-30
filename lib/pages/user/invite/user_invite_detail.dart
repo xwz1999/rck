@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:url_launcher/url_launcher.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -11,7 +14,6 @@ import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/toast.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class UserInviteDetail extends StatefulWidget {
   final Map arguments;

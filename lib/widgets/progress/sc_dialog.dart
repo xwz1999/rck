@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+
 import 'package:recook/widgets/progress/loading_dialog.dart';
 
 class GSDialog {

@@ -10,6 +10,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/address_list_model.dart';
 import 'package:recook/models/order_preview_model.dart';
@@ -21,7 +22,6 @@ import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/mvp.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';

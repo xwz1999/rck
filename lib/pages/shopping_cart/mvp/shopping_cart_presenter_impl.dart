@@ -11,7 +11,6 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/models/order_preview_model.dart';
 import 'package:recook/models/shopping_cart_list_model.dart';
-
 import 'shopping_cart_contact.dart';
 import 'shopping_cart_model_impl.dart';
 

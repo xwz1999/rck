@@ -1,22 +1,27 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:amap_location_fluttify/amap_location_fluttify.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bugly/flutter_bugly.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-
 import 'package:oktoast/oktoast.dart';
+import 'package:openinstall_flutter_plugin/openinstall_flutter_plugin.dart';
 import 'package:package_info/package_info.dart';
 import 'package:package_signature/package_signature.dart';
 import 'package:raw_toast/raw_toast.dart';
+import 'package:redux/redux.dart';
+import 'package:tencent_im_plugin/tencent_im_plugin.dart';
+import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
+
 import 'package:recook/constants/api.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -29,16 +34,11 @@ import 'package:recook/third_party/bugly_helper.dart';
 import 'package:recook/utils/CommonLocalizationsDelegate.dart';
 import 'package:recook/utils/storage/hive_store.dart';
 import 'package:recook/utils/test.dart';
-import 'package:redux/redux.dart';
-import 'package:tencent_im_plugin/tencent_im_plugin.dart';
-import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
-
 import 'constants/header.dart';
 import 'utils/app_router.dart';
 
 // import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
-import 'package:openinstall_flutter_plugin/openinstall_flutter_plugin.dart';
 
 List<CameraDescription> cameras;
 void main() async {

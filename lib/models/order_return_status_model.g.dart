@@ -140,5 +140,3 @@ Map<String, dynamic> _$OrderStatusDetailToJson(OrderStatusDetail instance) =>
       'returnReason': instance.returnReason,
       'returnRejectReason': instance.returnRejectReason,
     }; 
-
-

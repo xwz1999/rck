@@ -8,12 +8,12 @@
  */
 
 import 'package:flutter/material.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/invite_list_model.dart';
 import 'package:recook/pages/user/invite/invite_list_contact.dart';
 import 'package:recook/pages/user/invite/invite_list_presenter_impl.dart';
-import 'package:recook/pages/user/invite/item_invite_detail_list.dart';
 import 'package:recook/pages/user/widget/user_group_card.dart';
 import 'package:recook/utils/mvp.dart';
 import 'package:recook/utils/user_level_tool.dart';

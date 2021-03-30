@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+
+import 'package:velocity_x/velocity_x.dart';
+
+import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:recook/pages/user/model/user_common_model.dart';
 import 'package:recook/pages/user/widget/user_group_card.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
-import 'package:velocity_x/velocity_x.dart';
-import 'package:recook/constants/header.dart';
 
 //TODO CLEAN BOTTOM CODES.
 @Deprecated(" my_group_page need to be cleaned.")

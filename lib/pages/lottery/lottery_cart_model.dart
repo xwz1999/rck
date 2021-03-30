@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:recook/pages/lottery/redeem_lottery_page.dart';
 import 'package:recook/utils/math/recook_math.dart';
 

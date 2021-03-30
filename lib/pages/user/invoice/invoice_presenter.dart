@@ -7,7 +7,6 @@ import 'package:recook/pages/user/invoice/models/invoice_get_bill_model.dart';
 import 'package:recook/pages/user/invoice/models/invoice_title_list_model.dart';
 import 'package:recook/widgets/toast.dart';
 
-
 class InvoicePresenter {
   Future<List<InvoiceGetBillModel>> getInvoice({int page = 0}) async {
     ResultData resultData = await HttpManager.post(InvoiceApi.canGetBill, {

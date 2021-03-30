@@ -2,7 +2,6 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/home/mvp/purchase_ranking_contact.dart';
 
-
 class PurchaseRankingModelImpl extends PurchaseRankingModelI {
   @override
   Future<ResultData> fetchList(int page) async {

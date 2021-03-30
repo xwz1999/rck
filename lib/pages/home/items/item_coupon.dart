@@ -8,14 +8,15 @@
  */
 
 import 'package:flutter/material.dart';
+
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
+import 'package:recook/models/coupon_list_model.dart';
 import 'package:recook/pages/home/classify/mvp/coupon_list_model_impl.dart';
 import 'package:recook/utils/time_transition_util.dart';
 import 'package:recook/widgets/text_button.dart' as TButton;
-import 'package:recook/models/coupon_list_model.dart';
 import 'package:recook/widgets/toast.dart';
 
 class CouponItem extends StatefulWidget {

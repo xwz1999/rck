@@ -9,7 +9,6 @@
 
 import 'package:recook/constants/api.dart';
 import 'package:recook/manager/http_manager.dart';
-
 import 'selling_point_list_contact.dart';
 
 class SellingPointListModelImpl extends SellingPointListModelI {

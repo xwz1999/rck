@@ -9,11 +9,13 @@
 
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+
+import 'package:dio/dio.dart';
+
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/config.dart';
 import 'package:recook/manager/http_manager.dart';
-import 'package:recook/constants/api.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/models/user_model.dart';
 

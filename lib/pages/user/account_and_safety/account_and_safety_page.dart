@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/sc_tile.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class AccountAndSafetyPage extends StatefulWidget {
   AccountAndSafetyPage({Key key}) : super(key: key);

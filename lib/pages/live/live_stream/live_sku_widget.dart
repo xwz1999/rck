@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:recook/constants/header.dart';
+
 import 'package:recook/models/goods_detail_model.dart'
     show Attributes, Children, Sku;
 

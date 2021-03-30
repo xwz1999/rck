@@ -9,11 +9,16 @@
 
 import 'dart:io';
 
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:common_utils/common_utils.dart';
 import 'package:get/get.dart';
 import 'package:package_info/package_info.dart';
+import 'package:redux/redux.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/api_v2.dart';
@@ -34,7 +39,6 @@ import 'package:recook/pages/user/widget/capital_view.dart';
 import 'package:recook/pages/user/widget/money_view.dart';
 import 'package:recook/pages/user/widget/order_central_view.dart';
 import 'package:recook/pages/user/widget/other_item_view_v2.dart';
-import 'package:recook/pages/user/widget/shop_benefit_view.dart';
 import 'package:recook/pages/user/widget/shop_check_view.dart';
 import 'package:recook/pages/user/widget/shop_manager_view.dart';
 import 'package:recook/pages/user/widget/user_app_bar_v2.dart';
@@ -46,9 +50,6 @@ import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:recook/widgets/toast.dart';
-import 'package:redux/redux.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class UserPage extends StatefulWidget {
   @override

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import 'package:recook/base/base_store_state.dart';
 
 class SearchBarTextFieldWidget extends StatefulWidget {

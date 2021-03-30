@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:recook/constants/header.dart';
+
 import 'package:banner_view/banner_view.dart';
+
+import 'package:recook/constants/header.dart';
 
 ///广告banner
 ///author: yinbiao

@@ -8,13 +8,13 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:recook/models/user_brief_info_model.dart';
 
+import 'package:recook/models/user_brief_info_model.dart';
 import 'package:recook/models/user_model.dart';
+import 'package:recook/redux/openinstall_state.dart';
 import 'package:recook/redux/theme_redux.dart';
 import 'package:recook/redux/user_brief_redux.dart';
 import 'package:recook/redux/user_redux.dart';
-import 'package:recook/redux/openinstall_state.dart';
 
 class RecookState {
   User user;

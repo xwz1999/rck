@@ -9,7 +9,6 @@
 
 import 'package:recook/constants/api.dart';
 import 'package:recook/manager/http_manager.dart';
-
 import 'user_mvp_contact.dart';
 
 class UserModelImpl extends UserMvpModelI {

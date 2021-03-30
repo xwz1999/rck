@@ -1,8 +1,10 @@
 import 'dart:convert';
 
-import 'package:azlistview/azlistview.dart';
 import 'package:flutter/services.dart';
+
+import 'package:azlistview/azlistview.dart';
 import 'package:lpinyin/lpinyin.dart';
+
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/weather_page/weather_city_model.dart';
 

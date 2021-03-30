@@ -1,13 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/user/mvp/user_presenter_impl.dart';
 import 'package:recook/pages/user/user_verify_result.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/pages/user/mvp/user_presenter_impl.dart';
 
 class VerifyPage extends StatefulWidget {
   final Map arguments;

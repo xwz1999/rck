@@ -8,7 +8,9 @@
  */
 
 import 'package:flutter/material.dart';
+
 import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/my_favorites_list_model.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
@@ -18,7 +20,6 @@ import 'package:recook/pages/user/mvp/my_favorite_presenter_impl.dart';
 import 'package:recook/utils/mvp.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:recook/widgets/toast.dart';

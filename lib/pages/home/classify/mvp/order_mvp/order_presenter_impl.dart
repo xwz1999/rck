@@ -18,7 +18,6 @@ import 'package:recook/models/pay_result_model.dart';
 import 'package:recook/models/recook_fund_model.dart';
 import 'package:recook/models/self_pickup_store_list_model.dart';
 import 'package:recook/pages/home/classify/mvp/order_mvp/order_model_impl.dart';
-
 import 'order_contact.dart';
 
 class OrderPresenterImpl extends OrderPresenterI {

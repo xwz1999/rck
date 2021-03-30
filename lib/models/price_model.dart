@@ -6,6 +6,7 @@
  * remark    : 
  * ====================================================
  */
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'price_model.g.dart';

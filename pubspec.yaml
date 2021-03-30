@@ -236,6 +236,7 @@ dev_dependencies:
   build_runner: ^1.0.0
   json_serializable: ^2.0.0
   grinder:
+  import_sorter:
 
 flutter:
   uses-material-design: true
@@ -264,3 +265,7 @@ flutter:
     - family: AppIcons
       fonts:
         - asset: static/font/iconfont.ttf
+import_sorter:
+  emojis: true
+  comments: false
+

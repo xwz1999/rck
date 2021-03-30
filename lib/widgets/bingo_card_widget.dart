@@ -1,10 +1,11 @@
 import 'dart:async';
-
-import 'package:flip_card/flip_card.dart';
-import 'package:flutter/material.dart';
-import 'package:recook/constants/constants.dart';
 import 'dart:math';
 
+import 'package:flutter/material.dart';
+
+import 'package:flip_card/flip_card.dart';
+
+import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 
 class BingoCardModel {

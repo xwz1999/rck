@@ -1,13 +1,14 @@
-import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+import 'package:intl/intl.dart';
+
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
 import 'package:recook/widgets/share_page/post_bg.dart';
-
 
 enum Status { loading, complete }
 

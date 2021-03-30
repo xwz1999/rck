@@ -7,7 +7,6 @@
  * ====================================================
  */
 
-import 'package:recook/base/mixin_test.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/home/classify/mvp/order_mvp/order_contact.dart';

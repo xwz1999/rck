@@ -7,10 +7,12 @@
  * ====================================================
  */
 
-import 'package:encrypt/encrypt.dart';
 import 'dart:convert';
+
 import 'package:crypto/crypto.dart';
+import 'package:encrypt/encrypt.dart';
 import 'package:pointycastle/asymmetric/api.dart';
+
 import 'package:recook/utils/print_util.dart';
 
 class SCEncryptUtil {

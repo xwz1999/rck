@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+
 import 'package:recook/pages/goods/small_coupon_widget.dart'
     show SmallCouponType;
 

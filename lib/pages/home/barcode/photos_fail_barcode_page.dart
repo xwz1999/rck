@@ -4,7 +4,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
 import 'package:flutter_qr_reader/flutter_qr_reader.dart';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -15,7 +18,6 @@ import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:image_picker/image_picker.dart';
 
 class PhotosFailBarcodePage extends StatefulWidget{
   final Map arguments;

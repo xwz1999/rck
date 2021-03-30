@@ -9,8 +9,10 @@
 
 import 'dart:convert';
 
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+
+import 'package:common_utils/common_utils.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -26,8 +28,8 @@ import 'package:recook/pages/home/classify/coupon_list_page.dart';
 import 'package:recook/pages/home/classify/evaluation_list_page.dart';
 import 'package:recook/pages/home/classify/goods_param_page.dart';
 import 'package:recook/pages/home/classify/goods_service_guarantee.dart';
-import 'package:recook/pages/home/classify/order_preview_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:recook/pages/home/classify/order_preview_page.dart';
 import 'package:recook/pages/home/classify/sku_choose_page.dart';
 import 'package:recook/pages/home/items/item_user_comment.dart';
 import 'package:recook/pages/home/items/item_users_like.dart';

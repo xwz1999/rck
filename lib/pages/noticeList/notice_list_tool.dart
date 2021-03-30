@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/noticeList/perfect_information_widget.dart';
 import 'package:recook/pages/user/mvp/user_presenter_impl.dart';
 import 'package:recook/widgets/alert.dart';
-
 import 'diamond_recommendation_widget.dart';
 
 class NoticeListTool {

@@ -7,8 +7,8 @@
  * ====================================================
  */
 
-import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_image_button.dart';

@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -18,7 +21,6 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/share_page/post_all.dart';
 import 'package:recook/widgets/share_page/post_select_image.dart';
 import 'package:recook/widgets/toast.dart';
-import 'dart:ui' as ui;
 
 class ShareGoodsPosterPage extends StatefulWidget {
   final Map arguments;

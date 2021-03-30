@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/order_preview_model.dart';
 import 'package:recook/models/shopping_cart_list_model.dart';
@@ -18,14 +19,13 @@ import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/order_preview_page.dart';
 import 'package:recook/pages/shopping_cart/item/item_shopping_cart.dart';
 import 'package:recook/pages/shopping_cart/mvp/shopping_cart_contact.dart';
+import 'package:recook/pages/shopping_cart/mvp/shopping_cart_presenter_impl.dart';
 import 'package:recook/utils/mvp.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/alert.dart';
-import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
-import 'package:recook/pages/shopping_cart/mvp/shopping_cart_presenter_impl.dart';
 import 'package:recook/widgets/toast.dart';
 
 class ShoppingCartPage extends StatefulWidget {

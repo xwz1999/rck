@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
 import 'goods_list_contact.dart';

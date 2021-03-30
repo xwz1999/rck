@@ -6,18 +6,23 @@
  * remark    : 
  * ====================================================
  */
+
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:amap_location_fluttify/amap_location_fluttify.dart';
 import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sharesdk_plugin/sharesdk_plugin.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/api_v2.dart';
@@ -66,9 +71,6 @@ import 'package:recook/widgets/toast.dart';
 import 'package:recook/widgets/weather_page/weather_city_model.dart';
 import 'package:recook/widgets/weather_page/weather_city_page.dart';
 import 'package:recook/widgets/webView.dart';
-import 'package:recook/pages/home/lottery_page.dart';
-import 'package:sharesdk_plugin/sharesdk_plugin.dart';
-
 import '../../utils/text_utils.dart';
 
 class HomeItem {

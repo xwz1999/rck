@@ -1,5 +1,9 @@
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+
+import 'package:common_utils/common_utils.dart';
+import 'package:velocity_x/velocity_x.dart';
+
+import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/user/functions/user_balance_func.dart';
@@ -9,9 +13,7 @@ import 'package:recook/pages/user/user_cash_withdraw_page.dart';
 import 'package:recook/widgets/bottom_time_picker.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/widgets/refresh_widget.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class UserBalancePage extends StatefulWidget {
   UserBalancePage({Key key}) : super(key: key);

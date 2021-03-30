@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/lottery/lottery_cart_model.dart';
 import 'package:recook/pages/lottery/redeem_lottery_page.dart';

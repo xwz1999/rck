@@ -8,9 +8,10 @@
  */
 
 import 'package:flutter/material.dart';
+
 import 'package:recook/base/base_store_state.dart';
-import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/widgets/text_button.dart' as TButton;
 
 class GoodsParamPage extends StatefulWidget {

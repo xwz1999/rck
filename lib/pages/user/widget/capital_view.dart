@@ -7,9 +7,11 @@
  * ====================================================
  */
 
-import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
+
+import 'package:extended_text/extended_text.dart';
 import 'package:get/get.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/upgradeCard/upgrade_card_page_v2.dart';

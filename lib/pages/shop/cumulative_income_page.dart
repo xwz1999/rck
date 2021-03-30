@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/header.dart';
@@ -15,7 +18,6 @@ import 'package:recook/widgets/bottom_time_picker.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/dashed_rect.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class CumulativeIncomePage extends StatefulWidget {
   @override
