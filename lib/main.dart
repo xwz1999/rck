@@ -39,7 +39,6 @@ import 'utils/app_router.dart';
 
 // import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
-
 List<CameraDescription> cameras;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,7 +57,7 @@ void main() async {
     // useEncrypt: true
   );
   // 设置当前是否为测试环境
-  bool isDebug = true;
+  bool isDebug = false;
   AppConfig.setDebug(isDebug);
 
   //持久化存储
@@ -74,11 +73,12 @@ void main() async {
   // 奔溃界面修改!!!!
   ErrorWidget.builder = (FlutterErrorDetails flutterErrorDetails) {
     print(flutterErrorDetails.toString());
-    return Center(
-      child: Container(
-        color: Colors.white,
+    if (isDebug) return ErrorWidget(flutterErrorDetails.exception);
+    return Material(
+      color: Colors.white,
+      child: Center(
         child: Text(
-          "app不小心奔溃了!请重新打开app!",
+          "服务器繁忙，请稍后再试！",
           style: TextStyle(color: Colors.black, fontSize: 18),
         ),
       ),

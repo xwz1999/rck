@@ -15,9 +15,10 @@ class UserBalanceFunc {
     @required String month,
     @required int status,
   }) async {
-    ResultData result = await HttpManager.post(APIV2.userAPI.balanceMonthHistory, {
-      'date':month,
-      'status':status,
+    ResultData result =
+        await HttpManager.post(APIV2.userAPI.balanceMonthHistory, {
+      'date': month,
+      'status': status,
     });
     return UserBalanceHistoryModel.fromJson(result.data);
   }
