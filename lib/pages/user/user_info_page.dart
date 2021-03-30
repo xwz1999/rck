@@ -10,8 +10,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart' as flutterImagePicker;
+import 'package:oktoast/oktoast.dart';
 import 'package:photo/photo.dart';
 
 import 'package:recook/base/base_store_state.dart';
@@ -29,6 +31,7 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/image_picker.dart';
 import 'package:recook/widgets/sc_tile.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class UserInfoPage extends StatefulWidget {
   @override
@@ -45,7 +48,7 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
     DPrint.printf("---------------------------------------- ");
     return Scaffold(
       appBar: CustomAppBar(
-        title: "个人资料",
+        title: "个人信息",
         themeData: AppThemes.themeDataGrey.appBarTheme,
       ),
       body: _listView(),
@@ -191,13 +194,44 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
             }
           });
         }),
-        (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
+        (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_1 ||
+                    UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
                     (Platform.isIOS)) &&
                 !AppConfig.showExtraCommission
             ? SizedBox()
-            : SCTile.normalTile("我的邀请码", needDivide: true, listener: () {
+            : SCTile.normalTile("我的注册码", needDivide: true, listener: () {
                 push(RouteName.USER_INFO_QRCODE_PAGE);
               }),
+        UserManager?.instance?.user?.info?.teacherWechatNo?.isEmpty ?? true
+            ? SizedBox()
+            : SCTile.normalTile(
+                "我的服务商",
+                value: '',
+                needDivide: true,
+                needArrow: false,
+                trailing: Row(
+                  children: [
+                    (UserManager.instance.user.info.teacherWechatNo)
+                        .text
+                        .color(Color(0xFF666666))
+                        .size(14.sp)
+                        .make(),
+                    2.wb,
+                    Icon(
+                      Icons.copy,
+                      size: 18.sp,
+                      color: Color(0xFF999999),
+                    ),
+                  ],
+                ),
+                listener: () async {
+                  await Clipboard.setData(
+                    ClipboardData(
+                        text: UserManager.instance.user.info.teacherWechatNo),
+                  );
+                  showToast('已经复制到粘贴板');
+                },
+              ),
       ],
     );
   }

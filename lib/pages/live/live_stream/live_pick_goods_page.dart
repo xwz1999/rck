@@ -5,7 +5,6 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/live_stream/pick_search_goods_page.dart';
 import 'package:recook/pages/live/live_stream/pick_view/all_goods_view.dart';
-import 'package:recook/pages/live/live_stream/pick_view/brand_goods_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/goods_cart_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/goods_window_view.dart';
 import 'package:recook/pages/live/live_stream/pick_view/hot_goods_view.dart';

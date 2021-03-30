@@ -3,7 +3,6 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:recook/const/resource.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';

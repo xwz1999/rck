@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:recook/pages/lottery/redeem_lottery_page.dart';
 import 'package:recook/utils/math/recook_math.dart';
 
@@ -74,13 +73,13 @@ class LotteryCartStore {
   static List<LotteryCartModel> doubleLotteryModels = [];
   static List<LotteryCartModel> bigLotteryModels = [];
   static add1Shot(LotteryType type, LotteryCartModel model) {
-    int normalType = 0;
-    int multiplyType = 0;
-    int withChildType = 0;
+    // int normalType = 0;
+    // int multiplyType = 0;
+    // int withChildType = 0;
 
-    int normalTypeBigLottery = 0;
-    int multiplyTypeBigLottery = 0;
-    int withChildTypeBigLottery = 0;
+    // int normalTypeBigLottery = 0;
+    // int multiplyTypeBigLottery = 0;
+    // int withChildTypeBigLottery = 0;
 
     //TODO：需要重构
     if (type == LotteryType.DOUBLE_LOTTERY) {

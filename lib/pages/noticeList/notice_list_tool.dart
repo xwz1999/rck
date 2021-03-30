@@ -36,29 +36,6 @@ class NoticeListTool {
     return false;
   }
 
-  static Future<bool> vipAlert(BuildContext context) async {
-    await showDialog(
-      context: context, 
-      barrierDismissible: false,
-      builder: (context) {
-        return GestureDetector(
-          onTap: (){
-            Navigator.pop(context);
-            return false;
-          },
-          child: Container(
-            width: ScreenUtil.getInstance().width,
-            height: 240/355.0*ScreenUtil.getInstance().width,
-            child: Image.asset(AppImageName.master_right_remind),
-          ),
-        );
-      }).then((value){
-        return true;
-      }
-    );
-    return false;
-  }
-
   // 钻石推荐
   static Future<bool> diamondRecommendation(BuildContext context, {String title = ""}) async {
     await showDialog(

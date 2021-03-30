@@ -15,6 +15,8 @@ import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:recook/widgets/toast.dart';
 
+//TODO CLEAN BOTTOM CODES.
+@Deprecated("member_benefits_page deprecated.")
 class MemberBenefitsPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -44,7 +46,7 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
     if (_gsRefreshController.isRefresh()) {
       _gsRefreshController.refreshCompleted();
     }
-    if (!resultData.result) { 
+    if (!resultData.result) {
       if (mounted) showError(resultData.msg);
       return;
     }
@@ -102,8 +104,8 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
       // listWidget.add(_imageBgWidgetS());
       listWidget.add(_imageBgWidget());
       listWidget.add(GestureDetector(
-        onTap: (){
-          ShareTool().inviteShare(context,customTitle: Container());
+        onTap: () {
+          ShareTool().inviteShare(context, customTitle: Container());
         },
         child: _buttonWidget(),
       ));
@@ -111,81 +113,72 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
     return listWidget;
   }
 
-  _imageBgWidgetS() {
-    double width = MediaQuery.of(context).size.width;
-    return Stack(
-      children: [
-        Container(
-          width: width,
-          child: Image.asset(
-            'assets/memberBenefitsPage_bg_s.jpg',
-            fit: BoxFit.fill,
-          ),
-        ),
-        Positioned(
-          top: rSize(1148),
-          // right: 0,
-          left: rSize(120),
-          child: FlatButton(
-            onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(
-                              rSize(28), rSize(36), rSize(28), 0),
-                          child: Image.asset(
-                            'assets/memberBenefitsPage_dialog.jpg',
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                        rHBox(10),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Icon(
-                            CupertinoIcons.clear_circled,
-                            color: Colors.grey,
-                            size: rSize(40),
-                          ),
-                        ),
-                      ],
-                    );
-                  });
-            },
-            child: Text(''),
-            minWidth: rSize(150),
-            height: rSize(35),
-          ),
-        ),
-        Positioned(
-            left: rSize(40),
-            top: rSize(1200),
-            child: FlatButton(
-              onPressed: () {
-                ShareTool().inviteShare(context, customTitle: Container());
-              },
-              child: Text(''),
-              minWidth: rSize(300),
-              height: rSize(70),
-            ))
-      ],
-    );
-  }
+  // _imageBgWidgetS() {
+  //   double width = MediaQuery.of(context).size.width;
+  //   return Stack(
+  //     children: [
+  //       Positioned(
+  //         top: rSize(1148),
+  //         // right: 0,
+  //         left: rSize(120),
+  //         child: FlatButton(
+  //           onPressed: () {
+  //             showDialog(
+  //                 context: context,
+  //                 builder: (BuildContext context) {
+  //                   return Column(
+  //                     children: [
+  //                       Padding(
+  //                         padding: EdgeInsets.fromLTRB(
+  //                             rSize(28), rSize(36), rSize(28), 0),
+  //                         child: Image.asset(
+  //                           'assets/memberBenefitsPage_dialog.jpg',
+  //                           fit: BoxFit.fill,
+  //                         ),
+  //                       ),
+  //                       rHBox(10),
+  //                       GestureDetector(
+  //                         onTap: () {
+  //                           Navigator.pop(context);
+  //                         },
+  //                         child: Icon(
+  //                           CupertinoIcons.clear_circled,
+  //                           color: Colors.grey,
+  //                           size: rSize(40),
+  //                         ),
+  //                       ),
+  //                     ],
+  //                   );
+  //                 });
+  //           },
+  //           child: Text(''),
+  //           minWidth: rSize(150),
+  //           height: rSize(35),
+  //         ),
+  //       ),
+  //       Positioned(
+  //           left: rSize(40),
+  //           top: rSize(1200),
+  //           child: FlatButton(
+  //             onPressed: () {
+  //               ShareTool().inviteShare(context, customTitle: Container());
+  //             },
+  //             child: Text(''),
+  //             minWidth: rSize(300),
+  //             height: rSize(70),
+  //           ))
+  //     ],
+  //   );
+  // }
 
+//TODO CLEAN BOTTOM CODES.
+  @Deprecated("member_benefits_page,_imageBgWidget")
   _imageBgWidget() {
     double width = MediaQuery.of(context).size.width;
     double height = width / 750 * 1085;
     return Container(
       width: width,
       height: height,
-      child: Image.asset(
-        'assets/MemberBenefitsPage_bg.png',
-        fit: BoxFit.fill,
-      ),
     );
   }
 
@@ -300,7 +293,7 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
                 ),
                 Container(
                   child: Text(
-                    '已邀请人数:${_inviteCount}',
+                    '已邀请人数:$_inviteCount',
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: ScreenAdapterUtils.setSp(16)),
@@ -476,10 +469,6 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
     return Container(
       height: height,
       width: width,
-      child: Image.asset(
-        'assets/MemberBenefitsPage_content.png',
-        fit: BoxFit.fill,
-      ),
     );
   }
 

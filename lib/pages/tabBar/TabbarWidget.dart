@@ -11,11 +11,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:recook/constants/api.dart';
 import 'package:recook/constants/config.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
-import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/pages/agreements/live_agreement_page.dart';
@@ -24,23 +22,18 @@ import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/home_page.dart';
 import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
 import 'package:recook/pages/live/functions/live_function.dart';
-import 'package:recook/pages/live/live_stream/live_page.dart';
-import 'package:recook/pages/live/models/live_resume_model.dart';
 import 'package:recook/pages/live/video/add_video_page.dart';
 import 'package:recook/pages/live/pages/discovery_page.dart';
 import 'package:recook/pages/live/widget/live_fab_location.dart';
-import 'package:recook/pages/shop/widget/normal_shop_page.dart';
 import 'package:recook/pages/shopping_cart/shopping_cart_page.dart';
 import 'package:recook/pages/tabBar/rui_code_listener.dart';
 import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/third_party/bugly_helper.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/custom_route.dart';
-import 'package:recook/utils/permission_tool.dart';
 import 'package:recook/utils/print_util.dart';
 import 'package:recook/utils/rui_code_util.dart';
 import 'package:recook/utils/versionInfo/version_tool.dart';
-import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/tabbarWidget/ace_bottom_navigation_bar.dart';
@@ -212,25 +205,14 @@ class _TabBarWidgetState extends State<TabBarWidget>
           physics: NeverScrollableScrollPhysics(),
           needAnimation: false,
           controller: _tabController,
-          children:
-              // AppConfig.getShowCommission()
-              !AppConfig.getShowCommission()
-                  ? <Widget>[
-                      HomePage(),
-                      GoodsHotListPage(),
-                      DiscoveryPage(),
-                      // BusinessPage(),
-                      ShoppingCartPage(),
-                      UserPage()
-                    ]
-                  : <Widget>[
-                      HomePage(),
-                      NormalShopPage(),
-                      DiscoveryPage(),
-                      // BusinessPage(),
-                      ShoppingCartPage(),
-                      UserPage()
-                    ],
+          children: <Widget>[
+            HomePage(),
+            GoodsHotListPage(),
+            DiscoveryPage(),
+            // BusinessPage(),
+            ShoppingCartPage(),
+            UserPage()
+          ],
         ),
         bottomNavigationBar: _changeBottomBar(context));
   }
@@ -269,11 +251,11 @@ class _TabBarWidgetState extends State<TabBarWidget>
   @override
   void dispose() {
     DPrint.printf("- - - - - - dispose");
+    _tabController?.removeListener(_tabListener);
     _tabController.dispose();
     _bottomBarController.dispose();
     UserManager.instance.login?.removeListener(_loginListener);
     UserManager.instance.selectTabbar.removeListener(_selectTabbar);
-    _tabController?.removeListener(_tabListener);
     super.dispose();
   }
 
@@ -322,65 +304,34 @@ class _BottomBarState extends State<BottomBar> {
       iconUnSelectedColor: unSelectedColor,
       protrudingColor: selectedColor,
       // items: AppConfig.getShowCommission()
-      items: !AppConfig.getShowCommission()
-          ? [
-              NavigationItemBean(
-                textStr: '特卖',
-                image: AssetImage("assets/tabbar_sale_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_sale_selected.png"),
-              ),
-              NavigationItemBean(
-                textStr: '排行榜',
-                image: AssetImage("assets/tabbar_shop_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_shop_selected.png"),
-              ),
-              NavigationItemBean(
-                textStr: '发现',
-                image: AssetImage("assets/tabbar_find_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_find_selected.png"),
-              ),
-              NavigationItemBean(
-                textStr: '购物车',
-                image: AssetImage("assets/tabbar_cart_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_cart_selected.png"),
+      items: [
+        NavigationItemBean(
+          textStr: '特推',
+          image: AssetImage("assets/tabbar_sale_normal.png"),
+          imageSelected: AssetImage("assets/tabbar_sale_selected.png"),
+        ),
+        NavigationItemBean(
+          textStr: '排行榜',
+          image: AssetImage("assets/tabbar_shop_normal.png"),
+          imageSelected: AssetImage("assets/tabbar_shop_selected.png"),
+        ),
+        NavigationItemBean(
+          textStr: '发现',
+          image: AssetImage("assets/tabbar_find_normal.png"),
+          imageSelected: AssetImage("assets/tabbar_find_selected.png"),
+        ),
+        NavigationItemBean(
+          textStr: '购物车',
+          image: AssetImage("assets/tabbar_cart_normal.png"),
+          imageSelected: AssetImage("assets/tabbar_cart_selected.png"),
 //              protrudingIcon: Icons.add
-              ),
-              NavigationItemBean(
-                textStr: '我的',
-                image: AssetImage("assets/tabbar_mine_normal_new.png"),
-                imageSelected:
-                    AssetImage("assets/tabbar_mine_selected_new.png"),
-              )
-            ]
-          : [
-              NavigationItemBean(
-                textStr: '特卖',
-                image: AssetImage("assets/tabbar_sale_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_sale_selected.png"),
-              ),
-              NavigationItemBean(
-                textStr: '店铺',
-                image: AssetImage("assets/tabbar_shop_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_shop_selected.png"),
-              ),
-              NavigationItemBean(
-                textStr: '发现',
-                image: AssetImage("assets/tabbar_find_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_find_selected.png"),
-              ),
-              NavigationItemBean(
-                textStr: '购物车',
-                image: AssetImage("assets/tabbar_cart_normal.png"),
-                imageSelected: AssetImage("assets/tabbar_cart_selected.png"),
-//              protrudingIcon: Icons.add
-              ),
-              NavigationItemBean(
-                textStr: '我的',
-                image: AssetImage("assets/tabbar_mine_normal_new.png"),
-                imageSelected:
-                    AssetImage("assets/tabbar_mine_selected_new.png"),
-              )
-            ],
+        ),
+        NavigationItemBean(
+          textStr: '我的',
+          image: AssetImage("assets/tabbar_mine_normal_new.png"),
+          imageSelected: AssetImage("assets/tabbar_mine_selected_new.png"),
+        )
+      ],
       onTabChangedListener: (index) {
         RUICodeListener(context).clipboardListener();
         print(" $index");

@@ -1,18 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:recook/utils/user_level_tool.dart';
+import 'package:recook/constants/header.dart';
 
 class RoleLevelUpgradeAlert extends StatelessWidget {
   final UserRoleLevel userRoleLevel;
   final UserLevel userLevel;
   final double width;
-  const RoleLevelUpgradeAlert({Key key, this.userRoleLevel, this.width=0, this.userLevel,}) : super(key: key);
+  const RoleLevelUpgradeAlert({
+    Key key,
+    this.userRoleLevel,
+    this.width = 0,
+    this.userLevel,
+  }) : super(key: key);
 
-
-  final String master3Alert = "assets/alert_master3.png";
-  final String master4Alert = "assets/alert_master4.png";
-  final String silverAlert = "assets/alert_silver.png";
-  final String goldAlert = "assets/alert_gold.png";
+  final String master3Alert = R.ASSETS_ALERT_MASTER3_PNG_WEBP;
+  final String master4Alert = R.ASSETS_ALERT_MASTER4_PNG_WEBP;
+  final String silverAlert = R.ASSETS_ALERT_SILVER_PNG_WEBP;
+  final String goldAlert = R.ASSETS_ALERT_GOLD_PNG_WEBP;
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +27,11 @@ class RoleLevelUpgradeAlert extends StatelessWidget {
       ),
     );
   }
-  _body(){
+
+  _body() {
     switch (userRoleLevel) {
       case UserRoleLevel.Master:
-        return _masterWidget();    
+        return _masterWidget();
         break;
       case UserRoleLevel.Silver:
         return _silverWidget();
@@ -34,49 +40,59 @@ class RoleLevelUpgradeAlert extends StatelessWidget {
         return _goldWidget();
         break;
       default:
-        return _masterWidget(); 
+        return _masterWidget();
         break;
     }
   }
 
-  _masterWidget(){
+  _masterWidget() {
     return Container(
       child: Container(
-        width: width -80,
-        height: (width - 80)*(350.0/301.0),
-        child: Image.asset(userLevel == UserLevel.Others ? master4Alert : master3Alert , fit: BoxFit.fill,),
+        width: width - 80,
+        height: (width - 80) * (350.0 / 301.0),
+        child: Image.asset(
+          userLevel == UserLevel.Others ? master4Alert : master3Alert,
+          fit: BoxFit.fill,
+        ),
       ),
     );
   }
 
-  _silverWidget(){
+  _silverWidget() {
     return Container(
-      width: width -80,
-      height: (width - 80)*(355.0/301.0),
-      child: Image.asset(silverAlert, fit: BoxFit.fill,),
+      width: width - 80,
+      height: (width - 80) * (355.0 / 301.0),
+      child: Image.asset(
+        silverAlert,
+        fit: BoxFit.fill,
+      ),
     );
   }
 
-  _goldWidget(){
+  _goldWidget() {
     return Container(
-      width: width -80,
-      height: (width - 80)*(355.0/301.0),
-      child: Image.asset(goldAlert, fit: BoxFit.fill,),
+      width: width - 80,
+      height: (width - 80) * (355.0 / 301.0),
+      child: Image.asset(
+        goldAlert,
+        fit: BoxFit.fill,
+      ),
     );
   }
-
 }
-
 
 class ShopPageUpgradeAlert extends StatelessWidget {
   final UserRoleLevel userRoleLevel;
   final double width;
-  const ShopPageUpgradeAlert({Key key, this.userRoleLevel, this.width=0,}) : super(key: key);
+  const ShopPageUpgradeAlert({
+    Key key,
+    this.userRoleLevel,
+    this.width = 0,
+  }) : super(key: key);
 
-
-  final String masterAlert = "assets/shop_page_alert_master.png";
-  final String silverAlert = "assets/shop_page_alert_silver.png";
-  final String goldAlert = "assets/shop_page_alert_gold.png";
+  final String masterAlert = R.ASSETS_SHOP_PAGE_ALERT_MASTER_PNG_WEBP;
+  final String silverAlert = R.ASSETS_SHOP_PAGE_ALERT_SILVER_PNG_WEBP;
+  final String goldAlert = R.ASSETS_SHOP_PAGE_ALERT_GOLD_PNG_WEBP;
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +102,11 @@ class ShopPageUpgradeAlert extends StatelessWidget {
       ),
     );
   }
-  _body(){
+
+  _body() {
     switch (userRoleLevel) {
       case UserRoleLevel.Master:
-        return _masterWidget();    
+        return _masterWidget();
         break;
       case UserRoleLevel.Silver:
         return _silverWidget();
@@ -103,38 +120,50 @@ class ShopPageUpgradeAlert extends StatelessWidget {
     }
   }
 
-  _masterWidget(){
+  _masterWidget() {
     return Container(
       child: Column(
         children: <Widget>[
           Container(
-            width: width -80,
-            height: (width - 80)*(457.0/301.0),
-            child: Image.asset(masterAlert, fit: BoxFit.fill,),
+            width: width - 80,
+            height: (width - 80) * (457.0 / 301.0),
+            child: Image.asset(
+              masterAlert,
+              fit: BoxFit.fill,
+            ),
           ),
           Container(
             height: 40,
-            child: Icon(Icons.clear , color: Colors.white, size: 30,),
+            child: Icon(
+              Icons.clear,
+              color: Colors.white,
+              size: 30,
+            ),
           ),
         ],
       ),
     );
   }
 
-  _silverWidget(){
+  _silverWidget() {
     return Container(
-      width: width -80,
-      height: (width - 80)*(355.0/301.0),
-      child: Image.asset(silverAlert, fit: BoxFit.fill,),
+      width: width - 80,
+      height: (width - 80) * (355.0 / 301.0),
+      child: Image.asset(
+        silverAlert,
+        fit: BoxFit.fill,
+      ),
     );
   }
 
-  _goldWidget(){
+  _goldWidget() {
     return Container(
-      width: width -80,
-      height: (width - 80)*(355.0/301.0),
-      child: Image.asset(goldAlert, fit: BoxFit.fill,),
+      width: width - 80,
+      height: (width - 80) * (355.0 / 301.0),
+      child: Image.asset(
+        goldAlert,
+        fit: BoxFit.fill,
+      ),
     );
   }
-
 }

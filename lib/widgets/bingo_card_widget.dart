@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/constants.dart';
 import 'dart:math';
 
+import 'package:recook/constants/header.dart';
+
 class BingoCardModel {
   dynamic cardFaceFront;
   dynamic cardFaceBack;
@@ -198,7 +200,7 @@ class _BingoCardWidgetState extends State<BingoCardWidget> {
   }
 
   _buildBackground() {
-    return Image.asset('assets/lottery/background.png');
+    return Image.asset(R.ASSETS_LOTTERY_BACKGROUND_PNG_WEBP);
   }
 
   _buildButton() {
@@ -244,7 +246,11 @@ class _BingoCardWidgetState extends State<BingoCardWidget> {
         width: rSize(265),
         child: Center(
           child: Text(
-            _isShowResult ? widget.bingoType == 0 ? '好遗憾 没中奖' : '立即领取' : '天天好运',
+            _isShowResult
+                ? widget.bingoType == 0
+                    ? '好遗憾 没中奖'
+                    : '立即领取'
+                : '天天好运',
             style: TextStyle(
               color: Color(0xFFCE1F3D),
               fontSize: ScreenAdapterUtils.setSp(16),

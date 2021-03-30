@@ -78,7 +78,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage> {
         child: Stack(
           children: <Widget>[
             Image.asset(
-              'assets/goods_hot_list_title_bg.png',
+              R.ASSETS_GOODS_HOT_LIST_TITLE_BG_PNG_WEBP,
               fit: BoxFit.fill,
             ),
             Navigator.canPop(context)

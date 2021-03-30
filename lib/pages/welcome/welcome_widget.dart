@@ -241,7 +241,6 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
   }
 
   _columnBottomWidget() {
-    double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     double bottomHeight = height * 0.18;
     double bottomPicHeight = bottomHeight / 2 - 25;

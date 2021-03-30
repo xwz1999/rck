@@ -14,6 +14,7 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'package:oktoast/oktoast.dart';
+import 'package:package_info/package_info.dart';
 import 'package:package_signature/package_signature.dart';
 import 'package:raw_toast/raw_toast.dart';
 import 'package:recook/constants/api.dart';
@@ -43,7 +44,8 @@ List<CameraDescription> cameras;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
-
+  PackageInfo _packageInfo = await PackageInfo.fromPlatform();
+  AppConfig.versionNumber = _packageInfo.buildNumber;
   //初始化AMap
   AmapLocation.instance.init(iosKey: 'e8a8057cfedcdcadcf4e8f2c7f8de982');
 
@@ -142,13 +144,12 @@ class MyAppState extends State<MyApp> {
         licenseKey: key,
       );
     });
-
-    //签名验证
-    //----------
-    //使用SHA256计算签名
-    //仅验证Android 端的签名
   }
 
+  //签名验证
+  //----------
+  //使用SHA256计算签名
+  //仅验证Android 端的签名
   Future checkSignature() async {
     if (Platform.isAndroid) {
       Signature signature = await PackageSignature.signature;
@@ -246,14 +247,6 @@ class MyAppState extends State<MyApp> {
               // 做了缓存的静态图片在刷新页面时不会改变棋盘格的颜色；如果棋盘格颜色变了说明被重新缓存了，这是我们要避免的
               theme: store.state.themeData,
               home: LaunchWidget(),
-              // home: WillPopScope(
-              //   onWillPop: () async {
-              //     AndroidBackTop.backDeskTop();  //设置为返回不退出app
-              //     return false;  //一定要return false
-              //   },
-              //   child: LaunchWidget(),
-              // ),
-              // home: WelcomeWidget(),
               onGenerateRoute: onGenerateRoute,
             ),
           );

@@ -51,7 +51,6 @@ class OrderListModel extends BaseModel {
 
 @JsonSerializable()
 class OrderModel extends Object {
-  
   int id;
   int parentId;
   int userId;
@@ -84,7 +83,7 @@ class OrderModel extends Object {
   int payMethod;
   String completedAt;
   int totalGoodsCount;
-  
+
   List<OrderGoodsModel> goodsList;
 
   bool canConfirm;
@@ -123,7 +122,8 @@ class OrderModel extends Object {
     this.canConfirm,
   );
 
-  factory OrderModel.fromJson(Map<String, dynamic> srcJson) => _$OrderModelFromJson(srcJson);
+  factory OrderModel.fromJson(Map<String, dynamic> srcJson) =>
+      _$OrderModelFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$OrderModelToJson(this);
 }
@@ -178,25 +178,25 @@ class OrderModel extends Object {
 class OrderGoodsModel extends Object {
   int goodsDetailId;
   int orderId;
-  int vendorId;// 供应商ID: 0表示自营
-  int brandId;//品牌
-  String brandName;//品牌名称
-  int goodsId;//商品id
-  String goodsName;//商品名称
+  int vendorId; // 供应商ID: 0表示自营
+  int brandId; //品牌
+  String brandName; //品牌名称
+  int goodsId; //商品id
+  String goodsName; //商品名称
   int skuId;
   String skuName;
   String skuCode;
-  String mainPhotoUrl;//主图
-  int quantity;//商品数量
-  String promotionName;//活动名称
-  double unitPrice;//单价
-  double totalCommission;//提成总额
-  double brandCouponAmount;// 品牌优惠券抵扣金额
-  double universeBrandCouponAmount;// 购物券抵扣金额
-  double coinAmount;// 瑞币抵扣金额
-  double goodsAmount;// 商品总金额 单价x数量，不含其他费用减除
-  double expressFee;// 快递费
-  double actualAmount;// 实际支付的金额
+  String mainPhotoUrl; //主图
+  int quantity; //商品数量
+  String promotionName; //活动名称
+  double unitPrice; //单价
+  double totalCommission; //提成总额
+  double brandCouponAmount; // 品牌优惠券抵扣金额
+  double universeBrandCouponAmount; // 购物券抵扣金额
+  double coinAmount; // 瑞币抵扣金额
+  double goodsAmount; // 商品总金额 单价x数量，不含其他费用减除
+  double expressFee; // 快递费
+  double actualAmount; // 实际支付的金额
 
   int expressStatus;
   String expressCompName;
@@ -205,10 +205,13 @@ class OrderGoodsModel extends Object {
   int assType;
 
   int refundStatus;
-  int returnStatus;// 0正常，1等待商家审核 2审核被拒绝 3审核成功 4买家已填写退货物流信息 5收到退货，确认退款完成 6退货被拒绝
-  String returnReason;// 买家退货理由
+  int returnStatus; // 0正常，1等待商家审核 2审核被拒绝 3审核成功 4买家已填写退货物流信息 5收到退货，确认退款完成 6退货被拒绝
+  String returnReason; // 买家退货理由
   String returnRejectReason;
   String rStatus;
+  int isImport;
+
+  bool get importValue => isImport == 1;
   OrderGoodsModel(
     this.goodsDetailId,
     this.orderId,
@@ -240,22 +243,22 @@ class OrderGoodsModel extends Object {
     this.returnStatus,
     this.returnReason,
     this.returnRejectReason,
-    this.rStatus
+    this.rStatus,
+    this.isImport,
   );
 
-  factory OrderGoodsModel.fromJson(Map<String, dynamic> srcJson) => _$OrderGoodsModelFromJson(srcJson);
+  factory OrderGoodsModel.fromJson(Map<String, dynamic> srcJson) =>
+      _$OrderGoodsModelFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$OrderGoodsModelToJson(this);
 }
 
-
-
 // /*
 //  * ====================================================
-//  * package   : 
+//  * package   :
 //  * author    : Created by nansi.
-//  * time      : 2019-08-02  13:13 
-//  * remark    : 
+//  * time      : 2019-08-02  13:13
+//  * remark    :
 //  * ====================================================
 //  */
 
@@ -276,7 +279,7 @@ class OrderGoodsModel extends Object {
 //     0:待发货
 //     1:全部发货
 //     2:部分发货
-    
+
 //     `ass_type`          '售后类型 0无 1退款 2退货退款',
 
 //     先判断 refund_status ，不为0的话说明在退款流程，否则在退货流程中，判断 return_status

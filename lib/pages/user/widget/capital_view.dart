@@ -9,14 +9,20 @@
 
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/upgradeCard/upgrade_card_page_v2.dart';
+import 'package:recook/pages/user/banlance/user_balance_page.dart';
+import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class CapitalView extends StatefulWidget {
   final Function() listener;
-  const CapitalView({Key key, this.listener}) : super(key: key);
+  final int cardCount;
+  const CapitalView({Key key, this.listener, @required this.cardCount})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -103,17 +109,17 @@ class _CapitalViewState extends BaseStoreState<CapitalView> {
             height: 65,
             child: Row(
               children: <Widget>[
-                _otherItem(
-                    "优惠券(张)",
-                    getStore()
-                        .state
-                        .userBrief
-                        .myAssets
-                        .couponNum
-                        .toInt()
-                        .toString(), onTap: () {
-                  push(RouteName.MY_COUPON_PAGE);
-                }),
+                // _otherItem(
+                //     "优惠券(张)",
+                //     getStore()
+                //         .state
+                //         .userBrief
+                //         .myAssets
+                //         .couponNum
+                //         .toInt()
+                //         .toString(), onTap: () {
+                //   push(RouteName.MY_COUPON_PAGE);
+                // }),
                 _otherItem(
                     ExtendedText.rich(TextSpan(children: [
                       TextSpan(
@@ -153,17 +159,19 @@ class _CapitalViewState extends BaseStoreState<CapitalView> {
                   AppRouter.push(context, RouteName.RUI_COIN_PAGE);
                 }),
                 _otherItem(
-                    "权益卡(张)",
-                    getStore()
-                        .state
-                        .userBrief
-                        .myAssets
-                        .cards
-                        .toInt()
-                        .toString(), onTap: () {
-                  // push(RouteName.MY_FAVORITE_PAGE);
-                  push(RouteName.UPGRADE_CARD_PAGE);
-                }),
+                  "余额（元）",
+                  (getStore().state.userBrief.balance ?? 0.0)
+                      .toDouble()
+                      .toStringAsFixed(2),
+                  onTap: () => CRoute.push(context, UserBalancePage()),
+                ),
+                _otherItem(
+                  "权益卡(张)",
+                  widget.cardCount.toString(),
+                  onTap: () {
+                    Get.to(() => UpgradeCardPageV2());
+                  },
+                ),
               ],
             ),
           ),

@@ -37,8 +37,13 @@ class OrderPrepayPage extends StatefulWidget {
 
   const OrderPrepayPage({Key key, this.arguments}) : super(key: key);
 
-  static setArguments(OrderPrepayModel model, {bool goToOrder = false}) {
-    return {"model": model, "goToOrder": goToOrder};
+  static setArguments(OrderPrepayModel model,
+      {bool goToOrder = false, bool canUseBalance = true}) {
+    return {
+      "model": model,
+      "goToOrder": goToOrder,
+      "canUseBalance": canUseBalance,
+    };
   }
 
   @override
@@ -58,6 +63,8 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
 
   /// 取消支付后是否跳转到订单界面，从预览订单进来的会调到订单，订单列表继续支付进来的只会pop
   bool _goToOrder;
+
+  bool _canUseBalance = true;
 
   /// 用于辅助判断 app 从后台进入前台时，是否需要向后台验证订单状态
   bool _clickPay = false;
@@ -94,6 +101,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     _presenter = OrderPresenterImpl();
     _model = widget.arguments["model"];
     _goToOrder = widget.arguments["goToOrder"];
+    _canUseBalance = widget.arguments['canUseBalance'] ?? true;
     _presenter
         .queryRecookPayFund(UserManager.instance.user.info.id)
         .then((HttpResultModel<RecookFundModel> model) {
@@ -104,6 +112,10 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
       setState(() {
         if (model.data.data.amount > _model.data.actualTotalAmount) {
           _defaultPayIndex = 0;
+        }
+        //在保税仓或海外仓商品时，无法使用余额支付
+        if (!_canUseBalance) {
+          _defaultPayIndex = 1;
         }
         _recookFundModel = model.data;
       });
@@ -189,29 +201,29 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
           height: rSize(50),
         ),
         _payTile(
-            "",
-            SvgPicture.asset(
-              AppSvg.svg_balance_pay,
-              width: rSize(30),
-              height: rSize(30),
-            ),
-            0,
-            widgetTitle: RichText(
-              text: TextSpan(
-                  text: "余额支付 ",
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(17)),
-                  children: [
-                    TextSpan(
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(14),
-                            color: Colors.grey),
-                        text:
-                            "(可用余额: ￥${_recookFundModel == null ? "--" : _recookFundModel.data.amount})")
-                  ]),
-            ),
-            enable: _recookFundModel != null &&
-                (_recookFundModel.data.amount >=
-                    _model.data.actualTotalAmount)),
+          "",
+          SvgPicture.asset(
+            AppSvg.svg_balance_pay,
+            width: rSize(30),
+            height: rSize(30),
+          ),
+          0,
+          widgetTitle: RichText(
+            text: TextSpan(
+                text: "余额支付 ",
+                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(17)),
+                children: [
+                  TextSpan(
+                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                          color: Colors.grey),
+                      text:
+                          "(可用余额: ￥${_recookFundModel == null ? "--" : _recookFundModel.data.amount})")
+                ]),
+          ),
+          enable: _recookFundModel != null &&
+              (_recookFundModel.data.amount >= _model.data.actualTotalAmount) &&
+              _canUseBalance,
+        ),
         _payTile(
             "微信支付",
             Icon(

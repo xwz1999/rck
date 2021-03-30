@@ -8,13 +8,10 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/widgets/bussiness_cooperation_page.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/manager/meiqia_manager.dart';
 import 'package:recook/manager/user_manager.dart';
-import 'package:recook/widgets/webView.dart';
 
 class OtherItemView extends StatelessWidget {
   final Color _itemColor = Colors.grey[500];
@@ -73,11 +70,7 @@ class OtherItemView extends StatelessWidget {
             ),
             Expanded(
               child: CustomImageButton(
-                icon: Icon(
-                  AppIcons.icon_business_cooperation,
-                  color: _itemColor,
-                  size: _iconSize,
-                ),
+                icon: Image.asset(R.ASSETS_SHOP_BUSINESS_CORP_PNG),
                 title: "商务合作",
                 fontSize: _fontSize,
                 color: Colors.grey[700],

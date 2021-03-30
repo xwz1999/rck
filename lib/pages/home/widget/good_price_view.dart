@@ -13,7 +13,6 @@ import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/models/goods_detail_model.dart';
-import 'package:recook/pages/goods/small_coupon_widget.dart';
 import 'package:recook/utils/user_level_tool.dart';
 
 import 'package:recook/widgets/custom_image_button.dart';

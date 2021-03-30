@@ -11,16 +11,16 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 import 'package:amap_location_fluttify/amap_location_fluttify.dart';
-import 'package:clipboard_listener/clipboard_listener.dart';
 import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart' hide Response;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
+import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/daos/home_dao.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -28,14 +28,12 @@ import 'package:recook/manager/meiqia_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/banner_list_model.dart';
 import 'package:recook/models/base_model.dart';
-import 'package:recook/models/goods_detail_model.dart' as GDM;
 import 'package:recook/models/home_weather_model.dart';
 import 'package:recook/models/promotion_goods_list_model.dart';
 import 'package:recook/models/promotion_list_model.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/home/classify/classify_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
-import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/home_page_tabbar.dart';
 import 'package:recook/pages/home/items/item_row_acitivity.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
@@ -48,14 +46,15 @@ import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
 import 'package:recook/pages/noticeList/notice_list_model.dart';
 import 'package:recook/pages/noticeList/notice_list_tool.dart';
 import 'package:recook/pages/tabBar/rui_code_listener.dart';
+import 'package:recook/pages/upgradeCard/upgrade_card_page_v2.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/utils/android_back_desktop.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/color_util.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/permission_tool.dart';
-import 'package:recook/utils/rui_code_util.dart';
 import 'package:recook/utils/share_tool.dart';
+import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/banner.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -224,6 +223,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     // 抽奖功能
     _userLottery();
     _getNoticeList();
+    _userCardNoticeList();
   }
 
   // 获取当前页面需要刷新的数据
@@ -1411,45 +1411,118 @@ class _HomePageState extends BaseStoreState<HomePage>
     }
   }
 
-  _userLottery() {
-    //抽奖功能
-    HttpManager.post(
-      UserApi.user_lottery,
+  //抽奖功能
+  _userLottery() async {
+    //TODO 暂时移除抽奖功能（大概率以后用不到）
+    // ResultData resultData = await HttpManager.post(
+    //   UserApi.user_lottery,
+    //   {'userID': UserManager.instance.user.info.id},
+    // );
+    // if (resultData.data != null && resultData.data['data'] != null) {
+    //   if (resultData.data['data']['result'] == 0) {
+    //     ResultData lottery = await HttpManager.post(UserApi.user_do_lottery,
+    //         {'userID': UserManager.instance.user.info.id});
+    //     await Future.delayed(Duration(milliseconds: 500));
+    //     await Navigator.push(
+    //       context,
+    //       PageRouteBuilder(
+    //           opaque: false,
+    //           pageBuilder: (BuildContext context, Animation<double> animation,
+    //               Animation<double> secondaryAnimation) {
+    //             return LotteryPage(
+    //               cardIndex: lottery.data['data']['result'],
+    //             );
+    //           }),
+    //     );
+    //   }
+    // }
+
+    //店铺角色变动
+
+    bool firstTag = false;
+    ResultData shopLevel = await HttpManager.post(
+      APIV2.userAPI.userLottery,
       {'userID': UserManager.instance.user.info.id},
-    ).then((value) {
-      if (value.data != null) {
-        Map map = value.data;
-        if (!map.containsKey("data")) return;
-        if (value.data['data']['result'] == 0) {
-          HttpManager.post(UserApi.user_do_lottery,
-              {'userID': UserManager.instance.user.info.id}).then((result) {
-            Future.delayed(Duration(milliseconds: 500), () {
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                    opaque: false,
-                    pageBuilder: (BuildContext context,
-                        Animation<double> animation,
-                        Animation<double> secondaryAnimation) {
-                      return LotteryPage(
-                        cardIndex: result.data['data']['result'],
-                      );
-                    }),
-              );
-            });
-          });
+    );
+    if (shopLevel.data != null &&
+        shopLevel.data['data'] != null &&
+        shopLevel.data['code'] == 'SUCCESS') {
+      int oldLevel = shopLevel.data['data']['oldRoleLevel'];
+      int nowLevel = shopLevel.data['data']['nowRoleLevel'];
+
+      if (oldLevel == 400 && nowLevel == 400) return;
+
+      if ((oldLevel == 0 || oldLevel == 500) && nowLevel == 400) {
+        firstTag = true;
+        await showDialog(
+          context: context,
+          child: Center(
+            child: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Image.asset(R.ASSETS_USER_BE_THE_MASTER_WEBP),
+            ),
+          ),
+        );
+        await HttpManager.post(APIV2.userAPI.agreeLottery, {});
+        await UserManager.instance.updateUserBriefInfo(getStore());
+      }
+      String img;
+      //用户升级
+      if (oldLevel > nowLevel) {
+        switch (UserLevelTool.roleLevelEnum(nowLevel)) {
+          case UserRoleLevel.Diamond_1:
+          case UserRoleLevel.Diamond_2:
+          case UserRoleLevel.Diamond_3:
+            // img = R.ASSETS_USER_UPGRADE_DIAMOND_PNG_WEBP;
+            img = R.ASSETS_USER_UPGRADABLE_DIAMOND_PNG_WEBP;
+            break;
+          case UserRoleLevel.Gold:
+            // img = R.ASSETS_USER_UPGRADE_GOLD_PNG_WEBP;
+            img = R.ASSETS_USER_UPGRADABLE_GOLD_PNG_WEBP;
+            break;
+          case UserRoleLevel.Silver:
+            // img = R.ASSETS_USER_UPGRADE_SILVER_PNG_WEBP;
+            img = R.ASSETS_USER_UPGRADABLE_SILVER_PNG_WEBP;
+            break;
+          case UserRoleLevel.Master:
+            img = R.ASSETS_USER_UPGRADABLE_MASTER_PNG_WEBP;
+            break;
+          default:
+            break;
         }
       }
-    });
+      //用户降级
+      if (oldLevel < nowLevel) {
+        switch (UserLevelTool.roleLevelEnum(nowLevel)) {
+          case UserRoleLevel.Silver:
+            img = R.ASSETS_USER_DOWNGRADE_SILVER_WEBP;
+            break;
+          case UserRoleLevel.Master:
+            img = R.ASSETS_USER_DOWNGRADE_MASTER_WEBP;
+            break;
+          default:
+            break;
+        }
+      }
+      if (img != null && !firstTag) {
+        await showDialog(
+          context: context,
+          child: Center(
+            child: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Padding(
+                padding: const EdgeInsets.all(40),
+                child: Image.asset(img),
+              ),
+            ),
+          ),
+        );
+        await HttpManager.post(APIV2.userAPI.agreeLottery, {});
+      }
+    }
   }
 
   _getNoticeList() async {
-    // // await NoticeListTool.diamondRecommendation(context, title: "您成功推荐了X位大咖,恭喜获得X张晋升卡和保障卡");
-    // // await NoticeListTool.vipAlert(context);
-    // await NoticeListTool.perfectInformation(context, getStore());
-    // // await NoticeListTool.inputExpressInformation(context);
-    // return;
-
     if (!UserManager.instance.haveLogin) return;
     ResultData resultData = await HttpManager.post(
         HomeApi.notice_list, {"uid": UserManager.instance.user.info.id});
@@ -1461,12 +1534,71 @@ class _HomePageState extends BaseStoreState<HomePage>
         if (noticeData.type == 1)
           await NoticeListTool.diamondRecommendation(context,
               title: noticeData.content);
-        if (noticeData.type == 2 && (AppConfig.getShowCommission()))
-        //await NoticeListTool.vipAlert(context);
-        if (noticeData.type == 3)
+        if (noticeData.type == 2 &&
+            (AppConfig.getShowCommission())) if (noticeData.type == 3)
           await NoticeListTool.perfectInformation(context, getStore());
         if (noticeData.type == 4)
           await NoticeListTool.inputExpressInformation(context);
+      }
+    }
+  }
+
+  _userCardNoticeList() async {
+    await Future.delayed(Duration(milliseconds: 300));
+
+    ResultData resultData =
+        await HttpManager.post(APIV2.userAPI.userCardNoticeList, {});
+    if (resultData.data != null && resultData.data['data'] != null) {
+      List<dynamic> noticeList = resultData.data['data'];
+      for (var item in noticeList) {
+        final int gold = item['gold'];
+        final int silver = item['silver'];
+        final int id = item['id'];
+        String goldValue = '';
+        String silverValue = '';
+        if (gold != null && gold != 0) goldValue = '$gold张黄金卡';
+        if (silver != null && silver != 0) silverValue = '$silver张白银卡';
+        String result = '';
+        if (goldValue.isNotEmpty && silverValue.isNotEmpty)
+          result = '$goldValue,$silverValue';
+        else {
+          result = '$goldValue$silverValue';
+        }
+        await Get.dialog(Center(
+          child: GestureDetector(
+            onTap: () async {
+              await HttpManager.post(
+                APIV2.userAPI.confirmUserCardChange,
+                {"noticeId": id},
+              );
+              await Get.to(UpgradeCardPageV2());
+              Get.back();
+            },
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 50.w),
+              child: Center(
+                  child: Material(
+                color: Colors.transparent,
+                child: Transform.translate(
+                  offset: Offset(0, 20.w),
+                  child: Text(
+                    '您有$result已退至您的卡包',
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              )),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(R.ASSETS_USER_NOTICE_CARD_PNG),
+                ),
+              ),
+            ),
+          ),
+        ));
       }
     }
   }

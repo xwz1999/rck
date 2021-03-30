@@ -93,7 +93,7 @@ class _PhotosFailBarcodePageState extends BaseStoreState<PhotosFailBarcodePage>{
               color: Colors.white,
               fontSize: 16,
               onPressed: () async {
-                var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+                var image = await ImagePicker().getImage(source: ImageSource.gallery);
                 File cropFile = await ImageUtils.cropImage(image);
                 if (cropFile == null) {
                   return;

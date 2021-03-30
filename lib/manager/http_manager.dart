@@ -198,7 +198,8 @@ class HttpManager {
       // return new ResultData(null, false, HttpStatus.ERROR, "网络崩溃了");
 //      return new ResultData(null, false, HttpStatus.ERROR, "请求出错，请稍后再试");
     }
-    LoggerData.addData((response)..request.data = params);
+    // ignore: unnecessary_cast
+    LoggerData.addData((response as Response)..request.data = params);
     String responseStr = response.data;
     if (AppConfig.needEncrypt) {
       responseStr = await responseDecrypt(response.data);

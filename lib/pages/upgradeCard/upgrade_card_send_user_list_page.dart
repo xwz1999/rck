@@ -13,12 +13,10 @@ import 'package:recook/widgets/custom_app_bar.dart';
 
 class UpgradeCardSendUserListPage extends StatefulWidget {
   final Map arguments;
-  const UpgradeCardSendUserListPage({Key key, this.arguments}) : super(key: key);
-  static setArguments({bool isUpCard=true , String code=""}){
-    return {
-      "isUpCard": isUpCard,
-      "code": code
-    };
+  const UpgradeCardSendUserListPage({Key key, this.arguments})
+      : super(key: key);
+  static setArguments({bool isUpCard = true, String code = ""}) {
+    return {"isUpCard": isUpCard, "code": code};
   }
 
   @override
@@ -29,24 +27,23 @@ class UpgradeCardSendUserListPage extends StatefulWidget {
 
 class _UpgradeCardSendUserListPageState
     extends BaseStoreState<UpgradeCardSendUserListPage> {
-
   UpgradeChildInvitePageController _controller;
   bool isUpCard = false;
   String code = "";
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     isUpCard = widget.arguments["isUpCard"];
     code = widget.arguments["code"];
     _controller = UpgradeChildInvitePageController();
   }
-  
+
   @override
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
         appBar: CustomAppBar(
           themeData: AppThemes.themeDataGrey.appBarTheme,
-          title: "团队赠送",
+          title: "权益卡赠送",
           elevation: 0,
         ),
         backgroundColor: AppColor.frenchColor,
@@ -76,32 +73,38 @@ class _UpgradeCardSendUserListPageState
         ),
         Expanded(
           child: UpgradeChildInvitePage(
-            itemClick: (InviteModel inviteMode){
+            itemClick: (InviteModel inviteMode) {
               Alert.show(
-                context,
-                NormalContentDialog(
-                  type: NormalTextDialogType.delete,
-                  title: "赠送提示",
-                  content: Text.rich(
-                    TextSpan(
-                      style: TextStyle(color: Colors.black, fontSize: 15,),
-                      children: [
-                        TextSpan(text:isUpCard?'将赠送一张晋升卡给\n':'将赠送一张保障卡给\n',),
-                        TextSpan(text: inviteMode.nickname, style: TextStyle(color: Colors.red)),
-                      ]
+                  context,
+                  NormalContentDialog(
+                    type: NormalTextDialogType.delete,
+                    title: "赠送提示",
+                    content: Text.rich(
+                      TextSpan(
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: isUpCard ? '将赠送一张晋升卡给\n' : '将赠送一张保障卡给\n',
+                            ),
+                            TextSpan(
+                                text: inviteMode.nickname,
+                                style: TextStyle(color: Colors.red)),
+                          ]),
+                      textAlign: TextAlign.center,
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                  items: ["确认"],
-                  listener: (index) {
-                    Alert.dismiss(context);
-                    _sendCode(inviteMode.userId.toString());
-                  },
-                  deleteItem: "取消",
-                  deleteListener: () {
-                    Alert.dismiss(context);
-                  },
-                ));
+                    items: ["取消"],
+                    listener: (index) {
+                      Alert.dismiss(context);
+                    },
+                    deleteItem: "确认",
+                    deleteListener: () {
+                      Alert.dismiss(context);
+                      _sendCode(inviteMode.userId.toString());
+                    },
+                  ));
             },
             controller: _controller,
             userId: UserManager.instance.user.info.id,

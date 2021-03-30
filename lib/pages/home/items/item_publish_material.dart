@@ -7,15 +7,12 @@
  * ====================================================
  */
 
-import 'dart:ffi';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/material_list_model.dart';
-import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/nine_grid_view.dart';

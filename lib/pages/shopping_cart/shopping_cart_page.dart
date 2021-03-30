@@ -21,7 +21,6 @@ import 'package:recook/pages/shopping_cart/mvp/shopping_cart_contact.dart';
 import 'package:recook/utils/mvp.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
@@ -94,7 +93,9 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
       case UserRoleLevel.None:
         return Color(0xFFdca3ab);
         break;
-      case UserRoleLevel.Diamond:
+      case UserRoleLevel.Diamond_1:
+      case UserRoleLevel.Diamond_2:
+      case UserRoleLevel.Diamond_3:
         return Color(0xFFa27cc9);
         break;
       case UserRoleLevel.Gold:
