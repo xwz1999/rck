@@ -76,7 +76,7 @@ class OtherItemViewV2 extends StatelessWidget {
       ],
     ))
         .color(Color(0xFFFFFFFF))
-        .margin(EdgeInsets.all(10))
+        .margin(EdgeInsets.all(10).copyWith(top: 0))
         .withRounded(value: 10)
         .make();
   }

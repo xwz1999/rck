@@ -60,10 +60,9 @@ class ShopManagerView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          '店铺管理'.text.color(Color(0xFF333333)).size(16.sp).bold.make().p(10.w),
           GridView(
             padding:
-                EdgeInsets.symmetric(horizontal: 5.w).copyWith(bottom: 10.w),
+                EdgeInsets.symmetric(horizontal: 5.w,vertical: 10.w),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 170 / 90,

@@ -253,7 +253,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
               // UserPageAssetsView(),
               ...[
                 _renderBenefitCard(
-                  leadingPath: R.ASSETS_USER_PINK_BUYER_PNG,
+                  leadingPath: R.ASSETS_USER_PINK_BUYER_WEBP,
                   title: '自购收益',
                   alertTitle: '自购收益',
                   alertContent: '您本人下单并确认收货后，您获得的佣金。',
@@ -267,7 +267,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   content4: _userIncomeDataModel?.purchase?.countValue ?? '0',
                 ),
                 _renderBenefitCard(
-                  leadingPath: R.ASSETS_USER_PINK_SHARE_PNG,
+                  leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
                   title: '导购收益',
                   alertTitle: '导购收益',
                   alertContent: '会员通过您导购的商品链接，购买并确认收货的佣金收益',
@@ -282,7 +282,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 ),
                 if (_userIncomeDataModel?.hasTeamValue ?? false)
                   _renderBenefitCard(
-                    leadingPath: R.ASSETS_USER_PINK_GROUP_PNG,
+                    leadingPath: R.ASSETS_USER_PINK_GROUP_WEBP,
                     title: '店铺补贴',
                     alertTitle: '店铺补贴',
                     alertContent: shopContent,
@@ -306,7 +306,6 @@ class _UserPageState extends BaseStoreState<UserPage> {
                       amount: _amount,
                     )
                   : SizedBox(),
-              ShopManagerView(),
               OrderCentralView(
                 clickListener: (int index) {
                   if (index == 4) {
@@ -324,6 +323,9 @@ class _UserPageState extends BaseStoreState<UserPage> {
                       arguments: OrderCenterPage.setArguments(index));
                 },
               ),
+              10.hb,
+              ShopManagerView(),
+
               // OtherItemView(),
               OtherItemViewV2(),
             ],
@@ -373,13 +375,12 @@ class _UserPageState extends BaseStoreState<UserPage> {
           Row(
             children: [
               46.hb,
-              24.wb,
+              14.wb,
               Image.asset(
                 leadingPath,
-                width: 22.w,
-                height: 22.w,
+                width: 32.w,
+                height: 32.w,
               ),
-              10.wb,
               title.text.size(16.sp).black.make(),
               MaterialButton(
                 padding: EdgeInsets.all(4.w),
