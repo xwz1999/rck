@@ -195,19 +195,6 @@ class _UserPageState extends BaseStoreState<UserPage> {
     }
   }
 
-  String get shopContent {
-    UserRoleLevel role = UserLevelTool.currentRoleLevelEnum();
-    if (role == UserRoleLevel.Diamond_1 ||
-        role == UserRoleLevel.Diamond_2 ||
-        role == UserRoleLevel.Diamond_3) {
-      return '自营店铺补贴：每月1日结算您自营店铺上一个自然月确认收货的订单，按自营店铺销售额的3%计算补贴。\n分销店铺补贴：每月1日结算您分销店铺上一个自然月确认收货的订单，按分销店铺销售额的4%计算补贴。\n代理店铺补贴：每月1日结算您代理店铺上一个自然月确认收货的订单，按代理店铺销售额的5%计算补贴。';
-    }
-    if (role == UserRoleLevel.Gold || role == UserRoleLevel.Silver) {
-      return '自营店铺补贴：每月1日结算您自营店铺上一个自然月确认收货的订单，按自营店铺销售额的3%计算补贴。\n分销店铺补贴：每月1日结算您分销店铺上一个自然月确认收货的订单，按分销店铺销售额的4%计算补贴。';
-    } else
-      return '自营店铺补贴：每月1日结算您自营店铺上一个自然月确认收货的订单，按自营店铺销售额的3%计算补贴。';
-  }
-
   Widget _buildRefreshScrollView(
       BuildContext context, Store<RecookState> store) {
     return Stack(
@@ -256,7 +243,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   leadingPath: R.ASSETS_USER_PINK_BUYER_WEBP,
                   title: '自购收益',
                   alertTitle: '自购收益',
-                  alertContent: '您本人下单并确认收货后，您获得的佣金。',
+                  alertContent: '您本人下单并确认收货后，您获得的佣金。'.text.black.make(),
                   title1: '未到账收益(瑞币)',
                   title3: '已到账收益(瑞币)',
                   content1:
@@ -270,7 +257,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
                   title: '导购收益',
                   alertTitle: '导购收益',
-                  alertContent: '会员通过您导购的商品链接，购买并确认收货的佣金收益',
+                  alertContent: '会员通过您导购的商品链接，购买并确认收货的佣金收益'.text.black.make(),
                   title1: '未到账收益(瑞币)',
                   title3: '已到账收益(瑞币)',
                   content1:
@@ -285,7 +272,59 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     leadingPath: R.ASSETS_USER_PINK_GROUP_WEBP,
                     title: '店铺补贴',
                     alertTitle: '店铺补贴',
-                    alertContent: shopContent,
+                    alertContent: Builder(
+                      builder: (context) {
+                        //role == UserRoleLevel.Diamond_1 || role == UserRoleLevel.Diamond_2 || role == UserRoleLevel.Diamond_3
+                        UserRoleLevel role =
+                            UserLevelTool.currentRoleLevelEnum();
+
+                        final part1 = [
+                          TextSpan(
+                            text: '自营店铺补贴',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          TextSpan(
+                              text:
+                                  '：每月1日结算您自营店铺上一个自然月确认收货的订单，按自营店铺销售额的3%计算补贴。\n'),
+                        ];
+                        final part2 = [
+                          TextSpan(
+                            text: '分销店铺补贴',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          TextSpan(
+                              text:
+                                  '：每月1日结算您分销店铺上一个自然月确认收货的订单，按分销店铺销售额的4%计算补贴。\n'),
+                        ];
+                        final part3 = [
+                          TextSpan(
+                            text: '代理店铺补贴',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          TextSpan(
+                              text:
+                                  '：每月1日结算您代理店铺上一个自然月确认收货的订单，按代理店铺销售额的5%计算补贴。\n'),
+                        ];
+                        return Text.rich(TextSpan(
+                          children: [
+                            ...part1,
+                            if (role == UserRoleLevel.Gold ||
+                                role == UserRoleLevel.Silver ||
+                                role == UserRoleLevel.Diamond_1 ||
+                                role == UserRoleLevel.Diamond_2 ||
+                                role == UserRoleLevel.Diamond_3)
+                              ...part2,
+                            if (role == UserRoleLevel.Diamond_1 ||
+                                role == UserRoleLevel.Diamond_2 ||
+                                role == UserRoleLevel.Diamond_3)
+                              ...part3,
+                          ],
+                          style: TextStyle(
+                            color: Color(0xFF333333),
+                          ),
+                        ));
+                      },
+                    ),
                     title1: '未到账补贴(瑞币)',
                     title3: '已到账补贴(瑞币)',
                     content1:
@@ -360,7 +399,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
     @required String leadingPath,
     @required String title,
     @required String alertTitle,
-    @required String alertContent,
+    @required Widget alertContent,
     @required String title1,
     @required String title3,
     @required String content1,
@@ -394,7 +433,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 onPressed: () {
                   Alert.show(
                       context,
-                      NormalTextDialog(
+                      NormalContentDialog(
                         title: alertTitle,
                         content: alertContent,
                         items: ["确认"],

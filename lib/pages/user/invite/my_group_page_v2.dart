@@ -195,7 +195,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
                     context,
                     NormalContentDialog(
                       title: '店铺贡献榜图标定义',
-                      content: Image.asset(R.ASSETS_USER_CARD_DESCRIPTION_PNG),
+                      content: Image.asset(R.ASSETS_USER_CARD_DESCRIPTION_WEBP),
                       items: ["确认"],
                       listener: (index) => Alert.dismiss(context),
                     ),
