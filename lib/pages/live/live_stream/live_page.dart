@@ -1033,9 +1033,17 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
   _stopLive() async {
     _livePusher?.stopPush();
     if (_streamInfoModel != null) {
-      await TencentImPlugin.quitGroup(groupId: _streamInfoModel.groupId);
+      try {
+        await TencentImPlugin.quitGroup(groupId: _streamInfoModel.groupId);
+      } catch (e) {
+        print(e);
+      }
       TencentImPlugin.removeListener(parseMessage);
-      await TencentImPlugin.logout();
+      try {
+        await TencentImPlugin.logout();
+      } catch (e) {
+        print(e);
+      }
     }
     if (_isStream)
       await HttpManager.post(LiveAPI.exitLive, {
