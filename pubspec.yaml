@@ -39,7 +39,8 @@ dependencies:
   # 第三方分享功能
   sharesdk_plugin:
     git:
-      url: http://test.akuhotel.com:8099/laiiihz/sharesdk_plugin.git
+      url: http://159.75.73.143:8080/third_packages/ShareSDK-For-Flutter
+      path: sharesdk_plugin
 
   # 展示二维码
   qr_flutter: ^3.2.0
@@ -118,9 +119,9 @@ dependencies:
   flutter_gifimage: ^1.0.0
 
   # 微信登录 支付等
-  fluwx:
-    git:
-      url: http://test.akuhotel.com:8099/laiiihz/fluwx.git
+  fluwx: ^2.6.2
+    # git:
+    #   url: http://test.akuhotel.com:8099/laiiihz/fluwx.git
 
   #
   # 源码 TobiasPlugin.m

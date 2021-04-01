@@ -92,7 +92,7 @@ PODS:
     - Flutter
   - fluwx (0.0.1):
     - Flutter
-    - mob_sharesdk/ShareSDKPlatforms/WeChatFull
+    - WechatOpenSDK (= 1.8.7.1)
   - foundation_fluttify (0.0.1):
     - Flutter
   - HandyJSON (5.0.2)
@@ -169,9 +169,6 @@ PODS:
   - mob_sharesdk/ShareSDKPlatforms/WatermelonVideo (4.3.14):
     - mob_sharesdk/ShareSDK
     - MOBFoundation (>= 3.2.9)
-  - mob_sharesdk/ShareSDKPlatforms/WeChatFull (4.3.14):
-    - mob_sharesdk/ShareSDK
-    - MOBFoundation (>= 3.2.9)
   - mob_sharesdk/ShareSDKRestoreScene (4.3.14):
     - mob_sharesdk/ShareSDKExtension
     - MOBFoundation (>= 3.2.9)
@@ -213,9 +210,9 @@ PODS:
     - mob_sharesdk/ShareSDKPlatforms/SnapChat
     - mob_sharesdk/ShareSDKPlatforms/Twitter
     - mob_sharesdk/ShareSDKPlatforms/WatermelonVideo
-    - mob_sharesdk/ShareSDKPlatforms/WeChatFull
     - mob_sharesdk/ShareSDKRestoreScene
     - mob_sharesdk/ShareSDKUI
+    - WechatOpenSDK (= 1.8.7.1)
   - SwiftyGif (5.3.0)
   - tencent_im_plugin (0.0.1):
     - Flutter
@@ -243,6 +240,7 @@ PODS:
     - Flutter
   - webview_flutter (0.0.1):
     - Flutter
+  - WechatOpenSDK (1.8.7.1)
 
 DEPENDENCIES:
   - amap_core_fluttify (from `.symlinks/plugins/amap_core_fluttify/ios`)
@@ -307,6 +305,7 @@ SPEC REPOS:
     - TOCropViewController
     - TXIMSDK_iOS
     - TXLiteAVSDK_Professional
+    - WechatOpenSDK
 
 EXTERNAL SOURCES:
   amap_core_fluttify:
@@ -404,7 +403,7 @@ SPEC CHECKSUMS:
   flutter_qr_reader: 1b4faf9032e9ddc738107fd3dc067d29bd5cc67d
   flutter_txugcupload: fd4f7a2a99e5fe30e608bf6f4acf0e7408339816
   flutter_union_pay: 47a7bf5a4e987745d4378a8b9fb522d0a434793f
-  fluwx: 13b180563982bf3149472d650e01fa0312236c3d
+  fluwx: 07a55ed66bf3a4961e836a2a411b02dcada32902
   foundation_fluttify: 0c45145e3fad1fb99188e4979daed5b24cd9b278
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   image_cropper: 3c16d7651730ffe85897f5a1c4e2547e6b54989a
@@ -428,7 +427,7 @@ SPEC CHECKSUMS:
   raw_toast: 24d3af32bd83848a73a4a9f8edeed98ff5c469c4
   SDWebImage: a31ee8e90a97303529e03fb0c333eae0eacb88e9
   shared_preferences: 1feebfa37bb57264736e16865e7ffae7fc99b523
-  sharesdk_plugin: 1afa172841a590314b6ecd37eee084dfbd18f725
+  sharesdk_plugin: eab284820482d1ca79038b88792d6eb2dc69552a
   SwiftyGif: e466e86c660d343357ab944a819a101c4127cb40
   tencent_im_plugin: a055ed155fd2cae7f006e756dbec96255b4aa0a3
   tencent_live_fluttify: 98821d3233cf13a47eadf1555ebd56b050e0a5ca
@@ -442,6 +441,7 @@ SPEC CHECKSUMS:
   video_thumbnail: c4e2a3c539e247d4de13cd545344fd2d26ffafd1
   wakelock: 0d4a70faf8950410735e3f61fb15d517c8a6efc4
   webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
+  WechatOpenSDK: 6a4d1436c15b3b5fe2a0bd383f3046010186da44
 
 PODFILE CHECKSUM: 92b158b51b335be17f029808df79886222d2ae9c
 
