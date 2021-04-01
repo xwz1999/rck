@@ -1397,8 +1397,8 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   _mobShareInit() {
     ShareSDKRegister register = ShareSDKRegister();
-    register.setupSinaWeibo(
-        "3484799074", "0cc08d31b4d63dc81fbb7a2559999fb3", "https://reecook.cn");
+    // register.setupSinaWeibo(
+    //     "3484799074", "0cc08d31b4d63dc81fbb7a2559999fb3", "https://reecook.cn");
     register.setupQQ("101876843", "6f367bfad98978e22c2e11897dd74f00");
     SharesdkPlugin.regist(register);
   }
