@@ -15,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:get/get.dart';
 import 'package:package_info/package_info.dart';
+import 'package:recook/pages/user/user_old_history_benefit_page.dart';
 import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -552,21 +553,22 @@ class _UserPageState extends BaseStoreState<UserPage> {
                               materialTapTargetSize:
                                   MaterialTapTargetSize.shrinkWrap,
                               child: Icon(
-                                Icons.help_outline,
+                                Icons.schedule,
                                 size: 12.w,
                                 color: Color(0xFFA5A5A5),
                               ),
                               onPressed: () {
-                                Alert.show(
-                                    context,
-                                    NormalTextDialog(
-                                      title: "累计收益",
-                                      content: "您的账户使用至今所有已到账收益之和",
-                                      items: ["确认"],
-                                      listener: (index) {
-                                        Alert.dismiss(context);
-                                      },
-                                    ));
+                                Get.to(() => UserOldHistoryBenefitPage());
+                                // Alert.show(
+                                //     context,
+                                //     NormalTextDialog(
+                                //       title: "累计收益",
+                                //       content: "您的账户使用至今所有已到账收益之和",
+                                //       items: ["确认"],
+                                //       listener: (index) {
+                                //         Alert.dismiss(context);
+                                //       },
+                                //     ));
                               },
                             ),
                             Spacer(),
