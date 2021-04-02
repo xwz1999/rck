@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:bot_toast/bot_toast.dart';
+import 'package:recook/widgets/alert.dart';
 
 import 'package:recook/widgets/progress/loading_dialog.dart';
 
@@ -18,6 +19,17 @@ class ReToast {
       toastBuilder: (func) {
         return StatusDialog(
           status: Status.error,
+          text: text ?? '',
+        );
+      },
+    );
+  }
+
+  static Function success({String text}) {
+    return BotToast.showCustomText(
+      toastBuilder: (func) {
+        return StatusDialog(
+          status: Status.success,
           text: text ?? '',
         );
       },

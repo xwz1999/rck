@@ -57,14 +57,7 @@ class _AccountAndSafetyPageState extends State<AccountAndSafetyPage> {
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.w),
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onPressed: () async {
-              final cancel = ReToast.loading(text: '修改中');
-              secureValue = !secureValue;
-              await HttpManager.post(
-                APIV2.userAPI.securePhone,
-                {'secure': secureValue ? 1 : 0},
-              );
-              cancel();
-              setState(() {});
+              await _updateSwitchState();
             },
             child: Row(
               children: [
@@ -83,12 +76,7 @@ class _AccountAndSafetyPageState extends State<AccountAndSafetyPage> {
                   value: secureValue,
                   trackColor: Color(0xFFDB2D2D),
                   onChanged: (state) async {
-                    final cancel = ReToast.loading(text: '修改中');
-                    secureValue = !secureValue;
-                    await HttpManager.post(APIV2.userAPI.securePhone,
-                        {'secure': secureValue ? 1 : 0});
-                    cancel();
-                    setState(() {});
+                    await _updateSwitchState();
                   },
                 ),
               ],
@@ -97,6 +85,18 @@ class _AccountAndSafetyPageState extends State<AccountAndSafetyPage> {
         ],
       ),
     );
+  }
+
+  _updateSwitchState() async {
+    final cancel = ReToast.loading(text: '修改中');
+    secureValue = !secureValue;
+    await HttpManager.post(
+      APIV2.userAPI.securePhone,
+      {'secure': secureValue ? 1 : 0},
+    );
+    cancel();
+    ReToast.success(text: '修改成功');
+    setState(() {});
   }
 
   _backButton(context) {
