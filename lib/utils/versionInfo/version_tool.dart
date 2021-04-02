@@ -43,10 +43,10 @@ class VersionTool {
           NormalTextDialog(
             title: "发现新版本",
             content: "${versionInfo.desc}",
-            items: ["确认", "取消"],
+            items: ["取消", "确认"],
             listener: (int index) async {
               Alert.dismiss(context);
-              if (index == 0) {
+              if (index == 1) {
                 if (await canLaunch(_appStoreURL)) {
                   launch(_appStoreURL);
                   if (Theme.of(context).platform == TargetPlatform.iOS) {
