@@ -32,6 +32,9 @@ class UserBrief {
   OrderCenter orderCenter;
   VersionInfo versionInfo;
   String identifier;
+  int secret;
+
+  bool get secretValue => secret == 1;
 
   UserBrief({
     this.balance,
@@ -43,6 +46,7 @@ class UserBrief {
     this.orderCenter,
     this.versionInfo,
     this.identifier,
+    this.secret,
   });
 
   UserBrief.empty() {
@@ -56,6 +60,7 @@ class UserBrief {
         OrderCenter(waitPay: 0, waitSend: 0, waitRecv: 0, afterSales: 0);
     this.versionInfo = VersionInfo();
     this.identifier = "";
+    this.secret = 0;
   }
 
   UserBrief.fromJson(Map<String, dynamic> json) {
@@ -80,6 +85,7 @@ class UserBrief {
         ? new VersionInfo.fromJson(json['VersionInfo'])
         : null;
     identifier = json['identifier'];
+    secret = json['secret'];
   }
 
   Map<String, dynamic> toJson() {
