@@ -86,11 +86,11 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
       child: NormalTextDialog(
         title: '确认退出直播间吗',
         content: '',
-        items: ['确认'],
-        deleteItem: '取消',
+        deleteItem: '确认',
+        items: ['取消'],
         type: NormalTextDialogType.delete,
-        listener: (_) => Navigator.pop(context, true),
-        deleteListener: () => Navigator.pop(context),
+        listener: (_) => Navigator.pop(context),
+        deleteListener: () => Navigator.pop(context, true),
       ),
     );
   }
