@@ -2,10 +2,20 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+
+import 'package:common_utils/common_utils.dart';
 import 'package:many_like/many_like.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:tencent_im_plugin/entity/group_member_entity.dart';
+import 'package:tencent_im_plugin/entity/message_entity.dart';
+import 'package:tencent_im_plugin/entity/session_entity.dart';
+import 'package:tencent_im_plugin/message_node/group_system_message_node.dart';
+import 'package:tencent_im_plugin/message_node/text_message_node.dart';
+import 'package:tencent_im_plugin/tencent_im_plugin.dart';
+import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
+import 'package:wakelock/wakelock.dart';
+
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -25,16 +35,7 @@ import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:tencent_im_plugin/entity/group_member_entity.dart';
-import 'package:tencent_im_plugin/entity/message_entity.dart';
-import 'package:tencent_im_plugin/entity/session_entity.dart';
-import 'package:tencent_im_plugin/message_node/group_system_message_node.dart';
-import 'package:tencent_im_plugin/message_node/text_message_node.dart';
-import 'package:tencent_im_plugin/tencent_im_plugin.dart';
-import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
-import 'package:wakelock/wakelock.dart';
 
 class LiveStreamViewPage extends StatefulWidget {
   final int id;
@@ -85,11 +86,11 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
       builder: (context) => NormalTextDialog(
         title: '确认退出直播间吗',
         content: '',
-        items: ['确认'],
-        deleteItem: '取消',
+        deleteItem: '确认',
+        items: ['取消'],
         type: NormalTextDialogType.delete,
-        listener: (_) => Navigator.pop(context, true),
-        deleteListener: () => Navigator.pop(context),
+        listener: (_) => Navigator.pop(context),
+        deleteListener: () => Navigator.pop(context, true),
       ),
     );
   }

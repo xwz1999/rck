@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_markdown/flutter_markdown.dart';
+
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/agreements/agreements_markdown.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';

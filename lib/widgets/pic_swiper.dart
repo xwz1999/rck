@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:math';
-
-import 'package:extended_image/extended_image.dart';
 import 'dart:ui';
+
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/rendering.dart';
+
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:recook/constants/header.dart';
 import 'package:recook/utils/image_utils.dart';
 

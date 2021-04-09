@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:recook/constants/api_v2.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/user/functions/user_func.dart';
@@ -9,8 +13,6 @@ import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
 import 'package:recook/widgets/refresh_widget.dart';
-import 'package:velocity_x/velocity_x.dart';
-import 'package:recook/constants/header.dart';
 
 class MyGroupPageV2 extends StatefulWidget {
   MyGroupPageV2({Key key}) : super(key: key);
@@ -193,7 +195,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
                     context,
                     NormalContentDialog(
                       title: '店铺贡献榜图标定义',
-                      content: Image.asset(R.ASSETS_USER_CARD_DESCRIPTION_PNG),
+                      content: Image.asset(R.ASSETS_USER_CARD_DESCRIPTION_WEBP),
                       items: ["确认"],
                       listener: (index) => Alert.dismiss(context),
                     ),

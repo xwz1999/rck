@@ -1,12 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/manager/user_manager.dart';
+
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/sc_tile.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class AccountAndSafetyPage extends StatefulWidget {
   AccountAndSafetyPage({Key key}) : super(key: key);
@@ -15,16 +19,31 @@ class AccountAndSafetyPage extends StatefulWidget {
   _AccountAndSafetyPageState createState() => _AccountAndSafetyPageState();
 }
 
-class _AccountAndSafetyPageState extends State<AccountAndSafetyPage> {
+class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
   bool secureValue = false;
   @override
   void initState() {
     super.initState();
-    //TODO 初始化手机号显示开关数值
+    secureValue = UserManager.instance.userBrief.secretValue;
+  }
+
+  Future updateProfile() async {
+    await UserManager.instance.updateUserBriefInfo(getStore()).then((success) {
+      if (success) {
+        if (UserManager.instance.user.info.roleLevel !=
+            getStore().state.userBrief.roleLevel) {
+          UserManager.instance.user.info.roleLevel =
+              getStore().state.userBrief.roleLevel;
+          UserManager.instance.refreshUserRole.value =
+              !UserManager.instance.refreshUserRole.value;
+          UserManager.updateUserInfo(getStore());
+        }
+      }
+    });
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
       backgroundColor: AppColor.frenchColor,
       appBar: CustomAppBar(
@@ -55,14 +74,7 @@ class _AccountAndSafetyPageState extends State<AccountAndSafetyPage> {
             padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.w),
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onPressed: () async {
-              final cancel = ReToast.loading(text: '修改中');
-              secureValue = !secureValue;
-              await HttpManager.post(
-                APIV2.userAPI.securePhone,
-                {'secure': secureValue ? 1 : 0},
-              );
-              cancel();
-              setState(() {});
+              await _updateSwitchState();
             },
             child: Row(
               children: [
@@ -81,12 +93,7 @@ class _AccountAndSafetyPageState extends State<AccountAndSafetyPage> {
                   value: secureValue,
                   trackColor: Color(0xFFDB2D2D),
                   onChanged: (state) async {
-                    final cancel = ReToast.loading(text: '修改中');
-                    secureValue = !secureValue;
-                    await HttpManager.post(APIV2.userAPI.securePhone,
-                        {'secure': secureValue ? 1 : 0});
-                    cancel();
-                    setState(() {});
+                    await _updateSwitchState();
                   },
                 ),
               ],
@@ -95,6 +102,19 @@ class _AccountAndSafetyPageState extends State<AccountAndSafetyPage> {
         ],
       ),
     );
+  }
+
+  _updateSwitchState() async {
+    final cancel = ReToast.loading(text: '修改中');
+    secureValue = !secureValue;
+    await HttpManager.post(
+      APIV2.userAPI.securePhone,
+      {'secret': secureValue ? 1 : 0},
+    );
+    await updateProfile();
+    cancel();
+    ReToast.success(text: secureValue ? '已开启' : '已关闭');
+    setState(() {});
   }
 
   _backButton(context) {

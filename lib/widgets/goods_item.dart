@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
+
 import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
-import 'package:flutter/material.dart';
+
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/models/goods_hot_sell_list_model.dart'
-    as GoodsHotSellListModel;
 import 'package:recook/models/goods_simple_list_model.dart';
 import 'package:recook/models/promotion_goods_list_model.dart';
 import 'package:recook/pages/goods/small_coupon_widget.dart';
@@ -14,7 +14,9 @@ import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import 'package:recook/models/goods_hot_sell_list_model.dart'
+    as GoodsHotSellListModel;
 
 enum GoodsItemType {
   NONE,

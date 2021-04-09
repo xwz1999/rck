@@ -16,13 +16,15 @@ VipLevel     = 500    会员
 */
 
 import 'package:flutter/material.dart';
+
+import 'package:redux/redux.dart';
+
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/user_role_upgrade_model.dart';
 import 'package:recook/pages/shop/widget/shop_page_upgrade_alert.dart';
 import 'package:recook/redux/recook_state.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:redux/redux.dart';
 
 enum UserLevel { None, Partner, Top, First, Second, Others }
 enum UserRoleLevel {

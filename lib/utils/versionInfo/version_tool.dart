@@ -1,14 +1,16 @@
 import 'dart:io';
 
-import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+import 'package:device_info/device_info.dart';
 import 'package:package_info/package_info.dart';
+import 'package:url_launcher/url_launcher.dart';
+
 import 'package:recook/constants/api.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/utils/versionInfo/version_info_model.dart';
 import 'package:recook/widgets/alert.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class VersionTool {
   static checkVersionInfo(context) async {
@@ -41,10 +43,10 @@ class VersionTool {
           NormalTextDialog(
             title: "发现新版本",
             content: "${versionInfo.desc}",
-            items: ["确认", "取消"],
+            items: ["取消", "确认"],
             listener: (int index) async {
               Alert.dismiss(context);
-              if (index == 0) {
+              if (index == 1) {
                 if (await canLaunch(_appStoreURL)) {
                   launch(_appStoreURL);
                   if (Theme.of(context).platform == TargetPlatform.iOS) {

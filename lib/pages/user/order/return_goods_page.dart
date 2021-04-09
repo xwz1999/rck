@@ -8,13 +8,17 @@
  */
 
 import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
+
 import 'package:async/async.dart';
 import 'package:extended_image/extended_image.dart';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' as flutterImagePicker;
 import 'package:photo/photo.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
@@ -24,7 +28,6 @@ import 'package:recook/models/order_detail_model.dart';
 import 'package:recook/pages/user/model/return_reason_model.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/image_picker.dart';

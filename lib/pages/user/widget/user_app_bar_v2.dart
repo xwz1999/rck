@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -7,7 +10,6 @@ import 'package:recook/manager/meiqia_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class UserAppBarV2 extends StatefulWidget {
   UserAppBarV2({Key key}) : super(key: key);

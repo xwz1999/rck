@@ -9,6 +9,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -25,7 +26,6 @@ import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/pic_swiper.dart';
 import 'package:recook/widgets/toast.dart';
-
 import 'mvp/recommend_mvp_contact.dart';
 import 'mvp/recommend_presenter_implementation.dart';
 

@@ -2,9 +2,20 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+
+import 'package:common_utils/common_utils.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:tencent_im_plugin/entity/group_member_entity.dart';
+import 'package:tencent_im_plugin/entity/message_entity.dart';
+import 'package:tencent_im_plugin/entity/session_entity.dart';
+import 'package:tencent_im_plugin/message_node/group_system_message_node.dart';
+import 'package:tencent_im_plugin/message_node/text_message_node.dart';
+import 'package:tencent_im_plugin/tencent_im_plugin.dart';
+import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
+import 'package:wakelock/wakelock.dart';
+
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -34,15 +45,6 @@ import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:tencent_im_plugin/entity/group_member_entity.dart';
-import 'package:tencent_im_plugin/entity/message_entity.dart';
-import 'package:tencent_im_plugin/entity/session_entity.dart';
-import 'package:tencent_im_plugin/message_node/group_system_message_node.dart';
-import 'package:tencent_im_plugin/message_node/text_message_node.dart';
-import 'package:tencent_im_plugin/tencent_im_plugin.dart';
-import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:wakelock/wakelock.dart';
 
 class LivePage extends StatefulWidget {
   final bool resumeLive;
@@ -144,11 +146,11 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
       builder: (context) => NormalTextDialog(
         title: '确认停止直播间吗',
         content: '',
-        items: ['确认'],
-        deleteItem: '取消',
+        deleteItem: '确认',
+        items: ['取消'],
         type: NormalTextDialogType.delete,
-        listener: (_) => Navigator.pop(context, true),
-        deleteListener: () => Navigator.pop(context),
+        listener: (_) => Navigator.pop(context),
+        deleteListener: () => Navigator.pop(context, true),
       ),
     );
   }
@@ -1030,9 +1032,17 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
   _stopLive() async {
     _livePusher?.stopPush();
     if (_streamInfoModel != null) {
-      await TencentImPlugin.quitGroup(groupId: _streamInfoModel.groupId);
+      try {
+        await TencentImPlugin.quitGroup(groupId: _streamInfoModel.groupId);
+      } catch (e) {
+        print(e);
+      }
       TencentImPlugin.removeListener(parseMessage);
-      await TencentImPlugin.logout();
+      try {
+        await TencentImPlugin.logout();
+      } catch (e) {
+        print(e);
+      }
     }
     if (_isStream)
       await HttpManager.post(LiveAPI.exitLive, {

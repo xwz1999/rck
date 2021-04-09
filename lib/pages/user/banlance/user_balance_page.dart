@@ -1,5 +1,9 @@
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+
+import 'package:common_utils/common_utils.dart';
+import 'package:velocity_x/velocity_x.dart';
+
+import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/user/functions/user_balance_func.dart';
@@ -9,9 +13,7 @@ import 'package:recook/pages/user/user_cash_withdraw_page.dart';
 import 'package:recook/widgets/bottom_time_picker.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/widgets/refresh_widget.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class UserBalancePage extends StatefulWidget {
   UserBalancePage({Key key}) : super(key: key);
@@ -157,7 +159,7 @@ class _UserBalancePageState extends State<UserBalancePage> {
                 [
                   '可使用(元)'.text.size(14.sp).color(Color(0xFF333333)).make(),
                   4.hb,
-                  _model.data.balance
+                  (_model?.data?.balance ?? 0.0)
                       .toStringAsFixed(2)
                       .text
                       .size(30)
@@ -168,7 +170,7 @@ class _UserBalancePageState extends State<UserBalancePage> {
                 [
                   '累计提现(元)'.text.size(14.sp).color(Color(0xFF333333)).make(),
                   4.hb,
-                  _model.data.totalWithdraw
+                  (_model?.data?.totalWithdraw ?? 0.0)
                       .toStringAsFixed(2)
                       .text
                       .size(30)
@@ -258,7 +260,7 @@ class _UserBalancePageState extends State<UserBalancePage> {
                   height: 1.w,
                   thickness: 1.w,
                 ),
-                itemCount: _historyModel.data.list.length,
+                itemCount: _historyModel?.data?.list?.length ?? 0,
               ),
             ).material(color: Color(0xFFF9F9FB)).expand(),
           ],

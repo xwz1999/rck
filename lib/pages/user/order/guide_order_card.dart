@@ -1,10 +1,12 @@
+import 'package:flutter/material.dart';
+
 import 'package:common_utils/common_utils.dart';
 import 'package:extended_text/extended_text.dart';
-import 'package:flutter/material.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/guide_order_item_model.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class GuideOrderCard extends StatelessWidget {
   final GuideOrderItemModel model;

@@ -3,7 +3,6 @@ import 'package:recook/models/goods_list_model.dart';
 import 'package:recook/pages/home/mvp/purchase_ranking_contact.dart';
 import 'package:recook/pages/home/mvp/purchase_ranking_model_impl.dart';
 
-
 class PurchaseRankingPresenterImpl extends PurchaseRankingPresenterI {
   @override
   PurchaseRankingModelI initModel() {

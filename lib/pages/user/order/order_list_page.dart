@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -27,6 +28,7 @@ import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
+
 enum OrderPositionType {
   onlineOrder,  // 线上订单
   storeOrder,   // 门店订单

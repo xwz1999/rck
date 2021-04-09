@@ -1,11 +1,13 @@
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+
+import 'package:common_utils/common_utils.dart';
+import 'package:velocity_x/velocity_x.dart';
+
+import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/widget/shop_check_painter.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:velocity_x/velocity_x.dart';
-import 'package:recook/constants/constants.dart';
 
 class ShopCheckView extends StatefulWidget {
   final double target;

@@ -1,7 +1,6 @@
-
-import 'package:recook/models/user_model.dart';
 import 'package:redux/redux.dart';
 
+import 'package:recook/models/user_model.dart';
 
 final UserReducer = combineReducers<User>([
   TypedReducer<User, UpdateUserAction>(updateUserInfo)

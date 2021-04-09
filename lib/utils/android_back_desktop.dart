@@ -1,5 +1,5 @@
-import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AndroidBackTop {
 	//初始化通信管道-设置退出到手机桌面

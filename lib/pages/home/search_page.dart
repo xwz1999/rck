@@ -10,8 +10,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:waterfall_flow/waterfall_flow.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
+import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
@@ -23,6 +28,7 @@ import 'package:recook/models/promotion_goods_list_model.dart';
 import 'package:recook/models/promotion_list_model.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
+import 'package:recook/pages/home/classify/mvp/goods_list_contact.dart';
 import 'package:recook/pages/home/classify/mvp/goods_list_presenter_impl.dart';
 import 'package:recook/pages/home/items/item_brand_detail_grid.dart';
 import 'package:recook/pages/home/items/item_tag_widget.dart';
@@ -41,10 +47,6 @@ import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/progress/loading_dialog.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/refresh_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:recook/pages/home/classify/mvp/goods_list_contact.dart';
-import 'package:recook/constants/app_image_resources.dart';
-import 'package:waterfall_flow/waterfall_flow.dart';
 
 class SearchPage extends StatefulWidget {
   @override

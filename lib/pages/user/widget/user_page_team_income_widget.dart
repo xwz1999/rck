@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/constants.dart';
@@ -12,7 +15,6 @@ import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/bottom_time_picker.dart';
 import 'package:recook/widgets/custom_painters/round_background_painter.dart';
 import 'package:recook/widgets/sort_widget.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class UserPageTeamIncomeWidget extends StatefulWidget {
   UserPageTeamIncomeWidget({Key key}) : super(key: key);

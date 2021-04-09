@@ -7,14 +7,15 @@
  * ====================================================
  */
 
-import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
+
+import 'package:extended_text/extended_text.dart';
+
 import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/utils/user_level_tool.dart';
-
 import 'package:recook/widgets/custom_image_button.dart';
 
 class GoodPriceView extends StatefulWidget {

@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+
+import 'package:image_picker/image_picker.dart';
 import 'package:oktoast/oktoast.dart';
+
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/live/video/upload_video_page.dart';
@@ -9,7 +12,6 @@ import 'package:recook/pages/live/widget/local_file_video.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
-import 'package:image_picker/image_picker.dart';
 
 class VideoAdvancePage extends StatefulWidget {
   final File file;

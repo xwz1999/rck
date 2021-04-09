@@ -10,6 +10,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+
+import 'package:redux/redux.dart';
+
 import 'package:recook/base/http_result_model.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/models/home_weather_model.dart';
@@ -17,13 +20,12 @@ import 'package:recook/models/user_brief_info_model.dart';
 import 'package:recook/models/user_model.dart';
 import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/user/mvp/user_presenter_impl.dart';
+import 'package:recook/redux/recook_state.dart';
 import 'package:recook/redux/user_brief_redux.dart';
 import 'package:recook/redux/user_redux.dart';
 import 'package:recook/utils/print_util.dart';
 import 'package:recook/utils/share_preference.dart';
-import 'package:recook/redux/recook_state.dart';
 import 'package:recook/widgets/toast.dart';
-import 'package:redux/redux.dart';
 
 class UserManager {
   static bool shouldRefresh = false;

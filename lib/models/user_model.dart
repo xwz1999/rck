@@ -8,6 +8,7 @@
  */
 
 import 'package:json_annotation/json_annotation.dart';
+
 import 'package:recook/models/base_model.dart';
 
 part 'user_model.g.dart';

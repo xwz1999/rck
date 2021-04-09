@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+
+import 'package:velocity_x/velocity_x.dart';
+
+import 'package:recook/constants/header.dart';
 import 'package:recook/pages/upgradeCard/upgrade_card_unused_view.dart';
 import 'package:recook/pages/upgradeCard/upgrade_card_used_view.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
-import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/recook_indicator.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class UpgradeCardPageV2 extends StatefulWidget {
   UpgradeCardPageV2({Key key}) : super(key: key);

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:package_info/package_info.dart';
+
 import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/welcome/privacy_page_v2.dart';
@@ -9,7 +10,6 @@ import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/sc_tile.dart';
-import 'package:recook/widgets/webView.dart';
 
 class SettingPage extends StatelessWidget {
   @override

@@ -8,13 +8,15 @@
  */
 
 import 'package:flutter/material.dart';
+
+import 'package:flutter_slidable/flutter_slidable.dart';
+
 import 'package:recook/utils/mvp.dart';
 import 'package:recook/utils/print_util.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:recook/widgets/toast.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
 typedef RefreshCallback = Function();
 typedef LoadMoreCallback = Function(int page);

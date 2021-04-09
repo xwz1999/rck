@@ -10,10 +10,12 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info/package_info.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/app_image_resources.dart';

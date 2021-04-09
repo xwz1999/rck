@@ -1,7 +1,10 @@
+import 'package:flutter/material.dart';
+
 import 'package:chewie/chewie.dart';
 import 'package:common_utils/common_utils.dart';
-import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:video_player/video_player.dart';
+
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -14,7 +17,6 @@ import 'package:recook/pages/live/widget/live_user_bar.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
-import 'package:video_player/video_player.dart';
 
 class LivePlaybackViewPage extends StatefulWidget {
   final int id;

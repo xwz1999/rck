@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+
 import 'package:recook/pages/home/promotion_time_tool.dart';
 
 part 'promotion_goods_list_model.g.dart';

@@ -1,12 +1,13 @@
+import 'package:flutter/material.dart';
 
 import 'package:chewie/chewie.dart';
+import 'package:video_player/video_player.dart';
+
 // import 'package:fijkplayer/fijkplayer.dart';
 // import 'package:recook/constants/app_image_resources.dart';
 // import 'package:recook/constants/constants.dart';
 // import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:flutter/material.dart';
 // import 'package:recook/widgets/custom_image_button.dart';
-import 'package:video_player/video_player.dart';
 // import 'package:video_player/video_player.dart';
 
 class VideoView extends StatefulWidget {

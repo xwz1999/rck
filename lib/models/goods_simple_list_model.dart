@@ -1,4 +1,3 @@
-
 import 'package:recook/pages/home/promotion_time_tool.dart';
 
 class GoodsSimpleListModel {

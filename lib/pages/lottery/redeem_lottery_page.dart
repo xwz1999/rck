@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+
 import 'package:oktoast/oktoast.dart';
+
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/lottery/lottery_history_page.dart';
-import 'package:recook/pages/lottery/lottery_picker_page.dart';
 import 'package:recook/pages/lottery/models/lottery_list_model.dart';
 import 'package:recook/pages/lottery/tools/lottery_tool.dart';
 import 'package:recook/pages/lottery/widget/lottery_result_boxes.dart';

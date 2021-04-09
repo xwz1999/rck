@@ -9,8 +9,6 @@
 
 import 'package:flutter/material.dart';
 
-
-
 enum AnimationType { push, fade, model }
 
 

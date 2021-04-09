@@ -8,11 +8,13 @@
  */
 
 import 'package:flutter/material.dart';
+
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+
 import 'package:recook/constants/app_image_resources.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/utils/text_utils.dart';
-import 'package:recook/constants/header.dart';
 
 // ignore: must_be_immutable
 class LoadingDialog extends Dialog {

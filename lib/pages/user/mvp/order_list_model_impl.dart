@@ -10,9 +10,8 @@
 import 'package:recook/constants/api.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/shop/order/shop_order_list_page.dart';
-import 'package:recook/pages/user/order/order_list_page.dart';
-
 import 'package:recook/pages/user/mvp/order_list_contact.dart';
+import 'package:recook/pages/user/order/order_list_page.dart';
 
 class OrderAfterSalesListModelImpl extends OrderAfterSalesListModelI{
   // type  int    1：代表售后中     2：代表已完成

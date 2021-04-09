@@ -2,9 +2,10 @@ import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+
+import 'package:extended_image/extended_image.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class ShareImageTool{

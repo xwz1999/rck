@@ -9,11 +9,17 @@
 
 import 'dart:io';
 
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+import 'package:common_utils/common_utils.dart';
 import 'package:get/get.dart';
 import 'package:package_info/package_info.dart';
+import 'package:recook/pages/user/user_old_history_benefit_page.dart';
+import 'package:redux/redux.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/api_v2.dart';
@@ -34,7 +40,6 @@ import 'package:recook/pages/user/widget/capital_view.dart';
 import 'package:recook/pages/user/widget/money_view.dart';
 import 'package:recook/pages/user/widget/order_central_view.dart';
 import 'package:recook/pages/user/widget/other_item_view_v2.dart';
-import 'package:recook/pages/user/widget/shop_benefit_view.dart';
 import 'package:recook/pages/user/widget/shop_check_view.dart';
 import 'package:recook/pages/user/widget/shop_manager_view.dart';
 import 'package:recook/pages/user/widget/user_app_bar_v2.dart';
@@ -46,9 +51,6 @@ import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:recook/widgets/toast.dart';
-import 'package:redux/redux.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class UserPage extends StatefulWidget {
   @override
@@ -194,19 +196,6 @@ class _UserPageState extends BaseStoreState<UserPage> {
     }
   }
 
-  String get shopContent {
-    UserRoleLevel role = UserLevelTool.currentRoleLevelEnum();
-    if (role == UserRoleLevel.Diamond_1 ||
-        role == UserRoleLevel.Diamond_2 ||
-        role == UserRoleLevel.Diamond_3) {
-      return '自营店铺补贴：每月1日结算您自营店铺上一个自然月确认收货的订单，按自营店铺销售额的3%计算补贴。\n分销店铺补贴：每月1日结算您分销店铺上一个自然月确认收货的订单，按分销店铺销售额的4%计算补贴。\n代理店铺补贴：每月1日结算您代理店铺上一个自然月确认收货的订单，按代理店铺销售额的5%计算补贴。';
-    }
-    if (role == UserRoleLevel.Gold || role == UserRoleLevel.Silver) {
-      return '自营店铺补贴：每月1日结算您自营店铺上一个自然月确认收货的订单，按自营店铺销售额的3%计算补贴。\n分销店铺补贴：每月1日结算您分销店铺上一个自然月确认收货的订单，按分销店铺销售额的4%计算补贴。';
-    } else
-      return '自营店铺补贴：每月1日结算您自营店铺上一个自然月确认收货的订单，按自营店铺销售额的3%计算补贴。';
-  }
-
   Widget _buildRefreshScrollView(
       BuildContext context, Store<RecookState> store) {
     return Stack(
@@ -252,10 +241,10 @@ class _UserPageState extends BaseStoreState<UserPage> {
               // UserPageAssetsView(),
               ...[
                 _renderBenefitCard(
-                  leadingPath: R.ASSETS_USER_PINK_BUYER_PNG,
+                  leadingPath: R.ASSETS_USER_PINK_BUYER_WEBP,
                   title: '自购收益',
                   alertTitle: '自购收益',
-                  alertContent: '您本人下单并确认收货后，您获得的佣金。',
+                  alertContent: '您本人下单并确认收货后，您获得的佣金。'.text.black.make(),
                   title1: '未到账收益(瑞币)',
                   title3: '已到账收益(瑞币)',
                   content1:
@@ -266,10 +255,10 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   content4: _userIncomeDataModel?.purchase?.countValue ?? '0',
                 ),
                 _renderBenefitCard(
-                  leadingPath: R.ASSETS_USER_PINK_SHARE_PNG,
+                  leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
                   title: '导购收益',
                   alertTitle: '导购收益',
-                  alertContent: '会员通过您导购的商品链接，购买并确认收货的佣金收益',
+                  alertContent: '会员通过您导购的商品链接，购买并确认收货的佣金收益'.text.black.make(),
                   title1: '未到账收益(瑞币)',
                   title3: '已到账收益(瑞币)',
                   content1:
@@ -281,10 +270,62 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 ),
                 if (_userIncomeDataModel?.hasTeamValue ?? false)
                   _renderBenefitCard(
-                    leadingPath: R.ASSETS_USER_PINK_GROUP_PNG,
+                    leadingPath: R.ASSETS_USER_PINK_GROUP_WEBP,
                     title: '店铺补贴',
                     alertTitle: '店铺补贴',
-                    alertContent: shopContent,
+                    alertContent: Builder(
+                      builder: (context) {
+                        //role == UserRoleLevel.Diamond_1 || role == UserRoleLevel.Diamond_2 || role == UserRoleLevel.Diamond_3
+                        UserRoleLevel role =
+                            UserLevelTool.currentRoleLevelEnum();
+
+                        final part1 = [
+                          TextSpan(
+                            text: '自营店铺补贴',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          TextSpan(
+                              text:
+                                  '：每月1日结算您自营店铺上一个自然月确认收货的订单，按自营店铺销售额的3%计算补贴。\n'),
+                        ];
+                        final part2 = [
+                          TextSpan(
+                            text: '分销店铺补贴',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          TextSpan(
+                              text:
+                                  '：每月1日结算您分销店铺上一个自然月确认收货的订单，按分销店铺销售额的4%计算补贴。\n'),
+                        ];
+                        final part3 = [
+                          TextSpan(
+                            text: '代理店铺补贴',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          TextSpan(
+                              text:
+                                  '：每月1日结算您代理店铺上一个自然月确认收货的订单，按代理店铺销售额的5%计算补贴。\n'),
+                        ];
+                        return Text.rich(TextSpan(
+                          children: [
+                            ...part1,
+                            if (role == UserRoleLevel.Gold ||
+                                role == UserRoleLevel.Silver ||
+                                role == UserRoleLevel.Diamond_1 ||
+                                role == UserRoleLevel.Diamond_2 ||
+                                role == UserRoleLevel.Diamond_3)
+                              ...part2,
+                            if (role == UserRoleLevel.Diamond_1 ||
+                                role == UserRoleLevel.Diamond_2 ||
+                                role == UserRoleLevel.Diamond_3)
+                              ...part3,
+                          ],
+                          style: TextStyle(
+                            color: Color(0xFF333333),
+                          ),
+                        ));
+                      },
+                    ),
                     title1: '未到账补贴(瑞币)',
                     title3: '已到账补贴(瑞币)',
                     content1:
@@ -305,7 +346,6 @@ class _UserPageState extends BaseStoreState<UserPage> {
                       amount: _amount,
                     )
                   : SizedBox(),
-              ShopManagerView(),
               OrderCentralView(
                 clickListener: (int index) {
                   if (index == 4) {
@@ -323,6 +363,9 @@ class _UserPageState extends BaseStoreState<UserPage> {
                       arguments: OrderCenterPage.setArguments(index));
                 },
               ),
+              10.hb,
+              ShopManagerView(),
+
               // OtherItemView(),
               OtherItemViewV2(),
             ],
@@ -357,7 +400,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
     @required String leadingPath,
     @required String title,
     @required String alertTitle,
-    @required String alertContent,
+    @required Widget alertContent,
     @required String title1,
     @required String title3,
     @required String content1,
@@ -372,13 +415,12 @@ class _UserPageState extends BaseStoreState<UserPage> {
           Row(
             children: [
               46.hb,
-              24.wb,
+              14.wb,
               Image.asset(
                 leadingPath,
-                width: 22.w,
-                height: 22.w,
+                width: 32.w,
+                height: 32.w,
               ),
-              10.wb,
               title.text.size(16.sp).black.make(),
               MaterialButton(
                 padding: EdgeInsets.all(4.w),
@@ -392,7 +434,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 onPressed: () {
                   Alert.show(
                       context,
-                      NormalTextDialog(
+                      NormalContentDialog(
                         title: alertTitle,
                         content: alertContent,
                         items: ["确认"],
@@ -511,21 +553,22 @@ class _UserPageState extends BaseStoreState<UserPage> {
                               materialTapTargetSize:
                                   MaterialTapTargetSize.shrinkWrap,
                               child: Icon(
-                                Icons.help_outline,
+                                Icons.schedule,
                                 size: 12.w,
                                 color: Color(0xFFA5A5A5),
                               ),
                               onPressed: () {
-                                Alert.show(
-                                    context,
-                                    NormalTextDialog(
-                                      title: "累计收益",
-                                      content: "您的账户使用至今所有已到账收益之和",
-                                      items: ["确认"],
-                                      listener: (index) {
-                                        Alert.dismiss(context);
-                                      },
-                                    ));
+                                Get.to(() => UserOldHistoryBenefitPage());
+                                // Alert.show(
+                                //     context,
+                                //     NormalTextDialog(
+                                //       title: "累计收益",
+                                //       content: "您的账户使用至今所有已到账收益之和",
+                                //       items: ["确认"],
+                                //       listener: (index) {
+                                //         Alert.dismiss(context);
+                                //       },
+                                //     ));
                               },
                             ),
                             Spacer(),

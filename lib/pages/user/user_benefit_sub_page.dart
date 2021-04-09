@@ -1,7 +1,10 @@
 import 'dart:math';
 
-import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+
+import 'package:common_utils/common_utils.dart';
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/functions/user_benefit_func.dart';
 import 'package:recook/pages/user/model/user_benefit_extra_detail_model.dart';
@@ -14,7 +17,6 @@ import 'package:recook/widgets/bottom_time_picker.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_painters/round_background_painter.dart';
 import 'package:recook/widgets/refresh_widget.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 enum UserBenefitPageType {
   ///自购收益

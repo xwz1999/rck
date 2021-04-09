@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -16,7 +19,6 @@ import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/progress/sc_dialog.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class InviteSearchPage extends StatefulWidget {
   InviteSearchPage({Key key}) : super(key: key);

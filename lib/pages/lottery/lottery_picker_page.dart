@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
 import 'package:oktoast/oktoast.dart';
+
+import 'package:recook/const/resource.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/lottery/lottery_cart_model.dart';
@@ -16,7 +19,6 @@ import 'package:recook/pages/user/user_verify.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/const/resource.dart';
 
 class LotteryPickerPage extends StatefulWidget {
   final bool isDouble;

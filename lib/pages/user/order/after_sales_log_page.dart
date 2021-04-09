@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import 'package:timeline_tile/timeline_tile.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -8,7 +11,6 @@ import 'package:recook/models/after_sales_log_list_model.dart';
 import 'package:recook/utils/text_parse_util.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/toast.dart';
-import 'package:timeline_tile/timeline_tile.dart';
 
 enum AfterSalesRichTextType { black, gray, address, none }
 

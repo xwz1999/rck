@@ -10,7 +10,6 @@
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
-
 import 'goods_list_contact.dart';
 
 class GoodsListModelImpl extends GoodListModelI {

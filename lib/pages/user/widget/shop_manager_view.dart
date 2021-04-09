@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
-import 'package:recook/pages/shop/get_platform_award_page.dart';
-import 'package:recook/pages/user/functions/user_func.dart';
-import 'package:recook/pages/user/invite/my_group_page.dart';
+import 'package:velocity_x/velocity_x.dart';
+
+import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/invite/my_group_page_v2.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:velocity_x/velocity_x.dart';
-import 'package:recook/constants/constants.dart';
-import 'package:recook/constants/header.dart';
 
 class ShopManagerView extends StatelessWidget {
   const ShopManagerView({Key key}) : super(key: key);
@@ -62,10 +60,9 @@ class ShopManagerView extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          '店铺管理'.text.color(Color(0xFF333333)).size(16.sp).bold.make().p(10.w),
           GridView(
             padding:
-                EdgeInsets.symmetric(horizontal: 5.w).copyWith(bottom: 10.w),
+                EdgeInsets.symmetric(horizontal: 5.w,vertical: 10.w),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 170 / 90,

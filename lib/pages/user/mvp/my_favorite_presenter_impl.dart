@@ -12,7 +12,6 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/models/my_favorites_list_model.dart';
 import 'package:recook/pages/user/mvp/my_favorite_model_impl.dart';
-
 import 'my_favorite_contact.dart';
 
 class MyFavoritePresenterImpl extends MyFavoritePresenterI {

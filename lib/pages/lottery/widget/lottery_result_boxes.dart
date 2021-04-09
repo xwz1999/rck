@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:recook/pages/lottery/widget/lottery_ball.dart';
 
 class LotteryResultBoxes extends StatelessWidget {

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+
+import 'package:velocity_x/velocity_x.dart';
+
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/functions/user_benefit_func.dart';
 import 'package:recook/pages/user/model/user_accumulate_model.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class UserHistoryBenefitPage extends StatefulWidget {
   UserHistoryBenefitPage({Key key}) : super(key: key);
@@ -71,7 +73,11 @@ class _UserHistoryBenefitPageState extends State<UserHistoryBenefitPage> {
                   children: [
                     '累计总收益(瑞币)'.text.black.make(),
                     8.hb,
-                    _model.data.allAmount.text.black.size(34.sp).make(),
+                    (_model?.data?.allAmount?.toStringAsFixed(2) ?? '')
+                        .text
+                        .black
+                        .size(34.sp)
+                        .make(),
                   ],
                 ).expand(),
                 Image.asset(
@@ -86,11 +92,11 @@ class _UserHistoryBenefitPageState extends State<UserHistoryBenefitPage> {
             padding: EdgeInsets.symmetric(vertical: 8.w),
             child: Row(
               children: [
-                _renderColumn('自购收益', _model.data.purchaseAmountValue),
+                _renderColumn('自购收益', _model?.data?.purchaseAmountValue ?? ''),
                 _renderDivider(),
-                _renderColumn('导购收益', _model.data.guideAmountValue),
+                _renderColumn('导购收益', _model?.data?.guideAmountValue ?? ''),
                 _renderDivider(),
-                _renderColumn('店铺补贴', _model.data.trrValue),
+                _renderColumn('店铺补贴', _model?.data?.trrValue ?? ''),
               ],
             ),
           ),

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
+
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -14,12 +17,12 @@ import 'package:recook/pages/home/classify/order_preview_page.dart';
 import 'package:recook/pages/home/widget/plus_minus_view.dart';
 import 'package:recook/pages/live/live_stream/live_sku_widget.dart';
 import 'package:recook/pages/live/live_stream/small_window/small_window_page.dart';
-import 'package:recook/pages/live/models/live_stream_info_model.dart'
-    show GoodsLists;
 import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/toast.dart';
-import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
+
+import 'package:recook/pages/live/models/live_stream_info_model.dart'
+    show GoodsLists;
 
 class GoodsListDialog extends StatefulWidget {
   final List<GoodsLists> models;

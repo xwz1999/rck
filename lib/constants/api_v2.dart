@@ -17,6 +17,9 @@ class UserAPI {
   ///累计收益
   String get accumulate => '/v2/app/user/income/accumulate';
 
+  //历史累计收益
+  String get oldIncome => '/v2/app/user/income/history';
+
   ///年度月收益
   String get monthIncome => '/v2/app/user/income/month_income';
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:recook/widgets/bingo_card_widget.dart';
 
 class LotteryPage extends StatefulWidget {

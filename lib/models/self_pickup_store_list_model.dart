@@ -14,6 +14,7 @@
 */
 
 import 'package:json_annotation/json_annotation.dart';
+
 import 'package:recook/models/base_model.dart';
 
 part 'self_pickup_store_list_model.g.dart';

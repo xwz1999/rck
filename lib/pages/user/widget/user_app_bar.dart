@@ -7,17 +7,19 @@
  * ====================================================
  */
 
-import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
+
+import 'package:extended_text/extended_text.dart';
+
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/meiqia_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/utils/app_router.dart';
 import 'package:recook/widgets/custom_painters/user_app_bar_mask_painter.dart';
 
 class UserAppBar extends StatefulWidget {
