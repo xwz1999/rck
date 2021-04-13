@@ -49,7 +49,7 @@ class GuideOrderItemModel {
     goodsTotalAmount = json['goodsTotalAmount'];
     actualTotalAmount = json['actualTotalAmount'];
     if (json['goods'] != null) {
-      goods = new List<Goods>();
+      goods = [];
       json['goods'].forEach((v) {
         goods.add(new Goods.fromJson(v));
       });

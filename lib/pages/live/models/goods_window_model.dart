@@ -6,7 +6,7 @@ class GoodsWindowModel {
 
   GoodsWindowModel.fromJson(Map<String, dynamic> json) {
     if (json['list'] != null) {
-      list = new List<GoodsList>();
+      list = [];
       json['list'].forEach((v) {
         list.add(new GoodsList.fromJson(v));
       });

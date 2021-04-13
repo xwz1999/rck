@@ -15,14 +15,14 @@ class UserBenefitMonthExpectModel {
         : null;
     guide = json['guide'] != null ? new Purchase.fromJson(json['guide']) : null;
     if (json['purchaseList'] != null) {
-      purchaseList = new List<PurchaseList>();
+      purchaseList = [];
       json['purchaseList'].forEach((v) {
         purchaseList.add(new PurchaseList.fromJson(v));
       });
     } else
       purchaseList = [];
     if (json['guideList'] != null) {
-      guideList = new List<PurchaseList>();
+      guideList = [];
       json['guideList'].forEach((v) {
         guideList.add(new PurchaseList.fromJson(v));
       });

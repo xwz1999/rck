@@ -22,19 +22,19 @@ class UserBenefitExpectExtraModel {
         json['recommend'] != null ? new Team.fromJson(json['recommend']) : null;
     reward = json['reward'] != null ? new Team.fromJson(json['reward']) : null;
     if (json['teamList'] != null) {
-      teamList = new List<TeamList>();
+      teamList = [];
       json['teamList'].forEach((v) {
         teamList.add(new TeamList.fromJson(v));
       });
     }
     if (json['recommendList'] != null) {
-      recommendList = new List<TeamList>();
+      recommendList = [];
       json['recommendList'].forEach((v) {
         recommendList.add(new TeamList.fromJson(v));
       });
     }
     if (json['rewardList'] != null) {
-      rewardList = new List<TeamList>();
+      rewardList = [];
       json['rewardList'].forEach((v) {
         rewardList.add(new TeamList.fromJson(v));
       });

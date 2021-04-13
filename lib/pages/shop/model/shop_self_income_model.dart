@@ -33,7 +33,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['incomes'] != null) {
-      incomes = new List<Incomes>();
+      incomes = [];
       json['incomes'].forEach((v) {
         incomes.add(new Incomes.fromJson(v));
       });

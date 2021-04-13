@@ -33,7 +33,7 @@ class ActivityReviewListModel {
     praise = json['praise'];
     isPraise = json['isPraise'];
     if (json['sub'] != null) {
-      sub = new List<Sub>();
+      sub = [];
       json['sub'].forEach((v) {
         sub.add(new Sub.fromJson(v));
       });

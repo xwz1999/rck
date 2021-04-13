@@ -9,7 +9,7 @@ class ReturnReasonModel {
     code = json['code'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data = new List<ReasonModel>();
+      data = [];
       json['data'].forEach((v) {
         data.add(new ReasonModel.fromJson(v));
       });

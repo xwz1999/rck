@@ -9,7 +9,7 @@ class AfterSalesLogListModel {
     code = json['code'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data = new List<AfterSalesLogModel>();
+      data = [];
       json['data'].forEach((v) {
         data.add(new AfterSalesLogModel.fromJson(v));
       });
@@ -34,7 +34,8 @@ class AfterSalesLogModel {
   String content;
   String ctime;
 
-  AfterSalesLogModel({this.id, this.asId, this.title, this.content, this.ctime});
+  AfterSalesLogModel(
+      {this.id, this.asId, this.title, this.content, this.ctime});
 
   AfterSalesLogModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BaseController {
-  List<ValueNotifier> _cacheList = List();
+  List<ValueNotifier> _cacheList = [];
 
   addValueNotifier(ValueNotifier notify) {
     _cacheList.add(notify);

@@ -33,7 +33,7 @@ class CoinData {
     total = json['total'];
     history = json['history'];
     if (json['list'] != null) {
-      list = new List<CoinList>();
+      list = [];
       json['list'].forEach((v) {
         list.add(new CoinList.fromJson(v));
       });
@@ -102,14 +102,12 @@ class UserCoin {
   }
 }
 
-
-
 // /*
 //  * ====================================================
-//  * package   : 
+//  * package   :
 //  * author    : Created by nansi.
-//  * time      : 2019-08-27  11:41 
-//  * remark    : 
+//  * time      : 2019-08-27  11:41
+//  * remark    :
 //  * ====================================================
 //  */
 
@@ -205,7 +203,6 @@ class UserCoin {
 
 // part 'rui_coin_list_model.g.dart';
 
-
 // @JsonSerializable()
 // class RuiCoinListModel extends BaseModel {
 
@@ -218,7 +215,6 @@ class UserCoin {
 //   Map<String, dynamic> toJson() => _$RuiCoinListModelToJson(this);
 
 // }
-
 
 // @JsonSerializable()
 // class RuiCoinModel extends Object {
@@ -236,7 +232,6 @@ class UserCoin {
 //   Map<String, dynamic> toJson() => _$RuiCoinModelToJson(this);
 
 // }
-
 
 // @JsonSerializable()
 // class Detail extends Object {

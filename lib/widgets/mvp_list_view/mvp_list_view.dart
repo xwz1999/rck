@@ -137,8 +137,8 @@ class _MvpListViewState<T> extends State<MvpListView>
         GSRefreshController(initialRefresh: widget.autoRefresh);
 
     if (widget.controller == null) {
-      _mvpController = MvpListViewController(
-          controller: gsRefreshController, data: List<T>());
+      _mvpController =
+          MvpListViewController(controller: gsRefreshController, data: []);
     } else {
       _mvpController = widget.controller;
       if (_mvpController.refreshController == null) {

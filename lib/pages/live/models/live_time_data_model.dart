@@ -56,37 +56,37 @@ class LiveTimeDataModel {
     count = json['count'];
     duration = json['duration'];
     if (json['datePrise'] != null) {
-      datePrise = new List<LiveTimeDataBase>();
+      datePrise = [];
       json['datePrise'].forEach((v) {
         datePrise.add(new LiveTimeDataBase.fromJson(v));
       });
     }
     if (json['dateLook'] != null) {
-      dateLook = new List<LiveTimeDataBase>();
+      dateLook = [];
       json['dateLook'].forEach((v) {
         dateLook.add(new LiveTimeDataBase.fromJson(v));
       });
     }
     if (json['dateFans'] != null) {
-      dateFans = new List<LiveTimeDataBase>();
+      dateFans = [];
       json['dateFans'].forEach((v) {
         dateFans.add(new LiveTimeDataBase.fromJson(v));
       });
     }
     if (json['dateBuy'] != null) {
-      dateBuy = new List<LiveTimeDataBase>();
+      dateBuy = [];
       json['dateBuy'].forEach((v) {
         dateBuy.add(new LiveTimeDataBase.fromJson(v));
       });
     }
     if (json['dateSalesVolume'] != null) {
-      dateSalesVolume = new List<LiveTimeDataBase>();
+      dateSalesVolume = [];
       json['dateSalesVolume'].forEach((v) {
         dateSalesVolume.add(new LiveTimeDataBase.fromJson(v));
       });
     }
     if (json['dateAnticipatedRevenue'] != null) {
-      dateAnticipatedRevenue = new List<LiveTimeDataBase>();
+      dateAnticipatedRevenue = [];
       json['dateAnticipatedRevenue'].forEach((v) {
         dateAnticipatedRevenue.add(new LiveTimeDataBase.fromJson(v));
       });

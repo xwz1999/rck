@@ -9,7 +9,7 @@ class InviteListModel {
     code = json['code'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data = new List<InviteModel>();
+      data = [];
       json['data'].forEach((v) {
         data.add(new InviteModel.fromJson(v));
       });

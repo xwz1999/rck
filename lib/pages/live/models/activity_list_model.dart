@@ -55,7 +55,7 @@ class ActivityListModel {
     goods = json['goods'] != null ? new Goods.fromJson(json['goods']) : null;
     id = json['id'];
     if (json['imgList'] != null) {
-      imgList = new List<ImgList>();
+      imgList = [];
       json['imgList'].forEach((v) {
         imgList.add(new ImgList.fromJson(v));
       });

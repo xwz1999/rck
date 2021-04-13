@@ -9,7 +9,7 @@ class NoticeListModel {
     code = json['code'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data = new List<NoticeData>();
+      data = [];
       json['data'].forEach((v) {
         data.add(new NoticeData.fromJson(v));
       });

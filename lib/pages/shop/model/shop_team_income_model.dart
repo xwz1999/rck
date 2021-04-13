@@ -37,7 +37,7 @@ class Data {
     income = json['income'];
     memberCount = json['memberCount'];
     if (json['members'] != null) {
-      members = new List<Members>();
+      members = [];
       json['members'].forEach((v) {
         members.add(new Members.fromJson(v));
       });

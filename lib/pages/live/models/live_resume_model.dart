@@ -31,7 +31,7 @@ class LiveResumeModel {
     praise = json['praise'];
     isFirst = json['isFirst'];
     if (json['goodsLists'] != null) {
-      goodsLists = new List<GoodsLists>();
+      goodsLists = [];
       json['goodsLists'].forEach((v) {
         goodsLists.add(new GoodsLists.fromJson(v));
       });

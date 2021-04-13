@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 abstract class BaseAdapter<T> {
-  final _listData = new List();
+  final _listData = [];
 
   IndexedWidgetBuilder getBuilder() {
     return (context, index) {

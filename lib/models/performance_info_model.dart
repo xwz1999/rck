@@ -30,7 +30,7 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     if (json['list'] != null) {
-      list = new List<PerformanceList>();
+      list = [];
       json['list'].forEach((v) {
         list.add(new PerformanceList.fromJson(v));
       });
@@ -58,9 +58,13 @@ class PerformanceList {
   int userId;
   num salesAmount;
   num role;
-  
 
-  PerformanceList({this.nickname, this.avatarPath, this.userId, this.salesAmount, this.role});
+  PerformanceList(
+      {this.nickname,
+      this.avatarPath,
+      this.userId,
+      this.salesAmount,
+      this.role});
 
   PerformanceList.fromJson(Map<String, dynamic> json) {
     nickname = json['nickname'];
@@ -68,7 +72,6 @@ class PerformanceList {
     userId = json['userId'];
     salesAmount = json['salesAmount'];
     role = json['role'];
-    
   }
 
   Map<String, dynamic> toJson() {
@@ -78,7 +81,7 @@ class PerformanceList {
     data['userId'] = this.userId;
     data['salesAmount'] = this.salesAmount;
     data['role'] = this.role;
-    
+
     return data;
   }
 }
@@ -90,7 +93,12 @@ class Statistics {
   num ratio;
   num actualIncome;
 
-  Statistics({this.salesAmount, this.income, this.subIncome, this.ratio,this.actualIncome });
+  Statistics(
+      {this.salesAmount,
+      this.income,
+      this.subIncome,
+      this.ratio,
+      this.actualIncome});
 
   Statistics.fromJson(Map<String, dynamic> json) {
     salesAmount = json['salesAmount'];

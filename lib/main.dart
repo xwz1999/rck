@@ -43,7 +43,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   cameras = await availableCameras();
 
-  //TODO ios settings
   PackageInfo _packageInfo = await PackageInfo.fromPlatform();
   AppConfig.versionNumber = _packageInfo.buildNumber;
   //初始化AMap

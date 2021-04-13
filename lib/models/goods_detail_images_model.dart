@@ -31,7 +31,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     brand = json['brand'] != null ? new Brand.fromJson(json['brand']) : null;
     if (json['list'] != null) {
-      list = new List<Images>();
+      list = [];
       json['list'].forEach((v) {
         list.add(new Images.fromJson(v));
       });

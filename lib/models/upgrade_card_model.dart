@@ -58,13 +58,13 @@ class UpCode {
 
   UpCode.fromJson(Map<String, dynamic> json) {
     if (json['usedCode'] != null) {
-      usedCode = new List<UnusedCode>();
+      usedCode = [];
       json['usedCode'].forEach((v) {
         usedCode.add(new UnusedCode.fromJson(v));
       });
     }
     if (json['unusedCode'] != null) {
-      unusedCode = new List<UnusedCode>();
+      unusedCode = [];
       json['unusedCode'].forEach((v) {
         unusedCode.add(new UnusedCode.fromJson(v));
       });

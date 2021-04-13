@@ -39,7 +39,7 @@ class Data {
         ? new IncomeDetail.fromJson(json['incomeDetail'])
         : null;
     if (json['billboard'] != null) {
-      billboard = new List<Billboard>();
+      billboard = [];
       json['billboard'].forEach((v) {
         billboard.add(new Billboard.fromJson(v));
       });

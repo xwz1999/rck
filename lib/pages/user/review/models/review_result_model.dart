@@ -9,7 +9,7 @@ class ReviewResultModel {
         ? new GoodsEva.fromJson(json['goodsEva'])
         : null;
     if (json['goodsEvaGoods'] != null) {
-      goodsEvaGoods = new List<GoodsEvaGoods>();
+      goodsEvaGoods = [];
       json['goodsEvaGoods'].forEach((v) {
         goodsEvaGoods.add(new GoodsEvaGoods.fromJson(v));
       });

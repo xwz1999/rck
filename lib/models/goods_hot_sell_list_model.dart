@@ -9,7 +9,7 @@ class GoodsHotSellListModel {
     code = json['code'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data = new List<Data>();
+      data = [];
       json['data'].forEach((v) {
         data.add(new Data.fromJson(v));
       });
@@ -46,26 +46,26 @@ class Data {
   int isImport;
   int isFerme;
   int storehouse;
-  Data(
-      {this.id,
-      this.goodsName,
-      this.description,
-      this.inventory,
-      this.salesVolume,
-      this.mainPhotoUrl,
-      this.promotionName,
-      this.discountPrice,
-      this.originalPrice,
-      this.commission,
-      this.coupon,
-      this.index = 0,
-      this.brandName,
-      this.brandImg,
-      this.brandId,
-       this.isFerme,
-      this.isImport,
-      this.storehouse,
-    });
+  Data({
+    this.id,
+    this.goodsName,
+    this.description,
+    this.inventory,
+    this.salesVolume,
+    this.mainPhotoUrl,
+    this.promotionName,
+    this.discountPrice,
+    this.originalPrice,
+    this.commission,
+    this.coupon,
+    this.index = 0,
+    this.brandName,
+    this.brandImg,
+    this.brandId,
+    this.isFerme,
+    this.isImport,
+    this.storehouse,
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -82,9 +82,9 @@ class Data {
     brandName = json['brandName'];
     brandImg = json['brandImg'];
     brandId = json['brandId'];
-    isImport=json['isImport'];
-    isFerme=json['isFerme'];
-    storehouse=json['storehouse'];
+    isImport = json['isImport'];
+    isFerme = json['isFerme'];
+    storehouse = json['storehouse'];
   }
 
   Map<String, dynamic> toJson() {
@@ -100,9 +100,9 @@ class Data {
     data['originalPrice'] = this.originalPrice;
     data['commission'] = this.commission;
     data['coupon'] = this.coupon;
-    data['isImport']=this.isImport;
-    data['isFerme']=this.isFerme;
-    data['storehouse']=this.storehouse;
+    data['isImport'] = this.isImport;
+    data['isFerme'] = this.isFerme;
+    data['storehouse'] = this.storehouse;
     return data;
   }
 }

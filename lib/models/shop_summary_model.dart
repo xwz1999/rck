@@ -163,7 +163,7 @@ class Stand {
     level = json['Level'];
     basePercent = json['BasePercent'];
     if (json['IncreaseNum'] != null) {
-      increaseNum = new List<IncreaseNum>();
+      increaseNum = [];
       json['IncreaseNum'].forEach((v) {
         increaseNum.add(new IncreaseNum.fromJson(v));
       });

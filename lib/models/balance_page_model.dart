@@ -31,7 +31,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     balance = json['balance'];
     if (json['list'] != null) {
-      list = new List<DataList>();
+      list = [];
       json['list'].forEach((v) {
         list.add(new DataList.fromJson(v));
       });

@@ -44,7 +44,7 @@ class LiveStreamInfoModel {
     praise = json['praise'];
     groupId = json['groupId'];
     if (json['goodsLists'] != null) {
-      goodsLists = new List<GoodsLists>();
+      goodsLists = [];
       json['goodsLists'].forEach((v) {
         goodsLists.add(new GoodsLists.fromJson(v));
       });

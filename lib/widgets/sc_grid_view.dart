@@ -58,8 +58,8 @@ class SCGridView<T> extends StatefulWidget {
       this.crossAxisSpacing = 5,
       this.insetPadding = const EdgeInsets.all(5),
       this.margin = const EdgeInsets.all(0),
-      this.viewportHeight = 0, this.childAspectRatio =1
-      });
+      this.viewportHeight = 0,
+      this.childAspectRatio = 1});
 
   @override
   State<StatefulWidget> createState() {
@@ -82,31 +82,33 @@ class _SCGridViewState extends State<SCGridView>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    List<Widget> stackViews = List();
-    List<Widget> gridViews = List();
+    List<Widget> stackViews = [];
+    List<Widget> gridViews = [];
 
     for (int i = 0; i < widget.sectionCount; i++) {
       Widget sectionView = _buildSection(context, i);
       gridViews.add(sectionView);
     }
 
-    stackViews.add(ListView(physics: NeverScrollableScrollPhysics(), shrinkWrap:true, children: gridViews,));
+    stackViews.add(ListView(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      children: gridViews,
+    ));
 
     if (widget.viewportHeight > 0) {
-      stackViews.add(Container(height: widget.viewportHeight,));
+      stackViews.add(Container(
+        height: widget.viewportHeight,
+      ));
     }
 
     return Container(
       margin: widget.margin,
       child: ListView(
-          controller: _controller,
-          physics: BouncingScrollPhysics(),
-          children: [
-            Stack(
-              children: stackViews
-            )
-          ],
-        ),
+        controller: _controller,
+        physics: BouncingScrollPhysics(),
+        children: [Stack(children: stackViews)],
+      ),
     );
   }
 
@@ -129,7 +131,7 @@ class _SCGridViewState extends State<SCGridView>
             physics: NeverScrollableScrollPhysics(),
             itemCount: widget.itemCount(section),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: widget.childAspectRatio,
+                childAspectRatio: widget.childAspectRatio,
                 mainAxisSpacing: widget.mainAxisSpacing,
                 crossAxisSpacing: widget.crossAxisSpacing,
                 crossAxisCount: widget.crossAxisCount),

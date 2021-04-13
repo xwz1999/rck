@@ -44,7 +44,7 @@ class Data {
         ? new AccumulateIncome.fromJson(json['accumulateIncome'])
         : null;
     if (json['incomes'] != null) {
-      incomes = new List<Incomes>();
+      incomes = [];
       json['incomes'].forEach((v) {
         incomes.add(new Incomes.fromJson(v));
       });

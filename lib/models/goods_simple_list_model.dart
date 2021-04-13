@@ -10,7 +10,7 @@ class GoodsSimpleListModel {
     code = json['code'];
     msg = json['msg'];
     if (json['data'] != null) {
-      data = new List<GoodsSimple>();
+      data = [];
       json['data'].forEach((v) {
         data.add(new GoodsSimple.fromJson(v));
       });
@@ -50,29 +50,29 @@ class GoodsSimple {
   int isImport;
   int isFerme;
   int storehouse;
-  GoodsSimple(
-      {this.id,
-      this.goodsName,
-      this.description,
-      this.inventory,
-      this.salesVolume,
-      this.mainPhotoUrl,
-      this.promotionName,
-      this.originalPrice,
-      this.discountPrice,
-      this.commission,
-      this.tags,
-      this.percent,
-      this.startTime,
-      this.endTime,
-      this.coupon,
-      this.brandName,
-      this.brandImg,
-      this.brandId,
-      this.isFerme,
-      this.isImport,
-      this.storehouse,
-    });
+  GoodsSimple({
+    this.id,
+    this.goodsName,
+    this.description,
+    this.inventory,
+    this.salesVolume,
+    this.mainPhotoUrl,
+    this.promotionName,
+    this.originalPrice,
+    this.discountPrice,
+    this.commission,
+    this.tags,
+    this.percent,
+    this.startTime,
+    this.endTime,
+    this.coupon,
+    this.brandName,
+    this.brandImg,
+    this.brandId,
+    this.isFerme,
+    this.isImport,
+    this.storehouse,
+  });
 
   GoodsSimple.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -95,9 +95,9 @@ class GoodsSimple {
     brandName = json['brandName'];
     brandImg = json['brandImg'];
     brandId = json['brandId'];
-    isImport=json['isImport'];
-    isFerme=json['isFerme'];
-    storehouse=json['storehouse'];
+    isImport = json['isImport'];
+    isFerme = json['isFerme'];
+    storehouse = json['storehouse'];
   }
 
   Map<String, dynamic> toJson() {
@@ -116,14 +116,13 @@ class GoodsSimple {
     data['percent'] = this.percent;
     data['startTime'] = this.startTime;
     data['endTime'] = this.endTime;
-    data['isImport']=this.isImport;
-    data['isFerme']=this.isFerme;
-    data['storehouse']=this.storehouse;
+    data['isImport'] = this.isImport;
+    data['isFerme'] = this.isFerme;
+    data['storehouse'] = this.storehouse;
     return data;
   }
 
-  getPromotionStatus(){
+  getPromotionStatus() {
     return PromotionTimeTool.getPromotionStatusWithGoodsSimple(this);
   }
-  
 }
