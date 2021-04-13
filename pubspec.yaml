@@ -37,6 +37,7 @@ dependencies:
   # soundpool: 1.0.1
   ## 暂时关闭声音播放
   #flutter_audio_player: 0.1.2
+  just_audio: ^0.7.3
   # 第三方分享功能
   sharesdk_plugin:
     git:
