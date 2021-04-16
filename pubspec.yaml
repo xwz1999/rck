@@ -108,7 +108,7 @@ dependencies:
 
   # 图片压缩
   flutter_image_compress: 0.6.3
-  image_cropper: 1.1.2
+  image_cropper: ^1.4.0
 
   # svg
   flutter_svg: ^0.21.0-nullsafety.0

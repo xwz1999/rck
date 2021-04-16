@@ -335,14 +335,18 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             GoodPriceView(
               detailModel: widget.goodsDetail,
               shareCallback: () {
+                String img = '';
+                int length = widget.goodsDetail.data.mainPhotos.length;
+                if (length >= 2)
+                  img = widget.goodsDetail.data.mainPhotos[1].url;
+                if (length >= 1)
+                  img = widget.goodsDetail.data.mainPhotos[0].url;
                 ShareTool().goodsShare(
                   context,
                   goodsPrice: widget.goodsDetail.data.getPriceString(),
                   goodsName: widget.goodsDetail.data.goodsName,
                   goodsDescription: widget.goodsDetail.data.description,
-                  miniPicurl: widget.goodsDetail.data.mainPhotos.length >= 1
-                      ? widget.goodsDetail.data.mainPhotos[1].url
-                      : "",
+                  miniPicurl: img,
                   miniTitle:
                       "￥${widget.goodsDetail.data.getPriceString()} | ${widget.goodsDetail.data.goodsName} | ${widget.goodsDetail.data.description}",
                   amount:
