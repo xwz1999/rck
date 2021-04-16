@@ -821,12 +821,10 @@ packages:
   package_signature:
     dependency: "direct main"
     description:
-      path: "."
-      ref: null-safety
-      resolved-ref: "9005169d7bf801631fe69c4c6516ad4ee66a8740"
-      url: "git@192.168.2.201:aku_fe/package_signature.git"
-    source: git
-    version: "0.0.1"
+      name: package_signature
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.1"
   path:
     dependency: "direct main"
     description:
