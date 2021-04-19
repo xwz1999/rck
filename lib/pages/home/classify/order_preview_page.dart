@@ -551,11 +551,15 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   ///
   ///找到包含 2，3类型的仓库返回true
   bool get _checkSwitchEnabled {
-    return _orderModel.data.brands.every((element) {
-      return element.goods.every((element) {
-        return element.storehouse == 2 || element.storehouse == 3;
+    bool reslut=false;
+    _orderModel.data.brands.forEach((element) { 
+      element.goods.forEach((v) { 
+        if (v.storehouse==2||v.storehouse==3) {
+          reslut=true;
+        } 
       });
     });
+    return reslut;
   }
 
   _coinTile() {
@@ -581,7 +585,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
             builder: (context) {
               return _titleRow(
                 "瑞币",
-                text
+                text,
                 "本单抵扣: ￥${_orderModel.data.coinTotalAmount.toStringAsFixed(2)}",
                 rightTitleColor: Colors.black,
                 switchValue: _orderModel.data.coinStatus.isUseCoin,//后台回显 TODO:
