@@ -61,6 +61,9 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
 
   bool _accept = false;
 
+  ///瑞币抵扣按钮是否可以点击
+  bool switchEnabled = true;
+
   @override
   void initState() {
     super.initState();
@@ -576,17 +579,12 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
           ),
           Builder(
             builder: (context) {
-              bool switchEnabled = true;
-              switchEnabled = _orderModel.data.coinStatus.isEnable;
-              if (_checkSwitchEnabled) {
-                switchEnabled = false;
-              }
               return _titleRow(
                 "瑞币抵扣",
                 "",
                 "本单抵扣: ￥${_orderModel.data.coinTotalAmount.toStringAsFixed(2)}",
                 rightTitleColor: Colors.black,
-                switchValue: _orderModel.data.coinStatus.isUseCoin,
+                switchValue: _orderModel.data.coinStatus.isUseCoin,//后台回显 TODO:
                 switchEnable: switchEnabled,
                 switchChange: (change) {
                   // 切换瑞币抵扣状态
@@ -755,7 +753,9 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                       activeColor: AppColor.priceColor,
                       value: switchValue,
                       onChanged: !switchEnable
-                          ? null
+                          ? (change) {
+                                Toast.showError('订单含保税仓或海外仓商品，无法使用瑞币抵扣');
+                            }
                           : (change) => switchChange(change)),
                 ),
           Container(
@@ -1036,7 +1036,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
     }
     _orderModel = model.data;
     if (_checkSwitchEnabled) {
-      Toast.showError('订单含保税仓或海外仓商品，无法使用瑞币抵扣');
+      switchEnabled = false;
     }
     setState(() {});
   }

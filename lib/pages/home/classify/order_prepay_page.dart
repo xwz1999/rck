@@ -32,6 +32,7 @@ import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/keyboard/bottom_keyboard_widget.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 
 class OrderPrepayPage extends StatefulWidget {
@@ -329,7 +330,9 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         ),
       ),
       onPressed: !enable
-          ? null
+          ? () {
+              ReToast.err(text: '订单含跨境商品，无法使用余额支付');
+            }
           : () {
               setState(() {
                 _defaultPayIndex = index;
