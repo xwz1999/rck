@@ -186,7 +186,7 @@ dependencies:
 
   flip_card: ^0.4.4
   #腾讯云点播上传SDK
-  flutter_txugcupload: ^0.0.2
+  flutter_txugcupload: ^0.0.3
   #腾讯直播
   tencent_live_fluttify:
     git:
