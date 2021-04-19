@@ -761,6 +761,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
             onSelected: (bool value) async {
               _searchText = text;
               _textEditController.text = text;
+              FocusManager.instance.primaryFocus.unfocus();
               _callRefresh();
               setState(() {});
             },
