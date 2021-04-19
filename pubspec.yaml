@@ -217,10 +217,7 @@ dependencies:
     git:
       url: https://github.com/laiiihz/flutter_union_pay
 
-  package_signature:
-    git:
-      url: git@192.168.2.201:aku_fe/package_signature.git
-      ref: null-safety
+  package_signature: ^0.1.1
 
   raw_toast: ^0.0.1
 

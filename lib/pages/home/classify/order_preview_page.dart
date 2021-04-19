@@ -916,6 +916,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                               if (_overseaNeedIdentifier &&
                                   (!UserManager
                                       .instance.user.info.realInfoStatus)) {
+                                ReToast.err(
+                                    text: '因订单含跨境商品，收货人联系方式需与当前账号实名认证姓名相同');
                                 AppRouter.push(
                                   context,
                                   RouteName.USER_VERIFY,
