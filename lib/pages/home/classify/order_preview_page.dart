@@ -559,9 +559,9 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   }
 
   _coinTile() {
-    // String text = _orderModel.data.coinTotalAmount > 0
-    // ? "可用 ${(_orderModel.data.coinTotalAmount * 100).toInt()} 瑞币抵扣 ${_orderModel.data.coinTotalAmount} 元"
-    // : "瑞币抵扣0元";
+    String text = _orderModel.data.coinTotalAmount > 0
+    ? "可用：¥${_orderModel.data.coinTotalAmount.toStringAsFixed(2)}"
+    : "可用：¥0.0";
     // _orderModel.data.coupon = null;
     return Container(
       margin:
@@ -580,8 +580,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
           Builder(
             builder: (context) {
               return _titleRow(
-                "瑞币抵扣",
-                "",
+                "瑞币",
+                text
                 "本单抵扣: ￥${_orderModel.data.coinTotalAmount.toStringAsFixed(2)}",
                 rightTitleColor: Colors.black,
                 switchValue: _orderModel.data.coinStatus.isUseCoin,//后台回显 TODO:
