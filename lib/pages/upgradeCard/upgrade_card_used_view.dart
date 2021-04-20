@@ -62,7 +62,7 @@ class _UpgradeUsedViewState extends State<UpgradeUsedView> {
           );
         },
         separatorBuilder: (_, __) => 10.hb,
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.w),
+        padding: EdgeInsets.symmetric(horizontal: 16.rw, vertical: 10.rw),
       ),
     );
   }
@@ -90,8 +90,8 @@ class _userCard extends StatelessWidget {
   _renderItem(String title, String subTitle) {
     return Row(
       children: [
-        title.text.size(14.sp).black.make().w(72.w),
-        subTitle.text.size(14.sp).black.make(),
+        title.text.size(14.rsp).black.make().w(72.rw),
+        subTitle.text.size(14.rsp).black.make(),
       ],
     );
   }
@@ -104,7 +104,7 @@ class _userCard extends StatelessWidget {
     bool used = status != 2;
     return Material(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(5.w),
+      borderRadius: BorderRadius.circular(5.rw),
       clipBehavior: Clip.antiAlias,
       child: Column(
         children: <Widget>[
@@ -120,7 +120,7 @@ class _userCard extends StatelessWidget {
             DateUtil.formatDate(sendDate, format: 'yyyy-MM-dd HH:mm'),
           ),
         ].sepWidget(separate: 4.hb),
-      ).p(10.w),
+      ).p(10.rw),
     );
   }
 }

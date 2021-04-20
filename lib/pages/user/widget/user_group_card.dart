@@ -69,8 +69,8 @@ class _UserGroupCardState extends State<UserGroupCard> {
       children: [
         Image.asset(
           path,
-          height: 12.w,
-          width: 12.w,
+          height: 12.rw,
+          width: 12.rw,
         ),
         4.wb,
         title.text.color(Colors.black38).make().expand(),
@@ -87,12 +87,12 @@ class _UserGroupCardState extends State<UserGroupCard> {
       child: VxBox(
         child: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(20.w),
+            borderRadius: BorderRadius.circular(20.rw),
             child: FadeInImage.assetNetwork(
               placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
               image: Api.getImgUrl(widget.headImg),
-              height: 40.w,
-              width: 40.w,
+              height: 40.rw,
+              width: 40.rw,
             ),
           ),
           10.wb,
@@ -103,8 +103,8 @@ class _UserGroupCardState extends State<UserGroupCard> {
                 6.wb,
                 Image.asset(
                   R.ASSETS_INVITE_DETAIL_EDIT_PNG,
-                  height: 12.w,
-                  width: 12.w,
+                  height: 12.rw,
+                  width: 12.rw,
                 ),
                 Spacer(),
                 widget.isRecommend ?? false
@@ -119,14 +119,14 @@ class _UserGroupCardState extends State<UserGroupCard> {
                                       children: [
                                         '确定推荐${widget.name}为钻石店铺么 ？'
                                             .text
-                                            .size(15.sp)
+                                            .size(15.rsp)
                                             .color(Color(0xFF333333))
                                             .center
                                             .make(),
                                         '确认提拔后您将获得被推荐团队销售额提成比例的3%增加到4%'
                                             .text
                                             .center
-                                            .size(12.sp)
+                                            .size(12.rsp)
                                             .color(Color(0xFF666666))
                                             .make(),
                                       ],
@@ -160,7 +160,7 @@ class _UserGroupCardState extends State<UserGroupCard> {
                           if (result == true) {
                             showDialog(
                               context: context,
-                              builder:(context)=> Center(
+                              builder: (context) => Center(
                                 child: GestureDetector(
                                   onTap: () => Navigator.pop(context),
                                   child: Material(
@@ -169,30 +169,30 @@ class _UserGroupCardState extends State<UserGroupCard> {
                                       children: [
                                         Image.asset(
                                           R.ASSETS_USER_GROUP_RECOMMEND_BG_PNG,
-                                          height: 306.w,
-                                          width: 344.w,
+                                          height: 306.rw,
+                                          width: 344.rw,
                                         ),
                                         Positioned(
                                           left: 0,
                                           right: 0,
-                                          top: 62.w,
+                                          top: 62.rw,
                                           child:
                                               '恭喜！ ${UserManager.instance.user.info.nickname}'
                                                   .text
                                                   .white
-                                                  .size(16.sp)
+                                                  .size(16.rsp)
                                                   .make()
                                                   .centered(),
                                         ),
                                         Positioned(
-                                          left: 60.w,
-                                          right: 60.w,
-                                          top: 111.w,
+                                          left: 60.rw,
+                                          right: 60.rw,
+                                          top: 111.rw,
                                           child:
                                               '您从${widget.name}团队销售额获得提成比例将增至4%'
                                                   .text
                                                   .color(Color(0xFF333333))
-                                                  .size(16.sp)
+                                                  .size(16.rsp)
                                                   .make()
                                                   .centered(),
                                         ),
@@ -206,7 +206,7 @@ class _UserGroupCardState extends State<UserGroupCard> {
                         },
                         child: Image.asset(
                           R.ASSETS_USER_USER_RECOMMEND_PNG,
-                          height: 17.w,
+                          height: 17.rw,
                         ),
                       )
                     : SizedBox(),
@@ -233,10 +233,10 @@ class _UserGroupCardState extends State<UserGroupCard> {
           ].column().expand(),
         ].row(crossAlignment: CrossAxisAlignment.start),
       )
-          .padding(EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w))
+          .padding(EdgeInsets.symmetric(horizontal: 15.rw, vertical: 10.rw))
           .withDecoration(BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.circular(widget.flat ? 0 : 5.w),
+            borderRadius: BorderRadius.circular(widget.flat ? 0 : 5.rw),
           ))
           .make(),
     );

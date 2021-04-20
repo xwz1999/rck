@@ -7,7 +7,7 @@ class RoundBackgroundPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint paint = Paint()..color = Color(0xFF16182B);
 
-    canvas.drawCircle(Offset(size.width / 2, -100.w), 300.w, paint);
+    canvas.drawCircle(Offset(size.width / 2, -100.rw), 300.rw, paint);
   }
 
   @override

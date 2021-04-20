@@ -64,11 +64,11 @@ class _UpgradeCardPageV2State extends State<UpgradeCardPageV2>
         labelColor: Color(0xFFDB2D2D),
         unselectedLabelColor: Color(0xFF333333),
         labelStyle: TextStyle(
-          fontSize: 13.sp,
+          fontSize: 13.rsp,
           fontWeight: FontWeight.w600,
         ),
         unselectedLabelStyle: TextStyle(
-          fontSize: 13.sp,
+          fontSize: 13.rsp,
           fontWeight: FontWeight.w400,
         ),
         indicatorSize: TabBarIndicatorSize.label,

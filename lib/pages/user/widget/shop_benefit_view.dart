@@ -41,10 +41,10 @@ class ShopBenefitViewState extends State<ShopBenefitView> {
             '我的收益'
                 .text
                 .color(Color(0xFF333333))
-                .size(16.sp)
+                .size(16.rsp)
                 .bold
                 .make()
-                .p(10.w),
+                .p(10.rw),
             Spacer(),
             Icon(Icons.keyboard_arrow_right,
                 size: 22, color: Color(0xff999999)),
@@ -52,47 +52,47 @@ class ShopBenefitViewState extends State<ShopBenefitView> {
           ].row(),
           Divider(
             color: Color(0xFFE6E6E6),
-            height: 1.w,
-            thickness: 1.w,
+            height: 1.rw,
+            thickness: 1.rw,
           ),
           SizedBox(
-            height: 66.w,
+            height: 66.rw,
             child: Row(
               children: [
                 <Widget>[
                   (_model?.data?.monthExpect ?? 0)
                       .toStringAsFixed(2)
                       .text
-                      .size(18.sp)
+                      .size(18.rsp)
                       .color(Color(0xFF333333))
                       .make(),
                   6.hb,
-                  '本月预估'.text.size(12.sp).color(Color(0xFF333333)).make(),
+                  '本月预估'.text.size(12.rsp).color(Color(0xFF333333)).make(),
                 ].column().expand(),
                 VerticalDivider(
                   color: Color(0xFFE6E6E6),
-                  width: 1.w,
-                  thickness: 1.w,
-                  indent: 16.w,
-                  endIndent: 16.w,
+                  width: 1.rw,
+                  thickness: 1.rw,
+                  indent: 16.rw,
+                  endIndent: 16.rw,
                 ),
                 <Widget>[
                   (_model?.data?.dayExpect ?? 0)
                       .toStringAsFixed(2)
                       .text
-                      .size(18.sp)
+                      .size(18.rsp)
                       .color(Color(0xFF333333))
                       .make(),
                   6.hb,
-                  '今日预估'.text.size(12.sp).color(Color(0xFF333333)).make(),
+                  '今日预估'.text.size(12.rsp).color(Color(0xFF333333)).make(),
                 ].column().expand(),
               ],
             ),
           ),
           Divider(
             color: Color(0xFFE6E6E6),
-            height: 1.w,
-            thickness: 1.w,
+            height: 1.rw,
+            thickness: 1.rw,
           ),
           <Widget>[
             Row(
@@ -100,10 +100,10 @@ class ShopBenefitViewState extends State<ShopBenefitView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 textBaseline: TextBaseline.alphabetic,
                 children: <Widget>[
-                  '上月结算'.text.size(12.sp).color(Color(0xFF666666)).make(),
+                  '上月结算'.text.size(12.rsp).color(Color(0xFF666666)).make(),
                   '¥${_model?.data?.lastMonthIncome ?? 0.toStringAsFixed(2)}'
                       .text
-                      .size(12.sp)
+                      .size(12.rsp)
                       .color(Color(0xFFD7BE8E))
                       .make(),
                 ]).expand(),
@@ -113,10 +113,10 @@ class ShopBenefitViewState extends State<ShopBenefitView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 textBaseline: TextBaseline.alphabetic,
                 children: <Widget>[
-                  '上月预估'.text.size(12.sp).color(Color(0xFF666666)).make(),
+                  '上月预估'.text.size(12.rsp).color(Color(0xFF666666)).make(),
                   '¥${_model?.data?.lastMonthExpect ?? 0.toStringAsFixed(2)}'
                       .text
-                      .size(12.sp)
+                      .size(12.rsp)
                       .color(Color(0xFFD7BE8E))
                       .make(),
                 ]).expand(),

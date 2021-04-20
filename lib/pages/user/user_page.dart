@@ -134,7 +134,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
     //     children: <Widget>[
     //       UserAppBarV2(),
     //       // Container(
-    //       //   height: 160 + ScreenUtil.statusBarHeight,
+    //       //   height: 160 + ScreenUtil().statusBarHeight,
     //       //   child: UserAppBar(
     //       //     withdrawListener: () {
     //       //       AppRouter.push(context, RouteName.USER_CASH_WITHDRAW_PAGE,
@@ -418,17 +418,17 @@ class _UserPageState extends BaseStoreState<UserPage> {
               14.wb,
               Image.asset(
                 leadingPath,
-                width: 32.w,
-                height: 32.w,
+                width: 32.rw,
+                height: 32.rw,
               ),
-              title.text.size(16.sp).black.make(),
+              title.text.size(16.rsp).black.make(),
               MaterialButton(
-                padding: EdgeInsets.all(4.w),
+                padding: EdgeInsets.all(4.rw),
                 minWidth: 0,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 child: Icon(
                   Icons.help_outline,
-                  size: 12.w,
+                  size: 12.rw,
                   color: Color(0xFFA5A5A5),
                 ),
                 onPressed: () {
@@ -448,11 +448,11 @@ class _UserPageState extends BaseStoreState<UserPage> {
             ],
           ),
           Divider(
-            indent: 16.w,
-            endIndent: 16.w,
+            indent: 16.rw,
+            endIndent: 16.rw,
             color: Color(0xFFEEEEEE),
-            height: 1.w,
-            thickness: 1.w,
+            height: 1.rw,
+            thickness: 1.rw,
           ),
           Row(
             children: [
@@ -463,26 +463,26 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      title1.text.color(Color(0xFF999999)).size(12.sp).make(),
+                      title1.text.color(Color(0xFF999999)).size(12.rsp).make(),
                       10.hb,
-                      content1.text.black.size(16.sp).make(),
+                      content1.text.black.size(16.rsp).make(),
                     ],
                   ),
                   Spacer(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      '订单数'.text.color(Color(0xFF999999)).size(12.sp).make(),
+                      '订单数'.text.color(Color(0xFF999999)).size(12.rsp).make(),
                       10.hb,
-                      content2.text.black.size(16.sp).make(),
+                      content2.text.black.size(16.rsp).make(),
                     ],
                   ),
                   16.wb,
                 ],
               ).expand(),
               Container(
-                height: 28.w,
-                width: 1.w,
+                height: 28.rw,
+                width: 1.rw,
                 color: Color(0xFFEEEEEE),
               ),
               Row(
@@ -491,18 +491,18 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      title3.text.color(Color(0xFF999999)).size(12.sp).make(),
+                      title3.text.color(Color(0xFF999999)).size(12.rsp).make(),
                       10.hb,
-                      content3.text.black.size(16.sp).make(),
+                      content3.text.black.size(16.rsp).make(),
                     ],
                   ),
                   Spacer(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      '订单数'.text.color(Color(0xFF999999)).size(12.sp).make(),
+                      '订单数'.text.color(Color(0xFF999999)).size(12.rsp).make(),
                       10.hb,
-                      content4.text.black.size(16.sp).make(),
+                      content4.text.black.size(16.rsp).make(),
                     ],
                   ),
                   24.wb,
@@ -548,13 +548,13 @@ class _UserPageState extends BaseStoreState<UserPage> {
                                   fontWeight: FontWeight.w700),
                             ),
                             MaterialButton(
-                              padding: EdgeInsets.all(4.w),
+                              padding: EdgeInsets.all(4.rw),
                               minWidth: 0,
                               materialTapTargetSize:
                                   MaterialTapTargetSize.shrinkWrap,
                               child: Icon(
                                 Icons.schedule,
-                                size: 12.w,
+                                size: 12.rw,
                                 color: Color(0xFFA5A5A5),
                               ),
                               onPressed: () {

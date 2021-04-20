@@ -43,7 +43,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
       minWidth: double.infinity,
       child: name.text
-          .size(14.sp)
+          .size(14.rsp)
           .color(same ? Colors.black : Color(0xFFA3A3A3))
           .make(),
       onPressed: () {
@@ -67,20 +67,20 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
   }
 
   Widget get _renderShitVerticalLine => Container(
-        height: 20.w,
-        width: 1.w,
+        height: 20.rw,
+        width: 1.rw,
         color: Color(0xFF979797),
       );
 
   _renderTopCard() {
     return Material(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(4.w),
+      borderRadius: BorderRadius.circular(4.rw),
       clipBehavior: Clip.antiAlias,
       child: Column(
         children: [
           Container(
-            height: 76.w,
+            height: 76.rw,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(UserLevelTool.currentCardImagePath()),
@@ -90,8 +90,8 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
             alignment: Alignment.center,
             child: Image.asset(
               UserLevelTool.currentMedalImagePath(),
-              height: 56.w,
-              width: 56.w,
+              height: 56.rw,
+              width: 56.rw,
             ),
           ),
           Row(
@@ -106,7 +106,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
           ),
         ],
       ),
-    ).pSymmetric(h: 36.w, v: 10.w);
+    ).pSymmetric(h: 36.rw, v: 10.rw);
   }
 
   _renderSearchBar() {
@@ -125,10 +125,10 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
             decoration: InputDecoration(
               isDense: true,
               border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 20.w),
+              contentPadding: EdgeInsets.symmetric(horizontal: 20.rw),
               hintText: '请输入昵称/备注/手机号/微信号',
               hintStyle: TextStyle(
-                fontSize: 12.sp,
+                fontSize: 12.rsp,
                 color: Color(0xFF999999),
               ),
             ),
@@ -140,33 +140,33 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
           20.wb,
         ],
       ),
-    ).pSymmetric(h: 15.w, v: 10.w);
+    ).pSymmetric(h: 15.rw, v: 10.rw);
   }
 
   _renderShitLine() {
     return Container(
-      height: 10.w,
+      height: 10.rw,
       width: double.infinity,
       decoration: BoxDecoration(
         color: Color(0xFFE3E3E3),
-        borderRadius: BorderRadius.circular(5.w),
+        borderRadius: BorderRadius.circular(5.rw),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 2.w),
-            blurRadius: 4.w,
+            offset: Offset(0, 2.rw),
+            blurRadius: 4.rw,
             color: Colors.black.withOpacity(0.2451),
           )
         ],
       ),
-      margin: EdgeInsets.symmetric(horizontal: 6.w),
+      margin: EdgeInsets.symmetric(horizontal: 6.rw),
       alignment: Alignment.center,
       child: Container(
-        height: 4.w,
+        height: 4.rw,
         width: double.infinity,
-        margin: EdgeInsets.symmetric(horizontal: 4.w),
+        margin: EdgeInsets.symmetric(horizontal: 4.rw),
         decoration: BoxDecoration(
           color: Color(0xFF6A6A6A).withOpacity(0.3178),
-          borderRadius: BorderRadius.circular(2.w),
+          borderRadius: BorderRadius.circular(2.rw),
         ),
       ),
     );
@@ -180,14 +180,14 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
             children: [
               54.hb,
               16.wb,
-              _renderTitle.text.bold.size(14.sp).black.make(),
+              _renderTitle.text.bold.size(14.rsp).black.make(),
               MaterialButton(
-                padding: EdgeInsets.all(4.w),
+                padding: EdgeInsets.all(4.rw),
                 minWidth: 0,
                 materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 child: Icon(
                   Icons.help_outline,
-                  size: 12.w,
+                  size: 12.rw,
                   color: Color(0xFFA5A5A5),
                 ),
                 onPressed: () {
@@ -205,10 +205,10 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
               Spacer(),
               Image.asset(
                 R.ASSETS_USER_ICON_GROUP_PNG,
-                width: 12.w,
-                height: 12.w,
+                width: 12.rw,
+                height: 12.rw,
               ),
-              _allGroupCount.toString().text.size(12.sp).black.make(),
+              _allGroupCount.toString().text.size(12.rsp).black.make(),
               20.wb,
             ],
           ),
@@ -242,14 +242,14 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
                         : []),
         ],
       ),
-      margin: EdgeInsets.symmetric(horizontal: 16.w),
+      margin: EdgeInsets.symmetric(horizontal: 16.rw),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(2.w)),
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(2.rw)),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 2.w),
-            blurRadius: 4.w,
+            offset: Offset(0, 2.rw),
+            blurRadius: 4.rw,
             color: Colors.black.withOpacity(0.1089),
           ),
         ],

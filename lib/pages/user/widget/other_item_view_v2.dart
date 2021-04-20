@@ -19,7 +19,7 @@ class OtherItemViewV2 extends StatelessWidget {
       onPressed: onTap,
       child: <Widget>[
         icon,
-        title.text.color(Color(0xFF666666)).size(12.sp).make(),
+        title.text.color(Color(0xFF666666)).size(12.rsp).make(),
       ].column(),
     ).expand();
   }
@@ -58,8 +58,8 @@ class OtherItemViewV2 extends StatelessWidget {
         _buildItem(
           Image.asset(
             R.ASSETS_SHOP_BUSINESS_CORP_PNG,
-            width: 30.w,
-            height: 30.w,
+            width: 30.rw,
+            height: 30.rw,
           ),
           '商务合作',
           () => AppRouter.push(context, RouteName.BUSSINESS_COOPERATION_PAGE),

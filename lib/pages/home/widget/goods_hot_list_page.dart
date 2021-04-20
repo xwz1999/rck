@@ -87,7 +87,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage> {
                 ? Positioned(
                     child: _backButton(context),
                     left: 0,
-                    top: ScreenUtil.statusBarHeight,
+                    top: ScreenUtil().statusBarHeight,
                   )
                 : SizedBox(),
           ],
@@ -114,7 +114,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage> {
     return Container(
       child: ListView.builder(
         padding: EdgeInsets.only(
-            left: 0, top: 0, right: 0, bottom: ScreenUtil.bottomBarHeight),
+            left: 0, top: 0, right: 0, bottom: ScreenUtil().bottomBarHeight),
         itemBuilder: (_, index) {
           return GestureDetector(
             onTap: () {

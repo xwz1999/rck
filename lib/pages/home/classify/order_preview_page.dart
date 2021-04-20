@@ -942,7 +942,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
         _orderModel.data.goodsTotalCommission > 0 &&
         _orderModel.data.userRole > 0) {
       return Container(
-        height: kToolbarHeight + 30 + ScreenUtil.bottomBarHeight,
+        height: kToolbarHeight + 30 + ScreenUtil().bottomBarHeight,
         child: Column(
           children: <Widget>[
             Container(

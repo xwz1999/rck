@@ -71,7 +71,7 @@ class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
           MaterialButton(
             color: Colors.white,
             elevation: 0,
-            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.w),
+            padding: EdgeInsets.symmetric(horizontal: 16.rw, vertical: 6.rw),
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onPressed: () async {
               await _updateSwitchState();
@@ -81,10 +81,10 @@ class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    '手机号显示开关'.text.black.size(15.sp).make(),
+                    '手机号显示开关'.text.black.size(15.rsp).make(),
                     '关闭后，其他人将无法看到您的手机号'
                         .text
-                        .size(12.sp)
+                        .size(12.rsp)
                         .color(Color(0xFF666666))
                         .make(),
                   ],

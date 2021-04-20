@@ -276,7 +276,7 @@ class PostBannerInfo extends StatelessWidget {
         ),
       ));
       widgetList.add(Positioned(
-        width: ScreenUtil.screenWidthDp - 80 - rightBannerWidth + 15,
+        width: ScreenUtil().screenWidth - 80 - rightBannerWidth + 15,
         left: 0,
         top: 0,
         bottom: 0,
@@ -286,7 +286,7 @@ class PostBannerInfo extends StatelessWidget {
         ),
       ));
       widgetList.add(Positioned(
-          width: ScreenUtil.screenWidthDp - 80 - rightBannerWidth + 15,
+          width: ScreenUtil().screenWidth - 80 - rightBannerWidth + 15,
           left: 0,
           top: 0,
           bottom: 0,

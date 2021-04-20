@@ -135,7 +135,7 @@ dependencies:
   shared_preferences: ^2.0.5
 
   # 屏幕适配
-  flutter_screenutil: ^0.5.3
+  flutter_screenutil: ^5.0.0
 
   # banner
   banner_view: ^1.1.2

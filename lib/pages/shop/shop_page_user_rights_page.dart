@@ -64,7 +64,7 @@ class _ShopPageUserRightsPageState
                                 right: 0,
                                 left: 0,
                                 height: bgHeight -
-                                    ScreenUtil.statusBarHeight -
+                                    ScreenUtil().statusBarHeight -
                                     kToolbarHeight,
                                 child: Container(
                                   color: AppColor.blackColor,
@@ -180,7 +180,7 @@ class _ShopPageUserRightsPageState
 
   _appBar(title) {
     return Container(
-      margin: EdgeInsets.only(top: ScreenUtil.statusBarHeight),
+      margin: EdgeInsets.only(top: ScreenUtil().statusBarHeight),
       width: MediaQuery.of(context).size.width,
       height: kToolbarHeight,
       child: Row(

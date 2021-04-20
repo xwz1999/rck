@@ -55,12 +55,12 @@ class _UserBalancePageState extends State<UserBalancePage> {
       60.hb,
       16.wb,
       [
-        item.comment.text.black.size(14.sp).make(),
+        item.comment.text.black.size(14.rsp).make(),
         2.hb,
-        item.createdAt.text.black.size(12.sp).make(),
+        item.createdAt.text.black.size(12.rsp).make(),
       ].column(crossAlignment: CrossAxisAlignment.start),
       Spacer(),
-      item.amount.toStringAsFixed(2).text.black.size(14.sp).make(),
+      item.amount.toStringAsFixed(2).text.black.size(14.rsp).make(),
       16.wb,
     ].row();
   }
@@ -82,8 +82,8 @@ class _UserBalancePageState extends State<UserBalancePage> {
             padding: EdgeInsets.all(10),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 3,
-              crossAxisSpacing: 10.w,
-              mainAxisSpacing: 10.w,
+              crossAxisSpacing: 10.rw,
+              mainAxisSpacing: 10.rw,
               childAspectRatio: 2,
             ),
             children: _statusMap.entries.map((e) {
@@ -103,7 +103,7 @@ class _UserBalancePageState extends State<UserBalancePage> {
             }).toList(),
           ).material(color: Colors.white),
           height: MediaQuery.of(context).size.height -
-              214.w -
+              214.rw -
               MediaQuery.of(context).padding.top,
           width: MediaQuery.of(context).size.width,
           color: Colors.black26,
@@ -129,7 +129,7 @@ class _UserBalancePageState extends State<UserBalancePage> {
         whiteBg: true,
         actions: [
           CustomImageButton(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            padding: EdgeInsets.symmetric(horizontal: 16.rw),
             onPressed: () {
               AppRouter.push(context, RouteName.USER_CASH_WITHDRAW_PAGE,
                   arguments: UserCashWithdrawPage.setArguments(
@@ -141,11 +141,11 @@ class _UserBalancePageState extends State<UserBalancePage> {
               children: [
                 Image.asset(
                   "assets/rui_page_balance.png",
-                  width: 12.w,
-                  height: 12.w,
+                  width: 12.rw,
+                  height: 12.rw,
                 ),
                 3.wb,
-                '余额提现'.text.size(10.sp).black.make(),
+                '余额提现'.text.size(10.rsp).black.make(),
               ],
             ),
           ),
@@ -157,7 +157,7 @@ class _UserBalancePageState extends State<UserBalancePage> {
                 16.wb,
                 104.hb,
                 [
-                  '可使用(元)'.text.size(14.sp).color(Color(0xFF333333)).make(),
+                  '可使用(元)'.text.size(14.rsp).color(Color(0xFF333333)).make(),
                   4.hb,
                   (_model?.data?.balance ?? 0.0)
                       .toStringAsFixed(2)
@@ -168,7 +168,7 @@ class _UserBalancePageState extends State<UserBalancePage> {
                 ].column(crossAlignment: CrossAxisAlignment.start),
                 Spacer(),
                 [
-                  '累计提现(元)'.text.size(14.sp).color(Color(0xFF333333)).make(),
+                  '累计提现(元)'.text.size(14.rsp).color(Color(0xFF333333)).make(),
                   4.hb,
                   (_model?.data?.totalWithdraw ?? 0.0)
                       .toStringAsFixed(2)
@@ -192,7 +192,7 @@ class _UserBalancePageState extends State<UserBalancePage> {
                   Overlay.of(context).insert(_entry);
                 },
                 child: [
-                  _statusValue.text.color(Color(0xFF333333)).size(13.sp).make(),
+                  _statusValue.text.color(Color(0xFF333333)).size(13.rsp).make(),
                   Icon(
                     Icons.arrow_drop_down,
                     color: Color(0xFFBEBEBE),
@@ -234,7 +234,7 @@ class _UserBalancePageState extends State<UserBalancePage> {
                   '${_date.year}年${_date.month}月'
                       .text
                       .color(Color(0xFF333333))
-                      .size(13.sp)
+                      .size(13.rsp)
                       .make(),
                   Icon(
                     Icons.arrow_drop_down,
@@ -257,8 +257,8 @@ class _UserBalancePageState extends State<UserBalancePage> {
                     _buildListItem(_historyModel.data.list[index]),
                 separatorBuilder: (context, index) => Divider(
                   color: Color(0xFFE9E9E9),
-                  height: 1.w,
-                  thickness: 1.w,
+                  height: 1.rw,
+                  thickness: 1.rw,
                 ),
                 itemCount: _historyModel?.data?.list?.length ?? 0,
               ),

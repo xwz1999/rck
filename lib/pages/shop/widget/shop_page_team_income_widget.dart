@@ -47,7 +47,7 @@ class _ShopPageTeamIncomeWidgetState
                 left: 0,
                 right: 0,
                 top: 0,
-                height: 200 / 375 * ScreenUtil.screenWidthDp,
+                height: 200 / 375 * ScreenUtil().screenWidth,
                 child: Container(
                   child: Image.asset(
                     ShopImageName.income_appbar_bg,
@@ -143,7 +143,7 @@ class _ShopPageTeamIncomeWidgetState
   }
 
   _pageWidget() {
-    double width = ScreenUtil.screenWidthDp;
+    double width = ScreenUtil().screenWidth;
     double height = 140 * width / 375;
     return Container(
         constraints: BoxConstraints(

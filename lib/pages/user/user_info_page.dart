@@ -215,12 +215,12 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
                     (UserManager.instance.user.info.teacherWechatNo)
                         .text
                         .color(Color(0xFF666666))
-                        .size(14.sp)
+                        .size(14.rsp)
                         .make(),
                     2.wb,
                     Icon(
                       Icons.copy,
-                      size: 18.sp,
+                      size: 18.rsp,
                       color: Color(0xFF999999),
                     ),
                   ],

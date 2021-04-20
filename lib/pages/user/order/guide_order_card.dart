@@ -13,18 +13,18 @@ class GuideOrderCard extends StatelessWidget {
   const GuideOrderCard({Key key, @required this.model}) : super(key: key);
   Widget _buildGoodsItem(Goods item) {
     return SizedBox(
-      height: 100.w,
+      height: 100.rw,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Material(
             clipBehavior: Clip.antiAlias,
-            borderRadius: BorderRadius.circular(5.w),
+            borderRadius: BorderRadius.circular(5.rw),
             child: FadeInImage.assetNetwork(
               placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
               image: Api.getImgUrl(item.mainPhotoUrl),
-              height: 100.w,
-              width: 100.w,
+              height: 100.rw,
+              width: 100.rw,
             ),
           ),
           10.wb,
@@ -37,19 +37,19 @@ class GuideOrderCard extends StatelessWidget {
                     ExtendedWidgetSpan(
                       child: model.shippingMethod == 1
                           ? Container(
-                              margin: EdgeInsets.only(right: 2.w),
-                              height: 14.w,
-                              width: 24.w,
+                              margin: EdgeInsets.only(right: 2.rw),
+                              height: 14.rw,
+                              width: 24.rw,
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 color: Color(0xFFCC1B4F),
-                                borderRadius: BorderRadius.circular(3.w),
+                                borderRadius: BorderRadius.circular(3.rw),
                               ),
                               child: Text(
                                 '自提',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 10.sp,
+                                  fontSize: 10.rsp,
                                 ),
                               ),
                             )
@@ -58,19 +58,19 @@ class GuideOrderCard extends StatelessWidget {
                     ExtendedWidgetSpan(
                       child: item.importValue
                           ? Container(
-                              margin: EdgeInsets.only(right: 2.w),
-                              height: 14.w,
-                              width: 24.w,
+                              margin: EdgeInsets.only(right: 2.rw),
+                              height: 14.rw,
+                              width: 24.rw,
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 color: Color(0xFFCC1B4F),
-                                borderRadius: BorderRadius.circular(3.w),
+                                borderRadius: BorderRadius.circular(3.rw),
                               ),
                               child: Text(
                                 '进口',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 10.sp,
+                                  fontSize: 10.rsp,
                                 ),
                               ),
                             )
@@ -152,26 +152,26 @@ class GuideOrderCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(5.w),
+      borderRadius: BorderRadius.circular(5.rw),
       child: Padding(
-        padding: EdgeInsets.all(15.w),
+        padding: EdgeInsets.all(15.rw),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Row(
               children: [
                 Container(
-                  height: 20.w,
-                  width: 20.w,
+                  height: 20.rw,
+                  width: 20.rw,
                   decoration: BoxDecoration(
                     color: Color(0xFFFE3E27),
-                    borderRadius: BorderRadius.circular(2.w),
+                    borderRadius: BorderRadius.circular(2.rw),
                   ),
                   child: Text(
                     '卖',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 14.sp,
+                      fontSize: 14.rsp,
                     ),
                   ),
                   alignment: Alignment.center,
@@ -180,11 +180,11 @@ class GuideOrderCard extends StatelessWidget {
                 DateUtil.formatDate(
                   DateTime.fromMillisecondsSinceEpoch(model.createdAt * 1000),
                   format: 'yyyy-MM-dd HH:mm:ss',
-                ).text.black.size(16.sp).make(),
+                ).text.black.size(16.rsp).make(),
                 Spacer(),
                 model.statusValue.text
                     .color(Color(0xFFC92219))
-                    .size(14.sp)
+                    .size(14.rsp)
                     .make(),
               ],
             ),
@@ -200,7 +200,7 @@ class GuideOrderCard extends StatelessWidget {
                 '共${model.goods.length}件商品 总计¥${model.goodsTotalAmount.toStringAsFixed(2)}'
                     .text
                     .black
-                    .size(14.sp)
+                    .size(14.rsp)
                     .make(),
               ],
             ),

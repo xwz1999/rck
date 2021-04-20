@@ -51,7 +51,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
           children: <Widget>[
             Positioned(
                 left: 10,
-                top: ScreenUtil.statusBarHeight + 10,
+                top: ScreenUtil().statusBarHeight + 10,
                 child: GestureDetector(
                   onTap: () {
                     AppRouter.fadeAndReplaced(globalContext, RouteName.TAB_BAR);
@@ -76,7 +76,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
                 )),
             Positioned(
                 right: 10,
-                top: ScreenUtil.statusBarHeight + 10,
+                top: ScreenUtil().statusBarHeight + 10,
                 child: GestureDetector(
                   onTap: () {
                     AppRouter.push(context, RouteName.PHONE_LOGIN);

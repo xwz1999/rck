@@ -28,7 +28,7 @@ class _ShopPageIncomeCardWidgetState extends State<ShopPageIncomeCardWidget> {
   }
 
   _barWidget(){
-      double width = ScreenUtil.screenWidthDp-30;
+      double width = ScreenUtil().screenWidth-30;
       double height = 170.0/345*width; 
       return Container(
         margin: EdgeInsets.symmetric(horizontal: 15),

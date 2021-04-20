@@ -50,7 +50,7 @@ class HomeWeatherWidgetState extends State<HomeWeatherWidget>
       child: Column(
         children: <Widget>[
           Container(
-            height: 40 + ScreenUtil.statusBarHeight,
+            height: 40 + ScreenUtil().statusBarHeight,
           ),
           Container(
             width: MediaQuery.of(context).size.width,

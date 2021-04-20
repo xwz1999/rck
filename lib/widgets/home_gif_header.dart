@@ -1,5 +1,3 @@
-
-
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -7,17 +5,19 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:flutter/material.dart'
     hide RefreshIndicator, RefreshIndicatorState;
 
-
-class HomeGifHeader extends RefreshIndicator{
-  HomeGifHeader(): super(height:ScreenUtil.statusBarHeight + 80.0, refreshStyle: RefreshStyle.Follow);
+class HomeGifHeader extends RefreshIndicator {
+  HomeGifHeader()
+      : super(
+            height: ScreenUtil().statusBarHeight + 80.0,
+            refreshStyle: RefreshStyle.Follow);
   @override
   State<StatefulWidget> createState() {
     return _HomeGifHeaderState();
   }
-  
 }
 
-class _HomeGifHeaderState extends RefreshIndicatorState<HomeGifHeader> with SingleTickerProviderStateMixin{
+class _HomeGifHeaderState extends RefreshIndicatorState<HomeGifHeader>
+    with SingleTickerProviderStateMixin {
   GifController _gifController;
 
   @override
@@ -25,27 +25,32 @@ class _HomeGifHeaderState extends RefreshIndicatorState<HomeGifHeader> with Sing
     _gifController = GifController(vsync: this, value: 1);
     super.initState();
   }
+
   @override
   void onModeChange(RefreshStatus mode) {
     if (mode == RefreshStatus.refreshing) {
-      _gifController.repeat(min: 0, max: 38, period: Duration(milliseconds: 1500));
+      _gifController.repeat(
+          min: 0, max: 38, period: Duration(milliseconds: 1500));
     }
     super.onModeChange(mode);
   }
+
   @override
   Future<void> endRefresh() async {
     double value = _gifController.value;
     if (value < 38) {
-      await Future.delayed(Duration(milliseconds: ((39-value)/39*1500).toInt()-100), () {
+      await Future.delayed(
+          Duration(milliseconds: ((39 - value) / 39 * 1500).toInt() - 100), () {
         _gifController.value = 38;
         // _gifController.stop();
       });
       return super.endRefresh();
-    }else{
+    } else {
       return super.endRefresh();
     }
     // _gifController.value = 38;
   }
+
   @override
   void resetValue() {
     _gifController.value = 0;
@@ -55,9 +60,9 @@ class _HomeGifHeaderState extends RefreshIndicatorState<HomeGifHeader> with Sing
   @override
   Widget buildContent(BuildContext context, RefreshStatus mode) {
     return Container(
-      height: ScreenUtil.statusBarHeight+80,
+      height: ScreenUtil().statusBarHeight + 80,
       width: 80,
-      padding: EdgeInsets.only(top: ScreenUtil.statusBarHeight),
+      padding: EdgeInsets.only(top: ScreenUtil().statusBarHeight),
       child: GifImage(
         image: AssetImage('assets/HomeRefreshHeader3.gif'),
         controller: _gifController,
@@ -67,6 +72,7 @@ class _HomeGifHeaderState extends RefreshIndicatorState<HomeGifHeader> with Sing
       ),
     );
   }
+
   @override
   void dispose() {
     _gifController.dispose();

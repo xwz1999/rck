@@ -27,7 +27,7 @@ class ShopManagerView extends StatelessWidget {
       child: Stack(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(5.w),
+            borderRadius: BorderRadius.circular(5.rw),
             child: Image.asset(
               path,
               fit: BoxFit.cover,
@@ -35,8 +35,8 @@ class ShopManagerView extends StatelessWidget {
             ),
           ),
           Positioned(
-            left: 12.w,
-            top: 12.w,
+            left: 12.rw,
+            top: 12.rw,
             child: <Widget>[
               title.text.size(14).color(Colors.white).make(),
               subTitle.text.size(14).color(Colors.white).make(),
@@ -61,13 +61,12 @@ class ShopManagerView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           GridView(
-            padding:
-                EdgeInsets.symmetric(horizontal: 5.w,vertical: 10.w),
+            padding: EdgeInsets.symmetric(horizontal: 5.rw, vertical: 10.rw),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               childAspectRatio: 170 / 90,
-              crossAxisSpacing: 5.w,
-              mainAxisSpacing: 5.w,
+              crossAxisSpacing: 5.rw,
+              mainAxisSpacing: 5.rw,
             ),
             children: [
               _buildGridItem(

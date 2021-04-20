@@ -440,42 +440,44 @@ class _OrderListItemState extends State<OrderListItem> {
                           ExtendedWidgetSpan(
                             child: widget.orderModel.shippingMethod == 1
                                 ? Container(
-                                    margin: EdgeInsets.only(right: 2.w),
-                                    height: 14.w,
-                                    width: 24.w,
+                                    margin: EdgeInsets.only(right: 2.rw),
+                                    height: 14.rw,
+                                    width: 24.rw,
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
                                       color: Color(0xFFCC1B4F),
-                                      borderRadius: BorderRadius.circular(3.w),
+                                      borderRadius: BorderRadius.circular(3.rw),
                                     ),
                                     child: Text(
                                       '自提',
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 10.sp,
+                                        fontSize: 10.rsp,
                                       ),
                                     ),
                                   )
                                 : SizedBox(),
                           ),
                           ExtendedWidgetSpan(
-                            child:goods.importValue? Container(
-                              margin: EdgeInsets.only(right: 2.w),
-                              height: 14.w,
-                              width: 24.w,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFCC1B4F),
-                                borderRadius: BorderRadius.circular(3.w),
-                              ),
-                              child: Text(
-                                '进口',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10.sp,
-                                ),
-                              ),
-                            ):SizedBox(),
+                            child: goods.importValue
+                                ? Container(
+                                    margin: EdgeInsets.only(right: 2.rw),
+                                    height: 14.rw,
+                                    width: 24.rw,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFCC1B4F),
+                                      borderRadius: BorderRadius.circular(3.rw),
+                                    ),
+                                    child: Text(
+                                      '进口',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10.rsp,
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox(),
                           ),
                           TextSpan(text: goods.goodsName),
                         ],

@@ -56,22 +56,22 @@ class _MyGroupPageState extends State<MyGroupPage> {
               hintText: '请输入昵称/备注/手机号/微信号',
               hintStyle: TextStyle(
                 color: Colors.black45,
-                fontSize: 12.sp,
+                fontSize: 12.rsp,
               ),
             ),
           ).expand(),
           Image.asset(
             R.ASSETS_HOME_TAB_SEARCH_PNG,
             color: Color(0xFF999999),
-            height: 18.w,
-            width: 18.w,
+            height: 18.rw,
+            width: 18.rw,
           ),
           20.wb,
         ].row(),
       )
           .white
-          .withRounded(value: 17.w)
-          .margin(EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w))
+          .withRounded(value: 17.rw)
+          .margin(EdgeInsets.symmetric(horizontal: 15.rw, vertical: 10.rw))
           .make(),
       onPressed: () {},
     );
@@ -110,8 +110,8 @@ class _MyGroupPageState extends State<MyGroupPage> {
                   });
                 },
                 child: AnimatedContainer(
-                  height: 16.w,
-                  width: 58.w,
+                  height: 16.rw,
+                  width: 58.rw,
                   curve: Curves.easeInOutCubic,
                   alignment: _filterRecommand
                       ? Alignment.centerRight
@@ -119,15 +119,15 @@ class _MyGroupPageState extends State<MyGroupPage> {
                   duration: Duration(milliseconds: 300),
                   decoration: BoxDecoration(
                     color: Color(0xFFF1F1F1),
-                    borderRadius: BorderRadius.circular(8.w),
+                    borderRadius: BorderRadius.circular(8.rw),
                   ),
                   child: AnimatedContainer(
-                    width: 36.w,
-                    height: 16.w,
+                    width: 36.rw,
+                    height: 16.rw,
                     curve: Curves.easeInOutCubic,
                     duration: Duration(milliseconds: 300),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8.w),
+                      borderRadius: BorderRadius.circular(8.rw),
                       color: _filterRecommand
                           ? Color(0xFFFD6661)
                           : Color(0xFF9C9C9C),
@@ -139,7 +139,7 @@ class _MyGroupPageState extends State<MyGroupPage> {
                         key: ValueKey(_filterRecommand),
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 10.sp,
+                          fontSize: 10.rsp,
                         ),
                       ),
                     ),
@@ -164,7 +164,7 @@ class _MyGroupPageState extends State<MyGroupPage> {
         setState(() {});
       },
       body: ListView.separated(
-        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
+        padding: EdgeInsets.symmetric(horizontal: 15.rw, vertical: 10.rw),
         separatorBuilder: (_, __) => 10.hb,
         itemBuilder: (context, index) {
           final model = _models[index];

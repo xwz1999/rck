@@ -52,7 +52,7 @@ class _GuideOrderViewState extends State<GuideOrderView> {
         _refreshController.loadComplete();
       },
       body: ListView.separated(
-        padding: EdgeInsets.all(15.w),
+        padding: EdgeInsets.all(15.rw),
         itemBuilder: (context, index) {
           return GuideOrderCard(model: _models[index]);
         },

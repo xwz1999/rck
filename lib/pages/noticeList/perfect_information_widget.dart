@@ -28,7 +28,7 @@ class _PerfectInformationWidgetState extends State<PerfectInformationWidget> {
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(10)),
           height: ScreenAdapterUtils.setHeight(200),
-          width: ScreenUtil.getInstance().width,
+          width: ScreenUtil().screenWidth,
           margin: EdgeInsets.symmetric(horizontal: rSize(50)),
           padding: EdgeInsets.symmetric(
               horizontal: rSize(10),

@@ -76,8 +76,8 @@ class _ShopCheckViewState extends State<ShopCheckView> {
           15.wb,
           40.hb,
           Container(
-            height: 18.w,
-            width: 2.5.w,
+            height: 18.rw,
+            width: 2.5.rw,
             decoration: BoxDecoration(
               color: Colors.red,
               borderRadius: BorderRadius.circular(3),
@@ -87,7 +87,7 @@ class _ShopCheckViewState extends State<ShopCheckView> {
           '${UserLevelTool.currentRoleLevel()}考核'
               .text
               .bold
-              .size(16.sp)
+              .size(16.rsp)
               .black
               .make(),
           Spacer(),
@@ -108,32 +108,32 @@ class _ShopCheckViewState extends State<ShopCheckView> {
             )}考核。'
                 .text
                 .color(Colors.black45)
-                .size(12.sp)
+                .size(12.rsp)
                 .make()
-                .pOnly(left: 16.w),
+                .pOnly(left: 16.rw),
             2.wb,
             Image.asset(
               R.ASSETS_SHOP_HELPER_PNG,
-              height: 12.w,
-              width: 12.w,
+              height: 12.rw,
+              width: 12.rw,
             ),
           ].row(),
         ),
         '考核目标：店铺销售额${widget.target.toStringAsFixed(0)}元'
             .text
             .color(Colors.black45)
-            .size(12.sp)
+            .size(12.rsp)
             .make()
-            .pSymmetric(h: 16.w),
+            .pSymmetric(h: 16.rw),
         10.hb,
         Container(
-          height: 68.w,
-          width: 68.w,
+          height: 68.rw,
+          width: 68.rw,
           child: CustomPaint(
             child: Image.asset(
               R.ASSETS_SHOP_PAGE_PROGRESS_ICON_MASTER_SALE_PNG,
-              height: 16.w,
-              width: 16.w,
+              height: 16.rw,
+              width: 16.rw,
               color: _themeColor,
             ).centered(),
             painter: ShopCheckPainter(
@@ -145,7 +145,7 @@ class _ShopCheckViewState extends State<ShopCheckView> {
           ),
         ).centered(),
         5.hb,
-        title.text.size(12.sp).black.center.make().centered(),
+        title.text.size(12.rsp).black.center.make().centered(),
         15.hb,
       ],
     )).color(Colors.white).margin(EdgeInsets.only(bottom: 10)).make();

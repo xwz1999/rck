@@ -27,9 +27,9 @@ class GroupInviteCard extends StatelessWidget {
     }
     return Row(
       children: [
-        Image.asset(asset, width: 10.w, height: 10.w),
+        Image.asset(asset, width: 10.rw, height: 10.rw),
         2.wb,
-        displayValue.text.size(11.sp).color(Color(0xFF999999)).make().expand(),
+        displayValue.text.size(11.rsp).color(Color(0xFF999999)).make().expand(),
       ],
     ).expand();
   }
@@ -40,15 +40,15 @@ class GroupInviteCard extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          '确定将'.text.size(14.sp).color(Color(0xFF333333)).center.make(),
+          '确定将'.text.size(14.rsp).color(Color(0xFF333333)).center.make(),
           model.nickname.text
-              .size(14.sp)
+              .size(14.rsp)
               .color(Color(0xFF0080FF))
               .center
               .make(),
           '开设成为您的分销店铺吗?'
               .text
-              .size(14.sp)
+              .size(14.rsp)
               .color(Color(0xFF333333))
               .center
               .make(),
@@ -56,7 +56,7 @@ class GroupInviteCard extends StatelessWidget {
           '确定后，您将获得${model.nickname}店铺销售额的分销店铺补贴，${model.nickname}将享受钻石店铺权益'
               .text
               .center
-              .size(12.sp)
+              .size(12.rsp)
               .color(Color(0xFF333333))
               .make(),
         ],
@@ -94,42 +94,42 @@ class GroupInviteCard extends StatelessWidget {
               children: [
                 Image.asset(
                   R.ASSETS_USER_GROUP_RECOMMEND_BG_PNG,
-                  height: 306.w,
-                  width: 344.w,
+                  height: 306.rw,
+                  width: 344.rw,
                 ),
                 Positioned(
                   left: 0,
                   right: 0,
-                  top: 62.w,
+                  top: 62.rw,
                   child: '恭喜！ ${UserManager.instance.user.info.nickname}'
                       .text
                       .white
-                      .size(16.sp)
+                      .size(16.rsp)
                       .make()
                       .centered(),
                 ),
                 Positioned(
-                  left: 60.w,
-                  right: 60.w,
-                  top: 111.w,
+                  left: 60.rw,
+                  right: 60.rw,
+                  top: 111.rw,
                   child: Column(
                     children: [
                       '您已成功将'
                           .text
                           .color(Color(0xFF333333))
-                          .size(16.sp)
+                          .size(16.rsp)
                           .make()
                           .centered(),
                       '${model.nickname}'
                           .text
                           .color(Color(0xFF008AFF))
-                          .size(16.sp)
+                          .size(16.rsp)
                           .make()
                           .centered(),
                       '开设成为您的分销店铺'
                           .text
                           .color(Color(0xFF333333))
-                          .size(16.sp)
+                          .size(16.rsp)
                           .make()
                           .centered(),
                     ],
@@ -160,19 +160,19 @@ class GroupInviteCard extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(20.w),
+              borderRadius: BorderRadius.circular(20.rw),
               child: FadeInImage.assetNetwork(
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                 image: Api.getImgUrl(model.headImgUrl),
-                height: 40.w,
-                width: 40.w,
+                height: 40.rw,
+                width: 40.rw,
               ),
             ),
             10.hb,
             Image.asset(
               UserLevelTool.getRoleLevelIcon(model.roleLevelEnum),
-              width: 12.w,
-              height: 12.w,
+              width: 12.rw,
+              height: 12.rw,
             ),
           ],
         ),
@@ -181,7 +181,7 @@ class GroupInviteCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             12.hb,
-            itemName.text.black.size(14.sp).make(),
+            itemName.text.black.size(14.rsp).make(),
             8.hb,
             Row(
               children: [
@@ -210,11 +210,11 @@ class GroupInviteCard extends StatelessWidget {
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     minWidth: 0,
                     padding:
-                        EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.w),
+                        EdgeInsets.symmetric(horizontal: 20.rw, vertical: 12.rw),
                     child: Image.asset(
                       R.ASSETS_USER_USER_RECOMMEND_SINGLE_PNG,
-                      height: 17.w,
-                      width: 17.w,
+                      height: 17.rw,
+                      width: 17.rw,
                     ),
                     onPressed: upgradeFunc,
                   )

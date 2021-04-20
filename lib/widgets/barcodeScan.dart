@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_qr_reader/flutter_qr_reader.dart';
 import 'package:flutter_qr_reader/qrcode_reader_view.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:just_audio/just_audio.dart';
 
@@ -13,6 +14,7 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/pages/home/barcode/fail_barcode_page.dart';
 import 'package:recook/pages/home/barcode/photos_fail_barcode_page.dart';
+import 'package:recook/pages/home/barcode/qr_scaner_result_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/image_utils.dart';
@@ -112,8 +114,9 @@ class _BarcodeScanPageState extends BaseStoreState<BarcodeScanPage> {
       _key.currentState.stopScan();
       Future.delayed(Duration(milliseconds: 500), () {
         _getGoodsWithCode(data, (goodsId) {
-          AppRouter.pushAndReplaced(globalContext, RouteName.COMMODITY_PAGE,
-              arguments: CommodityDetailPage.setArguments(int.parse(goodsId)));
+          Get.to(() => QRScarerResultPage());
+          // AppRouter.pushAndReplaced(globalContext, RouteName.COMMODITY_PAGE,
+          //     arguments: CommodityDetailPage.setArguments(int.parse(goodsId)));
           return;
         }, image: image);
       });

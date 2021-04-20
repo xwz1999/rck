@@ -48,7 +48,7 @@ class _BusinessPageState extends State<BusinessPage> with TickerProviderStateMix
       child: Column(
         children: <Widget>[
           Container(
-            height: ScreenUtil.statusBarHeight,
+            height: ScreenUtil().statusBarHeight,
             color: Colors.white,
           ),
           TabBar(

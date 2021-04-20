@@ -42,7 +42,7 @@ class _ShopPageSelfIncomeWidgetState extends ShopPageIncomeWidgetState<ShopPageS
             children: <Widget>[
               Positioned(
                 left: 0, right: 0, top: 0,
-                height: 200/375*ScreenUtil.screenWidthDp,
+                height: 200/375*ScreenUtil().screenWidth,
                 child: Image.asset(ShopImageName.income_appbar_bg, fit: BoxFit.fill,),
               ),
               Column(

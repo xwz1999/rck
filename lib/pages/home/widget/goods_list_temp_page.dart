@@ -106,8 +106,8 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> {
               fit: BoxFit.fill,
             ),
             Positioned(
-              top: ScreenUtil.statusBarHeight + (kToolbarHeight - 24) / 2,
-              left: (ScreenUtil.screenWidthDp - 117) / 2,
+              top: ScreenUtil().statusBarHeight + (kToolbarHeight - 24) / 2,
+              left: (ScreenUtil().screenWidth - 117) / 2,
               child: Container(
                 width: 117,
                 height: 24,
@@ -122,7 +122,7 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> {
             Positioned(
               child: _backButton(context),
               left: 0,
-              top: ScreenUtil.statusBarHeight,
+              top: ScreenUtil().statusBarHeight,
             )
           ],
         ));
@@ -148,7 +148,7 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> {
     return Container(
       child: ListView.builder(
         padding: EdgeInsets.only(
-            left: 0, top: 0, right: 0, bottom: ScreenUtil.bottomBarHeight),
+            left: 0, top: 0, right: 0, bottom: ScreenUtil().bottomBarHeight),
         itemBuilder: (_, index) {
           return GestureDetector(
             onTap: () {

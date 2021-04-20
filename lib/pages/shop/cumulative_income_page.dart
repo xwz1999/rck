@@ -114,7 +114,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
             left: 0,
             right: 0,
             top: 0,
-            height: 200 / 375 * ScreenUtil.screenWidthDp,
+            height: 200 / 375 * ScreenUtil().screenWidth,
             child: Image.asset(
               ShopImageName.income_appbar_bg,
               fit: BoxFit.fill,
@@ -202,7 +202,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
   }
 
   _barWidget() {
-    double width = ScreenUtil.screenWidthDp - 30;
+    double width = ScreenUtil().screenWidth - 30;
     double height = 170.0 / 345 * width;
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 15),
@@ -229,7 +229,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
             ),
           ),
           ClipRRect(
-            borderRadius: BorderRadius.circular(5.w),
+            borderRadius: BorderRadius.circular(5.rw),
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 20),
               decoration: BoxDecoration(
@@ -253,8 +253,8 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
                     padding: EdgeInsets.zero,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
-                      crossAxisSpacing: 10.w,
-                      mainAxisSpacing: 5.w,
+                      crossAxisSpacing: 10.rw,
+                      mainAxisSpacing: 5.rw,
                       childAspectRatio: 110 / 70,
                     ),
                     shrinkWrap: true,
@@ -330,8 +330,8 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
           ).box.withShadow([
             BoxShadow(
               color: Color(0x8FA6A6AD),
-              offset: Offset(0, 2.w),
-              blurRadius: 6.w,
+              offset: Offset(0, 2.rw),
+              blurRadius: 6.rw,
             )
           ]).make(),
         ],
@@ -363,7 +363,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
           ].row(),
           DashedRect(
             color: Color(0xFFE6E6E6),
-          ).pSymmetric(h: 15.w),
+          ).pSymmetric(h: 15.rw),
           _models.isEmpty
               ? Container(
                   width: 140,
@@ -390,11 +390,11 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        title.text.size(12.sp).color(Color(0xFF666666)).make(),
+        title.text.size(12.rsp).color(Color(0xFF666666)).make(),
         4.hb,
         isSettlement
-            ? value.text.size(12.sp).color(Color(0xFF666666)).make()
-            : '未结算'.text.size(14.sp).color(Color(0xFFD5101A)).make(),
+            ? value.text.size(12.rsp).color(Color(0xFF666666)).make()
+            : '未结算'.text.size(14.rsp).color(Color(0xFFD5101A)).make(),
       ],
     );
   }
@@ -440,17 +440,17 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
                     .text
                     .black
                     .bold
-                    .size(14.sp)
+                    .size(14.rsp)
                     .make(),
-                '月'.text.black.size(10.sp).make(),
+                '月'.text.black.size(10.rsp).make(),
                 Spacer(),
-                '总收益:'.text.color(Color(0xFF999999)).size(12.sp).make(),
+                '总收益:'.text.color(Color(0xFF999999)).size(12.rsp).make(),
                 ((model?.isSettlement ?? true)
                         ? ((model?.allAmount ?? 0).toStringAsFixed(2))
                         : '未结算')
                     .text
                     .color(Color(0xFFD5101A))
-                    .size(12.sp)
+                    .size(12.rsp)
                     .make(),
               ],
             ),
@@ -489,35 +489,35 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
         ),
       )
           .color(Color(0xFFF7F8FA))
-          .padding(EdgeInsets.all(15.w))
-          .margin(EdgeInsets.symmetric(horizontal: 30.w))
-          .withRounded(value: 5.w)
+          .padding(EdgeInsets.all(15.rw))
+          .margin(EdgeInsets.symmetric(horizontal: 30.rw))
+          .withRounded(value: 5.rw)
           .make(),
       isFirst
           ? SizedBox()
           : Positioned(
-              left: 40.w,
-              top: -30.w,
+              left: 40.rw,
+              top: -30.rw,
               child: Container(
-                height: 40.w,
-                width: 3.w,
+                height: 40.rw,
+                width: 3.rw,
                 decoration: BoxDecoration(
                   color: Color(0xFFD5101A),
-                  borderRadius: BorderRadius.circular(3.w),
+                  borderRadius: BorderRadius.circular(3.rw),
                 ),
               ),
             ),
       isFirst
           ? SizedBox()
           : Positioned(
-              right: 40.w,
-              top: -30.w,
+              right: 40.rw,
+              top: -30.rw,
               child: Container(
-                height: 40.w,
-                width: 3.w,
+                height: 40.rw,
+                width: 3.rw,
                 decoration: BoxDecoration(
                   color: Color(0xFFD5101A),
-                  borderRadius: BorderRadius.circular(3.w),
+                  borderRadius: BorderRadius.circular(3.rw),
                 ),
               ),
             ),
@@ -525,7 +525,7 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
   }
   //TODO remove bottom code
   // _infoWidget() {
-  //   double width = ScreenUtil.screenWidthDp;
+  //   double width = ScreenUtil().screenWidth;
   //   double height = 140 * width / 375;
   //   return Container(
   //     constraints: BoxConstraints(
@@ -840,15 +840,15 @@ _buildGridColumn(
     child: Align(
       child: <Widget>[
         [
-          title.text.color(Color(0xff3a3943)).size(14.sp).make(),
+          title.text.color(Color(0xff3a3943)).size(14.rsp).make(),
           CustomImageButton(
             child: Image.asset(R.ASSETS_SHOP_HELPER_PNG,
-                width: 12.w, height: 12.w),
+                width: 12.rw, height: 12.rw),
             onPressed: () => _openQuestDialog(index, title, context),
           ),
         ].row(),
         3.hb,
-        value.text.color(Color(0xFF333333)).size(20.sp).make(),
+        value.text.color(Color(0xFF333333)).size(20.rsp).make(),
       ].column(
         crossAlignment: CrossAxisAlignment.start,
         alignment: MainAxisAlignment.center,

@@ -33,18 +33,18 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                 onPressed: () => push(RouteName.USER_INFO_PAGE),
                 child: DecoratedBox(
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30.w),
+                    borderRadius: BorderRadius.circular(30.rw),
                     border: Border.all(
-                      width: 1.w,
+                      width: 1.rw,
                       color: Color(0x8F979797),
                     ),
                   ),
                   position: DecorationPosition.foreground,
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(30.w),
+                    borderRadius: BorderRadius.circular(30.rw),
                     child: FadeInImage.assetNetwork(
-                      height: 60.w,
-                      width: 60.w,
+                      height: 60.rw,
+                      width: 60.rw,
                       placeholder: AppImageName.placeholder_1x1,
                       image: TextUtils.isEmpty(
                               UserManager.instance.user.info.headImgUrl)
@@ -59,7 +59,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
               '${UserManager.instance.user.info.nickname}'
                   .text
                   .color(Color(0xFF333333))
-                  .size(20.sp)
+                  .size(20.rsp)
                   .bold
                   .make(),
               10.hb,
@@ -121,8 +121,8 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                 },
                 child: Image.asset(
                   UserLevelTool.cardBadge(UserLevelTool.currentRoleLevelEnum()),
-                  width: 55.w,
-                  height: 55.w,
+                  width: 55.rw,
+                  height: 55.rw,
                 ),
               ),
               4.hb,
@@ -135,7 +135,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
           'NO.${UserManager.instance.indentifier}'
               .text
               .color(Color(0xFF333333))
-              .size(10.sp)
+              .size(10.rsp)
               .bold
               .make(),
           Spacer(),
@@ -160,7 +160,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
           '(${UserLevelTool.currentRoleLevel()})'
               .text
               .color(Color(0xFF333333))
-              .size(12.sp)
+              .size(12.rsp)
               .make(),
         ],
       ),
@@ -172,25 +172,25 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
     return Stack(
       children: [
         SizedBox(
-          height: 180.w + ScreenUtil.statusBarHeight,
+          height: 180.rw + ScreenUtil().statusBarHeight,
           child: Image.asset(
             R.ASSETS_USER_USER_APP_BAR_BG_WEBP,
             fit: BoxFit.cover,
           ),
         ),
         Positioned(
-          left: 6.w,
-          right: 6.w,
-          bottom: 5.w,
+          left: 6.rw,
+          right: 6.rw,
+          bottom: 5.rw,
           child: Image.asset(
             UserLevelTool.userCardBackground,
             fit: BoxFit.cover,
           ),
         ),
         Positioned(
-          left: 30.w,
-          right: 30.w,
-          bottom: 24.w,
+          left: 30.rw,
+          right: 30.rw,
+          bottom: 24.rw,
           child: _buildInnerInfo(),
         ),
       ],

@@ -19,14 +19,14 @@ class BussinessCooperationPage extends StatelessWidget {
       body: ListView(
         children: [
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
+            padding: EdgeInsets.symmetric(horizontal: 15.rw, vertical: 10.rw),
             child: Image.asset(
               R.ASSETS_BUSINESS_COOPERATION_WEBP,
               fit: BoxFit.fitWidth,
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
+            padding: EdgeInsets.symmetric(horizontal: 15.rw, vertical: 10.rw),
             color: Colors.white,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -40,7 +40,7 @@ class BussinessCooperationPage extends StatelessWidget {
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF333333),
-                    fontSize: 14.sp,
+                    fontSize: 14.rsp,
                   ),
                 ),
                 10.hb,
@@ -50,7 +50,7 @@ class BussinessCooperationPage extends StatelessWidget {
 邮箱：Dora@cn-recook.com''',
                   style: TextStyle(
                     color: Color(0xFF333333),
-                    fontSize: 12.sp,
+                    fontSize: 12.rsp,
                   ),
                 ),
               ],

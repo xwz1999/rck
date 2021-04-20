@@ -24,11 +24,11 @@ class UpgradeUseResultPage extends StatelessWidget {
           70.hb,
           Image.asset(
             result ? R.ASSETS_RESULT_SUCCESS_PNG : R.ASSETS_RESULT_FAIL_PNG,
-            width: 68.w,
-            height: 68.w,
+            width: 68.rw,
+            height: 68.rw,
           ),
           10.hb,
-          content.text.size(18.sp).black.make().centered(),
+          content.text.size(18.rsp).black.make().centered(),
         ],
       ),
     );

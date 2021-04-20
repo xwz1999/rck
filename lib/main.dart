@@ -9,6 +9,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter_bugly/flutter_bugly.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -226,28 +227,31 @@ class MyAppState extends State<MyApp> {
         store: store,
         child: StoreBuilder<RecookState>(builder: (context, store) {
           return OKToast(
-            child: GetMaterialApp(
-              builder: BotToastInit(),
-              navigatorObservers: [BotToastNavigatorObserver()],
-              localizationsDelegates: [
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                CommonLocalizationsDelegate(),
-              ],
-              supportedLocales: [
-                const Locale('zh', 'CN'),
-                const Locale('en', 'US'),
-              ],
-              title: 'Recook',
-              debugShowCheckedModeBanner: false,
-              // 设置这一属性即可
-              checkerboardOffscreenLayers: false,
-              // 使用了saveLayer的图形会显示为棋盘格式并随着页面刷新而闪烁
-              checkerboardRasterCacheImages: false,
-              // 做了缓存的静态图片在刷新页面时不会改变棋盘格的颜色；如果棋盘格颜色变了说明被重新缓存了，这是我们要避免的
-              theme: store.state.themeData,
-              home: LaunchWidget(),
-              onGenerateRoute: onGenerateRoute,
+            child: ScreenUtilInit(
+              designSize: Size(750, 1334),
+              builder: () => GetMaterialApp(
+                builder: BotToastInit(),
+                navigatorObservers: [BotToastNavigatorObserver()],
+                localizationsDelegates: [
+                  GlobalMaterialLocalizations.delegate,
+                  GlobalWidgetsLocalizations.delegate,
+                  CommonLocalizationsDelegate(),
+                ],
+                supportedLocales: [
+                  const Locale('zh', 'CN'),
+                  const Locale('en', 'US'),
+                ],
+                title: 'Recook',
+                debugShowCheckedModeBanner: false,
+                // 设置这一属性即可
+                checkerboardOffscreenLayers: false,
+                // 使用了saveLayer的图形会显示为棋盘格式并随着页面刷新而闪烁
+                checkerboardRasterCacheImages: false,
+                // 做了缓存的静态图片在刷新页面时不会改变棋盘格的颜色；如果棋盘格颜色变了说明被重新缓存了，这是我们要避免的
+                theme: store.state.themeData,
+                home: LaunchWidget(),
+                onGenerateRoute: onGenerateRoute,
+              ),
             ),
           );
         }));

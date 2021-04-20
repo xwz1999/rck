@@ -295,7 +295,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     super.build(context);
 
     screenWidth = MediaQuery.of(context).size.width;
-    weatherHeight = (76 + ScreenUtil.statusBarHeight);
+    weatherHeight = (76 + ScreenUtil().statusBarHeight);
     bannerHeight = (screenWidth - 20) / 2.34;
     t1Height = (screenWidth - 20) * 0.3429;
     t23Height = ((screenWidth - 28) / 2) * 0.5 + 10;
@@ -341,7 +341,7 @@ class _HomePageState extends BaseStoreState<HomePage>
               child: RefreshWidget(
                 header: HomeGifHeader(),
                 isInNest: true,
-                headerTriggerDistance: ScreenUtil.statusBarHeight,
+                headerTriggerDistance: ScreenUtil().statusBarHeight,
                 color: Colors.black,
                 controller: _gsRefreshController,
                 onRefresh: () async {
@@ -567,7 +567,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     rSize(62) +
                     timeHeight +
                     tabbarHeight -
-                    ScreenUtil.statusBarHeight -
+                    ScreenUtil().statusBarHeight -
                     tabbarHeight +
                     4
                 : weatherHeight +
@@ -579,7 +579,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     rSize(62) +
                     timeHeight +
                     tabbarHeight -
-                    ScreenUtil.statusBarHeight +
+                    ScreenUtil().statusBarHeight +
                     4,
             flexibleSpace: _flexibleSpaceBar(context),
             bottom: _promotionList == null || _promotionList.length == 0
@@ -1366,7 +1366,7 @@ class _HomePageState extends BaseStoreState<HomePage>
             t4Height +
             timeHeight +
             tabbarHeight -
-            ScreenUtil.statusBarHeight -
+            ScreenUtil().statusBarHeight -
             tabbarHeight -
             kToolbarHeight;
         double offset = _sliverListController.offset;
@@ -1467,7 +1467,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         firstTag = true;
         await showDialog(
           context: context,
-          builder:(context)=> Center(
+          builder: (context) => Center(
             child: GestureDetector(
               onTap: () => Navigator.pop(context),
               child: Image.asset(R.ASSETS_USER_BE_THE_MASTER_WEBP),
@@ -1518,7 +1518,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       if (img != null && !firstTag) {
         await showDialog(
           context: context,
-          builder:(context)=> Center(
+          builder: (context) => Center(
             child: GestureDetector(
               onTap: () => Navigator.pop(context),
               child: Padding(
@@ -1586,16 +1586,16 @@ class _HomePageState extends BaseStoreState<HomePage>
               Get.back();
             },
             child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 50.w),
+              margin: EdgeInsets.symmetric(horizontal: 50.rw),
               child: Center(
                   child: Material(
                 color: Colors.transparent,
                 child: Transform.translate(
-                  offset: Offset(0, 20.w),
+                  offset: Offset(0, 20.rw),
                   child: Text(
                     '您有$result已退至您的卡包',
                     style: TextStyle(
-                      fontSize: 14.sp,
+                      fontSize: 14.rsp,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),

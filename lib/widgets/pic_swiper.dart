@@ -36,9 +36,10 @@ class PicSwiper extends StatefulWidget {
   // final List<PicSwiperItem> pics;
   final Map arguments;
   const PicSwiper({Key key, this.arguments});
-  static setArguments({int index, List<PicSwiperItem> pics}){
+  static setArguments({int index, List<PicSwiperItem> pics}) {
     return {"index": index, "pics": pics};
   }
+
   @override
   _PicSwiperState createState() => _PicSwiperState();
 }
@@ -170,12 +171,11 @@ class _PicSwiperState extends State<PicSwiper>
                   return Hero(
                     tag: item + index.toString(),
                     child: image,
-                    flightShuttleBuilder: (
-                      BuildContext flightContext,
-                      Animation<double> animation,
-                      HeroFlightDirection flightDirection,
-                      BuildContext fromHeroContext,
-                      BuildContext toHeroContext) {
+                    flightShuttleBuilder: (BuildContext flightContext,
+                        Animation<double> animation,
+                        HeroFlightDirection flightDirection,
+                        BuildContext fromHeroContext,
+                        BuildContext toHeroContext) {
                       final Hero hero =
                           flightDirection == HeroFlightDirection.pop
                               ? fromHeroContext.widget
@@ -210,8 +210,11 @@ class _PicSwiperState extends State<PicSwiper>
                   bottom: 0.0,
                   left: 0.0,
                   right: 0.0,
-                  child:
-                      MySwiperPlugin(widget.arguments["pics"], currentIndex, rebuildIndex,),
+                  child: MySwiperPlugin(
+                    widget.arguments["pics"],
+                    currentIndex,
+                    rebuildIndex,
+                  ),
                 );
               },
               initialData: true,
@@ -251,7 +254,11 @@ class MySwiperPlugin extends StatelessWidget {
   final List<PicSwiperItem> pics;
   final int index;
   final StreamController<int> reBuild;
-  MySwiperPlugin(this.pics, this.index, this.reBuild,);
+  MySwiperPlugin(
+    this.pics,
+    this.index,
+    this.reBuild,
+  );
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<int>(
@@ -259,17 +266,16 @@ class MySwiperPlugin extends StatelessWidget {
         return DefaultTextStyle(
           style: TextStyle(color: Colors.blue),
           child: Container(
-            height: 50.0+ScreenUtil.bottomBarHeight,
-            alignment: Alignment.topCenter,
-            width: double.infinity,
-            color: Colors.grey.withOpacity(0.2),
-            child: Container(
-              height: 50.0,
-              child: Row(
-                children: _rowContainer(data,context),
-              ),
-            )
-          ),
+              height: 50.0 + ScreenUtil().bottomBarHeight,
+              alignment: Alignment.topCenter,
+              width: double.infinity,
+              color: Colors.grey.withOpacity(0.2),
+              child: Container(
+                height: 50.0,
+                child: Row(
+                  children: _rowContainer(data, context),
+                ),
+              )),
         );
       },
       initialData: index,
@@ -277,7 +283,7 @@ class MySwiperPlugin extends StatelessWidget {
     );
   }
 
-  _rowContainer(data, context){
+  _rowContainer(data, context) {
     return <Widget>[
       Container(
         width: 10.0,
@@ -308,21 +314,19 @@ class MySwiperPlugin extends StatelessWidget {
         onTap: () {
           GSDialog.of(context).showLoadingDialog(context, "保存图片中...");
           List<String> urls = [pics[data.data].picUrl];
-          ImageUtils.saveNetworkImagesToPhoto(
-            urls, 
-            (index){
-              DPrint.printf("保存好了---${urls[index]}");
-              DPrint.printf("保存好了---$index");
-            },
-            (success){
-              GSDialog.of(context).dismiss(context);
-              success ? GSDialog.of(context).showSuccess(context, "保存完成!") : GSDialog.of(context).showError(context, "保存失败...");
-            });
+          ImageUtils.saveNetworkImagesToPhoto(urls, (index) {
+            DPrint.printf("保存好了---${urls[index]}");
+            DPrint.printf("保存好了---$index");
+          }, (success) {
+            GSDialog.of(context).dismiss(context);
+            success
+                ? GSDialog.of(context).showSuccess(context, "保存完成!")
+                : GSDialog.of(context).showError(context, "保存失败...");
+          });
         },
       ),
     ];
   }
-
 }
 
 class PicSwiperItem {

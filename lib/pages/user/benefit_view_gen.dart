@@ -57,32 +57,32 @@ class _BenefitViewGenState extends State<BenefitViewGen>
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                '预估收益(瑞币)'.text.color(Colors.black45).size(16.sp).make(),
+                '预估收益(瑞币)'.text.color(Colors.black45).size(16.rsp).make(),
                 (card.benefit ?? 0.0)
                     .toStringAsFixed(2)
                     .text
                     .black
-                    .size(34.sp)
+                    .size(34.rsp)
                     .bold
                     .make(),
               ],
             ).expand(),
             Image.asset(
               UserLevelTool.currentMedalImagePath(),
-              height: 55.w,
-              width: 55.w,
+              height: 55.rw,
+              width: 55.rw,
             ),
           ],
         ),
         Spacer(),
         <Widget>[
           <Widget>[
-            '销售额'.text.color(Colors.black45).size(16.sp).make(),
+            '销售额'.text.color(Colors.black45).size(16.rsp).make(),
             (card.sales ?? 0.0)
                 .toStringAsFixed(2)
                 .text
                 .black
-                .size(24.sp)
+                .size(24.rsp)
                 .make(),
           ].column(crossAlignment: CrossAxisAlignment.start),
           Spacer(),
@@ -90,62 +90,62 @@ class _BenefitViewGenState extends State<BenefitViewGen>
             (card.isPercent ? '提成比例(%)' : '订单数(笔)')
                 .text
                 .color(Colors.black45)
-                .size(16.sp)
+                .size(16.rsp)
                 .make(),
             (card.isPercent ? ((card.count ?? 0) * 100) : (card.count ?? 0))
                 .toString()
                 .text
                 .black
-                .size(24.sp)
+                .size(24.rsp)
                 .make(),
           ].column(),
         ].row(),
       ].column(),
     )
-        .padding(EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.w))
+        .padding(EdgeInsets.symmetric(horizontal: 20.rw, vertical: 15.rw))
         .withDecoration(
           BoxDecoration(
-            borderRadius: BorderRadius.circular(5.w),
+            borderRadius: BorderRadius.circular(5.rw),
             image: DecorationImage(
               image: AssetImage(UserLevelTool.currentCardImagePath()),
               fit: BoxFit.cover,
             ),
           ),
         )
-        .margin(EdgeInsets.symmetric(horizontal: 15.w))
+        .margin(EdgeInsets.symmetric(horizontal: 15.rw))
         .make();
   }
 
   _buildBackBar() {
     return Container(
-      height: 10.w,
+      height: 10.rw,
       width: double.infinity,
       alignment: Alignment.center,
-      margin: EdgeInsets.symmetric(horizontal: 7.w),
+      margin: EdgeInsets.symmetric(horizontal: 7.rw),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 2.w),
+            offset: Offset(0, 2.rw),
             color: Colors.black.withOpacity(0.24),
-            blurRadius: 4.w,
+            blurRadius: 4.rw,
           ),
         ],
         color: Color(0xFFE3E3E3),
-        borderRadius: BorderRadius.circular(5.w),
+        borderRadius: BorderRadius.circular(5.rw),
       ),
       child: Container(
-        height: 4.w,
-        margin: EdgeInsets.symmetric(horizontal: 4.w),
+        height: 4.rw,
+        margin: EdgeInsets.symmetric(horizontal: 4.rw),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 2.w),
+              offset: Offset(0, 2.rw),
               color: Colors.black.withOpacity(0.39),
-              blurRadius: 4.w,
+              blurRadius: 4.rw,
             ),
           ],
           color: Color(0xFFBBBBBB),
-          borderRadius: BorderRadius.circular(5.w),
+          borderRadius: BorderRadius.circular(5.rw),
         ),
       ),
     );
@@ -305,9 +305,9 @@ class _BenefitViewGenState extends State<BenefitViewGen>
     return <Widget>[
       _buildBackBar(),
       Positioned(
-        top: 6.w,
-        left: 16.w,
-        right: 16.w,
+        top: 6.rw,
+        left: 16.rw,
+        right: 16.rw,
         bottom: 0,
         child: SingleChildScrollView(
           child: [
@@ -320,14 +320,14 @@ class _BenefitViewGenState extends State<BenefitViewGen>
                       15.wb,
                       '团队贡献榜'
                           .text
-                          .size(14.sp)
+                          .size(14.rsp)
                           .color(Color(0xFF333333))
                           .bold
                           .make(),
                       Spacer(),
                       '团队人数:${team?.length ?? 0}'
                           .text
-                          .size(14.sp)
+                          .size(14.rsp)
                           .color(Color(0xFF333333))
                           .bold
                           .make(),
@@ -343,12 +343,12 @@ class _BenefitViewGenState extends State<BenefitViewGen>
                         child: AnimatedRotate(
                           child: Image.asset(
                             R.ASSETS_ASCSORT_PNG,
-                            height: 15.w,
-                            width: 15.w,
+                            height: 15.rw,
+                            width: 15.rw,
                           ),
                           angle: _itemReverse ? 0 : pi,
                         ),
-                        padding: EdgeInsets.symmetric(horizontal: 15.w),
+                        padding: EdgeInsets.symmetric(horizontal: 15.rw),
                       ),
                     ],
                   ),
@@ -378,12 +378,12 @@ class _BenefitViewGenState extends State<BenefitViewGen>
             )
                 .withDecoration(BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(5.w),
+                  borderRadius: BorderRadius.circular(5.rw),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.10),
-                      blurRadius: 4.w,
-                      offset: Offset(0, 2.w),
+                      blurRadius: 4.rw,
+                      offset: Offset(0, 2.rw),
                     ),
                   ],
                 ))
@@ -399,13 +399,13 @@ class _BenefitViewGenState extends State<BenefitViewGen>
   _buildTable(UserBenefitMonthExpectModel model) {
     _buildTitle(String title, {bool red = false, bool bold = false}) {
       return title.text
-          .size(14.sp)
+          .size(14.rsp)
           .color(red ? Color(0xFFD5101A) : Color(0xFF333333))
           .fontWeight(bold ? FontWeight.bold : FontWeight.normal)
           .make()
           .centered()
           .box
-          .height(45.w)
+          .height(45.rw)
           .make();
     }
 
@@ -486,11 +486,11 @@ class _BenefitViewGenState extends State<BenefitViewGen>
       body: Column(
         children: [
           SizedBox(
-            height: 212.w,
+            height: 212.rw,
             child: Stack(
               children: [
                 CustomPaint(
-                  size: Size.fromHeight(197.w),
+                  size: Size.fromHeight(197.rw),
                   painter: RoundBackgroundPainter(),
                 ),
                 Column(
@@ -547,12 +547,12 @@ class __BenefitTabBarState extends State<_BenefitTabBar> {
       },
       child: AnimatedContainer(
         duration: Duration(milliseconds: 300),
-        height: 22.w,
-        width: 60.w,
+        height: 22.rw,
+        width: 60.rw,
         alignment: Alignment.center,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.white, width: 1.w),
-          borderRadius: BorderRadius.circular(11.w),
+          border: Border.all(color: Colors.white, width: 1.rw),
+          borderRadius: BorderRadius.circular(11.rw),
           color: _getColor(index, widget.tabController.animation.value),
         ),
         child: DefaultTextStyle(
@@ -588,7 +588,7 @@ class __BenefitTabBarState extends State<_BenefitTabBar> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40.w,
+      height: 40.rw,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: List.generate(

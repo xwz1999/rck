@@ -28,7 +28,7 @@ class _UserPageTeamIncomeWidgetState
     extends ShopPageIncomeWidgetState<UserPageTeamIncomeWidget> {
   String _selectTime = "";
   UserTeamIncomeModel _incomeModel;
-  
+
   @override
   void initState() {
     super.initState();
@@ -54,7 +54,7 @@ class _UserPageTeamIncomeWidgetState
               //   left: 0,
               //   top: 0,
               //   right: 0,
-              //   height: 170.0 / 345 * (ScreenUtil.screenWidthDp - 30) + 30,
+              //   height: 170.0 / 345 * (ScreenUtil().screenWidth - 30) + 30,
               //   child: Container(
               //     color: AppColor.blackColor,
               //   ),
@@ -136,7 +136,7 @@ class _UserPageTeamIncomeWidgetState
 
   _buildCard() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.w),
+      padding: EdgeInsets.symmetric(horizontal: 20.rw, vertical: 15.rw),
       child: Column(
         children: [
           Row(
@@ -144,21 +144,21 @@ class _UserPageTeamIncomeWidgetState
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  '累计收益(瑞币)'.text.color(Colors.black54).size(16.sp).make(),
+                  '累计收益(瑞币)'.text.color(Colors.black54).size(16.rsp).make(),
                   (_incomeModel?.data?.teamIncome?.historyIncome
                               ?.toStringAsFixed(2) ??
                           '0.00')
                       .text
                       .color(Color(0xFF333333))
-                      .size(34.sp)
+                      .size(34.rsp)
                       .make(),
                 ],
               ),
               Spacer(),
               Image.asset(
                 UserLevelTool.currentMedalImagePath(),
-                height: 55.w,
-                width: 55.w,
+                height: 55.rw,
+                width: 55.rw,
               ),
             ],
           ),
@@ -168,24 +168,24 @@ class _UserPageTeamIncomeWidgetState
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  '销售额(元)'.text.color(Colors.black54).size(16.sp).make(),
+                  '销售额(元)'.text.color(Colors.black54).size(16.rsp).make(),
                   (_incomeModel?.data?.teamIncome?.teamAmount
                               ?.toStringAsFixed(2) ??
                           '0.00')
                       .text
                       .color(Color(0xFF333333))
-                      .size(24.sp)
+                      .size(24.rsp)
                       .make(),
                 ],
               ),
               Spacer(),
               Column(
                 children: [
-                  '团队人数(人)'.text.color(Colors.black54).size(16.sp).make(),
+                  '团队人数(人)'.text.color(Colors.black54).size(16.rsp).make(),
                   (_incomeModel?.data?.teamIncome?.memberNum?.toString() ?? '0')
                       .text
                       .color(Color(0xFF333333))
-                      .size(24.sp)
+                      .size(24.rsp)
                       .make(),
                 ],
               ),
@@ -194,12 +194,12 @@ class _UserPageTeamIncomeWidgetState
         ],
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.w),
+        borderRadius: BorderRadius.circular(5.rw),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 2.w),
+            offset: Offset(0, 2.rw),
             color: Color.fromRGBO(166, 166, 173, 0.43),
-            blurRadius: 6.w,
+            blurRadius: 6.rw,
           )
         ],
         image: DecorationImage(
@@ -207,45 +207,45 @@ class _UserPageTeamIncomeWidgetState
           fit: BoxFit.cover,
         ),
       ),
-      height: 170.w,
+      height: 170.rw,
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
+      margin: EdgeInsets.symmetric(horizontal: 15.rw, vertical: 10.rw),
     );
   }
 
   _buildMidCard() {
     return VxBox(
             child: <Widget>[
-      '团队收益(元)'.text.color(Colors.black54).size(18.sp).make(),
+      '团队收益(元)'.text.color(Colors.black54).size(18.rsp).make(),
       6.hb,
       (_incomeModel?.data?.incomeDetail?.income?.toStringAsFixed(2) ?? '0.00')
           .text
           .color(Color(0xFF333333))
-          .size(24.sp)
+          .size(24.rsp)
           .make(),
       36.hb,
       Row(
         children: [
           Column(
             children: [
-              '销售额(元)'.text.color(Colors.black54).size(14.sp).make(),
+              '销售额(元)'.text.color(Colors.black54).size(14.rsp).make(),
               (_incomeModel?.data?.incomeDetail?.amount?.toStringAsFixed(2) ??
                       '0.00')
                   .text
                   .color(Color(0xFF333333))
-                  .size(16.sp)
+                  .size(16.rsp)
                   .make()
             ],
           ),
           Spacer(),
           Column(
             children: [
-              '提成比例(%)'.text.color(Colors.black54).size(14.sp).make(),
+              '提成比例(%)'.text.color(Colors.black54).size(14.rsp).make(),
               (_incomeModel?.data?.incomeDetail?.percent?.toStringAsFixed(2) ??
                       '0.00')
                   .text
                   .color(Color(0xFF333333))
-                  .size(16.sp)
+                  .size(16.rsp)
                   .make()
             ],
           ),
@@ -254,15 +254,15 @@ class _UserPageTeamIncomeWidgetState
     ].column(
       crossAlignment: CrossAxisAlignment.start,
     ))
-        .padding(EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.w))
+        .padding(EdgeInsets.symmetric(horizontal: 15.rw, vertical: 20.rw))
         .margin(EdgeInsets.symmetric(horizontal: 15))
         .color(Colors.white)
-        .withRounded(value: 5.w)
+        .withRounded(value: 5.rw)
         .make();
   }
 
   _pageWidget() {
-    double width = ScreenUtil.screenWidthDp;
+    double width = ScreenUtil().screenWidth;
     double height = 170 * width / 375;
     return Container(
         constraints: BoxConstraints(

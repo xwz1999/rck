@@ -74,7 +74,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
   ///头部卡片
   Widget _buildCard() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.w),
+      padding: EdgeInsets.symmetric(horizontal: 20.rw, vertical: 15.rw),
       child: Column(
         children: [
           Row(
@@ -87,16 +87,16 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
                           : '累计收益(瑞币)')
                       .text
                       .color(Colors.black54)
-                      .size(16.sp)
+                      .size(16.rsp)
                       .make(),
-                  _amount.text.color(Color(0xFF333333)).size(34.sp).make(),
+                  _amount.text.color(Color(0xFF333333)).size(34.rsp).make(),
                 ],
               ),
               Spacer(),
               Image.asset(
                 UserLevelTool.currentMedalImagePath(),
-                height: 55.w,
-                width: 55.w,
+                height: 55.rw,
+                width: 55.rw,
               ),
             ],
           ),
@@ -106,8 +106,11 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  '销售额(元)'.text.color(Colors.black54).size(16.sp).make(),
-                  _salesVolume.text.color(Color(0xFF333333)).size(24.sp).make(),
+                  '销售额(元)'.text.color(Colors.black54).size(16.rsp).make(),
+                  _salesVolume.text
+                      .color(Color(0xFF333333))
+                      .size(24.rsp)
+                      .make(),
                 ],
               ),
               Spacer(),
@@ -116,9 +119,9 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
                   (!_notSelfNotGUide ? '订单数(笔)' : '团队人数(人)')
                       .text
                       .color(Colors.black54)
-                      .size(16.sp)
+                      .size(16.rsp)
                       .make(),
-                  _count.text.color(Color(0xFF333333)).size(24.sp).make(),
+                  _count.text.color(Color(0xFF333333)).size(24.rsp).make(),
                 ],
               ),
             ],
@@ -126,12 +129,12 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
         ],
       ),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5.w),
+        borderRadius: BorderRadius.circular(5.rw),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 2.w),
+            offset: Offset(0, 2.rw),
             color: Color.fromRGBO(166, 166, 173, 0.43),
-            blurRadius: 6.w,
+            blurRadius: 6.rw,
           )
         ],
         image: DecorationImage(
@@ -139,9 +142,9 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
           fit: BoxFit.cover,
         ),
       ),
-      height: 170.w,
+      height: 170.rw,
       width: double.infinity,
-      margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.w),
+      margin: EdgeInsets.symmetric(horizontal: 15.rw, vertical: 10.rw),
     );
   }
 
@@ -212,23 +215,23 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
         ].row(),
       ].column(crossAlignment: CrossAxisAlignment.start),
     )
-        .withRounded(value: 5.w)
+        .withRounded(value: 5.rw)
         .white
-        .padding(EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.w))
-        .margin(EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.w))
+        .padding(EdgeInsets.symmetric(horizontal: 15.rw, vertical: 20.rw))
+        .margin(EdgeInsets.symmetric(horizontal: 16.rw, vertical: 10.rw))
         .make();
   }
 
   ///表格标题
   _buildTableTitle(String title, [bool red = false, bool bold = true]) =>
       SizedBox(
-        height: 45.w,
+        height: 45.rw,
         child: Text(
           title,
           style: TextStyle(
             fontWeight: bold ? FontWeight.bold : FontWeight.normal,
             color: red ? Color(0xFFD5101A) : Color(0xFF333333),
-            fontSize: 16.sp,
+            fontSize: 16.rsp,
           ),
         ).centered(),
       );
@@ -259,7 +262,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
     if (_models.isEmpty) return SizedBox();
     return Table(
       border: TableBorder(
-        horizontalInside: BorderSide(color: Color(0xFFEEEEEE), width: 1.w),
+        horizontalInside: BorderSide(color: Color(0xFFEEEEEE), width: 1.rw),
       ),
       children: [
         TableRow(
@@ -293,40 +296,40 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
           );
         }).toList(),
       ],
-    ).material(color: Colors.white).pSymmetric(v: 10.w);
+    ).material(color: Colors.white).pSymmetric(v: 10.rw);
   }
 
   ///背景条
   _buildBackBar() {
     return Container(
-      height: 10.w,
+      height: 10.rw,
       width: double.infinity,
       alignment: Alignment.center,
-      margin: EdgeInsets.symmetric(horizontal: 7.w),
+      margin: EdgeInsets.symmetric(horizontal: 7.rw),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 2.w),
+            offset: Offset(0, 2.rw),
             color: Colors.black.withOpacity(0.24),
-            blurRadius: 4.w,
+            blurRadius: 4.rw,
           ),
         ],
         color: Color(0xFFE3E3E3),
-        borderRadius: BorderRadius.circular(5.w),
+        borderRadius: BorderRadius.circular(5.rw),
       ),
       child: Container(
-        height: 4.w,
-        margin: EdgeInsets.symmetric(horizontal: 4.w),
+        height: 4.rw,
+        margin: EdgeInsets.symmetric(horizontal: 4.rw),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              offset: Offset(0, 2.w),
+              offset: Offset(0, 2.rw),
               color: Colors.black.withOpacity(0.39),
-              blurRadius: 4.w,
+              blurRadius: 4.rw,
             ),
           ],
           color: Color(0xFFBBBBBB),
-          borderRadius: BorderRadius.circular(5.w),
+          borderRadius: BorderRadius.circular(5.rw),
         ),
       ),
     );
@@ -338,17 +341,17 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
       children: [
         _buildBackBar(),
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 15.w, vertical: 6.w),
+          margin: EdgeInsets.symmetric(horizontal: 15.rw, vertical: 6.rw),
           child: <Widget>[
             20.hb,
             Row(
               children: [
                 15.wb,
-                '团队贡献榜'.text.size(14.sp).color(Color(0xFF333333)).bold.make(),
+                '团队贡献榜'.text.size(14.rsp).color(Color(0xFF333333)).bold.make(),
                 Spacer(),
                 '团队人数:${_extraDetailModel.data.count}'
                     .text
-                    .size(14.sp)
+                    .size(14.rsp)
                     .color(Color(0xFF333333))
                     .bold
                     .make(),
@@ -364,12 +367,12 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
                   child: AnimatedRotate(
                     child: Image.asset(
                       R.ASSETS_ASCSORT_PNG,
-                      height: 15.w,
-                      width: 15.w,
+                      height: 15.rw,
+                      width: 15.rw,
                     ),
                     angle: _itemReverse ? 0 : pi,
                   ),
-                  padding: EdgeInsets.symmetric(horizontal: 15.w),
+                  padding: EdgeInsets.symmetric(horizontal: 15.rw),
                 ),
               ],
             ),
@@ -396,11 +399,11 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
           ].column(),
           decoration: BoxDecoration(
             color: Colors.white,
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(5.w)),
+            borderRadius: BorderRadius.vertical(bottom: Radius.circular(5.rw)),
             boxShadow: [
               BoxShadow(
-                offset: Offset(0, 2.w),
-                blurRadius: 4.w,
+                offset: Offset(0, 2.rw),
+                blurRadius: 4.rw,
                 color: Colors.black.withOpacity(0.1),
               ),
             ],
@@ -421,7 +424,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
     return '当月收益(瑞币)：${benefitValue.toStringAsFixed(2)}'
         .text
         .color(Color(0xFF999999))
-        .size(16.sp)
+        .size(16.rsp)
         .make();
   }
 
@@ -447,12 +450,12 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
             ? PreferredSize(
                 child: '每月22号结算上月$_title'
                     .text
-                    .size(14.sp)
+                    .size(14.rsp)
                     .color(Color(0xFF333333))
                     .make()
                     .centered()
                     .material(color: Color(0xFFFAFAFA)),
-                preferredSize: Size.fromHeight(24.w),
+                preferredSize: Size.fromHeight(24.rw),
               )
             : null,
       ),
@@ -508,13 +511,13 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
                           BottomTimePickerType.BottomTimePickerMonth
                         ]);
                   },
-                  height: 31.w,
+                  height: 31.rw,
                   child: Row(
                     children: [
                       DateUtil.formatDate(_date, format: 'yyyy-MM')
                           .text
                           .black
-                          .size(14.sp)
+                          .size(14.rsp)
                           .make(),
                       Icon(
                         Icons.arrow_drop_down,

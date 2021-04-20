@@ -125,7 +125,7 @@ class _WebViewState extends BaseStoreState<WebViewPage> {
             !widget.arguments['hideBar']
                 ? Container()
                 : Positioned(
-                    top: ScreenUtil.statusBarHeight,
+                    top: ScreenUtil().statusBarHeight,
                     left: rSize(10),
                     width: rSize(30),
                     height: rSize(30),

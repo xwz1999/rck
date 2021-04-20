@@ -84,12 +84,12 @@ class _UserBenefitPageState extends State<UserBenefitPage>
         break;
     }
     return <Widget>[
-      '预估收益'.text.color(Colors.black54).size(18.sp).make(),
+      '预估收益'.text.color(Colors.black54).size(18.rsp).make(),
       allCount
           .toStringAsFixed(2)
           .text
           .color(Color(0xFF333333))
-          .size(28.sp)
+          .size(28.rsp)
           .make(),
     ].column(
       alignment: MainAxisAlignment.center,
@@ -101,14 +101,14 @@ class _UserBenefitPageState extends State<UserBenefitPage>
       VxBox(
         child: <Widget>[
           SizedBox(
-            height: 40.w,
+            height: 40.rw,
             child: TabBar(
               tabs: tabs.map((e) => e.text.make()).toList(),
               labelColor: Colors.black87,
               controller: _tabController,
               indicator: RecookIndicator(
                 borderSide: BorderSide(
-                  width: 4.w,
+                  width: 4.rw,
                   color: Color(0xFFFF7473),
                 ),
               ),
@@ -128,11 +128,11 @@ class _UserBenefitPageState extends State<UserBenefitPage>
                 image: AssetImage(R.ASSETS_SHOP_PAGE_INCOME_CARD_PNG),
                 fit: BoxFit.cover,
               ),
-              borderRadius: BorderRadius.circular(10.w),
+              borderRadius: BorderRadius.circular(10.rw),
             ),
           )
-          .height(134.w)
-          .margin(EdgeInsets.all(10.w))
+          .height(134.rw)
+          .margin(EdgeInsets.all(10.rw))
           .make(),
     ].stack();
   }
@@ -150,22 +150,22 @@ class _UserBenefitPageState extends State<UserBenefitPage>
     Widget getColumnItem(_ItemClass item) {
       Widget helper = CustomImageButton(
         onPressed: item.onHelper,
-        padding: EdgeInsets.all(5.w),
+        padding: EdgeInsets.all(5.rw),
         child: Image.asset(
           R.ASSETS_SHOP_HELPER_PNG,
-          height: 9.w,
-          width: 9.w,
+          height: 9.rw,
+          width: 9.rw,
         ),
       );
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           [
-            item.title.text.color(Colors.black45).size(12.sp).make(),
+            item.title.text.color(Colors.black45).size(12.rsp).make(),
             item.onHelper == null ? SizedBox() : helper,
           ].row(),
           10.hb,
-          item.value.text.black.size(16.sp).make(),
+          item.value.text.black.size(16.rsp).make(),
         ],
       ).expand();
     }
@@ -177,20 +177,20 @@ class _UserBenefitPageState extends State<UserBenefitPage>
           child: <Widget>[
             46.hb,
             16.wb,
-            Image.asset(path, height: 20.w, width: 20.w),
+            Image.asset(path, height: 20.rw, width: 20.rw),
             6.wb,
-            title.text.size(16.sp).color(Colors.black).bold.make(),
+            title.text.size(16.rsp).color(Colors.black).bold.make(),
             Spacer(),
             '查看明细'.text.color(Colors.black54).size(12).make(),
-            Icon(Icons.arrow_forward_ios, size: 16.w, color: Colors.black38),
+            Icon(Icons.arrow_forward_ios, size: 16.rw, color: Colors.black38),
             16.wb,
           ].row(),
         ),
         Divider(
-          height: 1.w,
-          thickness: 1.w,
-          indent: 16.w,
-          endIndent: 16.w,
+          height: 1.rw,
+          thickness: 1.rw,
+          indent: 16.rw,
+          endIndent: 16.rw,
           color: Color(0xFFEEEEEE),
         ),
         Row(
@@ -206,7 +206,7 @@ class _UserBenefitPageState extends State<UserBenefitPage>
       ].column(
         crossAlignment: CrossAxisAlignment.start,
       ),
-    ).margin(EdgeInsets.only(bottom: 10.w)).color(Colors.white).make();
+    ).margin(EdgeInsets.only(bottom: 10.rw)).color(Colors.white).make();
   }
 
   List<Widget> _buildBottomItems() {
@@ -371,7 +371,7 @@ class _UserBenefitPageState extends State<UserBenefitPage>
         children: [
           CustomPaint(
             painter: RoundBackgroundPainter(),
-            size: Size.fromHeight(197.w),
+            size: Size.fromHeight(197.rw),
           ),
           ListView(
             children: [

@@ -96,7 +96,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                 ),
               ),
               Positioned(
-                top: ScreenUtil.statusBarHeight + 20,
+                top: ScreenUtil().statusBarHeight + 20,
                 right: 30,
                 child: GestureDetector(
                   onTap: () {

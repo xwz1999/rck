@@ -30,17 +30,17 @@ class _UserOldHistoryBenefitPageState extends State<UserOldHistoryBenefitPage> {
   _renderColumn(String title, String subTitle) {
     return Column(
       children: [
-        title.text.size(14.sp).black.make(),
+        title.text.size(14.rsp).black.make(),
         2.hb,
-        subTitle.text.size(14.sp).black.make(),
+        subTitle.text.size(14.rsp).black.make(),
       ],
     ).expand();
   }
 
   _renderDivider() {
     return Container(
-      height: 22.w,
-      width: 1.w,
+      height: 22.rw,
+      width: 1.rw,
       color: Color(0xFF979797),
     );
   }
@@ -53,11 +53,11 @@ class _UserOldHistoryBenefitPageState extends State<UserOldHistoryBenefitPage> {
         boxShadow: [
           BoxShadow(
             color: Color(0xFFA6A6AD).withOpacity(0.41),
-            offset: Offset(0, 2.w),
-            blurRadius: 6.w,
+            offset: Offset(0, 2.rw),
+            blurRadius: 6.rw,
           ),
         ],
-        borderRadius: BorderRadius.circular(4.w),
+        borderRadius: BorderRadius.circular(4.rw),
       ),
       child: Column(
         children: [
@@ -68,7 +68,7 @@ class _UserOldHistoryBenefitPageState extends State<UserOldHistoryBenefitPage> {
                 image: AssetImage(UserLevelTool.currentCardImagePath()),
               ),
             ),
-            padding: EdgeInsets.all(10.w),
+            padding: EdgeInsets.all(10.rw),
             child: Row(
               children: [
                 Column(
@@ -79,20 +79,20 @@ class _UserOldHistoryBenefitPageState extends State<UserOldHistoryBenefitPage> {
                     (_total.toStringAsFixed(2) ?? '')
                         .text
                         .black
-                        .size(34.sp)
+                        .size(34.rsp)
                         .make(),
                   ],
                 ).expand(),
                 Image.asset(
                   UserLevelTool.currentMedalImagePath(),
-                  width: 48.w,
-                  height: 48.w,
+                  width: 48.rw,
+                  height: 48.rw,
                 ),
               ],
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 8.w),
+            padding: EdgeInsets.symmetric(vertical: 8.rw),
             child: Row(
               children: [
                 _renderColumn('自购收益', _purchase.toStringAsFixed(2) ?? ''),
@@ -119,7 +119,7 @@ class _UserOldHistoryBenefitPageState extends State<UserOldHistoryBenefitPage> {
         title: Text(
           '历史累计总收益',
           style: TextStyle(
-            fontSize: 18.sp,
+            fontSize: 18.rsp,
             color: Colors.white,
           ),
         ),
@@ -141,7 +141,7 @@ class _UserOldHistoryBenefitPageState extends State<UserOldHistoryBenefitPage> {
           _refreshController.refreshCompleted();
         },
         body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 36.w, vertical: 20.w),
+          padding: EdgeInsets.symmetric(horizontal: 36.rw, vertical: 20.rw),
           children: [
             _buildCard(),
           ],

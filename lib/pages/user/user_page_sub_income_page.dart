@@ -78,14 +78,14 @@ class _UserPageSubIncomesPageState
                     UserPageSubIncomesPageType.UserPageTeamIncome
                 ? Container(
                     width: double.infinity,
-                    height: 24.w,
+                    height: 24.rw,
                     color: AppColor.frenchColor.withOpacity(0.95),
                     alignment: Alignment.center,
                     child: Text(
                       '每月22号结算上月团队收益',
                       style: TextStyle(
                         color: AppColor.blackColor,
-                        fontSize: 14.sp,
+                        fontSize: 14.rsp,
                       ),
                     ),
                   )

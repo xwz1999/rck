@@ -62,8 +62,8 @@ class _UpgradeUnusedViewState extends State<UpgradeUnusedView> {
         },
         itemCount: _cards.length,
         padding: EdgeInsets.symmetric(
-          horizontal: 16.w,
-          vertical: 10.w,
+          horizontal: 16.rw,
+          vertical: 10.rw,
         ),
       ),
     );
@@ -101,10 +101,10 @@ class _UserCard extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      minWidth: 80.w,
-      height: 33.w,
+      minWidth: 80.rw,
+      height: 33.rw,
       onPressed: onTap,
-      child: title.text.size(14.sp).white.make(),
+      child: title.text.size(14.rsp).white.make(),
     );
   }
 
@@ -141,31 +141,31 @@ class _UserCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 193.w,
+      height: 193.rw,
       padding: EdgeInsets.only(
-        left: 16.w,
-        top: 16.w,
-        bottom: 6.w,
-        right: 10.w,
+        left: 16.rw,
+        top: 16.rw,
+        bottom: 6.rw,
+        right: 10.rw,
       ),
       child: Row(
         children: [
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              type.text.color(Color(0xFFDD2C4E)).size(18.sp).bold.make(),
-              typeEng.text.color(Color(0xFFDD2C4E)).size(10.sp).make(),
+              type.text.color(Color(0xFFDD2C4E)).size(18.rsp).bold.make(),
+              typeEng.text.color(Color(0xFFDD2C4E)).size(10.rsp).make(),
               Spacer(),
               '编号：${model.code}'
                   .text
                   .color(Color(0xFFDD2C4E))
-                  .size(16.sp)
+                  .size(16.rsp)
                   .bold
                   .make(),
               (model?.sourceName ?? '')
                   .text
                   .color(Color(0xFFDD2C4E))
-                  .size(12.sp)
+                  .size(12.rsp)
                   .make(),
             ],
           ).expand(),
@@ -187,12 +187,12 @@ class _UserCard extends StatelessWidget {
                           '$type使用后将于${nextMonth.month}月1日考核时生效'
                               .text
                               .black
-                              .size(15.sp)
+                              .size(15.rsp)
                               .make(),
                           '您使用了$type，将于下月1日生效，若店铺考核未达到$typeValue店铺考核标准，则消耗一张$type成为$typeValue店铺，享受$typeValue店铺权益；若店铺考核达到$typeValue店铺标准，则$type将返还至您的卡包。'
                               .text
                               .color(Color(0xFFDE180C))
-                              .size(15.sp)
+                              .size(15.rsp)
                               .make(),
                         ],
                       ),

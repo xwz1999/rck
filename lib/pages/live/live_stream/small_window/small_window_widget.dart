@@ -27,8 +27,8 @@ class _SmallWindowWidgetState extends State<SmallWindowWidget> {
   @override
   void initState() {
     super.initState();
-    _topPos = ScreenUtil.screenHeightDp - 20 - _height - 55;
-    _leftPos = _leftPos = ScreenUtil.screenWidthDp - 20 - _width;
+    _topPos = ScreenUtil().screenHeight - 20 - _height - 55;
+    _leftPos = _leftPos = ScreenUtil().screenWidth- 20 - _width;
   }
 
   @override
@@ -79,12 +79,12 @@ class _SmallWindowWidgetState extends State<SmallWindowWidget> {
               onPanEnd: (detail) {
                 _isMoving = false;
                 if (_leftPos < 20) _leftPos = 20;
-                if (_topPos < ScreenUtil.statusBarHeight + 20)
-                  _topPos = (20 + ScreenUtil.statusBarHeight);
-                if ((_leftPos + _width + 20) > ScreenUtil.screenWidthDp)
-                  _leftPos = ScreenUtil.screenWidthDp - 20 - _width;
-                if ((_topPos + _height + 55 + 20) > ScreenUtil.screenHeightDp)
-                  _topPos = ScreenUtil.screenHeightDp - 20 - _height - 55;
+                if (_topPos < ScreenUtil().statusBarHeight + 20)
+                  _topPos = (20 + ScreenUtil().statusBarHeight);
+                if ((_leftPos + _width + 20) > ScreenUtil().screenWidth)
+                  _leftPos = ScreenUtil().screenWidth - 20 - _width;
+                if ((_topPos + _height + 55 + 20) > ScreenUtil().screenHeight)
+                  _topPos = ScreenUtil().screenHeight- 20 - _height - 55;
                 setState(() {});
               },
               child: Container(

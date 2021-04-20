@@ -10,13 +10,11 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class Constants {
   Constants.initial(BuildContext context) {
     DeviceInfo.initial();
-    ScreenAdapterUtils.initial(context);
   }
 }
 
@@ -34,20 +32,17 @@ extension SeparateExt on List<Widget> {
 
 // 屏幕适配
 class ScreenAdapterUtils {
-  static initial(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(width: 750, height: 1334)..init(context);
-  }
 
   static double setWidth(double width) {
-    return ScreenUtil.getInstance().setWidth(width * 2);
+    return ScreenUtil().setWidth(width * 2);
   }
 
   static double setHeight(double height) {
-    return ScreenUtil.getInstance().setHeight(height * 2);
+    return ScreenUtil().setHeight(height * 2);
   }
 
   static double setSp(double font) {
-    return ScreenUtil.getInstance().setSp(font * 2);
+    return ScreenUtil().setSp(font * 2);
   }
 }
 
@@ -102,9 +97,9 @@ class DeviceInfo {
 }
 
 extension NumExt on num {
-  double get w => ScreenAdapterUtils.setWidth(this + .0);
+  double get rw => ScreenAdapterUtils.setWidth(this + .0);
 
-  double get sp => ScreenAdapterUtils.setSp(this + .0);
+  double get rsp => ScreenAdapterUtils.setSp(this + .0);
 
   Widget get hb => SizedBox(height: this.w);
 

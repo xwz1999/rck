@@ -168,7 +168,7 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
 
   _bottomWidget() {
     return Container(
-      margin: EdgeInsets.only(bottom: ScreenUtil.bottomBarHeight),
+      margin: EdgeInsets.only(bottom: ScreenUtil().bottomBarHeight),
       padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
       height: 60,
       child: CustomImageButton(

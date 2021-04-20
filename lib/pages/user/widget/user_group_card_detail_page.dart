@@ -32,12 +32,12 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
       children: [
         64.hb,
         15.wb,
-        title.text.size(14.sp).color(Color(0xFF333333)).make(),
+        title.text.size(14.rsp).color(Color(0xFF333333)).make(),
         Spacer(),
         DefaultTextStyle(
           style: TextStyle(
             color: Color(0xFF666666),
-            fontSize: 14.sp,
+            fontSize: 14.rsp,
           ),
           child: suffix ?? SizedBox(),
         ),
@@ -77,12 +77,12 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
                     _buildTile(
                       title: '头像',
                       suffix: ClipRRect(
-                        borderRadius: BorderRadius.circular(22.w),
+                        borderRadius: BorderRadius.circular(22.rw),
                         child: FadeInImage.assetNetwork(
                           placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                           image: Api.getImgUrl(_memberInfoModel.headImgUrl),
-                          height: 44.w,
-                          width: 44.w,
+                          height: 44.rw,
+                          width: 44.rw,
                         ),
                       ),
                     ),
@@ -90,23 +90,23 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
                       title: '角色',
                       suffix: Container(
                         padding: EdgeInsets.symmetric(
-                            horizontal: 6.w, vertical: 4.w),
+                            horizontal: 6.rw, vertical: 4.rw),
                         decoration: BoxDecoration(
                           color: Color(0xFFF5CA88),
-                          borderRadius: BorderRadius.circular(20.w),
+                          borderRadius: BorderRadius.circular(20.rw),
                         ),
                         child: [
                           Image.asset(
                             UserLevelTool.getRoleLevelIcon(
                                 _memberInfoModel.roleLevelEnum),
-                            width: 12.w,
-                            height: 12.w,
+                            width: 12.rw,
+                            height: 12.rw,
                             color: Color(0xFFC47F53),
                           ),
                           UserLevelTool.roleLevelWithEnum(
                                   _memberInfoModel.roleLevelEnum)
                               .text
-                              .size(10.sp)
+                              .size(10.rsp)
                               .color(Color(0xFFC47F53))
                               .make(),
                         ].row(),
@@ -143,11 +143,11 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
                     ),
                   ].sepWidget(
                       separate: Divider(
-                    height: 1.w,
-                    thickness: 1.w,
+                    height: 1.rw,
+                    thickness: 1.rw,
                     color: Color(0xFFE6E6E6),
-                    indent: 15.w,
-                    endIndent: 15.w,
+                    indent: 15.rw,
+                    endIndent: 15.rw,
                   )),
                   10.hb,
                   ...[
@@ -156,8 +156,8 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
                       suffix: (_memberInfoModel.phone ?? '').text.make(),
                       trailing: Image.asset(
                         R.ASSETS_USER_ICON_PHONE_PNG,
-                        height: 18.w,
-                        width: 18.w,
+                        height: 18.rw,
+                        width: 18.rw,
                       ),
                     ),
                     _buildTile(
@@ -171,18 +171,18 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
                         },
                         child: Image.asset(
                           R.ASSETS_USER_COPY_PNG,
-                          height: 18.w,
-                          width: 18.w,
+                          height: 18.rw,
+                          width: 18.rw,
                         ),
                       ),
                     ),
                   ].sepWidget(
                       separate: Divider(
-                    height: 1.w,
-                    thickness: 1.w,
+                    height: 1.rw,
+                    thickness: 1.rw,
                     color: Color(0xFFE6E6E6),
-                    indent: 15.w,
-                    endIndent: 15.w,
+                    indent: 15.rw,
+                    endIndent: 15.rw,
                   )),
                 ],
               ),

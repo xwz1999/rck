@@ -452,9 +452,9 @@ class _OrderReturnStatusPageState
         child: _popInfoWidget(),
         arrowLeftPadding: _statusModel.data.statusTile == 0
             ? rSize(130) / 2
-            : ScreenUtil.screenWidthDp - rSize(45) - (rSize(80)) / 2,
+            : ScreenUtil().screenWidth - rSize(45) - (rSize(80)) / 2,
       ),
-      // ScreenUtil.screenWidthDp-rSize(90),
+      // ScreenUtil().screenWidth-rSize(90),
     );
   }
 

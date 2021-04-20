@@ -125,7 +125,7 @@ class _LogisticDetailPageState extends BaseStoreState<LogisticDetailPage> {
         ),
         SliverToBoxAdapter(
           child: SizedBox(
-            height: ScreenUtil.bottomBarHeight,
+            height: ScreenUtil().bottomBarHeight,
           ),
         )
       ],

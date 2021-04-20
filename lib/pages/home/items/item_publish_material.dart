@@ -7,7 +7,6 @@
  * ====================================================
  */
 
-
 import 'package:flutter/material.dart';
 
 import 'package:recook/constants/api.dart';
@@ -57,7 +56,7 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
   @override
   Widget build(BuildContext context) {
     // List<String> list = [
-    //   "http://pic1.win4000.com/mobile/2019-05-16/5cdd0991ec539.jpg",
+    //   "http://pic1.rwin4000.com/mobile/2019-05-16/5cdd0991ec539.jpg",
     //   "http://img.tukexw.com/img/2c95d3d0d00cde29.jpg"
     // ];
     // int index11 = Random().nextInt(2);
