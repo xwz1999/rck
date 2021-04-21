@@ -1,11 +1,10 @@
-
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:flutter_qr_reader/flutter_qr_reader.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:recook/base/base_store_state.dart';
@@ -14,17 +13,18 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/base_model.dart';
+import 'package:recook/pages/home/barcode/qr_scaner_result_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
-class PhotosFailBarcodePage extends StatefulWidget{
+class PhotosFailBarcodePage extends StatefulWidget {
   final Map arguments;
 
   const PhotosFailBarcodePage({Key key, this.arguments}) : super(key: key);
-  
-  static setArguments(String code, String message, File image){
+
+  static setArguments(String code, String message, File image) {
     return {
       "code": code,
       "message": message,
@@ -38,12 +38,13 @@ class PhotosFailBarcodePage extends StatefulWidget{
   }
 }
 
-class _PhotosFailBarcodePageState extends BaseStoreState<PhotosFailBarcodePage>{
+class _PhotosFailBarcodePageState
+    extends BaseStoreState<PhotosFailBarcodePage> {
   String _code;
   String _message;
   File _image;
   @override
-  void initState() { 
+  void initState() {
     super.initState();
     if (widget.arguments != null) {
       _code = widget.arguments["code"];
@@ -67,7 +68,7 @@ class _PhotosFailBarcodePageState extends BaseStoreState<PhotosFailBarcodePage>{
     );
   }
 
-  _bodyWidget(){
+  _bodyWidget() {
     double width = MediaQuery.of(context).size.width;
     Color buttonColor = Color(0xffE98787);
     return Container(
@@ -77,17 +78,28 @@ class _PhotosFailBarcodePageState extends BaseStoreState<PhotosFailBarcodePage>{
           Container(
             height: ScreenAdapterUtils.setHeight(150),
             width: MediaQuery.of(context).size.width,
-            child: Image.file(_image, fit: BoxFit.contain,),
+            child: Image.file(
+              _image,
+              fit: BoxFit.contain,
+            ),
           ),
           Container(
             alignment: Alignment.centerLeft,
             width: width,
             padding: EdgeInsets.only(left: 30, top: 20),
-            child: Text(_message==null?"商品未录入":_message, style: TextStyle(color: Colors.black, fontSize: ScreenAdapterUtils.setSp(22)),),
+            child: Text(
+              _message == null ? "商品未录入" : _message,
+              style: TextStyle(
+                  color: Colors.black, fontSize: ScreenAdapterUtils.setSp(22)),
+            ),
           ),
           _codeWidget(),
           Container(
-            padding: EdgeInsets.only(left: 30, right: 30, top: 100,),
+            padding: EdgeInsets.only(
+              left: 30,
+              right: 30,
+              top: 100,
+            ),
             child: CustomImageButton(
               height: ScreenAdapterUtils.setHeight(36),
               backgroundColor: AppColor.themeColor,
@@ -95,7 +107,8 @@ class _PhotosFailBarcodePageState extends BaseStoreState<PhotosFailBarcodePage>{
               color: Colors.white,
               fontSize: 16,
               onPressed: () async {
-                var image = await ImagePicker.pickImage(source: ImageSource.gallery);
+                var image =
+                    await ImagePicker.pickImage(source: ImageSource.gallery);
                 File cropFile = await ImageUtils.cropImage(image);
                 if (cropFile == null) {
                   return;
@@ -103,11 +116,15 @@ class _PhotosFailBarcodePageState extends BaseStoreState<PhotosFailBarcodePage>{
                 File imageFile = cropFile;
                 final rest = await FlutterQrReader.imgScan(imageFile);
                 onScan(rest, image: imageFile);
-                },
+              },
             ),
           ),
           Container(
-            padding: EdgeInsets.only(left: 30, right: 30, top: 20,),
+            padding: EdgeInsets.only(
+              left: 30,
+              right: 30,
+              top: 20,
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -120,12 +137,15 @@ class _PhotosFailBarcodePageState extends BaseStoreState<PhotosFailBarcodePage>{
                       color: buttonColor,
                     ),
                     fontSize: 16,
-                    onPressed: (){
-                      AppRouter.pushAndReplaced(context, RouteName.BARCODE_SCAN);
+                    onPressed: () {
+                      AppRouter.pushAndReplaced(
+                          context, RouteName.BARCODE_SCAN);
                     },
                   ),
                 ),
-                Container(width: 30,),
+                Container(
+                  width: 30,
+                ),
                 Expanded(
                   child: CustomImageButton(
                     height: ScreenAdapterUtils.setHeight(36),
@@ -135,7 +155,7 @@ class _PhotosFailBarcodePageState extends BaseStoreState<PhotosFailBarcodePage>{
                       color: buttonColor,
                     ),
                     fontSize: 16,
-                    onPressed: (){
+                    onPressed: () {
                       Navigator.pop(context);
                     },
                   ),
@@ -147,56 +167,67 @@ class _PhotosFailBarcodePageState extends BaseStoreState<PhotosFailBarcodePage>{
       ),
     );
   }
-  
-  _codeWidget(){
+
+  _codeWidget() {
     return Container(
-      padding: EdgeInsets.only(left: 30, right: 30),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 0),
-                // height: 60,
-                alignment: Alignment.center,
-                child: Text("扫码结果", style: TextStyle(color: Colors.black, fontSize: ScreenAdapterUtils.setSp(16)),),
-              ),
-              Container(width: 15,),
-              Expanded(
-                child: Container(
-                  height: 60,
-                  alignment: Alignment.centerLeft,
-                  child: Text(_code, style: TextStyle(color: Colors.black.withOpacity(0.5), fontSize: ScreenAdapterUtils.setSp(15)),),
+        padding: EdgeInsets.only(left: 30, right: 30),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 0),
+                  // height: 60,
+                  alignment: Alignment.center,
+                  child: Text(
+                    "扫码结果",
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontSize: ScreenAdapterUtils.setSp(16)),
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Container(
-            height: 1,
-            color: AppColor.frenchColor,
-          )
-        ],
-      )
-    );
+                Container(
+                  width: 15,
+                ),
+                Expanded(
+                  child: Container(
+                    height: 60,
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      _code,
+                      style: TextStyle(
+                          color: Colors.black.withOpacity(0.5),
+                          fontSize: ScreenAdapterUtils.setSp(15)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              height: 1,
+              color: AppColor.frenchColor,
+            )
+          ],
+        ));
   }
 
-  Future onScan(String data, {File image}) async{
-    if (!TextUtils.isEmpty(data)){
-      _getGoodsWithCode(data, (goodsId){
-        AppRouter.pushAndReplaced(globalContext, RouteName.COMMODITY_PAGE, arguments: CommodityDetailPage.setArguments(int.parse(goodsId)));
+  Future onScan(String data, {File image}) async {
+    if (!TextUtils.isEmpty(data)) {
+      _getGoodsWithCode(data, (goodsId) {
+        Get.to(() => QRScarerResultPage());
+        // AppRouter.pushAndReplaced(globalContext, RouteName.COMMODITY_PAGE, arguments: CommodityDetailPage.setArguments(int.parse(goodsId)));
         return;
       }, image: image);
-    }else{
+    } else {
       showError("图片识别失败...");
     }
   }
 
   _getGoodsWithCode(String code, Function callBack, {File image}) async {
-    
     ResultData resultData = await HttpManager.post(GoodsApi.goods_code_search, {
-      "code":code,
+      "code": code,
     });
     if (!resultData.result) {
       _refreshState(code, resultData.msg, image);
@@ -217,11 +248,10 @@ class _PhotosFailBarcodePageState extends BaseStoreState<PhotosFailBarcodePage>{
     return;
   }
 
-  _refreshState(code, message, image){
+  _refreshState(code, message, image) {
     _code = code;
     _message = message;
     _image = image;
     setState(() {});
   }
-  
 }
