@@ -160,7 +160,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                                 offset: Offset(0, rSize(1)),
                               ),
                             ],
-                            fontSize: ScreenAdapterUtils.setSp(14),
+                            fontSize: 14 * 2.sp,
                             color: Color(0xFFFFFFFF),
                           ),
                         ),
@@ -170,7 +170,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
               rWBox(10),
               Text(
                 "$originPrice",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                style: AppTextStyle.generate(14 * 2.sp,
                     decoration: TextDecoration.lineThrough,
                     color: Colors.white.withOpacity(0.5),
                     fontWeight: FontWeight.w500),
@@ -194,9 +194,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                 text: TextSpan(children: [
                   TextSpan(
                     text: "券后价",
-                    style: TextStyle(
-                        color: Colors.yellow,
-                        fontSize: ScreenAdapterUtils.setSp(9)),
+                    style: TextStyle(color: Colors.yellow, fontSize: 9 * 2.sp),
                   ),
                   TextSpan(
                       text: "￥",
@@ -211,7 +209,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                       text: "$price ",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: ScreenAdapterUtils.setSp(23),
+                        fontSize: 23 * 2.sp,
                         fontWeight: FontWeight.w500,
                         letterSpacing: 0,
                       )),
@@ -224,7 +222,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                         : isTwoPrice
                             ? "/ "
                             : " / ",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                    style: AppTextStyle.generate(15 * 2.sp,
                         color: Colors.white, fontWeight: FontWeight.w500),
                   ),
                   TextSpan(
@@ -234,8 +232,8 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                                 UserRoleLevel.Vip)
                         ? ""
                         : "赚",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
-                        color: Colors.white),
+                    style:
+                        AppTextStyle.generate(13 * 2.sp, color: Colors.white),
                   ),
                   TextSpan(
                     text: (UserLevelTool.currentRoleLevelEnum() ==
@@ -244,8 +242,8 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                                 UserRoleLevel.Vip)
                         ? ""
                         : "$commission",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
-                        color: Colors.white),
+                    style:
+                        AppTextStyle.generate(15 * 2.sp, color: Colors.white),
                   ),
                 ]),
               ),
@@ -309,14 +307,13 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                                 height: 15,
                                 decoration: BoxDecoration(
                                   color: Color(0xFFCC1B4F),
-                                  borderRadius: BorderRadius.circular(
-                                      ScreenAdapterUtils.setWidth(3)),
+                                  borderRadius: BorderRadius.circular(3 * 2.w),
                                 ),
                                 child: Text(
                                   '进口',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: ScreenAdapterUtils.setSp(10),
+                                    fontSize: 10 * 2.sp,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -326,13 +323,12 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                       detailModel.data.isImport == 1
                           ? WidgetSpan(
                               child: Container(
-                              width: ScreenAdapterUtils.setWidth(5),
+                              width: 5 * 2.w,
                             ))
                           : WidgetSpan(child: SizedBox()),
                       TextSpan(
                         text: detailModel.data.goodsName,
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(18),
+                        style: AppTextStyle.generate(18 * 2.sp,
                             fontWeight: FontWeight.w600,
                             color: Color(0xff333333)),
                       ),
@@ -355,7 +351,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                         BorderRadius.horizontal(left: Radius.circular(20)),
                     backgroundColor: Colors.grey[200],
                     color: Colors.grey[500],
-                    fontSize: ScreenAdapterUtils.setSp(13),
+                    fontSize: 13 * 2.sp,
                     icon: Icon(
                       AppIcons.icon_share_2,
                       size: 18,
@@ -383,7 +379,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
       padding: const EdgeInsets.only(left: 10.0),
       child: Text(
         detailModel.data.description,
-        style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+        style: AppTextStyle.generate(14 * 2.sp,
             fontWeight: FontWeight.w400, color: Color(0xffb5b5b5)),
       ),
     );
@@ -402,12 +398,12 @@ class _GoodPriceViewState extends State<GoodPriceView> {
         title: title,
         color: Colors.black,
         direction: Direction.horizontal,
-        fontSize: ScreenAdapterUtils.setSp(14),
+        fontSize: 14 * 2.sp,
         icon: Icon(
           AppIcons.icon_check,
           // color: Color(0xFFFC8381),
           color: Colors.red,
-          size: ScreenAdapterUtils.setSp(20),
+          size: 20 * 2.sp,
         ));
   }
 

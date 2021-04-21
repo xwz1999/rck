@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import 'package:recook/constants/constants.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recook/widgets/custom_painters/coupon_painter_new.dart';
 
 enum SmallCouponType { white, red }
@@ -47,7 +46,7 @@ class _SmallCouponWidgetState extends State<SmallCouponWidget> {
                   padding: EdgeInsets.symmetric(horizontal: 4),
                   child: Text(
                     "${(widget.number).toString()}元券",
-                    style: TextStyle(fontSize: ScreenAdapterUtils.setSp(12)),
+                    style: TextStyle(fontSize: 12 * 2.sp),
                   ),
                 ),
               ],

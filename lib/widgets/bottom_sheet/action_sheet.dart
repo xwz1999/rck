@@ -27,7 +27,7 @@ class _ActionSheetWidget extends StatefulWidget {
 }
 
 class __ActionSheetWidgetState extends State<_ActionSheetWidget> {
-  double _itemFont = ScreenAdapterUtils.setSp(15);
+  double _itemFont = 15 * 2.sp;
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +45,7 @@ class __ActionSheetWidgetState extends State<_ActionSheetWidget> {
                     alignment: Alignment.center,
                     child: Text(
                       widget.title,
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: ScreenAdapterUtils.setSp(14)),
+                      style: TextStyle(color: Colors.grey, fontSize: 14 * 2.sp),
                     ),
                   )
                 : Container(),
@@ -135,7 +133,7 @@ class __ActionSheetWidgetState extends State<_ActionSheetWidget> {
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: Colors.grey[600],
-                            fontSize: ScreenAdapterUtils.setSp(12),
+                            fontSize: 12 * 2.sp,
                             fontWeight: FontWeight.w400),
                       )
                     : Container(),

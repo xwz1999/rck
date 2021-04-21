@@ -137,8 +137,7 @@ class _EvaluationItemState extends BaseStoreState<EvaluationItem> {
       height: rSize(56),
       decoration: BoxDecoration(
           border: Border(
-        bottom: BorderSide(
-            color: Colors.grey[400], width: ScreenAdapterUtils.setWidth(0.4)),
+        bottom: BorderSide(color: Colors.grey[400], width: 0.4 * 2.w),
       )),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -156,7 +155,7 @@ class _EvaluationItemState extends BaseStoreState<EvaluationItem> {
               widget.evaluationModel.goods.goodsName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14)),
+              style: AppTextStyle.generate(14 * 2.sp),
             ),
           ),
         ],
@@ -175,9 +174,9 @@ class _EvaluationItemState extends BaseStoreState<EvaluationItem> {
               padding: EdgeInsets.symmetric(
                   vertical: rSize(7), horizontal: rSize(7)),
               maxLines: 5,
-              textStyle: AppTextStyle.generate(ScreenAdapterUtils.setSp(14)),
-              hintStyle: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                  color: Colors.grey[300]),
+              textStyle: AppTextStyle.generate(14 * 2.sp),
+              hintStyle:
+                  AppTextStyle.generate(14 * 2.sp, color: Colors.grey[300]),
               hint: "请输入评价",
               onValueChanged: (text) {
                 widget.evaluationModel.content = text;

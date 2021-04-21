@@ -118,7 +118,7 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
           //     '开发票',
           //     style: TextStyle(
           //       color: AppColor.blackColor,
-          //       fontSize: ScreenAdapterUtils.setSp(14),
+          //       fontSize: 14*2.sp,
           //     ),
           //   ),
           // ),

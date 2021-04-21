@@ -63,19 +63,22 @@ class _BottomShareWidgetState extends State<BottomShareWidget> {
                     padding: EdgeInsets.symmetric(horizontal: 10),
                     itemCount: widget.items.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      crossAxisSpacing: 1,
-                      childAspectRatio: widget.items.length <= 3 ? 1: 1.3
-                    ),
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 1,
+                        childAspectRatio: widget.items.length <= 3 ? 1 : 1.3),
                     itemBuilder: (context, index) {
                       PlatformItem item = widget.items[index];
                       return CustomImageButton(
                         title: item.title,
                         contentSpacing: 5,
                         icon: item.icon,
-                        style: AppTextStyle.generate(ScreenAdapterUtils.setSp(12), fontWeight: FontWeight.w400,color: Color(0xff666666),),
+                        style: AppTextStyle.generate(
+                          12 * 2.sp,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xff666666),
+                        ),
                         onPressed: () {
-                          if (item.itemClick!=null) {
+                          if (item.itemClick != null) {
                             item.itemClick();
                           }
                           widget.action(index);
@@ -93,7 +96,8 @@ class _BottomShareWidgetState extends State<BottomShareWidget> {
                     // padding: EdgeInsets.symmetric(vertical: 15),
                     decoration: BoxDecoration(
                         border: Border(
-                            top: BorderSide(color: Color(0xfff8f9fb), width: 1))),
+                            top: BorderSide(
+                                color: Color(0xfff8f9fb), width: 1))),
                     child: Text(
                       "取消",
                       style:

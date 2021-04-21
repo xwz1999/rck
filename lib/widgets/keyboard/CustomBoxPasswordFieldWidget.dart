@@ -71,7 +71,7 @@ class CustomBoxPasswordFieldWidget extends StatelessWidget {
                     str,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: ScreenAdapterUtils.setSp(20),
+                      fontSize: 20 * 2.sp,
                     ),
                   )
                 : Container(

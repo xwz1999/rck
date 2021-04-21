@@ -89,7 +89,7 @@ class _CreateMaterialPageState extends BaseStoreState<CreateMaterialPage> {
           CustomImageButton(
             padding: EdgeInsets.only(top: rSize(8), right: rSize(10)),
             title: "发布",
-            style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15)),
+            style: AppTextStyle.generate(15 * 2.sp),
             onPressed: () {
               _publish();
             },

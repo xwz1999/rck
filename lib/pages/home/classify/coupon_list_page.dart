@@ -68,7 +68,7 @@ class _CouponListPageState extends BaseStoreState<CouponListPage> {
                   margin: EdgeInsets.only(bottom: 10),
                   child: Text(
                     "优惠",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(16),
+                    style: AppTextStyle.generate(16 * 2.sp,
                         fontWeight: FontWeight.w400),
                   )),
               Expanded(
@@ -85,7 +85,7 @@ class _CouponListPageState extends BaseStoreState<CouponListPage> {
                 radius: BorderRadius.all(Radius.circular(30)),
                 height: rSize(35),
                 title: "完成",
-                font: ScreenAdapterUtils.setSp(16),
+                font: 16 * 2.sp,
                 textColor: Colors.white,
                 backgroundColor: Color(0xFFFF2812),
                 onTap: () {

@@ -153,11 +153,9 @@ class _OrderAfterSalePageState extends BaseStoreState<OrderAfterSalePage>
                   indicatorColor: AppColor.themeColor,
                   indicatorSize: TabBarIndicatorSize.label,
                   labelStyle: TextStyle(
-                      color: AppColor.blackColor,
-                      fontSize: ScreenAdapterUtils.setSp(16)),
-                  unselectedLabelStyle: TextStyle(
-                      color: Color(0xff333333),
-                      fontSize: ScreenAdapterUtils.setSp(16)),
+                      color: AppColor.blackColor, fontSize: 16 * 2.sp),
+                  unselectedLabelStyle:
+                      TextStyle(color: Color(0xff333333), fontSize: 16 * 2.sp),
                   labelColor: AppColor.blackColor,
                   unselectedLabelColor: AppColor.greyColor,
                   controller: _tabController,

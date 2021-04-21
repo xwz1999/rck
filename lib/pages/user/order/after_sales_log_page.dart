@@ -63,8 +63,8 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
   _bodyWidget() {
     return Container(
       child: ListView.builder(
-        padding: EdgeInsets.symmetric(
-            horizontal: rSize(20), vertical: ScreenAdapterUtils.setHeight(20)),
+        padding:
+            EdgeInsets.symmetric(horizontal: rSize(20), vertical: 20 * 2.h),
         itemCount: _afterSalesLogListModel.data.length,
         itemBuilder: (BuildContext context, int index) {
           AfterSalesLogModel afterSalesLogModel =
@@ -78,7 +78,7 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
             // )),
             subInfo: DefaultTextStyle(
               style: TextStyle(
-                fontSize: ScreenAdapterUtils.setSp(14),
+                fontSize: 14 * 2.sp,
                 color: Color(0xFF666666),
               ),
               child: TextParseUtil.parseRefundText(afterSalesLogModel.content),
@@ -129,7 +129,7 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
                     child: Text(
                       title,
                       style: TextStyle(
-                        fontSize: ScreenAdapterUtils.setSp(14),
+                        fontSize: 14 * 2.sp,
                         color: Colors.black,
                         fontWeight: FontWeight.w600,
                       ),
@@ -139,7 +139,7 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
                     time,
                     style: TextStyle(
                       color: Color(0xff999999),
-                      fontSize: ScreenAdapterUtils.setSp(12),
+                      fontSize: 12 * 2.sp,
                     ),
                   )
                 ],
@@ -150,9 +150,10 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
                       maxLines: 10,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                          color: Color(0xff666666),
-                          fontSize: ScreenAdapterUtils.setSp(14)))
-                  : subInfo != null && subInfo is Widget ? subInfo : Container()
+                          color: Color(0xff666666), fontSize: 14 * 2.sp))
+                  : subInfo != null && subInfo is Widget
+                      ? subInfo
+                      : Container()
             ],
           ),
         ),
@@ -216,14 +217,13 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
     richTextList.sort((left, right) => left.start.compareTo(right.start));
     // richtext list
     List<InlineSpan> textSpanList = [];
-    TextStyle normalStyle = TextStyle(
-        color: Color(0xff333333), fontSize: ScreenAdapterUtils.setSp(14));
-    TextStyle blackStyle =
-        TextStyle(color: Colors.black, fontSize: ScreenAdapterUtils.setSp(14));
-    TextStyle grayStyle = TextStyle(
-        color: Color(0xff999999), fontSize: ScreenAdapterUtils.setSp(14));
-    TextStyle addressStyle = TextStyle(
-        color: Color(0xff666666), fontSize: ScreenAdapterUtils.setSp(14));
+    TextStyle normalStyle =
+        TextStyle(color: Color(0xff333333), fontSize: 14 * 2.sp);
+    TextStyle blackStyle = TextStyle(color: Colors.black, fontSize: 14 * 2.sp);
+    TextStyle grayStyle =
+        TextStyle(color: Color(0xff999999), fontSize: 14 * 2.sp);
+    TextStyle addressStyle =
+        TextStyle(color: Color(0xff666666), fontSize: 14 * 2.sp);
     for (AfterSalesRichTextModel textModel in richTextList) {
       print("--- " + textModel.getNormalText());
       if (textModel.type == AfterSalesRichTextType.none) {
@@ -244,8 +244,8 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
           decoration: BoxDecoration(
               color: Color(0xfff8f8f8), borderRadius: BorderRadius.circular(4)),
           child: Text(textModel.getNormalText(), style: grayStyle),
-          padding: EdgeInsets.symmetric(
-              horizontal: rSize(8), vertical: ScreenAdapterUtils.setHeight(8)),
+          padding:
+              EdgeInsets.symmetric(horizontal: rSize(8), vertical: 8 * 2.h),
         )));
       }
     }

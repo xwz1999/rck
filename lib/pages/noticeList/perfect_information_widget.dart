@@ -27,23 +27,22 @@ class _PerfectInformationWidgetState extends State<PerfectInformationWidget> {
         child: Container(
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(10)),
-          height: ScreenAdapterUtils.setHeight(200),
+          height: 200 * 2.h,
           width: ScreenUtil().screenWidth,
           margin: EdgeInsets.symmetric(horizontal: rSize(50)),
-          padding: EdgeInsets.symmetric(
-              horizontal: rSize(10),
-              vertical: ScreenAdapterUtils.setHeight(10)),
+          padding:
+              EdgeInsets.symmetric(horizontal: rSize(10), vertical: 10 * 2.h),
           child: Column(
             children: <Widget>[
               Container(
-                height: ScreenAdapterUtils.setHeight(30),
+                height: 30 * 2.h,
                 alignment: Alignment.center,
                 child: Text(
                   "完善信息",
                   style: TextStyle(
                       decoration: TextDecoration.none,
                       color: Colors.black,
-                      fontSize: ScreenAdapterUtils.setSp(18)),
+                      fontSize: 18 * 2.sp),
                 ),
               ),
               Expanded(
@@ -51,7 +50,7 @@ class _PerfectInformationWidgetState extends State<PerfectInformationWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Container(
-                      height: ScreenAdapterUtils.setHeight(40),
+                      height: 40 * 2.h,
                       child: InputView(
                         controller: _textEditingController,
                         margin: EdgeInsets.zero,
@@ -59,7 +58,7 @@ class _PerfectInformationWidgetState extends State<PerfectInformationWidget> {
                         hint: "请输入您的昵称",
                         hintStyle: TextStyle(
                             color: AppColor.greyColor,
-                            fontSize: ScreenAdapterUtils.setSp(16),
+                            fontSize: 16 * 2.sp,
                             fontWeight: FontWeight.w500),
                       ),
                     ),
@@ -73,15 +72,14 @@ class _PerfectInformationWidgetState extends State<PerfectInformationWidget> {
               ),
               CustomImageButton(
                 width: double.infinity,
-                height: ScreenAdapterUtils.setHeight(30),
+                height: 30 * 2.h,
                 backgroundColor: AppColor.redColor,
-                borderRadius:
-                    BorderRadius.circular(ScreenAdapterUtils.setHeight(30) / 2),
+                borderRadius: BorderRadius.circular(30 * 2.h / 2),
                 title: "确定",
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
                     color: Colors.white,
-                    fontSize: ScreenAdapterUtils.setSp(18),
+                    fontSize: 18 * 2.sp,
                     decoration: TextDecoration.none),
                 onPressed: () {
                   if (TextUtils.isEmpty(_textEditingController.text)) {
@@ -94,15 +92,14 @@ class _PerfectInformationWidgetState extends State<PerfectInformationWidget> {
               ),
               CustomImageButton(
                 width: double.infinity,
-                height: ScreenAdapterUtils.setHeight(30),
+                height: 30 * 2.h,
                 backgroundColor: Colors.white,
-                borderRadius:
-                    BorderRadius.circular(ScreenAdapterUtils.setHeight(30) / 2),
+                borderRadius: BorderRadius.circular(30 * 2.h / 2),
                 title: "跳过",
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
                     color: AppColor.greyColor,
-                    fontSize: ScreenAdapterUtils.setSp(15),
+                    fontSize: 15 * 2.sp,
                     decoration: TextDecoration.none),
                 onPressed: () {
                   if (widget.onClose != null) widget.onClose();

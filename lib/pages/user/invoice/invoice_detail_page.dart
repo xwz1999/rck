@@ -62,7 +62,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                           Text(
                             '企业单位',
                             style: TextStyle(
-                              fontSize: ScreenAdapterUtils.setSp(14),
+                              fontSize: 14 * 2.sp,
                               color: Color(0xFF666666),
                             ),
                           ),
@@ -83,7 +83,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                           Text(
                             '个人/非企业',
                             style: TextStyle(
-                              fontSize: ScreenAdapterUtils.setSp(14),
+                              fontSize: 14 * 2.sp,
                               color: Color(0xFF666666),
                             ),
                           ),
@@ -107,7 +107,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                     '总金额',
                     style: TextStyle(
                       color: Color(0xFF333333),
-                      fontSize: ScreenAdapterUtils.setSp(16),
+                      fontSize: 16 * 2.sp,
                     ),
                   ),
                   Spacer(),
@@ -137,7 +137,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
               child: Text(
                 '接收方式',
                 style: TextStyle(
-                  fontSize: ScreenAdapterUtils.setSp(14),
+                  fontSize: 14 * 2.sp,
                   color: Color(0xFF666666),
                 ),
               ),
@@ -163,7 +163,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                   hintText: '用于向您发送开票成功通知',
                   hintStyle: TextStyle(
                     color: Color(0xFF999999),
-                    fontSize: ScreenAdapterUtils.setSp(14),
+                    fontSize: 14 * 2.sp,
                   ),
                 ),
               ),
@@ -190,7 +190,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                   hintText: '用于向您发送电子发票',
                   hintStyle: TextStyle(
                     color: Color(0xFF999999),
-                    fontSize: ScreenAdapterUtils.setSp(14),
+                    fontSize: 14 * 2.sp,
                   ),
                 ),
               ),
@@ -249,8 +249,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                           child: Text(
                                             '开具电子发票',
                                             style: TextStyle(
-                                              fontSize:
-                                                  ScreenAdapterUtils.setSp(18),
+                                              fontSize: 18 * 2.sp,
                                               color: Color(0xFF333333),
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -409,8 +408,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                             '确认提交',
                                             style: TextStyle(
                                               color: Colors.white,
-                                              fontSize:
-                                                  ScreenAdapterUtils.setSp(16),
+                                              fontSize: 16 * 2.sp,
                                             ),
                                           ),
                                         ),
@@ -433,7 +431,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
               child: Text(
                 '提交',
                 style: TextStyle(
-                  fontSize: ScreenAdapterUtils.setSp(16),
+                  fontSize: 16 * 2.sp,
                   color: Colors.white,
                 ),
               ),
@@ -470,7 +468,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
               hintText: '填写发票抬头',
               hintStyle: TextStyle(
                 color: Color(0xFF999999),
-                fontSize: ScreenAdapterUtils.setSp(14),
+                fontSize: 14 * 2.sp,
               ),
             ),
           ),
@@ -511,7 +509,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
               hintText: '填写纳税人识别号',
               hintStyle: TextStyle(
                 color: Color(0xFF999999),
-                fontSize: ScreenAdapterUtils.setSp(14),
+                fontSize: 14 * 2.sp,
               ),
             ),
           ),
@@ -524,7 +522,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
             '填写备注、地址等（非必填）',
             style: TextStyle(
               color: Color(0xFF999999),
-              fontSize: ScreenAdapterUtils.setSp(14),
+              fontSize: 14 * 2.sp,
             ),
           ),
           suffix: Icon(
@@ -568,7 +566,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
               hintText: '填写发票抬头',
               hintStyle: TextStyle(
                 color: Color(0xFF999999),
-                fontSize: ScreenAdapterUtils.setSp(14),
+                fontSize: 14 * 2.sp,
               ),
             ),
           ),
@@ -600,7 +598,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
   _buildDivider() {
     return Container(
       child: Divider(
-        height: ScreenAdapterUtils.setWidth(0.5),
+        height: 0.5 * 2.w,
         thickness: 1,
         color: Color(0xFFEEEEEE),
       ),

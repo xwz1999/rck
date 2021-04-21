@@ -217,7 +217,7 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
                     model.description,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                    style: AppTextStyle.generate(14 * 2.sp,
                         color: Colors.black54, fontWeight: FontWeight.w300),
                   ),
                   AppConfig.getShowCommission()
@@ -243,7 +243,7 @@ class _GoodsListDialogState extends State<GoodsListDialog> {
                                 model.brandName,
                                 style: TextStyle(
                                   color: Color(0xffc70404),
-                                  fontSize: ScreenAdapterUtils.setSp(12),
+                                  fontSize: 12 * 2.sp,
                                 ),
                               ),
                             ],

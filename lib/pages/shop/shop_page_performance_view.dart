@@ -13,7 +13,7 @@
 //   final ShopSummaryModel shopSummaryModel;
 //   final Function commissionInfoClick;
 //   const ShopPagePerformanceView({Key key, this.shopSummaryModel, this.commissionInfoClick,}) : super(key: key);
-  
+
 //   @override
 //   State<StatefulWidget> createState() {
 //     return _ShopPagePerformanceViewState();
@@ -25,11 +25,11 @@
 //   IncomeType _incomeType = IncomeType.today;
 
 //   TextStyle selectStyle = TextStyle(fontWeight: FontWeight.w500 ,color: AppColor.themeColor, fontSize: 13);
-//   // TextStyle normalStyle = TextStyle(fontWeight: FontWeight.w500 ,color: Colors.black.withOpacity(0.32), fontSize: ScreenAdapterUtils.setSp(12)); 
+//   // TextStyle normalStyle = TextStyle(fontWeight: FontWeight.w500 ,color: Colors.black.withOpacity(0.32), fontSize: 12*2.sp);
 //   TextStyle normalStyle = TextStyle( fontWeight: FontWeight.w400, color: Colors.black45, fontSize: 13);
-//   TextStyle titleStyle = TextStyle(fontWeight: FontWeight.w400 ,color: Colors.black.withOpacity(0.9), fontSize: ScreenAdapterUtils.setSp(14)); 
-//   TextStyle greyTitleStyle = TextStyle(fontWeight: FontWeight.w400 ,color: Colors.black.withOpacity(0.5), fontSize: ScreenAdapterUtils.setSp(14)); 
-//   TextStyle numberStyle = TextStyle(fontWeight: FontWeight.w500 ,color: Colors.black, fontSize: ScreenAdapterUtils.setSp(15));
+//   TextStyle titleStyle = TextStyle(fontWeight: FontWeight.w400 ,color: Colors.black.withOpacity(0.9), fontSize: 14*2.sp);
+//   TextStyle greyTitleStyle = TextStyle(fontWeight: FontWeight.w400 ,color: Colors.black.withOpacity(0.5), fontSize: 14*2.sp);
+//   TextStyle numberStyle = TextStyle(fontWeight: FontWeight.w500 ,color: Colors.black, fontSize: 15*2.sp);
 
 //   @override
 //   Widget build(BuildContext context) {
@@ -91,7 +91,7 @@
 //                   },
 //                 ),
 //                 GestureDetector(
-//                   child: Container( width: 35, child: Text('当月', style: _incomeType == IncomeType.seven? selectStyle:normalStyle,),), 
+//                   child: Container( width: 35, child: Text('当月', style: _incomeType == IncomeType.seven? selectStyle:normalStyle,),),
 //                   onTap: (){
 //                     _incomeType = IncomeType.seven;
 //                     setState(() {});

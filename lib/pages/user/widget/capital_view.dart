@@ -54,26 +54,24 @@ class _CapitalViewState extends BaseStoreState<CapitalView> {
           RichText(
               text: TextSpan(
                   text: "可用余额(元): ",
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                      color: Colors.grey[600]),
+                  style:
+                      AppTextStyle.generate(14 * 2.sp, color: Colors.grey[600]),
                   children: [
                 TextSpan(
                   // text: getStore().state.userBrief.asset.fund.toStringAsFixed(2),
                   text: '测试',
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(18),
+                  style: AppTextStyle.generate(18 * 2.sp,
                       color: AppColor.themeColor),
                 )
               ])),
           Spacer(),
           CustomImageButton(
             title: "提现",
-            fontSize: ScreenAdapterUtils.setSp(13),
+            fontSize: 13 * 2.sp,
             borderRadius: BorderRadius.all(Radius.circular(40)),
             padding:
                 EdgeInsets.symmetric(vertical: rSize(1), horizontal: rSize(10)),
-            border: Border.all(
-                color: Colors.grey[500],
-                width: ScreenAdapterUtils.setWidth(0.8)),
+            border: Border.all(color: Colors.grey[500], width: 0.8 * 2.w),
             color: Colors.grey[500],
             onPressed: () {
               if (widget.listener == null) return;

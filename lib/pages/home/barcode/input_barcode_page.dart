@@ -60,8 +60,7 @@ class _InputBarcodePageState extends BaseStoreState<InputBarcodePage> {
             padding: EdgeInsets.only(left: 30, top: 20),
             child: Text(
               "填写商品条码",
-              style: TextStyle(
-                  color: Colors.black, fontSize: ScreenAdapterUtils.setSp(22)),
+              style: TextStyle(color: Colors.black, fontSize: 22 * 2.sp),
             ),
           ),
           inputWidget(),
@@ -72,7 +71,7 @@ class _InputBarcodePageState extends BaseStoreState<InputBarcodePage> {
               top: 30,
             ),
             child: CustomImageButton(
-              height: ScreenAdapterUtils.setHeight(36),
+              height: 36 * 2.h,
               backgroundColor: AppColor.themeColor,
               title: "确认",
               color: Colors.white,
@@ -95,7 +94,7 @@ class _InputBarcodePageState extends BaseStoreState<InputBarcodePage> {
               children: <Widget>[
                 Expanded(
                   child: CustomImageButton(
-                    height: ScreenAdapterUtils.setHeight(36),
+                    height: 36 * 2.h,
                     title: "切换扫描",
                     color: buttonColor,
                     border: Border.all(
@@ -113,7 +112,7 @@ class _InputBarcodePageState extends BaseStoreState<InputBarcodePage> {
                 ),
                 Expanded(
                   child: CustomImageButton(
-                    height: ScreenAdapterUtils.setHeight(36),
+                    height: 36 * 2.h,
                     title: "返回首页",
                     color: buttonColor,
                     border: Border.all(
@@ -147,9 +146,7 @@ class _InputBarcodePageState extends BaseStoreState<InputBarcodePage> {
                 alignment: Alignment.center,
                 child: Text(
                   "商品条码",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: ScreenAdapterUtils.setSp(16)),
+                  style: TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
                 ),
               ),
               Container(
@@ -168,9 +165,7 @@ class _InputBarcodePageState extends BaseStoreState<InputBarcodePage> {
                   decoration: BoxDecoration(),
                   maxLength: 13,
                   maxLines: 1,
-                  style: TextStyle(
-                      fontSize: ScreenAdapterUtils.setSp(15),
-                      color: Colors.black),
+                  style: TextStyle(fontSize: 15 * 2.sp, color: Colors.black),
                   textAlign: TextAlign.left,
                 ),
               )),
@@ -203,7 +198,7 @@ class _InputBarcodePageState extends BaseStoreState<InputBarcodePage> {
       return;
     }
     // AppRouter.pushAndReplaced(globalContext, RouteName.COMMODITY_PAGE, arguments: CommodityDetailPage.setArguments(int.parse(goodsId)));
-    Get.to(()=>QRScarerResultPage());
+    Get.to(() => QRScarerResultPage());
     return;
   }
 }

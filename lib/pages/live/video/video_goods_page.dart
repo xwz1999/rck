@@ -278,7 +278,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                   //   model.description,
                   //   maxLines: 1,
                   //   overflow: TextOverflow.ellipsis,
-                  //   style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                  //   style: AppTextStyle.generate(14*2.sp,
                   //       color: Colors.black54, fontWeight: FontWeight.w300),
                   // ),
                   // InkWell(
@@ -302,7 +302,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                   //         model.brandName,
                   //         style: TextStyle(
                   //           color: Color(0xffc70404),
-                  //           fontSize: ScreenAdapterUtils.setSp(12),
+                  //           fontSize: 12*2.sp,
                   //         ),
                   //       ),
                   //     ],
@@ -356,7 +356,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                     model.goodsName,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(16),
+                    style: AppTextStyle.generate(16 * 2.sp,
                         fontWeight: FontWeight.w600),
                   ),
                   Container(
@@ -368,8 +368,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                             model.description,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: AppTextStyle.generate(
-                                ScreenAdapterUtils.setSp(14),
+                            style: AppTextStyle.generate(14 * 2.sp,
                                 color: Colors.black54,
                                 fontWeight: FontWeight.w300),
                           ),
@@ -439,7 +438,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                 TextUtils.isEmpty(model.brandName) ? "" : model.brandName,
                 style: TextStyle(
                   color: Color(0xffc70404),
-                  fontSize: ScreenAdapterUtils.setSp(12),
+                  fontSize: 12 * 2.sp,
                 ),
               ),
             ],
@@ -481,7 +480,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                               "赚" + model.commission,
                               style: TextStyle(
                                 color: Colors.white.withAlpha(0),
-                                fontSize: ScreenAdapterUtils.setSp(12),
+                                fontSize: 12 * 2.sp,
                               ),
                             ),
                           ),
@@ -492,7 +491,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                                     "赚" + model.commission,
                                     style: TextStyle(
                                       color: Color(0xffeb0045),
-                                      fontSize: ScreenAdapterUtils.setSp(12),
+                                      fontSize: 12 * 2.sp,
                                     ),
                                   ),
                                 )
@@ -512,7 +511,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
               "已售${model.salesVolume}件",
               style: TextStyle(
                 color: Color(0xff595757),
-                fontSize: ScreenAdapterUtils.setSp(12),
+                fontSize: 12 * 2.sp,
               ),
             ),
           ),

@@ -132,7 +132,7 @@ class _WebViewState extends BaseStoreState<WebViewPage> {
                     child: CustomImageButton(
                       icon: Icon(
                         AppIcons.icon_back,
-                        size: ScreenAdapterUtils.setSp(16),
+                        size: 16 * 2.sp,
                         color: Colors.white,
                       ),
                       buttonSize: rSize(30),

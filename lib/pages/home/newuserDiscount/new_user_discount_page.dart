@@ -111,16 +111,14 @@ class _NewUserDiscountPageState extends BaseStoreState<NewUserDiscountPage> {
                 text: TextSpan(children: [
                   TextSpan(
                     text: '￥',
-                    style: TextStyle(
-                        color: textColor,
-                        fontSize: ScreenAdapterUtils.setSp(12)),
+                    style: TextStyle(color: textColor, fontSize: 12 * 2.sp),
                   ),
                   TextSpan(
                     text: '${_detailModel.data.cash}',
                     style: TextStyle(
                         letterSpacing: -3,
                         color: textColor,
-                        fontSize: ScreenAdapterUtils.setSp(40)),
+                        fontSize: 40 * 2.sp),
                   )
                 ]),
               ),
@@ -142,7 +140,7 @@ class _NewUserDiscountPageState extends BaseStoreState<NewUserDiscountPage> {
                           fontWeight: FontWeight.w500,
                           letterSpacing: 5,
                           color: textColor,
-                          fontSize: ScreenAdapterUtils.setSp(23)),
+                          fontSize: 23 * 2.sp),
                     ),
                     Container(
                       height: 3,
@@ -153,7 +151,7 @@ class _NewUserDiscountPageState extends BaseStoreState<NewUserDiscountPage> {
                           fontWeight: FontWeight.w400,
                           letterSpacing: 0,
                           color: textColor,
-                          fontSize: ScreenAdapterUtils.setSp(9)),
+                          fontSize: 9 * 2.sp),
                     ),
                   ],
                 )),
@@ -199,7 +197,7 @@ class _NewUserDiscountPageState extends BaseStoreState<NewUserDiscountPage> {
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: Colors.white,
-                        fontSize: ScreenAdapterUtils.setSp(20)),
+                        fontSize: 20 * 2.sp),
                   ),
                 ),
               )),
@@ -235,13 +233,9 @@ class _NewUserDiscountPageState extends BaseStoreState<NewUserDiscountPage> {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(3))),
-      margin: EdgeInsets.only(
-          left: rSize(10),
-          right: rSize(10),
-          top: ScreenAdapterUtils.setHeight(8)),
-      padding: EdgeInsets.symmetric(
-          horizontal: rSize(8), vertical: ScreenAdapterUtils.setHeight(8)),
-      height: ScreenAdapterUtils.setHeight(123),
+      margin: EdgeInsets.only(left: rSize(10), right: rSize(10), top: 8 * 2.h),
+      padding: EdgeInsets.symmetric(horizontal: rSize(8), vertical: 8 * 2.h),
+      height: 123 * 2.h,
       child: Row(
         children: <Widget>[
           Container(
@@ -264,26 +258,24 @@ class _NewUserDiscountPageState extends BaseStoreState<NewUserDiscountPage> {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: ScreenAdapterUtils.setSp(17),
+                      fontSize: 17 * 2.sp,
                     ),
                   ),
                   alignment: Alignment.topLeft,
                 ),
                 Container(
-                  margin: EdgeInsets.symmetric(
-                      vertical: ScreenAdapterUtils.setHeight(8)),
+                  margin: EdgeInsets.symmetric(vertical: 8 * 2.h),
                   alignment: Alignment.centerLeft,
                   child: Container(
                     padding: EdgeInsets.symmetric(
-                        vertical: ScreenAdapterUtils.setHeight(1),
-                        horizontal: rSize(3)),
+                        vertical: 1 * 2.h, horizontal: rSize(3)),
                     decoration: BoxDecoration(
                         color: Color(0xFFFDCEA5).withAlpha(100),
                         borderRadius: BorderRadius.all(Radius.circular(3))),
                     child: Text(goods.label,
                         style: TextStyle(
                           color: Color.fromARGB(255, 230, 79, 32),
-                          fontSize: ScreenAdapterUtils.setSp(11),
+                          fontSize: 11 * 2.sp,
                         )),
                   ),
                 ),
@@ -294,18 +286,18 @@ class _NewUserDiscountPageState extends BaseStoreState<NewUserDiscountPage> {
                       '券后价￥${goods.price}  ',
                       style: TextStyle(
                         color: AppColor.themeColor,
-                        fontSize: ScreenAdapterUtils.setSp(15),
+                        fontSize: 15 * 2.sp,
                       ),
                     ),
                     Text('${goods.originPrice}',
                         style: TextStyle(
                             color: Colors.grey,
                             decoration: TextDecoration.lineThrough,
-                            fontSize: ScreenAdapterUtils.setSp(12))),
+                            fontSize: 12 * 2.sp)),
                   ],
                 ),
                 Container(
-                  height: ScreenAdapterUtils.setHeight(5),
+                  height: 5 * 2.h,
                 ),
               ],
             ),
@@ -403,15 +395,14 @@ class _NewUserDiscountPageState extends BaseStoreState<NewUserDiscountPage> {
                             TextSpan(
                               text: '￥',
                               style: TextStyle(
-                                  color: textColor,
-                                  fontSize: ScreenAdapterUtils.setSp(12)),
+                                  color: textColor, fontSize: 12 * 2.sp),
                             ),
                             TextSpan(
                               text: '${_detailModel.data.cash}',
                               style: TextStyle(
                                   letterSpacing: -3,
                                   color: textColor,
-                                  fontSize: ScreenAdapterUtils.setSp(40)),
+                                  fontSize: 40 * 2.sp),
                             )
                           ]),
                         ),
@@ -432,7 +423,7 @@ class _NewUserDiscountPageState extends BaseStoreState<NewUserDiscountPage> {
                                   fontWeight: FontWeight.w500,
                                   letterSpacing: 5,
                                   color: textColor,
-                                  fontSize: ScreenAdapterUtils.setSp(23)),
+                                  fontSize: 23 * 2.sp),
                             ),
                             Container(
                               height: 3,
@@ -443,7 +434,7 @@ class _NewUserDiscountPageState extends BaseStoreState<NewUserDiscountPage> {
                                   fontWeight: FontWeight.w400,
                                   letterSpacing: 0,
                                   color: textColor,
-                                  fontSize: ScreenAdapterUtils.setSp(9)),
+                                  fontSize: 9 * 2.sp),
                             ),
                           ],
                         )),
@@ -469,8 +460,7 @@ class _NewUserDiscountPageState extends BaseStoreState<NewUserDiscountPage> {
                         child: Text(
                           '立即使用',
                           style: TextStyle(
-                              color: Color(0xFF974902),
-                              fontSize: ScreenAdapterUtils.setSp(20)),
+                              color: Color(0xFF974902), fontSize: 20 * 2.sp),
                         ),
                       ),
                     ),

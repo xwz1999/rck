@@ -117,26 +117,24 @@ class _RefreshWidgetState extends State<RefreshWidget> {
         header: widget.header != null
             ? widget.header
             : ClassicHeader(
-                textStyle: TextStyle(
-                    fontSize: ScreenAdapterUtils.setSp(14),
-                    color: widget.color),
+                textStyle: TextStyle(fontSize: 14 * 2.sp, color: widget.color),
                 idleIcon: Icon(
                   Icons.arrow_downward,
-                  size: ScreenAdapterUtils.setSp(20),
+                  size: 20 * 2.sp,
                   color: widget.color,
                 ),
                 releaseIcon: Icon(
                   Icons.arrow_upward,
-                  size: ScreenAdapterUtils.setSp(20),
+                  size: 20 * 2.sp,
                   color: widget.color,
                 ),
                 refreshingIcon: CupertinoActivityIndicator(
                   animating: true,
-                  radius: ScreenAdapterUtils.setWidth(9.0),
+                  radius: 9.0 * 2.w,
                 ),
                 completeIcon: Icon(
                   Icons.check,
-                  size: ScreenAdapterUtils.setSp(20),
+                  size: 20 * 2.sp,
                   color: widget.color,
                 ),
                 spacing: rSize(5),
@@ -147,12 +145,11 @@ class _RefreshWidgetState extends State<RefreshWidget> {
                 releaseText: widget.releaseText,
               ),
         footer: ClassicFooter(
-          textStyle: TextStyle(
-              fontSize: ScreenAdapterUtils.setSp(14), color: Color(0xff555555)),
+          textStyle: TextStyle(fontSize: 14 * 2.sp, color: Color(0xff555555)),
           idleText: widget.upIdleText,
           idleIcon: Icon(
             Icons.arrow_upward,
-            size: ScreenAdapterUtils.setSp(20),
+            size: 20 * 2.sp,
             color: Color(0xff555555),
           ),
           loadingText: widget.loadingText,

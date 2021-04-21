@@ -76,10 +76,10 @@ class _UserSetPasswordVarCodeState
   }
 
   _varCodeWidget() {
-    TextStyle redStyle = TextStyle(
-        color: AppColor.themeColor, fontSize: ScreenAdapterUtils.setSp(15));
-    TextStyle greyStyle = TextStyle(
-        color: Color(0xff777777), fontSize: ScreenAdapterUtils.setSp(15));
+    TextStyle redStyle =
+        TextStyle(color: AppColor.themeColor, fontSize: 15 * 2.sp);
+    TextStyle greyStyle =
+        TextStyle(color: Color(0xff777777), fontSize: 15 * 2.sp);
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -91,7 +91,7 @@ class _UserSetPasswordVarCodeState
               "请输入短信验证码",
               style: TextStyle(
                 color: Colors.black,
-                fontSize: ScreenAdapterUtils.setSp(25),
+                fontSize: 25 * 2.sp,
               ),
             ),
           ),
@@ -102,7 +102,7 @@ class _UserSetPasswordVarCodeState
               "我们已发送短信验证码到你的手机号",
               style: TextStyle(
                 color: Color(0xff888888),
-                fontSize: ScreenAdapterUtils.setSp(15),
+                fontSize: 15 * 2.sp,
               ),
             ),
           ),
@@ -113,7 +113,7 @@ class _UserSetPasswordVarCodeState
               UserManager.instance.user.info.mobile.replaceRange(3, 7, "****"),
               style: TextStyle(
                 color: Color(0xff333333),
-                fontSize: ScreenAdapterUtils.setSp(22),
+                fontSize: 22 * 2.sp,
               ),
             ),
           ),
@@ -154,7 +154,7 @@ class _UserSetPasswordVarCodeState
                 disabledTextColor: Color(0xff777777),
                 child: Text(
                   _countDownStr,
-                  style: TextStyle(fontSize: ScreenAdapterUtils.setSp(15)),
+                  style: TextStyle(fontSize: 15 * 2.sp),
                 ),
                 onPressed: _getCodeEnable
                     ? () {
@@ -179,9 +179,7 @@ class _UserSetPasswordVarCodeState
                 alignment: Alignment.center,
                 child: Text(
                   '确认',
-                  style: TextStyle(
-                      fontSize: ScreenAdapterUtils.setSp(17),
-                      color: Colors.white),
+                  style: TextStyle(fontSize: 17 * 2.sp, color: Colors.white),
                 ),
               ),
             ),

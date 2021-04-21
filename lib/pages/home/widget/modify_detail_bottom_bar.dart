@@ -171,7 +171,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
             height: rSize(40),
             borderRadius: BorderRadius.all(Radius.circular(30)),
             backgroundColor: AppColor.pinkColor,
-            fontSize: ScreenAdapterUtils.setSp(15),
+            fontSize: 15 * 2.sp,
             onPressed: () {},
           ),
           Positioned(
@@ -189,7 +189,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                   style: TextStyle(
                       letterSpacing: -0.5,
                       fontWeight: FontWeight.w300,
-                      fontSize: ScreenAdapterUtils.setSp(13),
+                      fontSize: 13 * 2.sp,
                       color: Colors.black),
                 ),
               ],
@@ -241,7 +241,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                             Image.asset(
                               'assets/goodsdetail_bottom_share_white.png',
                               width: rSize(13),
-                              height: ScreenAdapterUtils.setHeight(13),
+                              height: 13 * 2.h,
                             ),
                             Container(
                               width: 2,
@@ -250,7 +250,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                               "领券购买",
                               style: TextStyle(
                                   fontWeight: FontWeight.w300,
-                                  fontSize: ScreenAdapterUtils.setSp(14),
+                                  fontSize: 14 * 2.sp,
                                   color: Colors.white),
                             ),
                           ],
@@ -266,7 +266,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                                 style: TextStyle(
                                     letterSpacing: -0.5,
                                     fontWeight: FontWeight.w300,
-                                    fontSize: ScreenAdapterUtils.setSp(9),
+                                    fontSize: 9 * 2.sp,
                                     color: Colors.white),
                               ),
                       ],
@@ -305,7 +305,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                             bottomLeft: Radius.circular(30)),
                       ),
                       height: rSize(40),
-                      fontSize: ScreenAdapterUtils.setSp(15),
+                      fontSize: 15 * 2.sp,
                       onPressed: widget.shareListener,
                     ),
                     Positioned(
@@ -324,7 +324,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                                   Image.asset(
                                     'assets/goodsdetail_bottom_share_red.png',
                                     width: rSize(13),
-                                    height: ScreenAdapterUtils.setHeight(13),
+                                    height: 13 * 2.h,
                                   ),
                                   Container(
                                     width: 2,
@@ -340,7 +340,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                                         : "导购",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w300,
-                                        fontSize: ScreenAdapterUtils.setSp(14),
+                                        fontSize: 14 * 2.sp,
                                         color: Colors.white),
                                   ),
                                 ],
@@ -358,7 +358,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                                       style: TextStyle(
                                           letterSpacing: -0.5,
                                           fontWeight: FontWeight.w300,
-                                          fontSize: ScreenAdapterUtils.setSp(9),
+                                          fontSize: 9 * 2.sp,
                                           color: Colors.white),
                                     ),
                             ],
@@ -394,7 +394,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                     ),
                     width: double.infinity,
                     height: rSize(40),
-                    fontSize: ScreenAdapterUtils.setSp(15),
+                    fontSize: 15 * 2.sp,
                     onPressed: widget.buyListener,
                   ),
                   right: 0,
@@ -418,7 +418,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                             Image.asset(
                               'assets/goodsdetail_bottom_share_white.png',
                               width: rSize(13),
-                              height: ScreenAdapterUtils.setHeight(13),
+                              height: 13 * 2.h,
                             ),
                             Container(
                               width: 2,
@@ -427,7 +427,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                               "领券购买",
                               style: TextStyle(
                                   fontWeight: FontWeight.w300,
-                                  fontSize: ScreenAdapterUtils.setSp(14),
+                                  fontSize: 14 * 2.sp,
                                   color: Colors.white),
                             ),
                           ],
@@ -443,7 +443,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                                 style: TextStyle(
                                     letterSpacing: -0.5,
                                     fontWeight: FontWeight.w300,
-                                    fontSize: ScreenAdapterUtils.setSp(9),
+                                    fontSize: 9 * 2.sp,
                                     color: Colors.white),
                               ),
                       ],

@@ -78,26 +78,25 @@ class _LiveStreamPageState extends State<LiveStreamPage>
           Expanded(
             child: RefreshWidget(
               header: ClassicHeader(
-                textStyle: TextStyle(
-                    fontSize: ScreenAdapterUtils.setSp(14),
-                    color: Color(0xff555555)),
+                textStyle:
+                    TextStyle(fontSize: 14 * 2.sp, color: Color(0xff555555)),
                 idleIcon: Icon(
                   Icons.arrow_downward,
-                  size: ScreenAdapterUtils.setSp(20),
+                  size: 20 * 2.sp,
                   color: Color(0xff555555),
                 ),
                 releaseIcon: Icon(
                   Icons.arrow_forward,
-                  size: ScreenAdapterUtils.setSp(20),
+                  size: 20 * 2.sp,
                   color: Color(0xff555555),
                 ),
                 refreshingIcon: CupertinoActivityIndicator(
                   animating: true,
-                  radius: ScreenAdapterUtils.setWidth(9.0),
+                  radius: 9.0 * 2.w,
                 ),
                 completeIcon: Icon(
                   Icons.check,
-                  size: ScreenAdapterUtils.setSp(20),
+                  size: 20 * 2.sp,
                   color: Color(0xff555555),
                 ),
                 spacing: rSize(5),

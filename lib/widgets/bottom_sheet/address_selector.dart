@@ -6,7 +6,7 @@
  * remark    : 
  * ====================================================
  */
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
 import 'package:recook/constants/app_image_resources.dart';
@@ -101,7 +101,7 @@ class _AddressSelectorState extends State<AddressSelector>
           Text(
             "配送至",
             style: TextStyle(
-                fontSize: ScreenAdapterUtils.setSp(18),
+                fontSize: 18 * 2.sp,
                 fontWeight: FontWeight.w500,
                 color: Colors.black),
           ),
@@ -109,7 +109,11 @@ class _AddressSelectorState extends State<AddressSelector>
           CustomImageButton(
             padding: EdgeInsets.all(5),
             borderRadius: BorderRadius.all(Radius.circular(20)),
-            icon: Icon(AppIcons.icon_delete, color: Colors.grey[500],size: 12,),
+            icon: Icon(
+              AppIcons.icon_delete,
+              color: Colors.grey[500],
+              size: 12,
+            ),
             backgroundColor: Colors.grey[200],
             onPressed: () {
               _dismiss();
@@ -128,7 +132,7 @@ class _AddressSelectorState extends State<AddressSelector>
         isScrollable: true,
         indicatorColor: _selectedColor,
         indicatorSize: TabBarIndicatorSize.label,
-        indicatorPadding: EdgeInsets.only(left: 10 ,right: 10),
+        indicatorPadding: EdgeInsets.only(left: 10, right: 10),
         tabs: _tabItems());
   }
 
@@ -148,10 +152,8 @@ class _AddressSelectorState extends State<AddressSelector>
         child: Text(
           TextUtils.isEmpty(_result[i]) ? "请选择" : _result[i],
           style: TextStyle(
-              fontSize: ScreenAdapterUtils.setSp(16),
-              color: _tabController.index == i
-                  ? _selectedColor
-                  : Colors.black),
+              fontSize: 16 * 2.sp,
+              color: _tabController.index == i ? _selectedColor : Colors.black),
         ),
       ));
     }
@@ -175,7 +177,7 @@ class _AddressSelectorState extends State<AddressSelector>
                   Text(
                     addr,
                     style: TextStyle(
-                        fontSize: ScreenAdapterUtils.setSp(15),
+                        fontSize: 15 * 2.sp,
                         color: selected ? _selectedColor : Colors.black),
                   ),
                   Spacer(),
@@ -183,7 +185,7 @@ class _AddressSelectorState extends State<AddressSelector>
                       offstage: !selected,
                       child: Icon(
                         Icons.check,
-                        size: ScreenAdapterUtils.setSp(16),
+                        size: 16 * 2.sp,
                       ))
                 ]),
               ),

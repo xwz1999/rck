@@ -85,7 +85,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
   Text _orderStatusText() {
     return Text(
       _status,
-      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+      style: AppTextStyle.generate(14 * 2.sp,
           color: _color, fontWeight: FontWeight.w500),
     );
   }
@@ -119,13 +119,11 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
               ? CustomImageButton(
                   title: "查看物流",
                   color: Colors.grey[600],
-                  fontSize: ScreenAdapterUtils.setSp(12),
+                  fontSize: 12 * 2.sp,
                   padding: EdgeInsets.symmetric(
                       vertical: rSize(2), horizontal: rSize(8)),
                   borderRadius: BorderRadius.all(Radius.circular(40)),
-                  border: Border.all(
-                      color: Colors.grey,
-                      width: ScreenAdapterUtils.setWidth(0.8)),
+                  border: Border.all(color: Colors.grey, width: 0.8 * 2.w),
                   onPressed: () {
                     AppRouter.push(context, RouteName.ORDER_LOGISTIC,
                         arguments: OrderLogisticsListPage.setArguments(
@@ -137,12 +135,12 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
           RichText(
               text: TextSpan(
                   text: "共${widget.orderModel.totalGoodsCount}件商品  总计￥",
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13)),
+                  style: AppTextStyle.generate(13 * 2.sp),
                   children: [
                 TextSpan(
                     text:
                         "${widget.orderModel.actualTotalAmount.toStringAsFixed(2)}",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(16)))
+                    style: AppTextStyle.generate(16 * 2.sp))
               ])),
         ],
       ),
@@ -167,7 +165,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
       padding: EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(10)),
 //            backgroundColor: AppColor.themeColor,
       color: AppColor.themeColor,
-      fontSize: ScreenAdapterUtils.setSp(14),
+      fontSize: 14 * 2.sp,
       border: Border.all(color: AppColor.themeColor, width: 0.3),
       borderRadius: BorderRadius.all(Radius.circular(40)),
       onPressed: () {
@@ -215,7 +213,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
           ),
           contentSpacing: rSize(8),
           style: AppTextStyle.generate(
-            ScreenAdapterUtils.setSp(14),
+            14 * 2.sp,
           ),
           title: widget.orderModel.createdAt,
         ),
@@ -228,7 +226,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
         _orderStatusText()
         // Text(
         //   _expressStatus(),
-        //   style: AppTextStyle.generate(ScreenAdapterUtils.setSp(12), color: Colors.orange),
+        //   style: AppTextStyle.generate(12*2.sp, color: Colors.orange),
         // )
       ],
     );
@@ -287,14 +285,13 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
                 // text: "运费: ￥${widget.orderModel.expressTotalFee.toStringAsFixed(2)}\n共${widget.orderModel.totalGoodsCount}件商品  小计￥",
                 text:
                     "运费: ￥${widget.orderModel.expressTotalFee.toStringAsFixed(2)}",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(12),
-                    color: Colors.grey),
+                style: AppTextStyle.generate(12 * 2.sp, color: Colors.grey),
                 children: [
                   TextSpan(
                       // text: "${widget.orderModel.actualTotalAmount.toStringAsFixed(2)}",
                       text: "",
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                          color: Colors.grey)),
+                      style:
+                          AppTextStyle.generate(14 * 2.sp, color: Colors.grey)),
                 ])));
   }
 
@@ -333,7 +330,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyle.generate(
-                        ScreenAdapterUtils.setSp(14),
+                        14 * 2.sp,
                       ),
                     ),
                   ),
@@ -352,8 +349,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
                             goods.skuName,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
-                            style: AppTextStyle.generate(
-                                ScreenAdapterUtils.setSp(11),
+                            style: AppTextStyle.generate(11 * 2.sp,
                                 color: Colors.grey[600],
                                 fontWeight: FontWeight.w300),
                           ),
@@ -377,14 +373,12 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
                           text: TextSpan(children: [
                         TextSpan(
                           text: "￥",
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(10),
+                          style: AppTextStyle.generate(10 * 2.sp,
                               color: AppColor.priceColor),
                         ),
                         TextSpan(
                           text: "${goods.unitPrice.toStringAsFixed(2)}",
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(14),
+                          style: AppTextStyle.generate(14 * 2.sp,
                               color: AppColor.priceColor),
                         )
                       ])),
@@ -393,8 +387,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
                         goods.rStatus,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(14),
+                        style: AppTextStyle.generate(14 * 2.sp,
                             color: AppColor.priceColor),
                       )
                     ],

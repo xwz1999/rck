@@ -65,12 +65,12 @@ class _ImageSelectedViewState extends State<ImageSelectedView> {
               return CustomImageButton(
                 border: Border.all(
                     style: BorderStyle.solid,
-                    width: ScreenAdapterUtils.setWidth(0.3),
+                    width: 0.3 * 2.w,
                     color: Colors.grey),
                 icon: Icon(AppIcons.icon_add, color: Colors.grey),
                 color: Colors.grey,
                 title: "添加图片",
-                fontSize: ScreenAdapterUtils.setSp(14),
+                fontSize: 14 * 2.sp,
                 contentSpacing: rSize(10),
                 onPressed: () {
                   if (widget.addListener != null) {

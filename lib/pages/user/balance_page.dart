@@ -72,8 +72,7 @@ class _BalancePageState extends BaseStoreState<BalancePage> {
             child: Center(
               child: Text(
                 "资金收益明细",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(16),
-                    color: Colors.black),
+                style: AppTextStyle.generate(16 * 2.sp, color: Colors.black),
               ),
             ),
           ),
@@ -110,13 +109,11 @@ class _BalancePageState extends BaseStoreState<BalancePage> {
                   text: _coinModel == null
                       ? "- -"
                       : _coinModel.data.balance.toDouble().toString(),
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(25),
-                      color: Colors.white),
+                  style: AppTextStyle.generate(25 * 2.sp, color: Colors.white),
                   children: [
                     TextSpan(
                         text: "\n余额(元)",
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(13),
+                        style: AppTextStyle.generate(13 * 2.sp,
                             color: Colors.white))
                   ]),
             ),
@@ -150,8 +147,7 @@ class _BalancePageState extends BaseStoreState<BalancePage> {
                       color: Colors.white,
                       border: Border(
                           bottom: BorderSide(
-                              color: Colors.grey[300],
-                              width: ScreenAdapterUtils.setWidth(0.6)))),
+                              color: Colors.grey[300], width: 0.6 * 2.w))),
                   child: Row(
                     children: <Widget>[
                       Expanded(
@@ -160,16 +156,14 @@ class _BalancePageState extends BaseStoreState<BalancePage> {
                           children: <Widget>[
                             Text(
                               detail.title,
-                              style: AppTextStyle.generate(
-                                  ScreenAdapterUtils.setSp(15)),
+                              style: AppTextStyle.generate(15 * 2.sp),
                             ),
                             SizedBox(
                               height: rSize(2),
                             ),
                             Text(
                               detail.comment,
-                              style: AppTextStyle.generate(
-                                  ScreenAdapterUtils.setSp(13),
+                              style: AppTextStyle.generate(13 * 2.sp,
                                   color: Colors.grey[600]),
                             ),
                             SizedBox(
@@ -177,8 +171,7 @@ class _BalancePageState extends BaseStoreState<BalancePage> {
                             ),
                             Text(
                               detail.createdAt,
-                              style: AppTextStyle.generate(
-                                  ScreenAdapterUtils.setSp(12),
+                              style: AppTextStyle.generate(12 * 2.sp,
                                   color: Colors.grey),
                             ),
                           ],
@@ -186,8 +179,7 @@ class _BalancePageState extends BaseStoreState<BalancePage> {
                       ),
                       Text(
                         "${isAdd ? "+" : ""}${detail.amount}",
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(20),
+                        style: AppTextStyle.generate(20 * 2.sp,
                             color: isAdd ? Colors.red : Colors.green),
                       ),
                     ],

@@ -57,9 +57,8 @@ class _ChooseAfterSaleTypePageState
             padding: EdgeInsets.all(rSize(10)),
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(8)),
-            margin: EdgeInsets.symmetric(
-                horizontal: rSize(15),
-                vertical: ScreenAdapterUtils.setHeight(10)),
+            margin:
+                EdgeInsets.symmetric(horizontal: rSize(15), vertical: 10 * 2.h),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,13 +118,13 @@ class _ChooseAfterSaleTypePageState
   }
 
   _goodsItemWidget() {
-    TextStyle subGreyStyle = TextStyle(
-        color: Color(0xff666666), fontSize: ScreenAdapterUtils.setSp(14));
+    TextStyle subGreyStyle =
+        TextStyle(color: Color(0xff666666), fontSize: 14 * 2.sp);
     TextStyle subBlackStyle =
-        TextStyle(color: Colors.black, fontSize: ScreenAdapterUtils.setSp(14));
+        TextStyle(color: Colors.black, fontSize: 14 * 2.sp);
     return Container(
       alignment: Alignment.topLeft,
-      padding: EdgeInsets.only(bottom: ScreenAdapterUtils.setHeight(5)),
+      padding: EdgeInsets.only(bottom: 5 * 2.h),
       decoration: BoxDecoration(
         border:
             Border(bottom: BorderSide(width: 1, color: AppColor.frenchColor)),
@@ -159,15 +158,13 @@ class _ChooseAfterSaleTypePageState
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   color: AppColor.blackColor,
-                  fontSize: ScreenAdapterUtils.setSp(14),
+                  fontSize: 14 * 2.sp,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               Text(
                 "型号规格 ${_goods.skuName}",
-                style: TextStyle(
-                    color: Color(0xff666666),
-                    fontSize: ScreenAdapterUtils.setSp(13)),
+                style: TextStyle(color: Color(0xff666666), fontSize: 13 * 2.sp),
               ),
               ExtendedText.rich(TextSpan(children: [
                 TextSpan(text: "订单金额 ", style: subGreyStyle),
@@ -212,13 +209,12 @@ class _ChooseAfterSaleTypePageState
                   style: TextStyle(
                       color: AppColor.blackColor,
                       fontWeight: FontWeight.w600,
-                      fontSize: ScreenAdapterUtils.setSp(14)),
+                      fontSize: 14 * 2.sp),
                 ),
                 Text(
                   info,
                   style: TextStyle(
-                      color: AppColor.blackColor,
-                      fontSize: ScreenAdapterUtils.setSp(12)),
+                      color: AppColor.blackColor, fontSize: 12 * 2.sp),
                 ),
               ],
             )),

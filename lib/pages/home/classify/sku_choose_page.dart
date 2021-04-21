@@ -172,8 +172,7 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
                                 text:
                                     "￥${_sku != null ? _sku.discountPrice.toStringAsFixed(2) : _price}${skuNotNull && AppConfig.commissionByRoleLevel ? "/" : ""}",
                                 // "￥ ${_sku.discountPrice}",
-                                style: AppTextStyle.generate(
-                                    ScreenAdapterUtils.setSp(18),
+                                style: AppTextStyle.generate(18 * 2.sp,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black),
                               ),
@@ -183,8 +182,7 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
                                     ? " 赚${_sku.commission.toStringAsFixed(2)}"
                                     : "",
                                 // "￥ ${_sku.discountPrice}",
-                                style: AppTextStyle.generate(
-                                    ScreenAdapterUtils.setSp(12),
+                                style: AppTextStyle.generate(12 * 2.sp,
                                     color: Color(0xffC92219)),
                               ),
                             ]),
@@ -193,39 +191,38 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
                       ),
                       Text(
                         "库存 ${_sku != null ? _sku.inventory : widget.model.data.inventory}件",
-                        style:
-                            AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
-                                // fontWeight: FontWeight.w300,
-                                color: Colors.grey),
+                        style: AppTextStyle.generate(13 * 2.sp,
+                            // fontWeight: FontWeight.w300,
+                            color: Colors.grey),
                       ),
                       widget.model.data.isFerme == 1
                           ? Row(
                               children: [
                                 Container(
-                                  width: ScreenAdapterUtils.setWidth(32),
-                                  height: ScreenAdapterUtils.setWidth(14),
+                                  width: 32 * 2.w,
+                                  height: 14 * 2.w,
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     color: Color(0xFFFFE5ED),
-                                    borderRadius: BorderRadius.circular(
-                                        ScreenAdapterUtils.setWidth(7.5)),
+                                    borderRadius:
+                                        BorderRadius.circular(7.5 * 2.w),
                                   ),
                                   child: Text(
                                     '包税',
                                     style: TextStyle(
                                       color: Color(0xFFCC1B4F),
-                                      fontSize: ScreenAdapterUtils.setSp(10),
+                                      fontSize: 10 * 2.sp,
                                     ),
                                   ),
                                 ),
                                 SizedBox(
-                                  width: ScreenAdapterUtils.setWidth(10),
+                                  width: 10 * 2.w,
                                 ),
                                 Text(
                                   '进口税¥${widget.model.data.price.min.ferme.toStringAsFixed(2)},由瑞库客承担',
                                   style: TextStyle(
                                       color: Color(0xFF141414),
-                                      fontSize: ScreenAdapterUtils.setSp(12)),
+                                      fontSize: 12 * 2.sp),
                                 ),
                               ],
                             )
@@ -234,10 +231,9 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
                         "${_stringBuffer.toString()}",
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
-                        style:
-                            AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                                // fontWeight: FontWeight.w300,
-                                color: Colors.black),
+                        style: AppTextStyle.generate(14 * 2.sp,
+                            // fontWeight: FontWeight.w300,
+                            color: Colors.black),
                       )
                     ],
                   ),
@@ -314,7 +310,7 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
                   borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30),
                       bottomLeft: Radius.circular(30))),
-              fontSize: ScreenAdapterUtils.setSp(16),
+              fontSize: 16 * 2.sp,
               onPressed: () {
                 if (_sku == null) {
                   Toast.showInfo(_stringBuffer.toString(),
@@ -350,7 +346,7 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(30),
                       bottomRight: Radius.circular(30))),
-              fontSize: ScreenAdapterUtils.setSp(16),
+              fontSize: 16 * 2.sp,
               onPressed: () {
                 if (_sku == null) {
                   Toast.showInfo(_stringBuffer.toString(), color: Colors.black);

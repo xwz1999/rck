@@ -465,7 +465,7 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
   //           child: Center(
   //             child: Text(
   //               "瑞币收支明细",
-  //               style: AppTextStyle.generate(ScreenAdapterUtils.setSp(16), color: Colors.black),
+  //               style: AppTextStyle.generate(16*2.sp, color: Colors.black),
   //             ),
   //           ),
   //         ),
@@ -500,11 +500,11 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
   //             textAlign: TextAlign.center,
   //             text: TextSpan(
   //                 text: _coinModel == null ? "- -" : _coinModel.data.amount.toInt().toString(),
-  //                 style: AppTextStyle.generate(ScreenAdapterUtils.setSp(25), color: Colors.white),
+  //                 style: AppTextStyle.generate(25*2.sp, color: Colors.white),
   //                 children: [
   //                   TextSpan(
   //                       text: "\n瑞币",
-  //                       style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+  //                       style: AppTextStyle.generate(13*2.sp,
   //                           color: Colors.white))
   //                 ]),
   //           ),
@@ -538,7 +538,7 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
   //                     color: Colors.white,
   //                     border: Border(
   //                         bottom: BorderSide(
-  //                             color: Colors.grey[300], width: ScreenAdapterUtils.setWidth(0.6)))),
+  //                             color: Colors.grey[300], width: 0.6*2.w))),
   //                 child: Row(
   //                   children: <Widget>[
   //                     Expanded(
@@ -547,24 +547,24 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
   //                         children: <Widget>[
   //                           Text(
   //                             detail.title,
-  //                             style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15)),
+  //                             style: AppTextStyle.generate(15*2.sp),
   //                           ),
   //                           SizedBox(height: rSize(2),),
   //                           Text(
   //                             detail.channel,
-  //                             style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),color: Colors.grey[600]),
+  //                             style: AppTextStyle.generate(13*2.sp,color: Colors.grey[600]),
   //                           ),
   //                           SizedBox(height: rSize(2),),
   //                           Text(
   //                             detail.createdAt,
-  //                             style: AppTextStyle.generate(ScreenAdapterUtils.setSp(12),color: Colors.grey),
+  //                             style: AppTextStyle.generate(12*2.sp,color: Colors.grey),
   //                           ),
   //                         ],
   //                       ),
   //                     ),
   //                     Text(
   //                       "${isAdd ? "+" : "-"}${detail.number}",
-  //                       style: AppTextStyle.generate(ScreenAdapterUtils.setSp(20),
+  //                       style: AppTextStyle.generate(20*2.sp,
   //                           color: isAdd ? Colors.red : Colors.green),
   //                     ),
   //                   ],

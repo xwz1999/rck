@@ -104,8 +104,8 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
               imageUrl: Api.getResizeImgUrl(widget.model.brandLogo, 200),
             ),
             contentSpacing: rSize(8),
-            style: AppTextStyle.generate(ScreenAdapterUtils.setSp(17),
-                fontWeight: FontWeight.w500),
+            style:
+                AppTextStyle.generate(17 * 2.sp, fontWeight: FontWeight.w500),
             title: widget.model.brandName,
           )
         ],
@@ -232,14 +232,14 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                                     height: 15,
                                     decoration: BoxDecoration(
                                       color: Color(0xFFCC1B4F),
-                                      borderRadius: BorderRadius.circular(
-                                          ScreenAdapterUtils.setWidth(3)),
+                                      borderRadius:
+                                          BorderRadius.circular(3 * 2.w),
                                     ),
                                     child: Text(
                                       '进口',
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: ScreenAdapterUtils.setSp(10),
+                                        fontSize: 10 * 2.sp,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -249,13 +249,12 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                           goods.isImport == 1
                               ? WidgetSpan(
                                   child: Container(
-                                  width: ScreenAdapterUtils.setWidth(5),
+                                  width: 5 * 2.w,
                                 ))
                               : WidgetSpan(child: SizedBox()),
                           TextSpan(
                             text: goods.goodsName,
-                            style: AppTextStyle.generate(
-                                ScreenAdapterUtils.setSp(15),
+                            style: AppTextStyle.generate(15 * 2.sp,
                                 fontWeight: FontWeight.w600),
                           ),
                         ],
@@ -275,50 +274,49 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                         goods.skuName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(10),
+                        style: AppTextStyle.generate(10 * 2.sp,
                             color: Colors.grey[600],
                             fontWeight: FontWeight.w300),
                       ),
                     ),
                     SizedBox(
-                      height: ScreenAdapterUtils.setWidth(2),
+                      height: 2 * 2.w,
                     ),
-                    goods.isFerme==1
+                    goods.isFerme == 1
                         ? Row(
                             children: [
                               Container(
-                                width: ScreenAdapterUtils.setWidth(32),
-                                height: ScreenAdapterUtils.setWidth(14),
+                                width: 32 * 2.w,
+                                height: 14 * 2.w,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   color: Color(0xFFFFE5ED),
-                                  borderRadius: BorderRadius.circular(
-                                      ScreenAdapterUtils.setWidth(7.5)),
+                                  borderRadius:
+                                      BorderRadius.circular(7.5 * 2.w),
                                 ),
                                 child: Text(
                                   '包税',
                                   style: TextStyle(
                                     color: Color(0xFFCC1B4F),
-                                    fontSize: ScreenAdapterUtils.setSp(10),
+                                    fontSize: 10 * 2.sp,
                                   ),
                                 ),
                               ),
                               SizedBox(
-                                width: ScreenAdapterUtils.setWidth(2),
+                                width: 2 * 2.w,
                               ),
                               Text(
                                 '进口税¥${goods.ferme.toStringAsFixed(2)},由瑞库客承担',
                                 style: TextStyle(
                                     color: Color(0xFF666666),
-                                    fontSize: ScreenAdapterUtils.setSp(10)),
+                                    fontSize: 10 * 2.sp),
                               ),
                             ],
                           )
                         : SizedBox(),
 
                     SizedBox(
-                      height: ScreenAdapterUtils.setWidth(7),
+                      height: 7 * 2.w,
                     ),
                     Row(
                       children: <Widget>[
@@ -334,7 +332,7 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                                   "赚${goods.commission.toStringAsFixed(2)}",
                                   style: TextStyle(
                                       color: AppColor.themeColor,
-                                      fontSize: ScreenAdapterUtils.setSp(11)),
+                                      fontSize: 11 * 2.sp),
                                 ),
                               )
                             : SizedBox(),
@@ -379,28 +377,24 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                                     text: TextSpan(children: [
                                       TextSpan(
                                         text: "￥",
-                                        style: AppTextStyle.generate(
-                                            ScreenAdapterUtils.setSp(10),
+                                        style: AppTextStyle.generate(10 * 2.sp,
                                             color: AppColor.themeColor),
                                       ),
                                       TextSpan(
                                         text:
                                             "${goods.price.toStringAsFixed(2)} ",
-                                        style: AppTextStyle.generate(
-                                            ScreenAdapterUtils.setSp(14),
+                                        style: AppTextStyle.generate(14 * 2.sp,
                                             color: AppColor.themeColor),
                                       ),
                                       TextSpan(
                                         text: "￥",
-                                        style: AppTextStyle.generate(
-                                            ScreenAdapterUtils.setSp(7),
+                                        style: AppTextStyle.generate(7 * 2.sp,
                                             color: AppColor.greyColor),
                                       ),
                                       TextSpan(
                                         text:
                                             "${goods.originalPrice.toStringAsFixed(2)}",
-                                        style: AppTextStyle.generate(
-                                            ScreenAdapterUtils.setSp(11),
+                                        style: AppTextStyle.generate(11 * 2.sp,
                                             decoration:
                                                 TextDecoration.lineThrough,
                                             color: AppColor.greyColor),
@@ -444,19 +438,19 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                     //         children: [
                     //           TextSpan(
                     //             text: "￥",
-                    //             style: AppTextStyle.generate(ScreenAdapterUtils.setSp(10),color: AppColor.themeColor),
+                    //             style: AppTextStyle.generate(10*2.sp,color: AppColor.themeColor),
                     //           ),
                     //           TextSpan(
                     //             text: "${goods.price.toStringAsFixed(2)} ",
-                    //             style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),color: AppColor.themeColor),
+                    //             style: AppTextStyle.generate(14*2.sp,color: AppColor.themeColor),
                     //           ),
                     //           TextSpan(
                     //             text: "￥",
-                    //             style: AppTextStyle.generate(ScreenAdapterUtils.setSp(7),decoration: TextDecoration.lineThrough, color: AppColor.greyColor),
+                    //             style: AppTextStyle.generate(7*2.sp,decoration: TextDecoration.lineThrough, color: AppColor.greyColor),
                     //           ),
                     //           TextSpan(
                     //             text: "${goods.originalPrice.toStringAsFixed(2) }",
-                    //             style: AppTextStyle.generate(ScreenAdapterUtils.setSp(11),decoration: TextDecoration.lineThrough, color: AppColor.greyColor),
+                    //             style: AppTextStyle.generate(11*2.sp,decoration: TextDecoration.lineThrough, color: AppColor.greyColor),
                     //           ),
                     //         ]
                     //     )),

@@ -178,7 +178,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage> {
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
-                      fontSize: ScreenAdapterUtils.setSp(12)),
+                      fontSize: 12 * 2.sp),
                 ),
               )),
         ],
@@ -216,8 +216,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage> {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: ScreenAdapterUtils.setSp(16)),
+                                color: Colors.black, fontSize: 16 * 2.sp),
                           ),
                         ),
                         Expanded(
@@ -228,7 +227,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage> {
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                   color: Colors.black.withOpacity(0.7),
-                                  fontSize: ScreenAdapterUtils.setSp(13)),
+                                  fontSize: 13 * 2.sp),
                             ),
                           ),
                         ),
@@ -249,7 +248,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage> {
                             //   backgroundColor: Colors.pink[50],
                             //   padding: EdgeInsets.only(
                             //       bottom:
-                            //       ScreenAdapterUtils.setWidth(1.5),
+                            //       1.5*2.w,
                             //       left: rSize(4),
                             //       right: rSize(4)),
                             // ),
@@ -265,7 +264,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage> {
                                   style: TextStyle(
                                       letterSpacing: -1,
                                       fontWeight: FontWeight.w500,
-                                      fontSize: ScreenAdapterUtils.setSp(15),
+                                      fontSize: 15 * 2.sp,
                                       color: AppColor.themeColor)),
                               TextSpan(
                                 text: "   ",
@@ -273,7 +272,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage> {
                               TextSpan(
                                   text: data.originalPrice.toString(),
                                   style: TextStyle(
-                                    fontSize: ScreenAdapterUtils.setSp(12),
+                                    fontSize: 12 * 2.sp,
                                     color: Colors.black26,
                                     decoration: TextDecoration.lineThrough,
                                     decorationColor: Colors.black26,
@@ -314,7 +313,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage> {
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           color: Colors.white,
-                          fontSize: ScreenAdapterUtils.setSp(12)),
+                          fontSize: 12 * 2.sp),
                     ),
                   )),
             ],

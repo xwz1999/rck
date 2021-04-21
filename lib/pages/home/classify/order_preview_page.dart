@@ -303,17 +303,15 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
               RichText(
                   text: TextSpan(
                       text: _orderModel.data.addr.receiverName,
-                      style:
-                          AppTextStyle.generate(ScreenAdapterUtils.setSp(15)),
+                      style: AppTextStyle.generate(15 * 2.sp),
                       children: [
                     TextSpan(
                         text: "   ${_orderModel.data.addr.mobile}",
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(14),
+                        style: AppTextStyle.generate(14 * 2.sp,
                             color: Colors.grey))
                   ])),
               Container(
-                margin: EdgeInsets.only(top: ScreenAdapterUtils.setSp(8)),
+                margin: EdgeInsets.only(top: 8 * 2.sp),
                 child: Text(
                   TextUtils.isEmpty(_orderModel.data.addr.address)
                       ? "空地址"
@@ -323,7 +321,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                           _orderModel.data.addr.address,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                  style: AppTextStyle.generate(14 * 2.sp,
                       fontWeight: FontWeight.w300),
                 ),
               ),
@@ -333,7 +331,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
               //     margin: EdgeInsets.only(top: rSize(6)),
               //     child: Text(
               //       "当前地址不支持快递发货",
-              //       style: AppTextStyle.generate(ScreenAdapterUtils.setSp(12),
+              //       style: AppTextStyle.generate(12*2.sp,
               //           color: Colors.red, fontWeight: FontWeight.w300),
               //     ),
               //   ),
@@ -448,9 +446,9 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                     _orderModel.data.coupon == null
                         ? "暂无优惠券"
                         : _orderModel.data.coupon.couponName,
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+                    style: AppTextStyle.generate(13 * 2.sp,
                         color: Color(0xff373737)),
-                    // style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+                    // style: AppTextStyle.generate(13*2.sp,
                     //     fontWeight: FontWeight.w300, color: Colors.grey[700]),
                     textAlign: TextAlign.end,
                   ))),
@@ -551,12 +549,12 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   ///
   ///找到包含 2，3类型的仓库返回true
   bool get _checkSwitchEnabled {
-    bool reslut=false;
-    _orderModel.data.brands.forEach((element) { 
-      element.goods.forEach((v) { 
-        if (v.storehouse==2||v.storehouse==3) {
-          reslut=true;
-        } 
+    bool reslut = false;
+    _orderModel.data.brands.forEach((element) {
+      element.goods.forEach((v) {
+        if (v.storehouse == 2 || v.storehouse == 3) {
+          reslut = true;
+        }
       });
     });
     return reslut;
@@ -564,8 +562,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
 
   _coinTile() {
     String text = _orderModel.data.coinTotalAmount > 0
-    ? "可用：¥${_orderModel.data.coinTotalAmount.toStringAsFixed(2)}"
-    : "可用：¥0.0";
+        ? "可用：¥${_orderModel.data.coinTotalAmount.toStringAsFixed(2)}"
+        : "可用：¥0.0";
     // _orderModel.data.coupon = null;
     return Container(
       margin:
@@ -588,7 +586,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                 text,
                 "本单抵扣: ￥${_orderModel.data.coinTotalAmount.toStringAsFixed(2)}",
                 rightTitleColor: Colors.black,
-                switchValue: _orderModel.data.coinStatus.isUseCoin,//后台回显 TODO:
+                switchValue: _orderModel.data.coinStatus.isUseCoin, //后台回显 TODO:
                 switchEnable: switchEnabled,
                 switchChange: (change) {
                   // 切换瑞币抵扣状态
@@ -729,9 +727,9 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
               subTitle,
               maxLines: 1,
               style: subTitleColor != null
-                  ? AppTextStyle.generate(ScreenAdapterUtils.setSp(12),
+                  ? AppTextStyle.generate(12 * 2.sp,
                       color: subTitleColor, fontWeight: FontWeight.w300)
-                  : AppTextStyle.generate(ScreenAdapterUtils.setSp(12),
+                  : AppTextStyle.generate(12 * 2.sp,
                       color: Color.fromARGB(255, 249, 62, 13),
                       fontWeight: FontWeight.w300),
             ),
@@ -758,7 +756,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                       value: switchValue,
                       onChanged: !switchEnable
                           ? (change) {
-                                Toast.showError('订单含保税仓或海外仓商品，无法使用瑞币抵扣');
+                              Toast.showError('订单含保税仓或海外仓商品，无法使用瑞币抵扣');
                             }
                           : (change) => switchChange(change)),
                 ),
@@ -858,7 +856,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                   child: Text(
                     '共赚 ${ruiCoin.toStringAsFixed(2)} 瑞币',
                     style: AppTextStyle.generate(
-                      ScreenAdapterUtils.setSp(13),
+                      13 * 2.sp,
                       color: Color.fromARGB(255, 249, 62, 13),
                     ),
                   ),
@@ -875,20 +873,19 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                   RichText(
                     text: TextSpan(
                         // text: "共$totalNum件,",
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(14),
+                        style: AppTextStyle.generate(14 * 2.sp,
                             color: Colors.grey[600]),
                         children: [
                           TextSpan(
                               text: "应付金额: ",
                               style: AppTextStyle.generate(
-                                ScreenAdapterUtils.setSp(15),
+                                15 * 2.sp,
                               )),
                           TextSpan(
                               text:
                                   "￥${_orderModel.data.actualTotalAmount.toStringAsFixed(2)}",
                               style: AppTextStyle.generate(
-                                ScreenAdapterUtils.setSp(16),
+                                16 * 2.sp,
                                 color: Color.fromARGB(255, 249, 62, 13),
                               )),
                         ]),
@@ -913,7 +910,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                       title: "提交订单",
                       color: Colors.white,
                       disabledColor: Colors.grey[600],
-                      fontSize: ScreenAdapterUtils.setSp(14),
+                      fontSize: 14 * 2.sp,
                       onPressed: !canDeliver
                           ? null
                           : () {
@@ -951,8 +948,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
               color: Color.fromARGB(255, 250, 231, 235),
               child: Text(
                 "下单可返￥${_orderModel.data.goodsTotalCommission}",
-                style: TextStyle(
-                    color: Colors.red, fontSize: ScreenAdapterUtils.setSp(11)),
+                style: TextStyle(color: Colors.red, fontSize: 11 * 2.sp),
               ),
             ),
             bottomWidget,

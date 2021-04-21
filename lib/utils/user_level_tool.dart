@@ -83,7 +83,7 @@ class UserLevelTool {
       onPressed: () {},
       padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
       backgroundColor: Color(0xFFF6CB88),
-      fontSize: ScreenAdapterUtils.setSp(10),
+      fontSize: 10 * 2.sp,
       color: Color(0xFFAE5930),
       borderRadius: BorderRadius.all(Radius.circular(20)),
       direction: Direction.horizontal,

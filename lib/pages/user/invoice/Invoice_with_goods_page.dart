@@ -119,7 +119,7 @@ class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
                   text: TextSpan(
                     style: TextStyle(
                       color: Color(0xFF666666),
-                      fontSize: ScreenAdapterUtils.setSp(12),
+                      fontSize: 12 * 2.sp,
                     ),
                     children: [
                       TextSpan(
@@ -141,7 +141,7 @@ class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
                 ),
               ),
               Divider(
-                height: ScreenAdapterUtils.setWidth(0.5),
+                height: 0.5 * 2.w,
                 color: Color(0xFFEEEEEE),
               ),
               Container(
@@ -164,7 +164,7 @@ class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
                             '全选',
                             style: TextStyle(
                               color: Color(0xFF333333),
-                              fontSize: ScreenAdapterUtils.setSp(14),
+                              fontSize: 14 * 2.sp,
                             ),
                           ),
                         ],
@@ -225,7 +225,7 @@ class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
             ),
           ),
         ),
-        height: ScreenAdapterUtils.setHeight(100),
+        height: 100 * 2.h,
         child: Row(
           children: [
             RecookCheckBox(state: _selectedIds.contains(model.goodsDetailId)),
@@ -239,14 +239,14 @@ class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
                     model.orderTime,
                     style: TextStyle(
                       color: Color(0xFF666666),
-                      fontSize: ScreenAdapterUtils.setSp(14),
+                      fontSize: 14 * 2.sp,
                     ),
                   ),
                   Text(
                     model.goodsName,
                     style: TextStyle(
                       color: Color(0xFF333333),
-                      fontSize: ScreenAdapterUtils.setSp(14),
+                      fontSize: 14 * 2.sp,
                     ),
                   ),
                 ],
@@ -261,14 +261,14 @@ class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
                   model.goodsAmount.toString(),
                   style: TextStyle(
                     color: Color(0xFFDB2D2D),
-                    fontSize: ScreenAdapterUtils.setSp(24),
+                    fontSize: 24 * 2.sp,
                   ),
                 ),
                 Text(
                   '元',
                   style: TextStyle(
                     color: Color(0xFF666666),
-                    fontSize: ScreenAdapterUtils.setSp(14),
+                    fontSize: 14 * 2.sp,
                   ),
                 ),
               ],

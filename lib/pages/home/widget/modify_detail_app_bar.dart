@@ -96,7 +96,7 @@ class _DetailAppBarState extends State<DetailAppBar> {
         child: CustomImageButton(
           icon: Icon(
             AppIcons.icon_back,
-            size: ScreenAdapterUtils.setSp(16),
+            size: 16 * 2.sp,
             color: selectedOne ? _itemColor : Colors.black,
           ),
           buttonSize: rSize(30),
@@ -114,7 +114,7 @@ class _DetailAppBarState extends State<DetailAppBar> {
             child: CustomImageButton(
               // icon: Icon(
               //   AppIcons.icon_ellipsis,
-              //   size: ScreenAdapterUtils.setSp(16),
+              //   size: 16*2.sp,
               //   color: selectedOne ? _itemColor : Colors.black,
               // ),
               buttonSize: rSize(30),

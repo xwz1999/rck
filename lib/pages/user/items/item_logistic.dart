@@ -53,8 +53,7 @@ class LogisticItem extends StatelessWidget {
       children: <Widget>[
         Text(
           "${model.name}: ${model.no}",
-          style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
-              color: Colors.grey[600]),
+          style: AppTextStyle.generate(13 * 2.sp, color: Colors.grey[600]),
         ),
         SizedBox(
           height: rSize(5),
@@ -64,7 +63,7 @@ class LogisticItem extends StatelessWidget {
                 model.data.first.context,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(11),
+                style: AppTextStyle.generate(11 * 2.sp,
                     color: Colors.grey[600], fontWeight: FontWeight.w300),
               )
             : Container(),

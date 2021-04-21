@@ -85,13 +85,13 @@ class _LogisticDetailPageState extends BaseStoreState<LogisticDetailPage> {
                     Spacer(),
                     Text(
                       "承运公司: ${_model.name}",
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                      style: AppTextStyle.generate(14 * 2.sp,
                           color: Colors.grey[600]),
                     ),
                     Spacer(),
                     Text(
                       "快递单号: ${_model.no}",
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                      style: AppTextStyle.generate(14 * 2.sp,
                           color: Colors.grey[600]),
                     ),
                     Spacer(),

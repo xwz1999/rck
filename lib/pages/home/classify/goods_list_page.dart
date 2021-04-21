@@ -157,7 +157,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
               secondCategory.name,
               style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  fontSize: ScreenAdapterUtils.setSp(13),
+                  fontSize: 13 * 2.sp,
                   color: textColor),
             ),
           ],
@@ -170,7 +170,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
     return FilterToolBar(
       controller: _filterController,
       height: rSize(40),
-      fontSize: ScreenAdapterUtils.setSp(13),
+      fontSize: 13 * 2.sp,
       titles: [
         FilterItemModel(type: FilterItemType.normal, title: "综合"),
         FilterItemModel(type: FilterItemType.double, title: "价格"),
@@ -239,7 +239,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
             ),
             Text(
               "排列",
-              style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+              style: AppTextStyle.generate(13 * 2.sp,
                   color: Colors.grey[700], fontWeight: FontWeight.w400),
             ),
             Padding(
@@ -249,7 +249,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
                     ? AppIcons.icon_list_collection
                     : AppIcons.icon_list_normal,
                 color: Colors.grey[700],
-                size: ScreenAdapterUtils.setSp(20),
+                size: 20 * 2.sp,
               ),
             ),
           ],

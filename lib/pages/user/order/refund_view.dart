@@ -74,7 +74,7 @@ class _RefundViewState extends BaseStoreState<RefundView> {
                         child: CustomImageButton(
                           padding: EdgeInsets.symmetric(vertical: rSize(5)),
                           title: "取消",
-                          fontSize: ScreenAdapterUtils.setSp(14),
+                          fontSize: 14 * 2.sp,
                           borderRadius: BorderRadius.all(Radius.circular(40)),
                           backgroundColor: AppColor.tableViewGrayColor,
                           color: Colors.grey,
@@ -91,7 +91,7 @@ class _RefundViewState extends BaseStoreState<RefundView> {
                           padding: EdgeInsets.symmetric(vertical: rSize(5)),
                           title: "确认",
                           color: Colors.white,
-                          fontSize: ScreenAdapterUtils.setSp(14),
+                          fontSize: 14 * 2.sp,
                           borderRadius: BorderRadius.all(Radius.circular(40)),
                           backgroundColor: AppColor.themeColor,
                           onPressed: () {
@@ -172,7 +172,7 @@ class _RefundViewState extends BaseStoreState<RefundView> {
                       goods.goodsName,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                      style: AppTextStyle.generate(14 * 2.sp,
                           fontWeight: FontWeight.w300),
                     ),
                     Padding(
@@ -181,8 +181,7 @@ class _RefundViewState extends BaseStoreState<RefundView> {
                         goods.skuName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(13),
+                        style: AppTextStyle.generate(13 * 2.sp,
                             color: Colors.grey[600],
                             fontWeight: FontWeight.w300),
                       ),
@@ -194,8 +193,7 @@ class _RefundViewState extends BaseStoreState<RefundView> {
                           "￥ ${goods.unitPrice}",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(14),
+                          style: AppTextStyle.generate(14 * 2.sp,
                               color: AppColor.priceColor),
                         ),
                       ],

@@ -28,7 +28,7 @@ class WeChatBindPage extends StatefulWidget {
 }
 
 class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
-  double _fontSize = ScreenAdapterUtils.setSp(15);
+  double _fontSize = 15 * 2.sp;
 
   FocusNode _phoneFocusNode;
   FocusNode _smsCodeFocusNode;
@@ -85,7 +85,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
                   _smsCodeWidget(),
                   // _inviteWidget(),
                   Container(
-                    height: ScreenAdapterUtils.setHeight(50),
+                    height: 50 * 2.h,
                   ),
                   _loginBtnWidget(),
                   _messageWidget(),
@@ -106,7 +106,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
         style: TextStyle(
             fontWeight: FontWeight.w600,
             color: Colors.black,
-            fontSize: ScreenAdapterUtils.setSp(25)),
+            fontSize: 25 * 2.sp),
       ),
     );
   }
@@ -115,7 +115,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
     return Container(
       alignment: Alignment.centerLeft,
       margin: EdgeInsets.symmetric(horizontal: rSize(20)),
-      height: ScreenAdapterUtils.setHeight(40),
+      height: 40 * 2.h,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -193,7 +193,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
 
   _smsCodeWidget() {
     return Container(
-      height: ScreenAdapterUtils.setHeight(40),
+      height: 40 * 2.h,
       margin: EdgeInsets.symmetric(horizontal: rSize(20)),
       child: Column(
         children: <Widget>[
@@ -234,7 +234,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
                   // width: rSize(120),
                   textColor: Colors.black,
                   enable: _getCodeEnable,
-                  font: ScreenAdapterUtils.setSp(13),
+                  font: 13 * 2.sp,
                   fontWeight: FontWeight.w300,
                   unableTextColor: Colors.grey,
                   highlightTextColor: Colors.black,
@@ -297,7 +297,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
 
   _inviteWidget() {
     return Container(
-      height: ScreenAdapterUtils.setHeight(40),
+      height: 40 * 2.h,
       margin: EdgeInsets.symmetric(horizontal: rSize(20)),
       child: Column(
         children: <Widget>[
@@ -372,9 +372,9 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
         title: '登录',
         textColor: Colors.white,
         unableBackgroundColor: Colors.grey[300],
-        font: ScreenAdapterUtils.setSp(16),
+        font: 16 * 2.sp,
         enable: _loginEnable,
-        // height: ScreenAdapterUtils.setHeight(35),
+        // height: 35*2.h,
         margin: EdgeInsets.symmetric(horizontal: rSize(20)),
         padding: EdgeInsets.symmetric(vertical: rSize(7)),
         radius: BorderRadius.all(Radius.circular(3)),
@@ -389,13 +389,11 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
 
   _messageWidget() {
     return Container(
-      margin: EdgeInsets.symmetric(
-          horizontal: rSize(20), vertical: ScreenAdapterUtils.setHeight(12)),
+      margin: EdgeInsets.symmetric(horizontal: rSize(20), vertical: 12 * 2.h),
       child: Text(
         '根据《中华人民共和国网络安全法》要求,使用信息发布、即时通讯等互联网服务需进行身份信息验证。为保障您的使用体验,建议您尽快完成手机号绑定验证,感谢您的支持和理解。',
         style: TextStyle(
-            color: Colors.black.withOpacity(0.6),
-            fontSize: ScreenAdapterUtils.setSp(13)),
+            color: Colors.black.withOpacity(0.6), fontSize: 13 * 2.sp),
       ),
     );
   }

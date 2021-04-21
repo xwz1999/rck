@@ -82,7 +82,7 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
         children: <Widget>[
           Container(
             padding: EdgeInsets.symmetric(vertical: 10),
-            height: ScreenAdapterUtils.setHeight(100),
+            height: 100 * 2.h,
             child: PostSelectImage(
               selectImages: (List<MainPhotos> images) {
                 _selectPhotos = images;

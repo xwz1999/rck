@@ -264,9 +264,8 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
                   double.parse(_amountTextEditController.text) < 10),
               child: Text(
                 "提现金额至少10元",
-                style: TextStyle(
-                    fontSize: ScreenAdapterUtils.setSp(12),
-                    color: AppColor.themeColor),
+                style:
+                    TextStyle(fontSize: 12 * 2.sp, color: AppColor.themeColor),
               ),
             ),
           )
@@ -478,11 +477,9 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
             width: double.infinity,
             title: "申请提现",
             backgroundColor: AppColor.themeColor,
-            style: TextStyle(
-                color: Colors.white, fontSize: ScreenAdapterUtils.setSp(17)),
-            disableStyle: TextStyle(
-                color: Color(0xffbfbfbf),
-                fontSize: ScreenAdapterUtils.setSp(17)),
+            style: TextStyle(color: Colors.white, fontSize: 17 * 2.sp),
+            disableStyle:
+                TextStyle(color: Color(0xffbfbfbf), fontSize: 17 * 2.sp),
           ),
           Container(
             height: 10,

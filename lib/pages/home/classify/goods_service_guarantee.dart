@@ -52,7 +52,7 @@ class _GoodsServiceGuaranteeState
                   margin: EdgeInsets.only(bottom: 10),
                   child: Text(
                     "服务保障",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(16),
+                    style: AppTextStyle.generate(16 * 2.sp,
                         fontWeight: FontWeight.w400),
                   )),
               Container(
@@ -73,7 +73,7 @@ class _GoodsServiceGuaranteeState
                 radius: BorderRadius.all(Radius.circular(30)),
                 height: rSize(35),
                 title: "完成",
-                font: ScreenAdapterUtils.setSp(16),
+                font: 16 * 2.sp,
                 textColor: Colors.white,
                 backgroundColor: Color(0xFFFF2812),
                 onTap: () {
@@ -94,10 +94,10 @@ class _GoodsServiceGuaranteeState
       style: TextStyle(
           fontWeight: FontWeight.w500,
           color: Colors.black,
-          fontSize: ScreenAdapterUtils.setSp(14)),
+          fontSize: 14 * 2.sp),
       color: Colors.black,
       direction: Direction.horizontal,
-      fontSize: ScreenAdapterUtils.setSp(14),
+      fontSize: 14 * 2.sp,
       icon: Image.asset(
         'assets/goods_service_guarantee_close.png',
         width: 17,
@@ -107,7 +107,7 @@ class _GoodsServiceGuaranteeState
       //   AppIcons.icon_check,
       //   // color: Color(0xFFFC8381),
       //   color: Colors.red,
-      //   size: ScreenAdapterUtils.setSp(20),
+      //   size: 20*2.sp,
       // )
     );
   }

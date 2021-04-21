@@ -167,7 +167,7 @@ class _BingoCardWidgetState extends State<BingoCardWidget> {
                   child: _buildChild(),
                 ),
                 Positioned(
-                  bottom: ScreenAdapterUtils.setHeight(60),
+                  bottom: 60 * 2.h,
                   left: 0,
                   right: 0,
                   child: Center(
@@ -177,7 +177,7 @@ class _BingoCardWidgetState extends State<BingoCardWidget> {
                 Positioned(
                   left: 0,
                   right: 0,
-                  bottom: ScreenAdapterUtils.setHeight(105),
+                  bottom: 105 * 2.h,
                   child: Center(
                     child: _isShowResult
                         ? Text(
@@ -185,7 +185,7 @@ class _BingoCardWidgetState extends State<BingoCardWidget> {
                                 ? '抱歉未抽中任何奖项'
                                 : '可在“我的”-“卡包”中查看',
                             style: TextStyle(
-                              fontSize: ScreenAdapterUtils.setSp(12),
+                              fontSize: 12 * 2.sp,
                               color: Color(0xFFFFF7DF),
                             ),
                           )
@@ -243,7 +243,7 @@ class _BingoCardWidgetState extends State<BingoCardWidget> {
             end: Alignment.bottomCenter,
           ),
         ),
-        height: ScreenAdapterUtils.setHeight(40),
+        height: 40 * 2.h,
         width: rSize(265),
         child: Center(
           child: Text(
@@ -254,7 +254,7 @@ class _BingoCardWidgetState extends State<BingoCardWidget> {
                 : '天天好运',
             style: TextStyle(
               color: Color(0xFFCE1F3D),
-              fontSize: ScreenAdapterUtils.setSp(16),
+              fontSize: 16 * 2.sp,
             ),
           ),
         ),

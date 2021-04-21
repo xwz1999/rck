@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/styles.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class MemberInviteView extends StatefulWidget {
   final Function listener;
   const MemberInviteView({Key key, this.listener}) : super(key: key);
@@ -27,18 +27,12 @@ class _MemberInviteViewState extends State<MemberInviteView> {
   }
 
   Container _contentWidget() {
-    TextStyle lineStyle = TextStyle(
-        color: Colors.grey,
-        fontSize: ScreenAdapterUtils.setSp(11),
-        letterSpacing: -2);
-    TextStyle greyStyle = TextStyle(
-        color: Colors.grey,
-        fontSize: ScreenAdapterUtils.setSp(11),
-        letterSpacing: 2);
+    TextStyle lineStyle =
+        TextStyle(color: Colors.grey, fontSize: 11 * 2.sp, letterSpacing: -2);
+    TextStyle greyStyle =
+        TextStyle(color: Colors.grey, fontSize: 11 * 2.sp, letterSpacing: 2);
     TextStyle redStyle = TextStyle(
-        color: AppColor.themeColor,
-        fontSize: ScreenAdapterUtils.setSp(11),
-        letterSpacing: 2);
+        color: AppColor.themeColor, fontSize: 11 * 2.sp, letterSpacing: 2);
     return Container(
       margin: EdgeInsets.only(
         left: rSize(10),

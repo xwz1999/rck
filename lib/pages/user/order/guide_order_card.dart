@@ -82,7 +82,7 @@ class GuideOrderCard extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyle.generate(
-                  ScreenAdapterUtils.setSp(14),
+                  14 * 2.sp,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -100,7 +100,7 @@ class GuideOrderCard extends StatelessWidget {
                       "${item.skuName}",
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(11),
+                      style: AppTextStyle.generate(11 * 2.sp,
                           color: Colors.grey[600], fontWeight: FontWeight.w300),
                     ),
                   ),
@@ -122,12 +122,12 @@ class GuideOrderCard extends StatelessWidget {
                       text: TextSpan(children: [
                     TextSpan(
                       text: "￥",
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(10),
+                      style: AppTextStyle.generate(10 * 2.sp,
                           color: AppColor.priceColor),
                     ),
                     TextSpan(
                       text: "${item.unitPrice.toStringAsFixed(2)}",
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                      style: AppTextStyle.generate(14 * 2.sp,
                           color: AppColor.priceColor),
                     )
                   ])),
@@ -136,7 +136,7 @@ class GuideOrderCard extends StatelessWidget {
                     item.refundStatusValue,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                    style: AppTextStyle.generate(14 * 2.sp,
                         color: AppColor.priceColor),
                   )
                 ],

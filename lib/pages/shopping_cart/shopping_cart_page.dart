@@ -136,7 +136,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
                   padding: EdgeInsets.only(right: rSize(10), top: rSize(5)),
                   title: !_manageStatus ? "管理" : "完成",
                   color: Colors.white,
-                  fontSize: ScreenAdapterUtils.setSp(15),
+                  fontSize: 15 * 2.sp,
                   onPressed: () {
                     if (_editting) {
                       FocusScope.of(context).requestFocus(FocusNode());
@@ -207,20 +207,19 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
           RichText(
               text: TextSpan(
                   text: "合计: ",
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                  style: AppTextStyle.generate(15 * 2.sp,
                       color: Colors.black.withOpacity(0.6)),
                   children: [
                 TextSpan(
                     text: "${totalPrice.toStringAsFixed(2)}",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(16),
-                        color: Colors.black))
+                    style:
+                        AppTextStyle.generate(16 * 2.sp, color: Colors.black))
               ])),
           totalCommission > 0 && AppConfig.commissionByRoleLevel
               ? Text(
                   "赚${totalCommission.toStringAsFixed(2)}",
                   style: TextStyle(
-                      color: AppColor.themeColor,
-                      fontSize: ScreenAdapterUtils.setSp(11)),
+                      color: AppColor.themeColor, fontSize: 11 * 2.sp),
                 )
               : Container()
         ],
@@ -246,7 +245,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
             EdgeInsets.symmetric(vertical: rSize(3), horizontal: rSize(18)),
         title: "结算(${_selectedGoods.length})",
         color: Colors.white,
-        fontSize: ScreenAdapterUtils.setSp(14),
+        fontSize: 14 * 2.sp,
         onPressed: () {
           if (_selectedGoods.length == 0) {
             Toast.showInfo("您还没有选择商品");
@@ -267,7 +266,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
     return CustomImageButton(
       direction: Direction.horizontal,
       title: "全选",
-      fontSize: ScreenAdapterUtils.setSp(14),
+      fontSize: 14 * 2.sp,
       color: Colors.grey[700],
       icon: Icon(
         !_checkAll ? AppIcons.icon_circle : AppIcons.icon_check_circle,
@@ -302,7 +301,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
   CustomImageButton _deleteButton() {
     return CustomImageButton(
       title: "删除(${_selectedGoods.length})",
-      fontSize: ScreenAdapterUtils.setSp(14),
+      fontSize: 14 * 2.sp,
       padding: EdgeInsets.symmetric(horizontal: rSize(18), vertical: rSize(3)),
       borderRadius: BorderRadius.all(Radius.circular(50)),
       border: Border.all(width: 0.5, color: Colors.red),

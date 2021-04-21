@@ -12,8 +12,8 @@ class DiamondRecommendationWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size postSize = Size(ScreenUtil().screenWidth- 2 * rSize(40),
-        334 / 300.0 * (ScreenUtil().screenWidth- 2 * rSize(40)));
+    Size postSize = Size(ScreenUtil().screenWidth - 2 * rSize(40),
+        334 / 300.0 * (ScreenUtil().screenWidth - 2 * rSize(40)));
     return Center(
       child: Container(
         width: ScreenUtil().screenWidth,
@@ -35,15 +35,14 @@ class DiamondRecommendationWidget extends StatelessWidget {
                 height: 0.2 * postSize.height,
                 child: Container(
                   padding: EdgeInsets.symmetric(
-                      horizontal: rSize(20),
-                      vertical: ScreenAdapterUtils.setHeight(10)),
+                      horizontal: rSize(20), vertical: 10 * 2.h),
                   alignment: Alignment.topLeft,
                   child: Text(
                     title,
                     style: TextStyle(
                         decoration: TextDecoration.none,
                         color: Colors.white,
-                        fontSize: ScreenAdapterUtils.setSp(18),
+                        fontSize: 18 * 2.sp,
                         fontWeight: FontWeight.w500),
                   ),
                 ),

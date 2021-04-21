@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:recook/constants/constants.dart';
 import 'package:recook/widgets/tabbarWidget/ace_bottom_navigation_bar.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class NavigationItem extends StatelessWidget {
   final UniqueKey uniqueKey;
   final textStr;
@@ -55,9 +55,7 @@ class NavigationItem extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: TextStyle(
-                                fontSize: selected
-                                    ? ScreenAdapterUtils.setSp(11)
-                                    : ScreenAdapterUtils.setSp(11),
+                                fontSize: selected ? 11 * 2.sp : 11 * 2.sp,
                                 // fontWeight: FontWeight.normal,
                                 fontWeight: FontWeight.w500,
                                 color: selected

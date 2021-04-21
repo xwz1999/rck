@@ -216,7 +216,7 @@ class _VerifyPageState extends BaseStoreState<VerifyPage> {
         backgroundColor:
             !_canSubmit() ? AppColor.greyColor : AppColor.themeColor,
         color: Colors.white,
-        fontSize: ScreenAdapterUtils.setSp(16),
+        fontSize: 16 * 2.sp,
         borderRadius: BorderRadius.all(Radius.circular(2)),
         onPressed: !_canSubmit()
             ? null
@@ -321,7 +321,7 @@ class _VerifyPageState extends BaseStoreState<VerifyPage> {
 //               Container(
 //               child:
 //               Text("为保障账户安全，需保证姓名，身份证，银行卡开户人为同一人",
-//                 style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+//                 style: AppTextStyle.generate(13*2.sp,
 //                 color: Colors.grey,)),
 //               padding: EdgeInsets.all(rSize(10)),
 //               alignment: Alignment.center,
@@ -358,7 +358,7 @@ class _VerifyPageState extends BaseStoreState<VerifyPage> {
 //         title: "立即验证",
 //         backgroundColor: AppColor.themeColor,
 //         color: Colors.white,
-//         fontSize: ScreenAdapterUtils.setSp(16),
+//         fontSize: 16*2.sp,
 //         borderRadius: BorderRadius.all(Radius.circular(8)),
 //         onPressed: (){
 //           _verifyIDCard(context);

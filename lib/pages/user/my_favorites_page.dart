@@ -42,7 +42,7 @@ class _MyFavoritesPageState extends BaseStoreState<MyFavoritesPage>
   }
 
   @override
-  void dispose(){
+  void dispose() {
     super.dispose();
   }
 
@@ -70,8 +70,10 @@ class _MyFavoritesPageState extends BaseStoreState<MyFavoritesPage>
   _buildBody() {
     return MvpListView(
       noDataView: noDataView("没有数据..."),
-      itemClickListener: (index){
-        AppRouter.push(context, RouteName.COMMODITY_PAGE,arguments: CommodityDetailPage.setArguments(_controller.getData()[index].goods.id));
+      itemClickListener: (index) {
+        AppRouter.push(context, RouteName.COMMODITY_PAGE,
+            arguments: CommodityDetailPage.setArguments(
+                _controller.getData()[index].goods.id));
       },
       delegate: this,
       controller: _controller,
@@ -80,19 +82,19 @@ class _MyFavoritesPageState extends BaseStoreState<MyFavoritesPage>
       },
       itemBuilder: (context, index) {
         return MyFavoriteItem(
-          deleteFunc: (){
+          deleteFunc: () {
             _cancel(_controller.getData()[index]);
           },
-          shareFunc: (){
+          shareFunc: () {
             FavoriteModel favoriteModel = _controller.getData()[index];
-            ShareTool().goodsShare(
-              context, 
-              goodsPrice: favoriteModel.goods.discountPrice.toStringAsFixed(2),
-              goodsName: favoriteModel.goods.goodsName,
-              goodsDescription: favoriteModel.goods.description,
-              miniTitle: favoriteModel.goods.goodsName,
-              miniPicurl: favoriteModel.goods.mainPhotoUrl,
-              goodsId: favoriteModel.goods.id.toString());
+            ShareTool().goodsShare(context,
+                goodsPrice:
+                    favoriteModel.goods.discountPrice.toStringAsFixed(2),
+                goodsName: favoriteModel.goods.goodsName,
+                goodsDescription: favoriteModel.goods.description,
+                miniTitle: favoriteModel.goods.goodsName,
+                miniPicurl: favoriteModel.goods.mainPhotoUrl,
+                goodsId: favoriteModel.goods.id.toString());
           },
           model: _controller.getData()[index],
         );
@@ -108,7 +110,7 @@ class _MyFavoritesPageState extends BaseStoreState<MyFavoritesPage>
       //         // color: AppColor.themeColor,
       //         child: Text(
       //           "分享",
-      //           style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15), color: Colors.white),
+      //           style: AppTextStyle.generate(15*2.sp, color: Colors.white),
       //         ),
       //       ),
       //       onTap: () {
@@ -123,7 +125,7 @@ class _MyFavoritesPageState extends BaseStoreState<MyFavoritesPage>
       //         color: Colors.grey[500],
       //         child: Text(
       //           "取消",
-      //           style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15), color: Colors.white),
+      //           style: AppTextStyle.generate(15*2.sp, color: Colors.white),
       //         ),
       //       ),
       //       onTap: () {

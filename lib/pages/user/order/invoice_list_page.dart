@@ -53,7 +53,7 @@ class _InvoiceListPageState extends BaseStoreState<InvoiceListPage> {
           IconButton(
               icon: Icon(
                 AppIcons.icon_add,
-                size: ScreenAdapterUtils.setSp(18),
+                size: 18 * 2.sp,
                 color: Colors.black,
               ),
               onPressed: () {
@@ -105,7 +105,7 @@ class _InvoiceListPageState extends BaseStoreState<InvoiceListPage> {
                   borderRadius: BorderRadius.all(Radius.circular(rSize(5)))),
               child: Text(
                 invoice.type == 0 ? "个人" : "企业",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13)),
+                style: AppTextStyle.generate(13 * 2.sp),
               ),
             ),
             SizedBox(
@@ -113,8 +113,7 @@ class _InvoiceListPageState extends BaseStoreState<InvoiceListPage> {
             ),
             Text(
               "发票抬头: ${invoice.title}",
-              style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                  color: Colors.grey[600]),
+              style: AppTextStyle.generate(14 * 2.sp, color: Colors.grey[600]),
             )
           ],
         ),

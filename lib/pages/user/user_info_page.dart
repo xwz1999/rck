@@ -129,13 +129,11 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
           DatePicker.showDatePicker(globalContext,
               showTitleActions: true,
               theme: DatePickerTheme(
-                  cancelStyle: AppTextStyle.generate(
-                      ScreenAdapterUtils.setSp(15),
-                      color: Colors.grey),
-                  doneStyle: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                  cancelStyle:
+                      AppTextStyle.generate(15 * 2.sp, color: Colors.grey),
+                  doneStyle: AppTextStyle.generate(15 * 2.sp,
                       color: AppColor.themeColor),
-                  itemStyle:
-                      AppTextStyle.generate(ScreenAdapterUtils.setSp(15))),
+                  itemStyle: AppTextStyle.generate(15 * 2.sp)),
               minTime: DateTime(1970, 01, 01),
               maxTime: DateTime.now(),
               currentTime: currentTime,

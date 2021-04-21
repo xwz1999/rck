@@ -52,7 +52,7 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
               Container(
                   child: Text(
                 "产品参数",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(16),
+                style: AppTextStyle.generate(16 * 2.sp,
                     fontWeight: FontWeight.w400),
               )),
               rHBox(30),
@@ -65,7 +65,7 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
                       '品牌',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: ScreenAdapterUtils.setSp(13),
+                        fontSize: 13 * 2.sp,
                       ),
                     ),
                   ),
@@ -74,9 +74,7 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
                       child: Container(
                     child: Text(
                       model.data.brand.name,
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: ScreenAdapterUtils.setSp(13)),
+                      style: TextStyle(color: Colors.grey, fontSize: 13 * 2.sp),
                     ),
                   )),
                 ],
@@ -91,7 +89,7 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
                       '条形码',
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: ScreenAdapterUtils.setSp(13),
+                        fontSize: 13 * 2.sp,
                       ),
                     ),
                   ),
@@ -99,9 +97,7 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
                   Container(
                     child: Text(
                       '${model.data.sku[0].name}  ${model.data.sku[0].code}',
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: ScreenAdapterUtils.setSp(13)),
+                      style: TextStyle(color: Colors.grey, fontSize: 13 * 2.sp),
                     ),
                   ),
                 ],
@@ -117,8 +113,7 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
                             child: Text(
                               '${e.name}  ${e.code}',
                               style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: ScreenAdapterUtils.setSp(13)),
+                                  color: Colors.grey, fontSize: 13 * 2.sp),
                             ),
                           ),
                         )
@@ -132,7 +127,7 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
                 radius: BorderRadius.all(Radius.circular(30)),
                 height: rSize(35),
                 title: "完成",
-                font: ScreenAdapterUtils.setSp(16),
+                font: 16 * 2.sp,
                 textColor: Colors.white,
                 backgroundColor: Color(0xFFFF2812),
                 onTap: () {

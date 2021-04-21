@@ -28,7 +28,7 @@ class WeChatInputInviteCodePage extends StatefulWidget {
 
 class _WeChatInputInviteCodePageState
     extends BaseStoreState<WeChatInputInviteCodePage> {
-  double _fontSize = ScreenAdapterUtils.setSp(15);
+  double _fontSize = 15 * 2.sp;
 
   FocusNode _inviteCodeFocusNode;
   TextEditingController _inviteCodeController;
@@ -67,7 +67,7 @@ class _WeChatInputInviteCodePageState
                   _titleWidget(),
                   _inviteWidget(),
                   Container(
-                    height: ScreenAdapterUtils.setHeight(50),
+                    height: 50 * 2.h,
                   ),
                   _loginBtnWidget(),
                 ],
@@ -87,14 +87,14 @@ class _WeChatInputInviteCodePageState
         style: TextStyle(
             fontWeight: FontWeight.w600,
             color: Colors.black,
-            fontSize: ScreenAdapterUtils.setSp(25)),
+            fontSize: 25 * 2.sp),
       ),
     );
   }
 
   _inviteWidget() {
     return Container(
-      height: ScreenAdapterUtils.setHeight(40),
+      height: 40 * 2.h,
       margin: EdgeInsets.symmetric(horizontal: rSize(20)),
       child: Column(
         children: <Widget>[
@@ -168,9 +168,9 @@ class _WeChatInputInviteCodePageState
         title: '登录',
         textColor: Colors.white,
         unableBackgroundColor: Colors.grey[300],
-        font: ScreenAdapterUtils.setSp(17),
+        font: 17 * 2.sp,
         enable: _loginEnable,
-        // height: ScreenAdapterUtils.setHeight(35),
+        // height: 35*2.h,
         margin: EdgeInsets.symmetric(horizontal: rSize(20)),
         padding: EdgeInsets.symmetric(vertical: rSize(7)),
         radius: BorderRadius.all(Radius.circular(3)),

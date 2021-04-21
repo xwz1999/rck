@@ -110,10 +110,10 @@ abstract class BaseStoreState<T extends StatefulWidget> extends State<T>
     return Platform.isIOS
         ? CupertinoActivityIndicator(
             animating: true,
-            radius: ScreenAdapterUtils.setWidth(12.0),
+            radius: 24.w,
           )
         : CircularProgressIndicator(
-            strokeWidth: ScreenAdapterUtils.setWidth(2.0),
+            strokeWidth: 2.0 * 2.w,
             valueColor: AlwaysStoppedAnimation(Theme.of(context).primaryColor),
           );
   }
@@ -137,8 +137,7 @@ abstract class BaseStoreState<T extends StatefulWidget> extends State<T>
           ),
           Text(
             text,
-            style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                color: Colors.grey),
+            style: AppTextStyle.generate(14 * 2.sp, color: Colors.grey),
           ),
           SizedBox(
             height: rSize(30),

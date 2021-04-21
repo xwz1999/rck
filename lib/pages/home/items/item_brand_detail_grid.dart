@@ -42,8 +42,7 @@ class BrandDetailGridItem extends StatelessWidget {
       borderRadius: BorderRadius.all(Radius.circular(8)),
       child: Container(
         color: Colors.white,
-        padding: EdgeInsets.fromLTRB(ScreenAdapterUtils.setWidth(5), 0,
-            ScreenAdapterUtils.setWidth(5), ScreenAdapterUtils.setWidth(8)),
+        padding: EdgeInsets.fromLTRB(5 * 2.w, 0, 5 * 2.w, 8 * 2.w),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -73,7 +72,7 @@ class BrandDetailGridItem extends StatelessWidget {
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: ScreenAdapterUtils.setWidth(4)),
+              margin: EdgeInsets.only(top: 4 * 2.w),
               child: ExtendedText.rich(
                 TextSpan(
                   children: [
@@ -86,14 +85,13 @@ class BrandDetailGridItem extends StatelessWidget {
                               height: 15,
                               decoration: BoxDecoration(
                                 color: Color(0xFFCC1B4F),
-                                borderRadius: BorderRadius.circular(
-                                    ScreenAdapterUtils.setWidth(3)),
+                                borderRadius: BorderRadius.circular(3 * 2.w),
                               ),
                               child: Text(
                                 '进口',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: ScreenAdapterUtils.setSp(10),
+                                  fontSize: 10 * 2.sp,
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
@@ -103,12 +101,12 @@ class BrandDetailGridItem extends StatelessWidget {
                     this.goods.isImport == 1
                         ? WidgetSpan(
                             child: Container(
-                            width: ScreenAdapterUtils.setWidth(5),
+                            width: 5 * 2.w,
                           ))
                         : WidgetSpan(child: SizedBox()),
                     TextSpan(
                       text: this.goods.goodsName,
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                      style: AppTextStyle.generate(15 * 2.sp,
                           fontWeight: FontWeight.w600),
                     ),
                   ],
@@ -129,8 +127,7 @@ class BrandDetailGridItem extends StatelessWidget {
                             this.goods.description,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: AppTextStyle.generate(
-                                ScreenAdapterUtils.setSp(10),
+                            style: AppTextStyle.generate(10 * 2.sp,
                                 color: Colors.black54,
                                 fontWeight: FontWeight.w300),
                           ),
@@ -140,7 +137,7 @@ class BrandDetailGridItem extends StatelessWidget {
             // Spacer(),
             _saleNumberWidget(this.goods),
             SizedBox(
-              height: ScreenAdapterUtils.setWidth(4),
+              height: 4 * 2.w,
             ),
             Row(
               children: [
@@ -149,7 +146,7 @@ class BrandDetailGridItem extends StatelessWidget {
                   style: TextStyle(
                       decoration: TextDecoration.lineThrough,
                       decorationColor: Color(0xff898989),
-                      fontSize: ScreenAdapterUtils.setSp(12),
+                      fontSize: 12 * 2.sp,
                       color: Color(0xff898989),
                       fontWeight: FontWeight.w400),
                 ),
@@ -158,13 +155,13 @@ class BrandDetailGridItem extends StatelessWidget {
                   "累计已售${this.goods.salesVolume}件",
                   style: TextStyle(
                     color: Color(0xff595757),
-                    fontSize: ScreenAdapterUtils.setSp(12),
+                    fontSize: 12 * 2.sp,
                   ),
                 ),
               ],
             ),
             SizedBox(
-              height: ScreenAdapterUtils.setWidth(2),
+              height: 2 * 2.w,
             ),
             Container(
               width: double.infinity,
@@ -182,8 +179,7 @@ class BrandDetailGridItem extends StatelessWidget {
                       TextSpan(children: [
                         TextSpan(
                           text: "券后 ¥ ",
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(12),
+                          style: AppTextStyle.generate(12 * 2.sp,
                               color: Color(0xFFFA6400),
                               fontWeight: FontWeight.w500),
                         ),
@@ -194,7 +190,7 @@ class BrandDetailGridItem extends StatelessWidget {
                           style: TextStyle(
                               letterSpacing: -1,
                               wordSpacing: -1,
-                              fontSize: ScreenAdapterUtils.setSp(18),
+                              fontSize: 18 * 2.sp,
                               color: Color(0xFFC92219),
                               fontWeight: FontWeight.w500),
                         ),
@@ -211,7 +207,7 @@ class BrandDetailGridItem extends StatelessWidget {
                   //       height: 21,
                   //       title: "导购",
                   //       style: TextStyle(
-                  //           fontSize: ScreenAdapterUtils.setSp(13),
+                  //           fontSize: 13*2.sp,
                   //           color: sellout ? Colors.grey : _shareTextColor),
                   //       padding: EdgeInsets.symmetric(
                   //           horizontal: rSize(8),
@@ -243,7 +239,7 @@ class BrandDetailGridItem extends StatelessWidget {
                       title: this.goods.inventory <= 0 ? "已售完" : "自购",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: ScreenAdapterUtils.setSp(13),
+                        fontSize: 13 * 2.sp,
                       ),
                       padding: EdgeInsets.symmetric(
                           horizontal: ScreenAdapterUtils.setWidth(
@@ -320,7 +316,7 @@ class BrandDetailGridItem extends StatelessWidget {
                               "赚" + goods.commission.toStringAsFixed(2),
                               style: TextStyle(
                                 color: Colors.white.withAlpha(0),
-                                fontSize: ScreenAdapterUtils.setSp(12),
+                                fontSize: 12 * 2.sp,
                               ),
                             ),
                           ),
@@ -331,7 +327,7 @@ class BrandDetailGridItem extends StatelessWidget {
                                     "赚" + goods.commission.toStringAsFixed(2),
                                     style: TextStyle(
                                       color: Color(0xffeb0045),
-                                      fontSize: ScreenAdapterUtils.setSp(12),
+                                      fontSize: 12 * 2.sp,
                                     ),
                                   ),
                                 )
@@ -388,7 +384,7 @@ class BrandDetailGridItem extends StatelessWidget {
                   maxLines: 2,
                   style: TextStyle(
                     color: Color(0xffc70404),
-                    fontSize: ScreenAdapterUtils.setSp(12),
+                    fontSize: 12 * 2.sp,
                   ),
                 ),
               ),

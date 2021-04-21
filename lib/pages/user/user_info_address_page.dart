@@ -56,7 +56,7 @@ class _UserInfoAddressPageState extends BaseStoreState<UserInfoAddressPage> {
         actions: <Widget>[
           CustomImageButton(
             padding: EdgeInsets.symmetric(horizontal: 10),
-            fontSize: ScreenAdapterUtils.setSp(15),
+            fontSize: 15 * 2.sp,
             title: "确定",
             onPressed: () {
               String areaString =
@@ -83,7 +83,7 @@ class _UserInfoAddressPageState extends BaseStoreState<UserInfoAddressPage> {
               TextField(
                 maxLength: widget.arguments["maxLength"],
                 textAlign: TextAlign.start,
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15)),
+                style: AppTextStyle.generate(15 * 2.sp),
                 controller: _controller,
                 decoration: InputDecoration(
                     labelStyle: TextStyle(color: Colors.grey),
@@ -93,7 +93,7 @@ class _UserInfoAddressPageState extends BaseStoreState<UserInfoAddressPage> {
                       icon: Icon(
                         AppIcons.icon_clear,
                         color: Colors.grey[400],
-                        size: ScreenAdapterUtils.setSp(18),
+                        size: 18 * 2.sp,
                       ),
                       onPressed: () {
                         _controller.text = "";
