@@ -5,10 +5,14 @@ import 'package:extended_text/extended_text.dart';
 
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/goods_detail_images_model.dart';
+import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
 import 'package:recook/models/promotion_goods_list_model.dart';
 import 'package:recook/pages/goods/small_coupon_widget.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
+import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
@@ -735,7 +739,15 @@ class GoodsItemWidget extends StatelessWidget {
     );
   }
 
-  _shareEvent() {
+  Future _shareEvent() async {
+    String imgUrl;
+    GoodsDetailModel imagesModel =
+        await GoodsDetailModelImpl.getDetailInfo(this.id, UserManager.instance.user.info.id);
+    if (imagesModel.data.mainPhotos.length>1) {
+      imgUrl = imagesModel.data.mainPhotos[1].url;
+    } else {
+      imgUrl = imagesModel.data?.mainPhotos?.first ?? '';
+    }
     String goodsTitle =
         "￥${this.discountPrice} | ${this.goodsName} | ${this.description}";
     ShareTool().goodsShare(buildCtx,
@@ -743,7 +755,7 @@ class GoodsItemWidget extends StatelessWidget {
         goodsName: this.goodsName,
         goodsDescription: this.description,
         miniTitle: goodsTitle,
-        miniPicurl: this.mainPhotoUrl,
+        miniPicurl: imgUrl,
         amount: this.commission.toString(),
         goodsId: this.id.toString());
   }

@@ -639,19 +639,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                           arguments: BrandGoodsListPage.setArguments(
                               model.brandId, model.brandName));
                     },
-                    model: model,
-                    shareClick: () {
-                      String goodsTitle =
-                          "${model.priceDesc} | ${model.goodsName} | ${model.description}";
-                      ShareTool().goodsShare(context,
-                          goodsPrice: model.price.toStringAsFixed(2),
-                          goodsName: model.goodsName,
-                          goodsDescription: model.description,
-                          miniTitle: goodsTitle,
-                          miniPicurl: model.picture.url,
-                          amount: model.commission.toString(),
-                          goodsId: model.goodsId.toString());
-                    },
+                    model: model
                     buyClick: () {
                       AppRouter.push(context, RouteName.COMMODITY_PAGE,
                           arguments:

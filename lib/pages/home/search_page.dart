@@ -10,6 +10,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:recook/models/goods_detail_model.dart' hide Data, Promotion;
+import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
@@ -167,7 +169,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
     return FilterToolBar(
       controller: _filterController,
       height: rSize(40),
-      fontSize: ScreenAdapterUtils.setSp(13),
+      fontSize: 13 * 2.sp,
       titles: [
         FilterItemModel(type: FilterItemType.normal, title: "综合"),
         FilterItemModel(type: FilterItemType.double, title: "价格"),
@@ -236,7 +238,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
             ),
             Text(
               "排列",
-              style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+              style: AppTextStyle.generate(13 * 2.sp,
                   color: Colors.grey[700], fontWeight: FontWeight.w400),
             ),
             Padding(
@@ -246,7 +248,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                     ? AppIcons.icon_list_collection
                     : AppIcons.icon_list_normal,
                 color: Colors.grey[700],
-                size: ScreenAdapterUtils.setSp(20),
+                size: 20 * 2.sp,
               ),
             ),
           ],
@@ -540,18 +542,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                                     model.brandId, model.brandName));
                           },
                           model: model,
-                          shareClick: () {
-                            String goodsTitle =
-                                "${model.priceDesc} | ${model.goodsName} | ${model.description}";
-                            ShareTool().goodsShare(context,
-                                goodsPrice: model.price.toStringAsFixed(2),
-                                goodsName: model.goodsName,
-                                goodsDescription: model.description,
-                                miniTitle: goodsTitle,
-                                miniPicurl: model.picture.url,
-                                amount: model.commission.toString(),
-                                goodsId: model.goodsId.toString());
-                          },
+                          
                           buyClick: () {
                             AppRouter.push(context, RouteName.COMMODITY_PAGE,
                                 arguments: CommodityDetailPage.setArguments(
@@ -628,7 +619,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
           title: "搜索",
           // buttonSize: 60,
           color: TextUtils.isEmpty(_searchText) ? Colors.grey : Colors.black,
-          fontSize: ScreenAdapterUtils.setSp(15),
+          fontSize: 15 * 2.sp,
           onPressed: () async {
             if (TextUtils.isEmpty(_searchText)) return;
             _contentFocusNode.unfocus();
@@ -754,8 +745,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
           child: ChoiceChip(
             backgroundColor: AppColor.frenchColor,
             // disabledColor: Colors.blue,
-            labelStyle: TextStyle(
-                fontSize: ScreenAdapterUtils.setSp(15), color: Colors.black),
+            labelStyle: TextStyle(fontSize: 15 * 2.sp, color: Colors.black),
             labelPadding: EdgeInsets.only(left: 20, right: 20),
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onSelected: (bool value) async {
@@ -786,7 +776,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                       style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w500,
-                        fontSize: ScreenAdapterUtils.setSp(16),
+                        fontSize: 16 * 2.sp,
                       ),
                     ),
                     Spacer()
