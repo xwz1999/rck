@@ -20,8 +20,8 @@ class ModifyInfoPage extends StatefulWidget {
   const ModifyInfoPage({Key key, this.arguments, this.callback})
       : assert(arguments != null, "参数不能为空");
 
-  static Map setArguments(String title, String origin, {int maxLength:0}) {
-    return {"title": title, "origin": origin, "maxLength":maxLength};
+  static Map setArguments(String title, String origin, {int maxLength: 0}) {
+    return {"title": title, "origin": origin, "maxLength": maxLength};
   }
 
   @override
@@ -47,7 +47,7 @@ class _ModifyInfoPageState extends State<ModifyInfoPage> {
         actions: <Widget>[
           CustomImageButton(
             padding: EdgeInsets.symmetric(horizontal: 10),
-            fontSize: ScreenAdapterUtils.setSp(15),
+            fontSize: 15 * 2.sp,
             title: "确定",
             onPressed: () {
               Navigator.pop(context, _controller.text);
@@ -56,31 +56,30 @@ class _ModifyInfoPageState extends State<ModifyInfoPage> {
         ],
       ),
       body: Container(
-        margin: EdgeInsets.only(top: 20),
-        padding: EdgeInsets.symmetric(horizontal: 10),
-        height: 80,
-        color: Colors.white,
-        child: Center(
-          child: TextField(
-          maxLength: widget.arguments["maxLength"],
-          textAlign: TextAlign.start,
-          style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15)),
-          controller: _controller,
-          decoration: InputDecoration(
-              border: InputBorder.none,
-              suffixIcon: IconButton(
-                icon: Icon(
-                  AppIcons.icon_clear,
-                  color: Colors.grey[400],
-                  size: ScreenAdapterUtils.setSp(18),
-                ),
-                onPressed: () {
-                  _controller.text = "";
-                },
-              )),
-        ),
-        )
-      ),
+          margin: EdgeInsets.only(top: 20),
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          height: 80,
+          color: Colors.white,
+          child: Center(
+            child: TextField(
+              maxLength: widget.arguments["maxLength"],
+              textAlign: TextAlign.start,
+              style: AppTextStyle.generate(15 * 2.sp),
+              controller: _controller,
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      AppIcons.icon_clear,
+                      color: Colors.grey[400],
+                      size: 18 * 2.sp,
+                    ),
+                    onPressed: () {
+                      _controller.text = "";
+                    },
+                  )),
+            ),
+          )),
     );
   }
 }

@@ -293,7 +293,7 @@ class _GoodsWindowPageState extends State<GoodsWindowPage> {
                               : model.brandName,
                           style: TextStyle(
                             color: Color(0xffc70404),
-                            fontSize: ScreenAdapterUtils.setSp(12),
+                            fontSize: 12 * 2.sp,
                           ),
                         ),
                       ],
@@ -335,8 +335,7 @@ class _GoodsWindowPageState extends State<GoodsWindowPage> {
                                             "赚" + model.commission,
                                             style: TextStyle(
                                               color: Colors.white.withAlpha(0),
-                                              fontSize:
-                                                  ScreenAdapterUtils.setSp(12),
+                                              fontSize: 12 * 2.sp,
                                             ),
                                           ),
                                         ),
@@ -368,7 +367,7 @@ class _GoodsWindowPageState extends State<GoodsWindowPage> {
                             "已售${model.salesVolume}件",
                             style: TextStyle(
                               color: Color(0xff595757),
-                              fontSize: ScreenAdapterUtils.setSp(12),
+                              fontSize: 12 * 2.sp,
                             ),
                           ),
                         ),

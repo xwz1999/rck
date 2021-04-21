@@ -22,7 +22,7 @@ class PostWeatherWidget extends StatelessWidget {
   const PostWeatherWidget({Key key, this.homeWeatherModel}) : super(key: key);
 
   static final TextStyle textStyle =
-      TextStyle(color: Colors.black, fontSize: ScreenAdapterUtils.setSp(10));
+      TextStyle(color: Colors.black, fontSize: 10 * 2.sp);
   _normalText(str) {
     if (TextUtils.isEmpty(str)) {
       return "";
@@ -297,7 +297,7 @@ class PostBannerInfo extends StatelessWidget {
               textAlign: TextAlign.left,
               maxLines: 1,
               style: TextStyle(
-                  fontSize: ScreenAdapterUtils.setSp(14),
+                  fontSize: 14 * 2.sp,
                   color: Colors.white,
                   textBaseline: TextBaseline.alphabetic),
             ),
@@ -317,7 +317,7 @@ class PostBannerInfo extends StatelessWidget {
           textAlign: TextAlign.center,
           maxLines: 1,
           style: TextStyle(
-              fontSize: ScreenAdapterUtils.setSp(14),
+              fontSize: 14 * 2.sp,
               color: Colors.white,
               textBaseline: TextBaseline.alphabetic),
         ),
@@ -576,7 +576,7 @@ class _PostAllWidgetState extends State<PostAllWidget> {
                   padding: EdgeInsets.only(
                     top: postImageHorizontalMargin / 2,
                   ),
-                  height: ScreenAdapterUtils.setHeight(40),
+                  height: 40 * 2.h,
                   child: PostWeatherWidget(
                     homeWeatherModel: UserManager.instance.homeWeatherModel,
                   ),

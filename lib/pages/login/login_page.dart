@@ -122,8 +122,8 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
               margin: EdgeInsets.only(top: 10),
               child: Text(
                 "享受指尖的购物乐趣",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
-                    color: Colors.grey[700]),
+                style:
+                    AppTextStyle.generate(15 * 2.sp, color: Colors.grey[700]),
               )),
           Expanded(child: Container()),
 
@@ -135,9 +135,8 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
           RichText(
               text: TextSpan(
                   text: "登录代表您已阅读并同意",
-                  style: TextStyle(
-                      color: Colors.grey[500],
-                      fontSize: ScreenAdapterUtils.setSp(14)),
+                  style:
+                      TextStyle(color: Colors.grey[500], fontSize: 14 * 2.sp),
                   children: [
                 new TextSpan(
                     text: '《用户协议和隐私政策》',
@@ -195,7 +194,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
             ),
             Text(
               "微信登录",
-              style: AppTextStyle.generate(ScreenAdapterUtils.setSp(17),
+              style: AppTextStyle.generate(17 * 2.sp,
                   fontWeight: FontWeight.w500, color: Colors.white),
             )
           ],
@@ -228,8 +227,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
             ),
             Text(
               "手机登录",
-              style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
-                  color: Colors.grey[700]),
+              style: AppTextStyle.generate(15 * 2.sp, color: Colors.grey[700]),
             )
           ],
         ),

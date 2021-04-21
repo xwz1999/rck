@@ -13,7 +13,7 @@ import 'package:recook/widgets/keyboard/keyboard_widget.dart';
 import 'package:recook/widgets/keyboard/pay_password.dart';
 import 'package:recook/widgets/toast.dart';
 
-class UserSetPasswordAgain extends StatefulWidget{
+class UserSetPasswordAgain extends StatefulWidget {
   final Map arguments;
 
   const UserSetPasswordAgain({Key key, this.arguments}) : super(key: key);
@@ -21,15 +21,14 @@ class UserSetPasswordAgain extends StatefulWidget{
   static setArguments(String password) {
     return {"password": password};
   }
+
   @override
   State<StatefulWidget> createState() {
     return _UserSetPasswordAgainState();
   }
-  
 }
 
-class _UserSetPasswordAgainState extends BaseStoreState<UserSetPasswordAgain>{
-  
+class _UserSetPasswordAgainState extends BaseStoreState<UserSetPasswordAgain> {
   String pwdData = '';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   VoidCallback _showBottomSheetCallback;
@@ -54,15 +53,17 @@ class _UserSetPasswordAgainState extends BaseStoreState<UserSetPasswordAgain>{
     );
   }
 
-  _bodyWidget(){
+  _bodyWidget() {
     return Container(
       child: _varCodeWidget(),
     );
   }
 
-  _varCodeWidget(){
-    TextStyle redStyle = TextStyle(color: AppColor.themeColor, fontSize: ScreenAdapterUtils.setSp(15));
-    TextStyle greyStyle = TextStyle(color: Color(0xff777777), fontSize: ScreenAdapterUtils.setSp(15));
+  _varCodeWidget() {
+    TextStyle redStyle =
+        TextStyle(color: AppColor.themeColor, fontSize: 15 * 2.sp);
+    TextStyle greyStyle =
+        TextStyle(color: Color(0xff777777), fontSize: 15 * 2.sp);
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -70,31 +71,46 @@ class _UserSetPasswordAgainState extends BaseStoreState<UserSetPasswordAgain>{
           Container(
             margin: EdgeInsets.only(top: 36),
             alignment: Alignment.center,
-            child: Text("请确认您的支付密码", style: TextStyle(color: Color(0xff888888), fontSize: ScreenAdapterUtils.setSp(17),),),
+            child: Text(
+              "请确认您的支付密码",
+              style: TextStyle(
+                color: Color(0xff888888),
+                fontSize: 17 * 2.sp,
+              ),
+            ),
           ),
           Container(
-            margin: EdgeInsets.only(top:30),
-            child: GestureDetector(
-              child: CustomBoxPasswordFieldWidget(pwdData, width: 45, boxCount: 6, margin: 4,),
-              onTap: (){
-                _showBottomSheetCallback();
-              },
-            )
-          ),
+              margin: EdgeInsets.only(top: 30),
+              child: GestureDetector(
+                child: CustomBoxPasswordFieldWidget(
+                  pwdData,
+                  width: 45,
+                  boxCount: 6,
+                  margin: 4,
+                ),
+                onTap: () {
+                  _showBottomSheetCallback();
+                },
+              )),
           GestureDetector(
             child: Container(
               margin: EdgeInsets.only(left: 15, right: 15, top: 30),
               height: 47,
-              color: pwdData.length == 6 ? AppColor.themeColor : Color(0xffd7d7d7),
+              color:
+                  pwdData.length == 6 ? AppColor.themeColor : Color(0xffd7d7d7),
               child: Container(
                 alignment: Alignment.center,
-                child: Text('确认', style: TextStyle(fontSize: ScreenAdapterUtils.setSp(17),color: Colors.white ),),
+                child: Text(
+                  '确认',
+                  style: TextStyle(fontSize: 17 * 2.sp, color: Colors.white),
+                ),
               ),
             ),
-            onTap: (){
-              if (!TextUtils.isEmpty(widget.arguments['password']) && pwdData == widget.arguments['password']){
+            onTap: () {
+              if (!TextUtils.isEmpty(widget.arguments['password']) &&
+                  pwdData == widget.arguments['password']) {
                 _passwordSave();
-              }else{
+              } else {
                 showError("两次输入的密码不同...");
               }
             },
@@ -103,38 +119,45 @@ class _UserSetPasswordAgainState extends BaseStoreState<UserSetPasswordAgain>{
       ),
     );
   }
+
   /// 底部弹出 自定义键盘  下滑消失
   void _showBottomSheet() {
     _scaffoldKey.currentState
         .showBottomSheet<void>((BuildContext context) {
-      return Container(
-        height: MediaQuery.of(context).size.height,
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: GestureDetector(
-                child: Container(color: Colors.white.withAlpha(0),),
-                onTap: (){
-                  Navigator.pop(_scaffoldKey.currentContext);
-                },
-              ),
+          return Container(
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: GestureDetector(
+                    child: Container(
+                      color: Colors.white.withAlpha(0),
+                    ),
+                    onTap: () {
+                      Navigator.pop(_scaffoldKey.currentContext);
+                    },
+                  ),
+                ),
+                MyKeyboard(
+                  _onKeyDown,
+                  isShowTips: true,
+                ),
+              ],
             ),
-            MyKeyboard(_onKeyDown, isShowTips: true, ),
-          ],
-        ),
-      );
-    })
+          );
+        })
         .closed
         .whenComplete(() {
-      if (mounted) {
-        setState(() {
-          // re-enable the button
-          _showBottomSheetCallback = _showBottomSheet;
+          if (mounted) {
+            setState(() {
+              // re-enable the button
+              _showBottomSheetCallback = _showBottomSheet;
+            });
+          }
         });
-      }
-    });
   }
-  void _onKeyDown(KeyEvent data){
+
+  void _onKeyDown(KeyEvent data) {
     if (data.isDelete()) {
       if (pwdData.length > 0) {
         pwdData = pwdData.substring(0, pwdData.length - 1);
@@ -142,7 +165,7 @@ class _UserSetPasswordAgainState extends BaseStoreState<UserSetPasswordAgain>{
       }
     } else if (data.isCommit()) {
       if (pwdData.length < 6) {
-      //  Fluttertoast.showToast(msg: "密码不足6位，请重试", gravity: ToastGravity.CENTER);
+        //  Fluttertoast.showToast(msg: "密码不足6位，请重试", gravity: ToastGravity.CENTER);
         Toast.showError("验证码不足6位,请重试");
         return;
       }
@@ -157,10 +180,8 @@ class _UserSetPasswordAgainState extends BaseStoreState<UserSetPasswordAgain>{
 
   _passwordSave() async {
     showLoading("");
-    ResultData resultData = await HttpManager.post(
-      UserApi.password_save,
-      {"userId": UserManager.instance.user.info.id,
-        "password": pwdData});
+    ResultData resultData = await HttpManager.post(UserApi.password_save,
+        {"userId": UserManager.instance.user.info.id, "password": pwdData});
     dismissLoading();
     if (!resultData.result) {
       showError(resultData.msg);
@@ -174,7 +195,8 @@ class _UserSetPasswordAgainState extends BaseStoreState<UserSetPasswordAgain>{
     // AppRouter.pushAndReplaced(context, RouteName.USER_SET_PASSWORD);
     // AppRouter.canPop(context);
     // AppRouter.popAndPushNamed(context, RouteName.SETTING_PAGE);
-    UserManager.instance.setPassword.value = !UserManager.instance.setPassword.value;
+    UserManager.instance.setPassword.value =
+        !UserManager.instance.setPassword.value;
     UserManager.instance.user.info.isSetPayPwd = true;
     UserManager.updateUserInfo(getStore());
     Navigator.pop(context, true);

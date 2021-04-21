@@ -15,11 +15,14 @@ import 'package:recook/widgets/weather_page/weather_city_tool.dart';
 class WeatherCityPage extends StatefulWidget {
   final Map arguments;
   WeatherCityPage({Key key, this.arguments}) : super(key: key);
-  static setArguments(String cityName,){
+  static setArguments(
+    String cityName,
+  ) {
     return {
       "cityName": cityName,
     };
   }
+
   @override
   _WeatherCityPageState createState() => _WeatherCityPageState();
 }
@@ -37,12 +40,12 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
   @override
   void initState() {
     _textEditingController = TextEditingController();
-    _focusNode.addListener((){
+    _focusNode.addListener(() {
       setState(() {});
     });
     String cityName = widget.arguments['cityName'];
     if (!TextUtils.isEmpty(cityName)) _selectCity = cityName;
-    WeatherCityTool.getInstance().getCityList().then((onValue){
+    WeatherCityTool.getInstance().getCityList().then((onValue) {
       _cityList = onValue;
       setState(() {});
     });
@@ -65,46 +68,52 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
         child: Column(
           children: <Widget>[
             _searchBar(),
-            _focusNode.hasFocus || !TextUtils.isEmpty(_textEditingController.text) ? 
-            Expanded(child: _resultWidget())
-            : Expanded(
-              child: Column(
-                children: <Widget>[
-                  GestureDetector(
-                    onTap: (){
-                      if (TextUtils.isEmpty(_selectCity)) return;
-                      
-                      WeatherCityModel model = WeatherCityModel();
-                      model.cityZh = _selectCity;
-                      Navigator.pop(context, model);
-                    },
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      padding: const EdgeInsets.only(left: 15.0),
-                      height: 50.0,
-                      child: Text("当前定位城市: $_selectCity", style: TextStyle(color: Colors.black,fontSize: 14 ),),
-                    ),
-                  ),
-                  Expanded(
-                    child: AzListView(
-                      shrinkWrap: false,
-                      data: _cityList,
-                      topData: null,
-                      itemBuilder: (context, model) => _buildListItem(model),
-                      suspensionWidget: _buildSusWidget(_suspensionTag),
-                      isUseRealIndex: true,
-                      itemHeight: _itemHeight,
-                      suspensionHeight: _suspensionHeight,
-                      onSusTagChanged: (tag){
-                        setState(() {
-                          _suspensionTag = tag;
-                        });
-                      },
+            _focusNode.hasFocus ||
+                    !TextUtils.isEmpty(_textEditingController.text)
+                ? Expanded(child: _resultWidget())
+                : Expanded(
+                    child: Column(
+                      children: <Widget>[
+                        GestureDetector(
+                          onTap: () {
+                            if (TextUtils.isEmpty(_selectCity)) return;
+
+                            WeatherCityModel model = WeatherCityModel();
+                            model.cityZh = _selectCity;
+                            Navigator.pop(context, model);
+                          },
+                          child: Container(
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.only(left: 15.0),
+                            height: 50.0,
+                            child: Text(
+                              "当前定位城市: $_selectCity",
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 14),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: AzListView(
+                            shrinkWrap: false,
+                            data: _cityList,
+                            topData: null,
+                            itemBuilder: (context, model) =>
+                                _buildListItem(model),
+                            suspensionWidget: _buildSusWidget(_suspensionTag),
+                            isUseRealIndex: true,
+                            itemHeight: _itemHeight,
+                            suspensionHeight: _suspensionHeight,
+                            onSusTagChanged: (tag) {
+                              setState(() {
+                                _suspensionTag = tag;
+                              });
+                            },
+                          ),
+                        )
+                      ],
                     ),
                   )
-                ],
-              ),
-            )
           ],
         ),
       ),
@@ -125,19 +134,24 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   Navigator.pop(context, model);
                 },
                 child: Container(
                   color: Colors.white,
                   alignment: Alignment.centerLeft,
                   padding: EdgeInsets.only(left: 15),
-                  height: _itemHeight.toDouble()-1,
-                  child: Text(model.cityZh, style: TextStyle(color: Colors.black,fontSize: ScreenAdapterUtils.setSp(15) ),),
+                  height: _itemHeight.toDouble() - 1,
+                  child: Text(
+                    model.cityZh,
+                    style: TextStyle(color: Colors.black, fontSize: 15 * 2.sp),
+                  ),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(left: 15,),
+                margin: EdgeInsets.only(
+                  left: 15,
+                ),
                 color: AppColor.frenchColor,
                 height: 1,
               )
@@ -147,6 +161,7 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
       ],
     );
   }
+
   ///构建悬停Widget.
   Widget _buildSusWidget(String susTag) {
     return Container(
@@ -165,40 +180,44 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
     );
   }
 
-  _searchBar(){
+  _searchBar() {
     return Container(
-      height: 45, width: MediaQuery.of(context).size.width,
+      height: 45,
+      width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
       child: Container(
         decoration: BoxDecoration(
-          color: Color(0xfff3f4f5),
-          borderRadius: BorderRadius.circular(5)
-        ),
+            color: Color(0xfff3f4f5), borderRadius: BorderRadius.circular(5)),
         child: Row(
           children: <Widget>[
             Container(
               margin: EdgeInsets.only(left: 10),
-              child: Image.asset("assets/search.png", width: 22, height: 22,),
+              child: Image.asset(
+                "assets/search.png",
+                width: 22,
+                height: 22,
+              ),
             ),
             Expanded(
               child: CupertinoTextField(
-                decoration: BoxDecoration(
-                  color: Colors.white.withAlpha(0)
-                ),
+                decoration: BoxDecoration(color: Colors.white.withAlpha(0)),
                 controller: _textEditingController,
                 focusNode: _focusNode,
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.search,
                 placeholder: "请输入搜索词...",
-                placeholderStyle: TextStyle(color: Color(0xff999999), fontSize: 14, fontWeight: FontWeight.w300),
-                onSubmitted: (text){
+                placeholderStyle: TextStyle(
+                    color: Color(0xff999999),
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300),
+                onSubmitted: (text) {
                   // WeatherCityTool.getInstance().searchWithQuery(text, (list){
                   //   _searchResultCityList = list;
                   //   setState(() {});
                   // });
                 },
-                onChanged: (text){
-                  WeatherCityTool.getInstance().searchWithQuery(text, (list){
+                onChanged: (text) {
+                  WeatherCityTool.getInstance().searchWithQuery(text, (list) {
                     _searchResultCityList = list;
                     setState(() {});
                   });
@@ -210,19 +229,20 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
       ),
     );
   }
-  _resultWidget(){
+
+  _resultWidget() {
     return Container(
-      child: _searchResultCityList.length <= 0?
-      GestureDetector(
-        onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
-        child: noDataView("没有数据..."),
-      )
-      : ListView.builder(
-        itemCount: _searchResultCityList.length,
-        itemBuilder: (BuildContext context, int index) {
-        return _buildListItem(_searchResultCityList[index]);
-       },
-      ),
+      child: _searchResultCityList.length <= 0
+          ? GestureDetector(
+              onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
+              child: noDataView("没有数据..."),
+            )
+          : ListView.builder(
+              itemCount: _searchResultCityList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return _buildListItem(_searchResultCityList[index]);
+              },
+            ),
     );
   }
 }

@@ -91,7 +91,7 @@ class NormalGoodsItem extends StatelessWidget {
                     model.goodsName,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                    style: AppTextStyle.generate(15 * 2.sp,
                         fontWeight: FontWeight.w500),
                   ),
                   Expanded(
@@ -104,8 +104,7 @@ class NormalGoodsItem extends StatelessWidget {
                               model.description,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: AppTextStyle.generate(
-                                  ScreenAdapterUtils.setSp(12),
+                              style: AppTextStyle.generate(12 * 2.sp,
                                   color: Colors.black54,
                                   fontWeight: FontWeight.w300),
                             ),
@@ -223,12 +222,12 @@ class NormalGoodsItem extends StatelessWidget {
   //                       style: TextStyle(
   //                           fontWeight: FontWeight.w800,
   //                           color: priceColor,
-  //                           fontSize: ScreenAdapterUtils.setSp(5))),
+  //                           fontSize: 5*2.sp)),
   //                   Text("后",
   //                       style: TextStyle(
   //                           fontWeight: FontWeight.w800,
   //                           color: priceColor,
-  //                           fontSize: ScreenAdapterUtils.setSp(5))),
+  //                           fontSize: 5*2.sp)),
   //                 ],
   //               ),
   //               Container(
@@ -238,7 +237,7 @@ class NormalGoodsItem extends StatelessWidget {
   //                   text: TextSpan(children: [
   //                 TextSpan(
   //                   text: "¥",
-  //                   style: AppTextStyle.generate(ScreenAdapterUtils.setSp(11),
+  //                   style: AppTextStyle.generate(11*2.sp,
   //                       color: priceColor, fontWeight: FontWeight.w500),
   //                 ),
   //                 TextSpan(
@@ -246,7 +245,7 @@ class NormalGoodsItem extends StatelessWidget {
   //                       "${(model.discountPrice - model.discountPrice.toInt()) > 0 ? model.discountPrice.toStringAsFixed(1) : model.discountPrice.toStringAsFixed(0)}",
   //                   // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
   //                   style: TextStyle(
-  //                       fontSize: ScreenAdapterUtils.setSp(15),
+  //                       fontSize: 15*2.sp,
   //                       color: priceColor,
   //                       fontWeight: FontWeight.w500),
   //                 ),
@@ -258,7 +257,7 @@ class NormalGoodsItem extends StatelessWidget {
   //                   text: TextSpan(children: [
   //                 TextSpan(
   //                   text: "¥",
-  //                   style: AppTextStyle.generate(ScreenAdapterUtils.setSp(9),
+  //                   style: AppTextStyle.generate(9*2.sp,
   //                       color: Color(0xff898989), fontWeight: FontWeight.w500),
   //                 ),
   //                 TextSpan(
@@ -266,7 +265,7 @@ class NormalGoodsItem extends StatelessWidget {
   //                   style: TextStyle(
   //                       decoration: TextDecoration.lineThrough,
   //                       decorationColor: Color(0xff898989),
-  //                       fontSize: ScreenAdapterUtils.setSp(13),
+  //                       fontSize: 13*2.sp,
   //                       color: Color(0xff898989),
   //                       fontWeight: FontWeight.w500),
   //                 ),
@@ -300,7 +299,7 @@ class NormalGoodsItem extends StatelessWidget {
   //                       height: 21,
   //                       title: "导购",
   //                       style: TextStyle(
-  //                           fontSize: ScreenAdapterUtils.setSp(14),
+  //                           fontSize: 14*2.sp,
   //                           color: sellout ? Colors.grey : _shareTextColor),
   //                       padding: EdgeInsets.symmetric(
   //                           horizontal: rSize(8), vertical: rSize(0)),
@@ -331,7 +330,7 @@ class NormalGoodsItem extends StatelessWidget {
   //                 title: sellout ? "已售完" : "自购",
   //                 style: TextStyle(
   //                   color: Colors.white,
-  //                   fontSize: ScreenAdapterUtils.setSp(14),
+  //                   fontSize: 14*2.sp,
   //                 ),
   //                 padding: EdgeInsets.symmetric(
   //                     horizontal: ScreenAdapterUtils.setWidth(

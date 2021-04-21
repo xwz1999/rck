@@ -79,7 +79,7 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
                   //   widget.model.description,
                   //   maxLines: 1,
                   //   overflow: TextOverflow.ellipsis,
-                  //   style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                  //   style: AppTextStyle.generate(14*2.sp,
                   //       color: Colors.black54, fontWeight: FontWeight.w300),
                   // ),
                   Spacer(),
@@ -101,7 +101,7 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
                                     widget.model.brandName,
                                     style: TextStyle(
                                       color: Color(0xffc70404),
-                                      fontSize: ScreenAdapterUtils.setSp(12),
+                                      fontSize: 12 * 2.sp,
                                     ),
                                   ),
                                 ],

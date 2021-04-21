@@ -25,7 +25,7 @@ class OrderCentralView extends StatefulWidget {
 class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
   // final double _iconSize = rSize(25);
   final double _iconSize = rSize(30);
-  final double _fontSize = ScreenAdapterUtils.setSp(12);
+  final double _fontSize = 12 * 2.sp;
 
   @override
   bool needStore() {
@@ -65,7 +65,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                 ),
                 CustomImageButton(
                   title: "查看明细",
-                  fontSize: ScreenAdapterUtils.setSp(12),
+                  fontSize: 12 * 2.sp,
                   color: Colors.black45,
                   onPressed: () {
                     widget.clickListener(0);
@@ -74,11 +74,11 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                 Icon(
                   Icons.keyboard_arrow_right,
                   color: Colors.black38,
-                  size: ScreenAdapterUtils.setSp(18),
+                  size: 18 * 2.sp,
                 ),
                 // Icon(
                 //   AppIcons.icon_next,
-                //   size: ScreenAdapterUtils.setSp(14),
+                //   size: 14*2.sp,
                 //   color: Colors.grey,
                 // )
               ],

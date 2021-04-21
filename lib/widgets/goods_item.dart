@@ -253,7 +253,7 @@ class GoodsItemWidget extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Color(0xffc70404),
-                    fontSize: ScreenAdapterUtils.setSp(12),
+                    fontSize: 12 * 2.sp,
                   ),
                 ),
               ),
@@ -289,14 +289,13 @@ class GoodsItemWidget extends StatelessWidget {
                                 height: 15,
                                 decoration: BoxDecoration(
                                   color: Color(0xFFCC1B4F),
-                                  borderRadius: BorderRadius.circular(
-                                      ScreenAdapterUtils.setWidth(3)),
+                                  borderRadius: BorderRadius.circular(3 * 2.w),
                                 ),
                                 child: Text(
                                   '进口',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: ScreenAdapterUtils.setSp(10),
+                                    fontSize: 10 * 2.sp,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ),
@@ -306,13 +305,12 @@ class GoodsItemWidget extends StatelessWidget {
                       this.isImport == 1
                           ? WidgetSpan(
                               child: Container(
-                              width: ScreenAdapterUtils.setWidth(5),
+                              width: 5 * 2.w,
                             ))
                           : WidgetSpan(child: SizedBox()),
                       TextSpan(
                         text: this.goodsName,
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(15),
+                        style: AppTextStyle.generate(15 * 2.sp,
                             fontWeight: FontWeight.w600),
                       ),
                     ],
@@ -329,8 +327,7 @@ class GoodsItemWidget extends StatelessWidget {
                           this.description,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(14),
+                          style: AppTextStyle.generate(14 * 2.sp,
                               color: Colors.black54,
                               fontWeight: FontWeight.w300),
                         ),
@@ -432,7 +429,7 @@ class GoodsItemWidget extends StatelessWidget {
     bool sellout = this.inventory <= 0;
     Color priceColor = Color(0xffc70404);
     return Container(
-      height: ScreenAdapterUtils.setHeight(20),
+      height: 20 * 2.h,
       alignment: Alignment.center,
       child: Stack(
         children: <Widget>[
@@ -454,7 +451,7 @@ class GoodsItemWidget extends StatelessWidget {
                   child: ExtendedText.rich(TextSpan(children: [
                     TextSpan(
                       text: "券后 ¥ ",
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(12),
+                      style: AppTextStyle.generate(12 * 2.sp,
                           color: priceColor, fontWeight: FontWeight.w500),
                     ),
                     TextSpan(
@@ -464,7 +461,7 @@ class GoodsItemWidget extends StatelessWidget {
                       style: TextStyle(
                           letterSpacing: -1,
                           wordSpacing: -1,
-                          fontSize: ScreenAdapterUtils.setSp(18),
+                          fontSize: 18 * 2.sp,
                           color: priceColor,
                           fontWeight: FontWeight.w500),
                     ),
@@ -477,7 +474,7 @@ class GoodsItemWidget extends StatelessWidget {
                       style: TextStyle(
                           decoration: TextDecoration.lineThrough,
                           decorationColor: Color(0xff898989),
-                          fontSize: ScreenAdapterUtils.setSp(12),
+                          fontSize: 12 * 2.sp,
                           color: Color(0xff898989),
                           fontWeight: FontWeight.w400),
                     )
@@ -496,7 +493,7 @@ class GoodsItemWidget extends StatelessWidget {
                 //         style: TextStyle(
                 //             decoration: TextDecoration.lineThrough,
                 //             decorationColor: Color(0xff898989),
-                //             fontSize: ScreenAdapterUtils.setSp(12),
+                //             fontSize: 12*2.sp,
                 //             color: Color(0xff898989),
                 //             fontWeight: FontWeight.w400),
                 //       ),
@@ -535,7 +532,7 @@ class GoodsItemWidget extends StatelessWidget {
               //       height: 21,
               //       title: "导购",
               //       style: TextStyle(
-              //           fontSize: ScreenAdapterUtils.setSp(13),
+              //           fontSize: 13*2.sp,
               //           color: sellout ? Colors.grey : _shareTextColor),
               //       padding: EdgeInsets.symmetric(
               //           horizontal: rSize(8),
@@ -567,7 +564,7 @@ class GoodsItemWidget extends StatelessWidget {
                   title: sellout ? "已售完" : "自购",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: ScreenAdapterUtils.setSp(13),
+                    fontSize: 13 * 2.sp,
                   ),
                   padding: EdgeInsets.symmetric(
                       horizontal: ScreenAdapterUtils.setWidth(
@@ -666,7 +663,7 @@ class GoodsItemWidget extends StatelessWidget {
                               "赚" + this.commission.toStringAsFixed(2),
                               style: TextStyle(
                                 color: Colors.white.withAlpha(0),
-                                fontSize: ScreenAdapterUtils.setSp(12),
+                                fontSize: 12 * 2.sp,
                               ),
                             ),
                           ),
@@ -677,7 +674,7 @@ class GoodsItemWidget extends StatelessWidget {
                                     "赚" + this.commission.toStringAsFixed(2),
                                     style: TextStyle(
                                       color: Color(0xffeb0045),
-                                      fontSize: ScreenAdapterUtils.setSp(12),
+                                      fontSize: 12 * 2.sp,
                                     ),
                                   ),
                                 )
@@ -699,7 +696,7 @@ class GoodsItemWidget extends StatelessWidget {
                     "已售${this.salesVolume}件",
                     style: TextStyle(
                       color: Color(0xff595757),
-                      fontSize: ScreenAdapterUtils.setSp(12),
+                      fontSize: 12 * 2.sp,
                     ),
                   ),
           ),

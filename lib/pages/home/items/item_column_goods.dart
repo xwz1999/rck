@@ -91,7 +91,7 @@ class ColumnGoodsItem extends StatelessWidget {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
-                  fontSize: ScreenAdapterUtils.setSp(14),
+                  fontSize: 14 * 2.sp,
                   fontWeight: FontWeight.w400,
                   color: Colors.black),
             ),
@@ -152,7 +152,7 @@ class ColumnGoodsItem extends StatelessWidget {
             model.totalInventoryDesc,
             style: TextStyle(
               color: Colors.white,
-              fontSize: ScreenAdapterUtils.setSp(10),
+              fontSize: 10 * 2.sp,
             ),
           ),
         ),
@@ -193,7 +193,7 @@ class ColumnGoodsItem extends StatelessWidget {
           model.salesVolumeDesc,
           style: TextStyle(
             color: Colors.white,
-            fontSize: ScreenAdapterUtils.setSp(9),
+            fontSize: 9 * 2.sp,
           ),
         ),
       );
@@ -204,7 +204,7 @@ class ColumnGoodsItem extends StatelessWidget {
           model.salesVolumeDesc,
           style: TextStyle(
             color: Colors.white,
-            fontSize: ScreenAdapterUtils.setSp(9),
+            fontSize: 9 * 2.sp,
           ),
         ),
       );
@@ -215,7 +215,7 @@ class ColumnGoodsItem extends StatelessWidget {
             '   ' + model.salesVolumeDesc,
             style: TextStyle(
               color: Colors.white,
-              fontSize: ScreenAdapterUtils.setSp(9),
+              fontSize: 9 * 2.sp,
             ),
           ),
           Spacer(),
@@ -223,7 +223,7 @@ class ColumnGoodsItem extends StatelessWidget {
             model.percentageDesc + '   ',
             style: TextStyle(
               color: proportion > 0.7 ? Colors.white : AppColor.themeColor,
-              fontSize: ScreenAdapterUtils.setSp(9),
+              fontSize: 9 * 2.sp,
             ),
           ),
         ],
@@ -250,7 +250,9 @@ class ColumnGoodsItem extends StatelessWidget {
                         color:
                             model.getPromotionStatus() == PromotionStatus.ready
                                 ? AppColor.greenColor
-                                : sellout ? Colors.grey : _shareTextColor),
+                                : sellout
+                                    ? Colors.grey
+                                    : _shareTextColor),
                     pureDisplay: true,
                     padding: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
                     borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -258,7 +260,9 @@ class ColumnGoodsItem extends StatelessWidget {
                         color:
                             model.getPromotionStatus() == PromotionStatus.ready
                                 ? AppColor.greenColor
-                                : sellout ? Colors.grey : _shareTextColor,
+                                : sellout
+                                    ? Colors.grey
+                                    : _shareTextColor,
                         width: 0.5),
                   ),
                   onTap: () {
@@ -272,13 +276,17 @@ class ColumnGoodsItem extends StatelessWidget {
             child: CustomImageButton(
               title: model.getPromotionStatus() == PromotionStatus.ready
                   ? '未开始'
-                  : sellout ? "已抢完" : "省钱购",
+                  : sellout
+                      ? "已抢完"
+                      : "省钱购",
               color: Colors.white,
               pureDisplay: true,
               backgroundColor:
                   model.getPromotionStatus() == PromotionStatus.ready
                       ? AppColor.greenColor
-                      : sellout ? AppColor.pinkColor : AppColor.themeColor,
+                      : sellout
+                          ? AppColor.pinkColor
+                          : AppColor.themeColor,
               padding: EdgeInsets.symmetric(vertical: 2, horizontal: 10),
               borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
@@ -350,16 +358,15 @@ class ColumnGoodsItem extends StatelessWidget {
         text: TextSpan(children: [
       TextSpan(
         text: "${model.priceDesc}",
-        style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
-            fontWeight: FontWeight.w400),
+        style: AppTextStyle.generate(15 * 2.sp, fontWeight: FontWeight.w400),
       ),
       TextSpan(
         text: AppConfig.showCommission ? "  " : "",
-        style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14)),
+        style: AppTextStyle.generate(14 * 2.sp),
       ),
       TextSpan(
         text: AppConfig.showCommission ? model.commissionDesc : "",
-        style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+        style: AppTextStyle.generate(13 * 2.sp,
             fontWeight: FontWeight.w400, color: AppColor.themeColor),
       ),
     ]));

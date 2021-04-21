@@ -63,8 +63,7 @@ class LoadingDialog extends Dialog {
                       offstage: TextUtils.isEmpty(text),
                       child: new Container(
                           child: new Text(text,
-                              style: AppTextStyle.generate(
-                                  ScreenAdapterUtils.setSp(14),
+                              style: AppTextStyle.generate(14 * 2.sp,
                                   color: Colors.black))),
                     ),
                   ],
@@ -129,8 +128,7 @@ class StatusDialog extends Dialog {
                                 textAlign: TextAlign.center,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
-                                style: AppTextStyle.generate(
-                                    ScreenAdapterUtils.setSp(15),
+                                style: AppTextStyle.generate(15 * 2.sp,
                                     fontWeight: FontWeight.w300,
                                     color: Colors.white))),
                       ),

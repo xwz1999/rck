@@ -148,9 +148,9 @@ class _PublishBusinessDistrictPageState
               padding: EdgeInsets.symmetric(
                   vertical: rSize(7), horizontal: rSize(7)),
               maxLines: 5,
-              textStyle: AppTextStyle.generate(ScreenAdapterUtils.setSp(14)),
-              hintStyle: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                  color: Colors.grey[300]),
+              textStyle: AppTextStyle.generate(14 * 2.sp),
+              hintStyle:
+                  AppTextStyle.generate(14 * 2.sp, color: Colors.grey[300]),
               hint: "请输入评价",
               onValueChanged: (text) {
                 _contentText = text;

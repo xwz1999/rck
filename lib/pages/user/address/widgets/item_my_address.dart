@@ -46,7 +46,7 @@ class MyAddressItem extends StatelessWidget {
               children: <Widget>[
                 Text(
                   addressModel.name,
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(16),
+                  style: AppTextStyle.generate(16 * 2.sp,
                       fontWeight: FontWeight.w400),
                 ),
                 Container(
@@ -55,7 +55,7 @@ class MyAddressItem extends StatelessWidget {
                 ),
                 Text(
                   addressModel.mobile,
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                  style: AppTextStyle.generate(15 * 2.sp,
                       fontWeight: FontWeight.w400),
                 ),
               ],
@@ -66,8 +66,8 @@ class MyAddressItem extends StatelessWidget {
                 EdgeInsets.symmetric(horizontal: rSize(20), vertical: rSize(6)),
             child: Text(
               "${addressModel.province}${addressModel.city}${addressModel.district}${addressModel.address}",
-              style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
-                  fontWeight: FontWeight.w300),
+              style:
+                  AppTextStyle.generate(15 * 2.sp, fontWeight: FontWeight.w300),
             ),
           ),
           Container(
@@ -80,12 +80,12 @@ class MyAddressItem extends StatelessWidget {
                 padding: EdgeInsets.symmetric(
                     vertical: rSize(7), horizontal: rSize(10)),
                 direction: Direction.horizontal,
-                fontSize: ScreenAdapterUtils.setSp(15),
+                fontSize: 15 * 2.sp,
                 icon: Icon(
                   addressModel.isDefault == 0
                       ? AppIcons.icon_check
                       : Icons.check_circle,
-                  size: ScreenAdapterUtils.setSp(18),
+                  size: 18 * 2.sp,
                 ),
                 title: addressModel.isDefault == 0 ? "设为默认地址" : "默认地址",
                 contentSpacing: 5,
@@ -96,13 +96,13 @@ class MyAddressItem extends StatelessWidget {
               Spacer(),
               CustomImageButton(
                   padding: EdgeInsets.symmetric(horizontal: rSize(10)),
-                  fontSize: ScreenAdapterUtils.setSp(15),
+                  fontSize: 15 * 2.sp,
                   title: "编辑",
                   color: _titleColor,
                   onPressed: this.editListener),
               CustomImageButton(
                 padding: EdgeInsets.symmetric(horizontal: rSize(10)),
-                fontSize: ScreenAdapterUtils.setSp(15),
+                fontSize: 15 * 2.sp,
                 title: "删除",
                 color: _titleColor,
                 onPressed: this.deleteListener,

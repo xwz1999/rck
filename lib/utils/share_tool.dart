@@ -64,20 +64,19 @@ class ShareTool {
             TextSpan(text: '\n'),
             TextSpan(
                 text: '导购赚 ',
-                style: TextStyle(
-                    color: Colors.red, fontSize: ScreenAdapterUtils.setSp(14))),
+                style: TextStyle(color: Colors.red, fontSize: 14 * 2.sp)),
             TextSpan(
                 text: amount,
                 style: TextStyle(
                   color: Colors.red,
-                  fontSize: ScreenAdapterUtils.setSp(18),
+                  fontSize: 18 * 2.sp,
                 )),
             // TextSpan(text: '\n'),
             // TextSpan(
             //     text: '分享后好友至少能赚$amount',
             //     style: TextStyle(
             //         color: Color(0xff999999),
-            //         fontSize: ScreenAdapterUtils.setSp(10))),
+            //         fontSize: 10*2.sp)),
           ]),
         ),
       );

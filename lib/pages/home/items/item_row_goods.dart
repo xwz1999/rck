@@ -96,7 +96,7 @@ class RowGoodsItem extends StatelessWidget {
                     model.goodsName,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                    style: AppTextStyle.generate(15 * 2.sp,
                         fontWeight: FontWeight.w500),
                   ),
                   Expanded(
@@ -109,8 +109,7 @@ class RowGoodsItem extends StatelessWidget {
                               model.description,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: AppTextStyle.generate(
-                                  ScreenAdapterUtils.setSp(12),
+                              style: AppTextStyle.generate(12 * 2.sp,
                                   color: Colors.black54,
                                   fontWeight: FontWeight.w300),
                             ),
@@ -220,12 +219,12 @@ class RowGoodsItem extends StatelessWidget {
                       style: TextStyle(
                           fontWeight: FontWeight.w800,
                           color: priceColor,
-                          fontSize: ScreenAdapterUtils.setSp(5))),
+                          fontSize: 5 * 2.sp)),
                   Text("后",
                       style: TextStyle(
                           fontWeight: FontWeight.w800,
                           color: priceColor,
-                          fontSize: ScreenAdapterUtils.setSp(5))),
+                          fontSize: 5 * 2.sp)),
                 ],
               ),
               Container(
@@ -235,14 +234,14 @@ class RowGoodsItem extends StatelessWidget {
                   text: TextSpan(children: [
                 TextSpan(
                   text: "¥",
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(11),
+                  style: AppTextStyle.generate(11 * 2.sp,
                       color: priceColor, fontWeight: FontWeight.w500),
                 ),
                 TextSpan(
                   text:
                       "${(model.price - model.price.toInt()) > 0 ? model.price.toStringAsFixed(1) : model.price.toStringAsFixed(0)}",
                   style: TextStyle(
-                      fontSize: ScreenAdapterUtils.setSp(15),
+                      fontSize: 15 * 2.sp,
                       color: priceColor,
                       fontWeight: FontWeight.w500),
                 ),
@@ -254,7 +253,7 @@ class RowGoodsItem extends StatelessWidget {
                   text: TextSpan(children: [
                 TextSpan(
                   text: "¥",
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(9),
+                  style: AppTextStyle.generate(9 * 2.sp,
                       color: Color(0xff898989), fontWeight: FontWeight.w500),
                 ),
                 TextSpan(
@@ -262,7 +261,7 @@ class RowGoodsItem extends StatelessWidget {
                   style: TextStyle(
                       decoration: TextDecoration.lineThrough,
                       decorationColor: Color(0xff898989),
-                      fontSize: ScreenAdapterUtils.setSp(13),
+                      fontSize: 13 * 2.sp,
                       color: Color(0xff898989),
                       fontWeight: FontWeight.w500),
                 ),

@@ -107,7 +107,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
         title: "搜索商品",
         style: TextStyle(
             color: Colors.grey,
-            fontSize: ScreenAdapterUtils.setSp(15),
+            fontSize: 15 * 2.sp,
             fontWeight: FontWeight.w400),
       ),
     );
@@ -146,7 +146,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
             child: Center(
                 child: Text(
           item,
-          style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14)),
+          style: AppTextStyle.generate(14 * 2.sp),
           textAlign: TextAlign.center,
         )));
       },
@@ -250,7 +250,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
                 imageUrl: Api.getImgUrl(secondCategory.logoUrl)),
             title: secondCategory.name,
             contentSpacing: rSize(5),
-            fontSize: ScreenAdapterUtils.setSp(14),
+            fontSize: 14 * 2.sp,
             onPressed: () {
               AppRouter.push(context, RouteName.GOODS_LIST_PAGE,
                   arguments: GoodsListPage.setArguments(

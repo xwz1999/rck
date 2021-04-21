@@ -70,7 +70,7 @@ class _InvoiceAddTitlePageState extends State<InvoiceAddTitlePage> {
                         Text(
                           '企业单位',
                           style: TextStyle(
-                            fontSize: ScreenAdapterUtils.setSp(14),
+                            fontSize: 14 * 2.sp,
                             color: Color(0xFF666666),
                           ),
                         ),
@@ -91,7 +91,7 @@ class _InvoiceAddTitlePageState extends State<InvoiceAddTitlePage> {
                         Text(
                           '个人/非企业单位',
                           style: TextStyle(
-                            fontSize: ScreenAdapterUtils.setSp(14),
+                            fontSize: 14 * 2.sp,
                             color: Color(0xFF666666),
                           ),
                         ),

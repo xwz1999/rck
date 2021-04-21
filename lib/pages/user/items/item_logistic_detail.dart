@@ -7,7 +7,6 @@
  * ====================================================
  */
 
-
 import 'package:flutter/material.dart';
 
 import 'package:recook/constants/header.dart';
@@ -54,12 +53,11 @@ class LogisticDetailItem extends StatelessWidget {
           textAlign: TextAlign.end,
           text: TextSpan(
               text: expressStatus.ftime.substring(0, 10),
-              style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
-                  color: Colors.grey),
+              style: AppTextStyle.generate(13 * 2.sp, color: Colors.grey),
               children: [
                 TextSpan(
                     text: "\n${expressStatus.ftime.substring(10)}",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(12),
+                    style: AppTextStyle.generate(12 * 2.sp,
                         color: Colors.grey, fontWeight: FontWeight.w300))
               ])),
     );
@@ -81,7 +79,7 @@ class LogisticDetailItem extends StatelessWidget {
         children: <Widget>[
           Flexible(
               child: Container(
-            width: ScreenAdapterUtils.setWidth(0.5),
+            width: 0.5 * 2.w,
             color: firstItem ? Colors.transparent : Colors.grey[300],
           )),
           Container(
@@ -95,7 +93,7 @@ class LogisticDetailItem extends StatelessWidget {
           ),
           Flexible(
               child: Container(
-            width: ScreenAdapterUtils.setWidth(0.5),
+            width: 0.5 * 2.w,
             color: lastItem ? Colors.transparent : Colors.grey[300],
           )),
         ],

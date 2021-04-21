@@ -462,7 +462,7 @@ class _HomePageState extends BaseStoreState<HomePage>
               "厨房小工具",
               style: TextStyle(
                   color: Colors.white.withOpacity(0.9),
-                  fontSize: ScreenAdapterUtils.setSp(13),
+                  fontSize: 13 * 2.sp,
                   fontWeight: FontWeight.w300),
             )
           ],
@@ -623,7 +623,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     '已经到底啦~',
                     style: TextStyle(
                         color: Colors.black.withOpacity(0.4),
-                        fontSize: ScreenAdapterUtils.setSp(13)),
+                        fontSize: 13 * 2.sp),
                   ),
                 );
               }
@@ -1117,7 +1117,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                 title,
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
-                    fontSize: ScreenAdapterUtils.setSp(12),
+                    fontSize: 12 * 2.sp,
                     color: Colors.black.withOpacity(0.8)),
               ),
             )

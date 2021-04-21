@@ -40,8 +40,7 @@ class OrderReturnAddressPage extends StatefulWidget {
 
 class _OrderReturnAddressPageState
     extends BaseStoreState<OrderReturnAddressPage> {
-  TextStyle textStyle = TextStyle(
-      color: Colors.grey[500], fontSize: ScreenAdapterUtils.setSp(13));
+  TextStyle textStyle = TextStyle(color: Colors.grey[500], fontSize: 13 * 2.sp);
   OrderReturnAddressModel _addressModel;
 
   FocusNode _expressFocusNode;
@@ -142,7 +141,7 @@ class _OrderReturnAddressPageState
             ? Container()
             : _inputExpressFeeWidget(),
         Container(
-          height: ScreenAdapterUtils.setHeight(60),
+          height: 60 * 2.h,
         ),
         _addressModel == null ? Container() : _buttonWidget(),
         SafeArea(
@@ -158,8 +157,8 @@ class _OrderReturnAddressPageState
   _inputExpressWidget() {
     return Container(
       color: Colors.white,
-      height: ScreenAdapterUtils.setHeight(35),
-      margin: EdgeInsets.symmetric(vertical: ScreenAdapterUtils.setHeight(8)),
+      height: 35 * 2.h,
+      margin: EdgeInsets.symmetric(vertical: 8 * 2.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -169,8 +168,7 @@ class _OrderReturnAddressPageState
             width: rSize(60),
             child: Text(
               '单号',
-              style: TextStyle(
-                  color: Colors.black, fontSize: ScreenAdapterUtils.setSp(16)),
+              style: TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
             ),
           ),
           Expanded(
@@ -187,8 +185,7 @@ class _OrderReturnAddressPageState
               controller: _expressController,
               focusNode: _expressFocusNode,
               keyboardType: TextInputType.number,
-              style: TextStyle(
-                  color: Colors.black, fontSize: ScreenAdapterUtils.setSp(15)),
+              style: TextStyle(color: Colors.black, fontSize: 15 * 2.sp),
               // inputFormatters: [LengthLimitingTextInputFormatter(11),],
               cursorColor: Colors.black,
               decoration: InputDecoration(
@@ -199,7 +196,7 @@ class _OrderReturnAddressPageState
                 hintStyle: TextStyle(
                     fontWeight: FontWeight.w300,
                     color: Colors.grey[400],
-                    fontSize: ScreenAdapterUtils.setSp(15)),
+                    fontSize: 15 * 2.sp),
               ),
             ),
           ),
@@ -211,8 +208,8 @@ class _OrderReturnAddressPageState
   _inputExpressFeeWidget() {
     return Container(
       color: Colors.white,
-      height: ScreenAdapterUtils.setHeight(35),
-      margin: EdgeInsets.symmetric(vertical: ScreenAdapterUtils.setHeight(8)),
+      height: 35 * 2.h,
+      margin: EdgeInsets.symmetric(vertical: 8 * 2.h),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -222,8 +219,7 @@ class _OrderReturnAddressPageState
             width: rSize(60),
             child: Text(
               '运费补偿',
-              style: TextStyle(
-                  color: Colors.black, fontSize: ScreenAdapterUtils.setSp(16)),
+              style: TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
             ),
           ),
           Expanded(
@@ -240,8 +236,7 @@ class _OrderReturnAddressPageState
               controller: _expressFeeController,
               focusNode: _expressFeeFocusNode,
               keyboardType: TextInputType.number,
-              style: TextStyle(
-                  color: Colors.black, fontSize: ScreenAdapterUtils.setSp(15)),
+              style: TextStyle(color: Colors.black, fontSize: 15 * 2.sp),
               cursorColor: Colors.black,
               decoration: InputDecoration(
                 border: InputBorder.none,
@@ -249,7 +244,7 @@ class _OrderReturnAddressPageState
                 hintStyle: TextStyle(
                     fontWeight: FontWeight.w300,
                     color: Colors.grey[400],
-                    fontSize: ScreenAdapterUtils.setSp(15)),
+                    fontSize: 15 * 2.sp),
               ),
             ),
           ),
@@ -267,11 +262,10 @@ class _OrderReturnAddressPageState
         children: <Widget>[
           Container(
             alignment: Alignment.centerLeft,
-            height: ScreenAdapterUtils.setHeight(50),
+            height: 50 * 2.h,
             child: Text(
               '官方收货地址',
-              style: TextStyle(
-                  color: Colors.black, fontSize: ScreenAdapterUtils.setSp(18)),
+              style: TextStyle(color: Colors.black, fontSize: 18 * 2.sp),
             ),
           ),
           Container(
@@ -279,14 +273,12 @@ class _OrderReturnAddressPageState
             child: Text('收件人: ${_addressModel.data.name}', style: textStyle),
           ),
           Container(
-            margin: EdgeInsets.only(top: ScreenAdapterUtils.setHeight(8)),
+            margin: EdgeInsets.only(top: 8 * 2.h),
             alignment: Alignment.centerLeft,
             child: Text('电话: ${_addressModel.data.mobile}', style: textStyle),
           ),
           Container(
-            margin: EdgeInsets.only(
-                top: ScreenAdapterUtils.setHeight(8),
-                bottom: ScreenAdapterUtils.setHeight(8)),
+            margin: EdgeInsets.only(top: 8 * 2.h, bottom: 8 * 2.h),
             alignment: Alignment.centerLeft,
             child: Text('地址: ${_addressModel.data.address}', style: textStyle),
           ),
@@ -297,9 +289,9 @@ class _OrderReturnAddressPageState
 
   _buttonWidget() {
     return Container(
-      margin: EdgeInsets.only(top: ScreenAdapterUtils.setHeight(40)),
+      margin: EdgeInsets.only(top: 40 * 2.h),
       padding: EdgeInsets.symmetric(horizontal: rSize(20)),
-      height: ScreenAdapterUtils.setHeight(40),
+      height: 40 * 2.h,
       child: FlatButton(
         onPressed: () {
           if (!_commitButtonEnable) {
@@ -351,7 +343,7 @@ class _OrderReturnAddressPageState
             style: TextStyle(
                 fontWeight: FontWeight.w400,
                 color: Colors.white,
-                fontSize: ScreenAdapterUtils.setSp(18)),
+                fontSize: 18 * 2.sp),
           ),
         ),
       ),
@@ -362,7 +354,7 @@ class _OrderReturnAddressPageState
     return Container(
       color: Colors.white,
       margin: EdgeInsets.only(
-        top: ScreenAdapterUtils.setHeight(8),
+        top: 8 * 2.h,
       ),
       // padding: EdgeInsets.all(rSize(8)),
       child: Column(
@@ -426,8 +418,7 @@ class _OrderReturnAddressPageState
                         children: <Widget>[
                           Text(
                             "请选择快递公司:",
-                            style: AppTextStyle.generate(
-                                ScreenAdapterUtils.setSp(14),
+                            style: AppTextStyle.generate(14 * 2.sp,
                                 fontWeight: FontWeight.w500),
                           ),
                           Spacer(),

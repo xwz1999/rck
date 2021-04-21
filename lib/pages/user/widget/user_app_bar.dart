@@ -170,9 +170,8 @@ class _UserAppBarState extends BaseStoreState<UserAppBar> {
                         text: (getStore().state.userBrief.balance ?? 0.0)
                             .toDouble()
                             .toStringAsFixed(2),
-                        style: TextStyle(
-                            color: _goldColor,
-                            fontSize: ScreenAdapterUtils.setSp(22))),
+                        style:
+                            TextStyle(color: _goldColor, fontSize: 22 * 2.sp)),
                   ]),
                   textAlign: TextAlign.start,
                 ),
@@ -283,7 +282,7 @@ class _UserAppBarState extends BaseStoreState<UserAppBar> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     key: _myKey,
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(18),
+                    style: AppTextStyle.generate(18 * 2.sp,
                         color: Colors.white, fontWeight: FontWeight.w500),
                   ),
                 ),

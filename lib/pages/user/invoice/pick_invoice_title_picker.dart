@@ -71,7 +71,7 @@ class _InvoicePickerState extends State<InvoicePicker> {
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF333333),
-                  fontSize: ScreenAdapterUtils.setSp(16),
+                  fontSize: 16 * 2.sp,
                 ),
               ),
             ),

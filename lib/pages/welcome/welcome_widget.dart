@@ -54,7 +54,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     TextStyle textStyle = TextStyle(
         color: Colors.black.withOpacity(0.7),
         fontWeight: FontWeight.w300,
-        fontSize: ScreenAdapterUtils.setSp(11));
+        fontSize: 11 * 2.sp);
     return Scaffold(
       // backgroundColor: Colors.blueGrey,
       body: Center(
@@ -112,7 +112,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w400,
-                          fontSize: ScreenAdapterUtils.setSp(15)),
+                          fontSize: 15 * 2.sp),
                     ),
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.white, width: 0.6),
@@ -172,7 +172,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     TextStyle textStyle = TextStyle(
         color: Colors.black.withOpacity(0.7),
         fontWeight: FontWeight.w300,
-        fontSize: ScreenAdapterUtils.setSp(11));
+        fontSize: 11 * 2.sp);
     return Expanded(
       child: Container(
         color: Colors.white,
@@ -249,7 +249,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     TextStyle textStyle = TextStyle(
         color: Colors.black.withOpacity(0.7),
         fontWeight: FontWeight.w300,
-        fontSize: ScreenAdapterUtils.setSp(11));
+        fontSize: 11 * 2.sp);
     return Expanded(
       child: Container(
         color: Colors.white,

@@ -82,8 +82,7 @@ class _UserBillingDetailsState extends BaseStoreState<UserBillingDetails> {
                     child: Container(
                       child: Text(_selectValue,
                           style: TextStyle(
-                              color: Colors.black,
-                              fontSize: ScreenAdapterUtils.setSp(12))),
+                              color: Colors.black, fontSize: 12 * 2.sp)),
                     ),
                   ),
                   Icon(
@@ -206,8 +205,7 @@ class _UserBillingDetailsState extends BaseStoreState<UserBillingDetails> {
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: ScreenAdapterUtils.setSp(15)),
+                                    color: Colors.black, fontSize: 15 * 2.sp),
                               ),
                             )),
                           ],
@@ -227,7 +225,7 @@ class _UserBillingDetailsState extends BaseStoreState<UserBillingDetails> {
                             style: TextStyle(
                                 color:
                                     data.amount > 0 ? Colors.red : Colors.green,
-                                fontSize: ScreenAdapterUtils.setSp(18)),
+                                fontSize: 18 * 2.sp),
                           ),
                         ),
                       ),
@@ -240,7 +238,7 @@ class _UserBillingDetailsState extends BaseStoreState<UserBillingDetails> {
                       data.comment,
                       style: TextStyle(
                           color: Colors.black.withOpacity(0.5),
-                          fontSize: ScreenAdapterUtils.setSp(12)),
+                          fontSize: 12 * 2.sp),
                     )),
                 Container(
                     margin: EdgeInsets.only(top: 10),
@@ -249,7 +247,7 @@ class _UserBillingDetailsState extends BaseStoreState<UserBillingDetails> {
                       data.orderTime,
                       style: TextStyle(
                           color: Colors.black.withOpacity(0.5),
-                          fontSize: ScreenAdapterUtils.setSp(12)),
+                          fontSize: 12 * 2.sp),
                     )),
                 Spacer(),
                 Container(

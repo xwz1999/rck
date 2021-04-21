@@ -57,8 +57,8 @@ class _CouponItemState extends State<CouponItem> {
           children: <Widget>[
             Expanded(
               child: Container(
-                padding: EdgeInsets.symmetric(
-                    vertical: ScreenAdapterUtils.setHeight(5), horizontal: 10),
+                padding:
+                    EdgeInsets.symmetric(vertical: 5 * 2.h, horizontal: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
@@ -72,21 +72,19 @@ class _CouponItemState extends State<CouponItem> {
                               text: widget.coupon.cash.toString(),
                               style: new TextStyle(
                                   color: textColor,
-                                  fontSize: ScreenAdapterUtils.setSp(25),
+                                  fontSize: 25 * 2.sp,
                                   textBaseline: TextBaseline.ideographic,
                                   fontWeight: FontWeight.w500),
                             ),
                             new TextSpan(
                               text: !discount ? '' : " 折",
                               style: TextStyle(
-                                  color: textColor,
-                                  fontSize: ScreenAdapterUtils.setSp(14)),
+                                  color: textColor, fontSize: 14 * 2.sp),
                             ),
                             new TextSpan(
                               text: " (${widget.coupon.explanation})",
                               style: TextStyle(
-                                  color: textColor,
-                                  fontSize: ScreenAdapterUtils.setSp(13)),
+                                  color: textColor, fontSize: 13 * 2.sp),
                             ),
                           ]),
                       textAlign: TextAlign.justify,
@@ -95,9 +93,7 @@ class _CouponItemState extends State<CouponItem> {
                       widget.coupon.threshold == 0
                           ? "全场通用无限制"
                           : "满${widget.coupon.threshold}可用",
-                      style: TextStyle(
-                          color: textColor,
-                          fontSize: ScreenAdapterUtils.setSp(12)),
+                      style: TextStyle(color: textColor, fontSize: 12 * 2.sp),
                     ),
                     Text(
                       "有效期 ${TimeTransitionUtil.timeToFormatString(
@@ -107,9 +103,7 @@ class _CouponItemState extends State<CouponItem> {
                         ".",
                         timeString: widget.coupon.endTime,
                       )}",
-                      style: TextStyle(
-                          color: textColor,
-                          fontSize: ScreenAdapterUtils.setSp(12)),
+                      style: TextStyle(color: textColor, fontSize: 12 * 2.sp),
                     ),
                   ],
                 ),
@@ -149,7 +143,7 @@ class _CouponItemState extends State<CouponItem> {
               height: double.infinity,
               title: "立即领取",
               fontWeight: FontWeight.w500,
-              font: ScreenAdapterUtils.setSp(16),
+              font: 16 * 2.sp,
               textColor: textColor,
               backgroundColor: bgColor,
               onTap: () {

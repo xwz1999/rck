@@ -54,7 +54,7 @@ class _EvaluationItemState extends State<EvaluationItem> {
                   margin: EdgeInsets.symmetric(vertical: rSize(10)),
                   child: Text(
                     widget.evaluation.content,
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                    style: AppTextStyle.generate(15 * 2.sp,
                         fontWeight: FontWeight.w300),
                     maxLines: 100,
                     overflow: TextOverflow.ellipsis,

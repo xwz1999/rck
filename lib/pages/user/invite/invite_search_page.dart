@@ -140,7 +140,7 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
           title: "搜索",
           // buttonSize: 60,
           color: TextUtils.isEmpty(_searchText) ? Colors.grey : Colors.black,
-          fontSize: ScreenAdapterUtils.setSp(15),
+          fontSize: 15 * 2.sp,
           onPressed: () {
             if (TextUtils.isEmpty(_searchText)) return;
             _startSearch = true;
@@ -258,8 +258,7 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
           child: ChoiceChip(
             backgroundColor: Colors.white,
             // disabledColor: Colors.blue,
-            labelStyle: TextStyle(
-                fontSize: ScreenAdapterUtils.setSp(15), color: Colors.black),
+            labelStyle: TextStyle(fontSize: 15 * 2.sp, color: Colors.black),
             labelPadding: EdgeInsets.only(left: 20, right: 20),
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onSelected: (bool value) {

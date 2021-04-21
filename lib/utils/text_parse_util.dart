@@ -13,7 +13,7 @@ class TextParseUtil {
   );
 
   static TextStyle defaultTextStyle = TextStyle(
-    fontSize: ScreenAdapterUtils.setSp(14),
+    fontSize: 14 * 2.sp,
     color: Color(0xFF666666),
   );
 
@@ -65,7 +65,7 @@ class TextParseUtil {
           children: parts,
         ),
       ));
-      rows.add(SizedBox(height: ScreenAdapterUtils.setHeight(6)));
+      rows.add(SizedBox(height: 6 * 2.h));
     });
 
     return Column(
@@ -88,7 +88,7 @@ class TextParseUtil {
             borderRadius: BorderRadius.circular(4),
           ),
           padding: EdgeInsets.all(
-            ScreenAdapterUtils.setHeight(8),
+            8 * 2.h,
           ),
           child: Text(midText, style: greyTextStyle),
         ),

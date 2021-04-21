@@ -45,7 +45,7 @@ class _InvoiceUploadDonePageState extends State<InvoiceUploadDonePage> {
                       '提交成功',
                       style: TextStyle(
                         color: Color(0xFF333333),
-                        fontSize: ScreenAdapterUtils.setSp(18),
+                        fontSize: 18 * 2.sp,
                       ),
                     ),
                   ),
@@ -54,7 +54,7 @@ class _InvoiceUploadDonePageState extends State<InvoiceUploadDonePage> {
                     child: Text(
                       '您的发票预计将在24小时内开出，请注意查收',
                       style: TextStyle(
-                        fontSize: ScreenAdapterUtils.setSp(13),
+                        fontSize: 13 * 2.sp,
                         color: Color(0xFF999999),
                       ),
                     ),
@@ -78,7 +78,7 @@ class _InvoiceUploadDonePageState extends State<InvoiceUploadDonePage> {
                       '发票首页',
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: ScreenAdapterUtils.setSp(16),
+                        fontSize: 16 * 2.sp,
                       ),
                     ),
                   ),
@@ -106,7 +106,7 @@ class _InvoiceUploadDonePageState extends State<InvoiceUploadDonePage> {
                       '开票历史',
                       style: TextStyle(
                         color: Color(0xFF666666),
-                        fontSize: ScreenAdapterUtils.setSp(16),
+                        fontSize: 16 * 2.sp,
                       ),
                     ),
                   ),

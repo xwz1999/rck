@@ -40,7 +40,7 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
       child: Container(
         color: AppColor.frenchColor,
         child: Container(
-          height: ScreenAdapterUtils.setHeight(190),
+          height: 190 * 2.h,
           // height: 193,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8), color: Colors.white),
@@ -56,8 +56,8 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
     return Column(
       children: <Widget>[
         Container(
-          margin: EdgeInsets.symmetric(
-              horizontal: rSize(4), vertical: ScreenAdapterUtils.setHeight(10)),
+          margin:
+              EdgeInsets.symmetric(horizontal: rSize(4), vertical: 10 * 2.h),
           alignment: Alignment.centerLeft,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -66,14 +66,14 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
                 "售后编号   ",
                 style: TextStyle(
                     color: Color(0xff666666),
-                    fontSize: ScreenAdapterUtils.setSp(14),
+                    fontSize: 14 * 2.sp,
                     fontWeight: FontWeight.w600),
               ),
               Text(
                 _saleModel.asId.toString(),
                 style: TextStyle(
                   color: AppColor.blackColor,
-                  fontSize: ScreenAdapterUtils.setSp(14),
+                  fontSize: 14 * 2.sp,
                 ),
               ),
               Spacer(),
@@ -87,23 +87,23 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
                         : _saleModel.color == 2
                             ? AppColor.greyColor
                             : Colors.black,
-                    fontSize: ScreenAdapterUtils.setSp(14)),
+                    fontSize: 14 * 2.sp),
               ),
             ],
           ),
         ),
         Container(
-          height: ScreenAdapterUtils.setHeight(80),
+          height: 80 * 2.h,
           child: Row(
             children: <Widget>[
               Container(
                 color: AppColor.frenchColor,
                 margin: EdgeInsets.symmetric(horizontal: rSize(4)),
                 child: CustomCacheImage(
-                  width: ScreenAdapterUtils.setHeight(80),
-                  height: ScreenAdapterUtils.setHeight(80),
-                  imageUrl: Api.getResizeImgUrl(_saleModel.mainPhotoUrl,
-                      ScreenAdapterUtils.setHeight(160).toInt()),
+                  width: 80 * 2.h,
+                  height: 80 * 2.h,
+                  imageUrl: Api.getResizeImgUrl(
+                      _saleModel.mainPhotoUrl, 160 * 2.h.toInt()),
                   fit: BoxFit.cover,
                   borderRadius: BorderRadius.all(Radius.circular(6)),
                 ),
@@ -113,7 +113,7 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
               ),
               Expanded(
                 child: Container(
-                  height: ScreenAdapterUtils.setHeight(80),
+                  height: 80 * 2.h,
                   decoration: BoxDecoration(
                       border: Border(
                           bottom: BorderSide(
@@ -129,7 +129,7 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               color: Colors.black,
-                              fontSize: ScreenAdapterUtils.setSp(15),
+                              fontSize: 15 * 2.sp,
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -151,7 +151,7 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                         color: Colors.black.withOpacity(0.6),
-                                        fontSize: ScreenAdapterUtils.setSp(11),
+                                        fontSize: 11 * 2.sp,
                                       )),
                                 ),
                               ])),
@@ -165,8 +165,7 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
         Expanded(
           child: Container(
               alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(
-                  left: rSize(14) + ScreenAdapterUtils.setHeight(80)),
+              margin: EdgeInsets.only(left: rSize(14) + 80 * 2.h),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -176,14 +175,12 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
                       Text(
                         "退款金额  ",
                         style: TextStyle(
-                            color: Color(0xff666666),
-                            fontSize: ScreenAdapterUtils.setSp(14)),
+                            color: Color(0xff666666), fontSize: 14 * 2.sp),
                       ),
                       Text(
                         "￥${_saleModel.refundAmount + _saleModel.refundCoin}",
                         style: TextStyle(
-                            color: AppColor.redColor,
-                            fontSize: ScreenAdapterUtils.setSp(14)),
+                            color: AppColor.redColor, fontSize: 14 * 2.sp),
                       ),
                       _saleModel.quantity != null && _saleModel.quantity > 0
                           ? Container(
@@ -192,7 +189,7 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
                                   text: "退货数量 ",
                                   style: TextStyle(
                                       color: Color(0xff666666),
-                                      fontSize: ScreenAdapterUtils.setSp(14)),
+                                      fontSize: 14 * 2.sp),
                                   children: [
                                     TextSpan(
                                       text: _saleModel.quantity
@@ -200,8 +197,7 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
                                           .toString(),
                                       style: TextStyle(
                                           color: AppColor.redColor,
-                                          fontSize:
-                                              ScreenAdapterUtils.setSp(14)),
+                                          fontSize: 14 * 2.sp),
                                     )
                                   ])),
                             )
@@ -209,15 +205,14 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
                     ],
                   ),
                   SizedBox(
-                    height: ScreenAdapterUtils.setHeight(10),
+                    height: 10 * 2.h,
                   ),
                   Text(
                     TextUtils.isEmpty(_saleModel.createdAt)
                         ? ""
                         : "申请时间: ${_saleModel.createdAt}",
                     style: TextStyle(
-                        color: Color(0xff999999),
-                        fontSize: ScreenAdapterUtils.setSp(12)),
+                        color: Color(0xff999999), fontSize: 12 * 2.sp),
                   ),
                 ],
               )),

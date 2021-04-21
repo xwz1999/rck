@@ -31,7 +31,7 @@ class PlusMinusView extends StatefulWidget {
       @required this.onValueChanged,
       this.onInputComplete,
       this.initialValue,
-        this.onBeginInput})
+      this.onBeginInput})
       : assert(onValueChanged != null);
 
   @override
@@ -116,15 +116,16 @@ class _PlusMinusViewState extends State<PlusMinusView> {
                     if (int.parse(value) <= widget.minValue) {
                       _controller.text = "${widget.minValue}";
                     } else if (int.parse(value) >= widget.maxValue) {
-                      showToast(
-                          "已经达到最大购买数量!",
-                          textStyle: TextStyle(fontSize: ScreenAdapterUtils.setSp(14)),
-                          textPadding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
+                      showToast("已经达到最大购买数量!",
+                          textStyle: TextStyle(fontSize: 14 * 2.sp),
+                          textPadding: EdgeInsets.only(
+                              left: 15, right: 15, top: 5, bottom: 5),
                           backgroundColor: Colors.red,
                           duration: Duration(milliseconds: 2500),
-                          position: ToastPosition(align: Alignment.topCenter, offset: MediaQuery.of(context).size.height/2),
-                          dismissOtherToast: true
-                      );
+                          position: ToastPosition(
+                              align: Alignment.topCenter,
+                              offset: MediaQuery.of(context).size.height / 2),
+                          dismissOtherToast: true);
                       // Toast.showError("已经达到最大购买数量!", offset: -50.0);
                       _controller.text = "${widget.maxValue}";
                     }
@@ -149,17 +150,18 @@ class _PlusMinusViewState extends State<PlusMinusView> {
                 size: 10,
               ),
               onPressed: int.parse(_controller.text) >= widget.maxValue
-                  ? (){
-                    showToast(
-                        "已经达到最大购买数量!",
-                        textStyle: TextStyle(fontSize: ScreenAdapterUtils.setSp(14)),
-                        textPadding: EdgeInsets.only(left: 15, right: 15, top: 5, bottom: 5),
-                        backgroundColor: Colors.red,
-                        duration: Duration(milliseconds: 2500),
-                        position: ToastPosition(align: Alignment.topCenter, offset: MediaQuery.of(context).size.height/2),
-                        dismissOtherToast: true
-                    );
-                  }
+                  ? () {
+                      showToast("已经达到最大购买数量!",
+                          textStyle: TextStyle(fontSize: 14 * 2.sp),
+                          textPadding: EdgeInsets.only(
+                              left: 15, right: 15, top: 5, bottom: 5),
+                          backgroundColor: Colors.red,
+                          duration: Duration(milliseconds: 2500),
+                          position: ToastPosition(
+                              align: Alignment.topCenter,
+                              offset: MediaQuery.of(context).size.height / 2),
+                          dismissOtherToast: true);
+                    }
                   : () {
                       int num = int.parse(_controller.text);
                       num++;

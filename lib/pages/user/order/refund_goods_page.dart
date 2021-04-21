@@ -62,10 +62,9 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
     return Scaffold(
       bottomNavigationBar: CustomImageButton(
         title: "提交",
-        height: ScreenAdapterUtils.setHeight(48),
+        height: 48 * 2.h,
         width: double.infinity,
-        style: TextStyle(
-            color: Colors.white, fontSize: ScreenAdapterUtils.setSp(16)),
+        style: TextStyle(color: Colors.white, fontSize: 16 * 2.sp),
         backgroundColor: AppColor.themeColor,
         onPressed: () {
           FocusScope.of(globalContext).requestFocus(FocusNode());
@@ -117,7 +116,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
               padding: EdgeInsets.only(top: rSize(8), left: rSize(8)),
               child: Text(
                 "您选择退货的商品:",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+                style: AppTextStyle.generate(13 * 2.sp,
                     fontWeight: FontWeight.w500),
               )),
           MediaQuery.removePadding(
@@ -172,7 +171,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyle.generate(
-                        ScreenAdapterUtils.setSp(14),
+                        14 * 2.sp,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -182,8 +181,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
                         goods.skuName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(13),
+                        style: AppTextStyle.generate(13 * 2.sp,
                             color: Colors.grey[600],
                             fontWeight: FontWeight.w300),
                       ),
@@ -195,8 +193,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
                           "￥ ${goods.unitPrice}",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(14),
+                          style: AppTextStyle.generate(14 * 2.sp,
                               color: AppColor.priceColor),
                         ),
                       ],
@@ -221,17 +218,14 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
       ),
-      padding: EdgeInsets.symmetric(
-          horizontal: rSize(10), vertical: ScreenAdapterUtils.setHeight(10)),
+      padding: EdgeInsets.symmetric(horizontal: rSize(10), vertical: 10 * 2.h),
       child: Column(
         children: <Widget>[
           Row(
             children: <Widget>[
               Text(
                 "退回瑞币",
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: ScreenAdapterUtils.setSp(14)),
+                style: TextStyle(color: Colors.black, fontSize: 14 * 2.sp),
               ),
               Spacer(),
               Expanded(
@@ -243,12 +237,11 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
                   hint: '请输入瑞币数量～',
                   maxLength: 0,
                   textAlign: TextAlign.end,
-                  hintStyle: TextStyle(
-                      color: Color(0xff999999),
-                      fontSize: ScreenAdapterUtils.setSp(12)),
+                  hintStyle:
+                      TextStyle(color: Color(0xff999999), fontSize: 12 * 2.sp),
                   textStyle: TextStyle(
                     color: Color(0xffdb2d2d),
-                    fontSize: ScreenAdapterUtils.setSp(14),
+                    fontSize: 14 * 2.sp,
                   ),
                 ),
               ),
@@ -256,7 +249,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
               //   _goodsList.first.goodsAmount.toStringAsFixed(2),
               //   style: TextStyle(
               //     color: Color(0xffdb2d2d),
-              //     fontSize: ScreenAdapterUtils.setSp(14),
+              //     fontSize: 14*2.sp,
               //   ),
               // ),
             ],
@@ -266,45 +259,39 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
               border: Border(
                   bottom: BorderSide(width: 1, color: Color(0xffe6e6e6))),
             ),
-            height: ScreenAdapterUtils.setHeight(25),
+            height: 25 * 2.h,
             child: Row(
               children: <Widget>[
                 Text(
                   "实付款返还到瑞币账户",
-                  style: TextStyle(
-                      color: Color(0xff999999),
-                      fontSize: ScreenAdapterUtils.setSp(12)),
+                  style:
+                      TextStyle(color: Color(0xff999999), fontSize: 12 * 2.sp),
                 ),
                 Spacer(),
                 Text(
                   "瑞币数量可修改,最多${_goodsList.first.goodsAmount.toStringAsFixed(2)}",
-                  style: TextStyle(
-                      color: Color(0xff999999),
-                      fontSize: ScreenAdapterUtils.setSp(12)),
+                  style:
+                      TextStyle(color: Color(0xff999999), fontSize: 12 * 2.sp),
                 ),
               ],
             ),
           ),
           Container(
-            height: ScreenAdapterUtils.setHeight(30),
+            height: 30 * 2.h,
             child: Row(
               children: <Widget>[
                 Text(
                   "退款原因",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: ScreenAdapterUtils.setSp(14)),
+                  style: TextStyle(color: Colors.black, fontSize: 14 * 2.sp),
                 ),
                 Expanded(
                     child: InputView(
                   controller: _reasonController,
                   hint: "请填写退货原因200字以内",
-                  hintStyle: TextStyle(
-                      color: Color(0xff999999),
-                      fontSize: ScreenAdapterUtils.setSp(12)),
-                  textStyle: TextStyle(
-                      color: Colors.black,
-                      fontSize: ScreenAdapterUtils.setSp(12)),
+                  hintStyle:
+                      TextStyle(color: Color(0xff999999), fontSize: 12 * 2.sp),
+                  textStyle:
+                      TextStyle(color: Colors.black, fontSize: 12 * 2.sp),
                   maxLength: 200,
                   keyboardType: TextInputType.text,
                 ))
@@ -382,7 +369,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
               padding: EdgeInsets.only(top: rSize(8), left: rSize(8)),
               child: Text(
                 "上传凭证",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+                style: AppTextStyle.generate(13 * 2.sp,
                     fontWeight: FontWeight.w500),
               )),
           _imageSelect()

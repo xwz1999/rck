@@ -101,7 +101,7 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
           CustomImageButton(
             title: "添加收货地址",
             padding: EdgeInsets.symmetric(horizontal: 10),
-            fontSize: ScreenAdapterUtils.setSp(14),
+            fontSize: 14 * 2.sp,
             onPressed: () async {
               await CRoute.push(
                   context,

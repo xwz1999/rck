@@ -55,8 +55,7 @@ class _OrderReturnStatusPageState
   int _returnStatus;
   OrderReturnStatusModel _statusModel;
   DateTime _residueDateTime = DateTime(0, 0, 0, 24, 0, 0);
-  TextStyle textStyle = TextStyle(
-      color: Colors.grey[500], fontSize: ScreenAdapterUtils.setSp(12));
+  TextStyle textStyle = TextStyle(color: Colors.grey[500], fontSize: 12 * 2.sp);
 
   bool _isLoading = true;
   Timer timer;
@@ -120,7 +119,7 @@ class _OrderReturnStatusPageState
           CustomImageButton(
             title: "进度明细",
             color: Colors.white,
-            fontSize: ScreenAdapterUtils.setSp(14),
+            fontSize: 14 * 2.sp,
             onPressed: _statusModel == null
                 ? null
                 : () {
@@ -170,8 +169,7 @@ class _OrderReturnStatusPageState
     return ClipRRect(
       borderRadius: BorderRadius.circular(8),
       child: Container(
-        margin: EdgeInsets.symmetric(
-            horizontal: rSize(10), vertical: ScreenAdapterUtils.setHeight(10)),
+        margin: EdgeInsets.symmetric(horizontal: rSize(10), vertical: 10 * 2.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           color: Colors.white,
@@ -181,9 +179,7 @@ class _OrderReturnStatusPageState
             _goodsListView(),
             Container(
               margin: EdgeInsets.only(
-                  bottom: ScreenAdapterUtils.setHeight(6),
-                  left: rSize(10),
-                  right: rSize(10)),
+                  bottom: 6 * 2.h, left: rSize(10), right: rSize(10)),
               height: 1,
               width: double.infinity,
               color: Color(0xffeeeeee),
@@ -198,9 +194,9 @@ class _OrderReturnStatusPageState
   _orderInfoWidget() {
     return Container(
       padding: EdgeInsets.only(
-        bottom: ScreenAdapterUtils.setHeight(10),
+        bottom: 10 * 2.h,
       ),
-      // height: ScreenAdapterUtils.setHeight(120),
+      // height: 120*2.h,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
@@ -243,7 +239,7 @@ class _OrderReturnStatusPageState
     if (imageList == null || imageList.length == 0) return Container();
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: ScreenAdapterUtils.setHeight(3)),
+      padding: EdgeInsets.symmetric(vertical: 3 * 2.h),
       margin: EdgeInsets.only(left: rSize(8), top: rSize(2)),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -252,8 +248,8 @@ class _OrderReturnStatusPageState
               constraints: BoxConstraints(minWidth: rSize(70)),
               child: Text(
                 "$title:",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                    color: Color(0xff999999)),
+                style:
+                    AppTextStyle.generate(14 * 2.sp, color: Color(0xff999999)),
               )),
           Expanded(
             child: NineGridView(
@@ -290,7 +286,7 @@ class _OrderReturnStatusPageState
 
   _tile(String title, String value, {bool needCopy = false}) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: ScreenAdapterUtils.setHeight(3)),
+      padding: EdgeInsets.symmetric(vertical: 3 * 2.h),
       margin: EdgeInsets.only(left: rSize(8), top: rSize(2)),
       child: Row(
         children: <Widget>[
@@ -298,8 +294,8 @@ class _OrderReturnStatusPageState
               constraints: BoxConstraints(minWidth: rSize(70)),
               child: Text(
                 "$title:",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                    color: Color(0xff999999)),
+                style:
+                    AppTextStyle.generate(14 * 2.sp, color: Color(0xff999999)),
               )),
           GestureDetector(
             onTap: () {
@@ -312,8 +308,7 @@ class _OrderReturnStatusPageState
             },
             child: Text(
               "$value",
-              style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                  color: Color(0xff666666)),
+              style: AppTextStyle.generate(14 * 2.sp, color: Color(0xff666666)),
             ),
           ),
           needCopy
@@ -334,8 +329,8 @@ class _OrderReturnStatusPageState
                     ),
                     child: Text(
                       '复制',
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(10),
-                          color: Colors.grey),
+                      style:
+                          AppTextStyle.generate(10 * 2.sp, color: Colors.grey),
                     ),
                   ),
                 )
@@ -352,29 +347,24 @@ class _OrderReturnStatusPageState
         borderRadius: BorderRadius.circular(8),
       ),
       padding: EdgeInsets.all(rSize(10)),
-      margin: EdgeInsets.only(
-          left: rSize(10),
-          right: rSize(10),
-          top: ScreenAdapterUtils.setHeight(10)),
+      margin: EdgeInsets.only(left: rSize(10), right: rSize(10), top: 10 * 2.h),
       child: Column(
         children: <Widget>[
           _statusModel.data.refundAmount > 0
               ? Container(
-                  height: ScreenAdapterUtils.setHeight(25),
+                  height: 25 * 2.h,
                   child: Row(
                     children: <Widget>[
                       Text(
                         '退款金额',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: ScreenAdapterUtils.setSp(16)),
+                        style:
+                            TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
                       ),
                       Spacer(),
                       Text(
                         '￥ ${_statusModel.data.refundAmount}',
                         style: TextStyle(
-                            color: AppColor.themeColor,
-                            fontSize: ScreenAdapterUtils.setSp(16)),
+                            color: AppColor.themeColor, fontSize: 16 * 2.sp),
                       )
                     ],
                   ),
@@ -382,21 +372,19 @@ class _OrderReturnStatusPageState
               : Container(),
           _statusModel.data.refundCoin > 0
               ? Container(
-                  height: ScreenAdapterUtils.setHeight(25),
+                  height: 25 * 2.h,
                   child: Row(
                     children: <Widget>[
                       Text(
                         '退回瑞币',
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontSize: ScreenAdapterUtils.setSp(16)),
+                        style:
+                            TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
                       ),
                       Spacer(),
                       Text(
                         '${_statusModel.data.refundCoin}',
                         style: TextStyle(
-                            color: AppColor.themeColor,
-                            fontSize: ScreenAdapterUtils.setSp(16)),
+                            color: AppColor.themeColor, fontSize: 16 * 2.sp),
                       )
                     ],
                   ),
@@ -409,9 +397,9 @@ class _OrderReturnStatusPageState
 
   _buttonWidget() {
     return Container(
-      margin: EdgeInsets.only(top: ScreenAdapterUtils.setHeight(40)),
+      margin: EdgeInsets.only(top: 40 * 2.h),
       padding: EdgeInsets.symmetric(horizontal: rSize(20)),
-      height: ScreenAdapterUtils.setHeight(40),
+      height: 40 * 2.h,
       child: FlatButton(
         onPressed: () {
           AppRouter.push(context, RouteName.ORDER_RETURN_ADDRESS,
@@ -433,7 +421,7 @@ class _OrderReturnStatusPageState
             style: TextStyle(
                 fontWeight: FontWeight.w400,
                 color: Colors.white,
-                fontSize: ScreenAdapterUtils.setSp(18)),
+                fontSize: 18 * 2.sp),
           ),
         ),
       ),
@@ -443,10 +431,8 @@ class _OrderReturnStatusPageState
   _popWidget() {
     return Container(
       alignment: Alignment.center,
-      padding: EdgeInsets.only(
-          left: rSize(10),
-          right: rSize(10),
-          bottom: ScreenAdapterUtils.setHeight(10)),
+      padding:
+          EdgeInsets.only(left: rSize(10), right: rSize(10), bottom: 10 * 2.h),
       color: AppColor.themeColor,
       child: CustomBubbleWidget(
         child: _popInfoWidget(),
@@ -460,14 +446,13 @@ class _OrderReturnStatusPageState
 
   _statusTitleWidget() {
     return Container(
-      padding: EdgeInsets.symmetric(
-          horizontal: rSize(35), vertical: ScreenAdapterUtils.setHeight(5)),
+      padding: EdgeInsets.symmetric(horizontal: rSize(35), vertical: 5 * 2.h),
       color: AppColor.themeColor,
       child: Column(
         children: <Widget>[
           Container(
             padding: EdgeInsets.symmetric(horizontal: rSize(29)),
-            height: ScreenAdapterUtils.setHeight(40),
+            height: 40 * 2.h,
             child: Row(
               children: <Widget>[
                 Container(
@@ -501,9 +486,7 @@ class _OrderReturnStatusPageState
                 alignment: Alignment.center,
                 child: Text(
                   _statusModel.data.title,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: ScreenAdapterUtils.setSp(14)),
+                  style: TextStyle(color: Colors.white, fontSize: 14 * 2.sp),
                 ),
                 width: rSize(80),
               ),
@@ -512,9 +495,7 @@ class _OrderReturnStatusPageState
                 alignment: Alignment.center,
                 child: Text(
                   _statusModel.data.rightTile,
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: ScreenAdapterUtils.setSp(14)),
+                  style: TextStyle(color: Colors.white, fontSize: 14 * 2.sp),
                 ),
                 width: rSize(80),
               )
@@ -621,7 +602,7 @@ class _OrderReturnStatusPageState
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyle.generate(
-                        ScreenAdapterUtils.setSp(14),
+                        14 * 2.sp,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
@@ -638,21 +619,19 @@ class _OrderReturnStatusPageState
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             color: Colors.black.withOpacity(0.6),
-                            fontSize: ScreenAdapterUtils.setSp(11),
+                            fontSize: 11 * 2.sp,
                           )),
                     ),
                     Row(
                       children: <Widget>[
                         Text(
                           "订单金额:",
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(14),
+                          style: AppTextStyle.generate(14 * 2.sp,
                               color: Colors.grey[600]),
                         ),
                         Text(
                           "￥${(_statusModel.data.refundAmount + _statusModel.data.refundCoin).toStringAsFixed(2)}",
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(14),
+                          style: AppTextStyle.generate(14 * 2.sp,
                               color: Colors.black),
                         ),
                         Container(
@@ -660,14 +639,12 @@ class _OrderReturnStatusPageState
                         ),
                         Text(
                           "购买数量 ",
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(13),
+                          style: AppTextStyle.generate(13 * 2.sp,
                               color: Colors.grey[600]),
                         ),
                         Text(
                           "${_statusModel.data.quantity.toString()}",
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(14),
+                          style: AppTextStyle.generate(14 * 2.sp,
                               color: Colors.black),
                         )
                       ],
@@ -698,16 +675,12 @@ class _OrderReturnStatusPageState
   }
 
   _popInfoWidget() {
-    TextStyle titleStyle =
-        TextStyle(color: Colors.black, fontSize: ScreenAdapterUtils.setSp(16));
+    TextStyle titleStyle = TextStyle(color: Colors.black, fontSize: 16 * 2.sp);
     TextStyle blackStyle = TextStyle(
-        color: Colors.black,
-        fontSize: ScreenAdapterUtils.setSp(14),
-        fontWeight: FontWeight.w600);
-    TextStyle redStyle =
-        TextStyle(color: Colors.red, fontSize: ScreenAdapterUtils.setSp(14));
-    TextStyle greyStyle = TextStyle(
-        color: Color(0xff666666), fontSize: ScreenAdapterUtils.setSp(14));
+        color: Colors.black, fontSize: 14 * 2.sp, fontWeight: FontWeight.w600);
+    TextStyle redStyle = TextStyle(color: Colors.red, fontSize: 14 * 2.sp);
+    TextStyle greyStyle =
+        TextStyle(color: Color(0xff666666), fontSize: 14 * 2.sp);
     if (_statusModel.data.status == 1) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -844,9 +817,7 @@ class _OrderReturnStatusPageState
               ),
               Text(
                 "    " + _statusModel.data.createdAt,
-                style: TextStyle(
-                    color: Color(0xff999999),
-                    fontSize: ScreenAdapterUtils.setSp(14)),
+                style: TextStyle(color: Color(0xff999999), fontSize: 14 * 2.sp),
               ),
             ],
           ),
@@ -882,9 +853,8 @@ class _OrderReturnStatusPageState
               color: Color(0xfff8f8f8),
               borderRadius: BorderRadius.circular(4),
             ),
-            padding: EdgeInsets.symmetric(
-                horizontal: rSize(10),
-                vertical: ScreenAdapterUtils.setHeight(5)),
+            padding:
+                EdgeInsets.symmetric(horizontal: rSize(10), vertical: 5 * 2.h),
             child: Text(
               "若3天内未收到退款/瑞币，请联系客服咨询。",
               style: greyStyle,

@@ -155,7 +155,7 @@ class _NewAddressPageState extends BaseStoreState<NewAddressPage> {
         title: "保存地址",
         backgroundColor: AppColor.themeColor,
         color: Colors.white,
-        fontSize: ScreenAdapterUtils.setSp(17),
+        fontSize: 17 * 2.sp,
         borderRadius: BorderRadius.all(Radius.circular(8)),
         onPressed: () {
           _saveAddress(context);

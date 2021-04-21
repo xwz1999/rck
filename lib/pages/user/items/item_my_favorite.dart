@@ -40,9 +40,7 @@ class MyFavoriteItem extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border(
-              bottom: BorderSide(
-                  width: ScreenAdapterUtils.setWidth(0.5),
-                  color: Colors.grey[300]))),
+              bottom: BorderSide(width: 0.5 * 2.w, color: Colors.grey[300]))),
       child: Row(
         children: <Widget>[
           CustomCacheImage(
@@ -60,7 +58,7 @@ class MyFavoriteItem extends StatelessWidget {
               children: <Widget>[
                 Text(
                   model.goods.goodsName,
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                  style: AppTextStyle.generate(15 * 2.sp,
                       fontWeight: FontWeight.w300, color: Colors.black87),
                 ),
                 Container(
@@ -69,7 +67,7 @@ class MyFavoriteItem extends StatelessWidget {
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(model.goods.description,
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(12),
+                      style: AppTextStyle.generate(12 * 2.sp,
                           fontWeight: FontWeight.w300, color: Colors.black54)),
                 ),
                 Spacer(),
@@ -78,15 +76,13 @@ class MyFavoriteItem extends StatelessWidget {
                     RichText(
                         text: TextSpan(
                             text: "￥",
-                            style: AppTextStyle.generate(
-                                ScreenAdapterUtils.setSp(14),
+                            style: AppTextStyle.generate(14 * 2.sp,
                                 color: Color(0xffEE5252)),
                             children: [
                           TextSpan(
                               text:
                                   model.goods.discountPrice.toStringAsFixed(2),
-                              style: AppTextStyle.generate(
-                                  ScreenAdapterUtils.setSp(17),
+                              style: AppTextStyle.generate(17 * 2.sp,
                                   color: Color(0xffEE5252),
                                   fontWeight: FontWeight.w400))
                         ])),
@@ -119,7 +115,7 @@ class MyFavoriteItem extends StatelessWidget {
         child: Text(
           title,
           style: TextStyle(
-              fontSize: ScreenAdapterUtils.setSp(14),
+              fontSize: 14 * 2.sp,
               color: Color(0xffEE5252),
               fontWeight: FontWeight.w300),
         ),

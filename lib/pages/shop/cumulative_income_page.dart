@@ -216,15 +216,13 @@ class _CumulativeIncomePageState extends BaseStoreState<CumulativeIncomePage>
               text: TextSpan(children: [
                 TextSpan(
                     text: "收益汇总",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: ScreenAdapterUtils.setSp(14))),
+                    style: TextStyle(color: Colors.white, fontSize: 14 * 2.sp)),
                 TextSpan(
                     text: "(瑞币)",
                     style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.w300,
-                        fontSize: ScreenAdapterUtils.setSp(10))),
+                        fontSize: 10 * 2.sp)),
               ]),
             ),
           ),

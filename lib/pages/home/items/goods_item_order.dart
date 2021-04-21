@@ -86,7 +86,7 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
       color: Colors.black,
       pureDisplay: true,
       contentSpacing: 10,
-      fontSize: ScreenAdapterUtils.setSp(16),
+      fontSize: 16 * 2.sp,
       title: widget.brand.brandName,
       padding: EdgeInsets.symmetric(horizontal: 3),
       icon: CustomCacheImage(
@@ -106,33 +106,32 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
       child: RichText(
           text: TextSpan(
               text: "共 $goodsNum 件",
-              style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
-                  color: Colors.grey[600]),
+              style: AppTextStyle.generate(13 * 2.sp, color: Colors.grey[600]),
               children: [
             TextSpan(
                 text: " 合计:",
                 style: AppTextStyle.generate(
-                  ScreenAdapterUtils.setSp(13),
+                  13 * 2.sp,
                 )),
             TextSpan(
                 text:
                     "￥${widget.brand.brandGoodsTotalAmount.toStringAsFixed(2)}",
                 style: AppTextStyle.generate(
-                  ScreenAdapterUtils.setSp(13),
+                  13 * 2.sp,
                   color: Color.fromARGB(255, 249, 62, 13),
                 )),
             AppConfig.commissionByRoleLevel
                 ? TextSpan(
                     text: "  赚:",
                     style: AppTextStyle.generate(
-                      ScreenAdapterUtils.setSp(13),
+                      13 * 2.sp,
                     ))
                 : TextSpan(text: ''),
             AppConfig.commissionByRoleLevel
                 ? TextSpan(
                     text: '$commission',
                     style: AppTextStyle.generate(
-                      ScreenAdapterUtils.setSp(13),
+                      13 * 2.sp,
                       color: Color.fromARGB(255, 249, 62, 13),
                     ))
                 : TextSpan(text: ''),
@@ -180,7 +179,7 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
                     goods.goodsName,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                    style: AppTextStyle.generate(14 * 2.sp,
                         fontWeight: FontWeight.w400),
                   ),
                   rHBox(5),
@@ -195,7 +194,7 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
                       goods.skuName,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(11),
+                      style: AppTextStyle.generate(11 * 2.sp,
                           color: Colors.grey[600], fontWeight: FontWeight.w300),
                     ),
                   ),
@@ -246,7 +245,7 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
                   //             title:"${goods.promotionName}",
                   //             // title:
                   //             //     "${goods.promotionName} ${goods.promotionDiscount}折",
-                  //             fontSize: ScreenAdapterUtils.setSp(11),
+                  //             fontSize: 11*2.sp,
                   //             color: AppColor.themeColor,
                   //             backgroundColor: Colors.pink[50],
                   //           ),
@@ -257,7 +256,7 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
                       "￥ ${goods.unitPrice.toStringAsFixed(2)}",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                      style: AppTextStyle.generate(14 * 2.sp,
                           fontWeight: FontWeight.w300),
                     ),
                     Spacer(),

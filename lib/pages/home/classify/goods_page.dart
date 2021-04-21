@@ -462,7 +462,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                   children: <Widget>[
                     Text(
                       "规格",
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+                      style: AppTextStyle.generate(13 * 2.sp,
                           color: Color(0xff828282),
                           fontWeight: FontWeight.w300),
                     ),
@@ -474,13 +474,13 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                       _selectedSkuDes(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+                      style: AppTextStyle.generate(13 * 2.sp,
                           color: Color(0xff373737)),
                     )),
                     Icon(
                       AppIcons.icon_next,
                       color: Colors.grey[400],
-                      size: ScreenAdapterUtils.setSp(16),
+                      size: 16 * 2.sp,
                     )
                   ],
                 );
@@ -509,7 +509,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             children: <Widget>[
               Text(
                 "参数",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+                style: AppTextStyle.generate(13 * 2.sp,
                     color: Color(0xff828282), fontWeight: FontWeight.w300),
               ),
               Container(
@@ -518,13 +518,13 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               Expanded(
                   child: Text(
                 "品牌 工艺...",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
-                    color: Color(0xff373737)),
+                style:
+                    AppTextStyle.generate(13 * 2.sp, color: Color(0xff373737)),
               )),
               Icon(
                 AppIcons.icon_next,
                 color: Colors.grey[400],
-                size: ScreenAdapterUtils.setSp(16),
+                size: 16 * 2.sp,
               )
             ],
           ),
@@ -537,7 +537,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                   children: [
                     Text(
                       "服务",
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+                      style: AppTextStyle.generate(13 * 2.sp,
                           color: Color(0xff828282),
                           fontWeight: FontWeight.w300),
                     ),
@@ -552,8 +552,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                                   widget.goodsDetail.data.storehouse == 3)
                               ? Text(
                                   "跨境商品不支持开发票",
-                                  style: AppTextStyle.generate(
-                                      ScreenAdapterUtils.setSp(13),
+                                  style: AppTextStyle.generate(13 * 2.sp,
                                       color: Color(0xff373737)),
                                 )
                               : SizedBox(),
@@ -563,8 +562,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                               : SizedBox(),
                           Text(
                             "不支持7天无理由退换货",
-                            style: AppTextStyle.generate(
-                                ScreenAdapterUtils.setSp(13),
+                            style: AppTextStyle.generate(13 * 2.sp,
                                 color: Color(0xff373737)),
                           ),
                         ],
@@ -587,8 +585,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                       children: <Widget>[
                         Text(
                           "服务",
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(13),
+                          style: AppTextStyle.generate(13 * 2.sp,
                               color: Color(0xff828282),
                               fontWeight: FontWeight.w300),
                         ),
@@ -600,20 +597,17 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                           children: <Widget>[
                             Text(
                               "正品保证",
-                              style: AppTextStyle.generate(
-                                  ScreenAdapterUtils.setSp(13),
+                              style: AppTextStyle.generate(13 * 2.sp,
                                   color: Color(0xff373737)),
                             ),
                             Text(
                               " | ",
-                              style: AppTextStyle.generate(
-                                  ScreenAdapterUtils.setSp(13),
+                              style: AppTextStyle.generate(13 * 2.sp,
                                   color: Colors.grey.withOpacity(0.3)),
                             ),
                             Text(
                               "售后无忧",
-                              style: AppTextStyle.generate(
-                                  ScreenAdapterUtils.setSp(13),
+                              style: AppTextStyle.generate(13 * 2.sp,
                                   color: Color(0xff373737)),
                             ),
                           ],
@@ -621,7 +615,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                         Icon(
                           AppIcons.icon_next,
                           color: Colors.grey[400],
-                          size: ScreenAdapterUtils.setSp(16),
+                          size: 16 * 2.sp,
                         )
                       ],
                     ),
@@ -637,18 +631,18 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         //       children: <Widget>[
         //         Text(
         //           "品牌授权",
-        //           style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+        //           style: AppTextStyle.generate(13*2.sp,
         //               color: Color(0xff828282), fontWeight: FontWeight.w300),),
         //         Container(width: 20,),
         //         Expanded(
         //           child: Text(
         //             "查看授权",
-        //             style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13), color: Color(0xff373737)),
+        //             style: AppTextStyle.generate(13*2.sp, color: Color(0xff373737)),
         //             )),
         //         Icon(
         //           AppIcons.icon_next,
         //           color: Colors.grey[400],
-        //           size: ScreenAdapterUtils.setSp(16),
+        //           size: 16*2.sp,
         //         )
         //       ],
         //     ),
@@ -815,7 +809,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 Icon(
                   AppIcons.icon_next,
                   color: Colors.grey[400],
-                  size: ScreenAdapterUtils.setSp(16),
+                  size: 16 * 2.sp,
                 ),
               ],
             ),
@@ -962,7 +956,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     List<Widget> coupons = [
       Text(
         "领券",
-        style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+        style: AppTextStyle.generate(13 * 2.sp,
             color: Color(0xff828282), fontWeight: FontWeight.w300),
       ),
       Container(
@@ -975,10 +969,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         Text(
           "暂无优惠劵",
           maxLines: 1,
-          style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
-              color: Color(0xff373737)),
+          style: AppTextStyle.generate(13 * 2.sp, color: Color(0xff373737)),
           // style: AppTextStyle.generate(
-          //   ScreenAdapterUtils.setSp(11),
+          //   11*2.sp,
           //   color: Colors.grey[700],
           // ),
         ),
@@ -993,8 +986,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       coupons.add(Container(
         height: 26,
         margin: EdgeInsets.only(right: 10),
-        padding:
-            EdgeInsets.symmetric(vertical: ScreenAdapterUtils.setWidth(1.5)),
+        padding: EdgeInsets.symmetric(vertical: 1.5 * 2.w),
         child: Stack(
           alignment: Alignment.center,
           children: <Widget>[
@@ -1014,8 +1006,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 coupon.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(12),
-                    color: Colors.white),
+                style: AppTextStyle.generate(12 * 2.sp, color: Colors.white),
               ),
             ),
           ],
@@ -1028,7 +1019,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       Icon(
         AppIcons.icon_next,
         color: Colors.grey,
-        size: ScreenAdapterUtils.setSp(16),
+        size: 16 * 2.sp,
       )
     ]);
     return coupons;
@@ -1042,13 +1033,12 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           children: <Widget>[
             Text(
               "用户评价",
-              style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+              style: AppTextStyle.generate(15 * 2.sp,
                   fontWeight: FontWeight.w500, color: Color(0xff333333)),
             ),
             Text(
               " (${widget.goodsDetail.data.evaluations.total})",
-              style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
-                  color: Color(0xffb5b5b5)),
+              style: AppTextStyle.generate(15 * 2.sp, color: Color(0xffb5b5b5)),
             ),
             Expanded(
                 child: GestureDetector(
@@ -1060,7 +1050,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               child: Text(
                 "查看全部",
                 textAlign: TextAlign.end,
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                style: AppTextStyle.generate(14 * 2.sp,
                     color: AppColor.themeColor, fontWeight: FontWeight.w300),
               ),
             )),
@@ -1113,7 +1103,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w500,
-                    fontSize: ScreenAdapterUtils.setSp(16))),
+                    fontSize: 16 * 2.sp)),
             alignment: Alignment.centerLeft,
           ),
           Expanded(
@@ -1185,7 +1175,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w500,
-                          fontSize: ScreenAdapterUtils.setSp(13)),
+                          fontSize: 13 * 2.sp),
                     ),
                   ),
                   Text(
@@ -1193,7 +1183,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w500,
-                        fontSize: ScreenAdapterUtils.setSp(17)),
+                        fontSize: 17 * 2.sp),
                   ),
                 ],
               )),
@@ -1244,7 +1234,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             children: <Widget>[
               Text(
                 widget.goodsDetail.data.brand.name,
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(18),
+                style: AppTextStyle.generate(18 * 2.sp,
                     fontWeight: FontWeight.w500),
               ),
               Container(
@@ -1252,23 +1242,22 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               ),
               Text(
                 "全部商品： ${widget.goodsDetail.data.brand.goodsCount}",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
-                    color: Colors.grey[700]),
+                style:
+                    AppTextStyle.generate(13 * 2.sp, color: Colors.grey[700]),
               )
             ],
           ),
         ),
         CustomImageButton(
           title: "进入品牌",
-          style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
-              color: Colors.grey[700]),
+          style: AppTextStyle.generate(15 * 2.sp, color: Colors.grey[700]),
           onPressed: () {
             if (widget.openbrandList != null) widget.openbrandList();
           },
         ),
         // Text(
         //   "进入品牌",
-        //   style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15), color: Colors.grey[700]),
+        //   style: AppTextStyle.generate(15*2.sp, color: Colors.grey[700]),
         // ),
         Container(
           width: 5,
@@ -1326,14 +1315,12 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 text: amount,
                 style: TextStyle(
                     color: Colors.red,
-                    fontSize: ScreenAdapterUtils.setSp(35),
+                    fontSize: 35 * 2.sp,
                     fontWeight: FontWeight.w500)),
             TextSpan(text: '\n'),
             TextSpan(
                 text: '分享后好友至少能赚$amount',
-                style: TextStyle(
-                    color: Colors.grey,
-                    fontSize: ScreenAdapterUtils.setSp(12))),
+                style: TextStyle(color: Colors.grey, fontSize: 12 * 2.sp)),
           ]),
         ),
       );

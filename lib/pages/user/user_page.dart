@@ -200,7 +200,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
       BuildContext context, Store<RecookState> store) {
     return Stack(
       children: <Widget>[
-        // Container(color: AppColor.themeColor,height: ScreenAdapterUtils.setHeight(60)),
+        // Container(color: AppColor.themeColor,height: 60*2.h),
         RefreshWidget(
           headerTriggerDistance: rSize(80),
           color: Colors.black,
@@ -621,7 +621,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   title: " 登录 ",
                   backgroundColor: AppColor.themeColor,
                   color: Colors.white,
-                  fontSize: ScreenAdapterUtils.setSp(16),
+                  fontSize: 16 * 2.sp,
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                   onPressed: () {
                     AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
@@ -749,8 +749,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
           borderRadius: BorderRadius.all(Radius.circular(3))),
       child: TextField(
         keyboardType: TextInputType.number,
-        style: TextStyle(
-            color: Colors.black, fontSize: ScreenAdapterUtils.setSp(16)),
+        style: TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
         inputFormatters: [
           WhitelistingTextInputFormatter.digitsOnly,
           LengthLimitingTextInputFormatter(10),
@@ -764,8 +763,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
               left: rSize(10), top: rSize(13), bottom: rSize(14)),
           border: InputBorder.none,
           hintText: "请输入提现金额",
-          hintStyle: TextStyle(
-              color: Colors.grey[400], fontSize: ScreenAdapterUtils.setSp(15)),
+          hintStyle: TextStyle(color: Colors.grey[400], fontSize: 15 * 2.sp),
         ),
       ),
     );

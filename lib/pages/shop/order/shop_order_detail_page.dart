@@ -34,7 +34,8 @@ class ShopOrderDetailPage extends StatefulWidget {
   }
 }
 
-class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage> implements OrderListViewI {
+class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage>
+    implements OrderListViewI {
   // OrderPreviewModel _detail;
   OrderListPresenterImpl _presenter;
 
@@ -72,16 +73,16 @@ class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage> im
         orderInfo()
       ],
     );
-  }  
-  
+  }
+
   @override
   addressView() {
     String name = orderDetail.addr.receiverName;
-    if (name.length>1) {
+    if (name.length > 1) {
       name = name.replaceRange(1, null, "***");
     }
     String mobile = orderDetail.addr.mobile;
-    if (mobile != null && mobile.length>=11) {
+    if (mobile != null && mobile.length >= 11) {
       mobile = mobile.replaceRange(3, 7, "****");
     }
 
@@ -92,29 +93,29 @@ class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage> im
         RichText(
             text: TextSpan(
                 // text: "${_detail.addr.receiverName}",
-                text: name+"   ",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15)),
+                text: name + "   ",
+                style: AppTextStyle.generate(15 * 2.sp),
                 children: [
               TextSpan(
                   // text: "   ${_detail.addr.mobile}",
                   text: mobile,
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14), color: Colors.grey))
+                  style: AppTextStyle.generate(14 * 2.sp, color: Colors.grey))
             ])),
         Container(
-          margin: EdgeInsets.only(top: ScreenAdapterUtils.setSp(8)),
+          margin: EdgeInsets.only(top: 8 * 2.sp),
           child: Text(
             // "${_detail.addr.province + _detail.addr.city + _detail.addr.district + _detail.addr.address}",
             "${orderDetail.addr.province + orderDetail.addr.city + orderDetail.addr.district}***",
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14), fontWeight: FontWeight.w300),
+            style:
+                AppTextStyle.generate(14 * 2.sp, fontWeight: FontWeight.w300),
           ),
         ),
       ],
     );
-  } 
+  }
 
-  
   @override
   cancelOrderSuccess(OrderModel order) {
     GSDialog.of(context).dismiss(globalContext);
@@ -140,7 +141,8 @@ class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage> im
   refundSuccess(msg) {
     GSDialog.of(context).dismiss(globalContext);
     Toast.showInfo(msg);
-    _presenter.getShopOrderDetail(UserManager.instance.user.info.id, orderDetail.id);
+    _presenter.getShopOrderDetail(
+        UserManager.instance.user.info.id, orderDetail.id);
   }
 
   @override
@@ -152,7 +154,8 @@ class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage> im
   @override
   applyInvoiceSuccess() {
     GSDialog.of(globalContext).showSuccess(globalContext, "申请成功");
-    _presenter.getShopOrderDetail(UserManager.instance.user.info.id, orderDetail.id);
+    _presenter.getShopOrderDetail(
+        UserManager.instance.user.info.id, orderDetail.id);
   }
 
   @override
@@ -161,6 +164,5 @@ class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage> im
   }
 
   @override
-  confirmReceiptSuccess(model) {
-  }
+  confirmReceiptSuccess(model) {}
 }

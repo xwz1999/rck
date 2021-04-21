@@ -110,8 +110,7 @@ class _CustomBubbleWidgetState extends State<CustomBubbleWidget> {
                   color: Colors.white, borderRadius: BorderRadius.circular(10)),
               width: double.infinity,
               padding: EdgeInsets.symmetric(
-                  horizontal: rSize(10),
-                  vertical: ScreenAdapterUtils.setHeight(10)),
+                  horizontal: rSize(10), vertical: 10 * 2.h),
               child: widget.child == null ? Container() : widget.child)
         ],
       ),

@@ -15,12 +15,14 @@ typedef SelectedItemClickListener = Function(int section, int index);
 typedef ItemClick = Function(int index);
 typedef WidgetBuilder = Function();
 
-class SelectedList<T extends SelectedListItemChildModel> extends StatefulWidget {
+class SelectedList<T extends SelectedListItemChildModel>
+    extends StatefulWidget {
   final List<SelectedListItemModel<T>> data;
   final SelectedItemClickListener listener;
   final WidgetBuilder bottom;
 
-  const SelectedList({Key key, this.data, this.listener, this.bottom}) : super(key: key);
+  const SelectedList({Key key, this.data, this.listener, this.bottom})
+      : super(key: key);
 
   @override
   _SelectedListState createState() => _SelectedListState();
@@ -37,9 +39,10 @@ class _SelectedListState extends State<SelectedList> {
     return Container(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 3),
         child: ListView.builder(
-            itemCount: widget.bottom != null ? widget.data.length + 1 : widget.data.length,
+            itemCount: widget.bottom != null
+                ? widget.data.length + 1
+                : widget.data.length,
             itemBuilder: (context, index) {
-
               if (index == widget.data.length) {
                 return widget.bottom();
               }
@@ -52,8 +55,7 @@ class _SelectedListState extends State<SelectedList> {
                   if (widget.listener != null) {
                     widget.listener(index, itemIndex);
                   }
-                  setState(() {
-                  });
+                  setState(() {});
                 },
               );
             }));
@@ -92,11 +94,9 @@ class _SelectedListItemState extends State<SelectedListItem> {
   void initState() {
     super.initState();
     _index = widget.itemModel.selectedIndex;
-    WidgetsBinding.instance.addPostFrameCallback((callback){
+    WidgetsBinding.instance.addPostFrameCallback((callback) {
       widget.itemClick(widget.itemModel.selectedIndex);
-    }
-    );
-
+    });
   }
 
   @override
@@ -112,8 +112,7 @@ class _SelectedListItemState extends State<SelectedListItem> {
             ),
             child: Text(
               widget.itemModel.sectionTitle,
-              style: TextStyle(
-                  color: Colors.black, fontSize: ScreenAdapterUtils.setSp(14)),
+              style: TextStyle(color: Colors.black, fontSize: 14 * 2.sp),
             ),
           ),
           Wrap(
@@ -131,7 +130,6 @@ class _SelectedListItemState extends State<SelectedListItem> {
     );
   }
 
-
   _buildItems() {
     List<Widget> _items = [];
 
@@ -140,29 +138,31 @@ class _SelectedListItemState extends State<SelectedListItem> {
       if (widget.itemModel.items.length == 1 && _isFirstLoad) {
         _isFirstLoad = false;
         setState(() {
-            _index = index;
-            widget.itemModel.selectedIndex = index;
-          });
-          if (widget.itemClick != null) {
-            // widget.itemClick(index);
-          }
+          _index = index;
+          widget.itemModel.selectedIndex = index;
+        });
+        if (widget.itemClick != null) {
+          // widget.itemClick(index);
+        }
       }
       bool selected = index == _index;
       _items.add(GestureDetector(
-        onTap: !item.canSelected ? null: () {
-          setState(() {
-            if (selected) {
-              _index = null;
-              widget.itemModel.selectedIndex = null;
-            } else {
-              _index = index;
-              widget.itemModel.selectedIndex = index;
-            }
-          });
-          if (widget.itemClick != null) {
-            widget.itemClick(index);
-          }
-        },
+        onTap: !item.canSelected
+            ? null
+            : () {
+                setState(() {
+                  if (selected) {
+                    _index = null;
+                    widget.itemModel.selectedIndex = null;
+                  } else {
+                    _index = index;
+                    widget.itemModel.selectedIndex = index;
+                  }
+                });
+                if (widget.itemClick != null) {
+                  widget.itemClick(index);
+                }
+              },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
           constraints: BoxConstraints(
@@ -172,9 +172,10 @@ class _SelectedListItemState extends State<SelectedListItem> {
               borderRadius: BorderRadius.all(Radius.circular(5)),
               color: selected ? widget.selectedBgColor : widget.bgColor,
               border: Border.all(
-                      color: selected ? widget.selectedBorderColor ??
-                          widget.selectedTextColor :  widget.bgColor,
-                      width: 0.6)),
+                  color: selected
+                      ? widget.selectedBorderColor ?? widget.selectedTextColor
+                      : widget.bgColor,
+                  width: 0.6)),
           child: Opacity(
             opacity: !item.canSelected ? 0.3 : 1,
             child: Text(
@@ -183,7 +184,7 @@ class _SelectedListItemState extends State<SelectedListItem> {
               style: TextStyle(
                   color: selected ? widget.selectedTextColor : Colors.black,
 //                  fontWeight: FontWeight.w300,
-                  fontSize: ScreenAdapterUtils.setSp(13)),
+                  fontSize: 13 * 2.sp),
             ),
           ),
         ),
@@ -210,5 +211,6 @@ class SelectedListItemChildModel {
   bool canSelected;
   int id;
 
-  SelectedListItemChildModel({this.id, this.itemTitle, this.canSelected = true});
+  SelectedListItemChildModel(
+      {this.id, this.itemTitle, this.canSelected = true});
 }

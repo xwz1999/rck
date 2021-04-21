@@ -206,7 +206,7 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
             style: TextStyle(
               fontWeight: FontWeight.w500,
               color: Colors.white,
-              fontSize: ScreenAdapterUtils.setSp(17),
+              fontSize: 17 * 2.sp,
             ),
           ),
         ));
@@ -266,9 +266,8 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
                   children: <Widget>[
                     Text(
                       nickname,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: ScreenAdapterUtils.setSp(16)),
+                      style:
+                          TextStyle(color: Colors.white, fontSize: 16 * 2.sp),
                     ),
                     Container(
                       width: 10,
@@ -285,28 +284,25 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
                         style: TextStyle(
                             fontWeight: FontWeight.w400,
                             color: Colors.white,
-                            fontSize: ScreenAdapterUtils.setSp(12)),
+                            fontSize: 12 * 2.sp),
                       ),
                     ),
                     Spacer(),
-                    // Text('已邀请人数:${_inviteCount}', style: TextStyle(color: Colors.white, fontSize: ScreenAdapterUtils.setSp(16)),),
+                    // Text('已邀请人数:${_inviteCount}', style: TextStyle(color: Colors.white, fontSize: 16*2.sp),),
                   ],
                 ),
                 Container(
                   child: Text(
                     '已邀请人数:$_inviteCount',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: ScreenAdapterUtils.setSp(16)),
+                    style: TextStyle(color: Colors.white, fontSize: 16 * 2.sp),
                   ),
                 ),
                 Row(
                   children: <Widget>[
                     Text(
                       '邀请码: ${UserManager.instance.user.info.invitationNo}',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: ScreenAdapterUtils.setSp(12)),
+                      style:
+                          TextStyle(color: Colors.white, fontSize: 12 * 2.sp),
                     ),
                     Container(
                       width: 10,
@@ -330,8 +326,7 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
                           child: Text(
                             '复制',
                             style: TextStyle(
-                                color: Colors.white,
-                                fontSize: ScreenAdapterUtils.setSp(10)),
+                                color: Colors.white, fontSize: 10 * 2.sp),
                           ),
                         ))
                   ],
@@ -363,8 +358,7 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
             child: Text(
               '成长值: $_inviteCount',
               style: TextStyle(
-                  color: Colors.black.withOpacity(0.6),
-                  fontSize: ScreenAdapterUtils.setSp(13)),
+                  color: Colors.black.withOpacity(0.6), fontSize: 13 * 2.sp),
             ),
           ),
           Container(
@@ -489,7 +483,7 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
             style: TextStyle(
               fontWeight: FontWeight.w500,
               color: Colors.white,
-              fontSize: ScreenAdapterUtils.setSp(17),
+              fontSize: 17 * 2.sp,
             ),
           ),
         ));

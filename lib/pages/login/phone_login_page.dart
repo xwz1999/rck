@@ -96,8 +96,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                       top: rSize(60), right: rSize(20), left: rSize(20)),
                   child: Text(
                     _errorMsg,
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                        color: Colors.red),
+                    style: AppTextStyle.generate(14 * 2.sp, color: Colors.red),
                   ),
                 ),
                 _phoneText(),
@@ -121,8 +120,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
         controller: _phoneController,
         focusNode: _phoneNode,
         keyboardType: TextInputType.number,
-        style: TextStyle(
-            color: Colors.black, fontSize: ScreenAdapterUtils.setSp(16)),
+        style: TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
         inputFormatters: [
           LengthLimitingTextInputFormatter(11),
         ],
@@ -146,9 +144,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                 bottom: _phoneNode.hasFocus ? 0 : rSize(14)),
             border: InputBorder.none,
             hintText: "请输入手机号",
-            hintStyle: TextStyle(
-                color: Colors.grey[400],
-                fontSize: ScreenAdapterUtils.setSp(15)),
+            hintStyle: TextStyle(color: Colors.grey[400], fontSize: 15 * 2.sp),
             suffixIcon: _clearButton(_phoneController, _phoneNode)),
       ),
     );
@@ -160,7 +156,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
             padding: EdgeInsets.zero,
             icon: Icon(
               AppIcons.icon_clear,
-              size: ScreenAdapterUtils.setSp(17),
+              size: 17 * 2.sp,
               color: Colors.grey[300],
             ),
             onPressed: () {
@@ -192,8 +188,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
               controller: _smsCodeController,
               focusNode: _smsCodeNode,
               keyboardType: TextInputType.number,
-              style: TextStyle(
-                  color: Colors.black, fontSize: ScreenAdapterUtils.setSp(16)),
+              style: TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
               cursorColor: Colors.black,
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.only(
@@ -202,9 +197,8 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                       bottom: _smsCodeNode.hasFocus ? 0 : rSize(14)),
                   border: InputBorder.none,
                   hintText: "请输入验证码",
-                  hintStyle: TextStyle(
-                      color: Colors.grey[400],
-                      fontSize: ScreenAdapterUtils.setSp(14)),
+                  hintStyle:
+                      TextStyle(color: Colors.grey[400], fontSize: 14 * 2.sp),
                   suffixIcon: _clearButton(_smsCodeController, _smsCodeNode)),
             ),
           ),
@@ -213,7 +207,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
             width: rSize(120),
             textColor: Colors.grey[700],
             enable: _getCodeEnable,
-            font: ScreenAdapterUtils.setSp(15),
+            font: 15 * 2.sp,
             unableTextColor: Colors.grey[400],
             highlightTextColor: Colors.grey[400],
             border: Border(left: BorderSide(color: Colors.grey[500])),
@@ -246,13 +240,13 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
           // TextButton(
           //   title: "如何注册？",
           //   textColor: Colors.grey[500],
-          //   font: ScreenAdapterUtils.setSp(14),
+          //   font: 14*2.sp,
           //   highlightTextColor: Colors.grey[400],
           //   onTap: () {},
           // ),
           TButton.TextButton(
             title: "收不到验证码？",
-            font: ScreenAdapterUtils.setSp(14),
+            font: 14 * 2.sp,
             textColor: Colors.grey[500],
             highlightTextColor: Colors.grey[400],
             onTap: () {},
@@ -269,7 +263,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
       title: "登录",
       textColor: Colors.white,
       unableBackgroundColor: Colors.grey[300],
-      font: ScreenAdapterUtils.setSp(17),
+      font: 17 * 2.sp,
       enable: _loginEnable,
       margin: EdgeInsets.symmetric(horizontal: 15),
       padding: EdgeInsets.symmetric(vertical: rSize(7)),

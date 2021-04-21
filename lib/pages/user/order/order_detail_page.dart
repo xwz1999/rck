@@ -157,13 +157,11 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
             CustomImageButton(
               title: "评价",
               color: AppColor.themeColor,
-              fontSize: ScreenAdapterUtils.setSp(13),
+              fontSize: 13 * 2.sp,
               padding: EdgeInsets.symmetric(
                   vertical: rSize(2), horizontal: rSize(20)),
               borderRadius: BorderRadius.all(Radius.circular(40)),
-              border: Border.all(
-                  color: AppColor.themeColor,
-                  width: ScreenAdapterUtils.setWidth(0.8)),
+              border: Border.all(color: AppColor.themeColor, width: 0.8 * 2.w),
               onPressed: () {
                 List<EvaluationGoodsModel> goodsList = [];
                 orderDetail.brands.forEach((brand) {
@@ -199,11 +197,10 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
       ..add(CustomImageButton(
         title: "取消订单",
         color: Colors.grey,
-        fontSize: ScreenAdapterUtils.setSp(13),
+        fontSize: 13 * 2.sp,
         padding: EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(8)),
         borderRadius: BorderRadius.all(Radius.circular(40)),
-        border: Border.all(
-            color: Colors.grey, width: ScreenAdapterUtils.setWidth(0.8)),
+        border: Border.all(color: Colors.grey, width: 0.8 * 2.w),
         onPressed: () {
           Alert.show(
               context,
@@ -227,12 +224,10 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
       ..add(CustomImageButton(
         title: "继续支付",
         color: AppColor.themeColor,
-        fontSize: ScreenAdapterUtils.setSp(13),
+        fontSize: 13 * 2.sp,
         padding: EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(8)),
         borderRadius: BorderRadius.all(Radius.circular(40)),
-        border: Border.all(
-            color: AppColor.themeColor,
-            width: ScreenAdapterUtils.setWidth(0.8)),
+        border: Border.all(color: AppColor.themeColor, width: 0.8 * 2.w),
         onPressed: () {
           Data data = Data(
               orderDetail.id,
@@ -270,11 +265,11 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
     //       width: buttonWidth,
     //       title: "申请退款",
     //       color: Colors.grey[600],
-    //       fontSize: ScreenAdapterUtils.setSp(13),
+    //       fontSize: 13*2.sp,
     //       padding: EdgeInsets.symmetric(
     //           vertical: rSize(2), horizontal: rSize(8)),
     //       borderRadius: BorderRadius.all(Radius.circular(40)),
-    //       border: Border.all(color: Colors.grey[600], width: ScreenAdapterUtils.setWidth(0.8)),
+    //       border: Border.all(color: Colors.grey[600], width: 0.8*2.w),
     //       onPressed: () {
     //         _refundClick();
     //       },
@@ -295,11 +290,11 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
     //       width: buttonWidth,
     //       title: "申请退货",
     //       color: Colors.grey[600],
-    //       fontSize: ScreenAdapterUtils.setSp(13),
+    //       fontSize: 13*2.sp,
     //       padding: EdgeInsets.symmetric(
     //           vertical: rSize(2), horizontal: rSize(8)),
     //       borderRadius: BorderRadius.all(Radius.circular(40)),
-    //       border: Border.all(color: Colors.grey[600], width: ScreenAdapterUtils.setWidth(0.8)),
+    //       border: Border.all(color: Colors.grey[600], width: 0.8*2.w),
     //       onPressed: () {
     //         _returnGoodsClick();
     //       },
@@ -326,13 +321,11 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
             width: buttonWidth,
             title: "查看物流",
             color: Colors.grey[600],
-            fontSize: ScreenAdapterUtils.setSp(12),
+            fontSize: 12 * 2.sp,
             padding:
                 EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(8)),
             borderRadius: BorderRadius.all(Radius.circular(40)),
-            border: Border.all(
-                color: Colors.grey[600],
-                width: ScreenAdapterUtils.setWidth(0.8)),
+            border: Border.all(color: Colors.grey[600], width: 0.8 * 2.w),
             onPressed: () {
               AppRouter.push(globalContext, RouteName.ORDER_LOGISTIC,
                   arguments: OrderLogisticsListPage.setArguments(
@@ -356,13 +349,11 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
               width: buttonWidth,
               title: "确认收货",
               color: AppColor.themeColor,
-              fontSize: ScreenAdapterUtils.setSp(13),
+              fontSize: 13 * 2.sp,
               padding: EdgeInsets.symmetric(
                   vertical: rSize(2), horizontal: rSize(8)),
               borderRadius: BorderRadius.all(Radius.circular(40)),
-              border: Border.all(
-                  color: AppColor.themeColor,
-                  width: ScreenAdapterUtils.setWidth(0.8)),
+              border: Border.all(color: AppColor.themeColor, width: 0.8 * 2.w),
               onPressed: () {
                 _confirmReceiptClick();
               },

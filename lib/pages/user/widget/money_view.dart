@@ -29,16 +29,14 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
   TextStyle _moneyStyle = TextStyle(
       fontWeight: FontWeight.w400,
       color: Colors.black.withOpacity(0.6),
-      fontSize: ScreenAdapterUtils.setSp(14));
+      fontSize: 14 * 2.sp);
   TextStyle _subMoneyStyle = TextStyle(
       fontWeight: FontWeight.w400,
       color: Colors.black.withOpacity(0.6),
-      fontSize: ScreenAdapterUtils.setSp(14));
+      fontSize: 14 * 2.sp);
 
   TextStyle _moneyTitleStyle = TextStyle(
-      fontWeight: FontWeight.w400,
-      color: Colors.black,
-      fontSize: ScreenAdapterUtils.setSp(19));
+      fontWeight: FontWeight.w400, color: Colors.black, fontSize: 19 * 2.sp);
 
   @override
   bool needStore() {
@@ -88,7 +86,7 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
             Icon(
               Icons.keyboard_arrow_right,
               color: Colors.black38,
-              size: ScreenAdapterUtils.setSp(18),
+              size: 18 * 2.sp,
             ),
           ],
         ));
@@ -147,7 +145,7 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
                         style: TextStyle(
                             fontWeight: FontWeight.w400,
                             color: AppColor.themeColor,
-                            fontSize: ScreenAdapterUtils.setSp(22)),
+                            fontSize: 22 * 2.sp),
                       ),
                     ),
                     Spacer(),
@@ -164,7 +162,7 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
                             color: AppColor.themeColor,
-                            fontSize: ScreenAdapterUtils.setSp(14),
+                            fontSize: 14 * 2.sp,
                           ),
                         ),
                         width: 70,
@@ -180,7 +178,7 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
                 ),
               ),
               Container(
-                height: ScreenAdapterUtils.setHeight(10),
+                height: 10 * 2.h,
               ),
               Container(
                 decoration: BoxDecoration(
@@ -189,7 +187,7 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
                       bottomLeft: Radius.circular(8),
                       bottomRight: Radius.circular(8)),
                 ),
-                height: ScreenAdapterUtils.setHeight(35),
+                height: 35 * 2.h,
                 child: Container(
                   alignment: Alignment.center,
                   // child: Text(getStore().state.userBrief.advice, style: TextStyle(fontSize: ScreenAdapterUtils.setSp(12.5), fontWeight: FontWeight.w300, color: Color.fromARGB(255, 180, 109, 78)),),
@@ -229,7 +227,7 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
                       style: TextStyle(
                           fontWeight: FontWeight.w500,
                           color: AppColor.themeColor,
-                          fontSize: ScreenAdapterUtils.setSp(15)),
+                          fontSize: 15 * 2.sp),
                     ),
                     Spacer(),
                     GestureDetector(
@@ -243,14 +241,14 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
                         style: TextStyle(
                             fontWeight: FontWeight.w400,
                             color: Colors.black45,
-                            fontSize: ScreenAdapterUtils.setSp(12)),
+                            fontSize: 12 * 2.sp),
                       ),
                     ),
-                    // Text('查看订单明细' , style: TextStyle( fontWeight: FontWeight.w400, color: AppColor.greyColor, fontSize: ScreenAdapterUtils.setSp(12)),),
+                    // Text('查看订单明细' , style: TextStyle( fontWeight: FontWeight.w400, color: AppColor.greyColor, fontSize: 12*2.sp),),
                     Icon(
                       Icons.keyboard_arrow_right,
                       color: Colors.black38,
-                      size: ScreenAdapterUtils.setSp(18),
+                      size: 18 * 2.sp,
                     ),
                   ],
                 ),
@@ -258,8 +256,7 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
               Container(
                 height: 1,
                 color: Colors.grey[200],
-                margin: EdgeInsets.symmetric(
-                    vertical: ScreenAdapterUtils.setHeight(5)),
+                margin: EdgeInsets.symmetric(vertical: 5 * 2.h),
               ),
               Container(
                 height: 65,
@@ -379,7 +376,7 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
   //               value.toString(),
   //               maxLines: 1,
   //               overflow: TextOverflow.ellipsis,
-  //               style: AppTextStyle.generate(ScreenAdapterUtils.setSp(17),
+  //               style: AppTextStyle.generate(17*2.sp,
   //                   fontWeight: FontWeight.w500, color: Colors.black),
   //             ),
   //           ),

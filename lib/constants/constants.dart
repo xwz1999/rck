@@ -31,8 +31,8 @@ extension SeparateExt on List<Widget> {
 }
 
 // 屏幕适配
+@Deprecated('use num*2.w/sp/h instead')
 class ScreenAdapterUtils {
-
   static double setWidth(double width) {
     return ScreenUtil().setWidth(width * 2);
   }
@@ -50,22 +50,22 @@ class ScreenAdapterUtils {
 
 ///DESIGN WIDTH
 double rSize(double size) {
-  return ScreenAdapterUtils.setWidth(size);
+  return size * 2.w;
 }
 
 ///DESIGN SP
 double rSP(double size) {
-  return ScreenAdapterUtils.setSp(size);
+  return size * 2.sp;
 }
 
 /// DESIGN SizedBox with width
 Widget rWBox(double size) {
-  return SizedBox(width: ScreenAdapterUtils.setWidth(size));
+  return SizedBox(width: size * 2.w);
 }
 
 /// DESIGN SizedBox with height
 Widget rHBox(double size) {
-  return SizedBox(height: ScreenAdapterUtils.setWidth(size));
+  return SizedBox(height: size * 2.w);
 }
 
 class AppStrings {
@@ -97,9 +97,9 @@ class DeviceInfo {
 }
 
 extension NumExt on num {
-  double get rw => ScreenAdapterUtils.setWidth(this + .0);
+  double get rw => this*2.w;
 
-  double get rsp => ScreenAdapterUtils.setSp(this + .0);
+  double get rsp => this*2.sp;
 
   Widget get hb => SizedBox(height: this.w);
 

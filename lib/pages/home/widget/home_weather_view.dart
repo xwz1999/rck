@@ -37,7 +37,7 @@ class HomeWeatherWidgetState extends State<HomeWeatherWidget>
   Widget build(BuildContext context) {
     TextStyle textStyle = TextStyle(
       color: Colors.white,
-      fontSize: ScreenAdapterUtils.setSp(10),
+      fontSize: 10 * 2.sp,
     );
     DateTime nowDateTime = DateTime.now();
     Solar solar = Solar(

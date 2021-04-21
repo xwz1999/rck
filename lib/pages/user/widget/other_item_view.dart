@@ -17,7 +17,7 @@ import 'package:recook/widgets/custom_image_button.dart';
 class OtherItemView extends StatelessWidget {
   final Color _itemColor = Colors.grey[500];
   final double _iconSize = rSize(30);
-  final double _fontSize = ScreenAdapterUtils.setSp(12);
+  final double _fontSize = 12 * 2.sp;
 
   @override
   Widget build(BuildContext context) {

@@ -292,8 +292,8 @@ abstract class OrderDetailState<T extends StatefulWidget>
               constraints: BoxConstraints(minWidth: rSize(70)),
               child: Text(
                 "$title:",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                    color: Color(0xff333333)),
+                style:
+                    AppTextStyle.generate(14 * 2.sp, color: Color(0xff333333)),
               )),
           needCopy
               ? GestureDetector(
@@ -307,7 +307,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                   },
                   child: Text(
                     "$value",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(12),
+                    style: AppTextStyle.generate(12 * 2.sp,
                         color: Color(0xff333333)),
                   ),
                 )
@@ -323,7 +323,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                     },
                     child: Text(
                       "$value",
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(12),
+                      style: AppTextStyle.generate(12 * 2.sp,
                           color: Color(0xff333333)),
                     ),
                   ),
@@ -347,8 +347,8 @@ abstract class OrderDetailState<T extends StatefulWidget>
                     ),
                     child: Text(
                       '复制',
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(11),
-                          color: Colors.grey),
+                      style:
+                          AppTextStyle.generate(11 * 2.sp, color: Colors.grey),
                     ),
                   ),
                 )
@@ -376,11 +376,11 @@ abstract class OrderDetailState<T extends StatefulWidget>
       child: RichText(
           text: TextSpan(
               text: "共$totalQuantity件商品  总计￥",
-              style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13)),
+              style: AppTextStyle.generate(13 * 2.sp),
               children: [
             TextSpan(
                 text: "${orderDetail.goodsTotalAmount.toStringAsFixed(2)}",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(16)))
+                style: AppTextStyle.generate(16 * 2.sp))
           ])),
     );
   }
@@ -403,11 +403,11 @@ abstract class OrderDetailState<T extends StatefulWidget>
   //     child: RichText(
   //         text: TextSpan(
   //             text: "共$totalQuantity件商品  总计￥",
-  //             style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13)),
+  //             style: AppTextStyle.generate(13*2.sp),
   //             children: [
   //           TextSpan(
   //               text: "${orderDetail.actualTotalAmount.toStringAsFixed(2)}",
-  //               style: AppTextStyle.generate(ScreenAdapterUtils.setSp(16)))
+  //               style: AppTextStyle.generate(16*2.sp))
   //         ])),
   //   );
   // }
@@ -449,11 +449,11 @@ abstract class OrderDetailState<T extends StatefulWidget>
       //   ..add(CustomImageButton(
       //     title: "申请发票",
       //     color: Colors.grey[600],
-      //     fontSize: ScreenAdapterUtils.setSp(12),
+      //     fontSize: 12*2.sp,
       //     padding: EdgeInsets.symmetric(
       //         vertical: rSize(2), horizontal: rSize(8)),
       //     borderRadius: BorderRadius.all(Radius.circular(40)),
-      //     border: Border.all(color: Colors.grey, width: ScreenAdapterUtils.setWidth(0.8)),
+      //     border: Border.all(color: Colors.grey, width: 0.8*2.w),
       //     onPressed: () {
       //       if (_detail.invoiceStatus != 0) {
       //         GSDialog.of(globalContext).showError(globalContext, "您已经申请过发票了，请勿重复申请");
@@ -515,7 +515,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
       }
     }
     if (goods.refundStatus != 0) canRefund = false;
-    if (orderDetail.status != 1) canRefund = false; 
+    if (orderDetail.status != 1) canRefund = false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
@@ -554,8 +554,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                           goods.goodsName,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(14),
+                          style: AppTextStyle.generate(14 * 2.sp,
                               fontWeight: FontWeight.w600),
                         ),
                       ),
@@ -576,8 +575,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                                 goods.skuName,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
-                                style: AppTextStyle.generate(
-                                    ScreenAdapterUtils.setSp(11),
+                                style: AppTextStyle.generate(11 * 2.sp,
                                     color: Colors.grey[600],
                                     fontWeight: FontWeight.w300),
                               ),
@@ -602,8 +600,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                             "￥${goods.unitPrice.toStringAsFixed(2)}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: AppTextStyle.generate(
-                                ScreenAdapterUtils.setSp(14),
+                            style: AppTextStyle.generate(14 * 2.sp,
                                 color: AppColor.redColor),
                           ),
                           Spacer(),
@@ -616,14 +613,14 @@ abstract class OrderDetailState<T extends StatefulWidget>
                               ? CustomImageButton(
                                   title: "申请售后",
                                   color: Colors.grey[600],
-                                  fontSize: ScreenAdapterUtils.setSp(12),
+                                  fontSize: 12 * 2.sp,
                                   padding: EdgeInsets.symmetric(
                                       vertical: rSize(1), horizontal: rSize(4)),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(40)),
                                   border: Border.all(
                                       color: Colors.grey[600],
-                                      width: ScreenAdapterUtils.setWidth(0.8)),
+                                      width: 0.8 * 2.w),
                                   onPressed: () {
                                     returnClick(goods);
                                   },
@@ -636,14 +633,14 @@ abstract class OrderDetailState<T extends StatefulWidget>
                               ? CustomImageButton(
                                   title: "申请退款",
                                   color: Colors.grey[600],
-                                  fontSize: ScreenAdapterUtils.setSp(12),
+                                  fontSize: 12 * 2.sp,
                                   padding: EdgeInsets.symmetric(
                                       vertical: rSize(1), horizontal: rSize(4)),
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(40)),
                                   border: Border.all(
                                       color: Colors.grey[600],
-                                      width: ScreenAdapterUtils.setWidth(0.8)),
+                                      width: 0.8 * 2.w),
                                   onPressed: () {
                                     refundClick(goods);
                                   },
@@ -662,8 +659,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                                   goods.rStatus,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: AppTextStyle.generate(
-                                      ScreenAdapterUtils.setSp(12),
+                                  style: AppTextStyle.generate(12 * 2.sp,
                                       color: AppColor.priceColor),
                                 )
                               : TextUtils.isEmpty(goods.rStatus)
@@ -689,8 +685,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                                         child: Text(
                                           goods.rStatus,
                                           style: TextStyle(
-                                              fontSize:
-                                                  ScreenAdapterUtils.setSp(12),
+                                              fontSize: 12 * 2.sp,
                                               fontWeight: FontWeight.w300,
                                               color: AppColor.priceColor),
                                         ),
@@ -723,8 +718,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                 ),
                 child: Text(
                   "退货被拒原因: ${goods.returnRejectReason}",
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(11),
-                      color: Colors.red),
+                  style: AppTextStyle.generate(11 * 2.sp, color: Colors.red),
                 ))
       ],
     );
@@ -771,14 +765,12 @@ abstract class OrderDetailState<T extends StatefulWidget>
                 textAlign: TextAlign.end,
                 text: TextSpan(
                     text: "共$quantity件商品  小计￥",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(12),
-                        color: Colors.grey),
+                    style: AppTextStyle.generate(12 * 2.sp, color: Colors.grey),
                     children: [
                       TextSpan(
                           text:
                               "${brand.brandGoodsTotalAmount.toStringAsFixed(2)}",
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(14),
+                          style: AppTextStyle.generate(14 * 2.sp,
                               color: Colors.grey)),
                       TextSpan(
                         text:
@@ -807,7 +799,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
           ),
           contentSpacing: rSize(8),
           style: AppTextStyle.generate(
-            ScreenAdapterUtils.setSp(14),
+            14 * 2.sp,
           ),
           title: brand.brandName,
         ),
@@ -819,7 +811,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
 //        Spacer(),
 //        Text(
 //          _brandExpressStatus(brand),
-//          style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13), color: AppColor.priceColor),
+//          style: AppTextStyle.generate(13*2.sp, color: AppColor.priceColor),
 //        )
       ],
     );
@@ -843,7 +835,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
               )
               // child: Icon(
               //   AppIcons.icon_address,
-              //   size: ScreenAdapterUtils.setSp(20),
+              //   size: 20*2.sp,
               // ),
               ),
           Expanded(child: addressView()),
@@ -864,22 +856,21 @@ abstract class OrderDetailState<T extends StatefulWidget>
             : RichText(
                 text: TextSpan(
                     text: "${orderDetail.addr.receiverName}",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15)),
+                    style: AppTextStyle.generate(15 * 2.sp),
                     children: [
                     TextSpan(
                         text: "   ${orderDetail.addr.mobile}",
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(14),
+                        style: AppTextStyle.generate(14 * 2.sp,
                             color: Colors.grey))
                   ])),
         Container(
-          margin: EdgeInsets.only(top: ScreenAdapterUtils.setSp(8)),
+          margin: EdgeInsets.only(top: 8 * 2.sp),
           child: Text(
             "${orderDetail.addr.province + orderDetail.addr.city + orderDetail.addr.district + orderDetail.addr.address}",
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                fontWeight: FontWeight.w300),
+            style:
+                AppTextStyle.generate(14 * 2.sp, fontWeight: FontWeight.w300),
           ),
         ),
       ],
@@ -897,12 +888,11 @@ abstract class OrderDetailState<T extends StatefulWidget>
       child: RichText(
           text: TextSpan(
               text: "$status",
-              style: AppTextStyle.generate(ScreenAdapterUtils.setSp(17),
-                  color: Colors.white),
+              style: AppTextStyle.generate(17 * 2.sp, color: Colors.white),
               children: [
             TextSpan(
                 text: "\n$subTitle",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                style: AppTextStyle.generate(14 * 2.sp,
                     fontWeight: FontWeight.w300, color: Colors.white))
           ])),
     );

@@ -22,20 +22,14 @@ class _Styles {
   static final Color lineColor = Colors.grey[200];
   static final TextStyle contentStyle = TextStyle(
     color: Colors.black,
-    fontSize: ScreenAdapterUtils.setSp(14),
+    fontSize: 14 * 2.sp,
   );
   static final TextStyle normalTextStyle = TextStyle(
-      color: Colors.black,
-      fontSize: ScreenAdapterUtils.setSp(15),
-      fontWeight: FontWeight.w500);
+      color: Colors.black, fontSize: 15 * 2.sp, fontWeight: FontWeight.w500);
   static final TextStyle deleteTextStyle = TextStyle(
-      color: Colors.red,
-      fontSize: ScreenAdapterUtils.setSp(15),
-      fontWeight: FontWeight.w500);
+      color: Colors.red, fontSize: 15 * 2.sp, fontWeight: FontWeight.w500);
   static final TextStyle disableTextStyle = TextStyle(
-      color: Colors.grey,
-      fontSize: ScreenAdapterUtils.setSp(15),
-      fontWeight: FontWeight.w500);
+      color: Colors.grey, fontSize: 15 * 2.sp, fontWeight: FontWeight.w500);
 }
 
 class Alert {
@@ -85,7 +79,7 @@ class NormalTextDialog extends Dialog {
 
   Container _buildContent() {
     return Container(
-      padding: EdgeInsets.only(top: ScreenAdapterUtils.setWidth(8.0)),
+      padding: EdgeInsets.only(top: 8.0 * 2.w),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -102,7 +96,7 @@ class NormalTextDialog extends Dialog {
           this.title,
           style: TextStyle(
               color: Colors.black,
-              fontSize: ScreenAdapterUtils.setSp(16),
+              fontSize: 16 * 2.sp,
               fontWeight: FontWeight.w600),
         ),
       ));
@@ -143,11 +137,9 @@ class NormalTextDialog extends Dialog {
                 ? null
                 : Border(
                     right: BorderSide(
-                        color: _Styles.lineColor,
-                        width: ScreenAdapterUtils.setWidth(0.5)))),
+                        color: _Styles.lineColor, width: 0.5 * 2.w))),
         child: CustomImageButton(
-            padding: EdgeInsets.symmetric(
-                vertical: ScreenAdapterUtils.setWidth(8.0)),
+            padding: EdgeInsets.symmetric(vertical: 8.0 * 2.w),
             title: title,
             onPressed: this.listener == null
                 ? null
@@ -208,7 +200,7 @@ class NormalContentDialog extends Dialog {
 
   Container _buildContent() {
     return Container(
-      padding: EdgeInsets.only(top: ScreenAdapterUtils.setWidth(8.0)),
+      padding: EdgeInsets.only(top: 8.0 * 2.w),
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(8))),
@@ -228,7 +220,7 @@ class NormalContentDialog extends Dialog {
           this.title,
           style: TextStyle(
               color: Colors.black,
-              fontSize: ScreenAdapterUtils.setSp(16),
+              fontSize: 16 * 2.sp,
               fontWeight: FontWeight.w600),
         ),
       ));
@@ -266,11 +258,9 @@ class NormalContentDialog extends Dialog {
                 ? null
                 : Border(
                     right: BorderSide(
-                        color: _Styles.lineColor,
-                        width: ScreenAdapterUtils.setWidth(0.5)))),
+                        color: _Styles.lineColor, width: 0.5 * 2.w))),
         child: CustomImageButton(
-            padding: EdgeInsets.symmetric(
-                vertical: ScreenAdapterUtils.setWidth(8.0)),
+            padding: EdgeInsets.symmetric(vertical: 8.0 * 2.w),
             title: title,
             onPressed: this.listener == null
                 ? null

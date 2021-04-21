@@ -82,17 +82,13 @@ class _MyCouponListPageState extends BaseStoreState<MyCouponListPage> {
                 RichText(
                     text: TextSpan(
                         text: coupon.cash.toString(),
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(33),
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600),
+                        style: AppTextStyle.generate(33 * 2.sp,
+                            color: Colors.white, fontWeight: FontWeight.w600),
                         children: [
                       TextSpan(
                           text: " 元",
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(14),
-                              color: Colors.white,
-                              fontWeight: FontWeight.w400))
+                          style: AppTextStyle.generate(14 * 2.sp,
+                              color: Colors.white, fontWeight: FontWeight.w400))
                     ])),
                 SizedBox(
                   width: rSize(30),
@@ -104,14 +100,14 @@ class _MyCouponListPageState extends BaseStoreState<MyCouponListPage> {
                   children: <Widget>[
                     Text(
                       coupon.name,
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(17),
+                      style: AppTextStyle.generate(17 * 2.sp,
                           color: Colors.white, fontWeight: FontWeight.w300),
                     ),
                     Text(
                       coupon.startTime.substring(0, 10) +
                           "-" +
                           coupon.endTime.substring(0, 10),
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+                      style: AppTextStyle.generate(13 * 2.sp,
                           color: Colors.white, fontWeight: FontWeight.w300),
                     ),
                   ],
@@ -134,7 +130,7 @@ class _MyCouponListPageState extends BaseStoreState<MyCouponListPage> {
                   textAlign: TextAlign.left,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+                  style: AppTextStyle.generate(13 * 2.sp,
                       fontWeight: FontWeight.w300, color: Colors.white),
                 ),
               ))

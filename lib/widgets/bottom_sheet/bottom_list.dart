@@ -48,8 +48,7 @@ class _BottomListWidget<T> extends StatelessWidget {
                     Offstage(
                       child: Text(
                         title,
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(14),
+                        style: AppTextStyle.generate(14 * 2.sp,
                             fontWeight: FontWeight.w500),
                       ),
                       offstage: TextUtils.isEmpty(title),

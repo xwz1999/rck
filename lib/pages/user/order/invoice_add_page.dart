@@ -77,7 +77,7 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
             backgroundColor: AppColor.themeColor,
             borderRadius: BorderRadius.all(Radius.circular(rSize(5))),
             color: Colors.white,
-            fontSize: ScreenAdapterUtils.setSp(14),
+            fontSize: 14 * 2.sp,
             onPressed: () {
               _saveInvoice();
             },
@@ -91,7 +91,7 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
     return Container(
       margin: EdgeInsets.symmetric(vertical: rSize(15)),
       color: Colors.grey[300],
-      height: ScreenAdapterUtils.setWidth(0.5),
+      height: 0.5 * 2.w,
     );
   }
 
@@ -102,8 +102,8 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
 
     return Container(
       padding: EdgeInsets.symmetric(
-        horizontal: ScreenAdapterUtils.setSp(10),
-        vertical: ScreenAdapterUtils.setSp(15),
+        horizontal: 10 * 2.sp,
+        vertical: 15 * 2.sp,
       ),
       color: Colors.white,
       child: Column(
@@ -114,7 +114,7 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
                   width: rSize(80),
                   child: Text(
                     "发票类型",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                    style: AppTextStyle.generate(15 * 2.sp,
                         color: Colors.grey[500], fontWeight: FontWeight.w300),
                   )),
               CustomImageButton(
@@ -127,7 +127,7 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
                     : Border.all(
                         color: unselectedColor,
                         width: ScreenAdapterUtils.setSp(0.5)),
-                fontSize: ScreenAdapterUtils.setSp(13),
+                fontSize: 13 * 2.sp,
                 backgroundColor: personal ? selectedColor : null,
                 color: personal ? Colors.white : unselectedColor,
                 onPressed: () {
@@ -150,7 +150,7 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
                     : Border.all(
                         color: unselectedColor,
                         width: ScreenAdapterUtils.setSp(0.5)),
-                fontSize: ScreenAdapterUtils.setSp(13),
+                fontSize: 13 * 2.sp,
                 backgroundColor: !personal ? selectedColor : null,
                 color: !personal ? Colors.white : unselectedColor,
                 onPressed: () {
@@ -169,7 +169,7 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
                   width: rSize(80),
                   child: Text(
                     "发票抬头",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                    style: AppTextStyle.generate(15 * 2.sp,
                         color: Colors.grey[500], fontWeight: FontWeight.w300),
                   )),
               Expanded(
@@ -177,11 +177,11 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
                   padding: EdgeInsets.zero,
                   controller: _titleController,
                   textStyle: AppTextStyle.generate(
-                    ScreenAdapterUtils.setSp(15),
+                    15 * 2.sp,
                   ),
                   hint: "请输入发票抬头",
-                  hintStyle: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
-                      color: Colors.grey[300]),
+                  hintStyle:
+                      AppTextStyle.generate(15 * 2.sp, color: Colors.grey[300]),
                 ),
               ),
             ],
@@ -195,7 +195,7 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
                     width: rSize(80),
                     child: Text(
                       "发票税号",
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
+                      style: AppTextStyle.generate(15 * 2.sp,
                           color: Colors.grey[500], fontWeight: FontWeight.w300),
                     )),
                 Expanded(
@@ -203,11 +203,10 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
                     padding: EdgeInsets.zero,
                     controller: _TFNController,
                     textStyle: AppTextStyle.generate(
-                      ScreenAdapterUtils.setSp(15),
+                      15 * 2.sp,
                     ),
                     hint: "请输入税号",
-                    hintStyle: AppTextStyle.generate(
-                        ScreenAdapterUtils.setSp(15),
+                    hintStyle: AppTextStyle.generate(15 * 2.sp,
                         color: Colors.grey[300]),
                   ),
                 ),

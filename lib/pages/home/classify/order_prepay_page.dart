@@ -197,8 +197,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         Text(
           "创建时间: ${_model.data.createdAt}",
           textAlign: TextAlign.center,
-          style: AppTextStyle.generate(ScreenAdapterUtils.setSp(15),
-              color: Colors.grey),
+          style: AppTextStyle.generate(15 * 2.sp, color: Colors.grey),
         ),
         Container(
           height: rSize(50),
@@ -214,11 +213,11 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
           widgetTitle: RichText(
             text: TextSpan(
                 text: "余额支付 ",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(17)),
+                style: AppTextStyle.generate(17 * 2.sp),
                 children: [
                   TextSpan(
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                          color: Colors.grey),
+                      style:
+                          AppTextStyle.generate(14 * 2.sp, color: Colors.grey),
                       text:
                           "(可用余额: ￥${_recookFundModel == null ? "--" : _recookFundModel.data.amount})")
                 ]),
@@ -254,7 +253,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
               EdgeInsets.symmetric(horizontal: rSize(40), vertical: rSize(150)),
           child: CustomImageButton(
             title: "确认支付",
-            fontSize: ScreenAdapterUtils.setSp(16),
+            fontSize: 16 * 2.sp,
             padding: EdgeInsets.symmetric(vertical: rSize(8)),
             borderRadius: BorderRadius.all(Radius.circular(10)),
             backgroundColor: AppColor.themeColor,
@@ -274,12 +273,12 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
       child: RichText(
           textAlign: TextAlign.center,
           text: TextSpan(
-              style: AppTextStyle.generate(ScreenAdapterUtils.setSp(22),
-                  fontWeight: FontWeight.w500),
+              style:
+                  AppTextStyle.generate(22 * 2.sp, fontWeight: FontWeight.w500),
               text: "￥",
               children: [
                 TextSpan(
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(33),
+                    style: AppTextStyle.generate(33 * 2.sp,
                         fontWeight: FontWeight.w500),
                     text: _model.data.actualTotalAmount.toString())
               ])),
@@ -309,8 +308,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
                     widgetTitle ??
                         Text(
                           title,
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(17)),
+                          style: AppTextStyle.generate(17 * 2.sp),
                         ),
                     Spacer(),
                     Icon(

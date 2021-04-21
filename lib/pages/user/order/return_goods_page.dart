@@ -133,7 +133,7 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
               padding: EdgeInsets.only(top: rSize(8), left: rSize(8)),
               child: Text(
                 "您选择退货的商品:",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+                style: AppTextStyle.generate(13 * 2.sp,
                     fontWeight: FontWeight.w500),
               )),
           MediaQuery.removePadding(
@@ -166,7 +166,7 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
   //       children: <Widget>[
   //         Text(
   //           "请填写快递信息:",
-  //           style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+  //           style: AppTextStyle.generate(13*2.sp,
   //               fontWeight: FontWeight.w500),
   //         ),
   //         SCTile.normalTile("快递公司",
@@ -198,18 +198,15 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
                   text: TextSpan(children: [
                     TextSpan(
                         text: "退货原因",
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(14),
+                        style: AppTextStyle.generate(14 * 2.sp,
                             color: Colors.black)),
                     TextSpan(
                         text: "*",
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(14),
+                        style: AppTextStyle.generate(14 * 2.sp,
                             color: AppColor.themeColor)),
                     TextSpan(
                         text: ":",
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(14),
+                        style: AppTextStyle.generate(14 * 2.sp,
                             color: Colors.black)),
                   ]),
                 ),
@@ -219,7 +216,7 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
                   _selectReasonModel == null
                       ? "选择原因"
                       : _selectReasonModel.content,
-                  style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                  style: AppTextStyle.generate(14 * 2.sp,
                       color: _selectReasonModel != null
                           ? Colors.black
                           : Colors.grey)),
@@ -243,16 +240,16 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
               text: TextSpan(children: [
                 TextSpan(
                     text: "退货原因",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                        color: Colors.black)),
+                    style:
+                        AppTextStyle.generate(14 * 2.sp, color: Colors.black)),
                 TextSpan(
                     text: "*",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                    style: AppTextStyle.generate(14 * 2.sp,
                         color: AppColor.themeColor)),
                 TextSpan(
                     text: ":",
-                    style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                        color: Colors.black)),
+                    style:
+                        AppTextStyle.generate(14 * 2.sp, color: Colors.black)),
               ]),
             ),
           ),
@@ -267,10 +264,10 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
                 maxLength: 50,
                 hint: "请填写退货原因200字以内",
                 controller: _reasonController,
-                hintStyle: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                    color: Colors.grey[400]),
+                hintStyle:
+                    AppTextStyle.generate(14 * 2.sp, color: Colors.grey[400]),
                 textStyle: AppTextStyle.generate(
-                  ScreenAdapterUtils.setSp(14),
+                  14 * 2.sp,
                   color: Colors.black,
                 ),
               ),
@@ -314,7 +311,7 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
                       goods.goodsName,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
+                      style: AppTextStyle.generate(14 * 2.sp,
                           fontWeight: FontWeight.w300),
                     ),
                     Padding(
@@ -323,8 +320,7 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
                         goods.skuName,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.generate(
-                            ScreenAdapterUtils.setSp(13),
+                        style: AppTextStyle.generate(13 * 2.sp,
                             color: Colors.grey[600],
                             fontWeight: FontWeight.w300),
                       ),
@@ -336,8 +332,7 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
                           "￥ ${goods.unitPrice}",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(14),
+                          style: AppTextStyle.generate(14 * 2.sp,
                               color: AppColor.priceColor),
                         ),
                       ],
@@ -375,8 +370,7 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
                         children: <Widget>[
                           Text(
                             "请选择快递公司:",
-                            style: AppTextStyle.generate(
-                                ScreenAdapterUtils.setSp(14),
+                            style: AppTextStyle.generate(14 * 2.sp,
                                 fontWeight: FontWeight.w500),
                           ),
                           Spacer(),
@@ -529,7 +523,7 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
               padding: EdgeInsets.only(top: rSize(8), left: rSize(8)),
               child: Text(
                 "上传凭证",
-                style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13),
+                style: AppTextStyle.generate(13 * 2.sp,
                     fontWeight: FontWeight.w500),
               )),
           _imageSelect()
@@ -659,8 +653,7 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
                         children: <Widget>[
                           Text(
                             "请选择退货原因:",
-                            style: AppTextStyle.generate(
-                                ScreenAdapterUtils.setSp(14),
+                            style: AppTextStyle.generate(14 * 2.sp,
                                 fontWeight: FontWeight.w500),
                           ),
                           Spacer(),

@@ -14,15 +14,13 @@ import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/input_view.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SCTile {
-  static TextStyle _titleStyle = AppTextStyle.generate(
-      ScreenAdapterUtils.setSp(15),
-      fontWeight: FontWeight.w400);
-  static TextStyle _subtitleStyle = AppTextStyle.generate(
-      ScreenAdapterUtils.setSp(14),
-      color: Colors.grey[600],
-      fontWeight: FontWeight.w400);
+  static TextStyle _titleStyle =
+      AppTextStyle.generate(15 * 2.sp, fontWeight: FontWeight.w400);
+  static TextStyle _subtitleStyle = AppTextStyle.generate(14 * 2.sp,
+      color: Colors.grey[600], fontWeight: FontWeight.w400);
 
   static normalTile(String title,
       {VoidCallback listener,
@@ -85,7 +83,7 @@ class SCTile {
             child: Container(
               margin: divideMargin,
               color: Colors.grey[300],
-              height: ScreenAdapterUtils.setWidth(0.8),
+              height: 0.8 * 2.w,
             ),
           )
         ],
@@ -119,8 +117,7 @@ class SCTile {
               textStyle: subtitleStyle ?? _subtitleStyle,
               showClear: false,
               hintStyle: hintStyle ??
-                  AppTextStyle.generate(ScreenAdapterUtils.setSp(14),
-                      color: Colors.grey[300]),
+                  AppTextStyle.generate(14 * 2.sp, color: Colors.grey[300]),
               hint: hint,
               textAlign: textAlign,
             ),
@@ -145,7 +142,7 @@ class SCTile {
           title,
           style: TextStyle(
             color: Color(0xFF333333),
-            fontSize: ScreenAdapterUtils.setSp(16),
+            fontSize: 16 * 2.sp,
           ),
         ),
         Text(

@@ -73,7 +73,7 @@ class PostTimeBannerInfo {
       ui.ParagraphBuilder infoParagraphBuilder = ui.ParagraphBuilder(
         ui.ParagraphStyle(
           textAlign: TextAlign.left,
-          fontSize: ScreenAdapterUtils.setSp(14),
+          fontSize: 14 * 2.sp,
           textDirection: TextDirection.ltr,
           maxLines: 1,
         ),
@@ -102,7 +102,7 @@ class PostTimeBannerInfo {
       ui.ParagraphBuilder infoParagraphBuilder = ui.ParagraphBuilder(
         ui.ParagraphStyle(
           textAlign: TextAlign.center,
-          fontSize: ScreenAdapterUtils.setSp(14),
+          fontSize: 14 * 2.sp,
           textDirection: TextDirection.ltr,
           maxLines: 1,
         ),

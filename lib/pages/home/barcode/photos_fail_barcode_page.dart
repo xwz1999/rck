@@ -76,7 +76,7 @@ class _PhotosFailBarcodePageState
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           Container(
-            height: ScreenAdapterUtils.setHeight(150),
+            height: 150 * 2.h,
             width: MediaQuery.of(context).size.width,
             child: Image.file(
               _image,
@@ -89,8 +89,7 @@ class _PhotosFailBarcodePageState
             padding: EdgeInsets.only(left: 30, top: 20),
             child: Text(
               _message == null ? "商品未录入" : _message,
-              style: TextStyle(
-                  color: Colors.black, fontSize: ScreenAdapterUtils.setSp(22)),
+              style: TextStyle(color: Colors.black, fontSize: 22 * 2.sp),
             ),
           ),
           _codeWidget(),
@@ -101,7 +100,7 @@ class _PhotosFailBarcodePageState
               top: 100,
             ),
             child: CustomImageButton(
-              height: ScreenAdapterUtils.setHeight(36),
+              height: 36 * 2.h,
               backgroundColor: AppColor.themeColor,
               title: "重新上传",
               color: Colors.white,
@@ -130,7 +129,7 @@ class _PhotosFailBarcodePageState
               children: <Widget>[
                 Expanded(
                   child: CustomImageButton(
-                    height: ScreenAdapterUtils.setHeight(36),
+                    height: 36 * 2.h,
                     title: "切换扫描",
                     color: buttonColor,
                     border: Border.all(
@@ -148,7 +147,7 @@ class _PhotosFailBarcodePageState
                 ),
                 Expanded(
                   child: CustomImageButton(
-                    height: ScreenAdapterUtils.setHeight(36),
+                    height: 36 * 2.h,
                     title: "返回首页",
                     color: buttonColor,
                     border: Border.all(
@@ -183,9 +182,7 @@ class _PhotosFailBarcodePageState
                   alignment: Alignment.center,
                   child: Text(
                     "扫码结果",
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: ScreenAdapterUtils.setSp(16)),
+                    style: TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
                   ),
                 ),
                 Container(
@@ -199,7 +196,7 @@ class _PhotosFailBarcodePageState
                       _code,
                       style: TextStyle(
                           color: Colors.black.withOpacity(0.5),
-                          fontSize: ScreenAdapterUtils.setSp(15)),
+                          fontSize: 15 * 2.sp),
                     ),
                   ),
                 ),
