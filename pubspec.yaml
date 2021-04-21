@@ -39,19 +39,20 @@ dependencies:
   #flutter_audio_player: 0.1.2
   just_audio: ^0.7.3
   # 第三方分享功能
+  ## 解决了fluwx冲突的问题
   sharesdk_plugin:
     git:
-      url: http://159.75.73.143:8080/third_packages/ShareSDK-For-Flutter
+      url: https://github.com/customPub/ShareSDK-For-Flutter
       path: sharesdk_plugin
 
   # 展示二维码
   qr_flutter: ^3.2.0
   # 二维码
   # barcode_scan: ^1.0.0
+  ## unknow bug fix
   flutter_qr_reader:
     git:
-      url: https://gitee.com/laiiihz/flutter_qr_reader
-      ref: 3e4824752f4fa50c30ecd415341a3a779db01922
+      url: https://github.com/customPub/flutter_qr_reader
 
   webview_flutter: ^1.0.7
   # 网页组件
@@ -165,7 +166,7 @@ dependencies:
   # 图片选择
   photo:
     git:
-      url: http://159.75.73.143:8080/laiiihz/flutter_photo
+      url: https://github.com/customPub/flutter_photo
       ref: patch-1
   # wechat_assets_picker: ^2.2.0+2
 
@@ -190,13 +191,13 @@ dependencies:
   #腾讯直播
   tencent_live_fluttify:
     git:
-      url: http://test.akuhotel.com:8099/laiiihz/tencent_live_fluttify.git
+      url: https://github.com/customPub/tencent_live_fluttify
   #腾讯IM
   #TODO 已经将错误提交到上游代码，后期请使用新版本
   #more at https://github.com/JiangJuHong/FlutterTencentImPlugin/pull/101
   tencent_im_plugin:
     git:
-      url: https://gitee.com/laiiihz/FlutterTencentImPlugin
+      url: https://github.com/customPub/tencent_im_plugin
   #瀑布流
   waterfall_flow: ^2.0.3
   #相机
@@ -206,7 +207,7 @@ dependencies:
   #视频剪辑
   video_trimmer:
     git:
-      url: http://159.75.73.143:8080/laiiihz/video_trimmer
+      url: https://github.com/customPub/video_trimmer
 
   #点赞组件
   many_like: ^0.0.6

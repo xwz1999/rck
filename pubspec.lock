@@ -477,9 +477,9 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "3e4824752f4fa50c30ecd415341a3a779db01922"
+      ref: HEAD
       resolved-ref: "3e4824752f4fa50c30ecd415341a3a779db01922"
-      url: "https://gitee.com/laiiihz/flutter_qr_reader"
+      url: "https://github.com/customPub/flutter_qr_reader"
     source: git
     version: "1.0.2"
   flutter_redux:
@@ -915,7 +915,7 @@ packages:
       path: "."
       ref: patch-1
       resolved-ref: "8109f390d338d501d0734343dd0bc3690b1be8c5"
-      url: "http://159.75.73.143:8080/laiiihz/flutter_photo"
+      url: "https://github.com/customPub/flutter_photo"
     source: git
     version: "0.5.0"
   photo_manager:
@@ -1085,7 +1085,7 @@ packages:
       path: sharesdk_plugin
       ref: HEAD
       resolved-ref: "85593f87ec2e1f28834c3190cefd76f6e1587887"
-      url: "http://159.75.73.143:8080/third_packages/ShareSDK-For-Flutter"
+      url: "https://github.com/customPub/ShareSDK-For-Flutter"
     source: git
     version: "1.2.9"
   shelf:
@@ -1183,7 +1183,7 @@ packages:
       path: "."
       ref: HEAD
       resolved-ref: d615840184e52056a80aa950058b68677e403aa0
-      url: "https://gitee.com/laiiihz/FlutterTencentImPlugin"
+      url: "https://github.com/customPub/tencent_im_plugin"
     source: git
     version: "0.2.44"
   tencent_live_fluttify:
@@ -1192,7 +1192,7 @@ packages:
       path: "."
       ref: HEAD
       resolved-ref: cc34f13777b2eff58523fef3a96a827dc3bfda86
-      url: "http://test.akuhotel.com:8099/laiiihz/tencent_live_fluttify.git"
+      url: "https://github.com/customPub/tencent_live_fluttify"
     source: git
     version: "1.0.0"
   term_glyph:
@@ -1320,7 +1320,7 @@ packages:
       path: "."
       ref: HEAD
       resolved-ref: ad8c04b159cfa7c1be2fbf73b68776beb04cd8f7
-      url: "http://159.75.73.143:8080/laiiihz/video_trimmer"
+      url: "https://github.com/customPub/video_trimmer"
     source: git
     version: "0.3.5"
   vxstate:
