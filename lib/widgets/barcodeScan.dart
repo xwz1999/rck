@@ -112,14 +112,17 @@ class _BarcodeScanPageState extends BaseStoreState<BarcodeScanPage> {
     if (!TextUtils.isEmpty(data)) {
       _playSound();
       _key.currentState.stopScan();
-      Future.delayed(Duration(milliseconds: 500), () {
-        _getGoodsWithCode(data, (goodsId) {
-          Get.to(() => QRScarerResultPage());
-          // AppRouter.pushAndReplaced(globalContext, RouteName.COMMODITY_PAGE,
-          //     arguments: CommodityDetailPage.setArguments(int.parse(goodsId)));
-          return;
-        }, image: image);
-      });
+
+      Get.off(() => QRScarerResultPage(
+            code: data,
+          ));
+      // Future.delayed(Duration(milliseconds: 500), () {
+      //   _getGoodsWithCode(data, (goodsId) {
+      //     // AppRouter.pushAndReplaced(globalContext, RouteName.COMMODITY_PAGE,
+      //     //     arguments: CommodityDetailPage.setArguments(int.parse(goodsId)));
+      //     return;
+      //   }, image: image);
+      // });
     } else {
       _key.currentState.startScan();
     }

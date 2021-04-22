@@ -639,7 +639,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                           arguments: BrandGoodsListPage.setArguments(
                               model.brandId, model.brandName));
                     },
-                    model: model
+                    model: model,
                     buyClick: () {
                       AppRouter.push(context, RouteName.COMMODITY_PAGE,
                           arguments:

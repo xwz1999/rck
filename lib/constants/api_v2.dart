@@ -93,6 +93,9 @@ class UserAPI {
   String get securePhone => '/v2/app/user/secret';
 
   String get userSaleAmount => '/v2/app/user/sale';
+
+  ///二维码扫描
+  String get getScanResult => '/v2/app/operate/scan';
 }
 
 class BenefitAPI {
