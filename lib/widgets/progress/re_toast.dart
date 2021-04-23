@@ -40,4 +40,11 @@ class ReToast {
         toastBuilder: (func) => child,
         enableKeyboardSafeArea: false,
       );
+  static Function warning({String text}) {
+    return BotToast.showCustomText(toastBuilder: (func) {
+      return WarningDialog(
+        text: text,
+      );
+    });
+  }
 }

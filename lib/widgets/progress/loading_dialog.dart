@@ -169,3 +169,60 @@ class StatusDialog extends Dialog {
     return icon;
   }
 }
+
+class WarningDialog extends Dialog {
+  String text;
+  
+  WarningDialog({Key key, @required this.text}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+        color: Colors.transparent,
+        child: WillPopScope(
+          onWillPop: () => new Future.value(false),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              new Container(
+//                height: rSize(100),
+                constraints: BoxConstraints(
+                  minWidth: rSize(200),
+                ),
+                padding: new EdgeInsets.only(
+                    top: rSize(5),
+                    bottom: rSize(5),
+                    left: rSize(15),
+                    right: rSize(15)),
+                decoration: new BoxDecoration(
+                  color: Colors.red,
+                  //用一个BoxDecoration装饰器提供背景图片
+                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
+                ),
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Offstage(
+                      offstage: TextUtils.isEmpty(text),
+                      child: Container(
+                        child: new Container(
+                            constraints: BoxConstraints(maxWidth: 200),
+                            child: new Text(text,
+                                textAlign: TextAlign.center,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyle.generate(15 * 2.sp,
+                                    fontWeight: FontWeight.w300,
+                                    color: Colors.white))),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          )
+        ));
+  }
+}
