@@ -10,8 +10,10 @@ import 'package:just_audio/just_audio.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
+import 'package:recook/constants/api_v2.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/base_model.dart';
+import 'package:recook/models/scan_result_model.dart';
 import 'package:recook/pages/home/barcode/fail_barcode_page.dart';
 import 'package:recook/pages/home/barcode/photos_fail_barcode_page.dart';
 import 'package:recook/pages/home/barcode/qr_scaner_result_page.dart';
@@ -19,6 +21,7 @@ import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/utils/text_utils.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 
 // import 'package:flutter_audio_player/flutter_audio_player.dart';
 
@@ -112,17 +115,9 @@ class _BarcodeScanPageState extends BaseStoreState<BarcodeScanPage> {
     if (!TextUtils.isEmpty(data)) {
       _playSound();
       _key.currentState.stopScan();
-
-      Get.off(() => QRScarerResultPage(
-            code: data,
-          ));
-      // Future.delayed(Duration(milliseconds: 500), () {
-      //   _getGoodsWithCode(data, (goodsId) {
-      //     // AppRouter.pushAndReplaced(globalContext, RouteName.COMMODITY_PAGE,
-      //     //     arguments: CommodityDetailPage.setArguments(int.parse(goodsId)));
-      //     return;
-      //   }, image: image);
-      // });
+      Future.delayed(Duration(milliseconds: 500), () async {
+        await _getGoodsWithCode(data, image: image);
+      });
     } else {
       _key.currentState.startScan();
     }
@@ -133,9 +128,10 @@ class _BarcodeScanPageState extends BaseStoreState<BarcodeScanPage> {
     player.play();
   }
 
-  _getGoodsWithCode(String code, Function callBack, {File image}) async {
-    ResultData resultData = await HttpManager.post(GoodsApi.goods_code_search, {
-      "code": code,
+  _getGoodsWithCode(String code, {File image}) async {
+    ResultData resultData =
+        await HttpManager.post(APIV2.userAPI.getScanResult, {
+      "skuCode": code,
     });
     if (!resultData.result) {
       pushToFailPage(code, resultData.msg, image);
@@ -146,11 +142,19 @@ class _BarcodeScanPageState extends BaseStoreState<BarcodeScanPage> {
       pushToFailPage(code, model.msg, image);
       return;
     }
-    String goodsId = resultData.data['data']['goodsId'].toString();
-    if (TextUtils.isEmpty(goodsId)) {
+    // String goodsId = resultData.data['data']['goodsId'].toString();
+    // if (TextUtils.isEmpty(goodsId)) {
+    //   return;
+    // }
+    ScanResultModel scanResultModel =
+        ScanResultModel.fromMap(resultData.data['data']);
+    if (scanResultModel == null) {
+      pushToFailPage(code, model.msg, image);
       return;
     }
-    callBack(goodsId);
+    Get.off(() => QRScarerResultPage(
+          model: scanResultModel,
+        ));
     return;
   }
 

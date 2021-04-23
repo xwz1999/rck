@@ -1,62 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:recook/constants/api_v2.dart';
-import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/scan_result_model.dart';
 import 'package:recook/pages/home/widget/plus_minus_view.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:recook/const/resource.dart';
 
 class QRScarerResultPage extends StatefulWidget {
-  final String code;
-  QRScarerResultPage({Key key, this.code}) : super(key: key);
+  final ScanResultModel model;
+  QRScarerResultPage({Key key, this.model}) : super(key: key);
 
   @override
   _QRScarerResultPageState createState() => _QRScarerResultPageState();
 }
 
 class _QRScarerResultPageState extends State<QRScarerResultPage> {
-  ScanResultModel _scanResultModel;
-  bool _onload = true;
-  GSRefreshController _refreshController;
   int _goodsCount = 1;
   @override
   void initState() {
     super.initState();
-    _refreshController = GSRefreshController(initialRefresh: true);
   }
 
   @override
   void dispose() {
     super.dispose();
-    _refreshController?.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return RecookScaffold(
       title: '扫码购物',
-      body: RefreshWidget(
-        controller: _refreshController,
-        onRefresh: () async {
-          _scanResultModel = await _getScanModel();
-          if (_scanResultModel != null) {
-            _onload = false;
-          } else {
-            ReToast.err(text: '未获取数据');
-          }
-          setState(() {});
-        },
-        body: _onload
-            ? emptyWidget()
-            : ListView(
-                padding: EdgeInsets.symmetric(vertical: 22.w, horizontal: 20.w),
-                children: [_goodsCard(_scanResultModel)],
-              ),
+      body: ListView(
+        padding: EdgeInsets.symmetric(vertical: 22.w, horizontal: 20.w),
+        children: [_goodsCard(widget.model)],
       ),
       bottomNavi: Row(
         children: [_shopButton().expand(), 2.widthBox, _buyButton().expand()],
@@ -95,7 +73,7 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
           children: [
             FadeInImage.assetNetwork(
               placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-              image: model.brandImg,
+              image: model.goodsImg,
               width: 200.w,
               height: 200.w,
               fit: BoxFit.contain,
@@ -103,10 +81,12 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
             20.w.widthBox,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 model.goodsName.text
                     .size(28.sp)
                     .bold
+                    .lineHeight(1)
                     .color(Color(0xFF141414))
                     .maxLines(2)
                     .overflow(TextOverflow.ellipsis)
@@ -126,7 +106,7 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
                 30.w.heightBox,
                 Row(
                   children: [
-                    '¥'
+                    '¥ '
                         .richText
                         .withTextSpanChildren([
                           '${model.discount.toStringAsFixed(0)}.'
@@ -135,10 +115,9 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
                               .color(Color(0xFFC92219))
                               .bold
                               .make(),
-                          ((model.discount.toDouble() -
-                                      model.commission.toInt()) *
-                                  100)
-                              .toStringAsFixed(0)
+                          model.discount
+                              .toStringAsFixed(2)
+                              .split('.')[1]
                               .textSpan
                               .color(Color(0xFFC92219))
                               .size(24.sp)
@@ -150,22 +129,26 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
                         .bold
                         .make(),
                     8.w.widthBox,
-                    '赚:${model.commission.toStringAsFixed(2)}'.text.color(Color(0xFFC92219)).size(24.sp).make()
-                    // Spacer(),
-                    // PlusMinusView(
-                    //   onValueChanged: (value) {
-                    //     _goodsCount = value;
-                    //     setState(() {});
-                    //   },
-                    //   initialValue: 1,
-                    //   onInputComplete: (text) {
-                    //     _goodsCount = int.parse(text);
-                    //   },
-                    // )
+                    '赚${model.commission.toStringAsFixed(2)}'
+                        .text
+                        .color(Color(0xFFC92219))
+                        .bold
+                        .size(24.sp)
+                        .make(),
+                    PlusMinusView(
+                      onValueChanged: (value) {
+                        _goodsCount = value;
+                      },
+                      initialValue: 1,
+                      maxValue: getMaxGoodsCount,
+                      onInputComplete: (text) {
+                        _goodsCount = int.parse(text);
+                      },
+                    ).expand()
                   ],
                 )
               ],
-            ),
+            ).expand(),
           ],
         )
       ],
@@ -182,16 +165,12 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
     return Container();
   }
 
-  Future _getScanModel() async {
-    ResultData resultData =
-        await HttpManager.post(APIV2.userAPI.getScanResult, {
-      "skuCode": widget.code,
-    });
-    if (resultData.data == null) {
-      ReToast.err(text: resultData.msg);
-      return;
+  int get getMaxGoodsCount {
+    if (widget.model?.inventory == null) {
+      ReToast.err(text: '库存数量错误');
+      return 1;
     } else {
-      return ScanResultModel.fromMap(resultData.data['data']);
+      return widget.model.inventory < 50 ? widget.model.inventory : 50;
     }
   }
 

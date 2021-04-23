@@ -54,9 +54,9 @@ class _PlusMinusViewState extends State<PlusMinusView> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.initialValue != null) {
-      _controller.text = widget.initialValue.toString();
-    }
+    // if (widget.initialValue != null) {
+    //   _controller.text = widget.initialValue.toString();
+    // }
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {},
