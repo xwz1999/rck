@@ -152,9 +152,11 @@ class _BarcodeScanPageState extends BaseStoreState<BarcodeScanPage> {
       pushToFailPage(code, model.msg, image);
       return;
     }
-    Get.off(() => QRScarerResultPage(
-          model: scanResultModel,
-        ));
+    Get.off(
+      () => QRScarerResultPage(
+        model: scanResultModel,
+      ),
+    );
     return;
   }
 

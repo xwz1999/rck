@@ -964,7 +964,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
     HttpResultModel<SelfPickupStoreListModel> model =
         await _presenterImpl.getStoreList();
     if (!model.result) {
-      GSDialog.of(context).showError(globalContext, model.msg);
+      // GSDialog.of(context).showError(globalContext, model.msg);
+      ReToast.err(text: model.msg);
       return;
     }
     _storeList = model.data.data;
@@ -1057,16 +1058,18 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
     if (method == 1 && name == _selectedStoreName) {
       return;
     }
-    GSDialog.of(context).showLoadingDialog(context, "");
+    // GSDialog.of(context).showLoadingDialog(context, "");
+    ReToast.loading(text: '');
     HttpResultModel<OrderPreviewModel> resultModel =
         await _presenterImpl.changeShippingMethod(
             UserManager.instance.user.info.id,
             _orderModel.data.id,
             method,
             storeId);
-    GSDialog.of(context).dismiss(context);
+    // GSDialog.of(context).dismiss(context);
     if (!resultModel.result) {
-      GSDialog.of(context).showError(globalContext, resultModel.msg);
+      // GSDialog.of(context).showError(globalContext, resultModel.msg);
+      ReToast.err(text: resultModel.msg);
       return;
     }
     _orderModel = resultModel.data;

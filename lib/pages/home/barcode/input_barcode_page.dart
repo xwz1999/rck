@@ -4,10 +4,12 @@ import 'package:get/get.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
+import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/base_model.dart';
+import 'package:recook/models/scan_result_model.dart';
 import 'package:recook/pages/home/barcode/qr_scaner_result_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -181,8 +183,9 @@ class _InputBarcodePageState extends BaseStoreState<InputBarcodePage> {
   }
 
   _getGoodsWithCode(String code) async {
-    ResultData resultData = await HttpManager.post(GoodsApi.goods_code_search, {
-      "code": code,
+    ResultData resultData =
+        await HttpManager.post(APIV2.userAPI.getScanResult, {
+      "skuCode": code,
     });
     if (!resultData.result) {
       showError(resultData.msg);
@@ -193,12 +196,22 @@ class _InputBarcodePageState extends BaseStoreState<InputBarcodePage> {
       showError(model.msg);
       return;
     }
-    String goodsId = resultData.data['data']['goodsId'].toString();
-    if (TextUtils.isEmpty(goodsId)) {
+    // String goodsId = resultData.data['data']['goodsId'].toString();
+    // if (TextUtils.isEmpty(goodsId)) {
+    //   return;
+    // }
+    // AppRouter.pushAndReplaced(globalContext, RouteName.COMMODITY_PAGE, arguments: CommodityDetailPage.setArguments(int.parse(goodsId)));
+    ScanResultModel scanResultModel =
+        ScanResultModel.fromMap(resultData.data['data']);
+    if (scanResultModel == null) {
+      showError(model.msg);
       return;
     }
-    // AppRouter.pushAndReplaced(globalContext, RouteName.COMMODITY_PAGE, arguments: CommodityDetailPage.setArguments(int.parse(goodsId)));
-    Get.to(() => QRScarerResultPage());
+    Get.off(
+      () => QRScarerResultPage(
+        model: scanResultModel,
+      ),
+    );
     return;
   }
 }

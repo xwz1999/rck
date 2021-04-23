@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/order_preview_model.dart';
 import 'package:recook/models/scan_result_model.dart';
+import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:recook/pages/home/classify/order_preview_page.dart';
+import 'package:recook/pages/home/classify/sku_choose_page.dart';
 import 'package:recook/pages/home/widget/plus_minus_view.dart';
+import 'package:recook/utils/app_router.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
+import 'package:recook/widgets/progress/sc_dialog.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:recook/widgets/toast.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:recook/const/resource.dart';
 
@@ -18,6 +28,7 @@ class QRScarerResultPage extends StatefulWidget {
 
 class _QRScarerResultPageState extends State<QRScarerResultPage> {
   int _goodsCount = 1;
+  SkuChooseModel _chooseModel;
   @override
   void initState() {
     super.initState();
@@ -167,11 +178,14 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
 
   int get getMaxGoodsCount {
     if (widget.model?.inventory == null) {
-      ReToast.err(text: '库存数量错误');
-      return 1;
-    } else {
-      return widget.model.inventory < 50 ? widget.model.inventory : 50;
+      ReToast.warning(text: '库存数量错误');
+      return 0;
     }
+    if (widget.model.inventory == 0) {
+      ReToast.warning(text: '库存数量为0');
+      return 0;
+    }
+    return widget.model.inventory < 50 ? widget.model.inventory : 50;
   }
 
   Widget _buyButton() {
@@ -185,8 +199,32 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(30), bottomRight: Radius.circular(30))),
       fontSize: 32.sp,
-      onPressed: () {},
+      onPressed: getMaxGoodsCount == 0
+          ? null
+          : () {
+              _createOrder(widget.model.skuID, widget.model.skuName,
+                  _goodsCount, context);
+            },
     );
+  }
+
+  Future<dynamic> _createOrder(
+      int skuId, String skuName, int quantity, BuildContext context,
+      {bool isLive = false, int liveId = 0}) async {
+    OrderPreviewModel order = await GoodsDetailModelImpl.createOrderPreview(
+      UserManager.instance.user.info.id,
+      skuId,
+      skuName,
+      quantity,
+      liveId: isLive ? liveId : null,
+    );
+    if (order.code != HttpStatus.SUCCESS) {
+      ReToast.err(text: order.msg);
+      Get.back();
+      return;
+    }
+    AppRouter.push(context, RouteName.GOODS_ORDER_PAGE,
+        arguments: GoodsOrderPage.setArguments(order));
   }
 
   Widget _shopButton() {
