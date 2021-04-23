@@ -12,6 +12,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:common_utils/common_utils.dart';
+import 'package:get/get.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -1368,7 +1369,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 //     return;
                 //   }
                 // }
-                GSDialog.of(context).showLoadingDialog(context, "");
+                ReToast.loading(text: '');
                 _addToShoppingCart(context, skuModel);
               }
             },
@@ -1418,11 +1419,10 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       skuModel.num,
       liveId: isLive ? liveId : null,
     );
-    GSDialog.of(context).dismiss(context);
-    Navigator.pop(context);
     if (order.code != HttpStatus.SUCCESS) {
       // Toast.showError(order.msg);
       Toast.showInfo(order.msg, color: Colors.black87);
+      Get.back();
       return;
     }
     AppRouter.push(context, RouteName.GOODS_ORDER_PAGE,
