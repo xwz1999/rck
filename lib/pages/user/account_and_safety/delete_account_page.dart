@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 import 'package:oktoast/oktoast.dart';
 
@@ -7,6 +8,7 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/user/account_and_safety/delete_account_validation_page.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 
@@ -55,36 +57,37 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
                   padding: EdgeInsets.zero,
                   color: Color(0xFFF0F0F0),
                   onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => NormalTextDialog(
-                        title: '注销提示',
-                        content: '确定注销账户？',
-                        items: ['取消'],
-                        type: NormalTextDialogType.delete,
-                        listener: (index) {
-                          switch (index) {
-                            case 0:
-                              Navigator.pop(context);
-                              break;
-                          }
-                        },
-                        deleteItem: '确定',
-                        deleteListener: () {
-                          //TODO 注销账号
-                          HttpManager.post(UserApi.deleteAccount, {
-                            "user_id": UserManager.instance.user.info.id,
-                          }).then((value) {
-                            if (value.data['code'] == "SUCCESS") {
-                              UserManager.logout();
-                            } else {
-                              showToast('注销失败${value.data['msg']}');
-                              Navigator.pop(context);
-                            }
-                          });
-                        },
-                      ),
-                    );
+                    Get.to(() => DeleteAcountValidationPage());
+                    // showDialog(
+                    //   context: context,
+                    //   builder: (context) => NormalTextDialog(
+                    //     title: '注销提示',
+                    //     content: '确定注销账户？',
+                    //     items: ['取消'],
+                    //     type: NormalTextDialogType.delete,
+                    //     listener: (index) {
+                    //       switch (index) {
+                    //         case 0:
+                    //           Navigator.pop(context);
+                    //           break;
+                    //       }
+                    //     },
+                    //     deleteItem: '确定',
+                    //     deleteListener: () {
+                    //       //TODO 注销账号
+                    //       HttpManager.post(UserApi.deleteAccount, {
+                    //         "user_id": UserManager.instance.user.info.id,
+                    //       }).then((value) {
+                    //         if (value.data['code'] == "SUCCESS") {
+                    //           UserManager.logout();
+                    //         } else {
+                    //           showToast('注销失败${value.data['msg']}');
+                    //           Navigator.pop(context);
+                    //         }
+                    //       });
+                    //     },
+                    //   ),
+                    // );
                   },
                   textColor: Color(0xFF666666),
                   child: Padding(

@@ -96,6 +96,12 @@ class UserAPI {
 
   ///二维码扫描
   String get getScanResult => '/v2/app/operate/scan';
+
+  ///注销短信发送
+  String get getDeleteMessage => '/v2/app/message/destroy/send';
+
+  ///注销账户
+  String get deleteAccount => '/v2/app/user/operation/destroy';
 }
 
 class BenefitAPI {
