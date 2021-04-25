@@ -561,10 +561,22 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                                   widget.goodsDetail.data.storehouse == 3)
                               ? rHBox(rSize(4))
                               : SizedBox(),
-                          Text(
-                            "不支持7天无理由退换货",
-                            style: AppTextStyle.generate(13 * 2.sp,
-                                color: Color(0xff373737)),
+                          Row(
+                            children: [
+                              Text(
+                                "不支持7天无理由退换货",
+                                style: AppTextStyle.generate(13 * 2.sp,
+                                    color: Color(0xff373737)),
+                              ),
+                              (widget.goodsDetail.data.storehouse == 2 ||
+                                      widget.goodsDetail.data.storehouse == 3)
+                                  ? Text(
+                                      "｜ 不支持开发票",
+                                      style: AppTextStyle.generate(13 * 2.sp,
+                                          color: Color(0xff373737)),
+                                    )
+                                  : SizedBox(),
+                            ],
                           ),
                         ],
                       ),
