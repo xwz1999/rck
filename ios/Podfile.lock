@@ -21,6 +21,8 @@ PODS:
   - AMapFoundation (1.6.6)
   - AMapLocation (2.6.7):
     - AMapFoundation (~> 1.6.4)
+  - audio_session (0.0.1):
+    - Flutter
   - Bugly (2.5.90)
   - camera (0.0.1):
     - Flutter
@@ -87,12 +89,14 @@ PODS:
   - foundation_fluttify (0.0.1):
     - Flutter
   - HandyJSON (5.0.2)
-  - image_cropper (0.0.2):
+  - image_cropper (0.0.4):
     - Flutter
-    - TOCropViewController (~> 2.5.2)
+    - TOCropViewController (~> 2.6.0)
   - image_gallery_saver (1.5.0):
     - Flutter
   - image_picker (0.0.1):
+    - Flutter
+  - just_audio (0.0.1):
     - Flutter
   - LBXScan (2.5.1):
     - LBXScan/All (= 2.5.1)
@@ -217,7 +221,7 @@ PODS:
   - tobias (0.0.1):
     - AlipaySDK-iOS (~> 15.7.9)
     - Flutter
-  - TOCropViewController (2.5.5)
+  - TOCropViewController (2.6.0)
   - TXIMSDK_iOS (4.6.58)
   - TXLiteAVSDK_Professional (7.2.8927)
   - url_launcher (0.0.1):
@@ -235,6 +239,7 @@ PODS:
 
 DEPENDENCIES:
   - amap_flutter_location (from `.symlinks/plugins/amap_flutter_location/ios`)
+  - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - camera (from `.symlinks/plugins/camera/ios`)
   - clipboard_listener (from `.symlinks/plugins/clipboard_listener/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
@@ -251,6 +256,7 @@ DEPENDENCIES:
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - meiqia_plugin (from `.symlinks/plugins/meiqia_plugin/ios`)
   - openinstall_flutter_plugin (from `.symlinks/plugins/openinstall_flutter_plugin/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
@@ -299,6 +305,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   amap_flutter_location:
     :path: ".symlinks/plugins/amap_flutter_location/ios"
+  audio_session:
+    :path: ".symlinks/plugins/audio_session/ios"
   camera:
     :path: ".symlinks/plugins/camera/ios"
   clipboard_listener:
@@ -331,6 +339,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_gallery_saver/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
+  just_audio:
+    :path: ".symlinks/plugins/just_audio/ios"
   meiqia_plugin:
     :path: ".symlinks/plugins/meiqia_plugin/ios"
   openinstall_flutter_plugin:
@@ -372,6 +382,7 @@ SPEC CHECKSUMS:
   amap_flutter_location: 3e33b57f1aad80b0dfb4b399de857a1a9f071e62
   AMapFoundation: 2d012d9aaa7a5c0d387ddb1a8c5f03e1d6df29b8
   AMapLocation: a46c30d9930d0f3a3bd21139d8f845d10ac3f01d
+  audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   Bugly: 88bc32c0acc6fef7b74d610f0319ee7560d6b9fe
   camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
   clipboard_listener: 5bdabc3b4ebabf4b4055ca17aa97b9b4b55160e2
@@ -389,9 +400,10 @@ SPEC CHECKSUMS:
   fluwx: 07a55ed66bf3a4961e836a2a411b02dcada32902
   foundation_fluttify: 0c45145e3fad1fb99188e4979daed5b24cd9b278
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
-  image_cropper: 3c16d7651730ffe85897f5a1c4e2547e6b54989a
+  image_cropper: f1668dd8d2cad2d357955caad15a40547856edcb
   image_gallery_saver: 259eab68fb271cfd57d599904f7acdc7832e7ef2
   image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
+  just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   LBXScan: 90ca10d0c38fb4a5a6980d7782354f3f69f50093
   LBXZBarSDK: db826d1265fbb4fbdbb2f30d7d1e96142e32bfff
   libOpenInstallSDK: c0f724fcfabcbfe933774230b5738ca2744d9fba
@@ -416,7 +428,7 @@ SPEC CHECKSUMS:
   tencent_live_fluttify: 98821d3233cf13a47eadf1555ebd56b050e0a5ca
   Toaster: c3473963c78e8cabbf6ea6f11ad0fdaae6f54987
   tobias: 6872e2198dc30e17c10513b9ee114e28d099bc70
-  TOCropViewController: da59f531f8ac8a94ef6d6c0fc34009350f9e8bfe
+  TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
   TXIMSDK_iOS: d4231ccd8a045f54ca04d008dba46fdbf25687fb
   TXLiteAVSDK_Professional: 43ca7a2f8ad118c052162d961c8c02cd763d8467
   url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
@@ -426,6 +438,6 @@ SPEC CHECKSUMS:
   webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
   WechatOpenSDK: 6a4d1436c15b3b5fe2a0bd383f3046010186da44
 
-PODFILE CHECKSUM: dd0931f5fbd8283686724ad45274fce17c3e5bb5
+PODFILE CHECKSUM: c6a56d267dffea0219218982f38a1cc8d204035b
 
 COCOAPODS: 1.10.1
