@@ -314,18 +314,6 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                               model.brandId, model.brandName));
                     },
                     model: model,
-                    shareClick: () {
-                      String goodsTitle =
-                          "${model.priceDesc} | ${model.goodsName} | ${model.description}";
-                      ShareTool().goodsShare(context,
-                          goodsPrice: model.price.toStringAsFixed(2),
-                          goodsName: model.goodsName,
-                          goodsDescription: model.description,
-                          miniTitle: goodsTitle,
-                          miniPicurl: model.picture.url,
-                          amount: model.commission.toString(),
-                          goodsId: model.goodsId.toString());
-                    },
                     buyClick: () {
                       AppRouter.push(context, RouteName.COMMODITY_PAGE,
                           arguments:
@@ -498,7 +486,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container(
+                      Container( 
                         height: rSize(2),
                         color: Color(0xFFB8B8B8),
                         width: rSize(40),
@@ -542,7 +530,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                                     model.brandId, model.brandName));
                           },
                           model: model,
-                          
+                         
                           buyClick: () {
                             AppRouter.push(context, RouteName.COMMODITY_PAGE,
                                 arguments: CommodityDetailPage.setArguments(

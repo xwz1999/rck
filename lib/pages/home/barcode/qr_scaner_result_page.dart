@@ -278,6 +278,6 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
     UserManager.instance.refreshShoppingCart.value = true;
     UserManager.instance.refreshShoppingCartNumber.value = true;
     UserManager.instance.refreshShoppingCartNumberWithPage.value = true;
-    ReToast.success(text: model.msg);
+    ReToast.success(text: '加入成功');
   }
 }

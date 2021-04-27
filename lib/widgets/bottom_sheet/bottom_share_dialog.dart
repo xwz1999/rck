@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/bottom_sheet/custom_bottom_sheet.dart';
@@ -125,15 +126,22 @@ class ShareDialog {
       {List<PlatformItem> items,
       @required ShareAction action,
       Widget customTitle}) {
-    showCustomModalBottomSheet(
-        context: context,
-        builder: (context) {
-          return BottomShareWidget(
+    // showCustomModalBottomSheet(
+    //     context: context,
+    //     builder: (context) {
+    //       return BottomShareWidget(
+    //         customTitle: customTitle,
+    //         action: action,
+    //         items: items,
+    //       );
+    //     });
+    Get.bottomSheet(
+      BottomShareWidget(
             customTitle: customTitle,
             action: action,
             items: items,
-          );
-        });
+          ),
+    );
   }
 
   static dismiss(BuildContext context) {

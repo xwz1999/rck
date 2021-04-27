@@ -746,7 +746,7 @@ class GoodsItemWidget extends StatelessWidget {
     if (imagesModel.data.mainPhotos.length>1) {
       imgUrl = imagesModel.data.mainPhotos[1].url;
     } else {
-      imgUrl = imagesModel.data?.mainPhotos?.first ?? '';
+      imgUrl = imagesModel.data?.mainPhotos?.first?.url ?? '';
     }
     String goodsTitle =
         "￥${this.discountPrice} | ${this.goodsName} | ${this.description}";
