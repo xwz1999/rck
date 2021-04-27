@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
@@ -70,11 +71,14 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
       children: [
         Row(
           children: [
-            FadeInImage.assetNetwork(
-              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-              image: model.brandImg,
-              width: 44.w,
-              height: 44.w,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(4.w),
+              child: FadeInImage.assetNetwork(
+                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                image: Api.getImgUrl(model.brandImg),
+                width: 44.w,
+                height: 44.w,
+              ),
             ),
             20.w.widthBox,
             model.brandName.text
@@ -87,12 +91,15 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
         26.w.heightBox,
         Row(
           children: [
-            FadeInImage.assetNetwork(
-              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-              image: model.goodsImg,
-              width: 200.w,
-              height: 200.w,
-              fit: BoxFit.contain,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(10.w),
+              child: FadeInImage.assetNetwork(
+                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                image: Api.getImgUrl(model.goodsImg),
+                width: 200.w,
+                height: 200.w,
+                fit: BoxFit.contain,
+              ),
             ),
             20.w.widthBox,
             Column(
