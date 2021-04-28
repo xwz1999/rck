@@ -769,14 +769,15 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   }
 
   bool get _overseaNeedIdentifier {
-    for (var item in _orderModel.data.brands) {
-      for (var good in item.goods) {
-        if (good.storehouse == 2 || good.storehouse == 3) {
-          return true;
+    bool reslut = false;
+    _orderModel.data.brands.forEach((element) {
+      element.goods.forEach((v) {
+        if (v.storehouse == 2 || v.storehouse == 3) {
+          reslut = true;
         }
-      }
-    }
-    return false;
+      });
+    });
+    return reslut;
   }
 
   _allAmountTitle() {
@@ -793,21 +794,20 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
           Container(
               child: Text(
             "小计  ",
-            style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13.5),
-                fontWeight: FontWeight.w400),
+            style: AppTextStyle.generate(27.sp, fontWeight: FontWeight.w400),
           )),
           Expanded(
             child: Text(
               "(共${_orderModel.data.totalGoodsCount}件)",
               maxLines: 1,
-              style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13.5),
+              style: AppTextStyle.generate(27.sp,
                   color: Colors.grey[600], fontWeight: FontWeight.w300),
             ),
           ),
           Container(
               child: Text(
             "￥${_orderModel.data.goodsTotalAmount.toStringAsFixed(2)}",
-            style: AppTextStyle.generate(ScreenAdapterUtils.setSp(13.5),
+            style: AppTextStyle.generate(27.sp,
                 fontWeight: FontWeight.w400,
                 color: Color.fromARGB(255, 249, 62, 13)),
           )),
@@ -832,6 +832,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
         (_orderModel.data.shippingMethod == 1);
     if (isOversea) {
       if (!_accept) canDeliver = false;
+      if (_overseaNeedIdentifier &&
+          (!UserManager.instance.user.info.realInfoStatus)) canDeliver = false;
     }
     double ruiCoin = 0;
     _orderModel.data.brands.forEach((brand) {
@@ -914,15 +916,14 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                       onPressed: !canDeliver
                           ? null
                           : () {
-                              if (_overseaNeedIdentifier &&
-                                  (!UserManager
-                                      .instance.user.info.realInfoStatus)) {
+                              if (UserManager.instance.user.info.realName !=
+                                  _orderModel.data.addr.receiverName) {
                                 ReToast.err(
                                     text: '因订单含跨境商品，收货人联系方式需与当前账号实名认证姓名相同');
-                                AppRouter.push(
-                                  context,
-                                  RouteName.USER_VERIFY,
-                                );
+                                // AppRouter.push(
+                                //   context,
+                                //   RouteName.USER_VERIFY,
+                                // );
                               } else
                                 _submit(context);
                             },

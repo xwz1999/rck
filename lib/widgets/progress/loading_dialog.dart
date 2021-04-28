@@ -126,7 +126,7 @@ class StatusDialog extends Dialog {
                             constraints: BoxConstraints(maxWidth: 200),
                             child: new Text(text,
                                 textAlign: TextAlign.center,
-                                maxLines: 2,
+                                maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTextStyle.generate(15 * 2.sp,
                                     fontWeight: FontWeight.w300,
