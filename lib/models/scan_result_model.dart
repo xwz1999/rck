@@ -12,6 +12,7 @@ class ScanResultModel {
   final num commission;
   final String goodsImg;
   final num inventory;
+  final int goodsID;
 
   ScanResultModel(
     this.skuID,
@@ -24,6 +25,7 @@ class ScanResultModel {
     this.commission,
     this.goodsImg,
     this.inventory,
+    this.goodsID,
   );
 
   Map<String, dynamic> toMap() {
@@ -38,6 +40,7 @@ class ScanResultModel {
       'commission': commission,
       'goodsImg': goodsImg,
       'inventory': inventory,
+      'goodsID': goodsID,
     };
   }
 
@@ -53,6 +56,7 @@ class ScanResultModel {
       map['commission'],
       map['goodsImg'],
       map['inventory'],
+      map['goodsID'],
     );
   }
 
@@ -63,7 +67,7 @@ class ScanResultModel {
 
   @override
   String toString() {
-    return 'ScanResultModel(skuID: $skuID, skuCode: $skuCode, skuName: $skuName, brandName: $brandName, brandImg: $brandImg, goodsName: $goodsName, discount: $discount, commission: $commission, goodsImg: $goodsImg, inventory: $inventory)';
+    return 'ScanResultModel(skuID: $skuID, skuCode: $skuCode, skuName: $skuName, brandName: $brandName, brandImg: $brandImg, goodsName: $goodsName, discount: $discount, commission: $commission, goodsImg: $goodsImg, inventory: $inventory, goodsID: $goodsID)';
   }
 
   @override
@@ -80,7 +84,8 @@ class ScanResultModel {
       other.discount == discount &&
       other.commission == commission &&
       other.goodsImg == goodsImg &&
-      other.inventory == inventory;
+      other.inventory == inventory &&
+      other.goodsID == goodsID;
   }
 
   @override
@@ -94,6 +99,7 @@ class ScanResultModel {
       discount.hashCode ^
       commission.hashCode ^
       goodsImg.hashCode ^
-      inventory.hashCode;
+      inventory.hashCode ^
+      goodsID.hashCode;
   }
 }

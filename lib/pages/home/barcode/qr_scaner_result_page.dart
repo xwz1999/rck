@@ -6,15 +6,14 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/models/order_preview_model.dart';
 import 'package:recook/models/scan_result_model.dart';
+import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/classify/order_preview_page.dart';
-import 'package:recook/pages/home/classify/sku_choose_page.dart';
 import 'package:recook/pages/home/widget/plus_minus_view.dart';
 import 'package:recook/pages/shopping_cart/mvp/shopping_cart_model_impl.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
-import 'package:recook/widgets/progress/sc_dialog.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recook/widgets/toast.dart';
@@ -181,7 +180,12 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
         .withRounded(value: 10.w)
         .width(double.infinity)
         .color(Colors.white)
-        .make();
+        .make()
+        .onInkTap(() {
+      Get.to(() => CommodityDetailPage(arguments: {"goodsID": widget.model.goodsID},));
+      //  AppRouter.push(context, RouteName.COMMODITY_PAGE,
+      //     arguments: CommodityDetailPage.setArguments(widget.model.goodsId));
+    });
   }
 
   Widget emptyWidget() {
