@@ -50,12 +50,12 @@ class ScreenAdapterUtils {
 
 ///DESIGN WIDTH
 double rSize(double size) {
-  return size * 2.w;
+  return (size * 2).w;
 }
 
 ///DESIGN SP
 double rSP(double size) {
-  return size * 2.sp;
+  return (size * 2).sp;
 }
 
 /// DESIGN SizedBox with width
@@ -97,9 +97,9 @@ class DeviceInfo {
 }
 
 extension NumExt on num {
-  double get rw => this*2.w;
+  double get rw => (this*2).w;
 
-  double get rsp => this*2.sp;
+  double get rsp => (this*2).sp;
 
   Widget get hb => SizedBox(height: this.w);
 

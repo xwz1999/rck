@@ -27,54 +27,55 @@ class OtherItemViewV2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return VxBox(
-            child: Row(
-      children: [
-        70.hb,
-        _buildItem(
-          Icon(
-            AppIcons.icon_address,
-            color: _itemColor,
-            size: _iconSize,
+      
+      child: Row(
+        children: [
+          _buildItem(
+            Icon(
+              AppIcons.icon_address,
+              color: _itemColor,
+              size: _iconSize,
+            ),
+            '地址',
+            () => AppRouter.push(context, RouteName.RECEIVING_ADDRESS_PAGE),
           ),
-          '地址',
-          () => AppRouter.push(context, RouteName.RECEIVING_ADDRESS_PAGE),
-        ),
-        _buildItem(
-          Icon(
-            AppIcons.icon_help,
-            color: _itemColor,
-            size: _iconSize,
+          _buildItem(
+            Icon(
+              AppIcons.icon_help,
+              color: _itemColor,
+              size: _iconSize,
+            ),
+            '帮助',
+            () => MQManager.goToChat(
+                userId: UserManager.instance.user.info.id.toString(),
+                userInfo: <String, String>{
+                  "name": UserManager.instance.user.info.nickname ?? "",
+                  "gender":
+                      UserManager.instance.user.info.gender == 1 ? "男" : "女",
+                  "mobile": UserManager.instance.user.info.mobile ?? ""
+                }),
           ),
-          '帮助',
-          () => MQManager.goToChat(
-              userId: UserManager.instance.user.info.id.toString(),
-              userInfo: <String, String>{
-                "name": UserManager.instance.user.info.nickname ?? "",
-                "gender":
-                    UserManager.instance.user.info.gender == 1 ? "男" : "女",
-                "mobile": UserManager.instance.user.info.mobile ?? ""
-              }),
-        ),
-        _buildItem(
-          Image.asset(
-            R.ASSETS_SHOP_BUSINESS_CORP_PNG,
-            width: 30.rw,
-            height: 30.rw,
+          _buildItem(
+            Image.asset(
+              R.ASSETS_SHOP_BUSINESS_CORP_PNG,
+              width: 30.rw,
+              height: 30.rw,
+            ),
+            '商务合作',
+            () => AppRouter.push(context, RouteName.BUSSINESS_COOPERATION_PAGE),
           ),
-          '商务合作',
-          () => AppRouter.push(context, RouteName.BUSSINESS_COOPERATION_PAGE),
-        ),
-        _buildItem(
-          Icon(
-            AppIcons.icon_setting,
-            color: _itemColor,
-            size: _iconSize,
+          _buildItem(
+            Icon(
+              AppIcons.icon_setting,
+              color: _itemColor,
+              size: _iconSize,
+            ),
+            '设置',
+            () => AppRouter.push(context, RouteName.SETTING_PAGE),
           ),
-          '设置',
-          () => AppRouter.push(context, RouteName.SETTING_PAGE),
-        ),
-      ],
-    ))
+        ],
+      ).pSymmetric(v:18.w ),
+    )
         .color(Color(0xFFFFFFFF))
         .margin(EdgeInsets.all(10).copyWith(top: 0))
         .withRounded(value: 10)

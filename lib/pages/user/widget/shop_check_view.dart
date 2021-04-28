@@ -72,9 +72,9 @@ class _ShopCheckViewState extends State<ShopCheckView> {
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        <Widget>[
-          15.wb,
-          40.hb,
+        30.w.heightBox,
+        Row(children: <Widget>[
+          30.w.widthBox,
           Container(
             height: 18.rw,
             width: 2.5.rw,
@@ -91,7 +91,8 @@ class _ShopCheckViewState extends State<ShopCheckView> {
               .black
               .make(),
           Spacer(),
-        ].row(),
+        ]),
+        12.w.heightBox,
         CustomImageButton(
           padding: EdgeInsets.zero,
           onPressed: () {},
@@ -111,7 +112,7 @@ class _ShopCheckViewState extends State<ShopCheckView> {
                 .size(12.rsp)
                 .make()
                 .pOnly(left: 16.rw),
-            2.wb,
+            4.w.widthBox,
             Image.asset(
               R.ASSETS_SHOP_HELPER_PNG,
               height: 12.rw,
@@ -125,7 +126,7 @@ class _ShopCheckViewState extends State<ShopCheckView> {
             .size(12.rsp)
             .make()
             .pSymmetric(h: 16.rw),
-        10.hb,
+        20.w.heightBox,
         Container(
           height: 68.rw,
           width: 68.rw,
@@ -144,9 +145,9 @@ class _ShopCheckViewState extends State<ShopCheckView> {
             ),
           ),
         ).centered(),
-        5.hb,
+        10.w.heightBox,
         title.text.size(12.rsp).black.center.make().centered(),
-        15.hb,
+        30.w.heightBox,
       ],
     )).color(Colors.white).margin(EdgeInsets.only(bottom: 10)).make();
   }

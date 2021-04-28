@@ -134,7 +134,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
     //     children: <Widget>[
     //       UserAppBarV2(),
     //       // Container(
-    //       //   height: 160 + ScreenUtil().statusBarHeight,
+    //       //   height: 160 + ScreenUtil.statusBarHeight,
     //       //   child: UserAppBar(
     //       //     withdrawListener: () {
     //       //       AppRouter.push(context, RouteName.USER_CASH_WITHDRAW_PAGE,
@@ -335,8 +335,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     content3: _userIncomeDataModel?.team?.amountValue ?? '0',
                     content4: _userIncomeDataModel?.team?.countValue ?? '0',
                   ),
-              ].sepWidget(separate: 10.hb),
-              10.hb,
+              ].sepWidget(separate: 20.hb),
+              20.w.heightBox,
               // ShopBenefitView(key: _shopBenefitKey),
               UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Gold ||
                       UserLevelTool.currentRoleLevelEnum() ==
@@ -363,7 +363,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                       arguments: OrderCenterPage.setArguments(index));
                 },
               ),
-              10.hb,
+              20.w.heightBox,
               ShopManagerView(),
 
               // OtherItemView(),
@@ -412,10 +412,10 @@ class _UserPageState extends BaseStoreState<UserPage> {
       color: Colors.white,
       child: Column(
         children: [
+          18.w.heightBox,
           Row(
             children: [
-              46.hb,
-              14.wb,
+              14.w.widthBox,
               Image.asset(
                 leadingPath,
                 width: 32.rw,
@@ -447,24 +447,25 @@ class _UserPageState extends BaseStoreState<UserPage> {
               Spacer(),
             ],
           ),
+          8.w.heightBox,
           Divider(
-            indent: 16.rw,
-            endIndent: 16.rw,
+            indent: 32.w,
+            endIndent: 32.w,
             color: Color(0xFFEEEEEE),
-            height: 1.rw,
-            thickness: 1.rw,
+            height: 2.w,
+            thickness: 2.w,
           ),
+          18.w.heightBox,
           Row(
             children: [
-              74.hb,
               Row(
                 children: [
-                  24.wb,
+                  40.w.widthBox,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       title1.text.color(Color(0xFF999999)).size(12.rsp).make(),
-                      10.hb,
+                      20.w.heightBox,
                       content1.text.black.size(16.rsp).make(),
                     ],
                   ),
@@ -473,11 +474,11 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       '订单数'.text.color(Color(0xFF999999)).size(12.rsp).make(),
-                      10.hb,
+                      20.w.heightBox,
                       content2.text.black.size(16.rsp).make(),
                     ],
                   ),
-                  16.wb,
+                  32.w.widthBox,
                 ],
               ).expand(),
               Container(
@@ -487,12 +488,12 @@ class _UserPageState extends BaseStoreState<UserPage> {
               ),
               Row(
                 children: [
-                  16.wb,
+                  32.w.widthBox,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       title3.text.color(Color(0xFF999999)).size(12.rsp).make(),
-                      10.hb,
+                      20.w.heightBox,
                       content3.text.black.size(16.rsp).make(),
                     ],
                   ),
@@ -501,15 +502,16 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       '订单数'.text.color(Color(0xFF999999)).size(12.rsp).make(),
-                      10.hb,
+                      20.w.heightBox,
                       content4.text.black.size(16.rsp).make(),
                     ],
                   ),
-                  24.wb,
+                  48.w.widthBox,
                 ],
               ).expand(),
             ],
           ),
+          30.w.heightBox,
         ],
       ),
     );

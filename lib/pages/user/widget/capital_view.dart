@@ -19,7 +19,7 @@ import 'package:recook/pages/user/banlance/user_balance_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CapitalView extends StatefulWidget {
   final Function() listener;
   final int cardCount;
@@ -85,7 +85,7 @@ class _CapitalViewState extends BaseStoreState<CapitalView> {
 
   Container _old(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+      margin: EdgeInsets.symmetric(vertical: 20.w, horizontal: 20.w),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(8)),
           color: Colors.white),
