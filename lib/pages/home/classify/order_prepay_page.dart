@@ -203,29 +203,29 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
           height: rSize(50),
         ),
         _payTile(
-          "",
-          SvgPicture.asset(
-            AppSvg.svg_balance_pay,
-            width: rSize(30),
-            height: rSize(30),
-          ),
-          0,
-          widgetTitle: RichText(
-            text: TextSpan(
-                text: "余额支付 ",
-                style: AppTextStyle.generate(17 * 2.sp),
-                children: [
-                  TextSpan(
-                      style:
-                          AppTextStyle.generate(14 * 2.sp, color: Colors.grey),
-                      text:
-                          "(可用余额: ￥${_recookFundModel == null ? "--" : _recookFundModel.data.amount})")
-                ]),
-          ),
-          enable: _recookFundModel != null &&
-              (_recookFundModel.data.amount >= _model.data.actualTotalAmount) &&
-              _canUseBalance,
-        ),
+            "",
+            SvgPicture.asset(
+              AppSvg.svg_balance_pay,
+              width: rSize(30),
+              height: rSize(30),
+            ),
+            0,
+            widgetTitle: RichText(
+              text: TextSpan(
+                  text: "余额支付 ",
+                  style: AppTextStyle.generate(17 * 2.sp),
+                  children: [
+                    TextSpan(
+                        style: AppTextStyle.generate(14 * 2.sp,
+                            color: Colors.grey),
+                        text:
+                            "(可用余额: ￥${_recookFundModel == null ? "--" : _recookFundModel.data.amount})")
+                  ]),
+            ),
+            enable: _recookFundModel != null &&
+                (_recookFundModel.data.amount >=
+                    _model.data.actualTotalAmount) &&
+                _canUseBalance),
         _payTile(
             "微信支付",
             Icon(
@@ -329,7 +329,11 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
       ),
       onPressed: !enable
           ? () {
-              ReToast.err(text: '订单含跨境商品，无法使用余额支付');
+              if (!_canUseBalance) {
+                ReToast.err(text: '订单含跨境商品，无法使用余额支付');
+              } else {
+                ReToast.err(text: '余额不足');
+              }
             }
           : () {
               setState(() {

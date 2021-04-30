@@ -11,6 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
@@ -25,6 +26,7 @@ import 'package:recook/pages/home/classify/order_prepay_page.dart';
 import 'package:recook/pages/home/items/goods_item_order.dart';
 import 'package:recook/pages/home/items/oversea_accept_license_page.dart';
 import 'package:recook/pages/user/address/receiving_address_page.dart';
+import 'package:recook/pages/user/user_verify.dart';
 import 'package:recook/pages/user/widget/recook_check_box.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/bottom_sheet/bottom_list.dart';
@@ -780,6 +782,10 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
     return reslut;
   }
 
+  bool get identicalName =>
+      UserManager.instance.user.info.realName ==
+      _orderModel.data.addr.receiverName;
+
   _allAmountTitle() {
     return Container(
       height: 55,
@@ -832,9 +838,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
         (_orderModel.data.shippingMethod == 1);
     if (isOversea) {
       if (!_accept) canDeliver = false;
-      if (_overseaNeedIdentifier &&
-          (!UserManager.instance.user.info.realInfoStatus)) canDeliver = false;
     }
+
     double ruiCoin = 0;
     _orderModel.data.brands.forEach((brand) {
       brand.goods.forEach((good) {
@@ -916,10 +921,17 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                       onPressed: !canDeliver
                           ? null
                           : () {
-                              if (UserManager.instance.user.info.realName !=
-                                  _orderModel.data.addr.receiverName) {
-                                ReToast.err(
-                                    text: '因订单含跨境商品，收货人联系方式需与当前账号实名认证姓名相同');
+                              if (_overseaNeedIdentifier) {
+                                if (!UserManager
+                                    .instance.user.info.realInfoStatus) {
+                                  Get.to(() => VerifyPage());
+                                } else if (!identicalName) {
+                                  ReToast.err(
+                                      text: '因订单含跨境商品，收货人联系方式需与当前账号实名认证姓名相同');
+                                } else {
+                                  _submit(context);
+                                }
+
                                 // AppRouter.push(
                                 //   context,
                                 //   RouteName.USER_VERIFY,
