@@ -633,6 +633,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                   padding: EdgeInsets.only(bottom: 5),
                   color: AppColor.frenchColor,
                   child: GoodsItemWidget.rowGoods(
+                    buildCtx: context,
                     isSingleDayGoods: false,
                     onBrandClick: () {
                       AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,

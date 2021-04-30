@@ -1359,7 +1359,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 skuModel.num = 50;
               }
               if (skuModel.selectedIndex == 1) {
-                GSDialog.of(context).showLoadingDialog(context, "");
+                ReToast.loading(text: '');
                 if (widget.liveId != 0)
                   HttpManager.post(LiveAPI.buyGoodsInform, {
                     "liveItemId": widget.liveId,
@@ -1401,25 +1401,23 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         skuModel.sku.id,
         skuModel.des,
         skuModel.num);
-    Navigator.pop(context);
-    GSDialog.of(myGlobals.scaffoldKey.currentContext).dismiss(context);
     if (!resultData.result) {
-      GSDialog.of(myGlobals.scaffoldKey.currentContext)
-          .showError(context, resultData.msg);
+      ReToast.err(text: resultData.msg);
+      Get.back();
       return;
     }
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
       Toast.showError(model.msg);
-      // GSDialog.of(myGlobals.scaffoldKey.currentContext).showError(context, model.msg);
+      Get.back();
       return;
     }
     UserManager.instance.refreshShoppingCart.value = true;
     UserManager.instance.refreshShoppingCartNumber.value = true;
     UserManager.instance.refreshShoppingCartNumberWithPage.value = true;
-    // GSDialog.of(context).showSuccess(context, model.msg);
-    GSDialog.of(myGlobals.scaffoldKey.currentContext)
-        .showSuccess(myGlobals.scaffoldKey.currentContext, model.msg);
+    ReToast.success(text: '加入成功');
+    Get.back();
+    Get.back();
   }
 
   Future<dynamic> _createOrder(SkuChooseModel skuModel, BuildContext context,

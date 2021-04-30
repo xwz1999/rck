@@ -182,7 +182,9 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
         .color(Colors.white)
         .make()
         .onInkTap(() {
-      Get.to(() => CommodityDetailPage(arguments: {"goodsID": widget.model.goodsID},));
+      Get.to(() => CommodityDetailPage(
+            arguments: {"goodsID": widget.model.goodsID},
+          ));
       //  AppRouter.push(context, RouteName.COMMODITY_PAGE,
       //     arguments: CommodityDetailPage.setArguments(widget.model.goodsId));
     });
@@ -290,5 +292,6 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
     UserManager.instance.refreshShoppingCartNumber.value = true;
     UserManager.instance.refreshShoppingCartNumberWithPage.value = true;
     ReToast.success(text: '加入成功');
+    Get.back();
   }
 }

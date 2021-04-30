@@ -136,6 +136,7 @@ class _DeleteAcountValidationPageState
       return;
     }
     UserManager.logout();
+    ReToast.success(text:'注销成功');
   }
 
   Widget _validationCode() {
