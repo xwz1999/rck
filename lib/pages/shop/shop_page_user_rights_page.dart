@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -67,8 +69,11 @@ class _ShopPageUserRightsPageState
                                     ScreenUtil().statusBarHeight -
                                     kToolbarHeight,
                                 child: Container(
-                                  color: AppColor.blackColor,
-                                ),
+                                    color: Colors.black,
+                                    child: Image.asset(
+                                      _headBackgroundImage(),
+                                      fit: BoxFit.fill,
+                                    )),
                                 // child: Image.asset("assets/shop_page_user_rights_bg.png", width: width, height: bgHeight, fit: BoxFit.fill, ),
                               ),
                               Column(
@@ -215,10 +220,38 @@ class _ShopPageUserRightsPageState
     );
   }
 
+  String _headBackgroundImage() {
+    if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_1 ||
+        UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_2 ||
+        UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_3) {
+      return R.ASSETS_SHOP_PAGE_USER_RIGHTS_DIAMOND_HEAD_JPG;
+    } else if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Gold) {
+      return R.ASSETS_SHOP_PAGE_USER_RIGHTS_GOLD_HEAD_JPG;
+    } else if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Silver) {
+      return R.ASSETS_HEADER_SILVER_HEADER_PNG;
+    } else if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip &&
+        (UserLevelTool.currentUserLevelEnum() == UserLevel.Second ||
+            UserLevelTool.currentUserLevelEnum() == UserLevel.First)) {
+      return R.ASSETS_SHOP_PAGE_USER_RIGHTS_MASTER_AND_VIP_HEAD_JPG;
+    } else if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip &&
+        (UserLevelTool.currentUserLevelEnum() == UserLevel.Others)) {
+      // 绿色的vip
+      return R.ASSETS_SHOP_PAGE_USER_RIGHTS_MASTER_AND_VIP_HEAD_JPG;
+    } else if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Master &&
+        (UserLevelTool.currentUserLevelEnum() == UserLevel.Others)) {
+      return R.ASSETS_SHOP_PAGE_USER_RIGHTS_MASTER_AND_VIP_HEAD_JPG;
+    } else if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Master &&
+        ((UserLevelTool.currentUserLevelEnum() == UserLevel.Second ||
+            UserLevelTool.currentUserLevelEnum() == UserLevel.First))) {
+      return R.ASSETS_SHOP_PAGE_USER_RIGHTS_MASTER_AND_VIP_HEAD_JPG;
+    }
+    return '';
+  }
+
   _masterLevel23() {
     return Container(
       child: Image.asset(
-        R.ASSETS_SHOP_PAGE_USER_RIGHTS_MASTER23_PNG_WEBP,
+        R.ASSETS_SHOP_PAGE_USER_RIGHTS_MASTER_JPG,
         fit: BoxFit.fill,
       ),
     );
@@ -227,7 +260,7 @@ class _ShopPageUserRightsPageState
   _masterLevel4() {
     return Container(
       child: Image.asset(
-        R.ASSETS_SHOP_PAGE_USER_RIGHTS_MASTER4_PNG_WEBP,
+        R.ASSETS_SHOP_PAGE_USER_RIGHTS_MASTER_JPG,
         fit: BoxFit.fill,
       ),
     );
@@ -236,7 +269,7 @@ class _ShopPageUserRightsPageState
   _vip23() {
     return Container(
       child: Image.asset(
-        R.ASSETS_SHOP_PAGE_USER_RIGHTS_VIP_PNG_WEBP,
+        R.ASSETS_SHOP_PAGE_USER_RIGHTS_VIP_JPG,
         fit: BoxFit.fill,
       ),
     );
@@ -245,7 +278,7 @@ class _ShopPageUserRightsPageState
   _vip4() {
     return Container(
       child: Image.asset(
-        R.ASSETS_SHOP_PAGE_USER_RIGHTS_VIP4_PNG_WEBP,
+        R.ASSETS_SHOP_PAGE_USER_RIGHTS_VIP_JPG,
         fit: BoxFit.fill,
       ),
     );
@@ -254,7 +287,7 @@ class _ShopPageUserRightsPageState
   _silver() {
     return Container(
       child: Image.asset(
-        R.ASSETS_SHOP_PAGE_USER_RIGHTS_SILVER_PNG_WEBP,
+        R.ASSETS_SHOP_PAGE_USER_RIGHTS_SILVER_JPG,
         fit: BoxFit.fill,
       ),
     );
@@ -263,7 +296,7 @@ class _ShopPageUserRightsPageState
   _gold() {
     return Container(
       child: Image.asset(
-        R.ASSETS_SHOP_PAGE_USER_RIGHTS_GOLD_PNG_WEBP,
+        R.ASSETS_SHOP_PAGE_USER_RIGHTS_GOLD_JPG,
         fit: BoxFit.fill,
       ),
     );
@@ -272,7 +305,7 @@ class _ShopPageUserRightsPageState
   _diamond() {
     return Container(
       child: Image.asset(
-        R.ASSETS_SHOP_PAGE_USER_RIGHTS_DIAMOND_PNG_WEBP,
+        R.ASSETS_SHOP_PAGE_USER_RIGHTS_DIAMOND_JPG,
         fit: BoxFit.fill,
       ),
     );

@@ -35,6 +35,7 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/input_view.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class GoodsOrderPage extends StatefulWidget {
   final Map arguments;
@@ -563,8 +564,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   }
 
   _coinTile() {
-    String text = _orderModel.data.coinTotalAmount > 0
-        ? "可用：¥${_orderModel.data.coinTotalAmount.toStringAsFixed(2)}"
+    String text = _orderModel.data.coinStatus.coin > 0
+        ? "可用：¥${_orderModel.data.coinStatus.coin.toStringAsFixed(2)}"
         : "可用：¥0.0";
     // _orderModel.data.coupon = null;
     return Container(
@@ -583,10 +584,14 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
           ),
           Builder(
             builder: (context) {
+              double coin = _orderModel.data.goodsTotalAmount >
+                      _orderModel.data.coinStatus.coin.toDouble()
+                  ? _orderModel.data.coinStatus.coin.toDouble()
+                  : _orderModel.data.goodsTotalAmount;
               return _titleRow(
                 "瑞币",
                 text,
-                "本单抵扣: ￥${_orderModel.data.coinTotalAmount.toStringAsFixed(2)}",
+                "本单抵扣: ￥${coin.toStringAsFixed(2)}",
                 rightTitleColor: Colors.black,
                 switchValue: _orderModel.data.coinStatus.isUseCoin, //后台回显 TODO:
                 switchEnable: switchEnabled,
@@ -711,6 +716,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
       margin: EdgeInsets.only(top: 10),
       // height: 55,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Container(
               margin: EdgeInsets.only(
@@ -719,15 +725,16 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
               child: Text(
                 title,
                 style: titleColor != null
-                    ? AppTextStyle.generate(ScreenAdapterUtils.setSp(13.5),
+                    ? AppTextStyle.generate(27.sp,
                         color: titleColor, fontWeight: FontWeight.w400)
-                    : AppTextStyle.generate(ScreenAdapterUtils.setSp(13.5),
+                    : AppTextStyle.generate(27.sp,
                         fontWeight: FontWeight.w400),
               )),
           Expanded(
             child: Text(
               subTitle,
-              maxLines: 1,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: subTitleColor != null
                   ? AppTextStyle.generate(12 * 2.sp,
                       color: subTitleColor, fontWeight: FontWeight.w300)
@@ -741,11 +748,11 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
             rightTitle,
             style: rightTitleColor != null
                 ? TextStyle(
-                    fontSize: ScreenAdapterUtils.setSp(13.5),
+                    fontSize: 27.sp,
                     fontWeight: FontWeight.w400,
                     color: rightTitleColor)
                 : TextStyle(
-                    fontSize: ScreenAdapterUtils.setSp(13.5),
+                    fontSize: 27.sp,
                     fontWeight: FontWeight.w400,
                     color: Color.fromARGB(255, 249, 62, 13)),
           )),
