@@ -10,7 +10,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:recook/widgets/progress/loading_dialog.dart';
-
+@Deprecated('use Retoast or Toast instead')
 class GSDialog {
   static Map<BuildContext, GSDialog> dialogs = Map();
 

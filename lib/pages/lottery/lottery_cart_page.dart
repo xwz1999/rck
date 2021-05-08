@@ -17,6 +17,7 @@ import 'package:recook/pages/lottery/widget/lottery_grid_view.dart';
 import 'package:recook/pages/lottery/widget/lottery_scaffold.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 
 class LotteryCartPage extends StatefulWidget {
   final bool isDouble;
@@ -339,8 +340,7 @@ class _LotteryCartPageState extends State<LotteryCartPage> {
       params,
     );
     if (resultData.data['code'] == "SUCCESS") {
-      GSDialog.of(context).dismiss(context);
-      showToast('下单成功');
+      ReToast.success(text: '下单成功');
       LotteryCartStore.clear(widget.isDouble
           ? LotteryType.DOUBLE_LOTTERY
           : LotteryType.BIG_LOTTERY);
@@ -349,8 +349,7 @@ class _LotteryCartPageState extends State<LotteryCartPage> {
       Navigator.pop(context);
     } else {
       Navigator.pop(context);
-      GSDialog.of(context).dismiss(context);
-      showToast('兑换失败');
+      ReToast.err(text: '兑换失败');
     }
   }
 

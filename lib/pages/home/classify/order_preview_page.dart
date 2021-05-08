@@ -18,6 +18,7 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/address_list_model.dart';
 import 'package:recook/models/base_model.dart';
+import 'package:recook/models/order_list_model.dart';
 import 'package:recook/models/order_prepay_model.dart';
 import 'package:recook/models/order_preview_model.dart';
 import 'package:recook/models/self_pickup_store_list_model.dart';
@@ -65,7 +66,16 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   bool _accept = false;
 
   ///瑞币抵扣按钮是否可以点击
-  bool switchEnabled = true;
+  bool get switchEnabled {
+    if (_checkSwitchEnabled) {
+      return false;
+    }
+
+    return _orderModel.data?.coinStatus?.isEnable ?? true;
+  }
+
+  //瑞币按钮状态
+  bool get isUseCoin => _orderModel.data?.coinStatus?.isUseCoin ?? false;
 
   @override
   void initState() {
@@ -591,9 +601,9 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
               return _titleRow(
                 "瑞币",
                 text,
-                "本单抵扣: ￥${coin.toStringAsFixed(2)}",
+                "本单抵扣: ￥${isUseCoin ? coin.toStringAsFixed(2) : '0.00'}",
                 rightTitleColor: Colors.black,
-                switchValue: _orderModel.data.coinStatus.isUseCoin, //后台回显 TODO:
+                switchValue: isUseCoin, //后台回显 TODO:
                 switchEnable: switchEnabled,
                 switchChange: (change) {
                   // 切换瑞币抵扣状态
@@ -727,8 +737,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                 style: titleColor != null
                     ? AppTextStyle.generate(27.sp,
                         color: titleColor, fontWeight: FontWeight.w400)
-                    : AppTextStyle.generate(27.sp,
-                        fontWeight: FontWeight.w400),
+                    : AppTextStyle.generate(27.sp, fontWeight: FontWeight.w400),
               )),
           Expanded(
             child: Text(
@@ -765,7 +774,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                       value: switchValue,
                       onChanged: !switchEnable
                           ? (change) {
-                              Toast.showError('订单含保税仓或海外仓商品，无法使用瑞币抵扣');
+                              // ReToast.err(text: '订单含保税仓或海外仓商品，无法使用瑞币抵扣');
+                              switchChange(change);
                             }
                           : (change) => switchChange(change)),
                 ),
@@ -1056,9 +1066,6 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
       return;
     }
     _orderModel = model.data;
-    if (_checkSwitchEnabled) {
-      switchEnabled = false;
-    }
     setState(() {});
   }
 

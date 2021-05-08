@@ -26,6 +26,7 @@ import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 
 class ShoppingCartPage extends StatefulWidget {
@@ -251,7 +252,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
             Toast.showInfo("您还没有选择商品");
             return;
           }
-          GSDialog.of(context).showLoadingDialog(_context, "");
+          ReToast.loading();
           _presenter.submitOrder(
               UserManager.instance.user.info.id,
               _selectedGoods.map<int>((goods) {
@@ -464,7 +465,6 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
 
   @override
   void submitOrderSuccess(OrderPreviewModel model) {
-    GSDialog.of(context).dismiss(_context);
     AppRouter.push(context, RouteName.GOODS_ORDER_PAGE,
             arguments: GoodsOrderPage.setArguments(model))
         .then((value) {
@@ -480,7 +480,6 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
 
   @override
   void failure(String msg) {
-    GSDialog.of(context).dismiss(_context);
-    GSDialog.of(context).showError(globalContext, msg);
+    ReToast.err(text: msg);
   }
 }
