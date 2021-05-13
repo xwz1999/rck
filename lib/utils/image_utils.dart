@@ -25,7 +25,10 @@ class ImageUtils {
   static Future<File> cropImage(file) async {
     File croppedFile = await ImageCropper.cropImage(
       sourcePath: file.path,
-      androidUiSettings: AndroidUiSettings(toolbarTitle: "裁剪",toolbarColor: Colors.blue, toolbarWidgetColor: Colors.white ),
+      androidUiSettings: AndroidUiSettings(
+          toolbarTitle: "裁剪",
+          toolbarColor: Colors.blue,
+          toolbarWidgetColor: Colors.white),
       aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
     );
     return croppedFile;
@@ -75,26 +78,29 @@ class ImageUtils {
   //   return filePath != null && filePath != "";
   // }
   static Future<bool> saveNetworkImagesToPhoto(
-    List<String> urls, 
+    List<String> urls,
     void Function(int index) callBack,
-    void Function(bool success) endBack,
-    {bool useCache: true,}) async {
-      //
-      if (Platform.isAndroid) {
-        PermissionStatus permissionStorage =
-            await PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
-        if (permissionStorage != PermissionStatus.granted) {
-          Map<PermissionGroup, PermissionStatus> permissionStatus =
-              await PermissionHandler().requestPermissions([PermissionGroup.storage]);
-          permissionStorage = permissionStatus[PermissionGroup.storage] ?? PermissionStatus.unknown;
+    void Function(bool success) endBack, {
+    bool useCache: true,
+  }) async {
+    //
+    if (Platform.isAndroid) {
+      PermissionStatus permissionStorage = await PermissionHandler()
+          .checkPermissionStatus(PermissionGroup.storage);
+      if (permissionStorage != PermissionStatus.granted) {
+        Map<PermissionGroup, PermissionStatus> permissionStatus =
+            await PermissionHandler()
+                .requestPermissions([PermissionGroup.storage]);
+        permissionStorage = permissionStatus[PermissionGroup.storage] ??
+            PermissionStatus.unknown;
 
-          if (permissionStorage != PermissionStatus.granted) {
-            print("❌----------has no Permission");
-            return false;
-          }
+        if (permissionStorage != PermissionStatus.granted) {
+          print("❌----------has no Permission");
+          return false;
         }
       }
-      //
+    }
+    //
 
     for (var i = 0; i < urls.length; i++) {
       String url = urls[i];
@@ -102,16 +108,16 @@ class ImageUtils {
       try {
         final result = await ImageGallerySaver.saveImage(data);
         if (Platform.isAndroid) {
-          if (!TextUtils.isEmpty(result)){
+          if (!TextUtils.isEmpty(result)) {
             callBack(i);
-          }else{
+          } else {
             endBack(false);
             return false;
           }
-        }else if (Platform.isIOS){
+        } else if (Platform.isIOS) {
           if (result) {
             callBack(i);
-          }else{
+          } else {
             endBack(false);
             return false;
           }
@@ -131,64 +137,66 @@ class ImageUtils {
     endBack(true);
     return true;
   }
-  static Future<bool> saveImage(
-    List<Uint8List> fileDatas, 
-    void Function(int index) callBack,
-    void Function(bool success) endBack) async {
-      //
-      if (Platform.isAndroid) {
-        PermissionStatus permissionStorage =
-            await PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
-        if (permissionStorage != PermissionStatus.granted) {
-          Map<PermissionGroup, PermissionStatus> permissionStatus =
-              await PermissionHandler().requestPermissions([PermissionGroup.storage]);
-          permissionStorage = permissionStatus[PermissionGroup.storage] ?? PermissionStatus.unknown;
 
-          if (permissionStorage != PermissionStatus.granted) {
-            print("❌----------has no Permission");
-            return false;
-          }
-        }
-      }
-      //
-      for (var i = 0; i < fileDatas.length; i++) {
-        Uint8List data = fileDatas[i];
-        try {
-          final result = await ImageGallerySaver.saveImage(data);
-          if (Platform.isAndroid) {
-            if (!TextUtils.isEmpty(result)){
-              callBack(i);
-            }else{
-              endBack(false);
-              return false;
-            }
-          }else if (Platform.isIOS){
-            if (result) {
-              callBack(i);
-            }else{
-              endBack(false);
-              return false;
-            }
-          }
-        } catch (e) {
-          if (e is ArgumentError) {
-            if (Platform.isIOS) {
-              callBack(i);
-              if (i == (fileDatas.length-1)) {
-                endBack(true);
-                return true;
-              }
-              continue;
-            }
-          }
-          DPrint.printf(e);
-          endBack(false);
+  static Future<bool> saveImage(
+      List<Uint8List> fileDatas,
+      void Function(int index) callBack,
+      void Function(bool success) endBack) async {
+    //
+    if (Platform.isAndroid) {
+      PermissionStatus permissionStorage = await PermissionHandler()
+          .checkPermissionStatus(PermissionGroup.storage);
+      if (permissionStorage != PermissionStatus.granted) {
+        Map<PermissionGroup, PermissionStatus> permissionStatus =
+            await PermissionHandler()
+                .requestPermissions([PermissionGroup.storage]);
+        permissionStorage = permissionStatus[PermissionGroup.storage] ??
+            PermissionStatus.unknown;
+
+        if (permissionStorage != PermissionStatus.granted) {
+          print("❌----------has no Permission");
           return false;
         }
       }
-      endBack(true);
-      return true;
+    }
+    //
+    for (var i = 0; i < fileDatas.length; i++) {
+      Uint8List data = fileDatas[i];
+      try {
+        final Map<dynamic, dynamic> result =
+            await ImageGallerySaver.saveImage(data);
+        if (Platform.isAndroid) {
+          if (result.containsValue(true)) {
+            callBack(i);
+          } else {
+            endBack(false);
+            return false;
+          }
+        } else if (Platform.isIOS) {
+          if (result.containsValue(true)) {
+            callBack(i);
+          } else {
+            endBack(false);
+            return false;
+          }
+        }
+      } catch (e) {
+        if (e is ArgumentError) {
+          if (Platform.isIOS) {
+            callBack(i);
+            if (i == (fileDatas.length - 1)) {
+              endBack(true);
+              return true;
+            }
+            continue;
+          }
+        }
+        DPrint.printf(e);
+        endBack(false);
+        return false;
+      }
+    }
+    endBack(true);
+    return true;
   }
 }
-
-

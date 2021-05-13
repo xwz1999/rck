@@ -2,7 +2,7 @@ name: recook
 description: Recook Market App.
 publish_to: "none"
 
-version: 1.8.0-dev+301
+version: 1.8.2-dev+303
 environment:
   sdk: ">=2.10.0 <3.0.0"
 
@@ -170,7 +170,7 @@ dependencies:
       ref: patch-1
   # wechat_assets_picker: ^2.2.0+2
 
-  image_gallery_saver: 1.5.0
+  image_gallery_saver: 1.6.9
   # 因为项目compileSdkVersion 28
   # 第三方包compileSdkVersion 是27 所以需要修改 不然build会出错
   #
