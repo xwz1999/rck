@@ -14,7 +14,7 @@ test() => new TestRunner().testAsync();
 
 ///打包APK
 @Task()
-Future buildApk() async {
+Future releaseApk() async {
   stdout.write("Build APK 📦\n");
   stdout.write("BUILDINGAPK\n");
   await Process.start('flutter', ['build', 'apk']).then((proc) async {
@@ -38,7 +38,7 @@ Future buildApk() async {
 }
 
 @Task()
-Future buildDev() async {
+Future releaseDev() async {
   TaskArgs args = context.invocation.arguments;
   String input = args.getOption('type') ?? 'dev';
 
@@ -96,3 +96,37 @@ build() {
 
 @Task()
 clean() => defaultClean();
+
+@Task()
+buildApk() async {
+  Pub.runAsync('flutter', arguments: [
+    'build',
+    'apk',
+    '--target-platform=android-arm64',
+    '--dart-define',
+    'ISDEBUG=false'
+  ]);
+}
+
+@Task()
+buildApkDev() async {
+  Pub.runAsync('flutter', arguments: [
+    'build',
+    'apk',
+    '--target-platform=android-arm64',
+    '--dart-define',
+    'ISDEBUG=true'
+  ]);
+}
+
+@Task()
+buildIos() async {
+  Pub.runAsync('flutter', arguments: [
+    'build',
+    'ios',
+    '--dart-define',
+    'ISDEBUG=false'
+  ]);
+}
+
+
