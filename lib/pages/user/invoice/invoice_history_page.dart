@@ -60,7 +60,7 @@ Widget invoiceHistoryCard(BuildContext context, InvoiceBillListModel model) {
   return CustomImageButton(
     onPressed: () {
       AppRouter.push(context, RouteName.USER_INVOICE_DETAIL_INFOMATION,
-          arguments: {'id': model.result.id});
+          arguments: {'id': model.id});
     },
     child: Container(
       decoration: BoxDecoration(
@@ -87,7 +87,7 @@ Widget invoiceHistoryCard(BuildContext context, InvoiceBillListModel model) {
                 ),
               ),
               Text(
-                model.result.ctime,
+                model.ctime,
                 style: TextStyle(
                   color: Color(0xFF666666),
                   fontSize: rSP(14),
@@ -141,7 +141,7 @@ Widget invoiceHistoryCard(BuildContext context, InvoiceBillListModel model) {
                 crossAxisAlignment: CrossAxisAlignment.baseline,
                 children: [
                   Text(
-                    model.result.pice.toStringAsFixed(2),
+                    model.totalAmount.toStringAsFixed(2),
                     style: TextStyle(
                       fontSize: rSP(24),
                       color: Color(0xFF333333),
@@ -169,11 +169,9 @@ Widget invoiceHistoryCard(BuildContext context, InvoiceBillListModel model) {
               top: rSize(8),
             ),
             child: Text(
-              model.statusDec,
+              model.statusString,
               style: TextStyle(
-                color: model.color == 1
-                    ? Color(0xFF999999)
-                    : model.color == 2 ? Color(0xFF44D7B6) : Color(0xFFFF4D4F),
+                color: model.statusColor,
                 fontSize: rSP(13),
               ),
             ),

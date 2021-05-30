@@ -177,21 +177,21 @@ class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
                           _selectedIds = [];
                           _price = 0;
                           _models.forEach((element) {
-                            _price += element.goodsAmount;
-                            _selectedIds.add(element.goodsDetailId);
+                            _price += element.goodsTotalAmount;
+                            _selectedIds.add(element.orderId);
                           });
                         }
                         setState(() {});
                       },
                     ),
                     Spacer(),
-                    FlatButton(
+                    TextButton(
                       onPressed: () {
                         AppRouter.push(context, RouteName.USER_INVOICE_DETAIL,
                             arguments: {'ids': _selectedIds, 'price': _price});
                       },
-                      child: Text('下一步'),
-                      color: AppColor.redColor,
+                      child: Text('下一步',style: TextStyle(color: Colors.white),),
+                      style:ButtonStyle(backgroundColor: MaterialStateProperty.all(AppColor.redColor),)
                     ),
                   ],
                 ),
@@ -206,12 +206,12 @@ class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
   _buildCard(InvoiceGetBillModel model) {
     return InkWell(
       onTap: () {
-        if (_selectedIds.contains(model.goodsDetailId)) {
-          _selectedIds.remove(model.goodsDetailId);
-          _price -= model.goodsAmount;
+        if (_selectedIds.contains(model.orderId)) {
+          _selectedIds.remove(model.orderId);
+          _price -= model.goodsTotalAmount;
         } else {
-          _selectedIds.add(model.goodsDetailId);
-          _price += model.goodsAmount;
+          _selectedIds.add(model.orderId);
+          _price += model.goodsTotalAmount;
         }
         setState(() {});
       },
@@ -228,7 +228,7 @@ class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
         height: 100 * 2.h,
         child: Row(
           children: [
-            RecookCheckBox(state: _selectedIds.contains(model.goodsDetailId)),
+            RecookCheckBox(state: _selectedIds.contains(model.orderId)),
             SizedBox(width: rSize(16)),
             Expanded(
               child: Column(
@@ -236,7 +236,7 @@ class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    model.orderTime,
+                    model.endTime,
                     style: TextStyle(
                       color: Color(0xFF666666),
                       fontSize: 14 * 2.sp,
@@ -258,7 +258,7 @@ class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
               textBaseline: TextBaseline.alphabetic,
               children: [
                 Text(
-                  model.goodsAmount.toString(),
+                  model.goodsTotalAmount.toString(),
                   style: TextStyle(
                     color: Color(0xFFDB2D2D),
                     fontSize: 24 * 2.sp,

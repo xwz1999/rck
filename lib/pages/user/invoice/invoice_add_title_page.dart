@@ -157,7 +157,7 @@ class _InvoiceAddTitlePageState extends State<InvoiceAddTitlePage> {
                           _isCompany ? 1 : 2,
                           _isCompany ? _cName.text : _pName.text,
                           model.id,
-                          _taxNum.text,
+                          taxNum: _taxNum.text,
                           addr: _addr.text,
                           phone: _phone.text,
                           bankNum: _bankNum.text,
@@ -171,7 +171,7 @@ class _InvoiceAddTitlePageState extends State<InvoiceAddTitlePage> {
                             .addLetterHead(
                           _isCompany ? 1 : 2,
                           _isCompany ? _cName.text : _pName.text,
-                          _taxNum.text,
+                          taxNum: _taxNum.text,
                           addr: _addr.text,
                           phone: _phone.text,
                           bankNum: _bankNum.text,

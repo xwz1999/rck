@@ -2,6 +2,7 @@ class APIV2 {
   static UserAPI userAPI = UserAPI();
   static BenefitAPI benefitAPI = BenefitAPI();
   static _OrderAPI orderAPI = _OrderAPI();
+  static _InvoiceAoi invoiceApi = _InvoiceAoi();
 }
 
 class UserAPI {
@@ -130,4 +131,21 @@ class BenefitAPI {
 class _OrderAPI {
   ///导购订单列表
   String get guideOrderList => '/v2/app/order/guide_lists';
+}
+
+class _InvoiceAoi {
+  ///用户可开票订单列表
+  String get canInvoiceBill => '/v2/app/order/can_bill_list';
+
+  ///显示用户抬头列表
+  String get invoiceList => '/v2/app/order/invoice_user_list';
+
+  ///添加常用开票抬头（包括修改功能）
+  String get addInvocieTitle => '/v2/app/add_invoice_title';
+
+  ///用户申请开票
+  String get applyInvoice => '/v2/app/order/apply_invoice';
+
+  ///获取用户开票记录
+  String get invoiceRecord => '/v2/app/order/invoice_history';
 }

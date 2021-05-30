@@ -367,48 +367,56 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                           horizontal: rSize(16),
                                           vertical: rSize(12),
                                         ),
-                                        child: FlatButton(
-                                          onPressed: _parseCheck()
-                                              ? () {
-                                                  _invoicePresenter
-                                                      .createBill(
-                                                    ids:
-                                                        widget.arguments['ids'],
-                                                    buyername: _isCompany
-                                                        ? _cName.text
-                                                        : _pName.text,
-                                                    taxnum: _taxNum.text,
-                                                    addr: _addr.text,
-                                                    telephone: _telePhone.text,
-                                                    phone: _phone.text,
-                                                    email: _email.text,
-                                                    account: _bankNum.text,
-                                                    message: _message.text,
-                                                  )
-                                                      .then((value) {
-                                                    if (value) {
-                                                      AppRouter.pushAndReplaced(
-                                                          context,
-                                                          RouteName
-                                                              .USER_INVOICE_UPLOAD_DONE);
-                                                    } else {
-                                                      Navigator.pop(context);
-                                                      Navigator.pop(context);
-                                                      Navigator.pop(context);
-                                                    }
-                                                  });
-                                                }
-                                              : null,
+                                        child: Padding(
                                           padding: EdgeInsets.symmetric(
                                             horizontal: rSize(16),
                                             vertical: rSize(12),
                                           ),
-                                          color: AppColor.redColor,
-                                          child: Text(
-                                            '确认提交',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16 * 2.sp,
+                                          child: TextButton(
+                                            onPressed: _parseCheck()
+                                                ? () {
+                                                    _invoicePresenter
+                                                        .createBill(
+                                                      ids: widget
+                                                          .arguments['ids'],
+                                                      buyername: _isCompany
+                                                          ? _cName.text
+                                                          : _pName.text,
+                                                      taxnum: _taxNum.text,
+                                                      addr: _addr.text,
+                                                      telephone:
+                                                          _telePhone.text,
+                                                      phone: _phone.text,
+                                                      email: _email.text,
+                                                      account: _bankNum.text,
+                                                      totalAmount: widget
+                                                          .arguments['price'],
+                                                      invoiceStatus: 1,
+                                                    )
+                                                        .then((value) {
+                                                      if (value) {
+                                                        AppRouter.pushAndReplaced(
+                                                            context,
+                                                            RouteName
+                                                                .USER_INVOICE_UPLOAD_DONE);
+                                                      } else {
+                                                        Navigator.pop(context);
+                                                        Navigator.pop(context);
+                                                        Navigator.pop(context);
+                                                      }
+                                                    });
+                                                  }
+                                                : null,
+                                            style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty.all(
+                                                        AppColor.redColor)),
+                                            child: Text(
+                                              '确认提交',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16 * 2.sp,
+                                              ),
                                             ),
                                           ),
                                         ),

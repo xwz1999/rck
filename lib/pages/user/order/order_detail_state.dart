@@ -11,11 +11,14 @@ import 'package:recook/manager/meiqia_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/order_detail_model.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
+import 'package:recook/pages/home/classify/mvp/order_mvp/order_contact.dart';
+import 'package:recook/pages/home/classify/mvp/order_mvp/order_presenter_impl.dart';
 import 'package:recook/pages/user/order/order_return_status_page.dart';
 import 'package:recook/utils/goods_status/goods_status_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 
 abstract class OrderDetailState<T extends StatefulWidget>
@@ -455,15 +458,15 @@ abstract class OrderDetailState<T extends StatefulWidget>
       //     borderRadius: BorderRadius.all(Radius.circular(40)),
       //     border: Border.all(color: Colors.grey, width: 0.8*2.w),
       //     onPressed: () {
-      //       if (_detail.invoiceStatus != 0) {
-      //         GSDialog.of(globalContext).showError(globalContext, "您已经申请过发票了，请勿重复申请");
+      //       if (orderDetail.invoiceStatus != 0) {
+      //        ReToast.warning(text: "您已经申请过发票了，请勿重复申请");
 
       //         return;
       //       }
       //       AppRouter.push(globalContext, RouteName.ORDER_INVOICE_LIST).then((invoiceId) {
       //         if (invoiceId == null) return;
-      //         GSDialog.of(globalContext).showLoadingDialog(globalContext, "");
-      //         _presenter.applyInvoice(UserManager.instance.user.info.id, _detail.id, invoiceId);
+      //         ReToast.loading();
+      //         OrderListPresenterI.applyInvoice(UserManager.instance.user.info.id, orderDetail.id, invoiceId);
       //       });
       //     },
       //   ));
