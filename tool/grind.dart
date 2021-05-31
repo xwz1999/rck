@@ -121,12 +121,6 @@ buildApkDev() async {
 
 @Task()
 buildIos() async {
-  Pub.runAsync('flutter', arguments: [
-    'build',
-    'ios',
-    '--dart-define',
-    'ISDEBUG=false'
-  ]);
+  Pub.runAsync('flutter',
+      arguments: ['build', 'ios', '--dart-define', 'ISDEBUG=false']);
 }
-
-
