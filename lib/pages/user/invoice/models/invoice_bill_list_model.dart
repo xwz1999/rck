@@ -13,7 +13,7 @@ class InvoiceBillListModel {
   String email;
   String account;
   String message;
-  double totalAmount;
+  num totalAmount;
   int invoiceStatus;
   String fpqqlsh;
   String ctime;

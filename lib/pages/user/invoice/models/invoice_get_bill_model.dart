@@ -1,7 +1,7 @@
 class InvoiceGetBillModel {
   String endTime;
   String goodsName;
-  double goodsTotalAmount;
+  num goodsTotalAmount;
   int orderId;
 
   InvoiceGetBillModel(

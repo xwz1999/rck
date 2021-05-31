@@ -7,6 +7,7 @@ import 'package:recook/pages/user/invoice/models/invoice_bill_list_model.dart';
 import 'package:recook/pages/user/invoice/models/invoice_detail_model.dart';
 import 'package:recook/pages/user/invoice/models/invoice_get_bill_model.dart';
 import 'package:recook/pages/user/invoice/models/invoice_title_list_model.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 
 class InvoicePresenter {
@@ -116,7 +117,7 @@ class InvoicePresenter {
       'invoice_status': invoiceStatus,
     });
     if (resultData.data['code'] == 'FAIL') {
-      Toast.showError(resultData.data['msg']);
+      ReToast.warning(text:resultData.data['msg']);
       return false;
     } else
       return true;

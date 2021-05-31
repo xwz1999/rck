@@ -106,16 +106,16 @@ class ImageUtils {
       String url = urls[i];
       var data = await getNetworkImageData(url, useCache: useCache);
       try {
-        final result = await ImageGallerySaver.saveImage(data);
+        final Map<dynamic,dynamic> result = await ImageGallerySaver.saveImage(data);
         if (Platform.isAndroid) {
-          if (!TextUtils.isEmpty(result)) {
+          if (result.containsValue(true)) {
             callBack(i);
           } else {
             endBack(false);
             return false;
           }
         } else if (Platform.isIOS) {
-          if (result) {
+          if (result.containsValue(true)) {
             callBack(i);
           } else {
             endBack(false);

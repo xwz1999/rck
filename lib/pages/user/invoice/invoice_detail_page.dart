@@ -374,8 +374,8 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                           ),
                                           child: TextButton(
                                             onPressed: _parseCheck()
-                                                ? () {
-                                                    _invoicePresenter
+                                                ? () async{
+                                                    await _invoicePresenter
                                                         .createBill(
                                                       ids: widget
                                                           .arguments['ids'],
