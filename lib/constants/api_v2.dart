@@ -141,7 +141,7 @@ class _InvoiceAoi {
   String get invoiceList => '/v2/app/order/invoice_user_list';
 
   ///添加常用开票抬头（包括修改功能）
-  String get addInvocieTitle => '/v2/app/add_invoice_title';
+  String get addInvocieTitle => '/v2/app/order/add_invoice_title';
 
   ///用户申请开票
   String get applyInvoice => '/v2/app/order/apply_invoice';

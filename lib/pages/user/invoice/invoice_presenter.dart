@@ -51,7 +51,7 @@ class InvoicePresenter {
       'uid': UserManager.instance.user.info.id, //用户id
       'type': type,
       "name": name,
-      "default": defaultValue,
+      "defaultValue": defaultValue,
     };
     if (type == 1) {
       param.putIfAbsent('taxnum', () => taxNum);
@@ -59,7 +59,7 @@ class InvoicePresenter {
       param.putIfAbsent('address', () => addr);
       param.putIfAbsent('bank', () => bankNum);
     }
-    await HttpManager.post(InvoiceApi.addLetterHead, param);//暂时用老接口
+    await HttpManager.post(APIV2.invoiceApi.addInvocieTitle, param);
   }
 
   Future updateLetterHead(
@@ -78,7 +78,7 @@ class InvoicePresenter {
       'id': id,
       'type': type,
       "name": name,
-      "default": defaultValue,
+      "defaultValue": defaultValue,
     };
     if (type == 1) {
       param.putIfAbsent('taxnum', () => taxNum);
@@ -104,7 +104,7 @@ class InvoicePresenter {
   }) async {
     ResultData resultData = await HttpManager.post(APIV2.invoiceApi.applyInvoice, {
       'user_id': UserManager.instance.user.info.id,
-      'order_id': ids.first, //暂时只能传一个
+      'order_id': ids,
       'buyer_name': buyername,
       'tax_num': taxnum,
       'address': addr,
@@ -124,7 +124,7 @@ class InvoicePresenter {
 
   Future<List<InvoiceBillListModel>> getBillList() async {
     ResultData resultData = await HttpManager.post(APIV2.invoiceApi.invoiceRecord, {
-      'userId': UserManager.instance.user.info.id,
+      'uid': UserManager.instance.user.info.id,
       // 'page': page,
     });
     return resultData.data['data'] == null
