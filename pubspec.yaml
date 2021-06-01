@@ -19,7 +19,7 @@ dependencies:
   timeline_tile: 0.1.2
   # 高德定位
   # amap_location_fluttify: ^0.18.0
-  amap_flutter_location: ^1.0.1
+  amap_flutter_location: ^2.0.0
   # icons
   flutter_icons: 1.1.0
   # 拼音
@@ -231,7 +231,7 @@ dependencies:
   animations:
   device_info: ^2.0.0
   clipboard_listener: ^1.0.0
-  power_logger: ^1.0.1-nullsafety.1
+  power_logger: ^1.2.1
 
   bot_toast: ^3.0.5
   get: ^3.26.0

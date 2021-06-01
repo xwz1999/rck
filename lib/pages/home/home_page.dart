@@ -22,6 +22,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:permission_handler/permission_handler.dart';
+import 'package:power_logger/power_logger.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
 import 'package:recook/base/base_store_state.dart';
@@ -117,6 +118,9 @@ class _HomePageState extends BaseStoreState<HomePage>
   // 天气数据
   HomeWeatherModel _homeWeatherModel;
   WeatherCityModel _weatherCityModel;
+
+//定位
+  AMapFlutterLocation _amapFlutterLocation;
   //高度
   double screenWidth = 0;
   double weatherHeight = 0;
@@ -154,13 +158,26 @@ class _HomePageState extends BaseStoreState<HomePage>
   @override
   void initState() {
     super.initState();
+    //已在native配置
+    // AMapFlutterLocation.setApiKey(
+    //     '7225bca14fe7493f9f469315a933f99c', 'e8a8057cfedcdcadcf4e8f2c7f8de982');
+    _amapFlutterLocation = AMapFlutterLocation();
+    
     requestPermission().then((value) {
       if (value) {
-        AMapFlutterLocation().setLocationOption(AMapLocationOption());
-        AMapFlutterLocation().startLocation();
-        AMapFlutterLocation().onLocationChanged().listen((event) {
-          _weatherLocation = event;
-        });
+        //监听要在设置参数之前 否则无法获取定位
+        _amapFlutterLocation.onLocationChanged().listen(
+          (event) {
+            _weatherLocation = event;
+            _getWeather();
+          },
+        );
+
+        _amapFlutterLocation
+            .setLocationOption(AMapLocationOption(onceLocation: true));
+        _amapFlutterLocation.startLocation();
+      } else {
+        ReToast.err(text: '未获取到定位权限，请先在设置中打开定位权限');
       }
     });
 
@@ -241,7 +258,6 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   // 获取当前页面需要刷新的数据
   _updateSource() {
-    _getWeather();
     _getActiviteList();
     _getBannerList();
     _getPromotionList();
@@ -265,8 +281,8 @@ class _HomePageState extends BaseStoreState<HomePage>
   @override
   void dispose() {
     _tabController.dispose();
-    AMapFlutterLocation().stopLocation();
-    AMapFlutterLocation().destroy();
+    _amapFlutterLocation?.stopLocation();
+    _amapFlutterLocation?.destroy();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -1369,8 +1385,9 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   _getWeather() async {
     // if (_weatherLocation==null)
+    //cityid、city和ip参数3选一提交，如果不传，默认返回当前ip城市天气，cityid优先级最高。
     String url =
-        "https://tianqiapi.com/api?version=v61&appid=81622428&appsecret=AxKzYWq3";
+        "https://v0.yiketianqi.com/api?version=v61&appid=81622428&appsecret=AxKzYWq3";
     if (_weatherCityModel != null && !TextUtils.isEmpty(_weatherCityModel.id)) {
       url = "$url&cityid=${_weatherCityModel.id}";
     } else if (_weatherCityModel != null &&
@@ -1387,7 +1404,8 @@ class _HomePageState extends BaseStoreState<HomePage>
     if (res == null) {
       return;
     }
-    Map map = json.decode(res.toString());
+    LoggerData.addData(res);
+    Map map = json.decode(res.data.toString());
     _homeWeatherModel = HomeWeatherModel.fromJson(map);
     UserManager.instance.homeWeatherModel = _homeWeatherModel;
     if (mounted) setState(() {});
