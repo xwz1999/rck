@@ -162,13 +162,14 @@ class _HomePageState extends BaseStoreState<HomePage>
     // AMapFlutterLocation.setApiKey(
     //     '7225bca14fe7493f9f469315a933f99c', 'e8a8057cfedcdcadcf4e8f2c7f8de982');
     _amapFlutterLocation = AMapFlutterLocation();
-    
+
     requestPermission().then((value) {
       if (value) {
         //监听要在设置参数之前 否则无法获取定位
         _amapFlutterLocation.onLocationChanged().listen(
           (event) {
             _weatherLocation = event;
+            LoggerData.addData(_weatherLocation['city']);
             _getWeather();
           },
         );
@@ -463,12 +464,12 @@ class _HomePageState extends BaseStoreState<HomePage>
           children: <Widget>[
             Container(
               margin: EdgeInsets.only(left: 10),
-              width: ScreenAdapterUtils.setWidth(iconSize),
-              height: ScreenAdapterUtils.setWidth(iconSize),
+              width: iconSize * 2.w,
+              height: iconSize * 2.w,
               child: Image.asset(
                 'assets/home_tab_search.png',
-                width: ScreenAdapterUtils.setWidth(iconSize),
-                height: ScreenAdapterUtils.setWidth(iconSize),
+                width: iconSize * 2.w,
+                height: iconSize * 2.w,
               ),
             ),
             Container(

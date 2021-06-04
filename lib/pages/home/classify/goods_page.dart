@@ -339,7 +339,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 String img = '';
                 int length = widget.goodsDetail.data.mainPhotos.length;
                 if (length >= 2)
-                  img = widget.goodsDetail.data.mainPhotos[1].url;
+                  img = widget.goodsDetail.data.mainPhotos[0].url;
                 if (length >= 1)
                   img = widget.goodsDetail.data.mainPhotos[0].url;
                 ShareTool().goodsShare(

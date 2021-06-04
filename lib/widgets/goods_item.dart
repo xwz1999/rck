@@ -743,8 +743,8 @@ class GoodsItemWidget extends StatelessWidget {
     String imgUrl;
     GoodsDetailModel imagesModel =
         await GoodsDetailModelImpl.getDetailInfo(this.id, UserManager.instance.user.info.id);
-    if (imagesModel.data.mainPhotos.length>1) {
-      imgUrl = imagesModel.data.mainPhotos[1].url;
+    if (imagesModel.data.mainPhotos.length>=1) {
+      imgUrl = imagesModel.data.mainPhotos[0].url;
     } else {
       imgUrl = imagesModel.data?.mainPhotos?.first?.url ?? '';
     }

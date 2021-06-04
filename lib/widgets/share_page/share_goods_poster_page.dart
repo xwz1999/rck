@@ -156,8 +156,8 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
     }
     // _bottomBarController.setFavorite(_goodsDetail.data.isFavorite);
     MainPhotos photo = _goodsDetail.data.mainPhotos[0];
-    if (_goodsDetail.data.mainPhotos.length >= 2) {
-      photo = _goodsDetail.data.mainPhotos[1];
+    if (_goodsDetail.data.mainPhotos.length >= 1) {
+      photo = _goodsDetail.data.mainPhotos[0];
     }
     photo.isSelect = true;
     photo.isSelectNumber = 1;
