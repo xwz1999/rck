@@ -9,12 +9,20 @@ class InvoiceScaffoldWidget extends StatefulWidget {
   final String title;
   final Color backgroundColor;
   final Widget bottomNavigationBar;
+  final String extraMessage;
+  final String address;
+  final String tel;
+  final String bankNum;
   InvoiceScaffoldWidget(
       {Key key,
       this.body,
       this.title,
       this.backgroundColor,
-      this.bottomNavigationBar})
+      this.bottomNavigationBar,
+      this.extraMessage,
+      this.address,
+      this.tel,
+      this.bankNum})
       : super(key: key);
 
   @override

@@ -184,6 +184,7 @@ class _InvoiceDetailMorePageState extends State<InvoiceDetailMorePage> {
                     fontSize: rSP(16),
                   ),
                 ),
+                rWBox(10),
                 Text(
                   '该内容将会打印在发票上',
                   style: TextStyle(

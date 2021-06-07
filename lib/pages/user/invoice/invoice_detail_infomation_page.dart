@@ -61,11 +61,11 @@ class _InvoiceDetailInfomationPageState
                       ),
                       Spacer(),
                       Text(
-                        model.type == 1
+                        model.invoiceStatus== 5
                             ? '已开票'
-                            : model.type == 2 ? '开票中' : '开票失败',
+                            : model.invoiceStatus == 3? '开票中' : '开票失败',
                         style: TextStyle(
-                          color: model.type == 1
+                          color: model.invoiceStatus == 5
                               ? Color(0xFFFF8F44)
                               : Color(0xFF333333),
                           fontSize: rSize(16),
@@ -75,12 +75,12 @@ class _InvoiceDetailInfomationPageState
                   ),
                 ),
                 SizedBox(height: rSize(8)),
-                _buildBox('公司名称', model.buyername),
-                _buildBox('公司税号', model.taxnum),
+                _buildBox('公司名称', model.buyerName),
+                _buildBox('公司税号', model.taxNum),
                 _buildBox('公司地址', model.address, show: _showMore),
                 _buildBox('公司电话', model.telephone, show: _showMore),
                 _buildBox('开户银行账号', model.account, show: _showMore),
-                _buildBox('发票内容', model.content, show: _showMore),
+                _buildBox('发票内容', '平台消费', show: _showMore),//发票内容暂时写死
                 _buildBox('备注', model.message, show: _showMore),
                 Container(
                   color: Colors.white,
@@ -99,7 +99,7 @@ class _InvoiceDetailInfomationPageState
                       ),
                       Spacer(),
                       Text(
-                        model.pice.toStringAsFixed(2),
+                        model.totalAmount.toStringAsFixed(2),
                         style: TextStyle(
                           color: Color(0xFFFF4D4F),
                           fontSize: rSize(14),

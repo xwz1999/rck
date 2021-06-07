@@ -148,4 +148,7 @@ class _InvoiceAoi {
 
   ///获取用户开票记录
   String get invoiceRecord => '/v2/app/order/invoice_history';
+
+  ///显示单个开票详情
+  String get invoiceDetail => '/v2/app/order/invoice_one_detail';
 }

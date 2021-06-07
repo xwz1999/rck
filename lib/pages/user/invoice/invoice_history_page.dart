@@ -60,7 +60,7 @@ Widget invoiceHistoryCard(BuildContext context, InvoiceBillListModel model) {
   return CustomImageButton(
     onPressed: () {
       AppRouter.push(context, RouteName.USER_INVOICE_DETAIL_INFOMATION,
-          arguments: {'id': model.id});
+          arguments: {'id': model.orderId});
     },
     child: Container(
       decoration: BoxDecoration(

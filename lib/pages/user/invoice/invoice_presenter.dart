@@ -94,6 +94,7 @@ class InvoicePresenter {
   Future<bool> createBill({
     @required List<int> ids,
     @required String buyername,
+    String message,
     String taxnum,
     String addr,
     String telephone,
@@ -115,6 +116,7 @@ class InvoicePresenter {
       'account': account,
       'total_amount': totalAmount,
       'invoice_status': invoiceStatus,
+      'message':message,
     });
     if (resultData.data['code'] == 'FAIL') {
       ReToast.warning(text:resultData.data['msg']);
@@ -137,7 +139,7 @@ class InvoicePresenter {
 
   Future<InvoiceDetailModel> getDetailModel(int id) async {
     ResultData resultData =
-        await HttpManager.post(InvoiceApi.detail, {'billId': id});
+        await HttpManager.post(APIV2.invoiceApi.invoiceDetail, {'order_id': id});
     return resultData.data['data'] == null
         ? null
         : InvoiceDetailModel.fromJson(resultData.data['data']);
