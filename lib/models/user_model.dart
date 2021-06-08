@@ -159,7 +159,7 @@ class Info {
   int userLevel;
   bool isSetPayPwd; //是否设置过支付密码 支付和提现需要用到
   bool realInfoStatus; // 是否实名认证
-  String realName;
+  String realName;//真实姓名
   String idCard;
 
   ///导师微信号

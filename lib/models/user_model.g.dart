@@ -109,6 +109,7 @@ Map<String, dynamic> _$InfoToJson(Info instance) => <String, dynamic>{
       'userLevel': instance.userLevel,
       'isSetPayPwd': instance.isSetPayPwd,
       'realInfoStatus': instance.realInfoStatus,
+      'realName':instance.realName,
     };
 
 Tkn _$TknFromJson(Map<String, dynamic> json) {

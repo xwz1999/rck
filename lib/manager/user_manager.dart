@@ -10,6 +10,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:power_logger/power_logger.dart';
+import 'package:recook/utils/storage/hive_store.dart';
 
 import 'package:redux/redux.dart';
 
@@ -78,17 +80,18 @@ class UserManager {
     instance.user = user;
     instance.login.value = true;
     String jsonStr = json.encode(user.toJson());
-    await SharePreferenceUtils.setString(AppStrings.key_user, jsonStr);
-    store.dispatch(UpdateUserAction(user));
-
+    // await SharePreferenceUtils.setString(AppStrings.key_user, jsonStr);
+    // store.dispatch(UpdateUserAction(user));
+    HiveStore.appBox.put('key_user', jsonStr);
     UserManager.instance.updateUserBriefInfo(store);
     return true;
   }
 
   static updateUserInfo(Store<RecookState> store) async {
     String jsonStr = json.encode(instance.user.toJson());
-    await SharePreferenceUtils.setString(AppStrings.key_user, jsonStr);
-    store.dispatch(UpdateUserAction(instance.user));
+    // await SharePreferenceUtils.setString(AppStrings.key_user, jsonStr);
+    // store.dispatch(UpdateUserAction(instance.user));
+    HiveStore.appBox.put('key_user', jsonStr);
   }
 
   static logout() async {

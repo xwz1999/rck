@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:power_logger/power_logger.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
@@ -800,8 +801,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   }
 
   bool get identicalName =>
-      UserManager.instance.user.info.realName ==
-      _orderModel.data.addr.receiverName;
+      UserManager.instance.user.info.realName.removeAllWhitespace ==
+      _orderModel.data.addr.receiverName.removeAllWhitespace;
 
   _allAmountTitle() {
     return Container(

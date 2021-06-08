@@ -13,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:redux/redux.dart';
 
 import 'package:recook/constants/constants.dart';
@@ -21,7 +22,6 @@ import 'package:recook/constants/styles.dart';
 import 'package:recook/redux/recook_state.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/print_util.dart';
-import 'package:recook/widgets/progress/sc_dialog.dart';
 
 abstract class BaseStoreState<T extends StatefulWidget> extends State<T>
     with AutomaticKeepAliveClientMixin {
@@ -157,20 +157,18 @@ abstract class BaseStoreState<T extends StatefulWidget> extends State<T>
 
   Future<Null> showError(String error,
       {Duration duration = const Duration(milliseconds: 1000)}) async {
-    return GSDialog.of(globalContext)
-        .showError(globalContext, error, duration: duration);
+    return ReToast.err(text: error);
   }
 
   Future<Null> showSuccess(String success) async {
-    return GSDialog.of(globalContext).showSuccess(globalContext, success);
+    return ReToast.success(text: success);
   }
 
   showLoading(String loading) {
-    GSDialog.of(globalContext).showLoadingDialog(globalContext, loading);
+    ReToast.loading();
   }
 
   dismissLoading() {
-    GSDialog.of(globalContext).dismiss(globalContext);
   }
 
   @override

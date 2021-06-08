@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info/package_info.dart';
+import 'package:power_logger/power_logger.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -28,6 +29,7 @@ import 'package:recook/models/user_model.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/print_util.dart';
 import 'package:recook/utils/share_preference.dart';
+import 'package:recook/utils/storage/hive_store.dart';
 import 'package:recook/widgets/toast.dart';
 
 class WelcomeWidget extends StatefulWidget {
@@ -312,20 +314,23 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
    */
   _autoLogin() {
     _getLaunchInfo();
-    UserDao.autoLogin(
-      {'userId': UserManager.instance.user.info.id},
-      failure: (String code, String msg) {},
-      success: (User data, String code, String msg) {},
-    );
+    //无效代码
+    // UserDao.autoLogin(
+    //   {'userId': UserManager.instance.user.info.id},
+    //   failure: (String code, String msg) {},
+    //   success: (User data, String code, String msg) {},
+    // );
   }
 
   _getLaunchInfo() {
     // Future.delayed(Duration(seconds: 2), () {
-    SharePreferenceUtils.getString(AppStrings.key_user).then((value) {
-      DPrint.printf(value);
-      _launch(value);
-    });
+    // SharePreferenceUtils.getString(AppStrings.key_user).then((value) {
+    //   LoggerData.addData(value);
+    //   _launch(value);
     // });
+    // });
+    var value = HiveStore.appBox.get('key_user');
+    _launch(value);
   }
 
   _launch(String value) {

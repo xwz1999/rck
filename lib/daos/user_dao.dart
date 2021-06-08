@@ -12,6 +12,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:dio/dio.dart';
+import 'package:power_logger/power_logger.dart';
 
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/config.dart';
@@ -27,8 +28,9 @@ class UserDao {
     获取access_token 和 openid
    */
   static Future<Map> getOpenId(code) async {
-    String url = "$openIdUrl?appid=${AppConfig.WX_APP_ID}&secret=${AppConfig.WX_APP_SECRET}&code=$code&grant_type=authorization_code";
-    Response res = await HttpManager.netFetchNormal(url, null,null,null);
+    String url =
+        "$openIdUrl?appid=${AppConfig.WX_APP_ID}&secret=${AppConfig.WX_APP_SECRET}&code=$code&grant_type=authorization_code";
+    Response res = await HttpManager.netFetchNormal(url, null, null, null);
     Map map = json.decode(res.toString());
     return map;
   }
@@ -37,11 +39,8 @@ class UserDao {
     微信登录
    */
   static weChatLogin(String code,
-      {@required OnSuccess<User> success,
-      @required OnFailure failure}) async {
-    ResultData res =
-        await HttpManager.post(UserApi.wx_login, {"code": code});
-
+      {@required OnSuccess<User> success, @required OnFailure failure}) async {
+    ResultData res = await HttpManager.post(UserApi.wx_login, {"code": code});
     if (!res.result) {
       failure(res.code, res.msg);
     } else {
@@ -61,8 +60,8 @@ class UserDao {
       {@required OnSuccess<User> success, @required OnFailure failure}) async {
     // ResultData res = await HttpManager.post(
     //     UserApi.wx_register, {"wxUnionId":wxUnionId,"mobile":mobile,"sms":sms,"invitationNo":invitationNo.toUpperCase()});
-    ResultData res = await HttpManager.post(
-        UserApi.wx_register, {"wxUnionId":wxUnionId,"mobile":mobile,"sms":sms});
+    ResultData res = await HttpManager.post(UserApi.wx_register,
+        {"wxUnionId": wxUnionId, "mobile": mobile, "sms": sms});
     if (!res.result) {
       failure(res.code, res.msg);
     } else {
@@ -82,8 +81,8 @@ class UserDao {
       {@required OnSuccess<User> success, @required OnFailure failure}) async {
     // ResultData res = await HttpManager.post(
     //     UserApi.wx_register, {"wxUnionId":wxUnionId,"mobile":mobile,"sms":sms,"invitationNo":invitationNo.toUpperCase()});
-    ResultData res = await HttpManager.post(
-        UserApi.wx_invitation, {"wxUnionId":wxUnionId,"invitationNo":invitationNo.toUpperCase()});
+    ResultData res = await HttpManager.post(UserApi.wx_invitation,
+        {"wxUnionId": wxUnionId, "invitationNo": invitationNo.toUpperCase()});
     if (!res.result) {
       failure(res.code, res.msg);
     } else {
@@ -95,7 +94,6 @@ class UserDao {
       }
     }
   }
-
 
   /*
     获取验证码
@@ -138,7 +136,6 @@ class UserDao {
     }
   }
 
-
   /*
     自动登录
    */
@@ -146,21 +143,24 @@ class UserDao {
   //     {@required OnSuccess<User> success, @required OnFailure failure}) async {
   //   ResultData res =
   //       await HttpManager.post(UserApi.auto_login, {}, header: header);
-  static autoLogin(Map<String, dynamic> params,
-    {@required OnSuccess<User> success, @required OnFailure failure}) async {
-  ResultData res =
-      await HttpManager.post(UserApi.auto_login, params, );
-    if (!res.result) {
-      failure(res.code, res.msg);
-    } else {
-      UserModel model = UserModel.fromJson(res.data);
-      if (model.code == HttpStatus.SUCCESS) {
-        success(model.data, model.code, model.msg);
-      } else {
-        failure(model.code, model.msg);
-      }
-    }
-  }
+  /*无效代码*/
+  // static autoLogin(Map<String, dynamic> params,
+  //     {@required OnSuccess<User> success, @required OnFailure failure}) async {
+  //   ResultData res = await HttpManager.post(
+  //     UserApi.auto_login,
+  //     params,
+  //   );
+  //   if (!res.result) {
+  //     failure(res.code, res.msg);
+  //   } else {
+  //     UserModel model = UserModel.fromJson(res.data);
+  //     if (model.code == HttpStatus.SUCCESS) {
+  //       success(model.data, model.code, model.msg);
+  //     } else {
+  //       failure(model.code, model.msg);
+  //     }
+  //   }
+  // }
 
   /*
     自动登录
@@ -170,9 +170,11 @@ class UserDao {
   //   ResultData res =
   //       await HttpManager.post(UserApi.auto_login, {}, header: header);
   static launch(Map<String, dynamic> params,
-    {@required OnSuccess success, @required OnFailure failure}) async {
-  ResultData res =
-      await HttpManager.post(UserApi.launch, params,);
+      {@required OnSuccess success, @required OnFailure failure}) async {
+    ResultData res = await HttpManager.post(
+      UserApi.launch,
+      params,
+    );
     if (!res.result) {
       failure(res.code, res.msg);
     } else {
@@ -190,8 +192,8 @@ class UserDao {
    */
   static phoneRegister(String phone, String invitationNo,
       {@required OnSuccess<User> success, @required OnFailure failure}) async {
-    ResultData res = await HttpManager.post(
-        UserApi.phone_register, {"mobile": phone, "invitationNo": invitationNo.toUpperCase()});
+    ResultData res = await HttpManager.post(UserApi.phone_register,
+        {"mobile": phone, "invitationNo": invitationNo.toUpperCase()});
 
     if (!res.result) {
       failure(res.code, "网络错误");
