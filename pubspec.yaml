@@ -67,7 +67,7 @@ dependencies:
   chewie: ^1.0.0
 
   # 权限组件
-  permission_handler: 3.3.0
+  permission_handler: ^8.0.1
 
   #邀请码相关第三方安装
   openinstall_flutter_plugin: ^1.0.1

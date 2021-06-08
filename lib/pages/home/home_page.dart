@@ -1421,13 +1421,13 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   Future<bool> requestPermission() async {
-    final permissions = await PermissionHandler()
-        .requestPermissions([PermissionGroup.location]);
-    if (permissions[PermissionGroup.location] == PermissionStatus.granted) {
-      return true;
-    } else {
-      return false;
+    bool permission = await Permission.locationWhenInUse.isGranted;
+    if (!permission) {
+      Permission.locationWhenInUse
+          .request()
+          .then((value) => permission = value.isGranted);
     }
+    return permission;
   }
 
   //抽奖功能

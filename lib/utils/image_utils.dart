@@ -85,20 +85,14 @@ class ImageUtils {
   }) async {
     //
     if (Platform.isAndroid) {
-      PermissionStatus permissionStorage = await PermissionHandler()
-          .checkPermissionStatus(PermissionGroup.storage);
-      if (permissionStorage != PermissionStatus.granted) {
-        Map<PermissionGroup, PermissionStatus> permissionStatus =
-            await PermissionHandler()
-                .requestPermissions([PermissionGroup.storage]);
-        permissionStorage = permissionStatus[PermissionGroup.storage] ??
-            PermissionStatus.unknown;
-
-        if (permissionStorage != PermissionStatus.granted) {
-          print("❌----------has no Permission");
-          return false;
-        }
+      bool permissionStorage = await Permission.storage.isGranted;
+      if (!permissionStorage) {
+        print("❌----------has no Permission");
+        Permission.storage
+            .request()
+            .then((value) => permissionStorage = value.isGranted);
       }
+      return permissionStorage;
     }
     //
 
@@ -106,7 +100,8 @@ class ImageUtils {
       String url = urls[i];
       var data = await getNetworkImageData(url, useCache: useCache);
       try {
-        final Map<dynamic,dynamic> result = await ImageGallerySaver.saveImage(data);
+        final Map<dynamic, dynamic> result =
+            await ImageGallerySaver.saveImage(data);
         if (Platform.isAndroid) {
           if (result.containsValue(true)) {
             callBack(i);
@@ -144,20 +139,14 @@ class ImageUtils {
       void Function(bool success) endBack) async {
     //
     if (Platform.isAndroid) {
-      PermissionStatus permissionStorage = await PermissionHandler()
-          .checkPermissionStatus(PermissionGroup.storage);
-      if (permissionStorage != PermissionStatus.granted) {
-        Map<PermissionGroup, PermissionStatus> permissionStatus =
-            await PermissionHandler()
-                .requestPermissions([PermissionGroup.storage]);
-        permissionStorage = permissionStatus[PermissionGroup.storage] ??
-            PermissionStatus.unknown;
-
-        if (permissionStorage != PermissionStatus.granted) {
-          print("❌----------has no Permission");
-          return false;
-        }
+      bool permissionStorage = await Permission.storage.isGranted;
+      if (!permissionStorage) {
+        print("❌----------has no Permission");
+        Permission.storage
+            .request()
+            .then((value) => permissionStorage = value.isGranted);
       }
+      return permissionStorage;
     }
     //
     for (var i = 0; i < fileDatas.length; i++) {
