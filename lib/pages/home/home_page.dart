@@ -1423,9 +1423,8 @@ class _HomePageState extends BaseStoreState<HomePage>
   Future<bool> requestPermission() async {
     bool permission = await Permission.locationWhenInUse.isGranted;
     if (!permission) {
-      Permission.locationWhenInUse
-          .request()
-          .then((value) => permission = value.isGranted);
+     await Permission.locationWhenInUse.request();
+      permission = await Permission.locationWhenInUse.isGranted;
     }
     return permission;
   }

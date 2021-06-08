@@ -10,13 +10,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:power_logger/power_logger.dart';
 import 'package:recook/utils/storage/hive_store.dart';
 
 import 'package:redux/redux.dart';
 
 import 'package:recook/base/http_result_model.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/models/home_weather_model.dart';
 import 'package:recook/models/user_brief_info_model.dart';
 import 'package:recook/models/user_model.dart';
@@ -24,9 +22,7 @@ import 'package:recook/pages/live/tencent_im/tencent_im_tool.dart';
 import 'package:recook/pages/user/mvp/user_presenter_impl.dart';
 import 'package:recook/redux/recook_state.dart';
 import 'package:recook/redux/user_brief_redux.dart';
-import 'package:recook/redux/user_redux.dart';
 import 'package:recook/utils/print_util.dart';
-import 'package:recook/utils/share_preference.dart';
 import 'package:recook/widgets/toast.dart';
 
 class UserManager {
@@ -99,7 +95,8 @@ class UserManager {
     TencentIMTool.model = null;
     instance.user = User.empty();
     instance.login.value = false;
-    await SharePreferenceUtils.remove(AppStrings.key_user);
+    HiveStore.appBox.delete('key_user');
+    // await SharePreferenceUtils.remove(AppStrings.key_user);
 //    store.dispatch(UpdateUserAction(User.empty()));
   }
 

@@ -87,12 +87,13 @@ class ImageUtils {
     if (Platform.isAndroid) {
       bool permissionStorage = await Permission.storage.isGranted;
       if (!permissionStorage) {
-        print("❌----------has no Permission");
-        Permission.storage
-            .request()
-            .then((value) => permissionStorage = value.isGranted);
+        await Permission.storage.request();
+        permissionStorage = await Permission.storage.isGranted;
+        if (!permissionStorage) {
+          print("❌----------has no Permission");
+          return false;
+        }
       }
-      return permissionStorage;
     }
     //
 
@@ -104,14 +105,16 @@ class ImageUtils {
             await ImageGallerySaver.saveImage(data);
         if (Platform.isAndroid) {
           if (result.containsValue(true)) {
-            callBack(i);
+            endBack(true);
+            return true;
           } else {
             endBack(false);
             return false;
           }
         } else if (Platform.isIOS) {
           if (result.containsValue(true)) {
-            callBack(i);
+            endBack(true);
+            return true;
           } else {
             endBack(false);
             return false;
@@ -141,12 +144,13 @@ class ImageUtils {
     if (Platform.isAndroid) {
       bool permissionStorage = await Permission.storage.isGranted;
       if (!permissionStorage) {
-        print("❌----------has no Permission");
-        Permission.storage
-            .request()
-            .then((value) => permissionStorage = value.isGranted);
+        await Permission.storage.request();
+        permissionStorage = await Permission.storage.isGranted;
+        if (!permissionStorage) {
+          print("❌----------has no Permission");
+          return false;
+        }
       }
-      return permissionStorage;
     }
     //
     for (var i = 0; i < fileDatas.length; i++) {

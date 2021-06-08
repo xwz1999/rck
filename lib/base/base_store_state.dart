@@ -157,18 +157,20 @@ abstract class BaseStoreState<T extends StatefulWidget> extends State<T>
 
   Future<Null> showError(String error,
       {Duration duration = const Duration(milliseconds: 1000)}) async {
-    return ReToast.err(text: error);
+    return GSDialog.of(globalContext)
+        .showError(globalContext, error, duration: duration);
   }
 
   Future<Null> showSuccess(String success) async {
-    return ReToast.success(text: success);
+    return GSDialog.of(globalContext).showSuccess(globalContext, success);
   }
 
   showLoading(String loading) {
-    ReToast.loading();
+    GSDialog.of(globalContext).showLoadingDialog(globalContext, loading);
   }
 
   dismissLoading() {
+    GSDialog.of(globalContext).dismiss(globalContext);
   }
 
   @override

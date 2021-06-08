@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/widgets/custom_app_bar.dart';

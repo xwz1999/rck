@@ -15,6 +15,7 @@ import 'package:recook/widgets/cache_tab_bar_view.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/share_page/share_invite_model.dart';
 
 class ShareUrlPosterPage extends StatefulWidget {
@@ -148,14 +149,15 @@ class _ShareUrlPosterPageState extends BaseStoreState<ShareUrlPosterPage>
       height: 60,
       child: CustomImageButton(
         onPressed: () {
-          showLoading("");
+          var cancel = ReToast.loading();
           ImageUtils.saveNetworkImagesToPhoto(
               [_shareInvitaModal.data.data[_tabIndex]], (index) {}, (success) {
-            dismissLoading();
+            cancel();
+            Navigator.pop(context);
             if (success) {
-              showSuccess("图片已经保存到相册!");
+              ReToast.success(text: '图片已保存到相册');
             } else {
-              showError("图片保存失败...");
+              ReToast.err(text: '图片保存失败...');
             }
           });
         },

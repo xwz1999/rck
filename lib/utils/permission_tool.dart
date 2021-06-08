@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:permission_handler/permission_handler.dart';
 
@@ -7,7 +8,8 @@ class PermissionTool {
   static Future<bool> haveCameraPermission() async {
     bool permission = await Permission.camera.isGranted;
     if (!permission) {
-      Permission.camera.request().then((value) => permission = value.isGranted);
+      await Permission.camera.request();
+      permission = await Permission.camera.isGranted;
     }
     return permission;
   }
@@ -15,7 +17,8 @@ class PermissionTool {
   static Future<bool> havePhotoPermission() async {
     bool permission = await Permission.photos.isGranted;
     if (!permission) {
-      Permission.photos.request().then((value) => permission = value.isGranted);
+      await Permission.photos.request();
+      permission = await Permission.photos.isGranted;
     }
     return permission;
   }
@@ -23,7 +26,8 @@ class PermissionTool {
   static Future<bool> haveAudioPermission() async {
     bool permission = await Permission.microphone.isGranted;
     if (!permission) {
-      Permission.microphone.request().then((value) => permission = value.isGranted);
+      await Permission.microphone.request();
+      permission = await Permission.microphone.isGranted;
     }
     return permission;
   }
@@ -49,7 +53,9 @@ class PermissionTool {
               ),
               CupertinoDialogAction(
                 child: Text("取消"),
-                onPressed: () {},
+                onPressed: () {
+                  Get.back();
+                },
               ),
             ],
           );

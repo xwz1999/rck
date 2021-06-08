@@ -12,7 +12,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:dio/dio.dart';
-import 'package:power_logger/power_logger.dart';
 
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/config.dart';
