@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 /*
  * ====================================================
  * package   : 
@@ -31,9 +33,11 @@ class OrderDetailModel extends Object {
 
   String msg;
 
-  OrderDetailModel(this.code,
-      this.data,
-      this.msg,);
+  OrderDetailModel(
+    this.code,
+    this.data,
+    this.msg,
+  );
 
   factory OrderDetailModel.fromJson(Map<String, dynamic> srcJson) =>
       _$OrderDetailModelFromJson(srcJson);
@@ -43,36 +47,35 @@ class OrderDetailModel extends Object {
 
 @JsonSerializable()
 class OrderDetail extends Object {
-  
   int id;
-  int parentId;//分享者id
-  int userId;//下单者id
-  int isSubordinate;//是否为上下级
-  String title;//订单简要标题
-  double brandCouponTotalAmount;//品牌优惠券抵扣总金额
+  int parentId; //分享者id
+  int userId; //下单者id
+  int isSubordinate; //是否为上下级
+  String title; //订单简要标题
+  double brandCouponTotalAmount; //品牌优惠券抵扣总金额
   double universeCouponTotalAmount; // 购物券抵扣总金额
-  double coinTotalAmount;// 瑞币抵扣总金额
-  double expressTotalFee;// 总快递费
-  double goodsTotalAmount;// 商品总金额，
-  double goodsTotalCommission;// 商品总返还金额
-  double actualTotalAmount;// 实际支付的金额
-  int shippingMethod;// 0快递 1自提
-  String buyerMessage;// 买家留言
-  int status;// 0未付款 1支付成功 2订单取消 3订单过期 4交易成功 5订单关闭
-  int expressStatus;// 快递状态 0 没有发货 1部分发货 2全部发货
+  double coinTotalAmount; // 瑞币抵扣总金额
+  double expressTotalFee; // 总快递费
+  double goodsTotalAmount; // 商品总金额，
+  double goodsTotalCommission; // 商品总返还金额
+  double actualTotalAmount; // 实际支付的金额
+  int shippingMethod; // 0快递 1自提
+  String buyerMessage; // 买家留言
+  int status; // 0未付款 1支付成功 2订单取消 3订单过期 4交易成功 5订单关闭
+  int expressStatus; // 快递状态 0 没有发货 1部分发货 2全部发货
   // int isApplyInvoice;// 是否申请过开票
   // int isFinishInvoice;// 是否完成开票 0没有 1完成了
-  int invoiceStatus;// 开票状态 0 未申请， 1已申请 2已开票
-  int isAss;// 0正常 1申请过售后
-  String evaluatedAt;// 评价时间
-  String createdAt;// 创建时间
-  String expireTime;// 订单过期时间
-  String payIp;// 支付时的ip
-  String tradeNo;// 传递给第三方支付的id凭证
-  String payTime;// 支付时间
-  int payMethod;// 支付方式: 0:recookpay 1:微信 2:支付宝 3:零支付 4:小程序支付'
-  String completedAt;// 交易完成时间
-  int totalGoodsCount;// 商品总件数
+  int invoiceStatus; // 开票状态 0 未申请， 1已申请 2已开票
+  int isAss; // 0正常 1申请过售后
+  String evaluatedAt; // 评价时间
+  String createdAt; // 创建时间
+  String expireTime; // 订单过期时间
+  String payIp; // 支付时的ip
+  String tradeNo; // 传递给第三方支付的id凭证
+  String payTime; // 支付时间
+  int payMethod; // 支付方式: 0:recookpay 1:微信 2:支付宝 3:零支付 4:小程序支付'
+  String completedAt; // 交易完成时间
+  int totalGoodsCount; // 商品总件数
 
   // double actualAmount;
   // int shippingMethod;
@@ -89,6 +92,7 @@ class OrderDetail extends Object {
   // Payment payment;
   // Invoice invoice;
   bool canConfirm;
+  List<StatusList> statusList;
   // String title;
   // String subTitle;
 
@@ -124,9 +128,11 @@ class OrderDetail extends Object {
     this.addr,
     this.brands,
     this.canConfirm,
-    );
+    this.statusList,
+  );
 
-  factory OrderDetail.fromJson(Map<String, dynamic> srcJson) => _$OrderDetailFromJson(srcJson);
+  factory OrderDetail.fromJson(Map<String, dynamic> srcJson) =>
+      _$OrderDetailFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$OrderDetailToJson(this);
 }
@@ -151,24 +157,26 @@ class Addr extends Object {
 
   String mobile;
 
-  Addr(this.id,
-      this.orderId,
-      this.addressId,
-      this.province,
-      this.city,
-      this.district,
-      this.address,
-      this.receiverName,
-      this.mobile,);
+  Addr(
+    this.id,
+    this.orderId,
+    this.addressId,
+    this.province,
+    this.city,
+    this.district,
+    this.address,
+    this.receiverName,
+    this.mobile,
+  );
 
-  factory Addr.fromJson(Map<String, dynamic> srcJson) => _$AddrFromJson(srcJson);
+  factory Addr.fromJson(Map<String, dynamic> srcJson) =>
+      _$AddrFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$AddrToJson(this);
 }
 
 @JsonSerializable()
 class Brands extends Object {
-
   int brandId;
   String brandName;
   String brandLogoUrl;
@@ -179,9 +187,18 @@ class Brands extends Object {
 
   List<Goods> goods;
 
-  Brands(this.brandId,this.brandName,this.brandLogoUrl,this.brandExpressTotalAmount,this.brandGoodsTotalAmount,this.brandGoodsTotalCount,this.goods,this.coupon);
+  Brands(
+      this.brandId,
+      this.brandName,
+      this.brandLogoUrl,
+      this.brandExpressTotalAmount,
+      this.brandGoodsTotalAmount,
+      this.brandGoodsTotalCount,
+      this.goods,
+      this.coupon);
 
-  factory Brands.fromJson(Map<String, dynamic> srcJson) => _$BrandsFromJson(srcJson);
+  factory Brands.fromJson(Map<String, dynamic> srcJson) =>
+      _$BrandsFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$BrandsToJson(this);
 }
@@ -190,76 +207,75 @@ class Brands extends Object {
 class Goods extends Object {
   int goodsDetailId;
   int orderId;
-  int vendorId;// 供应商ID: 0表示自营
-  int brandId;// 品牌
-  String brandName;// 品牌名称
-  int goodsId;// 商品ID
-  String goodsName;// 商品名快照
-  int skuId;// 商品sku_id
-  String skuName;// SKU名字组合起来
-  String skuCode;// 条形码或者编码
-  String mainPhotoUrl;// 主图快照 先读sku 没有则读取主图
-  int quantity;// 商品数量
-  String promotionName;// 活动名称
-  double unitPrice;// 单价
-  double totalCommission;// 提成总额
-  double brandCouponAmount;// 品牌优惠券抵扣金额
-  double universeBrandCouponAmount;// 购物券抵扣金额
-  double coinAmount;// 瑞币抵扣金额
-  double goodsAmount;// 商品总金额 单价x数量，不含其他费用减除
-  double expressFee;// 快递费
-  double actualAmount;// 实际支付的金额
+  int vendorId; // 供应商ID: 0表示自营
+  int brandId; // 品牌
+  String brandName; // 品牌名称
+  int goodsId; // 商品ID
+  String goodsName; // 商品名快照
+  int skuId; // 商品sku_id
+  String skuName; // SKU名字组合起来
+  String skuCode; // 条形码或者编码
+  String mainPhotoUrl; // 主图快照 先读sku 没有则读取主图
+  int quantity; // 商品数量
+  String promotionName; // 活动名称
+  double unitPrice; // 单价
+  double totalCommission; // 提成总额
+  double brandCouponAmount; // 品牌优惠券抵扣金额
+  double universeBrandCouponAmount; // 购物券抵扣金额
+  double coinAmount; // 瑞币抵扣金额
+  double goodsAmount; // 商品总金额 单价x数量，不含其他费用减除
+  double expressFee; // 快递费
+  double actualAmount; // 实际支付的金额
   int expressStatus;
   String expressCompName;
   String expressCompCode;
   String expressNo;
-  int assType;//售后类型 0无 1退款 2退货退款
-  int refundStatus;// 0无申请退款的记录  1退款中 2退款成功
-  int returnStatus;// 0正常，1等待商家审核 2审核被拒绝 3审核成功 4买家已填写退货物流信息 5收到退货，确认退款完成 6退货被拒绝
-  String returnReason;// 买家退货理由
+  int assType; //售后类型 0无 1退款 2退货退款
+  int refundStatus; // 0无申请退款的记录  1退款中 2退款成功
+  int returnStatus; // 0正常，1等待商家审核 2审核被拒绝 3审核成功 4买家已填写退货物流信息 5收到退货，确认退款完成 6退货被拒绝
+  String returnReason; // 买家退货理由
   String returnRejectReason;
   bool selected;
   String rStatus;
   int isClosed;
   int asId;
   Goods(
-    this.goodsDetailId,
-    this.orderId,
-    this.vendorId,
-    this.brandId,
-    this.brandName,
-    this.goodsId,
-    this.goodsName,
-    this.skuId,
-    this.skuName,
-    this.skuCode,
-    this.mainPhotoUrl,
-    this.quantity,
-    this.promotionName,
-    this.unitPrice,
-    this.totalCommission,
-    this.brandCouponAmount,
-    this.universeBrandCouponAmount,
-    this.coinAmount,
-    this.goodsAmount,
-    this.expressFee,
-    this.actualAmount,
-    this.expressStatus,
-    this.expressCompName,
-    this.expressCompCode,
-    this.expressNo,
-    this.assType,
-    this.refundStatus,
-    this.returnStatus,
-    this.returnReason,
-    this.returnRejectReason,
-    this.selected,
-    this.rStatus,
-    this.isClosed,
-    this.asId
-    ){
-      this.selected = false;
-    }
+      this.goodsDetailId,
+      this.orderId,
+      this.vendorId,
+      this.brandId,
+      this.brandName,
+      this.goodsId,
+      this.goodsName,
+      this.skuId,
+      this.skuName,
+      this.skuCode,
+      this.mainPhotoUrl,
+      this.quantity,
+      this.promotionName,
+      this.unitPrice,
+      this.totalCommission,
+      this.brandCouponAmount,
+      this.universeBrandCouponAmount,
+      this.coinAmount,
+      this.goodsAmount,
+      this.expressFee,
+      this.actualAmount,
+      this.expressStatus,
+      this.expressCompName,
+      this.expressCompCode,
+      this.expressNo,
+      this.assType,
+      this.refundStatus,
+      this.returnStatus,
+      this.returnReason,
+      this.returnRejectReason,
+      this.selected,
+      this.rStatus,
+      this.isClosed,
+      this.asId) {
+    this.selected = false;
+  }
 
   // Goods(this.id,
   //     this.orderId,
@@ -268,7 +284,8 @@ class Goods extends Object {
   //   this.selected = false;
   // }
 
-  factory Goods.fromJson(Map<String, dynamic> srcJson) => _$GoodsFromJson(srcJson);
+  factory Goods.fromJson(Map<String, dynamic> srcJson) =>
+      _$GoodsFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$GoodsToJson(this);
 }
@@ -281,11 +298,14 @@ class Balance extends Object {
 
   double deductedAmount;
 
-  Balance(this.id,
-      this.orderId,
-      this.deductedAmount,);
+  Balance(
+    this.id,
+    this.orderId,
+    this.deductedAmount,
+  );
 
-  factory Balance.fromJson(Map<String, dynamic> srcJson) => _$BalanceFromJson(srcJson);
+  factory Balance.fromJson(Map<String, dynamic> srcJson) =>
+      _$BalanceFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$BalanceToJson(this);
 }
@@ -306,10 +326,11 @@ class Payment extends Object {
 
   String expireTime;
 
-  Payment(this.tradeNo, this.method, this.amount, this.status, this.createdAt, this.completeTime,
-      this.expireTime);
+  Payment(this.tradeNo, this.method, this.amount, this.status, this.createdAt,
+      this.completeTime, this.expireTime);
 
-  factory Payment.fromJson(Map<String, dynamic> srcJson) => _$PaymentFromJson(srcJson);
+  factory Payment.fromJson(Map<String, dynamic> srcJson) =>
+      _$PaymentFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$PaymentToJson(this);
 }
@@ -328,30 +349,71 @@ class Invoice extends Object {
 
   String createdAt;
 
-  Invoice(this.id, this.userId, this.type, this.title, this.taxNo, this.createdAt);
+  Invoice(
+      this.id, this.userId, this.type, this.title, this.taxNo, this.createdAt);
 
-  factory Invoice.fromJson(Map<String, dynamic> srcJson) => _$InvoiceFromJson(srcJson);
+  factory Invoice.fromJson(Map<String, dynamic> srcJson) =>
+      _$InvoiceFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$InvoiceToJson(this);
 }
 
 @JsonSerializable()
 class Coupon extends Object {
-
   int id;
 
   int brandId;
 
   int scope;
 
-  String couponName;//'使用的优惠券名称'
+  String couponName; //'使用的优惠券名称'
 
-  double deductedAmount;//'抵扣的金额',
+  double deductedAmount; //'抵扣的金额',
 
-  Coupon(this.id,this.brandId,this.scope,this.couponName,this.deductedAmount,);
+  Coupon(
+    this.id,
+    this.brandId,
+    this.scope,
+    this.couponName,
+    this.deductedAmount,
+  );
 
-  factory Coupon.fromJson(Map<String, dynamic> srcJson) => _$CouponFromJson(srcJson);
+  factory Coupon.fromJson(Map<String, dynamic> srcJson) =>
+      _$CouponFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$CouponToJson(this);
+}
+@JsonSerializable()
+class StatusList extends Object{
+  int goodsId;
+  int status;
+
+  StatusList({this.goodsId, this.status});
+
+  StatusList.fromJson(Map<String, dynamic> json) {
+    goodsId = json['goods_id'];
+    status = json['status'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['goods_id'] = this.goodsId;
+    data['status'] = this.status;
+    return data;
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'goodsId': goodsId,
+      'status': status,
+    };
+  }
+
+  factory StatusList.fromMap(Map<String, dynamic> map) {
+    return StatusList(
+      goodsId: map['goodsId'],
+      status: map['status'],
+    );
+  }
 
 }

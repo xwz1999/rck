@@ -96,17 +96,6 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
         ],
       ),
     );
-    return ListView(
-      children: <Widget>[
-        orderStatus(),
-        buildAddress(),
-        brandList(),
-        totalPrice(),
-        priceInfo(),
-        orderInfo(),
-        contactCustomerService(),
-      ],
-    );
   }
 
   // _brandExpressStatus(Brands brand) {

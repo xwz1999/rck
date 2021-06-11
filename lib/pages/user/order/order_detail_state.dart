@@ -11,8 +11,6 @@ import 'package:recook/manager/meiqia_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/order_detail_model.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
-import 'package:recook/pages/home/classify/mvp/order_mvp/order_contact.dart';
-import 'package:recook/pages/home/classify/mvp/order_mvp/order_presenter_impl.dart';
 import 'package:recook/pages/user/order/order_return_status_page.dart';
 import 'package:recook/utils/goods_status/goods_status_tool.dart';
 import 'package:recook/widgets/alert.dart';
@@ -425,18 +423,19 @@ abstract class OrderDetailState<T extends StatefulWidget>
           itemCount: orderDetail.brands.length,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (_, index) {
-            return _buildBrandsItem(orderDetail.brands[index]);
+            return _buildBrandsItem(
+                orderDetail.brands[index], orderDetail.statusList);
           }),
     );
   }
 
-  _buildBrandsItem(Brands brand) {
+  _buildBrandsItem(Brands brand, List<StatusList> status) {
     return Container(
       padding: EdgeInsets.only(bottom: rSize(8)),
       child: Column(
         children: <Widget>[
           _brandName(brand),
-          _goodsList(brand),
+          _goodsList(brand, status),
           // _brandBottomPrice(brand),
           _brandOperationView(brand),
         ],
@@ -481,7 +480,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
     );
   }
 
-  _goodsList(Brands brand) {
+  _goodsList(Brands brand, List<StatusList> status) {
     return ListView.builder(
         itemCount: brand.goods.length,
         shrinkWrap: true,
@@ -489,10 +488,20 @@ abstract class OrderDetailState<T extends StatefulWidget>
         itemBuilder: ((context, index) {
           return FlatButton(
             onPressed: () {
+              bool canPush = true;
               Goods goods = brand.goods[index];
-              AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                  arguments: CommodityDetailPage.setArguments(
-                      brand.goods[index].goodsId));
+              status.forEach((element) {
+                if (element.goodsId == goods.goodsId && element.status == 0) {
+                  canPush = false;
+                }
+              });
+              if (canPush) {
+                AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                    arguments: CommodityDetailPage.setArguments(
+                        brand.goods[index].goodsId));
+              } else {
+                ReToast.err(text: '商品已下架');
+              }
             },
             child: _goodsItem(brand.goods[index]),
           );

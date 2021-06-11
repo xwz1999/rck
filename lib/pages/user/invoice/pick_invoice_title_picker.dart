@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/user/invoice/invoice_add_title_page.dart';
 import 'package:recook/pages/user/invoice/invoice_presenter.dart';
 import 'package:recook/pages/user/invoice/models/invoice_title_list_model.dart';
 import 'package:recook/widgets/refresh_widget.dart';
@@ -142,7 +144,9 @@ class _InvoicePickerState extends State<InvoicePicker> {
               ),
               child: FlatButton(
                 color: AppColor.redColor,
-                onPressed: () {},
+                onPressed: () {
+                  Get.off(InvoiceAddTitlePage());
+                },
                 padding: EdgeInsets.symmetric(
                   vertical: rSize(12),
                 ),

@@ -35,6 +35,18 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
 
   GlobalKey<FormState> _formState = GlobalKey<FormState>();
 
+  controllerClear() {
+    _cName.clear();
+    _pName.clear();
+    _taxNum.clear();
+    _phone.clear();
+    _email.clear();
+    _addr.clear();
+    _telePhone.clear();
+    _bankNum.clear();
+    _message.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -53,6 +65,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                       onPressed: () {
                         setState(() {
                           _isCompany = true;
+                          controllerClear();
                         });
                       },
                       child: Row(
@@ -74,6 +87,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                       onPressed: () {
                         setState(() {
                           _isCompany = false;
+                          controllerClear();
                         });
                       },
                       child: Row(
