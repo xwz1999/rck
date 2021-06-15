@@ -59,7 +59,7 @@ void main() async {
     // useEncrypt: true
   );
   // 设置当前是否为测试环境
-  bool isDebug = bool.fromEnvironment('ISDEBUG',defaultValue: true);
+  bool isDebug = bool.fromEnvironment('ISDEBUG',defaultValue: false); 
 
   AppConfig.setDebug(isDebug);
 
