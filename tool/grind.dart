@@ -1,7 +1,9 @@
-import 'dart:async';
 import 'dart:io';
+
 import 'package:common_utils/common_utils.dart';
 import 'package:grinder/grinder.dart';
+import 'package:path/path.dart'hide context;
+import 'package:yaml/yaml.dart';
 
 import 'config.dart';
 
@@ -99,28 +101,52 @@ clean() => defaultClean();
 
 @Task()
 buildApk() async {
-  Pub.runAsync('flutter', arguments: [
+  await runAsync('flutter', arguments: [
     'build',
     'apk',
     '--target-platform=android-arm64',
     '--dart-define',
     'ISDEBUG=false'
   ]);
+  String date = DateUtil.formatDate(DateTime.now(), format: 'yy_MM_dd_HH_mm');
+  String version = await getVersion();
+  await runAsync('mv', arguments: [
+    Config.buildPath,
+    '${Config.buildDir}/${Config.packageName}_${version}_release_$date.apk'
+  ]);
 }
 
 @Task()
+@Depends(getVersion)
 buildApkDev() async {
-  Pub.runAsync('flutter', arguments: [
+ await runAsync('flutter', arguments: [
     'build',
     'apk',
     '--target-platform=android-arm64',
     '--dart-define',
     'ISDEBUG=true'
   ]);
+
+  String date = DateUtil.formatDate(DateTime.now(), format: 'yy_MM_dd_HH_mm');
+  String version = await getVersion();
+  await runAsync('mv', arguments: [
+    Config.buildPath,
+    '${Config.buildDir}/${Config.packageName}_${version}_beta_$date.apk'
+  ]);
 }
 
 @Task()
 buildIos() async {
-  Pub.runAsync('flutter',
+  runAsync('flutter',
       arguments: ['build', 'ios', '--dart-define', 'ISDEBUG=false']);
+}
+
+@Task()
+Future<String> getVersion() async {
+  String projectPath = Directory('.').absolute.path;
+  String yamlPath = join(projectPath, 'pubspec.yaml');
+  String yamlContent = await File(yamlPath).readAsString();
+  dynamic content = loadYaml(yamlContent);
+  String version = content['version'];
+  return version;
 }

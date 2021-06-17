@@ -243,6 +243,7 @@ dev_dependencies:
   json_serializable: ^4.0.2
   grinder:
   import_sorter:
+  yaml: ^3.1.0
 
 flutter:
   uses-material-design: true

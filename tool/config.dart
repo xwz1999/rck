@@ -1,6 +1,7 @@
+
 class Config {
   ///用户根目录
-  static const homeDir = '/Users/akufe';
+  static const homeDir = '/Users/zhangmeng';
 
   ///签名密码
   static const recookPassword = 'recook';
@@ -24,4 +25,7 @@ class Config {
   ///打包目录
   static String get buildPath =>
       './build/app/outputs/flutter-apk/app-release.apk';
+
+  ///打包目录文件夹
+  static String get buildDir => './build/app/outputs/flutter-apk';
 }
