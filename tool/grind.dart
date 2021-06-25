@@ -142,6 +142,11 @@ buildIos() async {
 }
 
 @Task()
+builIosDev()async{
+ runAsync('flutter',
+      arguments: ['build', 'ios', '--dart-define', 'ISDEBUG=true']);
+}
+@Task()
 Future<String> getVersion() async {
   String projectPath = Directory('.').absolute.path;
   String yamlPath = join(projectPath, 'pubspec.yaml');
