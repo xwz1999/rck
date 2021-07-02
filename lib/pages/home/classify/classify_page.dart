@@ -176,7 +176,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
 
                 if (currentIndex < widget.data.length - 1 &&
                     notification.metrics.pixels.toInt() >
-                        notification.metrics.maxScrollExtent + 120) {
+                      ( notification.metrics.maxScrollExtent + 120).toInt()) {
                   if (!animating) {
                     animating = true;
                     currentIndex++;

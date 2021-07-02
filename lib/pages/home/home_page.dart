@@ -1421,9 +1421,17 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   Future<bool> requestPermission() async {
-    bool permission = await Permission.locationWhenInUse.isGranted;
+    if (Platform.isIOS) {
+      return true;
+    }
+    bool permission = await Permission.locationWhenInUse.isRestricted;
+    bool permanentDenied =
+        await Permission.locationWhenInUse.isPermanentlyDenied;
     if (!permission) {
-     await Permission.locationWhenInUse.request();
+      await Permission.locationWhenInUse.request();
+      if (permanentDenied) {
+        await PermissionTool.showOpenPermissionDialog(context, '打开定位权限');
+      }
       permission = await Permission.locationWhenInUse.isGranted;
     }
     return permission;
