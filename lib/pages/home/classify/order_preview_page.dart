@@ -27,6 +27,7 @@ import 'package:recook/pages/home/classify/mvp/order_mvp/order_presenter_impl.da
 import 'package:recook/pages/home/classify/order_prepay_page.dart';
 import 'package:recook/pages/home/items/goods_item_order.dart';
 import 'package:recook/pages/home/items/oversea_accept_license_page.dart';
+import 'package:recook/pages/home/items/consumer_notification_page.dart';
 import 'package:recook/pages/user/address/receiving_address_page.dart';
 import 'package:recook/pages/user/user_verify.dart';
 import 'package:recook/pages/user/widget/recook_check_box.dart';
@@ -183,7 +184,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                                       rWBox(10),
                                       Expanded(
                                         child: Text(
-                                          '海关提醒：跨境订单订购人和支付人信息不一致，可能会影响订单通关，请务必认证！',
+                                          '海关提醒：境订单订购人和支付人信息不一致，可能会影响订单通关，请务必认证！',
                                           style: TextStyle(
                                             color:
                                                 Color.fromRGBO(210, 137, 64, 1),
@@ -697,12 +698,24 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                     ),
                   ),
                   InkWell(
-                    onTap: () => CRoute.push(
-                      context,
+                    onTap: () => Get.to(
                       OverseaAcceptLicensePage(),
                     ),
                     child: Text(
-                      '《跨境商品用户购买须知》',
+                      '《境商品用户购买须知》',
+                      style: TextStyle(
+                        color: Color(0xFF007AFF),
+                        fontSize: rSP(13),
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    //1.8版本新增 《消费者告知书》
+                    onTap: () => Get.to(
+                      ConsumerNotificationPage(),
+                    ),
+                    child: Text(
+                      '《消费者告知书》',
                       style: TextStyle(
                         color: Color(0xFF007AFF),
                         fontSize: rSP(13),
@@ -945,7 +958,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                                   Get.to(() => VerifyPage());
                                 } else if (!identicalName) {
                                   ReToast.err(
-                                      text: '因订单含跨境商品，收货人联系方式需与当前账号实名认证姓名相同');
+                                      text: '因订单含境商品，收货人联系方式需与当前账号实名认证姓名相同');
                                 } else {
                                   _submit(context);
                                 }

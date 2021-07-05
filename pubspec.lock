@@ -567,11 +567,9 @@ packages:
   flutter_union_pay:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "3b534e78f5448c518be3024f08cd73d27fe11f90"
-      url: "https://github.com/laiiihz/flutter_union_pay"
-    source: git
+      name: flutter_union_pay
+      url: "https://pub.flutter-io.cn"
+    source: hosted
     version: "0.0.4"
   flutter_web_plugins:
     dependency: transitive

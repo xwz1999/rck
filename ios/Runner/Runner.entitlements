@@ -6,6 +6,7 @@
 	<array>
 		<string>applinks:reecook.cn</string>
 		<string>applinks:uapywo.openinstall.io</string>
+		<string>webcredentials:example.com</string>
 	</array>
 </dict>
 </plist>
