@@ -464,10 +464,10 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
           } else {
             //团队补贴
           }
-          _amount = _models.data?.amount?.toStringAsFixed(2);
-          _all = _models.data?.all?.toStringAsFixed(2);
-          print(_models?.data?.amount?.toStringAsFixed(2));
-          print(_models?.data?.all?.toStringAsFixed(2));
+          _amount = _models?.amount?.toStringAsFixed(2);
+          _all = _models?.all?.toStringAsFixed(2);
+          print(_models?.amount?.toStringAsFixed(2));
+          print(_models?.all?.toStringAsFixed(2));
           setState(() {});
           _refreshController.refreshCompleted();
         },

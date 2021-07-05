@@ -1,63 +1,52 @@
 class UserIncomeModel1 {
-  Data data;
+  num amount;
+  num all;
+  List<Detial> detial;
 
-  UserIncomeModel1({this.data});
+  UserIncomeModel1({this.amount, this.all, this.detial});
 
   UserIncomeModel1.fromJson(Map<String, dynamic> json) {
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.data != null) {
-      data['data'] = this.data.toJson();
-    }
-    return data;
-  }
-}
-
-class Data {
-  double amount;
-  double all;
-  Detail detail;
-
-  Data({this.amount, this.all, this.detail});
-
-  Data.fromJson(Map<String, dynamic> json) {
     amount = json['amount'];
     all = json['all'];
-    detail =
-        json['detail'] != null ? new Detail.fromJson(json['detail']) : null;
+    if (json['detial'] != null) {
+      detial = new List<Detial>();
+      json['detial'].forEach((v) {
+        detial.add(new Detial.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['amount'] = this.amount;
     data['all'] = this.all;
-    if (this.detail != null) {
-      data['detail'] = this.detail.toJson();
+    if (this.detial != null) {
+      data['detial'] = this.detial.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Detail1 {
+class Detial {
   int date;
   num sale;
   int count;
   num coin;
-  Detail1 detail;
+  List<Detail> detail;
 
-  Detail1({this.date, this.sale, this.count, this.coin, this.detail});
+  Detial({this.date, this.sale, this.count, this.coin, this.detail});
 
-  Detail1.fromJson(Map<String, dynamic> json) {
+  Detial.fromJson(Map<String, dynamic> json) {
     date = json['date'];
     sale = json['sale'];
     count = json['count'];
     coin = json['coin'];
-    detail = json['detail'] != null
-        ? new Detail1.fromJson(json['detail'])
-        : Detail.init();
+    if (json['detail'] != null) {
+      detail = new List<Detail>();
+      json['detail'].forEach((v) {
+        detail.add(new Detail.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -67,7 +56,7 @@ class Detail1 {
     data['count'] = this.count;
     data['coin'] = this.coin;
     if (this.detail != null) {
-      data['detail'] = this.detail.toJson();
+      data['detail'] = this.detail.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -96,6 +85,4 @@ class Detail {
     data['coin'] = this.coin;
     return data;
   }
-
-  factory Detail.init() => Detail(date: 0, sale: 0, count: 0, coin: 0);
 }

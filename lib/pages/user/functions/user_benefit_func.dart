@@ -23,25 +23,22 @@ enum BenefitDateType {
 class UserBenefitFunc {
   //已到账收益
   static Future<UserIncomeModel1> receicedIncome(
-      String date_str, int type) async {
+      String dateStr, int type) async {
     ResultData result = await HttpManager.post(
-        APIV2.userAPI.rceivedDetail, {'date_str': date_str, 'type': type});
-    if (result.data != null) {
+        APIV2.userAPI.rceivedDetail, {'date_str': dateStr, 'type': type});
       if (result.data['data'] != null) {
         return UserIncomeModel1.fromJson(result.data['data']);
       }
-    }
   }
 
   //未到账收益
   static Future<UserIncomeModel1> notReceicedIncome(
-      String date_str, int type) async {
+      String dateStr, int type) async {
     ResultData result = await HttpManager.post(
-        APIV2.userAPI.rceivedDetail, {'date_str': date_str, 'type': type});
-    if (result.data != null) {
+        APIV2.userAPI.rceivedDetail, {'date_str': dateStr, 'type': type});
       if (result.data['data'] != null) {
         return UserIncomeModel1.fromJson(result.data['data']);
-      }
+      
     }
   }
 
