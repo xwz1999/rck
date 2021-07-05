@@ -11,6 +11,7 @@ import 'package:recook/pages/user/model/user_benefit_model.dart';
 import 'package:recook/pages/user/model/user_benefit_month_detail_model.dart';
 import 'package:recook/pages/user/model/user_benefit_month_expect_model.dart';
 import 'package:recook/pages/user/model/user_benefit_sub_model.dart';
+import 'package:recook/pages/user/model/user_income_model1.dart';
 import 'package:recook/pages/user/model/user_month_income_model.dart';
 import 'package:recook/pages/user/user_benefit_sub_page.dart';
 
@@ -20,6 +21,30 @@ enum BenefitDateType {
 }
 
 class UserBenefitFunc {
+  //已到账收益
+  static Future<UserIncomeModel1> receicedIncome(
+      String date_str, int type) async {
+    ResultData result = await HttpManager.post(
+        APIV2.userAPI.rceivedDetail, {'date_str': date_str, 'type': type});
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return UserIncomeModel1.fromJson(result.data['data']);
+      }
+    }
+  }
+
+  //未到账收益
+  static Future<UserIncomeModel1> notReceicedIncome(
+      String date_str, int type) async {
+    ResultData result = await HttpManager.post(
+        APIV2.userAPI.rceivedDetail, {'date_str': date_str, 'type': type});
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return UserIncomeModel1.fromJson(result.data['data']);
+      }
+    }
+  }
+
   static Future<UserBenefitModel> update() async {
     ResultData result = await HttpManager.post(APIV2.userAPI.userBenefit, {});
     return UserBenefitModel.fromJson(result.data);

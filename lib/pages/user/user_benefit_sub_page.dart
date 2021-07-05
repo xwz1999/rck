@@ -37,7 +37,7 @@ enum UserBenefitPageType {
 
 class UserBenefitSubPage extends StatefulWidget {
   final UserBenefitPageType type;
-  UserBenefitSubPage({Key key, this.type}) : super(key: key);
+  UserBenefitSubPage({Key key, @required this.type}) : super(key: key);
 
   @override
   _UserBenefitSubPageState createState() => _UserBenefitSubPageState();

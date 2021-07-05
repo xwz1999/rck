@@ -12,6 +12,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/meiqia_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -110,7 +112,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
         child: Row(
           children: <Widget>[
             Container(
-              width: 10,
+              width: 5,
             ),
             CustomImageButton(
               dotSize: 13,
@@ -144,8 +146,31 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                 widget.collectListener(!_collected);
               },
             ),
+            //1.10x新增客服按钮
+            CustomImageButton(
+              title: "客服",
+              padding: EdgeInsets.only(left: 5, bottom: 2, right: 5),
+              contentSpacing: 0,
+              icon: Icon(
+                AppIcons.icon_message,
+                size: rSize(30),
+              ),
+              fontSize: 10,
+              onPressed: () {
+                MQManager.goToChat(
+                  userId: UserManager.instance.user.info.id.toString(),
+                  userInfo: <String, String>{
+                    "name": UserManager.instance.user.info.nickname ?? "",
+                    "gender": UserManager.instance.user.info.gender == 1
+                        ? "男"
+                        : "女",
+                    "mobile": UserManager.instance.user.info.mobile ?? ""
+                  });    
+              },
+            ),
+
             Container(
-              width: 20,
+              width: 10,
             ),
             widget.goodsDetail == null || widget.goodsDetail.data.inventory > 0
                 ? AppConfig.getShowCommission()

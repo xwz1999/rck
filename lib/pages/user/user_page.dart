@@ -9,12 +9,16 @@
 
 import 'dart:io';
 
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:common_utils/common_utils.dart';
 import 'package:get/get.dart';
 import 'package:package_info/package_info.dart';
+import 'package:recook/pages/user/user_benefit_currency_pag.dart';
+import 'package:recook/pages/user/user_benefit_page.dart';
+import 'package:recook/pages/user/user_benefit_sub_page.dart';
 import 'package:recook/pages/user/user_old_history_benefit_page.dart';
 import 'package:redux/redux.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -51,6 +55,8 @@ import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:recook/widgets/toast.dart';
+
+import 'benefit_view_gen.dart';
 
 class UserPage extends StatefulWidget {
   @override
@@ -407,13 +413,23 @@ class _UserPageState extends BaseStoreState<UserPage> {
     @required String content2,
     @required String content3,
     @required String content4,
+    UserBenefitPageType type = UserBenefitPageType.SELF,
   }) {
+    if (title == "自购收益") {
+      type = UserBenefitPageType.SELF;
+    } else if (title == "导购收益") {
+      type = UserBenefitPageType.GUIDE;
+    } else if (title == "店铺补贴") {
+      type = UserBenefitPageType.TEAM;
+    }
+
     return Container(
       color: Colors.white,
       child: Column(
         children: [
           18.w.heightBox,
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               14.w.widthBox,
               Image.asset(
@@ -445,6 +461,23 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 },
               ),
               Spacer(),
+              // CustomImageButton(
+              //   onPressed: () {
+              //     Get.to(() =>
+              //         UserBenefitPage()); //UserBenefitSubPage(type: UserBenefitPageType.SELF)); //UserBenefitCurrencyPage());
+              //   },
+              //   child: Row(
+              //     children: [
+              //       '图表分析'.text.color(Color(0xFF999999)).size(12.rsp).make(),
+              //       Container(
+              //         padding: EdgeInsets.fromLTRB(0, 3, 0, 0),
+              //         child: Icon(Icons.keyboard_arrow_right,
+              //             size: 22, color: Color(0xff999999)),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              19.w.widthBox,
             ],
           ),
           8.w.heightBox,
@@ -464,18 +497,49 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      title1.text.color(Color(0xFF999999)).size(12.rsp).make(),
-                      20.w.heightBox,
-                      content1.text.black.size(16.rsp).make(),
+                      CustomImageButton(
+                        onPressed: () {
+                          Get.to(() => UserBenefitCurrencyPage(
+                              type: type,
+                              receivedType:
+                                  "未到账")); //UserBenefitSubPage(type: UserBenefitPageType.SELF)); //UserBenefitCurrencyPage());
+                        },
+                        child: Column(
+                          children: [
+                            title1.text
+                                .color(Color(0xFF999999))
+                                .size(12.rsp)
+                                .make(),
+                            20.w.heightBox,
+                            content1.text.black.size(16.rsp).make(),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                   Spacer(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      '订单数'.text.color(Color(0xFF999999)).size(12.rsp).make(),
-                      20.w.heightBox,
-                      content2.text.black.size(16.rsp).make(),
+                      CustomImageButton(
+                        onPressed: () {
+                          Get.to(() => UserBenefitCurrencyPage(
+                              type: type,
+                              receivedType:
+                                  "未到账")); //UserBenefitSubPage(type: UserBenefitPageType.SELF)); //UserBenefitCurrencyPage());
+                        },
+                        child: Column(
+                          children: [
+                            '订单数'
+                                .text
+                                .color(Color(0xFF999999))
+                                .size(12.rsp)
+                                .make(),
+                            20.w.heightBox,
+                            content2.text.black.size(16.rsp).make(),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                   32.w.widthBox,
@@ -489,22 +553,39 @@ class _UserPageState extends BaseStoreState<UserPage> {
               Row(
                 children: [
                   32.w.widthBox,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      title3.text.color(Color(0xFF999999)).size(12.rsp).make(),
-                      20.w.heightBox,
-                      content3.text.black.size(16.rsp).make(),
-                    ],
+                  CustomImageButton(
+                    onPressed: () {
+                      Get.to(() => UserBenefitCurrencyPage(
+                          type: type,
+                          receivedType:
+                              "已到账")); //UserBenefitSubPage(type: UserBenefitPageType.SELF)); //UserBenefitCurrencyPage());
+                    },
+                    child: Column(
+                      children: [
+                        title3.text
+                            .color(Color(0xFF999999))
+                            .size(12.rsp)
+                            .make(),
+                        20.w.heightBox,
+                        content3.text.black.size(16.rsp).make(),
+                      ],
+                    ),
                   ),
                   Spacer(),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      '订单数'.text.color(Color(0xFF999999)).size(12.rsp).make(),
-                      20.w.heightBox,
-                      content4.text.black.size(16.rsp).make(),
-                    ],
+                  CustomImageButton(
+                    onPressed: () {
+                      Get.to(() => UserBenefitCurrencyPage(
+                          type: type,
+                          receivedType:
+                              "已到账")); //UserBenefitSubPage(type: UserBenefitPageType.SELF)); //UserBenefitCurrencyPage());
+                    },
+                    child: Column(
+                      children: [
+                        '订单数'.text.color(Color(0xFF999999)).size(12.rsp).make(),
+                        20.w.heightBox,
+                        content4.text.black.size(16.rsp).make(),
+                      ],
+                    ),
                   ),
                   48.w.widthBox,
                 ],
@@ -540,7 +621,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                         Get.to(() => UserHistoryBenefitPage());
                       },
                       child: Container(
-                        padding: EdgeInsets.symmetric(horizontal: 15),
+                        padding: EdgeInsets.only(left: 15),
                         height: 40,
                         child: Row(
                           children: <Widget>[
@@ -560,17 +641,17 @@ class _UserPageState extends BaseStoreState<UserPage> {
                                 color: Color(0xFFA5A5A5),
                               ),
                               onPressed: () {
-                                Get.to(() => UserOldHistoryBenefitPage());
-                                // Alert.show(
-                                //     context,
-                                //     NormalTextDialog(
-                                //       title: "累计收益",
-                                //       content: "您的账户使用至今所有已到账收益之和",
-                                //       items: ["确认"],
-                                //       listener: (index) {
-                                //         Alert.dismiss(context);
-                                //       },
-                                //     ));
+                                //Get.to(() => UserOldHistoryBenefitPage());
+                                Alert.show(
+                                    context,
+                                    NormalTextDialog(
+                                      title: "累计收益",
+                                      content: "您的账户使用至今所有已到账收益之和",
+                                      items: ["确认"],
+                                      listener: (index) {
+                                        Alert.dismiss(context);
+                                      },
+                                    ));
                               },
                             ),
                             Spacer(),

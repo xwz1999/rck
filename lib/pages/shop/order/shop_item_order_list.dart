@@ -256,7 +256,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
         _color = AppColor.priceColor;
         break;
       case 5:
-        _status = "交易已关闭";
+        _status = "";
         _color = Colors.red[300];
         break;
     }
