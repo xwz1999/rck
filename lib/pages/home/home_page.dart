@@ -1439,7 +1439,7 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   //抽奖功能
   _userLottery() async {
-    //TODO 暂时移除抽奖功能（大概率以后用不到）
+    //暂时移除抽奖功能（大概率以后用不到）
     // ResultData resultData = await HttpManager.post(
     //   UserApi.user_lottery,
     //   {'userID': UserManager.instance.user.info.id},
