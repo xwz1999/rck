@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,7 @@ import 'package:recook/pages/login/wechat_bind_page.dart';
 import 'package:recook/pages/welcome/privacy_page_v2.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/utils/custom_route.dart';
+import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/progress/sc_dialog.dart';
 import 'package:recook/widgets/toast.dart';
 
@@ -34,6 +36,8 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
   BuildContext _context;
   bool _weChatLoginLoading = false;
   bool _hasInstallWeChat = false;
+
+  bool _chooseAgreement = false;
   @override
   initState() {
     super.initState();
@@ -132,17 +136,38 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
 
           ///
           _buildWeChatLogin(),
-          RichText(
-              text: TextSpan(
-                  text: "登录代表您已阅读并同意",
-                  style:
-                      TextStyle(color: Colors.grey[500], fontSize: 14 * 2.sp),
-                  children: [
-                new TextSpan(
-                    text: '《用户协议和隐私政策》',
-                    style: new TextStyle(color: Colors.red),
-                    recognizer: _recognizer(context)),
-              ])),
+
+          GestureDetector(
+            onTap: () {
+              _chooseAgreement = !_chooseAgreement;
+              setState(() {});
+            },
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Container(
+                    width: 50.w,
+                    height: 50.w,
+                    padding: EdgeInsets.only(top: 10.w, right: 5.w),
+                    child: !_chooseAgreement
+                        ? Icon(CupertinoIcons.square,
+                            size: 20, color: Colors.red)
+                        : Icon(CupertinoIcons.checkmark_square,
+                            size: 20, color: Colors.red)),
+                RichText(
+                    text: TextSpan(
+                        text: "您已阅读并同意",
+                        style: TextStyle(
+                            color: Colors.grey[500], fontSize: 14 * 2.sp),
+                        children: [
+                      new TextSpan(
+                          text: '《用户协议和隐私政策》',
+                          style: new TextStyle(color: Colors.red),
+                          recognizer: _recognizer(context)),
+                    ])),
+              ],
+            ),
+          ),
 
           ///
           Container(
@@ -166,20 +191,37 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
       ),
       child: MaterialButton(
         onPressed: () {
-          DPrint.printf("微信登录");
-          WeChatUtils.wxLogin((WXLoginResult result) {
-            if (result.errCode == -2) {
-              Toast.showInfo('用户取消登录');
-            } else if (result.errCode != 0) {
-              GSDialog.of(context).dismiss(_context);
-              Toast.showInfo(result.errStr);
-            } else {
-              if (!_weChatLoginLoading) {
-                _weChatLoginLoading = true;
-                _weChatLogin(result.code);
+          if (_chooseAgreement) {
+            DPrint.printf("微信登录");
+            WeChatUtils.wxLogin((WXLoginResult result) {
+              if (result.errCode == -2) {
+                Toast.showInfo('用户取消登录');
+              } else if (result.errCode != 0) {
+                GSDialog.of(context).dismiss(_context);
+                Toast.showInfo(result.errStr);
+              } else {
+                if (!_weChatLoginLoading) {
+                  _weChatLoginLoading = true;
+                  _weChatLogin(result.code);
+                }
               }
-            }
-          });
+            });
+          } else {
+            Alert.show(
+                context,
+                NormalContentDialog(
+                  type: NormalTextDialogType.remind,
+                  title: null,
+                  content: Text(
+                    '请您先阅读并同意《用户协议和隐私政策》',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  items: ["确认"],
+                  listener: (index) {
+                    Alert.dismiss(context);
+                  },
+                ));
+          }
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

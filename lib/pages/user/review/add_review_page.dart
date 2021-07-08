@@ -66,7 +66,8 @@ class _AddReviewPageState extends State<AddReviewPage> {
                 children: [
                   FadeInImage.assetNetwork(
                     placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                    image: Api.getImgUrl(widget.model.mainPhotoUrl),
+                    image: Api.getImgUrl(
+                        widget.model.myOrderGoodsDea.mainPhotoUrl),
                     height: rSize(56),
                     width: rSize(56),
                   ),
@@ -77,7 +78,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          widget.model.goodsName,
+                          widget.model.myOrderGoodsDea.goodsName,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           softWrap: false,
@@ -89,7 +90,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
                         ),
                         SizedBox(height: rSize(6)),
                         Text(
-                          '型号规格 ${widget.model.skuName}',
+                          '型号规格 ${widget.model.myOrderGoodsDea.skuName}',
                           style: TextStyle(
                             color: Color(0xFF666666),
                             fontSize: rSP(13),
@@ -254,7 +255,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
   Future addComment(String comment, {List<Map<String, dynamic>> images}) async {
     Map params = {
       'userId': UserManager.instance.user.info.id,
-      'goodsDetailId': widget.model.goodsDetailId,
+      'goodsDetailId': widget.model.myOrderGoodsDea.goodsDetailId,
       'content': comment,
     };
     if (images != null) params.putIfAbsent('images', () => images);

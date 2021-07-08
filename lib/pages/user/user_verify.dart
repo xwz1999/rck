@@ -7,6 +7,7 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/user/mvp/user_presenter_impl.dart';
 import 'package:recook/pages/user/user_verify_result.dart';
+import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
@@ -88,7 +89,12 @@ class _VerifyPageState extends BaseStoreState<VerifyPage> {
                 ),
               ),
               _idcardWidget(),
-              _saveButton(context)
+              _saveButton(context),
+              Container(
+                padding: EdgeInsets.only(top: 20.w),
+                alignment: Alignment.center,
+                child: _verifyReseason(),
+              )
             ],
           ),
         ),
@@ -193,6 +199,51 @@ class _VerifyPageState extends BaseStoreState<VerifyPage> {
           ),
         ],
       ),
+    );
+  }
+
+  _verifyReseason() {
+    return MaterialButton(
+      padding: EdgeInsets.all(4.rw),
+      minWidth: 0,
+      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            padding: EdgeInsets.only(top: 2.w),
+            child: Icon(
+              Icons.help_outline,
+              size: 20.rw,
+              color: Color(0xFFD5101A),
+            ),
+          ),
+          10.wb,
+          Text(
+            "为什么要实名认证",
+            style: TextStyle(
+                color: Colors.grey.shade500,
+                fontSize: 15,
+                fontWeight: FontWeight.w300),
+          ),
+        ],
+      ),
+      onPressed: () {
+        Alert.show(
+            context,
+            NormalContentDialog(
+              type: NormalTextDialogType.remind,
+              title: null,
+              content: Text(
+                '根据海关规定，购买跨境商品需要办理清关手续，请您配合进行实名认证，以确保购买的商品顺利通过海关检查。（瑞库客承诺用户上传的身份信息将仅用于办理跨境商品的清关手续，不作他途使用，并对身份信息加密）实名认证的规则：购买跨境商品需填写瑞库客账号注册人的真实姓名及身份证号码。',
+                style: TextStyle(color: Colors.black),
+              ),
+              items: ["我知道了"],
+              listener: (index) {
+                Alert.dismiss(context);
+              },
+            ));
+      },
     );
   }
 

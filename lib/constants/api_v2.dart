@@ -54,16 +54,16 @@ class UserAPI {
   String get platformDetail => '/v2/app/user/income/reward_month_income';
 
   ///未到账收益
-  String get notRceivedDetail => '/v2/app/user/income/nr/detail';
+  String get notReceivedDetail => '/v2/app/user/income/nr/detail';
 
   ///到账收益
-  String get rceivedDetail => '/v2/app/user/income/detail';
+  String get receivedDetail => '/v2/app/user/income/detail';
 
   ///团队未到账收益
-  String get groupNotRceivedDetail => '/v2/app/user/income/team/nr/detail';
+  String get groupNotReceivedDetail => '/v2/app/user/income/team/nr/detail';
 
   ///团队到账收益
-  String get groupRceivedDetail => '/v2/app/user/income/team/detail';
+  String get groupReceivedDetail => '/v2/app/user/income/team/detail';
 
   ///我的团队列表
   String get myGroup => '/v2/app/user/team';
