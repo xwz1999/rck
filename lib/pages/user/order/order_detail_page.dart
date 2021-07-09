@@ -52,6 +52,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
   void initState() {
     super.initState();
     int orderId = widget.arguments["orderId"];
+    print(orderId);
     _presenter = OrderListPresenterImpl();
     _presenter.attach(this);
     _presenter.getOrderDetail(UserManager.instance.user.info.id, orderId);

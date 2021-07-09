@@ -212,6 +212,10 @@ dependencies:
   #点赞组件
   many_like: ^0.0.6
 
+  #展开组件
+  expandable: ^5.0.1
+
+
   flutter_markdown:
 
 

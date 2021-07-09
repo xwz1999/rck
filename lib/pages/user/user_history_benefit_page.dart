@@ -65,7 +65,8 @@ class _UserHistoryBenefitPageState extends State<UserHistoryBenefitPage> {
                 image: AssetImage(UserLevelTool.currentCardImagePath()),
               ),
             ),
-            padding: EdgeInsets.all(10.rw),
+            padding: EdgeInsets.only(
+                top: 20.rw, bottom: 10.rw, left: 20.rw, right: 20.rw),
             child: Row(
               children: [
                 Column(

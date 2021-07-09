@@ -181,7 +181,7 @@ class HttpManager {
       response =
           await dio.request<String>(url, data: encryptParams, options: option);
     } on DioError catch (e) {
-      LoggerData.addData(e..requestOptions.data=params);
+      LoggerData.addData(e..requestOptions.data = params);
       Response errorResponse;
       if (e.response != null) {
         errorResponse = e.response;

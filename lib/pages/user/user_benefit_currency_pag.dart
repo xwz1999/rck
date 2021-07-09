@@ -1,16 +1,21 @@
 import 'dart:math';
 
+import 'package:expandable/expandable.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:recook/pages/user/model/user_income_model1.dart';
+import 'package:get/get.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/shop/order/shop_order_detail_page.dart';
+import 'package:recook/pages/user/order/order_detail_page.dart';
+import 'package:recook/pages/user/user_benefit_shop_page.dart';
 import 'package:recook/pages/user/user_benefit_sub_page.dart';
+import 'package:recook/pages/user/widget/user_group_card.dart';
 import 'package:recook/widgets/animated_rotate.dart';
 import 'package:recook/widgets/bottom_time_picker.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 import 'package:velocity_x/velocity_x.dart';
-
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/functions/user_benefit_func.dart';
 import 'package:recook/pages/user/model/user_accumulate_model.dart';
@@ -19,17 +24,8 @@ import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 import 'model/user_benefit_extra_detail_model.dart';
-
-enum UserBenefitCurrencyPageType {
-  ///自购收益
-  SELF,
-
-  ///导购收益
-  GUIDE,
-
-  ///店铺补贴
-  SUBSIDY
-}
+import 'model/user_income_model.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class UserBenefitCurrencyPage extends StatefulWidget {
   final UserBenefitPageType type;
@@ -60,173 +56,209 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
 
   String _amount = '';
   String _all = '';
-  String _count = '';
+  String _selfALL = '0.00';
+  String _distributionALL = '0.00';
+  String _agentALL = '0.00';
 
   bool _itemReverse = false;
 
-  bool yearChoose = false; //0为年 1为月
-  bool monthChoose = true; //0为年 1为月
+  bool _yearChoose = false; //0为年 1为月
+  bool _monthChoose = true; //0为年 1为月
+
+  bool _selfChoose = true; //选择自营补贴
+  bool _distributionChoose = false; //选择分销补贴
+  bool _agentChoose = false; //选择代理补贴
+
   ///累计收益
   ///
   UserAccumulateModel _model = UserAccumulateModel.zero();
   DateTime _date = DateTime.now();
+  String formatType = 'yyyy-MM'; //时间选择器按钮样式
+  String TableformatType = 'M月d日'; //时间样式
 
-  UserIncomeModel1 _models; //自购导购未到已到收益
-  UserBenefitExtraDetailModel _extraDetailModel;
+  int team_level = 1;
+  String _TformatType = 'yyyy-MM'; //团队时间样式
+  String _TTableformatType = 'M月d日'; //团队表格时间样式
+
+  UserIncomeModel _models; //自购导购未到已到收益
+  bool _onload = true;
+  List _gone = [];
 
   _chooseMonth() {
+    String MonthText = '';
+    if (widget.receivedType == '未到账') {
+      MonthText = '未到账明细(月)';
+    } else if (widget.receivedType == '已到账') {
+      MonthText = '已到账明细(月)';
+    }
     return CustomImageButton(
-      height: 50.w,
       onPressed: () {
-        setState(() {
-          yearChoose = false;
-          monthChoose = true;
-        });
+        _yearChoose = false;
+        _monthChoose = true;
+        formatType = 'yyyy-MM';
+        TableformatType = 'M月d日';
+
+        _refreshController.requestRefresh();
+        setState(() {});
       },
-      child: Text('未到账明细(月)',
+      child: Text(MonthText,
           style: TextStyle(
               fontSize: 14.rsp,
-              color: getColor(monthChoose),
-              fontWeight: getWeight(monthChoose))),
+              color: getColor(_monthChoose),
+              fontWeight: getWeight(_monthChoose))),
     ).expand();
   }
 
   _chooseYear() {
+    String YearText = '';
+
+    if (widget.receivedType == '未到账') {
+      YearText = '未到账明细(年)';
+    } else if (widget.receivedType == '已到账') {
+      YearText = '已到账明细(年)';
+    }
     return CustomImageButton(
-      height: 50.w,
       onPressed: () {
-        setState(() {
-          yearChoose = true;
-          monthChoose = false;
-        });
+        _yearChoose = true;
+        _monthChoose = false;
+        formatType = 'yyyy';
+        TableformatType = 'M月';
+
+        _refreshController.requestRefresh();
+        setState(() {});
       },
-      child: Text('未到账明细(年)',
+      child: Text(YearText,
           style: TextStyle(
               fontSize: 14.rsp,
-              color: getColor(yearChoose),
-              fontWeight: getWeight(yearChoose))),
+              color: getColor(_yearChoose),
+              fontWeight: getWeight(_yearChoose))),
+    ).expand();
+  }
+
+  _chooseSelf() {
+    if (widget.receivedType == '未到账') {
+      _TformatType = 'yyyy-MM';
+      _TTableformatType = 'M月d日';
+    } else if (widget.receivedType == '已到账') {
+      _TformatType = 'yyyy';
+      _TTableformatType = 'M月';
+    }
+
+    return CustomImageButton(
+      onPressed: () {
+        _selfChoose = true;
+        _distributionChoose = false;
+        _agentChoose = false;
+        team_level = 1;
+        _refreshController.requestRefresh();
+        setState(() {});
+      },
+      child: widget.receivedType == '已到账'
+          ? Column(
+              children: [
+                10.hb,
+                Text('自营补贴',
+                        style: TextStyle(
+                            fontSize: 14.rsp,
+                            color: getColor(_selfChoose),
+                            fontWeight: getWeight(_selfChoose)))
+                    .expand(),
+                Text(_selfALL,
+                        style: TextStyle(
+                            fontSize: 14.rsp,
+                            color: getColor(_selfChoose),
+                            fontWeight: getWeight(_selfChoose)))
+                    .expand(),
+              ],
+            )
+          : Text('自营补贴',
+                  style: TextStyle(
+                      fontSize: 14.rsp,
+                      color: getColor(_selfChoose),
+                      fontWeight: getWeight(_selfChoose)))
+              .expand(),
+    ).expand();
+  }
+
+  _chooseDistribution() {
+    return CustomImageButton(
+      onPressed: () {
+        _selfChoose = false;
+        _distributionChoose = true;
+        _agentChoose = false;
+        team_level = 2;
+        _refreshController.requestRefresh();
+        setState(() {});
+      },
+      child: widget.receivedType == '已到账'
+          ? Column(
+              children: [
+                10.hb,
+                Text('分销补贴',
+                        style: TextStyle(
+                            fontSize: 14.rsp,
+                            color: getColor(_distributionChoose),
+                            fontWeight: getWeight(_distributionChoose)))
+                    .expand(),
+                Text(_distributionALL,
+                        style: TextStyle(
+                            fontSize: 14.rsp,
+                            color: getColor(_distributionChoose),
+                            fontWeight: getWeight(_distributionChoose)))
+                    .expand(),
+              ],
+            )
+          : Text('分销补贴',
+                  style: TextStyle(
+                      fontSize: 14.rsp,
+                      color: getColor(_distributionChoose),
+                      fontWeight: getWeight(_distributionChoose)))
+              .expand(),
+    ).expand();
+  }
+
+  _chooseAgent() {
+    return CustomImageButton(
+      onPressed: () {
+        _selfChoose = false;
+        _distributionChoose = false;
+        _agentChoose = true;
+        team_level = 3;
+        _refreshController.requestRefresh();
+        setState(() {});
+      },
+      child: widget.receivedType == '已到账'
+          ? Column(
+              children: [
+                10.hb,
+                Text('团队补贴',
+                        style: TextStyle(
+                            fontSize: 14.rsp,
+                            color: getColor(_agentChoose),
+                            fontWeight: getWeight(_agentChoose)))
+                    .expand(),
+                Text(_agentALL,
+                        style: TextStyle(
+                            fontSize: 14.rsp,
+                            color: getColor(_agentChoose),
+                            fontWeight: getWeight(_agentChoose)))
+                    .expand(),
+              ],
+            )
+          : Text('团队补贴',
+                  style: TextStyle(
+                      fontSize: 14.rsp,
+                      color: getColor(_agentChoose),
+                      fontWeight: getWeight(_agentChoose)))
+              .expand(),
     ).expand();
   }
 
   _renderDivider() {
     return Container(
-      height: 22.rw,
+      height: 20.rw,
       width: 1.rw,
       color: Color(0xFF979797),
-    );
-  }
-
-  ///背景条
-  _buildBackBar() {
-    return Container(
-      height: 10.rw,
-      width: double.infinity,
-      alignment: Alignment.center,
-      margin: EdgeInsets.symmetric(horizontal: 7.rw),
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            offset: Offset(0, 2.rw),
-            color: Colors.black.withOpacity(0.24),
-            blurRadius: 4.rw,
-          ),
-        ],
-        color: Color(0xFFE3E3E3),
-        borderRadius: BorderRadius.circular(5.rw),
-      ),
-      child: Container(
-        height: 4.rw,
-        margin: EdgeInsets.symmetric(horizontal: 4.rw),
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              offset: Offset(0, 2.rw),
-              color: Colors.black.withOpacity(0.39),
-              blurRadius: 4.rw,
-            ),
-          ],
-          color: Color(0xFFBBBBBB),
-          borderRadius: BorderRadius.circular(5.rw),
-        ),
-      ),
-    );
-  }
-
-//团队
-  Widget _buildGroupItems() {
-    if (_extraDetailModel == null) return SizedBox();
-    return Stack(
-      children: [
-        Container(
-          margin: EdgeInsets.symmetric(horizontal: 15.rw, vertical: 6.rw),
-          child: <Widget>[
-            20.hb,
-            Row(
-              children: [
-                15.wb,
-                '团队贡献榜'.text.size(14.rsp).color(Color(0xFF333333)).bold.make(),
-                Spacer(),
-                '团队人数:${_extraDetailModel.data.count}'
-                    .text
-                    .size(14.rsp)
-                    .color(Color(0xFF333333))
-                    .bold
-                    .make(),
-                10.wb,
-                MaterialButton(
-                  minWidth: 0,
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  onPressed: () {
-                    setState(() {
-                      _itemReverse = !_itemReverse;
-                    });
-                  },
-                  child: AnimatedRotate(
-                    child: Image.asset(
-                      R.ASSETS_ASCSORT_PNG,
-                      height: 15.rw,
-                      width: 15.rw,
-                    ),
-                    angle: _itemReverse ? 0 : pi,
-                  ),
-                  padding: EdgeInsets.symmetric(horizontal: 15.rw),
-                ),
-              ],
-            ),
-            10.hb,
-            // ListView(
-            //   shrinkWrap: true,
-            //   physics: NeverScrollableScrollPhysics(),
-            //   reverse: _itemReverse,
-            //   children: _extraDetailModel.data.userIncome.map((e) {
-            //     bool hasExtraName = TextUtil.isEmpty(e.remarkName);
-            //     return UserGroupCard(
-            //       id: e.userId,
-            //       isRecommend: false,
-            //       shopRole: UserLevelTool.roleLevelEnum(e.roleLevel),
-            //       wechatId: e.wechatNo ?? '',
-            //       name: '${e.nickname}${hasExtraName ? '' : e.remarkName}',
-            //       groupCount: e.count,
-            //       phone: e.phone ?? '',
-            //       headImg: e.headImgUrl ?? '',
-            //       remarkName: e.remarkName ?? '',
-            //     );
-            //   }).toList(),
-            // ),
-          ].column(),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.vertical(bottom: Radius.circular(5.rw)),
-            boxShadow: [
-              BoxShadow(
-                offset: Offset(0, 2.rw),
-                blurRadius: 4.rw,
-                color: Colors.black.withOpacity(0.1),
-              ),
-            ],
-          ),
-        ),
-      ],
     );
   }
 
@@ -241,9 +273,11 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
         return SizedBox(
             height: 350 + MediaQuery.of(context).padding.bottom,
             child: BottomTimePicker(
-              timePickerTypes: monthChoose == true
-                  ? [BottomTimePickerType.BottomTimePickerMonth]
-                  : [BottomTimePickerType.BottomTimePickerYear],
+              timePickerTypes: !_notSelfNotGUide
+                  ? _monthChoose == true
+                      ? [BottomTimePickerType.BottomTimePickerMonth]
+                      : [BottomTimePickerType.BottomTimePickerYear]
+                  : timePickerTypes,
               cancle: () {
                 Navigator.maybePop(context);
               },
@@ -261,69 +295,26 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
     });
   }
 
-  ///中间的按钮
-  Widget _buildMidCard() {
-    if (_extraDetailModel == null) return SizedBox();
-    return VxBox(
-      child: [
-        '$_title\(元)'.text.color(Colors.black54).size(18).make(),
-        (_extraDetailModel.data.amount ?? 0.0)
-            .toStringAsFixed(2)
-            .text
-            .color(Color(0xFF333333))
-            .size(24)
-            .make(),
-        36.hb,
-        [
-          [
-            '销售额(元)'.text.color(Colors.black54).size(14).make(),
-            (_extraDetailModel.data.salesVolume ?? 0.0)
-                .toStringAsFixed(2)
-                .text
-                .color(Color(0xFF333333))
-                .size(16)
-                .make(),
-          ].column(crossAlignment: CrossAxisAlignment.start),
-          Spacer(),
-          [
-            '提成比例(%)'.text.color(Colors.black54).size(14).make(),
-            (_extraDetailModel.data.ratio ?? 0.0)
-                .toStringAsFixed(2)
-                .text
-                .color(Color(0xFF333333))
-                .size(16)
-                .make(),
-          ].column(),
-        ].row(),
-      ].column(crossAlignment: CrossAxisAlignment.start),
-    )
-        .withRounded(value: 5.rw)
-        .white
-        .padding(EdgeInsets.symmetric(horizontal: 15.rw, vertical: 20.rw))
-        .margin(EdgeInsets.symmetric(horizontal: 16.rw, vertical: 10.rw))
-        .make();
-  }
-
   Widget _buildTag() {
-    // if(_models.isEmpty)return SizedBox()
     String benefitValue = '';
     String text = '本月收益';
-    //benefitValue = _models.data.data.amount.toStringAsFixed(2);
 
-    // if (widget.type == UserBenefitPageType.SELF) {
-    //   _models.forEach((element) => benefitValue += element.purchaseAmount);
-    // }
-    // if (widget.type == UserBenefitPageType.GUIDE)
-    //   _models.forEach((element) => benefitValue += element.guideAmount);
-
-    if (widget.receivedType == '未到账' && yearChoose == true) {
-      text = '本年未到账收益：';
-    } else if (widget.receivedType == '未到账' && monthChoose == true) {
-      text = '本月未到账收益：';
-    } else if (widget.receivedType == '已到账' && yearChoose == true) {
-      text = '本年到账收益：';
-    } else if (widget.receivedType == '已到账' && monthChoose == true) {
-      text = '本月到账收益：';
+    if (_notSelfNotGUide) {
+      if (widget.receivedType == '未到账') {
+        text = '本月未到账补贴：';
+      } else {
+        text = '本年已到账补贴：';
+      }
+    } else {
+      if (widget.receivedType == '未到账' && _yearChoose == true) {
+        text = '本年未到账收益：';
+      } else if (widget.receivedType == '未到账' && _monthChoose == true) {
+        text = '本月未到账收益：';
+      } else if (widget.receivedType == '已到账' && _yearChoose == true) {
+        text = '本年已到账收益：';
+      } else if (widget.receivedType == '已到账' && _monthChoose == true) {
+        text = '本月已到账收益：';
+      }
     }
 
     return Row(
@@ -342,7 +333,8 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
               textAlign: TextAlign.center,
             )
           ],
-        )
+        ),
+        20.wb
       ],
     );
     // return '当月收益(瑞币)：${benefitValue.toStringAsFixed(2)}'
@@ -353,8 +345,18 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
   }
 
   Widget _buildCard() {
+    String CumulativeText = '';
+    if (widget.receivedType == '未到账') {
+      CumulativeText = '累计未到账收益(瑞币)';
+    } else if (widget.receivedType == '已到账') {
+      CumulativeText = '累计已到账收益(瑞币)';
+    }
+    //print(UserManager.instance.userBrief.roleLevel.toString() + '等级');
     return Container(
+      margin:
+          EdgeInsets.only(left: 30.rw, right: 30.rw, top: 20.rw, bottom: 20.rw),
       clipBehavior: Clip.antiAlias,
+      height: 146.rw,
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
@@ -382,27 +384,31 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    '累计未到账收益(瑞币)'.text.black.make(),
+                    CumulativeText.text.color(Color(0xFF3A3943)).make(),
                     8.hb,
                     (_all ?? '').text.black.size(34.rsp).make(),
                   ],
                 ).expand(),
                 Image.asset(
                   UserLevelTool.currentMedalImagePath(),
-                  width: 56.w,
-                  height: 56.w,
+                  width: 48.rw,
+                  height: 48.rw,
                 ),
               ],
             ),
           ),
           Container(
-            padding: EdgeInsets.symmetric(vertical: 8.rw),
+            height: 50.rw,
             child: Row(
               children: [
-                _chooseMonth(),
-                _renderDivider(),
-                _chooseYear(),
-                _buildTable(),
+                _notSelfNotGUide ? _chooseSelf() : SizedBox(),
+                _notSelfNotGUide ? _renderDivider() : SizedBox(),
+                _notSelfNotGUide ? _chooseDistribution() : SizedBox(),
+                _notSelfNotGUide ? _renderDivider() : SizedBox(),
+                _notSelfNotGUide ? _chooseAgent() : SizedBox(),
+                !_notSelfNotGUide ? _chooseMonth() : SizedBox(),
+                !_notSelfNotGUide ? _renderDivider() : SizedBox(),
+                !_notSelfNotGUide ? _chooseYear() : SizedBox(),
               ],
             ),
           ),
@@ -430,13 +436,8 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
       body: RefreshWidget(
         controller: _refreshController,
         onRefresh: () async {
-          // UserBenefitSubModel model =
-          //     await UserBenefitFunc.subInfo(widget.type);
-
-          // _amount = model.data.amount.toStringAsFixed(2);
-          // _salesVolume = model.data.salesVolume.toStringAsFixed(2);
-          // _count = model.data.count.toStringAsFixed(0);
           int BenefitType = 0;
+
           if (widget.type == UserBenefitPageType.SELF) {
             BenefitType = 1;
           } else if (widget.type == UserBenefitPageType.GUIDE) {
@@ -445,87 +446,168 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
 
           if (!_notSelfNotGUide) {
             if (widget.receivedType == '已到账') {
-              if (yearChoose == true) {
+              if (_yearChoose == true) {
+                formatType = 'yyyy';
                 _models = await UserBenefitFunc.receicedIncome(
                     DateUtil.formatDate(_date, format: 'yyyy'), BenefitType);
-              } else if (monthChoose == true) {
+              } else if (_monthChoose == true) {
+                formatType = 'yyyy-MM';
                 _models = await UserBenefitFunc.receicedIncome(
                     DateUtil.formatDate(_date, format: 'yyyyMM'), BenefitType);
               }
             } else if (widget.receivedType == '未到账') {
-              if (yearChoose == true) {
+              if (_yearChoose == true) {
+                formatType = 'yyyy';
                 _models = await UserBenefitFunc.notReceicedIncome(
                     DateUtil.formatDate(_date, format: 'yyyy'), BenefitType);
-              } else if (monthChoose == true) {
+              } else if (_monthChoose == true) {
+                formatType = 'yyyy-MM';
                 _models = await UserBenefitFunc.notReceicedIncome(
                     DateUtil.formatDate(_date, format: 'yyyyMM'), BenefitType);
               }
             }
+            _onload = false;
           } else {
             //团队补贴
+
+            if (widget.receivedType == '未到账') {
+              formatType = 'yyyy';
+              _models = await UserBenefitFunc.teamNotReceicedIncome(team_level);
+            } else if (widget.receivedType == '已到账') {
+              formatType = 'yyyy-MM';
+              _models = await UserBenefitFunc.teamReceicedIncome(
+                  int.parse(DateUtil.formatDate(_date, format: 'yyyy')));
+
+              _selfALL = _models?.team?.toStringAsFixed(2);
+              _distributionALL = _models?.recommend?.toStringAsFixed(2);
+              _agentALL = _models?.reward?.toStringAsFixed(2);
+            }
+
+            _onload = false;
           }
-          _amount = _models.data?.amount?.toStringAsFixed(2);
-          _all = _models.data?.all?.toStringAsFixed(2);
-          print(_models?.data?.amount?.toStringAsFixed(2));
-          print(_models?.data?.all?.toStringAsFixed(2));
+          _amount = _models?.amount?.toStringAsFixed(2);
+          _all = _models?.all?.toStringAsFixed(2);
+          //对隐藏列表全部置为隐藏
+          for (int i = 0; i < _models?.detail?.length; i++) {
+            _gone.add(true);
+          }
+          for (int i = 0; i < _gone.length; i++) {
+            _gone[i] = true;
+          }
+
+          print(_models?.amount?.toStringAsFixed(2));
+          print(_models?.all?.toStringAsFixed(2));
           setState(() {});
           _refreshController.refreshCompleted();
         },
-        body: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 30.rw, vertical: 20.rw),
+        body: Column(
           children: [
             _buildCard(),
             Row(
               children: [
+                28.wb,
                 Column(
                   children: [
-                    16.hb,
-                    MaterialButton(
-                      shape: StadiumBorder(),
-                      elevation: 0,
-                      color: Colors.white,
-                      onPressed: () {
-                        showTimePickerBottomSheet(
-                            submit: (time, type) {
-                              Navigator.maybePop(context);
-                              _date = time;
-                              _refreshController.requestRefresh();
-                              setState(() {});
+                    !_notSelfNotGUide
+                        ? MaterialButton(
+                            shape: StadiumBorder(),
+                            elevation: 0,
+                            color: Colors.white,
+                            onPressed: () {
+                              showTimePickerBottomSheet(
+                                  submit: (time, type) {
+                                    Navigator.maybePop(context);
+                                    _date = time;
+                                    _refreshController.requestRefresh();
+                                    setState(() {});
+                                  },
+                                  timePickerTypes: [
+                                    BottomTimePickerType.BottomTimePickerMonth
+                                  ]);
                             },
-                            timePickerTypes: [
-                              BottomTimePickerType.BottomTimePickerMonth
-                            ]);
-                      },
-                      height: 28.rw,
-                      child: Row(
-                        children: [
-                          DateUtil.formatDate(_date, format: 'yyyy-MM')
-                              .text
-                              .black
-                              .size(14.rsp)
-                              .make(),
-                          Icon(
-                            Icons.arrow_drop_down,
-                            color: Colors.black87,
-                          ),
-                        ],
-                      ),
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                    ),
+                            height: 28.rw,
+                            child: Row(
+                              children: [
+                                DateUtil.formatDate(_date, format: formatType)
+                                    .text
+                                    .black
+                                    .size(14.rsp)
+                                    .make(),
+                                Icon(
+                                  Icons.arrow_drop_down,
+                                  color: Colors.black87,
+                                ),
+                              ],
+                            ),
+                            materialTapTargetSize:
+                                MaterialTapTargetSize.shrinkWrap,
+                          )
+                        : widget.receivedType == '未到账'
+                            ? Container(
+                                padding: EdgeInsets.only(left: 30.w),
+                                child: DateUtil.formatDate(_date,
+                                        format: _TformatType)
+                                    .text
+                                    .black
+                                    .size(14.rsp)
+                                    .make(),
+                              )
+                            : MaterialButton(
+                                shape: StadiumBorder(),
+                                elevation: 0,
+                                color: Colors.white,
+                                onPressed: () {
+                                  showTimePickerBottomSheet(
+                                      submit: (time, type) {
+                                        Navigator.maybePop(context);
+                                        _date = time;
+                                        _refreshController.requestRefresh();
+                                        setState(() {});
+                                      },
+                                      timePickerTypes: [
+                                        BottomTimePickerType
+                                            .BottomTimePickerYear
+                                      ]);
+                                },
+                                height: 28.rw,
+                                child: Row(
+                                  children: [
+                                    DateUtil.formatDate(_date,
+                                            format: _TformatType)
+                                        .text
+                                        .black
+                                        .size(14.rsp)
+                                        .make(),
+                                    Icon(
+                                      Icons.arrow_drop_down,
+                                      color: Colors.black87,
+                                    ),
+                                  ],
+                                ),
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                              )
                   ],
                 ),
                 Spacer(),
                 Column(
                   children: [
-                    15.hb,
-                    _notSelfNotGUide ? SizedBox() : _buildTag(),
+                    _onload ? SizedBox() : _buildTag(),
                   ],
                 ),
                 15.wb,
               ],
             ),
+            20.hb,
             //_notSelfNotGUide ? _buildMidCard() : SizedBox(),
-            _notSelfNotGUide ? _buildGroupItems() : _buildTable(),
+            SizedBox(
+              height: 45.rw,
+              child: _buildTableTitle1(),
+            ),
+            Expanded(
+                child: Container(
+              child: _onload ? SizedBox() : _buildTableList(),
+            ))
           ],
         ),
       ),
@@ -548,80 +630,302 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
     }
   }
 
-  ///表格标题
-  _buildTableTitle(String title, [bool red = false, bool bold = true]) =>
-      SizedBox(
-        height: 45.rw,
-        child: Text(
-          title,
-          style: TextStyle(
-            fontWeight: bold ? FontWeight.bold : FontWeight.normal,
-            color: red ? Color(0xFFD5101A) : Color(0xFF333333),
-            fontSize: 16.rsp,
-          ),
-        ).centered(),
-      );
+  _buildTableList() {
+    return new ListView.builder(
+      itemCount: _models.detail.length,
+      itemBuilder: (context, i) {
+        UserIncomeModel userIncomeModel = _models;
+        return _buildTableBody(userIncomeModel.detail[i], i);
+      },
+    );
+  }
 
-  ///表格内容
-  _buildTableItem(String value, [bool red = false]) =>
-      _buildTableTitle(value, red, false);
-  TableRow _buildTableRow({
-    DateTime date,
-    num volume,
-    int count,
-    num benefit,
-  }) {
-    return TableRow(
+  _buildTableTitle1() {
+    String tableText = '';
+    if (_notSelfNotGUide) {
+      if (widget.receivedType == '未到账') {
+        tableText = '未到账补贴(瑞币)';
+      } else if (widget.receivedType == '已到账') {
+        tableText = '已到账补贴(瑞币)';
+      }
+    } else {
+      if (widget.receivedType == '未到账') {
+        tableText = '未到账收益(瑞币)';
+      } else if (widget.receivedType == '已到账') {
+        tableText = '已到账收益(瑞币)';
+      }
+    }
+
+    return Row(
       children: [
-        _buildTableItem(DateUtil.formatDate(date, format: 'M月dd日')),
-        _buildTableItem(volume.toStringAsFixed(2)),
-        _buildTableItem(count.toString()),
-        _buildTableItem(benefit.toStringAsFixed(2), true),
+        Container(
+          height: 88.w,
+          width: 150.w,
+          color: Colors.white,
+          child: Text(
+            '日期',
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              color: Color(0xFF333333),
+              fontSize: 16.rsp,
+            ),
+          ).centered(),
+        ),
+        Container(
+          height: 88.w,
+          width: 180.w,
+          color: Colors.white,
+          child: Text(
+            '销售额',
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              color: Color(0xFF333333),
+              fontSize: 16.rsp,
+            ),
+          ).centered(),
+        ),
+        Container(
+          height: 88.w,
+          width: 100.w,
+          color: Colors.white,
+          child: Text(
+            '订单数',
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              color: Color(0xFF333333),
+              fontSize: 16.rsp,
+            ),
+          ).centered(),
+        ),
+        Container(
+          height: 88.w,
+          width: 320.w,
+          color: Colors.white,
+          child: Text(
+            tableText,
+            style: TextStyle(
+              fontWeight: FontWeight.w400,
+              color: Color(0xFF333333),
+              fontSize: 16.rsp,
+            ),
+          ).centered(),
+        ),
       ],
     );
   }
 
-  ///表格
-  ///
-  ///自购收益和导购收益的列表
-  _buildTable() {
-    //if (_models.isEmpty) return SizedBox();
-    return Table(
-      border: TableBorder(
-        horizontalInside: BorderSide(color: Color(0xFFEEEEEE), width: 1.rw),
-      ),
-      children: [
-        TableRow(
-          children: [
-            _buildTableTitle('日期'),
-            _buildTableTitle('销售额'),
-            _buildTableTitle('订单数'),
-            _buildTableTitle('结算收益'),
-          ],
-        ),
-        // ..._models.map((e) {
-        //   num amount = 0;
-        //   num salesVolume = 0;
-        //   int count = 0;
-        //   if (widget.type == UserBenefitPageType.SELF) {
-        //     amount = e.purchaseAmount;
-        //     salesVolume = e.purchaseSalesVolume;
-        //     count = e.purchaseCount;
-        //   }
-        //   if (widget.type == UserBenefitPageType.GUIDE) {
-        //     amount = e.guideAmount;
-        //     salesVolume = e.guideSalesVolume;
-        //     count = e.guideCount;
-        //   }
+  _buildTableBody(var detail, int num) {
+    String _time = detail.date.toString() + '000'; //dart语言时间戳要求13位
 
-        //   return _buildTableRow(
-        //     date: e.day,
-        //     volume: salesVolume,
-        //     count: count,
-        //     benefit: amount,
-        //   );
-        // }).toList(),
+    return Column(
+      children: [
+        GestureDetector(
+          onTap: () {
+            if (!_notSelfNotGUide) {
+              if (detail.count > 1) {
+                _gone[num] = !_gone[num];
+                setState(() {});
+              } else if (detail.count == 1) {
+                AppRouter.push(context, RouteName.SHOP_ORDER_DETAIL,
+                    arguments: OrderDetailPage.setArguments(
+                        detail.detail[0].id)); //只有一条数据时，第二层也会有一条
+              }
+            } else {
+              int type = 0;
+              if (widget.receivedType == '未到账') {
+                type = 1;
+              } else {
+                type = 2;
+              }
+              Get.to(UserBenefitShopPage(teamType: type));
+            }
+          },
+          child: Row(
+            children: [
+              Container(
+                height: 88.w,
+                width: 150.w,
+                color: Colors.white,
+                child: Text(
+                  DateUtil.formatDate(
+                      DateTime.fromMillisecondsSinceEpoch(int.parse(_time)),
+                      format: TableformatType),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF333333),
+                    fontSize: 16.rsp,
+                  ),
+                ).centered(),
+              ),
+              Container(
+                height: 45.rw,
+                width: 180.w,
+                color: Colors.white,
+                child: Text(
+                  detail.sale.toStringAsFixed(2),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF333333),
+                    fontSize: 16.rsp,
+                  ),
+                ).centered(),
+              ),
+              Container(
+                height: 88.w,
+                width: 100.w,
+                color: Colors.white,
+                child: Text(
+                  detail.count.toString(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF333333),
+                    fontSize: 16.rsp,
+                  ),
+                ).centered(),
+              ),
+              Container(
+                height: 88.w,
+                width: 320.w,
+                color: Colors.white,
+                alignment: Alignment.center,
+                padding: EdgeInsets.only(left: 60.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        detail.coin.toStringAsFixed(2),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xffD5101A),
+                          fontSize: 16.rsp,
+                        ),
+                      ).centered(),
+                    ),
+                    !_notSelfNotGUide
+                        ? detail.count > 1
+                            ? _gone[num]
+                                ? Icon(Icons.keyboard_arrow_right,
+                                    size: 22, color: Color(0xff999999))
+                                : Icon(Icons.keyboard_arrow_down,
+                                    size: 22, color: Color(0xff999999))
+                            : SizedBox()
+                        : SizedBox(),
+                    20.wb
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+        !_notSelfNotGUide
+            ? Offstage(
+                offstage: _gone[num],
+                child: Column(
+                  children: [
+                    ..._models.detail[num].detail.map(
+                      (e) {
+                        return _buildHideBody(
+                            e.id, e.date, e.sale, e.count, e.coin);
+                      },
+                    ),
+                  ],
+                  //itemCount: _models.detail[index].detail.length,
+                  //return _buildHideBody(_models.detail[num].detail[index]);
+                ),
+              )
+            : SizedBox()
       ],
-    ).material(color: Colors.white).pSymmetric(v: 10.rw);
+    );
+  }
+
+  _buildHideBody(
+    num id,
+    num date,
+    num sale,
+    num count,
+    num coin,
+  ) {
+    String _time = date.toString() + '000'; //dart语言时间戳要求13位
+    return Row(
+      children: [
+        GestureDetector(
+          onTap: () {
+            AppRouter.push(context, RouteName.SHOP_ORDER_DETAIL,
+                arguments: OrderDetailPage.setArguments(id));
+          },
+          child: Row(
+            children: [
+              Container(
+                height: 88.w,
+                width: 150.w,
+                color: Color(0xFFF2F8FF),
+                child: Text(
+                  _yearChoose
+                      ? DateUtil.formatDate(
+                          DateTime.fromMillisecondsSinceEpoch(int.parse(_time)),
+                          format: 'M月d日')
+                      : DateUtil.formatDate(
+                          DateTime.fromMillisecondsSinceEpoch(int.parse(_time)),
+                          format: 'HH:mm:ss'),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF333333),
+                    fontSize: 12.rsp,
+                  ),
+                ).centered(),
+              ),
+              Container(
+                height: 45.rw,
+                width: 180.w,
+                color: Color(0xFFF2F8FF),
+                child: Text(
+                  sale.toStringAsFixed(2),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF333333),
+                    fontSize: 12.rsp,
+                  ),
+                ).centered(),
+              ),
+              Container(
+                height: 88.w,
+                width: 100.w,
+                color: Color(0xFFF2F8FF),
+                child: Text(
+                  count.toString(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF333333),
+                    fontSize: 12.rsp,
+                  ),
+                ).centered(),
+              ),
+              Container(
+                height: 88.w,
+                width: 320.w,
+                color: Color(0xFFF2F8FF),
+                alignment: Alignment.center,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        coin.toStringAsFixed(2),
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xffD5101A),
+                          fontSize: 12.rsp,
+                        ),
+                      ).centered(),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }
