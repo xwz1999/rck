@@ -17,14 +17,14 @@ class Config {
 
   ///Apksigner 目录
   static String get apksignerPath =>
-      '$androidSdkRoot/build-tools/30.0.2/apksigner';
+      '$androidSdkRoot/build-tools/30.0.3/apksigner';
 
   ///下载目录
   static String get downloadPath => '$homeDir/Downloads';
 
   ///打包目录
   static String get buildPath =>
-      './build/app/outputs/flutter-apk/app-release.apk';
+      './build/app/outputs/flutter-apk/app.apk';
 
   ///打包目录文件夹
   static String get buildDir => './build/app/outputs/flutter-apk';

@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:common_utils/common_utils.dart';
 import 'package:grinder/grinder.dart';
-import 'package:path/path.dart'hide context;
+import 'package:path/path.dart' hide context;
 import 'package:yaml/yaml.dart';
 
 import 'config.dart';
@@ -19,16 +19,31 @@ test() => new TestRunner().testAsync();
 Future releaseApk() async {
   stdout.write("Build APK 📦\n");
   stdout.write("BUILDINGAPK\n");
-  await Process.start('flutter', ['build', 'apk']).then((proc) async {
+  await Process.start('fvm', [
+    'flutter',
+    'build',
+    'apk',
+    '--target-platform=android-arm64',
+    '--dart-define',
+    'ISDEBUG=false'
+  ]).then((proc) async {
     await stdout.addStream(proc.stdout);
     await stderr.addStream(proc.stderr);
   });
   stdout.write("\rBuild APK DONE 📦\n");
   stdout.write("copy build to download 🛠\n");
+
+  String date = DateUtil.formatDate(DateTime.now(), format: 'yy_MM_dd_HH_mm');
+  String version = await getVersion();
+  await runAsync('mv', arguments: [
+    Config.buildPath,
+    '${Config.buildDir}/${Config.packageName}_${version}_beta_$date.apk'
+  ]);
+  stdout.write("rename done 🛠\n");
   await Process.run('rm', ['-rf', '${Config.downloadPath}/builds']);
   await Process.run('mkdir', ['${Config.downloadPath}/builds']);
   await Process.run('cp', [
-    Config.buildPath,
+    '${Config.buildDir}/${Config.packageName}_${version}_beta_$date.apk',
     '${Config.downloadPath}/builds/${Config.packageName}_release.apk'
   ]);
 
@@ -37,6 +52,7 @@ Future releaseApk() async {
   stdout.write("opening tencent reinforce 🛠\n");
   await Process.run(
       'open', ['https://console.cloud.tencent.com/ms/reinforce/upload']);
+  stdout.write("请将加固后的文件重命名为RECOOK_reinforce.apk,并移动至builds文件夹");
 }
 
 @Task()
@@ -46,7 +62,14 @@ Future releaseDev() async {
 
   stdout.write("Build Dev APK 📦\n");
   stdout.write("BUILDINGAPK\n");
-  await Process.start('flutter', ['build', 'apk']).then((proc) async {
+  await Process.start('fvm', [
+    'flutter',
+    'build',
+    'apk',
+    '--target-platform=android-arm64',
+    '--dart-define',
+    'ISDEBUG=false'
+  ]).then((proc) async {
     await stdout.addStream(proc.stdout);
     await stderr.addStream(proc.stderr);
   });
@@ -78,7 +101,9 @@ sign() async {
       'pass:${Config.recookPassword}',
       '--out',
       '${Config.downloadPath}/builds/${Config.packageName}_release_signed.apk',
-      input,
+      // input,
+      // '--input',
+      '${Config.downloadPath}/builds/${Config.packageName}_reinforce.apk'
     ],
   );
   stdout.write(process.stdout);
@@ -120,8 +145,8 @@ buildApk() async {
 @Task()
 @Depends(getVersion)
 buildApkDev() async {
- await runAsync('fvm', arguments: [
-   'flutter',
+  await runAsync('fvm', arguments: [
+    'flutter',
     'build',
     'apk',
     '--target-platform=android-arm64',
@@ -140,14 +165,15 @@ buildApkDev() async {
 @Task()
 buildIos() async {
   runAsync('fvm',
-      arguments: ['flutter','build', 'ios', '--dart-define', 'ISDEBUG=false']);
+      arguments: ['flutter', 'build', 'ios', '--dart-define', 'ISDEBUG=false']);
 }
 
 @Task()
-builIosDev()async{
- runAsync('fvm',
-      arguments: ['flutter','build', 'ios', '--dart-define', 'ISDEBUG=true']);
+builIosDev() async {
+  runAsync('fvm',
+      arguments: ['flutter', 'build', 'ios', '--dart-define', 'ISDEBUG=true']);
 }
+
 @Task()
 Future<String> getVersion() async {
   String projectPath = Directory('.').absolute.path;

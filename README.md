@@ -40,9 +40,11 @@ flutter pub run grinder build-apk --v
 ```
 
 ### 加固应用后签名
-
+//加固使用腾讯云
+//签名前请确保已安装java环境
+//签名前请将加固后的的安装包重命名为"RECOOK_reinforce.apk",并移动至”/Users/$name/Downloads/buils/“目录下
 ```bash
-flutter pub run grinder sign --input=xxx.apk
+grind sign
 ```
 
 ### 预安装软件包
