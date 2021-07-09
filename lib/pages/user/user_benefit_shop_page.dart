@@ -310,62 +310,57 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
         // setState(() {});
         // _refreshController.refreshCompleted();
         //},
-       body: ListView(
+        body: ListView(
           children: [
-            Stack(
-              children: [
-                Positioned(
-                  left: 0,
-                  right: 0,
-                  top: 0,
-                  child: CustomPaint(painter: RoundBackgroundPainter()),
-                ),
-                _buildCard(),
-              ],
-            ),
+            Stack(children: [
+              Positioned(
+                left: 0,
+                right: 0,
+                top: 0,
+                child: CustomPaint(painter: RoundBackgroundPainter()),
+              ),
+            ]),
+            10.hb,
             Row(
               children: [
                 10.wb,
-                MaterialButton(
-                  shape: StadiumBorder(),
-                  elevation: 0,
-                  color: Colors.white,
-                  onPressed: () {
-                    showTimePickerBottomSheet(
-                        submit: (time, type) {
-                          Navigator.maybePop(context);
-                          _date = time;
-                          _refreshController.requestRefresh();
-                          setState(() {});
-                        },
-                        timePickerTypes: [
-                          BottomTimePickerType.BottomTimePickerMonth
-                        ]);
-                  },
-                  height: 31.rw,
-                  child: Row(
-                    children: [
-                      DateUtil.formatDate(_date, format: 'yyyy-MM')
-                          .text
-                          .black
-                          .size(14.rsp)
-                          .make(),
-                      Icon(
-                        Icons.arrow_drop_down,
-                        color: Colors.black87,
-                      ),
-                    ],
-                  ),
-                  materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                ),
-                Spacer(),
-                
-                15.wb,
+                // MaterialButton(
+                //   shape: StadiumBorder(),
+                //   elevation: 0,
+                //   color: Colors.white,
+                //   onPressed: () {
+                //     showTimePickerBottomSheet(
+                //         submit: (time, type) {
+                //           Navigator.maybePop(context);
+                //           _date = time;
+                //           _refreshController.requestRefresh();
+                //           setState(() {});
+                //         },
+                //         timePickerTypes: [
+                //           BottomTimePickerType.BottomTimePickerMonth
+                //         ]);
+                //   },
+                //   height: 31.rw,
+                //   child: Row(
+                //     children: [
+                //       DateUtil.formatDate(_date, format: 'yyyy-MM')
+                //           .text
+                //           .black
+                //           .size(14.rsp)
+                //           .make(),
+                //       Icon(
+                //         Icons.arrow_drop_down,
+                //         color: Colors.black87,
+                //       ),
+                //     ],
+                //   ),
+                //   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                // ),
               ],
             ),
-
+            _buildCard(),
           ],
-        ),
+
           //_buildGroupItems(),
         ),
       ),
