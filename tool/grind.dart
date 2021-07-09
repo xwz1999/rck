@@ -19,7 +19,8 @@ test() => new TestRunner().testAsync();
 Future releaseApk() async {
   stdout.write("Build APK 📦\n");
   stdout.write("BUILDINGAPK\n");
-  await Process.start('flutter', [
+  await Process.start('fvm', [
+    'flutter',
     'build',
     'apk',
     '--target-platform=android-arm64',
@@ -61,7 +62,14 @@ Future releaseDev() async {
 
   stdout.write("Build Dev APK 📦\n");
   stdout.write("BUILDINGAPK\n");
-  await Process.start('flutter', ['build', 'apk']).then((proc) async {
+  await Process.start('fvm', [
+    'flutter',
+    'build',
+    'apk',
+    '--target-platform=android-arm64',
+    '--dart-define',
+    'ISDEBUG=false'
+  ]).then((proc) async {
     await stdout.addStream(proc.stdout);
     await stderr.addStream(proc.stderr);
   });
