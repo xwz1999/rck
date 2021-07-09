@@ -461,22 +461,6 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 },
               ),
               Spacer(),
-              // CustomImageButton(
-              //   onPressed: () {
-              //     Get.to(() =>
-              //         UserBenefitPage()); //UserBenefitSubPage(type: UserBenefitPageType.SELF)); //UserBenefitCurrencyPage());
-              //   },
-              //   child: Row(
-              //     children: [
-              //       '图表分析'.text.color(Color(0xFF999999)).size(12.rsp).make(),
-              //       Container(
-              //         padding: EdgeInsets.fromLTRB(0, 3, 0, 0),
-              //         child: Icon(Icons.keyboard_arrow_right,
-              //             size: 22, color: Color(0xff999999)),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               19.w.widthBox,
             ],
           ),
@@ -499,10 +483,10 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     children: [
                       CustomImageButton(
                         onPressed: () {
-                          Get.to(() => UserBenefitCurrencyPage(
-                              type: type,
-                              receivedType:
-                                  "未到账")); //UserBenefitSubPage(type: UserBenefitPageType.SELF)); //UserBenefitCurrencyPage());
+                          // Get.to(() => UserBenefitCurrencyPage(
+                          //     type: type,
+                          //     receivedType:
+                          //         "未到账"));
                         },
                         child: Column(
                           children: [
@@ -523,10 +507,10 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     children: [
                       CustomImageButton(
                         onPressed: () {
-                          Get.to(() => UserBenefitCurrencyPage(
-                              type: type,
-                              receivedType:
-                                  "未到账")); //UserBenefitSubPage(type: UserBenefitPageType.SELF)); //UserBenefitCurrencyPage());
+                          // Get.to(() => UserBenefitCurrencyPage(
+                          //     type: type,
+                          //     receivedType:
+                          //         "未到账"));
                         },
                         child: Column(
                           children: [
@@ -555,10 +539,10 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   32.w.widthBox,
                   CustomImageButton(
                     onPressed: () {
-                      Get.to(() => UserBenefitCurrencyPage(
-                          type: type,
-                          receivedType:
-                              "已到账")); //UserBenefitSubPage(type: UserBenefitPageType.SELF)); //UserBenefitCurrencyPage());
+                      // Get.to(() => UserBenefitCurrencyPage(
+                      //     type: type,
+                      //     receivedType:
+                      //         "已到账"));
                     },
                     child: Column(
                       children: [
@@ -574,10 +558,10 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   Spacer(),
                   CustomImageButton(
                     onPressed: () {
-                      Get.to(() => UserBenefitCurrencyPage(
-                          type: type,
-                          receivedType:
-                              "已到账")); //UserBenefitSubPage(type: UserBenefitPageType.SELF)); //UserBenefitCurrencyPage());
+                      // Get.to(() => UserBenefitCurrencyPage(
+                      //     type: type,
+                      //     receivedType:
+                      //         "已到账"));
                     },
                     child: Column(
                       children: [
