@@ -1421,9 +1421,17 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   Future<bool> requestPermission() async {
-    bool permission = await Permission.locationWhenInUse.isGranted;
+    if (Platform.isIOS) {
+      return true;
+    }
+    bool permission = await Permission.locationWhenInUse.isRestricted;
+    bool permanentDenied =
+        await Permission.locationWhenInUse.isPermanentlyDenied;
     if (!permission) {
-     await Permission.locationWhenInUse.request();
+      await Permission.locationWhenInUse.request();
+      if (permanentDenied) {
+        await PermissionTool.showOpenPermissionDialog(context, '打开定位权限');
+      }
       permission = await Permission.locationWhenInUse.isGranted;
     }
     return permission;
@@ -1431,7 +1439,7 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   //抽奖功能
   _userLottery() async {
-    //TODO 暂时移除抽奖功能（大概率以后用不到）
+    //暂时移除抽奖功能（大概率以后用不到）
     // ResultData resultData = await HttpManager.post(
     //   UserApi.user_lottery,
     //   {'userID': UserManager.instance.user.info.id},

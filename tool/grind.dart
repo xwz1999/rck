@@ -101,7 +101,8 @@ clean() => defaultClean();
 
 @Task()
 buildApk() async {
-  await runAsync('flutter', arguments: [
+  await runAsync('fvm', arguments: [
+    'flutter',
     'build',
     'apk',
     '--target-platform=android-arm64',
@@ -119,7 +120,8 @@ buildApk() async {
 @Task()
 @Depends(getVersion)
 buildApkDev() async {
- await runAsync('flutter', arguments: [
+ await runAsync('fvm', arguments: [
+   'flutter',
     'build',
     'apk',
     '--target-platform=android-arm64',
@@ -137,10 +139,15 @@ buildApkDev() async {
 
 @Task()
 buildIos() async {
-  runAsync('flutter',
-      arguments: ['build', 'ios', '--dart-define', 'ISDEBUG=false']);
+  runAsync('fvm',
+      arguments: ['flutter','build', 'ios', '--dart-define', 'ISDEBUG=false']);
 }
 
+@Task()
+builIosDev()async{
+ runAsync('fvm',
+      arguments: ['flutter','build', 'ios', '--dart-define', 'ISDEBUG=true']);
+}
 @Task()
 Future<String> getVersion() async {
   String projectPath = Directory('.').absolute.path;

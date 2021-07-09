@@ -31,7 +31,6 @@ class UserBenefitFunc {
       if (result.data['data'] != null) {
         return UserIncomeModel.fromJson(result.data['data']);
       }
-    }
   }
 
   //未到账收益

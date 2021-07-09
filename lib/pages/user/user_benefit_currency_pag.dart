@@ -494,7 +494,6 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
           for (int i = 0; i < _gone.length; i++) {
             _gone[i] = true;
           }
-
           print(_models?.amount?.toStringAsFixed(2));
           print(_models?.all?.toStringAsFixed(2));
           setState(() {});
