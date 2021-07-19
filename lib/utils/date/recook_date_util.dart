@@ -7,6 +7,9 @@ class RecookDateUtil {
   RecookDateUtil.fromString(String rawData) {
     dateTime = DateUtil.getDateTime(rawData);
   }
+  static int monthBetween(DateTime day, DateTime diffDay) {
+    return (diffDay.month + 12 - day.month) % 12;
+  }
 
   RecookDateUtil.fromMillsecond(int millsecond) {
     dateTime = DateTime.fromMillisecondsSinceEpoch(millsecond);

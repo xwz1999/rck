@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 import 'package:azlistview/azlistview.dart';
+import 'package:get/get.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
@@ -12,9 +13,9 @@ import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/weather_page/weather_city_model.dart';
 import 'package:recook/widgets/weather_page/weather_city_tool.dart';
 
-class WeatherCityPage extends StatefulWidget {
+class ChooseCityPage extends StatefulWidget {
   final Map arguments;
-  WeatherCityPage({Key key, this.arguments}) : super(key: key);
+  ChooseCityPage({Key key, this.arguments}) : super(key: key);
   static setArguments(
     String cityName,
   ) {
@@ -24,10 +25,10 @@ class WeatherCityPage extends StatefulWidget {
   }
 
   @override
-  _WeatherCityPageState createState() => _WeatherCityPageState();
+  _ChooseCityPageState createState() => _ChooseCityPageState();
 }
 
-class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
+class _ChooseCityPageState extends BaseStoreState<ChooseCityPage> {
   int _suspensionHeight = 40;
   int _itemHeight = 50;
   String _suspensionTag = "A";
@@ -80,7 +81,8 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
 
                             WeatherCityModel model = WeatherCityModel();
                             model.cityZh = _selectCity;
-                            Navigator.pop(context, model);
+                            Get.back(result: model);
+                            //Navigator.pop(context, model);
                           },
                           child: Container(
                             alignment: Alignment.centerLeft,

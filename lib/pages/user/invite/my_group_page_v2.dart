@@ -26,14 +26,23 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
   List<UserCommonModel> _models = [];
   UsersMode usersMode = UsersMode.MY_GROUP;
   int get _allGroupCount {
-    int value = 1;
-    _models.forEach((element) {
-      value += element.count;
-    });
-    return value;
+    if (usersMode == UsersMode.MY_GROUP) {
+      int value = 1;
+      _models.forEach((element) {
+        value += element.count;
+      });
+      return value;
+    } else {
+      int value = 0;
+      _models.forEach((element) {
+        value += element.count;
+      });
+      return value;
+    }
   }
 
   num _myPeopleCount = -1;
+  UserRoleLevel role = UserLevelTool.currentRoleLevelEnum();
 
   GSRefreshController _refreshController = GSRefreshController.auto();
 
@@ -98,10 +107,18 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
             children: [
               50.hb,
               _renderShitTab('自营店铺', UsersMode.MY_GROUP),
-              _renderShitVerticalLine,
-              _renderShitTab('分销店铺', UsersMode.MY_RECOMMEND),
-              _renderShitVerticalLine,
-              _renderShitTab('代理店铺', UsersMode.MY_REWARD),
+              role == UserRoleLevel.Diamond_1 || role == UserRoleLevel.Diamond_2
+                  ? _renderShitVerticalLine
+                  : SizedBox(),
+              role == UserRoleLevel.Diamond_1 || role == UserRoleLevel.Diamond_2
+                  ? _renderShitTab('分销店铺', UsersMode.MY_RECOMMEND)
+                  : SizedBox(),
+              role == UserRoleLevel.Diamond_1
+                  ? _renderShitVerticalLine
+                  : SizedBox(),
+              role == UserRoleLevel.Diamond_1
+                  ? _renderShitTab('代理店铺', UsersMode.MY_REWARD)
+                  : SizedBox(),
             ],
           ),
         ],
@@ -180,7 +197,9 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
             children: [
               54.hb,
               16.wb,
-              _renderTitle.text.bold.size(14.rsp).black.make(),
+              role == UserRoleLevel.Diamond_1 || role == UserRoleLevel.Diamond_2
+                  ? _renderTitle.text.bold.size(14.rsp).black.make()
+                  : "我的店铺".text.bold.size(14.rsp).black.make(),
               MaterialButton(
                 padding: EdgeInsets.all(4.rw),
                 minWidth: 0,
@@ -195,7 +214,10 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
                     context,
                     NormalContentDialog(
                       title: '店铺贡献榜图标定义',
-                      content: Image.asset(R.ASSETS_USER_CARD_DESCRIPTION_WEBP),
+                      content: role == UserRoleLevel.Diamond_1 ||
+                              role == UserRoleLevel.Diamond_2
+                          ? Image.asset(R.ASSETS_USER_CARD_DESCRIPTION_PNG)
+                          : Image.asset(R.ASSETS_USER_CARD_DESCRIPTION_WEBP),
                       items: ["确认"],
                       listener: (index) => Alert.dismiss(context),
                     ),

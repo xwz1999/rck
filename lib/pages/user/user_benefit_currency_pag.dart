@@ -54,8 +54,8 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
       widget.type != UserBenefitPageType.SELF &&
       widget.type != UserBenefitPageType.GUIDE;
 
-  String _amount = '';
-  String _all = '';
+  String _amount = '0.00';
+  String _all = '0.00';
   String _selfALL = '0.00';
   String _distributionALL = '0.00';
   String _agentALL = '0.00';
@@ -158,25 +158,22 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
               children: [
                 10.hb,
                 Text('自营补贴',
-                        style: TextStyle(
-                            fontSize: 14.rsp,
-                            color: getColor(_selfChoose),
-                            fontWeight: getWeight(_selfChoose)))
-                    .expand(),
+                    style: TextStyle(
+                        fontSize: 14.rsp,
+                        color: getColor(_selfChoose),
+                        fontWeight: getWeight(_selfChoose))),
                 Text(_selfALL,
-                        style: TextStyle(
-                            fontSize: 14.rsp,
-                            color: getColor(_selfChoose),
-                            fontWeight: getWeight(_selfChoose)))
-                    .expand(),
+                    style: TextStyle(
+                        fontSize: 14.rsp,
+                        color: getColor(_selfChoose),
+                        fontWeight: getWeight(_selfChoose))),
               ],
             )
           : Text('自营补贴',
-                  style: TextStyle(
-                      fontSize: 14.rsp,
-                      color: getColor(_selfChoose),
-                      fontWeight: getWeight(_selfChoose)))
-              .expand(),
+              style: TextStyle(
+                  fontSize: 14.rsp,
+                  color: getColor(_selfChoose),
+                  fontWeight: getWeight(_selfChoose))),
     ).expand();
   }
 
@@ -195,25 +192,22 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
               children: [
                 10.hb,
                 Text('分销补贴',
-                        style: TextStyle(
-                            fontSize: 14.rsp,
-                            color: getColor(_distributionChoose),
-                            fontWeight: getWeight(_distributionChoose)))
-                    .expand(),
+                    style: TextStyle(
+                        fontSize: 14.rsp,
+                        color: getColor(_distributionChoose),
+                        fontWeight: getWeight(_distributionChoose))),
                 Text(_distributionALL,
-                        style: TextStyle(
-                            fontSize: 14.rsp,
-                            color: getColor(_distributionChoose),
-                            fontWeight: getWeight(_distributionChoose)))
-                    .expand(),
+                    style: TextStyle(
+                        fontSize: 14.rsp,
+                        color: getColor(_distributionChoose),
+                        fontWeight: getWeight(_distributionChoose))),
               ],
             )
           : Text('分销补贴',
-                  style: TextStyle(
-                      fontSize: 14.rsp,
-                      color: getColor(_distributionChoose),
-                      fontWeight: getWeight(_distributionChoose)))
-              .expand(),
+              style: TextStyle(
+                  fontSize: 14.rsp,
+                  color: getColor(_distributionChoose),
+                  fontWeight: getWeight(_distributionChoose))),
     ).expand();
   }
 
@@ -232,25 +226,22 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
               children: [
                 10.hb,
                 Text('团队补贴',
-                        style: TextStyle(
-                            fontSize: 14.rsp,
-                            color: getColor(_agentChoose),
-                            fontWeight: getWeight(_agentChoose)))
-                    .expand(),
+                    style: TextStyle(
+                        fontSize: 14.rsp,
+                        color: getColor(_agentChoose),
+                        fontWeight: getWeight(_agentChoose))),
                 Text(_agentALL,
-                        style: TextStyle(
-                            fontSize: 14.rsp,
-                            color: getColor(_agentChoose),
-                            fontWeight: getWeight(_agentChoose)))
-                    .expand(),
+                    style: TextStyle(
+                        fontSize: 14.rsp,
+                        color: getColor(_agentChoose),
+                        fontWeight: getWeight(_agentChoose))),
               ],
             )
           : Text('团队补贴',
-                  style: TextStyle(
-                      fontSize: 14.rsp,
-                      color: getColor(_agentChoose),
-                      fontWeight: getWeight(_agentChoose)))
-              .expand(),
+              style: TextStyle(
+                  fontSize: 14.rsp,
+                  color: getColor(_agentChoose),
+                  fontWeight: getWeight(_agentChoose))),
     ).expand();
   }
 
@@ -328,7 +319,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
           children: [
             5.hb,
             Text(
-              _amount ?? '',
+              _amount ?? '0.00',
               style: TextStyle(color: Color(0xFFD5101A), fontSize: 16.rsp),
               textAlign: TextAlign.center,
             )
@@ -351,7 +342,8 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
     } else if (widget.receivedType == '已到账') {
       CumulativeText = '累计已到账收益(瑞币)';
     }
-    //print(UserManager.instance.userBrief.roleLevel.toString() + '等级');
+    UserRoleLevel role = UserLevelTool.currentRoleLevelEnum();
+
     return Container(
       margin:
           EdgeInsets.only(left: 30.rw, right: 30.rw, top: 20.rw, bottom: 20.rw),
@@ -381,13 +373,20 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
                 top: 20.rw, bottom: 10.rw, left: 20.rw, right: 20.rw),
             child: Row(
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CumulativeText.text.color(Color(0xFF3A3943)).make(),
-                    8.hb,
-                    (_all ?? '').text.black.size(34.rsp).make(),
-                  ],
+                Container(
+                  padding: role != UserRoleLevel.Diamond_1 &&
+                          role != UserRoleLevel.Diamond_2 &&
+                          _notSelfNotGUide
+                      ? EdgeInsets.only(top: 25.rw)
+                      : EdgeInsets.only(top: 0.rw),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CumulativeText.text.color(Color(0xFF3A3943)).make(),
+                      8.hb,
+                      (_all ?? '0.00').text.black.size(34.rsp).make(),
+                    ],
+                  ),
                 ).expand(),
                 Image.asset(
                   UserLevelTool.currentMedalImagePath(),
@@ -396,22 +395,44 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
                 ),
               ],
             ),
-          ),
-          Container(
-            height: 50.rw,
-            child: Row(
-              children: [
-                _notSelfNotGUide ? _chooseSelf() : SizedBox(),
-                _notSelfNotGUide ? _renderDivider() : SizedBox(),
-                _notSelfNotGUide ? _chooseDistribution() : SizedBox(),
-                _notSelfNotGUide ? _renderDivider() : SizedBox(),
-                _notSelfNotGUide ? _chooseAgent() : SizedBox(),
-                !_notSelfNotGUide ? _chooseMonth() : SizedBox(),
-                !_notSelfNotGUide ? _renderDivider() : SizedBox(),
-                !_notSelfNotGUide ? _chooseYear() : SizedBox(),
-              ],
-            ),
-          ),
+          ).expand(),
+          role == UserRoleLevel.Diamond_1 ||
+                  role == UserRoleLevel.Diamond_2 ||
+                  !_notSelfNotGUide
+              ? Container(
+                  height: 50.rw,
+                  child: Row(
+                    children: [
+                      _notSelfNotGUide ? _chooseSelf() : SizedBox(),
+                      _notSelfNotGUide
+                          ? role == UserRoleLevel.Diamond_1 ||
+                                  role == UserRoleLevel.Diamond_2
+                              ? _renderDivider()
+                              : SizedBox()
+                          : SizedBox(),
+                      _notSelfNotGUide
+                          ? role == UserRoleLevel.Diamond_1 ||
+                                  role == UserRoleLevel.Diamond_2
+                              ? _chooseDistribution()
+                              : SizedBox()
+                          : SizedBox(),
+                      _notSelfNotGUide
+                          ? role == UserRoleLevel.Diamond_1
+                              ? _renderDivider()
+                              : SizedBox()
+                          : SizedBox(),
+                      _notSelfNotGUide
+                          ? role == UserRoleLevel.Diamond_1
+                              ? _chooseAgent()
+                              : SizedBox()
+                          : SizedBox(),
+                      !_notSelfNotGUide ? _chooseMonth() : SizedBox(),
+                      !_notSelfNotGUide ? _renderDivider() : SizedBox(),
+                      !_notSelfNotGUide ? _chooseYear() : SizedBox(),
+                    ],
+                  ),
+                )
+              : SizedBox(),
         ],
       ),
     );
@@ -476,7 +497,8 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
             } else if (widget.receivedType == '已到账') {
               formatType = 'yyyy-MM';
               _models = await UserBenefitFunc.teamReceicedIncome(
-                  int.parse(DateUtil.formatDate(_date, format: 'yyyy')));
+                  int.parse(DateUtil.formatDate(_date, format: 'yyyy')),
+                  team_level);
 
               _selfALL = _models?.team?.toStringAsFixed(2);
               _distributionALL = _models?.recommend?.toStringAsFixed(2);
@@ -662,7 +684,11 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
           width: 150.w,
           color: Colors.white,
           child: Text(
-            '日期',
+            !_notSelfNotGUide
+                ? '日期'
+                : widget.receivedType == '已到账'
+                    ? '月份'
+                    : '日期',
             style: TextStyle(
               fontWeight: FontWeight.w400,
               color: Color(0xFF333333),
@@ -731,12 +757,18 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
               }
             } else {
               int type = 0;
-              if (widget.receivedType == '未到账') {
+              if (_selfChoose) {
                 type = 1;
-              } else {
+              } else if (_distributionChoose) {
                 type = 2;
+              } else if (_agentChoose) {
+                type = 3;
               }
-              Get.to(UserBenefitShopPage(teamType: type));
+
+              Get.to(UserBenefitShopPage(
+                  teamType: type,
+                  receivedType: widget.receivedType,
+                  date: DateTime.fromMillisecondsSinceEpoch(int.parse(_time))));
             }
           },
           child: Row(
@@ -746,9 +778,13 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
                 width: 150.w,
                 color: Colors.white,
                 child: Text(
-                  DateUtil.formatDate(
-                      DateTime.fromMillisecondsSinceEpoch(int.parse(_time)),
-                      format: TableformatType),
+                  !_notSelfNotGUide
+                      ? DateUtil.formatDate(
+                          DateTime.fromMillisecondsSinceEpoch(int.parse(_time)),
+                          format: TableformatType)
+                      : DateUtil.formatDate(
+                          DateTime.fromMillisecondsSinceEpoch(int.parse(_time)),
+                          format: _TTableformatType),
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF333333),

@@ -168,7 +168,7 @@ class GroupInviteCard extends StatelessWidget {
                 width: 40.rw,
               ),
             ),
-            10.hb,
+            8.hb,
             Image.asset(
               UserLevelTool.getRoleLevelIcon(model.roleLevelEnum),
               width: 12.rw,
@@ -180,16 +180,16 @@ class GroupInviteCard extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            12.hb,
+            16.hb,
             itemName.text.black.size(14.rsp).make(),
-            8.hb,
+            10.hb,
             Row(
               children: [
                 _renderItem(R.ASSETS_USER_ICON_PHONE_PNG, model.phone),
                 _renderItem(R.ASSETS_USER_ICON_WECHAT_PNG, model.wechatNo),
               ],
             ),
-            5.hb,
+            10.hb,
             Row(
               children: [
                 _renderItem(R.ASSETS_USER_ICON_GROUP_PNG, model.countValue),
@@ -200,6 +200,11 @@ class GroupInviteCard extends StatelessWidget {
               ],
             ),
             16.hb,
+            Divider(
+              color: Color(0xFFE6E6E6),
+              height: rSize(1),
+              thickness: rSize(1),
+            )
           ],
         ).expand(),
         Column(
@@ -209,8 +214,8 @@ class GroupInviteCard extends StatelessWidget {
                 ? MaterialButton(
                     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     minWidth: 0,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 20.rw, vertical: 12.rw),
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 20.rw, vertical: 12.rw),
                     child: Image.asset(
                       R.ASSETS_USER_USER_RECOMMEND_SINGLE_PNG,
                       height: 17.rw,

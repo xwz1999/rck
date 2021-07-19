@@ -483,10 +483,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     children: [
                       CustomImageButton(
                         onPressed: () {
-                          // Get.to(() => UserBenefitCurrencyPage(
-                          //     type: type,
-                          //     receivedType:
-                          //         "未到账"));
+                          Get.to(() => UserBenefitCurrencyPage(
+                              type: type, receivedType: "未到账"));
                         },
                         child: Column(
                           children: [
@@ -507,10 +505,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     children: [
                       CustomImageButton(
                         onPressed: () {
-                          // Get.to(() => UserBenefitCurrencyPage(
-                          //     type: type,
-                          //     receivedType:
-                          //         "未到账"));
+                          Get.to(() => UserBenefitCurrencyPage(
+                              type: type, receivedType: "未到账"));
                         },
                         child: Column(
                           children: [
@@ -539,10 +535,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   32.w.widthBox,
                   CustomImageButton(
                     onPressed: () {
-                      // Get.to(() => UserBenefitCurrencyPage(
-                      //     type: type,
-                      //     receivedType:
-                      //         "已到账"));
+                      Get.to(() => UserBenefitCurrencyPage(
+                          type: type, receivedType: "已到账"));
                     },
                     child: Column(
                       children: [
@@ -558,10 +552,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   Spacer(),
                   CustomImageButton(
                     onPressed: () {
-                      // Get.to(() => UserBenefitCurrencyPage(
-                      //     type: type,
-                      //     receivedType:
-                      //         "已到账"));
+                      Get.to(() => UserBenefitCurrencyPage(
+                          type: type, receivedType: "已到账"));
                     },
                     child: Column(
                       children: [
@@ -615,7 +607,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                                   fontWeight: FontWeight.w700),
                             ),
                             MaterialButton(
-                              padding: EdgeInsets.all(4.rw),
+                              padding: EdgeInsets.only(top: 3, left: 4),
                               minWidth: 0,
                               materialTapTargetSize:
                                   MaterialTapTargetSize.shrinkWrap,

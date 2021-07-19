@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recook/widgets/alert.dart';
 
 import 'package:velocity_x/velocity_x.dart';
 
@@ -42,6 +43,55 @@ class _UserHistoryBenefitPageState extends State<UserHistoryBenefitPage> {
     );
   }
 
+  Widget _buildToast() {
+    return Builder(
+      builder: (context) {
+        //role == UserRoleLevel.Diamond_1 || role == UserRoleLevel.Diamond_2 || role == UserRoleLevel.Diamond_3
+        UserRoleLevel role = UserLevelTool.currentRoleLevelEnum();
+
+        final part1 = [
+          TextSpan(
+            text: '自营店铺补贴',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          TextSpan(text: '：每月1日结算您自营店铺上一个自然月确认收货的订单，按自营店铺销售额的3%计算补贴。\n'),
+        ];
+        final part2 = [
+          TextSpan(
+            text: '分销店铺补贴',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          TextSpan(text: '：每月1日结算您分销店铺上一个自然月确认收货的订单，按分销店铺销售额的4%计算补贴。\n'),
+        ];
+        final part3 = [
+          TextSpan(
+            text: '代理店铺补贴',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          TextSpan(text: '：每月1日结算您代理店铺上一个自然月确认收货的订单，按代理店铺销售额的5%计算补贴。\n'),
+        ];
+        return Text.rich(TextSpan(
+          children: [
+            ...part1,
+            if (role == UserRoleLevel.Gold ||
+                role == UserRoleLevel.Silver ||
+                role == UserRoleLevel.Diamond_1 ||
+                role == UserRoleLevel.Diamond_2 ||
+                role == UserRoleLevel.Diamond_3)
+              ...part2,
+            if (role == UserRoleLevel.Diamond_1 ||
+                role == UserRoleLevel.Diamond_2 ||
+                role == UserRoleLevel.Diamond_3)
+              ...part3,
+          ],
+          style: TextStyle(
+            color: Color(0xFF333333),
+          ),
+        ));
+      },
+    );
+  }
+
   _buildCard() {
     return Container(
       clipBehavior: Clip.antiAlias,
@@ -69,18 +119,32 @@ class _UserHistoryBenefitPageState extends State<UserHistoryBenefitPage> {
                 top: 20.rw, bottom: 10.rw, left: 20.rw, right: 20.rw),
             child: Row(
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    '累计总收益(瑞币)'.text.black.make(),
-                    8.hb,
-                    (_model?.data?.allAmount?.toStringAsFixed(2) ?? '')
-                        .text
-                        .black
-                        .size(34.rsp)
-                        .make(),
-                  ],
-                ).expand(),
+                GestureDetector(
+                  onTap: () {
+                    Alert.show(
+                        context,
+                        NormalTextDialog(
+                          title: "累计收益",
+                          content: "您的账户使用至今所有已到账收益之和",
+                          items: ["确认"],
+                          listener: (index) {
+                            Alert.dismiss(context);
+                          },
+                        ));
+                  },
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      '累计总收益(瑞币)'.text.black.make(),
+                      8.hb,
+                      (_model?.data?.allAmount?.toStringAsFixed(2) ?? '')
+                          .text
+                          .black
+                          .size(34.rsp)
+                          .make(),
+                    ],
+                  ).expand(),
+                ),
                 Image.asset(
                   UserLevelTool.currentMedalImagePath(),
                   width: 48.rw,
@@ -93,11 +157,55 @@ class _UserHistoryBenefitPageState extends State<UserHistoryBenefitPage> {
             padding: EdgeInsets.symmetric(vertical: 8.rw),
             child: Row(
               children: [
-                _renderColumn('自购收益', _model?.data?.purchaseAmountValue ?? ''),
+                GestureDetector(
+                  child: _renderColumn(
+                      '自购收益', _model?.data?.purchaseAmountValue ?? ''),
+                  onTap: () {
+                    Alert.show(
+                        context,
+                        NormalTextDialog(
+                          title: "自购收益",
+                          content: "您本人下单并确认收货后，您获得的佣金。",
+                          items: ["确认"],
+                          listener: (index) {
+                            Alert.dismiss(context);
+                          },
+                        ));
+                  },
+                ).expand(),
                 _renderDivider(),
-                _renderColumn('导购收益', _model?.data?.guideAmountValue ?? ''),
+                GestureDetector(
+                  child: _renderColumn(
+                      '导购收益', _model?.data?.guideAmountValue ?? ''),
+                  onTap: () {
+                    Alert.show(
+                        context,
+                        NormalTextDialog(
+                          title: "导购收益",
+                          content: "会员通过您导购的商品链接，购买并确认收货的佣金收益",
+                          items: ["确认"],
+                          listener: (index) {
+                            Alert.dismiss(context);
+                          },
+                        ));
+                  },
+                ).expand(),
                 _renderDivider(),
-                _renderColumn('店铺补贴', _model?.data?.trrValue ?? ''),
+                GestureDetector(
+                  child: _renderColumn('店铺补贴', _model?.data?.trrValue ?? ''),
+                  onTap: () {
+                    Alert.show(
+                        context,
+                        NormalContentDialog(
+                          title: "店铺补贴",
+                          content: _buildToast(),
+                          items: ["确认"],
+                          listener: (index) {
+                            Alert.dismiss(context);
+                          },
+                        ));
+                  },
+                ).expand(),
               ],
             ),
           ),

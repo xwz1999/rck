@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -25,6 +26,7 @@ import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/progress/sc_dialog.dart';
 import 'package:recook/widgets/text_button.dart' as TButton;
 import 'package:recook/widgets/toast.dart';
+import 'package:recook/widgets/webView.dart';
 
 class PhoneLoginPage extends StatefulWidget {
   @override
@@ -150,14 +152,14 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   _recognizer(context) {
     final TapGestureRecognizer recognizer = new TapGestureRecognizer();
     recognizer.onTap = () {
-      // print("点击协议了");
-      // AppRouter.push(
-      //   context,
-      //   RouteName.WEB_VIEW_PAGE,
-      //   arguments: WebViewPage.setArguments(
-      //       url: WebApi.privacy, title: "用户使用协议", hideBar: true),
-      // );
-      CRoute.push(context, PrivacyPageV2());
+      print("点击协议了");
+      AppRouter.push(
+        context,
+        RouteName.WEB_VIEW_PAGE,
+        arguments: WebViewPage.setArguments(
+            url: WebApi.privacy, title: "用户使用协议", hideBar: true),
+      );
+      //CRoute.push(context, PrivacyPageV2());
     };
     return recognizer;
   }
