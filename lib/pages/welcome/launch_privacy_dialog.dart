@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api.dart';
 
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/welcome/privacy_page_v2.dart';
 import 'package:recook/utils/custom_route.dart';
+import 'package:recook/widgets/webView.dart';
 
 Future<bool> launchPrivacyDialog(BuildContext context) async {
   return await showDialog(
@@ -74,7 +76,15 @@ class __PrivacyDialogState extends State<_PrivacyDialog> {
                     rHBox(20),
                     GestureDetector(
                       onTap: () {
-                        CRoute.push(context, PrivacyPageV2());
+                        AppRouter.push(
+                          context,
+                          RouteName.WEB_VIEW_PAGE,
+                          arguments: WebViewPage.setArguments(
+                              url: WebApi.privacy,
+                              title: "用户使用协议",
+                              hideBar: true),
+                        );
+                        //CRoute.push(context, PrivacyPageV2());
                       },
                       child: Text.rich(TextSpan(
                         style: TextStyle(
@@ -182,7 +192,13 @@ class _PrivacySecondDialog extends StatelessWidget {
                 rHBox(20),
                 GestureDetector(
                   onTap: () {
-                    CRoute.push(context, PrivacyPageV2());
+                    AppRouter.push(
+                      context,
+                      RouteName.WEB_VIEW_PAGE,
+                      arguments: WebViewPage.setArguments(
+                          url: WebApi.privacy, title: "用户使用协议", hideBar: true),
+                    );
+                    //CRoute.push(context, PrivacyPageV2());
                   },
                   child: Text.rich(TextSpan(
                     children: [

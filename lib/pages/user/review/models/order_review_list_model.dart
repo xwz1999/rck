@@ -1,4 +1,31 @@
 class OrderReviewListModel {
+  MyOrderGoodsDea myOrderGoodsDea;
+  int passEvaluation;
+  int compliance;
+
+  OrderReviewListModel(
+      {this.myOrderGoodsDea, this.passEvaluation, this.compliance});
+
+  OrderReviewListModel.fromJson(Map<String, dynamic> json) {
+    myOrderGoodsDea = json['my_order_goods_dea'] != null
+        ? new MyOrderGoodsDea.fromJson(json['my_order_goods_dea'])
+        : null;
+    passEvaluation = json['pass_evaluation'];
+    compliance = json['compliance'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.myOrderGoodsDea != null) {
+      data['my_order_goods_dea'] = this.myOrderGoodsDea.toJson();
+    }
+    data['pass_evaluation'] = this.passEvaluation;
+    data['compliance'] = this.compliance;
+    return data;
+  }
+}
+
+class MyOrderGoodsDea {
   int goodsDetailId;
   int orderId;
   int parentId;
@@ -49,7 +76,7 @@ class OrderReviewListModel {
   String bomaoNo;
   int evaluatedId;
 
-  OrderReviewListModel(
+  MyOrderGoodsDea(
       {this.goodsDetailId,
       this.orderId,
       this.parentId,
@@ -100,7 +127,7 @@ class OrderReviewListModel {
       this.bomaoNo,
       this.evaluatedId});
 
-  OrderReviewListModel.fromJson(Map<String, dynamic> json) {
+  MyOrderGoodsDea.fromJson(Map<String, dynamic> json) {
     goodsDetailId = json['goodsDetailId'];
     orderId = json['orderId'];
     parentId = json['parentId'];

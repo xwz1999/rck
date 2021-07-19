@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:common_utils/common_utils.dart';
+import 'package:recook/widgets/alert.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'package:recook/constants/constants.dart';
@@ -113,19 +114,39 @@ class _ShopCheckViewState extends State<ShopCheckView> {
                 .make()
                 .pOnly(left: 16.rw),
             4.w.widthBox,
-            Image.asset(
-              R.ASSETS_SHOP_HELPER_PNG,
-              height: 12.rw,
-              width: 12.rw,
-            ),
           ].row(),
         ),
-        '考核目标：店铺销售额${widget.target.toStringAsFixed(0)}元'
-            .text
-            .color(Colors.black45)
-            .size(12.rsp)
-            .make()
-            .pSymmetric(h: 16.rw),
+        Row(
+          children: [
+            60.w.wb,
+            '考核目标：店铺销售额${widget.target.toStringAsFixed(0)}元'
+                .text
+                .color(Colors.black45)
+                .size(12.rsp)
+                .make(),
+            MaterialButton(
+              padding: EdgeInsets.all(4.rw),
+              minWidth: 0,
+              materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              child: Icon(
+                Icons.help_outline,
+                size: 12.rw,
+                color: Color(0xFFA5A5A5),
+              ),
+              onPressed: () {
+                Alert.show(
+                  context,
+                  NormalTextDialog(
+                    title: '提示',
+                    content: '店铺销售额为店铺内已确认收货订单的销售额合计',
+                    items: ["确认"],
+                    listener: (index) => Alert.dismiss(context),
+                  ),
+                );
+              },
+            ),
+          ],
+        ),
         20.w.heightBox,
         Container(
           height: 68.rw,

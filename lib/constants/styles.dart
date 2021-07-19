@@ -13,15 +13,18 @@ class AppColor {
   static const Color themeColor = Color.fromARGB(255, 206, 38, 40);
 //  static const Color themeColor = Color(0xFFFF2F10);
   static const Color pinkColor = Color.fromARGB(255, 254, 201, 198);
-
+  static const Color primaryColor = Color(0xFFFDCF12);
   static const Color greenColor = Color.fromARGB(255, 37, 186, 114);
-
+  static const Color backgroundColor = Color(0xFFF9F9F9);
+  static const Color secondColor = Color(0xFF3F8FFE);
   // 浅灰色
   static const Color frenchColor = Color(0xFFF8F7F8);
   static const Color blackColor = Color(0xff16182b);
   static const Color greyColor = Color.fromARGB(255, 204, 204, 204);
   static const Color tableViewGrayColor = Color.fromARGB(255, 237, 239, 240);
-
+  //TEXT
+  static const Color textMainColor = Color(0xFF333333);
+  static const Color textSubColor = Color(0xFF999999);
   static const Color appBarGrey = Color(0xFFFBFBFB);
 
   static const Color priceColor = Color(0xffff6d00);

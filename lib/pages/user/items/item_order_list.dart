@@ -229,7 +229,8 @@ class _OrderListItemState extends State<OrderListItem> {
         break;
       case 5:
         {
-          children..add(_deleteButtonWidget());
+          //1.8版本 交易关闭状态下 删除订单按钮隐藏
+          //children..add(_deleteButtonWidget());
         }
         break;
     }

@@ -9,17 +9,24 @@
 
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/welcome/privacy_page_v2.dart';
+import 'package:recook/utils/custom_route.dart';
+import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/progress/sc_dialog.dart';
 import 'package:recook/widgets/text_button.dart' as TButton;
 import 'package:recook/widgets/toast.dart';
+import 'package:recook/widgets/webView.dart';
 
 class PhoneLoginPage extends StatefulWidget {
   @override
@@ -34,6 +41,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   FocusNode _phoneNode;
   FocusNode _smsCodeNode;
 
+  bool _chooseAgreement = false;
   Timer _timer;
   String _countDownStr = "获取验证码";
   int _countDownNum = 59;
@@ -46,7 +54,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
     super.initState();
 
     if (AppConfig.debug) {
-      _smsCodeController = TextEditingController(text: "0520");
+      _smsCodeController = TextEditingController(text: "0716");
       _phoneController = TextEditingController(text: "18906611076");
       _loginEnable = true;
       _getCodeEnable = true;
@@ -88,7 +96,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
           },
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
                 Container(
                   height: rSize(20),
@@ -102,11 +110,58 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                 _phoneText(),
                 _smsCode(),
                 _bottomOperation(),
-                _loginButton(context)
+                _loginButton(context),
+                40.hb,
+                GestureDetector(
+                  onTap: () {
+                    _chooseAgreement = !_chooseAgreement;
+                    setState(() {});
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                          width: 50.w,
+                          height: 50.w,
+                          padding: EdgeInsets.only(top: 10.w, right: 5.w),
+                          child: !_chooseAgreement
+                              ? Icon(CupertinoIcons.square,
+                                  size: 20, color: Colors.red)
+                              : Icon(CupertinoIcons.checkmark_square,
+                                  size: 20, color: Colors.red)),
+                      RichText(
+                          text: TextSpan(
+                              text: "您已阅读并同意",
+                              style: TextStyle(
+                                  color: Colors.grey[500], fontSize: 14 * 2.sp),
+                              children: [
+                            new TextSpan(
+                                text: '《用户协议和隐私政策》',
+                                style: new TextStyle(color: Colors.red),
+                                recognizer: _recognizer(context)),
+                          ])),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
         ));
+  }
+
+  _recognizer(context) {
+    final TapGestureRecognizer recognizer = new TapGestureRecognizer();
+    recognizer.onTap = () {
+      print("点击协议了");
+      AppRouter.push(
+        context,
+        RouteName.WEB_VIEW_PAGE,
+        arguments: WebViewPage.setArguments(
+            url: WebApi.privacy, title: "用户使用协议", hideBar: true),
+      );
+      //CRoute.push(context, PrivacyPageV2());
+    };
+    return recognizer;
   }
 
   Container _phoneText() {
@@ -212,17 +267,34 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
             highlightTextColor: Colors.grey[400],
             border: Border(left: BorderSide(color: Colors.grey[500])),
             onTap: () {
-              if (!TextUtils.verifyPhone(_phoneController.text)) {
-                showError("手机号码格式不正确!");
-                return;
+              if (_chooseAgreement) {
+                if (!TextUtils.verifyPhone(_phoneController.text)) {
+                  showError("手机号码格式不正确!");
+                  return;
+                }
+                if (_cantSelected) return;
+                _cantSelected = true;
+                Future.delayed(Duration(seconds: 2), () {
+                  _cantSelected = false;
+                });
+                GSDialog.of(context).showLoadingDialog(context, "正在发送..");
+                _getSmsCode(context);
+              } else {
+                Alert.show(
+                    context,
+                    NormalContentDialog(
+                      type: NormalTextDialogType.remind,
+                      title: null,
+                      content: Text(
+                        '请您先阅读并同意《用户协议和隐私政策》',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      items: ["确认"],
+                      listener: (index) {
+                        Alert.dismiss(context);
+                      },
+                    ));
               }
-              if (_cantSelected) return;
-              _cantSelected = true;
-              Future.delayed(Duration(seconds: 2), () {
-                _cantSelected = false;
-              });
-              GSDialog.of(context).showLoadingDialog(context, "正在发送..");
-              _getSmsCode(context);
             },
           ),
         ],
@@ -270,8 +342,25 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
       radius: BorderRadius.all(Radius.circular(5)),
       backgroundColor: Theme.of(context).primaryColor,
       onTap: () {
-        GSDialog.of(context).showLoadingDialog(context, "正在登录...");
-        _phoneLogin(context);
+        if (_chooseAgreement) {
+          GSDialog.of(context).showLoadingDialog(context, "正在登录...");
+          _phoneLogin(context);
+        } else {
+          Alert.show(
+              context,
+              NormalContentDialog(
+                type: NormalTextDialogType.remind,
+                title: null,
+                content: Text(
+                  '请您先阅读并同意《用户协议和隐私政策》',
+                  style: TextStyle(color: Colors.black),
+                ),
+                items: ["确认"],
+                listener: (index) {
+                  Alert.dismiss(context);
+                },
+              ));
+        }
       },
     );
   }

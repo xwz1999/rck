@@ -53,6 +53,32 @@ class UserAPI {
   ///月平台奖励收益详情
   String get platformDetail => '/v2/app/user/income/reward_month_income';
 
+  ///未到账收益
+  String get notReceivedDetail => '/v2/app/user/income/nr/detail';
+
+  ///到账收益
+  String get receivedDetail => '/v2/app/user/income/detail';
+
+  ///店铺未到账收益
+  String get groupNotReceivedDetail => '/v2/app/user/income/team/nr/detail';
+
+  ///店铺到账收益
+  String get groupReceivedDetail => '/v2/app/user/income/team/detail';
+
+  ///店铺未到账收益日
+  String get groupNotReceivedDay => '/v2/app/user/income/day_expect_team';
+
+  ///店铺自营已到账收益月
+  String get groupSelfReceivedMonth => '/v2/app/user/income/team_month_income';
+
+  ///店铺分销已到账收益月
+  String get groupDistributionReceivedMonth =>
+      '/v2/app/user/income/recommend_month_income';
+
+  ///店铺代理已到账收益月
+  String get groupAgentReceivedMonth =>
+      '/v2/app/user/income/reward_month_income';
+
   ///我的团队列表
   String get myGroup => '/v2/app/user/team';
 

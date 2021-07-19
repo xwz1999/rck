@@ -30,6 +30,8 @@ class _Styles {
       color: Colors.red, fontSize: 15 * 2.sp, fontWeight: FontWeight.w500);
   static final TextStyle disableTextStyle = TextStyle(
       color: Colors.grey, fontSize: 15 * 2.sp, fontWeight: FontWeight.w500);
+  static final TextStyle remindTextStyle = TextStyle(
+      color: Colors.red, fontSize: 15 * 2.sp, fontWeight: FontWeight.bold);
 }
 
 class Alert {
@@ -47,7 +49,7 @@ class Alert {
   }
 }
 
-enum NormalTextDialogType { normal, delete }
+enum NormalTextDialogType { normal, delete, remind }
 
 ///普通文本弹框
 class NormalTextDialog extends Dialog {
@@ -267,7 +269,9 @@ class NormalContentDialog extends Dialog {
                 : () {
                     this.listener(index);
                   },
-            style: _Styles.normalTextStyle,
+            style: this.type != NormalTextDialogType.remind
+                ? _Styles.normalTextStyle
+                : _Styles.remindTextStyle,
             disableStyle: _Styles.disableTextStyle),
       ));
     }).toList();

@@ -34,7 +34,7 @@ class ReviewCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               FadeInImage.assetNetwork(
-                image: Api.getImgUrl(model.mainPhotoUrl),
+                image: Api.getImgUrl(model.myOrderGoodsDea.mainPhotoUrl),
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                 height: rSize(80),
                 width: rSize(80),
@@ -47,7 +47,7 @@ class ReviewCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      model.goodsName,
+                      model.myOrderGoodsDea.goodsName,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
@@ -59,7 +59,7 @@ class ReviewCard extends StatelessWidget {
                     ),
                     SizedBox(height: rSize(6)),
                     Text(
-                      '型号规格 ${model.skuName}',
+                      '型号规格 ${model.myOrderGoodsDea.skuName}',
                       style: TextStyle(
                         color: Color(0xFF666666),
                         fontSize: rSP(13),
@@ -77,7 +77,7 @@ class ReviewCard extends StatelessWidget {
                                 ),
                                 TextSpan(
                                   text:
-                                      '¥ ${model.goodsAmount.toStringAsFixed(0)}',
+                                      '¥ ${model.myOrderGoodsDea.goodsAmount.toStringAsFixed(0)}',
                                   style: TextStyle(
                                     color: Color(0xFF333333),
                                   ),
@@ -98,7 +98,7 @@ class ReviewCard extends StatelessWidget {
                                   text: '购买数量 ',
                                 ),
                                 TextSpan(
-                                  text: '${model.quantity}',
+                                  text: '${model.myOrderGoodsDea.quantity}',
                                   style: TextStyle(
                                     color: Color(0xFF333333),
                                   ),
@@ -131,7 +131,7 @@ class ReviewCard extends StatelessWidget {
                     CRoute.push(
                       context,
                       AddReviewPage(
-                        goodsDetailId: model.goodsDetailId,
+                        goodsDetailId: model.myOrderGoodsDea.goodsDetailId,
                         model: model,
                       ),
                     ).then((value) {

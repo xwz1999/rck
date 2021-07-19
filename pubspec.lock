@@ -351,6 +351,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "5.0.0"
+  expandable:
+    dependency: "direct main"
+    description:
+      name: expandable
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "5.0.1"
   extended_image:
     dependency: "direct main"
     description:
@@ -447,6 +454,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.2.8"
+  flutter_custom_calendar:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: b36def9c64e2f8955d2a63651bc29fc498245b0d
+      url: "https://gitee.com/laiiihz/flutter_custom_calendar"
+    source: git
+    version: "1.0.4+0.5"
   flutter_datetime_picker:
     dependency: "direct main"
     description:
@@ -567,11 +583,9 @@ packages:
   flutter_union_pay:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "3b534e78f5448c518be3024f08cd73d27fe11f90"
-      url: "https://github.com/laiiihz/flutter_union_pay"
-    source: git
+      name: flutter_union_pay
+      url: "https://pub.flutter-io.cn"
+    source: hosted
     version: "0.0.4"
   flutter_web_plugins:
     dependency: transitive
@@ -832,6 +846,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.0"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.0"
   oktoast:
     dependency: "direct main"
     description:
@@ -1065,6 +1086,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.2.1"
+  provider:
+    dependency: transitive
+    description:
+      name: provider
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "4.3.3"
   pub_semver:
     dependency: transitive
     description:
@@ -1128,6 +1156,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.26.0"
+  scrollable_positioned_list:
+    dependency: "direct main"
+    description:
+      name: scrollable_positioned_list
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.1.10"
   shared_preferences:
     dependency: "direct main"
     description:

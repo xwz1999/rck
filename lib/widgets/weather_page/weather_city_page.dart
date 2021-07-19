@@ -30,7 +30,7 @@ class WeatherCityPage extends StatefulWidget {
 class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
   int _suspensionHeight = 40;
   int _itemHeight = 50;
-  String _suspensionTag = "";
+  String _suspensionTag = "A";
   List<WeatherCityModel> _cityList = [];
   String _selectCity = "";
   List<WeatherCityModel> _searchResultCityList = [];

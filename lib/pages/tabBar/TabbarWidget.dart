@@ -16,6 +16,7 @@ import 'package:recook/constants/config.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/business/release_material_page.dart';
 import 'package:recook/pages/home/home_page.dart';
 import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
 import 'package:recook/pages/live/functions/live_function.dart';
@@ -140,11 +141,12 @@ class _TabBarWidgetState extends State<TabBarWidget>
                       R.ASSETS_LIVE_ADD_VIDEO_PNG,
                       onTap: () => CRoute.pushReplace(context, AddVideoPage()),
                     ),
-                    // verticalButton(
-                    //   '图文',
-                    //   R.ASSETS_LIVE_ADD_IMAGE_PNG,
-                    //   onTap: () {},
-                    // ),
+                    verticalButton(
+                      '图文',
+                      R.ASSETS_LIVE_ADD_IMAGE_PNG,
+                      onTap: () =>
+                          CRoute.pushReplace(context, ReleaseMaterialPage()),
+                    ),
                   ],
                 ),
                 CustomImageButton(

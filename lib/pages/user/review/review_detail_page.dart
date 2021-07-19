@@ -23,7 +23,7 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
   void initState() {
     super.initState();
     HttpManager.post(OrderApi.checkReview, {
-      "id": widget.reviewModel.evaluatedId,
+      "id": widget.reviewModel.myOrderGoodsDea.evaluatedId,
     }).then((data) {
       setState(() {
         _model = ReviewResultModel.fromJson(data.data['data']);
@@ -69,7 +69,8 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
                       children: [
                         FadeInImage.assetNetwork(
                           placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                          image: Api.getImgUrl(widget.reviewModel.mainPhotoUrl),
+                          image: Api.getImgUrl(
+                              widget.reviewModel.myOrderGoodsDea.mainPhotoUrl),
                           height: rSize(56),
                           width: rSize(56),
                         ),
@@ -80,7 +81,7 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                widget.reviewModel.goodsName,
+                                widget.reviewModel.myOrderGoodsDea.goodsName,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 softWrap: false,
@@ -92,7 +93,7 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
                               ),
                               SizedBox(height: rSize(6)),
                               Text(
-                                '型号规格 ${widget.reviewModel.skuName}',
+                                '型号规格 ${widget.reviewModel.myOrderGoodsDea.skuName}',
                                 style: TextStyle(
                                   color: Color(0xFF666666),
                                   fontSize: rSP(13),

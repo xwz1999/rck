@@ -30,17 +30,28 @@ import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 
 enum OrderPositionType {
-  onlineOrder,  // 线上订单
-  storeOrder,   // 门店订单
-  }
-enum OrderListType { all, unpaid, undelivered, receipt , afterSale ,}
+  onlineOrder, // 线上订单
+  storeOrder, // 门店订单
+}
+enum OrderListType {
+  all,
+  unpaid,
+  undelivered,
+  receipt,
+  afterSale,
+}
 
 class OrderListPage extends StatefulWidget {
   final OrderListType type;
   final OrderPositionType positionType;
   final OrderListController controller;
 
-  const OrderListPage({Key key, this.type, this.positionType=OrderPositionType.onlineOrder, this.controller}) : super(key: key);
+  const OrderListPage(
+      {Key key,
+      this.type,
+      this.positionType = OrderPositionType.onlineOrder,
+      this.controller})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -69,8 +80,8 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
   @override
   void initState() {
     super.initState();
-    widget.controller.refresh = (){
-      if (mounted && _controller!=null) {
+    widget.controller.refresh = () {
+      if (mounted && _controller != null) {
         _controller.requestRefresh();
       }
     };
@@ -87,10 +98,11 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
       pageSize: 10,
       itemClickListener: (index) {
         OrderModel orderModel = _controller.getData()[index];
+
         AppRouter.push(globalContext, RouteName.ORDER_DETAIL,
                 arguments: OrderDetailPage.setArguments(orderModel.id))
             .then(((result) {
-              _controller.requestRefresh();
+          _controller.requestRefresh();
           if (result == null) return;
           DPrint.printf(result);
           setState(() {
@@ -110,18 +122,21 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
           goToPay: (OrderModel order, {callback}) {
             _goToPay(order);
           },
-          delete: (OrderModel order, {callback}){
+          delete: (OrderModel order, {callback}) {
             _deleteOrder(order);
           },
-          confirm: (OrderModel order, {callback}){
+          confirm: (OrderModel order, {callback}) {
             _confirmReceiptClick(order);
           },
           applyRefund: (OrderModel order, {callback}) {},
           evaluation: (OrderModel order, {callback}) {
             List<EvaluationGoodsModel> goodsList = [];
-            order.goodsList.forEach((goods){
+            order.goodsList.forEach((goods) {
               if (goods.assType == 0) {
-                goodsList.add(EvaluationGoodsModel(id: goods.goodsId, mainPhotoUrl: goods.mainPhotoUrl, goodsName: goods.goodsName));
+                goodsList.add(EvaluationGoodsModel(
+                    id: goods.goodsId,
+                    mainPhotoUrl: goods.mainPhotoUrl,
+                    goodsName: goods.goodsName));
               }
             });
             // order.brands.forEach((brand) {
@@ -130,24 +145,26 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
             //         id: goods.goodsId, mainPhotoUrl: goods.mainPhotoUrl, goodsName: goods.goodsName));
             //   });
             // });
-            
+
             push(RouteName.ORDER_EVALUATION,
-                arguments:
-                    PublishEvaluationPage.setArguments(orderId: order.id, goodsList: goodsList));
+                arguments: PublishEvaluationPage.setArguments(
+                    orderId: order.id, goodsList: goodsList));
           },
         );
       },
       refreshCallback: () {
-        _presenter.getOrderList(UserManager.instance.user.info.id, 0, widget.type, widget.positionType);
+        _presenter.getOrderList(UserManager.instance.user.info.id, 0,
+            widget.type, widget.positionType);
       },
       loadMoreCallback: (page) {
-        _presenter.getOrderList(UserManager.instance.user.info.id, page, widget.type, widget.positionType);
+        _presenter.getOrderList(UserManager.instance.user.info.id, page,
+            widget.type, widget.positionType);
       },
       noDataView: noDataView("没有订单数据哦~"),
     );
   }
 
-  _deleteOrder(OrderModel order){
+  _deleteOrder(OrderModel order) {
     Alert.show(
         globalContext,
         NormalTextDialog(
@@ -161,6 +178,7 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
           },
         ));
   }
+
   _cancelOrder(OrderModel order) {
     Alert.show(
         globalContext,
@@ -171,14 +189,17 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
             Alert.dismiss(globalContext);
             if (index == 0) return;
             GSDialog.of(context).showLoadingDialog(globalContext, "");
-            _presenter.cancelOrder(UserManager.instance.user.info.id, order.id, order: order);
+            _presenter.cancelOrder(UserManager.instance.user.info.id, order.id,
+                order: order);
           },
         ));
   }
 
   _goToPay(OrderModel order) async {
-    Data data = Data(order.id, order.userId, order.actualTotalAmount, order.status, order.createdAt);
+    Data data = Data(order.id, order.userId, order.actualTotalAmount,
+        order.status, order.createdAt);
     OrderPrepayModel model = OrderPrepayModel("SUCCESS", data, "");
+
     AppRouter.push(globalContext, RouteName.ORDER_PREPAY_PAGE,
         arguments: OrderPrepayPage.setArguments(model));
 //    Future.delayed(Duration(seconds: 1), ()
@@ -187,26 +208,33 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
 //    });
   }
 
-  _confirmReceiptClick(OrderModel orderModel){
+  _confirmReceiptClick(OrderModel orderModel) {
     _confirmModel = null;
     Alert.show(
         context,
         NormalContentDialog(
           title: "确认收货",
-          content: Text("确认收货后无法发起售后申请，请确认您的商品无误。继续确认？", style: TextStyle(color: Colors.black,),),
+          content: Text(
+            "确认收货后无法发起售后申请，请确认您的商品无误。继续确认？",
+            style: TextStyle(
+              color: Colors.black,
+            ),
+          ),
           items: ["取消", "确认收货"],
-          listener: (int index){// Alert.dismiss(context);
-            if (index == 0) {// 
+          listener: (int index) {
+            // Alert.dismiss(context);
+            if (index == 0) {
+              //
               Alert.dismiss(context);
-            }else{
+            } else {
               Alert.dismiss(context);
               GSDialog.of(globalContext).showLoadingDialog(context, "");
-              _presenter.confirmReceipt(UserManager.instance.user.info.id, orderModel.id);
+              _presenter.confirmReceipt(
+                  UserManager.instance.user.info.id, orderModel.id);
               _confirmModel = orderModel;
             }
           },
-        )
-      );
+        ));
   }
 
   @override
@@ -230,7 +258,7 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
       if (model.id == orderId && model.id != null) {
         deleteOrderModel = model;
         break;
-      } 
+      }
     }
     _controller.getData().remove(deleteOrderModel);
     setState(() {});
@@ -254,12 +282,12 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
   applyInvoiceSuccess() {}
 
   @override
-  confirmReceiptSuccess(UserRoleUpgradeModel model){
+  confirmReceiptSuccess(UserRoleUpgradeModel model) {
     GSDialog.of(context).dismiss(globalContext);
     GSDialog.of(globalContext).showSuccess(globalContext, "确认成功").then((value) {
       UserLevelTool.showUpgradeWidget(model, globalContext, getStore());
     });
-    _presenter.getOrderList(UserManager.instance.user.info.id, 0, widget.type, widget.positionType);
+    _presenter.getOrderList(
+        UserManager.instance.user.info.id, 0, widget.type, widget.positionType);
   }
-  
 }

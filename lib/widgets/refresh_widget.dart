@@ -67,9 +67,11 @@ class RefreshWidget extends StatefulWidget {
       this.releaseText: "松开刷新",
       this.loadingText: "正在加载中...",
       this.noDataText: "已经到底了",
+      this.noPartner: "这是我最后的底线",
       this.headerTriggerDistance,
       this.header,
-      GridView child})
+      GridView child,
+      this.noData})
       : this.controller = controller ?? GSRefreshController();
 
   final Widget body;
@@ -90,7 +92,10 @@ class RefreshWidget extends StatefulWidget {
 
   final String loadingText;
   final String noDataText;
+  final String noPartner;
   final Widget header;
+  //不为空的时候 nodataText无效
+  final String noData;
 
   @override
   State<StatefulWidget> createState() {
@@ -144,19 +149,45 @@ class _RefreshWidgetState extends State<RefreshWidget> {
                 idleText: widget.idleText,
                 releaseText: widget.releaseText,
               ),
-        footer: ClassicFooter(
-          textStyle: TextStyle(fontSize: 14 * 2.sp, color: Color(0xff555555)),
-          idleText: widget.upIdleText,
-          idleIcon: Icon(
-            Icons.arrow_upward,
-            size: 20 * 2.sp,
-            color: Color(0xff555555),
-          ),
-          loadingText: widget.loadingText,
-          failedText: "网络出了一点问题呢",
-          noDataText: widget.noDataText,
-          canLoadingText: '',
-        ),
+        footer: widget.noData == 'part'
+            ? ClassicFooter(
+                textStyle:
+                    TextStyle(fontSize: 14 * 2.sp, color: Color(0xff555555)),
+                idleText: widget.upIdleText,
+                idleIcon: Icon(
+                  Icons.arrow_upward,
+                  size: 20 * 2.sp,
+                  color: Color(0xff555555),
+                ),
+                noMoreIcon: Image.asset(
+                  ShopImageName.shop_page_smile,
+                  width: 22,
+                  height: 12,
+                ),
+                iconPos: widget.noData == 'part'
+                    ? IconPosition.top
+                    : IconPosition.left,
+                loadingText: widget.loadingText,
+                failedText: "网络出了一点问题呢",
+                noDataText: widget.noData == 'part'
+                    ? widget.noPartner
+                    : widget.noDataText,
+                canLoadingText: '',
+              )
+            : ClassicFooter(
+                textStyle:
+                    TextStyle(fontSize: 14 * 2.sp, color: Color(0xff555555)),
+                idleText: widget.upIdleText,
+                idleIcon: Icon(
+                  Icons.arrow_upward,
+                  size: 20 * 2.sp,
+                  color: Color(0xff555555),
+                ),
+                loadingText: widget.loadingText,
+                failedText: "网络出了一点问题呢",
+                noDataText: widget.noDataText,
+                canLoadingText: '',
+              ),
         controller: widget.controller._controller,
         onRefresh: widget.onRefresh,
         onLoading: widget.onLoadMore,

@@ -35,7 +35,7 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="瑞库客"
         android:icon="@mipmap/ic_launcher"
-        tools:replace="android:label"
+        tools:replace="android:label,android:allowBackup"
         android:requestLegacyExternalStorage="true"
         >
         <meta-data android:name="com.amap.api.v2.apikey" android:value="7225bca14fe7493f9f469315a933f99c"/>
