@@ -95,9 +95,9 @@ void main() async {
           userBrief: UserBrief.empty(),
           openinstall: Openinstall.empty()));
 
-  const bool inProduction = const bool.fromEnvironment("dart.vm.product");
+  // const bool inProduction = const bool.fromEnvironment("dart.vm.product");
 
-  if (inProduction) {
+  if (!isDebug) {
     AppConfig.setDebug(isDebug);
     DPrint.printf("当前为release 模式");
     return FlutterBugly.postCatchedException(() {

@@ -34,7 +34,6 @@
     <application
         android:name="io.flutter.app.FlutterApplication"
         android:label="瑞库客"
-        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         tools:replace="android:label"
         android:requestLegacyExternalStorage="true"
