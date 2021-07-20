@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/utils/permission_tool.dart';
+import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/calendar/calendar_vertial_widget.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/constants/header.dart';
@@ -362,10 +363,13 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
         children: [
           40.wb,
           GestureDetector(
-              onTap: () {
-                _date = _date.add(new Duration(days: -1));
-                setState(() {});
-              },
+              onTap: _date.day != DateTime.now().day
+                  ? () {
+                      _date = _date.add(new Duration(days: -1));
+
+                      setState(() {});
+                    }
+                  : () {},
               child: Container(
                   color: Colors.transparent,
                   alignment: Alignment.center,
@@ -455,6 +459,33 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
         fontSize: 16 * 2.sp,
         borderRadius: BorderRadius.all(Radius.circular(2)),
         onPressed: () {
+          if (_originText == '出发地' || _originText == null || _date == null) {
+            Alert.show(
+                context,
+                NormalTextDialog(
+                  type: NormalTextDialogType.normal,
+                  title: "提示",
+                  content: "请您先选择出发地",
+                  items: ["确认"],
+                  listener: (index) {
+                    Alert.dismiss(context);
+                  },
+                ));
+          } else if (_destinationText == '选择到达' || _destinationText == null) {
+            Alert.show(
+                context,
+                NormalTextDialog(
+                  type: NormalTextDialogType.normal,
+                  title: "提示",
+                  content: "请您先选择目的地",
+                  items: ["确认"],
+                  listener: (index) {
+                    Alert.dismiss(context);
+                  },
+                ));
+          } else {
+            Get.to();
+          }
           print('查询');
         },
       ),
@@ -464,96 +495,10 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
   _dateWidget() {
     return CalendarVerticalWidget(
       startDay: _date,
-      //endDay: _date,
       callBack: (BuildContext context, DateTime start) {
         _date = start;
         setState(() {});
       },
     );
   }
-
-  // _dateWidget() {
-  //   return Container(
-  //     height: 448.rw,
-  //     color: Colors.white,
-  //     child: TableCalendar(
-  //       //availableGestures: (AvailableGestures.verticalSwipe),
-  //       calendarBuilders: CalendarBuilders(),
-  //       daysOfWeekHeight: 20.rw,
-  //       locale: 'zh_CN',
-  //       headerStyle: HeaderStyle(
-  //         titleTextStyle: TextStyle(
-  //           color: Colors.black,
-  //           fontSize: 20.0,
-  //         ),
-  //         titleCentered: true,
-  //         leftChevronVisible: true,
-  //         rightChevronVisible: true,
-  //         formatButtonVisible: false,
-  //       ),
-  //       rangeStartDay: DateTime.utc(2021, 7, 16),
-  //       rangeEndDay: DateTime.utc(2021, 8, 15),
-  //       calendarStyle: CalendarStyle(
-  //         defaultTextStyle: TextStyle(
-  //           color: Color(0xFFCCCCCC),
-  //           fontSize: 16.0,
-  //         ),
-
-  //         weekendTextStyle: TextStyle(
-  //           color: Color(0xFFCCCCCC),
-  //           fontSize: 16.0,
-  //         ),
-  //         rangeHighlightColor: Colors.transparent,
-  //         rangeStartDecoration: (BoxDecoration(color: Colors.transparent)),
-  //         rangeStartTextStyle: TextStyle(
-  //           color: Colors.black,
-  //           fontSize: 16.0,
-  //         ),
-  //         rangeEndTextStyle: TextStyle(
-  //           color: Colors.black,
-  //           fontSize: 16.0,
-  //         ),
-  //         withinRangeTextStyle: TextStyle(
-  //           color: Colors.black,
-  //           fontSize: 16.0,
-  //         ),
-  //         outsideDaysVisible: false,
-  //         todayTextStyle: TextStyle(
-  //           color: Colors.blue,
-  //           fontSize: 26.0,
-  //         ),
-  //         // disabledTextStyle: TextStyle(
-  //         //   color: Color(0xFFCCCCCC),
-  //         //   fontSize: 16.0,
-  //         // ),
-  //       ),
-  //       firstDay: DateTime.utc(2021, 6, 1),
-  //       lastDay: DateTime.utc(2021, 8, 1),
-  //       focusedDay: _date,
-  //       selectedDayPredicate: (day) {
-  //         return isSameDay(_selectedDay, day);
-  //       },
-  //       onDaySelected: (selectedDay, focusedDay) {
-  //         if (!isSameDay(_selectedDay, selectedDay)) {
-  //           setState(() {
-  //             _selectedDay = selectedDay;
-  //             _date = focusedDay; // update `_focusedDay` here as well
-  //           });
-  //         }
-  //       },
-  //       onFormatChanged: (format) {
-  //         if (_calendarFormat != format) {
-  //           // Call `setState()` when updating calendar format
-  //           setState(() {
-  //             _calendarFormat = format;
-  //           });
-  //         }
-  //       },
-  //       onPageChanged: (focusedDay) {
-  //         // No need to call `setState()` here
-  //         _date = focusedDay;
-  //       },
-  //     ),
-  //   );
-  // }
 }

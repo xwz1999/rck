@@ -14,7 +14,6 @@ class CalendarVerticalWidget extends StatefulWidget {
   CalendarVerticalWidget({
     Key key,
     @required this.startDay,
-    //@required this.endDay,
     @required this.callBack,
   }) : super(key: key);
 
@@ -34,7 +33,7 @@ class _CalendarVerticalWidgetState extends State<CalendarVerticalWidget> {
       borderRadius: BorderRadius.vertical(top: Radius.circular(8.rw)),
       child: Material(
         child: Container(
-          height: 448.rw,
+          height: 484.rw,
           decoration: BoxDecoration(
             color: Colors.white,
           ),
@@ -71,7 +70,7 @@ class _CalendarVerticalWidgetState extends State<CalendarVerticalWidget> {
                 ),
               ),
               Container(
-                height: 44.rw,
+                height: 34.rw,
                 alignment: Alignment.center,
                 padding: EdgeInsets.symmetric(horizontal: 16.rw),
                 child: DefaultTextStyle(
@@ -101,7 +100,7 @@ class _CalendarVerticalWidgetState extends State<CalendarVerticalWidget> {
                     1,
                   ),
                   maxDate: DateTime.now().add(Duration(days: 365)),
-                  // initialMinDate: appProvider.checkInDate,
+                  initialMinDate: widget.startDay,
                   // initialMaxDate: appProvider.checkOutDate,
                   onRangeSelected: (minDate) {
                     _firstDay = minDate;
@@ -175,16 +174,14 @@ class _CalendarVerticalWidgetState extends State<CalendarVerticalWidget> {
                                     .add(Duration(days: 30))
                                     .millisecondsSinceEpoch;
                     return Opacity(
-                      opacity: isBeforeToday || isIn30Days ? 0.6 : 1,
+                      opacity: isBeforeToday || isIn30Days ? 0.2 : 1,
                       child: Container(
                         padding: EdgeInsets.symmetric(
                           horizontal: 2.rw,
                         ),
-                        color:
-                            isSelected ? Color(0xFFECF4FF) : Colors.transparent,
                         child: Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            borderRadius: BorderRadius.all(Radius.circular(5)),
                             color:
                                 isSelected ? Color(0xFF0086F5) : Colors.white,
                           ),
@@ -203,25 +200,25 @@ class _CalendarVerticalWidgetState extends State<CalendarVerticalWidget> {
                                 ),
                               ),
                               Text(
-                                isToday ? '今天' : date.day.toString(),
+                                date.day.toString(),
                                 maxLines: 1,
                                 overflow: TextOverflow.visible,
                                 style: TextStyle(
                                   fontWeight: FontWeight.w500,
-                                  fontSize: isToday ? 14.rsp : 18.rsp,
-                                  color: DateUtil.sameDay(date, _firstDay)
-                                      ? Colors.white
-                                      : Colors.black,
+                                  fontSize: 18.rsp,
+                                  color:
+                                      isSelected ? Colors.white : Colors.black,
                                   height: 1,
                                 ),
                               ),
                               Text(
-                                DateModel.fromDateTime(date).lunarString,
+                                isToday
+                                    ? '今天'
+                                    : DateModel.fromDateTime(date).lunarString,
                                 style: TextStyle(
                                   fontSize: 10.rsp,
-                                  color: DateUtil.sameDay(date, _firstDay)
-                                      ? Colors.white
-                                      : Colors.black,
+                                  color:
+                                      isSelected ? Colors.white : Colors.black,
                                   height: 1,
                                 ),
                               ),

@@ -1,6 +1,27 @@
 import 'package:recook/utils/date/date_models.dart';
 
 class DateUtilss {
+  static bool sameDay(DateTime day, DateTime diffDay) {
+    return (day.year == diffDay.year &&
+        day.month == diffDay.month &&
+        day.day == diffDay.day);
+  }
+
+  static bool sameYear(DateTime day, DateTime diffDay) {
+    return (day.year == diffDay.year);
+  }
+
+  static int monthBetween(DateTime day, DateTime diffDay) {
+    return (diffDay.month + 12 - day.month) % 12;
+  }
+
+  static int countDays(DateTime day, DateTime diffDay) {
+    return DateTime.fromMillisecondsSinceEpoch(
+                (diffDay.millisecondsSinceEpoch - day.millisecondsSinceEpoch))
+            .day -
+        1;
+  }
+
   static List<Month> extractWeeks(DateTime minDate, DateTime maxDate) {
     DateTime weekMinDate = _findDayOfWeekInMonth(minDate, DateTime.monday);
     DateTime weekMaxDate = _findDayOfWeekInMonth(maxDate, DateTime.sunday);

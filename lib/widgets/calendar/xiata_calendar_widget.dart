@@ -98,23 +98,22 @@ class _XiataCalendarWidgetState extends State<XiataCalendarWidget> {
                       ? (DateTime date) {
                           if (rangeMinDate == null) {
                             setState(() {
+                              print(rangeMinDate);
+                              print('1111');
                               rangeMinDate = date;
                               //rangeMaxDate = null;
                             });
-                          } else if (date
-                              .isAfter(rangeMinDate.add(Duration(days: 30)))) {
-                          } else if (date.isBefore(rangeMinDate)) {
+                          } else {
                             setState(() {
-                              //rangeMaxDate = rangeMinDate;
-                              rangeMinDate = date;
-                            });
-                          } else if (date.isAfter(rangeMinDate)) {
-                            setState(() {
+                              print(rangeMinDate);
+                              print('2222');
                               //rangeMaxDate = date;
+                              rangeMinDate = date;
                             });
                           }
 
-                          // widget.onRangeSelected(rangeMinDate);
+                          //弹窗自动隐藏判断
+                          widget.onRangeSelected(rangeMinDate);
 
                           if (widget.onDayPressed != null) {
                             widget.onDayPressed(date);
@@ -185,10 +184,12 @@ class _MonthView extends StatelessWidget {
         return const SizedBox();
       } else {
         bool isSelected = false;
+        print(day);
+        print(rangeMinDate);
 
         if (rangeFeatureEnabled) {
           if (rangeMinDate != null) {
-            isSelected = day.isSameDayOrAfter(rangeMinDate);
+            isSelected = day.isSameDay(rangeMinDate);
           } else {
             isSelected = day.isAtSameMomentAs(rangeMinDate);
           }
