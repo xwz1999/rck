@@ -17,6 +17,7 @@ import 'package:recook/widgets/weather_page/weather_city_model.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'choose_city_page.dart';
+import 'choose_tickets_page.dart';
 
 class ChooseTicketsTypePage extends StatefulWidget {
   ChooseTicketsTypePage({Key key}) : super(key: key);
@@ -34,7 +35,8 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
   AMapFlutterLocation _amapFlutterLocation;
   Map<String, Object> _location;
   WeatherCityModel cityModel;
-  DateTime _date = DateTime.now();
+  DateTime _date = DateTime(
+      DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0);
   String _dateText = DateUtil.formatDate(DateTime.now(), format: 'M月d日');
   //DateTime _selectedDay;
   //CalendarFormat _calendarFormat = CalendarFormat.month;
@@ -484,7 +486,11 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
                   },
                 ));
           } else {
-            Get.to();
+            print(_date);
+            Get.to(ChooseTicketsPage(
+                fromText: _originText,
+                toText: _destinationText,
+                originDate: _date));
           }
           print('查询');
         },

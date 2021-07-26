@@ -15,8 +15,10 @@ import 'package:recook/utils/text_utils.dart';
 
 /// 自筛选列表点击监听
 typedef SelectedListener = Function(int selectedIndex, FilterItemModel item);
+
 /// 下拉列表状态变更
 typedef PopOptionHandle = Function(OptionListStatus status);
+
 /// filterBar 标题点击、变更等监听
 typedef FilterToolBarListener = Function(bool update);
 
@@ -82,7 +84,8 @@ class FilterToolBarResultContainer extends StatefulWidget {
   final FilterToolBarController controller;
   final Widget body;
 
-  const FilterToolBarResultContainer({GlobalKey key, this.controller, this.body})
+  const FilterToolBarResultContainer(
+      {GlobalKey key, this.controller, this.body})
       : assert(controller != null, "controller 不为空");
 
   @override
@@ -139,11 +142,10 @@ class _FilterToolBarResultContainerState
     });
 
     if (widget.key == null) {
-        widget.controller._containerKey = GlobalKey();
-    }else {
+      widget.controller._containerKey = GlobalKey();
+    } else {
       widget.controller._containerKey = widget.key;
     }
-
 
     super.initState();
   }
@@ -156,7 +158,6 @@ class _FilterToolBarResultContainerState
 
   @override
   Widget build(BuildContext context) {
-
     return Container(
       key: widget.controller._containerKey,
       child: _buildBody(context),
@@ -193,34 +194,33 @@ class _FilterToolBarResultContainerState
 
   Widget _maskView() {
     return widget.controller._toolBarKey == null
-          ? Container()
-          :
-      Positioned(
-              top: widget.controller.toolBarDy + 40,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              child: Offstage(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () {
-                    widget.controller.helper.changeOptionListStatus(
-                      OptionListStatus.close,
-                    );
-                    widget.controller.updateToolBarState(false);
-                    _animationController.reset();
-                  },
-                  child: Opacity(
-                    opacity: 0.3,
-                    child: Container(
-                      color: Colors.black,
-                    ),
+        ? Container()
+        : Positioned(
+            top: widget.controller.toolBarDy + 40,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: Offstage(
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  widget.controller.helper.changeOptionListStatus(
+                    OptionListStatus.close,
+                  );
+                  widget.controller.updateToolBarState(false);
+                  _animationController.reset();
+                },
+                child: Opacity(
+                  opacity: 0.3,
+                  child: Container(
+                    color: Colors.black,
                   ),
                 ),
-                offstage: _animation == null ||
-                    (_animation.status == AnimationStatus.dismissed),
               ),
-            );
+              offstage: _animation == null ||
+                  (_animation.status == AnimationStatus.dismissed),
+            ),
+          );
   }
 
   /// 有多个子列表时 因为有设置最大行数，小于最大行数[widget.maxLines]时，以子列表个数为准，
@@ -272,7 +272,6 @@ class _FilterToolBarResultContainerState
                     height: _lineHeight,
                     child: RawMaterialButton(
                       onPressed: () {
-
                         widget.controller.helper
                             .changeOptionListStatus(OptionListStatus.close);
                         widget.controller.updateToolBarState(false);
@@ -337,7 +336,8 @@ class FilterToolBar extends StatefulWidget {
     this.selectedColor,
     this.maxLines = 4,
     this.trialing,
-    this.fontSize = 15.0, this.height = 40,
+    this.fontSize = 15.0,
+    this.height = 40,
   })  : assert(listener != null, "请设置监听事件"),
         assert(controller != null, "请设置controller");
 
@@ -403,7 +403,9 @@ class _FilterToolBarState extends State<FilterToolBar>
       height: 40,
       decoration: BoxDecoration(
           color: Colors.white,
-          border: Border(top: BorderSide(color: Colors.grey[200], width: 0.5), bottom: BorderSide(color: Colors.grey[200], width: 0.5))),
+          border: Border(
+              top: BorderSide(color: Colors.grey[200], width: 0.5),
+              bottom: BorderSide(color: Colors.grey[200], width: 0.5))),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: items,
@@ -547,6 +549,7 @@ class FilterItemModel {
   final FilterItemType type;
   String title;
   final List<String> subtitles;
+
   /// 列表下拉时的子标题
   final List<String> subtitleShort;
   bool topSelected;

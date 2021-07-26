@@ -84,6 +84,41 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
   bool _onload = true;
   List _gone = [];
 
+  @override
+  void initState() {
+    super.initState();
+    if (widget.receivedType == '未到账') {
+      _TformatType = 'yyyy-MM';
+      _TTableformatType = 'M月d日';
+    } else if (widget.receivedType == '已到账') {
+      _TformatType = 'yyyy';
+      _TTableformatType = 'M月';
+    }
+    if (!_notSelfNotGUide) {
+      if (widget.receivedType == '已到账') {
+        if (_yearChoose == true) {
+          formatType = 'yyyy';
+        } else if (_monthChoose == true) {
+          formatType = 'yyyy-MM';
+        }
+      } else if (widget.receivedType == '未到账') {
+        if (_yearChoose == true) {
+          formatType = 'yyyy';
+        } else if (_monthChoose == true) {
+          formatType = 'yyyy-MM';
+        }
+      }
+    } else {
+      //团队补贴
+
+      if (widget.receivedType == '未到账') {
+        formatType = 'yyyy-MM';
+      } else if (widget.receivedType == '已到账') {
+        formatType = 'yyyy';
+      }
+    }
+  }
+
   _chooseMonth() {
     String MonthText = '';
     if (widget.receivedType == '未到账') {
@@ -136,14 +171,6 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
   }
 
   _chooseSelf() {
-    if (widget.receivedType == '未到账') {
-      _TformatType = 'yyyy-MM';
-      _TTableformatType = 'M月d日';
-    } else if (widget.receivedType == '已到账') {
-      _TformatType = 'yyyy';
-      _TTableformatType = 'M月';
-    }
-
     return CustomImageButton(
       onPressed: () {
         _selfChoose = true;
@@ -350,25 +377,28 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
       clipBehavior: Clip.antiAlias,
       height: 146.rw,
       decoration: BoxDecoration(
-        color: Colors.white,
+        borderRadius: BorderRadius.circular(5.rw),
         boxShadow: [
           BoxShadow(
-            color: Color(0xFFA6A6AD).withOpacity(0.41),
-            offset: Offset(0, 2.rw),
+            offset: Offset(0, 1.rw),
+            color: Color.fromRGBO(166, 166, 173, 0.43),
             blurRadius: 6.rw,
-          ),
+          )
         ],
-        borderRadius: BorderRadius.circular(4.rw),
+        image: DecorationImage(
+          image: AssetImage(UserLevelTool.currentCardImagePath()),
+          fit: BoxFit.cover,
+        ),
       ),
       child: Column(
         children: [
           Container(
             decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage(UserLevelTool.currentCardImagePath()),
-              ),
-            ),
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage(UserLevelTool.currentCardImagePath()),
+                ),
+                color: Colors.transparent),
             padding: EdgeInsets.only(
                 top: 20.rw, bottom: 10.rw, left: 20.rw, right: 20.rw),
             child: Row(
@@ -468,21 +498,17 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
           if (!_notSelfNotGUide) {
             if (widget.receivedType == '已到账') {
               if (_yearChoose == true) {
-                formatType = 'yyyy';
                 _models = await UserBenefitFunc.receicedIncome(
                     DateUtil.formatDate(_date, format: 'yyyy'), BenefitType);
               } else if (_monthChoose == true) {
-                formatType = 'yyyy-MM';
                 _models = await UserBenefitFunc.receicedIncome(
                     DateUtil.formatDate(_date, format: 'yyyyMM'), BenefitType);
               }
             } else if (widget.receivedType == '未到账') {
               if (_yearChoose == true) {
-                formatType = 'yyyy';
                 _models = await UserBenefitFunc.notReceicedIncome(
                     DateUtil.formatDate(_date, format: 'yyyy'), BenefitType);
               } else if (_monthChoose == true) {
-                formatType = 'yyyy-MM';
                 _models = await UserBenefitFunc.notReceicedIncome(
                     DateUtil.formatDate(_date, format: 'yyyyMM'), BenefitType);
               }
@@ -492,10 +518,8 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
             //团队补贴
 
             if (widget.receivedType == '未到账') {
-              formatType = 'yyyy';
               _models = await UserBenefitFunc.teamNotReceicedIncome(team_level);
             } else if (widget.receivedType == '已到账') {
-              formatType = 'yyyy-MM';
               _models = await UserBenefitFunc.teamReceicedIncome(
                   int.parse(DateUtil.formatDate(_date, format: 'yyyy')),
                   team_level);
@@ -510,7 +534,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
           _amount = _models?.amount?.toStringAsFixed(2);
           _all = _models?.all?.toStringAsFixed(2);
           //对隐藏列表全部置为隐藏
-          for (int i = 0; i < _models?.detail?.length; i++) {
+          for (int i = 0; i < _models.detail.length; i++) {
             _gone.add(true);
           }
           for (int i = 0; i < _gone.length; i++) {
@@ -567,7 +591,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
                             ? Container(
                                 padding: EdgeInsets.only(left: 30.w),
                                 child: DateUtil.formatDate(_date,
-                                        format: _TformatType)
+                                        format: formatType)
                                     .text
                                     .black
                                     .size(14.rsp)
@@ -594,7 +618,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
                                 child: Row(
                                   children: [
                                     DateUtil.formatDate(_date,
-                                            format: _TformatType)
+                                            format: formatType)
                                         .text
                                         .black
                                         .size(14.rsp)
@@ -844,8 +868,8 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
                                     size: 22, color: Color(0xff999999))
                                 : Icon(Icons.keyboard_arrow_down,
                                     size: 22, color: Color(0xff999999))
-                            : SizedBox()
-                        : SizedBox(),
+                            : Icon(null, size: 22, color: Color(0xff999999))
+                        : Icon(null, size: 22, color: Color(0xff999999)),
                     20.wb
                   ],
                 ),
