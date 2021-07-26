@@ -377,25 +377,30 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
       clipBehavior: Clip.antiAlias,
       height: 146.rw,
       decoration: BoxDecoration(
+        color: Colors.white,
         borderRadius: BorderRadius.circular(5.rw),
         boxShadow: [
           BoxShadow(
-            offset: Offset(0, 1.rw),
+            offset: Offset(0, 2.rw),
             color: Color.fromRGBO(166, 166, 173, 0.43),
             blurRadius: 6.rw,
           )
         ],
-        image: DecorationImage(
-          image: AssetImage(UserLevelTool.currentCardImagePath()),
-          fit: BoxFit.cover,
-        ),
       ),
       child: Column(
         children: [
           Container(
             decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5.rw),
+                boxShadow: [
+                  BoxShadow(
+                    offset: Offset(0, 1.rw),
+                    color: Color.fromRGBO(166, 166, 173, 0.43),
+                    blurRadius: 6.rw,
+                  )
+                ],
                 image: DecorationImage(
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                   image: AssetImage(UserLevelTool.currentCardImagePath()),
                 ),
                 color: Colors.transparent),
@@ -407,7 +412,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
                   padding: role != UserRoleLevel.Diamond_1 &&
                           role != UserRoleLevel.Diamond_2 &&
                           _notSelfNotGUide
-                      ? EdgeInsets.only(top: 25.rw)
+                      ? EdgeInsets.only(top: 22.rw)
                       : EdgeInsets.only(top: 0.rw),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -534,7 +539,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
           _amount = _models?.amount?.toStringAsFixed(2);
           _all = _models?.all?.toStringAsFixed(2);
           //对隐藏列表全部置为隐藏
-          for (int i = 0; i < _models.detail.length; i++) {
+          for (int i = 0; i < _models?.detail?.length; i++) {
             _gone.add(true);
           }
           for (int i = 0; i < _gone.length; i++) {

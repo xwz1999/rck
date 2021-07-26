@@ -61,6 +61,7 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
   bool _sortMoney = true;
 
   bool _isOver = false;
+  String _text = '';
 
   GSRefreshController _refreshController = GSRefreshController();
 
@@ -75,11 +76,7 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ('当日未到账补贴(瑞币)')
-                      .text
-                      .color(Colors.black54)
-                      .size(16.rsp)
-                      .make(),
+                  _text.text.color(Colors.black54).size(16.rsp).make(),
                   _amount.text.color(Color(0xFF333333)).size(34.rsp).make(),
                 ],
               ),
@@ -570,8 +567,10 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
     super.initState();
     _date = widget.date;
     if (widget.receivedType == '未到账') {
+      _text = '当日未到账补贴(瑞币)';
       _formatType = 'MM-dd';
     } else if (widget.receivedType == '已到账') {
+      _text = '当月已到账补贴(瑞币)';
       _formatType = 'yyyy-MM';
     }
 

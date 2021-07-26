@@ -25,17 +25,17 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
   void initState() {
     super.initState();
     _passengerList
-        .add(Item(item: '张伟', choice: false, num: '123243354543645456'));
+        .add(Item(item: '张伟', choice: false, num: '12345678901234567890'));
     _passengerList
-        .add(Item(item: '欧阳青青', choice: false, num: '123123546576863432'));
+        .add(Item(item: '欧阳青青', choice: false, num: '12345678901234567'));
     _passengerList
-        .add(Item(item: '小星星', choice: false, num: '76573353456435435345'));
+        .add(Item(item: '小星星', choice: false, num: '12345678901234567890'));
     _passengerList
-        .add(Item(item: '吕小树', choice: false, num: '54676578658234234'));
+        .add(Item(item: '吕小树', choice: false, num: '12345678901234567890'));
     _passengerList
-        .add(Item(item: '吕小树', choice: false, num: '54676578658234234'));
+        .add(Item(item: '吕小树', choice: false, num: '12345678901234567890'));
     _passengerList
-        .add(Item(item: '吕小树', choice: false, num: '54676578658234234'));
+        .add(Item(item: '吕小树', choice: false, num: '12345678901234567890'));
   }
 
   @override
@@ -427,7 +427,7 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
       child: Column(
         children: [
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 10.rw),
+            padding: EdgeInsets.symmetric(horizontal: 15.rw),
             height: 148.rw,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(4.rw)),
@@ -491,18 +491,29 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
 
   _getPassengerItem(Item item, index, VoidCallback onPressed) {
     return Container(
+      padding: EdgeInsets.only(top: 10.rw),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            item.item,
-            style: TextStyle(fontSize: 14.rsp, color: Color(0xFF666666)),
+          Container(
+            width: 80.rw,
+            child: Text(
+              item.item,
+              style: TextStyle(
+                  fontSize: 16.rsp,
+                  color: Color(0xFF333333),
+                  fontWeight: FontWeight.bold),
+            ),
           ),
-          Text(
-            item.item,
-            style: TextStyle(fontSize: 14.rsp, color: Color(0xFF666666)),
+          20.wb,
+          Container(
+            width: 200.rw,
+            child: Text(
+              _getCardId(item.num),
+              style: TextStyle(fontSize: 16.rsp, color: Color(0xFF666666)),
+            ),
           ),
-          Icon(CupertinoIcons.check_mark, size: 20, color: Colors.white),
+          30.wb,
+          Icon(CupertinoIcons.check_mark, size: 20, color: Colors.blue),
         ],
       ),
     );
@@ -517,7 +528,10 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
             alignment: Alignment.centerLeft,
             child: Text(
               "选择乘客",
-              style: TextStyle(fontSize: 16.rsp, color: Color(0xFF333333)),
+              style: TextStyle(
+                  fontSize: 16.rsp,
+                  color: Color(0xFF333333),
+                  fontWeight: FontWeight.bold),
             ),
           ),
         ),
@@ -556,9 +570,22 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
               });
             });
           }, childCount: 3),
-        )
+        ),
+        SliverToBoxAdapter(child: 20.hb),
       ],
     ).expand();
+  }
+
+  _getCardId(String id) {
+    String hear = id.substring(0, 4);
+    String foot = id.substring(id.length - 3);
+    String newId = '';
+    if (id.length > 7) {
+      for (var i = 0; i < id.length - 7; i++) {
+        newId += '*';
+      }
+    }
+    return hear + newId + foot;
   }
 }
 
