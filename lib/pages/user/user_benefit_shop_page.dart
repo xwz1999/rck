@@ -97,7 +97,7 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
               Container(
                 child: Column(
                   children: [
-                    '销售额(元)'.text.color(Colors.black54).size(15.rsp).make(),
+                    '销售额(元)'.text.color(Colors.black54).size(14.rsp).make(),
                     20.hb,
                     _salesVolume.text
                         .color(Color(0xFF333333))
@@ -110,7 +110,7 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
               Container(
                 child: Column(
                   children: [
-                    '品牌推广补贴(%)'.text.color(Colors.black54).size(15.rsp).make(),
+                    '品牌推广补贴(%)'.text.color(Colors.black54).size(14.rsp).make(),
                     20.hb,
                     _subsidy.text.color(Color(0xFF333333)).size(16.rsp).make(),
                   ],
@@ -120,7 +120,7 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
               Container(
                 child: Column(
                   children: [
-                    ('订单数(笔)').text.color(Colors.black54).size(15.rsp).make(),
+                    ('订单数(笔)').text.color(Colors.black54).size(14.rsp).make(),
                     20.hb,
                     _count.text.color(Color(0xFF333333)).size(16.rsp).make(),
                   ],

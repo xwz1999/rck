@@ -17,6 +17,7 @@ class AppColor {
   static const Color greenColor = Color.fromARGB(255, 37, 186, 114);
   static const Color backgroundColor = Color(0xFFF9F9F9);
   static const Color secondColor = Color(0xFF3F8FFE);
+  static const Color whiteColor = Color(0xFFFFFFFF);
   // 浅灰色
   static const Color frenchColor = Color(0xFFF8F7F8);
   static const Color blackColor = Color(0xff16182b);

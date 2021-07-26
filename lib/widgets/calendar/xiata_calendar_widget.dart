@@ -98,15 +98,13 @@ class _XiataCalendarWidgetState extends State<XiataCalendarWidget> {
                       ? (DateTime date) {
                           if (rangeMinDate == null) {
                             setState(() {
-                              print(rangeMinDate);
-                              print('1111');
+
                               rangeMinDate = date;
                               //rangeMaxDate = null;
                             });
                           } else {
                             setState(() {
-                              print(rangeMinDate);
-                              print('2222');
+
                               //rangeMaxDate = date;
                               rangeMinDate = date;
                             });
@@ -184,8 +182,6 @@ class _MonthView extends StatelessWidget {
         return const SizedBox();
       } else {
         bool isSelected = false;
-        print(day);
-        print(rangeMinDate);
 
         if (rangeFeatureEnabled) {
           if (rangeMinDate != null) {
