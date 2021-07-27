@@ -203,7 +203,9 @@ class _TabBarWidgetState extends State<TabBarWidget>
           needAnimation: false,
           controller: _tabController,
           children: <Widget>[
-            HomePage(),
+            HomePage(
+              tabController: _tabController,
+            ),
             GoodsHotListPage(),
             DiscoveryPage(),
             // BusinessPage(),

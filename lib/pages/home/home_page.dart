@@ -23,6 +23,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:power_logger/power_logger.dart';
+import 'package:recook/pages/live/pages/discovery_page.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
 import 'package:recook/base/base_store_state.dart';
@@ -88,6 +89,9 @@ class HomeAcitvityItem {
 }
 
 class HomePage extends StatefulWidget {
+  final TabController tabController;
+
+  const HomePage({Key key, this.tabController}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _HomePageState();
@@ -1030,13 +1034,18 @@ class _HomePageState extends BaseStoreState<HomePage>
                 _buttonTitleRow(
                   // R.ASSETS_LOTTERY_REDEEM_LOTTERY_ICON_PNG,
                   AppConfig.getShowCommission()
-                      ? R.ASSETS_HOME_MENU_BB_PNG
+                      ? R.ASSETS_HOME_MENU_BBB_PNG
                       : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
                   // AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
                   // '彩票兑换',
-                  '彩票频道',
+                  //2021 7,27 ios彩票审核不通过 隐藏彩票
+                  '精彩发现',
                   onPressed: () {
-                    AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
+                    //AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
+                    widget.tabController.animateTo(2);
+                    UserManager.instance.selectTabbar.value =
+                        !UserManager.instance.selectTabbar.value;
+                    setState(() {});
                   },
                   //   () {
                   // if (AppConfig.getShowCommission()) {

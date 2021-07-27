@@ -32,10 +32,6 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
         .add(Item(item: '小星星', choice: false, num: '12345678901234567890'));
     _passengerList
         .add(Item(item: '吕小树', choice: false, num: '12345678901234567890'));
-    _passengerList
-        .add(Item(item: '吕小树', choice: false, num: '12345678901234567890'));
-    _passengerList
-        .add(Item(item: '吕小树', choice: false, num: '12345678901234567890'));
   }
 
   @override
@@ -47,6 +43,7 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.frenchColor,
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         appBackground: Color(0xFFF9F9FB),
         elevation: 0,
@@ -84,6 +81,7 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
   _bottomTool(bool bottom) {
     return Container(
       height: 50.rw,
+      color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -253,6 +251,7 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
               fit: BoxFit.cover,
             ),
           ),
+          10.wb,
           Text(
             "联系电话",
             style: TextStyle(fontSize: 14.rsp, color: Color(0xFF333333)),
@@ -260,8 +259,8 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
           20.wb,
           TextField(
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.only(top: 10.rw, left: 20.rw),
-              hintText: '用于接受取票信息',
+              contentPadding: EdgeInsets.only(left: 20.rw, bottom: 4.rw),
+              hintText: '用于接收取票信息',
               border: InputBorder.none,
               hintStyle:
                   AppTextStyle.generate(14 * 2.sp, color: Color(0xff666666)),
@@ -428,7 +427,8 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
         children: [
           Container(
             padding: EdgeInsets.symmetric(horizontal: 15.rw),
-            height: 148.rw,
+            height:
+                _getHeight(_passengerList.length, _ChoosePassengerList.length),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(4.rw)),
               color: Colors.white,
@@ -445,6 +445,22 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
     ).expand();
   }
 
+  _getHeight(int top, int bottom) {
+    if (top < 5) {
+      if (bottom == 0) {
+        return 98.rw;
+      } else {
+        return 105.rw + bottom * 31.rw;
+      }
+    } else if (top > 5) {
+      if (bottom <= 8) {
+        return 105.rw + bottom * 31.rw + (top ~/ 4 - 1) * 53.rw;
+      } else {
+        return 105.rw + 8 * 31.rw + (top ~/ 4 - 1) * 53.rw;
+      }
+    }
+  }
+
   Widget _getItemContainer(
       Item item, index, VoidCallback onPressed, bool selected) {
     return GestureDetector(
@@ -452,21 +468,26 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
       child: Container(
           width: 68.rw,
           height: 38.rw,
+          padding: EdgeInsets.only(top: 2.rw),
           decoration: BoxDecoration(
-              color: Colors.blue,
+              color: Colors.white,
               borderRadius: BorderRadius.all(Radius.circular(3.rw)),
               border: Border.all(
                   color: selected ? Color(0xFFD5101A) : Color(0xFF999999),
                   width: 0.5.rw)),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment:
+                selected ? MainAxisAlignment.end : MainAxisAlignment.center,
             children: [
               Text(
                 item.item,
                 style: TextStyle(fontSize: 14.rsp, color: Color(0xFF666666)),
               ),
+              !selected ? 5.hb : SizedBox(),
               selected
                   ? Container(
+                      //color: Colors.yellow,
+                      margin: EdgeInsets.only(left: 10.rw),
                       alignment: Alignment.bottomRight,
                       width: 68.rw,
                       child: Container(
@@ -480,7 +501,7 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
                               bottomRight: Radius.circular(3.rw)),
                         ),
                         child: Icon(CupertinoIcons.check_mark,
-                            size: 20, color: Colors.white),
+                            size: 10, color: Colors.white),
                       ),
                     )
                   : SizedBox(),
@@ -542,11 +563,16 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
               return _getItemContainer(_passengerList[index], index, () {
                 setState(() {
                   _passengerList[index].choice = !_passengerList[index].choice;
-                  for (var i = 0; i < _passengerList.length; i++) {
-                    if (_passengerList[i].choice) {
-                      _ChoosePassengerList.add(_passengerList[i]);
+                  if (_passengerList[index].choice) {
+                    _ChoosePassengerList.add(_passengerList[index]);
+                  } else {
+                    if (_ChoosePassengerList.indexOf(_passengerList[index]) !=
+                        -1) {
+                      _ChoosePassengerList.removeAt(
+                          _ChoosePassengerList.indexOf(_passengerList[index]));
                     }
                   }
+                  setState(() {});
                 });
               }, _passengerList[index].choice);
             }, childCount: _passengerList.length),
@@ -558,18 +584,24 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
             )),
         SliverToBoxAdapter(child: 20.hb),
         SliverList(
-          delegate: SliverChildBuilderDelegate((content, index) {
-            return _getPassengerItem(_passengerList[index], index, () {
-              setState(() {
-                _passengerList[index].choice = !_passengerList[index].choice;
-                for (var i = 0; i < _passengerList.length; i++) {
-                  if (_passengerList[i].choice) {
-                    _ChoosePassengerList.add(_passengerList[i]);
-                  }
-                }
-              });
-            });
-          }, childCount: 3),
+          delegate: _ChoosePassengerList.length != 0
+              ? SliverChildBuilderDelegate((content, index) {
+                  return _getPassengerItem(_ChoosePassengerList[index], index,
+                      () {
+                    setState(() {
+                      _ChoosePassengerList[index].choice =
+                          !_ChoosePassengerList[index].choice;
+                      for (var i = 0; i < _ChoosePassengerList.length; i++) {
+                        if (_ChoosePassengerList[i].choice) {
+                          _ChoosePassengerList.add(_ChoosePassengerList[i]);
+                        }
+                      }
+                    });
+                  });
+                }, childCount: _ChoosePassengerList.length)
+              : SliverChildBuilderDelegate((content, index) {
+                  return SizedBox();
+                }, childCount: 0),
         ),
         SliverToBoxAdapter(child: 20.hb),
       ],

@@ -31,9 +31,13 @@ class NoDataView extends StatelessWidget {
               child: Image.asset(
                 AppImageName.img_no_data,
               )),
-          Text(
-            this.title,
-            style: AppTextStyle.generate(16, color: Colors.grey[400], fontWeight: FontWeight.w300),
+          Container(
+            alignment: Alignment.center,
+            child: Text(
+              this.title,
+              style: AppTextStyle.generate(16,
+                  color: Colors.grey[400], fontWeight: FontWeight.w300),
+            ),
           )
         ],
       ),

@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/constants/styles.dart';
+import 'package:recook/pages/buy_tickets/tickets_order_page.dart';
+import 'package:recook/pages/buy_tickets/used_passager_page.dart';
 import 'package:recook/utils/permission_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/calendar/calendar_vertial_widget.dart';
@@ -27,6 +29,23 @@ class ChooseTicketsTypePage extends StatefulWidget {
 }
 
 class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
+  final items = [
+    BottomNavigationBarItem(
+      icon: Icon(
+        Icons.pages,
+        size: rSize(14),
+        color: Color(0xFF666666),
+      ),
+      title: Text('订单'),
+    ),
+    BottomNavigationBarItem(
+        icon: Icon(
+          Icons.pages,
+          size: rSize(14),
+          color: Color(0xFF666666),
+        ),
+        title: Text("常用旅客")),
+  ];
   //按钮选中类型
   int _chooseType = 1; //1为飞机票 2为汽车票 3为火车票
   String _originText = '出发地';
@@ -74,7 +93,23 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
           title: '瑞库客购票',
           themeData: AppThemes.themeDataGrey.appBarTheme,
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: items,
+          onTap: onTap,
+          backgroundColor: Colors.white,
+          unselectedItemColor: Color(0xFF666666),
+          selectedItemColor: Color(0xFF666666),
+          type: BottomNavigationBarType.fixed,
+        ),
         body: _bodyWidget());
+  }
+
+  void onTap(int index) {
+    if (index == 0) {
+      Get.to(TicketsOrderPage());
+    } else {
+      Get.to(UsedPassagerPage());
+    }
   }
 
   _bodyWidget() {
