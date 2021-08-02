@@ -293,7 +293,7 @@ class _TicketsOrderPageState extends State<TicketsOrderPage>
             return MaterialButton(
                 padding: EdgeInsets.zero,
                 onPressed: () {
-                  Get.to(TicketsOrderDetailPage());
+                  Get.to(TicketsOrderDetailPage(ticketType: 1,));
                 },
                 child: _ticketsItem());
           }),

@@ -2,7 +2,7 @@ name: recook
 description: Recook Market App.
 publish_to: "none"
 
-version: 1.9.1-dev+306
+version: 1.9.1-dev+307
 environment:
   sdk: ">=2.10.0 <3.0.0"
 
@@ -154,7 +154,7 @@ dependencies:
   encrypt: ^5.0.0
 
   # 时间选择器
-  flutter_datetime_picker: ^1.5.0
+  flutter_datetime_picker: ^1.5.1
 
   #日期选择器
   flutter_custom_calendar:
@@ -243,7 +243,7 @@ dependencies:
   hive_flutter: ^1.0.0
 
   pin_input_text_field: ^4.0.0
-  velocity_x: ^2.6.0
+  velocity_x: ^3.3.0
 
   animations:
   device_info: ^2.0.0
