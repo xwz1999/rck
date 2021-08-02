@@ -224,6 +224,9 @@ dependencies:
   #展开组件
   expandable: ^5.0.1
 
+  #提示红点组件
+  badges: ^2.0.1
+
   scrollable_positioned_list: ^0.1.7
   
   flutter_markdown:
@@ -266,7 +269,7 @@ flutter:
     #TODO 重构图片assets
     - assets/home/
     - assets/user/
-
+    - assets/ticket/
     - assets/activityImage/
     - assets/recook_launch_image/
     - assets/svg/

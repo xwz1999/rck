@@ -4,11 +4,14 @@ import 'package:amap_flutter_location/amap_location_option.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lpinyin/lpinyin.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/pages/buy_tickets/tickets_order_page.dart';
+import 'package:recook/pages/buy_tickets/tools/airport_city_tool.dart';
 import 'package:recook/pages/buy_tickets/used_passager_page.dart';
 import 'package:recook/utils/permission_tool.dart';
+import 'package:recook/utils/storage/hive_store.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/calendar/calendar_vertial_widget.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -20,6 +23,9 @@ import 'package:velocity_x/velocity_x.dart';
 
 import 'choose_city_page.dart';
 import 'choose_tickets_page.dart';
+import 'functions/passager_func.dart';
+import 'models/air_items_list_model.dart';
+import 'models/airport_city_model.dart';
 
 class ChooseTicketsTypePage extends StatefulWidget {
   ChooseTicketsTypePage({Key key}) : super(key: key);
@@ -53,24 +59,38 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
   //定位
   AMapFlutterLocation _amapFlutterLocation;
   Map<String, Object> _location;
-  WeatherCityModel cityModel;
+  AirportCityModel cityModel;
   DateTime _date = DateTime(
       DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0);
   String _dateText = DateUtil.formatDate(DateTime.now(), format: 'M月d日');
+  AirItemModel airItemModel;
+  String goodId;
+  List notCity = [
+    '',
+  ];
+  List<AirportCityModel> _cityModelList;
   //DateTime _selectedDay;
   //CalendarFormat _calendarFormat = CalendarFormat.month;
   @override
   void initState() {
     super.initState();
-    _amapFlutterLocation = AMapFlutterLocation();
+    Future.delayed(Duration.zero, () async {
+      airItemModel = await PassagerFunc.getAirTicketGoodsList();
+      print(airItemModel.items.item[0].itemId);
+      goodId = airItemModel.items.item[0].itemId;
+    });
 
+    _amapFlutterLocation = AMapFlutterLocation();
     requestPermission().then((value) {
       if (value) {
         //监听要在设置参数之前 否则无法获取定位
         _amapFlutterLocation.onLocationChanged().listen(
           (event) {
             _location = event;
+            print(_location);
             _originText = _location['city'];
+            _originText = _originText.replaceAll('市', '');
+            _originText = _originText.replaceAll('区', '');
             setState(() {});
           },
         );
@@ -172,26 +192,37 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
                         end: Alignment.bottomCenter,
                         colors: [Color(0xFFF8F7F8), Colors.white])),
                 child: Container(
-                  alignment: Alignment.center,
-                  height: 40.rw,
-                  decoration: _chooseType == 1
-                      ? new BoxDecoration(color: Colors.white)
-                      : _chooseType == 2
-                          ? new BoxDecoration(
-                              color: Color(0xFFFCE7E5),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10.rw),
-                                  bottomRight: Radius.circular(10.rw)))
-                          : new BoxDecoration(
-                              color: Color(0xFFFCE7E5),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10.rw))),
-                  child: Text('飞机票',
-                      style: TextStyle(
-                        fontSize: 14.rsp,
-                        color: Color(0xFF333333),
-                      )),
-                ),
+                    alignment: Alignment.center,
+                    height: 40.rw,
+                    decoration: _chooseType == 1
+                        ? new BoxDecoration(color: Colors.white)
+                        : _chooseType == 2
+                            ? new BoxDecoration(
+                                color: Color(0xFFFCE7E5),
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10.rw),
+                                    bottomRight: Radius.circular(10.rw)))
+                            : new BoxDecoration(
+                                color: Color(0xFFFCE7E5),
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10.rw))),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          R.ASSETS_AIR_ICON_PNG,
+                          width: 14.rw,
+                          height: 14.rw,
+                        ),
+                        12.wb,
+                        Text('飞机票',
+                            style: TextStyle(
+                              fontSize: 10.rsp,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF333333),
+                            )),
+                      ],
+                    )),
               )
             ],
           ),
@@ -241,11 +272,23 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
                                   color: Color(0xFFFCE7E5), width: 1.rw),
                               borderRadius: BorderRadius.only(
                                   bottomRight: Radius.circular(10.rw))),
-                  child: Text('汽车票',
-                      style: TextStyle(
-                        fontSize: 14.rsp,
-                        color: Color(0xFF333333),
-                      )),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        R.ASSETS_TICKET_BUS_ICON_PNG,
+                        width: 14.rw,
+                        height: 14.rw,
+                      ),
+                      12.wb,
+                      Text('汽车票',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 10.rsp,
+                            color: Color(0xFF333333),
+                          )),
+                    ],
+                  ),
                 ),
               )
             ],
@@ -293,11 +336,23 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
                               borderRadius: BorderRadius.only(
                                   topRight: Radius.circular(10.rw),
                                   bottomLeft: Radius.circular(10.rw))),
-                  child: Text('火车票',
-                      style: TextStyle(
-                        fontSize: 14.rsp,
-                        color: Color(0xFF333333),
-                      )),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        R.ASSETS_TICKET_TRAIN_ICON_PNG,
+                        width: 14.rw,
+                        height: 14.rw,
+                      ),
+                      12.wb,
+                      Text('火车票',
+                          style: TextStyle(
+                            fontSize: 10.rsp,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xFF333333),
+                          )),
+                    ],
+                  ),
                 ),
               )
             ],
@@ -325,39 +380,60 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
           GestureDetector(
               onTap: () async {
                 cityModel = await Get.to(() => ChooseCityPage(
-                    arguments: ChooseCityPage.setArguments(locationCityName)));
+                      arguments: ChooseCityPage.setArguments(locationCityName),
+                      type: 1,
+                    ));
                 if (cityModel != null) {
-                  _originText = cityModel.cityZh;
+                  _originText = cityModel.city;
+
                   setState(() {});
                 }
               },
               child: Container(
+                padding: EdgeInsets.only(left: 10.rw),
                 color: Colors.transparent,
                 alignment: Alignment.center,
                 child: Text(_originText,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     style: TextStyle(
+                      fontWeight: FontWeight.bold,
                       fontSize: 22.rsp,
                       color: Color(0xFF333333),
                     )),
               )).expand(),
           Container(
-              alignment: Alignment.center,
-              child: Icon(Icons.keyboard_arrow_right,
-                  size: 50, color: Colors.red)),
+            alignment: Alignment.center,
+            child: Image.asset(
+              R.ASSETS_TICKET_COME_GO_ICON_PNG,
+              width: 30.rw,
+              height: 30.rw,
+            ),
+          ),
           GestureDetector(
               onTap: () async {
                 cityModel = await Get.to(() => ChooseCityPage(
-                    arguments: ChooseCityPage.setArguments(locationCityName)));
-                _destinationText = cityModel.cityZh;
+                      arguments: ChooseCityPage.setArguments(locationCityName),
+                      type: 1,
+                    ));
+                _destinationText = cityModel.city;
                 setState(() {});
               },
               child: Container(
+                padding: EdgeInsets.only(left: 10.rw),
                 color: Colors.transparent,
                 alignment: Alignment.center,
                 child: Text(_destinationText,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     style: TextStyle(
+                      fontWeight: _destinationText != '选择到达'
+                          ? FontWeight.bold
+                          : FontWeight.normal,
                       fontSize: 22.rsp,
-                      color: Color(0xFF333333),
+                      color: _destinationText != '选择到达'
+                          ? Color(0xFF333333)
+                          : Color(0xFF999999),
                     )),
               )).expand(),
         ],
@@ -437,6 +513,7 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
                       Text(DateUtil.formatDate(_date, format: 'M月d日'),
                           style: TextStyle(
                             fontSize: 22.rsp,
+                            fontWeight: FontWeight.bold,
                             color: Color(0xFF333333),
                           )),
                       3.wb,
@@ -495,7 +572,7 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
         color: Colors.white,
         fontSize: 16 * 2.sp,
         borderRadius: BorderRadius.all(Radius.circular(2)),
-        onPressed: () {
+        onPressed: () async {
           if (_originText == '出发地' || _originText == null || _date == null) {
             Alert.show(
                 context,
@@ -521,11 +598,16 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
                   },
                 ));
           } else {
+            //airportCityModel = await PassagerFunc.getCityAirportList();
+            _cityModelList =
+                await AriportCityTool.getInstance().getCityAirportList();
             print(_date);
             Get.to(ChooseTicketsPage(
                 fromText: _originText,
                 toText: _destinationText,
-                originDate: _date));
+                originDate: _date,
+                code: goodId,
+                list: _cityModelList));
           }
           print('查询');
         },
