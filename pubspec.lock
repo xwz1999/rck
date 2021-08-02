@@ -56,7 +56,7 @@ packages:
       name: async
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.6.1"
+    version: "2.5.0"
   audio_session:
     dependency: transitive
     description:
@@ -1246,7 +1246,7 @@ packages:
       name: source_span
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.8.1"
+    version: "1.8.0"
   sp_util:
     dependency: transitive
     description:
@@ -1334,7 +1334,7 @@ packages:
       name: test_api
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.3.0"
+    version: "0.2.19"
   timeline_tile:
     dependency: "direct main"
     description:
