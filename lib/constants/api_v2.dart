@@ -3,6 +3,7 @@ class APIV2 {
   static BenefitAPI benefitAPI = BenefitAPI();
   static _OrderAPI orderAPI = _OrderAPI();
   static _InvoiceAoi invoiceApi = _InvoiceAoi();
+  static TicketAPI ticketAPI = TicketAPI();
 }
 
 class UserAPI {
@@ -177,4 +178,34 @@ class _InvoiceAoi {
 
   ///显示单个开票详情
   String get invoiceDetail => '/v2/app/order/invoice_one_detail';
+}
+
+class TicketAPI {
+  ///常用乘客列表
+  String get getPassagerList =>
+      '/v2/app/liFang_ticketing/plane_ticket/air_user_list';
+
+  ///增加常用乘客
+  String get addPassager =>
+      '/v2/app/liFang_ticketing/plane_ticket/air_user_add';
+
+  ///删除常用乘客
+  String get deletePassager =>
+      '/v2/app/liFang_ticketing/plane_ticket/air_user_del';
+
+  ///查询飞机票标准商品列表
+  String get getAirTicketGoodsList =>
+      '/v2/app/liFang_ticketing/plane_ticket/air_items_list';
+
+  ///查询飞机票商品货源详情
+  String get getAirTicketGoodsSource =>
+      '/v2/app/liFang_ticketing/plane_ticket/air_item_detail';
+
+  ///显示城市和机场站点
+  String get getCityAirportList =>
+      '/v2/app/liFang_ticketing/plane_ticket/airport_city';
+
+  ///两个城市/站点之前的航线
+  String get getAirLineList =>
+      '/v2/app/liFang_ticketing/plane_ticket/airport_city_line';
 }

@@ -5,17 +5,24 @@ import 'package:flutter/widgets.dart';
 
 import 'package:azlistview/azlistview.dart';
 import 'package:get/get.dart';
+import 'package:lpinyin/lpinyin.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
+import 'package:recook/pages/buy_tickets/models/airport_city_model.dart';
+import 'package:recook/pages/buy_tickets/tools/airport_city_tool.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/weather_page/weather_city_model.dart';
 import 'package:recook/widgets/weather_page/weather_city_tool.dart';
 
+import 'functions/passager_func.dart';
+
 class ChooseCityPage extends StatefulWidget {
   final Map arguments;
-  ChooseCityPage({Key key, this.arguments}) : super(key: key);
+  final int type;
+  ChooseCityPage({Key key, this.arguments, this.type}) : super(key: key);
   static setArguments(
     String cityName,
   ) {
@@ -33,8 +40,9 @@ class _ChooseCityPageState extends BaseStoreState<ChooseCityPage> {
   int _itemHeight = 50;
   String _suspensionTag = "A";
   List<WeatherCityModel> _cityList = [];
+  List<AirportCityModel> _cityModelList = [];
   String _selectCity = "";
-  List<WeatherCityModel> _searchResultCityList = [];
+  List<AirportCityModel> _searchResultCityList = [];
   TextEditingController _textEditingController;
   FocusNode _focusNode = FocusNode();
 
@@ -46,10 +54,21 @@ class _ChooseCityPageState extends BaseStoreState<ChooseCityPage> {
     });
     String cityName = widget.arguments['cityName'];
     if (!TextUtils.isEmpty(cityName)) _selectCity = cityName;
+    Function cancel = ReToast.loading();
     WeatherCityTool.getInstance().getCityList().then((onValue) {
       _cityList = onValue;
       setState(() {});
     });
+    if (widget.type == 1) {
+      Future.delayed(Duration.zero, () async {
+        _cityModelList =
+            await AriportCityTool.getInstance().getCityAirportList();
+        setState(() {});
+        print(_cityModelList);
+        cancel();
+      });
+    }
+
     super.initState();
   }
 
@@ -79,15 +98,17 @@ class _ChooseCityPageState extends BaseStoreState<ChooseCityPage> {
                           onTap: () {
                             if (TextUtils.isEmpty(_selectCity)) return;
 
-                            WeatherCityModel model = WeatherCityModel();
-                            model.cityZh = _selectCity;
+                            AirportCityModel model = AirportCityModel();
+                            model.city = _selectCity;
                             Get.back(result: model);
                             //Navigator.pop(context, model);
                           },
                           child: Container(
                             alignment: Alignment.centerLeft,
                             padding: const EdgeInsets.only(left: 15.0),
+                            color: Colors.white,
                             height: 50.0,
+                            width: double.infinity,
                             child: Text(
                               "当前定位城市: $_selectCity",
                               style:
@@ -98,10 +119,11 @@ class _ChooseCityPageState extends BaseStoreState<ChooseCityPage> {
                         Expanded(
                           child: AzListView(
                             shrinkWrap: false,
-                            data: _cityList,
+                            data: widget.type == 1 ? _cityModelList : _cityList,
                             topData: null,
-                            itemBuilder: (context, model) =>
-                                _buildListItem(model),
+                            itemBuilder: widget.type == 1
+                                ? (context, model) => _buildListItem1(model)
+                                : (context, model) => _buildListItem(model),
                             suspensionWidget: _buildSusWidget(_suspensionTag),
                             isUseRealIndex: true,
                             itemHeight: _itemHeight,
@@ -122,6 +144,48 @@ class _ChooseCityPageState extends BaseStoreState<ChooseCityPage> {
     );
   }
 
+  Widget _buildListItem1(AirportCityModel model) {
+    return Column(
+      children: <Widget>[
+        Offstage(
+          offstage: !(model.isShowSuspension == true),
+          child: _buildSusWidget(model.getSuspensionTag()),
+        ),
+        SizedBox(
+          height: _itemHeight.toDouble(),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              GestureDetector(
+                onTap: () {
+                  Get.back(result: model);
+                  // Navigator.pop(context, model);
+                },
+                child: Container(
+                  color: Colors.white,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.only(left: 15),
+                  height: _itemHeight.toDouble() - 1,
+                  child: Text(
+                    model.city,
+                    style: TextStyle(color: Colors.black, fontSize: 15 * 2.sp),
+                  ),
+                ),
+              ),
+              Container(
+                margin: EdgeInsets.only(
+                  left: 15,
+                ),
+                color: AppColor.frenchColor,
+                height: 1,
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   ///构建列表 item Widget.
   Widget _buildListItem(WeatherCityModel model) {
     return Column(
@@ -137,7 +201,8 @@ class _ChooseCityPageState extends BaseStoreState<ChooseCityPage> {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  Navigator.pop(context, model);
+                  Get.back(result: model);
+                  //Navigator.pop(context, model);
                 },
                 child: Container(
                   color: Colors.white,
@@ -213,13 +278,13 @@ class _ChooseCityPageState extends BaseStoreState<ChooseCityPage> {
                     fontSize: 14,
                     fontWeight: FontWeight.w300),
                 onSubmitted: (text) {
-                  // WeatherCityTool.getInstance().searchWithQuery(text, (list){
-                  //   _searchResultCityList = list;
-                  //   setState(() {});
-                  // });
+                  AriportCityTool.getInstance().searchWithQuery(text, (list) {
+                    _searchResultCityList = list;
+                    setState(() {});
+                  });
                 },
                 onChanged: (text) {
-                  WeatherCityTool.getInstance().searchWithQuery(text, (list) {
+                  AriportCityTool.getInstance().searchWithQuery(text, (list) {
                     _searchResultCityList = list;
                     setState(() {});
                   });
@@ -242,7 +307,7 @@ class _ChooseCityPageState extends BaseStoreState<ChooseCityPage> {
           : ListView.builder(
               itemCount: _searchResultCityList.length,
               itemBuilder: (BuildContext context, int index) {
-                return _buildListItem(_searchResultCityList[index]);
+                return _buildListItem1(_searchResultCityList[index]);
               },
             ),
     );

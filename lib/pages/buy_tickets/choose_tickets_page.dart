@@ -1,8 +1,12 @@
+import 'package:azlistview/azlistview.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
+import 'package:recook/pages/buy_tickets/models/airline_model.dart';
+import 'package:recook/pages/buy_tickets/models/airport_city_model.dart';
+import 'package:recook/pages/buy_tickets/tools/airport_city_tool.dart';
 import 'package:recook/utils/mvp.dart';
 import 'package:recook/widgets/calendar/calendar_vertial_widget.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -10,22 +14,27 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'airplane_reserve_page.dart';
 import 'as_date_range_picker_part.dart';
 import 'condition_picker.dart';
+import 'functions/passager_func.dart';
 
 class ChooseTicketsPage extends StatefulWidget {
   final String fromText; //出发地
   final String toText; //目的地
   final DateTime originDate; //出发日期
   final String code; //飞机票标准商品编号
+  final List<AirportCityModel> list;
   ChooseTicketsPage(
       {Key key,
       @required this.fromText,
       @required this.toText,
       @required this.originDate,
+      @required this.list,
       this.code})
       : super(key: key);
 
@@ -34,17 +43,13 @@ class ChooseTicketsPage extends StatefulWidget {
 }
 
 class _ChooseTicketsPageState extends State<ChooseTicketsPage>
-    with TickerProviderStateMixin, MvpListViewDelegate<GoodsSimple> {
+    with TickerProviderStateMixin {
   List<DateTime> _dateTableList = [];
   TabController _tabController;
   DateTime _dateNow = DateTime(DateTime.now().year, DateTime.now().month,
       DateTime.now().day, 0, 0); //当天0点
   DateTime _chooseDate; //最终选中的日期
   int index = 0; //默认为选择日期在日期列表的位置
-  //手指移动的位置
-  double _lastMoveY = 0.0;
-  //手指按下的位置
-  double _downY = 0.0;
   bool _chooseState = true;
   bool _choosePriceSort = true;
   bool _sortPriceType = true; //1 低-高排序 2高-低排序
@@ -52,11 +57,27 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
   bool _sortTimeType = true; //1 早-晚排序 2晚-早排序
   bool _chooseScreen = false;
 
+  GSRefreshController _refreshController =
+      GSRefreshController(initialRefresh: true);
+
+  List<AirLineModel> _airLineList;
+  List<AirportCityModel> _cityModelList = [];
+  // List formList = [];
+  // List toList = [];
+  bool showList = false;
   @override
   void initState() {
     super.initState();
-
     _chooseDate = widget.originDate;
+    _cityModelList = widget.list;
+    // Future.delayed(Duration.zero, () async {
+    //   _airLineList = await PassagerFunc.getAirLineList(
+    //       _getAirport(widget.fromText),
+    //       widget.code,
+    //       DateUtil.formatDate(_chooseDate, format: 'yyyy-MM-dd'),
+    //       _getAirport(widget.toText));
+    // });
+
     initDate();
   }
 
@@ -95,6 +116,7 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
                       onTap: (index) {
                         _chooseDate = _dateTableList[index];
                         //initDate();
+                        _refreshController.requestRefresh();
                         setState(() {});
                       },
                       isScrollable: true,
@@ -263,45 +285,85 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
     );
   }
 
-  _buildList(BuildContext context) {
-    return MvpListView<GoodsSimple>(
-      delegate: this,
-      //noDataView: noDataView("没有找到商品!"),
-//      padding: EdgeInsets.all(_displayList ? 0 : 10.0),
-      //controller: _listViewController,
-      type: ListViewType.grid,
-      // refreshCallback: () {
-
-      //   _presenter.fetchList(_category.id, 0, _sortType);
-      // },
-      // loadMoreCallback: (int page) {
-
-      //   _presenter.fetchList(_category.id, page, _sortType);
-      // },
-      gridViewBuilder: () => _buildListView(),
-    );
-  }
-
   _buildListView() {
-    return ListView.builder(
-        padding: EdgeInsets.only(bottom: 80.rw),
-        physics: AlwaysScrollableScrollPhysics(),
-        itemCount: 10, //_listViewController.getData().length,
+    return RefreshWidget(
+        controller: _refreshController,
+        noData: '抱歉，没有找到您想要的班次',
+        onRefresh: () async {
+          Function cancel = ReToast.loading();
+          _airLineList = await PassagerFunc.getAirLineList(
+              _getAirportList(widget.fromText),
+              widget.code,
+              DateUtil.formatDate(_chooseDate, format: 'yyyy-MM-dd'),
+              _getAirportList(widget.toText));
+          showList = true;
 
-        itemBuilder: (context, index) {
-          //GoodsSimple goods = _listViewController.getData()[index];
-          return MaterialButton(
-              padding: EdgeInsets.zero,
-              onPressed: () {
-                // AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                //     arguments: CommodityDetailPage.setArguments(goods.id));
-                Get.to(AirplaneReservePage());
-              },
-              child: _ticketsItem());
-        });
+          setState(() {});
+          _refreshController.refreshCompleted();
+          cancel();
+        },
+        body: _airLineList != null
+            ? ListView.builder(
+                padding: EdgeInsets.only(bottom: 80.rw),
+                physics: AlwaysScrollableScrollPhysics(),
+                itemCount: _airLineList[0]
+                    .airlinesListResponse
+                    .airlines
+                    .airline
+                    .length, //_listViewController.getData().length,
+
+                itemBuilder: (context, index) {
+                  //GoodsSimple goods = _listViewController.getData()[index];
+                  return MaterialButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: () {
+                        // AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                        //     arguments: CommodityDetailPage.setArguments(goods.id));
+                        Get.to(AirplaneReservePage());
+                      },
+                      child: _ticketsItem(_airLineList[0], index));
+                })
+            : showList
+                ? noDataView('抱歉，没有找到您想要的班次')
+                : SizedBox());
   }
 
-  _ticketsItem() {
+  //获取城市的机场列表
+  List<String> _getAirportList(String city) {
+    if (_cityModelList != null) {
+      int index = _cityModelList.indexWhere((element) => element.city == city);
+      List<AirPorts> list = _cityModelList[index].airPorts;
+      List<String> airportsList = [];
+      for (int i = 0; i < list.length; i++) {
+        airportsList.add(list[i].code);
+      }
+      return airportsList;
+      // _cityModelList.forEach((element) {
+      //   if (element.city == city) return element.airPorts;
+      // });
+    }
+    return [];
+  }
+
+  // //获取出发机场名称
+  // _getFormAirportByCode(String code) {
+  //   if (_cityModelList != null) {
+  //     formList = _getAirportList(widget.fromText);
+  //     int index = formList.indexWhere((element) => element.code == code);
+  //     return formList[index];
+  //   }
+  // }
+
+  // //获取到达机场名称
+  // _getToAirportByCode(String code) {
+  //   if (_cityModelList != null) {
+  //     toList = _getAirportList(widget.toText);
+  //     int index = toList.indexWhere((element) => element.code == code);
+  //     return toList[index];
+  //   }
+  // }
+
+  _ticketsItem(AirLineModel model, int index) {
     return Container(
       padding:
           EdgeInsets.only(left: 20.rw, right: 15.rw, top: 10.rw, bottom: 7.rw),
@@ -332,12 +394,14 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "21.00",
+                              model.airlinesListResponse.airlines.airline[index]
+                                  .depTime,
                               style: TextStyle(
                                   fontSize: 18.rsp, color: Color(0xFF333333)),
                             ),
                             Text(
-                              "浦东T1",
+                              model.airlinesListResponse.airlines.airline[index]
+                                  .orgCityName,
                               textAlign: TextAlign.left,
                               style: TextStyle(
                                   fontSize: 12.rsp, color: Color(0xFF333333)),
@@ -367,12 +431,14 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "23.00",
+                              model.airlinesListResponse.airlines.airline[index]
+                                  .arriTime,
                               style: TextStyle(
                                   fontSize: 18.rsp, color: Color(0xFF333333)),
                             ),
                             Text(
-                              "大兴西北",
+                              model.airlinesListResponse.airlines.airline[index]
+                                  .dstCityName,
                               style: TextStyle(
                                   fontSize: 12.rsp, color: Color(0xFF333333)),
                             ),
@@ -382,7 +448,13 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
                     ),
                     8.hb,
                     Text(
-                      "东航12345" + "|" + "波音747(中)",
+                      model.airlinesListResponse.airlines.airline[index]
+                              .flightCompanyName +
+                          model.airlinesListResponse.airlines.airline[index]
+                              .flightNo +
+                          "|" +
+                          model.airlinesListResponse.airlines.airline[index]
+                              .planeType,
                       textAlign: TextAlign.left,
                       style:
                           TextStyle(fontSize: 12.rsp, color: Color(0xFF666666)),
@@ -515,9 +587,30 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
     );
   }
 
-  @override
-  MvpListViewPresenterI<GoodsSimple, MvpView, MvpModel> getPresenter() {
-    // TODO: implement getPresenter
-    throw UnimplementedError();
+  noDataView(String text) {
+    return Container(
+      height: double.infinity,
+      width: double.infinity,
+      padding: EdgeInsets.only(top: 100.rw),
+      child: Column(
+        //mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Image.asset(
+            R.ASSETS_TICKET_TICKET_NODATA_ICON_PNG,
+            width: rSize(144.rw),
+            height: rSize(126.rw),
+          ),
+//          Icon(AppIcons.icon_no_data_search,size: rSize(80),color: Colors.grey),
+          40.hb,
+          Text(
+            text,
+            style: AppTextStyle.generate(12.rsp, color: Color(0xFF333333)),
+          ),
+          SizedBox(
+            height: rSize(30),
+          )
+        ],
+      ),
+    );
   }
 }
