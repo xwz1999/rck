@@ -66,15 +66,15 @@ class Airline {
   String flightCompanyCode;
   String flightNo;
   String planeType;
-  int adultAirportTax;
-  int adultFuelTax;
+  num adultAirportTax;
+  num adultFuelTax;
   String depTime;
   String arriTime;
   String orgCity;
   String orgCityName;
   String dstCity;
   String dstCityName;
-  int basePrice;
+  num basePrice;
   AirSeats airSeats;
 
   Airline(
@@ -163,17 +163,17 @@ class AirSeat {
   String seatMsg;
   String seatStatus;
   Null serviceLevel;
-  double settlePrice;
+  num settlePrice;
   Null changePercentAfter;
   Null changePercentBefore;
   Null changeStipulate;
   Null changeTimePoint;
-  double commisionMoney;
+  num commisionMoney;
   String commisionPoint;
-  double discount;
+  num discount;
   bool hasQueryedStipulate;
-  int parPrice;
-  int policyId;
+  num parPrice;
+  num policyId;
   Null refundPercentBefore;
   Null refundPercentAfter;
   String refundStipulate;

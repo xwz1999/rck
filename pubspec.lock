@@ -56,7 +56,7 @@ packages:
       name: async
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.5.0"
+    version: "2.6.1"
   audio_session:
     dependency: transitive
     description:
@@ -1031,12 +1031,10 @@ packages:
   photo:
     dependency: "direct main"
     description:
-      path: "."
-      ref: patch-1
-      resolved-ref: "8109f390d338d501d0734343dd0bc3690b1be8c5"
-      url: "https://github.com/customPub/flutter_photo"
-    source: git
-    version: "0.5.0"
+      name: photo
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.5.0-dev.1"
   photo_manager:
     dependency: transitive
     description:
@@ -1253,7 +1251,7 @@ packages:
       name: source_span
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.8.0"
+    version: "1.8.1"
   sp_util:
     dependency: transitive
     description:
@@ -1341,7 +1339,7 @@ packages:
       name: test_api
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.19"
+    version: "0.3.0"
   timeline_tile:
     dependency: "direct main"
     description:
