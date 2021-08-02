@@ -126,7 +126,7 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
 
   void onTap(int index) {
     if (index == 0) {
-      Get.to(TicketsOrderPage());
+      Get.to(TicketsOrderPage(ticketType: 1,));
     } else {
       Get.to(UsedPassagerPage());
     }
