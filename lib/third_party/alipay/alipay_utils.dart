@@ -13,15 +13,15 @@ import 'package:recook/utils/print_util.dart';
 import 'package:recook/widgets/toast.dart';
 
 enum AliPayResultCode {
-  success,  // 9000 订单支付成功
-  cancel,   // 6001 用户中途取消
-  fail,   // 4000 订单支付失败
+  success, // 9000 订单支付成功
+  cancel, // 6001 用户中途取消
+  fail, // 4000 订单支付失败
   repeat, // 5000 重复请求
   processing, // 8000 正在处理中，支付结果未知（有可能已经支付成功），请查询商户订单列表中订单的支付状态
   error, // 6002 网络连接出错
-  unknown,  // 6004  支付结果未知（有可能已经支付成功），请查询商户订单列表中订单的支付状态
+  unknown, // 6004  支付结果未知（有可能已经支付成功），请查询商户订单列表中订单的支付状态
   other, // 其它支付错误
-  exception  // 自己try catch 中出错
+  exception // 自己try catch 中出错
 }
 
 class AliPayResult {
@@ -61,9 +61,9 @@ class AliPayResult {
   }
 }
 
-
 class AliPayUtils {
-  static Future<AliPayResult> callAliPay(String payInfo, {tobias.AliPayEvn evn = tobias.AliPayEvn.ONLINE}) async {
+  static Future<AliPayResult> callAliPay(String payInfo,
+      {tobias.AliPayEvn evn = tobias.AliPayEvn.ONLINE}) async {
     var install = await tobias.isAliPayInstalled();
     DPrint.printf("支付宝是否安装 ----- $install");
     if (!install) {
@@ -71,10 +71,11 @@ class AliPayUtils {
       return null;
     }
 
-    AliPayResult payResult ;
+    AliPayResult payResult;
     try {
       print("The pay info is : " + payInfo);
       Map result = await tobias.aliPay(payInfo, evn: evn);
+      print(result.toString());
       payResult = _result(result);
     } on Exception catch (e) {
 //      payResult = false;
@@ -87,6 +88,9 @@ class AliPayUtils {
   static _result(Map resultMap) {
     print("The pay result is : $resultMap");
 
-    return AliPayResult(code: int.parse(resultMap["resultStatus"]), msg: resultMap["memo"], platform:resultMap["platform"]);
+    return AliPayResult(
+        code: int.parse(resultMap["resultStatus"]),
+        msg: resultMap["memo"],
+        platform: resultMap["platform"]);
   }
 }

@@ -1,37 +1,91 @@
+import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/order_prepay_model.dart';
+import 'package:recook/pages/buy_tickets/add_used_passager_page.dart';
+import 'package:recook/pages/buy_tickets/models/passager_model.dart';
+import 'package:recook/pages/buy_tickets/models/submit_order_model.dart';
+import 'package:recook/pages/home/classify/order_prepay_page.dart';
+import 'package:recook/utils/date/date_utils.dart';
+import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import 'functions/passager_func.dart';
+import 'models/airline_model.dart';
+
 class AirplaneDetailPage extends StatefulWidget {
-  AirplaneDetailPage({Key key}) : super(key: key);
+  final List<Airline> airline;
+  final String fromText; //出发地
+  final String toText; //目的地
+  final DateTime originDate; //出发日期
+  final int airlineindex;
+  final AirSeat airSeat;
+  AirplaneDetailPage(
+      {Key key,
+      this.airline,
+      this.fromText,
+      this.toText,
+      this.originDate,
+      this.airlineindex,
+      this.airSeat})
+      : super(key: key);
 
   @override
   _AirplaneDetailPageState createState() => _AirplaneDetailPageState();
 }
 
 class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
-  List<Item> _passengerList = [];
-  List<Item> _ChoosePassengerList = [];
+  List<PassagerModel> _passengerList = [];
+  List<PassagerModel> _ChoosePassengerList = [];
   String _contactNum = '';
+  Airline airline;
+  AirSeat airSeat;
+  DateTime _dateNow = DateTime(
+      DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0);
 
   @override
   void initState() {
     super.initState();
-    _passengerList
-        .add(Item(item: '张伟', choice: false, num: '12345678901234567890'));
-    _passengerList
-        .add(Item(item: '欧阳青青', choice: false, num: '12345678901234567'));
-    _passengerList
-        .add(Item(item: '小星星', choice: false, num: '12345678901234567890'));
-    _passengerList
-        .add(Item(item: '吕小树', choice: false, num: '12345678901234567890'));
+    airline = widget.airline[widget.airlineindex];
+    airSeat = widget.airSeat;
+    // _passengerList.add(PassagerModel(name: '更多'));
+    initData();
+
+    // _passengerList
+    //     .add(Item(item: '张伟', choice: false, num: '12345678901234567890'));
+    // _passengerList
+    //     .add(Item(item: '欧阳青青', choice: false, num: '12345678901234567'));
+    // _passengerList
+    //     .add(Item(item: '小星星', choice: false, num: '12345678901234567890'));
+    // _passengerList
+    //     .add(Item(item: '吕小树', choice: false, num: '12345678901234567890'));
+  }
+
+  initData() {
+    Future.delayed(Duration.zero, () async {
+      _passengerList =
+          await PassagerFunc.getPassagerList(UserManager.instance.user.info.id);
+      if (_passengerList == null) {
+        _passengerList = [];
+      }
+
+      if (_passengerList.length > 0) {
+        for (var i = 0; i < _passengerList.length; i++) {
+          _passengerList[i].choice = false;
+        }
+      }
+      _ChoosePassengerList = [];
+      setState(() {});
+    });
   }
 
   @override
@@ -47,7 +101,7 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
       appBar: CustomAppBar(
         appBackground: Color(0xFFF9F9FB),
         elevation: 0,
-        title: '上海-北京',
+        title: widget.fromText + '-' + widget.toText,
         themeData: AppThemes.themeDataGrey.appBarTheme,
       ),
       body: Container(
@@ -100,7 +154,11 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
                 ),
               ),
               Text(
-                "0",
+                (_ChoosePassengerList.length *
+                        (airline.adultFuelTax +
+                            airline.adultAirportTax +
+                            airSeat.parPrice))
+                    .toString(),
                 style: TextStyle(fontSize: 18.rsp, color: Color(0xFFD5101A)),
               ),
             ],
@@ -148,7 +206,91 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
                 backgroundColor: Color(0xFFC92219),
                 color: Colors.white,
                 fontSize: 14.rsp,
-                onPressed: () {
+                onPressed: () async {
+                  Function cancel = ReToast.loading();
+                  if (_ChoosePassengerList.length <= 0) {
+                    Alert.show(
+                        context,
+                        NormalTextDialog(
+                          type: NormalTextDialogType.normal,
+                          title: "提示",
+                          content: "请您先选择乘客",
+                          items: ["确认"],
+                          listener: (index) {
+                            Alert.dismiss(context);
+                          },
+                        ));
+                  } else if (_contactNum == '') {
+                    Alert.show(
+                        context,
+                        NormalTextDialog(
+                          type: NormalTextDialogType.normal,
+                          title: "提示",
+                          content: "请您先输入联系电话",
+                          items: ["确认"],
+                          listener: (index) {
+                            Alert.dismiss(context);
+                          },
+                        ));
+                  } else {
+                    SubmitOrderModel submitOrderModel =
+                        await PassagerFunc.submitAirOrder(
+                            _getTitle(1),
+                            1,
+                            // (_ChoosePassengerList.length *
+                            //     (airline.adultFuelTax +
+                            //         airline.adultAirportTax +
+                            //         airSeat.parPrice)),
+                            0.01,
+                            widget.fromText,
+                            widget.toText,
+                            airline.depTime,
+                            airline.arriTime,
+                            airline.orgCityName,
+                            airline.dstCityName,
+                            airline.flightCompanyName + airline.flightNo,
+                            _getUserId(),
+                            _contactNum);
+                    if (submitOrderModel == null) {
+                      cancel();
+                      Alert.show(
+                          context,
+                          NormalTextDialog(
+                            type: NormalTextDialogType.normal,
+                            title: "提示",
+                            content: "提交订单失败！",
+                            items: ["确认"],
+                            listener: (index) {
+                              Alert.dismiss(context);
+                            },
+                          ));
+                    } else {
+                      //跳转到支付页面
+                      //Get.to(page)
+                      Data data = Data(
+                          submitOrderModel.id,
+                          submitOrderModel.userId,
+                          double.parse(submitOrderModel.amountMoney.toString()),
+                          submitOrderModel.status,
+                          submitOrderModel.createdTime);
+                      OrderPrepayModel resultModel =
+                          OrderPrepayModel("SUCCESS", data, "");
+                      AppRouter.pushAndReplaced(
+                          context, RouteName.ORDER_PREPAY_PAGE,
+                          arguments: OrderPrepayPage.setArguments(
+                            resultModel,
+                            goToOrder: false,
+                            canUseBalance: true,
+                            fromTo: airline.orgCityName +
+                                '--' +
+                                airline.dstCityName,
+                          ));
+                      cancel();
+                    }
+
+                    //if(submitOrderModel)
+                  }
+
                   //Get.to(AirplaneDetailPage());
                 },
               ),
@@ -158,6 +300,37 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
         ],
       ),
     );
+  }
+
+  _getTitle(int goods_type) {
+    String user = '';
+    if (_ChoosePassengerList.length > 0) {}
+    for (var i = 0; i < _ChoosePassengerList.length; i++) {
+      if (user == '') {
+        user = user + _ChoosePassengerList[i].name;
+      } else {
+        user = user + ',' + _ChoosePassengerList[i].name;
+      }
+    }
+    return '飞机票' +
+        ',' +
+        airline.orgCityName +
+        '-' +
+        airline.dstCityName +
+        ',' +
+        user;
+  }
+
+  _getUserId() {
+    String userId = '';
+    for (var i = 0; i < _ChoosePassengerList.length; i++) {
+      if (userId == '') {
+        userId = userId + _ChoosePassengerList[i].id.toString();
+      } else {
+        userId = userId + ',' + _ChoosePassengerList[i].id.toString();
+      }
+    }
+    return userId;
   }
 
   _bottomSheet() {
@@ -184,7 +357,10 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
                           TextStyle(fontSize: 16.rsp, color: Color(0xFF333333)),
                     ),
                     Text(
-                      "¥400 * 3张",
+                      "￥" +
+                          airSeat.parPrice.toString() +
+                          ' * ' +
+                          _ChoosePassengerList.length.toString(),
                       style:
                           TextStyle(fontSize: 16.rsp, color: Color(0xFF333333)),
                     ),
@@ -195,12 +371,15 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "基建",
+                      "机建",
                       style:
                           TextStyle(fontSize: 16.rsp, color: Color(0xFF333333)),
                     ),
                     Text(
-                      "¥50",
+                      "￥" +
+                          airline.adultAirportTax.toString() +
+                          ' * ' +
+                          _ChoosePassengerList.length.toString(),
                       style:
                           TextStyle(fontSize: 16.rsp, color: Color(0xFF333333)),
                     ),
@@ -216,7 +395,10 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
                           TextStyle(fontSize: 16.rsp, color: Color(0xFF333333)),
                     ),
                     Text(
-                      "¥0",
+                      "￥" +
+                          airline.adultFuelTax.toString() +
+                          ' * ' +
+                          _ChoosePassengerList.length.toString(),
                       style:
                           TextStyle(fontSize: 16.rsp, color: Color(0xFF333333)),
                     ),
@@ -243,12 +425,11 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
         children: [
           20.wb,
           Container(
-            child: CustomCacheImage(
-              borderRadius: BorderRadius.circular(5),
+            padding: EdgeInsets.only(top: 2.rw),
+            child: Image.asset(
+              R.ASSETS_TICKET_PHONE_ICON_PNG,
               width: 10.rw,
               height: 10.rw,
-              imageUrl: R.ASSETS_ORDER_ALERT_PNG,
-              fit: BoxFit.cover,
             ),
           ),
           10.wb,
@@ -293,7 +474,9 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
             children: [
               Container(
                 child: Text(
-                  "06月23日 后天",
+                  DateUtil.formatDate(widget.originDate, format: 'MM月dd日') +
+                      " " +
+                      getDayWeek(widget.originDate),
                   style: TextStyle(fontSize: 12.rsp, color: Color(0xFF333333)),
                 ),
               )
@@ -307,12 +490,12 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "21.00",
+                    airline.depTime,
                     style:
                         TextStyle(fontSize: 24.rsp, color: Color(0xFF333333)),
                   ),
                   Text(
-                    "浦东T1",
+                    airline.orgCityName,
                     textAlign: TextAlign.left,
                     style:
                         TextStyle(fontSize: 14.rsp, color: Color(0xFF333333)),
@@ -326,30 +509,31 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
                 child: Column(
                   children: [
                     Text(
-                      "2h25m",
+                      DateUtilss.getTimeReduce(
+                          airline.depTime, airline.arriTime),
                       style:
                           TextStyle(fontSize: 12.rsp, color: Color(0xFF333333)),
                     ),
                     10.hb,
-                    Container(
+                    Image.asset(
+                      R.ASSETS_TICKET_GOTO2_ICON_PNG,
                       width: 68.rw,
                       height: 7.rw,
-                      color: Colors.black,
                     ),
                   ],
                 ),
               ),
               40.wb,
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "23.00",
+                    airline.arriTime,
                     style:
                         TextStyle(fontSize: 24.rsp, color: Color(0xFF333333)),
                   ),
                   Text(
-                    "大兴西北",
+                    airline.dstCityName,
                     style:
                         TextStyle(fontSize: 14.rsp, color: Color(0xFF333333)),
                   ),
@@ -361,22 +545,13 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                child: CustomCacheImage(
-                  borderRadius: BorderRadius.circular(5),
-                  width: 10.rw,
-                  height: 10.rw,
-                  imageUrl: R.ASSETS_ORDER_ALERT_PNG,
-                  fit: BoxFit.cover,
-                ),
-              ),
               Text(
-                "东方航空CA8685",
+                airline.flightCompanyName + airline.flightNo,
                 style: TextStyle(fontSize: 12.rsp, color: Color(0xFF333333)),
               ),
               20.wb,
               Text(
-                "波音747-aaaa (中)",
+                _getPlaneNameByType(airline.planeType),
                 textAlign: TextAlign.left,
                 style: TextStyle(fontSize: 12.rsp, color: Color(0xFF666666)),
               ),
@@ -395,23 +570,15 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                "成人¥700,",
+                "成人¥" + airSeat.parPrice.toString() + '，',
                 style: TextStyle(fontSize: 14.rsp, color: Color(0xFF666666)),
               ),
               Text(
-                "机建+燃油 ¥700",
+                "机建+燃油 ¥" +
+                    (airline.adultFuelTax + airline.adultAirportTax).toString(),
                 style: TextStyle(fontSize: 14.rsp, color: Color(0xFF666666)),
               ),
               20.wb,
-              Container(
-                child: CustomCacheImage(
-                  borderRadius: BorderRadius.circular(5),
-                  width: 10.rw,
-                  height: 10.rw,
-                  imageUrl: R.ASSETS_ORDER_ALERT_PNG,
-                  fit: BoxFit.cover,
-                ),
-              ),
             ],
           ),
         ],
@@ -427,8 +594,8 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
         children: [
           Container(
             padding: EdgeInsets.symmetric(horizontal: 15.rw),
-            height:
-                _getHeight(_passengerList.length, _ChoosePassengerList.length),
+            height: _getHeight(
+                _passengerList.length + 1, _ChoosePassengerList.length),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(4.rw)),
               color: Colors.white,
@@ -445,6 +612,30 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
     ).expand();
   }
 
+  _getPlaneNameByType(String type) {
+    String first = type.substring(0, 1);
+    if (first == "7") {
+      return '波音' + type;
+    } else if (first == '3') {
+      return '空客' + type;
+    } else {
+      return type;
+    }
+  }
+
+  getDayWeek(DateTime date) {
+    //获取当天是周几
+    if (date == _dateNow) {
+      return '今天';
+    } else if (date == _dateNow.add(new Duration(days: 1))) {
+      return '明天';
+    } else if (date == _dateNow.add(new Duration(days: 2))) {
+      return '后天';
+    } else {
+      return DateUtil.getWeekday(date, languageCode: 'zh', short: true);
+    }
+  }
+
   _getHeight(int top, int bottom) {
     if (top < 5) {
       if (bottom == 0) {
@@ -452,17 +643,49 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
       } else {
         return 105.rw + bottom * 31.rw;
       }
-    } else if (top > 5) {
+    } else if (top >= 5) {
       if (bottom <= 8) {
-        return 105.rw + bottom * 31.rw + (top ~/ 4 - 1) * 53.rw;
+        return 105.rw + bottom * 31.rw + (top ~/ 4) * 53.rw;
       } else {
-        return 105.rw + 8 * 31.rw + (top ~/ 4 - 1) * 53.rw;
+        return 105.rw + 8 * 31.rw + (top ~/ 4) * 53.rw;
       }
     }
   }
 
+  Widget _moreBtn(VoidCallback onPressed) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+          width: 68.rw,
+          height: 38.rw,
+          padding: EdgeInsets.only(top: 2.rw),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(3.rw)),
+              border: Border.all(color: Color(0xFF999999), width: 0.5.rw)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                R.ASSETS_TICKET_ADD_ICON_PNG,
+                width: 16.rw,
+                height: 16.rw,
+              ),
+              10.wb,
+              Container(
+                padding: EdgeInsets.only(bottom: 3.rw),
+                child: Text(
+                  "更多",
+                  style: TextStyle(fontSize: 14.rsp, color: Color(0xFFD5101A)),
+                ),
+              )
+            ],
+          )),
+    );
+  }
+
   Widget _getItemContainer(
-      Item item, index, VoidCallback onPressed, bool selected) {
+      PassagerModel item, index, VoidCallback onPressed, bool selected) {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
@@ -480,7 +703,7 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
                 selected ? MainAxisAlignment.end : MainAxisAlignment.center,
             children: [
               Text(
-                item.item,
+                item.name,
                 style: TextStyle(fontSize: 14.rsp, color: Color(0xFF666666)),
               ),
               !selected ? 5.hb : SizedBox(),
@@ -510,7 +733,7 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
     );
   }
 
-  _getPassengerItem(Item item, index, VoidCallback onPressed) {
+  _getPassengerItem(PassagerModel item, index, VoidCallback onPressed) {
     return Container(
       padding: EdgeInsets.only(top: 10.rw),
       child: Row(
@@ -518,7 +741,7 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
           Container(
             width: 80.rw,
             child: Text(
-              item.item,
+              item.name,
               style: TextStyle(
                   fontSize: 16.rsp,
                   color: Color(0xFF333333),
@@ -529,12 +752,27 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
           Container(
             width: 200.rw,
             child: Text(
-              _getCardId(item.num),
+              _getCardId(item.residentIdCard),
               style: TextStyle(fontSize: 16.rsp, color: Color(0xFF666666)),
             ),
           ),
           30.wb,
-          Icon(CupertinoIcons.check_mark, size: 20, color: Colors.blue),
+          GestureDetector(
+            onTap: () async {
+              String code = await Get.to(AddUsedPassagerPage(
+                type: 2,
+                item: item,
+              ));
+              if (code == 'SUCCESS') {
+                initData();
+              }
+            },
+            child: Image.asset(
+              R.ASSETS_TICKET_EDIT_ICON_PNG,
+              width: 14.rw,
+              height: 14.rw,
+            ),
+          )
         ],
       ),
     );
@@ -560,22 +798,32 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
         SliverGrid(
             delegate:
                 SliverChildBuilderDelegate((BuildContext context, int index) {
-              return _getItemContainer(_passengerList[index], index, () {
-                setState(() {
-                  _passengerList[index].choice = !_passengerList[index].choice;
-                  if (_passengerList[index].choice) {
-                    _ChoosePassengerList.add(_passengerList[index]);
-                  } else {
-                    if (_ChoosePassengerList.indexOf(_passengerList[index]) !=
-                        -1) {
-                      _ChoosePassengerList.removeAt(
-                          _ChoosePassengerList.indexOf(_passengerList[index]));
-                    }
-                  }
-                  setState(() {});
-                });
-              }, _passengerList[index].choice);
-            }, childCount: _passengerList.length),
+              return index == _passengerList.length
+                  ? _moreBtn(() async {
+                      String code = await Get.to(AddUsedPassagerPage(type: 1));
+                      if (code == 'SUCCESS') {
+                        initData();
+                      }
+                    })
+                  : _getItemContainer(_passengerList[index], index, () {
+                      setState(() {
+                        _passengerList[index].choice =
+                            !_passengerList[index].choice;
+                        if (_passengerList[index].choice) {
+                          _ChoosePassengerList.add(_passengerList[index]);
+                        } else {
+                          if (_ChoosePassengerList.indexOf(
+                                  _passengerList[index]) !=
+                              -1) {
+                            _ChoosePassengerList.removeAt(
+                                _ChoosePassengerList.indexOf(
+                                    _passengerList[index]));
+                          }
+                        }
+                        setState(() {});
+                      });
+                    }, _passengerList[index].choice);
+            }, childCount: _passengerList.length + 1),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 4,
               crossAxisSpacing: 10.rw,
@@ -609,15 +857,18 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
   }
 
   _getCardId(String id) {
-    String hear = id.substring(0, 4);
-    String foot = id.substring(id.length - 3);
-    String newId = '';
-    if (id.length > 7) {
-      for (var i = 0; i < id.length - 7; i++) {
-        newId += '*';
+    if (id.length > 5) {
+      String hear = id.substring(0, 4);
+      String foot = id.substring(id.length - 3);
+      String newId = '';
+      if (id.length > 7) {
+        for (var i = 0; i < id.length - 7; i++) {
+          newId += '*';
+        }
       }
+      return hear + newId + foot;
     }
-    return hear + newId + foot;
+    return id;
   }
 }
 

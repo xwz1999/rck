@@ -41,11 +41,12 @@ class OrderPrepayPage extends StatefulWidget {
   const OrderPrepayPage({Key key, this.arguments}) : super(key: key);
 
   static setArguments(OrderPrepayModel model,
-      {bool goToOrder = false, bool canUseBalance = true}) {
+      {bool goToOrder = false, bool canUseBalance = true, String fromTo = ''}) {
     return {
       "model": model,
       "goToOrder": goToOrder,
       "canUseBalance": canUseBalance,
+      "fromTo": fromTo,
     };
   }
 
@@ -66,6 +67,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
 
   /// 取消支付后是否跳转到订单界面，从预览订单进来的会调到订单，订单列表继续支付进来的只会pop
   bool _goToOrder;
+  String _fromTo;
 
   bool _canUseBalance = true;
 
@@ -104,6 +106,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     _presenter = OrderPresenterImpl();
     _model = widget.arguments["model"];
     _goToOrder = widget.arguments["goToOrder"];
+    _fromTo = widget.arguments["fromTo"];
     _canUseBalance = widget.arguments['canUseBalance'] ?? true;
     _presenter
         .queryRecookPayFund(UserManager.instance.user.info.id)
@@ -144,7 +147,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     //TODO 每次应用进入后台返回前台都会进行订单验证操作，这里需要重写
     if (state == AppLifecycleState.resumed && !_lifecycleLock) {
       DPrint.printf("app 进入前台了");
-      _verifyPayStatus();
+      _fromTo == null ? _verifyPayStatus() : _verifyPayStatusLifang();
       _clickPay = false;
     }
   }
@@ -162,7 +165,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         body: _buildBody(context),
       ),
       onWillPop: () {
-        Alert.show(
+        _fromTo == null?Alert.show(
             context,
             NormalTextDialog(
               type: NormalTextDialogType.delete,
@@ -184,7 +187,26 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
                 }
                 Navigator.pop(context);
               },
-            ));
+            )):
+            Alert.show(
+            context,
+            NormalTextDialog(
+              type: NormalTextDialogType.delete,
+              title: "确认要离开收银台?",
+              content: "您的订单将在您退出收银台后取消,请尽快支付！",
+              items: ["继续支付"],
+              listener: (index) {
+                Alert.dismiss(context);
+              },
+              deleteItem: "确认离开",
+              deleteListener: () {
+                _updateUserBrief();
+                Alert.dismiss(context);
+
+                Navigator.pop(context);
+              },
+            ))
+            ;
         return Future.value(false);
       },
     );
@@ -199,33 +221,42 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
           textAlign: TextAlign.center,
           style: AppTextStyle.generate(15 * 2.sp, color: Colors.grey),
         ),
+        _fromTo != null
+            ? Text(
+                _fromTo,
+                textAlign: TextAlign.center,
+                style: AppTextStyle.generate(15 * 2.sp, color: Colors.grey),
+              )
+            : SizedBox(),
         Container(
           height: rSize(50),
         ),
-        _payTile(
-            "",
-            SvgPicture.asset(
-              AppSvg.svg_balance_pay,
-              width: rSize(30),
-              height: rSize(30),
-            ),
-            0,
-            widgetTitle: RichText(
-              text: TextSpan(
-                  text: "余额支付 ",
-                  style: AppTextStyle.generate(17 * 2.sp),
-                  children: [
-                    TextSpan(
-                        style: AppTextStyle.generate(14 * 2.sp,
-                            color: Colors.grey),
-                        text:
-                            "(可用余额: ￥${_recookFundModel == null ? "--" : _recookFundModel.data.amount})")
-                  ]),
-            ),
-            enable: _recookFundModel != null &&
-                (_recookFundModel.data.amount >=
-                    _model.data.actualTotalAmount) &&
-                _canUseBalance),
+        _fromTo == ''
+            ? _payTile(
+                "",
+                SvgPicture.asset(
+                  AppSvg.svg_balance_pay,
+                  width: rSize(30),
+                  height: rSize(30),
+                ),
+                0,
+                widgetTitle: RichText(
+                  text: TextSpan(
+                      text: "余额支付 ",
+                      style: AppTextStyle.generate(17 * 2.sp),
+                      children: [
+                        TextSpan(
+                            style: AppTextStyle.generate(14 * 2.sp,
+                                color: Colors.grey),
+                            text:
+                                "(可用余额: ￥${_recookFundModel == null ? "--" : _recookFundModel.data.amount})")
+                      ]),
+                ),
+                enable: _recookFundModel != null &&
+                    (_recookFundModel.data.amount >=
+                        _model.data.actualTotalAmount) &&
+                    _canUseBalance)
+            : SizedBox(),
         _payTile(
             "微信支付",
             Icon(
@@ -356,16 +387,16 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     switch (_defaultPayIndex) {
       case 0:
         // _recookPay();
-        _submitPassword();
+        _fromTo == '' ? _submitPassword() : SizedBox();
         break;
       case 1:
-        _weChatPay(context);
+        _fromTo == '' ? _weChatPay(context) : _weChatPayLifang(context);
         break;
       case 2:
-        _aliPay(context);
+        _fromTo == '' ? _aliPay(context) : _aliPayLifang(context);
         break;
       case 3:
-        _unionPay(context);
+        _fromTo == '' ? _unionPay(context) : _unionPayLifang(context);
         break;
     }
   }
@@ -395,6 +426,18 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     AliPayUtils.callAliPay(resultModel.data.data.orderString);
   }
 
+  _aliPayLifang(BuildContext context) async {
+    HttpResultModel<AlipayOrderModel> resultModel =
+        await _presenter.createAliPayOrderLifang(
+            UserManager.instance.user.info.id, _model.data.id);
+    dismissLoading();
+    if (!resultModel.result) {
+      GSDialog.of(context).showError(context, resultModel.msg);
+      return;
+    }
+    AliPayUtils.callAliPay(resultModel.data.data.orderString);
+  }
+
   _weChatPay(BuildContext context) async {
     HttpResultModel<PayInfoModel> resultModel = await _presenter
         .createWeChatOrder(UserManager.instance.user.info.id, _model.data.id);
@@ -415,9 +458,46 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         listener: (WXPayResult result) {});
   }
 
+  _weChatPayLifang(BuildContext context) async {
+    HttpResultModel<PayInfoModel> resultModel =
+        await _presenter.createWeChatOrderLifang(
+            UserManager.instance.user.info.id, _model.data.id);
+    GSDialog.of(context).dismiss(context);
+    if (!resultModel.result) {
+      GSDialog.of(context).showError(context, resultModel.msg);
+      return;
+    }
+    PayInfoModel wxPayModel = resultModel.data;
+    WeChatUtils.pay(
+        appId: wxPayModel.payInfo.appid,
+        partnerId: wxPayModel.payInfo.partnerid,
+        prepayId: wxPayModel.payInfo.prepayid,
+        packageValue: wxPayModel.payInfo.package,
+        nonceStr: wxPayModel.payInfo.noncestr,
+        timeStamp: int.parse(wxPayModel.payInfo.timestamp),
+        sign: wxPayModel.payInfo.sign,
+        listener: (WXPayResult result) {});
+  }
+
   _unionPay(BuildContext context) async {
     ResultData resultData =
         await HttpManager.post("/v1/pay/unionpay/order/create", {
+      "orderId": _model.data.id,
+      "userId": UserManager.instance.user.info.id,
+    });
+    dismissLoading();
+    if (!TextUtil.isEmpty(resultData?.data['data']['tn'] ?? null)) {
+      FlutterUnionPay.pay(
+        tn: resultData?.data['data']['tn'],
+        mode: AppConfig.debug ? PaymentEnv.DEVELOPMENT : PaymentEnv.PRODUCT,
+        scheme: "RecookUnionPay",
+      );
+    }
+  }
+
+  _unionPayLifang(BuildContext context) async {
+    ResultData resultData = await HttpManager.post(
+        "/v2/app/liFang_ticketing/order_pay/pay/unionpay_order", {
       "orderId": _model.data.id,
       "userId": UserManager.instance.user.info.id,
     });
@@ -564,6 +644,37 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     _updateUserBrief();
     AppRouter.pushAndReplaced(globalContext, RouteName.ORDER_LIST_PAGE,
         arguments: OrderCenterPage.setArguments(2));
+  }
+
+  _verifyPayStatusLifang() async {
+    GSDialog.of(_scaffoldKey.currentContext)
+        .showLoadingDialog(_scaffoldKey.currentContext, "正在验证订单...");
+
+    await Future.delayed(Duration(seconds: 1));
+
+    HttpResultModel<PayResult> resultModel =
+        await _presenter.verifyOrderPayStatusLifang(_model.data.id);
+
+    GSDialog.of(_scaffoldKey.currentContext)
+        .dismiss(_scaffoldKey.currentContext);
+
+    if (!resultModel.result) {
+      GSDialog.of(_scaffoldKey.currentContext)
+          .showError(_scaffoldKey.currentContext, resultModel.msg);
+      return;
+    }
+
+    if (resultModel.data.status == 0) {
+      
+      
+      ReToast.success(text: '购票成功');
+      Navigator.pop(context);
+      
+    } else {
+      ReToast.success(text: '购票成功');
+      Navigator.pop(context);
+    }
+
   }
 
   _updateUserBrief() {

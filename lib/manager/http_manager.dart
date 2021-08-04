@@ -159,7 +159,7 @@ class HttpManager {
     Dio dio = new Dio();
 
     dio.options.baseUrl = Api.host;
-    dio.options.connectTimeout = 5000;
+    dio.options.connectTimeout = 10000;
     dio.options.receiveTimeout = 5000;
     dio.options.method = "POST";
 

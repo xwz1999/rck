@@ -1,6 +1,27 @@
 import 'package:recook/utils/date/date_models.dart';
 
 class DateUtilss {
+  //获取 10：00 -8：00的时间差
+  static String getTimeReduce(String timeE, String timeL) {
+    int hourL = int.parse(timeL.substring(0, 2)); //晚的时间的小时
+    int hourE = int.parse(timeE.substring(0, 2));
+    //早的时间的小时
+    int minL = int.parse(timeL.substring(3, 5)); //晚的时间的小时
+    int minE = int.parse(timeE.substring(3, 5)); //早的时间的小时
+
+    int hourDifference = hourL - hourE; //时间差
+    int minDifference = minL - minE;
+
+    if (hourDifference < 0) {
+      hourDifference = hourL - hourE + 24;
+    }
+    if (minDifference < 0) {
+      hourDifference = hourDifference - 1;
+      minDifference = minDifference.abs();
+    }
+    return hourDifference.toString() + 'h' + minDifference.toString() + 'm';
+  }
+
   static bool sameDay(DateTime day, DateTime diffDay) {
     return (day.year == diffDay.year &&
         day.month == diffDay.month &&

@@ -172,11 +172,10 @@ dependencies:
   #     ref: 4073e1ff7db967aad4f97f0eee5909c5f8f339b5
 
   # 图片选择
-  # photo:
-  #   git:
-  #     url: https://github.com/customPub/flutter_photo
-  #     ref: patch-1
-  photo: 0.5.0-dev.1
+  photo:
+    git:
+      url: https://github.com/customPub/flutter_photo
+      ref: patch-1
   # wechat_assets_picker: ^2.2.0+2
 
   image_gallery_saver: 1.6.9

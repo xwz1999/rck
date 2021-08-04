@@ -4,9 +4,11 @@ import 'package:recook/constants/api_v2.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/buy_tickets/models/air_items_list_model.dart';
+import 'package:recook/pages/buy_tickets/models/air_order_model.dart';
 import 'package:recook/pages/buy_tickets/models/airline_model.dart';
 import 'package:recook/pages/buy_tickets/models/airport_city_model.dart';
 import 'package:recook/pages/buy_tickets/models/passager_model.dart';
+import 'package:recook/pages/buy_tickets/models/submit_order_model.dart';
 import 'package:recook/utils/storage/hive_store.dart';
 
 class PassagerFunc {
@@ -97,7 +99,7 @@ class PassagerFunc {
       'id': UserManager.instance.user.info.id,
       'from': from,
       'item_id': itemId,
-      'date': '2021-08-21',
+      'date': date,
       'to': to
     });
     if (result.data != null) {
@@ -105,6 +107,60 @@ class PassagerFunc {
         return (result.data['data'] as List)
             .map((e) => AirLineModel.fromJson(e))
             .toList();
+      }
+    }
+    return [];
+  }
+
+  //获取订单列表
+  static Future<List<AirOrderModel>> getAirOrderList() async {
+    ResultData result =
+        await HttpManager.post(APIV2.ticketAPI.getAirOrderList, {
+      'user_id': 3816 //UserManager.instance.user.info.id,
+    });
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return (result.data['data'] as List)
+            .map((e) => AirOrderModel.fromJson(e))
+            .toList();
+      }
+    }
+  }
+
+  //提交订单接口
+  static Future<SubmitOrderModel> submitAirOrder(
+      String title,
+      int goods_type,
+      num amount_money,
+      String from,
+      String to,
+      String from_date,
+      String to_date,
+      String from_port,
+      String to_port,
+      String line,
+      String users,
+      String phone) async {
+    //goods_type 1为飞机票 title商品信息
+    ResultData result = await HttpManager.post(APIV2.ticketAPI.submitAirOrder, {
+      "user_id": UserManager.instance.user.info.id,
+      "title": title,
+      "goods_type": goods_type,
+      "amount_money": amount_money,
+      "from": from,
+      "to": to,
+      "from_date": from_date,
+      "to_date": to_date,
+      "from_port": from_port,
+      "to_port": to_port,
+      "line": line,
+      "users": users,
+      "phone":phone
+
+    });
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return SubmitOrderModel.fromJson(result.data['data']);
       }
     }
   }

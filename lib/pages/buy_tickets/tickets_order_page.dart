@@ -1,11 +1,13 @@
 import 'dart:async';
 
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_calendar/utils/solar_term_util.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/pages/buy_tickets/add_used_passager_page.dart';
 import 'package:recook/pages/buy_tickets/airplane_detail_page.dart';
+import 'package:recook/pages/buy_tickets/order_widgt.dart';
 import 'package:recook/pages/buy_tickets/tickets_orde_detail_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/constants/header.dart';
@@ -15,6 +17,9 @@ import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:badges/badges.dart';
+
+import 'functions/passager_func.dart';
+import 'models/air_order_model.dart';
 
 class TicketsOrderPage extends StatefulWidget {
   final String code; //飞机票标准商品编号
@@ -37,7 +42,11 @@ class _TicketsOrderPageState extends State<TicketsOrderPage>
   String _stateText = '';
   Timer _timer;
   bool _getTime = false;
-  int countDown = 5;
+  int countDown = 5; //剩下多少秒
+  List<AirOrderModel> _orderList = [];
+  bool showList = false;
+  DateTime _endDate = new DateTime.now();
+  List<AirOrderModel> _typelist = [];
 
   @override
   void initState() {
@@ -53,15 +62,34 @@ class _TicketsOrderPageState extends State<TicketsOrderPage>
     super.dispose();
   }
 
+  String _getStartDate(DateTime date) {
+    int endYear = date.year;
+    int endMonth = date.month;
+    int startYear = 0;
+    int startMonth = 0;
+    if (endMonth - 3 < 0) {
+      startYear = endYear - 1;
+      startMonth = 12 + endMonth - 3;
+    } else {
+      startYear = endYear;
+      startMonth = endMonth - 3;
+    }
+    return DateUtil.formatDate(
+        DateTime(startYear, startMonth, DateTime.now().day, 0, 0, 0),
+        format: 'yyyy-MM-dd HH:mm:ss');
+  }
+
   startTick() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (timer.tick >= 5) {
+      if (timer.tick >= 15 * 60) {
         _getTime = false;
         _timer.cancel();
         _timer = null;
+        _refreshController.requestRefresh();
       } else {
         _getTime = true;
       }
+
       setState(() {});
     });
   }
@@ -97,6 +125,19 @@ class _TicketsOrderPageState extends State<TicketsOrderPage>
         break;
     }
     return _ticketText;
+  }
+
+  int getsurplus(String expiration) {
+    if (expiration != null) {
+      //获取订单剩余时间
+      DateTime endTime = DateUtil.getDateTime(expiration);
+      if (endTime.difference(DateTime.now()).inSeconds <= 0) {
+        return 0;
+      } else {
+        return endTime.difference(DateTime.now()).inSeconds;
+      }
+    }
+    return 0;
   }
 
   List<Widget> tabs = [
@@ -232,19 +273,19 @@ class _TicketsOrderPageState extends State<TicketsOrderPage>
               _tabType = index;
               switch (_tabType) {
                 case 0:
-                  _stateText = '等待预订';
-                  break;
-                case 1:
                   _stateText = '待付款';
                   break;
+                case 1:
+                  _stateText = '已付款';
+                  break;
                 case 2:
-                  _stateText = '待出行';
+                  _stateText = '已取消';
                   break;
                 case 3:
-                  _stateText = '已完成';
+                  _stateText = '已过期';
                   break;
                 case 4:
-                  _stateText = '已取消';
+                  _stateText = '已完成';
                   break;
               }
               setState(() {});
@@ -267,162 +308,12 @@ class _TicketsOrderPageState extends State<TicketsOrderPage>
             tabs: tabs),
       ),
       body: TabBarView(controller: _tabController, children: [
-        _bulidBody(_tabType),
-        _bulidBody(_tabType),
-        _bulidBody(_tabType),
-        _bulidBody(_tabType),
-        _bulidBody(_tabType),
+        OrderWidgetPage(ticketType: widget.ticketType, orderType: 3),
+        OrderWidgetPage(ticketType: widget.ticketType, orderType: 0),
+        OrderWidgetPage(ticketType: widget.ticketType, orderType: 1),
+        OrderWidgetPage(ticketType: widget.ticketType, orderType: 4),
+        OrderWidgetPage(ticketType: widget.ticketType, orderType: 2),
       ]),
     );
-  }
-
-  _bulidBody(int type) {
-    return RefreshWidget(
-      controller: _refreshController,
-      onRefresh: () async {
-        _refreshController.refreshCompleted();
-      },
-      onLoadMore: () async {
-        _refreshController.loadComplete();
-        _refreshController.loadNoData();
-      },
-      body: ListView.builder(
-          physics: AlwaysScrollableScrollPhysics(),
-          itemCount: 10,
-          itemBuilder: (context, index) {
-            return MaterialButton(
-                padding: EdgeInsets.zero,
-                onPressed: () {
-                  Get.to(TicketsOrderDetailPage(ticketType: 1,));
-                },
-                child: _ticketsItem());
-          }),
-    );
-  }
-
-  _ticketsItem() {
-    return Container(
-        padding: EdgeInsets.only(
-            left: 10.rw, right: 10.rw, top: 10.rw, bottom: 10.rw),
-        margin: EdgeInsets.only(top: 10.rw, left: 10.rw, right: 10.rw),
-        color: Colors.white,
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Text("上海",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.rsp,
-                          color: Color(0xFF333333),
-                        )),
-                    20.wb,
-                    Image.asset(R.ASSETS_GOTO1_PNG,
-                        width: 18.rw, height: 7.rw, color: Color(0xFF999999)),
-                    20.wb,
-                    Text("北京",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18.rsp,
-                          color: Color(0xFF333333),
-                        )),
-                  ],
-                ),
-                Text(_stateText,
-                    style: TextStyle(
-                      fontSize: 14.rsp,
-                      color: Color(0xFFFA6400),
-                    )),
-              ],
-            ),
-            20.hb,
-            Row(
-              children: [
-                Text("出发",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.rsp,
-                      color: Color(0xFF333333),
-                    )),
-                20.wb,
-                Text("06-27 21:00",
-                    style: TextStyle(
-                      fontSize: 14.rsp,
-                      color: Color(0xFF333333),
-                    )),
-                60.wb,
-                Text("到达",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.rsp,
-                      color: Color(0xFF333333),
-                    )),
-                20.wb,
-                Text("06-27 23:30",
-                    style: TextStyle(
-                      fontSize: 14.rsp,
-                      color: Color(0xFF333333),
-                    )),
-              ],
-            ),
-            20.hb,
-            Row(
-              children: [
-                Text("虹桥机场T2",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.rsp,
-                      color: Color(0xFF333333),
-                    )),
-                40.wb,
-                Text("MU5199",
-                    style: TextStyle(
-                      fontSize: 14.rsp,
-                      color: Color(0xFF333333),
-                    )),
-              ],
-            ),
-            20.hb,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    Text("¥",
-                        style: TextStyle(
-                          fontSize: 18.rsp,
-                          color: Color(0xFFCB322D),
-                        )),
-                    Text("1250",
-                        style: TextStyle(
-                          fontSize: 18.rsp,
-                          color: Color(0xFFCB322D),
-                        )),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Text(
-                        _getTime
-                            ? getTimeText(countDown - _timer.tick)
-                            : '00分00秒后',
-                        style: TextStyle(
-                          fontSize: 10.rsp,
-                          color: Color(0xFFCB322D),
-                        )),
-                    Text('本订单取消',
-                        style: TextStyle(
-                          fontSize: 10.rsp,
-                          color: Color(0xFF333333),
-                        )),
-                  ],
-                ),
-              ],
-            )
-          ],
-        ));
   }
 }

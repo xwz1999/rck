@@ -251,10 +251,20 @@ class OrderApi {
       "/v1/pay/recookpay/fund/query";
   static const String order_wechat_order_create = "/v1/pay/wxpay/order/create";
   static const String order_alipay_order_create = "/v1/pay/alipay/order/create";
+
   static const String order_recook_pay_order_create =
       "/v1/pay/recookpay/order/create";
+
   static const String order_verify_pay_status = "/v1/pay/order/query";
+  static const String order_verify_pay_status_lifang =
+      "/v2/app/liFang_ticketing/order_pay/pay/status";
+
   static const String order_pay_zero = "/v1/pay/zeropay/order/create";
+
+  static const String order_wechat_order_create_lifang =
+      "/v2/app/liFang_ticketing/order_pay/pay/wx_pay_order";
+  static const String order_alipay_order_create_lifang =
+      "/v2/app/liFang_ticketing/order_pay/pay/ali_pay_order";
 
   static const String express_company_list = "/v1/order/express/company/list";
   static const String express_logistic = "/v1/order/express/query";

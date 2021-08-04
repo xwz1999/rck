@@ -208,4 +208,12 @@ class TicketAPI {
   ///两个城市/站点之前的航线
   String get getAirLineList =>
       '/v2/app/liFang_ticketing/plane_ticket/airport_city_line';
+
+  ///订单列表
+  String get getAirOrderList =>
+      '/v2/app/liFang_ticketing/plane_ticket/air_user_order_list';
+
+  //提交订单接口
+  String get submitAirOrder =>
+      '/v2/app/liFang_ticketing/plane_ticket/air_user_add_order';
 }

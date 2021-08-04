@@ -1,7 +1,10 @@
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/buy_tickets/models/airline_model.dart';
+import 'package:recook/utils/date/date_utils.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -11,7 +14,19 @@ import 'package:velocity_x/velocity_x.dart';
 import 'airplane_detail_page.dart';
 
 class AirplaneReservePage extends StatefulWidget {
-  AirplaneReservePage({Key key}) : super(key: key);
+  final List<Airline> airline;
+  final String fromText; //出发地
+  final String toText; //目的地
+  final DateTime originDate; //出发日期
+  final int index;
+  AirplaneReservePage(
+      {Key key,
+      this.airline,
+      this.fromText,
+      this.toText,
+      this.originDate,
+      this.index})
+      : super(key: key);
 
   @override
   _AirplaneReservePageState createState() => _AirplaneReservePageState();
@@ -20,10 +35,30 @@ class AirplaneReservePage extends StatefulWidget {
 class _AirplaneReservePageState extends State<AirplaneReservePage>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
+  DateTime _dateNow = DateTime(DateTime.now().year, DateTime.now().month,
+      DateTime.now().day, 0, 0); //当天0点
+  List<AirSeat> _firstclassList = [];
+  List<AirSeat> _economyclassList = [];
+  Airline airline;
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: 2, vsync: this);
+    if (widget.airline != null) {
+      if (widget.airline.length > 0) {
+        airline = widget.airline[widget.index];
+        airline.airSeats.airSeat.forEach((element) {
+          if (element.seatMsg == '商务舱' || element.seatMsg == '头等舱') {
+            _firstclassList.add(element);
+          } else if (element.seatMsg != '商务舱' &&
+              element.seatMsg != '头等舱' &&
+              element.discount <= 1) {
+            _economyclassList.add(element);
+          }
+        });
+        print(widget.airline);
+      }
+    }
   }
 
   @override
@@ -39,7 +74,7 @@ class _AirplaneReservePageState extends State<AirplaneReservePage>
         appBar: CustomAppBar(
           appBackground: Color(0xFFF9F9FB),
           elevation: 0,
-          title: '上海-北京',
+          title: widget.fromText + '-' + widget.toText,
           themeData: AppThemes.themeDataGrey.appBarTheme,
         ),
         body: Container(
@@ -78,17 +113,8 @@ class _AirplaneReservePageState extends State<AirplaneReservePage>
               Row(
                 children: [
                   50.wb,
-                  Container(
-                    child: CustomCacheImage(
-                      borderRadius: BorderRadius.circular(5),
-                      width: 10.rw,
-                      height: 10.rw,
-                      imageUrl: R.ASSETS_ORDER_ALERT_PNG,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
                   Text(
-                    "东方航空CA8685",
+                    airline.flightCompanyName + airline.flightNo,
                     style:
                         TextStyle(fontSize: 12.rsp, color: Color(0xFF333333)),
                   ),
@@ -97,7 +123,9 @@ class _AirplaneReservePageState extends State<AirplaneReservePage>
               40.wb,
               Container(
                 child: Text(
-                  "06月23日 后天",
+                  DateUtil.formatDate(widget.originDate, format: 'MM月dd日') +
+                      " " +
+                      getDayWeek(widget.originDate),
                   style: TextStyle(fontSize: 12.rsp, color: Color(0xFF333333)),
                 ),
               )
@@ -111,12 +139,12 @@ class _AirplaneReservePageState extends State<AirplaneReservePage>
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "21.00",
+                    airline.depTime,
                     style:
                         TextStyle(fontSize: 24.rsp, color: Color(0xFF333333)),
                   ),
                   Text(
-                    "浦东T1",
+                    airline.orgCityName,
                     textAlign: TextAlign.left,
                     style:
                         TextStyle(fontSize: 14.rsp, color: Color(0xFF333333)),
@@ -130,30 +158,31 @@ class _AirplaneReservePageState extends State<AirplaneReservePage>
                 child: Column(
                   children: [
                     Text(
-                      "2h25m",
+                      DateUtilss.getTimeReduce(
+                          airline.depTime, airline.arriTime),
                       style:
                           TextStyle(fontSize: 12.rsp, color: Color(0xFF333333)),
                     ),
                     10.hb,
-                    Container(
+                    Image.asset(
+                      R.ASSETS_TICKET_GOTO2_ICON_PNG,
                       width: 68.rw,
                       height: 7.rw,
-                      color: Colors.black,
                     ),
                   ],
                 ),
               ),
               40.wb,
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "23.00",
+                    airline.arriTime,
                     style:
                         TextStyle(fontSize: 24.rsp, color: Color(0xFF333333)),
                   ),
                   Text(
-                    "大兴西北",
+                    airline.dstCityName,
                     style:
                         TextStyle(fontSize: 14.rsp, color: Color(0xFF333333)),
                   ),
@@ -163,13 +192,37 @@ class _AirplaneReservePageState extends State<AirplaneReservePage>
           ),
           8.hb,
           Text(
-            "波音747-aaaa (中)",
+            _getPlaneNameByType(airline.planeType),
             textAlign: TextAlign.left,
             style: TextStyle(fontSize: 12.rsp, color: Color(0xFF666666)),
           ),
         ],
       ),
     );
+  }
+
+  _getPlaneNameByType(String type) {
+    String first = type.substring(0, 1);
+    if (first == "7") {
+      return '波音' + type;
+    } else if (first == '3') {
+      return '空客' + type;
+    } else {
+      return type;
+    }
+  }
+
+  getDayWeek(DateTime date) {
+    //获取当天是周几
+    if (date == _dateNow) {
+      return '今天';
+    } else if (date == _dateNow.add(new Duration(days: 1))) {
+      return '明天';
+    } else if (date == _dateNow.add(new Duration(days: 2))) {
+      return '后天';
+    } else {
+      return DateUtil.getWeekday(date, languageCode: 'zh', short: true);
+    }
   }
 
   _tabBarView() {
@@ -213,8 +266,8 @@ class _AirplaneReservePageState extends State<AirplaneReservePage>
       child: TabBarView(
         controller: _tabController,
         children: [
-          _firstList(),
           _economyList(),
+          _firstList(),
         ],
       ),
     ).expand();
@@ -222,24 +275,32 @@ class _AirplaneReservePageState extends State<AirplaneReservePage>
 
 //头等舱
   _firstList() {
-    return ListView.builder(
-        physics: AlwaysScrollableScrollPhysics(),
-        itemCount: 3,
-        itemBuilder: (context, index) {
-          return _firstItem();
-        });
+    return _firstclassList != null
+        ? ListView.builder(
+            physics: AlwaysScrollableScrollPhysics(),
+            itemCount: _firstclassList.length,
+            itemBuilder: (context, index) {
+              return _firstclassList.length > 0
+                  ? _firstItem(_firstclassList[index], 2, index)
+                  : SizedBox();
+            })
+        : SizedBox();
   }
 
   _economyList() {
-    return ListView.builder(
-        physics: AlwaysScrollableScrollPhysics(),
-        itemCount: 3,
-        itemBuilder: (context, index) {
-          return _economyItem();
-        });
+    return _economyclassList != null
+        ? ListView.builder(
+            physics: AlwaysScrollableScrollPhysics(),
+            itemCount: _economyclassList.length,
+            itemBuilder: (context, index) {
+              return _economyclassList.length > 0
+                  ? _firstItem(_economyclassList[index], 1, index)
+                  : SizedBox();
+            })
+        : SizedBox();
   }
 
-  _firstItem() {
+  _firstItem(AirSeat model, int type, int index) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4.rw),
@@ -262,7 +323,7 @@ class _AirplaneReservePageState extends State<AirplaneReservePage>
                         TextStyle(fontSize: 12.rsp, color: Color(0xFFC92219)),
                   ),
                   Text(
-                    "400",
+                    model.parPrice.toString(),
                     style:
                         TextStyle(fontSize: 24.rsp, color: Color(0xFFC92219)),
                   ),
@@ -270,33 +331,39 @@ class _AirplaneReservePageState extends State<AirplaneReservePage>
               ),
               20.hb,
               Text(
-                "儿童票，婴儿暂不可预定",
+                '儿童票，婴儿暂不可预订',
                 style: TextStyle(fontSize: 12.rsp, color: Color(0xFF333333)),
               ),
               10.hb,
               Row(
                 children: [
                   Text(
-                    "退改规｜免费托运20KG",
+                    type == 1 ? '免费托运20KG行李' : '免费托运30KG行李',
                     style:
                         TextStyle(fontSize: 12.rsp, color: Color(0xFF333333)),
                   ),
-                  GestureDetector(
-                    onTap: () {},
-                    child: Container(
-                      margin: EdgeInsets.only(left: 10.rw, bottom: 2.rw),
-                      child: Icon(
-                        AppIcons.icon_next,
-                        size: 12.rw,
-                        color: Color(0xFF999999),
-                      ),
-                    ),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () {},
+                  //   child: Container(
+                  //     margin: EdgeInsets.only(left: 10.rw, bottom: 2.rw),
+                  //     child: Icon(
+                  //       AppIcons.icon_next,
+                  //       size: 12.rw,
+                  //       color: Color(0xFF999999),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
               10.hb,
               Text(
-                "7.0折经济舱 ｜ 提供行程单",
+                type == 1
+                    ? model.discount != 1
+                        ? (model.discount * 10).toStringAsFixed(2) +
+                            '折' +
+                            model.seatMsg
+                        : '全价' + model.seatMsg
+                    : model.seatMsg,
                 style: TextStyle(fontSize: 10.rsp, color: Color(0xFF666666)),
               ),
             ],
@@ -307,7 +374,7 @@ class _AirplaneReservePageState extends State<AirplaneReservePage>
               CustomImageButton(
                 height: 38.rw,
                 width: 44.rw,
-                title: "预定",
+                title: "预订",
                 boxDecoration: BoxDecoration(
                   gradient: LinearGradient(
                     begin: Alignment.centerLeft,
@@ -323,19 +390,21 @@ class _AirplaneReservePageState extends State<AirplaneReservePage>
                 color: Colors.white,
                 fontSize: 16.rsp,
                 onPressed: () {
-                  Get.to(AirplaneDetailPage());
+                  Get.to(AirplaneDetailPage(
+                      airline: widget.airline,
+                      airlineindex: widget.index,
+                      airSeat: type == 1
+                          ? _economyclassList[index]
+                          : _firstclassList[index],
+                      fromText: widget.fromText,
+                      toText: widget.toText,
+                      originDate: widget.originDate));
                 },
               ),
             ],
           ),
         ],
       ),
-    );
-  }
-
-  _economyItem() {
-    return Container(
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(4.rw)),
     );
   }
 }

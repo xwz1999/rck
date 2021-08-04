@@ -1,23 +1,22 @@
-import 'package:azlistview/azlistview.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/styles.dart';
-import 'package:recook/models/goods_simple_list_model.dart';
+
 import 'package:recook/pages/buy_tickets/models/airline_model.dart';
 import 'package:recook/pages/buy_tickets/models/airport_city_model.dart';
-import 'package:recook/pages/buy_tickets/tools/airport_city_tool.dart';
-import 'package:recook/utils/mvp.dart';
+import 'package:recook/utils/date/date_utils.dart';
+
 import 'package:recook/widgets/calendar/calendar_vertial_widget.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
+
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import 'airline_widget.dart';
 import 'airplane_reserve_page.dart';
 import 'as_date_range_picker_part.dart';
 import 'condition_picker.dart';
@@ -49,7 +48,7 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
   DateTime _dateNow = DateTime(DateTime.now().year, DateTime.now().month,
       DateTime.now().day, 0, 0); //当天0点
   DateTime _chooseDate; //最终选中的日期
-  int index = 0; //默认为选择日期在日期列表的位置
+  int _index = 0; //默认为选择日期在日期列表的位置
   bool _chooseState = true;
   bool _choosePriceSort = true;
   bool _sortPriceType = true; //1 低-高排序 2高-低排序
@@ -97,12 +96,12 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
           title: widget.fromText + '-' + widget.toText,
           themeData: AppThemes.themeDataGrey.appBarTheme,
         ),
-        floatingActionButton: _chooseState
-            ? Container(
-                color: Colors.transparent,
-                child: _chooseConditon(),
-              )
-            : SizedBox(),
+        // floatingActionButton: _chooseState
+        //     ? Container(
+        //         color: Colors.transparent,
+        //         child: _chooseConditon(),
+        //       )
+        //     : SizedBox(),
         body: Column(
           children: [
             Row(
@@ -115,8 +114,9 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
                   child: TabBar(
                       onTap: (index) {
                         _chooseDate = _dateTableList[index];
+                        print(_chooseDate);
+                        _tabController.index = index;
                         //initDate();
-                        _refreshController.requestRefresh();
                         setState(() {});
                       },
                       isScrollable: true,
@@ -135,8 +135,9 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
                         callBack: (BuildContext context, DateTime start) {
                           _chooseDate = start;
                           initDate();
+
                           setState(() {
-                            //_tabController.animateTo(index);
+                            _tabController.animateTo(_index);
                           });
                         },
                       ),
@@ -175,8 +176,18 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
               ],
             ),
             Expanded(
-              child: _buildListView(),
-            )
+                child: TabBarView(
+              physics: NeverScrollableScrollPhysics(),
+              controller: _tabController,
+              children: List.generate(
+                  _tabItems().length,
+                  (index) => AirlineWidget(
+                      cityModelList: _cityModelList,
+                      fromText: widget.fromText,
+                      toText: widget.toText,
+                      originDate: _dateTableList[index],
+                      code: widget.code)),
+            ))
           ],
         ));
   }
@@ -266,9 +277,9 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
       days = hours ~/ 24 + 1;
     }
     if (days > 5) {
-      index = days = 5;
+      _index = days = 5;
     } else {
-      index = days;
+      _index = days;
     }
     for (var i = 0; i < days; i++) {
       DateTime a = _chooseDate.add(new Duration(days: -days + i));
@@ -279,7 +290,7 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
       _dateTableList.add(a);
     }
     _tabController = TabController(
-      initialIndex: index,
+      initialIndex: _index,
       vsync: this,
       length: _dateTableList.length,
     );
@@ -345,24 +356,6 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
     return [];
   }
 
-  // //获取出发机场名称
-  // _getFormAirportByCode(String code) {
-  //   if (_cityModelList != null) {
-  //     formList = _getAirportList(widget.fromText);
-  //     int index = formList.indexWhere((element) => element.code == code);
-  //     return formList[index];
-  //   }
-  // }
-
-  // //获取到达机场名称
-  // _getToAirportByCode(String code) {
-  //   if (_cityModelList != null) {
-  //     toList = _getAirportList(widget.toText);
-  //     int index = toList.indexWhere((element) => element.code == code);
-  //     return toList[index];
-  //   }
-  // }
-
   _ticketsItem(AirLineModel model, int index) {
     return Container(
       padding:
@@ -410,7 +403,8 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
                         ),
                         20.wb,
                         Container(
-                          alignment: Alignment.topCenter,
+                          //alignment: Alignment.topCenter,
+                          margin: EdgeInsets.only(bottom: 10.rw),
                           child: Column(
                             children: [
                               Icon(
@@ -419,7 +413,11 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
                                 size: 20.rw,
                               ),
                               Text(
-                                "2h25m",
+                                DateUtilss.getTimeReduce(
+                                    model.airlinesListResponse.airlines
+                                        .airline[index].depTime,
+                                    model.airlinesListResponse.airlines
+                                        .airline[index].arriTime),
                                 style: TextStyle(
                                     fontSize: 12.rsp, color: Color(0xFF333333)),
                               ),
@@ -489,103 +487,103 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
     );
   }
 
-  _chooseConditon() {
-    return Container(
-      height: 48.rw,
-      margin: EdgeInsets.only(left: 55.rw, right: 55.rw, bottom: 10.rw),
-      //padding: EdgeInsets.symmetric(horizontal: 55.rw),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.horizontal(
-              left: Radius.circular(24.rw),
-              right: Radius.circular(24.rw)), //BorderRadius.circular(24.rw),
-          color: Colors.white),
-      child: Row(
-        children: [
-          GestureDetector(
-            onTap: () async {
-              Options options =
-                  await show2DatePicker(context, date: _chooseDate);
-              if (options.arrive != '' ||
-                  options.depart != '' ||
-                  options.date != '' ||
-                  options.company != '' ||
-                  options.space != '') {
-                _chooseScreen = true;
-                setState(() {});
-              } else if (options.arrive == '' &&
-                  options.depart == '' &&
-                  options.date == '' &&
-                  options.company == '' &&
-                  options.space == '') {
-                _chooseScreen = false;
-                setState(() {});
-              }
-            },
-            child: Container(
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    AppIcons.icon_training,
-                    size: rSize(14),
-                    color: Colors.grey,
-                  ),
-                  Text(
-                    '筛选条件',
-                    style: TextStyle(
-                        color: _chooseScreen ? Colors.red : Colors.black,
-                        fontSize: 12.rsp),
-                  ),
-                ],
-              ),
-            ),
-          ).expand(),
-          GestureDetector(
-              onTap: () {
-                _choosePriceSort = true;
-                _sortPriceType = !_sortPriceType;
-                _chooseTimeSort = false;
-                setState(() {});
-              },
-              child: Container(
-                alignment: Alignment.center,
-                child: Text(
-                  _choosePriceSort
-                      ? _sortPriceType
-                          ? '价格低-高'
-                          : '价格高-低'
-                      : '价格排序',
-                  style: TextStyle(
-                      color: _choosePriceSort ? Colors.red : Colors.black,
-                      fontSize: 12.rsp),
-                ),
-              )).expand(),
-          GestureDetector(
-            onTap: () {
-              _choosePriceSort = false;
-              _chooseTimeSort = true;
-              _sortTimeType = !_sortTimeType;
-              setState(() {});
-            },
-            child: Container(
-              alignment: Alignment.center,
-              child: Text(
-                _chooseTimeSort
-                    ? _sortTimeType
-                        ? '时间早-晚'
-                        : '时间晚-早'
-                    : '时间排序',
-                style: TextStyle(
-                    color: _chooseTimeSort ? Colors.red : Colors.black,
-                    fontSize: 12.rsp),
-              ),
-            ),
-          ).expand(),
-        ],
-      ),
-    );
-  }
+  // _chooseConditon() {
+  //   return Container(
+  //     height: 48.rw,
+  //     margin: EdgeInsets.only(left: 55.rw, right: 55.rw, bottom: 10.rw),
+  //     //padding: EdgeInsets.symmetric(horizontal: 55.rw),
+  //     decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.horizontal(
+  //             left: Radius.circular(24.rw),
+  //             right: Radius.circular(24.rw)), //BorderRadius.circular(24.rw),
+  //         color: Colors.white),
+  //     child: Row(
+  //       children: [
+  //         GestureDetector(
+  //           onTap: () async {
+  //             Options options =
+  //                 await show2DatePicker(context, fromNameList: _chooseDate);
+  //             if (options.arrive != '' ||
+  //                 options.depart != '' ||
+  //                 options.date != '' ||
+  //                 options.company != '' ||
+  //                 options.space != '') {
+  //               _chooseScreen = true;
+  //               setState(() {});
+  //             } else if (options.arrive == '' &&
+  //                 options.depart == '' &&
+  //                 options.date == '' &&
+  //                 options.company == '' &&
+  //                 options.space == '') {
+  //               _chooseScreen = false;
+  //               setState(() {});
+  //             }
+  //           },
+  //           child: Container(
+  //             alignment: Alignment.center,
+  //             child: Column(
+  //               mainAxisAlignment: MainAxisAlignment.center,
+  //               children: [
+  //                 Icon(
+  //                   AppIcons.icon_training,
+  //                   size: rSize(14),
+  //                   color: Colors.grey,
+  //                 ),
+  //                 Text(
+  //                   '筛选条件',
+  //                   style: TextStyle(
+  //                       color: _chooseScreen ? Colors.red : Colors.black,
+  //                       fontSize: 12.rsp),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ).expand(),
+  //         GestureDetector(
+  //             onTap: () {
+  //               _choosePriceSort = true;
+  //               _sortPriceType = !_sortPriceType;
+  //               _chooseTimeSort = false;
+  //               setState(() {});
+  //             },
+  //             child: Container(
+  //               alignment: Alignment.center,
+  //               child: Text(
+  //                 _choosePriceSort
+  //                     ? _sortPriceType
+  //                         ? '价格低-高'
+  //                         : '价格高-低'
+  //                     : '价格排序',
+  //                 style: TextStyle(
+  //                     color: _choosePriceSort ? Colors.red : Colors.black,
+  //                     fontSize: 12.rsp),
+  //               ),
+  //             )).expand(),
+  //         GestureDetector(
+  //           onTap: () {
+  //             _choosePriceSort = false;
+  //             _chooseTimeSort = true;
+  //             _sortTimeType = !_sortTimeType;
+  //             setState(() {});
+  //           },
+  //           child: Container(
+  //             alignment: Alignment.center,
+  //             child: Text(
+  //               _chooseTimeSort
+  //                   ? _sortTimeType
+  //                       ? '时间早-晚'
+  //                       : '时间晚-早'
+  //                   : '时间排序',
+  //               style: TextStyle(
+  //                   color: _chooseTimeSort ? Colors.red : Colors.black,
+  //                   fontSize: 12.rsp),
+  //             ),
+  //           ),
+  //         ).expand(),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   noDataView(String text) {
     return Container(

@@ -80,6 +80,10 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
       goodId = airItemModel.items.item[0].itemId;
     });
 
+    Future.delayed(Duration.zero, () async {
+      _cityModelList = await AriportCityTool.getInstance().getCityAirportList();
+    });
+
     _amapFlutterLocation = AMapFlutterLocation();
     requestPermission().then((value) {
       if (value) {
@@ -126,7 +130,9 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
 
   void onTap(int index) {
     if (index == 0) {
-      Get.to(TicketsOrderPage(ticketType: 1,));
+      Get.to(TicketsOrderPage(
+        ticketType: 1,
+      ));
     } else {
       Get.to(UsedPassagerPage());
     }
@@ -598,9 +604,6 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
                   },
                 ));
           } else {
-            //airportCityModel = await PassagerFunc.getCityAirportList();
-            _cityModelList =
-                await AriportCityTool.getInstance().getCityAirportList();
             print(_date);
             Get.to(ChooseTicketsPage(
                 fromText: _originText,

@@ -7,12 +7,17 @@ import 'package:velocity_x/velocity_x.dart';
 import 'package:recook/constants/header.dart';
 
 import 'as_date_range_picker_part.dart';
+import 'models/airport_city_model.dart';
 
 class AS2DatePicker extends StatefulWidget {
-  //final bool isAnHour;
-  final DateTime date;
+  final List<String> fromNameList;
+  final List<String> endNameList;
 
-  AS2DatePicker({Key key, this.date}) : super(key: key);
+  AS2DatePicker({
+    this.fromNameList,
+    this.endNameList,
+    Key key,
+  }) : super(key: key);
 
   @override
   _AS2DatePickerState createState() => _AS2DatePickerState();
@@ -53,27 +58,36 @@ class _AS2DatePickerState extends State<AS2DatePicker> {
     _chooseDate.add(Item(item: '12:00-18:00', choice: false));
     _chooseDate.add(Item(item: '18:00-24:00', choice: false));
 
-    _chooseDepart.add(Item(item: '宁波丽舍国际机场', choice: false));
-    _chooseDepart.add(Item(item: '舟山机场', choice: false));
-    _chooseDepart.add(Item(item: '余姚机场', choice: false));
-    _chooseDepart.add(Item(item: '慈禧机场', choice: false));
-    _chooseDepart.insert(0, Item(item: '不限', choice: true));
+    if (widget.fromNameList != null) {
+      for (int i = 0; i < widget.fromNameList.length; i++) {
+        _chooseDepart.add(Item(item: widget.fromNameList[i], choice: false));
+      }
+      _chooseDepart.insert(0, Item(item: '不限', choice: true));
+    }
 
-    _chooseArrive.add(Item(item: '不限', choice: true));
-    _chooseArrive.add(Item(item: '首都机场', choice: false));
-    _chooseArrive.add(Item(item: '大兴机场', choice: false));
-    _chooseArrive.add(Item(item: 'bk机场', choice: false));
+    if (widget.endNameList != null) {
+      for (int i = 0; i < widget.endNameList.length; i++) {
+        _chooseArrive.add(Item(item: widget.endNameList[i], choice: false));
+      }
+      _chooseArrive.insert(0, Item(item: '不限', choice: true));
+    }
 
     _chooseCompany.add(Item(item: '不限', choice: true));
-    _chooseCompany.add(Item(item: '中国国际航空', choice: false));
-    _chooseCompany.add(Item(item: '海南航空', choice: false));
-    _chooseCompany.add(Item(item: '东方航空', choice: false));
-    _chooseCompany.add(Item(item: '南方航空', choice: false));
+    _chooseCompany.add(Item(item: '中国国航', choice: false, code: 'CA'));
+    _chooseCompany.add(Item(item: '海南航空', choice: false, code: 'HU'));
+    _chooseCompany.add(Item(item: '东方航空', choice: false, code: 'MU'));
+    _chooseCompany.add(Item(item: '南方航空', choice: false, code: 'CZ'));
+    _chooseCompany.add(Item(item: '深圳航空', choice: false, code: 'ZH'));
+    _chooseCompany.add(Item(item: '上海航空', choice: false, code: 'FM'));
+    _chooseCompany.add(Item(item: '厦门航空', choice: false, code: 'MF'));
+    _chooseCompany.add(Item(item: '河北航空', choice: false, code: 'NS'));
+    _chooseCompany.add(Item(item: '联合航空', choice: false, code: 'KN'));
+    _chooseCompany.add(Item(item: '长龙航空', choice: false, code: 'GJ'));
+    _chooseCompany.add(Item(item: '首都航空', choice: false, code: 'JD'));
 
     _chooseSpace.add(Item(item: '不限', choice: true));
     _chooseSpace.add(Item(item: '经济仓', choice: false));
-    _chooseSpace.add(Item(item: '商务仓', choice: false));
-    _chooseSpace.add(Item(item: '头等仓', choice: false));
+    _chooseSpace.add(Item(item: '商务仓/头等仓', choice: false));
   }
 
   //左边选择标题框
@@ -245,7 +259,7 @@ class _AS2DatePickerState extends State<AS2DatePicker> {
         }
         return _renderButton(_chooseCompany[index].item, () {
           setState(() => {
-                options.company = _chooseCompany[index].item,
+                options.company = _chooseCompany[index].code,
                 for (var i = 0; i < _chooseCompany.length; i++)
                   {_chooseCompany[i].choice = false},
                 _chooseCompany[index].choice = true,
@@ -400,9 +414,11 @@ class _AS2DatePickerState extends State<AS2DatePicker> {
 class Item {
   String item;
   bool choice;
+  String code;
   Item({
     this.item,
     this.choice,
+    this.code,
   });
 }
 

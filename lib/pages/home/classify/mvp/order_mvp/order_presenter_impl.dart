@@ -108,9 +108,36 @@ class OrderPresenterImpl extends OrderPresenterI {
     return HttpResultModel(aliPayModel.code, aliPayModel, aliPayModel.msg, true);
   }
 
+    @override
+  Future<HttpResultModel<AlipayOrderModel>> createAliPayOrderLifang(int userId, int orderId) async {
+    ResultData resultData = await getModel().createAliPayOrderLifang(userId, orderId);
+    if (!resultData.result) {
+      return HttpResultModel(resultData.code, null, resultData.msg, false);
+    }
+    AlipayOrderModel aliPayModel = AlipayOrderModel.fromJson(resultData.data);
+    if (aliPayModel.code != HttpStatus.SUCCESS) {
+      return HttpResultModel(aliPayModel.code, null, aliPayModel.msg, false);
+    }
+    return HttpResultModel(aliPayModel.code, aliPayModel, aliPayModel.msg, true);
+  }
+
   @override
   Future<HttpResultModel<PayInfoModel>> createWeChatOrder(int userId, int orderId) async {
     ResultData resultData = await getModel().createWeChatOrder(userId, orderId);
+    if (!resultData.result) {
+      return HttpResultModel(resultData.code, null, resultData.msg, false);
+    }
+    PayInfoModel wxPayModel = PayInfoModel.fromJson(resultData.data);
+    if (wxPayModel.code != HttpStatus.SUCCESS) {
+      return HttpResultModel(wxPayModel.code, null, wxPayModel.msg, false);
+    }
+    return HttpResultModel(wxPayModel.code, wxPayModel, wxPayModel.msg, true);
+  }
+
+
+    @override
+  Future<HttpResultModel<PayInfoModel>> createWeChatOrderLifang(int userId, int orderId) async {
+    ResultData resultData = await getModel().createWeChatOrderLifang(userId, orderId);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -137,6 +164,19 @@ class OrderPresenterImpl extends OrderPresenterI {
   @override
   Future<HttpResultModel<PayResult>> verifyOrderPayStatus(int orderId) async {
     ResultData resultData = await getModel().verifyOrderPayStatus(orderId);
+    if (!resultData.result) {
+      return HttpResultModel(resultData.code, null, resultData.msg, false);
+    }
+    PayResultModel resultModel = PayResultModel.fromJson(resultData.data);
+    if (resultModel.code != HttpStatus.SUCCESS) {
+      return HttpResultModel(resultModel.code, null, resultModel.msg, false);
+    }
+    return HttpResultModel(resultModel.code, resultModel.data, resultModel.msg, true);
+  }
+
+    @override
+  Future<HttpResultModel<PayResult>> verifyOrderPayStatusLifang(int orderId) async {
+    ResultData resultData = await getModel().verifyOrderPayStatusLifang(orderId);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }

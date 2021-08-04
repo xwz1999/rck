@@ -5,6 +5,7 @@ class PassagerModel {
   String residentIdCard;
   String phone;
   int isDefault;
+  bool choice;
 
   PassagerModel(
       {this.id,
