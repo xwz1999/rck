@@ -130,6 +130,9 @@ class UserAPI {
 
   ///注销账户
   String get deleteAccount => '/v2/app/user/operation/destroy';
+
+  ///更新活跃人数
+  String get activePeople => '/v2/app/evaluation/active_people';
 }
 
 class BenefitAPI {
@@ -216,4 +219,8 @@ class TicketAPI {
   //提交订单接口
   String get submitAirOrder =>
       '/v2/app/liFang_ticketing/plane_ticket/air_user_add_order';
+
+  //飞机票订单支付
+  String get airOrderPayLifang =>
+      '/v2/app/liFang_ticketing/plane_ticket/air_order_payBill';
 }

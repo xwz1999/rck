@@ -75,6 +75,7 @@ class Airline {
   String dstCity;
   String dstCityName;
   num basePrice;
+  num minimum;
   AirSeats airSeats;
 
   Airline(

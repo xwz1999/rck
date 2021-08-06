@@ -5,6 +5,7 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/buy_tickets/models/air_items_list_model.dart';
 import 'package:recook/pages/buy_tickets/models/air_order_model.dart';
+import 'package:recook/pages/buy_tickets/models/air_order_pay_model.dart';
 import 'package:recook/pages/buy_tickets/models/airline_model.dart';
 import 'package:recook/pages/buy_tickets/models/airport_city_model.dart';
 import 'package:recook/pages/buy_tickets/models/passager_model.dart';
@@ -140,7 +141,10 @@ class PassagerFunc {
       String to_port,
       String line,
       String users,
-      String phone) async {
+      String phone,
+      String fromCity,
+      String toCity,
+      String date) async {
     //goods_type 1为飞机票 title商品信息
     ResultData result = await HttpManager.post(APIV2.ticketAPI.submitAirOrder, {
       "user_id": UserManager.instance.user.info.id,
@@ -155,13 +159,53 @@ class PassagerFunc {
       "to_port": to_port,
       "line": line,
       "users": users,
-      "phone":phone
-
+      "phone": phone,
+      "from_city": fromCity,
+      "to_city": toCity,
+      "date":date
     });
     if (result.data != null) {
       if (result.data['data'] != null) {
         return SubmitOrderModel.fromJson(result.data['data']);
       }
     }
+  }
+
+  //飞机票订单支付接口 立方的支付
+  static Future<String> airOrderPayLifang(
+      int lf_order_id,
+      String seatCode,
+      String passagers,
+      String itemId,
+      String contactName,
+      String contactTel,
+      String date,
+      String from,
+      String to,
+      String companyCode,
+      String flightNo) async {
+    ResultData result =
+        await HttpManager.post(APIV2.ticketAPI.airOrderPayLifang, {
+      "user_id": UserManager.instance.user.info.id,
+      "lf_order_id": lf_order_id,
+      "seatCode": seatCode,
+      "passagers": passagers,
+      "itemId": itemId,
+      "contactName": contactName,
+      "contactTel": contactTel,
+      "date": date,
+      "from": from,
+      "to": to,
+      "companyCode": companyCode,
+      "flightNo": flightNo
+    });
+    if (result.data != null) {
+      if (result.data['msg'] == 'ok') {
+        return result.data['msg'];
+      } else {
+        return 'no';
+      }
+    }
+    return 'no';
   }
 }

@@ -2,10 +2,12 @@ import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/order_prepay_model.dart';
 import 'package:recook/pages/buy_tickets/add_used_passager_page.dart';
 import 'package:recook/pages/buy_tickets/models/passager_model.dart';
+import 'package:recook/pages/buy_tickets/models/pay_need_model.dart';
 import 'package:recook/pages/buy_tickets/models/submit_order_model.dart';
 import 'package:recook/pages/home/classify/order_prepay_page.dart';
 import 'package:recook/utils/date/date_utils.dart';
@@ -14,7 +16,6 @@ import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -29,6 +30,7 @@ class AirplaneDetailPage extends StatefulWidget {
   final DateTime originDate; //出发日期
   final int airlineindex;
   final AirSeat airSeat;
+  final String itemId;
   AirplaneDetailPage(
       {Key key,
       this.airline,
@@ -36,7 +38,8 @@ class AirplaneDetailPage extends StatefulWidget {
       this.toText,
       this.originDate,
       this.airlineindex,
-      this.airSeat})
+      this.airSeat,
+      this.itemId})
       : super(key: key);
 
   @override
@@ -47,6 +50,7 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
   List<PassagerModel> _passengerList = [];
   List<PassagerModel> _ChoosePassengerList = [];
   String _contactNum = '';
+  String _contactName = '';
   Airline airline;
   AirSeat airSeat;
   DateTime _dateNow = DateTime(
@@ -232,25 +236,46 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
                             Alert.dismiss(context);
                           },
                         ));
+                  } else if (_contactName == '') {
+                    Alert.show(
+                        context,
+                        NormalTextDialog(
+                          type: NormalTextDialogType.normal,
+                          title: "提示",
+                          content: "请您先输入联系人姓名",
+                          items: ["确认"],
+                          listener: (index) {
+                            Alert.dismiss(context);
+                          },
+                        ));
                   } else {
+                    print(airline.orgCity +
+                        airline.dstCity +
+                        widget.fromText +
+                        widget.toText +
+                        airline.depTime +
+                        airline.arriTime);
                     SubmitOrderModel submitOrderModel =
                         await PassagerFunc.submitAirOrder(
                             _getTitle(1),
                             1,
-                            // (_ChoosePassengerList.length *
-                            //     (airline.adultFuelTax +
-                            //         airline.adultAirportTax +
-                            //         airSeat.parPrice)),
-                            0.01,
-                            widget.fromText,
-                            widget.toText,
+                            (_ChoosePassengerList.length *
+                                (airline.adultFuelTax +
+                                    airline.adultAirportTax +
+                                    airSeat.parPrice)),
+                            airline.orgCity,
+                            airline.dstCity,
                             airline.depTime,
                             airline.arriTime,
                             airline.orgCityName,
                             airline.dstCityName,
                             airline.flightCompanyName + airline.flightNo,
                             _getUserId(),
-                            _contactNum);
+                            _contactNum,
+                            widget.fromText,
+                            widget.toText,
+                            DateUtil.formatDate(widget.originDate,
+                                format: 'yyyy-MM-dd'));
                     if (submitOrderModel == null) {
                       cancel();
                       Alert.show(
@@ -273,18 +298,33 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
                           double.parse(submitOrderModel.amountMoney.toString()),
                           submitOrderModel.status,
                           submitOrderModel.createdTime);
+
+                      PayNeedModel payNeedModel = PayNeedModel(
+                          id: submitOrderModel.userId,
+                          lfOrderId: submitOrderModel.id,
+                          seatCode: airSeat.seatCode,
+                          passagers: _getPassagerText(),
+                          itemId: widget.itemId,
+                          contactName: _contactName,
+                          contactTel: _contactNum,
+                          date: DateUtil.formatDate(widget.originDate,
+                              format: 'yyyy-MM-dd'),
+                          from: airline.orgCity,
+                          to: airline.dstCity,
+                          companyCode: airline.flightCompanyCode,
+                          flightNo: airline.flightNo);
+
                       OrderPrepayModel resultModel =
                           OrderPrepayModel("SUCCESS", data, "");
                       AppRouter.pushAndReplaced(
                           context, RouteName.ORDER_PREPAY_PAGE,
-                          arguments: OrderPrepayPage.setArguments(
-                            resultModel,
-                            goToOrder: false,
-                            canUseBalance: true,
-                            fromTo: airline.orgCityName +
-                                '--' +
-                                airline.dstCityName,
-                          ));
+                          arguments: OrderPrepayPage.setArguments(resultModel,
+                              goToOrder: false,
+                              canUseBalance: true,
+                              fromTo: airline.orgCityName +
+                                  '--' +
+                                  airline.dstCityName,
+                              payNeedModel: payNeedModel));
                       cancel();
                     }
 
@@ -300,6 +340,27 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
         ],
       ),
     );
+  }
+
+  _getPassagerText() {
+    String Passager = '';
+    for (var i = 0; i < _ChoosePassengerList.length; i++) {
+      if (Passager == '') {
+        Passager = _ChoosePassengerList[i].id.toString() +
+            ',' +
+            _ChoosePassengerList[i].phone +
+            ',' +
+            _ChoosePassengerList[i].residentIdCard;
+      } else {
+        Passager = Passager +
+            ';' +
+            _ChoosePassengerList[i].id.toString() +
+            ',' +
+            _ChoosePassengerList[i].phone +
+            ',' +
+            _ChoosePassengerList[i].residentIdCard;
+      }
+    }
   }
 
   _getTitle(int goods_type) {
@@ -446,11 +507,61 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
               hintStyle:
                   AppTextStyle.generate(14 * 2.sp, color: Color(0xff666666)),
             ),
+            keyboardType: TextInputType.number,
+            inputFormatters: [
+              FilteringTextInputFormatter.digitsOnly,
+              LengthLimitingTextInputFormatter(11)
+            ],
             style: AppTextStyle.generate(14 * 2.sp),
-            maxLength: 15,
+            maxLength: 11,
             maxLines: 1,
             onChanged: (text) {
               _contactNum = text;
+            },
+          ).expand(),
+        ],
+      ),
+    );
+  }
+
+  _contractName() {
+    return Container(
+      margin: EdgeInsets.only(top: 10.rw),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(4.rw)),
+        color: Colors.white,
+      ),
+      height: 42.rw,
+      child: Row(
+        children: [
+          20.wb,
+          Container(
+            padding: EdgeInsets.only(top: 2.rw),
+            child: Image.asset(
+              R.ASSETS_TICKET_PHONE_ICON_PNG,
+              width: 10.rw,
+              height: 10.rw,
+            ),
+          ),
+          10.wb,
+          Text(
+            "联系人姓名",
+            style: TextStyle(fontSize: 14.rsp, color: Color(0xFF333333)),
+          ),
+          20.wb,
+          TextField(
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 5.rw, bottom: 4.rw),
+              hintText: '用于接收取票信息',
+              border: InputBorder.none,
+              hintStyle:
+                  AppTextStyle.generate(14 * 2.sp, color: Color(0xff666666)),
+            ),
+            style: AppTextStyle.generate(14 * 2.sp),
+            maxLength: 11,
+            maxLines: 1,
+            onChanged: (text) {
+              _contactName = text;
             },
           ).expand(),
         ],
@@ -593,9 +704,10 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
       child: Column(
         children: [
           Container(
+            constraints: BoxConstraints(maxHeight: 330.rw),
             padding: EdgeInsets.symmetric(horizontal: 15.rw),
             height: _getHeight(
-                _passengerList.length + 1, _ChoosePassengerList.length),
+                _passengerList.length - 1, _ChoosePassengerList.length),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(4.rw)),
               color: Colors.white,
@@ -607,6 +719,7 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
             ),
           ),
           _contract(),
+          _contractName()
         ],
       ),
     ).expand();
@@ -637,17 +750,17 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
   }
 
   _getHeight(int top, int bottom) {
-    if (top < 5) {
+    if (top <= 4) {
       if (bottom == 0) {
         return 98.rw;
       } else {
         return 105.rw + bottom * 31.rw;
       }
-    } else if (top >= 5) {
+    } else if (top > 4) {
       if (bottom <= 8) {
-        return 105.rw + bottom * 31.rw + (top ~/ 4) * 53.rw;
+        return 105.rw + bottom * 31.rw + (top ~/ 4) * 55.rw;
       } else {
-        return 105.rw + 8 * 31.rw + (top ~/ 4) * 53.rw;
+        return 105.rw + 8 * 31.rw + (top ~/ 4) * 55.rw;
       }
     }
   }

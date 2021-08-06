@@ -8,7 +8,7 @@ class SubmitOrderModel {
   int status;
   String expireTime;
   String payIp;
-  Null payTime;
+  String payTime;
   int payMethod;
   int goodsType;
   num amountMoney;
@@ -20,6 +20,10 @@ class SubmitOrderModel {
   String toPort;
   String line;
   String users;
+  String thirdPartyNo;
+  String reservedPhone;
+  String fromCity;
+  String toCity;
 
   SubmitOrderModel(
       {this.id,
@@ -42,7 +46,11 @@ class SubmitOrderModel {
       this.fromPort,
       this.toPort,
       this.line,
-      this.users});
+      this.users,
+      this.thirdPartyNo,
+      this.reservedPhone,
+      this.fromCity,
+      this.toCity});
 
   SubmitOrderModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -66,6 +74,10 @@ class SubmitOrderModel {
     toPort = json['to_port'];
     line = json['line'];
     users = json['users'];
+    thirdPartyNo = json['third_party_no'];
+    reservedPhone = json['reserved_phone'];
+    fromCity = json['from_city'];
+    toCity = json['to_city'];
   }
 
   Map<String, dynamic> toJson() {
@@ -91,6 +103,10 @@ class SubmitOrderModel {
     data['to_port'] = this.toPort;
     data['line'] = this.line;
     data['users'] = this.users;
+    data['third_party_no'] = this.thirdPartyNo;
+    data['reserved_phone'] = this.reservedPhone;
+    data['from_city'] = this.fromCity;
+    data['to_city'] = this.toCity;
     return data;
   }
 }

@@ -84,10 +84,10 @@ class _SettingItemListViewState extends BaseStoreState<SettingItemListView> {
                       }),
 
                       //购票临时入口
-                      SCTile.normalTile("购票(临时)", listener: () {
-                        Get.to(() => ChooseTicketsTypePage());
-                        //CRoute.push(context, PrivacyPageV2());
-                      }),
+                      // SCTile.normalTile("购票(临时)", listener: () {
+                      //   Get.to(() => ChooseTicketsTypePage());
+                      //   //CRoute.push(context, PrivacyPageV2());
+                      // }),
 
                       getEmptyBox(),
                       SCTile.normalTile("退出登录", listener: () {

@@ -136,9 +136,7 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
                           _chooseDate = start;
                           initDate();
 
-                          setState(() {
-                            _tabController.animateTo(_index);
-                          });
+                          setState(() {});
                         },
                       ),
                       isScrollControlled: true,
@@ -290,10 +288,11 @@ class _ChooseTicketsPageState extends State<ChooseTicketsPage>
       _dateTableList.add(a);
     }
     _tabController = TabController(
-      initialIndex: _index,
+      // initialIndex: _index,
       vsync: this,
       length: _dateTableList.length,
     );
+    _tabController.animateTo(_index);
   }
 
   _buildListView() {

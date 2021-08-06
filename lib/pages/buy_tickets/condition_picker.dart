@@ -87,7 +87,7 @@ class _AS2DatePickerState extends State<AS2DatePicker> {
 
     _chooseSpace.add(Item(item: '不限', choice: true));
     _chooseSpace.add(Item(item: '经济仓', choice: false));
-    _chooseSpace.add(Item(item: '商务仓/头等仓', choice: false));
+    _chooseSpace.add(Item(item: '商务舱/头等舱', choice: false));
   }
 
   //左边选择标题框

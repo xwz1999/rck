@@ -64,7 +64,7 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
       DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0);
   String _dateText = DateUtil.formatDate(DateTime.now(), format: 'M月d日');
   AirItemModel airItemModel;
-  String goodId;
+  String ItemId;
   List notCity = [
     '',
   ];
@@ -77,7 +77,7 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
     Future.delayed(Duration.zero, () async {
       airItemModel = await PassagerFunc.getAirTicketGoodsList();
       print(airItemModel.items.item[0].itemId);
-      goodId = airItemModel.items.item[0].itemId;
+      ItemId = airItemModel.items.item[0].itemId;
     });
 
     Future.delayed(Duration.zero, () async {
@@ -102,7 +102,7 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
             .setLocationOption(AMapLocationOption(onceLocation: true));
         _amapFlutterLocation.startLocation();
       } else {
-        ReToast.err(text: '未获取到定位权限，请先在设置中打开定位权限');
+        //ReToast.err(text: '未获取到定位权限，请先在设置中打开定位权限');
       }
     });
   }
@@ -236,8 +236,19 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
         GestureDetector(
           //汽车票
           onTap: () {
-            _chooseType = 2;
-            setState(() {});
+            Alert.show(
+                context,
+                NormalTextDialog(
+                  type: NormalTextDialogType.normal,
+                  title: "提示",
+                  content: "汽车票购买暂未开放",
+                  items: ["确认"],
+                  listener: (index) {
+                    Alert.dismiss(context);
+                  },
+                ));
+            //_chooseType = 2;
+            //setState(() {});
           },
           child: Column(
             children: [
@@ -303,8 +314,19 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
         GestureDetector(
           //火车票
           onTap: () {
-            _chooseType = 3;
-            setState(() {});
+            Alert.show(
+                context,
+                NormalTextDialog(
+                  type: NormalTextDialogType.normal,
+                  title: "提示",
+                  content: "火车票购买暂未开放",
+                  items: ["确认"],
+                  listener: (index) {
+                    Alert.dismiss(context);
+                  },
+                ));
+            //_chooseType = 3;
+            //setState(() {});
           },
           child: Column(
             children: [
@@ -609,7 +631,7 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
                 fromText: _originText,
                 toText: _destinationText,
                 originDate: _date,
-                code: goodId,
+                code: ItemId,
                 list: _cityModelList));
           }
           print('查询');

@@ -19,13 +19,14 @@ class AirplaneReservePage extends StatefulWidget {
   final String toText; //目的地
   final DateTime originDate; //出发日期
   final int index;
+  final String itemId;
   AirplaneReservePage(
       {Key key,
       this.airline,
       this.fromText,
       this.toText,
       this.originDate,
-      this.index})
+      this.index, this.itemId})
       : super(key: key);
 
   @override
@@ -398,7 +399,8 @@ class _AirplaneReservePageState extends State<AirplaneReservePage>
                           : _firstclassList[index],
                       fromText: widget.fromText,
                       toText: widget.toText,
-                      originDate: widget.originDate));
+                      originDate: widget.originDate,
+                      itemId:widget.itemId));
                 },
               ),
             ],

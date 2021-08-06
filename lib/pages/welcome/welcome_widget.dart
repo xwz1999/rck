@@ -151,6 +151,9 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     WidgetsBinding.instance.addPostFrameCallback((callback) {
       _beginCountDown();
       UserManager.instance.updateUserBriefInfo(getStore());
+      if (UserManager.instance.haveLogin) {
+        UserManager.instance.activePeople();
+      }
     });
   }
 

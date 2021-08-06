@@ -23,6 +23,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:power_logger/power_logger.dart';
+import 'package:recook/pages/buy_tickets/choose_tickets_type_page.dart';
 import 'package:recook/pages/live/pages/discovery_page.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
@@ -182,7 +183,7 @@ class _HomePageState extends BaseStoreState<HomePage>
             .setLocationOption(AMapLocationOption(onceLocation: true));
         _amapFlutterLocation.startLocation();
       } else {
-        ReToast.err(text: '未获取到定位权限，请先在设置中打开定位权限');
+        //ReToast.err(text: '未获取到定位权限，请先在设置中打开定位权限');
       }
     });
 
@@ -509,6 +510,7 @@ class _HomePageState extends BaseStoreState<HomePage>
             : "";
     Widget leftContainer = GestureDetector(
       onTap: () {
+        requestPermission();
         AppRouter.push(context, RouteName.WEATHER_CITY_PAGE,
                 arguments: WeatherCityPage.setArguments(locationCityName))
             .then((model) {
@@ -1034,20 +1036,20 @@ class _HomePageState extends BaseStoreState<HomePage>
                 _buttonTitleRow(
                   // R.ASSETS_LOTTERY_REDEEM_LOTTERY_ICON_PNG,
                   AppConfig.getShowCommission()
-                      ? R.ASSETS_HOME_MENU_BBB_PNG
+                      ? R.ASSETS_HOME_MENU_AIR_PNG
                       : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
                   // AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
                   // '彩票兑换',
                   //2021 7,27 ios彩票审核不通过 隐藏彩票
-                  '精彩发现',
+                  '出行服务',
                   onPressed: () async {
                     //AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
 
                     //widget.tabController.animateTo(2);
-                    UserManager.instance.selectTabbarIndex = 2;
-                    bool value = UserManager.instance.selectTabbar.value;
-                    UserManager.instance.selectTabbar.value = !value;
-
+                    // UserManager.instance.selectTabbarIndex = 2;
+                    // bool value = UserManager.instance.selectTabbar.value;
+                    // UserManager.instance.selectTabbar.value = !value;
+                    Get.to(() => ChooseTicketsTypePage());
                     //setState(() {});
                   },
                   //   () {

@@ -10,8 +10,6 @@ import 'package:recook/pages/buy_tickets/models/airport_city_model.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/utils/date/date_utils.dart';
 import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -46,10 +44,11 @@ class _AirlineWidgetState extends State<AirlineWidget> {
   GSRefreshController _refreshController =
       GSRefreshController(initialRefresh: true);
   List<AirLineModel> _airLineList = [];
+  List<AirLineModel> _airLineHandleList = [];
   bool showList = false;
   bool _chooseState = true;
   DateTime _chooseDate; //最终选中的日期
-  int index = 0; //默认为选择日期在日期列表的位置
+  // int index = 0; //默认为选择日期在日期列表的位置
   bool _choosePriceSort = true;
   bool _sortPriceType = true; //1 低-高排序 2高-低排序
   bool _chooseTimeSort = false;
@@ -126,23 +125,34 @@ class _AirlineWidgetState extends State<AirlineWidget> {
           Function cancel = ReToast.loading();
 
           _airLineList = await PassagerFunc.getAirLineList(
-              fromList,
-              widget.code,
-              DateUtil.formatDate(widget.originDate, format: 'yyyy-MM-dd'),
-              toList);
-
+            ['PEK', 'SHA'],
+            // fromList,
+            widget.code,
+            DateUtil.formatDate(widget.originDate, format: 'yyyy-MM-dd'),
+            //toList
+            ['SZX', 'HAK'],
+          );
+          _airLineHandleList = _airLineList;
           showList = true;
+
+          if (_choosePriceSort) {
+            _sortListbyPriceTB(_sortPriceType);
+          } else if (_chooseTimeSort) {
+            _sortListbyTimeTB(_sortTimeType);
+          }
 
           setState(() {});
           _refreshController.refreshCompleted();
           cancel();
         },
-        body: _airLineList.length > 0 &&
-                _airLineList.first.airlinesListResponse.airlines.airline != null
+        body: _airLineHandleList.length > 0 &&
+                _airLineHandleList
+                        .first.airlinesListResponse.airlines.airline !=
+                    null
             ? ListView.builder(
                 padding: EdgeInsets.only(bottom: 80.rw),
                 physics: AlwaysScrollableScrollPhysics(),
-                itemCount: _airLineList[0]
+                itemCount: _airLineHandleList[0]
                     .airlinesListResponse
                     .airlines
                     .airline
@@ -155,20 +165,76 @@ class _AirlineWidgetState extends State<AirlineWidget> {
                       onPressed: () {
                         // AppRouter.push(context, RouteName.COMMODITY_PAGE,
                         //     arguments: CommodityDetailPage.setArguments(goods.id));
+                        if (_timer != null) {
+                          _timer.cancel();
+                        }
                         Get.to(AirplaneReservePage(
-                          fromText: widget.fromText,
-                          toText: widget.toText,
-                          originDate: widget.originDate,
-                          airline: _airLineList
-                              .first.airlinesListResponse.airlines.airline,
-                          index: index,
-                        ));
+                            fromText: widget.fromText,
+                            toText: widget.toText,
+                            originDate: widget.originDate,
+                            airline: _airLineHandleList
+                                .first.airlinesListResponse.airlines.airline,
+                            index: index,
+                            itemId: widget.code));
                       },
-                      child: _ticketsItem(_airLineList[0], index));
+                      child: _ticketsItem(_airLineHandleList[0], index));
                 })
             : showList
                 ? noDataView('抱歉，没有找到您想要的班次')
                 : SizedBox());
+  }
+
+  _sortListbyPriceTB(bool status) {
+    print(status);
+    if (_airLineHandleList.length > 0 &&
+        _airLineHandleList.first.airlinesListResponse.airlines.airline !=
+            null) {
+      //价格高低排序
+      for (var i = 0;
+          i <
+              _airLineHandleList
+                  .first.airlinesListResponse.airlines.airline.length;
+          i++) {
+        _airLineHandleList
+                .first.airlinesListResponse.airlines.airline[i].minimum =
+            _airLineHandleList
+                .first.airlinesListResponse.airlines.airline[i].airSeats.airSeat
+                .sortedBy((a, b) => a.settlePrice.compareTo(b.settlePrice))
+                .first
+                .settlePrice;
+      }
+
+      status
+          ? _airLineHandleList.first.airlinesListResponse.airlines.airline =
+              _airLineHandleList.first.airlinesListResponse.airlines.airline
+                  .sortedBy((a, b) => a.minimum.compareTo(b.minimum))
+          : _airLineHandleList.first.airlinesListResponse.airlines.airline =
+              _airLineHandleList.first.airlinesListResponse.airlines.airline
+                  .sortedBy((a, b) => b.minimum.compareTo(a.minimum));
+    }
+  }
+
+  _sortListbyTimeTB(bool status) {
+    if (_airLineHandleList.length > 0 &&
+        _airLineHandleList.first.airlinesListResponse.airlines.airline !=
+            null) {
+      //时间早晚排序
+      status
+          ? _airLineHandleList.first.airlinesListResponse.airlines.airline =
+              _airLineHandleList.first.airlinesListResponse.airlines.airline
+                  .sortedBy((a, b) => _getDateTimeByString(a.depTime)
+                      .compareTo(_getDateTimeByString(b.depTime)))
+          : _airLineHandleList.first.airlinesListResponse.airlines.airline =
+              _airLineHandleList.first.airlinesListResponse.airlines.airline
+                  .sortedBy((a, b) =>
+                      _getDateTimeByString(b.depTime).compareTo(_getDateTimeByString(a.depTime)));
+    }
+  }
+
+  _getDateTimeByString(String time) {
+    time = '1111-11-11 ' + time;
+
+    return DateUtil.getDateTime(time);
   }
 
   List<String> _getAirportList(String city) {
@@ -205,7 +271,7 @@ class _AirlineWidgetState extends State<AirlineWidget> {
     return [];
   }
 
-  _getAirportCode(String city, String airport) {
+  List<String> _getAirportCode(String city, String airport) {
     if (widget.cityModelList != null) {
       int index =
           widget.cityModelList.indexWhere((element) => element.city == city);
@@ -330,20 +396,32 @@ class _AirlineWidgetState extends State<AirlineWidget> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                "¥" + _sortListbyPrice(model).parPrice.toString(),
+                "¥" +
+                    model.airlinesListResponse.airlines.airline[index].airSeats
+                        .airSeat.first.parPrice
+                        .toString(),
                 textAlign: TextAlign.right,
                 style: TextStyle(fontSize: 18.rsp, color: Color(0xFFD5101A)),
               ),
               Text(
-                (_sortListbyPrice(model).discount * 10).toString() +
+                (model.airlinesListResponse.airlines.airline[index].airSeats
+                                .airSeat.first.discount *
+                            10)
+                        .toStringAsFixed(1) +
                     '折' +
-                    _sortListbyPrice(model).seatMsg,
+                    model.airlinesListResponse.airlines.airline[index].airSeats
+                        .airSeat.first.seatMsg,
                 textAlign: TextAlign.right,
                 style: TextStyle(fontSize: 10.rsp, color: Color(0xFF999999)),
               ),
-              _sortListbyPrice(model).seatStatus != 'A'
+              model.airlinesListResponse.airlines.airline[index].airSeats
+                          .airSeat.first.seatStatus !=
+                      'A'
                   ? Text(
-                      "仅剩" + _sortListbyPrice(model).seatStatus + '张',
+                      "仅剩" +
+                          model.airlinesListResponse.airlines.airline[index]
+                              .airSeats.airSeat.first.seatStatus +
+                          '张',
                       textAlign: TextAlign.right,
                       style:
                           TextStyle(fontSize: 12.rsp, color: Color(0xFFD5101A)),
@@ -356,73 +434,82 @@ class _AirlineWidgetState extends State<AirlineWidget> {
     );
   }
 
-  AirSeat _sortListbyPrice(AirLineModel model) {
-    return model.airlinesListResponse.airlines.airline[index].airSeats.airSeat
-        .sortedBy((a, b) => a.settlePrice.compareTo(b.settlePrice))
-        .first;
+  // _sortListbyPrice() {
+  //   for (var i = 0;
+  //       i <
+  //           _airLineHandleList
+  //               .first.airlinesListResponse.airlines.airline.length;
+  //       i++) {
+  //     _airLineHandleList
+  //             .first.airlinesListResponse.airlines.airline[i].airSeats.airSeat =
+  //         _airLineHandleList
+  //             .first.airlinesListResponse.airlines.airline[i].airSeats.airSeat
+  //             .sortedBy((a, b) => a.settlePrice.compareTo(b.settlePrice));
+  //   }
+  // }
+
+  _sortListbyShangwu(List<AirLineModel> AirLineList) {
+    List<AirSeat> list = [];
+    var model = AirLineList.first.airlinesListResponse.airlines.airline;
+    for (var i = 0; i < model.length; i++) {
+      for (var j = 0; j < model[i].airSeats.airSeat.length; j++) {
+        if (model[i].airSeats.airSeat[j].seatMsg == '商务舱' ||
+            model[i].airSeats.airSeat[j].seatMsg == '头等舱') {
+          list.add(model[i].airSeats.airSeat[j]);
+        }
+      }
+      model[i].airSeats.airSeat = list;
+      if (model[i].airSeats.airSeat == []) {
+        model.removeAt(i);
+      }
+    }
+    AirLineList.first.airlinesListResponse.airlines.airline = model;
+    print(AirLineList);
+    return AirLineList;
   }
 
-  // _ticketsItem1(AirLineModel model, int index) {
-  //   return Container(
-  //     padding:
-  //         EdgeInsets.only(left: 20.rw, right: 15.rw, top: 10.rw, bottom: 7.rw),
-  //     margin: EdgeInsets.only(top: 10.rw),
-  //     color: Colors.white,
-  //     child:
-  //         Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-  //       Row(
-  //         children: [
-  //           Text(
-  //             model.airlinesListResponse.airlines.airline[index].depTime,
-  //             style: TextStyle(fontSize: 18.rsp, color: Color(0xFF333333)),
-  //           ),
-  //           20.wb,
-  //           Container(
-  //             alignment: Alignment.topCenter,
-  //             padding: EdgeInsets.only(bottom: 10.rw),
-  //             child: Column(
-  //               children: [
-  //                 Text(
-  //                   "2h25m",
-  //                   style:
-  //                       TextStyle(fontSize: 12.rsp, color: Color(0xFF333333)),
-  //                 ),
-  //                 Image.asset(
-  //                   R.ASSETS_TICKET_GOTO2_ICON_PNG,
-  //                   height: rSize(5.rw),
-  //                   width: rSize(106.rw),
-  //                   fit: BoxFit.fitWidth,
-  //                 ),
-  //               ],
-  //             ),
-  //           ),
-  //           20.wb,
-  //           Text(
-  //             model.airlinesListResponse.airlines.airline[index].depTime,
-  //             style: TextStyle(fontSize: 18.rsp, color: Color(0xFF333333)),
-  //           ),
-  //         ],
-  //       ),
-  //       Container(
-  //         child: Row(
-  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //           children: [
-  //             Text(
-  //               model.airlinesListResponse.airlines.airline[index].orgCityName,
-  //               textAlign: TextAlign.left,
-  //               style: TextStyle(fontSize: 12.rsp, color: Color(0xFF333333)),
-  //             ),
-  //             Text(
-  //               model.airlinesListResponse.airlines.airline[index].dstCityName,
-  //               textAlign: TextAlign.left,
-  //               style: TextStyle(fontSize: 12.rsp, color: Color(0xFF333333)),
-  //             ),
-  //           ],
-  //         ),
-  //       )
-  //     ]),
-  //   );
-  // }
+  _sortListbyJingji(List<AirLineModel> AirLineList) {
+    List<AirSeat> list = [];
+    var model = AirLineList.first.airlinesListResponse.airlines.airline;
+    for (var i = 0; i < model.length; i++) {
+      for (var j = 0; j < model[i].airSeats.airSeat.length; j++) {
+        if (model[i].airSeats.airSeat[j].seatMsg != '商务舱' &&
+            model[i].airSeats.airSeat[j].seatMsg != '头等舱') {
+          list.add(model[i].airSeats.airSeat[j]);
+        }
+      }
+      model[i].airSeats.airSeat = list;
+      if (model[i].airSeats.airSeat == []) {
+        model.removeAt(i);
+      }
+    }
+    AirLineList.first.airlinesListResponse.airlines.airline = model;
+    return AirLineList;
+  }
+
+  _sortListbyfrom(List<AirLineModel> AirLineList, String code) {
+    var model = AirLineList.first.airlinesListResponse.airlines.airline;
+    for (var i = 0; i < model.length; i++) {
+      if (model[i].orgCity == code) {
+        model.remove(i);
+      }
+      AirLineList.first.airlinesListResponse.airlines.airline = model;
+      print(AirLineList);
+      return AirLineList;
+    }
+  }
+
+  _sortListbyto(List<AirLineModel> AirLineList, String code) {
+    var model = AirLineList.first.airlinesListResponse.airlines.airline;
+    for (var i = 0; i < model.length; i++) {
+      if (model[i].dstCity == code) {
+        model.remove(i);
+      }
+      AirLineList.first.airlinesListResponse.airlines.airline = model;
+      print(AirLineList);
+      return AirLineList;
+    }
+  }
 
   _getPlaneNameByType(String type) {
     String first = type.substring(0, 1);
@@ -452,36 +539,44 @@ class _AirlineWidgetState extends State<AirlineWidget> {
               Options options = await show2DatePicker(context,
                   fromNameList: _getAirportNameList(widget.fromText),
                   endNameList: _getAirportNameList(widget.toText));
-              if (options.arrive != '' ||
-                  options.depart != '' ||
-                  options.date != '' ||
-                  options.company != '' ||
-                  options.space != '') {
-                if (options.depart != '') {
-                  fromList = _getAirportCode(widget.fromText, options.depart);
-                } else {
-                  fromList = _getAirportList(widget.fromText);
-                }
-                if (options.arrive != '') {
-                  toList = _getAirportCode(widget.toText, options.arrive);
-                } else {
-                  toList = _getAirportList(widget.toText);
-                }
 
-                _refreshController.requestRefresh();
-
-                _chooseScreen = true;
-                setState(() {});
-              } else if (options.arrive == '' &&
-                  options.depart == '' &&
-                  options.date == '' &&
+              // if (options.depart != '') {
+              //   fromList = _getAirportCode(widget.fromText, options.depart);
+              //   _airLineHandleList = _sortListbyShangwu(_airLineList);
+              // }
+              // if (options.arrive != '') {
+              //   toList = _getAirportCode(widget.toText, options.arrive);
+              //   _airLineHandleList = _sortListbyShangwu(_airLineList);
+              // }
+              if (options.arrive == '' &&
                   options.company == '' &&
+                  options.date == '' &&
+                  options.depart == '' &&
                   options.space == '') {
                 _chooseScreen = false;
-                fromList = _getAirportList(widget.fromText);
-                toList = _getAirportList(widget.toText);
-                _refreshController.requestRefresh();
+                _airLineHandleList = _airLineList;
                 setState(() {});
+              } else {
+                _chooseScreen = true;
+                if (options.depart != null) {
+                  _airLineHandleList = _sortListbyfrom(_airLineHandleList,
+                      _getAirportCode(widget.fromText, options.depart).first);
+                  setState(() {});
+                }
+                if (options.arrive != null) {
+                  _airLineHandleList = _sortListbyto(_airLineHandleList,
+                      _getAirportCode(widget.fromText, options.arrive).first);
+                  setState(() {});
+                }
+                if (options.space == '商务舱/头等舱') {
+                  _airLineHandleList = _sortListbyShangwu(_airLineHandleList);
+                  setState(() {});
+                } else if (options.space == '经济舱') {
+                  _airLineHandleList = _sortListbyJingji(_airLineHandleList);
+                  setState(() {});
+                }
+
+                print(_airLineHandleList);
               }
             },
             child: Container(
@@ -511,6 +606,7 @@ class _AirlineWidgetState extends State<AirlineWidget> {
                 _choosePriceSort = true;
                 _sortPriceType = !_sortPriceType;
                 _chooseTimeSort = false;
+                _sortListbyPriceTB(_sortPriceType);
                 setState(() {});
               },
               child: Container(
@@ -531,6 +627,7 @@ class _AirlineWidgetState extends State<AirlineWidget> {
               _choosePriceSort = false;
               _chooseTimeSort = true;
               _sortTimeType = !_sortTimeType;
+              _sortListbyTimeTB(_sortTimeType);
               setState(() {});
             },
             child: Container(

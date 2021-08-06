@@ -23,6 +23,8 @@ import 'package:recook/models/base_model.dart';
 import 'package:recook/models/order_prepay_model.dart';
 import 'package:recook/models/pay_result_model.dart';
 import 'package:recook/models/recook_fund_model.dart';
+import 'package:recook/pages/buy_tickets/functions/passager_func.dart';
+import 'package:recook/pages/buy_tickets/models/pay_need_model.dart';
 import 'package:recook/pages/home/classify/mvp/order_mvp/order_presenter_impl.dart';
 import 'package:recook/pages/user/order/order_center_page.dart';
 import 'package:recook/pages/user/order/order_detail_page.dart';
@@ -41,12 +43,16 @@ class OrderPrepayPage extends StatefulWidget {
   const OrderPrepayPage({Key key, this.arguments}) : super(key: key);
 
   static setArguments(OrderPrepayModel model,
-      {bool goToOrder = false, bool canUseBalance = true, String fromTo = ''}) {
+      {bool goToOrder = false,
+      bool canUseBalance = true,
+      String fromTo = '',
+      PayNeedModel payNeedModel}) {
     return {
       "model": model,
       "goToOrder": goToOrder,
       "canUseBalance": canUseBalance,
       "fromTo": fromTo,
+      "payNeedModel": payNeedModel
     };
   }
 
@@ -62,6 +68,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
 
   OrderPresenterImpl _presenter;
   OrderPrepayModel _model;
+  PayNeedModel _payNeedModel;
   int _defaultPayIndex = 1;
   RecookFundModel _recookFundModel;
 
@@ -107,6 +114,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     _model = widget.arguments["model"];
     _goToOrder = widget.arguments["goToOrder"];
     _fromTo = widget.arguments["fromTo"];
+    _payNeedModel = widget.arguments['payNeedModel'];
     _canUseBalance = widget.arguments['canUseBalance'] ?? true;
     _presenter
         .queryRecookPayFund(UserManager.instance.user.info.id)
@@ -165,48 +173,49 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         body: _buildBody(context),
       ),
       onWillPop: () {
-        _fromTo == null?Alert.show(
-            context,
-            NormalTextDialog(
-              type: NormalTextDialogType.delete,
-              title: "确认要离开收银台?",
-              content: "您的订单在生成后20分钟内未支付将被取消，请尽快完成支付。",
-              items: ["继续支付"],
-              listener: (index) {
-                Alert.dismiss(context);
-              },
-              deleteItem: "确认离开",
-              deleteListener: () {
-                _updateUserBrief();
-                Alert.dismiss(context);
-                if (_goToOrder) {
-                  AppRouter.pushAndReplaced(
-                      globalContext, RouteName.ORDER_DETAIL,
-                      arguments: OrderDetailPage.setArguments(_model.data.id));
-                  return;
-                }
-                Navigator.pop(context);
-              },
-            )):
-            Alert.show(
-            context,
-            NormalTextDialog(
-              type: NormalTextDialogType.delete,
-              title: "确认要离开收银台?",
-              content: "您的订单将在您退出收银台后取消,请尽快支付！",
-              items: ["继续支付"],
-              listener: (index) {
-                Alert.dismiss(context);
-              },
-              deleteItem: "确认离开",
-              deleteListener: () {
-                _updateUserBrief();
-                Alert.dismiss(context);
+        _fromTo == null
+            ? Alert.show(
+                context,
+                NormalTextDialog(
+                  type: NormalTextDialogType.delete,
+                  title: "确认要离开收银台?",
+                  content: "您的订单在生成后20分钟内未支付将被取消，请尽快完成支付。",
+                  items: ["继续支付"],
+                  listener: (index) {
+                    Alert.dismiss(context);
+                  },
+                  deleteItem: "确认离开",
+                  deleteListener: () {
+                    _updateUserBrief();
+                    Alert.dismiss(context);
+                    if (_goToOrder) {
+                      AppRouter.pushAndReplaced(
+                          globalContext, RouteName.ORDER_DETAIL,
+                          arguments:
+                              OrderDetailPage.setArguments(_model.data.id));
+                      return;
+                    }
+                    Navigator.pop(context);
+                  },
+                ))
+            : Alert.show(
+                context,
+                NormalTextDialog(
+                  type: NormalTextDialogType.delete,
+                  title: "确认要离开收银台?",
+                  content: "您的订单将在您退出收银台后取消,请尽快支付！",
+                  items: ["继续支付"],
+                  listener: (index) {
+                    Alert.dismiss(context);
+                  },
+                  deleteItem: "确认离开",
+                  deleteListener: () {
+                    _updateUserBrief();
+                    Alert.dismiss(context);
 
-                Navigator.pop(context);
-              },
-            ))
-            ;
+                    Navigator.pop(context);
+                  },
+                ));
         return Future.value(false);
       },
     );
@@ -272,13 +281,15 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
             ),
             2),
         //TODO 由于退款原因，暂时隐藏该支付方式
-        _payTile(
-            "云闪付支付",
-            Image.asset(
-              R.ASSETS_UNION_PAY_PNG,
-              height: rSize(30),
-            ),
-            3),
+        _fromTo == ''
+            ? _payTile(
+                "云闪付支付",
+                Image.asset(
+                  R.ASSETS_UNION_PAY_PNG,
+                  height: rSize(30),
+                ),
+                3)
+            : SizedBox(),
         Container(
           margin:
               EdgeInsets.symmetric(horizontal: rSize(40), vertical: rSize(150)),
@@ -396,7 +407,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         _fromTo == '' ? _aliPay(context) : _aliPayLifang(context);
         break;
       case 3:
-        _fromTo == '' ? _unionPay(context) : _unionPayLifang(context);
+        _fromTo == '' ? _unionPay(context) : SizedBox();
         break;
     }
   }
@@ -650,7 +661,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     GSDialog.of(_scaffoldKey.currentContext)
         .showLoadingDialog(_scaffoldKey.currentContext, "正在验证订单...");
 
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(seconds: 2));
 
     HttpResultModel<PayResult> resultModel =
         await _presenter.verifyOrderPayStatusLifang(_model.data.id);
@@ -665,16 +676,71 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     }
 
     if (resultModel.data.status == 0) {
-      
-      
-      ReToast.success(text: '购票成功');
-      Navigator.pop(context);
-      
-    } else {
-      ReToast.success(text: '购票成功');
-      Navigator.pop(context);
-    }
+      await Future.delayed(Duration(seconds: 2));
+      HttpResultModel<PayResult> resultModel =
+          await _presenter.verifyOrderPayStatusLifang(_model.data.id);
+      if (resultModel.data.status == 0) {
+        ReToast.success(text: '购票失败');
+        //Navigator.pop(context);
 
+      } else if (resultModel.data.status == 1) {
+        if (_payNeedModel != null) {
+          String msg = await PassagerFunc.airOrderPayLifang(
+              _payNeedModel.lfOrderId,
+              _payNeedModel.seatCode,
+              _payNeedModel.passagers,
+              _payNeedModel.itemId,
+              _payNeedModel.contactName,
+              _payNeedModel.contactTel,
+              _payNeedModel.date,
+              _payNeedModel.from,
+              _payNeedModel.to,
+              _payNeedModel.companyCode,
+              _payNeedModel.flightNo);
+          if (msg == 'ok') {
+            ReToast.success(text: '购票成功');
+            Navigator.pop(context);
+            Navigator.pop(context);
+            Navigator.pop(context);
+          } else {
+            ReToast.success(text: '购票失败');
+            Navigator.pop(context);
+            Navigator.pop(context);
+            Navigator.pop(context);
+          }
+        }
+
+        //Navigator.pop(context);
+      }
+    } else if (resultModel.data.status == 1) {
+      if (_payNeedModel != null) {
+        String msg = await PassagerFunc.airOrderPayLifang(
+            _payNeedModel.lfOrderId,
+            _payNeedModel.seatCode,
+            _payNeedModel.passagers,
+            _payNeedModel.itemId,
+            _payNeedModel.contactName,
+            _payNeedModel.contactTel,
+            _payNeedModel.date,
+            _payNeedModel.from,
+            _payNeedModel.to,
+            _payNeedModel.companyCode,
+            _payNeedModel.flightNo);
+        if (msg == 'ok') {
+          ReToast.success(text: '购票成功');
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.pop(context);
+        } else {
+          ReToast.success(text: '购票失败');
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.pop(context);
+        }
+      }
+
+      //Navigator.pop(context);
+    }
   }
 
   _updateUserBrief() {

@@ -10,6 +10,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api_v2.dart';
+import 'package:recook/manager/http_manager.dart';
 import 'package:recook/utils/storage/hive_store.dart';
 
 import 'package:redux/redux.dart';
@@ -75,6 +77,7 @@ class UserManager {
   static Future<bool> updateUser(User user, Store<RecookState> store) async {
     instance.user = user;
     instance.login.value = true;
+    UserManager.instance.activePeople();
     String jsonStr = json.encode(user.toJson());
     // await SharePreferenceUtils.setString(AppStrings.key_user, jsonStr);
     // store.dispatch(UpdateUserAction(user));
@@ -112,5 +115,12 @@ class UserManager {
     _instance.userBrief = model.data;
     store.dispatch(UpdateUserBriefAction(model.data));
     return true;
+  }
+
+  Future<bool> activePeople() async {
+        ResultData result =
+        await HttpManager.post(APIV2.userAPI.activePeople,{
+          'id': UserManager.instance.user.info.id,
+        });
   }
 }
