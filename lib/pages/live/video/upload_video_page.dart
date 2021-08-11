@@ -16,6 +16,7 @@ import 'package:recook/pages/live/video/tencent_video_listener.dart';
 import 'package:recook/pages/live/video/video_goods_page.dart';
 import 'package:recook/pages/live/video/video_preview_page.dart';
 import 'package:recook/utils/custom_route.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook/recook_list_tile.dart';
 
 class UploadVideoPage extends StatefulWidget {
@@ -120,6 +121,7 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
                                   : _topicListModel.id,
                               'goodsId': _videoGoodsModel.id,
                             }).then((resultData) {
+                              ReToast.success(text: '短视频发布成功，等待平台审核');
                               GSDialog.of(context).dismiss(context);
                               Navigator.pop(context);
                             });

@@ -117,7 +117,7 @@ class PassagerFunc {
   static Future<List<AirOrderModel>> getAirOrderList() async {
     ResultData result =
         await HttpManager.post(APIV2.ticketAPI.getAirOrderList, {
-      'user_id': 3816 //UserManager.instance.user.info.id,
+      'user_id': UserManager.instance.user.info.id,
     });
     if (result.data != null) {
       if (result.data['data'] != null) {

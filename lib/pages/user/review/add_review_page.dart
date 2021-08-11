@@ -14,7 +14,9 @@ import 'package:recook/models/media_model.dart';
 import 'package:recook/pages/user/review/models/order_review_list_model.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/image_picker.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook_back_button.dart';
+import 'package:recook/widgets/toast.dart';
 
 class AddReviewPage extends StatefulWidget {
   final int goodsDetailId;
@@ -204,7 +206,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
             disabledColor: Colors.white12,
             onPressed: isDisabled()
                 ? null
-                : () {
+                : () {  
                     uploadFiles();
                   },
             child: Text(
@@ -240,6 +242,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
                     .toList())
             .then((value) {
           GSDialog.of(context).dismiss(context);
+          ReToast.success(text: "产品评论成功，待平台审核");
           Navigator.pop(context);
         });
       });

@@ -8,7 +8,7 @@ import 'package:recook/pages/user/review/models/order_review_list_model.dart';
 import 'package:recook/pages/user/review/review_detail_page.dart';
 import 'package:recook/utils/custom_route.dart';
 
-class ReviewCard extends StatelessWidget {
+class  ReviewCard extends StatelessWidget {
   final OrderReviewListModel model;
   final VoidCallback onBack;
   final bool reviewStatusAdd;

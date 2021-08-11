@@ -125,12 +125,10 @@ class _AirlineWidgetState extends State<AirlineWidget> {
           Function cancel = ReToast.loading();
 
           _airLineList = await PassagerFunc.getAirLineList(
-            ['PEK', 'SHA'],
-            // fromList,
+            fromList,
             widget.code,
             DateUtil.formatDate(widget.originDate, format: 'yyyy-MM-dd'),
-            //toList
-            ['SZX', 'HAK'],
+            toList,
           );
           _airLineHandleList = _airLineList;
           showList = true;
@@ -272,18 +270,18 @@ class _AirlineWidgetState extends State<AirlineWidget> {
   }
 
   List<String> _getAirportCode(String city, String airport) {
+    print(city);
+    print(airport);
     if (widget.cityModelList != null) {
       int index =
           widget.cityModelList.indexWhere((element) => element.city == city);
       List<AirPorts> list = widget.cityModelList[index].airPorts;
 
       int airportIndex = list.indexWhere((element) => element.name == airport);
+      print(airportIndex);
       List<String> airportsCodeList = [];
       airportsCodeList.add(list[airportIndex].code);
       return airportsCodeList;
-      // _cityModelList.forEach((element) {
-      //   if (element.city == city) return element.airPorts;
-      // });
     }
     return [];
   }
@@ -489,26 +487,28 @@ class _AirlineWidgetState extends State<AirlineWidget> {
 
   _sortListbyfrom(List<AirLineModel> AirLineList, String code) {
     var model = AirLineList.first.airlinesListResponse.airlines.airline;
+    List<Airline> airList = [];
     for (var i = 0; i < model.length; i++) {
       if (model[i].orgCity == code) {
-        model.remove(i);
+        airList.add(model[i]);
       }
-      AirLineList.first.airlinesListResponse.airlines.airline = model;
-      print(AirLineList);
-      return AirLineList;
     }
+    AirLineList.first.airlinesListResponse.airlines.airline = airList;
+    print(AirLineList);
+    return AirLineList;
   }
 
   _sortListbyto(List<AirLineModel> AirLineList, String code) {
     var model = AirLineList.first.airlinesListResponse.airlines.airline;
+    List<Airline> airList = [];
     for (var i = 0; i < model.length; i++) {
       if (model[i].dstCity == code) {
-        model.remove(i);
+        airList.add(model[i]);
       }
-      AirLineList.first.airlinesListResponse.airlines.airline = model;
-      print(AirLineList);
-      return AirLineList;
     }
+    AirLineList.first.airlinesListResponse.airlines.airline = airList;
+    print(AirLineList);
+    return AirLineList;
   }
 
   _getPlaneNameByType(String type) {
@@ -539,15 +539,8 @@ class _AirlineWidgetState extends State<AirlineWidget> {
               Options options = await show2DatePicker(context,
                   fromNameList: _getAirportNameList(widget.fromText),
                   endNameList: _getAirportNameList(widget.toText));
-
-              // if (options.depart != '') {
-              //   fromList = _getAirportCode(widget.fromText, options.depart);
-              //   _airLineHandleList = _sortListbyShangwu(_airLineList);
-              // }
-              // if (options.arrive != '') {
-              //   toList = _getAirportCode(widget.toText, options.arrive);
-              //   _airLineHandleList = _sortListbyShangwu(_airLineList);
-              // }
+              _chooseScreen = true;
+              _airLineHandleList = _getList(_airLineList, options);
               if (options.arrive == '' &&
                   options.company == '' &&
                   options.date == '' &&
@@ -556,27 +549,6 @@ class _AirlineWidgetState extends State<AirlineWidget> {
                 _chooseScreen = false;
                 _airLineHandleList = _airLineList;
                 setState(() {});
-              } else {
-                _chooseScreen = true;
-                if (options.depart != null) {
-                  _airLineHandleList = _sortListbyfrom(_airLineHandleList,
-                      _getAirportCode(widget.fromText, options.depart).first);
-                  setState(() {});
-                }
-                if (options.arrive != null) {
-                  _airLineHandleList = _sortListbyto(_airLineHandleList,
-                      _getAirportCode(widget.fromText, options.arrive).first);
-                  setState(() {});
-                }
-                if (options.space == '商务舱/头等舱') {
-                  _airLineHandleList = _sortListbyShangwu(_airLineHandleList);
-                  setState(() {});
-                } else if (options.space == '经济舱') {
-                  _airLineHandleList = _sortListbyJingji(_airLineHandleList);
-                  setState(() {});
-                }
-
-                print(_airLineHandleList);
               }
             },
             child: Container(
@@ -647,6 +619,32 @@ class _AirlineWidgetState extends State<AirlineWidget> {
         ],
       ),
     );
+  }
+
+  _getList(List<AirLineModel> list, Options options) {
+    if (options.depart != "") {
+      list = _sortListbyfrom(
+          list, _getAirportCode(widget.fromText, options.depart).first);
+      print(list);
+      setState(() {});
+    }
+    if (options.arrive != "") {
+      list = _sortListbyto(
+          list, _getAirportCode(widget.fromText, options.arrive).first);
+      print(list);
+      setState(() {});
+    }
+    if (options.space == '商务舱/头等舱') {
+      list = _sortListbyShangwu(list);
+      print(list);
+      setState(() {});
+    } else if (options.space == '经济舱') {
+      list = _sortListbyJingji(list);
+      print(list);
+      setState(() {});
+    }
+
+    return list;
   }
 
   noDataView(String text) {

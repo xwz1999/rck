@@ -51,6 +51,10 @@ class GoodsItemWidget extends StatelessWidget {
 
   final bool notShowAmount;
 
+  final List<String> specialSale;
+
+  final List<String> specialIcon;
+
   // model.getPromotionStatus()
   final PromotionStatus promotionStatus;
   final Function onBrandClick;
@@ -77,6 +81,9 @@ class GoodsItemWidget extends StatelessWidget {
     this.onBrandClick,
     this.isImport,
     this.notShowAmount = false,
+    this.specialSale,
+    this.specialIcon,
+    //this.special_sale,
   })  : widgetType = GoodsItemType.NONE,
         super(key: key);
 
@@ -90,6 +97,8 @@ class GoodsItemWidget extends StatelessWidget {
     this.onBrandClick,
     GoodsSimple model,
     this.notShowAmount = false,
+    this.specialSale,
+    //this.special_sale,
   })  : goodsName = model.goodsName,
         brandName = model.brandName,
         brandPictureUrl = model.brandImg,
@@ -106,6 +115,7 @@ class GoodsItemWidget extends StatelessWidget {
         promotionStatus = model.getPromotionStatus(),
         widgetType = GoodsItemType.NORMAL,
         isImport = model.isImport,
+        specialIcon = model.specialIcon,
         super(key: key);
 
   ///Hot List
@@ -118,6 +128,8 @@ class GoodsItemWidget extends StatelessWidget {
     this.isSingleDayGoods = false,
     GoodsHotSellListModel.Data data,
     this.notShowAmount = false,
+    this.specialSale,
+    this.specialIcon,
   })  : goodsName = data.goodsName,
         brandName = data.brandName,
         brandPictureUrl = data.brandImg,
@@ -164,6 +176,8 @@ class GoodsItemWidget extends StatelessWidget {
         promotionStatus = model.getPromotionStatus(),
         widgetType = GoodsItemType.ROW_GOODS,
         isImport = model.isImport,
+        specialSale = model.specialSale,
+        specialIcon = model.specialIcon,
         super(key: key);
   final BuildContext buildCtx;
   final VoidCallback shareClick;
@@ -424,6 +438,68 @@ class GoodsItemWidget extends StatelessWidget {
                   ),
                 )
               : SizedBox(),
+          specialSale != null
+              ? Positioned(
+                  left: 5.rw,
+                  bottom: 5.rw,
+                  child: Container(
+                    width: _height - 18,
+                    height: specialSale.length > 3 ? 52.rw : 26.rw,
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      reverse: true,
+                      padding: EdgeInsets.zero,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              childAspectRatio: 2,
+                              mainAxisSpacing: 5,
+                              crossAxisSpacing: 5),
+                      itemCount: specialSale.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return
+                            // Container(
+                            //   color: Colors.red,
+                            // );
+                            CustomCacheImage(
+                          imageUrl: Api.getImgUrl(specialSale[index]),
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    ),
+                  ))
+              : SizedBox(),
+          specialIcon != null
+              ? Positioned(
+                  left: 5.rw,
+                  bottom: 5.rw,
+                  child: Container(
+                    width: _height - 18,
+                    height: specialIcon.length > 3 ? 52.rw : 26.rw,
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      reverse: true,
+                      padding: EdgeInsets.zero,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              childAspectRatio: 2,
+                              mainAxisSpacing: 5,
+                              crossAxisSpacing: 5),
+                      itemCount: specialIcon.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return
+                            // Container(
+                            //   color: Colors.red,
+                            // );
+                            CustomCacheImage(
+                          imageUrl: Api.getImgUrl(specialIcon[index]),
+                          fit: BoxFit.cover,
+                        );
+                      },
+                    ),
+                  ))
+              : SizedBox()
         ]),
       ),
     );
@@ -741,9 +817,9 @@ class GoodsItemWidget extends StatelessWidget {
 
   Future _shareEvent() async {
     String imgUrl;
-    GoodsDetailModel imagesModel =
-        await GoodsDetailModelImpl.getDetailInfo(this.id, UserManager.instance.user.info.id);
-    if (imagesModel.data.mainPhotos.length>=1) {
+    GoodsDetailModel imagesModel = await GoodsDetailModelImpl.getDetailInfo(
+        this.id, UserManager.instance.user.info.id);
+    if (imagesModel.data.mainPhotos.length >= 1) {
       imgUrl = imagesModel.data.mainPhotos[0].url;
     } else {
       imgUrl = imagesModel.data?.mainPhotos?.first?.url ?? '';

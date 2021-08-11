@@ -31,6 +31,9 @@ class GoodsSimpleListModel {
 class GoodsSimple {
   num id;
   String goodsName;
+  String brandImg;
+  String brandName;
+  num brandId;
   String description;
   num inventory;
   num salesVolume;
@@ -44,39 +47,49 @@ class GoodsSimple {
   String startTime;
   String endTime;
   num coupon;
-  String brandName;
-  String brandImg;
-  num brandId;
-  int isImport;
-  int isFerme;
-  int storehouse;
+  num isImport;
+  num storehouse;
+  num isFerme;
+  bool hasCoin;
+  bool hasBalance;
+  Living living;
+  num gysId;
+  List<String> specialIcon;
   GoodsSimple({
-    this.id,
-    this.goodsName,
-    this.description,
-    this.inventory,
-    this.salesVolume,
-    this.mainPhotoUrl,
-    this.promotionName,
-    this.originalPrice,
-    this.discountPrice,
-    this.commission,
-    this.tags,
-    this.percent,
-    this.startTime,
-    this.endTime,
-    this.coupon,
-    this.brandName,
-    this.brandImg,
-    this.brandId,
-    this.isFerme,
-    this.isImport,
-    this.storehouse,
+this.id,
+      this.goodsName,
+      this.brandImg,
+      this.brandName,
+      this.brandId,
+      this.description,
+      this.inventory,
+      this.salesVolume,
+      this.mainPhotoUrl,
+      this.promotionName,
+      this.originalPrice,
+      this.discountPrice,
+      this.commission,
+      this.tags,
+      this.percent,
+      this.startTime,
+      this.endTime,
+      this.coupon,
+      this.isImport,
+      this.storehouse,
+      this.isFerme,
+      this.hasCoin,
+      this.hasBalance,
+      this.living,
+      this.gysId,
+      this.specialIcon
   });
 
   GoodsSimple.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+id = json['id'];
     goodsName = json['goodsName'];
+    brandImg = json['brandImg'];
+    brandName = json['brandName'];
+    brandId = json['brandId'];
     description = json['description'];
     inventory = json['inventory'];
     salesVolume = json['salesVolume'];
@@ -85,25 +98,31 @@ class GoodsSimple {
     originalPrice = json['originalPrice'];
     discountPrice = json['discountPrice'];
     commission = json['commission'];
-    if (json['tags'] != null) {
-      tags = json['tags'].cast<String>();
-    }
+    tags = json['tags'].cast<String>();
     percent = json['percent'];
     startTime = json['startTime'];
     endTime = json['endTime'];
     coupon = json['coupon'];
-    brandName = json['brandName'];
-    brandImg = json['brandImg'];
-    brandId = json['brandId'];
     isImport = json['isImport'];
-    isFerme = json['isFerme'];
     storehouse = json['storehouse'];
+    isFerme = json['isFerme'];
+    hasCoin = json['hasCoin'];
+    hasBalance = json['hasBalance'];
+    living =
+        json['living'] != null ? new Living.fromJson(json['living']) : null;
+    gysId = json['gys_id'];
+
+    specialIcon =
+        json['spec_icon'] != null ? json['spec_icon'].cast<String>() : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
+data['id'] = this.id;
     data['goodsName'] = this.goodsName;
+    data['brandImg'] = this.brandImg;
+    data['brandName'] = this.brandName;
+    data['brandId'] = this.brandId;
     data['description'] = this.description;
     data['inventory'] = this.inventory;
     data['salesVolume'] = this.salesVolume;
@@ -116,13 +135,41 @@ class GoodsSimple {
     data['percent'] = this.percent;
     data['startTime'] = this.startTime;
     data['endTime'] = this.endTime;
+    data['coupon'] = this.coupon;
     data['isImport'] = this.isImport;
-    data['isFerme'] = this.isFerme;
     data['storehouse'] = this.storehouse;
+    data['isFerme'] = this.isFerme;
+    data['hasCoin'] = this.hasCoin;
+    data['hasBalance'] = this.hasBalance;
+    if (this.living != null) {
+      data['living'] = this.living.toJson();
+    }
+    data['gys_id'] = this.gysId;
+    data['spec_icon'] = this.specialIcon;
     return data;
   }
 
   getPromotionStatus() {
     return PromotionTimeTool.getPromotionStatusWithGoodsSimple(this);
+  }
+  
+}
+
+class Living {
+  int status;
+  int itemId;
+
+  Living({this.status, this.itemId});
+
+  Living.fromJson(Map<String, dynamic> json) {
+    status = json['status'];
+    itemId = json['item_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status'] = this.status;
+    data['item_id'] = this.itemId;
+    return data;
   }
 }

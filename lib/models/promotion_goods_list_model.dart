@@ -1,176 +1,251 @@
-import 'package:json_annotation/json_annotation.dart';
-
+import 'package:flustars/flustars.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
 
-part 'promotion_goods_list_model.g.dart';
-
-@JsonSerializable()
-class PromotionGoodsListModel extends Object {
+class PromotionGoodsListModel {
   String code;
-
+  String msg;
   PromotionModel data;
 
-  String msg;
+  PromotionGoodsListModel({this.code, this.msg, this.data});
 
-  PromotionGoodsListModel(
-    this.code,
-    this.data,
-    this.msg,
-  );
+  PromotionGoodsListModel.fromJson(Map<String, dynamic> json) {
+    code = json['code'];
+    msg = json['msg'];
+    data =
+        json['data'] != null ? new PromotionModel.fromJson(json['data']) : null;
+  }
 
-  factory PromotionGoodsListModel.fromJson(Map<String, dynamic> srcJson) =>
-      _$PromotionGoodsListModelFromJson(srcJson);
-
-  Map<String, dynamic> toJson() => _$PromotionGoodsListModelToJson(this);
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['code'] = this.code;
+    data['msg'] = this.msg;
+    if (this.data != null) {
+      data['data'] = this.data.toJson();
+    }
+    return data;
+  }
 }
 
-@JsonSerializable()
-class PromotionModel extends Object {
+class PromotionModel {
   List<PromotionGoodsModel> goodsList;
   List<PromotionActivityModel> activityList;
-  PromotionModel(this.goodsList, this.activityList);
-  factory PromotionModel.fromJson(Map<String, dynamic> srcJson) =>
-      _$PromotionModelFromJson(srcJson);
 
-  Map<String, dynamic> toJson() => _$PromotionModelToJson(this);
+  PromotionModel({this.goodsList, this.activityList});
+
+  PromotionModel.fromJson(Map<String, dynamic> json) {
+    if (json['goodsList'] != null) {
+      goodsList = new List<PromotionGoodsModel>();
+      json['goodsList'].forEach((v) {
+        goodsList.add(new PromotionGoodsModel.fromJson(v));
+      });
+    }
+    if (json['activityList'] != null) {
+      activityList = new List<PromotionActivityModel>();
+      json['activityList'].forEach((v) {
+        activityList.add(new PromotionActivityModel.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.goodsList != null) {
+      data['goodsList'] = this.goodsList.map((v) => v.toJson()).toList();
+    }
+    if (this.activityList != null) {
+      data['activityList'] = this.activityList.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
-@JsonSerializable()
-class PromotionActivityModel extends Object {
-  num id;
+class PromotionActivityModel {
+  int id;
   String activityUrl;
   String logoUrl;
   String topUrl;
 
-  PromotionActivityModel(this.id, this.activityUrl, this.logoUrl, this.topUrl);
-  factory PromotionActivityModel.fromJson(Map<String, dynamic> srcJson) =>
-      _$PromotionActivityModelFromJson(srcJson);
+  PromotionActivityModel(
+      {this.id, this.activityUrl, this.logoUrl, this.topUrl});
 
-  Map<String, dynamic> toJson() => _$PromotionActivityModelToJson(this);
+  PromotionActivityModel.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    activityUrl = json['activityUrl'];
+    logoUrl = json['logoUrl'];
+    topUrl = json['topUrl'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['activityUrl'] = this.activityUrl;
+    data['logoUrl'] = this.logoUrl;
+    data['topUrl'] = this.topUrl;
+    return data;
+  }
 }
 
-@JsonSerializable()
-class PromotionGoodsModel extends Object {
-  /*
-  {
-    "goodsName":"左家右厨丰子恺清代古画",
-    "description":"珍惜古董",
-    "price":34444.5,
-    "priceDesc":"¥34444.50",
-    "commission":100,
-    "commissionDesc":"¥100.00",
-    "picture":{
-        "url":"/photo/3829010101001hassnja.png",
-        "width":500,
-        "height":300
-    },
-    "inventory":1000,
-    "inventoryDesc":"库存1000",
-    "totalInventory":1000,
-    "totalInventoryDesc":"限购1000件",
-    "totalSalesVolume":10,
-    "salesVolumeDesc":"已抢10件",
-    "startTime":"2019-11-29 14:28",
-    "endTime":"2019-11-29 14:28",
-    "percentageDesc":"10%"
-  } 
-  */
-
+class PromotionGoodsModel {
   int goodsId;
   String goodsName;
+  String brandName;
+  String brandImg;
+  num brandId;
   String description;
-  double price;
+  num price;
+  num primePrice;
   String priceDesc;
   double commission;
   String commissionDesc;
+  Picture picture;
   int inventory;
   String inventoryDesc;
-  int totalInventory;
+  num totalInventory;
   String totalInventoryDesc;
   int totalSalesVolume;
   String salesVolumeDesc;
   String startTime;
   String endTime;
+  num percentage;
   String percentageDesc;
-  double percentage;
-  Picture picture;
-  num primePrice;
   num coupon;
-  String brandName;
-  String brandImg;
-  num brandId;
   num isImport;
-  num isFerme;
   num storehouse;
+  num isFerme;
+  num living;
+  List<String> specialSale;
+  num gysId;
+  List<String> specialIcon;
 
   PromotionGoodsModel(
-    this.goodsId,
-    this.goodsName,
-    this.description,
-    this.price,
-    this.priceDesc,
-    this.commission,
-    this.commissionDesc,
-    this.inventory,
-    this.inventoryDesc,
-    this.totalInventory,
-    this.totalInventoryDesc,
-    this.totalSalesVolume,
-    this.salesVolumeDesc,
-    this.startTime,
-    this.endTime,
-    this.percentageDesc,
-    this.percentage,
-    this.picture,
-    this.primePrice,
-    this.coupon,
-    this.brandName,
-    this.brandImg,
-    this.brandId,
-    this.isImport,
-    this.isFerme,
-    this.storehouse,
-  );
+      {this.goodsId,
+      this.goodsName,
+      this.brandName,
+      this.brandImg,
+      this.brandId,
+      this.description,
+      this.price,
+      this.primePrice,
+      this.priceDesc,
+      this.commission,
+      this.commissionDesc,
+      this.picture,
+      this.inventory,
+      this.inventoryDesc,
+      this.totalInventory,
+      this.totalInventoryDesc,
+      this.totalSalesVolume,
+      this.salesVolumeDesc,
+      this.startTime,
+      this.endTime,
+      this.percentage,
+      this.percentageDesc,
+      this.coupon,
+      this.isImport,
+      this.storehouse,
+      this.isFerme,
+      this.living,
+      this.specialSale,
+      this.gysId,
+      this.specialIcon});
 
-  factory PromotionGoodsModel.fromJson(Map<String, dynamic> srcJson) =>
-      _$PromotionGoodsModelFromJson(srcJson);
+  PromotionGoodsModel.fromJson(Map<String, dynamic> json) {
+    goodsId = json['goodsId'];
+    goodsName = json['goodsName'];
+    brandName = json['brandName'];
+    brandImg = json['brandImg'];
+    brandId = json['brandId'];
+    description = json['description'];
+    price = json['price'];
+    primePrice = json['primePrice'];
+    priceDesc = json['priceDesc'];
+    commission = json['commission'];
+    commissionDesc = json['commissionDesc'];
+    picture =
+        json['picture'] != null ? new Picture.fromJson(json['picture']) : null;
+    inventory = json['inventory'];
+    inventoryDesc = json['inventoryDesc'];
+    totalInventory = json['totalInventory'];
+    totalInventoryDesc = json['totalInventoryDesc'];
+    totalSalesVolume = json['totalSalesVolume'];
+    salesVolumeDesc = json['salesVolumeDesc'];
+    startTime = json['startTime'];
+    endTime = json['endTime'];
+    percentage = json['percentage'];
+    percentageDesc = json['percentageDesc'];
+    coupon = json['coupon'];
+    isImport = json['isImport'];
+    storehouse = json['storehouse'];
+    isFerme = json['isFerme'];
+    living = json['living'];
+    specialSale = json['special_sale'] != null
+        ? json['special_sale'].cast<String>()
+        : null;
+    specialIcon =
+        json['spec_icon'] != null ? json['spec_icon'].cast<String>() : null;
+    gysId = json['gys_id'];
+  }
 
-  Map<String, dynamic> toJson() => _$PromotionGoodsModelToJson(this);
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['goodsId'] = this.goodsId;
+    data['goodsName'] = this.goodsName;
+    data['brandName'] = this.brandName;
+    data['brandImg'] = this.brandImg;
+    data['brandId'] = this.brandId;
+    data['description'] = this.description;
+    data['price'] = this.price;
+    data['primePrice'] = this.primePrice;
+    data['priceDesc'] = this.priceDesc;
+    data['commission'] = this.commission;
+    data['commissionDesc'] = this.commissionDesc;
+    if (this.picture != null) {
+      data['picture'] = this.picture.toJson();
+    }
+    data['inventory'] = this.inventory;
+    data['inventoryDesc'] = this.inventoryDesc;
+    data['totalInventory'] = this.totalInventory;
+    data['totalInventoryDesc'] = this.totalInventoryDesc;
+    data['totalSalesVolume'] = this.totalSalesVolume;
+    data['salesVolumeDesc'] = this.salesVolumeDesc;
+    data['startTime'] = this.startTime;
+    data['endTime'] = this.endTime;
+    data['percentage'] = this.percentage;
+    data['percentageDesc'] = this.percentageDesc;
+    data['coupon'] = this.coupon;
+    data['isImport'] = this.isImport;
+    data['storehouse'] = this.storehouse;
+    data['isFerme'] = this.isFerme;
+    data['living'] = this.living;
+    data['special_sale'] = this.specialSale;
+    data['gys_id'] = this.gysId;
+    data['spec_icon'] = this.specialIcon;
+    return data;
+  }
 
   getPromotionStatus() {
     return PromotionTimeTool.getPromotionStatusWithPGModel(this);
   }
-
-  // ColumnGoodsModel transformToColumnModel() {
-  //   ColumnGoodsModel columnGoodsModel = ColumnGoodsModel(
-  //     isProcessing: this.isProcessing,
-  //     salesVolume: this.salesVolume,
-  //     title: this.goodsName,
-  //     inventory: this.inventory,
-  //     price: this.price.min.discountPrice,
-  //     commission: this.price.min.commission,
-  //     des: this.description,
-  //     imgUrl: this.picture.url);
-  //   return columnGoodsModel;
-  // }
 }
 
-@JsonSerializable()
-class Picture extends Object {
+class Picture {
   String url;
-
   int width;
-
   int height;
 
-  Picture(
-    this.url,
-    this.width,
-    this.height,
-  );
+  Picture({this.url, this.width, this.height});
 
-  factory Picture.fromJson(Map<String, dynamic> srcJson) =>
-      _$PictureFromJson(srcJson);
+  Picture.fromJson(Map<String, dynamic> json) {
+    url = json['url'];
+    width = json['width'];
+    height = json['height'];
+  }
 
-  Map<String, dynamic> toJson() => _$PictureToJson(this);
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['url'] = this.url;
+    data['width'] = this.width;
+    data['height'] = this.height;
+    return data;
+  }
 }

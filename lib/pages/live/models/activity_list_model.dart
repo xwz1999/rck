@@ -11,10 +11,13 @@ class ActivityListModel {
   int trendType;
   String updatedAt;
   Short short;
+  int praise;
   int isPraise;
   int topicId;
   String topicName;
   int isFollow;
+  int compliance;
+  int passStatus;
 
   ActivityListModel({
     this.content,
@@ -25,10 +28,13 @@ class ActivityListModel {
     this.trendType,
     this.updatedAt,
     this.short,
+    this.praise,
     this.isPraise,
     this.topicId,
     this.topicName,
     this.isFollow,
+    this.compliance,
+    this.passStatus,
   });
 
   ActivityListModel.fromVideoList(VideoListModel model) {
@@ -43,10 +49,13 @@ class ActivityListModel {
       mediaUrl: model.mediaUrl,
       coverUrl: model.coverUrl,
     );
+    this.praise = model.praise;
     this.isPraise = model.isPraise;
     this.topicId = model.topicId;
     this.topicName = model.topicName;
     this.isFollow = model.isFollow;
+    this.compliance = model.compliance;
+    this.passStatus = model.passStatus;
   }
 
   ActivityListModel.fromJson(Map<String, dynamic> json) {
@@ -64,9 +73,12 @@ class ActivityListModel {
     trendType = json['trendType'];
     updatedAt = json['updatedAt'];
     short = json['short'] != null ? new Short.fromJson(json['short']) : null;
+    praise = json['praise'];
     isPraise = json['isPraise'];
     topicId = json['topicId'];
     topicName = json['topicName'];
+        compliance = json['compliance'];
+    passStatus = json['pass_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -85,9 +97,13 @@ class ActivityListModel {
     if (this.short != null) {
       data['short'] = this.short.toJson();
     }
+    data['praise'] = this.praise;
     data['isPraise'] = this.isPraise;
     data['topicId'] = this.topicId;
     data['topicName'] = this.topicName;
+    data['compliance'] = this.compliance;
+    data['pass_status'] = this.passStatus;
+
     return data;
   }
 }

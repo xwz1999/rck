@@ -133,12 +133,20 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                           text: TextSpan(
                               text: "您已阅读并同意",
                               style: TextStyle(
-                                  color: Colors.grey[500], fontSize: 14 * 2.sp),
+                                  color: Colors.grey[500], fontSize: 13 * 2.sp),
                               children: [
                             new TextSpan(
-                                text: '《用户协议和隐私政策》',
-                                style: new TextStyle(color: Colors.red),
-                                recognizer: _recognizer(context)),
+                                text: '《用户服务协议》',
+                                style: new TextStyle(color: Colors.red, fontSize: 13 * 2.sp),
+                                recognizer: _recognizer(context,2)),
+                                TextSpan(
+                              text: "和",
+                              style: TextStyle(
+                                  color: Colors.grey[500], fontSize: 13 * 2.sp),),
+                             new TextSpan(
+                                text: '《用户隐私政策》',
+                                style: new TextStyle(color: Colors.red, fontSize: 13 * 2.sp),
+                                recognizer: _recognizer(context,1)),
                           ])),
                     ],
                   ),
@@ -149,7 +157,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
         ));
   }
 
-  _recognizer(context) {
+  _recognizer(context,int type) {
     final TapGestureRecognizer recognizer = new TapGestureRecognizer();
     recognizer.onTap = () {
       print("点击协议了");
@@ -157,7 +165,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
         context,
         RouteName.WEB_VIEW_PAGE,
         arguments: WebViewPage.setArguments(
-            url: WebApi.privacy, title: "用户使用协议", hideBar: true),
+            url: type==1?WebApi.privacy:WebApi.agreement, title: type==1?"用户隐私政策":"用户服务协议", hideBar: true),
       );
       //CRoute.push(context, PrivacyPageV2());
     };
@@ -286,7 +294,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                       type: NormalTextDialogType.remind,
                       title: null,
                       content: Text(
-                        '请您先阅读并同意《用户协议和隐私政策》',
+                        '请您先阅读并同意《用户协议》和《隐私政策》',
                         style: TextStyle(color: Colors.black),
                       ),
                       items: ["确认"],
@@ -352,7 +360,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                 type: NormalTextDialogType.remind,
                 title: null,
                 content: Text(
-                  '请您先阅读并同意《用户协议和隐私政策》',
+                  '请您先阅读并同意《用户协议》和《隐私政策》',
                   style: TextStyle(color: Colors.black),
                 ),
                 items: ["确认"],

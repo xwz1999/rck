@@ -8,6 +8,8 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:recook/models/category_list_model.dart';
+import 'package:recook/models/country_list_model.dart';
 
 import 'package:waterfall_flow/waterfall_flow.dart';
 
@@ -27,35 +29,43 @@ import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'mvp/goods_list_contact.dart';
 import 'mvp/goods_list_presenter_impl.dart';
 
-class GoodsListPage extends StatefulWidget {
-  // final SecondCategory category;
-  final Map arguments;
-  const GoodsListPage({Key key, this.arguments}) : super(key: key);
+class GoodsImportListPage extends StatefulWidget {
+  final String title;
+  final int index;
+  final int countryId;
+  final List<First> secondCategoryList;
+  const GoodsImportListPage(
+      {Key key,
+      this.title,
+      this.index,
+      this.secondCategoryList,
+      this.countryId})
+      : super(key: key);
 
-  static setArguments(
-      {String title, int index, List<SecondCategory> secondCategoryList}) {
-    return {
-      "title": title,
-      "index": index,
-      "secondCategoryList": secondCategoryList
-    };
-  }
+  // static setArguments(
+  //     {String title, int index, List<Country> secondCategoryList}) {
+  //   return {
+  //     "title": title,
+  //     "index": index,
+  //     "secondCategoryList": secondCategoryList
+  //   };
+  //}
 
   @override
   State<StatefulWidget> createState() {
-    return _GoodsListPageState();
+    return _GoodsImportListPageState();
   }
 }
 
-class _GoodsListPageState extends BaseStoreState<GoodsListPage>
+class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
     with MvpListViewDelegate<GoodsSimple>, TickerProviderStateMixin {
   /// 切换展示形式  true 为 List， false 为grid
   bool _displayList = true;
 
   FilterToolBarController _filterController;
 
-  SecondCategory _category;
-  List<SecondCategory> _secondCategoryList;
+  First _category;
+  List<First> _secondCategoryList;
   GoodsListPresenterImpl _presenter;
   TabController _tabController;
 
@@ -67,16 +77,23 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
 
   @override
   void initState() {
-    int index = widget.arguments["index"];
+    super.initState();
+    int index = widget.index;
     DPrint.printf("index=$index");
-    _secondCategoryList = widget.arguments["secondCategoryList"];
+    _secondCategoryList = widget.secondCategoryList;
+    print(_secondCategoryList);
     _category = _secondCategoryList[index];
     _tabController = TabController(
         initialIndex: index, length: _secondCategoryList.length, vsync: this);
     _filterController = FilterToolBarController();
-    super.initState();
+
     _presenter = GoodsListPresenterImpl();
     _listViewController = MvpListViewController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -86,7 +103,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
         appBar: CustomAppBar(
           themeData: AppThemes.themeDataGrey.appBarTheme,
           elevation: 0,
-          title: widget.arguments["title"],
+          title: widget.title,
         ),
         body: Column(
           children: <Widget>[
@@ -140,7 +157,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
     }).toList();
   }
 
-  _tabItem(SecondCategory secondCategory, int index) {
+  _tabItem(First secondCategory, int index) {
     Color textColor = index == _tabController.index
         ? getCurrentThemeColor()
         : Colors.black.withOpacity(0.9);
@@ -267,11 +284,11 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
       type: ListViewType.grid,
       refreshCallback: () {
         // _presenter.fetchList(widget.category.id, 0, _sortType);
-        _presenter.fetchList(_category.id, 0, _sortType,null);
+        _presenter.fetchList(_category.id, 0, _sortType, widget.countryId);
       },
       loadMoreCallback: (int page) {
         // _presenter.fetchList(widget.category.id, page, _sortType);
-        _presenter.fetchList(_category.id, page, _sortType,null);
+        _presenter.fetchList(_category.id, page, _sortType, widget.countryId);
       },
       gridViewBuilder: () => _buildGridView(),
     );

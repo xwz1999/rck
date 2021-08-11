@@ -7,6 +7,7 @@ import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/user/review/models/order_review_list_model.dart';
 import 'package:recook/pages/user/review/models/review_result_model.dart';
+import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
 class ReviewDetailPage extends StatefulWidget {
@@ -112,7 +113,74 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
                         fontSize: rSP(14),
                       ),
                     ),
-                    SizedBox(height: rSize(20)),
+                    Row(
+                      children: [
+                        Spacer(),
+                        _model.goodsEva.pass == 0
+                            ? Text(
+                                '评论审核中',
+                                style: TextStyle(
+                                  color: Color(0xFFFF6F00),
+                                  fontSize: rSP(14),
+                                ),
+                              )
+                            : _model.goodsEva.pass == 1
+                                ? Text(
+                                    '审核通过',
+                                    style: TextStyle(
+                                      color: Color(0xFF12B631),
+                                      fontSize: rSP(14),
+                                    ),
+                                  )
+                                : _model.goodsEva.pass == 2
+                                    ? GestureDetector(
+                                        onTap: () {
+                                          Alert.show(
+                                              context,
+                                              NormalTextDialog(
+                                                title: '提示',
+                                                content: '您的产品评论不符合互联网行为规范',
+                                                items: ["确认"],
+                                                type:
+                                                    NormalTextDialogType.remind,
+                                                deleteItem: '确定',
+                                                listener: (index) {
+                                                  Alert.dismiss(context);
+                                                },
+                                              ));
+                                        },
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              '审核驳回',
+                                              style: TextStyle(
+                                                color: Color(0xFFCF3D35),
+                                                fontSize: rSP(14),
+                                              ),
+                                            ),
+                                            Container(
+                                              padding:
+                                                  EdgeInsets.only(top: 3.rw),
+                                              child: Icon(
+                                                Icons.help_outline,
+                                                size: 10.rw,
+                                                color: Color(0xFFCF3D35),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      )
+                                    : Text(
+                                        '评论审核中',
+                                        style: TextStyle(
+                                          color: Color(0xFFFF6F00),
+                                          fontSize: rSP(14),
+                                        ),
+                                      ),
+                        20.wb,
+                      ],
+                    ),
+                    //SizedBox(height: rSize(20)),
                     _model.goodsEvaGoods.isEmpty
                         ? SizedBox()
                         : Row(

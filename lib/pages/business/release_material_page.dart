@@ -144,7 +144,7 @@ class _ReleaseMaterialPage extends BaseStoreState<ReleaseMaterialPage> {
         showError(resultModel.msg);
         return;
       }
-      showSuccess("您的素材已提交，请等待审核").then((value) {
+      showSuccess("图文发布成功，等待平台审核").then((value) {
         Navigator.pop(context, {'backdata': 'ImageText'});
       });
     });

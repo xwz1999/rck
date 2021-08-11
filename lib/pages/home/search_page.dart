@@ -51,6 +51,9 @@ import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class SearchPage extends StatefulWidget {
+  final int countryId;
+
+  const SearchPage({Key key, this.countryId}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _SearchPageState();
@@ -345,6 +348,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
           -99,
           0,
           _sortType,
+          widget.countryId,
           keyword: _searchText,
         );
       },
@@ -357,6 +361,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
           -99,
           page,
           _sortType,
+          widget.countryId,
           keyword: _searchText,
           onLoadDone: () {
             Future.delayed(Duration(milliseconds: 100), () {
@@ -424,20 +429,21 @@ class _SearchPageState extends BaseStoreState<SearchPage>
       showError(model.msg);
       return;
     }
-    List array = [];
+    List<dynamic> array = [];
+    //List array = [];
     if (model.data.goodsList == null) {
       model.data.goodsList = [];
     } else {
       array.addAll(model.data.goodsList);
     }
-    if (model.data.activityList != null && model.data.activityList.length > 0) {
-      if (array.length > 3) {
-        array.insert(3, model.data.activityList.first);
-      } else {
-        array.add(model.data.activityList.first);
-      }
-    }
-    // _promotionGoodsList = model.data.goodsList;
+    // if (model.data.activityList != null && model.data.activityList.length > 0) {
+    //   if (array.length > 3) {
+    //     array.insert(3, model.data.activityList.first);
+    //   } else {
+    //     array.add(model.data.activityList.first);
+    //   }
+    // }
+    //_promotionGoodsList = model.data.goodsList;
     _promotionGoodsList = array;
     if (mounted) setState(() {});
   }
@@ -486,7 +492,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Container( 
+                      Container(
                         height: rSize(2),
                         color: Color(0xFFB8B8B8),
                         width: rSize(40),
@@ -530,7 +536,6 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                                     model.brandId, model.brandName));
                           },
                           model: model,
-                         
                           buyClick: () {
                             AppRouter.push(context, RouteName.COMMODITY_PAGE,
                                 arguments: CommodityDetailPage.setArguments(
@@ -592,6 +597,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
       -99,
       0,
       _sortType,
+      widget.countryId,
       keyword: _searchText,
     );
     cancel();

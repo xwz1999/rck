@@ -445,34 +445,37 @@ class UserLevelTool {
   }
 
   static UserRoleLevel roleLevelEnum(int level) {
+    UserRoleLevel userRoleLevel;
     if (level == null) {
       return UserRoleLevel.Vip;
     }
     switch (level) {
       case 100:
-        return UserRoleLevel.Diamond_1;
+        userRoleLevel = UserRoleLevel.Diamond_1;
         break;
       case 130:
-        return UserRoleLevel.Diamond_2;
+        userRoleLevel = UserRoleLevel.Diamond_2;
         break;
       case 160:
-        return UserRoleLevel.Diamond_3;
+        userRoleLevel = UserRoleLevel.Diamond_3;
         break;
       case 200:
-        return UserRoleLevel.Gold;
+        userRoleLevel = UserRoleLevel.Gold;
         break;
       case 300:
-        return UserRoleLevel.Silver;
+        userRoleLevel = UserRoleLevel.Silver;
         break;
       case 400:
-        return UserRoleLevel.Master;
+        userRoleLevel = UserRoleLevel.Master;
         break;
       case 500:
-        return UserRoleLevel.Vip;
+        userRoleLevel = UserRoleLevel.Vip;
         break;
       default:
+        userRoleLevel = UserRoleLevel.Vip;
+        break;
     }
-    return UserRoleLevel.Vip;
+    return userRoleLevel;
   }
 
   ///获取用户的名片的角色 icon

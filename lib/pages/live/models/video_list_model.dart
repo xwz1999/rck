@@ -14,7 +14,8 @@ class VideoListModel {
   int topicId;
   String topicName;
   int isFollow;
-
+  int compliance;
+  int passStatus;
   VideoListModel({
     this.userId,
     this.nickname,
@@ -31,6 +32,8 @@ class VideoListModel {
     this.topicId,
     this.topicName,
     this.isFollow,
+    this.compliance,
+    this.passStatus,
   });
 
   VideoListModel.fromJson(Map<String, dynamic> json) {
@@ -49,6 +52,8 @@ class VideoListModel {
     topicId = json['topicId'];
     topicName = json['topicName'];
     isFollow = json['isFollow'];
+    compliance= json['compliance'];
+    passStatus= json['pass_status'];
   }
 
   Map<String, dynamic> toJson() {
@@ -70,6 +75,8 @@ class VideoListModel {
     data['topicId'] = this.topicId;
     data['topicName'] = this.topicName;
     data['isFollow'] = this.isFollow;
+    data['compliance'] = this.compliance;
+    data['pass_status'] = this.passStatus;
     return data;
   }
 }

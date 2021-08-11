@@ -23,8 +23,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:permission_handler/permission_handler.dart';
 import 'package:power_logger/power_logger.dart';
+import 'package:recook/models/country_list_model.dart';
 import 'package:recook/pages/buy_tickets/choose_tickets_type_page.dart';
+import 'package:recook/pages/live/models/king_coin_list_model.dart';
 import 'package:recook/pages/live/pages/discovery_page.dart';
+import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
 import 'package:recook/base/base_store_state.dart';
@@ -76,6 +79,7 @@ import 'package:recook/widgets/weather_page/weather_city_model.dart';
 import 'package:recook/widgets/weather_page/weather_city_page.dart';
 import 'package:recook/widgets/webView.dart';
 import '../../utils/text_utils.dart';
+import 'classify/classify_country_page.dart';
 
 class HomeItem {
   String title;
@@ -109,6 +113,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   TabController _tabController;
   int _tabIndex = 0;
 
+  List<KingCoinListModel> kingCoinListModelList;
 //控制额外功能显示（后端控制）
 //false iOS隐藏
 //true 全部显示
@@ -163,6 +168,10 @@ class _HomePageState extends BaseStoreState<HomePage>
   @override
   void initState() {
     super.initState();
+    // Future.delayed(Duration.zero, () async {
+    //   kingCoinListModelList = await UserFunc.getKingCoinList();
+    // });
+    kingCoinListModelList = UserManager.instance.kingCoinListModelList;
     //已在native配置
     // AMapFlutterLocation.setApiKey(
     //     '7225bca14fe7493f9f469315a933f99c', 'e8a8057cfedcdcadcf4e8f2c7f8de982');
@@ -721,7 +730,9 @@ class _HomePageState extends BaseStoreState<HomePage>
                   ),
                   _bannerView(),
                   _buildGoodsCards(),
-                  _buttonTitle(context),
+                  kingCoinListModelList != null
+                      ? _buttonTitle(context)
+                      : SizedBox(),
                   _activityImageTitle(),
                   _activityImageRow(),
                   _activityT4Image(),
@@ -1010,9 +1021,11 @@ class _HomePageState extends BaseStoreState<HomePage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 _buttonTitleRow(
-                    AppConfig.getShowCommission()
-                        ? R.ASSETS_HOME_MENU_A_PNG
-                        : R.ASSETS_LISTTEMP_RECOOKMAKE_ICON_PNG,
+                    // AppConfig.getShowCommission()
+                    //     ? R.ASSETS_HOME_MENU_A_PNG
+                    //     : R.ASSETS_LISTTEMP_RECOOKMAKE_ICON_PNG,
+                    //Api.getImgUrl(kingCoinListModelList[0].url),
+                    Api.getImgUrl(kingCoinListModelList[0].url),
                     AppConfig.getShowCommission() ? "我的权益" : "瑞库制品",
                     onPressed: () {
                   if (AppConfig.getShowCommission()) {
@@ -1035,9 +1048,10 @@ class _HomePageState extends BaseStoreState<HomePage>
                 }),
                 _buttonTitleRow(
                   // R.ASSETS_LOTTERY_REDEEM_LOTTERY_ICON_PNG,
-                  AppConfig.getShowCommission()
-                      ? R.ASSETS_HOME_MENU_AIR_PNG
-                      : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
+                  // AppConfig.getShowCommission()
+                  //     ? R.ASSETS_HOME_MENU_AIR_PNG
+                  //     : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
+                  Api.getImgUrl(kingCoinListModelList[1].url),
                   // AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
                   // '彩票兑换',
                   //2021 7,27 ios彩票审核不通过 隐藏彩票
@@ -1065,9 +1079,10 @@ class _HomePageState extends BaseStoreState<HomePage>
                   // },
                 ),
                 _buttonTitleRow(
-                    AppConfig.getShowCommission()
-                        ? R.ASSETS_HOME_INVITE_WEBP_S_PNG
-                        : R.ASSETS_LISTTEMP_HOMEAPPLIANCES_ICON_PNG,
+                    // AppConfig.getShowCommission()
+                    //     ? R.ASSETS_HOME_INVITE_WEBP_S_PNG
+                    //     : R.ASSETS_LISTTEMP_HOMEAPPLIANCES_ICON_PNG,
+                    Api.getImgUrl(kingCoinListModelList[2].url),
                     AppConfig.getShowCommission()
                         // ? "升级店主"
                         ? "一键邀请"
@@ -1082,21 +1097,30 @@ class _HomePageState extends BaseStoreState<HomePage>
                     // AppRouter.push(context, RouteName.Member_BENEFITS_PAGE,);
                   }
                 }),
-                _buttonTitleRow(R.ASSETS_HOME_MENU_DD_PNG, "热销榜单",
-                    onPressed: () {
+                _buttonTitleRow(
+                    //R.ASSETS_HOME_MENU_DD_PNG,
+                    Api.getImgUrl(kingCoinListModelList[3].url),
+                    "热销榜单", onPressed: () {
                   AppRouter.push(context, RouteName.GOODS_HOT_LIST);
                 }),
-                _buttonTitleRow(R.ASSETS_HOME_MENU_EE_PNG, "全部分类",
-                    onPressed: () {
-                  HomeDao.getCategories(success: (data, code, msg) {
-                    CRoute.push(
-                        context,
-                        ClassifyPage(
-                          data: data,
-                        ));
-                  }, failure: (code, msg) {
-                    Toast.showError(msg);
-                  });
+                _buttonTitleRow(
+                    //R.ASSETS_HOME_MENU_EE_PNG,
+                    Api.getImgUrl(kingCoinListModelList[4].url),
+                    "进口专区", onPressed: () async {
+                  // HomeDao.getCategories(success: (data, code, msg) {
+                  //   CRoute.push(
+                  //       context,
+                  //       ClassifyPage(
+                  //         data: data,
+                  //       ));
+                  // }, failure: (code, msg) {
+                  //   Toast.showError(msg);
+                  // });
+
+                  //8.9更新金刚区 增加进口专区
+                  List<CountryListModel> countryListModelList;
+                  countryListModelList = await HomeDao.getCountryList();
+                  Get.to(ClassifyCountryPage(data: countryListModelList));
                 }),
               ],
             ),
@@ -1123,14 +1147,17 @@ class _HomePageState extends BaseStoreState<HomePage>
               height: 10,
             ),
             Container(
-              margin: EdgeInsets.only(top: 5),
-              width: 48,
-              height: 48,
-              child: Image.asset(
-                icon,
-                fit: BoxFit.fill,
-              ),
-            ),
+                margin: EdgeInsets.only(top: 5),
+                width: 48,
+                height: 48,
+                child: FadeInImage.assetNetwork(
+                    placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                    image: icon)
+                // Image.asset(
+                //   icon,
+                //   fit: BoxFit.fill,
+                // ),
+                ),
             Container(
               margin: EdgeInsets.only(top: 8),
               child: Text(

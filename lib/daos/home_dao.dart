@@ -10,8 +10,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:recook/constants/api.dart';
+import 'package:recook/constants/api_v2.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/models/category_list_model.dart';
 import 'package:recook/models/category_model.dart';
+import 'package:recook/models/country_list_model.dart';
+import 'package:recook/models/view_goods_model.dart';
 
 class HomeDao {
   static Future getCategories(
@@ -30,4 +34,76 @@ class HomeDao {
       }
     }
   }
+
+    //进口专区 选择国家
+  static Future<List<CountryListModel>> getCountryList() async {
+    ResultData result =
+        await HttpManager.post(APIV2.userAPI.getCountryList, {});
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return (result.data['data'] as List)
+            .map((e) => CountryListModel.fromJson(e))
+            .toList();
+      }
+    }
+  }
+
+      //进口专区 搜索国家
+  static Future<List<CountryListModel>> findCountryList(
+    String text
+  ) async {
+    ResultData result =
+        await HttpManager.post(APIV2.userAPI.findCountry, {
+          "name":text
+        });
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return (result.data['data'] as List)
+            .map((e) => CountryListModel.fromJson(e))
+            .toList();
+      }
+    }
+  }
+
+      //进口专区 国家下的分类
+      
+  static Future<List<CategoryListModel>> getCategoryList(
+    int countryId
+  ) async {
+    ResultData result =
+        await HttpManager.post(APIV2.userAPI.getCategoryList, {
+          "country_id":countryId
+        });
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return (result.data['data'] as List)
+            .map((e) => CategoryListModel.fromJson(e))
+            .toList();
+      }
+    }
+  }
+
+      //进口专区 获取进口商品列表
+  static Future<List<ViewGoodsModel>> getViewGoods(
+    int countryId,int categoryId,int page
+  ) async {
+    ResultData result =
+        await HttpManager.post(APIV2.userAPI.getViewGoods, {
+          "country_id":countryId,
+          "category_id":categoryId,
+          "page":{
+            "limit":15,
+            "page":page,
+          }
+        });
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return (result.data['data'] as List)
+            .map((e) => ViewGoodsModel.fromJson(e))
+            .toList();
+      }
+    }
+  }
+
+
 }

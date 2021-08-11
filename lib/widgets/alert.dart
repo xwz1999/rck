@@ -148,7 +148,9 @@ class NormalTextDialog extends Dialog {
                 : () {
                     this.listener(index);
                   },
-            style: _Styles.normalTextStyle,
+            style: this.type == NormalTextDialogType.remind
+                ? _Styles.remindTextStyle
+                : _Styles.normalTextStyle,
             disableStyle: _Styles.disableTextStyle),
       ));
     }).toList();

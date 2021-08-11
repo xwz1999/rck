@@ -133,6 +133,28 @@ class UserAPI {
 
   ///更新活跃人数
   String get activePeople => '/v2/app/evaluation/active_people';
+
+  ///删除图文或者视频
+  String get deleteImageOrVideo => '/v2/app/evaluation/del_image_video';
+
+  ///上传极光id
+  String get updateJId => '/v2/app/jPush/update_Id';
+
+  ///选择进口国家
+  String get getCountryList => '/v2/app/abroad/countryList';
+
+  ///选择国家下的类目
+  String get getCategoryList => '/v2/app/abroad/category_list';
+
+  ///展示进口商品列表
+  String get getViewGoods => '/v2/app/abroad/view_goods';
+
+  ///获取金刚区
+  String get getKingCion => '/v2/app/aku_school/king_coin_list';
+
+  ///搜索国家
+  String get findCountry => '/v2/app/abroad/search_country';
+
 }
 
 class BenefitAPI {

@@ -12,6 +12,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/live/models/king_coin_list_model.dart';
 import 'package:recook/utils/storage/hive_store.dart';
 
 import 'package:redux/redux.dart';
@@ -52,6 +53,8 @@ class UserManager {
 
   ValueNotifier<bool> openInstallLive = ValueNotifier(false);
   int selectTabbarIndex;
+
+  List<KingCoinListModel> kingCoinListModelList;
 
   bool get haveLogin => login.value;
 
@@ -122,5 +125,20 @@ class UserManager {
         await HttpManager.post(APIV2.userAPI.activePeople,{
           'id': UserManager.instance.user.info.id,
         });
+  }
+
+    //上传极光id
+  static Future<String> updateJId(
+    String registrationId,int type
+  ) async {
+    ResultData result = await HttpManager.post(APIV2.userAPI.updateJId, {
+      "user_id": UserManager.instance.user.info.id,
+      "registration_id":registrationId,
+      "type":type//1:android 2:ios
+    });
+
+    if (result.data != null) {
+      return result.data['code'];
+    }
   }
 }

@@ -17,14 +17,14 @@ enum SortType { comprehensive, priceAsc, priceDesc, salesAsc, salesDesc }
 
 abstract class GoodsListPresenterI
     extends MvpListViewPresenterI<GoodsSimple, GoodListViewI, GoodListModelI> {
-  fetchList(int categoryID, int page, SortType type,
+  fetchList(int categoryID, int page, SortType type,int countryId,
       {String keyword, VoidCallback onLoadDone});
   fetchBrandList(int brandId, int page, SortType type);
   fetchSearchList(String keyword, int page);
 }
 
 abstract class GoodListModelI extends MvpModel {
-  fetchList(int categoryID, int page, SortType type, {String keyword});
+  fetchList(int categoryID, int page, SortType type,int countryId, {String keyword});
   fetchBrandList(int brandId, int page, SortType type);
   fetchSearchList(String keyword, int page);
 }

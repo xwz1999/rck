@@ -7,11 +7,14 @@
  * ====================================================
  */
 
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jpush_flutter/jpush_flutter.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -19,9 +22,7 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/login/wechat_bind_page.dart';
-import 'package:recook/pages/welcome/privacy_page_v2.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/progress/sc_dialog.dart';
 import 'package:recook/widgets/toast.dart';
@@ -38,11 +39,27 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
   BuildContext _context;
   bool _weChatLoginLoading = false;
   bool _hasInstallWeChat = false;
-
   bool _chooseAgreement = false;
+  final JPush jpush = new JPush();
+  String debugLable = 'Unknown';
   @override
   initState() {
     super.initState();
+    jpush.getRegistrationID().then((rid) {
+      print("flutter get registration id : $rid");
+      Future.delayed(Duration.zero, () async {
+        int type;
+        if (Platform.isIOS) {
+          type = 2;
+        } else if (Platform.isAndroid) {
+          type = 1;
+        }
+        String code = await UserManager.updateJId(rid, type);
+        print(code);
+      });
+
+    });
+
     if (WeChatUtils.isInstall) {
       _hasInstallWeChat = true;
     }
@@ -160,12 +177,23 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
                     text: TextSpan(
                         text: "您已阅读并同意",
                         style: TextStyle(
-                            color: Colors.grey[500], fontSize: 14 * 2.sp),
+                            color: Colors.grey[500], fontSize: 13 * 2.sp),
                         children: [
                       new TextSpan(
-                          text: '《用户协议和隐私政策》',
-                          style: new TextStyle(color: Colors.red),
-                          recognizer: _recognizer(context)),
+                          text: '《用户服务协议》',
+                          style: new TextStyle(
+                              color: Colors.red, fontSize: 13 * 2.sp),
+                          recognizer: _recognizer(context, 2)),
+                      TextSpan(
+                        text: "和",
+                        style: TextStyle(
+                            color: Colors.grey[500], fontSize: 13 * 2.sp),
+                      ),
+                      new TextSpan(
+                          text: '《用户隐私政策》',
+                          style: new TextStyle(
+                              color: Colors.red, fontSize: 13 * 2.sp),
+                          recognizer: _recognizer(context, 1)),
                     ])),
               ],
             ),
@@ -215,7 +243,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
                   type: NormalTextDialogType.remind,
                   title: null,
                   content: Text(
-                    '请您先阅读并同意《用户协议和隐私政策》',
+                    '请您先阅读并同意《用户服务协议》和《用户隐私政策》',
                     style: TextStyle(color: Colors.black),
                   ),
                   items: ["确认"],
@@ -279,7 +307,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
     );
   }
 
-  _recognizer(context) {
+  _recognizer(context, int type) {
     final TapGestureRecognizer recognizer = new TapGestureRecognizer();
     recognizer.onTap = () {
       print("点击协议了");
@@ -287,7 +315,9 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
         context,
         RouteName.WEB_VIEW_PAGE,
         arguments: WebViewPage.setArguments(
-            url: WebApi.privacy, title: "用户使用协议", hideBar: true),
+            url: type == 1 ? WebApi.privacy : WebApi.agreement,
+            title: type == 1 ? "用户隐私政策" : "用户服务协议",
+            hideBar: true),
       );
       //CRoute.push(context, PrivacyPageV2());
     };

@@ -1,5 +1,7 @@
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/live/models/king_coin_list_model.dart';
 import 'package:recook/pages/user/model/user_common_model.dart';
 
 enum UsersMode {
@@ -30,5 +32,19 @@ class UserFunc {
     return (result.data['data'] as List)
         .map((e) => UserCommonModel.fromJson(e))
         .toList();
+  }
+    //获取金刚区图标
+  static Future<List<KingCoinListModel>> getKingCoinList() async {
+    ResultData result =
+        await HttpManager.post(APIV2.userAPI.getKingCion, {
+      'user_id': UserManager.instance.user.info.id,
+    });
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return (result.data['data'] as List)
+            .map((e) => KingCoinListModel.fromJson(e))
+            .toList();
+      }
+    }
   }
 }

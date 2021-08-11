@@ -3,9 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -27,85 +25,56 @@ class _ShopPageUserRightsPageState
     extends BaseStoreState<ShopPageUserRightsPage> {
   @override
   Widget buildContext(BuildContext context, {store}) {
-    double width = MediaQuery.of(context).size.width;
-    double bgHeight = width / 375 * 290;
-    Scaffold scaffold = Scaffold(
-      body: Container(
-        margin: EdgeInsets.all(0),
-        padding: EdgeInsets.all(0),
-        color: AppColor.frenchColor,
-        child: Stack(
-          children: <Widget>[
-            // Positioned(
-            //   top: 0, right: 0, left: 0, height: bgHeight,
-            //   child: Container(color: AppColor.blackColor,),
-            //   // child: Image.asset("assets/shop_page_user_rights_bg.png", width: width, height: bgHeight, fit: BoxFit.fill, ),
-            // ),
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 0,
-              top: 0,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    color: AppColor.blackColor,
-                    child: _appBar("瑞库客8大权益"),
+    return Scaffold(
+      backgroundColor: AppColor.tableViewGrayColor,
+      body: Stack(
+        children: <Widget>[
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            top: 0,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.all(0),
+                    physics: ClampingScrollPhysics(),
+                    children: <Widget>[
+                      Container(
+                        child: Stack(
+                          children: <Widget>[
+                            Column(
+                              children: <Widget>[
+                                Container(
+                                  child: _contextWidget(),
+                                )
+                              ],
+                            ),
+                            Positioned(
+                              top: 40.rw + ScreenUtil().statusBarHeight,
+                              left: 0,
+                              child: _userInfo(),
+                              //child: Image.asset("assets/shop_page_user_rights_bg.png", width: width, height: bgHeight, fit: BoxFit.fill, ),
+                            ),
+                            Positioned(
+                              top: 0,
+                              left: 0,
+                              child: _appBar("瑞库客8大权益"),
+                              //child: Image.asset("assets/shop_page_user_rights_bg.png", width: width, height: bgHeight, fit: BoxFit.fill, ),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
                   ),
-                  Expanded(
-                    child: ListView(
-                      padding: EdgeInsets.all(0),
-                      physics: ClampingScrollPhysics(),
-                      children: <Widget>[
-                        Container(
-                          child: Stack(
-                            children: <Widget>[
-                              Positioned(
-                                top: 0,
-                                right: 0,
-                                left: 0,
-                                height: bgHeight -
-                                    ScreenUtil().statusBarHeight -
-                                    kToolbarHeight,
-                                child: Container(
-                                    color: Colors.black,
-                                    child: Image.asset(
-                                      _headBackgroundImage(),
-                                      fit: BoxFit.fill,
-                                    )),
-                                // child: Image.asset("assets/shop_page_user_rights_bg.png", width: width, height: bgHeight, fit: BoxFit.fill, ),
-                              ),
-                              Column(
-                                children: <Widget>[
-                                  _userInfo(),
-                                  Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 10),
-                                    child: _contextWidget(),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
-            // Positioned(
-            //   right: 0, top: ScreenUtil.screenHeightDp/2-30,
-            //   child: _roleButton(),
-            // )
-          ],
-        ),
+          ),
+        ],
       ),
-    );
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light,
-      child: scaffold,
     );
   }
 
@@ -118,7 +87,7 @@ class _ShopPageUserRightsPageState
     return Container(
         padding: EdgeInsets.symmetric(horizontal: 15),
         width: MediaQuery.of(context).size.width,
-        height: 80,
+        height: 60,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
@@ -185,9 +154,10 @@ class _ShopPageUserRightsPageState
 
   _appBar(title) {
     return Container(
+      color: Colors.transparent,
       margin: EdgeInsets.only(top: ScreenUtil().statusBarHeight),
       width: MediaQuery.of(context).size.width,
-      height: kToolbarHeight,
+      height: 40.rw,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -218,34 +188,6 @@ class _ShopPageUserRightsPageState
         ],
       ),
     );
-  }
-
-  String _headBackgroundImage() {
-    if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_1 ||
-        UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_2 ||
-        UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_3) {
-      return R.ASSETS_SHOP_PAGE_USER_RIGHTS_DIAMOND_HEAD_JPG;
-    } else if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Gold) {
-      return R.ASSETS_SHOP_PAGE_USER_RIGHTS_GOLD_HEAD_JPG;
-    } else if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Silver) {
-      return R.ASSETS_HEADER_SILVER_HEADER_PNG;
-    } else if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip &&
-        (UserLevelTool.currentUserLevelEnum() == UserLevel.Second ||
-            UserLevelTool.currentUserLevelEnum() == UserLevel.First)) {
-      return R.ASSETS_SHOP_PAGE_USER_RIGHTS_MASTER_AND_VIP_HEAD_JPG;
-    } else if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip &&
-        (UserLevelTool.currentUserLevelEnum() == UserLevel.Others)) {
-      // 绿色的vip
-      return R.ASSETS_SHOP_PAGE_USER_RIGHTS_MASTER_AND_VIP_HEAD_JPG;
-    } else if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Master &&
-        (UserLevelTool.currentUserLevelEnum() == UserLevel.Others)) {
-      return R.ASSETS_SHOP_PAGE_USER_RIGHTS_MASTER_AND_VIP_HEAD_JPG;
-    } else if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Master &&
-        ((UserLevelTool.currentUserLevelEnum() == UserLevel.Second ||
-            UserLevelTool.currentUserLevelEnum() == UserLevel.First))) {
-      return R.ASSETS_SHOP_PAGE_USER_RIGHTS_MASTER_AND_VIP_HEAD_JPG;
-    }
-    return '';
   }
 
   _masterLevel23() {
@@ -311,28 +253,28 @@ class _ShopPageUserRightsPageState
     );
   }
 
-  _roleButton() {
-    return GestureDetector(
-      onTap: () {
-        AppRouter.push(
-          context,
-          RouteName.WEB_VIEW_PAGE,
-          arguments: WebViewPage.setArguments(
-              appBarTheme: AppThemes.themeDataGrey.appBarTheme,
-              url:
-                  "https://cdn.reecook.cn/website/www/rule/${_webViewUrl()}.html",
-              title: "规则",
-              hideBar: false),
-        );
-      },
-      child: Container(
-        width: 57,
-        height: 61,
-        child: Image.asset("assets/shop_page_user_rights_role_button.png",
-            fit: BoxFit.fill),
-      ),
-    );
-  }
+  // _roleButton() {
+  //   return GestureDetector(
+  //     onTap: () {
+  //       AppRouter.push(
+  //         context,
+  //         RouteName.WEB_VIEW_PAGE,
+  //         arguments: WebViewPage.setArguments(
+  //             appBarTheme: AppThemes.themeDataGrey.appBarTheme,
+  //             url:
+  //                 "https://cdn.reecook.cn/website/www/rule/${_webViewUrl()}.html",
+  //             title: "规则",
+  //             hideBar: false),
+  //       );
+  //     },
+  //     child: Container(
+  //       width: 57,
+  //       height: 61,
+  //       child: Image.asset("assets/shop_page_user_rights_role_button.png",
+  //           fit: BoxFit.fill),
+  //     ),
+  //   );
+  // }
 
   _webViewUrl() {
     if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_1 &&

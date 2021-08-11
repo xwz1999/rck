@@ -17,6 +17,8 @@ import 'package:recook/utils/app_router.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/goods_item.dart';
 
+import 'package:fijkplayer/fijkplayer.dart';
+
 class GoodsHotListPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
@@ -26,10 +28,11 @@ class GoodsHotListPage extends StatefulWidget {
 
 class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage> {
   GoodsHotSellListModel _listModel;
-
+final FijkPlayer player = FijkPlayer();
   @override
   void initState() {
     super.initState();
+    //player.setDataSource('https://testcdn.reecook.cn/static/video/20210727/56baf9fd537e83f7584209528e2bb3ef.mp4', autoPlay: true);
     _getGoodsHotSellList();
   }
 
@@ -40,13 +43,18 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage> {
         body: SafeArea(
           top: false,
           bottom: false,
-          child: _bodyWidget(),
+          child: 
+          // FijkView(
+          //   player: player,
+          // ),
+          _bodyWidget(),
         ));
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: scaffold,
     );
   }
+
 
   _bodyWidget() {
     return Container(

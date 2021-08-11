@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 
@@ -95,13 +96,19 @@ class __PrivacyDialogState extends State<_PrivacyDialog> {
                           TextSpan(
                             text: '相关您个人信息的相关问题，详见',
                           ),
-                          TextSpan(
-                            text: '《用户协议和隐私政策》',
-                            style: TextStyle(
-                              color: Color(0xFFFA3524),
-                              fontSize: rSP(10),
+                          TextSpan(text: "您已阅读并同意", children: [
+                            new TextSpan(
+                                text: '《用户服务协议》',
+                                style: new TextStyle(color: Colors.red),
+                                recognizer: _recognizer(context, 2)),
+                            TextSpan(
+                              text: "和",
                             ),
-                          ),
+                            new TextSpan(
+                                text: '《用户隐私政策》',
+                                style: new TextStyle(color: Colors.red),
+                                recognizer: _recognizer(context, 1)),
+                          ]),
                           TextSpan(
                             text:
                                 '全文，请您认真阅读并充分理解，如您同意我们的政策内容，请点击同意并继续使用本软件。我们会不断完善技术和安全管理，保护您的个人信息。',
@@ -157,6 +164,23 @@ class __PrivacyDialogState extends State<_PrivacyDialog> {
   }
 }
 
+_recognizer(context, int type) {
+  final TapGestureRecognizer recognizer = new TapGestureRecognizer();
+  recognizer.onTap = () {
+    print("点击协议了");
+    AppRouter.push(
+      context,
+      RouteName.WEB_VIEW_PAGE,
+      arguments: WebViewPage.setArguments(
+          url: type == 1 ? WebApi.privacy : WebApi.agreement,
+          title: type == 1 ? "用户隐私政策" : "用户服务协议",
+          hideBar: true),
+    );
+    //CRoute.push(context, PrivacyPageV2());
+  };
+  return recognizer;
+}
+
 class _PrivacySecondDialog extends StatelessWidget {
   const _PrivacySecondDialog({Key key}) : super(key: key);
 
@@ -203,13 +227,23 @@ class _PrivacySecondDialog extends StatelessWidget {
                   child: Text.rich(TextSpan(
                     children: [
                       TextSpan(text: '您可再次查看'),
+                      new TextSpan(
+                          text: '《用户服务协议》',
+                          style: TextStyle(
+                            color: Color(0xFFFD3212),
+                            fontSize: rSP(14),
+                          ),
+                          recognizer: _recognizer(context, 2)),
                       TextSpan(
-                        text: '《用户协议和隐私政策》',
-                        style: TextStyle(
-                          color: Color(0xFFFD3212),
-                          fontSize: rSP(14),
-                        ),
+                        text: "和",
                       ),
+                      new TextSpan(
+                          text: '《用户隐私政策》',
+                          style: TextStyle(
+                            color: Color(0xFFFD3212),
+                            fontSize: rSP(14),
+                          ),
+                          recognizer: _recognizer(context, 1)),
                       TextSpan(text: '全文。如您同意我们的政策内容后，您可继续使用瑞库客'),
                     ],
                     style: TextStyle(

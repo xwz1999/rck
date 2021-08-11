@@ -8,25 +8,32 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/activity/activity_preview_page.dart';
+import 'package:recook/pages/live/functions/user_live_func.dart';
 import 'package:recook/pages/live/models/activity_list_model.dart';
 import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/widget/review_child_cards.dart';
 import 'package:recook/pages/live/widget/user_base_card.dart';
+import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/date/recook_date_util.dart';
+import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook/recook_like_button.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 
 class UserActivityCard extends StatefulWidget {
   final ActivityListModel model;
   final LiveBaseInfoModel userModel;
   final bool initAttention;
+  final GSRefreshController controller;
   UserActivityCard({
     Key key,
     @required this.model,
     @required this.userModel,
     @required this.initAttention,
+    this.controller,
   }) : super(key: key);
 
   @override
@@ -53,6 +60,75 @@ class _UserActivityCardState extends State<UserActivityCard> {
       date: recookDateUtil.prefixDay,
       detailDate: recookDateUtil.detailDate,
       children: [
+        Container(
+          padding: EdgeInsets.only(top: 3.rw),
+          child: Row(
+            children: [
+              Spacer(),
+              widget.model.passStatus == 0
+                  ? Text(
+                      '评论审核中',
+                      style: TextStyle(
+                        color: Color(0xFFFF6F00),
+                        fontSize: rSP(14),
+                      ),
+                    )
+                  : widget.model.passStatus == 1
+                      ? Text(
+                          '审核通过',
+                          style: TextStyle(
+                            color: Color(0xFF12B631),
+                            fontSize: rSP(14),
+                          ),
+                        )
+                      : widget.model.passStatus == 2
+                          ? GestureDetector(
+                              onTap: () {
+                                Alert.show(
+                                    context,
+                                    NormalTextDialog(
+                                      title: '提示',
+                                      content: widget.model.trendType == 1
+                                          ? '您发布的图文内容不符合互联网行为规范'
+                                          : '您发布的短视频内容不符合互联网行为规范',
+                                      items: ["确认"],
+                                      type: NormalTextDialogType.remind,
+                                      listener: (index) {
+                                        Alert.dismiss(context);
+                                      },
+                                    ));
+                              },
+                              child: Row(
+                                children: [
+                                  Text(
+                                    '审核驳回',
+                                    style: TextStyle(
+                                      color: Color(0xFFCF3D35),
+                                      fontSize: rSP(14),
+                                    ),
+                                  ),
+                                  Container(
+                                    padding: EdgeInsets.only(top: 3.rw),
+                                    child: Icon(
+                                      Icons.help_outline,
+                                      size: 10.rw,
+                                      color: Color(0xFFCF3D35),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            )
+                          : Text(
+                              '评论审核中',
+                              style: TextStyle(
+                                color: Color(0xFFFF6F00),
+                                fontSize: rSP(14),
+                              ),
+                            ),
+              20.wb,
+            ],
+          ),
+        ),
         SizedBox(height: rSize(35)),
         GestureDetector(
           onTap: () {
@@ -173,15 +249,53 @@ class _UserActivityCardState extends State<UserActivityCard> {
         ),
         Row(
           children: [
-            // CustomImageButton(
-            //   padding: EdgeInsets.only(top: rSize(10)),
-            //   child: Image.asset(
-            //     R.ASSETS_LIVE_MORE_PNG,
-            //     width: rSize(18),
-            //     height: rSize(18),
-            //   ),
-            //   onPressed: () {},
-            // ),
+            CustomImageButton(
+              padding: EdgeInsets.only(top: rSize(10)),
+              child: Container(
+                width: 40.rw,
+                height: 18.rw,
+                alignment: Alignment.center,
+                child: Container(
+                  //padding: EdgeInsets.only(bottom: 5.rw),
+                  child: Text(
+                    '删除',
+                    style: TextStyle(
+                        color: Color(0xFFDB2D2D),
+                        fontSize: 12.rsp,
+                        height: 1.2),
+                  ),
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(9.rw)),
+                  border: Border.all(color: Color(0xFFDB2D2D), width: 1.rw),
+                ),
+              ),
+              onPressed: () {
+                Alert.show(
+                    context,
+                    NormalTextDialog(
+                      title: '提示',
+                      content: '是否删除本条图文',
+                      items: ["取消"],
+                      type: NormalTextDialogType.delete,
+                      deleteItem: '删除',
+                      deleteListener: () async {
+                        Alert.dismiss(context);
+                        String code =
+                            await UserLiveFunc.delImageOrVideo(widget.model.id);
+                        if (code == 'SUCCESS') {
+                          ReToast.success(text: '删除成功');
+                          widget.controller.requestRefresh();
+                        } else {
+                          ReToast.success(text: '删除失败');
+                        }
+                      },
+                      listener: (index) {
+                        Alert.dismiss(context);
+                      },
+                    ));
+              },
+            ),
             Spacer(),
             CustomImageButton(
               padding: EdgeInsets.only(top: rSize(10)),

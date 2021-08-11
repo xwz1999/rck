@@ -37,15 +37,20 @@ class GoodsEva {
   String headImgUrl;
   String content;
   String createdAt;
+  int pass;
+  int compliance;
 
-  GoodsEva(
-      {this.id,
-      this.goodsId,
-      this.userId,
-      this.nickname,
-      this.headImgUrl,
-      this.content,
-      this.createdAt});
+  GoodsEva({
+    this.id,
+    this.goodsId,
+    this.userId,
+    this.nickname,
+    this.headImgUrl,
+    this.content,
+    this.createdAt,
+    this.pass,
+    this.compliance,
+  });
 
   GoodsEva.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -55,6 +60,8 @@ class GoodsEva {
     headImgUrl = json['headImgUrl'];
     content = json['content'];
     createdAt = json['createdAt'];
+    pass = json['pass'];
+    compliance = json['compliance'];
   }
 
   Map<String, dynamic> toJson() {
@@ -66,6 +73,8 @@ class GoodsEva {
     data['headImgUrl'] = this.headImgUrl;
     data['content'] = this.content;
     data['createdAt'] = this.createdAt;
+    data['pass'] = this.pass;
+    data['compliance'] = this.compliance;
     return data;
   }
 }

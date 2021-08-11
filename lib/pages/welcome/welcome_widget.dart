@@ -13,6 +13,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info/package_info.dart';
 import 'package:power_logger/power_logger.dart';
@@ -26,11 +27,13 @@ import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/user_model.dart';
+import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/print_util.dart';
 import 'package:recook/utils/share_preference.dart';
 import 'package:recook/utils/storage/hive_store.dart';
 import 'package:recook/widgets/toast.dart';
+import 'package:jpush_flutter/jpush_flutter.dart';
 
 class WelcomeWidget extends StatefulWidget {
   @override
@@ -38,12 +41,14 @@ class WelcomeWidget extends StatefulWidget {
 }
 
 class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
+   final JPush jpush = new JPush();
+   String debugLable = 'Unknown';
   String _backgroundUrl;
   bool _close = false;
   int _countDownNum = 3;
   int _goodsId = 0;
   Timer _timer;
-
+  //List<KingCoinListModel> kingCoinListModelList;
   @override
   Widget buildContext(BuildContext context, {store}) {
     Constants.initial(context);
@@ -145,15 +150,72 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
   @override
   void initState() {
     super.initState();
+    initPlatformState();
     getPackageInfo();
     _autoLogin();
     _showController();
+
     WidgetsBinding.instance.addPostFrameCallback((callback) {
       _beginCountDown();
       UserManager.instance.updateUserBriefInfo(getStore());
       if (UserManager.instance.haveLogin) {
         UserManager.instance.activePeople();
       }
+    });
+      Future.delayed(Duration.zero, () async {
+      UserManager.instance.kingCoinListModelList = await UserFunc.getKingCoinList();
+    });
+  }
+
+   Future<void> initPlatformState() async {
+    String platformVersion;
+
+    try {
+      jpush.addEventHandler(
+          onReceiveNotification: (Map<String, dynamic> message) async {
+        print("flutter onReceiveNotification: $message");
+        setState(() {
+          debugLable = "flutter onReceiveNotification: $message";
+        });
+      }, onOpenNotification: (Map<String, dynamic> message) async {
+        print("flutter onOpenNotification: $message");
+        setState(() {
+          debugLable = "flutter onOpenNotification: $message";
+        });
+      }, onReceiveMessage: (Map<String, dynamic> message) async {
+        print("flutter onReceiveMessage: $message");
+        setState(() {
+          debugLable = "flutter onReceiveMessage: $message";
+        });
+      }, onReceiveNotificationAuthorization:
+              (Map<String, dynamic> message) async {
+        print("flutter onReceiveNotificationAuthorization: $message");
+        setState(() {
+          debugLable = "flutter onReceiveNotificationAuthorization: $message";
+        });
+      });
+    } on PlatformException {
+      platformVersion = 'Failed to get platform version.';
+    }
+
+    jpush.setup(
+      appKey: "2dba4439e97b3c0b78146fab", //你自己应用的 AppKey
+      channel: "theChannel",
+      production: false,
+      debug: true,
+    );
+    jpush.applyPushAuthority(
+        new NotificationSettingsIOS(sound: true, alert: true, badge: true));
+
+    // Platform messages may fail, so we use a try/catch PlatformException.
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      debugLable = platformVersion;
     });
   }
 

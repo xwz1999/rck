@@ -10,6 +10,7 @@
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'goods_list_contact.dart';
 
 class GoodsListModelImpl extends GoodListModelI {
@@ -25,8 +26,10 @@ class GoodsListModelImpl extends GoodListModelI {
   }
 
   @override
-  Future<ResultData> fetchList(int categoryID, int page, SortType type,
+  Future<ResultData> fetchList(
+      int categoryID, int page, SortType type, int countryId,
       {String keyword}) async {
+            print(countryId.toString()+'|423546756678678');
     String url;
     switch (type) {
       case SortType.comprehensive:
@@ -42,14 +45,19 @@ class GoodsListModelImpl extends GoodListModelI {
         break;
     }
 
+
     Map<String, dynamic> params = {
       "page": page,
     };
 
-    if (!TextUtils.isEmpty(keyword)&&categoryID==-99) {
+    if (!TextUtils.isEmpty(keyword) && categoryID == -99) {
       params.putIfAbsent("keyword", () => keyword);
     } else {
       params.putIfAbsent("secondCategoryID", () => categoryID);
+    }
+    if (countryId != null) {
+      params.putIfAbsent("country_id", () => countryId);
+      params.putIfAbsent("user_id", () => UserManager.instance.user.info.id);
     }
 
     if (type == SortType.priceAsc || type == SortType.salesAsc) {
@@ -57,6 +65,7 @@ class GoodsListModelImpl extends GoodListModelI {
     } else if (type == SortType.priceDesc || type == SortType.salesDesc) {
       params.putIfAbsent("order", () => "desc");
     }
+    print(params);
 
     ResultData resultData = await HttpManager.post(url, params);
     return resultData;

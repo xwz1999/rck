@@ -97,6 +97,7 @@ class _UserActivityViewState extends State<UserActivityView>
                   model: activityListModels[index],
                   userModel: widget.userModel,
                   initAttention: widget.initAttention,
+                  controller:_controller,
                 );
               },
               itemCount: activityListModels.length,
