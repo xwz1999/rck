@@ -68,7 +68,7 @@ android {
        ndk {
            //设置支持的SO库架构
            abiFilters 'arm64-v8a'//, 'arm64-v8a', 'x86', 'x86_64'
-           abiFilters 'armeabi-v7a'
+          // abiFilters 'armeabi-v7a'
        }
         manifestPlaceholders = [
             OPENINSTALL_APPKEY : "uapywo",

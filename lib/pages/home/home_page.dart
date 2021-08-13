@@ -1055,15 +1055,15 @@ class _HomePageState extends BaseStoreState<HomePage>
                   // AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
                   // '彩票兑换',
                   //2021 7,27 ios彩票审核不通过 隐藏彩票
-                  '出行服务',
+                  '精彩发现',
                   onPressed: () async {
                     //AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
 
                     //widget.tabController.animateTo(2);
-                    // UserManager.instance.selectTabbarIndex = 2;
-                    // bool value = UserManager.instance.selectTabbar.value;
-                    // UserManager.instance.selectTabbar.value = !value;
-                    Get.to(() => ChooseTicketsTypePage());
+                    UserManager.instance.selectTabbarIndex = 2;
+                    bool value = UserManager.instance.selectTabbar.value;
+                    UserManager.instance.selectTabbar.value = !value;
+                    //Get.to(() => ChooseTicketsTypePage());
                     //setState(() {});
                   },
                   //   () {

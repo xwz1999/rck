@@ -17,7 +17,6 @@ import 'package:recook/utils/app_router.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/goods_item.dart';
 
-import 'package:fijkplayer/fijkplayer.dart';
 
 class GoodsHotListPage extends StatefulWidget {
   @override
@@ -28,7 +27,6 @@ class GoodsHotListPage extends StatefulWidget {
 
 class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage> {
   GoodsHotSellListModel _listModel;
-final FijkPlayer player = FijkPlayer();
   @override
   void initState() {
     super.initState();

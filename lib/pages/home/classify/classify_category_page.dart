@@ -30,8 +30,9 @@ import 'goods_import_list_page.dart';
 
 class ClassifyCategoryPage extends StatefulWidget {
   final List<CategoryListModel> data;
+  final int countryId;
   final String initValue;
-  ClassifyCategoryPage({Key key, @required this.data, this.initValue})
+  ClassifyCategoryPage({Key key, @required this.data, this.initValue,this.countryId})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -306,13 +307,11 @@ class _ClassifyCategoryPageState extends BaseStoreState<ClassifyCategoryPage>
               //         title: firstTitle,
               //         index: indexIn,
               //         secondCategoryList: secondCategories));
-              print(secondCategory.id);
-
               Get.to(GoodsImportListPage(
                   title: firstTitle,
                   index: indexIn,
                   secondCategoryList: secondCategories,
-                  countryId: widget.data[index].first.id));
+                  countryId: widget.countryId));
             },
           );
         });

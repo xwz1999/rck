@@ -18,6 +18,7 @@ import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/business/release_material_page.dart';
 import 'package:recook/pages/home/home_page.dart';
+import 'package:recook/pages/home/widget/aku_college_page.dart';
 import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
 import 'package:recook/pages/live/functions/live_function.dart';
 import 'package:recook/pages/live/pages/discovery_page.dart';
@@ -206,7 +207,8 @@ class _TabBarWidgetState extends State<TabBarWidget>
             HomePage(
               tabController: _tabController,
             ),
-            GoodsHotListPage(),
+            //GoodsHotListPage(),
+            AkuCollegePage(),//------akkuxuyaun
             DiscoveryPage(),
             // BusinessPage(),
             ShoppingCartPage(),

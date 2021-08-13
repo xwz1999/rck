@@ -462,6 +462,7 @@ class GoodsItemWidget extends StatelessWidget {
                             //   color: Colors.red,
                             // );
                             CustomCacheImage(
+                          borderRadius: BorderRadius.all(Radius.circular(2.rw)),
                           imageUrl: Api.getImgUrl(specialSale[index]),
                           fit: BoxFit.cover,
                         );
@@ -493,6 +494,7 @@ class GoodsItemWidget extends StatelessWidget {
                             //   color: Colors.red,
                             // );
                             CustomCacheImage(
+                          borderRadius: BorderRadius.all(Radius.circular(2.rw)),
                           imageUrl: Api.getImgUrl(specialIcon[index]),
                           fit: BoxFit.cover,
                         );

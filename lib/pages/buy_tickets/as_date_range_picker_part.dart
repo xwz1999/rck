@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'condition_picker.dart';
-import 'models/airport_city_model.dart';
 
 class RangeDate {
   DateTime start;

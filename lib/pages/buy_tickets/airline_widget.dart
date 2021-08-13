@@ -525,7 +525,8 @@ class _AirlineWidgetState extends State<AirlineWidget> {
   _chooseConditon() {
     return Container(
       height: 48.rw,
-      margin: EdgeInsets.only(left: 55.rw, right: 55.rw, bottom: 10.rw),
+      //margin: EdgeInsets.only(left: 55.rw, right: 55.rw, bottom: 10.rw),
+      margin: EdgeInsets.only(left: 85.rw, right: 85.rw, bottom: 10.rw),
       //padding: EdgeInsets.symmetric(horizontal: 55.rw),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.horizontal(
@@ -534,45 +535,45 @@ class _AirlineWidgetState extends State<AirlineWidget> {
           color: Colors.white),
       child: Row(
         children: [
-          GestureDetector(
-            onTap: () async {
-              Options options = await show2DatePicker(context,
-                  fromNameList: _getAirportNameList(widget.fromText),
-                  endNameList: _getAirportNameList(widget.toText));
-              _chooseScreen = true;
-              _airLineHandleList = _getList(_airLineList, options);
-              if (options.arrive == '' &&
-                  options.company == '' &&
-                  options.date == '' &&
-                  options.depart == '' &&
-                  options.space == '') {
-                _chooseScreen = false;
-                _airLineHandleList = _airLineList;
-                setState(() {});
-              }
-            },
-            child: Container(
-              alignment: Alignment.center,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    _chooseScreen
-                        ? R.ASSETS_TICKET_SCREEN_CHOOSE_ICON_PNG
-                        : R.ASSETS_TICKET__SCREEN_ICON_PNG,
-                    width: 17.rw,
-                    height: 17.rw,
-                  ),
-                  Text(
-                    '筛选条件',
-                    style: TextStyle(
-                        color: _chooseScreen ? Colors.red : Colors.black,
-                        fontSize: 12.rsp),
-                  ),
-                ],
-              ),
-            ),
-          ).expand(),
+          // GestureDetector(
+          //   onTap: () async {
+          //     Options options = await show2DatePicker(context,
+          //         fromNameList: _getAirportNameList(widget.fromText),
+          //         endNameList: _getAirportNameList(widget.toText));
+          //     _chooseScreen = true;
+          //     _airLineHandleList = _getList(_airLineList, options);
+          //     if (options.arrive == '' &&
+          //         options.company == '' &&
+          //         options.date == '' &&
+          //         options.depart == '' &&
+          //         options.space == '') {
+          //       _chooseScreen = false;
+          //       _airLineHandleList = _airLineList;
+          //       setState(() {});
+          //     }
+          //   },
+          //   child: Container(
+          //     alignment: Alignment.center,
+          //     child: Column(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         Image.asset(
+          //           _chooseScreen
+          //               ? R.ASSETS_TICKET_SCREEN_CHOOSE_ICON_PNG
+          //               : R.ASSETS_TICKET__SCREEN_ICON_PNG,
+          //           width: 17.rw,
+          //           height: 17.rw,
+          //         ),
+          //         Text(
+          //           '筛选条件',
+          //           style: TextStyle(
+          //               color: _chooseScreen ? Colors.red : Colors.black,
+          //               fontSize: 12.rsp),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ).expand(),
           GestureDetector(
               onTap: () {
                 _choosePriceSort = true;

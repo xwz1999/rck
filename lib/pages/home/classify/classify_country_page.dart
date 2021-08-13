@@ -314,7 +314,7 @@ class _ClassifyCountryPageState extends BaseStoreState<ClassifyCountryPage>
               categoryListModelList =
                   await HomeDao.getCategoryList(secondCategory.id);
 
-              Get.to(ClassifyCategoryPage(data: categoryListModelList));
+              Get.to(ClassifyCategoryPage(data: categoryListModelList,countryId:secondCategories[indexIn].id));
             },
           );
         });

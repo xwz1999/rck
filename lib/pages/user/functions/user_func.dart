@@ -33,11 +33,13 @@ class UserFunc {
         .map((e) => UserCommonModel.fromJson(e))
         .toList();
   }
-    //获取金刚区图标
+
+  //获取金刚区图标
   static Future<List<KingCoinListModel>> getKingCoinList() async {
-    ResultData result =
-        await HttpManager.post(APIV2.userAPI.getKingCion, {
-      'user_id': UserManager.instance.user.info.id,
+    ResultData result = await HttpManager.post(APIV2.userAPI.getKingCion, {
+      'user_id': UserManager.instance.user.info.id != null
+          ? UserManager.instance.user.info.id
+          : 0,
     });
     if (result.data != null) {
       if (result.data['data'] != null) {

@@ -26,7 +26,8 @@ class AirplaneReservePage extends StatefulWidget {
       this.fromText,
       this.toText,
       this.originDate,
-      this.index, this.itemId})
+      this.index,
+      this.itemId})
       : super(key: key);
 
   @override
@@ -372,37 +373,103 @@ class _AirplaneReservePageState extends State<AirplaneReservePage>
           Column(
             children: [
               10.hb,
-              CustomImageButton(
-                height: 38.rw,
-                width: 44.rw,
-                title: "预订",
-                boxDecoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      Color(0xFFFF493F),
-                      Color(0xFFC92219),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(4.rw)),
-                ),
-                backgroundColor: Color(0xFFC92219),
-                color: Colors.white,
-                fontSize: 16.rsp,
-                onPressed: () {
-                  Get.to(AirplaneDetailPage(
-                      airline: widget.airline,
-                      airlineindex: widget.index,
-                      airSeat: type == 1
-                          ? _economyclassList[index]
-                          : _firstclassList[index],
-                      fromText: widget.fromText,
-                      toText: widget.toText,
-                      originDate: widget.originDate,
-                      itemId:widget.itemId));
-                },
-              ),
+              model.seatStatus != 'A'
+                  ? CustomImageButton(
+                      padding: EdgeInsets.zero,
+                      boxDecoration: BoxDecoration(boxShadow: [
+                        BoxShadow(
+                          color: Color(0xFFC92219),
+                          blurRadius: 4.rw,
+                        )
+                      ]),
+                      height: 38.rw,
+                      width: 44.rw,
+                      child: Column(
+                        children: [
+                          Container(
+                            alignment: Alignment.center,
+                            height: 24.rw,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                                  Color(0xFFFF493F),
+                                  Color(0xFFC92219),
+                                ],
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(4.rw)),
+                            ),
+                            child: Text('预订',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 16.rsp,
+                                )),
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            height: 14.rw,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(4.rw),
+                                  bottomRight: Radius.circular(4.rw)),
+                            ),
+                            child: Text("余" + model.seatStatus + "张",
+                                style: TextStyle(
+                                  color: Color(0xFFF64239),
+                                  fontSize: 10.rsp,
+                                )),
+                          ),
+                        ],
+                      ),
+                      onPressed: () {
+                        Get.to(AirplaneDetailPage(
+                            airline: widget.airline,
+                            airlineindex: widget.index,
+                            airSeat: type == 1
+                                ? _economyclassList[index]
+                                : _firstclassList[index],
+                            fromText: widget.fromText,
+                            toText: widget.toText,
+                            originDate: widget.originDate,
+                            itemId: widget.itemId));
+                      },
+                    )
+                  : CustomImageButton(
+                      height: 38.rw,
+                      width: 44.rw,
+                      title: "预订",
+                      boxDecoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Color(0xFFFF493F),
+                            Color(0xFFC92219),
+                          ],
+                        ),
+                        borderRadius: BorderRadius.all(Radius.circular(4.rw)),
+                      ),
+                      backgroundColor: Color(0xFFC92219),
+                      color: Colors.white,
+                      fontSize: 16.rsp,
+                      onPressed: () {
+                        Get.to(AirplaneDetailPage(
+                            airline: widget.airline,
+                            airlineindex: widget.index,
+                            airSeat: type == 1
+                                ? _economyclassList[index]
+                                : _firstclassList[index],
+                            fromText: widget.fromText,
+                            toText: widget.toText,
+                            originDate: widget.originDate,
+                            itemId: widget.itemId));
+                      },
+                    ),
             ],
           ),
         ],

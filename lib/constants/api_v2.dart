@@ -155,6 +155,12 @@ class UserAPI {
   ///搜索国家
   String get findCountry => '/v2/app/abroad/search_country';
 
+  ///阿库学院视频
+  String get getAkuVideoList => '/v2/app/aku_school/school_list';
+
+  
+
+
 }
 
 class BenefitAPI {
