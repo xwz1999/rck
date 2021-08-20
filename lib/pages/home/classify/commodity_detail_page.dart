@@ -39,8 +39,8 @@ class CommodityDetailPage extends StatefulWidget {
     this.liveId = 0,
   }) : super(key: key);
 
-  static setArguments(int goodsID) {
-    return {"goodsID": goodsID};
+  static setArguments(int goodsID, {int liveStatus, int roomId}) {
+    return {"goodsID": goodsID, 'liveStatus': liveStatus, 'roomId': roomId};
   }
 
   @override
@@ -57,11 +57,15 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
   ValueNotifier<bool> _openSkuChoosePage = ValueNotifier(false);
   int _goodsId;
   GoodsDetailModel _goodsDetail;
+  int _liveStatus;
+  int _roomId;
 
   @override
   void initState() {
     super.initState();
     _goodsId = widget.arguments["goodsID"];
+    _liveStatus = widget.arguments["liveStatus"];
+    _roomId = widget.arguments["roomId"];
     _tabController = TabController(length: 2, vsync: this);
     _appBarController = AppBarController();
     _bottomBarController = BottomBarController();
@@ -145,8 +149,10 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
                           controller: _tabController,
                           children: [
                             GoodsPage(
-                              isLive:widget.isLive,
-                              liveId:widget.liveId,
+                              liveStatus:_liveStatus,
+                              roomId:_roomId,
+                              isLive: widget.isLive,
+                              liveId: widget.liveId,
                               openbrandList: () {
                                 // _goodsDetail.data.brandId;
                                 AppRouter.push(

@@ -140,43 +140,44 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
         return _deliverItems();
 
       case 4:
-        {
-          if (!TextUtils.isEmpty(orderDetail.evaluatedAt)) return [];
-          DPrint.printf(TextUtils.isEmpty(orderDetail.evaluatedAt));
-          return [
-            CustomImageButton(
-              title: "评价",
-              color: AppColor.themeColor,
-              fontSize: 13 * 2.sp,
-              padding: EdgeInsets.symmetric(
-                  vertical: rSize(2), horizontal: rSize(20)),
-              borderRadius: BorderRadius.all(Radius.circular(40)),
-              border: Border.all(color: AppColor.themeColor, width: 0.8 * 2.w),
-              onPressed: () {
-                List<EvaluationGoodsModel> goodsList = [];
-                orderDetail.brands.forEach((brand) {
-                  brand.goods.forEach((goods) {
-                    if (goods.assType == 0) {
-                      goodsList.add(EvaluationGoodsModel(
-                          id: goods.goodsId,
-                          mainPhotoUrl: goods.mainPhotoUrl,
-                          goodsName: goods.goodsName));
-                    }
-                  });
-                });
+        return null;
+      // {
+      //   if (!TextUtils.isEmpty(orderDetail.evaluatedAt)) return [];
+      //   DPrint.printf(TextUtils.isEmpty(orderDetail.evaluatedAt));
+      //   return [
+      //     CustomImageButton(
+      //       title: "评价",
+      //       color: AppColor.themeColor,
+      //       fontSize: 13 * 2.sp,
+      //       padding: EdgeInsets.symmetric(
+      //           vertical: rSize(2), horizontal: rSize(20)),
+      //       borderRadius: BorderRadius.all(Radius.circular(40)),
+      //       border: Border.all(color: AppColor.themeColor, width: 0.8 * 2.w),
+      //       onPressed: () {
+      //         List<EvaluationGoodsModel> goodsList = [];
+      //         orderDetail.brands.forEach((brand) {
+      //           brand.goods.forEach((goods) {
+      //             if (goods.assType == 0) {
+      //               goodsList.add(EvaluationGoodsModel(
+      //                   id: goods.goodsId,
+      //                   mainPhotoUrl: goods.mainPhotoUrl,
+      //                   goodsName: goods.goodsName));
+      //             }
+      //           });
+      //         });
 
-                push(RouteName.ORDER_EVALUATION,
-                        arguments: PublishEvaluationPage.setArguments(
-                            orderId: orderDetail.id, goodsList: goodsList))
-                    .then((isSuccess) {
-                  if (isSuccess) {
-                    orderDetail.evaluatedAt = "已评价";
-                  }
-                });
-              },
-            )
-          ];
-        }
+      //         push(RouteName.ORDER_EVALUATION,
+      //                 arguments: PublishEvaluationPage.setArguments(
+      //                     orderId: orderDetail.id, goodsList: goodsList))
+      //             .then((isSuccess) {
+      //           if (isSuccess) {
+      //             orderDetail.evaluatedAt = "已评价";
+      //           }
+      //         });
+      //       },
+      //     )
+      //   ];
+      // }
     }
     return null;
   }

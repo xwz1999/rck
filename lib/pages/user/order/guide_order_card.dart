@@ -64,7 +64,9 @@ class GuideOrderCard extends StatelessWidget {
                               width: 24.rw,
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                color: Color(0xFFCC1B4F),
+                                                                      color: item.countryIcon == null
+                                          ? Color(0xFFCC1B4F)
+                                          : Colors.transparent,
                                 borderRadius: BorderRadius.circular(3.rw),
                               ),
                               child: item.countryIcon == null

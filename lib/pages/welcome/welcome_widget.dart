@@ -152,6 +152,10 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
   @override
   void initState() {
     super.initState();
+        Future.delayed(Duration.zero, () async {
+      UserManager.instance.kingCoinListModelList =
+          await UserFunc.getKingCoinList();
+    });
     initPlatformState();
     getPackageInfo();
     _autoLogin();
@@ -164,10 +168,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
         UserManager.instance.activePeople();
       }
     });
-    Future.delayed(Duration.zero, () async {
-      UserManager.instance.kingCoinListModelList =
-          await UserFunc.getKingCoinList();
-    });
+
   }
 
   Future<void> initPlatformState() async {

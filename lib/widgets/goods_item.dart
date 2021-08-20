@@ -22,6 +22,7 @@ import 'package:recook/widgets/custom_image_button.dart';
 
 import 'package:recook/models/goods_hot_sell_list_model.dart'
     as GoodsHotSellListModel;
+import 'package:recook/widgets/seckill_activity_widget/live_animate_widget.dart';
 
 enum GoodsItemType {
   NONE,
@@ -325,7 +326,9 @@ class GoodsItemWidget extends StatelessWidget {
                                 width: 24.rw,
                                 height: 16.rw,
                                 decoration: BoxDecoration(
-                                  color: Color(0xFFCC1B4F),
+                                  color: countryIcon == null
+                                      ? Color(0xFFCC1B4F)
+                                      : Colors.transparent,
                                   borderRadius: BorderRadius.circular(3 * 2.w),
                                 ),
                                 child: countryIcon == null
@@ -415,9 +418,31 @@ class GoodsItemWidget extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(cir)),
         child: Stack(children: [
-          living?
-            child: Container(color: AppColor.frenchColor),
-          ),
+          living?.status == 1
+              ? Positioned(
+                  top: 6.rw,
+                  right: 6.rw,
+                  child: Container(
+                    width: 25.rw,
+                    height: 16.rw,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8.rw)),
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Color(0xFFEC4073),
+                            Color(0xFFE50043),
+                          ],
+                        )),
+                    child: Row(
+                      children: [
+                        LiveAnimateWidget(),
+                      ],
+                    ),
+                  ),
+                )
+              : SizedBox(),
           Positioned(
             top: 0,
             right: 0,
@@ -463,18 +488,21 @@ class GoodsItemWidget extends StatelessWidget {
           specialSale != null
               ? Positioned(
                   left: 5.rw,
-                  bottom: 5.rw,
+                  top: 5.rw,
                   child: Container(
-                    width: _height - 18,
-                    height: specialSale.length > 3 ? 52.rw : 26.rw,
+                    ///color: Colors.red,
+                    width: (_height - 8.rw) / 3.rw * 2.rw,
+                    height: specialSale == null
+                        ? 0
+                        : specialSale.length ~/ 2 * 24.rw + 24.rw,
                     child: GridView.builder(
                       shrinkWrap: true,
-                      reverse: true,
+                      //reverse: true,
                       padding: EdgeInsets.zero,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              childAspectRatio: 2,
+                              crossAxisCount: 2,
+                              childAspectRatio: 2.4,
                               mainAxisSpacing: 5,
                               crossAxisSpacing: 5),
                       itemCount: specialSale.length,
@@ -495,18 +523,20 @@ class GoodsItemWidget extends StatelessWidget {
           specialIcon != null
               ? Positioned(
                   left: 5.rw,
-                  bottom: 5.rw,
+                  top: 5.rw,
                   child: Container(
-                    width: _height - 18,
-                    height: specialIcon.length > 3 ? 52.rw : 26.rw,
+                    width: (_height - 8.rw) / 3.rw * 2.rw,
+                    height: specialSale == null
+                        ? 0
+                        : specialSale.length ~/ 2 * 26.rw,
                     child: GridView.builder(
                       shrinkWrap: true,
                       reverse: true,
                       padding: EdgeInsets.zero,
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              childAspectRatio: 2,
+                              crossAxisCount: 2,
+                              childAspectRatio: 2.4,
                               mainAxisSpacing: 5,
                               crossAxisSpacing: 5),
                       itemCount: specialIcon.length,
@@ -893,7 +923,17 @@ class GoodsItemWidget extends StatelessWidget {
       buyClick();
     } else {
       AppRouter.push(buildCtx, RouteName.COMMODITY_PAGE,
-          arguments: CommodityDetailPage.setArguments(this.id));
+          arguments: CommodityDetailPage.setArguments(this.id,
+              liveStatus: living == null ? null : living.status,
+              roomId: living == null ? null : living.roomId));
+    }
+  }
+
+  _getLivingStatus(int status) {
+    if (status == 1) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

@@ -72,6 +72,9 @@ class GoodsPage extends StatefulWidget {
 
   final bool isLive;
   final int liveId;
+
+  final int liveStatus;
+  final int roomId;
   const GoodsPage({
     Key key,
     this.onScroll,
@@ -80,7 +83,7 @@ class GoodsPage extends StatefulWidget {
     this.goodsDetail,
     this.openbrandList,
     this.isLive = false,
-    this.liveId = 0,
+    this.liveId = 0, this.liveStatus, this.roomId,
   }) : super(key: key);
 
   @override
@@ -422,7 +425,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     //   images.add(widget.goodsDetail.data.video);
     // }
     images.addAll(widget.goodsDetail.data.mainPhotos);
-    return ImagePageView(images: images, onScrolled: (index) {});
+    return ImagePageView(images: images,liveStatus:widget.liveStatus,roomId:widget.roomId,onScrolled: (index) {});
   }
 
   /// 优惠券  规格等

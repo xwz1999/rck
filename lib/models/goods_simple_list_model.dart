@@ -159,19 +159,19 @@ class GoodsSimple {
 
 class Living {
   int status;
-  int itemId;
+  int roomId;
 
-  Living({this.status, this.itemId});
+  Living({this.status, this.roomId});
 
   Living.fromJson(Map<String, dynamic> json) {
     status = json['status'];
-    itemId = json['item_id'];
+    roomId = json['room_id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
-    data['item_id'] = this.itemId;
+    data['room_id'] = this.roomId;
     return data;
   }
 }

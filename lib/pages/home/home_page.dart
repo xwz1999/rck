@@ -1082,10 +1082,10 @@ class _HomePageState extends BaseStoreState<HomePage>
                   onPressed: () async {
                     if (AppConfig.commissionByRoleLevel) {
                       //AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
-                      // UserManager.instance.selectTabbarIndex = 2;
-                      // bool value = UserManager.instance.selectTabbar.value;
-                      // UserManager.instance.selectTabbar.value = !value;
-                      Get.to(() => ChooseTicketsTypePage());
+                      UserManager.instance.selectTabbarIndex = 2;
+                      bool value = UserManager.instance.selectTabbar.value;
+                      UserManager.instance.selectTabbar.value = !value;
+                      //Get.to(() => ChooseTicketsTypePage());
                       //setState(() {});
                     } else {
                       AppRouter.push(context, RouteName.GOODS_LIST_TEMP,

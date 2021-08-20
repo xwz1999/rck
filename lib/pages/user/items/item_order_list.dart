@@ -464,7 +464,9 @@ class _OrderListItemState extends State<OrderListItem> {
                                     width: 24.rw,
                                     alignment: Alignment.center,
                                     decoration: BoxDecoration(
-                                      color: Color(0xFFCC1B4F),
+                                                                            color: goods.countryIcon == null
+                                          ? Color(0xFFCC1B4F)
+                                          : Colors.transparent,
                                       borderRadius: BorderRadius.circular(3.rw),
                                     ),
                                     child: goods.countryIcon == null

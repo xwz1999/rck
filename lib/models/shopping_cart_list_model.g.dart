@@ -55,29 +55,29 @@ Map<String, dynamic> _$ShoppingCartBrandModelToJson(
 ShoppingCartGoodsModel _$ShoppingCartGoodsModelFromJson(
     Map<String, dynamic> json) {
   return ShoppingCartGoodsModel(
-      json['shoppingTrolleyId'] as int,
-      json['goodsId'] as int,
-      json['goodsName'] as String,
-      json['mainPhotoUrl'] as String,
-      json['skuName'] as String,
-      json['skuId'] as int,
-      json['quantity'] as int,
-      json['valid'] as bool,
-      (json['price'] as num)?.toDouble(),
-      json['promotionName'] as String,
-      json['selected'] as bool,
-      json['promotion'] == null
-          ? null
-          : Promotion.fromJson(json['promotion'] as Map<String, dynamic>),
-      json['commission'] as num,
-      json['originalPrice'] as num,
-      json['isImport'] as num,
-      json['isFerme'] as num,
-      json['storehouse'] as int,
-      json['ferme'] as num,
-      json['publish_status'] as num,
-      json['countryIcon'] as String,
-      );
+    json['shoppingTrolleyId'] as int,
+    json['goodsId'] as int,
+    json['goodsName'] as String,
+    json['mainPhotoUrl'] as String,
+    json['skuName'] as String,
+    json['skuId'] as int,
+    json['quantity'] as int,
+    json['valid'] as bool,
+    (json['price'] as num)?.toDouble(),
+    json['promotionName'] as String,
+    json['selected'] as bool,
+    json['promotion'] == null
+        ? null
+        : Promotion.fromJson(json['promotion'] as Map<String, dynamic>),
+    json['commission'] as num,
+    json['originalPrice'] as num,
+    json['isImport'] as num,
+    json['isFerme'] as num,
+    json['storehouse'] as int,
+    json['ferme'] as num,
+    json['publish_status'] as num,
+    json['country_icon'] as String,
+  );
 }
 
 Map<String, dynamic> _$ShoppingCartGoodsModelToJson(
@@ -97,6 +97,6 @@ Map<String, dynamic> _$ShoppingCartGoodsModelToJson(
       'promotion': instance.promotion,
       'commission': instance.commission,
       'originalPrice': instance.originalPrice,
-      'publish_status':instance.publishStatus,
-      'country_icon':instance.countryIcon,
+      'publish_status': instance.publishStatus,
+      'country_icon': instance.countryIcon,
     };

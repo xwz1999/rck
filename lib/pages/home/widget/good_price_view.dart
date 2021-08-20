@@ -308,23 +308,27 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                                 width: 24,
                                 height: 15,
                                 decoration: BoxDecoration(
-                                  color: Color(0xFFCC1B4F),
+                                  color: detailModel.data.countryIcon == null
+                                      ? Color(0xFFCC1B4F)
+                                      : Colors.transparent,
                                   borderRadius: BorderRadius.circular(3 * 2.w),
                                 ),
-                                child:detailModel.data.countryIcon==null?
-                              Text(
-                                '进口',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10 * 2.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ): CustomCacheImage(
-                                  width: rSize(100),
-                                  height: rSize(100),
-                                  imageUrl: Api.getImgUrl( detailModel.data.countryIcon),
-                                  fit: BoxFit.cover,
-                                ),
+                                child: detailModel.data.countryIcon == null
+                                    ? Text(
+                                        '进口',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10 * 2.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      )
+                                    : CustomCacheImage(
+                                        width: rSize(100),
+                                        height: rSize(100),
+                                        imageUrl: Api.getImgUrl(
+                                            detailModel.data.countryIcon),
+                                        fit: BoxFit.cover,
+                                      ),
                               ),
                             )
                           : WidgetSpan(child: SizedBox()),
