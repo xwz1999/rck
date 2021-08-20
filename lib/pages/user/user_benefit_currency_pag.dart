@@ -25,7 +25,6 @@ import 'package:recook/widgets/refresh_widget.dart';
 
 import 'model/user_benefit_extra_detail_model.dart';
 import 'model/user_income_model.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class UserBenefitCurrencyPage extends StatefulWidget {
   final UserBenefitPageType type;

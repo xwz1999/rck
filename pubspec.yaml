@@ -2,7 +2,7 @@ name: recook
 description: Recook Market App.
 publish_to: "none"
 
-version: 1.11.0-dev+308
+version: 1.11.1-dev+309
 environment:
   sdk: ">=2.10.0 <3.0.0"
 
@@ -222,7 +222,7 @@ dependencies:
   many_like: ^0.0.6
 
   #加载html
-
+  flutter_widget_from_html_core: ^0.6.2
 
   #展开组件
   expandable: ^5.0.1
@@ -232,6 +232,9 @@ dependencies:
 
   #极光推送
   jpush_flutter: 2.1.4
+
+  #flutter 使用原生android的几个生命周期
+  need_resume: ^1.0.6
 
   scrollable_positioned_list: ^0.1.7
   

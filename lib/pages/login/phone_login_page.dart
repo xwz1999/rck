@@ -8,6 +8,7 @@
  */
 
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -137,16 +138,19 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                               children: [
                             new TextSpan(
                                 text: '《用户服务协议》',
-                                style: new TextStyle(color: Colors.red, fontSize: 13 * 2.sp),
-                                recognizer: _recognizer(context,2)),
-                                TextSpan(
+                                style: new TextStyle(
+                                    color: Colors.red, fontSize: 13 * 2.sp),
+                                recognizer: _recognizer(context, 2)),
+                            TextSpan(
                               text: "和",
                               style: TextStyle(
-                                  color: Colors.grey[500], fontSize: 13 * 2.sp),),
-                             new TextSpan(
+                                  color: Colors.grey[500], fontSize: 13 * 2.sp),
+                            ),
+                            new TextSpan(
                                 text: '《用户隐私政策》',
-                                style: new TextStyle(color: Colors.red, fontSize: 13 * 2.sp),
-                                recognizer: _recognizer(context,1)),
+                                style: new TextStyle(
+                                    color: Colors.red, fontSize: 13 * 2.sp),
+                                recognizer: _recognizer(context, 1)),
                           ])),
                     ],
                   ),
@@ -157,7 +161,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
         ));
   }
 
-  _recognizer(context,int type) {
+  _recognizer(context, int type) {
     final TapGestureRecognizer recognizer = new TapGestureRecognizer();
     recognizer.onTap = () {
       print("点击协议了");
@@ -165,7 +169,9 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
         context,
         RouteName.WEB_VIEW_PAGE,
         arguments: WebViewPage.setArguments(
-            url: type==1?WebApi.privacy:WebApi.agreement, title: type==1?"用户隐私政策":"用户服务协议", hideBar: true),
+            url: type == 1 ? WebApi.privacy : WebApi.agreement,
+            title: type == 1 ? "用户隐私政策" : "用户服务协议",
+            hideBar: true),
       );
       //CRoute.push(context, PrivacyPageV2());
     };
@@ -451,6 +457,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
       GSDialog.of(context).dismiss(context);
       AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
       UserManager.updateUser(data, getStore());
+
     }, failure: (code, msg) {
       GSDialog.of(context).dismiss(context);
       Toast.showError(msg);

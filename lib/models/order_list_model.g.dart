@@ -166,6 +166,7 @@ OrderGoodsModel _$OrderGoodsModelFromJson(Map<String, dynamic> json) {
     json['returnRejectReason'] as String,
     json['rStatus'] as String,
     json['isImport'] as int,
+    json['countryIcon'] as String,
   );
 }
 

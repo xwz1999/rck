@@ -10,12 +10,14 @@
 import 'package:flutter/material.dart';
 
 import 'package:extended_text/extended_text.dart';
+import 'package:recook/constants/api.dart';
 
 import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/utils/user_level_tool.dart';
+import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class GoodPriceView extends StatefulWidget {
@@ -309,13 +311,19 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                                   color: Color(0xFFCC1B4F),
                                   borderRadius: BorderRadius.circular(3 * 2.w),
                                 ),
-                                child: Text(
-                                  '进口',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10 * 2.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                child:detailModel.data.countryIcon==null?
+                              Text(
+                                '进口',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10 * 2.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ): CustomCacheImage(
+                                  width: rSize(100),
+                                  height: rSize(100),
+                                  imageUrl: Api.getImgUrl( detailModel.data.countryIcon),
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             )

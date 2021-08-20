@@ -211,6 +211,7 @@ class OrderGoodsModel extends Object {
   String returnRejectReason;
   String rStatus;
   int isImport;
+  String countryIcon;
 
   bool get importValue => isImport == 1;
   OrderGoodsModel(
@@ -246,6 +247,7 @@ class OrderGoodsModel extends Object {
     this.returnRejectReason,
     this.rStatus,
     this.isImport,
+    this.countryIcon,
   );
 
   factory OrderGoodsModel.fromJson(Map<String, dynamic> srcJson) =>

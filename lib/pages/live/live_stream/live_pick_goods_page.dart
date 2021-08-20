@@ -164,7 +164,7 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
           ],
         ),
       ),
-      bottomNavigationBar: BottomAppBar(
+      bottomNavigationBar: PickCart.type==1&&PickCart.carManager||PickCart.type==2&&PickCart.goodsManager? SizedBox():BottomAppBar(
         color: Colors.white,
         child: Builder(
           builder: (context) {
@@ -176,7 +176,7 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
                     children: [
                       rWBox(15),
                       Text(
-                        '已选${PickCart.picked.length}/50',
+                       '已选${PickCart.picked.length}/50',
                         style: TextStyle(
                           color: Color(0xFF333333),
                           fontSize: rSP(14),

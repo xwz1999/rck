@@ -2,12 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>aps-environment</key>
+	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:www.reecook.cn</string>
 		<string>applinks:reecook.cn</string>
 		<string>applinks:uapywo.openinstall.io</string>
-		<string>applinks:b0qi.t4m.cn</string>
+		<string>webcredentials:example.com</string>
 	</array>
 </dict>
 </plist>

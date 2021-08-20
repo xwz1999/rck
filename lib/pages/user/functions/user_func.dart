@@ -49,4 +49,15 @@ class UserFunc {
       }
     }
   }
+
+  //解绑微信
+  static Future<String> wechatUnboundhandle() async {
+    ResultData result =
+        await HttpManager.post(APIV2.userAPI.wechatUnboundhandle, {
+      'userId': UserManager.instance.user.info.id,
+    });
+    if (result.data != null) {
+      return result.data['code'];
+    }
+  }
 }

@@ -10,14 +10,19 @@
 import 'package:flutter/material.dart';
 
 import 'package:extended_text/extended_text.dart';
+import 'package:get/get.dart';
 
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/models/goods_simple_list_model.dart';
 import 'package:recook/models/shopping_cart_list_model.dart';
 import 'package:recook/pages/home/widget/plus_minus_view.dart';
+import 'package:recook/pages/shopping_cart/function/shopping_cart_fuc.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/input_view.dart';
+
+import '../similar_goods_page.dart';
 
 typedef GoodsSelectedCallback = Function(ShoppingCartGoodsModel goods);
 typedef GoodsClickCallback = Function(ShoppingCartGoodsModel goods);
@@ -84,8 +89,11 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                       // 只有 不是 活动未开始 的商品才能选择
                       // isEdit 编辑状态下都可以选择
                       // if (!goods.isWaitPromotionStart() || widget.isEdit) {
-                      goods.selected = widget.model.selected;
-                      widget.selectedListener(goods);
+                      if (goods.publishStatus == 1 || widget.isEdit) {
+                        goods.selected = widget.model.selected;
+                        widget.selectedListener(goods);
+                      } else {}
+
                       // }
                     });
                     setState(() {});
@@ -107,7 +115,7 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
             style:
                 AppTextStyle.generate(17 * 2.sp, fontWeight: FontWeight.w500),
             title: widget.model.brandName,
-          )
+          ),
         ],
       ),
     );
@@ -170,24 +178,32 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
         width: rSize(26),
         // padding: EdgeInsets.only(left: rSize(0)),
         height: double.infinity,
-        icon: Icon(
-          selected ? AppIcons.icon_check_circle : AppIcons.icon_circle,
-          color: selected ? AppColor.themeColor : Colors.grey,
-          size: rSize(20),
-        ),
-        onPressed: () {
-          goods.selected = !goods.selected;
-          bool checkAll = true;
-          widget.model.children.forEach((goodsItem) {
-            if (!goodsItem.selected) {
-              checkAll = false;
-              return;
-            }
-          });
-          widget.model.selected = checkAll;
-          widget.selectedListener(goods);
-          setState(() {});
-        },
+        icon: goods.publishStatus == 1 || widget.isEdit
+            ? Icon(
+                selected ? AppIcons.icon_check_circle : AppIcons.icon_circle,
+                color: selected ? AppColor.themeColor : Colors.grey,
+                size: rSize(20),
+              )
+            : Image.asset(
+                R.ASSETS_NOT_SELECT_PNG,
+                width: 20.rw,
+                height: 20.rw,
+              ),
+        onPressed: goods.publishStatus == 1 || widget.isEdit
+            ? () {
+                goods.selected = !goods.selected;
+                bool checkAll = true;
+                widget.model.children.forEach((goodsItem) {
+                  if (!goodsItem.selected) {
+                    checkAll = false;
+                    return;
+                  }
+                });
+                widget.model.selected = checkAll;
+                widget.selectedListener(goods);
+                setState(() {});
+              }
+            : () {},
       ),
     );
   }
@@ -199,11 +215,13 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
     // }
     return CustomImageButton(
       padding: EdgeInsets.all(0),
-      onPressed: () {
-        if (widget.clickListener != null) {
-          widget.clickListener(goods);
-        }
-      },
+      onPressed: goods.publishStatus == 0
+          ? () {}
+          : () {
+              if (widget.clickListener != null) {
+                widget.clickListener(goods);
+              }
+            },
       child: Container(
         // height: rSize(130),
         padding:
@@ -212,7 +230,22 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             _goodsItemSelectIcon(goods),
-            _goodsItemImage(goods),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                _goodsItemImage(goods),
+                4.hb,
+                goods.publishStatus == 0
+                    ? Text(
+                        '该产品已下架',
+                        style: TextStyle(
+                            fontSize: 12.rsp,
+                            color: Color(0xFFC92219),
+                            fontWeight: FontWeight.bold),
+                      )
+                    : SizedBox()
+              ],
+            ),
             Expanded(
               child: Container(
                 margin: EdgeInsets.symmetric(horizontal: 8),
@@ -235,14 +268,22 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                                       borderRadius:
                                           BorderRadius.circular(3 * 2.w),
                                     ),
-                                    child: Text(
-                                      '进口',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 10 * 2.sp,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
+                                    child: goods.countryIcon == null
+                                        ? Text(
+                                            '进口',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10 * 2.sp,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          )
+                                        : CustomCacheImage(
+                                            width: rSize(100),
+                                            height: rSize(100),
+                                            imageUrl: Api.getImgUrl(
+                                                goods.countryIcon),
+                                            fit: BoxFit.cover,
+                                          ),
                                   ),
                                 )
                               : WidgetSpan(child: SizedBox()),
@@ -401,32 +442,61 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                                       ),
                                     ])),
                               )),
-                          Positioned(
-                            right: 0,
-                            bottom: 0,
-                            top: 0,
-                            left: 0,
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                    child: PlusMinusView(
-                                  maxValue: 50,
-                                  initialValue: goods.quantity,
-                                  onValueChanged: (int num) {},
-                                  onBeginInput: widget.onBeginInput,
-                                  onInputComplete: (value) {
-                                    if (int.parse(value) == goods.quantity)
-                                      return;
-                                    if (widget.numUpdateCompleteCallback !=
-                                        null) {
-                                      widget.numUpdateCompleteCallback(
-                                          goods, int.parse(value));
-                                    }
-                                  },
-                                ))
-                              ],
-                            ),
-                          )
+                          goods.publishStatus == 1
+                              ? Positioned(
+                                  right: 0,
+                                  bottom: 0,
+                                  top: 0,
+                                  left: 0,
+                                  child: Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                          child: PlusMinusView(
+                                        maxValue: 50,
+                                        initialValue: goods.quantity,
+                                        onValueChanged: (int num) {},
+                                        onBeginInput: widget.onBeginInput,
+                                        onInputComplete: (value) {
+                                          if (int.parse(value) ==
+                                              goods.quantity) return;
+                                          if (widget
+                                                  .numUpdateCompleteCallback !=
+                                              null) {
+                                            widget.numUpdateCompleteCallback(
+                                                goods, int.parse(value));
+                                          }
+                                        },
+                                      ))
+                                    ],
+                                  ),
+                                )
+                              : Positioned(
+                                  right: 0,
+                                  bottom: 0,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Get.to(SimilarGoodsPage(
+                                          goodsId: goods.goodsId));
+                                    },
+                                    child: Container(
+                                        width: 48.rw,
+                                        height: 20.rw,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(10.rw)),
+                                            border: Border.all(
+                                                color: Color(0xFFC92219),
+                                                width: 1.rw)),
+                                        child: Text(
+                                          '找相似',
+                                          style: TextStyle(
+                                            height: 1.1,
+                                            color: Color(0xFFC92219),
+                                            fontSize: 12.rsp,
+                                          ),
+                                        )),
+                                  ))
                         ],
                       ),
                     )

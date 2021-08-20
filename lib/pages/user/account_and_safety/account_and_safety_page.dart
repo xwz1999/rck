@@ -1,7 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/user_model.dart';
+import 'package:recook/pages/user/functions/user_func.dart';
+import 'package:recook/third_party/wechat/wechat_utils.dart';
+import 'package:recook/utils/share_preference.dart';
+import 'package:recook/utils/storage/hive_store.dart';
+import 'package:recook/widgets/alert.dart';
+import 'package:recook/widgets/toast.dart';
 
 import 'package:velocity_x/velocity_x.dart';
 
@@ -21,6 +32,9 @@ class AccountAndSafetyPage extends StatefulWidget {
 
 class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
   bool secureValue = false;
+  bool _weChatLoginLoading = false;
+  String _backgroundUrl;
+  int _goodsId = 0;
   @override
   void initState() {
     super.initState();
@@ -64,8 +78,19 @@ class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
             // push(RouteName.USER_SET_PASSWORD);
             AppRouter.push(context, RouteName.USER_SET_PASSWORD_VARCODE);
           }),
-          SCTile.normalTile("注销账户", listener: () {
+          SCTile.normalTile("注销账户", needDivide: true, listener: () {
             AppRouter.push(context, RouteName.USER_DELETE_ACCOUNT_PAGE);
+          }),
+          SCTile.normalTile(
+              TextUtils.isEmpty(UserManager.instance.user.info.wxUnionId)
+                  ? "关联微信"
+                  : "解绑微信",
+              value: TextUtils.isEmpty(UserManager.instance.user.info.wxUnionId)
+                  ? ''
+                  : UserManager.instance.user.info.nickname, listener: () {
+            TextUtils.isEmpty(UserManager.instance.user.info.wxUnionId)
+                ? _wechatBindinghandle()
+                : _wechatUnboundhandle();
           }),
           16.hb,
           MaterialButton(
@@ -102,6 +127,88 @@ class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
         ],
       ),
     );
+  }
+
+  _wechatBindinghandle() {
+    DPrint.printf("微信登录");
+    if (!WeChatUtils.isInstall) {
+      showError("没有检测到微信！请先安装！");
+      return;
+    }
+    GSDialog.of(context).showLoadingDialog(context, "正在请求数据...");
+    WeChatUtils.wxLogin((WXLoginResult result) {
+      if (result.errCode == -2) {
+        Toast.showInfo('用户取消登录');
+        GSDialog.of(context).dismiss(context);
+      } else if (result.errCode != 0) {
+        GSDialog.of(context).dismiss(context);
+        Toast.showInfo(result.errStr);
+      } else {
+        if (!_weChatLoginLoading) {
+          _weChatLoginLoading = true;
+          print(result.code);
+          _weChatLogin(result.code);
+        }
+      }
+    });
+    GSDialog.of(context).dismiss(context);
+  }
+
+  _wechatUnboundhandle() async {
+    DPrint.printf("微信解绑");
+    if (!WeChatUtils.isInstall) {
+      showError("没有检测到微信！请先安装！");
+      return;
+    }
+    Alert.show(
+        context,
+        NormalTextDialog(
+          title: '解绑提示',
+          type: NormalTextDialogType.delete,
+          content: "是否解除和微信的绑定",
+          items: ["取消"],
+          listener: (index) {
+            Alert.dismiss(context);
+          },
+          deleteItem: "确定",
+          deleteListener: () async {
+            Alert.dismiss(context);
+            String code = await UserFunc.wechatUnboundhandle();
+            if (code == 'SUCCESS') {
+              ReToast.success(text: '解绑成功');
+              //更新本地信息
+              UserManager.instance.user.info.wxUnionId = '';
+              UserManager.instance.user.info.wxOpenId = '';
+              String jsonStr = json.encode(UserManager.instance.user.toJson());
+              HiveStore.appBox.put('key_user', jsonStr);
+              //_getLaunchInfo();
+              setState(() {});
+            } else {
+              ReToast.err(text: '解绑失败');
+            }
+          },
+        ));
+  }
+
+  _weChatLogin(String code) async {
+    GSDialog.of(context).showLoadingDialog(context, "登录中...");
+    ResultData resultData = await HttpManager.post(UserApi.wx_binding,
+        {'userId': UserManager.instance.user.info.id, 'code': code});
+    GSDialog.of(context).dismiss(context);
+
+    _weChatLoginLoading = false;
+    if (!resultData.result) {
+      showError(resultData.msg);
+      return;
+    }
+    UserModel model = UserModel.fromJson(resultData.data);
+    if (model.code != HttpStatus.SUCCESS) {
+      showError(model.msg);
+      return;
+    }
+    UserManager.updateUser(model.data, getStore());
+    setState(() {});
+    showSuccess('绑定成功!');
   }
 
   _updateSwitchState() async {

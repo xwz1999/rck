@@ -467,13 +467,22 @@ class _OrderListItemState extends State<OrderListItem> {
                                       color: Color(0xFFCC1B4F),
                                       borderRadius: BorderRadius.circular(3.rw),
                                     ),
-                                    child: Text(
-                                      '进口',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 10.rsp,
-                                      ),
-                                    ),
+                                    child: goods.countryIcon == null
+                                        ? Text(
+                                            '进口',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 10 * 2.sp,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          )
+                                        : CustomCacheImage(
+                                            width: rSize(100),
+                                            height: rSize(100),
+                                            imageUrl: Api.getImgUrl(
+                                                goods.countryIcon),
+                                            fit: BoxFit.cover,
+                                          ),
                                   )
                                 : SizedBox(),
                           ),

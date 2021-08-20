@@ -65,7 +65,7 @@ class UserModel extends BaseModel {
 @JsonSerializable()
 class User {
   Tkn auth;
-  Info info;
+  Info   info;
   int status;
 
   User(this.auth, this.info, this.status);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -58,6 +59,11 @@ class GoodsItemWidget extends StatelessWidget {
   // model.getPromotionStatus()
   final PromotionStatus promotionStatus;
   final Function onBrandClick;
+  final int type; //type = 4 找相似
+
+  final String countryIcon;
+  final Living living;
+
   const GoodsItemWidget({
     Key key,
     this.isSingleDayGoods = false,
@@ -83,6 +89,9 @@ class GoodsItemWidget extends StatelessWidget {
     this.notShowAmount = false,
     this.specialSale,
     this.specialIcon,
+    this.type,
+    this.countryIcon,
+    this.living,
     //this.special_sale,
   })  : widgetType = GoodsItemType.NONE,
         super(key: key);
@@ -98,6 +107,8 @@ class GoodsItemWidget extends StatelessWidget {
     GoodsSimple model,
     this.notShowAmount = false,
     this.specialSale,
+    this.type,
+
     //this.special_sale,
   })  : goodsName = model.goodsName,
         brandName = model.brandName,
@@ -116,6 +127,8 @@ class GoodsItemWidget extends StatelessWidget {
         widgetType = GoodsItemType.NORMAL,
         isImport = model.isImport,
         specialIcon = model.specialIcon,
+        countryIcon = model.countryIcon,
+        living = model.living,
         super(key: key);
 
   ///Hot List
@@ -130,6 +143,8 @@ class GoodsItemWidget extends StatelessWidget {
     this.notShowAmount = false,
     this.specialSale,
     this.specialIcon,
+    this.type,
+    this.living,
   })  : goodsName = data.goodsName,
         brandName = data.brandName,
         brandPictureUrl = data.brandImg,
@@ -148,6 +163,7 @@ class GoodsItemWidget extends StatelessWidget {
         promotionStatus = PromotionStatus.none,
         widgetType = GoodsItemType.HOT_LIST,
         isImport = data.isImport,
+        countryIcon = data.countryIcon,
         super(key: key);
 
   /// 活动列表
@@ -160,6 +176,7 @@ class GoodsItemWidget extends StatelessWidget {
     @required this.buyClick,
     PromotionGoodsModel model,
     this.notShowAmount = false,
+    this.type,
   })  : goodsName = model.goodsName,
         brandName = model.brandName,
         brandPictureUrl = model.brandImg,
@@ -178,6 +195,8 @@ class GoodsItemWidget extends StatelessWidget {
         isImport = model.isImport,
         specialSale = model.specialSale,
         specialIcon = model.specialIcon,
+        countryIcon = model.countryIcon,
+        living = model.living,
         super(key: key);
   final BuildContext buildCtx;
   final VoidCallback shareClick;
@@ -303,20 +322,27 @@ class GoodsItemWidget extends StatelessWidget {
                               alignment: PlaceholderAlignment.middle,
                               child: Container(
                                 alignment: Alignment.center,
-                                width: 24,
-                                height: 15,
+                                width: 24.rw,
+                                height: 16.rw,
                                 decoration: BoxDecoration(
                                   color: Color(0xFFCC1B4F),
                                   borderRadius: BorderRadius.circular(3 * 2.w),
                                 ),
-                                child: Text(
-                                  '进口',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 10 * 2.sp,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
+                                child: countryIcon == null
+                                    ? Text(
+                                        '进口',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10 * 2.sp,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      )
+                                    : CustomCacheImage(
+                                        width: rSize(100),
+                                        height: rSize(100),
+                                        imageUrl: Api.getImgUrl(countryIcon),
+                                        fit: BoxFit.cover,
+                                      ),
                               ),
                             )
                           : WidgetSpan(child: SizedBox()),
@@ -389,11 +415,7 @@ class GoodsItemWidget extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(cir)),
         child: Stack(children: [
-          Positioned(
-            top: 0,
-            right: 0,
-            left: 0,
-            bottom: 0,
+          living?
             child: Container(color: AppColor.frenchColor),
           ),
           Positioned(
@@ -464,7 +486,7 @@ class GoodsItemWidget extends StatelessWidget {
                             CustomCacheImage(
                           borderRadius: BorderRadius.all(Radius.circular(2.rw)),
                           imageUrl: Api.getImgUrl(specialSale[index]),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         );
                       },
                     ),
@@ -496,7 +518,7 @@ class GoodsItemWidget extends StatelessWidget {
                             CustomCacheImage(
                           borderRadius: BorderRadius.all(Radius.circular(2.rw)),
                           imageUrl: Api.getImgUrl(specialIcon[index]),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.fill,
                         );
                       },
                     ),
@@ -639,45 +661,73 @@ class GoodsItemWidget extends StatelessWidget {
               Container(
                 width: 10,
               ),
-              GestureDetector(
-                child: CustomImageButton(
-                  direction: Direction.horizontal,
-                  height: 21,
-                  title: sellout ? "已售完" : "自购",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 13 * 2.sp,
-                  ),
-                  padding: EdgeInsets.symmetric(
-                      horizontal: ScreenAdapterUtils.setWidth(
-                          UserLevelTool.currentRoleLevelEnum() ==
-                                      UserRoleLevel.Vip &&
-                                  this.promotionStatus == PromotionStatus.start
-                              ? 16
-                              : 8),
-                      vertical: rSize(0)),
-                  borderRadius: BorderRadius.circular(40),
-                  // borderRadius: BorderRadius.only(
-                  //     topLeft: Radius.circular(
-                  //         UserLevelTool.currentRoleLevelEnum() ==
-                  //                 UserRoleLevel.Vip
-                  //             ? 40
-                  //             : 0),
-                  //     bottomLeft: Radius.circular(
-                  //         UserLevelTool.currentRoleLevelEnum() ==
-                  //                 UserRoleLevel.Vip
-                  //             ? 40
-                  //             : 0),
-                  //     topRight: Radius.circular(40),
-                  //     bottomRight: Radius.circular(40)),
-                  backgroundColor:
-                      sellout ? AppColor.greyColor : _shareTextColor,
-                  pureDisplay: true,
-                ),
-                onTap: () {
-                  _buyEvent();
-                },
-              ),
+              type != 4
+                  ? GestureDetector(
+                      child: CustomImageButton(
+                        direction: Direction.horizontal,
+                        height: 21,
+                        title: sellout ? "已售完" : "自购",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 13 * 2.sp,
+                        ),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: ScreenAdapterUtils.setWidth(
+                                UserLevelTool.currentRoleLevelEnum() ==
+                                            UserRoleLevel.Vip &&
+                                        this.promotionStatus ==
+                                            PromotionStatus.start
+                                    ? 16
+                                    : 8),
+                            vertical: rSize(0)),
+                        borderRadius: BorderRadius.circular(40),
+                        // borderRadius: BorderRadius.only(
+                        //     topLeft: Radius.circular(
+                        //         UserLevelTool.currentRoleLevelEnum() ==
+                        //                 UserRoleLevel.Vip
+                        //             ? 40
+                        //             : 0),
+                        //     bottomLeft: Radius.circular(
+                        //         UserLevelTool.currentRoleLevelEnum() ==
+                        //                 UserRoleLevel.Vip
+                        //             ? 40
+                        //             : 0),
+                        //     topRight: Radius.circular(40),
+                        //     bottomRight: Radius.circular(40)),
+                        backgroundColor:
+                            sellout ? AppColor.greyColor : _shareTextColor,
+                        pureDisplay: true,
+                      ),
+                      onTap: () {
+                        _buyEvent();
+                      },
+                    )
+                  : GestureDetector(
+                      child: CustomImageButton(
+                        direction: Direction.horizontal,
+                        height: 21,
+                        title: '前往品牌馆',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12.rsp,
+                        ),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: ScreenAdapterUtils.setWidth(
+                                UserLevelTool.currentRoleLevelEnum() ==
+                                            UserRoleLevel.Vip &&
+                                        this.promotionStatus ==
+                                            PromotionStatus.start
+                                    ? 16
+                                    : 8),
+                            vertical: rSize(0)),
+                        borderRadius: BorderRadius.circular(40),
+                        backgroundColor: _shareTextColor,
+                        pureDisplay: true,
+                      ),
+                      onTap: () {
+                        if (onBrandClick != null) onBrandClick();
+                      },
+                    ),
             ],
           )
         ],

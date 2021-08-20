@@ -172,6 +172,7 @@ class Data extends Object {
   num isImport;
   num isFerme;
   num storehouse;
+  String countryIcon;
 
   Data(
     this.id,
@@ -198,6 +199,7 @@ class Data extends Object {
     this.isFerme,
     this.storehouse,
     this.notice,
+    this.countryIcon
   );
 
   factory Data.fromJson(Map<String, dynamic> srcJson) =>

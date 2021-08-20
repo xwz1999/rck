@@ -84,6 +84,7 @@ class Goods {
   int expressStatus;
   int assType;
   int refundStatus;
+  String countryIcon;
 
   bool get importValue => isImport == 1;
   String get refundStatusValue {
@@ -109,7 +110,8 @@ class Goods {
       this.unitPrice,
       this.expressStatus,
       this.assType,
-      this.refundStatus});
+      this.refundStatus,
+      this.countryIcon});
 
   Goods.fromJson(Map<String, dynamic> json) {
     orderGoodsId = json['orderGoodsId'];
@@ -122,6 +124,7 @@ class Goods {
     expressStatus = json['expressStatus'];
     assType = json['assType'];
     refundStatus = json['refundStatus'];
+    countryIcon = json['country_icon'];
   }
 
   Map<String, dynamic> toJson() {
@@ -136,6 +139,7 @@ class Goods {
     data['expressStatus'] = this.expressStatus;
     data['assType'] = this.assType;
     data['refundStatus'] = this.refundStatus;
+    data['country_icon'] = this.countryIcon;
     return data;
   }
 }

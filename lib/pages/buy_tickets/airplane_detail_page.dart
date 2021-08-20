@@ -346,7 +346,7 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
     String Passager = '';
     for (var i = 0; i < _ChoosePassengerList.length; i++) {
       if (Passager == '') {
-        Passager = _ChoosePassengerList[i].id.toString() +
+        Passager = _ChoosePassengerList[i].name +
             ',' +
             _ChoosePassengerList[i].phone +
             ',' +
@@ -354,13 +354,14 @@ class _AirplaneDetailPageState extends State<AirplaneDetailPage> {
       } else {
         Passager = Passager +
             ';' +
-            _ChoosePassengerList[i].id.toString() +
+            _ChoosePassengerList[i].name +
             ',' +
             _ChoosePassengerList[i].phone +
             ',' +
             _ChoosePassengerList[i].residentIdCard;
       }
     }
+    return Passager;
   }
 
   _getTitle(int goods_type) {

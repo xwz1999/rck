@@ -94,16 +94,17 @@ class ShoppingCartBrandModel extends Object {
 
   bool selected;
   bool isShowMore;
-  ShoppingCartBrandModel(
-      this.id, this.brandID, this.brandLogo, this.brandName, this.children,this.selected ) {
-    this.selected = false; isShowMore = false;
+  ShoppingCartBrandModel(this.id, this.brandID, this.brandLogo, this.brandName,
+      this.children, this.selected) {
+    this.selected = false;
+    isShowMore = false;
   }
 
   factory ShoppingCartBrandModel.fromJson(Map<String, dynamic> srcJson) =>
       _$ShoppingCartBrandModelFromJson(srcJson);
 
   Map<String, dynamic> toJson() => _$ShoppingCartBrandModelToJson(this);
-  bool isAllWaitPromotionStart(){
+  bool isAllWaitPromotionStart() {
     // 判断当前所以商品是否都在等待活动开始
     if (this.children == null || this.children.length == 0) {
       return false;
@@ -146,26 +147,30 @@ class ShoppingCartGoodsModel extends Object {
   int isFerme;
   int storehouse;
   num ferme;
+  int publishStatus;
+  String countryIcon;
   ShoppingCartGoodsModel(
-      this.shoppingTrolleyId,
-      this.goodsId,
-      this.goodsName,
-      this.mainPhotoUrl,
-      this.skuName,
-      this.skuId,
-      this.quantity,
-      this.valid,
-      this.price,
-      this.promotionName,
-      this.selected,
-      this.promotion,
-      this.commission,
-      this.originalPrice,
-      this.isImport,
-      this.isFerme,
-      this.storehouse,
-      this.ferme,
-      ) {
+    this.shoppingTrolleyId,
+    this.goodsId,
+    this.goodsName,
+    this.mainPhotoUrl,
+    this.skuName,
+    this.skuId,
+    this.quantity,
+    this.valid,
+    this.price,
+    this.promotionName,
+    this.selected,
+    this.promotion,
+    this.commission,
+    this.originalPrice,
+    this.isImport,
+    this.isFerme,
+    this.storehouse,
+    this.ferme,
+    this.publishStatus,
+    this.countryIcon, 
+  ) {
     this.selected = false;
   }
 
@@ -176,7 +181,7 @@ class ShoppingCartGoodsModel extends Object {
 
   ShoppingCartGoodsModel.empty();
 
-  bool isWaitPromotionStart(){
+  bool isWaitPromotionStart() {
     if (this.promotion != null && this.promotion.isWaitPromotionStart()) {
       return true;
     }

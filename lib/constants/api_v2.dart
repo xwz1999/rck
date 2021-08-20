@@ -158,9 +158,17 @@ class UserAPI {
   ///阿库学院视频
   String get getAkuVideoList => '/v2/app/aku_school/school_list';
 
-  
+  ///阿库学院浏览量+1
+  String get addHits => '/v2/app/aku_school/add_hits';
 
+  ///获取购物车可能喜欢商品列表
+  String get getLikeGoodsList => '/v2/app/shopping_cart/view_like_maybe';
 
+  ///购物车找相似接口
+  String get getSimilarGoodsList => '/v2/app/shopping_cart/view_like';
+
+  ///解除微信绑定
+  String get wechatUnboundhandle => '/v2/app/command/user/unbundling_wx';
 }
 
 class BenefitAPI {

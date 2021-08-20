@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:common_utils/common_utils.dart';
 import 'package:extended_text/extended_text.dart';
+import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'package:recook/constants/api.dart';
@@ -66,13 +67,22 @@ class GuideOrderCard extends StatelessWidget {
                                 color: Color(0xFFCC1B4F),
                                 borderRadius: BorderRadius.circular(3.rw),
                               ),
-                              child: Text(
-                                '进口',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10.rsp,
-                                ),
-                              ),
+                              child: item.countryIcon == null
+                                  ? Text(
+                                      '进口',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 10 * 2.sp,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    )
+                                  : CustomCacheImage(
+                                      width: rSize(100),
+                                      height: rSize(100),
+                                      imageUrl:
+                                          Api.getImgUrl(item.countryIcon),
+                                      fit: BoxFit.cover,
+                                    ),
                             )
                           : SizedBox(),
                     ),

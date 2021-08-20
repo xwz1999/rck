@@ -99,7 +99,7 @@ class _UserSetPasswordVarCodeState
             margin: EdgeInsets.only(top: 15),
             alignment: Alignment.center,
             child: Text(
-              "我们已发送短信验证码到你的手机号",
+              "我们将发送短信验证码到你的手机号",
               style: TextStyle(
                 color: Color(0xff888888),
                 fontSize: 15 * 2.sp,

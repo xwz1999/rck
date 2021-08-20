@@ -20,33 +20,73 @@ class LiveGoodsCard extends StatefulWidget {
 
 class _LiveGoodsCardState extends State<LiveGoodsCard> {
   @override
+  void initState() {
+    super.initState();
+    setState(() {});
+  }
+
+  @override
   Widget build(BuildContext context) {
     final bool picked = PickCart.picked
+            .indexWhere((element) => element.id == widget.model.id) !=
+        -1;
+    final bool carPicked = PickCart.carPicked
+            .indexWhere((element) => element.id == widget.model.id) !=
+        -1;
+    final bool goodsPicked = PickCart.goodsPicked
             .indexWhere((element) => element.id == widget.model.id) !=
         -1;
     return SizedBox(
       width: rSize(200),
       height: rSize(100 + 15.0),
       child: MaterialButton(
-        onPressed: () {
-          if (picked)
-            PickCart.picked.removeWhere((e) => e.id == widget.model.id);
-          else {
-            if (PickCart.picked.length < 50)
-              PickCart.picked.add(widget.model);
-            else
-              showToast('最多只能选择50个商品');
-          }
+        onPressed: PickCart.type == 1 && PickCart.carManager
+            ? () {
+                if (carPicked) {
+                  PickCart.carPicked
+                      .removeWhere((e) => e.id == widget.model.id);
+                } else {
+                  PickCart.carPicked.add(widget.model);
+                }
 
-          widget.onPick();
-        },
+                widget.onPick();
+              }
+            : PickCart.type == 2 && PickCart.goodsManager
+                ? () {
+                    if (goodsPicked) {
+                      PickCart.goodsPicked
+                          .removeWhere((e) => e.id == widget.model.id);
+                    } else {
+                      PickCart.goodsPicked.add(widget.model);
+                    }
+
+                    widget.onPick();
+                  }
+                : () {
+                    if (picked) {
+                      PickCart.picked
+                          .removeWhere((e) => e.id == widget.model.id);
+                    } else {
+                      if (PickCart.picked.length < 50) {
+                        PickCart.picked.add(widget.model);
+                      } else
+                        showToast('最多只能选择50个商品');
+                    }
+
+                    widget.onPick();
+                  },
         padding: EdgeInsets.symmetric(
           horizontal: rSize(15),
           vertical: rSize(15 / 2),
         ),
         child: Row(
           children: [
-            RecookCheckBox(state: picked),
+            RecookCheckBox(
+                state: PickCart.type == 1 && PickCart.carManager
+                    ? carPicked
+                    : PickCart.type == 2 && PickCart.goodsManager
+                        ? goodsPicked
+                        : picked),
             rWBox(10),
             ClipRRect(
               borderRadius: BorderRadius.circular(rSize(4)),

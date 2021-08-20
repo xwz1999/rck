@@ -488,6 +488,29 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         timeStamp: int.parse(wxPayModel.payInfo.timestamp),
         sign: wxPayModel.payInfo.sign,
         listener: (WXPayResult result) {});
+    // String msg = await PassagerFunc.airOrderPayLifang(
+    //     _payNeedModel.lfOrderId,
+    //     _payNeedModel.seatCode,
+    //     _payNeedModel.passagers,
+    //     _payNeedModel.itemId,
+    //     _payNeedModel.contactName,
+    //     _payNeedModel.contactTel,
+    //     _payNeedModel.date,
+    //     _payNeedModel.from,
+    //     _payNeedModel.to,
+    //     _payNeedModel.companyCode,
+    //     _payNeedModel.flightNo);
+    // if (msg == 'ok') {
+    //   ReToast.success(text: '购票成功');
+    //   Navigator.pop(context);
+    //   Navigator.pop(context);
+    //   Navigator.pop(context);
+    // } else {
+    //   ReToast.success(text: '购票失败');
+    //   Navigator.pop(context);
+    //   Navigator.pop(context);
+    //   Navigator.pop(context);
+    // }
   }
 
   _unionPay(BuildContext context) async {
@@ -666,8 +689,6 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     HttpResultModel<PayResult> resultModel =
         await _presenter.verifyOrderPayStatusLifang(_model.data.id);
 
-    GSDialog.of(_scaffoldKey.currentContext)
-        .dismiss(_scaffoldKey.currentContext);
 
     if (!resultModel.result) {
       GSDialog.of(_scaffoldKey.currentContext)
@@ -680,11 +701,17 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
       HttpResultModel<PayResult> resultModel =
           await _presenter.verifyOrderPayStatusLifang(_model.data.id);
       if (resultModel.data.status == 0) {
-        ReToast.success(text: '购票失败');
-        //Navigator.pop(context);
-
+            GSDialog.of(_scaffoldKey.currentContext)
+        .dismiss(_scaffoldKey.currentContext);
+        ReToast.err(text: '购票失败');
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
       } else if (resultModel.data.status == 1) {
+            GSDialog.of(_scaffoldKey.currentContext)
+        .dismiss(_scaffoldKey.currentContext);
         if (_payNeedModel != null) {
+          print(_payNeedModel);
           String msg = await PassagerFunc.airOrderPayLifang(
               _payNeedModel.lfOrderId,
               _payNeedModel.seatCode,
@@ -713,6 +740,8 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         //Navigator.pop(context);
       }
     } else if (resultModel.data.status == 1) {
+          GSDialog.of(_scaffoldKey.currentContext)
+        .dismiss(_scaffoldKey.currentContext);
       if (_payNeedModel != null) {
         String msg = await PassagerFunc.airOrderPayLifang(
             _payNeedModel.lfOrderId,
@@ -732,7 +761,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
           Navigator.pop(context);
           Navigator.pop(context);
         } else {
-          ReToast.success(text: '购票失败');
+          ReToast.err(text: '购票失败');
           Navigator.pop(context);
           Navigator.pop(context);
           Navigator.pop(context);

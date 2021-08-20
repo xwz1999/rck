@@ -40,26 +40,10 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
   bool _weChatLoginLoading = false;
   bool _hasInstallWeChat = false;
   bool _chooseAgreement = false;
-  final JPush jpush = new JPush();
   String debugLable = 'Unknown';
   @override
   initState() {
     super.initState();
-    jpush.getRegistrationID().then((rid) {
-      print("flutter get registration id : $rid");
-      Future.delayed(Duration.zero, () async {
-        int type;
-        if (Platform.isIOS) {
-          type = 2;
-        } else if (Platform.isAndroid) {
-          type = 1;
-        }
-        String code = await UserManager.updateJId(rid, type);
-        print(code);
-      });
-
-    });
-
     if (WeChatUtils.isInstall) {
       _hasInstallWeChat = true;
     }
@@ -339,6 +323,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
       } else {
         AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
         UserManager.updateUser(user, getStore());
+
       }
     }, failure: (code, msg) {
       GSDialog.of(context).dismiss(context);

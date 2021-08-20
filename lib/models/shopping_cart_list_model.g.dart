@@ -75,6 +75,8 @@ ShoppingCartGoodsModel _$ShoppingCartGoodsModelFromJson(
       json['isFerme'] as num,
       json['storehouse'] as int,
       json['ferme'] as num,
+      json['publish_status'] as num,
+      json['countryIcon'] as String,
       );
 }
 
@@ -94,5 +96,7 @@ Map<String, dynamic> _$ShoppingCartGoodsModelToJson(
       'selected': instance.selected,
       'promotion': instance.promotion,
       'commission': instance.commission,
-      'originalPrice': instance.originalPrice
+      'originalPrice': instance.originalPrice,
+      'publish_status':instance.publishStatus,
+      'country_icon':instance.countryIcon,
     };

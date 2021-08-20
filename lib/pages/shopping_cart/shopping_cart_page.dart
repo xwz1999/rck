@@ -13,10 +13,12 @@ import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/goods_simple_list_model.dart';
 import 'package:recook/models/order_preview_model.dart';
 import 'package:recook/models/shopping_cart_list_model.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/order_preview_page.dart';
+import 'package:recook/pages/home/items/item_brand_like_grid.dart';
 import 'package:recook/pages/shopping_cart/item/item_shopping_cart.dart';
 import 'package:recook/pages/shopping_cart/mvp/shopping_cart_contact.dart';
 import 'package:recook/pages/shopping_cart/mvp/shopping_cart_presenter_impl.dart';
@@ -28,6 +30,9 @@ import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
+import 'package:waterfall_flow/waterfall_flow.dart';
+
+import 'function/shopping_cart_fuc.dart';
 
 class ShoppingCartPage extends StatefulWidget {
   final bool needSafeArea;
@@ -47,7 +52,9 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
   ShoppingCartPresenterImpl _presenter;
   MvpListViewController<ShoppingCartBrandModel> _controller;
   bool _checkAll = false;
-  List<ShoppingCartGoodsModel> _selectedGoods;
+  List<ShoppingCartGoodsModel> _selectedGoods = [];
+  GoodsSimpleListModel goodsSimpleListModel;
+  List<GoodsSimple> _likeGoodsList = [];
   StateSetter _bottomStateSetter;
   int _totalNum = 0;
   bool _manageStatus;
@@ -72,6 +79,20 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
     _presenter.getShoppingCartList(UserManager.instance.user.info.id);
 
     UserManager.instance.refreshShoppingCart.addListener(_refreshShoppingCart);
+    Future.delayed(Duration.zero, () async {
+      int userid;
+      if (UserManager.instance.user.info.id == null) {
+        userid = 0;
+      } else {
+        userid = UserManager.instance.user.info.id;
+      }
+      _likeGoodsList = await ShoppingCartFuc.getLikeGoodsList(userid);
+      // if (goodsSimpleListModel != null) {
+      //   _likeGoodsList = goodsSimpleListModel.data;
+      // }
+
+      setState(() {});
+    });
   }
 
   _refreshShoppingCart() {
@@ -143,15 +164,17 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
                       FocusScope.of(context).requestFocus(FocusNode());
                       return;
                     }
-                    // 切换管理状态  重置所以数据到原始数据
-                    // for (ShoppingCartBrandModel _brandModel in _controller.getData()) {
-                    //   _brandModel.selected = false;
-                    //   for (ShoppingCartGoodsModel _goodsModel in _brandModel.children) {
-                    //     _goodsModel.selected = false;
-                    //   }
-                    // }
-                    // _checkAll = false;
-                    // _selectedGoods.clear();
+                    //切换管理状态  重置所以数据到原始数据
+                    for (ShoppingCartBrandModel _brandModel
+                        in _controller.getData()) {
+                      _brandModel.selected = false;
+                      for (ShoppingCartGoodsModel _goodsModel
+                          in _brandModel.children) {
+                        _goodsModel.selected = false;
+                      }
+                    }
+                    _checkAll = false;
+                    _selectedGoods.clear();
                     _manageStatus = !_manageStatus;
                     setState(() {});
                   },
@@ -252,7 +275,8 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
             Toast.showInfo("您还没有选择商品");
             return;
           }
-          ReToast.loading();
+
+          //ReToast.loading();
           _presenter.submitOrder(
               UserManager.instance.user.info.id,
               _selectedGoods.map<int>((goods) {
@@ -339,6 +363,93 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
     );
   }
 
+  _buildLikeTitle() {
+    return Container(
+      width: double.infinity,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 22.rw,
+            height: 2.rw,
+            decoration: BoxDecoration(color: Color(0xFFC92219)),
+          ),
+          Container(
+            width: 6.rw,
+            height: 6.rw,
+            decoration: BoxDecoration(
+                color: Color(0xFFC92219),
+                borderRadius: BorderRadius.all(Radius.circular(6.rw))),
+          ),
+          20.wb,
+          Text(
+            '您可能还喜欢',
+            style: TextStyle(color: Color(0xFFC92219), fontSize: 14.rsp),
+          ),
+          20.wb,
+          Container(
+            width: 6.rw,
+            height: 6.rw,
+            decoration: BoxDecoration(
+                color: Color(0xFFC92219),
+                borderRadius: BorderRadius.all(Radius.circular(6.rw))),
+          ),
+          Container(
+            width: 22.rw,
+            height: 2.rw,
+            decoration: BoxDecoration(color: Color(0xFFC92219)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _buildLikeWidget() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.rw),
+      height: _likeGoodsList?.length * 378.rw / 2,
+      width: double.infinity,
+      child: Column(
+        children: [
+          35.hb,
+          _buildLikeTitle(),
+          50.hb,
+          WaterfallFlow.builder(
+              primary: false,
+              shrinkWrap: true,
+              padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight),
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: _likeGoodsList?.length,
+              gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              itemBuilder: (context, index) {
+                GoodsSimple goods = _likeGoodsList[index];
+
+                return MaterialButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                          arguments:
+                              CommodityDetailPage.setArguments(goods.id));
+                    },
+                    child: BrandLikeGridItem(goods: goods));
+              }),
+          40.hb,
+          Container(
+            alignment: Alignment.center,
+            child: Text(
+              '已经到底啦~',
+              style: TextStyle(color: Color(0xFF999999), fontSize: 14.rsp),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   _buildList(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
@@ -350,17 +461,66 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         delegate: this,
         controller: _controller,
         itemBuilder: (context, index) {
-          return _buildItem(context, index);
+          return index == _controller.getData().length - 1
+              ? _buildExtraItem(context, index)
+              : _buildItem(context, index);
         },
         refreshCallback: () {
           // if (UserManager.instance.haveLogin){
           _presenter.getShoppingCartList(UserManager.instance.user.info.id);
+
+          Future.delayed(Duration.zero, () async {
+            int userid;
+            if (UserManager.instance.user.info.id == null) {
+              userid = 0;
+            } else {
+              userid = UserManager.instance.user.info.id;
+            }
+            _likeGoodsList = await ShoppingCartFuc.getLikeGoodsList(userid);
+            // if (goodsSimpleListModel != null) {
+            //   _likeGoodsList = goodsSimpleListModel.data;
+            // }
+
+            setState(() {});
+          });
           // }else{
           //   _presenter.getShoppingCartList(0);
           // }
         },
         noDataView: noDataView("购物车是空的~快去逛逛吧"),
       ),
+    );
+  }
+
+  noDataView(String text, {Widget icon}) {
+    return ListView(
+      //height: double.infinity,
+      children: <Widget>[
+        100.hb,
+        icon ??
+            Image.asset(
+              R.ASSETS_NODATA_PNG,
+              width: rSize(80),
+              height: rSize(80),
+            ),
+//          Icon(AppIcons.icon_no_data_search,size: rSize(80),color: Colors.grey),
+        SizedBox(
+          height: 8,
+        ),
+        Container(
+          alignment: Alignment.center,
+          width: double.infinity,
+          child: Text(
+            text,
+            style: AppTextStyle.generate(14 * 2.sp, color: Colors.grey),
+          ),
+        ),
+
+        SizedBox(
+          height: rSize(30),
+        ),
+        _likeGoodsList != null ? _buildLikeWidget() : SizedBox(),
+      ],
     );
   }
 
@@ -375,8 +535,8 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
     // }
 
     return ShoppingCartItem(
-      // isEdit: _manageStatus,
-      isEdit: true,
+      isEdit: _manageStatus,
+      //isEdit: true,
       model: _controller.getData()[index],
       selectedListener: (ShoppingCartGoodsModel goods) {
         bool goodsSelected = goods.selected;
@@ -415,6 +575,56 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         _presenter.updateQuantity(
             UserManager.instance.user.info.id, goods, num);
       },
+    );
+  }
+
+  _buildExtraItem(BuildContext context, int index) {
+    return Column(
+      children: [
+        ShoppingCartItem(
+          isEdit: _manageStatus,
+          //isEdit: true,
+          model: _controller.getData()[index],
+          selectedListener: (ShoppingCartGoodsModel goods) {
+            bool goodsSelected = goods.selected;
+            if (_selectedGoods.contains(goods)) {
+              if (!goodsSelected) {
+                _selectedGoods.remove(goods);
+              }
+            } else {
+              if (goodsSelected) {
+                _selectedGoods.add(goods);
+              }
+            }
+            if (_selectedGoods.length == _totalNum) {
+              _checkAll = true;
+            } else {
+              _checkAll = false;
+            }
+            _bottomStateSetter(() {});
+          },
+          clickListener: (ShoppingCartGoodsModel goods) {
+            if (_editting) {
+              FocusScope.of(context).requestFocus(FocusNode());
+              return;
+            }
+            AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                    arguments: CommodityDetailPage.setArguments(goods.goodsId))
+                .then((onValue) {
+              _controller.requestRefresh();
+            });
+          },
+          onBeginInput: (value) {
+            _editting = true;
+          },
+          numUpdateCompleteCallback: (goods, num) {
+            _editting = false;
+            _presenter.updateQuantity(
+                UserManager.instance.user.info.id, goods, num);
+          },
+        ),
+        _likeGoodsList != null ? _buildLikeWidget() : SizedBox(),
+      ],
     );
   }
 

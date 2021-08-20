@@ -8,6 +8,7 @@
  */
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api_v2.dart';
@@ -60,6 +61,7 @@ class UserManager {
 
   String _identifier = "";
   String get indentifier => _identifier;
+  String jpushRid = '';
 
   factory UserManager() => _getInstance();
   static UserManager get instance => _getInstance();
@@ -86,6 +88,16 @@ class UserManager {
     // store.dispatch(UpdateUserAction(user));
     HiveStore.appBox.put('key_user', jsonStr);
     UserManager.instance.updateUserBriefInfo(store);
+    int type;
+    if (Platform.isIOS) {
+      type = 2;
+    } else if (Platform.isAndroid) {
+      type = 1;
+    }
+    String code =
+        await UserManager.updateJId(UserManager.instance.jpushRid, type);
+    print(code);
+
     return true;
   }
 
@@ -121,20 +133,17 @@ class UserManager {
   }
 
   Future<bool> activePeople() async {
-        ResultData result =
-        await HttpManager.post(APIV2.userAPI.activePeople,{
-          'id': UserManager.instance.user.info.id,
-        });
+    ResultData result = await HttpManager.post(APIV2.userAPI.activePeople, {
+      'id': UserManager.instance.user.info.id,
+    });
   }
 
-    //上传极光id
-  static Future<String> updateJId(
-    String registrationId,int type
-  ) async {
+  //上传极光id
+  static Future<String> updateJId(String registrationId, int type) async {
     ResultData result = await HttpManager.post(APIV2.userAPI.updateJId, {
       "user_id": UserManager.instance.user.info.id,
-      "registration_id":registrationId,
-      "type":type//1:android 2:ios
+      "registration_id": registrationId,
+      "type": type //1:android 2:ios
     });
 
     if (result.data != null) {

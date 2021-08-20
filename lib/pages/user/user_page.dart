@@ -868,7 +868,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
       showError("没有检测到微信！请先安装！");
       return;
     }
-    GSDialog.of(context).showLoadingDialog(context, "正在请求数据...");
+    //GSDialog.of(context).showLoadingDialog(context, "正在请求数据...");
     WeChatUtils.wxLogin((WXLoginResult result) {
       if (result.errCode == -2) {
         Toast.showInfo('用户取消登录');
@@ -896,6 +896,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
       return;
     }
     UserModel model = UserModel.fromJson(resultData.data);
+    print(model);
     if (model.code != HttpStatus.SUCCESS) {
       showError(model.msg);
       return;

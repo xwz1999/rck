@@ -46,6 +46,7 @@ class Data {
   int isImport;
   int isFerme;
   int storehouse;
+  String countryIcon;
   Data({
     this.id,
     this.goodsName,
@@ -65,6 +66,7 @@ class Data {
     this.isFerme,
     this.isImport,
     this.storehouse,
+    this.countryIcon,
   });
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -85,6 +87,7 @@ class Data {
     isImport = json['isImport'];
     isFerme = json['isFerme'];
     storehouse = json['storehouse'];
+    countryIcon = json['country_icon'];
   }
 
   Map<String, dynamic> toJson() {
@@ -103,6 +106,7 @@ class Data {
     data['isImport'] = this.isImport;
     data['isFerme'] = this.isFerme;
     data['storehouse'] = this.storehouse;
+    data['country_icon'] = this.countryIcon;
     return data;
   }
 }

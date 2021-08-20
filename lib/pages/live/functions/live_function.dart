@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:extended_text/extended_text.dart';
@@ -70,10 +72,14 @@ checkStartLive() async {
   //check camera and audio permission
   bool cameraPerm = await PermissionTool.haveCameraPermission();
   bool audioPerm = await PermissionTool.haveAudioPermission();
-  if (!cameraPerm || !audioPerm) {
-    ReToast.err(text: '请打开相机权限或录音权限以开始直播');
-    return;
+  if (Platform.isAndroid) {
+    if (!cameraPerm || !audioPerm) {
+      ReToast.err(text: '请打开相机权限或录音权限以开始直播');
+
+      return;
+    }
   }
+
   final cancel = ReToast.loading(text: '加载中');
 
   //get live info

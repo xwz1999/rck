@@ -21,6 +21,7 @@ import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide Response;
+import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:power_logger/power_logger.dart';
 import 'package:recook/models/country_list_model.dart';
@@ -28,6 +29,7 @@ import 'package:recook/pages/buy_tickets/choose_tickets_type_page.dart';
 import 'package:recook/pages/live/models/king_coin_list_model.dart';
 import 'package:recook/pages/live/pages/discovery_page.dart';
 import 'package:recook/pages/user/functions/user_func.dart';
+import 'package:recook/utils/storage/hive_store.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
 import 'package:recook/base/base_store_state.dart';
@@ -168,9 +170,19 @@ class _HomePageState extends BaseStoreState<HomePage>
   @override
   void initState() {
     super.initState();
-    // Future.delayed(Duration.zero, () async {
-    //   kingCoinListModelList = await UserFunc.getKingCoinList();
-    // });
+    bool notificationPermission = HiveStore.appBox.get('notification') ?? false;
+    if (!notificationPermission) {
+      JPush().isNotificationEnabled().then((bool value) {
+        if (!value) {
+          HiveStore.appBox.put('notification', true);
+          PermissionTool.showOpenPermissionDialog(
+              context, "我们为您准备了精彩的内容推荐，试试看吧！");
+        }
+      }).catchError((onError) {
+        print(onError);
+      });
+    }
+
     kingCoinListModelList = UserManager.instance.kingCoinListModelList;
     //已在native配置
     // AMapFlutterLocation.setApiKey(
@@ -395,6 +407,11 @@ class _HomePageState extends BaseStoreState<HomePage>
           }
           bool canUseCamera = await PermissionTool.haveCameraPermission();
           bool canUsePhoto = await PermissionTool.havePhotoPermission();
+          bool canNotification =
+              await PermissionTool.haveNotificationPermission();
+          if (!canNotification) {
+            PermissionTool.showOpenPermissionDialog(context, "没有相机权限,请先授予相机权限");
+          }
           if (!canUseCamera) {
             PermissionTool.showOpenPermissionDialog(context, "没有相机权限,请先授予相机权限");
             return;
@@ -1021,14 +1038,17 @@ class _HomePageState extends BaseStoreState<HomePage>
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 _buttonTitleRow(
+
                     // AppConfig.getShowCommission()
                     //     ? R.ASSETS_HOME_MENU_A_PNG
                     //     : R.ASSETS_LISTTEMP_RECOOKMAKE_ICON_PNG,
                     //Api.getImgUrl(kingCoinListModelList[0].url),
-                    Api.getImgUrl(kingCoinListModelList[0].url),
-                    AppConfig.getShowCommission() ? "我的权益" : "瑞库制品",
+                    AppConfig.commissionByRoleLevel
+                        ? Api.getImgUrl(kingCoinListModelList[5].url)
+                        : Api.getImgUrl(kingCoinListModelList[0].url),
+                    AppConfig.commissionByRoleLevel ? "我的权益" : "瑞库制品",
                     onPressed: () {
-                  if (AppConfig.getShowCommission()) {
+                  if (AppConfig.commissionByRoleLevel) {
                     if (!UserManager.instance.haveLogin) {
                       AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
                       return;
@@ -1051,21 +1071,29 @@ class _HomePageState extends BaseStoreState<HomePage>
                   // AppConfig.getShowCommission()
                   //     ? R.ASSETS_HOME_MENU_AIR_PNG
                   //     : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
-                  Api.getImgUrl(kingCoinListModelList[1].url),
-                  // AppConfig.getShowCommission() ? "我的店铺" : "家居生活",
+                  AppConfig.commissionByRoleLevel
+                      ? Api.getImgUrl(kingCoinListModelList[6].url)
+                      : Api.getImgUrl(kingCoinListModelList[1].url),
+                  AppConfig.commissionByRoleLevel ? "精彩发现" : "家居生活",
                   // '彩票兑换',
                   //2021 7,27 ios彩票审核不通过 隐藏彩票
-                  '精彩发现',
+                  //'精彩发现',
+                  //'出行服务',
                   onPressed: () async {
-                    //AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
-
-                    //widget.tabController.animateTo(2);
-                    UserManager.instance.selectTabbarIndex = 2;
-                    bool value = UserManager.instance.selectTabbar.value;
-                    UserManager.instance.selectTabbar.value = !value;
-                    //Get.to(() => ChooseTicketsTypePage());
-                    //setState(() {});
+                    if (AppConfig.commissionByRoleLevel) {
+                      //AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
+                      // UserManager.instance.selectTabbarIndex = 2;
+                      // bool value = UserManager.instance.selectTabbar.value;
+                      // UserManager.instance.selectTabbar.value = !value;
+                      Get.to(() => ChooseTicketsTypePage());
+                      //setState(() {});
+                    } else {
+                      AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
+                          arguments: GoodsListTempPage.setArguments(
+                              title: "家居生活", type: GoodsListTempType.homeLife));
+                    }
                   },
+
                   //   () {
                   // if (AppConfig.getShowCommission()) {
                   //   bool value = UserManager.instance.selectTabbar.value;
@@ -1082,12 +1110,14 @@ class _HomePageState extends BaseStoreState<HomePage>
                     // AppConfig.getShowCommission()
                     //     ? R.ASSETS_HOME_INVITE_WEBP_S_PNG
                     //     : R.ASSETS_LISTTEMP_HOMEAPPLIANCES_ICON_PNG,
-                    Api.getImgUrl(kingCoinListModelList[2].url),
-                    AppConfig.getShowCommission()
+                    AppConfig.commissionByRoleLevel
+                        ? Api.getImgUrl(kingCoinListModelList[7].url)
+                        : Api.getImgUrl(kingCoinListModelList[2].url),
+                    AppConfig.commissionByRoleLevel
                         // ? "升级店主"
                         ? "一键邀请"
                         : "数码家电", onPressed: () {
-                  if (AppConfig.getShowCommission()) {
+                  if (AppConfig.commissionByRoleLevel) {
                     ShareTool().inviteShare(context, customTitle: Container());
                   } else {
                     AppRouter.push(context, RouteName.GOODS_LIST_TEMP,

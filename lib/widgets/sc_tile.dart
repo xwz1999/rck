@@ -25,6 +25,7 @@ class SCTile {
   static normalTile(String title,
       {VoidCallback listener,
       String value,
+      //String extraText,
       Color backgroundColor = Colors.white,
       EdgeInsets padding =
           const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

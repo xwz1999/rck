@@ -207,8 +207,8 @@ class _TabBarWidgetState extends State<TabBarWidget>
             HomePage(
               tabController: _tabController,
             ),
-            //GoodsHotListPage(),
-            AkuCollegePage(),//------akkuxuyaun
+            GoodsHotListPage(),
+            //AkuCollegePage(),//------akkuxuyaun
             DiscoveryPage(),
             // BusinessPage(),
             ShoppingCartPage(),

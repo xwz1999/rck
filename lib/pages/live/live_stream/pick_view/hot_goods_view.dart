@@ -35,6 +35,7 @@ class _HotGoodsViewState extends State<HotGoodsView>
   @override
   void initState() {
     super.initState();
+    PickCart.type = 0;
     Future.delayed(Duration(milliseconds: 300), () {
       if (mounted) _controller.requestRefresh();
     });

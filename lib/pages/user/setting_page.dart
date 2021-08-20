@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
+import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:package_info/package_info.dart';
-
-import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/buy_tickets/choose_tickets_type_page.dart';
-import 'package:recook/pages/welcome/privacy_page_v2.dart';
-import 'package:recook/utils/custom_route.dart';
+import 'package:recook/pages/user/user_info_page.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/sc_tile.dart';
 import 'package:recook/widgets/webView.dart';
+import 'package:need_resume/need_resume.dart';
+import 'package:get/get.dart';
+
+import 'account_and_safety/account_and_safety_page.dart';
 
 class SettingPage extends StatelessWidget {
   @override
@@ -33,16 +33,41 @@ class SettingItemListView extends StatefulWidget {
   _SettingItemListViewState createState() => _SettingItemListViewState();
 }
 
-class _SettingItemListViewState extends BaseStoreState<SettingItemListView> {
+class _SettingItemListViewState extends ResumableState<SettingItemListView> {
   PackageInfo _packageInfo;
+  String perText = '';
   @override
   void initState() {
     super.initState();
+    JPush().isNotificationEnabled().then((bool value) {
+      if (value)
+        perText = '已开启';
+      else
+        perText = '已关闭';
+    }).catchError((onError) {
+      print(onError);
+    });
     getPackageInfo();
   }
 
   @override
-  Widget buildContext(BuildContext context, {store}) {
+  void onResume() {
+    // Implement your code inside here
+    Future.delayed(Duration(milliseconds: 300), () {
+      JPush().isNotificationEnabled().then((bool value) {
+        if (value)
+          perText = '已开启';
+        else
+          perText = '已关闭';
+      }).catchError((onError) {
+        print(onError);
+      });
+      setState(() {});
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
         color: AppColor.frenchColor,
         child: Container(
@@ -55,10 +80,29 @@ class _SettingItemListViewState extends BaseStoreState<SettingItemListView> {
                     children: <Widget>[
                       getEmptyBox(),
                       SCTile.normalTile("个人资料", needDivide: true, listener: () {
-                        push(RouteName.USER_INFO_PAGE);
+                        Get.to(UserInfoPage());
+                        //push(RouteName.USER_INFO_PAGE);
                       }),
-                      SCTile.normalTile('账户与安全', needArrow: true, listener: () {
-                        push(RouteName.ACCOUNT_AND_SAFETY_PAGE);
+                      SCTile.normalTile('账户与安全', needDivide: true,
+                          listener: () {
+                        Get.to(AccountAndSafetyPage());
+
+                        //push(RouteName.ACCOUNT_AND_SAFETY_PAGE);
+                      }),
+                      SCTile.normalTile('接收推送通知',
+                          needArrow: true, value: perText, listener: () async {
+                        JPush().openSettingsForNotification();
+                        //bool result = await openAppSettings();
+
+                        JPush().isNotificationEnabled().then((bool value) {
+                          if (value)
+                            perText = '已开启';
+                          else
+                            perText = '已关闭';
+                        }).catchError((onError) {
+                          print(onError);
+                        });
+                        setState(() {});
                       }),
                       getEmptyBox(),
                       // SCTile.normalTile("清除缓存", needDivide: true, listener: () {}),

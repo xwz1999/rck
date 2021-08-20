@@ -9,6 +9,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -29,6 +30,7 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/user_model.dart';
 import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:recook/utils/app_router.dart';
+import 'package:recook/utils/permission_tool.dart';
 import 'package:recook/utils/print_util.dart';
 import 'package:recook/utils/share_preference.dart';
 import 'package:recook/utils/storage/hive_store.dart';
@@ -41,8 +43,8 @@ class WelcomeWidget extends StatefulWidget {
 }
 
 class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
-   final JPush jpush = new JPush();
-   String debugLable = 'Unknown';
+  final JPush jpush = new JPush();
+  String debugLable = 'Unknown';
   String _backgroundUrl;
   bool _close = false;
   int _countDownNum = 3;
@@ -162,12 +164,13 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
         UserManager.instance.activePeople();
       }
     });
-      Future.delayed(Duration.zero, () async {
-      UserManager.instance.kingCoinListModelList = await UserFunc.getKingCoinList();
+    Future.delayed(Duration.zero, () async {
+      UserManager.instance.kingCoinListModelList =
+          await UserFunc.getKingCoinList();
     });
   }
 
-   Future<void> initPlatformState() async {
+  Future<void> initPlatformState() async {
     String platformVersion;
 
     try {
@@ -217,6 +220,11 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     setState(() {
       debugLable = platformVersion;
     });
+    jpush.getRegistrationID().then((rid) {
+      print("flutter get registration id : $rid");
+      UserManager.instance.jpushRid = rid;
+    });
+
   }
 
   getPackageInfo() async {
@@ -439,6 +447,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
 
   _userLogin(User user) {
     UserManager.updateUser(user, getStore()).then((login) {});
+
     //  _delayedFunc(_pushToTabbar);
   }
 

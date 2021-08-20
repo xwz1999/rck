@@ -8,15 +8,11 @@ import 'package:recook/constants/styles.dart';
 import 'package:recook/pages/home/function/home_fuc.dart';
 import 'package:recook/pages/home/model/aku_video_list_model.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
-import 'package:recook/widgets/refresh_widget.dart';
-import 'package:recook/widgets/webView.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flustars/flustars.dart';
 import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
-import 'package:webview_flutter/webview_flutter.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
 class AkuCollegeDetailPage extends StatefulWidget {
   final AkuVideo akuVideo;
@@ -34,10 +30,15 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
 
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
-  WebViewController _webViewController;
+
   @override
   void initState() {
     super.initState();
+    Future.delayed(Duration.zero, () async {
+      String code = await HomeFuc.addHits(widget.akuVideo.id);
+      print(code);
+    });
+
     if (widget.akuVideo.type == 1) {
       _videoPlayerController = VideoPlayerController.network(
           Api.getImgUrl(widget.akuVideo.videoUrl));
@@ -51,6 +52,8 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
 
         setState(() {});
       });
+    } else {
+      if (widget.akuVideo.textBody != null) {}
     }
 
     // player.setDataSource(Api.getImgUrl(widget.akuVideo.videoUrl),
@@ -78,7 +81,8 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
   }
 
   _bodyWidget() {
-    return ListView(
+    return SingleChildScrollView(
+        child: Column(
       children: [
         40.hb,
         Row(
@@ -135,9 +139,10 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
             ),
           ],
         ),
+        20.hb,
         widget.akuVideo.type == 1 ? _playVideo() : _playImagText()
       ],
-    );
+    ));
   }
 
   _getDateTime(String date) {
@@ -161,12 +166,10 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
     );
   }
 
-  // _playImagText() {
-  //   return Container(
-  //     height: 300.rw,
-  //     width: 500.rw,
-  //     child: HtmlWidget(),
-  //   );
-  // }
-
+  _playImagText() {
+    return HtmlWidget(
+      widget.akuVideo.textBody,
+      textStyle: TextStyle(color: Color(0xFF333333)),
+    );
+  }
 }

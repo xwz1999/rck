@@ -24,13 +24,13 @@ import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
-class BrandDetailGridItem extends StatelessWidget {
+class BrandLikeGridItem extends StatelessWidget {
   // final Goods goods;
   final GoodsSimple goods;
   final VoidCallback buyClick;
   final Function onBrandClick;
 
-  const BrandDetailGridItem(
+  const BrandLikeGridItem(
       {Key key, this.goods, this.buyClick, this.onBrandClick})
       : super(key: key);
   static final Color colorGrey = Color(0xff999999);
@@ -87,8 +87,7 @@ class BrandDetailGridItem extends StatelessWidget {
                                 color: Color(0xFFCC1B4F),
                                 borderRadius: BorderRadius.circular(3 * 2.w),
                               ),
-                              child: 
-                              this.goods.countryIcon==null?
+                              child:                               this.goods.countryIcon==null?
                               Text(
                                 '进口',
                                 style: TextStyle(
@@ -118,7 +117,7 @@ class BrandDetailGridItem extends StatelessWidget {
                     ),
                   ],
                 ),
-                maxLines: 2,
+                maxLines: 3,
                 overflow: TextOverflow.ellipsis,
               ),
             ),
@@ -243,8 +242,9 @@ class BrandDetailGridItem extends StatelessWidget {
                     child: CustomImageButton(
                       direction: Direction.horizontal,
                       height: 21,
-                      title: this.goods.inventory <= 0 ? "已售完" : "自购",
+                      title: this.goods.inventory <= 0 ? "已售完" : "详情",
                       style: TextStyle(
+                        height: 1.2,
                         color: Colors.white,
                         fontSize: 13 * 2.sp,
                       ),

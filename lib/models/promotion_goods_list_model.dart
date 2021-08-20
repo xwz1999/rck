@@ -1,6 +1,8 @@
 import 'package:flustars/flustars.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
 
+import 'goods_simple_list_model.dart';
+
 class PromotionGoodsListModel {
   String code;
   String msg;
@@ -112,10 +114,11 @@ class PromotionGoodsModel {
   num isImport;
   num storehouse;
   num isFerme;
-  num living;
+  Living living;
   List<String> specialSale;
   num gysId;
   List<String> specialIcon;
+  String countryIcon;
 
   PromotionGoodsModel(
       {this.goodsId,
@@ -147,7 +150,8 @@ class PromotionGoodsModel {
       this.living,
       this.specialSale,
       this.gysId,
-      this.specialIcon});
+      this.specialIcon,
+      this.countryIcon});
 
   PromotionGoodsModel.fromJson(Map<String, dynamic> json) {
     goodsId = json['goodsId'];
@@ -177,13 +181,15 @@ class PromotionGoodsModel {
     isImport = json['isImport'];
     storehouse = json['storehouse'];
     isFerme = json['isFerme'];
-    living = json['living'];
+        living =
+        json['living'] != null ? new Living.fromJson(json['living']) : null;
     specialSale = json['special_sale'] != null
         ? json['special_sale'].cast<String>()
         : null;
     specialIcon =
         json['spec_icon'] != null ? json['spec_icon'].cast<String>() : null;
     gysId = json['gys_id'];
+    countryIcon = json['country_icon'];
   }
 
   Map<String, dynamic> toJson() {
@@ -216,10 +222,13 @@ class PromotionGoodsModel {
     data['isImport'] = this.isImport;
     data['storehouse'] = this.storehouse;
     data['isFerme'] = this.isFerme;
-    data['living'] = this.living;
+        if (this.living != null) {
+      data['living'] = this.living.toJson();
+    }
     data['special_sale'] = this.specialSale;
     data['gys_id'] = this.gysId;
     data['spec_icon'] = this.specialIcon;
+    data['country_icon'] = this.countryIcon;
     return data;
   }
 

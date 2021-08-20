@@ -41,7 +41,13 @@ class UserActivityCard extends StatefulWidget {
 }
 
 class _UserActivityCardState extends State<UserActivityCard> {
-  int get imgSize => widget.model.imgList.length;
+  int get imgSize {
+    if (widget.model.imgList == null) {
+      return 0;
+    } else {
+      return widget.model.imgList.length;
+    }
+  }
 
   int get axisCount {
     if (imgSize == 1)

@@ -55,8 +55,9 @@ class GoodsSimple {
   Living living;
   num gysId;
   List<String> specialIcon;
-  GoodsSimple({
-this.id,
+  String countryIcon;
+  GoodsSimple(
+      {this.id,
       this.goodsName,
       this.brandImg,
       this.brandName,
@@ -81,11 +82,11 @@ this.id,
       this.hasBalance,
       this.living,
       this.gysId,
-      this.specialIcon
-  });
+      this.specialIcon,
+      this.countryIcon});
 
   GoodsSimple.fromJson(Map<String, dynamic> json) {
-id = json['id'];
+    id = json['id'];
     goodsName = json['goodsName'];
     brandImg = json['brandImg'];
     brandName = json['brandName'];
@@ -114,11 +115,12 @@ id = json['id'];
 
     specialIcon =
         json['spec_icon'] != null ? json['spec_icon'].cast<String>() : null;
+    countryIcon = json['country_icon'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-data['id'] = this.id;
+    data['id'] = this.id;
     data['goodsName'] = this.goodsName;
     data['brandImg'] = this.brandImg;
     data['brandName'] = this.brandName;
@@ -146,13 +148,13 @@ data['id'] = this.id;
     }
     data['gys_id'] = this.gysId;
     data['spec_icon'] = this.specialIcon;
+    data['country_icon'] = this.countryIcon;
     return data;
   }
 
   getPromotionStatus() {
     return PromotionTimeTool.getPromotionStatusWithGoodsSimple(this);
   }
-  
 }
 
 class Living {

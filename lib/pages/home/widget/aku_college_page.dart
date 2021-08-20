@@ -256,5 +256,4 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
     );
   }
 
-  _getNum(int num) {}
 }

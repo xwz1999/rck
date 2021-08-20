@@ -12,10 +12,12 @@ import 'package:recook/manager/http_manager.dart';
 import 'shopping_cart_contact.dart';
 
 class ShoppingCartModelImpl extends ShoppingCartModelI {
+  //购物车接口
   @override
   Future<ResultData> getShoppingCartList(int userID) async {
     ResultData resultData =
         await HttpManager.post(GoodsApi.shopping_cart_list, {"userID": userID});
+    print(resultData);
     return resultData;
   }
 
@@ -35,20 +37,20 @@ class ShoppingCartModelImpl extends ShoppingCartModelI {
   @override
   Future<ResultData> deleteFromShoppingCart(
       int userID, List<int> cartIDs) async {
-    ResultData resultData =
-        await HttpManager.post(GoodsApi.shopping_cart_delete, {
-          "trolleyGoodsIDs": cartIDs,
-          "userID": userID
-        });
+    ResultData resultData = await HttpManager.post(
+        GoodsApi.shopping_cart_delete,
+        {"trolleyGoodsIDs": cartIDs, "userID": userID});
     return resultData;
   }
 
   @override
-  Future<ResultData> updateQuantity(
-      int userID, goods, int quantity) async {
-    ResultData resultData = await HttpManager.post(
-        GoodsApi.shopping_cart_update_quantity,
-        {"userId": userID, "shoppingTrolleyId": goods.shoppingTrolleyId, "quantity": quantity});
+  Future<ResultData> updateQuantity(int userID, goods, int quantity) async {
+    ResultData resultData =
+        await HttpManager.post(GoodsApi.shopping_cart_update_quantity, {
+      "userId": userID,
+      "shoppingTrolleyId": goods.shoppingTrolleyId,
+      "quantity": quantity
+    });
     return resultData;
   }
 
@@ -57,5 +59,6 @@ class ShoppingCartModelImpl extends ShoppingCartModelI {
     ResultData resultData = await HttpManager.post(
         GoodsApi.shopping_cart_submit_order,
         {"userId": userId, "ids": cardIds});
-    return resultData;  }
+    return resultData;
+  }
 }

@@ -181,12 +181,16 @@ class GroupInviteCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             16.hb,
-            itemName.text.black.size(14.rsp).make(),
+            model.phone.startsWith('2')
+                ? '【该账户已注销】'.text.black.size(14.rsp).make()
+                : itemName.text.black.size(14.rsp).make(),
             10.hb,
             Row(
               children: [
-                _renderItem(R.ASSETS_USER_ICON_PHONE_PNG, model.phone),
-                _renderItem(R.ASSETS_USER_ICON_WECHAT_PNG, model.wechatNo),
+                _renderItem(R.ASSETS_USER_ICON_PHONE_PNG,
+                    model.phone.startsWith('2') ? ' —' : model.phone),
+                _renderItem(R.ASSETS_USER_ICON_WECHAT_PNG,
+                    model.phone.startsWith('2') ? ' —' : model.wechatNo),
               ],
             ),
             10.hb,
