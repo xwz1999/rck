@@ -97,7 +97,7 @@ class PromotionGoodsModel {
   num price;
   num primePrice;
   String priceDesc;
-  double commission;
+  num commission;
   String commissionDesc;
   Picture picture;
   int inventory;

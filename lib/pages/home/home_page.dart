@@ -27,8 +27,7 @@ import 'package:power_logger/power_logger.dart';
 import 'package:recook/models/country_list_model.dart';
 import 'package:recook/pages/buy_tickets/choose_tickets_type_page.dart';
 import 'package:recook/pages/live/models/king_coin_list_model.dart';
-import 'package:recook/pages/live/pages/discovery_page.dart';
-import 'package:recook/pages/user/functions/user_func.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:recook/utils/storage/hive_store.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
@@ -1177,17 +1176,22 @@ class _HomePageState extends BaseStoreState<HomePage>
               height: 10,
             ),
             Container(
-                margin: EdgeInsets.only(top: 5),
-                width: 48,
-                height: 48,
-                child: FadeInImage.assetNetwork(
-                    placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                    image: icon)
-                // Image.asset(
-                //   icon,
-                //   fit: BoxFit.fill,
-                // ),
-                ),
+              margin: EdgeInsets.only(top: 5),
+              width: 48,
+              height: 48,
+              child:
+                  // FadeInImage.assetNetwork(
+                  //     placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                  //     image: icon)
+                  // Image.asset(
+                  //   icon,
+                  //   fit: BoxFit.fill,
+                  // ),
+                  CachedNetworkImage(
+                      imageUrl: icon, placeholder: (context,url) => Image.asset(
+                        R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,fit: BoxFit.fill,
+                      )),
+            ),
             Container(
               margin: EdgeInsets.only(top: 8),
               child: Text(
@@ -1206,6 +1210,13 @@ class _HomePageState extends BaseStoreState<HomePage>
           }
         },
       ),
+    );
+  }
+
+   _placeholder() {
+    return Image.asset(
+      R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+      fit: BoxFit.fill,
     );
   }
 

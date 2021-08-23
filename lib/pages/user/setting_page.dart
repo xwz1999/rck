@@ -6,6 +6,7 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/user/user_info_page.dart';
+import 'package:recook/seckill_activity/seckill_activity_page.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/sc_tile.dart';
@@ -89,6 +90,19 @@ class _SettingItemListViewState extends ResumableState<SettingItemListView> {
 
                         //push(RouteName.ACCOUNT_AND_SAFETY_PAGE);
                       }),
+
+
+                      // SCTile.normalTile('秒杀', needDivide: true,
+                      //     listener: () {
+                      //   Get.to(SeckillActivityPage());
+
+                      //   //push(RouteName.ACCOUNT_AND_SAFETY_PAGE);
+                      // }),
+
+
+
+
+
                       SCTile.normalTile('接收推送通知',
                           needArrow: true, value: perText, listener: () async {
                         JPush().openSettingsForNotification();

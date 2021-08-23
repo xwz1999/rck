@@ -208,6 +208,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
               tabController: _tabController,
             ),
             GoodsHotListPage(),
+            //秒杀入口(测试待定入口)
             //AkuCollegePage(),//------akkuxuyaun
             DiscoveryPage(),
             // BusinessPage(),

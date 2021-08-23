@@ -155,7 +155,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     //TODO 每次应用进入后台返回前台都会进行订单验证操作，这里需要重写
     if (state == AppLifecycleState.resumed && !_lifecycleLock) {
       DPrint.printf("app 进入前台了");
-      _fromTo == null ? _verifyPayStatus() : _verifyPayStatusLifang();
+      _fromTo == '' ? _verifyPayStatus() : _verifyPayStatusLifang();
       _clickPay = false;
     }
   }
@@ -173,7 +173,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         body: _buildBody(context),
       ),
       onWillPop: () {
-        _fromTo == null
+        _fromTo != ''
             ? Alert.show(
                 context,
                 NormalTextDialog(
@@ -230,7 +230,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
           textAlign: TextAlign.center,
           style: AppTextStyle.generate(15 * 2.sp, color: Colors.grey),
         ),
-        _fromTo != null
+        _fromTo != ''
             ? Text(
                 _fromTo,
                 textAlign: TextAlign.center,
@@ -689,7 +689,6 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     HttpResultModel<PayResult> resultModel =
         await _presenter.verifyOrderPayStatusLifang(_model.data.id);
 
-
     if (!resultModel.result) {
       GSDialog.of(_scaffoldKey.currentContext)
           .showError(_scaffoldKey.currentContext, resultModel.msg);
@@ -701,15 +700,15 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
       HttpResultModel<PayResult> resultModel =
           await _presenter.verifyOrderPayStatusLifang(_model.data.id);
       if (resultModel.data.status == 0) {
-            GSDialog.of(_scaffoldKey.currentContext)
-        .dismiss(_scaffoldKey.currentContext);
+        GSDialog.of(_scaffoldKey.currentContext)
+            .dismiss(_scaffoldKey.currentContext);
         ReToast.err(text: '购票失败');
         Navigator.pop(context);
         Navigator.pop(context);
         Navigator.pop(context);
       } else if (resultModel.data.status == 1) {
-            GSDialog.of(_scaffoldKey.currentContext)
-        .dismiss(_scaffoldKey.currentContext);
+        GSDialog.of(_scaffoldKey.currentContext)
+            .dismiss(_scaffoldKey.currentContext);
         if (_payNeedModel != null) {
           print(_payNeedModel);
           String msg = await PassagerFunc.airOrderPayLifang(
@@ -740,8 +739,8 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         //Navigator.pop(context);
       }
     } else if (resultModel.data.status == 1) {
-          GSDialog.of(_scaffoldKey.currentContext)
-        .dismiss(_scaffoldKey.currentContext);
+      GSDialog.of(_scaffoldKey.currentContext)
+          .dismiss(_scaffoldKey.currentContext);
       if (_payNeedModel != null) {
         String msg = await PassagerFunc.airOrderPayLifang(
             _payNeedModel.lfOrderId,

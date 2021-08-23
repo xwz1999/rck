@@ -88,6 +88,9 @@ PODS:
   - fluwx (0.0.1):
     - Flutter
     - WechatOpenSDK (= 1.8.7.1)
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
   - foundation_fluttify (0.0.1):
     - Flutter
   - HandyJSON (5.0.2)
@@ -219,6 +222,9 @@ PODS:
     - mob_sharesdk/ShareSDKRestoreScene
     - mob_sharesdk/ShareSDKUI
     - WechatOpenSDK (= 1.8.7.1)
+  - sqflite (0.0.2):
+    - Flutter
+    - FMDB (>= 2.7.5)
   - SwiftyGif (5.4.0)
   - tencent_im_plugin (0.0.1):
     - Flutter
@@ -280,6 +286,7 @@ DEPENDENCIES:
   - raw_toast (from `.symlinks/plugins/raw_toast/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sharesdk_plugin (from `.symlinks/plugins/sharesdk_plugin/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - tencent_im_plugin (from `.symlinks/plugins/tencent_im_plugin/ios`)
   - tencent_live_fluttify (from `.symlinks/plugins/tencent_live_fluttify/ios`)
   - tobias (from `.symlinks/plugins/tobias/ios`)
@@ -298,6 +305,7 @@ SPEC REPOS:
     - Bugly
     - DKImagePickerController
     - DKPhotoGallery
+    - FMDB
     - HandyJSON
     - JCore
     - JPush
@@ -381,6 +389,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences/ios"
   sharesdk_plugin:
     :path: ".symlinks/plugins/sharesdk_plugin/ios"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
   tencent_im_plugin:
     :path: ".symlinks/plugins/tencent_im_plugin/ios"
   tencent_live_fluttify:
@@ -421,6 +431,7 @@ SPEC CHECKSUMS:
   flutter_txugcupload: fd4f7a2a99e5fe30e608bf6f4acf0e7408339816
   flutter_union_pay: 47a7bf5a4e987745d4378a8b9fb522d0a434793f
   fluwx: 07a55ed66bf3a4961e836a2a411b02dcada32902
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   foundation_fluttify: 0c45145e3fad1fb99188e4979daed5b24cd9b278
   HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   image_cropper: f1668dd8d2cad2d357955caad15a40547856edcb
@@ -450,6 +461,7 @@ SPEC CHECKSUMS:
   SDWebImage: 7acbb57630ac7db4a495547fb73916ff3e432f6b
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   sharesdk_plugin: eab284820482d1ca79038b88792d6eb2dc69552a
+  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   SwiftyGif: 5d4af95df24caf1c570dbbcb32a3b8a0763bc6d7
   tencent_im_plugin: a055ed155fd2cae7f006e756dbec96255b4aa0a3
   tencent_live_fluttify: 98821d3233cf13a47eadf1555ebd56b050e0a5ca

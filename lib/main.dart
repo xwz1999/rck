@@ -50,7 +50,7 @@ void main() async {
   // AmapLocation.instance.init(iosKey: 'e8a8057cfedcdcadcf4e8f2c7f8de982');
 
   //初始化腾讯im
-  
+
   TencentImPlugin.init(appid: '1400435566');
 
   AppConfig.initial(
@@ -59,7 +59,8 @@ void main() async {
     // useEncrypt: true
   );
   // 设置当前是否为测试环境
- const bool isDebug = const bool.fromEnvironment('ISDEBUG',defaultValue: true); 
+  const bool isDebug =
+      const bool.fromEnvironment('ISDEBUG', defaultValue: true);
 
   AppConfig.setDebug(isDebug);
 

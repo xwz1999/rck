@@ -143,6 +143,23 @@ buildApk() async {
 }
 
 @Task()
+buildApk32() async {
+  await runAsync('fvm', arguments: [
+    'flutter',
+    'build',
+    'apk',
+    '--target-platform=android-armeabi-v7a',
+    '--dart-define',
+    'ISDEBUG=false'
+  ]);
+  String date = DateUtil.formatDate(DateTime.now(), format: 'yy_MM_dd_HH_mm');
+  String version = await getVersion();
+  await runAsync('mv', arguments: [
+    Config.buildPath,
+    '${Config.buildDir}/${Config.packageName}_${version}_release_$date.apk'
+  ]);
+}
+@Task()
 @Depends(getVersion)
 buildApkDev() async {
   await runAsync('fvm', arguments: [
