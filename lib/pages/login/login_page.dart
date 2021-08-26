@@ -208,6 +208,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
           if (_chooseAgreement) {
             DPrint.printf("微信登录");
             WeChatUtils.wxLogin((WXLoginResult result) {
+              print(result);
               if (result.errCode == -2) {
                 Toast.showInfo('用户取消登录');
               } else if (result.errCode != 0) {
@@ -323,7 +324,6 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
       } else {
         AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
         UserManager.updateUser(user, getStore());
-
       }
     }, failure: (code, msg) {
       GSDialog.of(context).dismiss(context);

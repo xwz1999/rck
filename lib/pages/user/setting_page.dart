@@ -5,6 +5,7 @@ import 'package:package_info/package_info.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/goods/goods_report/goods_report_page.dart';
 import 'package:recook/pages/user/user_info_page.dart';
 import 'package:recook/seckill_activity/seckill_activity_page.dart';
 import 'package:recook/widgets/alert.dart';
@@ -91,17 +92,11 @@ class _SettingItemListViewState extends ResumableState<SettingItemListView> {
                         //push(RouteName.ACCOUNT_AND_SAFETY_PAGE);
                       }),
 
+                      SCTile.normalTile('产品报表', needDivide: true, listener: () {
+                        Get.to(GoodsReportPage());
 
-                      // SCTile.normalTile('秒杀', needDivide: true,
-                      //     listener: () {
-                      //   Get.to(SeckillActivityPage());
-
-                      //   //push(RouteName.ACCOUNT_AND_SAFETY_PAGE);
-                      // }),
-
-
-
-
+                        //push(RouteName.ACCOUNT_AND_SAFETY_PAGE);
+                      }),
 
                       SCTile.normalTile('接收推送通知',
                           needArrow: true, value: perText, listener: () async {

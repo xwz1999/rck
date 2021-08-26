@@ -16,6 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:get/get.dart';
 import 'package:package_info/package_info.dart';
+import 'package:recook/pages/goods/report_form/report_form_page.dart';
 import 'package:recook/pages/user/user_benefit_currency_pag.dart';
 import 'package:recook/pages/user/user_benefit_page.dart';
 import 'package:recook/pages/user/user_benefit_sub_page.dart';
@@ -461,7 +462,31 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 },
               ),
               Spacer(),
-              19.w.widthBox,
+              GestureDetector(
+                onTap: () {
+                  Get.to(ReportFormPage()); //加载报表数据
+                },
+                child: Container(
+                    color: Colors.transparent,
+                    child: Row(
+                      children: [
+                        '图表分析'
+                            .text
+                            .size(12.rsp)
+                            .color(Color(0xFF999999))
+                            .make(),
+                        Container(
+                          padding: EdgeInsets.only(top: 2.rw),
+                          child: Icon(
+                            Icons.chevron_right_outlined,
+                            size: 16.rw,
+                            color: Color(0xFFA5A5A5),
+                          ),
+                        ),
+                      ],
+                    )),
+              ),
+              29.w.widthBox,
             ],
           ),
           8.w.heightBox,

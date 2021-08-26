@@ -243,6 +243,9 @@ dependencies:
   #倒计时组件
   flutter_countdown_timer: ^4.1.0
 
+  #图表组件
+  fl_chart: ^0.36.4
+
   scrollable_positioned_list: ^0.1.7
   
   flutter_markdown:
