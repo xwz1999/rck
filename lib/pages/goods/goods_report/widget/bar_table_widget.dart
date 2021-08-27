@@ -18,14 +18,6 @@ class BarTableWidgetState extends State<BarTableWidget> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Text(
-                '本周',
-                style: TextStyle(
-                  color: Color(0xFF333333),
-                  fontSize: 16,
-                ),
-                textAlign: TextAlign.center,
-              ),
               SizedBox(
                 height: 4,
               ),
@@ -98,7 +90,7 @@ class BarTableWidgetState extends State<BarTableWidget> {
           ),
           leftTitles: SideTitles(
             showTitles: true,
-            interval: 200,//换成计算值
+            interval: 200, //换成计算值
             getTextStyles: (context, value) => const TextStyle(
                 color: Color(
                   0xff939393,
@@ -109,7 +101,7 @@ class BarTableWidgetState extends State<BarTableWidget> {
         ),
         gridData: FlGridData(
           show: true,
-          checkToShowHorizontalLine: (value) => value % 200 == 0,//换成计算值
+          checkToShowHorizontalLine: (value) => value % 200 == 0, //换成计算值
           getDrawingHorizontalLine: (value) => FlLine(
             color: const Color(0xffe7e8ec),
             strokeWidth: 1,
@@ -151,6 +143,4 @@ class BarTableWidgetState extends State<BarTableWidget> {
       ],
     );
   }
-
-  
 }

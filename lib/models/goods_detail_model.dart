@@ -6,6 +6,8 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/models/price_model.dart';
 
+import 'goods_simple_list_model.dart';
+
 part 'goods_detail_model.g.dart';
 
 /*
@@ -173,34 +175,35 @@ class Data extends Object {
   num isFerme;
   num storehouse;
   String countryIcon;
+  Living living;
 
   Data(
-    this.id,
-    this.brandId,
-    this.goodsName,
-    this.description,
-    this.firstCategoryId,
-    this.secondCategoryId,
-    this.inventory,
-    this.salesVolume,
-    this.price,
-    this.video,
-    this.mainPhotos,
-    this.attributes,
-    this.sku,
-    this.promotion,
-    this.brand,
-    this.evaluations,
-    this.coupons,
-    this.isFavorite,
-    this.shoppingTrolleyCount,
-    this.recommends,
-    this.isImport,
-    this.isFerme,
-    this.storehouse,
-    this.notice,
-    this.countryIcon
-  );
+      this.id,
+      this.brandId,
+      this.goodsName,
+      this.description,
+      this.firstCategoryId,
+      this.secondCategoryId,
+      this.inventory,
+      this.salesVolume,
+      this.price,
+      this.video,
+      this.mainPhotos,
+      this.attributes,
+      this.sku,
+      this.promotion,
+      this.brand,
+      this.evaluations,
+      this.coupons,
+      this.isFavorite,
+      this.shoppingTrolleyCount,
+      this.recommends,
+      this.isImport,
+      this.isFerme,
+      this.storehouse,
+      this.notice,
+      this.countryIcon,
+      this.living);
 
   factory Data.fromJson(Map<String, dynamic> srcJson) =>
       _$DataFromJson(srcJson);

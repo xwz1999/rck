@@ -149,10 +149,8 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
                           controller: _tabController,
                           children: [
                             GoodsPage(
-                              liveStatus:_liveStatus,
-                              roomId:_roomId,
-                              isLive: widget.isLive,
-                              liveId: widget.liveId,
+                              liveStatus: _liveStatus,
+                              roomId: _roomId,
                               openbrandList: () {
                                 // _goodsDetail.data.brandId;
                                 AppRouter.push(

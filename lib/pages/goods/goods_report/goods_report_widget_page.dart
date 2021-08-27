@@ -243,7 +243,7 @@ class _GoodsReportWidgetPageState extends State<GoodsReportWidgetPage>
                             color: Color(0xFF2C5EB3),
                             aspectRato: 0.3,
                             aboveStrokeWidth: 5.rw),
-                        30.hb,
+                        40.hb,
                         Text(
                           '男',
                           style: TextStyle(
@@ -260,7 +260,7 @@ class _GoodsReportWidgetPageState extends State<GoodsReportWidgetPage>
                             color: Color(0xFFC31B20),
                             aspectRato: 0.7,
                             aboveStrokeWidth: 5.rw),
-                        30.hb,
+                        40.hb,
                         Text(
                           '女',
                           style: TextStyle(

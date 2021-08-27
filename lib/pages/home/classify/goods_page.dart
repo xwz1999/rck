@@ -70,8 +70,8 @@ class GoodsPage extends StatefulWidget {
   final ValueNotifier<bool> openSkuChoosePage;
   final void Function() openbrandList; //打开商家页面
 
-  final bool isLive;
-  final int liveId;
+  // final bool isLive;
+  // final int liveId;
 
   final int liveStatus;
   final int roomId;
@@ -82,8 +82,9 @@ class GoodsPage extends StatefulWidget {
     this.openSkuChoosePage,
     this.goodsDetail,
     this.openbrandList,
-    this.isLive = false,
-    this.liveId = 0, this.liveStatus, this.roomId,
+    // this.isLive = false,
+    // this.liveId = 0, 
+    this.liveStatus, this.roomId,
   }) : super(key: key);
 
   @override
@@ -425,7 +426,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     //   images.add(widget.goodsDetail.data.video);
     // }
     images.addAll(widget.goodsDetail.data.mainPhotos);
-    return ImagePageView(images: images,liveStatus:widget.liveStatus,roomId:widget.roomId,onScrolled: (index) {});
+    return ImagePageView(images: images,living:widget.goodsDetail.data.living,onScrolled: (index) {});
   }
 
   /// 优惠券  规格等
@@ -1363,16 +1364,14 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               }
               if (skuModel.selectedIndex == 1) {
                 ReToast.loading(text: '');
-                if (widget.liveId != 0)
+                if (widget.goodsDetail.data.living.status != 0||widget.goodsDetail.data.living.roomId!=0)
                   HttpManager.post(LiveAPI.buyGoodsInform, {
-                    "liveItemId": widget.liveId,
+                    "liveItemId":widget.goodsDetail.data.living.roomId,
                     "goodsId": widget.goodsId,
                   });
                 _createOrder(
                   skuModel,
                   context,
-                  isLive: widget.isLive,
-                  liveId: widget.liveId,
                 );
                 return;
               } else {
@@ -1430,7 +1429,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       skuModel.sku.id,
       skuModel.des,
       skuModel.num,
-      liveId: isLive ? liveId : null,
+      // liveId: isLive ? liveId : null,
     );
     if (order.code != HttpStatus.SUCCESS) {
       // Toast.showError(order.msg);

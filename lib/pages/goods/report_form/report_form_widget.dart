@@ -53,49 +53,6 @@ class _ReportFormWidgetPagePageState extends State<ReportFormWidgetPage>
       children: [
         Container(
             width: double.infinity,
-            margin: EdgeInsets.only(top: 10.rw),
-            padding: EdgeInsets.only(top: 10.rw),
-            height: 470.rw,
-            decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(6.rw))),
-            child: (Column(
-              children: [
-                Row(
-                  children: [
-                    Container(
-                      width: 3.rw,
-                      height: 15.rw,
-                      color: Color(0xFF5484D8),
-                    ),
-                    20.wb,
-                    Text('产品参数',
-                        style: TextStyle(
-                            color: Color(0xFF333333),
-                            fontSize: 16.rsp,
-                            fontWeight: FontWeight.bold)),
-                  ],
-                ),
-                40.hb,
-                _buildParameterText('品牌', '作家有出', '名称', '30cm多功能低压炒锅'),
-                _buildParameterText('净重', '约2.54kg', '材质', '铝合金基材，玻璃，硅胶，傲视不锈钢'),
-                _buildParameterText('尺寸', '约30cm*9.5cm', '适合炉灶', '通用'),
-                50.hb,
-                Container(
-                  width: double.infinity,
-                  height: 200.rw,
-                  alignment: Alignment.center,
-                  child: FadeInImage.assetNetwork(
-                    placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                    image: Api.getImgUrl('/photo/15961790346127.png'),
-                    height: 200.rw,
-                    width: 200.rw,
-                  ),
-                )
-              ],
-            ))),
-        Container(
-            width: double.infinity,
             height: 320.rw,
             margin: EdgeInsets.only(top: 10.rw),
             padding: EdgeInsets.only(top: 10.rw),
@@ -112,7 +69,7 @@ class _ReportFormWidgetPagePageState extends State<ReportFormWidgetPage>
                       color: Color(0xFF5484D8),
                     ),
                     20.wb,
-                    Text('累计销量',
+                    Text('类目',
                         style: TextStyle(
                             color: Color(0xFF333333),
                             fontSize: 16.rsp,
@@ -161,16 +118,6 @@ class _ReportFormWidgetPagePageState extends State<ReportFormWidgetPage>
                   child: BarTableWidget(),
                 ),
                 40.hb,
-                Text('地图分布',
-                    style: TextStyle(
-                        color: Color(0xFF333333),
-                        fontSize: 16.rsp,
-                        fontWeight: FontWeight.bold)),
-                Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.only(left: 15.rw),
-                    height: 300.rw,
-                    child: MapWidget()),
               ],
             ))),
         Container(

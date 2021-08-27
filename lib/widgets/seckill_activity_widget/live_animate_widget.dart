@@ -20,11 +20,10 @@ class _LiveAnimateWidgetState extends State<LiveAnimateWidget> {
     return Container(
         width: widget.size ?? 50.w,
         height: widget.size ?? 50.w,
-        color: Colors.transparent,
-        // decoration: BoxDecoration(
-        //   color: Colors.red,
-        //   borderRadius: BorderRadius.circular((widget.size ?? 50.w) / 2),
-        // ),
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular((widget.size ?? 50.w) / 2),
+        ),
         child: Row(
           children: [
             LiveAnimate(

@@ -12,10 +12,12 @@ import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/goods_detail_model.dart';
+import 'package:recook/models/goods_simple_list_model.dart';
 import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/pic_swiper.dart';
 import 'package:recook/widgets/seckill_activity_widget/live_animate_widget.dart';
+import 'package:recook/widgets/toast.dart';
 import 'package:recook/widgets/video_view.dart';
 
 typedef OnScrolledListener = Function(int index);
@@ -24,16 +26,15 @@ class ImagePageView extends StatefulWidget {
   final OnScrolledListener onScrolled;
   final List<dynamic> images;
 
-  final int liveStatus;
-  final int roomId;
+  final Living living;
+
   // final Video video;
 
   ImagePageView({
     Key key,
     this.onScrolled,
     this.images,
-    this.liveStatus,
-    this.roomId,
+    this.living,
   }) : assert(images != null && images.length > 0, "images 不能为空");
 
   @override
@@ -122,14 +123,20 @@ class _ImagePageViewState extends State<ImagePageView> {
                         BorderRadius.horizontal(left: Radius.circular(20))),
                 child: _imageCount(),
               )),
-          widget.liveStatus == 1
+          widget.living.status == 1
               ? Positioned(
-                  top: 32.rw,
+                  top: 60.rw,
                   right: 35.rw,
-                  child: GestureDetector(
-                    onTap: () {
-                      Get.to(LiveStreamViewPage(id: widget.roomId));
-                    },
+                  child: InkWell(
+                    onTap: widget.living.roomId != 0
+                        ? () {
+                            Get.to(
+                                LiveStreamViewPage(id: widget.living.roomId));
+                          }
+                        : () {
+                            Toast.showError('找不到该直播间！');
+                            print('1');
+                          },
                     child: Container(
                       width: 50.rw,
                       height: 69.rw,
@@ -138,19 +145,20 @@ class _ImagePageViewState extends State<ImagePageView> {
                           color: Colors.white),
                       child: Column(
                         children: [
-                          5.hb,
+                          10.hb,
                           Container(
-                            width: 40.rw,
-                            height: 40.rw,
+                            width: 35.rw,
+                            height: 35.rw,
+                            alignment: Alignment.center,
                             decoration: BoxDecoration(
                                 color: Color(0xFFFF0000),
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(40.rw))),
                             child: LiveAnimateWidget(
-                              size: 80.w,
+                              size: 50.w,
                             ),
                           ),
-                          5.hb,
+                          10.hb,
                           Text(
                             '直播中',
                             style: TextStyle(
@@ -158,6 +166,30 @@ class _ImagePageViewState extends State<ImagePageView> {
                           )
                         ],
                       ),
+                    ),
+                  ),
+                )
+              : SizedBox(),
+          widget.living.status == 1
+              ? Positioned(
+                  top: 50.rw,
+                  right: 35.rw,
+                  child: InkWell(
+                    onTap: widget.living.roomId != 0
+                        ? () {
+                            Get.to(
+                                LiveStreamViewPage(id: widget.living.roomId));
+                          }
+                        : () {
+                            Toast.showError('找不到该直播间！');
+                            print('2');
+                          },
+                    child: Container(
+                      width: 60.rw,
+                      height: 70.rw,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(7.rw)),
+                          color: Colors.transparent),
                     ),
                   ),
                 )

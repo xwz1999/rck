@@ -73,53 +73,59 @@ class _GoodsReportPageState extends State<GoodsReportPage>
         width: double.infinity,
         margin: EdgeInsets.only(top: 10.rw),
         padding: EdgeInsets.only(top: 10.rw),
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(6.rw))),
         child: (Column(
           children: [
-            Row(
-              children: [
-                Container(
-                  width: 3.rw,
-                  height: 15.rw,
-                  color: Color(0xFF5484D8),
-                ),
-                20.wb,
-                Text('产品报表',
-                    style: TextStyle(
-                        color: Color(0xFF333333),
-                        fontSize: 16.rsp,
-                        fontWeight: FontWeight.bold)),
-              ],
-            ),
-            30.hb,
             Container(
-              height: 30.rw,
-              width: double.infinity,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(6.rw)),
-                  color: Color(0xFFD5D5D5)),
-              alignment: Alignment.center,
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(6.rw))),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 3.rw,
+                        height: 15.rw,
+                        color: Color(0xFF5484D8),
+                      ),
+                      20.wb,
+                      Text('产品报表',
+                          style: TextStyle(
+                              color: Color(0xFF333333),
+                              fontSize: 16.rsp,
+                              fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                  30.hb,
+                  Container(
+                    height: 30.rw,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(6.rw)),
+                        color: Color(0xFFD5D5D5)),
+                    alignment: Alignment.center,
 
-              // width: DeviceInfo.screenWidth,
-              child: TabBar(
-                  onTap: (index) {
-                    _tabController.index = index;
-                    setState(() {});
-                  },
-                  //isScrollable: ,
+                    // width: DeviceInfo.screenWidth,
+                    child: TabBar(
+                        onTap: (index) {
+                          _tabController.index = index;
+                          setState(() {});
+                        },
+                        //isScrollable: ,
 
-                  labelPadding: EdgeInsets.all(0),
-                  controller: _tabController,
-                  indicator: const BoxDecoration(),
-                  indicatorWeight: 0,
-                  unselectedLabelColor: Colors.black54,
-                  labelStyle: TextStyle(color: Colors.black54),
-                  tabs: _tabList.map<Tab>((item) {
-                    int index = _tabList.indexOf(item);
-                    return _tabItem(item, index);
-                  }).toList()),
+                        labelPadding: EdgeInsets.all(0),
+                        controller: _tabController,
+                        indicator: const BoxDecoration(),
+                        indicatorWeight: 0,
+                        unselectedLabelColor: Colors.black54,
+                        labelStyle: TextStyle(color: Colors.black54),
+                        tabs: _tabList.map<Tab>((item) {
+                          int index = _tabList.indexOf(item);
+                          return _tabItem(item, index);
+                        }).toList()),
+                  ),
+                ],
+              ),
             ),
             Expanded(
                 child: TabBarView(

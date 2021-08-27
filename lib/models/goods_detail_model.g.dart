@@ -75,6 +75,7 @@ Data _$DataFromJson(Map<String, dynamic> json) {
         ? null
         : Notice.fromJson(json['notice'] as Map<String, dynamic>),
     json['country_icon'],
+    json['living'] == null ? null : new Living.fromJson(json['living']),
   );
 }
 
@@ -98,7 +99,8 @@ Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'coupons': instance.coupons,
       'isFavorite': instance.isFavorite,
       'shoppingTrolleyCount': instance.shoppingTrolleyCount,
-      'country_icon':instance.countryIcon,
+      'country_icon': instance.countryIcon,
+      'living': instance.living,
     };
 
 MainPhotos _$MainPhotosFromJson(Map<String, dynamic> json) {

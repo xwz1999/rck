@@ -924,8 +924,9 @@ class GoodsItemWidget extends StatelessWidget {
     } else {
       AppRouter.push(buildCtx, RouteName.COMMODITY_PAGE,
           arguments: CommodityDetailPage.setArguments(this.id,
-              liveStatus: living == null ? null : living.status,
-              roomId: living == null ? null : living.roomId));
+              // liveStatus: living == null ? null : living.status,
+              // roomId: living == null ? null : living.roomId
+              ));
     }
   }
 
