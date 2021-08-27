@@ -303,6 +303,7 @@ flutter:
     - assets/shop/
     - assets/header/
     - assets/live/
+    - assets/weather/
   fonts:
     - family: AppIcons
       fonts:

@@ -53,6 +53,7 @@ enum NormalTextDialogType { normal, delete, remind }
 
 ///普通文本弹框
 class NormalTextDialog extends Dialog {
+  final Color titleColor;
   final String title;
   final String content;
   final String deleteItem;
@@ -63,6 +64,7 @@ class NormalTextDialog extends Dialog {
 
   const NormalTextDialog(
       {this.title,
+      this.titleColor,
       this.content,
       this.deleteItem = "删除",
       this.items,
@@ -97,7 +99,7 @@ class NormalTextDialog extends Dialog {
         child: Text(
           this.title,
           style: TextStyle(
-              color: Colors.black,
+              color: titleColor == null ? Colors.black : titleColor,
               fontSize: 16 * 2.sp,
               fontWeight: FontWeight.w600),
         ),

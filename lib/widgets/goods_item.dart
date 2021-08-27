@@ -415,34 +415,13 @@ class GoodsItemWidget extends StatelessWidget {
     return Container(
       width: _height - 8,
       height: _height - 8,
+      decoration: BoxDecoration(
+        color: AppColor.frenchColor,
+        borderRadius: BorderRadius.all(Radius.circular(cir)),
+      ),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(cir)),
         child: Stack(children: [
-          living?.status == 1
-              ? Positioned(
-                  top: 6.rw,
-                  right: 6.rw,
-                  child: Container(
-                    width: 25.rw,
-                    height: 16.rw,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8.rw)),
-                        gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [
-                            Color(0xFFEC4073),
-                            Color(0xFFE50043),
-                          ],
-                        )),
-                    child: Row(
-                      children: [
-                        LiveAnimateWidget(),
-                      ],
-                    ),
-                  ),
-                )
-              : SizedBox(),
           Positioned(
             top: 0,
             right: 0,
@@ -475,6 +454,31 @@ class GoodsItemWidget extends StatelessWidget {
               ),
             ),
           ),
+          living?.status == 1
+              ? Positioned(
+                  top: 6.rw,
+                  right: 6.rw,
+                  child: Container(
+                    width: 25.rw,
+                    height: 16.rw,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8.rw)),
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Color(0xFFEC4073),
+                            Color(0xFFE50043),
+                          ],
+                        )),
+                    child: Row(
+                      children: [
+                        LiveAnimateWidget(),
+                      ],
+                    ),
+                  ),
+                )
+              : SizedBox(),
           isSingleDayGoods
               ? Positioned(
                   left: 0,
@@ -923,10 +927,11 @@ class GoodsItemWidget extends StatelessWidget {
       buyClick();
     } else {
       AppRouter.push(buildCtx, RouteName.COMMODITY_PAGE,
-          arguments: CommodityDetailPage.setArguments(this.id,
-              // liveStatus: living == null ? null : living.status,
-              // roomId: living == null ? null : living.roomId
-              ));
+          arguments: CommodityDetailPage.setArguments(
+            this.id,
+            // liveStatus: living == null ? null : living.status,
+            // roomId: living == null ? null : living.roomId
+          ));
     }
   }
 

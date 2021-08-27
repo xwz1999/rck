@@ -108,7 +108,8 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
                   bigImageUrl: _bigImageUrl,
                   goodsDetailModel: _goodsDetail,
                 )),
-          )
+          ),
+
         ],
       ),
     );

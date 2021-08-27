@@ -51,7 +51,7 @@ class HomeWeatherWidgetState extends State<HomeWeatherWidget>
 
     return GestureDetector(
       onTap: () {
-        Get.to(HomeWeatherDetailPage());
+        Get.to(HomeWeatherDetailPage(homeWeatherModel:widget.homeWeatherModel));
       },
       child: Container(
         color: _backgroundColor,
