@@ -63,18 +63,24 @@ class PromotionModel {
 
 class PromotionActivityModel {
   int id;
+  int activitySortId;
   String activityUrl;
   String logoUrl;
   String topUrl;
 
   PromotionActivityModel(
-      {this.id, this.activityUrl, this.logoUrl, this.topUrl});
+      {this.id,
+      this.activityUrl,
+      this.logoUrl,
+      this.topUrl,
+      this.activitySortId});
 
   PromotionActivityModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     activityUrl = json['activityUrl'];
     logoUrl = json['logoUrl'];
     topUrl = json['topUrl'];
+    activitySortId = json['activity_sort_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -83,6 +89,7 @@ class PromotionActivityModel {
     data['activityUrl'] = this.activityUrl;
     data['logoUrl'] = this.logoUrl;
     data['topUrl'] = this.topUrl;
+    data['activity_sort_id'] = this.activitySortId;
     return data;
   }
 }
@@ -181,7 +188,7 @@ class PromotionGoodsModel {
     isImport = json['isImport'];
     storehouse = json['storehouse'];
     isFerme = json['isFerme'];
-        living =
+    living =
         json['living'] != null ? new Living.fromJson(json['living']) : null;
     specialSale = json['special_sale'] != null
         ? json['special_sale'].cast<String>()
@@ -222,7 +229,7 @@ class PromotionGoodsModel {
     data['isImport'] = this.isImport;
     data['storehouse'] = this.storehouse;
     data['isFerme'] = this.isFerme;
-        if (this.living != null) {
+    if (this.living != null) {
       data['living'] = this.living.toJson();
     }
     data['special_sale'] = this.specialSale;

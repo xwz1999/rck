@@ -1188,9 +1188,11 @@ class _HomePageState extends BaseStoreState<HomePage>
                   //   fit: BoxFit.fill,
                   // ),
                   CachedNetworkImage(
-                      imageUrl: icon, placeholder: (context,url) => Image.asset(
-                        R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,fit: BoxFit.fill,
-                      )),
+                      imageUrl: icon,
+                      placeholder: (context, url) => Image.asset(
+                            R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                            fit: BoxFit.fill,
+                          )),
             ),
             Container(
               margin: EdgeInsets.only(top: 8),
@@ -1213,7 +1215,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     );
   }
 
-   _placeholder() {
+  _placeholder() {
     return Image.asset(
       R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
       fit: BoxFit.fill,
@@ -1436,11 +1438,27 @@ class _HomePageState extends BaseStoreState<HomePage>
       array.addAll(model.data.goodsList);
     }
     if (model.data.activityList != null && model.data.activityList.length > 0) {
-      if (array.length > 3) {
-        array.insert(3, model.data.activityList.first);
+      if (model.data.activityList.first.activitySortId != 0) {
+        if (array.length >= model.data.activityList.first.activitySortId) {
+          array.insert(model.data.activityList.first.activitySortId - 1,
+              model.data.activityList.first);
+        } else {
+          array.add(model.data.activityList.first);
+        }
       } else {
-        array.add(model.data.activityList.first);
+        if (array.length > 3) {
+          array.insert(3, model.data.activityList.first);
+        } else {
+          array.add(model.data.activityList.first);
+        }
       }
+
+      //   if (array.length > 3) {
+
+      //   array.insert(3, model.data.activityList.first);
+      // } else {
+      //   array.add(model.data.activityList.first);
+      // }
     }
     // _promotionGoodsList = model.data.goodsList;
     _promotionGoodsList = array;
