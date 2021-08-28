@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
+import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'package:recook/constants/api.dart';
@@ -11,6 +12,8 @@ import 'package:recook/models/goods_detail_images_model.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
 import 'package:recook/models/promotion_goods_list_model.dart';
+import 'package:recook/pages/goods/goods_report/goods_report_page.dart';
+import 'package:recook/pages/goods/report_form/report_form_page.dart';
 import 'package:recook/pages/goods/small_coupon_widget.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
@@ -412,153 +415,161 @@ class GoodsItemWidget extends StatelessWidget {
 
   _image() {
     double cir = 5;
-    return Container(
-      width: _height - 8,
-      height: _height - 8,
-      decoration: BoxDecoration(
-        color: AppColor.frenchColor,
-        borderRadius: BorderRadius.all(Radius.circular(cir)),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.all(Radius.circular(cir)),
-        child: Stack(children: [
-          Positioned(
-            top: 0,
-            right: 0,
-            left: 0,
-            bottom: 0,
-            child: CustomCacheImage(
-              borderRadius: BorderRadius.circular(5),
-              width: _height - 8,
-              height: _height - 8,
-              imageUrl: Api.getImgUrl(this.mainPhotoUrl),
-              fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        
+        Get.to(GoodsReportPage(goodsId:id,));
+      },
+      child: Container(
+        width: _height - 8,
+        height: _height - 8,
+        decoration: BoxDecoration(
+          color: AppColor.frenchColor,
+          borderRadius: BorderRadius.all(Radius.circular(cir)),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(cir)),
+          child: Stack(children: [
+            Positioned(
+              top: 0,
+              right: 0,
+              left: 0,
+              bottom: 0,
+              child: CustomCacheImage(
+                borderRadius: BorderRadius.circular(5),
+                width: _height - 8,
+                height: _height - 8,
+                imageUrl: Api.getImgUrl(this.mainPhotoUrl),
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          Positioned(
-            top: 0,
-            right: 0,
-            left: 0,
-            bottom: 0,
-            child: Offstage(
-              offstage: this.inventory > 0,
-              child: Container(
-                color: Colors.black38,
-                child: Center(
-                  child: Image.asset(
-                    'assets/sellout_bg.png',
-                    width: rSize(70),
-                    height: rSize(70),
+            Positioned(
+              top: 0,
+              right: 0,
+              left: 0,
+              bottom: 0,
+              child: Offstage(
+                offstage: this.inventory > 0,
+                child: Container(
+                  color: Colors.black38,
+                  child: Center(
+                    child: Image.asset(
+                      'assets/sellout_bg.png',
+                      width: rSize(70),
+                      height: rSize(70),
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          living?.status == 1
-              ? Positioned(
-                  top: 6.rw,
-                  right: 6.rw,
-                  child: Container(
-                    width: 25.rw,
-                    height: 16.rw,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8.rw)),
-                        gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [
-                            Color(0xFFEC4073),
-                            Color(0xFFE50043),
-                          ],
-                        )),
-                    child: Row(
-                      children: [
-                        LiveAnimateWidget(),
-                      ],
+            living?.status == 1
+                ? Positioned(
+                    top: 6.rw,
+                    right: 6.rw,
+                    child: Container(
+                      width: 25.rw,
+                      height: 16.rw,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(8.rw)),
+                          gradient: LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [
+                              Color(0xFFEC4073),
+                              Color(0xFFE50043),
+                            ],
+                          )),
+                      child: Row(
+                        children: [
+                          LiveAnimateWidget(),
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              : SizedBox(),
-          isSingleDayGoods
-              ? Positioned(
-                  left: 0,
-                  top: 0,
-                  child: Image.asset(
-                    R.ASSETS_HOME_SINGLE_DAY_PNG,
-                    height: rSize(20),
-                  ),
-                )
-              : SizedBox(),
-          specialSale != null
-              ? Positioned(
-                  left: 5.rw,
-                  top: 5.rw,
-                  child: Container(
-                    ///color: Colors.red,
-                    width: (_height - 8.rw) / 3.rw * 2.rw,
-                    height: specialSale == null
-                        ? 0
-                        : specialSale.length ~/ 2 * 24.rw + 24.rw,
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      //reverse: true,
-                      padding: EdgeInsets.zero,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 2.4,
-                              mainAxisSpacing: 5,
-                              crossAxisSpacing: 5),
-                      itemCount: specialSale.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return
-                            // Container(
-                            //   color: Colors.red,
-                            // );
-                            CustomCacheImage(
-                          borderRadius: BorderRadius.all(Radius.circular(2.rw)),
-                          imageUrl: Api.getImgUrl(specialSale[index]),
-                          fit: BoxFit.fill,
-                        );
-                      },
+                  )
+                : SizedBox(),
+            isSingleDayGoods
+                ? Positioned(
+                    left: 0,
+                    top: 0,
+                    child: Image.asset(
+                      R.ASSETS_HOME_SINGLE_DAY_PNG,
+                      height: rSize(20),
                     ),
-                  ))
-              : SizedBox(),
-          specialIcon != null
-              ? Positioned(
-                  left: 5.rw,
-                  top: 5.rw,
-                  child: Container(
-                    width: (_height - 8.rw) / 3.rw * 2.rw,
-                    height: specialSale == null
-                        ? 0
-                        : specialSale.length ~/ 2 * 26.rw,
-                    child: GridView.builder(
-                      shrinkWrap: true,
-                      reverse: true,
-                      padding: EdgeInsets.zero,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 2.4,
-                              mainAxisSpacing: 5,
-                              crossAxisSpacing: 5),
-                      itemCount: specialIcon.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return
-                            // Container(
-                            //   color: Colors.red,
-                            // );
-                            CustomCacheImage(
-                          borderRadius: BorderRadius.all(Radius.circular(2.rw)),
-                          imageUrl: Api.getImgUrl(specialIcon[index]),
-                          fit: BoxFit.fill,
-                        );
-                      },
-                    ),
-                  ))
-              : SizedBox()
-        ]),
+                  )
+                : SizedBox(),
+            specialSale != null
+                ? Positioned(
+                    left: 5.rw,
+                    top: 5.rw,
+                    child: Container(
+                      ///color: Colors.red,
+                      width: (_height - 8.rw) / 3.rw * 2.rw,
+                      height: specialSale == null
+                          ? 0
+                          : specialSale.length ~/ 2 * 24.rw + 24.rw,
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        //reverse: true,
+                        padding: EdgeInsets.zero,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 2.4,
+                                mainAxisSpacing: 5,
+                                crossAxisSpacing: 5),
+                        itemCount: specialSale.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return
+                              // Container(
+                              //   color: Colors.red,
+                              // );
+                              CustomCacheImage(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(2.rw)),
+                            imageUrl: Api.getImgUrl(specialSale[index]),
+                            fit: BoxFit.fill,
+                          );
+                        },
+                      ),
+                    ))
+                : SizedBox(),
+            specialIcon != null
+                ? Positioned(
+                    left: 5.rw,
+                    top: 5.rw,
+                    child: Container(
+                      width: (_height - 8.rw) / 3.rw * 2.rw,
+                      height: specialSale == null
+                          ? 0
+                          : specialSale.length ~/ 2 * 26.rw,
+                      child: GridView.builder(
+                        shrinkWrap: true,
+                        reverse: true,
+                        padding: EdgeInsets.zero,
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 2.4,
+                                mainAxisSpacing: 5,
+                                crossAxisSpacing: 5),
+                        itemCount: specialIcon.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return
+                              // Container(
+                              //   color: Colors.red,
+                              // );
+                              CustomCacheImage(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(2.rw)),
+                            imageUrl: Api.getImgUrl(specialIcon[index]),
+                            fit: BoxFit.fill,
+                          );
+                        },
+                      ),
+                    ))
+                : SizedBox()
+          ]),
+        ),
       ),
     );
   }

@@ -1,12 +1,20 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:recook/pages/goods/model/goods_report_model.dart';
 
 class BarTableWidget extends StatefulWidget {
+  final List<TopTen> topTenList;
+  final int timetype;
+
+  const BarTableWidget(
+      {Key key, @required this.topTenList, @required this.timetype})
+      : super(key: key);
   @override
   State<BarTableWidget> createState() => BarTableWidgetState();
 }
 
-class BarTableWidgetState extends State<BarTableWidget> {
+class BarTableWidgetState extends State<BarTableWidget>
+    {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -53,55 +61,38 @@ class BarTableWidgetState extends State<BarTableWidget> {
         alignment: BarChartAlignment.center,
         barTouchData: BarTouchData(
           enabled: true,
+          touchTooltipData: BarTouchTooltipData(
+            tooltipBgColor: Colors.transparent,
+          ),
         ),
         titlesData: FlTitlesData(
           show: true,
           bottomTitles: SideTitles(
             showTitles: true,
-            getTextStyles: (context, value) =>
-                const TextStyle(color: Color(0xff939393), fontSize: 10),
+            getTextStyles: (context, value) => const TextStyle(
+              color: Color(0xff939393),
+              fontSize: 10,
+            ),
             margin: 10,
             getTitles: (double value) {
-              switch (value.toInt()) {
-                case 0:
-                  return '浙江';
-                case 1:
-                  return '上海';
-                case 2:
-                  return '江苏';
-                case 3:
-                  return '广东';
-                case 4:
-                  return '吉林';
-                case 5:
-                  return '重庆';
-                case 6:
-                  return '四川';
-                case 7:
-                  return '云南';
-                case 8:
-                  return '黑龙江';
-                case 9:
-                  return '湖南';
-                default:
-                  return '';
-              }
+              return _getProvice(widget.topTenList[value.toInt()].province);
             },
           ),
           leftTitles: SideTitles(
             showTitles: true,
-            interval: 200, //换成计算值
+            interval: _getInterval(_getMaxNum()), //间隔
             getTextStyles: (context, value) => const TextStyle(
                 color: Color(
                   0xff939393,
                 ),
                 fontSize: 10),
-            margin: 0,
+            margin: 10,
           ),
         ),
         gridData: FlGridData(
           show: true,
-          checkToShowHorizontalLine: (value) => value % 200 == 0, //换成计算值
+          checkToShowHorizontalLine: (value) =>
+              value % _getInterval(_getMaxNum()) == 0, //换成计算值
           getDrawingHorizontalLine: (value) => FlLine(
             color: const Color(0xffe7e8ec),
             strokeWidth: 1,
@@ -124,8 +115,8 @@ class BarTableWidgetState extends State<BarTableWidget> {
 
   List<BarChartGroupData> getData() {
     List<BarChartGroupData> barList = [];
-    for (int i = 0; i < 10; i++) {
-      barList.add(_barChartGroupData(i, i * 100.0 + 50));
+    for (int i = 0; i < widget.topTenList.length; i++) {
+      barList.add(_barChartGroupData(i, widget.topTenList[i].sum.toDouble()));
     }
     return barList;
   }
@@ -136,11 +127,52 @@ class BarTableWidgetState extends State<BarTableWidget> {
       barsSpace: 10,
       barRods: [
         BarChartRodData(
-            width: 15,
+            width: 16,
             y: y,
             colors: [Color(0xFFC31B20)],
             borderRadius: const BorderRadius.all(Radius.zero)),
       ],
     );
+  }
+
+
+
+  _getProvice(String provice) {
+    provice = provice.replaceAll('维吾尔自治区', '');
+    provice = provice.replaceAll('回族自治区', '');
+    provice = provice.replaceAll('壮族自治区', '');
+    provice = provice.replaceAll('自治区', '');
+    provice = provice.replaceAll('省', '');
+    provice = provice.replaceAll('市', '');
+    return provice;
+  }
+
+  _getInterval(num maxNum) {
+    //得到一个10的倍数的间隔值
+    if (maxNum < 4)
+      return maxNum;
+    else {
+      int num1 = maxNum ~/ 4;
+      int a = num1 % 10;
+      if (a > 0) {
+        print(((num1 ~/ 10) * 10 + 10).toDouble());
+        return ((num1 ~/ 10) * 10 + 10).toDouble();
+      }
+    }
+  }
+
+  // _getMaxNum() {
+  //   num max = 0;
+  //   for (int i = 0; i < _saleList.length; i++) {
+  //     if (max < _saleList[i].saleNum) {
+  //       max = _saleList[i].saleNum;
+  //     }
+  //   }
+  //   return max;
+  // }
+
+  _getMaxNum() {
+    widget.topTenList.sort((a, b) => b.sum.compareTo(a.sum));
+    return widget.topTenList.first.sum;
   }
 }

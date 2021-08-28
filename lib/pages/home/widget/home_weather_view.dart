@@ -11,6 +11,7 @@ import 'package:recook/constants/styles.dart';
 import 'package:recook/models/home_weather_model.dart';
 import 'package:recook/utils/date/recook_lunar.dart';
 
+import 'home_date_detail_page.dart';
 import 'home_weather_detail_page.dart';
 
 class HomeWeatherWidget extends StatefulWidget {
@@ -51,7 +52,8 @@ class HomeWeatherWidgetState extends State<HomeWeatherWidget>
 
     return GestureDetector(
       onTap: () {
-        Get.to(HomeWeatherDetailPage(homeWeatherModel:widget.homeWeatherModel));
+        Get.to(
+            HomeWeatherDetailPage(homeWeatherModel: widget.homeWeatherModel));
       },
       child: Container(
         color: _backgroundColor,
@@ -114,9 +116,14 @@ class HomeWeatherWidgetState extends State<HomeWeatherWidget>
                                     width: 10,
                                   ),
                                   Spacer(),
-                                  Text(
-                                      "${nowDateTime.year}.${nowDateTime.month}.${nowDateTime.day}${_normalText(widget.homeWeatherModel.week)}",
-                                      style: textStyle),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.to(HomeDateDetailPage());
+                                    },
+                                    child: Text(
+                                        "${nowDateTime.year}.${nowDateTime.month}.${nowDateTime.day}${_normalText(widget.homeWeatherModel.week)}",
+                                        style: textStyle),
+                                  )
                                 ],
                               ),
                               Flex(
@@ -153,13 +160,17 @@ class HomeWeatherWidgetState extends State<HomeWeatherWidget>
                                     ),
                                   ),
                                   Expanded(
-                                      child: Container(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      RecookLunar(lunar).toString(),
-                                      style: textStyle,
-                                    ),
-                                  )),
+                                      child: GestureDetector(
+                                          onTap: () {
+                                            Get.to(HomeDateDetailPage());
+                                          },
+                                          child: Container(
+                                            alignment: Alignment.centerRight,
+                                            child: Text(
+                                              RecookLunar(lunar).toString(),
+                                              style: textStyle,
+                                            ),
+                                          ))),
                                 ],
                               ),
                             ],

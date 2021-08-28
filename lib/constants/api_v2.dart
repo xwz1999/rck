@@ -4,6 +4,7 @@ class APIV2 {
   static _OrderAPI orderAPI = _OrderAPI();
   static _InvoiceAoi invoiceApi = _InvoiceAoi();
   static TicketAPI ticketAPI = TicketAPI();
+  static GoodsAPI gooodsAPI = GoodsAPI();
 }
 
 class UserAPI {
@@ -197,6 +198,10 @@ class BenefitAPI {
 class _OrderAPI {
   ///导购订单列表
   String get guideOrderList => '/v2/app/order/guide_lists';
+}
+class GoodsAPI{
+    ///产品画像
+  String get getProductPortrait => '/v2/app/product_portrait/goods_detail_about';
 }
 
 class _InvoiceAoi {

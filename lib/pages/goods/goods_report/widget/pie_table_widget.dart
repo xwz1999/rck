@@ -1,15 +1,25 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:recook/pages/goods/model/goods_report_model.dart';
 import 'indicator.dart';
 
 class PieTabWidget extends StatefulWidget {
+  final List<AgePort> agePortList;
+
+  const PieTabWidget({Key key, @required this.agePortList}) : super(key: key);
   @override
   State<PieTabWidget> createState() => PieTabWidgetState();
 }
 
 class PieTabWidgetState extends State<PieTabWidget> {
   int touchedIndex = -1;
+  List<AgePort> _agePortList = [];
+  @override
+  void initState() {
+    super.initState();
+    _agePortList = widget.agePortList;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -122,58 +132,58 @@ class PieTabWidgetState extends State<PieTabWidget> {
         case 4:
           return PieChartSectionData(
             color: const Color(0xFFC31B20),
-            value: 40,
-            title: '40%',
-            radius: 100,
-            titleStyle: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
-          );
-        case 3:
-          return PieChartSectionData(
-            color: const Color(0xFFFAAD5D),
-            value: 25,
-            title: '25%',
+            value: _agePortList[0].numi.toDouble(),
+            title: '${_agePortList[0].numi}%',
             radius: 80,
             titleStyle: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
+                color: const Color(0xFF333333)),
+          );
+        case 3:
+          return PieChartSectionData(
+            color: const Color(0xFFFAAD5D),
+            value: _agePortList[1].numi.toDouble(),
+            title: '${_agePortList[1].numi}%',
+            radius: 64,
+            titleStyle: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: const Color(0xFF333333)),
           );
         case 2:
           return PieChartSectionData(
             color: const Color(0xFF9C62DA),
-            value: 20,
-            title: '20%',
-            radius: 60,
+            value: _agePortList[2].numi.toDouble(),
+            title: '${_agePortList[2].numi}%',
+            radius: 48,
             titleStyle: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
+                color: const Color(0xFF333333)),
           );
         case 1:
           return PieChartSectionData(
             color: const Color(0xFF5285D8),
-            value: 10,
-            title: '10%',
-            radius: 40,
+            value: _agePortList[3].numi.toDouble(),
+            title: '${_agePortList[3].numi}%',
+            radius: 32,
             titleStyle: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
+                color: const Color(0xFF333333)),
           );
 
         case 0:
           return PieChartSectionData(
             color: const Color(0xFFC92FBB),
-            value: 5,
-            title: '5%',
-            radius: 20,
+            value: _agePortList[4].numi.toDouble(),
+            title: '${_agePortList[4].numi}%',
+            radius: 16,
             titleStyle: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
+                color: const Color(0xFF333333)),
           );
 
         default:

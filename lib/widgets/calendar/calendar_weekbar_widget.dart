@@ -13,7 +13,8 @@ class CalendarWeekBarWidget extends BaseWeekBar {
         weekList[index],
         style: TextStyle(
           fontSize: 14.rsp,
-          color: Color(0xFF333333),
+          fontWeight: FontWeight.bold,
+          color: Color(0xFF181818),
         ),
       ),
     );

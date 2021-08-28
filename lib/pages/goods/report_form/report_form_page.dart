@@ -10,8 +10,9 @@ import 'package:recook/widgets/recook_back_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ReportFormPage extends StatefulWidget {
+  final int goodId;
   ReportFormPage({
-    Key key,
+    Key key,@required this.goodId,
   }) : super(key: key);
 
   @override

@@ -464,7 +464,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
               Spacer(),
               GestureDetector(
                 onTap: () {
-                  Get.to(ReportFormPage()); //加载报表数据
+                  //Get.to(ReportFormPage()); //加载报表数据
                 },
                 child: Container(
                     color: Colors.transparent,

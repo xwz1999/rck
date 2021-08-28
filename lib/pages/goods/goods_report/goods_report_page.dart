@@ -11,8 +11,10 @@ import 'package:velocity_x/velocity_x.dart';
 import 'goods_report_widget_page.dart';
 
 class GoodsReportPage extends StatefulWidget {
+  final int goodsId;
   GoodsReportPage({
     Key key,
+    @required this.goodsId,
   }) : super(key: key);
 
   @override
@@ -132,7 +134,11 @@ class _GoodsReportPageState extends State<GoodsReportPage>
               physics: NeverScrollableScrollPhysics(),
               controller: _tabController,
               children: List.generate(
-                  _tabItems().length, (index) => GoodsReportWidgetPage()),
+                  _tabItems().length,
+                  (index) => GoodsReportWidgetPage(
+                        goodsId: widget.goodsId,
+                        timeType: index + 1,
+                      )),
             ))
           ],
         )));

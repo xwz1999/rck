@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:recook/constants/api.dart';
+import 'package:recook/pages/goods/function/report_functions.dart';
 import 'package:recook/pages/goods/goods_report/widget/bar_table_widget.dart';
 import 'package:recook/pages/goods/goods_report/widget/circle_chart_widget.dart';
 import 'package:recook/pages/goods/goods_report/widget/line_table_widget.dart';
@@ -13,11 +14,16 @@ import 'package:recook/pages/goods/goods_report/widget/pie_table_widget.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/goods/model/goods_report_model.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class GoodsReportWidgetPage extends StatefulWidget {
+  final int goodsId;
+  final int timeType;
   GoodsReportWidgetPage({
     Key key,
+    @required this.goodsId,
+    @required this.timeType,
   }) : super(key: key);
 
   @override
@@ -25,27 +31,30 @@ class GoodsReportWidgetPage extends StatefulWidget {
 }
 
 class _GoodsReportWidgetPageState extends State<GoodsReportWidgetPage>
-    with TickerProviderStateMixin {
-  DateTime _dateNow = DateTime(
-      DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0);
-  TabController _tabController;
-  List _tabList = ['周', '月', '年', '总'];
+    with AutomaticKeepAliveClientMixin {
+  GoodsReportModel _goodsReportModel;
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 4, vsync: this);
+
+    Future.delayed(Duration.zero, () async {
+      _goodsReportModel =
+          await ReportFunc.getGoodsPortrait(widget.goodsId, widget.timeType);
+
+      setState(() {});
+    });
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColor.frenchColor, body: _buildListView());
+        backgroundColor: AppColor.frenchColor,
+        body: _goodsReportModel != null ? _buildListView() : SizedBox());
   }
 
   _buildListView() {
@@ -77,9 +86,24 @@ class _GoodsReportWidgetPageState extends State<GoodsReportWidgetPage>
                   ],
                 ),
                 40.hb,
-                _buildParameterText('品牌', '作家有出', '名称', '30cm多功能低压炒锅'),
-                _buildParameterText('净重', '约2.54kg', '材质', '铝合金基材，玻璃，硅胶，傲视不锈钢'),
-                _buildParameterText('尺寸', '约30cm*9.5cm', '适合炉灶', '通用'),
+                _buildParameterText(
+                    '品牌',
+                    _goodsReportModel.basicParameters.brandName,
+                    '名称',
+                    _goodsReportModel.basicParameters.goodsName),
+                _buildParameterText(
+                    '净重',
+                    _goodsReportModel.basicParameters.weight == 0
+                        ? '无详细参数'
+                        : '约' +
+                            _goodsReportModel.basicParameters.weight
+                                .toString() +
+                            'kg',
+                    '材质',
+                    _goodsReportModel.basicParameters.mainMaterial == ''
+                        ? '无详细参数'
+                        : _goodsReportModel.basicParameters.mainMaterial),
+                // _buildParameterText('尺寸', '约30cm*9.5cm', '适合炉灶', '通用'),
                 50.hb,
                 Container(
                   width: double.infinity,
@@ -87,7 +111,8 @@ class _GoodsReportWidgetPageState extends State<GoodsReportWidgetPage>
                   alignment: Alignment.center,
                   child: FadeInImage.assetNetwork(
                     placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                    image: Api.getImgUrl('/photo/15961790346127.png'),
+                    image: Api.getImgUrl(
+                        _goodsReportModel.basicParameters.mainPhoto),
                     height: 200.rw,
                     width: 200.rw,
                   ),
@@ -124,7 +149,10 @@ class _GoodsReportWidgetPageState extends State<GoodsReportWidgetPage>
                   width: double.infinity,
                   padding: EdgeInsets.only(right: 10.rw),
                   height: 270.rw,
-                  child: LineTablewidget(),
+                  child: LineTablewidget(
+                    saleList: _goodsReportModel.saleNum,
+                    timetype: widget.timeType,
+                  ),
                 )
               ],
             ))),
@@ -158,7 +186,10 @@ class _GoodsReportWidgetPageState extends State<GoodsReportWidgetPage>
                   width: double.infinity,
                   padding: EdgeInsets.only(right: 10.rw),
                   height: 270.rw,
-                  child: BarTableWidget(),
+                  child: BarTableWidget(
+                    topTenList: _goodsReportModel.topTen,
+                    timetype: widget.timeType,
+                  ),
                 ),
                 40.hb,
                 Text('地图分布',
@@ -170,7 +201,7 @@ class _GoodsReportWidgetPageState extends State<GoodsReportWidgetPage>
                     width: double.infinity,
                     padding: EdgeInsets.only(left: 15.rw),
                     height: 300.rw,
-                    child: MapWidget()),
+                    child: MapWidget(topTenList: _goodsReportModel.topTen)),
               ],
             ))),
         Container(
@@ -202,7 +233,7 @@ class _GoodsReportWidgetPageState extends State<GoodsReportWidgetPage>
                   width: double.infinity,
                   padding: EdgeInsets.only(top: 50.rw),
                   height: 240.rw,
-                  child: PieTabWidget(),
+                  child: PieTabWidget(agePortList: _goodsReportModel.agePort),
                 ),
               ],
             ))),
@@ -239,9 +270,10 @@ class _GoodsReportWidgetPageState extends State<GoodsReportWidgetPage>
                       children: [
                         CircleChart(
                             size: 100.rw,
-                            core: _percentage('30'),
+                            core:
+                                _percentage('${_goodsReportModel.gender.male}'),
                             color: Color(0xFF2C5EB3),
-                            aspectRato: 0.3,
+                            aspectRato: _goodsReportModel.gender.male / 100,
                             aboveStrokeWidth: 5.rw),
                         40.hb,
                         Text(
@@ -256,9 +288,10 @@ class _GoodsReportWidgetPageState extends State<GoodsReportWidgetPage>
                       children: [
                         CircleChart(
                             size: 100.rw,
-                            core: _percentage('70'),
+                            core: _percentage(
+                                '${_goodsReportModel.gender.female}'),
                             color: Color(0xFFC31B20),
-                            aspectRato: 0.7,
+                            aspectRato: _goodsReportModel.gender.female / 100,
                             aboveStrokeWidth: 5.rw),
                         40.hb,
                         Text(
@@ -353,4 +386,7 @@ class _GoodsReportWidgetPageState extends State<GoodsReportWidgetPage>
       ],
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
