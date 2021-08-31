@@ -8,15 +8,32 @@
  */
 
 import 'package:recook/constants/api.dart';
+import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/models/goods_detail_images_model.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/models/material_list_model.dart';
+import 'package:recook/models/missing_children_model.dart';
 import 'package:recook/models/order_preview_model.dart';
 
 class GoodsDetailModelImpl {
+  ///获取失踪儿童信息
+  static Future<MissingChildrenModel> getMissingChildrenInfo() async {
+    ResultData result =
+        await HttpManager.post(APIV2.gooodsAPI.getMissingChildrenInfo, {
+      'user_id': UserManager.instance.user.info.id,
+    });
+
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return MissingChildrenModel.fromJson(result.data['data']);
+      }
+    }
+  }
+
   /// 商品详情
   static Future<GoodsDetailModel> getDetailInfo(int goodsID, int userID) async {
     ResultData res = await HttpManager.post(

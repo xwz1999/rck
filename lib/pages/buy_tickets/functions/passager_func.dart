@@ -126,6 +126,20 @@ class PassagerFunc {
     }
   }
 
+    //取消订单
+  static Future<String> changeOrderStatus(
+    int orderId,
+  ) async {
+    ResultData result = await HttpManager.post(APIV2.ticketAPI.changeOrderStatus, {
+      'user_id':UserManager.instance.user.info.id,
+      "order_id": orderId,
+      'status':5
+    });
+    if (result.data != null) {
+      return result.data['code'];
+    }
+  }
+
   //提交订单接口
   static Future<SubmitOrderModel> submitAirOrder(
       String title,

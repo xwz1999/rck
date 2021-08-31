@@ -199,9 +199,14 @@ class _OrderAPI {
   ///导购订单列表
   String get guideOrderList => '/v2/app/order/guide_lists';
 }
-class GoodsAPI{
-    ///产品画像
-  String get getProductPortrait => '/v2/app/product_portrait/goods_detail_about';
+
+class GoodsAPI {
+  ///产品画像
+  String get getProductPortrait =>
+      '/v2/app/product_portrait/goods_detail_about';
+
+  ///获取失踪儿童的信息
+  String get getMissingChildrenInfo => '/v2/app/shopping_cart/missing_children';
 }
 
 class _InvoiceAoi {
@@ -256,6 +261,10 @@ class TicketAPI {
   ///订单列表
   String get getAirOrderList =>
       '/v2/app/liFang_ticketing/plane_ticket/air_user_order_list';
+
+  ///改变订单状态为取消订单
+  String get changeOrderStatus =>
+      '/v2/app/liFang_ticketing/plane_ticket/air_user_add_order_success';
 
   //提交订单接口
   String get submitAirOrder =>

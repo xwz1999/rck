@@ -323,7 +323,11 @@ class _MapState extends State<MapWidget> with AutomaticKeepAliveClientMixin {
           (details.localPosition.dx - _mapOffsetX) / _mapScale,
           (details.localPosition.dy - _mapOffsetY) / _mapScale))) {
         if (_chooseCityNameList.contains(mapEntity.name)) {
-          Toast.showInfo(mapEntity.name); //销量
+          //_chooseCityNameList.indexWhere(mapEntity.name);
+          // Toast.showInfo(mapEntity.name +
+          //     '销量为' +
+          //     widget.topTenList[_chooseCityNameList.indexOf(mapEntity.name)].sum
+          //         .toString()); //销量
         }
         mapEntity.isSelected = true;
 
@@ -466,29 +470,29 @@ class _MapState extends State<MapWidget> with AutomaticKeepAliveClientMixin {
         offsetY -= 6 * _mapScale;
       }
 
-      cityNameListWidget.add(Positioned(
-        left: offsetX,
-        top: offsetY,
-        child: _chooseCityNameList.contains(element.name)
-            ?
-            //   Row(
-            // children: [
-            //   Image.asset(
-            //     R.ASSETS_MAP_SIGN_PNG,
-            //     width: 20,
-            //     height: 20,
-            //   ),
-            Text(
-                element.name,
-                style: TextStyle(
-                    fontSize: 10,
-                    color: Color(0xFF3A3A3A),
-                    fontWeight: FontWeight.bold),
-              )
-            //   ],
-            // )
-            : SizedBox(),
-      ));
+      // cityNameListWidget.add(Positioned(
+      //   left: offsetX,
+      //   top: offsetY,
+      //   child: _chooseCityNameList.contains(element.name)
+      //       ?
+      //       //   Row(
+      //       // children: [
+      //       //   Image.asset(
+      //       //     R.ASSETS_MAP_SIGN_PNG,
+      //       //     width: 20,
+      //       //     height: 20,
+      //       //   ),
+      //       Text(
+      //           element.name,
+      //           style: TextStyle(
+      //               fontSize: 10,
+      //               color: Color(0xff939393),
+      //               fontWeight: FontWeight.bold),
+      //         )
+      //       //   ],
+      //       // )
+      //       : SizedBox(),
+      // ));
     });
     return cityNameListWidget;
   }

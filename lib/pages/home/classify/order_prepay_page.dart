@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_union_pay/flutter_union_pay.dart';
+import 'package:get/get.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
@@ -25,6 +26,8 @@ import 'package:recook/models/pay_result_model.dart';
 import 'package:recook/models/recook_fund_model.dart';
 import 'package:recook/pages/buy_tickets/functions/passager_func.dart';
 import 'package:recook/pages/buy_tickets/models/pay_need_model.dart';
+import 'package:recook/pages/buy_tickets/order_widgt.dart';
+import 'package:recook/pages/buy_tickets/tickets_order_page.dart';
 import 'package:recook/pages/home/classify/mvp/order_mvp/order_presenter_impl.dart';
 import 'package:recook/pages/user/order/order_center_page.dart';
 import 'package:recook/pages/user/order/order_detail_page.dart';
@@ -173,7 +176,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         body: _buildBody(context),
       ),
       onWillPop: () {
-        _fromTo != ''
+        _fromTo == ''
             ? Alert.show(
                 context,
                 NormalTextDialog(
@@ -209,11 +212,17 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
                     Alert.dismiss(context);
                   },
                   deleteItem: "确认离开",
-                  deleteListener: () {
-                    _updateUserBrief();
+                  deleteListener: () async {
+                    //_updateUserBrief();
                     Alert.dismiss(context);
+                    String code = await PassagerFunc.changeOrderStatus(
+                        _payNeedModel.lfOrderId);
+
+                    //设置飞机票为取消
 
                     Navigator.pop(context);
+                    Navigator.pop(context);
+                    if (code == 'SUCCESS') Toast.showInfo('订单已取消,请重新下单购买');
                   },
                 ));
         return Future.value(false);
@@ -702,10 +711,20 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
       if (resultModel.data.status == 0) {
         GSDialog.of(_scaffoldKey.currentContext)
             .dismiss(_scaffoldKey.currentContext);
-        ReToast.err(text: '购票失败');
+        String code =
+            await PassagerFunc.changeOrderStatus(_payNeedModel.lfOrderId);
+
         Navigator.pop(context);
         Navigator.pop(context);
         Navigator.pop(context);
+        Get.to(TicketsOrderPage(
+          ticketType: 1,
+          firstTab: 3,
+        ));
+        if (code == 'SUCCESS')
+          Toast.showInfo('支付失败,订单已取消,请重新下单购买');
+        else
+          Toast.showInfo('支付异常,订单已取消,请重新下单购买');
       } else if (resultModel.data.status == 1) {
         GSDialog.of(_scaffoldKey.currentContext)
             .dismiss(_scaffoldKey.currentContext);
@@ -723,17 +742,14 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
               _payNeedModel.to,
               _payNeedModel.companyCode,
               _payNeedModel.flightNo);
-          if (msg == 'ok') {
-            ReToast.success(text: '购票成功');
-            Navigator.pop(context);
-            Navigator.pop(context);
-            Navigator.pop(context);
-          } else {
-            ReToast.success(text: '购票失败');
-            Navigator.pop(context);
-            Navigator.pop(context);
-            Navigator.pop(context);
-          }
+
+          ReToast.success(text: '为您购票中');
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Navigator.pop(context);
+          Get.to(TicketsOrderPage(
+            ticketType: 1,
+          ));
         }
 
         //Navigator.pop(context);
@@ -754,17 +770,14 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
             _payNeedModel.to,
             _payNeedModel.companyCode,
             _payNeedModel.flightNo);
-        if (msg == 'ok') {
-          ReToast.success(text: '购票成功');
-          Navigator.pop(context);
-          Navigator.pop(context);
-          Navigator.pop(context);
-        } else {
-          ReToast.err(text: '购票失败');
-          Navigator.pop(context);
-          Navigator.pop(context);
-          Navigator.pop(context);
-        }
+
+        ReToast.success(text: '为您购票中');
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Navigator.pop(context);
+        Get.to(TicketsOrderPage(
+          ticketType: 1,
+        ));
       }
 
       //Navigator.pop(context);

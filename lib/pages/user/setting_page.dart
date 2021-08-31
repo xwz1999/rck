@@ -92,12 +92,6 @@ class _SettingItemListViewState extends ResumableState<SettingItemListView> {
                         //push(RouteName.ACCOUNT_AND_SAFETY_PAGE);
                       }),
 
-                      SCTile.normalTile('产品报表', needDivide: true, listener: () {
-                        Get.to(GoodsReportPage());
-
-                        //push(RouteName.ACCOUNT_AND_SAFETY_PAGE);
-                      }),
-
                       SCTile.normalTile('接收推送通知',
                           needArrow: true, value: perText, listener: () async {
                         JPush().openSettingsForNotification();

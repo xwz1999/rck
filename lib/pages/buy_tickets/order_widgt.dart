@@ -25,7 +25,7 @@ class OrderWidgetPage extends StatefulWidget {
   final int ticketType; //1飞机 2汽车 3火车
   final int orderType;
   OrderWidgetPage(
-      {Key key, this.code, @required this.ticketType, @required this.orderType})
+      {Key key, this.code, this.ticketType, @required this.orderType})
       : super(key: key);
 
   @override
@@ -39,9 +39,9 @@ class _OrderWidgetPageState extends State<OrderWidgetPage>
   int _ticketTypee;
   String _ticketText = '飞机票';
   String _stateText = '';
-  Timer _timer;
-  bool _getTime = false;
-  int countDown = 0; //剩下多少秒
+  // Timer _timer;
+  // bool _getTime = false;
+  // int countDown = 0; //剩下多少秒
   List<AirOrderModel> _orderList = [];
   bool showList = false;
   DateTime _endDate = new DateTime.now();
@@ -51,65 +51,66 @@ class _OrderWidgetPageState extends State<OrderWidgetPage>
   void initState() {
     super.initState();
     _ticketTypee = 1;
-    startTick();
+
+    //startTick();
   }
 
   @override
   void dispose() {
-    _timer.cancel();
+    //_timer.cancel();
     _refreshController.dispose();
     super.dispose();
   }
 
-  String _getStartDate(DateTime date) {
-    int endYear = date.year;
-    int endMonth = date.month;
-    int startYear = 0;
-    int startMonth = 0;
-    if (endMonth - 3 < 0) {
-      startYear = endYear - 1;
-      startMonth = 12 + endMonth - 3;
-    } else {
-      startYear = endYear;
-      startMonth = endMonth - 3;
-    }
-    return DateUtil.formatDate(
-        DateTime(startYear, startMonth, DateTime.now().day, 0, 0, 0),
-        format: 'yyyy-MM-dd HH:mm:ss');
-  }
+  // String _getStartDate(DateTime date) {
+  //   int endYear = date.year;
+  //   int endMonth = date.month;
+  //   int startYear = 0;
+  //   int startMonth = 0;
+  //   if (endMonth - 3 < 0) {
+  //     startYear = endYear - 1;
+  //     startMonth = 12 + endMonth - 3;
+  //   } else {
+  //     startYear = endYear;
+  //     startMonth = endMonth - 3;
+  //   }
+  //   return DateUtil.formatDate(
+  //       DateTime(startYear, startMonth, DateTime.now().day, 0, 0, 0),
+  //       format: 'yyyy-MM-dd HH:mm:ss');
+  // }
 
-  startTick() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (timer.tick >= 15 * 60) {
-        _getTime = false;
-        _timer.cancel();
-        _timer = null;
-        _refreshController.requestRefresh();
-      } else {
-        _getTime = true;
-      }
+  // startTick() {
+  //   _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+  //     if (timer.tick >= 15 * 60) {
+  //       _getTime = false;
+  //       _timer.cancel();
+  //       _timer = null;
+  //       _refreshController.requestRefresh();
+  //     } else {
+  //       _getTime = true;
+  //     }
 
-      setState(() {});
-    });
-  }
+  //     setState(() {});
+  //   });
+  // }
 
-  getTimeText(int tick) {
-    String m = '';
-    String s = '';
-    if (tick >= 0) {
-      if ((tick ~/ 60) < 10) {
-        m = '0' + (tick ~/ 60).toString() + '分';
-      } else {
-        m = (tick ~/ 60).toString() + '分';
-      }
-      if ((tick % 60) < 10) {
-        s = '0' + (tick % 60).toString() + '秒后';
-      } else {
-        s = (tick % 60).toString() + '秒后';
-      }
-    }
-    return m + s;
-  }
+  // getTimeText(int tick) {
+  //   String m = '';
+  //   String s = '';
+  //   if (tick >= 0) {
+  //     if ((tick ~/ 60) < 10) {
+  //       m = '0' + (tick ~/ 60).toString() + '分';
+  //     } else {
+  //       m = (tick ~/ 60).toString() + '分';
+  //     }
+  //     if ((tick % 60) < 10) {
+  //       s = '0' + (tick % 60).toString() + '秒后';
+  //     } else {
+  //       s = (tick % 60).toString() + '秒后';
+  //     }
+  //   }
+  //   return m + s;
+  // }
 
   getTicketType() {
     switch (_ticketTypee) {
@@ -126,18 +127,18 @@ class _OrderWidgetPageState extends State<OrderWidgetPage>
     return _ticketText;
   }
 
-  int getsurplus(String expiration) {
-    if (expiration != null) {
-      //获取订单剩余时间
-      DateTime endTime = DateUtil.getDateTime(expiration);
-      if (endTime.difference(DateTime.now()).inSeconds <= 0) {
-        return 0;
-      } else {
-        return endTime.difference(DateTime.now()).inSeconds;
-      }
-    }
-    return 0;
-  }
+  // int getsurplus(String expiration) {
+  //   if (expiration != null) {
+  //     //获取订单剩余时间
+  //     DateTime endTime = DateUtil.getDateTime(expiration);
+  //     if (endTime.difference(DateTime.now()).inSeconds <= 0) {
+  //       return 0;
+  //     } else {
+  //       return endTime.difference(DateTime.now()).inSeconds;
+  //     }
+  //   }
+  //   return 0;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -162,6 +163,7 @@ class _OrderWidgetPageState extends State<OrderWidgetPage>
           });
           showList = true;
           _refreshController.refreshCompleted();
+          setState(() {});
         },
         onLoadMore: () async {
           _refreshController.loadComplete();
@@ -200,7 +202,7 @@ class _OrderWidgetPageState extends State<OrderWidgetPage>
               children: [
                 Row(
                   children: [
-                    Text(item.order.from,
+                    Text(item.order.fromCity ?? '',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18.rsp,
@@ -210,7 +212,7 @@ class _OrderWidgetPageState extends State<OrderWidgetPage>
                     Image.asset(R.ASSETS_GOTO1_PNG,
                         width: 18.rw, height: 7.rw, color: Color(0xFF999999)),
                     20.wb,
-                    Text(item.order.to,
+                    Text(item.order.toCity ?? '',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 18.rsp,
@@ -218,11 +220,31 @@ class _OrderWidgetPageState extends State<OrderWidgetPage>
                         )),
                   ],
                 ),
-                Text(_stateText,
-                    style: TextStyle(
-                      fontSize: 14.rsp,
-                      color: Color(0xFFFA6400),
-                    )),
+                widget.orderType == 1
+                    ? Text('出票中',
+                        style: TextStyle(
+                          fontSize: 14.rsp,
+                          color: Color(0xFFFA6400),
+                        ))
+                    : widget.orderType == 2
+                        ? Text('已完成',
+                            style: TextStyle(
+                              fontSize: 14.rsp,
+                              color: Color(0xFF25D701),
+                            ))
+                        : widget.orderType == 3
+                            ? Text('出票失败',
+                                style: TextStyle(
+                                  fontSize: 14.rsp,
+                                  color: Color(0xFFCB322D),
+                                ))
+                            : widget.orderType == 5
+                                ? Text('已取消',
+                                    style: TextStyle(
+                                      fontSize: 14.rsp,
+                                      color: Color(0xFF999999),
+                                    ))
+                                : SizedBox(),
               ],
             ),
             20.hb,
@@ -235,16 +257,28 @@ class _OrderWidgetPageState extends State<OrderWidgetPage>
                       color: Color(0xFF333333),
                     )),
                 20.wb,
-                Text(
-                    item.order.fromDate != null
-                        ? item.order.fromDate.length > 0
-                            ? item.order.fromDate.substring(5)
-                            : item.order.fromDate
-                        : '',
-                    style: TextStyle(
-                      fontSize: 14.rsp,
-                      color: Color(0xFF333333),
-                    )),
+                Container(
+                  padding: EdgeInsets.only(top: 2.rw),
+                  child: Row(
+                    children: [
+                      Text(
+                          DateUtil.formatDate(
+                                  DateUtil.getDateTime(item.order.date ?? ''),
+                                  format: 'MM-dd') ??
+                              '',
+                          style: TextStyle(
+                            fontSize: 14.rsp,
+                            color: Color(0xFF333333),
+                          )),
+                      10.wb,
+                      Text(item.order.fromDate ?? '',
+                          style: TextStyle(
+                            fontSize: 14.rsp,
+                            color: Color(0xFF333333),
+                          )),
+                    ],
+                  ),
+                ),
                 60.wb,
                 Text("到达",
                     style: TextStyle(
@@ -253,29 +287,40 @@ class _OrderWidgetPageState extends State<OrderWidgetPage>
                       color: Color(0xFF333333),
                     )),
                 20.wb,
-                Text(
-                    item.order.toDate != null
-                        ? item.order.toDate.length > 0
-                            ? item.order.toDate.substring(5)
-                            : item.order.toDate
-                        : '',
-                    style: TextStyle(
-                      fontSize: 14.rsp,
-                      color: Color(0xFF333333),
-                    )),
+                Container(
+                  padding: EdgeInsets.only(top: 2.rw),
+                  child: Row(
+                    children: [
+                      Text(
+                          _getDayTime(item.order.fromDate, item.order.toDate,
+                                  item.order.date) ??
+                              '',
+                          style: TextStyle(
+                            fontSize: 14.rsp,
+                            color: Color(0xFF333333),
+                          )),
+                      10.wb,
+                      Text(item.order.toDate ?? '',
+                          style: TextStyle(
+                            fontSize: 14.rsp,
+                            color: Color(0xFF333333),
+                          )),
+                    ],
+                  ),
+                )
               ],
             ),
             20.hb,
             Row(
               children: [
-                Text(item.order.fromPort,
+                Text(item.order.fromPort ?? '',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 14.rsp,
                       color: Color(0xFF333333),
                     )),
                 40.wb,
-                Text(item.order.line,
+                Text(item.order.line ?? '',
                     style: TextStyle(
                       fontSize: 14.rsp,
                       color: Color(0xFF333333),
@@ -293,34 +338,34 @@ class _OrderWidgetPageState extends State<OrderWidgetPage>
                           fontSize: 18.rsp,
                           color: Color(0xFFCB322D),
                         )),
-                    Text(item.order.amountMoney.toString(),
+                    Text(item.order.amountMoney.toString() ?? '',
                         style: TextStyle(
                           fontSize: 18.rsp,
                           color: Color(0xFFCB322D),
                         )),
                   ],
                 ),
-                item.order.status == 2
-                    ? Row(
-                        children: [
-                          Text(
-                              _getTime
-                                  ? getTimeText(
-                                      getsurplus(item.order.fromDate) -
-                                          _timer.tick)
-                                  : '',
-                              style: TextStyle(
-                                fontSize: 10.rsp,
-                                color: Color(0xFFCB322D),
-                              )),
-                          Text('本订单已取消',
-                              style: TextStyle(
-                                fontSize: 10.rsp,
-                                color: Color(0xFF333333),
-                              )),
-                        ],
-                      )
-                    : SizedBox(),
+                // item.order.status == 2
+                //     ? Row(
+                //         children: [
+                //           Text(
+                //               _getTime
+                //                   ? getTimeText(
+                //                       getsurplus(item.order.fromDate) -
+                //                           _timer.tick)
+                //                   : '',
+                //               style: TextStyle(
+                //                 fontSize: 10.rsp,
+                //                 color: Color(0xFFCB322D),
+                //               )),
+                //           Text('本订单已取消',
+                //               style: TextStyle(
+                //                 fontSize: 10.rsp,
+                //                 color: Color(0xFF333333),
+                //               )),
+                //         ],
+                //       )
+                //     : SizedBox(),
               ],
             )
           ],
@@ -352,5 +397,18 @@ class _OrderWidgetPageState extends State<OrderWidgetPage>
         ],
       ),
     );
+  }
+
+  _getDayTime(String start, String end, String date) {
+    //print(DateUtil.getDateTime(date));
+    if (date != null) {
+      if (end.compareTo(start) == -1) {
+        return DateUtil.formatDate(
+            DateUtil.getDateTime(date).add(Duration(days: 1)),
+            format: 'MM-dd');
+      } else {
+        return DateUtil.formatDate(DateUtil.getDateTime(date), format: 'MM-dd');
+      }
+    }
   }
 }

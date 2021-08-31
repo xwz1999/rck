@@ -13,8 +13,7 @@ class BarTableWidget extends StatefulWidget {
   State<BarTableWidget> createState() => BarTableWidgetState();
 }
 
-class BarTableWidgetState extends State<BarTableWidget>
-    {
+class BarTableWidgetState extends State<BarTableWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -70,10 +69,10 @@ class BarTableWidgetState extends State<BarTableWidget>
           bottomTitles: SideTitles(
             showTitles: true,
             getTextStyles: (context, value) => const TextStyle(
-              color: Color(0xff939393),
+              color: Color(0xFF333333),
               fontSize: 10,
             ),
-            margin: 10,
+            margin: 5,
             getTitles: (double value) {
               return _getProvice(widget.topTenList[value.toInt()].province);
             },
@@ -83,9 +82,9 @@ class BarTableWidgetState extends State<BarTableWidget>
             interval: _getInterval(_getMaxNum()), //间隔
             getTextStyles: (context, value) => const TextStyle(
                 color: Color(
-                  0xff939393,
+                  0xFF333333,
                 ),
-                fontSize: 10),
+                fontSize: 12),
             margin: 10,
           ),
         ),
@@ -135,8 +134,6 @@ class BarTableWidgetState extends State<BarTableWidget>
     );
   }
 
-
-
   _getProvice(String provice) {
     provice = provice.replaceAll('维吾尔自治区', '');
     provice = provice.replaceAll('回族自治区', '');
@@ -149,8 +146,8 @@ class BarTableWidgetState extends State<BarTableWidget>
 
   _getInterval(num maxNum) {
     //得到一个10的倍数的间隔值
-    if (maxNum < 4)
-      return maxNum;
+    if (maxNum < 10)
+      return maxNum.toDouble();
     else {
       int num1 = maxNum ~/ 4;
       int a = num1 % 10;

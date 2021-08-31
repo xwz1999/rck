@@ -48,29 +48,40 @@ class Order {
   String toPort;
   String line;
   String users;
+  String date;
+  String thirdPartyNo;
+  String reservedPhone;
+  String fromCity;
+  String toCity;
 
-  Order(
-      {this.id,
-      this.title,
-      this.userId,
-      this.tradeNo,
-      this.createdTime,
-      this.unsubscribe,
-      this.status,
-      this.expireTime,
-      this.payIp,
-      this.payTime,
-      this.payMethod,
-      this.goodsType,
-      this.amountMoney,
-      this.from,
-      this.to,
-      this.fromDate,
-      this.toDate,
-      this.fromPort,
-      this.toPort,
-      this.line,
-      this.users});
+  Order({
+    this.id,
+    this.title,
+    this.userId,
+    this.tradeNo,
+    this.createdTime,
+    this.unsubscribe,
+    this.status,
+    this.expireTime,
+    this.payIp,
+    this.payTime,
+    this.payMethod,
+    this.goodsType,
+    this.amountMoney,
+    this.from,
+    this.to,
+    this.fromDate,
+    this.toDate,
+    this.fromPort,
+    this.toPort,
+    this.line,
+    this.users,
+    this.date,
+    this.thirdPartyNo,
+    this.reservedPhone,
+    this.fromCity,
+    this.toCity,
+  });
 
   Order.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -94,6 +105,11 @@ class Order {
     toPort = json['to_port'];
     line = json['line'];
     users = json['users'];
+    date = json['date'];
+    thirdPartyNo = json['third_party_no'];
+    reservedPhone = json['reserved_phone'];
+    fromCity = json['from_city'];
+    toCity = json['to_city'];
   }
 
   Map<String, dynamic> toJson() {
@@ -119,6 +135,11 @@ class Order {
     data['to_port'] = this.toPort;
     data['line'] = this.line;
     data['users'] = this.users;
+    data['date'] = this.date;
+    data['third_party_no'] = this.thirdPartyNo;
+    data['reserved_phone'] = this.reservedPhone;
+    data['from_city'] = this.fromCity;
+    data['to_city'] = this.toCity;
     return data;
   }
 }

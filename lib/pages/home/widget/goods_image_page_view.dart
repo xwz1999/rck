@@ -35,7 +35,8 @@ class ImagePageView extends StatefulWidget {
     this.onScrolled,
     this.images,
     this.living,
-  }) : assert(images != null && images.length > 0, "images 不能为空");
+  });
+  //: assert(images != null && images.length > 0, "images 不能为空");
 
   @override
   State<StatefulWidget> createState() {

@@ -24,7 +24,8 @@ import 'models/air_order_model.dart';
 class TicketsOrderPage extends StatefulWidget {
   final String code; //飞机票标准商品编号
   final int ticketType; //1飞机 2汽车 3火车
-  TicketsOrderPage({Key key, this.code, @required this.ticketType})
+  final int firstTab;
+  TicketsOrderPage({Key key, this.code, @required this.ticketType, this.firstTab})
       : super(key: key);
 
   @override
@@ -52,65 +53,65 @@ class _TicketsOrderPageState extends State<TicketsOrderPage>
   void initState() {
     super.initState();
     _ticketTypee = 1;
-    _tabController = TabController(length: 5, vsync: this);
-    startTick();
+    _tabController = TabController(length: 4, vsync: this,initialIndex:widget.firstTab );
+    //startTick();
   }
 
   @override
   void dispose() {
-    _timer.cancel();
+    //_timer.cancel();
     super.dispose();
   }
 
-  String _getStartDate(DateTime date) {
-    int endYear = date.year;
-    int endMonth = date.month;
-    int startYear = 0;
-    int startMonth = 0;
-    if (endMonth - 3 < 0) {
-      startYear = endYear - 1;
-      startMonth = 12 + endMonth - 3;
-    } else {
-      startYear = endYear;
-      startMonth = endMonth - 3;
-    }
-    return DateUtil.formatDate(
-        DateTime(startYear, startMonth, DateTime.now().day, 0, 0, 0),
-        format: 'yyyy-MM-dd HH:mm:ss');
-  }
+  // String _getStartDate(DateTime date) {
+  //   int endYear = date.year;
+  //   int endMonth = date.month;
+  //   int startYear = 0;
+  //   int startMonth = 0;
+  //   if (endMonth - 3 < 0) {
+  //     startYear = endYear - 1;
+  //     startMonth = 12 + endMonth - 3;
+  //   } else {
+  //     startYear = endYear;
+  //     startMonth = endMonth - 3;
+  //   }
+  //   return DateUtil.formatDate(
+  //       DateTime(startYear, startMonth, DateTime.now().day, 0, 0, 0),
+  //       format: 'yyyy-MM-dd HH:mm:ss');
+  // }
 
-  startTick() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
-      if (timer.tick >= 15 * 60) {
-        _getTime = false;
-        _timer.cancel();
-        _timer = null;
-        _refreshController.requestRefresh();
-      } else {
-        _getTime = true;
-      }
+  // startTick() {
+  //   _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+  //     if (timer.tick >= 15 * 60) {
+  //       _getTime = false;
+  //       _timer.cancel();
+  //       _timer = null;
+  //       _refreshController.requestRefresh();
+  //     } else {
+  //       _getTime = true;
+  //     }
 
-      setState(() {});
-    });
-  }
+  //     setState(() {});
+  //   });
+  // }
 
-  getTimeText(int tick) {
-    String m = '';
-    String s = '';
-    if (tick >= 0) {
-      if ((tick ~/ 60) < 10) {
-        m = '0' + (tick ~/ 60).toString() + '分';
-      } else {
-        m = (tick ~/ 60).toString() + '分';
-      }
-      if ((tick % 60) < 10) {
-        s = '0' + (tick % 60).toString() + '秒后';
-      } else {
-        s = (tick % 60).toString() + '秒后';
-      }
-    }
-    return m + s;
-  }
+  // getTimeText(int tick) {
+  //   String m = '';
+  //   String s = '';
+  //   if (tick >= 0) {
+  //     if ((tick ~/ 60) < 10) {
+  //       m = '0' + (tick ~/ 60).toString() + '分';
+  //     } else {
+  //       m = (tick ~/ 60).toString() + '分';
+  //     }
+  //     if ((tick % 60) < 10) {
+  //       s = '0' + (tick % 60).toString() + '秒后';
+  //     } else {
+  //       s = (tick % 60).toString() + '秒后';
+  //     }
+  //   }
+  //   return m + s;
+  // }
 
   getTicketType() {
     switch (_ticketTypee) {
@@ -127,79 +128,71 @@ class _TicketsOrderPageState extends State<TicketsOrderPage>
     return _ticketText;
   }
 
-  int getsurplus(String expiration) {
-    if (expiration != null) {
-      //获取订单剩余时间
-      DateTime endTime = DateUtil.getDateTime(expiration);
-      if (endTime.difference(DateTime.now()).inSeconds <= 0) {
-        return 0;
-      } else {
-        return endTime.difference(DateTime.now()).inSeconds;
-      }
-    }
-    return 0;
-  }
+  // int getsurplus(String expiration) {
+  //   if (expiration != null) {
+  //     //获取订单剩余时间
+  //     DateTime endTime = DateUtil.getDateTime(expiration);
+  //     if (endTime.difference(DateTime.now()).inSeconds <= 0) {
+  //       return 0;
+  //     } else {
+  //       return endTime.difference(DateTime.now()).inSeconds;
+  //     }
+  //   }
+  //   return 0;
+  // }
 
   List<Widget> tabs = [
     Tab(
-      icon: Badge(
-        badgeColor: Colors.red,
-        shape: BadgeShape.circle,
-        position: BadgePosition.topEnd(top: -3, end: -4),
-        padding: EdgeInsets.all(3.rw),
-        badgeContent: null,
-        child: Text(
-          '预订中',
-        ),
-      ),
+      text: '出票中',
+      // icon: Badge(
+      //   badgeColor: Colors.red,
+      //   shape: BadgeShape.circle,
+      //   position: BadgePosition.topEnd(top: -3, end: -4),
+      //   padding: EdgeInsets.all(3.rw),
+      //   badgeContent: null,
+      //   child: Text(
+      //     '出票中',
+      //   ),
+      // ),
     ),
     Tab(
-      icon: Badge(
-        badgeColor: Colors.red,
-        shape: BadgeShape.circle,
-        position: BadgePosition.topEnd(top: -3, end: -4),
-        padding: EdgeInsets.all(3.rw),
-        badgeContent: null,
-        child: Text(
-          '待付款',
-        ),
-      ),
+      text: '已完成',
+      // icon: Badge(
+      //   badgeColor: Colors.red,
+      //   shape: BadgeShape.circle,
+      //   position: BadgePosition.topEnd(top: -3, end: -4),
+      //   padding: EdgeInsets.all(3.rw),
+      //   badgeContent: null,
+      //   child: Text(
+      //     '已完成',
+      //   ),
+      // ),
     ),
     Tab(
-      icon: Badge(
-        badgeColor: Colors.red,
-        shape: BadgeShape.circle,
-        position: BadgePosition.topEnd(top: -3, end: -4),
-        padding: EdgeInsets.all(3.rw),
-        badgeContent: null,
-        child: Text(
-          '待出行',
-        ),
-      ),
+      text: '出票失败',
+      // icon: Badge(
+      //   badgeColor: Colors.red,
+      //   shape: BadgeShape.circle,
+      //   position: BadgePosition.topEnd(top: -3, end: -4),
+      //   padding: EdgeInsets.all(3.rw),
+      //   badgeContent: null,
+      //   child: Text(
+      //     '出票失败',
+      //   ),
+      // ),
     ),
     Tab(
-      icon: Badge(
-        badgeColor: Colors.red,
-        shape: BadgeShape.circle,
-        position: BadgePosition.topEnd(top: -3, end: -4),
-        padding: EdgeInsets.all(3.rw),
-        badgeContent: null,
-        child: Text(
-          '已完成',
-        ),
-      ),
-    ),
-    Tab(
-      icon: Badge(
-        badgeColor: Colors.red,
-        shape: BadgeShape.circle,
-        position: BadgePosition.topEnd(top: -3, end: -4),
-        padding: EdgeInsets.all(3.rw),
-        badgeContent: null,
-        child: Text(
-          '已取消',
-        ),
-      ),
+      text: '已取消',
+      // icon: Badge(
+      //   badgeColor: Colors.red,
+      //   shape: BadgeShape.circle,
+      //   position: BadgePosition.topEnd(top: -3, end: -4),
+      //   padding: EdgeInsets.all(3.rw),
+      //   badgeContent: null,
+      //   child: Text(
+      //     '已取消',
+      //   ),
+      // ),
     ),
   ];
 
@@ -210,56 +203,70 @@ class _TicketsOrderPageState extends State<TicketsOrderPage>
       appBar: CustomAppBar(
         appBackground: Color(0xFFF9F9FB),
         actions: [
-          PopupMenuButton(
-              offset: Offset(0, 10),
-              color: Colors.white,
-              child: Row(
-                children: [
-                  Text(getTicketType(),
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14.rsp,
-                        color: Color(0xFF333333),
-                      )),
-                  Icon(
-                    Icons.arrow_drop_down,
-                    color: Colors.black87,
-                  ),
-                ],
+          Row(
+            children: [
+              Text(getTicketType(),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 14.rsp,
+                    color: Color(0xFF333333),
+                  )),
+              Icon(
+                Icons.arrow_drop_down,
+                color: Colors.black87,
               ),
-              onSelected: (String value) {
-                setState(() {
-                  _ticketTypee = int.parse(value);
-                  print(value);
-                  setState(() {});
-                });
-              },
-              itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
-                    PopupMenuItem(
-                        value: "1",
-                        child: Text("飞机票",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14.rsp,
-                              color: Color(0xFF333333),
-                            ))),
-                    PopupMenuItem(
-                        value: "2",
-                        child: Text("汽车票",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14.rsp,
-                              color: Color(0xFF333333),
-                            ))),
-                    PopupMenuItem(
-                        value: "3",
-                        child: Text("火车票",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14.rsp,
-                              color: Color(0xFF333333),
-                            ))),
-                  ]),
+            ],
+          ),
+          // PopupMenuButton(
+          //     offset: Offset(0, 10),
+          //     color: Colors.white,
+          //     child: Row(
+          //       children: [
+          //         Text(getTicketType(),
+          //             style: TextStyle(
+          //               fontWeight: FontWeight.bold,
+          //               fontSize: 14.rsp,
+          //               color: Color(0xFF333333),
+          //             )),
+          //         Icon(
+          //           Icons.arrow_drop_down,
+          //           color: Colors.black87,
+          //         ),
+          //       ],
+          //     ),
+          //     onSelected: (String value) {
+          //       setState(() {
+          //         _ticketTypee = int.parse(value);
+          //         print(value);
+          //         setState(() {});
+          //       });
+          //     },
+          //     itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+          //           PopupMenuItem(
+          //               value: "1",
+          //               child: Text("飞机票",
+          //                   style: TextStyle(
+          //                     fontWeight: FontWeight.bold,
+          //                     fontSize: 14.rsp,
+          //                     color: Color(0xFF333333),
+          //                   ))),
+          //           PopupMenuItem(
+          //               value: "2",
+          //               child: Text("汽车票",
+          //                   style: TextStyle(
+          //                     fontWeight: FontWeight.bold,
+          //                     fontSize: 14.rsp,
+          //                     color: Color(0xFF333333),
+          //                   ))),
+          //           PopupMenuItem(
+          //               value: "3",
+          //               child: Text("火车票",
+          //                   style: TextStyle(
+          //                     fontWeight: FontWeight.bold,
+          //                     fontSize: 14.rsp,
+          //                     color: Color(0xFF333333),
+          //                   ))),
+          //         ]),
         ],
         elevation: 0,
         title: Text(
@@ -273,20 +280,20 @@ class _TicketsOrderPageState extends State<TicketsOrderPage>
               _tabType = index;
               switch (_tabType) {
                 case 0:
-                  _stateText = '待付款';
+                  _stateText = '出票中';
                   break;
                 case 1:
-                  _stateText = '已付款';
+                  _stateText = '已完成';
                   break;
                 case 2:
                   _stateText = '已取消';
                   break;
                 case 3:
-                  _stateText = '已过期';
+                  _stateText = '出票失败';
                   break;
-                case 4:
-                  _stateText = '已完成';
-                  break;
+                // case 4:
+                //   _stateText = '已完成';
+                //   break;
               }
               setState(() {});
             },
@@ -308,11 +315,12 @@ class _TicketsOrderPageState extends State<TicketsOrderPage>
             tabs: tabs),
       ),
       body: TabBarView(controller: _tabController, children: [
-        OrderWidgetPage(ticketType: widget.ticketType, orderType: 3),
-        OrderWidgetPage(ticketType: widget.ticketType, orderType: 0),
-        OrderWidgetPage(ticketType: widget.ticketType, orderType: 1),
-        OrderWidgetPage(ticketType: widget.ticketType, orderType: 4),
-        OrderWidgetPage(ticketType: widget.ticketType, orderType: 2),
+        //
+        OrderWidgetPage(ticketType: widget.ticketType, orderType: 1), //1 出票中
+        OrderWidgetPage(ticketType: widget.ticketType, orderType: 2), //2 已完成
+        // OrderWidgetPage(ticketType: widget.ticketType, orderType: 4),
+        OrderWidgetPage(ticketType: widget.ticketType, orderType: 3), //3 出票失败
+        OrderWidgetPage(ticketType: widget.ticketType, orderType: 5), //5已取消
       ]),
     );
   }

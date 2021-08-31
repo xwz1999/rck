@@ -207,9 +207,8 @@ class _TabBarWidgetState extends State<TabBarWidget>
             HomePage(
               tabController: _tabController,
             ),
-            GoodsHotListPage(),
-            //秒杀入口(测试待定入口)
-            //AkuCollegePage(),//------akkuxuyaun
+            //GoodsHotListPage(),
+            AkuCollegePage(), //------akkuxuyaun
             DiscoveryPage(),
             // BusinessPage(),
             ShoppingCartPage(),
@@ -313,9 +312,9 @@ class _BottomBarState extends State<BottomBar> {
           imageSelected: AssetImage("assets/tabbar_sale_selected.png"),
         ),
         NavigationItemBean(
-          textStr: '排行榜',
-          image: AssetImage("assets/tabbar_shop_normal.png"),
-          imageSelected: AssetImage("assets/tabbar_shop_selected.png"),
+          textStr: '阿库学院',
+          image: AssetImage("assets/tabbar_aku_normal.png"),
+          imageSelected: AssetImage("assets/tabbar_aku_selected.png"),
         ),
         NavigationItemBean(
           textStr: '发现',

@@ -12,6 +12,7 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/home_weather_model.dart';
 import 'package:recook/widgets/calendar/calendar_weekbar_widget.dart';
+import 'package:recook/widgets/calendar/holiday_calendar_model.dart';
 import 'package:recook/widgets/calendar/perpetual_calendar_model.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/recook_back_button.dart';
@@ -31,17 +32,21 @@ class HomeDateDetailPage extends StatefulWidget {
 class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
   CalendarController _calendarController;
   PerpetualCalendarModel _perpetualCalendarModel;
+  HolidayCalendarModel _holidayCalendarModel;
   Set<DateTime> _dates = Set<DateTime>();
   DateModel _dateModel;
 
   final DateTime dateNow = DateTime.now();
   int _year = DateTime.now().year;
   int _month = DateTime.now().month;
+  String _holiday = '';
+  String _workday = '';
   @override
   void initState() {
     super.initState();
     DateTime dateNow = DateTime.now();
     _getPerpetual(DateUtil.formatDate(dateNow, format: 'yyyy-MM-dd'));
+    _getholiday(dateNow.year.toString());
     _calendarController = CalendarController(
       maxYear: dateNow.year + 10,
       maxYearMonth: 12,
@@ -54,14 +59,19 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
     )
       ..addMonthChangeListener((year, month) {
         setState(() {
+          if (_year != year) {
+            _getholiday(year.toString());
+            setState(() {});
+          }
           _year = year;
           _month = month;
         });
       })
       ..addOnCalendarSelectListener((dateModel) {
         _dateModel = dateModel;
-        _getPerpetual(
-            DateUtil.formatDate(dateModel.getDateTime(), format: 'yyyy-MM-dd'));
+        // _getPerpetual(
+        //     DateUtil.formatDate(dateModel.getDateTime(), format: 'yyyy-MM-dd'));
+
         print(dateModel.lunar);
       });
   }
@@ -110,6 +120,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
         color: Colors.white,
         child: Column(
           children: [
+            20.hb,
             Row(
               children: [
                 54.wb,
@@ -117,22 +128,37 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
                   onTap: () {
                     _calendarController.moveToPreviousYear();
                   },
-                  child: Icon(
-                    Icons.chevron_left_outlined,
-                    size: 16.rw,
-                    color: Color(0xFFA5A5A5),
-                  ),
+                  child: Container(
+                      color: Colors.transparent,
+                      width: 14.rw,
+                      height: 14.rw,
+                      alignment: Alignment.center,
+                      child: Image.asset(
+                        R.ASSETS_LAST_YEAR_ICON_PNG,
+                        width: 14.rw,
+                        height: 14.rw,
+                      )),
+                  // Icon(
+                  //   Icons.chevron_left_outlined,
+                  //   size: 16.rw,
+                  //   color: Color(0xFFA5A5A5),
+                  // ),
                 ),
                 80.wb,
                 GestureDetector(
                   onTap: () {
                     _calendarController.moveToPreviousMonth();
                   },
-                  child: Icon(
-                    Icons.chevron_left_outlined,
-                    size: 16.rw,
-                    color: Color(0xFFA5A5A5),
-                  ),
+                  child: Container(
+                      color: Colors.transparent,
+                      width: 14.rw,
+                      height: 14.rw,
+                      alignment: Alignment.center,
+                      child: Image.asset(
+                        R.ASSETS_LAST_MONTH_ICON_PNG,
+                        width: 7.rw,
+                        height: 14.rw,
+                      )),
                 ),
                 Container(
                   alignment: Alignment.center,
@@ -144,33 +170,41 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
                   ),
                 ).expand(),
                 GestureDetector(
-                  onTap: () {
-                    _calendarController.moveToNextMonth();
-                  },
-                  child: Icon(
-                    Icons.chevron_right_outlined,
-                    size: 16.rw,
-                    color: Color(0xFFA5A5A5),
-                  ),
-                ),
+                    onTap: () {
+                      _calendarController.moveToNextMonth();
+                    },
+                    child: Container(
+                        color: Colors.transparent,
+                        width: 14.rw,
+                        height: 14.rw,
+                        alignment: Alignment.center,
+                        child: Image.asset(
+                          R.ASSETS_NEXT_MONTH_ICON_PNG,
+                          width: 7.rw,
+                          height: 14.rw,
+                        ))),
                 80.wb,
                 GestureDetector(
-                  onTap: () {
-                    _calendarController.moveToNextYear();
-                  },
-                  child: Icon(
-                    Icons.chevron_right_outlined,
-                    size: 16.rw,
-                    color: Color(0xFFA5A5A5),
-                  ),
-                ),
+                    onTap: () {
+                      _calendarController.moveToNextYear();
+                    },
+                    child: Container(
+                        color: Colors.transparent,
+                        width: 14.rw,
+                        height: 14.rw,
+                        alignment: Alignment.center,
+                        child: Image.asset(
+                          R.ASSETS_NEXT_YEAR_ICON_PNG,
+                          width: 14.rw,
+                          height: 14.rw,
+                        ))),
                 54.wb,
               ],
             ),
             ClipRRect(
               borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
               child: CalendarViewWidget(
-                padding: EdgeInsets.symmetric(horizontal: 16.rw),
+                padding: EdgeInsets.symmetric(horizontal: 12.rw),
                 weekBarItemWidgetBuilder: () {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -179,7 +213,8 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
                       Divider(
                         height: 1.rw,
                         color: Color(0xFFDDDDDD),
-                      )
+                      ),
+                      5.hb,
                     ],
                   );
                 },
@@ -205,54 +240,114 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
                     padding: EdgeInsets.symmetric(
                       horizontal: 5.rw,
                     ),
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 50.rw,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(5.rw)),
-                          color: Colors.white,
-                          border: dateModel.isCurrentDay
-                              ? Border.all(
-                                  color: Color(0xFFDB2D2D), width: 1.rw)
-                              : dateModel.isSelected
-                                  ? Border.all(
-                                      color: Color(0xFF007BFF), width: 1.rw)
-                                  : null),
-                      child: Column(
-                        children: <Widget>[
-                          Spacer(),
-                          Text(
-                            dateModel.day.toString(),
-                            textScaleFactor: 1,
-                            style: AppTextStyle.generate(
-                              12.rsp,
-                              fontWeight: FontWeight.w500,
-                              color: dateModel.isCurrentMonth
-                                  ? AppColor.textMainColor
-                                  : Color(0xFF999999),
+                    child: Opacity(
+                      opacity: dateModel.isCurrentMonth ? 1 : 0.3,
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50.rw,
+                        decoration: BoxDecoration(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(5.rw)),
+                            color: _getColor(DateUtil.formatDate(
+                                dateModel.getDateTime(),
+                                format:
+                                    'yyyy-MM-dd')), // DateUtil.formatDate(dateModel.getDateTime(), format: 'yyyy-MM-dd') Colors.white,
+                            border: dateModel.isCurrentDay
+                                ? Border.all(
+                                    color: Color(0xFFDB2D2D), width: 1.rw)
+                                : dateModel.isSelected
+                                    ? Border.all(
+                                        color: Color(0xFF007BFF), width: 1.rw)
+                                    : null),
+                        child: Column(
+                          children: <Widget>[
+                            // Spacer(),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                // _getHOrW(DateUtil.formatDate(
+                                //             dateModel.getDateTime(),
+                                //             format: 'yyyy-MM-dd')) !=
+                                //         3
+                                //     ? 20.wb
+                                //     : SizedBox(),
+                                Container(
+                                    width: 37.rw,
+                                    height: 25.rw,
+                                    //color: Colors.blue,
+                                    child: Stack(
+                                      //color: Colors.blue,
+                                      children: [
+                                        Positioned(
+                                            left: 0,
+                                            top: 0,
+                                            right: 0,
+                                            bottom: 0,
+                                            child: Align(
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                dateModel.day.toString(),
+                                                textScaleFactor: 1,
+                                                style: AppTextStyle.generate(
+                                                    12.rsp,
+                                                    fontWeight: FontWeight.w500,
+                                                    color: _getHOrW(DateUtil.formatDate(
+                                                                dateModel
+                                                                    .getDateTime(),
+                                                                format:
+                                                                    'yyyy-MM-dd')) ==
+                                                            1
+                                                        ? Color(0xFFDB2D2D)
+                                                        : AppColor
+                                                            .textMainColor),
+                                              ),
+                                            )),
+                                        Positioned(
+                                            top: 0,
+                                            right: 0,
+                                            child: _getHOrW(DateUtil.formatDate(
+                                                        dateModel.getDateTime(),
+                                                        format:
+                                                            'yyyy-MM-dd')) !=
+                                                    3
+                                                ? _getText(dateModel)
+                                                : SizedBox())
+                                      ],
+
+                                      // child: Row(
+                                      //   children: [
+
+                                      //   ],
+                                      // ),
+                                    ))
+                              ],
                             ),
-                          ),
-                          Text(
-                            dateModel.lunarString,
-                            style: TextStyle(
-                              fontSize: 12.rsp,
-                              color: dateModel.traditionFestival.isNotEmpty ||
-                                      dateModel.solarTerm.isNotEmpty ||
-                                      dateModel.gregorianFestival.isNotEmpty
-                                  ? Color(0xFFDB2D2D)
-                                  : dateModel.isCurrentMonth
-                                      ? AppColor.textMainColor
-                                      : Color(0xFF999999),
+                            Text(
+                              dateModel.lunarString,
+                              style: TextStyle(
+                                fontSize: 12.rsp,
+                                color: dateModel.traditionFestival.isNotEmpty ||
+                                        dateModel.solarTerm.isNotEmpty ||
+                                        dateModel
+                                            .gregorianFestival.isNotEmpty ||
+                                        _getHOrW(DateUtil.formatDate(
+                                                dateModel.getDateTime(),
+                                                format: 'yyyy-MM-dd')) ==
+                                            1
+                                    ? Color(0xFFDB2D2D)
+                                    : AppColor.textMainColor,
+                              ),
                             ),
-                          ),
-                          Spacer(),
-                        ],
+                            Spacer(),
+                          ],
+                        ),
                       ),
                     ),
                   );
                 },
               ),
             ),
+            15.hb,
           ],
         ));
   }
@@ -268,12 +363,19 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
             children: [
               40.wb,
               Text(
-                _perpetualCalendarModel.result.yangli,
+                '农历' +
+                    _perpetualCalendarModel.newslist.first.lubarmonth +
+                    _perpetualCalendarModel.newslist.first.lunarday,
                 style: TextStyle(color: Color(0xFF181818), fontSize: 16.rsp),
               ),
               Spacer(),
               Text(
-                _perpetualCalendarModel.result.yinli,
+                _perpetualCalendarModel.newslist.first.tiangandizhiyear +
+                    '年 ' +
+                    _perpetualCalendarModel.newslist.first.tiangandizhimonth +
+                    '月 ' +
+                    _perpetualCalendarModel.newslist.first.tiangandizhiday +
+                    '日',
                 style: TextStyle(color: Color(0xFF181818), fontSize: 16.rsp),
               ),
               40.wb
@@ -284,7 +386,16 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
             children: [
               40.wb,
               Text(
-                '"xx节"',
+                _perpetualCalendarModel.newslist.first.festival.isNotEmpty ||
+                        _perpetualCalendarModel
+                            .newslist.first.lunarFestival.isNotEmpty
+                    ? _perpetualCalendarModel.newslist.first.festival.isNotEmpty
+                        ? '"${_perpetualCalendarModel.newslist.first.festival}"'
+                        : _perpetualCalendarModel
+                                .newslist.first.lunarFestival.isNotEmpty
+                            ? '"${_perpetualCalendarModel.newslist.first.lunarFestival}"'
+                            : ''
+                    : '',
                 style: TextStyle(color: Color(0xFF181818), fontSize: 16.rsp),
               ),
               Spacer(),
@@ -292,7 +403,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
           ),
           40.hb,
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               40.wb,
               Column(
@@ -318,8 +429,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
               ),
               40.wb,
               Container(
-                child: Text(
-                    '搬家、装修、结婚、入宅、领证、出行、 旅游、入学、求嗣、修坟、赴任、修造、 祈福、祭祀、纳财、启钻、嫁娶、移徙、 立券、求医、栽种、招赘、开仓',
+                child: Text(_perpetualCalendarModel.newslist.first.fitness,
                     maxLines: 5,
                     overflow: TextOverflow.ellipsis,
                     style:
@@ -330,7 +440,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
           ),
           40.hb,
           Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               40.wb,
               Column(
@@ -356,8 +466,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
               ),
               40.wb,
               Container(
-                child: Text(
-                    '开业、开工、动土、安门、安床、订婚、安葬、上梁、开张、作灶、破土、开市、纳畜、纳采、伐木、盖屋、竖柱、求财',
+                child: Text(_perpetualCalendarModel.newslist.first.taboo,
                     maxLines: 5,
                     overflow: TextOverflow.ellipsis,
                     style:
@@ -373,11 +482,89 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
 
   _getPerpetual(String time) async {
     String url =
-        "http://v.juhe.cn/laohuangli/d?date=$time&key=edfd263c72451fd0b50c348259445879";
+        "http://api.tianapi.com/txapi/lunar/index?key=f2599751017c50b91d6f31261ce6dbc0&date=$time";
     Response res = await HttpManager.netFetchNormal(url, null, null, null);
-    Map map = json.decode(res.toString());
+    Map map = json.decode(res.data.toString());
+
     _perpetualCalendarModel = PerpetualCalendarModel.fromJson(map);
+    print(_perpetualCalendarModel);
     setState(() {});
     //_homeWeatherModel = HomeWeatherModel.fromJson(map);
+  }
+
+  _getholiday(String time) async {
+    String url =
+        "http://api.tianapi.com/txapi/jiejiari/index?key=f2599751017c50b91d6f31261ce6dbc0&date=$time&type=1";
+    Response res = await HttpManager.netFetchNormal(url, null, null, null);
+    Map map = json.decode(res.data.toString());
+
+    _holidayCalendarModel = HolidayCalendarModel.fromJson(map);
+    print(_holidayCalendarModel);
+    for (int i = 0; i < _holidayCalendarModel.newslist.length; i++) {
+      if (_holiday.isNotEmpty)
+        _holiday += _holidayCalendarModel.newslist[i].vacation + '|';
+      else
+        _holiday += _holidayCalendarModel.newslist[i].vacation;
+      if (_workday.isNotEmpty)
+        _workday += _holidayCalendarModel.newslist[i].remark + '|';
+      else
+        _workday += _holidayCalendarModel.newslist[i].vacation;
+    }
+    // _workday =
+    //     '2021-01-01|2021-01-02|2021-01-03|2021-02-07|2021-02-20||2021-04-25|2021-05-08||2021-09-18|2021-09-26|2021-10-09|';
+    // _holiday =
+    //     '2021-01-01|2021-01-02|2021-01-032021-02-11|2021-02-12|2021-02-13|2021-02-14|2021-02-15|2021-02-16|2021-02-17|2021-04-03|2021-04-04|2021-04-05|2021-05-01|2021-05-02|2021-05-03|2021-05-04|2021-05-05|2021-06-12|2021-06-13|2021-06-14|2021-09-19|2021-09-20|2021-09-21|2021-10-01|2021-10-02|2021-10-03|2021-10-04|2021-10-05|2021-10-06|2021-10-07|';
+    // print(_holiday);
+    // print(_workday);
+    setState(() {});
+  }
+
+  _getColor(String time) {
+    Color color;
+    if (_holiday.contains(time)) {
+      color = Color(0xFFFFD3D3);
+    } else if (_workday.contains(time)) {
+      color = Color(0xFFEBEBEB);
+    } else {
+      color = Colors.white;
+    }
+    return color;
+  }
+
+  _getHOrW(String time) {
+    //1 放假 2补班 3正常
+    if (_holiday.contains(time)) {
+      return 1;
+    } else if (_workday.contains(time)) {
+      return 2;
+    } else {
+      return 3;
+    }
+  }
+
+  _getText(DateModel dateModel) {
+    return Text(
+      _getHOrW(DateUtil.formatDate(dateModel.getDateTime(),
+                  format: 'yyyy-MM-dd')) ==
+              1
+          ? '休'
+          : _getHOrW(DateUtil.formatDate(dateModel.getDateTime(),
+                      format: 'yyyy-MM-dd')) ==
+                  2
+              ? '班'
+              : '',
+      textScaleFactor: 1,
+      style: AppTextStyle.generate(10.rsp,
+          fontWeight: FontWeight.w500,
+          color: _getHOrW(DateUtil.formatDate(dateModel.getDateTime(),
+                      format: 'yyyy-MM-dd')) ==
+                  1
+              ? Color(0xFFDB2D2D)
+              : _getHOrW(DateUtil.formatDate(dateModel.getDateTime(),
+                          format: 'yyyy-MM-dd')) ==
+                      2
+                  ? Color(0xFF999999)
+                  : AppColor.textMainColor),
+    );
   }
 }

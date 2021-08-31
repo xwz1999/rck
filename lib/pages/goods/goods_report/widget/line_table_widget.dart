@@ -84,7 +84,7 @@ class LineTablewidgetState extends State<LineTablewidget> {
         titlesData: titlesData2,
         borderData: borderData,
         lineBarsData: lineBarsData2,
-        //minX: 0,
+        // minX: 0,
         //maxX: 210,
         //maxY: 500,
         minY: 0,
@@ -100,21 +100,20 @@ class LineTablewidgetState extends State<LineTablewidget> {
   FlTitlesData get titlesData2 => FlTitlesData(
         show: true,
         bottomTitles: bottomTitles,
-        leftTitles: leftTitles(
-            // getTitles: (value) {
-            //   switch (value.toInt()) {
-            //     case 250:
-            //       return '250';
-            //     case 500:
-            //       return '500';
-            //     case 750:
-            //       return '750';
-            //     case 1000:
-            //       return '1000';
-            //   }
-            //   return '';
-            // },
-            ),
+        leftTitles: leftTitles(),
+        // getTitles: (value) {
+        //   switch (value.toInt()) {
+        //     case 250:
+        //       return '250';
+        //     case 500:
+        //       return '500';
+        //     case 750:
+        //       return '750';
+        //     case 1000:
+        //       return '1000';
+        //   }
+        //   return '';
+        // },
       );
 
   List<LineChartBarData> get lineBarsData2 => [
@@ -132,6 +131,19 @@ class LineTablewidgetState extends State<LineTablewidget> {
           fontSize: 12,
         ),
       );
+  // SideTitles leftTitles1({GetTitleFunction getTitles}) => SideTitles(
+  //       getTitles: getTitles,
+  //       showTitles: true,
+  //       margin: 10,
+  //       // interval: _getInterval(_getMaxNum()) < 5
+  //       //     ? null
+  //       //     : _getInterval(_getMaxNum()), //间隔
+  //       reservedSize: 30,
+  //       getTextStyles: (context, value) => const TextStyle(
+  //         color: Color(0xFF333333),
+  //         fontSize: 12,
+  //       ),
+  //     );
 
   SideTitles get bottomTitles => SideTitles(
       showTitles: true,
@@ -251,12 +263,13 @@ class LineTablewidgetState extends State<LineTablewidget> {
 
   _getInterval(num maxNum) {
     //得到一个10的倍数的间隔值
-    if (maxNum < 4)
-      return maxNum;
+    if (maxNum < 10)
+      return maxNum.toDouble();
     else {
       int num1 = maxNum ~/ 4;
       int a = num1 % 10;
       if (a > 0) {
+        print((num1 ~/ 10) * 10 + 10);
         return ((num1 ~/ 10) * 10 + 10).toDouble();
       }
     }

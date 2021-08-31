@@ -14,7 +14,10 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/models/home_weather_model.dart';
+import 'package:recook/models/missing_children_model.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
+
+import '../custom_cache_image.dart';
 
 // 天气信息
 class PostWeatherWidget extends StatelessWidget {
@@ -531,12 +534,14 @@ class PostAllWidget extends StatefulWidget {
   final GoodsDetailModel goodsDetailModel;
   final String bigImageUrl;
   final List<MainPhotos> selectImagePhotos;
+  final MissingChildrenModel missingChildrenModel;
   PostAllWidget(
       {Key key,
       this.goodsDetailModel,
       this.bigImageUrl = "",
       this.selectImagePhotos,
-      this.controller})
+      this.controller,
+      this.missingChildrenModel})
       : super(key: key);
 
   @override
@@ -607,15 +612,55 @@ class _PostAllWidgetState extends State<PostAllWidget> {
           ),
           Container(
             height: postImageHorizontalMargin / 2,
-          )
-          // Container(
-          //   padding: EdgeInsets.all(postImageHorizontalMargin/2),
-          //   height: truePhotoHeight,
-          //   color: Colors.red,
-          //   child: Container(
-          //     color: Colors.blue,
-          //   ),
-          // )
+          ),
+          Container(
+            //padding: EdgeInsets.all(postImageHorizontalMargin / 2),
+            height: 229.rw,
+            width: 355.rw,
+            color: Color(0xFFFFF6F6),
+            child: Row(
+              children: [
+                Container(
+                  width: 160.rw,
+                  height: 229.rw,
+                  child: CustomCacheImage(
+                      height: 229.rw,
+                      fit: BoxFit.fitHeight,
+                      width: 160.rw,
+                      imageUrl: Api.getImgUrl(widget.missingChildrenModel.pic)),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      child: Text(
+                        '#儿童失踪紧急发布#',
+                        style: TextStyle(
+                          fontSize: 14.rsp,
+                          color: Color(0xFFEA455B),
+                        ),
+                      ),
+                    ),
+                    40.hb,
+                    Container(
+                      width: 165.rw,
+                      padding: EdgeInsets.only(left: 5.rw),
+                      child: Text(
+                        widget.missingChildrenModel.text
+                            .replaceAll('#儿童失踪紧急发布#', ''),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 10,
+                        style: TextStyle(
+                          fontSize: 12.rsp,
+                          color: Color(0xFF333333),
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );

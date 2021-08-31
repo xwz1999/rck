@@ -14,6 +14,7 @@ import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_detail_model.dart';
+import 'package:recook/models/missing_children_model.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -42,6 +43,7 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
   GlobalKey _globalKey = GlobalKey();
   // GoodsDetailImagesModel _goodsDetailImagesModel;
   double postHorizontalMargin = 50;
+  MissingChildrenModel _missingChildrenModel;
   // double postWidth = 0;
   // // 50 天气 70 头像 45 banner 75 价格二维码
   // double postImageVerticalMargin = 200;
@@ -58,6 +60,7 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
       _goodsId = int.parse(widget.arguments["goodsId"]);
     } catch (e) {}
     _getDetail();
+    _getMissingChildren();
   }
 
   @override
@@ -96,10 +99,7 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
             ),
           ),
           Container(
-            padding: EdgeInsets.only(
-                left: postHorizontalMargin / 2,
-                right: postHorizontalMargin / 2,
-                bottom: 10),
+            padding: EdgeInsets.only(bottom: 10, left: 10.rw, right: 10.rw),
             child: RepaintBoundary(
                 key: _globalKey,
                 child: PostAllWidget(
@@ -107,9 +107,9 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
                   selectImagePhotos: _selectPhotos,
                   bigImageUrl: _bigImageUrl,
                   goodsDetailModel: _goodsDetail,
+                  missingChildrenModel: _missingChildrenModel,
                 )),
           ),
-
         ],
       ),
     );
@@ -165,6 +165,11 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
     _bigImageUrl = Api.getImgUrl(photo.url);
     _selectPhotos.add(photo);
     setState(() {});
+  }
+
+  _getMissingChildren() async {
+    _missingChildrenModel = await GoodsDetailModelImpl.getMissingChildrenInfo();
+    print(Api.getImgUrl(_missingChildrenModel.pic));
   }
 
   _bottomWidget() {
