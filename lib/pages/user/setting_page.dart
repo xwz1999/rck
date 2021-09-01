@@ -6,8 +6,8 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/goods/goods_report/goods_report_page.dart';
+import 'package:recook/pages/recharge/recharge_page.dart';
 import 'package:recook/pages/user/user_info_page.dart';
-import 'package:recook/seckill_activity/seckill_activity_page.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/sc_tile.dart';
@@ -130,11 +130,11 @@ class _SettingItemListViewState extends ResumableState<SettingItemListView> {
                         //CRoute.push(context, PrivacyPageV2());
                       }),
 
-                      //购票临时入口
-                      // SCTile.normalTile("购票(临时)", listener: () {
-                      //   Get.to(() => ChooseTicketsTypePage());
-                      //   //CRoute.push(context, PrivacyPageV2());
-                      // }),
+                      //充值临时入口
+                      SCTile.normalTile("购票(临时)", listener: () {
+                        Get.to(() => RechargePage());
+                        //CRoute.push(context, PrivacyPageV2());
+                      }),
 
                       getEmptyBox(),
                       SCTile.normalTile("退出登录", listener: () {

@@ -37,20 +37,13 @@ class ChooseTicketsTypePage extends StatefulWidget {
 class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
   final items = [
     BottomNavigationBarItem(
-      icon: Icon(
-        Icons.pages,
-        size: rSize(14),
-        color: Color(0xFF666666),
-      ),
-      title: Text('订单'),
+      icon: Image.asset(R.ASSETS_TICKET_ORDER_TAB_ICON_PNG,width: 18.rw,height: 19.rw,),
+
+      title: Text('订单',style: TextStyle(fontSize: 10.rsp),),
     ),
     BottomNavigationBarItem(
-        icon: Icon(
-          Icons.pages,
-          size: rSize(14),
-          color: Color(0xFF666666),
-        ),
-        title: Text("常用旅客")),
+        icon: Image.asset(R.ASSETS_TICKET_PASSAGER_TAB_ICON_PNG,width: 21.rw,height: 16.rw,),
+        title: Text("常用旅客",style: TextStyle(fontSize: 10.rsp),)),
   ];
   //按钮选中类型
   int _chooseType = 1; //1为飞机票 2为汽车票 3为火车票
