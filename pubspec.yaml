@@ -98,6 +98,9 @@ dependencies:
   # toast提示
   oktoast: 2.3.2
 
+  # 通讯录选择
+  easy_contact_picker: ^0.0.2
+
   # 应用信息
   package_info: ^2.0.0
 

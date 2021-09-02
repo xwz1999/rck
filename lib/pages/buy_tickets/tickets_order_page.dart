@@ -53,7 +53,7 @@ class _TicketsOrderPageState extends State<TicketsOrderPage>
   void initState() {
     super.initState();
     _ticketTypee = 1;
-    _tabController = TabController(length: 4, vsync: this,initialIndex:widget.firstTab );
+    _tabController =  TabController(length: 4, vsync: this,initialIndex:widget.firstTab!=null?widget.firstTab:0 );
     //startTick();
   }
 

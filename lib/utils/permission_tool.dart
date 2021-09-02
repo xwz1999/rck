@@ -44,6 +44,15 @@ class PermissionTool {
     return permission;
   }
 
+  static Future<bool> haveContactPermission() async {
+    bool permission = await Permission.contacts.isGranted;
+    if (!permission) {
+      await Permission.contacts.request();
+      permission = await Permission.contacts.isGranted;
+    }
+    return permission;
+  }
+
   static showOpenPermissionDialog(BuildContext context, String message,
       {Function open ,String title}) {
     Alert.show(
