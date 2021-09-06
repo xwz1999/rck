@@ -147,10 +147,11 @@ class _ACEBottomNavigationBar extends State<ACEBottomNavigationBar>
       child: SafeArea(
         child: Stack(
             alignment: Alignment.bottomCenter,
-            overflow: Overflow.visible,
+            //overflow: Overflow.visible,
+            fit: StackFit.loose,
             children: <Widget>[
               Container(
-                  height: ScreenAdapterUtils.setWidth(50.0),
+                  height: 50.rw,
                   decoration: navigationBarBg(),
                   child: Row(
                       mainAxisSize: MainAxisSize.max,

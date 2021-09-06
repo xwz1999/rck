@@ -31,12 +31,12 @@ class ItemStyleOne extends StatefulWidget {
 class _ItemStyleOneState extends State<ItemStyleOne> {
   @override
   Widget build(BuildContext context) {
-    Widget current = Text(
-      widget._title,
-      style: TextStyle(color: widget._titleColor, fontSize: 16),
-      maxLines: 1,
-    );
-    current = Row(crossAxisAlignment: CrossAxisAlignment.center,);
+    // Widget current = Text(
+    //   widget._title,
+    //   style: TextStyle(color: widget._titleColor, fontSize: 16),
+    //   maxLines: 1,
+    // );
+    // current = Row(crossAxisAlignment: CrossAxisAlignment.center,);
     return Container(
       color: widget._backColor,
       child: Padding(

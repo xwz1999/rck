@@ -70,8 +70,8 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
         50.hb,
         Container(
             alignment: Alignment.center,
-            width: 190.rw,
-            height: 26.rw,
+            width: 260.rw,
+            height: 40.rw,
             decoration: BoxDecoration(
               color: Colors.white,
               boxShadow: [
@@ -90,17 +90,25 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
                     keyboardType: TextInputType.text,
                     controller: _textEditController,
                     //textInputAction: TextInputAction.search,
-                    onChanged: (text) {},
+                    onChanged: (text) async {
+
+                      _searchText = text;
+                      _akuVideoListModel =
+                          await HomeFuc.getAkuVideoList(_searchText, page);
+
+                      setState(() {});
+
+                    },
                     placeholder: "搜一下是否有您想要的内容",
                     placeholderStyle: TextStyle(
                         color: Color(0xFF999999),
-                        fontSize: 10.rsp,
+                        fontSize: 14.rsp,
                         fontWeight: FontWeight.w300),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(13.rw)),
+                      borderRadius: BorderRadius.all(Radius.circular(16.rw)),
                     ),
-                    style: TextStyle(color: Colors.black, fontSize: 14.rsp),
+                    style: TextStyle(color: Colors.black, fontSize: 16.rsp),
                   ),
                 ),
                 Container(
@@ -113,7 +121,7 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
                   padding: EdgeInsets.symmetric(horizontal: 5),
                   child: Icon(
                     Icons.search,
-                    size: 15.rw,
+                    size: 18.rw,
                     color: Color(0xFFC92219),
                   ),
                 ),
@@ -131,14 +139,14 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
                 controller: _refreshController,
                 noData: '没有找到您想要的内容',
                 onRefresh: () async {
-                  Function cancel = ReToast.loading();
+                  //Function cancel = ReToast.loading();
 
                   _akuVideoListModel =
                       await HomeFuc.getAkuVideoList(_searchText, page);
 
                   setState(() {});
                   _refreshController.refreshCompleted();
-                  cancel();
+                  //cancel();
                 },
                 onLoadMore: () async {
                   if (_akuVideoListModel.list.length >=
@@ -201,10 +209,15 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
               children: [
                 Positioned(
                   child: Container(
+                    decoration: BoxDecoration(
+                      //color: Colors.white,
+                      borderRadius: BorderRadius.circular(4.rw),
+                    ),
                     child: CustomCacheImage(
+                      borderRadius: BorderRadius.circular(4.rw),
                       imageUrl: Api.getImgUrl(akuVideo.coverUrl),
                       height: 90.rw,
-                      fit: BoxFit.fitWidth,
+                      fit: BoxFit.fill,
                     ),
                   ),
                 ),

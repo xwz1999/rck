@@ -33,9 +33,9 @@ class PostWeatherWidget extends StatelessWidget {
     return str;
   }
 
-  _getWeatherImage(wea_img) {
-    return "assets/weatherCake/$wea_img.png";
-  }
+  // _getWeatherImage(weaImg) {
+  //   return "assets/weatherCake/$weaImg.png";
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +183,7 @@ class PostUserInfo extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: TextStyle(
                       color: Color(0xff666666),
-                      fontSize: ScreenAdapterUtils.setSp(10.0),
+                      fontSize: 10.rw,
                     ),
                   ),
                   Container(
@@ -643,8 +643,8 @@ class _PostAllWidgetState extends State<PostAllWidget> {
                     ),
                     40.hb,
                     Container(
-                      width: 165.rw,
-                      padding: EdgeInsets.only(left: 5.rw),
+                      width: 160.rw,
+                      padding: EdgeInsets.only(left: 5.rw,right: 2.rw),
                       child: Text(
                         widget.missingChildrenModel.text
                             .replaceAll('#儿童失踪紧急发布#', ''),

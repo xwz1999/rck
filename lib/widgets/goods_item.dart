@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
+import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:get/get.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -36,7 +37,6 @@ enum GoodsItemType {
 
 class GoodsItemWidget extends StatelessWidget {
   final bool isSingleDayGoods;
-
   final String goodsName;
   final String description;
   final String mainPhotoUrl;
@@ -67,6 +67,7 @@ class GoodsItemWidget extends StatelessWidget {
 
   final String countryIcon;
   final Living living;
+  final GifController gifController;
 
   const GoodsItemWidget({
     Key key,
@@ -95,7 +96,7 @@ class GoodsItemWidget extends StatelessWidget {
     this.specialIcon,
     this.type,
     this.countryIcon,
-    this.living,
+    this.living, this.gifController,
     //this.special_sale,
   })  : widgetType = GoodsItemType.NONE,
         super(key: key);
@@ -111,7 +112,7 @@ class GoodsItemWidget extends StatelessWidget {
     GoodsSimple model,
     this.notShowAmount = false,
     this.specialSale,
-    this.type,
+    this.type, this.gifController,
 
     //this.special_sale,
   })  : goodsName = model.goodsName,
@@ -148,7 +149,7 @@ class GoodsItemWidget extends StatelessWidget {
     this.specialSale,
     this.specialIcon,
     this.type,
-    this.living,
+    this.living, this.gifController,
   })  : goodsName = data.goodsName,
         brandName = data.brandName,
         brandPictureUrl = data.brandImg,
@@ -180,7 +181,7 @@ class GoodsItemWidget extends StatelessWidget {
     @required this.buyClick,
     PromotionGoodsModel model,
     this.notShowAmount = false,
-    this.type,
+    this.type, this.gifController,
   })  : goodsName = model.goodsName,
         brandName = model.brandName,
         brandPictureUrl = model.brandImg,
@@ -209,9 +210,11 @@ class GoodsItemWidget extends StatelessWidget {
   static Color _shareTextColor = Color(0xffc70404);
   static double _height = 0;
 
+
   @override
   Widget build(BuildContext context) {
     _height = (MediaQuery.of(context).size.width - 20) * 150.0 / 350.0;
+
     return Container(
       height: _height,
       padding: EdgeInsets.only(bottom: 3.33, left: 10, right: 10),
@@ -222,6 +225,7 @@ class GoodsItemWidget extends StatelessWidget {
       child: _container(),
     );
   }
+
 
   _container() {
     return Container(
@@ -415,12 +419,7 @@ class GoodsItemWidget extends StatelessWidget {
 
   _image() {
     double cir = 5;
-    return GestureDetector(
-      onTap: () {
-        
-        Get.to(GoodsReportPage(goodsId:id,));
-      },
-      child: Container(
+    return Container(
         width: _height - 8,
         height: _height - 8,
         decoration: BoxDecoration(
@@ -467,23 +466,24 @@ class GoodsItemWidget extends StatelessWidget {
                     top: 6.rw,
                     right: 6.rw,
                     child: Container(
-                      width: 25.rw,
+                      width: 16.rw,
                       height: 16.rw,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(8.rw)),
-                          gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              Color(0xFFEC4073),
-                              Color(0xFFE50043),
-                            ],
-                          )),
-                      child: Row(
-                        children: [
-                          LiveAnimateWidget(),
-                        ],
-                      ),
+                      // decoration: BoxDecoration(
+                      //     borderRadius: BorderRadius.all(Radius.circular(8.rw)),
+                      //     gradient: LinearGradient(
+                      //       begin: Alignment.centerLeft,
+                      //       end: Alignment.centerRight,
+                      //       colors: [
+                      //         Color(0xFFEC4073),
+                      //         Color(0xFFE50043),
+                      //       ],
+                      //     )),
+                      child: GifImage(
+                        controller: gifController,
+                        image: AssetImage(R.ASSETS_LIVE_PLAY_GIF),
+                        height: 16.rw,
+                        width: 16.rw,
+                      )
                     ),
                   )
                 : SizedBox(),
@@ -570,7 +570,7 @@ class GoodsItemWidget extends StatelessWidget {
                 : SizedBox()
           ]),
         ),
-      ),
+
     );
   }
 
@@ -954,3 +954,4 @@ class GoodsItemWidget extends StatelessWidget {
     }
   }
 }
+

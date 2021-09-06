@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:recook/models/category_list_model.dart';
 import 'package:recook/models/country_list_model.dart';
 
@@ -74,10 +75,17 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
   SortType _sortType = SortType.comprehensive;
 
   int _filterIndex = 0;
+  GifController _gifController;
 
   @override
   void initState() {
     super.initState();
+    _gifController = GifController(vsync: this)
+      ..repeat(
+        min: 0,
+        max: 20,
+        period: Duration(milliseconds: 700),
+      );
     int index = widget.index;
     DPrint.printf("index=$index");
     _secondCategoryList = widget.secondCategoryList;
@@ -93,6 +101,7 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
 
   @override
   void dispose() {
+    _gifController.dispose();
     super.dispose();
   }
 
@@ -321,6 +330,7 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
               child: _displayList
                   // ? BrandDetailListItem(goods: goods)
                   ? GoodsItemWidget.normalGoodsItem(
+                gifController: _gifController,
                       onBrandClick: () {
                         AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                             arguments: BrandGoodsListPage.setArguments(

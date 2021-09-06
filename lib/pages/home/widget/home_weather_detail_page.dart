@@ -294,7 +294,7 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
                       ),
                       Text(
                         _homeWeatherModel.airLevel,
-                        style: TextStyle(color: Colors.white, fontSize: 26.rsp),
+                        style: TextStyle(color: Colors.white, fontSize: 24.rsp),
                       )
                     ],
                   ),
@@ -337,7 +337,7 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
                 ),
                 Text(
                   content1,
-                  style: TextStyle(color: Colors.white, fontSize: 26.rsp),
+                  style: TextStyle(color: Colors.white, fontSize: 24.rsp),
                 )
               ],
             ).expand(),
@@ -347,12 +347,12 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  title1,
+                  title2,
                   style: TextStyle(color: Colors.white, fontSize: 16.rsp),
                 ),
                 Text(
-                  content1,
-                  style: TextStyle(color: Colors.white, fontSize: 26.rsp),
+                  content2,
+                  style: TextStyle(color: Colors.white, fontSize: 24.rsp),
                 )
               ],
             ).expand()

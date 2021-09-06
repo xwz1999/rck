@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class CustomKbBtn extends StatefulWidget {
 
-  String text;
-  Widget child;
-  CustomKbBtn({Key key, this.text, this.child, this.callback}) : super(key: key);
+  final String text;
+  final Widget child;
+   CustomKbBtn({Key key, this.text, this.child, this.callback}) : super(key: key);
   final callback;
 
   @override
@@ -34,12 +34,15 @@ class ButtonState extends State<CustomKbBtn> {
     return new Container(
         height:50.0,
         width: _screenWidth / 3,
-        child: new OutlineButton(
-          // 直角
-          shape: new RoundedRectangleBorder(
-              borderRadius: new BorderRadius.circular(0.0)),
-          // 边框颜色
-          borderSide: new BorderSide(color: Color(0x10333333)),
+        child:
+        new OutlinedButton(
+          style: OutlinedButton.styleFrom(
+            // 直角
+            shape: new RoundedRectangleBorder(
+                borderRadius: new BorderRadius.circular(0.0)),
+            // 边框颜色
+            side: new BorderSide(color: Color(0x10333333)),
+          ),
           child: widget.child!=null?
             widget.child
             :Text(
@@ -47,6 +50,9 @@ class ButtonState extends State<CustomKbBtn> {
               style: new TextStyle(color: Color(0xff333333), fontSize: 25.0),
             ),
           onPressed: back,
-        ));
+        )
+
+
+    );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gifimage/flutter_gifimage.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -31,7 +32,7 @@ class GoodsListTempPage extends StatefulWidget {
   }
 }
 
-class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> {
+class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> with TickerProviderStateMixin {
   GoodsHotSellListModel _listModel;
   String _title;
   GoodsListTempType _goodsListTempType;
@@ -171,6 +172,12 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> {
       child: Stack(
         children: <Widget>[
           GoodsItemWidget.hotList(
+            gifController: GifController(vsync: this)
+              ..repeat(
+                min: 0,
+                max: 20,
+                period: Duration(milliseconds: 700),
+              ),
             onBrandClick: () {
               AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                   arguments: BrandGoodsListPage.setArguments(

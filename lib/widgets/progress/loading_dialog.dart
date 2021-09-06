@@ -33,9 +33,9 @@ class LoadingDialog extends Dialog {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               new Container(
-                height: ScreenAdapterUtils.setWidth(100.0),
+                height: 100.rw,
                 constraints: BoxConstraints(
-                    minWidth: ScreenAdapterUtils.setWidth(100.0)),
+                    minWidth: 100.rw),
                 padding: new EdgeInsets.only(
                     top: rSize(5),
                     bottom: rSize(5),
@@ -171,7 +171,7 @@ class StatusDialog extends Dialog {
 }
 
 class WarningDialog extends Dialog {
-  String text;
+  final String text;
   
   WarningDialog({Key key, @required this.text}) : super(key: key);
 

@@ -19,6 +19,7 @@ import 'package:flutter/material.dart';
 
 import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:jpush_flutter/jpush_flutter.dart';
@@ -147,6 +148,8 @@ class _HomePageState extends BaseStoreState<HomePage>
   StateSetter _bannerState;
   GlobalKey<AnimatedHomeBackgroundState> _animatedBackgroundState = GlobalKey();
   GlobalKey<HomeSliverAppBarState> _sliverAppBarGlobalKey = GlobalKey();
+
+  GifController _gifController;
   @override
   bool needStore() {
     return true;
@@ -169,6 +172,12 @@ class _HomePageState extends BaseStoreState<HomePage>
   @override
   void initState() {
     super.initState();
+    _gifController = GifController(vsync: this)
+      ..repeat(
+        min: 0,
+        max: 20,
+        period: Duration(milliseconds: 700),
+      );
     bool notificationPermission = HiveStore.appBox.get('notification') ?? false;
     if (!notificationPermission) {
       JPush().isNotificationEnabled().then((bool value) {
@@ -306,6 +315,7 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   @override
   void dispose() {
+    _gifController.dispose();
     _tabController.dispose();
     _amapFlutterLocation?.stopLocation();
     _amapFlutterLocation?.destroy();
@@ -402,6 +412,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         onTap: () async {
           if (Platform.isIOS) {
             AppRouter.push(context, RouteName.BARCODE_SCAN);
+            //Get.to(QRViewExample());
             return;
           }
           bool canUseCamera = await PermissionTool.haveCameraPermission();
@@ -419,6 +430,7 @@ class _HomePageState extends BaseStoreState<HomePage>
             return;
           } else {
             AppRouter.push(context, RouteName.BARCODE_SCAN);
+            //Get.to(QRViewExample());
           }
         },
         child: Container(
@@ -681,6 +693,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                   padding: EdgeInsets.only(bottom: 5),
                   color: AppColor.frenchColor,
                   child: GoodsItemWidget.rowGoods(
+                    gifController: _gifController,
                     buildCtx: context,
                     isSingleDayGoods: false,
                     onBrandClick: () {

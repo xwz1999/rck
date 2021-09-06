@@ -2,21 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'CustomJPasswordFieldWidget.dart';
 import 'bottom_keyboard_widget.dart';
-import 'pay_password.dart';
 
 /// 支付密码  +  自定义键盘
 
-class main_keyboard extends StatefulWidget {
+class MainKeyBoard extends StatefulWidget {
   static final String sName = "enter";
 
   @override
   State<StatefulWidget> createState() {
-    return new keyboardState();
+    return new KeyboardState();
   }
 }
 
 
-class keyboardState extends State<main_keyboard> {
+class KeyboardState extends State<MainKeyBoard> {
   String pwdData = '';
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -84,25 +83,25 @@ class keyboardState extends State<main_keyboard> {
 
   }
 
-  void _onKeyDown(KeyEvent data){
-    if (data.isDelete()) {
-      if (pwdData.length > 0) {
-        pwdData = pwdData.substring(0, pwdData.length - 1);
-        setState(() {});
-      }
-    } else if (data.isCommit()) {
-      if (pwdData.length != 6) {
-//        Fluttertoast.showToast(msg: "密码不足6位，请重试", gravity: ToastGravity.CENTER);
-        return;
-      }
-      onAffirmButton();
-    } else {
-      if (pwdData.length < 6) {
-        pwdData += data.key;
-      }
-      setState(() {});
-    }
-  }
+//   void _onKeyDown(KeyEvent data){
+//     if (data.isDelete()) {
+//       if (pwdData.length > 0) {
+//         pwdData = pwdData.substring(0, pwdData.length - 1);
+//         setState(() {});
+//       }
+//     } else if (data.isCommit()) {
+//       if (pwdData.length != 6) {
+// //        Fluttertoast.showToast(msg: "密码不足6位，请重试", gravity: ToastGravity.CENTER);
+//         return;
+//       }
+//       onAffirmButton();
+//     } else {
+//       if (pwdData.length < 6) {
+//         pwdData += data.key;
+//       }
+//       setState(() {});
+//     }
+//   }
   /// 底部弹出 自定义键盘  下滑消失
   void _showBottomSheet() {
     setState(() {

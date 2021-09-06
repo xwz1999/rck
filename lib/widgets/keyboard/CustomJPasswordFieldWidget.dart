@@ -30,18 +30,18 @@ class MyCustom extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
 
-    int PWD_SPACING = 5;
-    int PWD_SIZE = 5;
-    int mWidth;
+    // int PWD_SPACING = 5;
+    // int PWD_SIZE = 5;
+    // int mWidth;
 
     // 密码长度
-    int PWD_LENGTH = 6;
+    //int PWD_LENGTH = 6;
 
     // 密码画笔
     Paint mPwdPaint;
     Paint mRectPaint;
-    Rect mRect;
-    int mInputLength;
+    //Rect mRect;
+    //int mInputLength;
 
 
     // 初始化密码画笔  

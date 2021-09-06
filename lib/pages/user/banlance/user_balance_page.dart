@@ -51,19 +51,61 @@ class _UserBalancePageState extends State<UserBalancePage> {
   GSRefreshController _refreshController = GSRefreshController();
 
   _buildListItem(ListItem item) {
-    return [
-      60.hb,
-      16.wb,
-      [
-        item.comment.text.black.size(14.rsp).make(),
-        2.hb,
-        item.createdAt.text.black.size(12.rsp).make(),
-      ].column(crossAlignment: CrossAxisAlignment.start),
-      Spacer(),
-      item.amount.toStringAsFixed(2).text.black.size(14.rsp).make(),
-      16.wb,
-    ].row();
+    return Container(
+      padding: EdgeInsets.only(left: 15),
+      width: double.infinity,
+      height: 60,
+      color: Colors.white,
+      child: Column(
+        children: <Widget>[
+          Expanded(
+              child: Container(
+                width: double.infinity,
+                margin: EdgeInsets.only(right: 30),
+                child: Flex(
+                  direction: Axis.horizontal,
+                  children: <Widget>[
+                    Flex(
+                      direction: Axis.vertical,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          item.comment,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 13),
+                        ),
+                        Container(
+                          height: 3,
+                        ),
+                        Text(
+                          item.createdAt,
+                          style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 12),
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    Text(
+                      item.amount.toStringAsFixed(2),
+                      style: TextStyle(color: Colors.black, fontSize: 14),
+                    ),
+                  ],
+                ),
+              )),
+          Container(
+            height: 1,
+            color: AppColor.frenchColor,
+          )
+        ],
+      ),
+    );
   }
+
 
   _buildOverlay() {
     return GestureDetector(

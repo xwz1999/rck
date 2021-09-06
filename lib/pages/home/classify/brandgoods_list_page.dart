@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gifimage/flutter_gifimage.dart';
 
 import 'package:waterfall_flow/waterfall_flow.dart';
 
@@ -43,7 +44,7 @@ class BrandGoodsListPage extends StatefulWidget {
 }
 
 class _BrandGoodsListPageState extends BaseStoreState<BrandGoodsListPage>
-    with MvpListViewDelegate<GoodsSimple> {
+    with MvpListViewDelegate<GoodsSimple> ,TickerProviderStateMixin {
   /// 切换展示形式  true 为 List， false 为grid
   bool _displayList = true;
 
@@ -56,14 +57,27 @@ class _BrandGoodsListPageState extends BaseStoreState<BrandGoodsListPage>
   SortType _sortType = SortType.comprehensive;
 
   int _filterIndex = 0;
+  GifController _gifController;
 
   @override
   void initState() {
     _filterController = FilterToolBarController();
+    _gifController = GifController(vsync: this)
+      ..repeat(
+        min: 0,
+        max: 20,
+        period: Duration(milliseconds: 700),
+      );
     super.initState();
     _brandPresenter = GoodsListPresenterImpl();
     _brandListViewController = MvpListViewController();
     // _brandPresenter.fetchBrandList(widget.argument["brandId"], 0, SortType.comprehensive);
+  }
+
+  @override
+  void dispose() {
+    _gifController.dispose();
+    super.dispose();
   }
 
   @override
@@ -218,6 +232,7 @@ class _BrandGoodsListPageState extends BaseStoreState<BrandGoodsListPage>
                   // ? BrandDetailListItem(goods: goods)
                   // ? NormalGoodsItem(model: goods, buildCtx: context,)
                   ? GoodsItemWidget.normalGoodsItem(
+                gifController: _gifController,
                       onBrandClick: () {
                         AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                             arguments: BrandGoodsListPage.setArguments(

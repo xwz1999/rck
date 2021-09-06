@@ -75,6 +75,9 @@ class UserPartnerCard extends StatelessWidget {
     if (UserManager.instance.user.info.id == userId) {
       item += '(本人)';
     }
+    if(phone.startsWith('2')){
+      item = '【该账户已注销】';
+    }
 
     return item;
   }
@@ -134,7 +137,7 @@ class UserPartnerCard extends StatelessWidget {
             10.hb,
             Row(
               children: [
-                _renderItem(R.ASSETS_USER_ICON_PHONE_PNG, phone),
+                _renderItem(R.ASSETS_USER_ICON_PHONE_PNG, phone.startsWith('2')?'—':phone),
                 _renderItem(R.ASSETS_USER_ICON_WECHAT_PNG, wechatNo),
                 _renderNoItem(),
               ],

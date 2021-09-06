@@ -10,6 +10,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:recook/constants/header.dart';
 import 'package:recook/utils/image_utils.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 
 double initScale({Size imageSize, Size size, double initialScale}) {
   var n1 = imageSize.height / imageSize.width;
@@ -312,16 +313,19 @@ class MySwiperPlugin extends StatelessWidget {
           ),
         ),
         onTap: () {
-          GSDialog.of(context).showLoadingDialog(context, "保存图片中...");
+          //GSDialog.of(context).showLoadingDialog(context, "保存图片中...");
+         var cancel =  ReToast.loading(text:"保存图片中...");
           List<String> urls = [pics[data.data].picUrl];
           ImageUtils.saveNetworkImagesToPhoto(urls, (index) {
             DPrint.printf("保存好了---${urls[index]}");
             DPrint.printf("保存好了---$index");
           }, (success) {
-            GSDialog.of(context).dismiss(context);
-            success
-                ? GSDialog.of(context).showSuccess(context, "保存完成!")
-                : GSDialog.of(context).showError(context, "保存失败...");
+            cancel();
+            //GSDialog.of(context).dismiss(context);
+            success?ReToast.success(text: '保存完成！'):ReToast.err(text: '保存失败...');
+                // ? GSDialog.of(context).showSuccess(context, "保存完成!")
+                // : GSDialog.of(context).showError(context, "保存失败...");
+
           });
         },
       ),

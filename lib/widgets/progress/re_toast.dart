@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:bot_toast/bot_toast.dart';
-import 'package:recook/widgets/alert.dart';
 
 import 'package:recook/widgets/progress/loading_dialog.dart';
 

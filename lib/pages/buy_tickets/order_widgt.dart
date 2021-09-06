@@ -15,7 +15,6 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:badges/badges.dart';
 
 import 'functions/passager_func.dart';
 import 'models/air_order_model.dart';

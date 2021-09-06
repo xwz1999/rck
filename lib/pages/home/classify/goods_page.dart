@@ -41,6 +41,7 @@ import 'package:recook/pages/user/address/mvp/address_model_impl.dart';
 import 'package:recook/utils/file_utils.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/utils/share_tool.dart';
+import 'package:recook/widgets/OverlayWidget.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/bottom_sheet/address_selector.dart';
 import 'package:recook/widgets/bottom_sheet/custom_bottom_sheet.dart';
@@ -150,27 +151,39 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
 
   MediaQuery _buildBody(BuildContext context) {
     _context = context;
-    return MediaQuery.removePadding(
+    return
+      MediaQuery.removePadding(
         key: myGlobals.scaffoldKey,
         context: context,
         removeTop: true,
-        child: Container(
-          color: AppColor.frenchColor,
-          child: NotificationListener<ScrollUpdateNotification>(
-            onNotification: (notification) {
-              if (widget.onScroll != null) {
-                widget.onScroll(notification);
-              }
-              return true;
-            },
-            child: ListView(
-              //ListView 子项不销毁
-              cacheExtent: double.infinity,
-              physics: BouncingScrollPhysics(),
-              children: _detailListWidget(),
+        child: Stack(
+          children: [
+
+            Container(
+              color: AppColor.frenchColor,
+              child: NotificationListener<ScrollUpdateNotification>(
+                onNotification: (notification) {
+                  if (widget.onScroll != null) {
+                    widget.onScroll(notification);
+                  }
+                  return true;
+                },
+                child: ListView(
+                  //ListView 子项不销毁
+                  cacheExtent: double.infinity,
+                  physics: BouncingScrollPhysics(),
+                  children: _detailListWidget(),
+                ),
+              ),
+
             ),
-          ),
-        ));
+            widget.goodsDetail.data.living!=null?widget.goodsDetail.data.living.status==1?
+            OverlayLivingBtnWidget(living: widget.goodsDetail.data.living):SizedBox():SizedBox(),
+
+          ],
+        )
+
+);
   }
 
   List<Widget> _detailListWidget() {

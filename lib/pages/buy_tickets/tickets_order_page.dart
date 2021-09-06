@@ -1,24 +1,12 @@
 import 'dart:async';
 
-import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_calendar/utils/solar_term_util.dart';
-import 'package:get/get.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/pages/buy_tickets/add_used_passager_page.dart';
-import 'package:recook/pages/buy_tickets/airplane_detail_page.dart';
-import 'package:recook/pages/buy_tickets/order_widgt.dart';
-import 'package:recook/pages/buy_tickets/tickets_orde_detail_page.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/no_data_view.dart';
+import 'package:recook/constants/styles.dart';
+import 'package:recook/pages/buy_tickets/order_widgt.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/refresh_widget.dart';
-import 'package:velocity_x/velocity_x.dart';
-import 'package:badges/badges.dart';
 
-import 'functions/passager_func.dart';
 import 'models/air_order_model.dart';
 
 class TicketsOrderPage extends StatefulWidget {

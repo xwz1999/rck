@@ -10,6 +10,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:recook/models/goods_detail_model.dart' hide Data, Promotion;
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 
@@ -61,7 +62,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends BaseStoreState<SearchPage>
-    with MvpListViewDelegate<GoodsSimple> {
+    with MvpListViewDelegate<GoodsSimple>,TickerProviderStateMixin{
   String _searchText = "";
   FocusNode _contentFocusNode = FocusNode();
 
@@ -83,6 +84,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
 
   GSRefreshController _refreshController = GSRefreshController();
   GoodsHotSellListModel _listModel;
+  GifController _gifController;
 
   _getGoodsHotSellList() async {
     ResultData resultData = await HttpManager.post(HomeApi.hot_sell_list, {});
@@ -105,6 +107,12 @@ class _SearchPageState extends BaseStoreState<SearchPage>
 
   @override
   void initState() {
+    _gifController = GifController(vsync: this)
+      ..repeat(
+        min: 0,
+        max: 20,
+        period: Duration(milliseconds: 700),
+      );
     getSearchListFromSharedPreferences();
     _textEditController = TextEditingController();
     _filterController = FilterToolBarController();
@@ -112,6 +120,11 @@ class _SearchPageState extends BaseStoreState<SearchPage>
     _presenter = GoodsListPresenterImpl();
     _listViewController = MvpListViewController(controller: _refreshController);
     _getPromotionList();
+  }
+  @override
+  void dispose() {
+    _gifController.dispose();
+    super.dispose();
   }
 
   @override
@@ -310,6 +323,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                   padding: EdgeInsets.only(bottom: 5),
                   color: AppColor.frenchColor,
                   child: GoodsItemWidget.rowGoods(
+                    gifController: _gifController,
                     isSingleDayGoods: false,
                     onBrandClick: () {
                       AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
@@ -465,6 +479,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                       // ? BrandDetailListItem(goods: goods)
                       // ? NormalGoodsItem(model: goods, buildCtx: context,)
                       ? GoodsItemWidget.normalGoodsItem(
+                    gifController: _gifController,
                           onBrandClick: () {
                             AppRouter.push(
                                 context, RouteName.BRANDGOODS_LIST_PAGE,
@@ -528,6 +543,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                         padding: EdgeInsets.only(bottom: 5),
                         color: AppColor.frenchColor,
                         child: GoodsItemWidget.rowGoods(
+                          gifController: _gifController,
                           isSingleDayGoods: false,
                           onBrandClick: () {
                             AppRouter.push(
@@ -570,6 +586,12 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                   // ? BrandDetailListItem(goods: goods)
                   // ? NormalGoodsItem(model: goods, buildCtx: context,)
                   ? GoodsItemWidget.normalGoodsItem(
+                gifController: GifController(vsync: this)
+                  ..repeat(
+                    min: 0,
+                    max: 20,
+                    period: Duration(milliseconds: 700),
+                  ),
                       onBrandClick: () {
                         AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                             arguments: BrandGoodsListPage.setArguments(

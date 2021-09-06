@@ -16,6 +16,7 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/models/goods_detail_model.dart';
+import 'package:recook/pages/goods/goods_report/goods_report_page.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/home/classify/goods_page.dart';
 import 'package:recook/pages/home/classify/material_page.dart' as MP;
@@ -66,12 +67,12 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
     _goodsId = widget.arguments["goodsID"];
     _liveStatus = widget.arguments["liveStatus"];
     _roomId = widget.arguments["roomId"];
-    _tabController = TabController(length: 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     _appBarController = AppBarController();
     _bottomBarController = BottomBarController();
 
     _tabController.addListener(() {
-      if (_tabController.index == 1) {
+      if (_tabController.index == 1||_tabController.index == 2) {
         _bottomBarController.hidden.value = true;
       } else {
         _bottomBarController.hidden.value = false;
@@ -181,6 +182,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
                             MP.MaterialPage(
                               goodsID: _goodsId,
                             ),
+                            GoodsReportPage(goodsId: _goodsId,),
                           ]),
                     ),
                     _bottomBar()
@@ -228,6 +230,10 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
           // Text("详情", style: TextStyle(color: Colors.black)),
           Text(
             "发现",
+            style: TextStyle(color: Colors.black),
+          ),
+          Text(
+            "产品画像",
             style: TextStyle(color: Colors.black),
           ),
         ]);

@@ -53,7 +53,8 @@ class _SmallWindowWidgetState extends State<SmallWindowWidget> {
               right: 0,
               top: 0,
               bottom: 0,
-              child: CloudVideo(
+              child:
+              CloudVideo(
                 onCloudVideoCreated: (controller) async {
                   _livePlayer = await LivePlayer.create();
                   await _livePlayer.setPlayerView(controller);

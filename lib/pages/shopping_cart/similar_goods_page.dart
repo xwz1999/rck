@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gifimage/flutter_gifimage.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
@@ -10,7 +11,6 @@ import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/items/item_brand_like_grid.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/goods_item.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
@@ -27,7 +27,7 @@ class SimilarGoodsPage extends StatefulWidget {
   }
 }
 
-class _SimilarGoodsPageState extends BaseStoreState<SimilarGoodsPage> {
+class _SimilarGoodsPageState extends BaseStoreState<SimilarGoodsPage> with TickerProviderStateMixin {
   GoodsSimpleListModel goodsSimpleListModel;
   List<GoodsSimple> _likeGoodsList = [];
   List<GoodsSimple> _similarGoodsList = [];
@@ -176,6 +176,12 @@ class _SimilarGoodsPageState extends BaseStoreState<SimilarGoodsPage> {
                   arguments: CommodityDetailPage.setArguments(goods.id));
             },
             child: GoodsItemWidget.normalGoodsItem(
+              gifController: GifController(vsync: this)
+                ..repeat(
+                  min: 0,
+                  max: 20,
+                  period: Duration(milliseconds: 700),
+                ),
               onBrandClick: () {
                 AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                     arguments: BrandGoodsListPage.setArguments(
@@ -263,6 +269,12 @@ class _SimilarGoodsPageState extends BaseStoreState<SimilarGoodsPage> {
                         arguments: CommodityDetailPage.setArguments(goods.id));
                   },
                   child: GoodsItemWidget.normalGoodsItem(
+                    gifController: GifController(vsync: this)
+                      ..repeat(
+                        min: 0,
+                        max: 20,
+                        period: Duration(milliseconds: 700),
+                      ),
                     onBrandClick: () {
                       AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                           arguments: BrandGoodsListPage.setArguments(

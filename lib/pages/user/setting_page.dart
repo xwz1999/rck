@@ -131,10 +131,10 @@ class _SettingItemListViewState extends ResumableState<SettingItemListView> {
                       }),
 
                       //充值临时入口
-                      SCTile.normalTile("购票(临时)", listener: () {
-                        Get.to(() => RechargePage());
-                        //CRoute.push(context, PrivacyPageV2());
-                      }),
+                      // SCTile.normalTile("购票(临时)", listener: () {
+                      //   Get.to(() => RechargePage());
+                      //   //CRoute.push(context, PrivacyPageV2());
+                      // }),
 
                       getEmptyBox(),
                       SCTile.normalTile("退出登录", listener: () {

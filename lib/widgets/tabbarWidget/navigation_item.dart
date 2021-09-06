@@ -82,11 +82,11 @@ class NavigationItem extends StatelessWidget {
     var size;
     if (type == ACEBottomNavigationBarType.normal) {
       // size = ScreenAdapterUtils.setWidth(25.0);
-      size = ScreenAdapterUtils.setWidth(18.0);
+      size = 36.w;
     } else {
       size = selected
-          ? ScreenAdapterUtils.setWidth(18.0)
-          : ScreenAdapterUtils.setWidth(16.0);
+          ? 36.w
+          : 32.w;
       // size = selected
       //     ? ScreenAdapterUtils.setWidth(28.0)
       //     : ScreenAdapterUtils.setWidth(25.0);

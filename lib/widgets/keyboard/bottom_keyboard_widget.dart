@@ -27,7 +27,7 @@ class BottomKeyBoardWidget extends StatefulWidget{
 class _BottomKeyBoardWidgetState extends State<BottomKeyBoardWidget>{
   
   String _pwdData = '';
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  //final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   void initState() {
     super.initState();

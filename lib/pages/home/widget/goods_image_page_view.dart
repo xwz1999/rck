@@ -8,12 +8,14 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
 import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
+import 'package:recook/widgets/OverlayWidget.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/pic_swiper.dart';
 import 'package:recook/widgets/seckill_activity_widget/live_animate_widget.dart';
@@ -44,13 +46,20 @@ class ImagePageView extends StatefulWidget {
   }
 }
 
-class _ImagePageViewState extends State<ImagePageView> {
+class _ImagePageViewState extends State<ImagePageView> with TickerProviderStateMixin {
   double _width = DeviceInfo.screenWidth;
   int _imageIndex = 1;
   List<dynamic> photoList = [];
   List<PicSwiperItem> picSwiperItem = [];
+  GifController _gifController;
   @override
   void initState() {
+    _gifController= GifController(vsync: this)
+      ..repeat(
+        min: 0,
+        max: 20,
+        period: Duration(milliseconds: 700),
+      );
     for (dynamic photo in widget.images) {
       if (photo is MainPhotos) {
         photoList.add(photo);
@@ -58,7 +67,14 @@ class _ImagePageViewState extends State<ImagePageView> {
         picSwiperItem.add(PicSwiperItem(Api.getImgUrl(photo.url)));
       }
     }
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _gifController.dispose();
+    super.dispose();
   }
 
   @override
@@ -124,53 +140,56 @@ class _ImagePageViewState extends State<ImagePageView> {
                         BorderRadius.horizontal(left: Radius.circular(20))),
                 child: _imageCount(),
               )),
-          widget.living.status == 1
-              ? Positioned(
-                  top: 60.rw,
-                  right: 35.rw,
-                  child: InkWell(
-                    onTap: widget.living.roomId != 0
-                        ? () {
-                            Get.to(
-                                LiveStreamViewPage(id: widget.living.roomId));
-                          }
-                        : () {
-                            Toast.showError('找不到该直播间！');
-                            print('1');
-                          },
-                    child: Container(
-                      width: 50.rw,
-                      height: 69.rw,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(7.rw)),
-                          color: Colors.white),
-                      child: Column(
-                        children: [
-                          10.hb,
-                          Container(
-                            width: 35.rw,
-                            height: 35.rw,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: Color(0xFFFF0000),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(40.rw))),
-                            child: LiveAnimateWidget(
-                              size: 50.w,
-                            ),
-                          ),
-                          10.hb,
-                          Text(
-                            '直播中',
-                            style: TextStyle(
-                                fontSize: 10.rsp, color: Color(0xFF333333)),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                )
-              : SizedBox(),
+          // widget.living.status == 1
+          //     ? Positioned(
+          //         top: 60.rw,
+          //         right: 35.rw,
+          //         child: InkWell(
+          //           onTap: widget.living.roomId != 0
+          //               ? () {
+          //                   Get.to(
+          //                       LiveStreamViewPage(id: widget.living.roomId));
+          //                 }
+          //               : () {
+          //                   Toast.showError('找不到该直播间！');
+          //                   print('1');
+          //                 },
+          //           child: Container(
+          //             width: 50.rw,
+          //             height: 69.rw,
+          //             decoration: BoxDecoration(
+          //                 borderRadius: BorderRadius.all(Radius.circular(7.rw)),
+          //                 color: Colors.white),
+          //             child: Column(
+          //               children: [
+          //                 10.hb,
+          //                 Container(
+          //
+          //                   alignment: Alignment.center,
+          //                   //color: Colors.blue,
+          //                   // decoration: BoxDecoration(
+          //                   //     color: Color(0xFFFF0000),
+          //                   //     borderRadius:
+          //                   //         BorderRadius.all(Radius.circular(40.rw))),
+          //                   child: GifImage(
+          //                     controller: _gifController,
+          //                     image: AssetImage(R.ASSETS_LIVE_PLAY_GIF),
+          //                     height: 40.rw,
+          //                     width: 40.rw,
+          //                   ),
+          //                 ),
+          //
+          //                 Text(
+          //                   '直播中',
+          //                   style: TextStyle(
+          //                       fontSize: 10.rsp, color: Color(0xFF333333)),
+          //                 )
+          //               ],
+          //             ),
+          //           ),
+          //         ),
+          //       )
+          //     : SizedBox(),
           widget.living.status == 1
               ? Positioned(
                   top: 50.rw,

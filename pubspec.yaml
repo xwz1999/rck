@@ -2,7 +2,7 @@ name: recook
 description: Recook Market App.
 publish_to: "none"
 
-version: 1.11.3-dev+312
+version: 1.12.0-dev+313
 environment:
   sdk: ">=2.10.0 <3.0.0"
 
@@ -51,6 +51,7 @@ dependencies:
   # 二维码
   # barcode_scan: ^1.0.0
   ## unknow bug fix
+
   flutter_qr_reader:
     git:
       url: https://github.com/customPub/flutter_qr_reader
@@ -146,11 +147,15 @@ dependencies:
   banner_view: ^1.1.2
 
   # meiqia_plugin: 0.0.2
-  meiqia_plugin:
-    git:
-      url: https://github.com/haysuperman/meiqia
-      ref: bfa6b9d81c079a4d1ce86ad611301966fa849538
+#  meiqia_plugin:
+#    git:
+#      url: https://github.com/haysuperman/meiqia
+#      ref: bfa6b9d81c079a4d1ce86ad611301966fa849538
       # ref: a16c54c40259d4c5bcf8f8da66379fe68a1115f1
+
+  meiqia_flutter:
+    git:
+      url: https://github.com/Mocaris/meiqia_flutter
 
   #  flutter_bugly: ^0.2.3+1
 
@@ -229,7 +234,7 @@ dependencies:
   expandable: ^5.0.1
 
   #提示红点组件
-  badges: ^2.0.1
+  #badges: ^2.0.1
 
   #极光推送
   jpush_flutter: 2.1.4
@@ -246,6 +251,8 @@ dependencies:
   #图表组件
   fl_chart: ^0.36.4
 
+  float_button_overlay: ^0.3.4
+
   scrollable_positioned_list: ^0.1.7
   
   flutter_markdown:
@@ -254,8 +261,6 @@ dependencies:
   flutter_union_pay: ^0.0.4
 
   package_signature: ^0.1.1
-
-  raw_toast: ^0.0.1
 
   hive: ^2.0.0
   hive_flutter: ^1.0.0

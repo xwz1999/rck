@@ -28,24 +28,28 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
   GSRefreshController _refreshController =
       GSRefreshController(initialRefresh: true);
   Widget _buildTile({String title, Widget suffix, Widget trailing}) {
-    return Row(
-      children: [
-        64.hb,
-        15.wb,
-        title.text.size(14.rsp).color(Color(0xFF333333)).make(),
-        Spacer(),
-        DefaultTextStyle(
-          style: TextStyle(
-            color: Color(0xFF666666),
-            fontSize: 14.rsp,
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 5.rw,horizontal: 8.rw),
+      color: Colors.white,
+      child: Row(
+        children: [
+          64.hb,
+          15.wb,
+          title.text.size(14.rsp).color(Color(0xFF333333)).make(),
+          Spacer(),
+          DefaultTextStyle(
+            style: TextStyle(
+              color: Color(0xFF666666),
+              fontSize: 14.rsp,
+            ),
+            child: suffix ?? SizedBox(),
           ),
-          child: suffix ?? SizedBox(),
-        ),
-        (suffix != null && trailing != null) ? 6.wb : SizedBox(),
-        trailing ?? SizedBox(),
-        15.wb,
-      ],
-    ).material(color: Colors.white);
+          (suffix != null && trailing != null) ? 6.wb : SizedBox(),
+          trailing ?? SizedBox(),
+          15.wb,
+        ],
+      ),
+    );
   }
 
   @override
@@ -149,7 +153,7 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
                     indent: 15.rw,
                     endIndent: 15.rw,
                   )),
-                  10.hb,
+                  30.hb,
                   ...[
                     _buildTile(
                       title: '手机号',

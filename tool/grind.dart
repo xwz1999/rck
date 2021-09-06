@@ -84,8 +84,8 @@ Future releaseDev() async {
 ///签名
 @Task()
 sign() async {
-  TaskArgs args = context.invocation.arguments;
-  String input = args.getOption('input');
+  //TaskArgs args = context.invocation.arguments;
+  //String input = args.getOption('input');
   stdout.write('start SIGN 🔑\n');
   ProcessResult process = await Process.run(
     Config.apksignerPath,
@@ -186,7 +186,7 @@ buildIos() async {
 }
 
 @Task()
-builIosDev() async {
+buildIosDev() async {
   runAsync('fvm',
       arguments: ['flutter', 'build', 'ios', '--dart-define', 'ISDEBUG=true']);
 }

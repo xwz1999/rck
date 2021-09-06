@@ -69,8 +69,9 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
       })
       ..addOnCalendarSelectListener((dateModel) {
         _dateModel = dateModel;
-        // _getPerpetual(
-        //     DateUtil.formatDate(dateModel.getDateTime(), format: 'yyyy-MM-dd'));
+        _getPerpetual(
+            DateUtil.formatDate(dateModel.getDateTime(), format: 'yyyy-MM-dd'));
+        setState(() {});
 
         print(dateModel.lunar);
       });
@@ -130,8 +131,8 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
                   },
                   child: Container(
                       color: Colors.transparent,
-                      width: 14.rw,
-                      height: 14.rw,
+                      width: 30.rw,
+                      height: 30.rw,
                       alignment: Alignment.center,
                       child: Image.asset(
                         R.ASSETS_LAST_YEAR_ICON_PNG,
@@ -144,15 +145,15 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
                   //   color: Color(0xFFA5A5A5),
                   // ),
                 ),
-                80.wb,
+                50.wb,
                 GestureDetector(
                   onTap: () {
                     _calendarController.moveToPreviousMonth();
                   },
                   child: Container(
                       color: Colors.transparent,
-                      width: 14.rw,
-                      height: 14.rw,
+                      width: 30.rw,
+                      height: 30.rw,
                       alignment: Alignment.center,
                       child: Image.asset(
                         R.ASSETS_LAST_MONTH_ICON_PNG,
@@ -175,23 +176,23 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
                     },
                     child: Container(
                         color: Colors.transparent,
-                        width: 14.rw,
-                        height: 14.rw,
+                        width: 30.rw,
+                        height: 30.rw,
                         alignment: Alignment.center,
                         child: Image.asset(
                           R.ASSETS_NEXT_MONTH_ICON_PNG,
                           width: 7.rw,
                           height: 14.rw,
                         ))),
-                80.wb,
+                50.wb,
                 GestureDetector(
                     onTap: () {
                       _calendarController.moveToNextYear();
                     },
                     child: Container(
                         color: Colors.transparent,
-                        width: 14.rw,
-                        height: 14.rw,
+                        width: 30.rw,
+                        height: 30.rw,
                         alignment: Alignment.center,
                         child: Image.asset(
                           R.ASSETS_NEXT_YEAR_ICON_PNG,

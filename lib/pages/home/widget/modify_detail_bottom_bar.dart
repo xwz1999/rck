@@ -10,6 +10,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:recook/constants/api.dart';
 
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/meiqia_manager.dart';
@@ -165,7 +166,12 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                         ? "男"
                         : "女",
                     "mobile": UserManager.instance.user.info.mobile ?? ""
-                  });    
+
+                  },
+                  goodsName: widget.goodsDetail.data.goodsName??"",
+                  goodsUrl: Api.getImgUrl(widget.goodsDetail.data.mainPhotos.first.url),
+                  );
+
               },
             ),
 

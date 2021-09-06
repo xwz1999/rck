@@ -78,14 +78,15 @@ class BarTableWidgetState extends State<BarTableWidget> {
             },
           ),
           leftTitles: SideTitles(
+            reservedSize: 40,
             showTitles: true,
-            interval: _getInterval(_getMaxNum()), //间隔
+            interval: _getInterval(_getMaxNum())==0?1:_getInterval(_getMaxNum())??1, //间隔
             getTextStyles: (context, value) => const TextStyle(
                 color: Color(
                   0xFF333333,
                 ),
-                fontSize: 12),
-            margin: 10,
+                fontSize: 10),
+            margin: 5,
           ),
         ),
         gridData: FlGridData(

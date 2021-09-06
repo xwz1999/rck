@@ -1,6 +1,4 @@
-import 'dart:math';
 
-import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -150,7 +148,7 @@ class _GoodsReportWidgetPageState extends State<GoodsReportWidgetPage>
                   padding: EdgeInsets.only(right: 10.rw),
                   height: 270.rw,
                   child: LineTablewidget(
-                    saleList: _goodsReportModel.saleNum,
+                    saleList: _goodsReportModel.saleNum??[],
                     timetype: widget.timeType,
                   ),
                 )

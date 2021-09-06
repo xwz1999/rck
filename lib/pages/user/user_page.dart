@@ -462,30 +462,30 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 },
               ),
               Spacer(),
-              GestureDetector(
-                onTap: () {
-                  //Get.to(ReportFormPage()); //加载报表数据
-                },
-                child: Container(
-                    color: Colors.transparent,
-                    child: Row(
-                      children: [
-                        '图表分析'
-                            .text
-                            .size(12.rsp)
-                            .color(Color(0xFF999999))
-                            .make(),
-                        Container(
-                          padding: EdgeInsets.only(top: 2.rw),
-                          child: Icon(
-                            Icons.chevron_right_outlined,
-                            size: 16.rw,
-                            color: Color(0xFFA5A5A5),
-                          ),
-                        ),
-                      ],
-                    )),
-              ),
+              // GestureDetector(
+              //   onTap: () {
+              //     //Get.to(ReportFormPage()); //加载报表数据
+              //   },
+              //   child: Container(
+              //       color: Colors.transparent,
+              //       child: Row(
+              //         children: [
+              //           '图表分析'
+              //               .text
+              //               .size(12.rsp)
+              //               .color(Color(0xFF999999))
+              //               .make(),
+              //           Container(
+              //             padding: EdgeInsets.only(top: 2.rw),
+              //             child: Icon(
+              //               Icons.chevron_right_outlined,
+              //               size: 16.rw,
+              //               color: Color(0xFFA5A5A5),
+              //             ),
+              //           ),
+              //         ],
+              //       )),
+              // ),
               29.w.widthBox,
             ],
           ),

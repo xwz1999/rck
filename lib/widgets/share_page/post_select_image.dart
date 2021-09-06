@@ -80,13 +80,13 @@ class _PostSelectImageState extends State<PostSelectImage> {
         border: Border.all(color: photo.isSelect ? AppColor.themeColor : Colors.grey, width: 0.5),
       ),
     );
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColor.frenchColor,
-        border: Border.all(color: Colors.grey, width: 0.2),
-      ),
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      child: ExtendedImage.network(Api.getImgUrl(photo.url), fit: BoxFit.fill,),
-    );
+    // return Container(
+    //   decoration: BoxDecoration(
+    //     color: AppColor.frenchColor,
+    //     border: Border.all(color: Colors.grey, width: 0.2),
+    //   ),
+    //   margin: EdgeInsets.symmetric(horizontal: 5),
+    //   child: ExtendedImage.network(Api.getImgUrl(photo.url), fit: BoxFit.fill,),
+    // );
   }
 }

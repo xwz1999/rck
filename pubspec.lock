@@ -71,13 +71,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
-  badges:
-    dependency: "direct main"
-    description:
-      name: badges
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
   banner_view:
     dependency: "direct main"
     description:
@@ -133,7 +126,7 @@ packages:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.2"
   build_runner_core:
     dependency: transitive
     description:
@@ -147,7 +140,7 @@ packages:
       name: built_collection
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.1.0"
+    version: "5.1.1"
   built_value:
     dependency: transitive
     description:
@@ -477,6 +470,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.4"
+  float_button_overlay:
+    dependency: "direct main"
+    description:
+      name: float_button_overlay
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.4"
   flustars:
     dependency: "direct main"
     description:
@@ -586,7 +586,7 @@ packages:
       name: flutter_plugin_android_lifecycle
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   flutter_qr_reader:
     dependency: "direct main"
     description:
@@ -907,13 +907,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.12.10"
-  meiqia_plugin:
+  meiqia_flutter:
     dependency: "direct main"
     description:
       path: "."
-      ref: bfa6b9d81c079a4d1ce86ad611301966fa849538
-      resolved-ref: bfa6b9d81c079a4d1ce86ad611301966fa849538
-      url: "https://github.com/haysuperman/meiqia"
+      ref: HEAD
+      resolved-ref: "8b4ea696527a6921f248a3f9cfc85387324c1fdb"
+      url: "https://github.com/Mocaris/meiqia_flutter"
     source: git
     version: "0.0.2"
   meta:
@@ -1055,7 +1055,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   path_provider_linux:
     dependency: transitive
     description:
@@ -1162,7 +1162,7 @@ packages:
       name: pointycastle
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.3.2"
+    version: "3.3.3"
   pool:
     dependency: transitive
     description:
@@ -1233,13 +1233,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.1"
-  raw_toast:
-    dependency: "direct main"
-    description:
-      name: raw_toast
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1"
   redux:
     dependency: transitive
     description:
@@ -1253,7 +1246,7 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.27.1"
+    version: "0.27.2"
   scrollable_positioned_list:
     dependency: "direct main"
     description:
@@ -1530,7 +1523,7 @@ packages:
       name: video_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.14"
+    version: "2.1.15"
   video_player_platform_interface:
     dependency: transitive
     description:

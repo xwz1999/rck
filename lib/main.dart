@@ -17,7 +17,7 @@ import 'package:oktoast/oktoast.dart';
 import 'package:openinstall_flutter_plugin/openinstall_flutter_plugin.dart';
 import 'package:package_info/package_info.dart';
 import 'package:package_signature/package_signature.dart';
-import 'package:raw_toast/raw_toast.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:redux/redux.dart';
 import 'package:tencent_im_plugin/tencent_im_plugin.dart';
 import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
@@ -160,7 +160,8 @@ class MyAppState extends State<MyApp> {
       bool signPass =
           'kzOk4i5opDSCXXjbA9SSrws9a5fytdFFUsumV5DHz2o=' == signature.sha256;
       if (!signPass) {
-        RawToast.toast('请从官方渠道下载本应用,即将退出');
+
+        ReToast.raw(Text('请从官方渠道下载本应用,即将退出'));
         Future.delayed(Duration(milliseconds: 300), () {
           SystemNavigator.pop();
         });
@@ -232,28 +233,38 @@ class MyAppState extends State<MyApp> {
           return OKToast(
             child: ScreenUtilInit(
               designSize: Size(750, 1334),
-              builder: () => GetMaterialApp(
-                builder: BotToastInit(),
-                navigatorObservers: [BotToastNavigatorObserver()],
-                localizationsDelegates: [
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                  CommonLocalizationsDelegate(),
-                ],
-                supportedLocales: [
-                  const Locale('zh', 'CN'),
-                  const Locale('en', 'US'),
-                ],
-                title: 'Recook',
-                debugShowCheckedModeBanner: false,
-                // 设置这一属性即可
-                checkerboardOffscreenLayers: false,
-                // 使用了saveLayer的图形会显示为棋盘格式并随着页面刷新而闪烁
-                checkerboardRasterCacheImages: false,
-                // 做了缓存的静态图片在刷新页面时不会改变棋盘格的颜色；如果棋盘格颜色变了说明被重新缓存了，这是我们要避免的
-                theme: store.state.themeData,
-                home: LaunchWidget(),
-                onGenerateRoute: onGenerateRoute,
+              builder: () => GestureDetector(
+                onTap: (){
+                  //只能响应点击非手势识别的组件
+                  var currentFocus = FocusScope.of(context);
+                  if (!currentFocus.hasPrimaryFocus &&
+                      currentFocus.focusedChild != null) {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  }
+                },
+                child: GetMaterialApp(
+                  builder: BotToastInit(),
+                  navigatorObservers: [BotToastNavigatorObserver()],
+                  localizationsDelegates: [
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                    CommonLocalizationsDelegate(),
+                  ],
+                  supportedLocales: [
+                    const Locale('zh', 'CN'),
+                    const Locale('en', 'US'),
+                  ],
+                  title: 'Recook',
+                  debugShowCheckedModeBanner: false,
+                  // 设置这一属性即可
+                  checkerboardOffscreenLayers: false,
+                  // 使用了saveLayer的图形会显示为棋盘格式并随着页面刷新而闪烁
+                  checkerboardRasterCacheImages: false,
+                  // 做了缓存的静态图片在刷新页面时不会改变棋盘格的颜色；如果棋盘格颜色变了说明被重新缓存了，这是我们要避免的
+                  theme: store.state.themeData,
+                  home: LaunchWidget(),
+                  onGenerateRoute: onGenerateRoute,
+                ),
               ),
             ),
           );

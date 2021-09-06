@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gifimage/flutter_gifimage.dart';
 
 import 'package:waterfall_flow/waterfall_flow.dart';
 
@@ -64,10 +65,16 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
   SortType _sortType = SortType.comprehensive;
 
   int _filterIndex = 0;
-
+  GifController _gifController;
   @override
   void initState() {
     int index = widget.arguments["index"];
+    _gifController = GifController(vsync: this)
+      ..repeat(
+        min: 0,
+        max: 20,
+        period: Duration(milliseconds: 700),
+      );
     DPrint.printf("index=$index");
     _secondCategoryList = widget.arguments["secondCategoryList"];
     _category = _secondCategoryList[index];
@@ -77,6 +84,11 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
     super.initState();
     _presenter = GoodsListPresenterImpl();
     _listViewController = MvpListViewController();
+  }
+  @override
+  void dispose() {
+    _gifController.dispose();
+    super.dispose();
   }
 
   @override
@@ -304,6 +316,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
               child: _displayList
                   // ? BrandDetailListItem(goods: goods)
                   ? GoodsItemWidget.normalGoodsItem(
+                gifController: _gifController,
                       onBrandClick: () {
                         AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                             arguments: BrandGoodsListPage.setArguments(

@@ -123,12 +123,12 @@ class LineTablewidgetState extends State<LineTablewidget> {
   SideTitles leftTitles({GetTitleFunction getTitles}) => SideTitles(
         getTitles: getTitles,
         showTitles: true,
-        margin: 10,
-        interval: _getInterval(_getMaxNum()), //间隔
-        reservedSize: 30,
+        margin: 5,
+        interval: _getInterval(_getMaxNum())==0?1:_getInterval(_getMaxNum())??1, //间隔
+        reservedSize: 40,
         getTextStyles: (context, value) => const TextStyle(
           color: Color(0xFF333333),
-          fontSize: 12,
+          fontSize: 10,
         ),
       );
   // SideTitles leftTitles1({GetTitleFunction getTitles}) => SideTitles(
@@ -282,7 +282,7 @@ class LineTablewidgetState extends State<LineTablewidget> {
           widget.saleList[i].saleNum.toDouble()));
       print(widget.saleList[i].sortId);
     }
-    return flspotList;
+    return flspotList.isEmpty?[FlSpot(1,0)]:flspotList;
   }
 
   _getTitle() {
