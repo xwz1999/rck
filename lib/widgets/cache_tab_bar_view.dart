@@ -153,7 +153,7 @@ class _CacheTabBarViewState extends State<CacheTabBarView> {
     if (_pageController.page == _currentIndex.toDouble())
       return Future<void>.value();
 
-    final int previousIndex = _controller.previousIndex;
+    // final int previousIndex = _controller.previousIndex;
 
     /// 不注释点击间距大于1的时候  会刷新 children 界面
 //    if ((_currentIndex - previousIndex).abs() == 1)
@@ -163,30 +163,30 @@ class _CacheTabBarViewState extends State<CacheTabBarView> {
     }
     return _pageController.jumpToPage(_currentIndex);
 
-    assert((_currentIndex - previousIndex).abs() > 1);
-    int initialPage;
-    setState(() {
-      _warpUnderwayCount += 1;
-      _children = List<Widget>.from(widget.children, growable: false);
-      if (_currentIndex > previousIndex) {
-        _children[_currentIndex - 1] = _children[previousIndex];
-        initialPage = _currentIndex - 1;
-      } else {
-        _children[_currentIndex + 1] = _children[previousIndex];
-        initialPage = _currentIndex + 1;
-      }
-    });
-
-    _pageController.jumpToPage(initialPage);
-
-    await _pageController.animateToPage(_currentIndex,
-        duration: kTabScrollDuration, curve: Curves.ease);
-    if (!mounted) return Future<void>.value();
-
-    setState(() {
-      _warpUnderwayCount -= 1;
-      _children = widget.children;
-    });
+    // assert((_currentIndex - previousIndex).abs() > 1);
+    // int initialPage;
+    // setState(() {
+    //   _warpUnderwayCount += 1;
+    //   _children = List<Widget>.from(widget.children, growable: false);
+    //   if (_currentIndex > previousIndex) {
+    //     _children[_currentIndex - 1] = _children[previousIndex];
+    //     initialPage = _currentIndex - 1;
+    //   } else {
+    //     _children[_currentIndex + 1] = _children[previousIndex];
+    //     initialPage = _currentIndex + 1;
+    //   }
+    // });
+    //
+    // _pageController.jumpToPage(initialPage);
+    //
+    // await _pageController.animateToPage(_currentIndex,
+    //     duration: kTabScrollDuration, curve: Curves.ease);
+    // if (!mounted) return Future<void>.value();
+    //
+    // setState(() {
+    //   _warpUnderwayCount -= 1;
+    //   _children = widget.children;
+    // });
   }
 
   // Called when the PageView scrolls

@@ -27,7 +27,8 @@ import 'package:recook/widgets/sc_tab_bar.dart';
 class ClassifyPage extends StatefulWidget {
   final List<FirstCategory> data;
   final String initValue;
-  ClassifyPage({Key key, @required this.data, this.initValue})
+  final int jdType;//1为京东商品 空为非jd
+  ClassifyPage({Key key, @required this.data, this.initValue, this.jdType})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -256,7 +257,9 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
                   arguments: GoodsListPage.setArguments(
                       title: firstTitle,
                       index: indexIn,
-                      secondCategoryList: secondCategories));
+                      secondCategoryList: secondCategories,
+                      isJD: widget.jdType==1?true:false));
+
             },
           );
         });

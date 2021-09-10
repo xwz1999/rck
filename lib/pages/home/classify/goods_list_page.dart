@@ -31,14 +31,19 @@ import 'mvp/goods_list_presenter_impl.dart';
 class GoodsListPage extends StatefulWidget {
   // final SecondCategory category;
   final Map arguments;
+
   const GoodsListPage({Key key, this.arguments}) : super(key: key);
 
   static setArguments(
-      {String title, int index, List<SecondCategory> secondCategoryList}) {
+      {String title,
+      int index,
+      List<SecondCategory> secondCategoryList,
+      bool isJD = false}) {
     return {
       "title": title,
       "index": index,
-      "secondCategoryList": secondCategoryList
+      "secondCategoryList": secondCategoryList,
+      'isJD': isJD
     };
   }
 
@@ -64,10 +69,20 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
 
   SortType _sortType = SortType.comprehensive;
 
+  int _JDType = 0; // 0 默认数据 1传回全部JD数据 2为JD自营数据 3为JD pop数据
+  bool _isJD = false;
+  String _jdTypeText = '全部';
   int _filterIndex = 0;
   GifController _gifController;
+
   @override
   void initState() {
+    if (widget.arguments['isJD'] != null) {
+      _isJD = widget.arguments['isJD'];
+    }
+    if (_isJD) {
+      _JDType = 1;
+    }
     int index = widget.arguments["index"];
     _gifController = GifController(vsync: this)
       ..repeat(
@@ -85,6 +100,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
     _presenter = GoodsListPresenterImpl();
     _listViewController = MvpListViewController();
   }
+
   @override
   void dispose() {
     _gifController.dispose();
@@ -183,13 +199,20 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
       controller: _filterController,
       height: rSize(40),
       fontSize: 13 * 2.sp,
-      titles: [
-        FilterItemModel(type: FilterItemType.normal, title: "综合"),
-        FilterItemModel(type: FilterItemType.double, title: "价格"),
-        FilterItemModel(type: FilterItemType.double, title: "销量"),
+      titles: _isJD
+          ? [
+              FilterItemModel(type: FilterItemType.double, title: "价格"),
+              FilterItemModel(type: FilterItemType.double, title: "销量"),
 //        FilterItemModel(type: FilterItemType.normal, title: "特卖优先")
-      ],
+            ]
+          : [
+              FilterItemModel(type: FilterItemType.normal, title: "综合"),
+              FilterItemModel(type: FilterItemType.double, title: "价格"),
+              FilterItemModel(type: FilterItemType.double, title: "销量"),
+//        FilterItemModel(type: FilterItemType.normal, title: "特卖优先")
+            ],
       trialing: _displayIcon(),
+      startWidget: _jdTypeWidget(),
       selectedColor: Theme.of(context).primaryColor,
       listener: (index, item) {
         if ((index != 1 && index != 2) && _filterIndex == index) {
@@ -199,29 +222,53 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
         //   return;
         // }
         _filterIndex = index;
-        switch (index) {
-          case 0:
-            _sortType = SortType.comprehensive;
-            break;
-          case 1:
-            if (item.topSelected) {
-              _sortType = SortType.priceAsc;
-            } else {
-              _sortType = SortType.priceDesc;
-            }
-            break;
-          case 2:
-            if (item.topSelected) {
-              _sortType = SortType.salesAsc;
-            } else {
-              _sortType = SortType.salesDesc;
-            }
-            // _sortType = SortType.sales;
-            break;
+        if (_isJD) {
+          switch (index) {
+            case 0:
+              if (item.topSelected) {
+                _sortType = SortType.priceAsc;
+              } else {
+                _sortType = SortType.priceDesc;
+              }
+              break;
+            case 1:
+              if (item.topSelected) {
+                _sortType = SortType.salesAsc;
+              } else {
+                _sortType = SortType.salesDesc;
+              }
+              // _sortType = SortType.sales;
+              break;
 //          case 3:
 //            print("特卖优先");
 //            break;
+          }
+        } else {
+          switch (index) {
+            case 0:
+              _sortType = SortType.comprehensive;
+              break;
+            case 1:
+              if (item.topSelected) {
+                _sortType = SortType.priceAsc;
+              } else {
+                _sortType = SortType.priceDesc;
+              }
+              break;
+            case 2:
+              if (item.topSelected) {
+                _sortType = SortType.salesAsc;
+              } else {
+                _sortType = SortType.salesDesc;
+              }
+              // _sortType = SortType.sales;
+              break;
+//          case 3:
+//            print("特卖优先");
+//            break;
+          }
         }
+
         // _presenter.fetchList(widget.category.id, 0, _sortType);
         // _presenter.fetchList(_category.id, 0, _sortType);
         _listViewController.stopRefresh();
@@ -270,6 +317,64 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
     );
   }
 
+  Widget _jdTypeWidget() {
+    return PopupMenuButton(
+        offset: Offset(0, 10),
+        color: Colors.white,
+        child: Row(
+          children: [
+            Text(_jdTypeText,
+                style: TextStyle(
+                  fontSize: 14.rsp,
+                  color: Color(0xFFD5101A),
+                )),
+            Icon(
+              Icons.arrow_drop_down,
+              color: Color(0xFFD5101A),
+            ),
+          ],
+        ),
+        onSelected: (String value) {
+          setState(() {
+            _jdTypeText = value;
+            if (value == '全部') {
+              _JDType = 1;
+            } else if (value == '京东自营') {
+              _JDType = 2;
+            } else if (value == '京东POP') {
+              _JDType = 3;
+            }
+            print(value);
+            setState(() {});
+            _listViewController.stopRefresh();
+            _listViewController.requestRefresh();
+          });
+        },
+        itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+              PopupMenuItem(
+                  value: "全部",
+                  child: Text("全部",
+                      style: TextStyle(
+                        fontSize: 14.rsp,
+                        color: Color(0xFF333333),
+                      ))),
+              PopupMenuItem(
+                  value: "京东自营",
+                  child: Text("京东自营",
+                      style: TextStyle(
+                        fontSize: 14.rsp,
+                        color: Color(0xFF333333),
+                      ))),
+              PopupMenuItem(
+                  value: "京东POP",
+                  child: Text("京东POP",
+                      style: TextStyle(
+                        fontSize: 14.rsp,
+                        color: Color(0xFF333333),
+                      ))),
+            ]);
+  }
+
   _buildList(BuildContext context) {
     return MvpListView<GoodsSimple>(
       delegate: this,
@@ -279,11 +384,12 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
       type: ListViewType.grid,
       refreshCallback: () {
         // _presenter.fetchList(widget.category.id, 0, _sortType);
-        _presenter.fetchList(_category.id, 0, _sortType,null);
+        _presenter.fetchList(_category.id, 0, _sortType, null, JDType: _JDType);
       },
       loadMoreCallback: (int page) {
         // _presenter.fetchList(widget.category.id, page, _sortType);
-        _presenter.fetchList(_category.id, page, _sortType,null);
+        _presenter.fetchList(_category.id, page, _sortType, null,
+            JDType: _JDType);
       },
       gridViewBuilder: () => _buildGridView(),
     );
@@ -316,7 +422,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
               child: _displayList
                   // ? BrandDetailListItem(goods: goods)
                   ? GoodsItemWidget.normalGoodsItem(
-                gifController: _gifController,
+                      gifController: _gifController,
                       onBrandClick: () {
                         AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                             arguments: BrandGoodsListPage.setArguments(

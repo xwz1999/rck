@@ -12,6 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/utils/text_utils.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/constants/styles.dart';
 
 /// 自筛选列表点击监听
 typedef SelectedListener = Function(int selectedIndex, FilterItemModel item);
@@ -114,7 +116,7 @@ class _FilterToolBarResultContainerState
   Color _unselectedColor = Colors.grey[700];
 
   /// toolbar 字体大小
-  double _toolBarTitleFont = 14.0;
+  // double _toolBarTitleFont = 14.0;
 
   /// 子列表字体大小
   double _subTitleFont = 13.0;
@@ -329,6 +331,7 @@ class _FilterToolBarResultContainerState
 }
 
 class FilterToolBar extends StatefulWidget {
+
   FilterToolBar({
     @required this.titles,
     @required this.listener,
@@ -336,6 +339,7 @@ class FilterToolBar extends StatefulWidget {
     this.selectedColor,
     this.maxLines = 4,
     this.trialing,
+    this.startWidget,
     this.fontSize = 15.0,
     this.height = 40,
   })  : assert(listener != null, "请设置监听事件"),
@@ -346,6 +350,7 @@ class FilterToolBar extends StatefulWidget {
   final int maxLines;
   final SelectedListener listener;
   final Widget trialing;
+  final Widget startWidget;
   final FilterToolBarController controller;
   final double fontSize;
   final double height;
@@ -393,6 +398,10 @@ class _FilterToolBarState extends State<FilterToolBar>
 
   Container _buildToolBar() {
     List<Widget> items = <Widget>[];
+    if (widget.startWidget != null) {
+      items.add(SizedBox(width: 30.rw,));
+      items.add(widget.startWidget);
+    }
     items.addAll(_buildToolBarItem());
     if (widget.trialing != null) {
       items.add(widget.trialing);

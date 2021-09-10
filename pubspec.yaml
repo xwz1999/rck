@@ -2,7 +2,7 @@ name: recook
 description: Recook Market App.
 publish_to: "none"
 
-version: 1.12.0-dev+313
+version: 1.12.0-dev+314
 environment:
   sdk: ">=2.10.0 <3.0.0"
 
@@ -271,7 +271,11 @@ dependencies:
   animations:
   device_info: ^2.0.0
   clipboard_listener: ^1.0.0
-  power_logger: ^1.2.2
+  #日志
+  power_logger:
+      git:
+        url: https://git.oa00.com/flutter_pub/power_logger.git
+        ref: b208dfd21f
 
   bot_toast: ^3.0.5
   get: ^3.26.0

@@ -180,18 +180,18 @@ class _CustomImageButtonState extends State<CustomImageButton> {
                                 Radius.circular(widget.dotSize)),
                             color: widget.dotColor),
                         constraints: BoxConstraints(
-                          minWidth: ScreenAdapterUtils.setWidth(
-                            widget.dotSize,
-                          ),
-                          minHeight: ScreenAdapterUtils.setWidth(
-                            widget.dotSize,
-                          ),
+                          minWidth:
+                            widget.dotSize.rw,
+
+                          minHeight:
+                            widget.dotSize.rw,
+
                         ),
                         child: Text(
                           widget.dotNum,
                           textAlign: TextAlign.center,
                           style: AppTextStyle.generate(
-                              ScreenAdapterUtils.setSp(widget.dotFontSize),
+                              widget.dotFontSize.rw,
                               color: Colors.white,
                               fontWeight: FontWeight.w500),
                         ),

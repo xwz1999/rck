@@ -129,20 +129,20 @@ class ImagePicker implements LoadingDelegate {
       return mediaModel;
   }
 
-  Future<Size> _calculateImageDimension(file) {
-    Completer<Size> completer = Completer();
-    Image image = Image.file(file);
-    image.image.resolve(ImageConfiguration()).addListener(
-      ImageStreamListener(
-        (ImageInfo image, bool synchronousCall) {
-          var myImage = image.image;
-          Size size = Size(myImage.width.toDouble(), myImage.height.toDouble());
-          completer.complete(size);
-        },
-      ),
-    );
-    return completer.future;
-  }
+  // Future<Size> _calculateImageDimension(file) {
+  //   Completer<Size> completer = Completer();
+  //   Image image = Image.file(file);
+  //   image.image.resolve(ImageConfiguration()).addListener(
+  //     ImageStreamListener(
+  //       (ImageInfo image, bool synchronousCall) {
+  //         var myImage = image.image;
+  //         Size size = Size(myImage.width.toDouble(), myImage.height.toDouble());
+  //         completer.complete(size);
+  //       },
+  //     ),
+  //   );
+  //   return completer.future;
+  // }
 
   Future<List<MediaModel>> pickAsset(BuildContext context) async {
     List<MediaModel> medias = [];
@@ -187,8 +187,8 @@ class ImagePicker implements LoadingDelegate {
     for (AssetEntity entity in entities) {
         MediaModel mediaModel = MediaModel();
         mediaModel.file = await entity.file;
-        mediaModel.width = (await entity.size).width.toInt();
-        mediaModel.height = (await entity.size).height.toInt();
+        mediaModel.width =  entity.size.width.toInt();
+        mediaModel.height =  entity.size.height.toInt();
         mediaModel.thumbData = await entity.thumbData;
         mediaModel.type = entity.type == AssetType.video ? MediaType.video : MediaType.image;
         medias.add(mediaModel);

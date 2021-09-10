@@ -151,7 +151,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
                 Container(
                     width: 50.w,
                     height: 50.w,
-                    padding: EdgeInsets.only(top: 10.w, right: 5.w),
+                    padding: EdgeInsets.only(top: 8.w, right: 5.w),
                     child: !_chooseAgreement
                         ? Icon(CupertinoIcons.square,
                             size: 20, color: Colors.red)

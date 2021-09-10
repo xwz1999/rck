@@ -74,9 +74,9 @@ class GoodsListPresenterImpl extends GoodsListPresenterI {
 
   @override
   fetchList(int categoryID, int page, SortType type,int countryId,
-      {String keyword, VoidCallback onLoadDone}) async {
+      {String keyword, VoidCallback onLoadDone,int JDType}) async {
     return await getModel()
-        .fetchList(categoryID, page, type, countryId,keyword: keyword,)
+        .fetchList(categoryID, page, type, countryId,keyword: keyword,JDType: JDType)
         .then((ResultData response) {
       if (!response.result) {
         getRefreshView().refreshFailure(response.msg);

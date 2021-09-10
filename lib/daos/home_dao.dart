@@ -45,6 +45,11 @@ class HomeDao {
             .map((e) => CountryListModel.fromJson(e))
             .toList();
       }
+      else{
+        return [];
+      }
+    }else{
+      return [];
     }
   }
 
@@ -62,6 +67,12 @@ class HomeDao {
             .map((e) => CountryListModel.fromJson(e))
             .toList();
       }
+      else{
+        return [];
+      }
+    }
+    else{
+      return [];
     }
   }
 
@@ -80,6 +91,12 @@ class HomeDao {
             .map((e) => CategoryListModel.fromJson(e))
             .toList();
       }
+      else{
+        return [];
+      }
+    }
+    else{
+      return [];
     }
   }
 
@@ -102,8 +119,34 @@ class HomeDao {
             .map((e) => ViewGoodsModel.fromJson(e))
             .toList();
       }
+      else{
+        return [];
+      }
+    }
+    else{
+      return [];
     }
   }
+
+
+  //获取京东商品类目
+  static Future<List<FirstCategory>> getJDCategoryList() async {
+    ResultData result =
+    await HttpManager.post(APIV2.goodsAPI.getJDCategoryList, {});
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return (result.data['data'] as List)
+            .map((e) => FirstCategory.fromJson(e))
+            .toList();
+      }
+      else{
+        return [];
+      }
+    }else{
+      return [];
+    }
+  }
+
 
 
 }

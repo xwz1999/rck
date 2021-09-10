@@ -40,7 +40,7 @@ class __ActionSheetWidgetState extends State<_ActionSheetWidget> {
           children: <Widget>[
             widget.title != null
                 ? Container(
-                    height: ScreenAdapterUtils.setWidth(rSize(40)),
+                    height: 40.rw,
                     color: Colors.white,
                     alignment: Alignment.center,
                     child: Text(

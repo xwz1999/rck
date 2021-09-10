@@ -66,7 +66,7 @@ class ReportFunc {
   //获取产品画像数据
   static Future<GoodsReportModel> getGoodsPortrait(int goodsId,int datType) async {
     ResultData result =
-        await HttpManager.post(APIV2.gooodsAPI.getProductPortrait, {
+        await HttpManager.post(APIV2.goodsAPI.getProductPortrait, {
       "goods_id": goodsId,
       'day_type':datType
     });

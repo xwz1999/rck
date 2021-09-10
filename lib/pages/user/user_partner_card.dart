@@ -1,22 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'package:get/get.dart';
-import 'package:oktoast/oktoast.dart';
-import 'package:recook/pages/user/model/user_partner_model.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/api_v2.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/user/model/user_common_model.dart';
-import 'package:recook/pages/user/widget/user_group_card_detail_page.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
 
-import 'model/user_benefit_month_team_model.dart';
+import 'package:recook/constants/header.dart';
+
+import 'package:recook/manager/user_manager.dart';
+
+import 'package:recook/utils/user_level_tool.dart';
+
 
 class UserPartnerCard extends StatelessWidget {
   final int userId;

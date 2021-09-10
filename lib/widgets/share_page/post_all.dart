@@ -581,7 +581,7 @@ class _PostAllWidgetState extends State<PostAllWidget> {
                   padding: EdgeInsets.only(
                     top: postImageHorizontalMargin / 2,
                   ),
-                  height: 40 * 2.h,
+                  height: 43.rw,
                   child: PostWeatherWidget(
                     homeWeatherModel: UserManager.instance.homeWeatherModel,
                   ),
@@ -589,7 +589,7 @@ class _PostAllWidgetState extends State<PostAllWidget> {
               : Container(),
           Container(
             padding: EdgeInsets.symmetric(
-              vertical: 10,
+              vertical: 8,
             ),
             child: PostUserInfo(
               name: UserManager.instance.user.info.nickname + "的店铺",
@@ -613,7 +613,7 @@ class _PostAllWidgetState extends State<PostAllWidget> {
           Container(
             height: postImageHorizontalMargin / 2,
           ),
-          Container(
+          widget.missingChildrenModel !=null? Container(
             //padding: EdgeInsets.all(postImageHorizontalMargin / 2),
             height: 229.rw,
             width: 355.rw,
@@ -660,7 +660,7 @@ class _PostAllWidgetState extends State<PostAllWidget> {
                 )
               ],
             ),
-          ),
+          ):SizedBox(),
         ],
       ),
     );

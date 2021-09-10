@@ -9,7 +9,7 @@ class PerpetualCalendarModel {
     code = json['code'];
     msg = json['msg'];
     if (json['newslist'] != null) {
-      newslist = new List<Newslist>();
+      newslist = [];
       json['newslist'].forEach((v) {
         newslist.add(new Newslist.fromJson(v));
       });

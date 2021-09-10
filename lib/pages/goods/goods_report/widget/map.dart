@@ -136,10 +136,11 @@ class _MapState extends State<MapWidget> with AutomaticKeepAliveClientMixin {
   List<String> _chooseCityNameList = [];
   List<Widget> cityNameListWidget = [];
   List<MapEntity> _mapEntityList = [];
-
+  List<TopTen> _topTenList = [];
   @override
   void initState() {
     super.initState();
+    _topTenList = widget.topTenList;
     _initMapData();
   }
 
@@ -157,7 +158,7 @@ class _MapState extends State<MapWidget> with AutomaticKeepAliveClientMixin {
   void _initMapData() {
     _mapEntityList.clear();
     _cityNameList = _cityName.split(",");
-    widget.topTenList.forEach((element) {
+    _topTenList.forEach((element) {
       _chooseCityNameList.add(_getProvice(element.province));
     });
     // _chooseCityNameList = [

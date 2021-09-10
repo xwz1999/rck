@@ -1,7 +1,6 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_calendar/flutter_custom_calendar.dart';
-import 'package:provider/provider.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/calendar/xiata_calendar_widget.dart';
 
@@ -152,14 +151,14 @@ class _CalendarVerticalWidgetState extends State<CalendarVerticalWidget> {
                     final bool isToday =
                         DateUtil.isToday(date.millisecondsSinceEpoch);
                     //七天内
-                    final bool isSevenDay = date.millisecondsSinceEpoch <
-                            DateTime.now()
-                                .add(Duration(days: 6))
-                                .millisecondsSinceEpoch &&
-                        date.millisecondsSinceEpoch >
-                            DateTime.now()
-                                .subtract(Duration(days: 1))
-                                .millisecondsSinceEpoch;
+                    // final bool isSevenDay = date.millisecondsSinceEpoch <
+                    //         DateTime.now()
+                    //             .add(Duration(days: 6))
+                    //             .millisecondsSinceEpoch &&
+                    //     date.millisecondsSinceEpoch >
+                    //         DateTime.now()
+                    //             .subtract(Duration(days: 1))
+                    //             .millisecondsSinceEpoch;
 
                     ///今日之前
                     final bool isBeforeToday = date.millisecondsSinceEpoch <

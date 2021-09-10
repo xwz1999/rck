@@ -13,7 +13,18 @@ class BarTableWidget extends StatefulWidget {
   State<BarTableWidget> createState() => BarTableWidgetState();
 }
 
+
+
 class BarTableWidgetState extends State<BarTableWidget> {
+  List<TopTen> _topTenList = [];
+  @override
+  void initState() {
+    super.initState();
+    _topTenList = widget.topTenList;
+    setState(() {
+
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -74,7 +85,7 @@ class BarTableWidgetState extends State<BarTableWidget> {
             ),
             margin: 5,
             getTitles: (double value) {
-              return _getProvice(widget.topTenList[value.toInt()].province);
+              return _getProvice(_topTenList[value.toInt()].province);
             },
           ),
           leftTitles: SideTitles(
@@ -115,8 +126,8 @@ class BarTableWidgetState extends State<BarTableWidget> {
 
   List<BarChartGroupData> getData() {
     List<BarChartGroupData> barList = [];
-    for (int i = 0; i < widget.topTenList.length; i++) {
-      barList.add(_barChartGroupData(i, widget.topTenList[i].sum.toDouble()));
+    for (int i = 0; i < _topTenList.length; i++) {
+      barList.add(_barChartGroupData(i, _topTenList[i].sum.toDouble()));
     }
     return barList;
   }
@@ -170,7 +181,7 @@ class BarTableWidgetState extends State<BarTableWidget> {
   // }
 
   _getMaxNum() {
-    widget.topTenList.sort((a, b) => b.sum.compareTo(a.sum));
-    return widget.topTenList.first.sum;
+    _topTenList.sort((a, b) => b.sum.compareTo(a.sum));
+    return _topTenList.first.sum;
   }
 }

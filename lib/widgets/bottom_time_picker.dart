@@ -109,7 +109,7 @@ class _BottomTimePickerState extends State<BottomTimePicker> {
       height: 44,
       child: Row(
         children: <Widget>[
-          FlatButton(
+          TextButton(
             onPressed: (){
               if (widget.cancle!=null) widget.cancle();
             }, 
@@ -118,7 +118,7 @@ class _BottomTimePickerState extends State<BottomTimePicker> {
           Expanded(
             child: Text("选择时间", textAlign: TextAlign.center ,style: TextStyle( color: Colors.black, fontSize: 17),),
           ),
-          FlatButton(
+          TextButton(
             onPressed: (){
               if (widget.submit!=null){
                 widget.submit(_dateTime, _timePickerTypes[_index]);

@@ -40,7 +40,7 @@ class CouponPainterNew extends CustomPainter {
         Paint white100Paint = Paint()
           ..color = Colors.white.withAlpha(60)
           ..style = PaintingStyle.fill;
-        Path backgroundPath = Path();
+        //Path backgroundPath = Path();
         white100PaintPath.lineTo(width*0.4, 0);
         // backgroundPath.arcTo(Rect.fromCircle(center: Offset(width, 8), radius: 3),
         //     -pi / 2, -pi, false);

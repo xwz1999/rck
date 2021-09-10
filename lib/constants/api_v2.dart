@@ -4,7 +4,7 @@ class APIV2 {
   static _OrderAPI orderAPI = _OrderAPI();
   static _InvoiceAoi invoiceApi = _InvoiceAoi();
   static TicketAPI ticketAPI = TicketAPI();
-  static GoodsAPI gooodsAPI = GoodsAPI();
+  static GoodsAPI goodsAPI = GoodsAPI();
 }
 
 class UserAPI {
@@ -207,6 +207,17 @@ class GoodsAPI {
 
   ///获取失踪儿童的信息
   String get getMissingChildrenInfo => '/v2/app/shopping_cart/missing_children';
+
+
+  ///获取秒杀列表
+  String get getSeckillList => '/v2/app/flash_sale/show_list';
+
+
+  ///获取高佣特推列表
+  String get getHighCommissionList => '/v2/app/active_bit/recommend/list';
+
+  ///获取京东商品类目
+  String get getJDCategoryList => '/v2/app/jcook/category';
 }
 
 class _InvoiceAoi {

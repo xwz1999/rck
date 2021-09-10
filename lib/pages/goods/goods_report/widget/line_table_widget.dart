@@ -22,11 +22,15 @@ class LineTablewidgetState extends State<LineTablewidget> {
   void initState() {
     super.initState();
     _saleList = widget.saleList;
+    setState(() {
+
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+
+    return  Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(18)),
           color: Colors.white),

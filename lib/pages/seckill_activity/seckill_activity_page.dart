@@ -1,21 +1,27 @@
+import 'package:date_format/date_format.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
+import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/utils/date/date_utils.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/widgets/goods_item.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'cut_down_time_widget.dart';
+import 'model/SeckillModel.dart';
 
 class SeckillActivityPage extends StatefulWidget {
+  final SeckillModel seckillModel;
   SeckillActivityPage({
-    Key key,
+    Key key, @required this.seckillModel,
   }) : super(key: key);
 
   @override
@@ -25,10 +31,18 @@ class SeckillActivityPage extends StatefulWidget {
 class _SeckillActivityPageState extends State<SeckillActivityPage> {
   DateTime _dateNow = DateTime(
       DateTime.now().year, DateTime.now().month, DateTime.now().day, 0, 0);
+  int _status = 0;
+  String _endTime = '';
+  String _startTime = '';
+  num _peopleNum = 800;
 
   @override
   void initState() {
     super.initState();
+    _status = widget.seckillModel.status;
+    _endTime = widget.seckillModel.endTime;
+    _startTime = widget.seckillModel.startTime;
+    _peopleNum = widget.seckillModel.shoppingPeople;
   }
 
   @override
@@ -73,14 +87,6 @@ class _SeckillActivityPageState extends State<SeckillActivityPage> {
         bottom: _bottomWidgt(),
       ),
 
-      // CustomAppBar(
-      //   appBackground: Color(0xFFF9F9FB),
-
-      //   elevation: 0,
-      //   title: '限时秒杀'.text.bold.size(16.rsp).color(Colors.white).make(),
-      //   themeData: AppThemes.themeDataGrey.appBarTheme,
-      //   bottom: _bottomWidgt()
-      // ),
       body: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -92,15 +98,47 @@ class _SeckillActivityPageState extends State<SeckillActivityPage> {
           ],
           stops: [0.0, 0.5],
         )),
-        child: _bodyWidget(),
+        child: _listWidget(),
       ),
     );
   }
 
-  _bodyWidget() {
+
+  _listWidget() {
     return Container(
-      child: Column(
-        children: [],
+      child: ListView.builder(
+
+        itemBuilder: (_, index) {
+          return GestureDetector(
+            onTap: () {
+              AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                  arguments: CommodityDetailPage.setArguments(
+                      widget.seckillModel.seckillGoodsList[index].goodsId));
+            },
+            child: _itemWidget(widget.seckillModel.seckillGoodsList[index]),
+          );
+        },
+        itemCount: widget.seckillModel.seckillGoodsList.length,
+      ),
+    );
+  }
+
+  _itemWidget(SeckillGoods data) {
+    return Container(
+      padding: EdgeInsets.only(bottom: 5),
+      constraints: BoxConstraints(minWidth: 150),
+      child: Stack(
+        children: <Widget>[
+          GoodsItemWidget.seckillGoodsItem(
+            onBrandClick: () {
+              AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
+                  arguments: BrandGoodsListPage.setArguments(
+                     3, data.brandName));//brandId
+            },
+            buildCtx: context,
+            model: data,
+          ),
+        ],
       ),
     );
   }
@@ -113,7 +151,8 @@ class _SeckillActivityPageState extends State<SeckillActivityPage> {
         width: double.infinity,
         height: 30.rw,
         color: Color(0xFFFCEEED),
-        child: Row(
+        child:_status==1&&_startTime!=''?
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
@@ -121,14 +160,50 @@ class _SeckillActivityPageState extends State<SeckillActivityPage> {
               style: TextStyle(color: Color(0xFFC92219), fontSize: 14.rw),
             ),
             16.wb,
-            CutDownTimeWidget(),
+            CutDownTimeWidget(time:_startTime),
             16.wb,
             Text(
               '活动开始',
               style: TextStyle(color: Color(0xFFC92219), fontSize: 14.rw),
             ),
           ],
-        ),
+        ):_status==2?
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              children: [
+                30.wb,
+                Text(
+                  '约',
+                  style: TextStyle(color: Color(0xFFC92219), fontSize: 14.rw),
+                ),
+                Text(
+                  _peopleNum.toString()+'人',
+                  style: TextStyle(color: Color(0xFFC92219), fontSize: 14.rw),
+                ),
+                Text(
+                  '正在疯抢中',
+                  style: TextStyle(color: Color(0xFFC92219), fontSize: 14.rw),
+                ),
+              ],
+            ),
+            Container(
+              child: Row(
+                children: [
+                  Text(
+                    '距结束',
+                    style: TextStyle(color: Color(0xFFC92219), fontSize: 14.rw),
+                  ),
+                  16.wb,
+                  CutDownTimeWidget(time:_endTime),
+                  30.wb,
+                ],
+              ),
+            ),
+
+          ],
+        ):SizedBox(),
       )),
     );
   }

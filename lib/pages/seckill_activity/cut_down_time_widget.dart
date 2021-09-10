@@ -5,8 +5,10 @@ import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:recook/constants/header.dart';
 
 class CutDownTimeWidget extends StatefulWidget {
+  final String time;//格式为00:00:00
+  final int type;//1为 活动未开始 传的开始时间 2为活动中 传结束时间
   CutDownTimeWidget({
-    Key key,
+    Key key, this.time, this.type,
   }) : super(key: key);
 
   @override
@@ -15,16 +17,35 @@ class CutDownTimeWidget extends StatefulWidget {
 
 class _CutDownTimeWidgetState extends State<CutDownTimeWidget> {
   CountdownTimerController controller;
-  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 600;
-
+  int _endTime;
+  DateTime _dateNow ;
   void onEnd() {
     print('onEnd');
+
   }
 
   @override
   void initState() {
     super.initState();
-    controller = CountdownTimerController(endTime: endTime, onEnd: onEnd);
+    print(widget.time);
+    if(widget.time.length>7){
+
+      int hour = int.parse(widget.time.substring(0,2));
+      int minute = int.parse(widget.time.substring(3,5));
+      int second = int.parse(widget.time.substring(6,8));
+      print(hour);
+      print(minute);
+      print(second);
+      _dateNow = DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day,hour, minute,second);
+      print(_dateNow);
+
+      num difference = _dateNow.difference(DateTime.now()).inSeconds;
+      print(difference);
+      _endTime =  DateTime.now().millisecondsSinceEpoch + difference*1000;
+    }
+
+    controller = CountdownTimerController(endTime: _endTime, onEnd: onEnd);
   }
 
   @override
@@ -41,14 +62,16 @@ class _CutDownTimeWidgetState extends State<CutDownTimeWidget> {
       child: CountdownTimer(
         controller: controller,
         onEnd: onEnd,
-        endTime: endTime,
+        endTime: _endTime,
         widgetBuilder: (_, CurrentRemainingTime time) {
           if (time == null) {
             return Container(
+
               width: 70.rw,
               height: 20.rw,
               child: Row(
                 children: [
+                  30.hb,
                   _time('00'),
                   Text(
                     ':',
@@ -67,6 +90,7 @@ class _CutDownTimeWidgetState extends State<CutDownTimeWidget> {
             );
           } else
             return Container(
+
               width: 70.rw,
               height: 20.rw,
               child: Row(
@@ -84,6 +108,7 @@ class _CutDownTimeWidgetState extends State<CutDownTimeWidget> {
                         TextStyle(color: Color(0xFFC92219), fontSize: 14.rsp),
                   ),
                   _time(time.sec != null ? time.sec.toString() : '00'),
+                  30.hb,
                 ],
               ),
             );

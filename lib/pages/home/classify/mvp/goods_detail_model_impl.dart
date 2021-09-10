@@ -23,7 +23,7 @@ class GoodsDetailModelImpl {
   ///获取失踪儿童信息
   static Future<MissingChildrenModel> getMissingChildrenInfo() async {
     ResultData result =
-        await HttpManager.post(APIV2.gooodsAPI.getMissingChildrenInfo, {
+        await HttpManager.post(APIV2.goodsAPI.getMissingChildrenInfo, {
       'user_id': UserManager.instance.user.info.id,
     });
 

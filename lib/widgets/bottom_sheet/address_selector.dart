@@ -81,7 +81,7 @@ class _AddressSelectorState extends State<AddressSelector>
 
   Container _buildBody() {
     return Container(
-      height: ScreenAdapterUtils.setWidth(DeviceInfo.screenHeight * 0.75),
+      height: (DeviceInfo.screenHeight * 0.75).rw,
       padding: EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
           color: Colors.white,

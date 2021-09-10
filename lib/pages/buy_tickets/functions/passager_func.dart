@@ -24,7 +24,11 @@ class PassagerFunc {
             .map((e) => PassagerModel.fromJson(e))
             .toList();
       }
+      else
+        return [];
     }
+    else
+      return [];
   }
 
   //添加乘客
@@ -47,6 +51,8 @@ class PassagerFunc {
     if (result.data != null) {
       return result.data['code'];
     }
+    else
+      return 'FAIL';
   }
 
   //删除乘客
@@ -60,6 +66,8 @@ class PassagerFunc {
     if (result.data != null) {
       return result.data['code'];
     }
+    else
+      return 'FAIL';
   }
 
   //获取商品属性
@@ -74,8 +82,15 @@ class PassagerFunc {
         if (result.data['data']['air_items_list_response'] != null)
           return AirItemModel.fromJson(
               result.data['data']['air_items_list_response']);
+        else
+          return AirItemModel();
       }
+      else
+        return AirItemModel();
     }
+    else
+      return AirItemModel();
+
   }
 
   //获取城市和机场列表
@@ -88,7 +103,11 @@ class PassagerFunc {
             .map((e) => AirportCityModel.fromJson(e))
             .toList();
       }
+      else
+        return [];
     }
+    else
+      return [];
   }
 
   //获取两个城市之间的航线//输入的是两个城市间的站点选择城市则输入所有的站点
@@ -107,7 +126,10 @@ class PassagerFunc {
             .map((e) => AirLineModel.fromJson(e))
             .toList();
       }
+      else
+        return [];
     }
+    else
     return [];
   }
 
@@ -123,7 +145,11 @@ class PassagerFunc {
             .map((e) => AirOrderModel.fromJson(e))
             .toList();
       }
+      else
+        return [];
     }
+    else
+      return [];
   }
 
     //取消订单
@@ -138,6 +164,8 @@ class PassagerFunc {
     if (result.data != null) {
       return result.data['code'];
     }
+    else
+      return null;
   }
 
   //提交订单接口
@@ -180,7 +208,11 @@ class PassagerFunc {
       if (result.data['data'] != null) {
         return SubmitOrderModel.fromJson(result.data['data']);
       }
+      else
+        return SubmitOrderModel();
     }
+    else
+      return SubmitOrderModel();
   }
 
   //飞机票订单支付接口 立方的支付

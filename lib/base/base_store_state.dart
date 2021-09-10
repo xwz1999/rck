@@ -13,7 +13,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:redux/redux.dart';
 
 import 'package:recook/constants/constants.dart';

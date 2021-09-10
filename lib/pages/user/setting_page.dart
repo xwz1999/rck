@@ -4,9 +4,15 @@ import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:package_info/package_info.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/daos/home_dao.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/category_model.dart';
 import 'package:recook/pages/goods/goods_report/goods_report_page.dart';
+import 'package:recook/pages/home/classify/classify_page.dart';
 import 'package:recook/pages/recharge/recharge_page.dart';
+import 'package:recook/pages/seckill_activity/functions/SeckillFunctions.dart';
+import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
+import 'package:recook/pages/seckill_activity/seckill_activity_page.dart';
 import 'package:recook/pages/user/user_info_page.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -130,11 +136,31 @@ class _SettingItemListViewState extends ResumableState<SettingItemListView> {
                         //CRoute.push(context, PrivacyPageV2());
                       }),
 
-                      //充值临时入口
-                      // SCTile.normalTile("购票(临时)", listener: () {
-                      //   Get.to(() => RechargePage());
-                      //   //CRoute.push(context, PrivacyPageV2());
-                      // }),
+                      //秒杀临时入口
+                      SCTile.normalTile("秒杀(临时)", listener: () async {
+                        SeckillModel seckillModel = new SeckillModel();
+                        seckillModel = await SeckillFunc.getSeckillList();
+                        if(seckillModel!=null){
+                          Get.to(() => SeckillActivityPage(seckillModel:seckillModel));
+                        }
+
+                        //CRoute.push(context, PrivacyPageV2());
+                      }),
+
+                      //京东商品临时入口
+                      SCTile.normalTile("京东(临时)", listener: () async {
+                        List<FirstCategory> firstCategoryList = [];
+                        firstCategoryList = await HomeDao.getJDCategoryList();
+                        if(firstCategoryList!=null){
+                          Get.to(() => ClassifyPage(
+                            jdType: 1,
+                            data: firstCategoryList,
+                            initValue: '全部',
+                          ));
+                        }
+
+                        //CRoute.push(context, PrivacyPageV2());
+                      }),
 
                       getEmptyBox(),
                       SCTile.normalTile("退出登录", listener: () {

@@ -3,22 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
-import 'package:get/get.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
-
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/goods_detail_images_model.dart';
+
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
 import 'package:recook/models/promotion_goods_list_model.dart';
-import 'package:recook/pages/goods/goods_report/goods_report_page.dart';
-import 'package:recook/pages/goods/report_form/report_form_page.dart';
+
 import 'package:recook/pages/goods/small_coupon_widget.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
+import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
@@ -26,13 +23,13 @@ import 'package:recook/widgets/custom_image_button.dart';
 
 import 'package:recook/models/goods_hot_sell_list_model.dart'
     as GoodsHotSellListModel;
-import 'package:recook/widgets/seckill_activity_widget/live_animate_widget.dart';
 
 enum GoodsItemType {
   NONE,
   NORMAL,
   HOT_LIST,
   ROW_GOODS,
+  SECKILL,
 }
 
 class GoodsItemWidget extends StatelessWidget {
@@ -202,6 +199,33 @@ class GoodsItemWidget extends StatelessWidget {
         specialIcon = model.specialIcon,
         countryIcon = model.countryIcon,
         living = model.living,
+        super(key: key);
+
+  //秒杀活动
+  GoodsItemWidget.seckillGoodsItem({
+    Key key,
+    this.isSingleDayGoods = false,
+    this.buildCtx,
+    this.shareClick,
+    this.buyClick,
+    this.onBrandClick,
+    SeckillGoods model,
+    this.notShowAmount = false,
+    this.specialSale,
+
+    this.type, this.gifController, this.inventory, this.originalPrice, this.percent, this.coupon, this.commission, this.isImport, this.specialIcon, this.promotionStatus, this.living,
+    //this.special_sale,
+  })  : goodsName = model.goodsName,
+        brandName = model.brandName,
+        brandPictureUrl = model.brandUrl,
+        description = model.subTitle,
+        mainPhotoUrl = model.mainPhoto,
+        discountPrice = model.minDiscountPrice,
+        salesVolume = model.saleNum,
+        id = model.goodsId,
+        widgetType = GoodsItemType.SECKILL,
+        countryIcon = model.countryUrl,
+
         super(key: key);
   final BuildContext buildCtx;
   final VoidCallback shareClick;
@@ -408,14 +432,14 @@ class GoodsItemWidget extends StatelessWidget {
     );
   }
 
-  _addGestureDetectorForWidget(Widget widget, VoidCallback click) {
-    return GestureDetector(
-      child: widget,
-      onTap: () {
-        if (click != null) click();
-      },
-    );
-  }
+  // _addGestureDetectorForWidget(Widget widget, VoidCallback click) {
+  //   return GestureDetector(
+  //     child: widget,
+  //     onTap: () {
+  //       if (click != null) click();
+  //     },
+  //   );
+  // }
 
   _image() {
     double cir = 5;
@@ -442,25 +466,26 @@ class GoodsItemWidget extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            Positioned(
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: 0,
-              child: Offstage(
-                offstage: this.inventory > 0,
-                child: Container(
-                  color: Colors.black38,
-                  child: Center(
-                    child: Image.asset(
-                      'assets/sellout_bg.png',
-                      width: rSize(70),
-                      height: rSize(70),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            //暂时隐藏
+            // Positioned(
+            //   top: 0,
+            //   right: 0,
+            //   left: 0,
+            //   bottom: 0,
+            //   child: Offstage(
+            //     offstage: this.inventory > 0,
+            //     child: Container(
+            //       color: Colors.black38,
+            //       child: Center(
+            //         child: Image.asset(
+            //           'assets/sellout_bg.png',
+            //           width: rSize(70),
+            //           height: rSize(70),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
             living?.status == 1
                 ? Positioned(
                     top: 6.rw,
@@ -575,7 +600,8 @@ class GoodsItemWidget extends StatelessWidget {
   }
 
   _inventoryView() {
-    bool sellout = this.inventory <= 0;
+    //暂时隐藏
+    //bool sellout = this.inventory <= 0;
     Color priceColor = Color(0xffc70404);
     return Container(
       height: 20 * 2.h,
@@ -599,7 +625,7 @@ class GoodsItemWidget extends StatelessWidget {
                   alignment: Alignment.center,
                   child: ExtendedText.rich(TextSpan(children: [
                     TextSpan(
-                      text: "券后 ¥ ",
+                      text: widgetType == GoodsItemType.SECKILL? "秒杀 ¥ ": "券后 ¥ ",
                       style: AppTextStyle.generate(12 * 2.sp,
                           color: priceColor, fontWeight: FontWeight.w500),
                     ),
@@ -619,7 +645,7 @@ class GoodsItemWidget extends StatelessWidget {
                       width: 5,
                     )),
                     TextSpan(
-                      text: "¥${this.originalPrice.toStringAsFixed(0)}",
+                      text: widgetType == GoodsItemType.SECKILL?'':"¥${this.originalPrice.toStringAsFixed(0)}",
                       style: TextStyle(
                           decoration: TextDecoration.lineThrough,
                           decorationColor: Color(0xff898989),
@@ -711,19 +737,21 @@ class GoodsItemWidget extends StatelessWidget {
                       child: CustomImageButton(
                         direction: Direction.horizontal,
                         height: 21,
-                        title: sellout ? "已售完" : "自购",
+                        //暂时隐藏
+                        //title: sellout ? "已售完" : "自购",
+                        title: "自购",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 13 * 2.sp,
                         ),
                         padding: EdgeInsets.symmetric(
-                            horizontal: ScreenAdapterUtils.setWidth(
+                            horizontal:
                                 UserLevelTool.currentRoleLevelEnum() ==
                                             UserRoleLevel.Vip &&
                                         this.promotionStatus ==
                                             PromotionStatus.start
-                                    ? 16
-                                    : 8),
+                                    ? 16.rw
+                                    : 8.rw,
                             vertical: rSize(0)),
                         borderRadius: BorderRadius.circular(40),
                         // borderRadius: BorderRadius.only(
@@ -740,7 +768,9 @@ class GoodsItemWidget extends StatelessWidget {
                         //     topRight: Radius.circular(40),
                         //     bottomRight: Radius.circular(40)),
                         backgroundColor:
-                            sellout ? AppColor.greyColor : _shareTextColor,
+                        //暂时隐藏
+                            //sellout ? AppColor.greyColor : _shareTextColor,
+                        _shareTextColor,
                         pureDisplay: true,
                       ),
                       onTap: () {
@@ -757,13 +787,13 @@ class GoodsItemWidget extends StatelessWidget {
                           fontSize: 12.rsp,
                         ),
                         padding: EdgeInsets.symmetric(
-                            horizontal: ScreenAdapterUtils.setWidth(
+                            horizontal:
                                 UserLevelTool.currentRoleLevelEnum() ==
                                             UserRoleLevel.Vip &&
                                         this.promotionStatus ==
                                             PromotionStatus.start
-                                    ? 16
-                                    : 8),
+                                    ? 32.rw
+                                    : 16.rw,
                             vertical: rSize(0)),
                         borderRadius: BorderRadius.circular(40),
                         backgroundColor: _shareTextColor,
@@ -780,31 +810,31 @@ class GoodsItemWidget extends StatelessWidget {
     );
   }
 
-  _priceView() {
-    if (promotionStatus == PromotionStatus.ready) {
-      return Container();
-    }
-    return Row(
-      children: <Widget>[
-        _stockWidget(),
-        Container(
-          width: 10,
-        ),
-        Expanded(
-          child: Text.rich(
-            TextSpan(children: [
-              TextSpan(
-                  text: "已售",
-                  style: TextStyle(color: Colors.black, fontSize: 11)),
-              TextSpan(
-                  text: "${(this.percent / 100.0).toStringAsFixed(0)}%",
-                  style: TextStyle(color: Color(0xffec294d), fontSize: 11)),
-            ]),
-          ),
-        ),
-      ],
-    );
-  }
+  // _priceView() {
+  //   if (promotionStatus == PromotionStatus.ready) {
+  //     return Container();
+  //   }
+  //   return Row(
+  //     children: <Widget>[
+  //       _stockWidget(),
+  //       Container(
+  //         width: 10,
+  //       ),
+  //       Expanded(
+  //         child: Text.rich(
+  //           TextSpan(children: [
+  //             TextSpan(
+  //                 text: "已售",
+  //                 style: TextStyle(color: Colors.black, fontSize: 11)),
+  //             TextSpan(
+  //                 text: "${(this.percent / 100.0).toStringAsFixed(0)}%",
+  //                 style: TextStyle(color: Color(0xffec294d), fontSize: 11)),
+  //           ]),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   _saleNumberWidget() {
     return Container(
@@ -837,7 +867,7 @@ class GoodsItemWidget extends StatelessWidget {
                                 )),
                             padding: EdgeInsets.symmetric(horizontal: 3),
                             child: Text(
-                              "赚" + this.commission.toStringAsFixed(2),
+                              "赚" + (this.commission??0).toStringAsFixed(2),
                               style: TextStyle(
                                 color: Colors.white.withAlpha(0),
                                 fontSize: 12 * 2.sp,
@@ -848,7 +878,7 @@ class GoodsItemWidget extends StatelessWidget {
                               ? Container(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    "赚" + this.commission.toStringAsFixed(2),
+                                    "赚" +  (this.commission??0).toStringAsFixed(2),
                                     style: TextStyle(
                                       color: Color(0xffeb0045),
                                       fontSize: 12 * 2.sp,
@@ -882,35 +912,35 @@ class GoodsItemWidget extends StatelessWidget {
     );
   }
 
-  _stockWidget() {
-    double height = 4;
-    double allWidth = 120;
-    double proportion = this.percent / 100.0;
-    double width = allWidth * proportion < 4 && allWidth * proportion > 0
-        ? 4
-        : allWidth * proportion;
-    return Container(
-      width: allWidth,
-      height: height,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(height)),
-          // color: AppColor.pinkColor,
-          color: Color(0xffdcdddd)),
-      child: Stack(
-        alignment: AlignmentDirectional.centerStart,
-        children: <Widget>[
-          Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(height)),
-              color: AppColor.themeColor,
-            ),
-            width: width,
-            height: height,
-          ),
-        ],
-      ),
-    );
-  }
+  // _stockWidget() {
+  //   double height = 4;
+  //   double allWidth = 120;
+  //   double proportion = this.percent / 100.0;
+  //   double width = allWidth * proportion < 4 && allWidth * proportion > 0
+  //       ? 4
+  //       : allWidth * proportion;
+  //   return Container(
+  //     width: allWidth,
+  //     height: height,
+  //     decoration: BoxDecoration(
+  //         borderRadius: BorderRadius.all(Radius.circular(height)),
+  //         // color: AppColor.pinkColor,
+  //         color: Color(0xffdcdddd)),
+  //     child: Stack(
+  //       alignment: AlignmentDirectional.centerStart,
+  //       children: <Widget>[
+  //         Container(
+  //           decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.all(Radius.circular(height)),
+  //             color: AppColor.themeColor,
+  //           ),
+  //           width: width,
+  //           height: height,
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Future _shareEvent() async {
     String imgUrl;
@@ -946,12 +976,12 @@ class GoodsItemWidget extends StatelessWidget {
     }
   }
 
-  _getLivingStatus(int status) {
-    if (status == 1) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // _getLivingStatus(int status) {
+  //   if (status == 1) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 }
 

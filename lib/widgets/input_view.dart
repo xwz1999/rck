@@ -106,7 +106,7 @@ class _InputViewState extends State<InputView> {
                 inputFormatters: widget.maxLength == null
                     ? null
                     : [
-                        widget.maxLength == 0 ? WhitelistingTextInputFormatter.digitsOnly:
+                        widget.maxLength == 0 ? FilteringTextInputFormatter.digitsOnly:
                         LengthLimitingTextInputFormatter(widget.maxLength),
                       ],
                 cursorColor: widget.cursorColor,

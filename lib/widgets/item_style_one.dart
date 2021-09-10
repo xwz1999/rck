@@ -3,32 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/app_image_resources.dart';
 
 class ItemStyleOne extends StatefulWidget {
-  String _title;
-  Color _titleColor;
-  String _subTitle;
-  Color _backColor;
-  EdgeInsets _padding;
+  final String title;
 
-  ItemStyleOne(this._title,
-      {String subTitle,
-      Color backColor = Colors.white,
-      EdgeInsets padding =
-          const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 8)}) {
-    this._backColor = backColor;
-    this._subTitle = subTitle;
-    this._padding = padding;
-    this._titleColor = Colors.greenAccent;
-  }
+  const ItemStyleOne({Key key, this.title}) : super(key: key);
+  // Color _titleColor;
+   //String _subTitle;
+  // Color _backColor;
+  // EdgeInsets _padding;
+
 
   @override
   _ItemStyleOneState createState() => _ItemStyleOneState();
 
-  updateSubTitle(String subTitle) {
-    _subTitle = subTitle;
-  }
+  // updateSubTitle(String subTitle) {
+  //   _subTitle = subTitle;
+  // }
 }
 
 class _ItemStyleOneState extends State<ItemStyleOne> {
+  Color _backColor = Colors.white;
+  // Color _titleColor = Colors.greenAccent;
+      EdgeInsets _padding =
+  const EdgeInsets.only(left: 16, top: 8, right: 16, bottom: 8);
   @override
   Widget build(BuildContext context) {
     // Widget current = Text(
@@ -38,15 +34,15 @@ class _ItemStyleOneState extends State<ItemStyleOne> {
     // );
     // current = Row(crossAxisAlignment: CrossAxisAlignment.center,);
     return Container(
-      color: widget._backColor,
+      color: _backColor,
       child: Padding(
-        padding: widget._padding,
+        padding: _padding,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Expanded(
               child: Text(
-                widget._title,
+                widget.title,
                 style: TextStyle(color: Colors.grey, fontSize: 16),
               ),
             ),

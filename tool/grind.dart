@@ -23,7 +23,7 @@ Future releaseApk() async {
     'flutter',
     'build',
     'apk',
-    '--target-platform=android-arm64',
+    '--target-platform=android-arm64,android-arm',
     '--dart-define',
     'ISDEBUG=false'
   ]).then((proc) async {
