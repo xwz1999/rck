@@ -53,8 +53,10 @@ import 'package:recook/widgets/refresh_widget.dart';
 
 class SearchPage extends StatefulWidget {
   final int countryId;
+  final int jdType; //1为京东商品 空为非jd
 
-  const SearchPage({Key key, this.countryId}) : super(key: key);
+  const SearchPage({Key key, this.countryId, this.jdType}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _SearchPageState();
@@ -62,7 +64,7 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends BaseStoreState<SearchPage>
-    with MvpListViewDelegate<GoodsSimple>,TickerProviderStateMixin{
+    with MvpListViewDelegate<GoodsSimple>, TickerProviderStateMixin {
   String _searchText = "";
   FocusNode _contentFocusNode = FocusNode();
 
@@ -77,6 +79,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
   TextEditingController _textEditController;
 
   List<String> _searchHistory = [];
+  List<bool> _barBool = [false, false, false];
   bool _startSearch = false;
 
   SortType _sortType = SortType.comprehensive;
@@ -105,8 +108,16 @@ class _SearchPageState extends BaseStoreState<SearchPage>
     if (mounted) setState(() {});
   }
 
+  int _jDType = 0; // 0 默认数据 1传回全部JD数据 2为JD自营数据 3为JD pop数据
+  String _jdTypeText = '全部';
+
   @override
   void initState() {
+    if (widget.jdType == 1) {
+      _jDType = 1;
+      _sortType = SortType.priceAsc;
+      _barBool = [false, false];
+    }
     _gifController = GifController(vsync: this)
       ..repeat(
         min: 0,
@@ -121,6 +132,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
     _listViewController = MvpListViewController(controller: _refreshController);
     _getPromotionList();
   }
+
   @override
   void dispose() {
     _gifController.dispose();
@@ -186,44 +198,97 @@ class _SearchPageState extends BaseStoreState<SearchPage>
       controller: _filterController,
       height: rSize(40),
       fontSize: 13 * 2.sp,
-      titles: [
-        FilterItemModel(type: FilterItemType.normal, title: "综合"),
-        FilterItemModel(type: FilterItemType.double, title: "价格"),
-        FilterItemModel(type: FilterItemType.double, title: "销量"),
+      titles: widget.jdType == 1
+          ? [
+              FilterItemModel(
+                  type: FilterItemType.double,
+                  title: "价格",
+                  selectedList: _barBool),
+              FilterItemModel(
+                  type: FilterItemType.double,
+                  title: "销量",
+                  selectedList: _barBool),
+            ]
+          : [
+              FilterItemModel(
+                  type: FilterItemType.normal,
+                  title: "综合",
+                  selectedList: _barBool),
+              FilterItemModel(
+                  type: FilterItemType.double,
+                  title: "价格",
+                  selectedList: _barBool),
+              FilterItemModel(
+                  type: FilterItemType.double,
+                  title: "销量",
+                  selectedList: _barBool),
 //        FilterItemModel(type: FilterItemType.normal, title: "特卖优先")
-      ],
+            ],
       trialing: _displayIcon(),
+      startWidget: widget.jdType==1? _jdTypeWidget():null,
       selectedColor: Theme.of(context).primaryColor,
       listener: (index, item) {
-        if ((index != 1 && index != 2) && _filterIndex == index) {
-          return;
+        if (widget.jdType != 1) {
+          if ((index != 1 && index != 2) && _filterIndex == index) {
+            return;
+          }
+        } else {
+          if ((index != 1 && index != 2 && index != 0) &&
+              _filterIndex == index) {
+            return;
+          }
         }
         // if (index != 1 && _filterIndex == index) {
         //   return;
         // }
         _filterIndex = index;
-        switch (index) {
-          case 0:
-            _sortType = SortType.comprehensive;
-            break;
-          case 1:
-            if (item.topSelected) {
-              _sortType = SortType.priceAsc;
-            } else {
-              _sortType = SortType.priceDesc;
-            }
-            break;
-          case 2:
-            if (item.topSelected) {
-              _sortType = SortType.salesAsc;
-            } else {
-              _sortType = SortType.salesDesc;
-            }
-            // _sortType = SortType.sales;
-            break;
+        if (widget.jdType == 1) {
+          switch (index) {
+            case 0:
+              print(item.topSelected);
+              if (item.topSelected) {
+                _sortType = SortType.priceAsc;
+              } else {
+                _sortType = SortType.priceDesc;
+              }
+              break;
+            case 1:
+              print(item.topSelected);
+              if (item.topSelected) {
+                _sortType = SortType.salesAsc;
+              } else {
+                _sortType = SortType.salesDesc;
+              }
+              // _sortType = SortType.sales;
+              break;
 //          case 3:
 //            print("特卖优先");
 //            break;
+          }
+        } else {
+          switch (index) {
+            case 0:
+              _sortType = SortType.comprehensive;
+              break;
+            case 1:
+              if (item.topSelected) {
+                _sortType = SortType.priceAsc;
+              } else {
+                _sortType = SortType.priceDesc;
+              }
+              break;
+            case 2:
+              if (item.topSelected) {
+                _sortType = SortType.salesAsc;
+              } else {
+                _sortType = SortType.salesDesc;
+              }
+              // _sortType = SortType.sales;
+              break;
+//          case 3:
+//            print("特卖优先");
+//            break;
+          }
         }
         // _presenter.fetchList(widget.category.id, 0, _sortType);
         // _presenter.fetchList(_category.id, 0, _sortType);
@@ -273,6 +338,64 @@ class _SearchPageState extends BaseStoreState<SearchPage>
     );
   }
 
+  Widget _jdTypeWidget() {
+    return PopupMenuButton(
+        offset: Offset(0, 10),
+        color: Colors.white,
+        child: Row(
+          children: [
+            Text(_jdTypeText,
+                style: TextStyle(
+                  fontSize: 14.rsp,
+                  color: Color(0xFFD5101A),
+                )),
+            Icon(
+              Icons.arrow_drop_down,
+              color: Color(0xFFD5101A),
+            ),
+          ],
+        ),
+        onSelected: (String value) {
+          setState(() {
+            _jdTypeText = value;
+            if (value == '全部') {
+              _jDType = 1;
+            } else if (value == '京东自营') {
+              _jDType = 2;
+            } else if (value == '京东POP') {
+              _jDType = 3;
+            }
+            print(value);
+            setState(() {});
+            _listViewController.stopRefresh();
+            _listViewController.requestRefresh();
+          });
+        },
+        itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
+              PopupMenuItem(
+                  value: "全部",
+                  child: Text("全部",
+                      style: TextStyle(
+                        fontSize: 14.rsp,
+                        color: Color(0xFF333333),
+                      ))),
+              PopupMenuItem(
+                  value: "京东自营",
+                  child: Text("京东自营",
+                      style: TextStyle(
+                        fontSize: 14.rsp,
+                        color: Color(0xFF333333),
+                      ))),
+              PopupMenuItem(
+                  value: "京东POP",
+                  child: Text("京东POP",
+                      style: TextStyle(
+                        fontSize: 14.rsp,
+                        color: Color(0xFF333333),
+                      ))),
+            ]);
+  }
+
   _buildList(BuildContext context) {
     return MvpListView<GoodsSimple>(
       noDataView: CustomScrollView(
@@ -280,68 +403,68 @@ class _SearchPageState extends BaseStoreState<SearchPage>
           SliverToBoxAdapter(
             child: NoDataView(
               title: "换个关键词搜索一下吧~",
-              height: 300,
+              height: 500,
             ),
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.only(top: rSize(40), bottom: rSize(10)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: rSize(2),
-                    color: Color(0xFFB8B8B8),
-                    width: rSize(40),
-                  ),
-                  rWBox(10),
-                  Text(
-                    '猜你喜欢',
-                    style: TextStyle(
-                      fontSize: rSP(15),
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  rWBox(10),
-                  Container(
-                    height: rSize(2),
-                    color: Color(0xFFB8B8B8),
-                    width: rSize(40),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                PromotionGoodsModel model = _promotionGoodsList[index];
-                return Container(
-                  padding: EdgeInsets.only(bottom: 5),
-                  color: AppColor.frenchColor,
-                  child: GoodsItemWidget.rowGoods(
-                    gifController: _gifController,
-                    isSingleDayGoods: false,
-                    onBrandClick: () {
-                      AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
-                          arguments: BrandGoodsListPage.setArguments(
-                              model.brandId, model.brandName));
-                    },
-                    model: model,
-                    buyClick: () {
-                      AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                          arguments:
-                              CommodityDetailPage.setArguments(model.goodsId));
-                    },
-                  ),
-                );
-              },
-              itemCount: _promotionGoodsList.length,
-            ),
-          ),
+          // SliverToBoxAdapter(
+          //   child: Padding(
+          //     padding: EdgeInsets.only(top: rSize(40), bottom: rSize(10)),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         Container(
+          //           height: rSize(2),
+          //           color: Color(0xFFB8B8B8),
+          //           width: rSize(40),
+          //         ),
+          //         rWBox(10),
+          //         Text(
+          //           '猜你喜欢',
+          //           style: TextStyle(
+          //             fontSize: rSP(15),
+          //             fontWeight: FontWeight.bold,
+          //             color: Colors.black87,
+          //           ),
+          //         ),
+          //         rWBox(10),
+          //         Container(
+          //           height: rSize(2),
+          //           color: Color(0xFFB8B8B8),
+          //           width: rSize(40),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // SliverToBoxAdapter(
+          //   child: ListView.builder(
+          //     shrinkWrap: true,
+          //     physics: NeverScrollableScrollPhysics(),
+          //     itemBuilder: (context, index) {
+          //       PromotionGoodsModel model = _promotionGoodsList[index];
+          //       return Container(
+          //         padding: EdgeInsets.only(bottom: 5),
+          //         color: AppColor.frenchColor,
+          //         child: GoodsItemWidget.rowGoods(
+          //           gifController: _gifController,
+          //           isSingleDayGoods: false,
+          //           onBrandClick: () {
+          //             AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
+          //                 arguments: BrandGoodsListPage.setArguments(
+          //                     model.brandId, model.brandName));
+          //           },
+          //           model: model,
+          //           buyClick: () {
+          //             AppRouter.push(context, RouteName.COMMODITY_PAGE,
+          //                 arguments:
+          //                     CommodityDetailPage.setArguments(model.goodsId));
+          //           },
+          //         ),
+          //       );
+          //     },
+          //     itemCount: _promotionGoodsList.length,
+          //   ),
+          // ),
         ],
       ),
       autoRefresh: false,
@@ -358,13 +481,8 @@ class _SearchPageState extends BaseStoreState<SearchPage>
         //   _searchText,
         //   0,
         // );
-        _presenter.fetchList(
-          -99,
-          0,
-          _sortType,
-          widget.countryId,
-          keyword: _searchText,
-        );
+        _presenter.fetchList(-99, 0, _sortType, widget.countryId,
+            keyword: _searchText, JDType: _jDType);
       },
       loadMoreCallback: (int page) {
         // _presenter.fetchSearchList(
@@ -377,6 +495,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
           _sortType,
           widget.countryId,
           keyword: _searchText,
+          JDType: _jDType,
           onLoadDone: () {
             Future.delayed(Duration(milliseconds: 100), () {
               if (mounted) setState(() {});
@@ -392,6 +511,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
 
   List<Promotion> _promotionList = [];
   List<dynamic> _promotionGoodsList = [];
+
   _getPromotionList() async {
     ResultData resultData = await HttpManager.post(HomeApi.promotion_list, {});
 
@@ -479,7 +599,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                       // ? BrandDetailListItem(goods: goods)
                       // ? NormalGoodsItem(model: goods, buildCtx: context,)
                       ? GoodsItemWidget.normalGoodsItem(
-                    gifController: _gifController,
+                          gifController: _gifController,
                           onBrandClick: () {
                             AppRouter.push(
                                 context, RouteName.BRANDGOODS_LIST_PAGE,
@@ -488,6 +608,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                           },
                           buildCtx: context,
                           model: goods,
+                          type: widget.jdType == 1?3:0,
                         )
                       : BrandDetailGridItem(goods: goods));
             },
@@ -586,12 +707,12 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                   // ? BrandDetailListItem(goods: goods)
                   // ? NormalGoodsItem(model: goods, buildCtx: context,)
                   ? GoodsItemWidget.normalGoodsItem(
-                gifController: GifController(vsync: this)
-                  ..repeat(
-                    min: 0,
-                    max: 20,
-                    period: Duration(milliseconds: 700),
-                  ),
+                      gifController: GifController(vsync: this)
+                        ..repeat(
+                          min: 0,
+                          max: 20,
+                          period: Duration(milliseconds: 700),
+                        ),
                       onBrandClick: () {
                         AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                             arguments: BrandGoodsListPage.setArguments(
@@ -621,6 +742,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
       _sortType,
       widget.countryId,
       keyword: _searchText,
+      JDType: _jDType,
     );
     cancel();
     _startSearch = true;

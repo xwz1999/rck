@@ -58,6 +58,7 @@ class _BrandGoodsListPageState extends BaseStoreState<BrandGoodsListPage>
 
   int _filterIndex = 0;
   GifController _gifController;
+  List<bool> _barBool = [false,false,false];
 
   @override
   void initState() {
@@ -109,9 +110,9 @@ class _BrandGoodsListPageState extends BaseStoreState<BrandGoodsListPage>
       height: rSize(40),
       fontSize: 15 * 2.sp,
       titles: [
-        FilterItemModel(type: FilterItemType.normal, title: "综合"),
-        FilterItemModel(type: FilterItemType.double, title: "价格"),
-        FilterItemModel(type: FilterItemType.double, title: "销量"),
+        FilterItemModel(type: FilterItemType.normal, title: "综合",selectedList:_barBool),
+        FilterItemModel(type: FilterItemType.double, title: "价格",selectedList:_barBool),
+        FilterItemModel(type: FilterItemType.double, title: "销量",selectedList:_barBool),
 //        FilterItemModel(type: FilterItemType.normal, title: "特卖优先")
       ],
       trialing: _displayIcon(),

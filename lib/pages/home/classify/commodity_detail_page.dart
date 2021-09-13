@@ -40,8 +40,8 @@ class CommodityDetailPage extends StatefulWidget {
     this.liveId = 0,
   }) : super(key: key);
 
-  static setArguments(int goodsID, {int liveStatus, int roomId}) {
-    return {"goodsID": goodsID, 'liveStatus': liveStatus, 'roomId': roomId};
+  static setArguments(int goodsID, {int liveStatus, int roomId,int gysId}) {
+    return {"goodsID": goodsID, 'liveStatus': liveStatus, 'roomId': roomId,'gysId':gysId};
   }
 
   @override
@@ -60,6 +60,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
   GoodsDetailModel _goodsDetail;
   int _liveStatus;
   int _roomId;
+  num _gysId;
 
   @override
   void initState() {
@@ -67,6 +68,8 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
     _goodsId = widget.arguments["goodsID"];
     _liveStatus = widget.arguments["liveStatus"];
     _roomId = widget.arguments["roomId"];
+    _gysId = widget.arguments["gysId"];
+    print(_gysId);
     _tabController = TabController(length: 3, vsync: this);
     _appBarController = AppBarController();
     _bottomBarController = BottomBarController();
@@ -163,6 +166,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
                               goodsId: _goodsId,
                               openSkuChoosePage: _openSkuChoosePage,
                               goodsDetail: _goodsDetail,
+                              gysId: _gysId,
                               onScroll: (notification) {
                                 // double maxScroll = notification.metrics.maxScrollExtent;
                                 double offset = notification.metrics.pixels;
@@ -269,6 +273,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
       },
       buyListener: () {
         _openSkuChoosePage.value = true;
+
       },
       shareListener: () {
         _showShare(context);

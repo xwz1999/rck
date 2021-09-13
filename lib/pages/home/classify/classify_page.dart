@@ -10,6 +10,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -23,6 +24,8 @@ import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/sc_grid_view.dart';
 import 'package:recook/widgets/sc_tab_bar.dart';
+
+import '../search_page.dart';
 
 class ClassifyPage extends StatefulWidget {
   final List<FirstCategory> data;
@@ -93,7 +96,8 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
       ),
       child: CustomImageButton(
         onPressed: () {
-          AppRouter.push(context, RouteName.SEARCH);
+          //AppRouter.push(context, RouteName.SEARCH);
+          Get.to(SearchPage(jdType: 1,));
         },
         direction: Direction.horizontal,
         icon: Container(
@@ -257,6 +261,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
                   arguments: GoodsListPage.setArguments(
                       title: firstTitle,
                       index: indexIn,
+
                       secondCategoryList: secondCategories,
                       isJD: widget.jdType==1?true:false));
 

@@ -15,7 +15,7 @@ import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/widgets/goods_item.dart';
 
-enum GoodsListTempType { recookMake, homeAppliances, homeLife }
+enum GoodsListTempType { recookMake, homeAppliances, homeLife ,highCommission,preferential }//瑞库制品  数码家电 家居生活  高佣特推 特惠专区
 
 class GoodsListTempPage extends StatefulWidget {
   final Map arguments;

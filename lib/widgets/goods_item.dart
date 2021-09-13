@@ -60,11 +60,13 @@ class GoodsItemWidget extends StatelessWidget {
   // model.getPromotionStatus()
   final PromotionStatus promotionStatus;
   final Function onBrandClick;
-  final int type; //type = 4 找相似
+  final int type; //type = 4 找相似  type = 3  京东商品
 
   final String countryIcon;
   final Living living;
   final GifController gifController;
+  final num gysId;
+
 
   const GoodsItemWidget({
     Key key,
@@ -93,7 +95,7 @@ class GoodsItemWidget extends StatelessWidget {
     this.specialIcon,
     this.type,
     this.countryIcon,
-    this.living, this.gifController,
+    this.living, this.gifController, this.gysId,
     //this.special_sale,
   })  : widgetType = GoodsItemType.NONE,
         super(key: key);
@@ -131,6 +133,7 @@ class GoodsItemWidget extends StatelessWidget {
         specialIcon = model.specialIcon,
         countryIcon = model.countryIcon,
         living = model.living,
+        gysId = model.gysId,
         super(key: key);
 
   ///Hot List
@@ -146,7 +149,7 @@ class GoodsItemWidget extends StatelessWidget {
     this.specialSale,
     this.specialIcon,
     this.type,
-    this.living, this.gifController,
+    this.living, this.gifController, this.gysId,
   })  : goodsName = data.goodsName,
         brandName = data.brandName,
         brandPictureUrl = data.brandImg,
@@ -178,7 +181,7 @@ class GoodsItemWidget extends StatelessWidget {
     @required this.buyClick,
     PromotionGoodsModel model,
     this.notShowAmount = false,
-    this.type, this.gifController,
+    this.type, this.gifController, this.gysId,
   })  : goodsName = model.goodsName,
         brandName = model.brandName,
         brandPictureUrl = model.brandImg,
@@ -213,7 +216,7 @@ class GoodsItemWidget extends StatelessWidget {
     this.notShowAmount = false,
     this.specialSale,
 
-    this.type, this.gifController, this.inventory, this.originalPrice, this.percent, this.coupon, this.commission, this.isImport, this.specialIcon, this.promotionStatus, this.living,
+    this.type, this.gifController, this.inventory, this.originalPrice, this.percent, this.coupon, this.commission, this.isImport, this.specialIcon, this.promotionStatus, this.living, this.gysId,
     //this.special_sale,
   })  : goodsName = model.goodsName,
         brandName = model.brandName,
@@ -399,9 +402,26 @@ class GoodsItemWidget extends StatelessWidget {
                 Container(
                   alignment: Alignment.centerLeft,
                   margin: EdgeInsets.only(top: 2),
-                  child: this.description == null
+                  child:
+                  gysId==1800||gysId==2000?//jd的商品供应商 自营为1800 pop 为2000
+                  Container(
+                    width: 30.rw,
+                    height: 14.rw,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: Color(0xFFC92219),
+                        borderRadius: BorderRadius.all(Radius.circular(1.rw))
+
+                    ),
+                    child: Text(
+                      gysId==1800?'自营':gysId==2000?'POP':'',
+                      style: TextStyle(height: 1.1),
+                    ),
+                  ):
+                  this.description == null
                       ? Container()
-                      : Text(
+                      :
+                        Text(
                           this.description,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -467,25 +487,25 @@ class GoodsItemWidget extends StatelessWidget {
               ),
             ),
             //暂时隐藏
-            // Positioned(
-            //   top: 0,
-            //   right: 0,
-            //   left: 0,
-            //   bottom: 0,
-            //   child: Offstage(
-            //     offstage: this.inventory > 0,
-            //     child: Container(
-            //       color: Colors.black38,
-            //       child: Center(
-            //         child: Image.asset(
-            //           'assets/sellout_bg.png',
-            //           width: rSize(70),
-            //           height: rSize(70),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
+            Positioned(
+              top: 0,
+              right: 0,
+              left: 0,
+              bottom: 0,
+              child: Offstage(
+                offstage: this.inventory > 0,
+                child: Container(
+                  color: Colors.black38,
+                  child: Center(
+                    child: Image.asset(
+                      'assets/sellout_bg.png',
+                      width: rSize(70),
+                      height: rSize(70),
+                    ),
+                  ),
+                ),
+              ),
+            ),
             living?.status == 1
                 ? Positioned(
                     top: 6.rw,
@@ -601,7 +621,7 @@ class GoodsItemWidget extends StatelessWidget {
 
   _inventoryView() {
     //暂时隐藏
-    //bool sellout = this.inventory <= 0;
+    bool sellout = this.inventory <= 0;
     Color priceColor = Color(0xffc70404);
     return Container(
       height: 20 * 2.h,
@@ -738,8 +758,8 @@ class GoodsItemWidget extends StatelessWidget {
                         direction: Direction.horizontal,
                         height: 21,
                         //暂时隐藏
-                        //title: sellout ? "已售完" : "自购",
-                        title: "自购",
+                        title: sellout ? "已售完" : "自购",
+
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 13 * 2.sp,
@@ -769,8 +789,8 @@ class GoodsItemWidget extends StatelessWidget {
                         //     bottomRight: Radius.circular(40)),
                         backgroundColor:
                         //暂时隐藏
-                            //sellout ? AppColor.greyColor : _shareTextColor,
-                        _shareTextColor,
+                            sellout ? AppColor.greyColor : _shareTextColor,
+
                         pureDisplay: true,
                       ),
                       onTap: () {
@@ -970,6 +990,7 @@ class GoodsItemWidget extends StatelessWidget {
       AppRouter.push(buildCtx, RouteName.COMMODITY_PAGE,
           arguments: CommodityDetailPage.setArguments(
             this.id,
+            gysId: gysId,
             // liveStatus: living == null ? null : living.status,
             // roomId: living == null ? null : living.roomId
           ));

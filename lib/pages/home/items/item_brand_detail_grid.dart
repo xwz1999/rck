@@ -124,13 +124,32 @@ class BrandDetailGridItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
+            goods.gysId==1800||goods.gysId==2000?//jd的商品供应商 自营为1800 pop 为2000
+            Container(
+              width: 30.rw,
+              height: 14.rw,
+              alignment: Alignment.center,
+              margin: const EdgeInsets.only(
+                  left: 0, right: 0, top: 5, bottom: 5),
+              decoration: BoxDecoration(
+                  color: Color(0xFFC92219),
+                  borderRadius: BorderRadius.all(Radius.circular(1.rw))
+
+              ),
+              child: Text(
+
+                goods.gysId==1800?'自营':goods.gysId==2000?'POP':'',
+                style: TextStyle(height: 1.1),
+              ),
+            ):
             TextUtil.isEmpty(this.goods.description)
                 ? SizedBox()
                 : Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.only(
                         left: 0, right: 0, top: 5, bottom: 5),
-                    child: this.goods.description == null
+                    child:
+                    this.goods.description == null
                         ? Container()
                         : Text(
                             this.goods.description,
@@ -358,7 +377,7 @@ class BrandDetailGridItem extends StatelessWidget {
       buyClick();
     } else {
       AppRouter.push(context, RouteName.COMMODITY_PAGE,
-          arguments: CommodityDetailPage.setArguments(this.goods.id));
+          arguments: CommodityDetailPage.setArguments(this.goods.id,gysId: this.goods.gysId));
     }
   }
 

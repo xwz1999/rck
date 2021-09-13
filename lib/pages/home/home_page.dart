@@ -1086,7 +1086,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                   AppConfig.commissionByRoleLevel
                       ? Api.getImgUrl(kingCoinListModelList[6].url)
                       : Api.getImgUrl(kingCoinListModelList[1].url),
-                  AppConfig.commissionByRoleLevel ? "精彩发现" : "家居生活",
+                  AppConfig.commissionByRoleLevel ? "高佣特推" : "家居生活",
                   // '彩票兑换',
                   //2021 7,27 ios彩票审核不通过 隐藏彩票
                   //'精彩发现',
@@ -1097,9 +1097,9 @@ class _HomePageState extends BaseStoreState<HomePage>
 
                       // UserManager.instance.selectTabbarIndex = 2;
                       // bool value = UserManager.instance.selectTabbar.value;
-                      // UserManager.instance.selectTabbar.value = !value;
+                      // UserManager.instance.selectTabbar.value = !value; 精彩发现
 
-                      Get.to(() => ChooseTicketsTypePage());
+                      //Get.to(() => ChooseTicketsTypePage()); //机票
                       //setState(() {});
                     } else {
                       AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
@@ -1129,10 +1129,10 @@ class _HomePageState extends BaseStoreState<HomePage>
                         : Api.getImgUrl(kingCoinListModelList[2].url),
                     AppConfig.commissionByRoleLevel
                         // ? "升级店主"
-                        ? "一键邀请"
+                        ? "特惠专区"
                         : "数码家电", onPressed: () {
                   if (AppConfig.commissionByRoleLevel) {
-                    ShareTool().inviteShare(context, customTitle: Container());
+                    //ShareTool().inviteShare(context, customTitle: Container()); 一键邀请的代码
                   } else {
                     AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
                         arguments: GoodsListTempPage.setArguments(

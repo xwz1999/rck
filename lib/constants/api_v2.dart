@@ -170,6 +170,8 @@ class UserAPI {
 
   ///解除微信绑定
   String get wechatUnboundhandle => '/v2/app/command/user/unbundling_wx';
+
+
 }
 
 class BenefitAPI {
@@ -218,6 +220,12 @@ class GoodsAPI {
 
   ///获取京东商品类目
   String get getJDCategoryList => '/v2/app/jcook/category';
+
+  ///获取京东商品是否有库存
+  String get getJDStock => '/v2/app/jcook/stock';
+
+
+
 }
 
 class _InvoiceAoi {

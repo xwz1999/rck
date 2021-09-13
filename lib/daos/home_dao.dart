@@ -147,6 +147,26 @@ class HomeDao {
     }
   }
 
+  //获取京东商品类目
+  static Future<num> getJDStock(num goodsId,String address) async {
+    ResultData result =
+    await HttpManager.post(APIV2.goodsAPI.getJDStock, {
+      'goods_id':goodsId,
+      'address':address,
+      'quantity':1
+    });
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return result.data['data']["stock_state"];
+      }
+      else{
+        return -1;
+      }
+    }else{
+      return -1;
+    }
+  }
+
 
 
 }

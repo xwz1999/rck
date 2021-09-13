@@ -401,6 +401,7 @@ class _FilterToolBarState extends State<FilterToolBar>
     if (widget.startWidget != null) {
       items.add(SizedBox(width: 30.rw,));
       items.add(widget.startWidget);
+      items.add(SizedBox(width: 10.rw,));
     }
     items.addAll(_buildToolBarItem());
     if (widget.trialing != null) {
@@ -459,9 +460,14 @@ class _FilterToolBarState extends State<FilterToolBar>
             /// 上下箭头选项点击
             if (item.type == FilterItemType.double) {
               if (widget.controller.selectedIndex != index) {
-                item.topSelected = true;
+               item.selectedList[index] = true;
+                item.topSelected = item.selectedList[index];
               } else {
-                item.topSelected = !item.topSelected;
+                 //print(item.topSelected);
+                 //item.topSelected = !item.topSelected;
+                // print(widget.titles[index].topSelected);
+                 item.selectedList[index] = ! item.selectedList[index];
+                 item.topSelected = item.selectedList[index];
               }
               widget.listener(index, item);
             }
@@ -486,7 +492,7 @@ class _FilterToolBarState extends State<FilterToolBar>
                   style: AppTextStyle.generate(widget.fontSize,
                       color: color, fontWeight: FontWeight.w400),
                 ),
-                _buildArrow(item, color, selected)
+                _buildArrow(item, color, selected,index)
               ],
             ),
           ),
@@ -495,7 +501,7 @@ class _FilterToolBarState extends State<FilterToolBar>
     }).toList();
   }
 
-  _buildArrow(FilterItemModel item, color, bool selected) {
+  _buildArrow(FilterItemModel item, color, bool selected,int index) {
     if (item.type == FilterItemType.list) {
       return Icon(
         selected
@@ -512,7 +518,7 @@ class _FilterToolBarState extends State<FilterToolBar>
         return Padding(
           padding: const EdgeInsets.only(left: 2.0),
           child: Icon(
-            item.topSelected ? AppIcons.icon_top : AppIcons.icon_down,
+            item.selectedList[index] ? AppIcons.icon_top : AppIcons.icon_down,
             size: 7,
             color: color,
           ),
@@ -561,15 +567,17 @@ class FilterItemModel {
 
   /// 列表下拉时的子标题
   final List<String> subtitleShort;
+  List<bool> selectedList;
   bool topSelected;
   int selectedSubIndex = 0;
 
   FilterItemModel({
     @required this.type,
     @required this.title,
+    this.selectedList,
     this.subtitles,
     this.subtitleShort,
-    this.topSelected = true,
+    this.topSelected  = true,
   }) : assert(
             type == FilterItemType.list
                 ? (subtitles != null && subtitles.length > 0)

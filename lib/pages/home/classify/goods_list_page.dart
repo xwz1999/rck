@@ -69,10 +69,11 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
 
   SortType _sortType = SortType.comprehensive;
 
-  int _JDType = 0; // 0 默认数据 1传回全部JD数据 2为JD自营数据 3为JD pop数据
+  int _jDType = 0; // 0 默认数据 1传回全部JD数据 2为JD自营数据 3为JD pop数据
   bool _isJD = false;
   String _jdTypeText = '全部';
   int _filterIndex = 0;
+  List<bool> _barBool = [false,false,false];
   GifController _gifController;
 
   @override
@@ -81,7 +82,9 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
       _isJD = widget.arguments['isJD'];
     }
     if (_isJD) {
-      _JDType = 1;
+      _jDType = 1;
+      _sortType = SortType.priceAsc;
+      _barBool = [false,false];
     }
     int index = widget.arguments["index"];
     _gifController = GifController(vsync: this)
@@ -201,23 +204,32 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
       fontSize: 13 * 2.sp,
       titles: _isJD
           ? [
-              FilterItemModel(type: FilterItemType.double, title: "价格"),
-              FilterItemModel(type: FilterItemType.double, title: "销量"),
+
+              FilterItemModel(type: FilterItemType.double, title: "价格",selectedList:_barBool),
+              FilterItemModel(type: FilterItemType.double, title: "销量",selectedList:_barBool),
 //        FilterItemModel(type: FilterItemType.normal, title: "特卖优先")
             ]
           : [
-              FilterItemModel(type: FilterItemType.normal, title: "综合"),
-              FilterItemModel(type: FilterItemType.double, title: "价格"),
-              FilterItemModel(type: FilterItemType.double, title: "销量"),
+              FilterItemModel(type: FilterItemType.normal, title: "综合",selectedList:_barBool),
+              FilterItemModel(type: FilterItemType.double, title: "价格",selectedList:_barBool),
+              FilterItemModel(type: FilterItemType.double, title: "销量",selectedList:_barBool),
 //        FilterItemModel(type: FilterItemType.normal, title: "特卖优先")
             ],
       trialing: _displayIcon(),
       startWidget: _jdTypeWidget(),
       selectedColor: Theme.of(context).primaryColor,
       listener: (index, item) {
-        if ((index != 1 && index != 2) && _filterIndex == index) {
+        print(index);
+        if(!_isJD){
+          if ((index != 1 && index != 2) && _filterIndex == index) {
+          return;
+          }
+        }else{
+        if ((index != 1 && index != 2&& index != 0) && _filterIndex == index) {
           return;
         }
+      }
+
         // if (index != 1 && _filterIndex == index) {
         //   return;
         // }
@@ -225,6 +237,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
         if (_isJD) {
           switch (index) {
             case 0:
+            print(item.topSelected);
               if (item.topSelected) {
                 _sortType = SortType.priceAsc;
               } else {
@@ -232,6 +245,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
               }
               break;
             case 1:
+              print(item.topSelected);
               if (item.topSelected) {
                 _sortType = SortType.salesAsc;
               } else {
@@ -273,6 +287,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
         // _presenter.fetchList(_category.id, 0, _sortType);
         _listViewController.stopRefresh();
         _listViewController.requestRefresh();
+
       },
     );
   }
@@ -338,11 +353,11 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
           setState(() {
             _jdTypeText = value;
             if (value == '全部') {
-              _JDType = 1;
+              _jDType = 1;
             } else if (value == '京东自营') {
-              _JDType = 2;
+              _jDType = 2;
             } else if (value == '京东POP') {
-              _JDType = 3;
+              _jDType = 3;
             }
             print(value);
             setState(() {});
@@ -384,12 +399,18 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
       type: ListViewType.grid,
       refreshCallback: () {
         // _presenter.fetchList(widget.category.id, 0, _sortType);
-        _presenter.fetchList(_category.id, 0, _sortType, null, JDType: _JDType);
+        _presenter.fetchList(_category.id, 0, _sortType, null, JDType: _jDType);
+        setState(() {
+
+        });
       },
       loadMoreCallback: (int page) {
         // _presenter.fetchList(widget.category.id, page, _sortType);
         _presenter.fetchList(_category.id, page, _sortType, null,
-            JDType: _JDType);
+            JDType: _jDType);
+        setState(() {
+
+        });
       },
       gridViewBuilder: () => _buildGridView(),
     );
@@ -430,6 +451,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
                       },
                       model: goods,
                       buildCtx: context,
+                      type: _isJD?3:0,
                     )
                   // ? NormalGoodsItem(model: goods, buildCtx: context,)
                   : BrandDetailGridItem(goods: goods));

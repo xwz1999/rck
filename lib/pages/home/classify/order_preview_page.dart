@@ -635,7 +635,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
           _titleRow("商品金额", "",
               "￥${_orderModel.data.goodsTotalAmount.toStringAsFixed(2)}",
               rightTitleColor: Colors.black),
-          _titleRow("运费", "",
+          _titleRow("合计运费", "",
               "+￥${_orderModel.data.expressTotalFee.toStringAsFixed(2)}",
               rightTitleColor: Colors.black),
           Builder(

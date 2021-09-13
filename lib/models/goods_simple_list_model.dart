@@ -99,7 +99,8 @@ class GoodsSimple {
     originalPrice = json['originalPrice'];
     discountPrice = json['discountPrice'];
     commission = json['commission'];
-    tags = json['tags'].cast<String>();
+    tags =
+    json['tags'] != null ? json['tags'].cast<String>() : null;
     percent = json['percent'];
     startTime = json['startTime'];
     endTime = json['endTime'];
