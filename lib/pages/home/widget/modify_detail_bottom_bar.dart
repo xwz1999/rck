@@ -16,8 +16,10 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/meiqia_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_detail_model.dart';
+import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/goods_item.dart';
 
 typedef VoidListener = Function();
 typedef FavoriteListener = Function(bool favorite);
@@ -33,7 +35,7 @@ class DetailBottomBar extends StatefulWidget {
     this.controller,
     this.goodsDetail,
     this.isLive = false,
-    this.liveId = 0,
+    this.liveId = 0, this.seckillout,
   });
 
   final VoidListener addToShopCartListener;
@@ -48,6 +50,7 @@ class DetailBottomBar extends StatefulWidget {
 
   final bool isLive;
   final int liveId;
+  final bool seckillout;
 
   @override
   State<StatefulWidget> createState() {
@@ -178,6 +181,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
             Container(
               width: 10,
             ),
+            widget.seckillout?_oneButtonRow():
             widget.goodsDetail == null || widget.goodsDetail.data.inventory > 0
                 ? AppConfig.getShowCommission()
                     ? _twoButtonRow()
@@ -313,9 +317,19 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
   }
 
   _twoButtonRow() {
-    String commission = widget.goodsDetail == null
-        ? null
-        : widget.goodsDetail.data.price.min.commission.toStringAsFixed(2);
+    String commission = '';
+    if(widget.goodsDetail != null){
+      if( widget.goodsDetail.data.seckill.seckill_status==1){
+        commission = widget.goodsDetail.data.seckill.seckillCommission.toStringAsFixed(2);
+      }else{
+        commission = widget.goodsDetail == null
+            ? null
+            : widget.goodsDetail.data.price.min.commission.toStringAsFixed(2);
+      }
+    }
+
+
+
     return Expanded(
       child: Row(
         children: <Widget>[

@@ -39,6 +39,7 @@ import 'package:recook/pages/home/items/item_users_like.dart';
 import 'package:recook/pages/home/model/address_model.dart';
 import 'package:recook/pages/home/widget/good_price_view.dart';
 import 'package:recook/pages/home/widget/goods_image_page_view.dart';
+import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
 import 'package:recook/pages/shopping_cart/mvp/shopping_cart_model_impl.dart';
 import 'package:recook/pages/user/address/mvp/address_model_impl.dart';
 import 'package:recook/utils/file_utils.dart';
@@ -51,6 +52,7 @@ import 'package:recook/widgets/bottom_sheet/custom_bottom_sheet.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/empty_view.dart';
+import 'package:recook/widgets/goods_item.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/selected_list.dart';
 import 'package:recook/widgets/toast.dart';
@@ -83,7 +85,6 @@ class GoodsPage extends StatefulWidget {
   final int roomId;
 
   final num gysId;
-
 
   const GoodsPage({
     Key key,
@@ -127,6 +128,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   AddressDefaultModel _addressModel;
   String _defaltAddress;
   int _jDHaveGoods = -1;
+  int _seckillStatus = 0;//秒杀状态 0为未开始 1为开始
 
   @override
   bool get wantKeepAlive => true;
@@ -134,32 +136,32 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
-      _addressList =  await _getDefaultAddress();
-      if(_addressList!=null){
-        _addressList.forEach((element) {
-          if(element.isDefault==1)
-          _addressModel = element;
-          if(_addressModel!=null){
-            _defaltAddress = _addressModel.province+_addressModel.city+_addressModel.district;
-            if(_defaltAddress!=null){
-              Future.delayed(Duration.zero, () async {
-                _jDHaveGoods  =  await HomeDao.getJDStock(widget.goodsId,_defaltAddress);
-                _jDHaveGoods = 0;
-                if(_jDHaveGoods!=null){
+    //gysid为1800或者2000
+    if (widget.gysId == 1800 || widget.gysId == 2000) {
+      Future.delayed(Duration.zero, () async {
+        _addressList = await _getDefaultAddress();
+        if (_addressList != null) {
+          _addressList.forEach((element) {
+            if (element.isDefault == 1) _addressModel = element;
+            if (_addressModel != null) {
+              _defaltAddress = _addressModel.province +
+                  _addressModel.city +
+                  _addressModel.district;
+              if (_defaltAddress != null) {
+                Future.delayed(Duration.zero, () async {
+                  _jDHaveGoods =
+                  await HomeDao.getJDStock(widget.goodsId, _defaltAddress);
                   print(_jDHaveGoods);
-                }
-              });
-
+                  setState(() {});
+                });
+              }
             }
-          }
-          //
-        });
-      }
-    });
+            //
 
-
-
+          });
+        }
+      });
+    }
     GoodsDetailModelImpl.getDetailImages(widget.goodsId)
         .then((GoodsDetailImagesModel model) {
       if (model.code != HttpStatus.SUCCESS) {
@@ -175,17 +177,19 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       if (_context != null &&
           widget.goodsDetail != null &&
           widget.openSkuChoosePage.value) {
-          if(_jDHaveGoods==1){
+        if (widget.gysId == 1800 || widget.gysId == 2000) {
+          if (_jDHaveGoods == 1) {
             _showSkuChoosePage(context);
-          }else{
+          } else {
             Toast.showInfo('本地区无货，请选择其他');
             widget.openSkuChoosePage.value = false;
           }
-
-
-
+        } else {
+          _showSkuChoosePage(context);
+        }
       }
     });
+
   }
 
   @override
@@ -405,6 +409,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           children: <Widget>[
             _headPageView(),
             GoodPriceView(
+              gysId: widget.gysId,
               detailModel: widget.goodsDetail,
               shareCallback: () {
                 String img = '';
@@ -436,12 +441,14 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         color: Colors.white,
         child: _discountContent(context),
       ),
-      widget.gysId==1800||widget.gysId==2000?Container(
-        margin: EdgeInsets.only(bottom: 13),
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        color: Colors.white,
-        child: _addressContent(context),
-      ):SizedBox(),
+      widget.gysId == 1800 || widget.gysId == 2000
+          ? Container(
+              margin: EdgeInsets.only(bottom: 13),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              color: Colors.white,
+              child: _addressContent(context),
+            )
+          : SizedBox(),
       widget.goodsDetail.data.storehouse == 2 ||
               widget.goodsDetail.data.storehouse == 3
           ? Container(
@@ -520,13 +527,17 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                     Toast.showError('请先登录...');
                     return;
                   }
-                  showCustomModalBottomSheet(
-                      context: context,
-                      builder: (context) {
-                        return CouponListPage(
-                          brandId: widget.goodsDetail.data.brandId,
-                        );
-                      });
+                  if(widget.goodsDetail.data.seckill!=null?widget.goodsDetail.data.seckill.seckill_status==0:true)
+                  {
+                    showCustomModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return CouponListPage(
+                            brandId: widget.goodsDetail.data.brandId,
+                          );
+                        });
+                  }
+
                 },
           child: Row(children: _coupons()),
         ),
@@ -534,11 +545,14 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           margin: EdgeInsets.only(top: 10),
           child: GestureDetector(
             onTap: () {
-              if(_jDHaveGoods==1){
+              if (widget.gysId == 1800 || widget.gysId == 2000) {
+                if (_jDHaveGoods == 1) {
+                  _showSkuChoosePage(context);
+                } else {
+                  Toast.showInfo('本地区无货，请选择其他');
+                }
+              } else {
                 _showSkuChoosePage(context);
-
-              }else{
-                Toast.showInfo('本地区无货，请选择其他');
               }
             },
             child: StatefulBuilder(
@@ -578,8 +592,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     );
   }
 
-   _addressContent(BuildContext context) {
-
+  _addressContent(BuildContext context) {
     return GestureDetector(
       onTap: () async {
         if (_cityModel == null) {
@@ -590,14 +603,12 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           if (result) {
             _selectCityAddress(context);
             // print(_defaltAddress);
-            // _jDHaveGoods  =  await HomeDao.getJDStock(widget.goodsId,_defaltAddress);
-
+            _jDHaveGoods =
+                await HomeDao.getJDStock(widget.goodsId, _defaltAddress);
           }
-        }else{
+        } else {
           _selectCityAddress(context);
-
         }
-
       },
       child: Container(
         color: Colors.transparent,
@@ -615,74 +626,76 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 Container(
                   width: 20,
                 ),
-
+                Image.asset(
+                  R.ASSETS_DINGWEI_ICON_PNG,
+                  width: 20.w,
+                  height: 20.w,
+                ),
+                6.wb,
                 _cityModel == null
-                ? _addressModel!=null?
+                    ? _addressModel != null
+                        ? Container(
+                            width: 280.rw,
+                            child: Text(
+                              '${_addressModel.province}-${_addressModel.city}-${_addressModel.district}',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Color(0xFF525252),
+                                fontSize: rSP(13),
+                              ),
+                            ),
+                          )
+                        : Text(
+                            '您还没有配置地址',
+                            style: TextStyle(
+                              color: Color(0xFF525252),
+                              fontSize: rSP(13),
+                            ),
+                          )
+                    : Container(
+                        width: 280.rw,
+                        child: Text(
+                          '${_cityAddress.province}-${_cityAddress.city}-${_cityAddress.district}',
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: TextStyle(
+                            color: Color(0xFF525252),
+                            fontSize: rSP(13),
+                          ),
+                        ),
+                      ),
+                Spacer(),
+                Icon(
+                  AppIcons.icon_next,
+                  color: Colors.grey[400],
+                  size: 16 * 2.sp,
+                ),
+              ],
+            ),
+            Row(
+              children: [
                 Container(
-                  width: 280.rw,
-                  child: Text(
-                    '${_addressModel.province}-${_addressModel.city}-${_addressModel.district}',
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      color: Color(0xFF525252),
-                      fontSize: rSP(13),
-                    ),
-                  ),
-                ):
+                  width: 46.rw,
+                ),
                 Text(
-                  '您还没有配置地址',
+                  _jDHaveGoods == 1
+                      ? '有货'
+                      : _jDHaveGoods == 0
+                          ? '无货'
+                          : '',
                   style: TextStyle(
                     color: Color(0xFF525252),
                     fontSize: rSP(13),
                   ),
-                )
-
-                  :
-            Container(
-              width: 280.rw,
-              child: Text(
-              '${_cityAddress.province}-${_cityAddress.city}-${_cityAddress.district}',
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-
-                style: TextStyle(
-
-                  color: Color(0xFF525252),
-                  fontSize: rSP(13),
                 ),
-              ),
+              ],
             ),
-          Spacer(),
-          Icon(
-            AppIcons.icon_next,
-            color: Colors.grey[400],
-            size: 16 * 2.sp,
-          ),
           ],
         ),
-          Row(
-            children: [
-
-              Container(
-                width: 46.rw,
-              ),
-              Text(
-                _jDHaveGoods==1?'有货':_jDHaveGoods==0?'无货':'',
-                style: TextStyle(
-                  color: Color(0xFF525252),
-                  fontSize: rSP(13),
-                ),
-              ),
-      ],
-    ),
-
-        ],
       ),
-    ),
     );
   }
-
 
   _goodsInfoWidget(context) {
     return Column(
@@ -799,11 +812,13 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                         Expanded(
                             child: Row(
                           children: <Widget>[
-                            widget.gysId==1800?Text(
-                              "京东仓发货 | ",
-                              style: AppTextStyle.generate(13 * 2.sp,
-                                  color: Color(0xff373737)),
-                            ):SizedBox(),
+                            widget.gysId == 1800
+                                ? Text(
+                                    "京东仓发货 | ",
+                                    style: AppTextStyle.generate(13 * 2.sp,
+                                        color: Color(0xff373737)),
+                                  )
+                                : SizedBox(),
                             Text(
                               "正品保证",
                               style: AppTextStyle.generate(13 * 2.sp,
@@ -941,7 +956,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
 
   Future<bool> _getCityAddress() async {
     FileOperationResult result =
-    await FileUtils.readJSON(AppPaths.path_province_city_json);
+        await FileUtils.readJSON(AppPaths.path_province_city_json);
     if (result.success &&
         result.data != null &&
         result.data.toString().length > 0) {
@@ -961,30 +976,23 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
 
   Future<List<AddressDefaultModel>> _getDefaultAddress() async {
     ResultData res = await HttpManager.post(UserApi.address_list, {
-      "userId":UserManager.instance.user.info.id,
+      "userId": UserManager.instance.user.info.id,
     });
-    if(res!=null){
-      if(res.data!=null){
+    if (res != null) {
+      if (res.data != null) {
         print(res.data);
-        if(res.data["data"]!=null){
+        if (res.data["data"] != null) {
           print(res.data["data"]);
           return (res.data['data'] as List)
               .map((e) => AddressDefaultModel.fromJson(e))
               .toList();
-
-        }else
+        } else
           return null;
-      }else
+      } else
         return null;
-
-    }else
+    } else
       return null;
-
   }
-
-
-
-
 
   _selectAddress(BuildContext context) {
     AddressSelectorHelper.show(
@@ -1014,25 +1022,25 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       province: _cityAddress.province,
       district: _cityAddress.district,
       callback: (
-          String province,
-          String city,
-          String district,
-          ) {
+        String province,
+        String city,
+        String district,
+      ) {
         _cityAddress.city = city;
         _cityAddress.province = province;
         _cityAddress.district = district;
-        _defaltAddress = province+city+district;
+        _defaltAddress = province + city + district;
         Future.delayed(Duration.zero, () async {
-          _jDHaveGoods  =  await HomeDao.getJDStock(widget.goodsId,_defaltAddress);
-          if(_jDHaveGoods!=null){
+          _jDHaveGoods =
+              await HomeDao.getJDStock(widget.goodsId, _defaltAddress);
+          if (_jDHaveGoods != null) {
             print(_jDHaveGoods);
           }
           setState(() {});
         });
-        if(_defaltAddress.length>3){
+        if (_defaltAddress.length > 3) {
           setState(() {});
         }
-
       },
     );
   }
@@ -1251,7 +1259,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       ),
     ];
 
-    if (widget.goodsDetail.data.coupons.length == 0) {
+    if (widget.goodsDetail.data.coupons.length == 0||
+        (widget.goodsDetail.data.seckill!=null?widget.goodsDetail.data.seckill.seckill_status==1:false)) {//秒杀中的商品都没有优惠券
       coupons.add(
         Text(
           "暂无优惠劵",
@@ -1265,6 +1274,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       );
       return coupons;
     }
+
 
     for (int i = 0; i < widget.goodsDetail.data.coupons.length; i++) {
       if (i > 2) break;

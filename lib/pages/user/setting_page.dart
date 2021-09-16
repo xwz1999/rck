@@ -147,20 +147,6 @@ class _SettingItemListViewState extends ResumableState<SettingItemListView> {
                         //CRoute.push(context, PrivacyPageV2());
                       }),
 
-                      //京东商品临时入口
-                      SCTile.normalTile("京东(临时)", listener: () async {
-                        List<FirstCategory> firstCategoryList = [];
-                        firstCategoryList = await HomeDao.getJDCategoryList();
-                        if(firstCategoryList!=null){
-                          Get.to(() => ClassifyPage(
-                            jdType: 1,
-                            data: firstCategoryList,
-                            initValue: '全部',
-                          ));
-                        }
-
-                        //CRoute.push(context, PrivacyPageV2());
-                      }),
 
                       getEmptyBox(),
                       SCTile.normalTile("退出登录", listener: () {

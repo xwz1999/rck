@@ -23,9 +23,11 @@ import 'package:recook/pages/home/classify/material_page.dart' as MP;
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/widget/modify_detail_app_bar.dart';
 import 'package:recook/pages/home/widget/modify_detail_bottom_bar.dart';
+import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
+import 'package:recook/widgets/goods_item.dart';
 import 'package:recook/widgets/toast.dart';
 
 class CommodityDetailPage extends StatefulWidget {
@@ -40,8 +42,8 @@ class CommodityDetailPage extends StatefulWidget {
     this.liveId = 0,
   }) : super(key: key);
 
-  static setArguments(int goodsID, {int liveStatus, int roomId,int gysId}) {
-    return {"goodsID": goodsID, 'liveStatus': liveStatus, 'roomId': roomId,'gysId':gysId};
+  static setArguments(int goodsID, {int liveStatus, int roomId,int gysId,bool seckillout}) {
+    return {"goodsID": goodsID, 'liveStatus': liveStatus, 'roomId': roomId,'gysId':gysId,'seckillout':seckillout};
   }
 
   @override
@@ -62,6 +64,8 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
   int _roomId;
   num _gysId;
 
+  bool _seckillout;//秒杀是否无货
+
   @override
   void initState() {
     super.initState();
@@ -69,7 +73,9 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
     _liveStatus = widget.arguments["liveStatus"];
     _roomId = widget.arguments["roomId"];
     _gysId = widget.arguments["gysId"];
-    print(_gysId);
+
+    _seckillout = widget.arguments['seckillout']??false;
+
     _tabController = TabController(length: 3, vsync: this);
     _appBarController = AppBarController();
     _bottomBarController = BottomBarController();
@@ -248,6 +254,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
       goodsDetail: _goodsDetail,
       controller: _bottomBarController,
       collected: _goodsDetail == null ? false : _goodsDetail.data.isFavorite,
+      seckillout:_seckillout,
       shopCartNum: _goodsDetail?.data == null
           ? ''
           : _goodsDetail.data.shoppingTrolleyCount > 99

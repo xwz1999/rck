@@ -16,6 +16,8 @@ import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
 import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
+import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
+import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
@@ -66,6 +68,7 @@ class GoodsItemWidget extends StatelessWidget {
   final Living living;
   final GifController gifController;
   final num gysId;
+  final SeckillModel seckillModel;
 
 
   const GoodsItemWidget({
@@ -95,7 +98,7 @@ class GoodsItemWidget extends StatelessWidget {
     this.specialIcon,
     this.type,
     this.countryIcon,
-    this.living, this.gifController, this.gysId,
+    this.living, this.gifController, this.gysId, this.seckillModel,
     //this.special_sale,
   })  : widgetType = GoodsItemType.NONE,
         super(key: key);
@@ -111,7 +114,7 @@ class GoodsItemWidget extends StatelessWidget {
     GoodsSimple model,
     this.notShowAmount = false,
     this.specialSale,
-    this.type, this.gifController,
+    this.type, this.gifController, this.seckillModel,
 
     //this.special_sale,
   })  : goodsName = model.goodsName,
@@ -149,7 +152,7 @@ class GoodsItemWidget extends StatelessWidget {
     this.specialSale,
     this.specialIcon,
     this.type,
-    this.living, this.gifController, this.gysId,
+    this.living, this.gifController, this.gysId, this.seckillModel,
   })  : goodsName = data.goodsName,
         brandName = data.brandName,
         brandPictureUrl = data.brandImg,
@@ -181,7 +184,7 @@ class GoodsItemWidget extends StatelessWidget {
     @required this.buyClick,
     PromotionGoodsModel model,
     this.notShowAmount = false,
-    this.type, this.gifController, this.gysId,
+    this.type, this.gifController, this.gysId, this.seckillModel,
   })  : goodsName = model.goodsName,
         brandName = model.brandName,
         brandPictureUrl = model.brandImg,
@@ -213,10 +216,11 @@ class GoodsItemWidget extends StatelessWidget {
     this.buyClick,
     this.onBrandClick,
     SeckillGoods model,
+    SeckillModel seckillModel,
     this.notShowAmount = false,
     this.specialSale,
 
-    this.type, this.gifController, this.inventory, this.originalPrice, this.percent, this.coupon, this.commission, this.isImport, this.specialIcon, this.promotionStatus, this.living, this.gysId,
+    this.type, this.gifController,this.originalPrice, this.percent, this.coupon,this.isImport, this.specialIcon, this.promotionStatus, this.living, this.gysId,
     //this.special_sale,
   })  : goodsName = model.goodsName,
         brandName = model.brandName,
@@ -228,8 +232,11 @@ class GoodsItemWidget extends StatelessWidget {
         id = model.goodsId,
         widgetType = GoodsItemType.SECKILL,
         countryIcon = model.countryUrl,
+        inventory = model.inventory,
+        commission = model.commission,
+        seckillModel = seckillModel,
 
-        super(key: key);
+      super(key: key);
   final BuildContext buildCtx;
   final VoidCallback shareClick;
   final VoidCallback buyClick;
@@ -389,6 +396,29 @@ class GoodsItemWidget extends StatelessWidget {
                               width: 5 * 2.w,
                             ))
                           : WidgetSpan(child: SizedBox()),
+                      gysId==1800||gysId==2000?//jd的商品供应商 自营为1800 pop 为2000?
+                      WidgetSpan(
+                          child: Container(
+                            padding: EdgeInsets.only(right: 5.rw),
+                            child:
+                            Container(
+                              width: 24.rw,
+                              height: 16.rw,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: Color(0xFFC92219),
+                                  borderRadius: BorderRadius.all(Radius.circular(4.rw)),
+
+
+                              ),
+
+                              child: Text(
+                                gysId==1800?'自营':gysId==2000?'POP':'',
+                                style: TextStyle(fontSize: 10.rsp,height:1.05,fontWeight: FontWeight.bold),
+                              ),
+                            )
+                         )
+                      ): WidgetSpan(child: SizedBox()),
                       TextSpan(
                         text: this.goodsName,
                         style: AppTextStyle.generate(15 * 2.sp,
@@ -399,28 +429,28 @@ class GoodsItemWidget extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                Container(
+                this.description == null
+                    ? SizedBox()
+                    :Container(
                   alignment: Alignment.centerLeft,
                   margin: EdgeInsets.only(top: 2),
                   child:
-                  gysId==1800||gysId==2000?//jd的商品供应商 自营为1800 pop 为2000
-                  Container(
-                    width: 30.rw,
-                    height: 14.rw,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: Color(0xFFC92219),
-                        borderRadius: BorderRadius.all(Radius.circular(1.rw))
+                  // gysId==1800||gysId==2000?//jd的商品供应商 自营为1800 pop 为2000
+                  // Container(
+                  //   width: 30.rw,
+                  //   height: 14.rw,
+                  //   alignment: Alignment.center,
+                  //   decoration: BoxDecoration(
+                  //       color: Color(0xFFC92219),
+                  //       borderRadius: BorderRadius.all(Radius.circular(1.rw))
+                  //
+                  //   ),
+                  //   child: Text(
+                  //     gysId==1800?'自营':gysId==2000?'POP':'',
+                  //     style: TextStyle(height: 1.1),
+                  //   ),
+                  // ):
 
-                    ),
-                    child: Text(
-                      gysId==1800?'自营':gysId==2000?'POP':'',
-                      style: TextStyle(height: 1.1),
-                    ),
-                  ):
-                  this.description == null
-                      ? Container()
-                      :
                         Text(
                           this.description,
                           maxLines: 1,
@@ -493,7 +523,7 @@ class GoodsItemWidget extends StatelessWidget {
               left: 0,
               bottom: 0,
               child: Offstage(
-                offstage: this.inventory > 0,
+                offstage: this.inventory > 0&&(this.salesVolume<this.inventory||this.widgetType != GoodsItemType.SECKILL),
                 child: Container(
                   color: Colors.black38,
                   child: Center(
@@ -621,6 +651,7 @@ class GoodsItemWidget extends StatelessWidget {
 
   _inventoryView() {
     //暂时隐藏
+    bool seckillout = this.salesVolume>=this.inventory&&this.widgetType == GoodsItemType.SECKILL;
     bool sellout = this.inventory <= 0;
     Color priceColor = Color(0xffc70404);
     return Container(
@@ -643,37 +674,55 @@ class GoodsItemWidget extends StatelessWidget {
                 Container(
                   height: double.infinity,
                   alignment: Alignment.center,
-                  child: ExtendedText.rich(TextSpan(children: [
-                    TextSpan(
-                      text: widgetType == GoodsItemType.SECKILL? "秒杀 ¥ ": "券后 ¥ ",
-                      style: AppTextStyle.generate(12 * 2.sp,
-                          color: priceColor, fontWeight: FontWeight.w500),
-                    ),
-                    TextSpan(
-                      text:
+                  child: Row(
+                    children: [
+                      ExtendedText.rich(TextSpan(children: [
+                        TextSpan(
+                          text: widgetType == GoodsItemType.SECKILL? "秒杀 ¥ ": "券后 ¥ ",
+                          style: AppTextStyle.generate(12 * 2.sp,
+                              color: priceColor, fontWeight: FontWeight.w500),
+                        ),
+                        TextSpan(
+                          text:
                           "${(this.discountPrice - this.discountPrice.toInt()) > 0 ? this.discountPrice.toStringAsFixed(1) : this.discountPrice.toStringAsFixed(0)}",
-                      // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
-                      style: TextStyle(
-                          letterSpacing: -1,
-                          wordSpacing: -1,
-                          fontSize: 18 * 2.sp,
-                          color: priceColor,
-                          fontWeight: FontWeight.w500),
-                    ),
-                    WidgetSpan(
-                        child: SizedBox(
-                      width: 5,
-                    )),
-                    TextSpan(
-                      text: widgetType == GoodsItemType.SECKILL?'':"¥${this.originalPrice.toStringAsFixed(0)}",
-                      style: TextStyle(
-                          decoration: TextDecoration.lineThrough,
-                          decorationColor: Color(0xff898989),
-                          fontSize: 12 * 2.sp,
-                          color: Color(0xff898989),
-                          fontWeight: FontWeight.w400),
-                    )
-                  ])),
+                          // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
+                          style: TextStyle(
+                              letterSpacing: -1,
+                              wordSpacing: -1,
+                              fontSize: 18 * 2.sp,
+                              color: priceColor,
+                              fontWeight: FontWeight.w500),
+                        ),
+                        WidgetSpan(
+                            child: SizedBox(
+                              width: 5,
+                            )),
+                        TextSpan(
+                          text: widgetType == GoodsItemType.SECKILL?'':"¥${this.originalPrice.toStringAsFixed(0)}",
+                          style: TextStyle(
+                              decoration: TextDecoration.lineThrough,
+                              decorationColor: Color(0xff898989),
+                              fontSize: 12 * 2.sp,
+                              color: Color(0xff898989),
+                              fontWeight: FontWeight.w400),
+                        )
+                      ])),
+
+                      AppConfig.getShowCommission()&&this.widgetType==GoodsItemType.SECKILL
+                          ? Container(
+                        alignment: Alignment.center,
+                        child: Text(
+                          "赚" +  (this.commission??0).toStringAsFixed(2),
+                          style: TextStyle(
+                            color: Color(0xFFC92219),
+                            fontSize: 12 * 2.sp,
+                          ),
+                        ),
+                      )
+                          : SizedBox(),
+                    ],
+                  )
+
                 ),
                 // Container(
                 //   width: 5,
@@ -758,7 +807,7 @@ class GoodsItemWidget extends StatelessWidget {
                         direction: Direction.horizontal,
                         height: 21,
                         //暂时隐藏
-                        title: sellout ? "已售完" : "自购",
+                        title: sellout||seckillout ? "已售完" : "自购",
 
                         style: TextStyle(
                           color: Colors.white,
@@ -789,7 +838,7 @@ class GoodsItemWidget extends StatelessWidget {
                         //     bottomRight: Radius.circular(40)),
                         backgroundColor:
                         //暂时隐藏
-                            sellout ? AppColor.greyColor : _shareTextColor,
+                            sellout||seckillout ? AppColor.greyColor : _shareTextColor,
 
                         pureDisplay: true,
                       ),
@@ -871,6 +920,10 @@ class GoodsItemWidget extends StatelessWidget {
                       ),
                     )
                   : SizedBox(),
+              this.widgetType==GoodsItemType.SECKILL?
+                  Container(
+                    child: Image.asset(R.ASSETS_SECKILL_ICON_PNG,width: 69.rw,height: 20.rw,),
+                  ):
               AppConfig.commissionByRoleLevel
                   ? Container(
                       child: Stack(
@@ -984,6 +1037,7 @@ class GoodsItemWidget extends StatelessWidget {
   }
 
   _buyEvent() {
+    bool seckillout = this.salesVolume>=this.inventory&&this.widgetType == GoodsItemType.SECKILL;
     if (buyClick != null) {
       buyClick();
     } else {
@@ -991,6 +1045,7 @@ class GoodsItemWidget extends StatelessWidget {
           arguments: CommodityDetailPage.setArguments(
             this.id,
             gysId: gysId,
+            seckillout:seckillout
             // liveStatus: living == null ? null : living.status,
             // roomId: living == null ? null : living.roomId
           ));

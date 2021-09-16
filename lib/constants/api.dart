@@ -299,6 +299,8 @@ class HomeApi {
   static const String tehui_xinren = "/v1/goods/list/tehui/xinren";
   //show
   static const String showController = "/v1/show/get";
+  ///特惠专区列表
+  static const String preferentialList= '/v1/goods/recommend/list';
 }
 
 class AttentionApi {

@@ -215,9 +215,6 @@ class GoodsAPI {
   String get getSeckillList => '/v2/app/flash_sale/show_list';
 
 
-  ///获取高佣特推列表
-  String get getHighCommissionList => '/v2/app/active_bit/recommend/list';
-
   ///获取京东商品类目
   String get getJDCategoryList => '/v2/app/jcook/category';
 

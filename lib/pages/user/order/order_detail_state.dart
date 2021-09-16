@@ -94,8 +94,8 @@ abstract class OrderDetailState<T extends StatefulWidget>
         info: "￥" + orderDetail.goodsTotalAmount.toStringAsFixed(2));
 
     Widget expressFee = _priceItemWidget(
-        title: "运费",
-        info: "-￥" + orderDetail.expressTotalFee.toStringAsFixed(2));
+        title: "合计运费",
+        info: "+￥" + orderDetail.expressTotalFee.toStringAsFixed(2));
     Widget coupon = _priceItemWidget(
         title: "优惠券",
         info: "-￥" +

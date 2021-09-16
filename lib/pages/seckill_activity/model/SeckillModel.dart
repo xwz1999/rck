@@ -39,15 +39,18 @@ class SeckillModel {
 }
 
 class SeckillGoods {
-  num goodsId;
+  int goodsId;
   String goodsName;
   String subTitle;
   String mainPhoto;
   String countryUrl;
   String brandName;
   String brandUrl;
-  num minDiscountPrice;
-  num saleNum;
+  int minDiscountPrice;
+  int saleNum;
+  int brandId;
+  int inventory;
+  num commission;
 
   SeckillGoods(
       {this.goodsId,
@@ -58,7 +61,10 @@ class SeckillGoods {
         this.brandName,
         this.brandUrl,
         this.minDiscountPrice,
-        this.saleNum});
+        this.saleNum,
+        this.brandId,
+        this.inventory,
+        this.commission});
 
   SeckillGoods.fromJson(Map<String, dynamic> json) {
     goodsId = json['goods_id'];
@@ -70,6 +76,9 @@ class SeckillGoods {
     brandUrl = json['brand_url'];
     minDiscountPrice = json['min_discount_price'];
     saleNum = json['sale_num'];
+    brandId = json['brand_id'];
+    inventory = json['inventory'];
+    commission = json['commission'];
   }
 
   Map<String, dynamic> toJson() {
@@ -83,6 +92,9 @@ class SeckillGoods {
     data['brand_url'] = this.brandUrl;
     data['min_discount_price'] = this.minDiscountPrice;
     data['sale_num'] = this.saleNum;
+    data['brand_id'] = this.brandId;
+    data['inventory'] = this.inventory;
+    data['commission'] = this.commission;
     return data;
   }
 }

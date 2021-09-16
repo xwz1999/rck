@@ -18,18 +18,17 @@ import 'package:recook/utils/app_router.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/goods_item.dart';
 
-class GoodsHotListPage extends StatefulWidget {
-  final bool isHot;
+class GoodsPreferentialListPage extends StatefulWidget {
 
-  const GoodsHotListPage({Key key, this.isHot = true}) : super(key: key);
+  const GoodsPreferentialListPage({Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return _GoodsHotListPageState();
+    return _GoodsPreferentialListPageState();
   }
 }
 
-class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
+class _GoodsPreferentialListPageState extends BaseStoreState<GoodsPreferentialListPage>
     with TickerProviderStateMixin {
   GoodsHotSellListModel _listModel;
 
@@ -48,10 +47,10 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
           top: false,
           bottom: false,
           child:
-              // FijkView(
-              //   player: player,
-              // ),
-              _bodyWidget(),
+          // FijkView(
+          //   player: player,
+          // ),
+          _bodyWidget(),
         ));
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
@@ -91,17 +90,15 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
         child: Stack(
           children: <Widget>[
             Image.asset(
-              widget.isHot
-                  ? R.ASSETS_GOODS_HOT_LIST_TITLE_BG_PNG_WEBP
-                  : R.ASSETS_GOODS_PREFERENTIAL_LIST_TITLE_BG_PNG,
+              R.ASSETS_GOODS_PREFERENTIAL_LIST_TITLE_BG_PNG,
               fit: BoxFit.fill,
             ),
             Navigator.canPop(context)
                 ? Positioned(
-                    child: _backButton(context),
-                    left: 0,
-                    top: ScreenUtil().statusBarHeight,
-                  )
+              child: _backButton(context),
+              left: 0,
+              top: ScreenUtil().statusBarHeight,
+            )
                 : SizedBox(),
           ],
         ));
@@ -253,26 +250,26 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
     //                     Expanded(
     //                         child: Container(
     //                             child: Row(
-    //                       children: <Widget>[
-    //                         // TextUtils.isEmpty(data.promotionName)?
-    //                         // Container():
-    //                         // CustomImageButton(
-    //                         //   title: data.promotionName,
-    //                         //   pureDisplay: true,
-    //                         //   borderRadius: BorderRadius.all(
-    //                         //       Radius.circular(
-    //                         //           rSize(3))),
-    //                         //   color: Colors.red,
-    //                         //   fontSize: 11,
-    //                         //   backgroundColor: Colors.pink[50],
-    //                         //   padding: EdgeInsets.only(
-    //                         //       bottom:
-    //                         //       1.5*2.w,
-    //                         //       left: rSize(4),
-    //                         //       right: rSize(4)),
-    //                         // ),
-    //                       ],
-    //                     ))),
+    //                               children: <Widget>[
+    //                                 // TextUtils.isEmpty(data.promotionName)?
+    //                                 // Container():
+    //                                 // CustomImageButton(
+    //                                 //   title: data.promotionName,
+    //                                 //   pureDisplay: true,
+    //                                 //   borderRadius: BorderRadius.all(
+    //                                 //       Radius.circular(
+    //                                 //           rSize(3))),
+    //                                 //   color: Colors.red,
+    //                                 //   fontSize: 11,
+    //                                 //   backgroundColor: Colors.pink[50],
+    //                                 //   padding: EdgeInsets.only(
+    //                                 //       bottom:
+    //                                 //       1.5*2.w,
+    //                                 //       left: rSize(4),
+    //                                 //       right: rSize(4)),
+    //                                 // ),
+    //                               ],
+    //                             ))),
     //                     Spacer(),
     //                     Container(
     //                       alignment: Alignment.centerLeft,
@@ -340,30 +337,30 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
     // );
   }
 
-  _imageWidget(Data data) {
-    return Stack(children: [
-      CustomCacheImage(
-        width: rSize(100),
-        height: rSize(100),
-        imageUrl: Api.getImgUrl(data.mainPhotoUrl),
-        fit: BoxFit.cover,
-      ),
-    ]);
-  }
+  // _imageWidget(Data data) {
+  //   return Stack(children: [
+  //     CustomCacheImage(
+  //       width: rSize(100),
+  //       height: rSize(100),
+  //       imageUrl: Api.getImgUrl(data.mainPhotoUrl),
+  //       fit: BoxFit.cover,
+  //     ),
+  //   ]);
+  // }
 
   _getGoodsHotSellList() async {
     Map<String, dynamic> data = {};
-    if (!widget.isHot) {
+
       data.putIfAbsent('status', () => 2);
-    }
+
     ResultData resultData = await HttpManager.post(
-        widget.isHot ? HomeApi.hot_sell_list : HomeApi.preferentialList, data);
+         HomeApi.preferentialList, data);
     if (!resultData.result) {
       showError(resultData.msg);
       return;
     }
     GoodsHotSellListModel model =
-        GoodsHotSellListModel.fromJson(resultData.data);
+    GoodsHotSellListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
       showError(model.msg);
       return;

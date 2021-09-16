@@ -113,6 +113,29 @@ class BrandDetailGridItem extends StatelessWidget {
                             width: 5 * 2.w,
                           ))
                         : WidgetSpan(child: SizedBox()),
+                    this.goods.gysId==1800||this.goods.gysId==2000?//jd的商品供应商 自营为1800 pop 为2000?
+                    WidgetSpan(
+                        child: Container(
+                            padding: EdgeInsets.only(right: 5.rw),
+                            child:
+                            Container(
+                              width: 24.rw,
+                              height: 16.rw,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFC92219),
+                                borderRadius: BorderRadius.all(Radius.circular(4.rw)),
+
+
+                              ),
+
+                              child: Text(
+                                this.goods.gysId==1800?'自营':this.goods.gysId==2000?'POP':'',
+                                style: TextStyle(fontSize: 10.rsp,height:1.05,fontWeight: FontWeight.bold),
+                              ),
+                            )
+                        )
+                    ): WidgetSpan(child: SizedBox()),
                     TextSpan(
                       text: this.goods.goodsName,
                       style: AppTextStyle.generate(15 * 2.sp,
@@ -124,24 +147,7 @@ class BrandDetailGridItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            goods.gysId==1800||goods.gysId==2000?//jd的商品供应商 自营为1800 pop 为2000
-            Container(
-              width: 30.rw,
-              height: 14.rw,
-              alignment: Alignment.center,
-              margin: const EdgeInsets.only(
-                  left: 0, right: 0, top: 5, bottom: 5),
-              decoration: BoxDecoration(
-                  color: Color(0xFFC92219),
-                  borderRadius: BorderRadius.all(Radius.circular(1.rw))
 
-              ),
-              child: Text(
-
-                goods.gysId==1800?'自营':goods.gysId==2000?'POP':'',
-                style: TextStyle(height: 1.1),
-              ),
-            ):
             TextUtil.isEmpty(this.goods.description)
                 ? SizedBox()
                 : Container(
@@ -208,7 +214,7 @@ class BrandDetailGridItem extends StatelessWidget {
                         TextSpan(
                           text: "券后 ¥ ",
                           style: AppTextStyle.generate(12 * 2.sp,
-                              color: Color(0xFFFA6400),
+                              color: Color(0xffc70404),
                               fontWeight: FontWeight.w500),
                         ),
                         TextSpan(

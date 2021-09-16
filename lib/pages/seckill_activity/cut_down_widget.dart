@@ -4,19 +4,19 @@ import 'package:flutter_countdown_timer/current_remaining_time.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:recook/constants/header.dart';
 
-class CutDownTimeWidget extends StatefulWidget {
+class CutDownWidget extends StatefulWidget {
   final String time;//格式为00:00:00
   final int type;//1为 活动未开始 传的开始时间 2为活动中 传结束时间
   final bool white;
-  CutDownTimeWidget({
+  CutDownWidget({
     Key key, this.time, this.type, this.white,
   }) : super(key: key);
 
   @override
-  _CutDownTimeWidgetState createState() => _CutDownTimeWidgetState();
+  _CutDownWidgetState createState() => _CutDownWidgetState();
 }
 
-class _CutDownTimeWidgetState extends State<CutDownTimeWidget> {
+class _CutDownWidgetState extends State<CutDownWidget> {
   CountdownTimerController controller;
   int _endTime;
   DateTime _dateNow ;
@@ -59,7 +59,7 @@ class _CutDownTimeWidgetState extends State<CutDownTimeWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: 70.rw,
-      height: 20.rw,
+      height: 17.rw,
       child: CountdownTimer(
         controller: controller,
         onEnd: onEnd,
@@ -69,7 +69,7 @@ class _CutDownTimeWidgetState extends State<CutDownTimeWidget> {
             return Container(
 
               width: 70.rw,
-              height: 20.rw,
+              height: 17.rw,
               child: Row(
                 children: [
                   30.hb,
@@ -77,13 +77,13 @@ class _CutDownTimeWidgetState extends State<CutDownTimeWidget> {
                   Text(
                     ':',
                     style:
-                        TextStyle(color: widget.white?Colors.white:Color(0xFFC92219), fontSize: 14.rsp),
+                        TextStyle(color: widget.white?Colors.white:Color(0xFFC92219), fontSize: 12.rsp),
                   ),
                   _time('00'),
                   Text(
                     ':',
                     style:
-                        TextStyle(color: widget.white?Colors.white:Color(0xFFC92219), fontSize: 14.rsp),
+                        TextStyle(color: widget.white?Colors.white:Color(0xFFC92219), fontSize: 12.rsp),
                   ),
                   _time('00'),
                 ],
@@ -91,22 +91,21 @@ class _CutDownTimeWidgetState extends State<CutDownTimeWidget> {
             );
           } else
             return Container(
-
               width: 70.rw,
-              height: 20.rw,
+              height: 17.rw,
               child: Row(
                 children: [
                   _time(time.hours != null ? time.hours.toString() : '00'),
                   Text(
                     ':',
                     style:
-                        TextStyle(color: widget.white?Colors.white:Color(0xFFC92219), fontSize: 14.rsp),
+                        TextStyle(color: widget.white?Colors.white:Color(0xFFC92219), fontSize: 12.rsp),
                   ),
                   _time(time.min != null ? time.min.toString() : '00'),
                   Text(
                     ':',
                     style:
-                        TextStyle(color: widget.white?Colors.white:Color(0xFFC92219), fontSize: 14.rsp),
+                        TextStyle(color: widget.white?Colors.white:Color(0xFFC92219), fontSize: 12.rsp),
                   ),
                   _time(time.sec != null ? time.sec.toString() : '00'),
                   30.hb,
@@ -121,15 +120,15 @@ class _CutDownTimeWidgetState extends State<CutDownTimeWidget> {
   _time(String time) {
     return Container(
       alignment: Alignment.center,
-      width: 20.rw,
-      height: 20.rw,
+      width: 15.rw,
+      height: 17.rw,
       decoration: BoxDecoration(
         color: widget.white?Colors.white:Color(0xFFC92219),
-        borderRadius: BorderRadius.all(Radius.circular(1.rw)),
+        borderRadius: BorderRadius.all(Radius.circular(4.rw)),
       ),
       child: Text(
         time.length == 1 ? '0' + time : time,
-        style: TextStyle(color: widget.white?Color(0xFFC92219):Colors.white, fontSize: 14.rsp),
+        style: TextStyle(color: widget.white?Color(0xFFC92219):Colors.white, fontSize: 12.rsp),
       ),
     );
   }

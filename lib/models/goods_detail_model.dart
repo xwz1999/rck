@@ -177,6 +177,9 @@ class Data extends Object {
   String countryIcon;
   Living living;
 
+  Seckill seckill;
+
+
   Data(
       this.id,
       this.brandId,
@@ -203,7 +206,9 @@ class Data extends Object {
       this.storehouse,
       this.notice,
       this.countryIcon,
-      this.living);
+      this.living,
+      this.seckill
+      );
 
   factory Data.fromJson(Map<String, dynamic> srcJson) =>
       _$DataFromJson(srcJson);
@@ -223,6 +228,31 @@ class Data extends Object {
           "${minPrice.toStringAsFixed(2)}-${maxPrice.toStringAsFixed(2)}";
     }
     return returnPrice;
+  }
+}
+
+class Seckill {
+  num seckill_status;
+  String seckillEndTime;
+  num seckillMinPrice;
+  num seckillCommission;
+
+  Seckill({this.seckill_status, this.seckillEndTime, this.seckillMinPrice, this.seckillCommission});
+
+  Seckill.fromJson(Map<String, dynamic> json) {
+    seckill_status = json['sec_kill'];
+    seckillEndTime = json['sec_kill_end_time'];
+    seckillMinPrice = json['sec_kill_min_price'];
+    seckillCommission = json['sec_kill_commission'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['sec_kill'] = this.seckill_status;
+    data['sec_kill_end_time'] = this.seckillEndTime;
+    data['sec_kill_min_price'] = this.seckillMinPrice;
+    data['sec_kill_commission'] = this.seckillCommission;
+    return data;
   }
 }
 

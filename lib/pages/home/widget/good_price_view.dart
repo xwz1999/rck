@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 
 import 'package:extended_text/extended_text.dart';
@@ -16,15 +17,22 @@ import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/models/goods_detail_model.dart';
+import 'package:recook/pages/seckill_activity/cut_down_time_widget.dart';
+import 'package:recook/pages/seckill_activity/cut_down_widget.dart';
+import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
+import 'package:recook/utils/date/date_utils.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/goods_item.dart';
 
 class GoodPriceView extends StatefulWidget {
   final GoodsDetailModel detailModel;
   final VoidCallback shareCallback;
+  final gysId;
 
-  const GoodPriceView({Key key, this.detailModel, this.shareCallback})
+  const GoodPriceView(
+      {Key key, this.detailModel, this.shareCallback, this.gysId})
       : super(key: key);
 
   @override
@@ -36,10 +44,21 @@ class GoodPriceView extends StatefulWidget {
 class _GoodPriceViewState extends State<GoodPriceView> {
   GoodsDetailModel detailModel;
   VoidCallback shareCallback;
+  int _status = 0;
+  String _endTime = '';
+
 
   @override
   void initState() {
     super.initState();
+    if(widget.detailModel.data.seckill!=null){
+      _status = widget.detailModel.data.seckill.seckill_status;
+      _endTime = widget.detailModel.data.seckill.seckillEndTime;
+      print('--------------------');
+      print(DateTime.parse(_endTime));
+      print('--------------------');
+      _endTime= DateUtil.formatDate(DateTime.parse(_endTime), format: 'HH-mm-ss');
+    }
 
     detailModel = widget.detailModel;
     shareCallback = widget.shareCallback;
@@ -55,8 +74,29 @@ class _GoodPriceViewState extends State<GoodPriceView> {
         _name(),
         _detail(),
         _label(),
-        _service(),
+        //京东商品隐藏
+        widget.gysId == 1800 || widget.gysId == 2000 ?SizedBox(): _service() ,
       ],
+    );
+  }
+
+  _finishedView(){
+    return Container(
+
+      child:
+      Column(
+        //mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '距活动结束还剩',
+            style: TextStyle(color: Colors.white, fontSize: 10.rw),
+          ),
+          5.hb,
+          CutDownWidget(time:_endTime,white: true,),
+
+        ],
+      )
     );
   }
 
@@ -115,6 +155,13 @@ class _GoodPriceViewState extends State<GoodPriceView> {
       commission =
           "${_getDoubleText(minCommission)}-${_getDoubleText(maxCommission)}";
     }
+    if(_status==1){
+      if(detailModel.data.sku != null && detailModel.data.sku.length > 0){
+        detailModel.data.sku.sort((left,right)=> left.discountPrice.compareTo(right.discountPrice));
+        price = detailModel.data.sku[0].discountPrice.toStringAsFixed(2);
+        commission = detailModel.data.sku[0].commission.toStringAsFixed(2);
+      }
+    }
     return _normalPriceWidget(
         price, commission, originPrice, isTwoPrice, coupon);
   }
@@ -130,10 +177,12 @@ class _GoodPriceViewState extends State<GoodPriceView> {
   _promotionPrice(price, commission, originPrice, coupon,
       {isTwoPrice = false}) {
     return Container(
-      margin: EdgeInsets.only(top: 5, left: 15),
+      padding: EdgeInsets.only(top:0,left: 15),
+      color: Colors.transparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
+          _status==1&&_endTime!=''?_finishedView():
           Row(
             children: <Widget>[
               (coupon != null && coupon != 0)
@@ -195,7 +244,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
               RichText(
                 text: TextSpan(children: [
                   TextSpan(
-                    text: "券后价",
+                    text: _status==1?"秒杀价":"券后价",
                     style: TextStyle(color: Colors.yellow, fontSize: 9 * 2.sp),
                   ),
                   TextSpan(
@@ -259,8 +308,9 @@ class _GoodPriceViewState extends State<GoodPriceView> {
 
   _normalPriceWidget(price, commission, originPrice, isTwoPrice, coupon) {
     return Container(
-      height: 75,
+      height: 80,
       width: MediaQuery.of(context).size.width,
+      color: Colors.transparent,
       child: Stack(
         overflow: Overflow.visible,
         alignment: AlignmentDirectional.center,
@@ -268,12 +318,14 @@ class _GoodPriceViewState extends State<GoodPriceView> {
           Positioned(
             child: Image.asset(
               R.ASSETS_GOODS_DETAILS_BOTTOM_ANIMAL_PNG,
-              fit: BoxFit.fitWidth,
+              fit: BoxFit.fill,
+              //height: 100.rw,
             ),
             left: 0,
             right: 0,
             bottom: 0,
           ),
+
           _promotionPrice(
             price,
             commission,
@@ -285,6 +337,8 @@ class _GoodPriceViewState extends State<GoodPriceView> {
       ),
     );
   }
+
+
 
   Container _name() {
     return Container(

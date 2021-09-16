@@ -25,8 +25,12 @@ import 'package:get/get.dart' hide Response;
 import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:power_logger/power_logger.dart';
+import 'package:recook/models/category_model.dart';
 import 'package:recook/models/country_list_model.dart';
 import 'package:recook/pages/buy_tickets/choose_tickets_type_page.dart';
+import 'package:recook/pages/home/widget/good_high_commission_page.dart';
+import 'package:recook/pages/home/widget/good_preferential_list_page.dart';
+import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
 import 'package:recook/pages/live/models/king_coin_list_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:recook/utils/storage/hive_store.dart';
@@ -1058,21 +1062,42 @@ class _HomePageState extends BaseStoreState<HomePage>
                     AppConfig.commissionByRoleLevel
                         ? Api.getImgUrl(kingCoinListModelList[5].url)
                         : Api.getImgUrl(kingCoinListModelList[0].url),
-                    AppConfig.commissionByRoleLevel ? "我的权益" : "瑞库制品",
-                    onPressed: () {
+                    AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+                    onPressed: () async{
                   if (AppConfig.commissionByRoleLevel) {
                     if (!UserManager.instance.haveLogin) {
                       AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
                       return;
                     }
-                    AppRouter.push(
-                      globalContext,
-                      RouteName.SHOP_PAGE_USER_RIGHTS_PAGE,
-                    );
+                    //我的权益内容
+                    // AppRouter.push(
+                    //   globalContext,
+                    //   RouteName.SHOP_PAGE_USER_RIGHTS_PAGE,
+                    // );
+
+                    List<FirstCategory> firstCategoryList = [];
+                    firstCategoryList = await HomeDao.getJDCategoryList();
+                    if(firstCategoryList!=null){
+                      Get.to(() => ClassifyPage(
+                        jdType: 1,
+                        data: firstCategoryList,
+                        initValue: '全部',
+                      ));
+                    }
                   } else {
-                    AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
-                        arguments: GoodsListTempPage.setArguments(
-                            title: "瑞库制品", type: GoodsListTempType.recookMake));
+                    //京东优选
+                    List<FirstCategory> firstCategoryList = [];
+                    firstCategoryList = await HomeDao.getJDCategoryList();
+                    if(firstCategoryList!=null){
+                      Get.to(() => ClassifyPage(
+                        jdType: 1,
+                        data: firstCategoryList,
+                        initValue: '全部',
+                      ));
+                    }
+                    // AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
+                    //     arguments: GoodsListTempPage.setArguments(
+                    //         title: "瑞库制品", type: GoodsListTempType.recookMake));
                     // AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
                   }
                   // return;
@@ -1093,6 +1118,8 @@ class _HomePageState extends BaseStoreState<HomePage>
                   //'出行服务',
                   onPressed: () async {
                     if (AppConfig.commissionByRoleLevel) {
+                      Get.to(()=>GoodsHighCommissionListPage());
+
                       //AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
 
                       // UserManager.instance.selectTabbarIndex = 2;
@@ -1130,14 +1157,17 @@ class _HomePageState extends BaseStoreState<HomePage>
                     AppConfig.commissionByRoleLevel
                         // ? "升级店主"
                         ? "特惠专区"
-                        : "数码家电", onPressed: () {
+                        : "特惠专区", onPressed: () {
                   if (AppConfig.commissionByRoleLevel) {
+                    Get.to(()=>GoodsPreferentialListPage());
+
                     //ShareTool().inviteShare(context, customTitle: Container()); 一键邀请的代码
                   } else {
-                    AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
-                        arguments: GoodsListTempPage.setArguments(
-                            title: "数码家电",
-                            type: GoodsListTempType.homeAppliances));
+                    Get.to(()=>GoodsPreferentialListPage());
+                    // AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
+                    //     arguments: GoodsListTempPage.setArguments(
+                    //         title: "数码家电",
+                    //         type: GoodsListTempType.homeAppliances));
                     // AppRouter.push(context, RouteName.Member_BENEFITS_PAGE,);
                   }
                 }),

@@ -76,6 +76,7 @@ Data _$DataFromJson(Map<String, dynamic> json) {
         : Notice.fromJson(json['notice'] as Map<String, dynamic>),
     json['country_icon'],
     json['living'] == null ? null : new Living.fromJson(json['living']),
+    json['sec_kill'] == null ? null : new Seckill.fromJson(json['sec_kill']),
   );
 }
 
@@ -101,6 +102,7 @@ Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'shoppingTrolleyCount': instance.shoppingTrolleyCount,
       'country_icon': instance.countryIcon,
       'living': instance.living,
+      'sec_kill':instance.seckill,
     };
 
 MainPhotos _$MainPhotosFromJson(Map<String, dynamic> json) {
