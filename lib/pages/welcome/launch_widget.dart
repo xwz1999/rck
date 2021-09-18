@@ -32,7 +32,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
   @override
   void initState() {
     super.initState();
-    PowerLogger.start(context, debug: AppConfig.debug);
+    PowerLogger.start(context, debug: true);//京东测试
     WidgetsBinding.instance.addPostFrameCallback((callback) async {
       await Future.delayed(Duration(milliseconds: 2450));
       if (HiveStore.appBox.get('privacy_init') == null) {

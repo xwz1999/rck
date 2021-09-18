@@ -84,7 +84,6 @@ class GoodsPage extends StatefulWidget {
   final int liveStatus;
   final int roomId;
 
-  final num gysId;
 
   const GoodsPage({
     Key key,
@@ -97,7 +96,6 @@ class GoodsPage extends StatefulWidget {
     // this.liveId = 0,
     this.liveStatus,
     this.roomId,
-    this.gysId,
   }) : super(key: key);
 
   @override
@@ -128,7 +126,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   AddressDefaultModel _addressModel;
   String _defaltAddress;
   int _jDHaveGoods = -1;
-  int _seckillStatus = 0;//秒杀状态 0为未开始 1为开始
+  // int _seckillStatus = 0;//秒杀状态 0为未开始 1为开始
 
   @override
   bool get wantKeepAlive => true;
@@ -136,8 +134,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   @override
   void initState() {
     super.initState();
-    //gysid为1800或者2000
-    if (widget.gysId == 1800 || widget.gysId == 2000) {
+    //获取默认地址并且判断有无货源
+    if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
       Future.delayed(Duration.zero, () async {
         _addressList = await _getDefaultAddress();
         if (_addressList != null) {
@@ -156,12 +154,14 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 });
               }
             }
-            //
-
           });
         }
       });
+
     }
+    //goodsDetail.data.vendorId为1800或者2000
+
+
     GoodsDetailModelImpl.getDetailImages(widget.goodsId)
         .then((GoodsDetailImagesModel model) {
       if (model.code != HttpStatus.SUCCESS) {
@@ -177,7 +177,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       if (_context != null &&
           widget.goodsDetail != null &&
           widget.openSkuChoosePage.value) {
-        if (widget.gysId == 1800 || widget.gysId == 2000) {
+        if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
           if (_jDHaveGoods == 1) {
             _showSkuChoosePage(context);
           } else {
@@ -190,6 +190,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       }
     });
 
+
   }
 
   @override
@@ -201,6 +202,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   @override
   Widget buildContext(BuildContext context, {store}) {
     if (widget.goodsDetail != null) {
+
       _skuCombinations();
       _itemModels = _chooseValues();
     }
@@ -210,6 +212,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   }
 
   MediaQuery _buildBody(BuildContext context) {
+
+
     _context = context;
     return MediaQuery.removePadding(
         key: myGlobals.scaffoldKey,
@@ -245,6 +249,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   }
 
   List<Widget> _detailListWidget() {
+
     List<Widget> children = [];
     children.addAll(_goodHeadDetail());
     children.addAll(_goodDetailImages());
@@ -409,7 +414,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           children: <Widget>[
             _headPageView(),
             GoodPriceView(
-              gysId: widget.gysId,
+
               detailModel: widget.goodsDetail,
               shareCallback: () {
                 String img = '';
@@ -441,7 +446,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         color: Colors.white,
         child: _discountContent(context),
       ),
-      widget.gysId == 1800 || widget.gysId == 2000
+      widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000
           ? Container(
               margin: EdgeInsets.only(bottom: 13),
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -545,7 +550,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           margin: EdgeInsets.only(top: 10),
           child: GestureDetector(
             onTap: () {
-              if (widget.gysId == 1800 || widget.gysId == 2000) {
+              if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
                 if (_jDHaveGoods == 1) {
                   _showSkuChoosePage(context);
                 } else {
@@ -812,7 +817,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                         Expanded(
                             child: Row(
                           children: <Widget>[
-                            widget.gysId == 1800
+                            widget.goodsDetail.data.vendorId == 1800
                                 ? Text(
                                     "京东仓发货 | ",
                                     style: AppTextStyle.generate(13 * 2.sp,

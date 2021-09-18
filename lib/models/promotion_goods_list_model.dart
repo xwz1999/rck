@@ -1,6 +1,7 @@
 import 'package:flustars/flustars.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
 
+import 'goods_hot_sell_list_model.dart';
 import 'goods_simple_list_model.dart';
 
 class PromotionGoodsListModel {
@@ -126,6 +127,7 @@ class PromotionGoodsModel {
   num gysId;
   List<String> specialIcon;
   String countryIcon;
+  SecKill secKill;
 
   PromotionGoodsModel(
       {this.goodsId,
@@ -158,7 +160,8 @@ class PromotionGoodsModel {
       this.specialSale,
       this.gysId,
       this.specialIcon,
-      this.countryIcon});
+      this.countryIcon,
+        this.secKill});
 
   PromotionGoodsModel.fromJson(Map<String, dynamic> json) {
     goodsId = json['goodsId'];
@@ -197,6 +200,9 @@ class PromotionGoodsModel {
         json['spec_icon'] != null ? json['spec_icon'].cast<String>() : null;
     gysId = json['gys_id'];
     countryIcon = json['country_icon'];
+    secKill = json['sec_kill'] != null
+        ? new SecKill.fromJson(json['sec_kill'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -236,6 +242,9 @@ class PromotionGoodsModel {
     data['gys_id'] = this.gysId;
     data['spec_icon'] = this.specialIcon;
     data['country_icon'] = this.countryIcon;
+    if (this.secKill != null) {
+      data['sec_kill'] = this.secKill.toJson();
+    }
     return data;
   }
 

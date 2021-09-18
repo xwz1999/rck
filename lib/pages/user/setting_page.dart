@@ -138,11 +138,10 @@ class _SettingItemListViewState extends ResumableState<SettingItemListView> {
 
                       //秒杀临时入口
                       SCTile.normalTile("秒杀(临时)", listener: () async {
-                        SeckillModel seckillModel = new SeckillModel();
-                        seckillModel = await SeckillFunc.getSeckillList();
-                        if(seckillModel!=null){
-                          Get.to(() => SeckillActivityPage(seckillModel:seckillModel));
-                        }
+
+
+                          Get.to(() => SeckillActivityPage());
+
 
                         //CRoute.push(context, PrivacyPageV2());
                       }),

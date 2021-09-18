@@ -72,8 +72,8 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          !widget.model.isAllWaitPromotionStart() || widget.isEdit
-              ? CustomImageButton(
+          // !widget.model.isAllWaitPromotionStart() || widget.isEdit?
+          CustomImageButton(
                   icon: Icon(
                     widget.model.selected
                         ? AppIcons.icon_check_circle
@@ -98,8 +98,8 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                     });
                     setState(() {});
                   },
-                )
-              : Container(),
+                ),
+              // : Container(),
           Container(
             width: rSize(6),
           ),

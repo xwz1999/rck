@@ -188,7 +188,7 @@ class BrandLikeGridItem extends StatelessWidget {
                         TextSpan(
                           text: "券后 ¥ ",
                           style: AppTextStyle.generate(12 * 2.sp,
-                              color: Color(0xFFFA6400),
+                              color: Color(0xffc70404),
                               fontWeight: FontWeight.w500),
                         ),
                         TextSpan(

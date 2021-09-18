@@ -577,6 +577,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
                             Container(
+                              constraints: BoxConstraints(maxWidth: 150.rw),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(2),
                                 color: Color(0xffeff1f6),
@@ -585,7 +586,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                                   vertical: 3, horizontal: 6),
                               child: Text(
                                 goods.skuName,
-                                maxLines: 3,
+                                maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTextStyle.generate(11 * 2.sp,
                                     color: Colors.grey[600],

@@ -29,10 +29,9 @@ import 'package:recook/widgets/goods_item.dart';
 class GoodPriceView extends StatefulWidget {
   final GoodsDetailModel detailModel;
   final VoidCallback shareCallback;
-  final gysId;
 
   const GoodPriceView(
-      {Key key, this.detailModel, this.shareCallback, this.gysId})
+      {Key key, this.detailModel, this.shareCallback})
       : super(key: key);
 
   @override
@@ -54,10 +53,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
     if(widget.detailModel.data.seckill!=null){
       _status = widget.detailModel.data.seckill.seckill_status;
       _endTime = widget.detailModel.data.seckill.seckillEndTime;
-      print('--------------------');
-      print(DateTime.parse(_endTime));
-      print('--------------------');
-      _endTime= DateUtil.formatDate(DateTime.parse(_endTime), format: 'HH-mm-ss');
+      //_endTime= DateUtil.formatDate(DateTime.parse(_endTime), format: 'HH-mm-ss');
     }
 
     detailModel = widget.detailModel;
@@ -75,7 +71,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
         _detail(),
         _label(),
         //京东商品隐藏
-        widget.gysId == 1800 || widget.gysId == 2000 ?SizedBox(): _service() ,
+        widget.detailModel.data.vendorId == 1800 || widget.detailModel.data.vendorId == 2000 ?SizedBox(): _service() ,
       ],
     );
   }
@@ -156,11 +152,10 @@ class _GoodPriceViewState extends State<GoodPriceView> {
           "${_getDoubleText(minCommission)}-${_getDoubleText(maxCommission)}";
     }
     if(_status==1){
-      if(detailModel.data.sku != null && detailModel.data.sku.length > 0){
-        detailModel.data.sku.sort((left,right)=> left.discountPrice.compareTo(right.discountPrice));
-        price = detailModel.data.sku[0].discountPrice.toStringAsFixed(2);
-        commission = detailModel.data.sku[0].commission.toStringAsFixed(2);
-      }
+
+        price = detailModel.data.seckill.seckillMinPrice.toStringAsFixed(2)??'';
+        commission = detailModel.data.seckill.seckillCommission.toStringAsFixed(2)??'';
+
     }
     return _normalPriceWidget(
         price, commission, originPrice, isTwoPrice, coupon);

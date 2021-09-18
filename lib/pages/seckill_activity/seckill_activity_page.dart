@@ -17,12 +17,12 @@ import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'cut_down_time_widget.dart';
+import 'functions/SeckillFunctions.dart';
 import 'model/SeckillModel.dart';
 
 class SeckillActivityPage extends StatefulWidget {
-  final SeckillModel seckillModel;
   SeckillActivityPage({
-    Key key, @required this.seckillModel,
+    Key key
   }) : super(key: key);
 
   @override
@@ -36,6 +36,8 @@ class _SeckillActivityPageState extends State<SeckillActivityPage> {
   String _endTime = '';
   String _startTime = '';
   num _peopleNum = 800;
+  SeckillModel _seckillModel;
+
 
   GSRefreshController _refreshController =
   GSRefreshController(initialRefresh: true);
@@ -43,10 +45,7 @@ class _SeckillActivityPageState extends State<SeckillActivityPage> {
   @override
   void initState() {
     super.initState();
-    _status = widget.seckillModel.status;
-    _endTime = widget.seckillModel.endTime;
-    _startTime = widget.seckillModel.startTime;
-    _peopleNum = widget.seckillModel.shoppingPeople;
+
   }
 
   @override
@@ -91,41 +90,41 @@ class _SeckillActivityPageState extends State<SeckillActivityPage> {
         bottom: _bottomWidgt(),
       ),
 
-      body: Container(
-        // decoration: BoxDecoration(
-        //     gradient: LinearGradient(
-        //   begin: Alignment.topCenter,
-        //   end: Alignment.bottomCenter,
-        //   colors: [
-        //     Color(0xFFD5101A),
-        //     Color(0x03FE2E39),
-        //   ],
-        //   stops: [0.0, 0.5],
-        // )),
-        child: _listWidget(),
-      ),
-    );
+      body: RefreshWidget(
+          controller: _refreshController,
+          noData: '抱歉，没有找到商品',
+          onRefresh: () async {
+            _seckillModel = await SeckillFunc.getSeckillList();
+            if(_seckillModel!=null){
+              _status =_seckillModel.status;
+              _endTime = _seckillModel.endTime;
+              _startTime = _seckillModel.startTime;
+              _peopleNum = _seckillModel.shoppingPeople;
+              setState(() {});
+            }
+            _refreshController.refreshCompleted();
+
+          },
+          body:  _listWidget()));
   }
 
 
   _listWidget() {
-    return Container(
-      child: widget.seckillModel.seckillGoodsList!=null?
+    return _seckillModel!=null?
       ListView.builder(
-
         itemBuilder: (_, index) {
           return GestureDetector(
             onTap: () {
               AppRouter.push(context, RouteName.COMMODITY_PAGE,
                   arguments: CommodityDetailPage.setArguments(
-                      widget.seckillModel.seckillGoodsList[index].goodsId));
+                      _seckillModel.seckillGoodsList[index].goodsId));
             },
-            child: _itemWidget(widget.seckillModel.seckillGoodsList[index]),
+            child: _itemWidget(_seckillModel.seckillGoodsList[index]),
           );
         },
-        itemCount: widget.seckillModel.seckillGoodsList.length,
-      ):noDataView('没有找到商品'),
-    );
+        itemCount: _seckillModel.seckillGoodsList.length,
+      ):noDataView('没有找到商品');
+
   }
   noDataView(String text, {Widget icon}) {
     return Container(
@@ -170,7 +169,7 @@ class _SeckillActivityPageState extends State<SeckillActivityPage> {
             },
             buildCtx: context,
             model: data,
-            seckillModel: widget.seckillModel,
+            seckillModel: _seckillModel,
           ),
         ],
       ),

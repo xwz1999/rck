@@ -42,8 +42,8 @@ class CommodityDetailPage extends StatefulWidget {
     this.liveId = 0,
   }) : super(key: key);
 
-  static setArguments(int goodsID, {int liveStatus, int roomId,int gysId,bool seckillout}) {
-    return {"goodsID": goodsID, 'liveStatus': liveStatus, 'roomId': roomId,'gysId':gysId,'seckillout':seckillout};
+  static setArguments(int goodsID, {int liveStatus, int roomId,bool seckillout}) {
+    return {"goodsID": goodsID, 'liveStatus': liveStatus, 'roomId': roomId,'seckillout':seckillout};
   }
 
   @override
@@ -62,7 +62,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
   GoodsDetailModel _goodsDetail;
   int _liveStatus;
   int _roomId;
-  num _gysId;
+
 
   bool _seckillout;//秒杀是否无货
 
@@ -72,8 +72,6 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
     _goodsId = widget.arguments["goodsID"];
     _liveStatus = widget.arguments["liveStatus"];
     _roomId = widget.arguments["roomId"];
-    _gysId = widget.arguments["gysId"];
-
     _seckillout = widget.arguments['seckillout']??false;
 
     _tabController = TabController(length: 3, vsync: this);
@@ -158,6 +156,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
                       child: CacheTabBarView(
                           controller: _tabController,
                           children: [
+                            _goodsDetail!=null?
                             GoodsPage(
                               liveStatus: _liveStatus,
                               roomId: _roomId,
@@ -172,7 +171,6 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
                               goodsId: _goodsId,
                               openSkuChoosePage: _openSkuChoosePage,
                               goodsDetail: _goodsDetail,
-                              gysId: _gysId,
                               onScroll: (notification) {
                                 // double maxScroll = notification.metrics.maxScrollExtent;
                                 double offset = notification.metrics.pixels;
@@ -185,7 +183,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
                                 //   _tabController.animateTo(1);
                                 // }
                               },
-                            ),
+                            ):SizedBox(),
                             // DetailPage(
                             //   goodsID: _goodsId,
                             // ),

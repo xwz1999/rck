@@ -76,6 +76,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
     _controller = MvpListViewController();
     _selectedGoods = [];
 
+
     _presenter.getShoppingCartList(UserManager.instance.user.info.id);
 
     UserManager.instance.refreshShoppingCart.addListener(_refreshShoppingCart);
@@ -308,12 +309,14 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         _checkAll = !_checkAll;
         _selectedGoods.clear();
         // 如果是编辑状态 可以选中所以
-        // 如果不是编辑状态 只能选中没有在活动中的商品
+        // 如果不是编辑状态 只能选中未下架的商品
         _controller.getData().forEach((brand) {
           brand.selected = _checkAll;
           brand.children.forEach((goods) {
             if (_checkAll) {
-              _selectedGoods.add(goods);
+              if(goods.publishStatus!=0){//判断是否下架
+                _selectedGoods.add(goods);
+              }
             }
             goods.selected = _checkAll;
           });

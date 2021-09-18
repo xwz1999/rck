@@ -34,9 +34,26 @@ class BrandDetailGridItem extends StatelessWidget {
       {Key key, this.goods, this.buyClick, this.onBrandClick})
       : super(key: key);
   static final Color colorGrey = Color(0xff999999);
+
   @override
   Widget build(BuildContext context) {
-    bool isSoldOut = goods.inventory <= 0 ? true : false;
+
+    bool sellout = false;
+    bool isSeckill = false;
+
+      if(this.goods.inventory>0){
+        sellout = false;
+      }else{
+        sellout = true;
+      }
+      if(this.goods.secKill!=null){
+        if(this.goods.secKill.secKill==1){
+          isSeckill = true;
+          sellout = true;
+          //秒杀中 通过seckill中的库存和销量来判断是否是否售完
+        }
+      }
+
     double width = (MediaQuery.of(context).size.width - 10) / 2;
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -63,7 +80,7 @@ class BrandDetailGridItem extends StatelessWidget {
                                 Api.getResizeImgUrl(goods.mainPhotoUrl, 300)),
                       )),
                   Positioned(
-                    child: isSoldOut
+                    child: sellout
                         ? ItemTagWidget.imageMaskWidget(
                             padding: 40, width: width - 80, height: width - 80)
                         : Container(),
@@ -171,10 +188,20 @@ class BrandDetailGridItem extends StatelessWidget {
             // Spacer(),
             _saleNumberWidget(this.goods),
             SizedBox(
-              height: 4 * 2.w,
+              height: 4.w,
             ),
             Row(
               children: [
+                isSeckill?Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "赚" +  (this.goods.commission??0).toStringAsFixed(2),
+                    style: TextStyle(
+                      color: Color(0xFFC92219),
+                      fontSize: 12 * 2.sp,
+                    ),
+                  ),
+                ):
                 Text(
                   '¥${this.goods.originalPrice.toStringAsFixed(2)}',
                   style: TextStyle(
@@ -270,7 +297,7 @@ class BrandDetailGridItem extends StatelessWidget {
                     child: CustomImageButton(
                       direction: Direction.horizontal,
                       height: 21,
-                      title: this.goods.inventory <= 0 ? "已售完" : "自购",
+                      title: sellout ? "已售完" : "自购",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 13 * 2.sp,
@@ -298,7 +325,7 @@ class BrandDetailGridItem extends StatelessWidget {
                       //             : 0),
                       //     topRight: Radius.circular(40),
                       //     bottomRight: Radius.circular(40)),
-                      backgroundColor: this.goods.inventory <= 0
+                      backgroundColor: sellout
                           ? AppColor.greyColor
                           : Color(0xFFC92219),
                       pureDisplay: true,
@@ -317,11 +344,27 @@ class BrandDetailGridItem extends StatelessWidget {
   }
 
   _saleNumberWidget(GoodsSimple goods) {
+    bool sellout = false;
+    bool isSeckill = false;
+
+    if(this.goods.inventory>0){
+      sellout = false;
+    }else{
+      sellout = true;
+    }
+    if(this.goods.secKill!=null){
+      if(this.goods.secKill.secKill==1){
+        isSeckill = true;
+        sellout = true;
+        //秒杀中 通过seckill中的库存和销量来判断是否是否售完
+      }
+    }
     return Container(
       child: Stack(
         children: <Widget>[
           Row(
             children: <Widget>[
+              isSeckill?SizedBox():
               (goods.coupon != null && goods.coupon != 0)
                   ? Container(
                       margin: EdgeInsets.only(right: 5),
@@ -331,11 +374,16 @@ class BrandDetailGridItem extends StatelessWidget {
                       ),
                     )
                   : SizedBox(),
+              isSeckill? Container(
+                padding: EdgeInsets.only(top:5.rw),
+                child: Image.asset(R.ASSETS_SECKILL_ICON_PNG,width: 69.rw,height: 20.rw,),
+              ):
               AppConfig.commissionByRoleLevel
                   ? Container(
                       child: Stack(
                         alignment: Alignment.center,
                         children: <Widget>[
+
                           Container(
                             margin: EdgeInsets.symmetric(vertical: 2),
                             alignment: Alignment.center,
@@ -354,6 +402,7 @@ class BrandDetailGridItem extends StatelessWidget {
                               ),
                             ),
                           ),
+
                           AppConfig.getShowCommission()
                               ? Container(
                                   alignment: Alignment.center,
@@ -383,7 +432,7 @@ class BrandDetailGridItem extends StatelessWidget {
       buyClick();
     } else {
       AppRouter.push(context, RouteName.COMMODITY_PAGE,
-          arguments: CommodityDetailPage.setArguments(this.goods.id,gysId: this.goods.gysId));
+          arguments: CommodityDetailPage.setArguments(this.goods.id));
     }
   }
 

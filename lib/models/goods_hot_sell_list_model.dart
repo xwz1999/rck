@@ -47,6 +47,8 @@ class Data {
   int isFerme;
   int storehouse;
   String countryIcon;
+  int gysId;
+  SecKill secKill;
   Data({
     this.id,
     this.goodsName,
@@ -67,6 +69,8 @@ class Data {
     this.isImport,
     this.storehouse,
     this.countryIcon,
+    this.gysId,
+    this.secKill
   });
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -88,6 +92,10 @@ class Data {
     isFerme = json['isFerme'];
     storehouse = json['storehouse'];
     countryIcon = json['country_icon'];
+    gysId = json['gys_id'];
+    secKill = json['sec_kill'] != null
+        ? new SecKill.fromJson(json['sec_kill'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -107,6 +115,38 @@ class Data {
     data['isFerme'] = this.isFerme;
     data['storehouse'] = this.storehouse;
     data['country_icon'] = this.countryIcon;
+    data['gys_id'] = this.gysId;
+    if (this.secKill != null) {
+      data['sec_kill'] = this.secKill.toJson();
+    }
+    return data;
+  }
+}
+class SecKill {
+  int secKill;
+  String secKillEndTime;
+  int secKillMinPrice;
+  int secKillCommission;
+
+  SecKill(
+      {this.secKill,
+        this.secKillEndTime,
+        this.secKillMinPrice,
+        this.secKillCommission});
+
+  SecKill.fromJson(Map<String, dynamic> json) {
+    secKill = json['sec_kill'];
+    secKillEndTime = json['sec_kill_end_time'];
+    secKillMinPrice = json['sec_kill_min_price'];
+    secKillCommission = json['sec_kill_commission'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['sec_kill'] = this.secKill;
+    data['sec_kill_end_time'] = this.secKillEndTime;
+    data['sec_kill_min_price'] = this.secKillMinPrice;
+    data['sec_kill_commission'] = this.secKillCommission;
     return data;
   }
 }

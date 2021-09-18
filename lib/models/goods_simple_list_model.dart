@@ -1,5 +1,7 @@
 import 'package:recook/pages/home/promotion_time_tool.dart';
 
+import 'goods_hot_sell_list_model.dart';
+
 class GoodsSimpleListModel {
   String code;
   String msg;
@@ -56,6 +58,7 @@ class GoodsSimple {
   num gysId;
   List<String> specialIcon;
   String countryIcon;
+  SecKill secKill;
   GoodsSimple(
       {this.id,
       this.goodsName,
@@ -83,7 +86,8 @@ class GoodsSimple {
       this.living,
       this.gysId,
       this.specialIcon,
-      this.countryIcon});
+      this.countryIcon,
+        this.secKill});
 
   GoodsSimple.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -117,6 +121,9 @@ class GoodsSimple {
     specialIcon =
         json['spec_icon'] != null ? json['spec_icon'].cast<String>() : null;
     countryIcon = json['country_icon'];
+    secKill = json['sec_kill'] != null
+        ? new SecKill.fromJson(json['sec_kill'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -150,6 +157,9 @@ class GoodsSimple {
     data['gys_id'] = this.gysId;
     data['spec_icon'] = this.specialIcon;
     data['country_icon'] = this.countryIcon;
+    if (this.secKill != null) {
+      data['sec_kill'] = this.secKill.toJson();
+    }
     return data;
   }
 
@@ -176,3 +186,4 @@ class Living {
     return data;
   }
 }
+

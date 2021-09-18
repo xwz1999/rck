@@ -8,6 +8,7 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 
 import 'package:recook/models/goods_detail_model.dart';
+import 'package:recook/models/goods_hot_sell_list_model.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
 import 'package:recook/models/promotion_goods_list_model.dart';
 
@@ -15,8 +16,6 @@ import 'package:recook/pages/goods/small_coupon_widget.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
-import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
-import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
 import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
@@ -69,6 +68,7 @@ class GoodsItemWidget extends StatelessWidget {
   final GifController gifController;
   final num gysId;
   final SeckillModel seckillModel;
+  final SecKill secKill;
 
 
   const GoodsItemWidget({
@@ -98,7 +98,7 @@ class GoodsItemWidget extends StatelessWidget {
     this.specialIcon,
     this.type,
     this.countryIcon,
-    this.living, this.gifController, this.gysId, this.seckillModel,
+    this.living, this.gifController, this.gysId, this.seckillModel, this.secKill,
     //this.special_sale,
   })  : widgetType = GoodsItemType.NONE,
         super(key: key);
@@ -137,6 +137,8 @@ class GoodsItemWidget extends StatelessWidget {
         countryIcon = model.countryIcon,
         living = model.living,
         gysId = model.gysId,
+        secKill = model.secKill,
+        //secKill = model.
         super(key: key);
 
   ///Hot List
@@ -152,7 +154,7 @@ class GoodsItemWidget extends StatelessWidget {
     this.specialSale,
     this.specialIcon,
     this.type,
-    this.living, this.gifController, this.gysId, this.seckillModel,
+    this.living, this.gifController, this.seckillModel,
   })  : goodsName = data.goodsName,
         brandName = data.brandName,
         brandPictureUrl = data.brandImg,
@@ -172,6 +174,8 @@ class GoodsItemWidget extends StatelessWidget {
         widgetType = GoodsItemType.HOT_LIST,
         isImport = data.isImport,
         countryIcon = data.countryIcon,
+        gysId = data.gysId,
+        secKill = data.secKill,
         super(key: key);
 
   /// 活动列表
@@ -184,7 +188,7 @@ class GoodsItemWidget extends StatelessWidget {
     @required this.buyClick,
     PromotionGoodsModel model,
     this.notShowAmount = false,
-    this.type, this.gifController, this.gysId, this.seckillModel,
+    this.type, this.gifController,  this.seckillModel,
   })  : goodsName = model.goodsName,
         brandName = model.brandName,
         brandPictureUrl = model.brandImg,
@@ -205,6 +209,8 @@ class GoodsItemWidget extends StatelessWidget {
         specialIcon = model.specialIcon,
         countryIcon = model.countryIcon,
         living = model.living,
+        gysId = model.gysId,
+        secKill = model.secKill,
         super(key: key);
 
   //秒杀活动
@@ -220,7 +226,7 @@ class GoodsItemWidget extends StatelessWidget {
     this.notShowAmount = false,
     this.specialSale,
 
-    this.type, this.gifController,this.originalPrice, this.percent, this.coupon,this.isImport, this.specialIcon, this.promotionStatus, this.living, this.gysId,
+    this.type, this.gifController,this.originalPrice, this.percent, this.coupon,this.isImport, this.specialIcon, this.promotionStatus, this.living, this.gysId, this.secKill,
     //this.special_sale,
   })  : goodsName = model.goodsName,
         brandName = model.brandName,
@@ -492,6 +498,26 @@ class GoodsItemWidget extends StatelessWidget {
   // }
 
   _image() {
+    bool sellout = false;
+    if(this.widgetType == GoodsItemType.SECKILL){
+      if(this.salesVolume>=this.inventory){
+        sellout = true;
+      }else{
+        sellout = false;
+      }
+    }else{
+      if(this.inventory>0){
+        sellout = false;
+      }else{
+        sellout = true;
+      }
+      if(this.secKill!=null){
+        if(secKill.secKill==1){
+          sellout = true;
+          //秒杀中 通过seckill中的库存和销量来判断是否是否售完
+        }
+      }
+    }
     double cir = 5;
     return Container(
         width: _height - 8,
@@ -523,7 +549,7 @@ class GoodsItemWidget extends StatelessWidget {
               left: 0,
               bottom: 0,
               child: Offstage(
-                offstage: this.inventory > 0&&(this.salesVolume<this.inventory||this.widgetType != GoodsItemType.SECKILL),
+                offstage: !sellout,
                 child: Container(
                   color: Colors.black38,
                   child: Center(
@@ -651,8 +677,38 @@ class GoodsItemWidget extends StatelessWidget {
 
   _inventoryView() {
     //暂时隐藏
-    bool seckillout = this.salesVolume>=this.inventory&&this.widgetType == GoodsItemType.SECKILL;
-    bool sellout = this.inventory <= 0;
+    // bool seckillout = this.salesVolume>=this.inventory&&(this.widgetType == GoodsItemType.SECKILL);
+    // bool sellout = this.inventory <= 0;
+    bool sellout = false;
+    bool isSeckill = false;
+    if(this.widgetType == GoodsItemType.SECKILL){
+      if(this.seckillModel!=null){
+        if(seckillModel.status==2){
+          isSeckill = true;//秒杀页面的商品 非秒杀状态（2）的情况下 正常显示
+        }
+        else{
+          isSeckill = false;
+        }
+      }
+      if(this.salesVolume>=this.inventory){
+        sellout = true;
+      }else{
+        sellout = false;
+      }
+    }else{
+      if(this.inventory>0){
+        sellout = false;
+      }else{
+        sellout = true;
+      }
+      if(this.secKill!=null){
+        if(secKill.secKill==1){
+          isSeckill = true;
+          sellout = true;
+          //秒杀中 通过seckill中的库存和销量来判断是否是否售完
+        }
+      }
+    }
     Color priceColor = Color(0xffc70404);
     return Container(
       height: 20 * 2.h,
@@ -678,7 +734,7 @@ class GoodsItemWidget extends StatelessWidget {
                     children: [
                       ExtendedText.rich(TextSpan(children: [
                         TextSpan(
-                          text: widgetType == GoodsItemType.SECKILL? "秒杀 ¥ ": "券后 ¥ ",
+                          text: isSeckill&&this.widgetType == GoodsItemType.SECKILL? "秒杀 ¥ ": isSeckill&&this.widgetType != GoodsItemType.SECKILL?'¥':"券后 ¥ ",
                           style: AppTextStyle.generate(12 * 2.sp,
                               color: priceColor, fontWeight: FontWeight.w500),
                         ),
@@ -698,7 +754,7 @@ class GoodsItemWidget extends StatelessWidget {
                               width: 5,
                             )),
                         TextSpan(
-                          text: widgetType == GoodsItemType.SECKILL?'':"¥${this.originalPrice.toStringAsFixed(0)}",
+                          text: isSeckill?'':"¥${this.originalPrice.toStringAsFixed(0)}",
                           style: TextStyle(
                               decoration: TextDecoration.lineThrough,
                               decorationColor: Color(0xff898989),
@@ -708,7 +764,7 @@ class GoodsItemWidget extends StatelessWidget {
                         )
                       ])),
 
-                      AppConfig.getShowCommission()&&this.widgetType==GoodsItemType.SECKILL
+                      AppConfig.getShowCommission()&&(isSeckill)
                           ? Container(
                         alignment: Alignment.center,
                         child: Text(
@@ -807,7 +863,7 @@ class GoodsItemWidget extends StatelessWidget {
                         direction: Direction.horizontal,
                         height: 21,
                         //暂时隐藏
-                        title: sellout||seckillout ? "已售完" : "自购",
+                        title: sellout?"已售完" : "自购",
 
                         style: TextStyle(
                           color: Colors.white,
@@ -838,7 +894,7 @@ class GoodsItemWidget extends StatelessWidget {
                         //     bottomRight: Radius.circular(40)),
                         backgroundColor:
                         //暂时隐藏
-                            sellout||seckillout ? AppColor.greyColor : _shareTextColor,
+                            sellout? AppColor.greyColor : _shareTextColor,
 
                         pureDisplay: true,
                       ),
@@ -906,11 +962,34 @@ class GoodsItemWidget extends StatelessWidget {
   // }
 
   _saleNumberWidget() {
+
+    bool isSeckill = false;
+    if(this.widgetType == GoodsItemType.SECKILL){
+      if(this.seckillModel!=null){
+        if(seckillModel.status==2){
+          isSeckill = true;//秒杀页面的商品 非秒杀状态（2）的情况下 正常显示
+        }
+        else{
+          isSeckill = false;
+        }
+      }
+
+    }else{
+      if(this.secKill!=null){
+        if(secKill.secKill==1){
+          isSeckill = true;
+          //秒杀中 通过seckill中的库存和销量来判断是否是否售完
+        }else{
+          isSeckill = false;
+        }
+      }
+    }
     return Container(
       child: Stack(
         children: <Widget>[
           Row(
             children: <Widget>[
+              isSeckill?SizedBox():
               (this.coupon != null && this.coupon != 0)
                   ? Container(
                       margin: EdgeInsets.only(right: 5),
@@ -920,7 +999,7 @@ class GoodsItemWidget extends StatelessWidget {
                       ),
                     )
                   : SizedBox(),
-              this.widgetType==GoodsItemType.SECKILL?
+              isSeckill?
                   Container(
                     child: Image.asset(R.ASSETS_SECKILL_ICON_PNG,width: 69.rw,height: 20.rw,),
                   ):
@@ -1037,15 +1116,34 @@ class GoodsItemWidget extends StatelessWidget {
   }
 
   _buyEvent() {
-    bool seckillout = this.salesVolume>=this.inventory&&this.widgetType == GoodsItemType.SECKILL;
+    bool sellout = false;
+    if(this.widgetType == GoodsItemType.SECKILL){
+      if(this.salesVolume>=this.inventory){
+        sellout = true;
+      }else{
+        sellout = false;
+      }
+    }else{
+      if(this.inventory>0){
+        sellout = false;
+      }else{
+        sellout = true;
+      }
+      if(this.secKill!=null){
+        if(secKill.secKill==1){
+          sellout = true;
+          //秒杀中 通过seckill中的库存和销量来判断是否是否售完
+        }
+      }
+    }
     if (buyClick != null) {
       buyClick();
     } else {
       AppRouter.push(buildCtx, RouteName.COMMODITY_PAGE,
           arguments: CommodityDetailPage.setArguments(
             this.id,
-            gysId: gysId,
-            seckillout:seckillout
+
+            seckillout:sellout
             // liveStatus: living == null ? null : living.status,
             // roomId: living == null ? null : living.roomId
           ));

@@ -509,11 +509,12 @@ class _OrderListItemState extends State<OrderListItem> {
                             borderRadius: BorderRadius.circular(2),
                             color: Color(0xffeff1f6),
                           ),
+                          constraints: BoxConstraints(maxWidth: 150.rw),//增加最大宽度
                           padding: const EdgeInsets.symmetric(
                               vertical: 3, horizontal: 6),
                           child: Text(
                             "${goods.skuName}",
-                            maxLines: 3,
+                            maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyle.generate(11 * 2.sp,
                                 color: Colors.grey[600],
