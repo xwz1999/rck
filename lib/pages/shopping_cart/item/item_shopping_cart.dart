@@ -429,19 +429,19 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                                         style: AppTextStyle.generate(14 * 2.sp,
                                             color: AppColor.themeColor),
                                       ),
-                                      TextSpan(
-                                        text: "￥",
-                                        style: AppTextStyle.generate(7 * 2.sp,
-                                            color: AppColor.greyColor),
-                                      ),
-                                      TextSpan(
-                                        text:
-                                            "${goods.originalPrice.toStringAsFixed(2)}",
-                                        style: AppTextStyle.generate(11 * 2.sp,
-                                            decoration:
-                                                TextDecoration.lineThrough,
-                                            color: AppColor.greyColor),
-                                      ),
+                                      // TextSpan(
+                                      //   text: "￥",
+                                      //   style: AppTextStyle.generate(7 * 2.sp,
+                                      //       color: AppColor.greyColor),
+                                      // ),
+                                      // TextSpan(
+                                      //   text:
+                                      //       "${goods.originalPrice.toStringAsFixed(2)}",
+                                      //   style: AppTextStyle.generate(11 * 2.sp,
+                                      //       decoration:
+                                      //           TextDecoration.lineThrough,
+                                      //       color: AppColor.greyColor),
+                                      // ),
                                     ])),
                               )),
                           goods.publishStatus == 1

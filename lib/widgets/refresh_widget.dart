@@ -133,17 +133,15 @@ class _RefreshWidgetState extends State<RefreshWidget> {
                   size: 20 * 2.sp,
                   color: widget.color,
                 ),
-                refreshingIcon: CupertinoActivityIndicator(
-                  animating: true,
-                  radius: 9.0 * 2.w,
-                ),
+                // refreshingIcon:CircularProgressIndicator(),
                 completeIcon: Icon(
                   Icons.check,
                   size: 20 * 2.sp,
                   color: widget.color,
                 ),
                 spacing: rSize(5),
-                refreshingText: widget.refreshingText,
+
+                refreshingText: '',//widget.refreshingText,
                 completeText: widget.completeText,
                 failedText: widget.failedText,
                 idleText: widget.idleText,

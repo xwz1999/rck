@@ -779,9 +779,12 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
                 _gone[num] = !_gone[num];
                 setState(() {});
               } else if (detail.count == 1) {
-                AppRouter.push(context, RouteName.SHOP_ORDER_DETAIL,
-                    arguments: OrderDetailPage.setArguments(
-                        detail.detail[0].id)); //只有一条数据时，第二层也会有一条
+                if(detail.detail!=null){
+                  AppRouter.push(context, RouteName.SHOP_ORDER_DETAIL,
+                      arguments: OrderDetailPage.setArguments(
+                          detail.detail[0].id)); //只有一条数据时，第二层也会有一条
+                }
+
               }
             } else {
               int type = 0;
@@ -914,8 +917,11 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
       children: [
         GestureDetector(
           onTap: () {
-            AppRouter.push(context, RouteName.SHOP_ORDER_DETAIL,
-                arguments: OrderDetailPage.setArguments(id));
+            if(id!=null&&id!=0){
+
+              AppRouter.push(context, RouteName.SHOP_ORDER_DETAIL,
+                  arguments: OrderDetailPage.setArguments(id));
+            }
           },
           child: Row(
             children: [

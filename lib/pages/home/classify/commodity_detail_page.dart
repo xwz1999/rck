@@ -140,7 +140,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
       // backgroundColor: AppColor.frenchColor,
       backgroundColor: Colors.white,
       body: SafeArea(
-        top: false,
+        top: true,
         bottom: true,
         child: Stack(
           children: <Widget>[

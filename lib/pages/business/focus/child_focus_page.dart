@@ -81,6 +81,7 @@ class _FocusPageState extends BaseStoreState<FocusPage>
               List<String> urls = indexModel.photos.map((f){
                 return Api.getResizeImgUrl(f.url, 300);
               }).toList();
+              print(urls);
               ImageUtils.saveNetworkImagesToPhoto(
                 urls, 
                 (index){

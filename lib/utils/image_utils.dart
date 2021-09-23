@@ -103,23 +103,24 @@ class ImageUtils {
       try {
         final Map<dynamic, dynamic> result =
             await ImageGallerySaver.saveImage(data);
-        if (Platform.isAndroid) {
-          if (result.containsValue(true)) {
-            endBack(true);
-            return true;
-          } else {
-            endBack(false);
-            return false;
-          }
-        } else if (Platform.isIOS) {
-          if (result.containsValue(true)) {
-            endBack(true);
-            return true;
-          } else {
-            endBack(false);
-            return false;
-          }
-        }
+        //只下载单张图片的bug
+        // if (Platform.isAndroid) {
+        //   if (result.containsValue(true)) {
+        //     endBack(true);
+        //     return true;
+        //   } else {
+        //     endBack(false);
+        //     return false;
+        //   }
+        // } else if (Platform.isIOS) {
+        //   if (result.containsValue(true)) {
+        //     endBack(true);
+        //     return true;
+        //   } else {
+        //     endBack(false);
+        //     return false;
+        //   }
+        // }
       } catch (e) {
         if (e is ArgumentError) {
           if (Platform.isIOS) {

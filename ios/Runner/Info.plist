@@ -161,7 +161,7 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>我们需要访问日历权限</string>
 	<key>NSCameraUsageDescription</key>
-	<string>我们需要访问您的相机，当您评价商品、编辑头像、发布录像或直播时，请同意</string>
+	<string>是否允许"瑞库客"访问您设备上的照片、媒体内容和文件</string>
 	<key>NSContactsUsageDescription</key>
 	<string>我们需要访问您的通讯录权限</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -175,9 +175,9 @@
 	<key>NSMotionUsageDescription</key>
 	<string>我们需要访问健康权限</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>我们需要访问您的照片，当您评价商品或编辑头像时，请同意</string>
+	<string>是否允许"瑞库客"访问您设备上的照片、媒体内容和文件</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>我们需要访问您的照片，当您评价商品或编辑头像时，请同意</string>
+	<string>是否允许"瑞库客"访问您设备上的照片、媒体内容和文件</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>我们需要访问语音识别权限</string>
 	<key>UILaunchStoryboardName</key>

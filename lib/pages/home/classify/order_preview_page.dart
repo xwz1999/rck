@@ -702,7 +702,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                       OverseaAcceptLicensePage(),
                     ),
                     child: Text(
-                      '《境商品用户购买须知》',
+                      '《跨境商品用户购买须知》',
                       style: TextStyle(
                         color: Color(0xFF007AFF),
                         fontSize: rSP(13),

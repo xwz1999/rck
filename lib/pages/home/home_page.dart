@@ -1297,7 +1297,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_FURNITURE_PNG, '家具饰品'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_CLOTHES_PNG, '服饰内衣'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_BAG_PNG, '鞋靴箱包'),
-                _buildSingleGoodsCard(R.ASSETS_HOME_IC_MEMBERS_PNG, '会员专享'),
+                //_buildSingleGoodsCard(R.ASSETS_HOME_IC_MEMBERS_PNG, '会员专享'), 9.23优化更新隐藏
               ],
             ),
           ),

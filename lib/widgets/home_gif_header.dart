@@ -30,7 +30,7 @@ class _HomeGifHeaderState extends RefreshIndicatorState<HomeGifHeader>
   void onModeChange(RefreshStatus mode) {
     if (mode == RefreshStatus.refreshing) {
       _gifController.repeat(
-          min: 0, max: 38, period: Duration(milliseconds: 1500));
+          min: 0, max: 38, period: Duration(milliseconds: 1000));
     }
     super.onModeChange(mode);
   }
@@ -40,7 +40,7 @@ class _HomeGifHeaderState extends RefreshIndicatorState<HomeGifHeader>
     double value = _gifController.value;
     if (value < 38) {
       await Future.delayed(
-          Duration(milliseconds: ((39 - value) / 39 * 1500).toInt() - 100), () {
+          Duration(milliseconds: ((39 - value) / 39 * 1000).toInt() - 100), () {
         _gifController.value = 38;
         // _gifController.stop();
       });

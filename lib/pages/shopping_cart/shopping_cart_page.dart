@@ -410,7 +410,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
   _buildLikeWidget() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.rw),
-      height: _likeGoodsList?.length * 378.rw / 2,
+      height: _likeGoodsList?.length * 381.rw / 2,
       width: double.infinity,
       child: Column(
         children: [

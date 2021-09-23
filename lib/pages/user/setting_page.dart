@@ -137,14 +137,14 @@ class _SettingItemListViewState extends ResumableState<SettingItemListView> {
                       }),
 
                       //秒杀临时入口
-                      SCTile.normalTile("秒杀(临时)", listener: () async {
-
-
-                          Get.to(() => SeckillActivityPage());
-
-
-                        //CRoute.push(context, PrivacyPageV2());
-                      }),
+                      // SCTile.normalTile("秒杀(临时)", listener: () async {
+                      //
+                      //
+                      //     Get.to(() => SeckillActivityPage());
+                      //
+                      //
+                      //   //CRoute.push(context, PrivacyPageV2());
+                      // }),
 
 
                       getEmptyBox(),
