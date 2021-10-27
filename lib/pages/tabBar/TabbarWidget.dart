@@ -63,7 +63,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
     UserManager.instance.login.addListener(_loginListener);
     UserManager.instance.selectTabbar.addListener(_selectTabbar);
     // UserManager.instance.refreshUserRole.addListener(_refreshUserRoleTabBar);
-    BuglyHelper.setUserInfo();
+   // BuglyHelper.setUserInfo();
   }
 
   _loginListener() {

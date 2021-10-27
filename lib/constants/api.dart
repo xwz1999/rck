@@ -183,6 +183,7 @@ class GoodsApi {
   static const String goods_sort_price = "/v1/goods/price/list";
   static const String goods_sort_sales = "/v1/goods/sales/list";
   static const String goods_detail_info = "/v1/goods/detail/summary";
+  static const String goods_detail_info_new = "/v1/goods/detail/summary_new"; //1.13.3版本 商详情可上传多个 新增接口以避免影响老版本的使用
   static const String goods_detail_images = "/v1/goods/detail/photo";
   static const String goods_detail_moments =
       "/v1/goods/detail/moments_copy/list";

@@ -46,7 +46,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
     super.initState();
     DateTime dateNow = DateTime.now();
     _getPerpetual(DateUtil.formatDate(dateNow, format: 'yyyy-MM-dd'));
-    _getholiday(dateNow.year.toString());
+
     _calendarController = CalendarController(
       maxYear: dateNow.year + 10,
       maxYearMonth: 12,
@@ -75,6 +75,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
 
         print(dateModel.lunar);
       });
+    _getholiday(dateNow.year.toString());
   }
 
   @override
@@ -91,6 +92,9 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
         appBackground: Colors.white,
         leading: RecookBackButton(
           white: false,
+          onTap: (){
+            Navigator.pop(context);
+          },
         ),
         elevation: 0,
         title: Text(
@@ -102,7 +106,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
         ),
       ),
       body: Container(
-        child: _bodyWidget(),
+        child: _holiday!=''?_bodyWidget():SizedBox(),
       ),
     );
   }

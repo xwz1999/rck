@@ -77,6 +77,7 @@ ShoppingCartGoodsModel _$ShoppingCartGoodsModelFromJson(
     json['ferme'] as num,
     json['publish_status'] as num,
     json['country_icon'] as String,
+    json['sec_kill'] == null ? null : new SecKill.fromJson(json['sec_kill']),
   );
 }
 
@@ -99,4 +100,5 @@ Map<String, dynamic> _$ShoppingCartGoodsModelToJson(
       'originalPrice': instance.originalPrice,
       'publish_status': instance.publishStatus,
       'country_icon': instance.countryIcon,
+      'sec_kill':instance.secKill,
     };

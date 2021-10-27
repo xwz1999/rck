@@ -131,6 +131,28 @@ class WeChatUtils {
     fluwx.shareToWeChat(model);
   }
 
+
+  static miniProgramShareLive({
+    String userName,
+    int id,
+    String netWorkThumbnail,
+    String des,
+    int isLive,
+  }) {
+    // String qrCode =
+    //     "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}$id/${UserManager.instance.user.info.invitationNo}";
+
+    var model = fluwx.WeChatShareMiniProgramModel(
+      userName: 'gh_530bd0866836',
+      webPageUrl: 'https://h5.reecook.cn/',
+      path:
+      '/packageA/livePlayback/livePlayback?id=' + '$id' + "&isLive=1",
+      thumbnail: fluwx.WeChatImage.network(netWorkThumbnail),
+      title: des,
+    );
+    fluwx.shareToWeChat(model);
+  }
+
   static shareGoodsForMiniProgram({
     int goodsId,
     String title,

@@ -362,24 +362,30 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     //           ),
     //         ));
     insertFirst() {
-      if (!TextUtil.isEmpty(widget.goodsDetail.data.notice.img))
-        children.insert(
-          0,
-          FadeInImage.assetNetwork(
-            placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-            image: Api.getImgUrl(widget.goodsDetail.data.notice.img),
-          ),
-        );
+      if (widget.goodsDetail.data.notice.img!=null)
+        for(int i=0;i<widget.goodsDetail.data.notice.img.length;i++){
+          children.insert(
+            0,
+
+            FadeInImage.assetNetwork(
+              placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+              image: Api.getImgUrl(widget.goodsDetail.data.notice.img[i]),
+            ),
+          );
+        }
+
     }
 
     insertLast() {
-      if (!TextUtil.isEmpty(widget.goodsDetail.data.notice.img))
+      if (widget.goodsDetail.data.notice.img!=null)
+        for(int i=0;i<widget.goodsDetail.data.notice.img.length;i++){
         children.add(
           FadeInImage.assetNetwork(
             placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-            image: Api.getImgUrl(widget.goodsDetail.data.notice.img),
+            image: Api.getImgUrl(widget.goodsDetail.data.notice.img[i]),
           ),
         );
+        }
     }
 
     if (widget?.goodsDetail?.data?.notice?.type == 1) insertFirst();
@@ -463,14 +469,14 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               child: _buildOverseaTax(),
             )
           : SizedBox(),
-      widget.goodsDetail.data.isImport == 1
-          ? Container(
-              margin: EdgeInsets.only(bottom: 13),
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              color: Colors.white,
-              child: _buildOverseaCityPicker(),
-            )
-          : SizedBox(),
+      // widget.goodsDetail.data.isImport == 1
+      //     ? Container(
+      //         margin: EdgeInsets.only(bottom: 13),
+      //         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      //         color: Colors.white,
+      //         child: _buildOverseaCityPicker(),
+      //       )
+      //     : SizedBox(),
       Container(
         margin: EdgeInsets.only(bottom: 13),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -532,7 +538,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                     Toast.showError('请先登录...');
                     return;
                   }
-                  if(widget.goodsDetail.data.seckill!=null?widget.goodsDetail.data.seckill.seckill_status==0:true)
+                  if(widget.goodsDetail.data.secKill!=null?widget.goodsDetail.data.secKill.secKill==0:true)
                   {
                     showCustomModalBottomSheet(
                         context: context,
@@ -640,7 +646,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 _cityModel == null
                     ? _addressModel != null
                         ? Container(
-                            width: 280.rw,
+                            width: 270.rw,
                             child: Text(
                               '${_addressModel.province}-${_addressModel.city}-${_addressModel.district}',
                               maxLines: 1,
@@ -659,7 +665,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                             ),
                           )
                     : Container(
-                        width: 280.rw,
+                        width: 270.rw,
                         child: Text(
                           '${_cityAddress.province}-${_cityAddress.city}-${_cityAddress.district}',
                           overflow: TextOverflow.ellipsis,
@@ -1265,7 +1271,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     ];
 
     if (widget.goodsDetail.data.coupons.length == 0||
-        (widget.goodsDetail.data.seckill!=null?widget.goodsDetail.data.seckill.seckill_status==1:false)) {//秒杀中的商品都没有优惠券
+        (widget.goodsDetail.data.secKill!=null?widget.goodsDetail.data.secKill.secKill==1:false)) {//秒杀中的商品都没有优惠券
       coupons.add(
         Text(
           "暂无优惠劵",

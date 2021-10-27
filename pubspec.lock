@@ -496,13 +496,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.6.0"
-  flutter_bugly:
-    dependency: "direct main"
-    description:
-      name: flutter_bugly
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.2.8"
   flutter_cache_manager:
     dependency: transitive
     description:
@@ -1174,8 +1167,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: b208dfd21f
-      resolved-ref: b208dfd21f1c283acfec5a6be2858a79643ccce4
+      ref: HEAD
+      resolved-ref: "68895e57326e0cc7dde146ee8dd7727eef8e71d3"
       url: "https://git.oa00.com/flutter_pub/power_logger.git"
     source: git
     version: "1.2.2"

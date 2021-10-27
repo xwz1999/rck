@@ -50,13 +50,21 @@ class GoodsListModelImpl extends GoodListModelI {
       "page": page,
     };
 
-    if (!TextUtils.isEmpty(keyword) && categoryID == -99) {
+    if (!TextUtils.isEmpty(keyword)) {
       params.putIfAbsent("keyword", () => keyword);
-    } else {
+    }
+
+
+    if(categoryID!=-99){
       params.putIfAbsent("secondCategoryID", () => categoryID);
     }
+
+
     if (countryId != null) {
       params.putIfAbsent("country_id", () => countryId);
+
+    }
+    if(type == SortType.comprehensive){
       params.putIfAbsent("user_id", () => UserManager.instance.user.info.id);
     }
 

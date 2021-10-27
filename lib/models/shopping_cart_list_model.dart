@@ -3,6 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/models/goods_detail_model.dart';
 
+import 'goods_hot_sell_list_model.dart';
+
 part 'shopping_cart_list_model.g.dart';
 
 /*
@@ -136,7 +138,7 @@ class ShoppingCartGoodsModel extends Object {
 
   bool valid;
 
-  double price;
+  num price;
 
   bool selected;
   String promotionName;
@@ -149,6 +151,7 @@ class ShoppingCartGoodsModel extends Object {
   num ferme;
   int publishStatus;
   String countryIcon;
+  SecKill secKill;
   ShoppingCartGoodsModel(
     this.shoppingTrolleyId,
     this.goodsId,
@@ -169,7 +172,8 @@ class ShoppingCartGoodsModel extends Object {
     this.storehouse,
     this.ferme,
     this.publishStatus,
-    this.countryIcon, 
+    this.countryIcon,
+    this.secKill,
   ) {
     this.selected = false;
   }

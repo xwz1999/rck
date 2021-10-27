@@ -7,6 +7,7 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/daos/home_dao.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/category_model.dart';
+import 'package:recook/pages/boosting_activitiy/boosting_activity.dart';
 import 'package:recook/pages/goods/goods_report/goods_report_page.dart';
 import 'package:recook/pages/home/classify/classify_page.dart';
 import 'package:recook/pages/recharge/recharge_page.dart';
@@ -136,16 +137,24 @@ class _SettingItemListViewState extends ResumableState<SettingItemListView> {
                         //CRoute.push(context, PrivacyPageV2());
                       }),
 
-                      //秒杀临时入口
-                      // SCTile.normalTile("秒杀(临时)", listener: () async {
+                      //助力临时入口
+                      // SCTile.normalTile("助力(临时)", listener: () async {
                       //
                       //
-                      //     Get.to(() => SeckillActivityPage());
+                      //     Get.to(() => BooStingActivityPage());
                       //
                       //
                       //   //CRoute.push(context, PrivacyPageV2());
                       // }),
 
+                      // SCTile.normalTile("秒杀(临时)", listener: () async {
+                      //
+                      //
+                      //   Get.to(() => SeckillActivityPage());
+                      //
+                      //
+                      //   //CRoute.push(context, PrivacyPageV2());
+                      // }),
 
                       getEmptyBox(),
                       SCTile.normalTile("退出登录", listener: () {

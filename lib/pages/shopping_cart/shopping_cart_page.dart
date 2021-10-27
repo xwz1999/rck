@@ -205,7 +205,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         return Container(
           padding: EdgeInsets.symmetric(horizontal: rSize(8)),
           color: Colors.white,
-          height: rSize(49),
+          height: rSize(65),
           child: Row(
             children: _bottomBarChildren(totalPrice,
                 totalCommission: totalCommission),
@@ -232,19 +232,23 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
           RichText(
               text: TextSpan(
                   text: "合计: ",
-                  style: AppTextStyle.generate(15 * 2.sp,
-                      color: Colors.black.withOpacity(0.6)),
+                  style: AppTextStyle.generate(14 * 2.sp,
+                      color: Colors.black),
                   children: [
+                    TextSpan(
+                        text: "¥",
+                        style:
+                        AppTextStyle.generate(13 * 2.sp, color: Color(0xffc70404),fontWeight: FontWeight.bold)),
                 TextSpan(
                     text: "${totalPrice.toStringAsFixed(2)}",
                     style:
-                        AppTextStyle.generate(16 * 2.sp, color: Colors.black))
+                        AppTextStyle.generate(22 * 2.sp, color: Color(0xffc70404),fontWeight: FontWeight.bold))
               ])),
           totalCommission > 0 && AppConfig.commissionByRoleLevel
               ? Text(
-                  "赚${totalCommission.toStringAsFixed(2)}",
+                  "赚 ¥${totalCommission.toStringAsFixed(2)}",
                   style: TextStyle(
-                      color: AppColor.themeColor, fontSize: 11 * 2.sp),
+                      color: AppColor.themeColor, fontSize: 14 * 2.sp),
                 )
               : Container()
         ],
@@ -267,10 +271,10 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
           ])),
       child: CustomImageButton(
         padding:
-            EdgeInsets.symmetric(vertical: rSize(3), horizontal: rSize(18)),
+            EdgeInsets.symmetric(vertical: rSize(9), horizontal: rSize(23)),
         title: "结算(${_selectedGoods.length})",
         color: Colors.white,
-        fontSize: 14 * 2.sp,
+        fontSize: 16 * 2.sp,
         onPressed: () {
           if (_selectedGoods.length == 0) {
             Toast.showInfo("您还没有选择商品");
@@ -305,7 +309,6 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
           FocusScope.of(context).requestFocus(FocusNode());
           return;
         }
-
         _checkAll = !_checkAll;
         _selectedGoods.clear();
         // 如果是编辑状态 可以选中所以

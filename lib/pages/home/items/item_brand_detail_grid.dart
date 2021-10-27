@@ -15,11 +15,15 @@ import 'package:extended_text/extended_text.dart';
 
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
 import 'package:recook/pages/goods/small_coupon_widget.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
+import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/items/item_tag_widget.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
+import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -29,14 +33,16 @@ class BrandDetailGridItem extends StatelessWidget {
   final GoodsSimple goods;
   final VoidCallback buyClick;
   final Function onBrandClick;
+  final VoidCallback shareClick;
 
   const BrandDetailGridItem(
-      {Key key, this.goods, this.buyClick, this.onBrandClick})
+      {Key key, this.goods, this.buyClick, this.onBrandClick, this.shareClick})
       : super(key: key);
   static final Color colorGrey = Color(0xff999999);
 
   @override
   Widget build(BuildContext context) {
+
 
     bool sellout = false;
     bool isSeckill = false;
@@ -49,7 +55,11 @@ class BrandDetailGridItem extends StatelessWidget {
       if(this.goods.secKill!=null){
         if(this.goods.secKill.secKill==1){
           isSeckill = true;
-          sellout = true;
+          if(this.goods.secKill.realStock>0){
+            sellout = false;
+          }else{
+            sellout = true;
+          }
           //秒杀中 通过seckill中的库存和销量来判断是否是否售完
         }
       }
@@ -132,12 +142,14 @@ class BrandDetailGridItem extends StatelessWidget {
                         : WidgetSpan(child: SizedBox()),
                     this.goods.gysId==1800||this.goods.gysId==2000?//jd的商品供应商 自营为1800 pop 为2000?
                     WidgetSpan(
-                        child: Container(
+                        child:  Container(
                             padding: EdgeInsets.only(right: 5.rw),
                             child:
                             Container(
-                              width: 24.rw,
-                              height: 16.rw,
+                              width: 20.rw,
+                              height: 22.rw,
+                              //padding: EdgeInsets.only(left: 1.rw),
+
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 color: Color(0xFFC92219),
@@ -146,16 +158,33 @@ class BrandDetailGridItem extends StatelessWidget {
 
                               ),
 
-                              child: Text(
-                                this.goods.gysId==1800?'自营':this.goods.gysId==2000?'POP':'',
-                                style: TextStyle(fontSize: 10.rsp,height:1.05,fontWeight: FontWeight.bold),
-                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                //mainAxisAlignment: MainAxisAlignment.center,
+
+                                children: [
+                                  2.hb,
+                                  Text(
+                                    this.goods.gysId==1800?'京东': this.goods.gysId==2000?'京东':'',
+                                    maxLines: 1,
+
+                                    style: TextStyle(fontSize: 9.rsp,height:1.05),
+                                  ),
+                                  Text(
+                                    this.goods.gysId==1800?'自营': this.goods.gysId==2000?'优选':'',
+                                    maxLines: 1,
+
+                                    style: TextStyle(fontSize: 9.rsp,height:1.05),
+                                  )
+                                ],
+                              )
+                              ,
                             )
                         )
                     ): WidgetSpan(child: SizedBox()),
                     TextSpan(
                       text: this.goods.goodsName,
-                      style: AppTextStyle.generate(15 * 2.sp,
+                      style: AppTextStyle.generate(14 * 2.sp,
                           fontWeight: FontWeight.w600),
                     ),
                   ],
@@ -195,7 +224,7 @@ class BrandDetailGridItem extends StatelessWidget {
                 isSeckill?Container(
                   alignment: Alignment.center,
                   child: Text(
-                    "赚" +  (this.goods.commission??0).toStringAsFixed(2),
+                    "赚" +  (this.goods.secKill.secKillCommission??0).toStringAsFixed(2),
                     style: TextStyle(
                       color: Color(0xFFC92219),
                       fontSize: 12 * 2.sp,
@@ -213,7 +242,7 @@ class BrandDetailGridItem extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  "累计已售${this.goods.salesVolume}件",
+                  isSeckill?"已售${this.goods.secKill.saleNum}件":"已售${this.goods.salesVolume}件",
                   style: TextStyle(
                     color: Color(0xff595757),
                     fontSize: 12 * 2.sp,
@@ -239,14 +268,20 @@ class BrandDetailGridItem extends StatelessWidget {
                     child: ExtendedText.rich(
                       TextSpan(children: [
                         TextSpan(
-                          text: "券后 ¥ ",
-                          style: AppTextStyle.generate(12 * 2.sp,
+                          text: isSeckill?"¥":"券后¥",
+                          style: AppTextStyle.generate(isSeckill?18.rsp:12 * 2.sp,
                               color: Color(0xffc70404),
                               fontWeight: FontWeight.w500),
                         ),
                         TextSpan(
                           text:
-                              "${(this.goods.discountPrice - this.goods.discountPrice.toInt()) > 0 ? this.goods.discountPrice.toStringAsFixed(1) : this.goods.discountPrice.toStringAsFixed(0)}",
+                          isSeckill?"${(this.goods.secKill.secKillMinPrice -
+                              this.goods.secKill.secKillMinPrice.toInt()) > 0
+                              ? this.goods.secKill.secKillMinPrice.toStringAsFixed(1)
+                              : this.goods.secKill.secKillMinPrice.toStringAsFixed(0)}"
+                              :"${(this.goods.discountPrice - this.goods.discountPrice.toInt()) > 0
+                              ? this.goods.discountPrice.toStringAsFixed(1)
+                              : this.goods.discountPrice.toStringAsFixed(0)}",
                           // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
                           style: TextStyle(
                               letterSpacing: -1,
@@ -263,6 +298,27 @@ class BrandDetailGridItem extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
+                  UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip
+                      ? Container()
+                      : GestureDetector(
+                    onTap: () {
+                      if (shareClick != null) {
+                        shareClick();
+                      } else {
+                        _shareEvent(context);
+                      }
+                    },
+                    child: Container(
+                      color: Colors.white.withAlpha(1),
+
+                      child: Image.asset(
+                        "assets/share.png",
+                        width: 19,
+                        height: 19,
+                      ),
+                    ),
+                  ),
+
                   // GestureDetector(
                   //     child: CustomImageButton(
                   //       height: 21,
@@ -474,5 +530,37 @@ class BrandDetailGridItem extends StatelessWidget {
             ],
           ),
         ));
+  }
+
+  Future _shareEvent(BuildContext context) async {
+
+    bool isSeckill = false;
+
+    if(this.goods.secKill!=null){
+      if(this.goods.secKill.secKill==1){
+        isSeckill = true;
+
+        //秒杀中 通过seckill中的库存和销量来判断是否是否售完
+      }
+    }
+    String imgUrl;
+    GoodsDetailModel imagesModel = await GoodsDetailModelImpl.getDetailInfo(
+        this.goods.id, UserManager.instance.user.info.id);
+    if (imagesModel.data.mainPhotos.length >= 1) {
+      imgUrl = imagesModel.data.mainPhotos[0].url;
+    } else {
+      imgUrl = imagesModel.data?.mainPhotos?.first?.url ?? '';
+    }
+    String goodsTitle =
+        isSeckill?"￥${this.goods.secKill.secKillMinPrice} | ${this.goods.goodsName} | ${this.goods.description}":
+        "￥${this.goods.discountPrice} | ${this.goods.goodsName} | ${this.goods.description}";
+    ShareTool().goodsShare(context,
+        goodsPrice: isSeckill?this.goods.secKill.secKillMinPrice.toStringAsFixed(2):this.goods.discountPrice.toStringAsFixed(2),
+        goodsName: this.goods.goodsName,
+        goodsDescription: this.goods.description,
+        miniTitle: goodsTitle,
+        miniPicurl: imgUrl,
+        amount: isSeckill?this.goods.secKill.secKillCommission.toString():this.goods.commission.toString(),
+        goodsId: this.goods.id.toString());
   }
 }

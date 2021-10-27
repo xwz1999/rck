@@ -13,10 +13,15 @@ import 'package:extended_text/extended_text.dart';
 
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/base_model.dart';
 import 'package:recook/models/order_list_model.dart';
 import 'package:recook/pages/user/order/order_logistics_list_page.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
+import 'package:recook/widgets/toast.dart';
 
 typedef ItemClickListener = Function(OrderModel order, {VoidCallback callback});
 
@@ -35,6 +40,7 @@ class OrderListItem extends StatefulWidget {
     2:部分发货
     */
   final OrderModel orderModel;
+  final VoidCallback itemClick;
   final ItemClickListener goToPay;
   final ItemClickListener cancelOrder;
   final ItemClickListener applyRefund;
@@ -52,7 +58,7 @@ class OrderListItem extends StatefulWidget {
       this.applySalesReturn,
       this.evaluation,
       this.delete,
-      this.confirm})
+      this.confirm, this.itemClick})
       : super(key: key);
 
   @override
@@ -77,14 +83,23 @@ class _OrderListItemState extends State<OrderListItem> {
             borderRadius: BorderRadius.all(Radius.circular(rSize(10))),
             color: Colors.white),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            // _orderStatusText(),
-            _brandList(context),
-            _orderTotalPrice(),
-            _bottomOperations()
-          ],
-        ));
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: <Widget>[
+                // _orderStatusText(),
+                GestureDetector(
+                  onTap: widget.itemClick,
+                  child: Column(
+                    children: [
+                      _brandList(context),
+                      _orderTotalPrice(),
+                    ],
+                  ),
+                ),
+                _bottomOperations(),
+              ],
+            ),
+
+        );
   }
 
   Text _orderStatusText() {
@@ -164,6 +179,77 @@ class _OrderListItemState extends State<OrderListItem> {
     switch (widget.orderModel.status) {
       case 0:
         children
+          ..add(
+          //     CustomImageButton(
+          //   padding:
+          //   EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(10)),
+          //   title: "更多",
+          //   borderRadius: BorderRadius.all(Radius.circular(40)),
+          //   color: Colors.grey[500],
+          //   fontSize: 14 * 2.sp,
+          //   //border: Border.all(color: Colors.grey[700], width: 0.3),
+          //   onPressed: () {
+          //     // if (widget.cancelOrder == null) return;
+          //     // widget.cancelOrder(widget.orderModel, callback: () {
+          //     //   setState(() {});
+          //     // });
+          //   },
+          // )
+            PopupMenuButton(
+                offset: Offset(0, 0),
+                padding: EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(10)),
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+
+                ),
+                child:
+                Container(
+                  width: 70.rw,
+                  height: 28.rw,
+                  alignment: Alignment.centerLeft,
+                  padding: EdgeInsets.only(left: 10.rw),
+                  child:
+                      Text('更多',
+                          style: TextStyle(
+                            fontSize: 14.rsp,
+                            color: Colors.grey[600],
+                          )),
+                ),
+                onSelected:  (String value) {
+                        print('加入购物车');
+                        if(widget.orderModel.goodsList!=null){
+                          widget.orderModel.goodsList.forEach((element) async {
+                            await _addToShoppingCart(element.skuId,element.skuName,element.quantity);
+                          });
+                        }
+
+
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                      PopupMenuItem(
+                          value: "1",
+                          child:
+                              Text("加入购物车",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.rsp,
+                                    color: Color(0xFF333333),
+                                  )),
+                          ),
+                      // PopupMenuItem(
+                      //     value: "2",
+                      //     child: Text("修改地址",
+                      //         style: TextStyle(
+                      //           fontWeight: FontWeight.bold,
+                      //           fontSize: 14.rsp,
+                      //           color: Color(0xFF333333),
+                      //         ))),
+
+                    ]
+            ),
+          )
+          ..add(Spacer())
           ..add(CustomImageButton(
             padding:
                 EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(10)),
@@ -266,6 +352,42 @@ class _OrderListItemState extends State<OrderListItem> {
         children: children,
       ),
     );
+  }
+
+  Future<dynamic> _addToShoppingCart(int skuID, String skuName, int quantity) async {
+    ResultData resultData = await addToShoppingCart(
+        UserManager.instance.user.info.id,
+        skuID,
+        skuName,
+        quantity);
+    if (!resultData.result) {
+      ReToast.err(text: resultData.msg);
+
+      return;
+    }
+    BaseModel model = BaseModel.fromJson(resultData.data);
+    if (model.code != HttpStatus.SUCCESS) {
+      Toast.showError(model.msg);
+
+      return;
+    }
+    UserManager.instance.refreshShoppingCart.value = true;
+    UserManager.instance.refreshShoppingCartNumber.value = true;
+    UserManager.instance.refreshShoppingCartNumberWithPage.value = true;
+    ReToast.success(text: '加入成功');
+
+  }
+
+  Future<ResultData> addToShoppingCart(
+      int userID, int skuID, String skuName, int quantity) async {
+    ResultData resultData = await HttpManager.post(
+        GoodsApi.goods_add_shopping_cart, {
+      "userID": userID,
+      "skuID": skuID,
+      "skuName": skuName,
+      "quantity": quantity
+    });
+    return resultData;
   }
 
   _deleteButtonWidget() {

@@ -53,6 +53,7 @@ class ShoppingCartItem extends StatefulWidget {
 class _ShoppingCartItemState extends State<ShoppingCartItem> {
   @override
   Widget build(BuildContext context) {
+
     return Container(
       padding: EdgeInsets.symmetric(vertical: rSize(13)),
       margin: EdgeInsets.symmetric(vertical: rSize(5), horizontal: rSize(10)),
@@ -213,6 +214,17 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
     // if (goods.isWaitPromotionStart()) {
     //   dateTime = DateTime.parse(goods.promotion.startTime);
     // }
+
+    bool isSeckill = false;
+
+    if(goods.secKill!=null){
+      if(goods.secKill.secKill==1){
+        isSeckill = true;
+        goods.price = goods.secKill.secKillMinPrice;
+        goods.commission = goods.secKill.secKillCommission;
+        //秒杀中 通过seckill中的库存和销量来判断是否是否售完
+      }
+    }
     return CustomImageButton(
       padding: EdgeInsets.all(0),
       onPressed: goods.publishStatus == 0
@@ -372,7 +384,7 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                                 margin: EdgeInsets.only(right: 5),
                                 padding: EdgeInsets.symmetric(horizontal: 2),
                                 child: Text(
-                                  "赚${goods.commission.toStringAsFixed(2)}",
+                                  isSeckill?"赚${goods.secKill.secKillCommission.toStringAsFixed(2)}":"赚${goods.commission.toStringAsFixed(2)}",
                                   style: TextStyle(
                                       color: AppColor.themeColor,
                                       fontSize: 11 * 2.sp),
@@ -425,7 +437,7 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                                       ),
                                       TextSpan(
                                         text:
-                                            "${goods.price.toStringAsFixed(2)} ",
+                                        isSeckill?"${goods.secKill.secKillMinPrice.toStringAsFixed(2)}":"${goods.price.toStringAsFixed(2)}",
                                         style: AppTextStyle.generate(14 * 2.sp,
                                             color: AppColor.themeColor),
                                       ),

@@ -97,23 +97,39 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
       controller: _controller,
       pageSize: 10,
       itemClickListener: (index) {
-        OrderModel orderModel = _controller.getData()[index];
-
-        AppRouter.push(globalContext, RouteName.ORDER_DETAIL,
-                arguments: OrderDetailPage.setArguments(orderModel.id))
-            .then(((result) {
-          _controller.requestRefresh();
-          if (result == null) return;
-          DPrint.printf(result);
-          setState(() {
-            orderModel.status = result;
-          });
-        }));
+        // OrderModel orderModel = _controller.getData()[index];
+        //
+        // AppRouter.push(globalContext, RouteName.ORDER_DETAIL,
+        //         arguments: OrderDetailPage.setArguments(orderModel.id))
+        //     .then(((result) {
+        //   _controller.requestRefresh();
+        //   if (result == null) return;
+        //   DPrint.printf(result);
+        //   setState(() {
+        //     orderModel.status = result;
+        //   });
+        // }));
 //        GSDialog.of(context).showLoadingDialog(context, "");
 //        _presenter.getOrderDetail(UserManager.instance.user.info.id, _controller.getData()[index].id);
       },
       itemBuilder: (context, index) {
         return OrderListItem(
+          itemClick: () {
+            OrderModel orderModel = _controller.getData()[index];
+
+            AppRouter.push(globalContext, RouteName.ORDER_DETAIL,
+                arguments: OrderDetailPage.setArguments(orderModel.id))
+                .then(((result) {
+              _controller.requestRefresh();
+              if (result == null) return;
+              DPrint.printf(result);
+              setState(() {
+                orderModel.status = result;
+              });
+            }));
+//        GSDialog.of(context).showLoadingDialog(context, "");
+//        _presenter.getOrderDetail(UserManager.instance.user.info.id, _controller.getData()[index].id);
+          },
           orderModel: _controller.getData()[index],
           cancelOrder: (OrderModel order, {callback}) {
             _cancelCallback = callback;

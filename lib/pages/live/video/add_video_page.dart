@@ -10,6 +10,7 @@ import 'package:path_provider/path_provider.dart';
 
 import 'package:recook/constants/header.dart';
 import 'package:recook/main.dart';
+import 'package:recook/pages/welcome/launch_widget.dart';
 import 'package:recook/pages/live/video/crop_video_page.dart';
 import 'package:recook/pages/live/video/video_advance_page.dart';
 import 'package:recook/pages/live/widget/local_file_video.dart';

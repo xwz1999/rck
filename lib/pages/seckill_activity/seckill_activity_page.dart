@@ -105,12 +105,13 @@ class _SeckillActivityPageState extends State<SeckillActivityPage> {
             _refreshController.refreshCompleted();
 
           },
-          body:  _listWidget()));
+          body:  _seckillModel!=null?_listWidget():SizedBox()));
   }
 
 
   _listWidget() {
     return _seckillModel!=null?
+    _seckillModel.seckillGoodsList!=null?
       ListView.builder(
         itemBuilder: (_, index) {
           return GestureDetector(
@@ -122,8 +123,8 @@ class _SeckillActivityPageState extends State<SeckillActivityPage> {
             child: _itemWidget(_seckillModel.seckillGoodsList[index]),
           );
         },
-        itemCount: _seckillModel.seckillGoodsList.length,
-      ):noDataView('没有找到商品');
+        itemCount: _seckillModel.seckillGoodsList!=null?_seckillModel.seckillGoodsList.length:0,
+      ):noDataView('没有找到商品'):noDataView('没有找到商品');
 
   }
   noDataView(String text, {Widget icon}) {

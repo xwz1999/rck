@@ -25,7 +25,7 @@ Future releaseApk() async {
     'apk',
     '--target-platform=android-arm64,android-arm',
     '--dart-define',
-    'ISDEBUG=false'
+    'ISDEBUG=false',
   ]).then((proc) async {
     await stdout.addStream(proc.stdout);
     await stderr.addStream(proc.stderr);

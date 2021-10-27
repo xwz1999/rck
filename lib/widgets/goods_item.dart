@@ -122,13 +122,12 @@ class GoodsItemWidget extends StatelessWidget {
         brandPictureUrl = model.brandImg,
         description = model.description,
         mainPhotoUrl = model.mainPhotoUrl,
-        inventory = model.inventory,
-        discountPrice = model.discountPrice,
+
+        inventory = model.secKill.secKill==1? model.secKill.realStock:model.inventory,
+
         originalPrice = model.originalPrice,
         percent = model.percent,
         coupon = model.coupon,
-        commission = model.commission,
-        salesVolume = model.salesVolume,
         id = model.id,
         promotionStatus = model.getPromotionStatus(),
         widgetType = GoodsItemType.NORMAL,
@@ -138,6 +137,10 @@ class GoodsItemWidget extends StatelessWidget {
         living = model.living,
         gysId = model.gysId,
         secKill = model.secKill,
+
+        salesVolume = model.secKill.secKill==1? model.secKill.saleNum:model.salesVolume,
+        discountPrice = model.secKill.secKill==1? model.secKill.secKillMinPrice:model.discountPrice,
+        commission = model.secKill.secKill==1? model.secKill.secKillCommission:model.commission,
         //secKill = model.
         super(key: key);
 
@@ -160,14 +163,12 @@ class GoodsItemWidget extends StatelessWidget {
         brandPictureUrl = data.brandImg,
         description = data.description,
         mainPhotoUrl = data.mainPhotoUrl,
-        inventory = data.inventory,
-        discountPrice = data.discountPrice,
+
+        inventory = data.secKill.secKill==1? data.secKill.realStock:data.inventory,
         originalPrice = data.originalPrice,
         //TODO hot list unset percent;
         percent = 0,
         coupon = data.coupon,
-        commission = data.commission,
-        salesVolume = data.salesVolume,
         id = data.id,
         //TODO hot list unset promotion status;
         promotionStatus = PromotionStatus.none,
@@ -176,6 +177,9 @@ class GoodsItemWidget extends StatelessWidget {
         countryIcon = data.countryIcon,
         gysId = data.gysId,
         secKill = data.secKill,
+        salesVolume = data.secKill.secKill==1? data.secKill.saleNum:data.salesVolume,
+        discountPrice = data.secKill.secKill==1? data.secKill.secKillMinPrice:data.discountPrice,
+        commission = data.secKill.secKill==1? data.secKill.secKillCommission:data.commission,
         super(key: key);
 
   /// 活动列表
@@ -194,13 +198,12 @@ class GoodsItemWidget extends StatelessWidget {
         brandPictureUrl = model.brandImg,
         description = model.description,
         mainPhotoUrl = model.picture.url,
-        inventory = model.inventory,
+
+        inventory = model.secKill.secKill==1? model.secKill.realStock:model.inventory,
         originalPrice = model.primePrice,
-        discountPrice = model.price,
+
         percent = model.percentage,
         coupon = model.coupon,
-        commission = model.commission,
-        salesVolume = model.totalSalesVolume,
         id = model.goodsId,
         promotionStatus = model.getPromotionStatus(),
         widgetType = GoodsItemType.ROW_GOODS,
@@ -211,6 +214,9 @@ class GoodsItemWidget extends StatelessWidget {
         living = model.living,
         gysId = model.gysId,
         secKill = model.secKill,
+        salesVolume = model.secKill.secKill==1? model.secKill.saleNum:model.totalSalesVolume,
+        discountPrice = model.secKill.secKill==1? model.secKill.secKillMinPrice:model.price,
+        commission = model.secKill.secKill==1? model.secKill.secKillCommission:model.commission,
         super(key: key);
 
   //秒杀活动
@@ -408,26 +414,45 @@ class GoodsItemWidget extends StatelessWidget {
                             padding: EdgeInsets.only(right: 5.rw),
                             child:
                             Container(
-                              width: 24.rw,
-                              height: 16.rw,
+                              width: 20.rw,
+                              height: 22.rw,
+                              //padding: EdgeInsets.only(left: 1.rw),
+
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                  color: Color(0xFFC92219),
-                                  borderRadius: BorderRadius.all(Radius.circular(4.rw)),
+                                color: Color(0xFFC92219),
+                                borderRadius: BorderRadius.all(Radius.circular(4.rw)),
 
 
                               ),
 
-                              child: Text(
-                                gysId==1800?'自营':gysId==2000?'POP':'',
-                                style: TextStyle(fontSize: 10.rsp,height:1.05,fontWeight: FontWeight.bold),
-                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                //mainAxisAlignment: MainAxisAlignment.center,
+
+                                children: [
+                                  2.hb,
+                                  Text(
+                                    gysId==1800?'京东':gysId==2000?'京东':'',
+                                    maxLines: 1,
+
+                                    style: TextStyle(fontSize: 9.rsp,height:1.05),
+                                  ),
+                                  Text(
+                                    gysId==1800?'自营':gysId==2000?'优选':'',
+                                    maxLines: 1,
+
+                                    style: TextStyle(fontSize: 9.rsp,height:1.05),
+                                  )
+                                ],
+                              )
+,
                             )
                          )
                       ): WidgetSpan(child: SizedBox()),
                       TextSpan(
                         text: this.goodsName,
-                        style: AppTextStyle.generate(15 * 2.sp,
+                        style: AppTextStyle.generate(16 * 2.sp,
                             fontWeight: FontWeight.w600),
                       ),
                     ],
@@ -513,7 +538,12 @@ class GoodsItemWidget extends StatelessWidget {
       }
       if(this.secKill!=null){
         if(secKill.secKill==1){
-          sellout = true;
+          if(secKill.realStock>0){
+            sellout = false;
+          }else{
+            sellout = true;
+          }
+
           //秒杀中 通过seckill中的库存和销量来判断是否是否售完
         }
       }
@@ -704,7 +734,11 @@ class GoodsItemWidget extends StatelessWidget {
       if(this.secKill!=null){
         if(secKill.secKill==1){
           isSeckill = true;
-          sellout = true;
+          if(secKill.realStock>0){
+            sellout = false;
+          }else{
+            sellout = true;
+          }
           //秒杀中 通过seckill中的库存和销量来判断是否是否售完
         }
       }
@@ -734,8 +768,8 @@ class GoodsItemWidget extends StatelessWidget {
                     children: [
                       ExtendedText.rich(TextSpan(children: [
                         TextSpan(
-                          text: isSeckill&&this.widgetType == GoodsItemType.SECKILL? "秒杀 ¥ ": isSeckill&&this.widgetType != GoodsItemType.SECKILL?'¥':"券后 ¥ ",
-                          style: AppTextStyle.generate(12 * 2.sp,
+                          text: isSeckill&&this.widgetType == GoodsItemType.SECKILL? "¥": isSeckill&&this.widgetType != GoodsItemType.SECKILL?'¥':"券后 ¥ ",
+                          style: AppTextStyle.generate(isSeckill?18.rsp: 12 * 2.sp,
                               color: priceColor, fontWeight: FontWeight.w500),
                         ),
                         TextSpan(
@@ -745,7 +779,7 @@ class GoodsItemWidget extends StatelessWidget {
                           style: TextStyle(
                               letterSpacing: -1,
                               wordSpacing: -1,
-                              fontSize: 18 * 2.sp,
+                              fontSize: 19 * 2.sp,
                               color: priceColor,
                               fontWeight: FontWeight.w500),
                         ),
@@ -754,7 +788,7 @@ class GoodsItemWidget extends StatelessWidget {
                               width: 5,
                             )),
                         TextSpan(
-                          text: isSeckill?'':"¥${this.originalPrice.toStringAsFixed(0)}",
+                          text: this.widgetType == GoodsItemType.SECKILL?'':"¥${this.originalPrice.toStringAsFixed(0)}",
                           style: TextStyle(
                               decoration: TextDecoration.lineThrough,
                               decorationColor: Color(0xff898989),
@@ -1131,7 +1165,11 @@ class GoodsItemWidget extends StatelessWidget {
       }
       if(this.secKill!=null){
         if(secKill.secKill==1){
-          sellout = true;
+          if(secKill.realStock>0){
+            sellout = false;
+          }else{
+            sellout = true;
+          }
           //秒杀中 通过seckill中的库存和销量来判断是否是否售完
         }
       }

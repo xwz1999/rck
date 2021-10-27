@@ -153,6 +153,9 @@ class UserAPI {
   ///获取金刚区
   String get getKingCion => '/v2/app/aku_school/king_coin_list';
 
+  ///获取金刚区新
+  String get getKingCionNew => '/v2/app/aku_school/king_coin_list_new';
+
   ///搜索国家
   String get findCountry => '/v2/app/abroad/search_country';
 

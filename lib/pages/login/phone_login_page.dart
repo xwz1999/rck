@@ -111,8 +111,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                 _phoneText(),
                 _smsCode(),
                 _bottomOperation(),
-                _loginButton(context),
-                40.hb,
+                120.hb,
                 GestureDetector(
                   onTap: () {
                     _chooseAgreement = !_chooseAgreement;
@@ -120,41 +119,46 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                   },
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
                           width: 50.w,
                           height: 50.w,
-                          padding: EdgeInsets.only(top: 8.w, right: 5.w),
+                          padding: EdgeInsets.only(top: 6.w, right: 5.w),
                           child: !_chooseAgreement
-                              ? Icon(CupertinoIcons.square,
-                                  size: 20, color: Colors.red)
-                              : Icon(CupertinoIcons.checkmark_square,
-                                  size: 20, color: Colors.red)),
+                              ? Icon(CupertinoIcons.circle,
+                              size: 18, color: Color(0xFFdddddd))
+                              : Icon(CupertinoIcons.checkmark_circle,
+                              size: 18 , color: Colors.red)),
                       RichText(
                           text: TextSpan(
                               text: "您已阅读并同意",
                               style: TextStyle(
-                                  color: Colors.grey[500], fontSize: 13 * 2.sp),
+                                  color: Colors.grey[500], fontSize: 12 * 2.sp),
                               children: [
-                            new TextSpan(
-                                text: '《用户服务协议》',
-                                style: new TextStyle(
-                                    color: Colors.red, fontSize: 13 * 2.sp),
-                                recognizer: _recognizer(context, 2)),
-                            TextSpan(
-                              text: "和",
-                              style: TextStyle(
-                                  color: Colors.grey[500], fontSize: 13 * 2.sp),
-                            ),
-                            new TextSpan(
-                                text: '《用户隐私政策》',
-                                style: new TextStyle(
-                                    color: Colors.red, fontSize: 13 * 2.sp),
-                                recognizer: _recognizer(context, 1)),
-                          ])),
+                                new TextSpan(
+                                    text: '《用户服务协议》',
+                                    style: new TextStyle(
+                                        color: Colors.black, fontSize: 12 * 2.sp),
+                                    recognizer: _recognizer(context, 2)),
+                                TextSpan(
+                                  text: "和",
+                                  style: TextStyle(
+                                      color: Colors.grey[500], fontSize: 12 * 2.sp),
+                                ),
+                                new TextSpan(
+                                    text: '《用户隐私政策》',
+                                    style: new TextStyle(
+                                        color: Colors.black, fontSize: 12 * 2.sp),
+                                    recognizer: _recognizer(context, 1)),
+                              ])),
                     ],
                   ),
                 ),
+                40.hb,
+                _loginButton(context),
+
+
               ],
             ),
           ),
@@ -319,7 +323,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   Container _bottomOperation() {
     return Container(
       margin: EdgeInsets.only(
-          top: rSize(15), left: rSize(15), right: rSize(8), bottom: rSize(100)),
+          top: rSize(10), left: rSize(15), right: rSize(8), bottom: rSize(15)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -332,10 +336,93 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
           // ),
           TButton.TextButton(
             title: "收不到验证码？",
-            font: 14 * 2.sp,
-            textColor: Colors.grey[500],
+            font: 14.rsp,
+            textColor: Colors.grey[400],
             highlightTextColor: Colors.grey[400],
-            onTap: () {},
+            onTap: () {
+              Alert.show(
+                  context,
+                  NormalContentDialog(
+                    type: NormalTextDialogType.remind,
+                    title: '收不到验证码',
+                    content: Container(
+                      padding: EdgeInsets.only(top: 10.rw,left: 10.rw,right: 10.rw),
+                      child:
+                      Column(
+                        children: [
+                          Text(
+                            '如果没有手机验证吗，建议您进行以下操作：',
+                            style: TextStyle(color: Color(0xFF333333),fontSize: 13.rsp),
+                          ),
+                          10.hb,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(top: 2.rw),
+                                width: 10.rw,
+                                height: 10.rw,
+                                decoration: BoxDecoration(
+                                    color: Color(0xFFD5101A),
+                                    borderRadius: BorderRadius.all(Radius.circular(5.rw))
+                                ),
+                              ),
+                              10.wb,
+                              Text(
+                                '检查您的手机是否停机或无网络',
+                                style: TextStyle(color: Color(0xFF333333),fontSize: 13.rsp),
+                              ),
+                            ],
+                          ),
+                          10.hb,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(top: 2.rw),
+                                width: 10.rw,
+                                height: 10.rw,
+                                decoration: BoxDecoration(
+                                    color: Color(0xFFD5101A),
+                                    borderRadius: BorderRadius.all(Radius.circular(5.rw))
+                                ),
+                              ),
+                              10.wb,
+                              Text(
+                                '检查您的手机号是否输入正确',
+                                style: TextStyle(color: Color(0xFF333333),fontSize: 13.rsp),
+                              ),
+                            ],
+                          ),
+                          10.hb,
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin: EdgeInsets.only(top: 2.rw),
+                                width: 10.rw,
+                                height: 10.rw,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFD5101A),
+                                  borderRadius: BorderRadius.all(Radius.circular(5.rw))
+                                ),
+                              ),
+                              10.wb,
+                              Text(
+                                '检查您的验证码短信是否被屏蔽',
+                                style: TextStyle(color: Color(0xFF333333),fontSize: 13.rsp),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    items: ["确认"],
+                    listener: (index) {
+                      Alert.dismiss(context);
+                    },
+                  ));
+            },
           ),
         ],
       ),

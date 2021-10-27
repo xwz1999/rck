@@ -75,7 +75,9 @@ class _SCTabBarState<T> extends State<SCTabBar> {
     return Container(
       padding: widget.padding,
       decoration: BoxDecoration(
+
           border:
+
               Border(right: BorderSide(color: Colors.green[300], width: 0.1))),
       child: ListView.builder(
         itemCount: widget.items.length,
@@ -83,7 +85,7 @@ class _SCTabBarState<T> extends State<SCTabBar> {
         itemBuilder: (context, index) {
           return GestureDetector(
             child: Container(
-              color: Colors.white,
+              color: Color(0xFFF2F2F2),
               padding: _itemSpaceEdge(),
               child: Container(
                 height: widget.height,

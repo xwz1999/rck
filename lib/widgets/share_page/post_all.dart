@@ -142,13 +142,15 @@ class PostWeatherWidget extends StatelessWidget {
 // 用户信息
 class PostUserInfo extends StatelessWidget {
   final String name;
-  const PostUserInfo({Key key, this.name = "瑞库客"}) : super(key: key);
+  final int gysId;
+  const PostUserInfo({Key key, this.name = "瑞库客", this.gysId}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
     String title = "让消费服务生活，让生活充满精致";
     return Container(
-      height: 50,
+      height: gysId==1800||gysId==2000?50:40,
       child: Container(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -164,9 +166,34 @@ class PostUserInfo extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  gysId==1800||gysId==2000?
                   Container(
-                    height: 6,
-                  ),
+                      padding: EdgeInsets.only(right: 5.rw),
+                      child:
+                      Container(
+                        width: 46.rw,
+                        height: 14.rw,
+                        padding: EdgeInsets.only(left: 1.rw),
+
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFC92219),
+                          borderRadius: BorderRadius.all(Radius.circular(2.rw)),
+                          gradient: LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [Color(0xFFE54A32),Color(0xFFBD3320)]
+                          )
+
+                        ),
+
+                        child: Text(
+                          gysId==1800?'京东自营':gysId==2000?'京东优选':'',
+                          maxLines: 1,
+                          style: TextStyle(fontSize: 10.rsp,height:1.05),
+                        ),
+                      )
+                  ):SizedBox(),
                   Text(
                     name,
                     maxLines: 1,
@@ -185,9 +212,6 @@ class PostUserInfo extends StatelessWidget {
                       color: Color(0xff666666),
                       fontSize: 10.rw,
                     ),
-                  ),
-                  Container(
-                    height: 6,
                   ),
                 ],
               ),
@@ -593,6 +617,7 @@ class _PostAllWidgetState extends State<PostAllWidget> {
             ),
             child: PostUserInfo(
               name: UserManager.instance.user.info.nickname + "的店铺",
+              gysId: widget.goodsDetailModel.data.vendorId,
             ),
           ),
           PostBigImage(

@@ -122,8 +122,8 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
     return Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
-        Expanded(flex: 1, child: _buildLeft()),
-        Expanded(flex: 3, child: _buildRight()),
+        Expanded(flex: 2, child: _buildLeft()),
+        Expanded(flex: 7, child: _buildRight()),
       ],
     );
   }
@@ -136,22 +136,23 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
       indicatorLocation: IndicatorLocation.left,
       indicatorHeight: rSize(4),
       direction: Axis.vertical,
-      spacing: rSize(20),
+      spacing: rSize(30),
       items: widget.data.map((item) {
         return item.name;
       }).toList(),
       itemBuilder: (context, index, item) {
-        // Color color;
-        // if (index == currentIndex) {
-        //   color = Colors.red;
-        // } else {
-        //   color = Colors.black87;
-        // }
+        Color color;
+        if (index == currentIndex) {
+          color = Colors.red;
+        } else {
+          color = Colors.black87;
+        }
         return Container(
             child: Center(
                 child: Text(
+
           item,
-          style: AppTextStyle.generate(14 * 2.sp),
+          style: AppTextStyle.generate(14 * 2.sp,color: color),
           textAlign: TextAlign.center,
         )));
       },
@@ -255,7 +256,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
                 imageUrl: Api.getImgUrl(secondCategory.logoUrl)),
             title: secondCategory.name,
             contentSpacing: rSize(5),
-            fontSize: 14 * 2.sp,
+            fontSize: 13 * 2.sp,
             onPressed: () {
               AppRouter.push(context, RouteName.GOODS_LIST_PAGE,
                   arguments: GoodsListPage.setArguments(

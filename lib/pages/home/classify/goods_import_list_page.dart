@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:recook/models/category_list_model.dart';
@@ -61,7 +62,7 @@ class GoodsImportListPage extends StatefulWidget {
 class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
     with MvpListViewDelegate<GoodsSimple>, TickerProviderStateMixin {
   /// 切换展示形式  true 为 List， false 为grid
-  bool _displayList = true;
+  bool _displayList = false;//默认排列方式改为瀑布流
 
   FilterToolBarController _filterController;
 
@@ -77,6 +78,8 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
   int _filterIndex = 0;
   List<bool> _barBool = [false,false,false];
   GifController _gifController;
+  TextEditingController _textEditController;
+  String _searchText = '';
 
   @override
   void initState() {
@@ -143,7 +146,12 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
             ),
             Container(
               color: AppColor.frenchColor,
-              height: 10,
+              height: 5,
+            ),
+            _buildTitle(),
+            Container(
+              color: AppColor.frenchColor,
+              height: 5,
             ),
             Expanded(
               child: FilterToolBarResultContainer(
@@ -191,6 +199,58 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
         ),
       ),
     );
+  }
+
+  Widget _buildTitle() {
+    return Container(
+      // margin: EdgeInsets.only(right: rSize(10)),
+        height: 40,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(20)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              width: 10,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              child: Icon(
+                Icons.search,
+                size: 20,
+                color: Colors.grey,
+              ),
+            ),
+            Expanded(
+              child: CupertinoTextField(
+                //autofocus: true,
+                keyboardType: TextInputType.text,
+                controller: _textEditController,
+                textInputAction: TextInputAction.search,
+                onSubmitted: (_submitted) {
+                  //_contentFocusNode.unfocus();
+                  _presenter.fetchList(_category.id, 0, _sortType, widget.countryId,keyword: _searchText);
+
+                  setState(() {});
+                },
+                //focusNode: _contentFocusNode,
+                onChanged: (text) async {
+                  _searchText = text;
+
+                },
+                placeholder: "请输入想要搜索的商品",
+                placeholderStyle: TextStyle(
+                    color: Colors.grey.shade500,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300),
+                decoration: BoxDecoration(color: Colors.white.withAlpha(0)),
+                style: TextStyle(
+                    color: Colors.black,
+                    textBaseline: TextBaseline.ideographic),
+              ),
+            )
+          ],
+        ));
   }
 
   _filterToolBar(BuildContext context) {

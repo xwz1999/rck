@@ -125,20 +125,30 @@ class Data {
 class SecKill {
   int secKill;
   String secKillEndTime;
-  int secKillMinPrice;
-  int secKillCommission;
+  num secKillMinPrice;
+  num secKillCommission;
+  num realStock;
+  num secStock;
+  num saleNum;
 
   SecKill(
       {this.secKill,
         this.secKillEndTime,
         this.secKillMinPrice,
-        this.secKillCommission});
+        this.secKillCommission,
+        this.realStock,
+        this.secStock,
+        this.saleNum
+      });
 
   SecKill.fromJson(Map<String, dynamic> json) {
     secKill = json['sec_kill'];
     secKillEndTime = json['sec_kill_end_time'];
     secKillMinPrice = json['sec_kill_min_price'];
     secKillCommission = json['sec_kill_commission'];
+    realStock = json['real_stock'];
+    secStock = json['sec_stock'];
+    saleNum = json['sale_num'];
   }
 
   Map<String, dynamic> toJson() {
@@ -147,6 +157,9 @@ class SecKill {
     data['sec_kill_end_time'] = this.secKillEndTime;
     data['sec_kill_min_price'] = this.secKillMinPrice;
     data['sec_kill_commission'] = this.secKillCommission;
+    data['real_stock'] = this.realStock;
+    data['sec_stock'] = this.secStock;
+    data['sale_num'] = this.saleNum;
     return data;
   }
 }

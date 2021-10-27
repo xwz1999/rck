@@ -46,7 +46,7 @@ class BrandGoodsListPage extends StatefulWidget {
 class _BrandGoodsListPageState extends BaseStoreState<BrandGoodsListPage>
     with MvpListViewDelegate<GoodsSimple> ,TickerProviderStateMixin {
   /// 切换展示形式  true 为 List， false 为grid
-  bool _displayList = true;
+  bool _displayList = false;//默认排列方式改为瀑布流
 
   FilterToolBarController _filterController;
 

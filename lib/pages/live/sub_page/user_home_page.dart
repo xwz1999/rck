@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:oktoast/oktoast.dart';
 
@@ -12,8 +13,10 @@ import 'package:recook/pages/live/models/live_base_info_model.dart';
 import 'package:recook/pages/live/num_tool/live_num_tool.dart';
 import 'package:recook/pages/live/sub_page/live_host_center_page.dart';
 import 'package:recook/pages/live/sub_page/user_attention_page.dart';
+import 'package:recook/pages/live/sub_page/user_fans_page.dart';
 import 'package:recook/pages/live/sub_page/user_home/user_activity_view.dart';
 import 'package:recook/pages/live/sub_page/user_home/user_playback_view.dart';
+import 'package:recook/pages/live/sub_page/user_support_page.dart';
 import 'package:recook/pages/live/widget/live_attention_button.dart';
 import 'package:recook/pages/live/widget/sliver_bottom_persistent_delegate.dart';
 import 'package:recook/pages/user/user_page.dart';
@@ -168,12 +171,17 @@ class _UserHomePageState extends State<UserHomePage>
                             _buildVerticalView(
                               '粉丝',
                               model.fans,
-                              onTap: () {},
+                              onTap: () {
+                                Get.to(UserFansPage(id: widget.userId));
+                              },
                             ),
                             _buildVerticalView(
                               '获赞',
                               model.praise,
-                              onTap: () {},
+                              onTap: () {
+                                Get.to(UserSupportPage(id: widget.userId));
+
+                              },
                             ),
                           ],
                         ),

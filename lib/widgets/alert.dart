@@ -299,3 +299,113 @@ class NormalContentDialog extends Dialog {
     return _items;
   }
 }
+
+class BoosTingDialog extends Dialog {
+  final String title;
+  final String price;
+  final Widget content;
+  final String tips;
+  final Widget AlertItem;
+  final Widget DeleteItem;
+  // final AlertItemClickListener listener;
+  // final DeleteItemClickListener deleteListener;
+
+
+  BoosTingDialog({
+    @required this.title,
+    @required this.price,
+    @required this.content,
+    @required this.tips,
+    @required this.AlertItem,
+    @required this.DeleteItem,
+    // @required this.listener,
+    // @required this.deleteListener,
+
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(8))),
+        backgroundColor: Colors.transparent,
+        child: Container(
+          height: 500.rw,
+          child: Column(
+            children: [
+              _buildContent(),
+              this.DeleteItem,
+            ],
+          ),
+        ));
+  }
+
+  Container _buildContent() {
+    return Container(
+      width: 314.rw,
+      height: 410.rw,
+      padding: EdgeInsets.only(top: 8.0 * 2.w),
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+              // color: Colors.red,
+              image: DecorationImage(
+                  image: AssetImage(R.ASSETS_BOOSTING_BOOSTING_FINISH_BG_PNG),
+                  fit: BoxFit.fill),
+          borderRadius: BorderRadius.all(Radius.circular(8))),
+      child: Column(
+        children:_children(),
+      ),
+    );
+  }
+
+  _children() {
+    List<Widget> children = [];
+    if (this.title != null) {
+      children.add(Container(
+        padding: EdgeInsets.only(top: rSize(50)),
+        child: Text(
+          this.title,
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 20 * 2.sp,
+              ),
+        ),
+      ));
+    }
+    children.add(Container(
+      padding: EdgeInsets.only(top: rSize(10)),
+      child: Text(
+        this.price,
+        style: TextStyle(
+            color: Colors.white,
+            fontSize: 22 * 2.sp,
+            fontWeight: FontWeight.bold),
+      ),
+    ));
+
+    children.add(Container(
+      padding: EdgeInsets.only(top: rSize(10)),
+      // child: Text(this.content, style: _Styles.contentStyle),
+      child: this.content,
+    ));
+
+    children.add(Container(
+      padding: EdgeInsets.only(top: rSize(10)),
+      child: Text(
+        this.tips,
+        style: TextStyle(
+            color: Colors.white,
+            fontSize: 16 * 2.sp,
+            ),
+      ),
+    ));
+
+    children.add(Container(
+        padding: EdgeInsets.only(top: rSize(20)),
+        child: this.AlertItem));
+
+    return children;
+  }
+
+
+}

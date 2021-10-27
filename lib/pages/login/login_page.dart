@@ -138,7 +138,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
           // _buildPhoneLogin(context),
 
           ///
-          _buildWeChatLogin(),
+
 
           GestureDetector(
             onTap: () {
@@ -146,43 +146,44 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
               setState(() {});
             },
             child: Row(
-              mainAxisSize: MainAxisSize.min,
+              //mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                     width: 50.w,
                     height: 50.w,
-                    padding: EdgeInsets.only(top: 8.w, right: 5.w),
+                    padding: EdgeInsets.only(top: 6.w, right: 5.w),
                     child: !_chooseAgreement
-                        ? Icon(CupertinoIcons.square,
-                            size: 20, color: Colors.red)
-                        : Icon(CupertinoIcons.checkmark_square,
-                            size: 20, color: Colors.red)),
+                        ? Icon(CupertinoIcons.circle,
+                            size: 18, color:Color(0xFFdddddd))
+                        : Icon(CupertinoIcons.checkmark_circle,
+                            size: 18, color: Colors.red)),
                 RichText(
                     text: TextSpan(
                         text: "您已阅读并同意",
                         style: TextStyle(
-                            color: Colors.grey[500], fontSize: 13 * 2.sp),
+                            color: Colors.grey[500], fontSize: 12 * 2.sp),
                         children: [
                       new TextSpan(
                           text: '《用户服务协议》',
                           style: new TextStyle(
-                              color: Colors.red, fontSize: 13 * 2.sp),
+                              color: Colors.black, fontSize: 12 * 2.sp),
                           recognizer: _recognizer(context, 2)),
                       TextSpan(
                         text: "和",
                         style: TextStyle(
-                            color: Colors.grey[500], fontSize: 13 * 2.sp),
+                            color: Colors.grey[500], fontSize: 12 * 2.sp),
                       ),
                       new TextSpan(
                           text: '《用户隐私政策》',
                           style: new TextStyle(
-                              color: Colors.red, fontSize: 13 * 2.sp),
+                              color: Colors.black, fontSize: 12 * 2.sp),
                           recognizer: _recognizer(context, 1)),
                     ])),
               ],
             ),
           ),
-
+          _buildWeChatLogin(),
           ///
           Container(
             height: 20,
@@ -197,7 +198,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
       return Container(height: 20);
     }
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+      margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       height: rSize(44),
       decoration: BoxDecoration(
         color: Colors.green,

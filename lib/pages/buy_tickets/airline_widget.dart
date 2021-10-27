@@ -66,7 +66,7 @@ class _AirlineWidgetState extends State<AirlineWidget> {
         backgroundColor: AppColor.frenchColor,
         floatingActionButton: _chooseState
             ? Container(
-                color: Colors.transparent,
+                color: Color(0xFF333333),
                 child: _chooseConditon(),
               )
             : SizedBox(),

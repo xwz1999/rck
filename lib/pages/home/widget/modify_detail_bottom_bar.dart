@@ -322,9 +322,9 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
       commission = widget.goodsDetail == null
           ? null
           : widget.goodsDetail.data.price.min.commission.toStringAsFixed(2);
-      if(widget.goodsDetail.data.seckill!=null){
-        if( widget.goodsDetail.data.seckill.seckill_status==1){
-          commission = widget.goodsDetail.data.seckill.seckillCommission.toStringAsFixed(2);
+      if(widget.goodsDetail.data.secKill!=null){
+        if( widget.goodsDetail.data.secKill.secKill==1){
+          commission = widget.goodsDetail.data.secKill.secKillCommission.toStringAsFixed(2);
         }
 
       }

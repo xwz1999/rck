@@ -34,10 +34,10 @@ class GoodsDetailModelImpl {
     }
   }
 
-  /// 商品详情
+  /// 商品详情  1.13.3版本 商详情可上传多个 更改接口以避免影响老版本的使用 //GoodsApi.goods_detail_info_new
   static Future<GoodsDetailModel> getDetailInfo(int goodsID, int userID) async {
     ResultData res = await HttpManager.post(
-        GoodsApi.goods_detail_info, {"goodsID": goodsID, "userId": userID});
+        GoodsApi.goods_detail_info_new, {"goodsID": goodsID, "userId": userID});
 
     if (!res.result) {
       return GoodsDetailModel(res.code, null, res.msg);

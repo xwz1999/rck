@@ -50,9 +50,9 @@ class _GoodPriceViewState extends State<GoodPriceView> {
   @override
   void initState() {
     super.initState();
-    if(widget.detailModel.data.seckill!=null){
-      _status = widget.detailModel.data.seckill.seckill_status;
-      _endTime = widget.detailModel.data.seckill.seckillEndTime;
+    if(widget.detailModel.data.secKill!=null){
+      _status = widget.detailModel.data.secKill.secKill;
+      _endTime = widget.detailModel.data.secKill.secKillEndTime;
       //_endTime= DateUtil.formatDate(DateTime.parse(_endTime), format: 'HH-mm-ss');
     }
 
@@ -153,8 +153,8 @@ class _GoodPriceViewState extends State<GoodPriceView> {
     }
     if(_status==1){
 
-        price = detailModel.data.seckill.seckillMinPrice.toStringAsFixed(2)??'';
-        commission = detailModel.data.seckill.seckillCommission.toStringAsFixed(2)??'';
+        price = detailModel.data.secKill.secKillMinPrice.toStringAsFixed(2)??'';
+        commission = detailModel.data.secKill.secKillCommission.toStringAsFixed(2)??'';
 
     }
     return _normalPriceWidget(
@@ -190,12 +190,14 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                               R.ASSETS_GOODS_DETAILS_BOTTOM_GOLD_PNG),
                         ),
                       ),
+                      alignment: Alignment.center,
                       child: Padding(
                         padding: EdgeInsets.only(
                             left: rSize(12),
-                            top: rSize(1),
+                            top: rSize(0),
                             right: rSize(12),
-                            bottom: rSize(1)),
+                            bottom: rSize(0),
+                           ),
                         child: Text(
                           '$coupon\元优惠券',
                           style: TextStyle(
@@ -303,7 +305,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
 
   _normalPriceWidget(price, commission, originPrice, isTwoPrice, coupon) {
     return Container(
-      height: 80,
+      height: _status==0?70: 80,
       width: MediaQuery.of(context).size.width,
       color: Colors.transparent,
       child: Stack(
@@ -337,7 +339,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
 
   Container _name() {
     return Container(
-      margin: EdgeInsets.only(left: 10, bottom: 5, top: 10),
+      margin: EdgeInsets.only(left: 10,top: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -387,6 +389,48 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                               width: 5 * 2.w,
                             ))
                           : WidgetSpan(child: SizedBox()),
+                      detailModel.data.vendorId==1800||detailModel.data.vendorId==2000?//jd的商品供应商 自营为1800 pop 为2000?
+                      WidgetSpan(
+                          child:  Container(
+                              padding: EdgeInsets.only(right: 5.rw),
+                              child:
+                              Container(
+                                width: 20.rw,
+                                height: 22.rw,
+                                //padding: EdgeInsets.only(left: 1.rw),
+
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFC92219),
+                                  borderRadius: BorderRadius.all(Radius.circular(4.rw)),
+
+
+                                ),
+
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  //mainAxisAlignment: MainAxisAlignment.center,
+
+                                  children: [
+                                    2.hb,
+                                    Text(
+                                      detailModel.data.vendorId==1800?'京东':detailModel.data.vendorId==2000?'京东':'',
+                                      maxLines: 1,
+
+                                      style: TextStyle(fontSize: 9.rsp,height:1.05),
+                                    ),
+                                    Text(
+                                      detailModel.data.vendorId==1800?'自营':detailModel.data.vendorId==2000?'优选':'',
+                                      maxLines: 1,
+
+                                      style: TextStyle(fontSize: 9.rsp,height:1.05),
+                                    )
+                                  ],
+                                )
+                                ,
+                              )
+                          )
+                      ): WidgetSpan(child: SizedBox()),
                       TextSpan(
                         text: detailModel.data.goodsName,
                         style: AppTextStyle.generate(18 * 2.sp,
@@ -395,7 +439,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                       ),
                     ],
                   ),
-                  maxLines: 2,
+
                 ),
               ],
             ),

@@ -60,17 +60,17 @@ class MyFavoriteItem extends StatelessWidget {
                   model.goods.goodsName,
                   style: AppTextStyle.generate(15 * 2.sp,
                       fontWeight: FontWeight.w300, color: Colors.black87),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                Container(
-                  height: 5,
-                ),
+
                 Container(
                   alignment: Alignment.centerLeft,
                   child: Text(model.goods.description,
                       style: AppTextStyle.generate(12 * 2.sp,
                           fontWeight: FontWeight.w300, color: Colors.black54)),
                 ),
-                Spacer(),
+
                 Row(
                   children: <Widget>[
                     RichText(

@@ -36,7 +36,7 @@ class UserFunc {
 
   //获取金刚区图标
   static Future<List<KingCoinListModel>> getKingCoinList() async {
-    ResultData result = await HttpManager.post(APIV2.userAPI.getKingCion, {
+    ResultData result = await HttpManager.post(APIV2.userAPI.getKingCionNew, {
       'user_id': UserManager.instance.user.info.id != null
           ? UserManager.instance.user.info.id
           : 0,

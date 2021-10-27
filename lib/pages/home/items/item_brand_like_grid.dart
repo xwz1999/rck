@@ -36,7 +36,26 @@ class BrandLikeGridItem extends StatelessWidget {
   static final Color colorGrey = Color(0xff999999);
   @override
   Widget build(BuildContext context) {
-    bool isSoldOut = goods.inventory <= 0 ? true : false;
+    // bool isSoldOut = goods.inventory <= 0 ? true : false;
+    bool sellout = false;
+    bool isSeckill = false;
+
+    if(this.goods.inventory>0){
+      sellout = false;
+    }else{
+      sellout = true;
+    }
+    if(this.goods.secKill!=null){
+      if(this.goods.secKill.secKill==1){
+        isSeckill = true;
+        if(this.goods.secKill.realStock>0){
+          sellout = false;
+        }else{
+          sellout = true;
+        }
+        //秒杀中 通过seckill中的库存和销量来判断是否是否售完
+      }
+    }
     double width = (MediaQuery.of(context).size.width - 10) / 2;
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -63,7 +82,7 @@ class BrandLikeGridItem extends StatelessWidget {
                                 Api.getResizeImgUrl(goods.mainPhotoUrl, 300)),
                       )),
                   Positioned(
-                    child: isSoldOut
+                    child: sellout
                         ? ItemTagWidget.imageMaskWidget(
                             padding: 40, width: width - 80, height: width - 80)
                         : Container(),
@@ -84,7 +103,7 @@ class BrandLikeGridItem extends StatelessWidget {
                               width: 24,
                               height: 15,
                               decoration: BoxDecoration(
-                                                                  color: this.goods.countryIcon == null
+                                  color: this.goods.countryIcon == null
                                       ? Color(0xFFCC1B4F)
                                       : Colors.transparent,
                                 borderRadius: BorderRadius.circular(3 * 2.w),
@@ -112,6 +131,48 @@ class BrandLikeGridItem extends StatelessWidget {
                             width: 5 * 2.w,
                           ))
                         : WidgetSpan(child: SizedBox()),
+                    this.goods.gysId==1800||this.goods.gysId==2000?//jd的商品供应商 自营为1800 pop 为2000?
+                    WidgetSpan(
+                        child:  Container(
+                            padding: EdgeInsets.only(right: 5.rw),
+                            child:
+                            Container(
+                              width: 20.rw,
+                              height: 22.rw,
+                              //padding: EdgeInsets.only(left: 1.rw),
+
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFC92219),
+                                borderRadius: BorderRadius.all(Radius.circular(4.rw)),
+
+
+                              ),
+
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                //mainAxisAlignment: MainAxisAlignment.center,
+
+                                children: [
+                                  2.hb,
+                                  Text(
+                                    this.goods.gysId==1800?'京东':this.goods.gysId==2000?'京东':'',
+                                    maxLines: 1,
+
+                                    style: TextStyle(fontSize: 9.rsp,height:1.05),
+                                  ),
+                                  Text(
+                                    this.goods.gysId==1800?'自营':this.goods.gysId==2000?'优选':'',
+                                    maxLines: 1,
+
+                                    style: TextStyle(fontSize: 9.rsp,height:1.05),
+                                  )
+                                ],
+                              )
+                              ,
+                            )
+                        )
+                    ): WidgetSpan(child: SizedBox()),
                     TextSpan(
                       text: this.goods.goodsName,
                       style: AppTextStyle.generate(15 * 2.sp,
@@ -149,6 +210,16 @@ class BrandLikeGridItem extends StatelessWidget {
             ),
             Row(
               children: [
+                isSeckill?Container(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "赚" +  (this.goods.secKill.secKillCommission??0).toStringAsFixed(2),
+                    style: TextStyle(
+                      color: Color(0xFFC92219),
+                      fontSize: 12 * 2.sp,
+                    ),
+                  ),
+                ):
                 Text(
                   '¥${this.goods.originalPrice.toStringAsFixed(2)}',
                   style: TextStyle(
@@ -160,7 +231,7 @@ class BrandLikeGridItem extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  "累计已售${this.goods.salesVolume}件",
+                  isSeckill?"已售${this.goods.secKill.saleNum}件":"已售${this.goods.salesVolume}件",
                   style: TextStyle(
                     color: Color(0xff595757),
                     fontSize: 12 * 2.sp,
@@ -186,14 +257,20 @@ class BrandLikeGridItem extends StatelessWidget {
                     child: ExtendedText.rich(
                       TextSpan(children: [
                         TextSpan(
-                          text: "券后 ¥ ",
-                          style: AppTextStyle.generate(12 * 2.sp,
+                          text: isSeckill?"¥":"券后¥",
+                          style: AppTextStyle.generate(isSeckill?18.rsp:12 * 2.sp,
                               color: Color(0xffc70404),
                               fontWeight: FontWeight.w500),
                         ),
                         TextSpan(
                           text:
-                              "${(this.goods.discountPrice - this.goods.discountPrice.toInt()) > 0 ? this.goods.discountPrice.toStringAsFixed(1) : this.goods.discountPrice.toStringAsFixed(0)}",
+                          isSeckill?"${(this.goods.secKill.secKillMinPrice -
+                              this.goods.secKill.secKillMinPrice.toInt()) > 0
+                              ? this.goods.secKill.secKillMinPrice.toStringAsFixed(1)
+                              : this.goods.secKill.secKillMinPrice.toStringAsFixed(0)}"
+                              :"${(this.goods.discountPrice - this.goods.discountPrice.toInt()) > 0
+                              ? this.goods.discountPrice.toStringAsFixed(1)
+                              : this.goods.discountPrice.toStringAsFixed(0)}",
                           // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
                           style: TextStyle(
                               letterSpacing: -1,
@@ -204,8 +281,8 @@ class BrandLikeGridItem extends StatelessWidget {
                         ),
                         WidgetSpan(
                             child: SizedBox(
-                          width: 5,
-                        )),
+                              width: 5,
+                            )),
                       ]),
                     ),
                   ),
@@ -244,7 +321,7 @@ class BrandLikeGridItem extends StatelessWidget {
                     child: CustomImageButton(
                       direction: Direction.horizontal,
                       height: 21,
-                      title: this.goods.inventory <= 0 ? "已售完" : "详情",
+                      title: sellout ? "已售完" : "详情",
                       style: TextStyle(
                         height: 1.2,
                         color: Colors.white,
@@ -273,7 +350,7 @@ class BrandLikeGridItem extends StatelessWidget {
                       //             : 0),
                       //     topRight: Radius.circular(40),
                       //     bottomRight: Radius.circular(40)),
-                      backgroundColor: this.goods.inventory <= 0
+                      backgroundColor:sellout
                           ? AppColor.greyColor
                           : Color(0xFFC92219),
                       pureDisplay: true,
@@ -292,58 +369,80 @@ class BrandLikeGridItem extends StatelessWidget {
   }
 
   _saleNumberWidget(GoodsSimple goods) {
+    bool sellout = false;
+    bool isSeckill = false;
+
+    if(this.goods.inventory>0){
+      sellout = false;
+    }else{
+      sellout = true;
+    }
+    if(this.goods.secKill!=null){
+      if(this.goods.secKill.secKill==1){
+        isSeckill = true;
+        sellout = true;
+        //秒杀中 通过seckill中的库存和销量来判断是否是否售完
+      }
+    }
     return Container(
       child: Stack(
         children: <Widget>[
           Row(
             children: <Widget>[
+              isSeckill?SizedBox():
               (goods.coupon != null && goods.coupon != 0)
                   ? Container(
-                      margin: EdgeInsets.only(right: 5),
-                      child: SmallCouponWidget(
-                        height: 18,
-                        number: goods.coupon,
-                      ),
-                    )
+                margin: EdgeInsets.only(right: 5),
+                child: SmallCouponWidget(
+                  height: 18,
+                  number: goods.coupon,
+                ),
+              )
                   : SizedBox(),
+              isSeckill? Container(
+                padding: EdgeInsets.only(top:5.rw),
+                child: Image.asset(R.ASSETS_SECKILL_ICON_PNG,width: 69.rw,height: 20.rw,),
+              ):
               AppConfig.commissionByRoleLevel
                   ? Container(
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 2),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2),
-                                border: Border.all(
-                                  color: Color(0xffec294d),
-                                  width: 0.5,
-                                )),
-                            padding: EdgeInsets.symmetric(horizontal: 3),
-                            child: Text(
-                              "赚" + goods.commission.toStringAsFixed(2),
-                              style: TextStyle(
-                                color: Colors.white.withAlpha(0),
-                                fontSize: 12 * 2.sp,
-                              ),
-                            ),
-                          ),
-                          AppConfig.getShowCommission()
-                              ? Container(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "赚" + goods.commission.toStringAsFixed(2),
-                                    style: TextStyle(
-                                      color: Color(0xffeb0045),
-                                      fontSize: 12 * 2.sp,
-                                    ),
-                                  ),
-                                )
-                              : SizedBox(),
-                        ],
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: <Widget>[
+
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 2),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2),
+                          border: Border.all(
+                            color: Color(0xffec294d),
+                            width: 0.5,
+                          )),
+                      padding: EdgeInsets.symmetric(horizontal: 3),
+                      child: Text(
+                        "赚" + goods.commission.toStringAsFixed(2),
+                        style: TextStyle(
+                          color: Colors.white.withAlpha(0),
+                          fontSize: 12 * 2.sp,
+                        ),
+                      ),
+                    ),
+
+                    AppConfig.getShowCommission()
+                        ? Container(
+                      alignment: Alignment.center,
+                      child: Text(
+                        "赚" + goods.commission.toStringAsFixed(2),
+                        style: TextStyle(
+                          color: Color(0xffeb0045),
+                          fontSize: 12 * 2.sp,
+                        ),
                       ),
                     )
+                        : SizedBox(),
+                  ],
+                ),
+              )
                   : SizedBox(),
               Spacer(),
             ],

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:tencent_im_plugin/entity/group_member_entity.dart';
 import 'package:tencent_im_plugin/entity/message_entity.dart';
 import 'package:tencent_im_plugin/entity/session_entity.dart';
@@ -628,13 +629,17 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                                     onPressed: () {
                                       if (UserManager.instance.haveLogin) {
                                         Navigator.pop(context);
-                                        ShareTool().liveShare(
-                                          context,
-                                          liveId: liveItemId,
-                                          title:
-                                              '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘',
-                                          des: '让消费服务生活，让生活充满精致',
-                                          headUrl: _streamInfoModel.headImgUrl,
+                                        // ShareTool().liveShare(
+                                        //   context,
+                                        //   liveId: liveItemId,
+                                        //   title:
+                                        //       '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘',
+                                        //   des: '让消费服务生活，让生活充满精致',
+                                        //   headUrl: _streamInfoModel.headImgUrl,
+                                        // );
+                                        WeChatUtils.miniProgramShareLive(
+                                          id: liveItemId,netWorkThumbnail: Api.getImgUrl(_streamInfoModel.headImgUrl),
+                                          des: '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘'
                                         );
                                       } else {
                                         showToast('未登陆，请先登陆');

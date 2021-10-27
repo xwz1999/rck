@@ -27,13 +27,16 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:power_logger/power_logger.dart';
 import 'package:recook/models/category_model.dart';
 import 'package:recook/models/country_list_model.dart';
+import 'package:recook/pages/boosting_activitiy/boosting_activity.dart';
 import 'package:recook/pages/buy_tickets/choose_tickets_type_page.dart';
 import 'package:recook/pages/home/widget/good_high_commission_page.dart';
 import 'package:recook/pages/home/widget/good_preferential_list_page.dart';
 import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
 import 'package:recook/pages/live/models/king_coin_list_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:recook/pages/seckill_activity/seckill_activity_page.dart';
 import 'package:recook/utils/storage/hive_store.dart';
+import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
 import 'package:recook/base/base_store_state.dart';
@@ -102,7 +105,7 @@ class HomeAcitvityItem {
 class HomePage extends StatefulWidget {
   final TabController tabController;
 
-  const HomePage({Key key, this.tabController}) : super(key: key);
+  const  HomePage({Key key, this.tabController}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _HomePageState();
@@ -141,7 +144,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   double screenWidth = 0;
   double weatherHeight = 0;
   double bannerHeight = 0;
-  double buttonsHeight = 100;
+  double buttonsHeight = 200;
   double t1Height = 0;
   double t23Height = 0;
   double t4Height = 0;
@@ -176,6 +179,25 @@ class _HomePageState extends BaseStoreState<HomePage>
   @override
   void initState() {
     super.initState();
+    _getWeather();//部分机型获取地址较慢 所以放在外面先获取
+    requestPermission().then((value) {
+      if (value) {
+        //监听要在设置参数之前 否则无法获取定位
+        _amapFlutterLocation.onLocationChanged().listen(
+              (event) {
+            _weatherLocation = event;
+            LoggerData.addData(_weatherLocation['city']);
+            _getWeather();
+          },
+        );
+
+        _amapFlutterLocation
+            .setLocationOption(AMapLocationOption(onceLocation: true));
+        _amapFlutterLocation.startLocation();
+      } else {
+        //ReToast.err(text: '未获取到定位权限，请先在设置中打开定位权限');
+      }
+    });
     _gifController = GifController(vsync: this)
       ..repeat(
         min: 0,
@@ -201,24 +223,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     //     '7225bca14fe7493f9f469315a933f99c', 'e8a8057cfedcdcadcf4e8f2c7f8de982');
     _amapFlutterLocation = AMapFlutterLocation();
 
-    requestPermission().then((value) {
-      if (value) {
-        //监听要在设置参数之前 否则无法获取定位
-        _amapFlutterLocation.onLocationChanged().listen(
-          (event) {
-            _weatherLocation = event;
-            LoggerData.addData(_weatherLocation['city']);
-            _getWeather();
-          },
-        );
 
-        _amapFlutterLocation
-            .setLocationOption(AMapLocationOption(onceLocation: true));
-        _amapFlutterLocation.startLocation();
-      } else {
-        //ReToast.err(text: '未获取到定位权限，请先在设置中打开定位权限');
-      }
-    });
 
     // 分享注册
     _mobShareInit();
@@ -552,14 +557,17 @@ class _HomePageState extends BaseStoreState<HomePage>
     Widget leftContainer = GestureDetector(
       onTap: () {
         requestPermission();
-        AppRouter.push(context, RouteName.WEATHER_CITY_PAGE,
-                arguments: WeatherCityPage.setArguments(locationCityName))
-            .then((model) {
-          if (model is WeatherCityModel) {
-            _weatherCityModel = model;
-            _getWeather();
-          }
-        });
+        if(locationCityName!=''){
+          AppRouter.push(context, RouteName.WEATHER_CITY_PAGE,
+              arguments: WeatherCityPage.setArguments(locationCityName))
+              .then((model) {
+            if (model is WeatherCityModel) {
+              _weatherCityModel = model;
+              _getWeather();
+            }
+          });
+        }
+
       },
       child: Container(
         child: Row(
@@ -633,7 +641,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     tabbarHeight -
                     ScreenUtil().statusBarHeight -
                     tabbarHeight +
-                    4
+                    4+84
                 : weatherHeight +
                     bannerHeight +
                     buttonsHeight +
@@ -644,7 +652,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     timeHeight +
                     tabbarHeight -
                     ScreenUtil().statusBarHeight +
-                    4,
+                    4+84,
             flexibleSpace: _flexibleSpaceBar(context),
             bottom: _promotionList == null || _promotionList.length == 0
                 ? PreferredSize(
@@ -838,7 +846,7 @@ class _HomePageState extends BaseStoreState<HomePage>
               }
             },
             child: ExtendedImage.network(Api.getImgUrl(bannerModel.url),
-                fit: BoxFit.fill, enableLoadState: false),
+                fit: BoxFit.fill, enableLoadState: true),
           );
         },
       );
@@ -889,7 +897,7 @@ class _HomePageState extends BaseStoreState<HomePage>
               ? ExtendedImage.network(
                   Api.getImgUrl(item.logoUrl),
                   fit: BoxFit.fill,
-                  enableLoadState: false,
+                  enableLoadState: true,
                 )
               // CustomCacheImage(imageUrl: Api.getImgUrl(item.logoUrl),fit: BoxFit.fill, height: rSize(300),width: MediaQuery.of(context).size.width,)
               : Container(),
@@ -918,7 +926,7 @@ class _HomePageState extends BaseStoreState<HomePage>
             ? ExtendedImage.network(
                 Api.getImgUrl(itemD.logoUrl),
                 fit: BoxFit.fill,
-                enableLoadState: false,
+                enableLoadState: true,
               )
             : Container(),
         borderRadius: BorderRadius.all(
@@ -980,7 +988,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                             ? ExtendedImage.network(
                                 Api.getImgUrl(itemB.logoUrl),
                                 fit: BoxFit.fill,
-                                enableLoadState: false)
+                                enableLoadState: true)
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemB.logoUrl),fit: BoxFit.fill,)
                             : Container(),
                         borderRadius: BorderRadius.only(
@@ -1017,7 +1025,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                             ? ExtendedImage.network(
                                 Api.getImgUrl(itemC.logoUrl),
                                 fit: BoxFit.fill,
-                                enableLoadState: false)
+                                enableLoadState: true)
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemC.logoUrl),fit: BoxFit.fill,)
                             : Container(),
                         borderRadius: BorderRadius.only(
@@ -1046,158 +1054,187 @@ class _HomePageState extends BaseStoreState<HomePage>
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                _buttonTitleRow(
+      child:
 
-                    // AppConfig.getShowCommission()
-                    //     ? R.ASSETS_HOME_MENU_A_PNG
-                    //     : R.ASSETS_LISTTEMP_RECOOKMAKE_ICON_PNG,
-                    //Api.getImgUrl(kingCoinListModelList[0].url),
-                    AppConfig.commissionByRoleLevel
-                        ? Api.getImgUrl(kingCoinListModelList[5].url)
-                        : Api.getImgUrl(kingCoinListModelList[0].url),
-                    AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
-                    onPressed: () async{
-                  if (AppConfig.commissionByRoleLevel) {
-                    if (!UserManager.instance.haveLogin) {
-                      AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
-                      return;
-                    }
-                    //我的权益内容
-                    // AppRouter.push(
-                    //   globalContext,
-                    //   RouteName.SHOP_PAGE_USER_RIGHTS_PAGE,
-                    // );
+      Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    _buttonTitleRow(
+                        AppConfig.commissionByRoleLevel
+                            ? kingCoinListModelList[0].data[0]
+                            : kingCoinListModelList[0].data[1],
+                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+                        onPressed: () async {
+                          if (AppConfig.commissionByRoleLevel) {
+                            _KingCionGetto(kingCoinListModelList[0].data[0]
+                                .kingName.name);
+                          } else {
+                            _KingCionGetto(kingCoinListModelList[0].data[1]
+                                .kingName.name);
+                          }
+                        }
+                      ),
+                    _buttonTitleRow(
+                        AppConfig.commissionByRoleLevel
+                            ? kingCoinListModelList[1].data[0]
+                            : kingCoinListModelList[1].data[1],
+                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+                        onPressed: () async {
+                          if (AppConfig.commissionByRoleLevel) {
+                            _KingCionGetto(kingCoinListModelList[1].data[0]
+                                .kingName.name);
+                          } else {
+                            _KingCionGetto(kingCoinListModelList[1].data[1]
+                                .kingName.name);
+                          }
+                        }
+                    ),
+                    _buttonTitleRow(
+                        AppConfig.commissionByRoleLevel
+                            ? kingCoinListModelList[2].data[0]
+                            : kingCoinListModelList[2].data[1],
+                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+                        onPressed: () async {
+                          if (AppConfig.commissionByRoleLevel) {
+                            _KingCionGetto(kingCoinListModelList[2].data[0]
+                                .kingName.name);
+                          } else {
+                            _KingCionGetto(kingCoinListModelList[2].data[1]
+                                .kingName.name);
+                          }
+                        }
+                    ),
+                    _buttonTitleRow(
+                        AppConfig.commissionByRoleLevel
+                            ? kingCoinListModelList[3].data[0]
+                            : kingCoinListModelList[3].data[1],
+                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+                        onPressed: () async {
+                          if (AppConfig.commissionByRoleLevel) {
+                            _KingCionGetto(kingCoinListModelList[3].data[0]
+                                .kingName.name);
+                          } else {
+                            _KingCionGetto(kingCoinListModelList[3].data[1]
+                                .kingName.name);
+                          }
+                        }
+                    ),
+                    _buttonTitleRow(
+                        AppConfig.commissionByRoleLevel
+                            ? kingCoinListModelList[4].data[0]
+                            : kingCoinListModelList[4].data[1],
+                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+                        onPressed: () async {
+                          if (AppConfig.commissionByRoleLevel) {
+                            _KingCionGetto(kingCoinListModelList[4].data[0]
+                                .kingName.name);
+                          } else {
+                            _KingCionGetto(kingCoinListModelList[4].data[1]
+                                .kingName.name);
+                          }
+                        }
+                    ),
 
-                    List<FirstCategory> firstCategoryList = [];
-                    firstCategoryList = await HomeDao.getJDCategoryList();
-                    if(firstCategoryList!=null){
-                      Get.to(() => ClassifyPage(
-                        jdType: 1,
-                        data: firstCategoryList,
-                        initValue: '全部',
-                      ));
-                    }
-                  } else {
-                    //京东优选
-                    List<FirstCategory> firstCategoryList = [];
-                    firstCategoryList = await HomeDao.getJDCategoryList();
-                    if(firstCategoryList!=null){
-                      Get.to(() => ClassifyPage(
-                        jdType: 1,
-                        data: firstCategoryList,
-                        initValue: '全部',
-                      ));
-                    }
-                    // AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
-                    //     arguments: GoodsListTempPage.setArguments(
-                    //         title: "瑞库制品", type: GoodsListTempType.recookMake));
-                    // AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
-                  }
-                  // return;
-                  // AppRouter.push(context, RouteName.NEW_USER_DISCOUNT_PAGE);
-                }),
-                _buttonTitleRow(
-                  // R.ASSETS_LOTTERY_REDEEM_LOTTERY_ICON_PNG,
-                  // AppConfig.getShowCommission()
-                  //     ? R.ASSETS_HOME_MENU_AIR_PNG
-                  //     : R.ASSETS_LISTTEMP_HOMELIFE_ICON_PNG,
-                  AppConfig.commissionByRoleLevel
-                      ? Api.getImgUrl(kingCoinListModelList[6].url)
-                      : Api.getImgUrl(kingCoinListModelList[1].url),
-                  AppConfig.commissionByRoleLevel ? "高佣特推" : "家居生活",
-                  // '彩票兑换',
-                  //2021 7,27 ios彩票审核不通过 隐藏彩票
-                  //'精彩发现',
-                  //'出行服务',
-                  onPressed: () async {
-                    if (AppConfig.commissionByRoleLevel) {
-                      Get.to(()=>GoodsHighCommissionListPage());
 
-                      //AppRouter.push(context, RouteName.REDEEM_LOTTERY_PAGE);
-
-                      // UserManager.instance.selectTabbarIndex = 2;
-                      // bool value = UserManager.instance.selectTabbar.value;
-                      // UserManager.instance.selectTabbar.value = !value; 精彩发现
-
-                      //Get.to(() => ChooseTicketsTypePage()); //机票
-                      //setState(() {});
-                    } else {
-                      AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
-                          arguments: GoodsListTempPage.setArguments(
-                              title: "家居生活", type: GoodsListTempType.homeLife));
-                    }
-                  },
-
-                  //   () {
-                  // if (AppConfig.getShowCommission()) {
-                  //   bool value = UserManager.instance.selectTabbar.value;
-                  //   UserManager.instance.selectTabbar.value = !value;
-                  //   UserManager.instance.selectTabbarIndex = 1;
-                  // } else {
-                  //   AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
-                  //       arguments: GoodsListTempPage.setArguments(
-                  //           title: "家居生活", type: GoodsListTempType.homeLife));
-                  // }
-                  // },
+                  ],
                 ),
-                _buttonTitleRow(
-                    // AppConfig.getShowCommission()
-                    //     ? R.ASSETS_HOME_INVITE_WEBP_S_PNG
-                    //     : R.ASSETS_LISTTEMP_HOMEAPPLIANCES_ICON_PNG,
-                    AppConfig.commissionByRoleLevel
-                        ? Api.getImgUrl(kingCoinListModelList[7].url)
-                        : Api.getImgUrl(kingCoinListModelList[2].url),
-                    AppConfig.commissionByRoleLevel
-                        // ? "升级店主"
-                        ? "特惠专区"
-                        : "特惠专区", onPressed: () {
-                  if (AppConfig.commissionByRoleLevel) {
-                    Get.to(()=>GoodsPreferentialListPage());
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    _buttonTitleRow(
+                        AppConfig.commissionByRoleLevel
+                            ? kingCoinListModelList[5].data[0]
+                            : kingCoinListModelList[5].data[1],
+                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+                        onPressed: () async {
+                          if (AppConfig.commissionByRoleLevel) {
+                            _KingCionGetto(kingCoinListModelList[5].data[0]
+                                .kingName.name);
+                          } else {
+                            _KingCionGetto(kingCoinListModelList[5].data[1]
+                                .kingName.name);
+                          }
+                        }
+                    ),
+                    _buttonTitleRow(
+                        AppConfig.commissionByRoleLevel
+                            ? kingCoinListModelList[6].data[0]
+                            : kingCoinListModelList[6].data[1],
+                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+                        onPressed: () async {
+                          if (AppConfig.commissionByRoleLevel) {
+                            _KingCionGetto(kingCoinListModelList[6].data[0]
+                                .kingName.name);
+                          } else {
+                            _KingCionGetto(kingCoinListModelList[6].data[1]
+                                .kingName.name);
+                          }
+                        }
+                    ),
+                    _buttonTitleRow(
+                        AppConfig.commissionByRoleLevel
+                            ? kingCoinListModelList[7].data[0]
+                            : kingCoinListModelList[7].data[1],
+                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+                        onPressed: () async {
+                          if (AppConfig.commissionByRoleLevel) {
+                            _KingCionGetto(kingCoinListModelList[7].data[0]
+                                .kingName.name);
+                          } else {
+                            _KingCionGetto(kingCoinListModelList[7].data[1]
+                                .kingName.name);
+                          }
+                        }
+                    ),
+                    _buttonTitleRow(
+                        AppConfig.commissionByRoleLevel
+                            ? kingCoinListModelList[8].data[0]
+                            : kingCoinListModelList[8].data[1],
+                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+                        onPressed: () async {
+                          if (AppConfig.commissionByRoleLevel) {
+                            _KingCionGetto(kingCoinListModelList[8].data[0]
+                                .kingName.name);
+                          } else {
+                            _KingCionGetto(kingCoinListModelList[8].data[1]
+                                .kingName.name);
+                          }
+                        }
+                    ),
+                    _buttonTitleRow(
+                        AppConfig.commissionByRoleLevel
+                            ? kingCoinListModelList[9].data[0]
+                            : kingCoinListModelList[9].data[1],
+                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+                        onPressed: () async {
+                          if (AppConfig.commissionByRoleLevel) {
+                            _KingCionGetto(kingCoinListModelList[9].data[0]
+                                .kingName.name);
+                          } else {
+                            _KingCionGetto(kingCoinListModelList[9].data[1]
+                                .kingName.name);
+                          }
+                        }
+                    ),
 
-                    //ShareTool().inviteShare(context, customTitle: Container()); 一键邀请的代码
-                  } else {
-                    Get.to(()=>GoodsPreferentialListPage());
-                    // AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
-                    //     arguments: GoodsListTempPage.setArguments(
-                    //         title: "数码家电",
-                    //         type: GoodsListTempType.homeAppliances));
-                    // AppRouter.push(context, RouteName.Member_BENEFITS_PAGE,);
-                  }
-                }),
-                _buttonTitleRow(
-                    //R.ASSETS_HOME_MENU_DD_PNG,
-                    Api.getImgUrl(kingCoinListModelList[3].url),
-                    "热销榜单", onPressed: () {
-                  AppRouter.push(context, RouteName.GOODS_HOT_LIST);
-                }),
-                _buttonTitleRow(
-                    //R.ASSETS_HOME_MENU_EE_PNG,
-                    Api.getImgUrl(kingCoinListModelList[4].url),
-                    "进口专区", onPressed: () async {
-                  // HomeDao.getCategories(success: (data, code, msg) {
-                  //   CRoute.push(
-                  //       context,
-                  //       ClassifyPage(
-                  //         data: data,
-                  //       ));
-                  // }, failure: (code, msg) {
-                  //   Toast.showError(msg);
-                  // });
 
-                  //8.9更新金刚区 增加进口专区
-                  List<CountryListModel> countryListModelList;
-                  countryListModelList = await HomeDao.getCountryList();
-                  Get.to(ClassifyCountryPage(data: countryListModelList));
-                }),
-              ],
-            ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -1205,13 +1242,13 @@ class _HomePageState extends BaseStoreState<HomePage>
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
       color: AppColor.frenchColor,
-      height: 100,
+      height: buttonsHeight,
       width: MediaQuery.of(context).size.width,
       child: titles,
     );
   }
 
-  _buttonTitleRow(icon, title, {onPressed}) {
+  _buttonTitleRow(KingCoin kingCoin ,{onPressed}) {
     return Expanded(
       child: CupertinoButton(
         padding: EdgeInsets.zero,
@@ -1225,24 +1262,21 @@ class _HomePageState extends BaseStoreState<HomePage>
               width: 48,
               height: 48,
               child:
-                  // FadeInImage.assetNetwork(
-                  //     placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                  //     image: icon)
+                  FadeInImage.assetNetwork(
+                      placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                      image: Api.getImgUrl(kingCoin.url),)
                   // Image.asset(
                   //   icon,
                   //   fit: BoxFit.fill,
                   // ),
-                  CachedNetworkImage(
-                      imageUrl: icon,
-                      placeholder: (context, url) => Image.asset(
-                            R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                            fit: BoxFit.fill,
-                          )),
+              // CustomCacheImage(
+              //         imageUrl: icon,
+              //         fit: BoxFit.fill,),
             ),
             Container(
               margin: EdgeInsets.only(top: 8),
               child: Text(
-                title,
+                kingCoin.name,
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 12 * 2.sp,
@@ -1260,6 +1294,90 @@ class _HomePageState extends BaseStoreState<HomePage>
     );
   }
 
+  _KingCionGetto(String name) async {
+    switch(name){
+      case '京东优选':
+        List<FirstCategory> firstCategoryList = [];
+        firstCategoryList = await HomeDao.getJDCategoryList();
+        if(firstCategoryList!=null){
+          Get.to(() => ClassifyPage(
+            jdType: 1,
+            data: firstCategoryList,
+            initValue: '全部',
+          ));
+        }
+        break;
+      case '我的权益':
+        AppRouter.push(
+          globalContext,
+          RouteName.SHOP_PAGE_USER_RIGHTS_PAGE,
+        );
+        break;
+      case '一键邀请':
+        ShareTool().inviteShare(context, customTitle: Container());
+        break;
+      case '热销榜单':
+        AppRouter.push(context, RouteName.GOODS_HOT_LIST);
+        break;
+      case '进口专区':
+        List<CountryListModel> countryListModelList;
+        countryListModelList = await HomeDao.getCountryList();
+        Get.to(ClassifyCountryPage(data: countryListModelList));
+        break;
+      case '特惠专区':
+        Get.to(()=>GoodsPreferentialListPage());
+        break;
+      case '高额返补':
+        Get.to(()=>GoodsHighCommissionListPage());
+        break;
+      case '限时秒杀':
+        Get.to(()=>SeckillActivityPage());
+        break;
+      case '助力抢购':
+        Get.to(() => BooStingActivityPage());
+        break;
+      case '阿库学院':
+        UserManager.instance.selectTabbarIndex = 1;
+        bool value = UserManager.instance.selectTabbar.value;
+        UserManager.instance.selectTabbar.value = !value;
+        break;
+      case '家居生活':
+        AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
+            arguments: GoodsListTempPage.setArguments(
+                title: "家居生活", type: GoodsListTempType.homeLife));
+        break;
+      case '数码家电':
+      AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
+          arguments: GoodsListTempPage.setArguments(
+              title: "数码家电",
+              type: GoodsListTempType.homeAppliances));
+        break;
+      case '日用百货':
+
+        break;
+      case '酒饮冲调':
+
+        break;
+      case '休闲美食':
+
+        break;
+      case '茶米油盐':
+
+        break;
+      case '个护清洁':
+
+        break;
+      case '家用电器':
+
+        break;
+      case '母婴用品':
+
+        break;
+      case '美妆护肤':
+
+        break;
+    }
+  }
   _placeholder() {
     return Image.asset(
       R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,

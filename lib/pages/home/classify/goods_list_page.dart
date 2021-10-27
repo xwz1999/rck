@@ -7,8 +7,11 @@
  * ====================================================
  */
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
+import 'package:get/get.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 
 import 'package:waterfall_flow/waterfall_flow.dart';
 
@@ -25,6 +28,7 @@ import 'package:recook/widgets/filter_tool_bar.dart';
 import 'package:recook/widgets/goods_item.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import '../search_page.dart';
 import 'mvp/goods_list_contact.dart';
 import 'mvp/goods_list_presenter_impl.dart';
 
@@ -56,7 +60,7 @@ class GoodsListPage extends StatefulWidget {
 class _GoodsListPageState extends BaseStoreState<GoodsListPage>
     with MvpListViewDelegate<GoodsSimple>, TickerProviderStateMixin {
   /// 切换展示形式  true 为 List， false 为grid
-  bool _displayList = true;
+  bool _displayList = false;//默认排列方式改为瀑布流
 
   FilterToolBarController _filterController;
 
@@ -75,6 +79,8 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
   int _filterIndex = 0;
   List<bool> _barBool = [false,false,false];
   GifController _gifController;
+  TextEditingController _textEditController;
+  String _searchText = '';
 
   @override
   void initState() {
@@ -114,6 +120,11 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
         backgroundColor: AppColor.frenchColor,
+        // appBar: CustomAppBar(
+        //   title: _buildTitle(),
+        //   // leading: Container(),
+        //   themeData: AppThemes.themeDataGrey.appBarTheme,
+        // ),
         appBar: CustomAppBar(
           themeData: AppThemes.themeDataGrey.appBarTheme,
           elevation: 0,
@@ -147,7 +158,12 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
             ),
             Container(
               color: AppColor.frenchColor,
-              height: 10,
+              height: 5,
+            ),
+            _buildTitle(),
+            Container(
+              color: AppColor.frenchColor,
+              height: 5,
             ),
             Expanded(
               child: FilterToolBarResultContainer(
@@ -158,6 +174,59 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
                     Expanded(child: _buildList(context))
                   ],
                 ),
+              ),
+            )
+          ],
+        ));
+  }
+
+  Widget _buildTitle() {
+    return Container(
+      // margin: EdgeInsets.only(right: rSize(10)),
+        height: 40,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(20)),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              width: 10,
+            ),
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 5),
+              child: Icon(
+                Icons.search,
+                size: 20,
+                color: Colors.grey,
+              ),
+            ),
+            Expanded(
+              child: CupertinoTextField(
+                //autofocus: true,
+                keyboardType: TextInputType.text,
+                controller: _textEditController,
+                textInputAction: TextInputAction.search,
+                onSubmitted: (_submitted) {
+                  //_contentFocusNode.unfocus();
+
+                  _presenter.fetchList(_category.id, 0, _sortType, null, JDType: _jDType,keyword: _searchText);
+
+                  setState(() {});
+                },
+                //focusNode: _contentFocusNode,
+                onChanged: (text) async {
+                  _searchText = text;
+
+                },
+                placeholder: "请输入想要搜索的商品",
+                placeholderStyle: TextStyle(
+                    color: Colors.grey.shade500,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w300),
+                decoration: BoxDecoration(color: Colors.white.withAlpha(0)),
+                style: TextStyle(
+                    color: Colors.black,
+                    textBaseline: TextBaseline.ideographic),
               ),
             )
           ],
@@ -399,7 +468,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
       type: ListViewType.grid,
       refreshCallback: () {
         // _presenter.fetchList(widget.category.id, 0, _sortType);
-        _presenter.fetchList(_category.id, 0, _sortType, null, JDType: _jDType);
+        _presenter.fetchList(_category.id, 0, _sortType, null, JDType: _jDType,keyword: _searchText);
         setState(() {
 
         });
@@ -407,7 +476,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
       loadMoreCallback: (int page) {
         // _presenter.fetchList(widget.category.id, page, _sortType);
         _presenter.fetchList(_category.id, page, _sortType, null,
-            JDType: _jDType);
+            JDType: _jDType,keyword: _searchText);
         setState(() {
 
         });

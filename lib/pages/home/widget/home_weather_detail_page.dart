@@ -38,48 +38,51 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       backgroundColor: AppColor.frenchColor,
       resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
-        appBackground: Colors.white,
+        appBackground: Colors.transparent,
         leading: RecookBackButton(
-          white: false,
+          white: _boolWhite(_homeWeatherModel.weaImg),
         ),
-        // flexibleSpace: Container(
-        //   width: double.infinity,
-        //   height: 34.rw,
-        //   decoration: BoxDecoration(
-        //     borderRadius:
-        //         BorderRadius.only(bottomRight: Radius.circular(104.rw)),
-        //     color: _getBarColor(_homeWeatherModel.weaImg),
-        //   ),
-        // ),
         elevation: 0,
         title: Text(
           "天气",
           style: TextStyle(
-            color: Color(0xFF333333),
+            color: _getBackColor(_homeWeatherModel.weaImg),
             fontSize: 18.rsp,
           ),
         ),
       ),
-      body: Container(
-        child: _bodyWidget(),
+      body: Stack(
+        children: [
+          Positioned(child: Container(
+            height: 379.rw+DeviceInfo.statusBarHeight + DeviceInfo.appBarHeight,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(_getBackGroud(_homeWeatherModel.weaImg)),
+                    fit: BoxFit.fill)),
+          )),
+          _bodyWidget(),
+        ],
+
+
+
       ),
     );
   }
 
   _bodyWidget() {
     return ListView(
+      physics: ClampingScrollPhysics(),
       children: [
         Container(
           child: Container(
             width: double.infinity,
             height: 379.rw,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage(_getBackGroud(_homeWeatherModel.weaImg)),
-                    fit: BoxFit.fill)),
+
             child: (Column(
               children: [
                 140.hb,
@@ -403,6 +406,52 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
         return Color(0xFF373F4A);
       case 'qing':
         return Color(0xFF64A8F1);
+    }
+  }
+
+  _getBackColor(String weather) {
+    switch (weather) {
+      case 'xue':
+        return Color(0xFF333333);
+      case 'lei':
+        return Colors.white;
+      case 'shachen':
+        return Colors.white;
+      case 'wu':
+        return Colors.white;
+      case 'bingbao':
+        return Colors.white;
+      case 'yun':
+        return Color(0xFF333333);
+      case 'yu':
+        return Colors.white;
+      case 'yin':
+        return Colors.white;
+      case 'qing':
+        return Color(0xFF333333);
+    }
+  }
+
+  _boolWhite(String weather) {
+    switch (weather) {
+      case 'xue':
+        return false;
+      case 'lei':
+        return true;
+      case 'shachen':
+        return true;
+      case 'wu':
+        return true;
+      case 'bingbao':
+        return true;
+      case 'yun':
+        return false;
+      case 'yu':
+        return true;
+      case 'yin':
+        return true;
+      case 'qing':
+        return false;
     }
   }
 }

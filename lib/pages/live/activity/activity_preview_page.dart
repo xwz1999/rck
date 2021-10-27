@@ -53,24 +53,27 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
 
           ///bottom bar
           Positioned(
-            bottom: rSize(15),
+            bottom: 50.rw,
             left: 0,
             right: 0,
             child: Container(
+
               padding: EdgeInsets.symmetric(
                 horizontal: rSize(15),
+
               ),
               alignment: Alignment.bottomCenter,
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.black.withOpacity(0),
-                    Colors.black.withOpacity(0.8),
-                    Colors.black,
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
+                color:Colors.transparent,
+                // gradient: LinearGradient(
+                //   colors: [
+                //     Colors.black.withOpacity(0),
+                //     Colors.black.withOpacity(0.8),
+                //     Colors.black,
+                //   ],
+                //   begin: Alignment.topCenter,
+                //   end: Alignment.bottomCenter,
+                // ),
               ),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,

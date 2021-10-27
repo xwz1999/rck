@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:many_like/many_like.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:tencent_im_plugin/entity/group_member_entity.dart';
 import 'package:tencent_im_plugin/entity/message_entity.dart';
 import 'package:tencent_im_plugin/entity/session_entity.dart';
@@ -746,14 +747,18 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                                   if (UserManager
                                                       .instance.haveLogin) {
                                                     Navigator.pop(context);
-                                                    ShareTool().liveShare(
-                                                      context,
-                                                      liveId: widget.id,
-                                                      title:
-                                                          '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘',
-                                                      des: '',
-                                                      headUrl: _streamInfoModel
-                                                          .headImgUrl,
+                                                    // ShareTool().liveShare(
+                                                    //   context,
+                                                    //   liveId: widget.id,
+                                                    //   title:
+                                                    //       '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘',
+                                                    //   des: '',
+                                                    //   headUrl: _streamInfoModel
+                                                    //       .headImgUrl,
+                                                    // );
+                                                    WeChatUtils.miniProgramShareLive(
+                                                        id: widget.id,netWorkThumbnail: Api.getImgUrl(_streamInfoModel.headImgUrl),
+                                                        des: '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘'
                                                     );
                                                   } else {
                                                     showToast('未登陆，请先登陆');

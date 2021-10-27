@@ -163,14 +163,16 @@ class OrderCenter {
   num waitSend;
   num waitRecv;
   num afterSales;
+  num evaNum;
 
-  OrderCenter({this.waitPay, this.waitSend, this.waitRecv, this.afterSales});
+  OrderCenter({this.waitPay, this.waitSend, this.waitRecv, this.afterSales,this.evaNum});
 
   OrderCenter.fromJson(Map<String, dynamic> json) {
     waitPay = json['waitPay'];
     waitSend = json['waitSend'];
     waitRecv = json['waitRecv'];
     afterSales = json['afterSales'];
+    evaNum = json['eva_num'];
   }
 
   Map<String, dynamic> toJson() {
@@ -179,6 +181,7 @@ class OrderCenter {
     data['waitSend'] = this.waitSend;
     data['waitRecv'] = this.waitRecv;
     data['afterSales'] = this.afterSales;
+    data['eva_num'] = this.evaNum;
     return data;
   }
 }

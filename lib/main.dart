@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:camera/camera.dart';
-import 'package:flutter_bugly/flutter_bugly.dart';
+// import 'package:flutter_bugly/flutter_bugly.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,39 +39,44 @@ import 'utils/app_router.dart';
 
 // import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
-List<CameraDescription> cameras;
+// List<CameraDescription> cameras;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  cameras = await availableCameras();
+  //配合隐私政策整改，将一部分初始化转移到同意隐私政策以后
 
-  PackageInfo _packageInfo = await PackageInfo.fromPlatform();
-  AppConfig.versionNumber = _packageInfo.buildNumber;
+  //cameras = await availableCameras();
+
+  // PackageInfo _packageInfo = await PackageInfo.fromPlatform();
+  // AppConfig.versionNumber = _packageInfo.buildNumber;
   //初始化AMap
   // AmapLocation.instance.init(iosKey: 'e8a8057cfedcdcadcf4e8f2c7f8de982');
 
   //初始化腾讯im
 
-  TencentImPlugin.init(appid: '1400435566');
+  // TencentImPlugin.init(appid: '1400435566');
 
   AppConfig.initial(
     useEncrypt: false,
     // 网络请求加密功能
     // useEncrypt: true
   );
-  // 设置当前是否为测试环境
-  const bool isDebug =
-      const bool.fromEnvironment('ISDEBUG', defaultValue: true);
 
-  AppConfig.setDebug(isDebug);
 
-  //持久化存储
-  await Hive.initFlutter();
-  await HiveStore.initBox();
 
   bool inTest = Test.test();
   if (inTest) {
     return;
   }
+
+  //持久化存储
+  await Hive.initFlutter();
+  await HiveStore.initBox();
+
+  // 设置当前是否为测试环境
+  const bool isDebug =
+  const bool.fromEnvironment('ISDEBUG', defaultValue: true);
+
+  AppConfig.setDebug(isDebug);
   // WeChatUtils.initial();
   // MQManager.initial();
   // 奔溃界面修改!!!!
@@ -101,14 +106,14 @@ void main() async {
   if (!isDebug) {
     AppConfig.setDebug(isDebug);
     DPrint.printf("当前为release 模式");
-    return FlutterBugly.postCatchedException(() {
+    //return FlutterBugly.postCatchedException(() {
       runApp(MyApp(store));
-    });
+    //});
   }
   DPrint.printf("当前为 debug 模式");
-  return FlutterBugly.postCatchedException(() {
+  //return FlutterBugly.postCatchedException(() {
     runApp(MyApp(store));
-  });
+  //});
 }
 
 class MyApp extends StatefulWidget {
@@ -131,7 +136,7 @@ class MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     initPlatformState();
-    BuglyHelper.initialSDK();
+    //BuglyHelper.initialSDK();
     checkSignature();
 
     // BuglyHelper.setUserInfo();
@@ -139,15 +144,15 @@ class MyAppState extends State<MyApp> {
     // register.setupQQ("1109724223", "UGWklum7WWI03ll9");
     // SharesdkPlugin.regist(register);
 
-    HttpManager.post(LiveAPI.liveLicense, {}).then((resultData) {
-      String key = resultData.data['data']['key'];
-      String licenseURL = resultData.data['data']['licenseUrl'];
-      //初始化腾讯直播
-      TencentLive.instance.init(
-        licenseUrl: licenseURL,
-        licenseKey: key,
-      );
-    });
+    // HttpManager.post(LiveAPI.liveLicense, {}).then((resultData) {
+    //   String key = resultData.data['data']['key'];
+    //   String licenseURL = resultData.data['data']['licenseUrl'];
+    //   //初始化腾讯直播
+    //   TencentLive.instance.init(
+    //     licenseUrl: licenseURL,
+    //     licenseKey: key,
+    //   );
+    // });
   }
 
   //签名验证
@@ -227,6 +232,10 @@ class MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp, //只能纵向
+      DeviceOrientation.portraitDown,//只能纵向
+    ]);
     return StoreProvider<RecookState>(
         store: store,
         child: StoreBuilder<RecookState>(builder: (context, store) {

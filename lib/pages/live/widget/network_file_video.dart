@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:chewie/chewie.dart';
+import 'package:recook/widgets/play_widget/PlayerControls.dart';
 import 'package:video_player/video_player.dart';
 
 class NetworkFileVideo extends StatefulWidget {
@@ -31,10 +32,11 @@ class _NetworkFileVideoState extends State<NetworkFileVideo> {
       _chewieController = ChewieController(
         aspectRatio: _videoPlayerController.value.aspectRatio,
         autoPlay: true,
-        showControls: false,
+        //showControls: true,
         looping: true,
         placeholder: new Container(color: Colors.black),
         videoPlayerController: _videoPlayerController,
+        customControls: ShortVideoController(_videoPlayerController),
       );
       setState(() {});
       widget.pageController.addListener(pageControllerListener);

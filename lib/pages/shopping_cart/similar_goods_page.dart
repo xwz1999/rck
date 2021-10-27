@@ -200,7 +200,7 @@ class _SimilarGoodsPageState extends BaseStoreState<SimilarGoodsPage> with Ticke
     return RefreshWidget(
       controller: _refreshController,
       //noData: '抱歉，没有找相似商品',
-      noDataText: '抱歉，没有找相似商品',
+      noDataText: '抱歉，没有到找相似商品',
       onRefresh: () async {
         //Function cancel = ReToast.loading();
         if (_similarGoodsList.isNotEmpty) {
@@ -216,7 +216,7 @@ class _SimilarGoodsPageState extends BaseStoreState<SimilarGoodsPage> with Ticke
       },
       body: _similarGoodsList.isNotEmpty
           ? _buildSimilarList()
-          : noDataView('抱歉，没有找相似商品'),
+          : noDataView('抱歉，没有到找相似商品'),
       //
     );
   }

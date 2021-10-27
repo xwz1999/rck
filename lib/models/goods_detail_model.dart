@@ -7,7 +7,7 @@ import 'package:recook/models/base_model.dart';
 import 'package:recook/models/price_model.dart';
 
 import 'goods_simple_list_model.dart';
-
+import 'goods_hot_sell_list_model.dart';
 part 'goods_detail_model.g.dart';
 
 /*
@@ -178,7 +178,7 @@ class Data extends Object {
   String countryIcon;
   Living living;
 
-  Seckill seckill;
+  SecKill secKill;
   int vendorId;
 
 
@@ -209,7 +209,7 @@ class Data extends Object {
       this.notice,
       this.countryIcon,
       this.living,
-      this.seckill,
+      this.secKill,
       this.vendorId
       );
 
@@ -234,30 +234,30 @@ class Data extends Object {
   }
 }
 
-class Seckill {
-  num seckill_status;
-  String seckillEndTime;
-  num seckillMinPrice;
-  num seckillCommission;
-
-  Seckill({this.seckill_status, this.seckillEndTime, this.seckillMinPrice, this.seckillCommission});
-
-  Seckill.fromJson(Map<String, dynamic> json) {
-    seckill_status = json['sec_kill'];
-    seckillEndTime = json['sec_kill_end_time'];
-    seckillMinPrice = json['sec_kill_min_price'];
-    seckillCommission = json['sec_kill_commission'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['sec_kill'] = this.seckill_status;
-    data['sec_kill_end_time'] = this.seckillEndTime;
-    data['sec_kill_min_price'] = this.seckillMinPrice;
-    data['sec_kill_commission'] = this.seckillCommission;
-    return data;
-  }
-}
+// class Seckill {
+//   num seckill_status;
+//   String seckillEndTime;
+//   num seckillMinPrice;
+//   num seckillCommission;
+//
+//   Seckill({this.seckill_status, this.seckillEndTime, this.seckillMinPrice, this.seckillCommission});
+//
+//   Seckill.fromJson(Map<String, dynamic> json) {
+//     seckill_status = json['sec_kill'];
+//     seckillEndTime = json['sec_kill_end_time'];
+//     seckillMinPrice = json['sec_kill_min_price'];
+//     seckillCommission = json['sec_kill_commission'];
+//   }
+//
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['sec_kill'] = this.seckill_status;
+//     data['sec_kill_end_time'] = this.seckillEndTime;
+//     data['sec_kill_min_price'] = this.seckillMinPrice;
+//     data['sec_kill_commission'] = this.seckillCommission;
+//     return data;
+//   }
+// }
 
 @JsonSerializable()
 class MainPhotos extends Object {
@@ -568,37 +568,62 @@ class Recommends extends Object {
   Map<String, dynamic> toJson() => _$RecommendsToJson(this);
 }
 
+// class Notice {
+//   String title;
+//   List<String> img;
+//
+//
+//   ///type: 1头显示，2尾显示，3头尾显示
+//   int type;
+//   Notice({
+//     this.title,
+//     this.img,
+//     this.type,
+//   });
+//
+//   Map<String, dynamic> toMap() {
+//     return {
+//       'title': title,
+//       'img': img,
+//       'type': type,
+//     };
+//   }
+//
+//   factory Notice.fromMap(Map<String, dynamic> map) {
+//     if (map == null) return null;
+//
+//     return Notice(
+//       title: map['title'],
+//       img: map['img'],
+//       type: map['type'],
+//     );
+//   }
+//
+//   String toJson() => json.encode(toMap());
+//
+//   factory Notice.fromJson(dynamic source) => Notice.fromMap(source);
+// }
+
 class Notice {
   String title;
-  String img;
-
-  ///type: 1头显示，2尾显示，3头尾显示
   int type;
-  Notice({
-    this.title,
-    this.img,
-    this.type,
-  });
+  List<String> img;
 
-  Map<String, dynamic> toMap() {
-    return {
-      'title': title,
-      'img': img,
-      'type': type,
-    };
+  Notice({this.title, this.type, this.img});
+
+  Notice.fromJson(Map<String, dynamic> json) {
+    title = json['title'];
+    type = json['type'];
+
+    img =
+    json['img'] != null ? json['img'].cast<String>() : [];
   }
 
-  factory Notice.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
-    return Notice(
-      title: map['title'],
-      img: map['img'],
-      type: map['type'],
-    );
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['title'] = this.title;
+    data['type'] = this.type;
+    data['img'] = this.img;
+    return data;
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory Notice.fromJson(dynamic source) => Notice.fromMap(source);
 }

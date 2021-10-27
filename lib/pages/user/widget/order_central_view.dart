@@ -91,7 +91,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                   padding: EdgeInsets.symmetric(vertical: rSize(10)),
                   dotPosition: DotPosition(right: rSize(8), top: 0),
                   dotNum: getStore().state.userBrief.orderCenter.waitPay == 0
-                      ? null
+                      ? ''
                       : getStore()
                           .state
                           .userBrief
@@ -118,7 +118,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                   padding: EdgeInsets.symmetric(vertical: rSize(10)),
                   dotPosition: DotPosition(right: rSize(8), top: 0),
                   dotNum: getStore().state.userBrief.orderCenter.waitSend == 0
-                      ? null
+                      ? ''
                       : getStore()
                           .state
                           .userBrief
@@ -145,7 +145,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                   padding: EdgeInsets.symmetric(vertical: rSize(10)),
                   dotPosition: DotPosition(right: rSize(8), top: 0),
                   dotNum: getStore().state.userBrief.orderCenter.waitRecv == 0
-                      ? null
+                      ? ''
                       : getStore()
                           .state
                           .userBrief
@@ -169,6 +169,17 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
               ),
               Expanded(
                 child: CustomImageButton(
+                  padding: EdgeInsets.symmetric(vertical: rSize(10)),
+                  dotPosition: DotPosition(right: rSize(8), top: 0),
+                  dotNum: getStore().state.userBrief.orderCenter.evaNum == 0
+                      ? ''
+                      : getStore()
+                      .state
+                      .userBrief
+                      .orderCenter
+                      .evaNum
+                      .toString(),
+                  dotColor: AppColor.themeColor,
                   icon: Image.asset(
                     R.ASSETS_USER_REVIEW_PNG,
                     width: 30,
@@ -188,6 +199,17 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                   // dotNum: null,
                   // padding: EdgeInsets.symmetric(vertical: rSize(10)),
                   // dotColor: AppColor.themeColor,
+                  padding: EdgeInsets.symmetric(vertical: rSize(10)),
+                  dotPosition: DotPosition(right: rSize(8), top: 0),
+                  dotNum: getStore().state.userBrief.orderCenter.evaNum == 0
+                      ? ''
+                      : getStore()
+                      .state
+                      .userBrief
+                      .orderCenter
+                      .evaNum
+                      .toString(),
+                  dotColor: AppColor.themeColor,
                   icon: Image.asset(
                     R.ASSETS_USER_AFTER_SALE_PNG,
                     width: 30,

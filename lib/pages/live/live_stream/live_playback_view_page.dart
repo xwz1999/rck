@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:chewie/chewie.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:recook/widgets/play_widget/PlayerControls.dart';
 import 'package:video_player/video_player.dart';
 
 import 'package:recook/constants/api.dart';
@@ -55,6 +56,7 @@ class _LivePlaybackViewPageState extends State<LivePlaybackViewPage> {
             aspectRatio: _videoPlayerController.value.aspectRatio,
             autoPlay: true,
             showControls: true,
+            customControls: CupertinoControls(backgroundColor: Colors.transparent,iconColor: Colors.white,),
           );
 
           setState(() {});
