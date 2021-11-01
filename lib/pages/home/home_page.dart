@@ -29,12 +29,14 @@ import 'package:recook/models/category_model.dart';
 import 'package:recook/models/country_list_model.dart';
 import 'package:recook/pages/boosting_activitiy/boosting_activity.dart';
 import 'package:recook/pages/buy_tickets/choose_tickets_type_page.dart';
+import 'package:recook/pages/home/search_page.dart';
 import 'package:recook/pages/home/widget/good_high_commission_page.dart';
 import 'package:recook/pages/home/widget/good_preferential_list_page.dart';
 import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
 import 'package:recook/pages/live/models/king_coin_list_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:recook/pages/seckill_activity/seckill_activity_page.dart';
+import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:recook/utils/storage/hive_store.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:sharesdk_plugin/sharesdk_plugin.dart';
@@ -155,6 +157,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   StateSetter _bannerState;
   GlobalKey<AnimatedHomeBackgroundState> _animatedBackgroundState = GlobalKey();
   GlobalKey<HomeSliverAppBarState> _sliverAppBarGlobalKey = GlobalKey();
+  String keyWords = '锅';
 
   GifController _gifController;
   @override
@@ -179,7 +182,15 @@ class _HomePageState extends BaseStoreState<HomePage>
   @override
   void initState() {
     super.initState();
+    Future.delayed(Duration.zero, () async {
+      UserManager.instance.kingCoinListModelList =
+      await UserFunc.getKingCoinList();
+      setState(() {
+
+      });
+    });
     _getWeather();//部分机型获取地址较慢 所以放在外面先获取
+
     requestPermission().then((value) {
       if (value) {
         //监听要在设置参数之前 否则无法获取定位
@@ -298,6 +309,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     _userLottery();
     _getNoticeList();
     _userCardNoticeList();
+
   }
 
   // 获取当前页面需要刷新的数据
@@ -305,6 +317,14 @@ class _HomePageState extends BaseStoreState<HomePage>
     _getActiviteList();
     _getBannerList();
     _getPromotionList();
+    _getKeyWords();
+    Future.delayed(Duration.zero, () async {
+      kingCoinListModelList =
+      await UserFunc.getKingCoinList();
+      setState(() {
+
+      });
+    });
   }
 
   _handleOpenInstallEvents() {
@@ -527,7 +547,7 @@ class _HomePageState extends BaseStoreState<HomePage>
               width: 6,
             ),
             Text(
-              "厨房小工具",
+              keyWords,
               style: TextStyle(
                   color: Colors.white.withOpacity(0.9),
                   fontSize: 13 * 2.sp,
@@ -537,7 +557,8 @@ class _HomePageState extends BaseStoreState<HomePage>
         ),
       ),
       onTap: () {
-        AppRouter.push(context, RouteName.SEARCH);
+        Get.to(SearchPage(keyWords: keyWords,));
+        //AppRouter.push(context, RouteName.SEARCH);
       },
     );
     String locationCityName =
@@ -640,8 +661,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     timeHeight +
                     tabbarHeight -
                     ScreenUtil().statusBarHeight -
-                    tabbarHeight +
-                    4+84
+                    4
                 : weatherHeight +
                     bannerHeight +
                     buttonsHeight +
@@ -652,7 +672,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     timeHeight +
                     tabbarHeight -
                     ScreenUtil().statusBarHeight +
-                    4+84,
+                    4,
             flexibleSpace: _flexibleSpaceBar(context),
             bottom: _promotionList == null || _promotionList.length == 0
                 ? PreferredSize(
@@ -748,6 +768,15 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   FlexibleSpaceBar _flexibleSpaceBar(context) {
+    if(kingCoinListModelList == null){
+      Future.delayed(Duration.zero, () async {
+        kingCoinListModelList =
+        await UserFunc.getKingCoinList();
+        setState(() {
+
+        });
+      });
+    }
     return FlexibleSpaceBar(
       collapseMode: CollapseMode.pin,
       background: Container(
@@ -1066,76 +1095,76 @@ class _HomePageState extends BaseStoreState<HomePage>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     _buttonTitleRow(
-                        AppConfig.commissionByRoleLevel
+                        !AppConfig.commissionByRoleLevel
                             ? kingCoinListModelList[0].data[0]
                             : kingCoinListModelList[0].data[1],
                         // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
                         onPressed: () async {
-                          if (AppConfig.commissionByRoleLevel) {
-                            _KingCionGetto(kingCoinListModelList[0].data[0]
+                          if (!AppConfig.commissionByRoleLevel) {
+                            _kingCoinGet(kingCoinListModelList[0].data[0]
                                 .kingName.name);
                           } else {
-                            _KingCionGetto(kingCoinListModelList[0].data[1]
+                            _kingCoinGet(kingCoinListModelList[0].data[1]
                                 .kingName.name);
                           }
                         }
                       ),
                     _buttonTitleRow(
-                        AppConfig.commissionByRoleLevel
+                        !AppConfig.commissionByRoleLevel
                             ? kingCoinListModelList[1].data[0]
                             : kingCoinListModelList[1].data[1],
                         // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
                         onPressed: () async {
-                          if (AppConfig.commissionByRoleLevel) {
-                            _KingCionGetto(kingCoinListModelList[1].data[0]
+                          if (!AppConfig.commissionByRoleLevel) {
+                            _kingCoinGet(kingCoinListModelList[1].data[0]
                                 .kingName.name);
                           } else {
-                            _KingCionGetto(kingCoinListModelList[1].data[1]
+                            _kingCoinGet(kingCoinListModelList[1].data[1]
                                 .kingName.name);
                           }
                         }
                     ),
                     _buttonTitleRow(
-                        AppConfig.commissionByRoleLevel
+                        !AppConfig.commissionByRoleLevel
                             ? kingCoinListModelList[2].data[0]
                             : kingCoinListModelList[2].data[1],
                         // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
                         onPressed: () async {
-                          if (AppConfig.commissionByRoleLevel) {
-                            _KingCionGetto(kingCoinListModelList[2].data[0]
+                          if (!AppConfig.commissionByRoleLevel) {
+                            _kingCoinGet(kingCoinListModelList[2].data[0]
                                 .kingName.name);
                           } else {
-                            _KingCionGetto(kingCoinListModelList[2].data[1]
+                            _kingCoinGet(kingCoinListModelList[2].data[1]
                                 .kingName.name);
                           }
                         }
                     ),
                     _buttonTitleRow(
-                        AppConfig.commissionByRoleLevel
+                        !AppConfig.commissionByRoleLevel
                             ? kingCoinListModelList[3].data[0]
                             : kingCoinListModelList[3].data[1],
                         // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
                         onPressed: () async {
-                          if (AppConfig.commissionByRoleLevel) {
-                            _KingCionGetto(kingCoinListModelList[3].data[0]
+                          if (!AppConfig.commissionByRoleLevel) {
+                            _kingCoinGet(kingCoinListModelList[3].data[0]
                                 .kingName.name);
                           } else {
-                            _KingCionGetto(kingCoinListModelList[3].data[1]
+                            _kingCoinGet(kingCoinListModelList[3].data[1]
                                 .kingName.name);
                           }
                         }
                     ),
                     _buttonTitleRow(
-                        AppConfig.commissionByRoleLevel
+                        !AppConfig.commissionByRoleLevel
                             ? kingCoinListModelList[4].data[0]
                             : kingCoinListModelList[4].data[1],
                         // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
                         onPressed: () async {
-                          if (AppConfig.commissionByRoleLevel) {
-                            _KingCionGetto(kingCoinListModelList[4].data[0]
+                          if (!AppConfig.commissionByRoleLevel) {
+                            _kingCoinGet(kingCoinListModelList[4].data[0]
                                 .kingName.name);
                           } else {
-                            _KingCionGetto(kingCoinListModelList[4].data[1]
+                            _kingCoinGet(kingCoinListModelList[4].data[1]
                                 .kingName.name);
                           }
                         }
@@ -1155,76 +1184,76 @@ class _HomePageState extends BaseStoreState<HomePage>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     _buttonTitleRow(
-                        AppConfig.commissionByRoleLevel
+                        !AppConfig.commissionByRoleLevel
                             ? kingCoinListModelList[5].data[0]
                             : kingCoinListModelList[5].data[1],
                         // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
                         onPressed: () async {
-                          if (AppConfig.commissionByRoleLevel) {
-                            _KingCionGetto(kingCoinListModelList[5].data[0]
+                          if (!AppConfig.commissionByRoleLevel) {
+                            _kingCoinGet(kingCoinListModelList[5].data[0]
                                 .kingName.name);
                           } else {
-                            _KingCionGetto(kingCoinListModelList[5].data[1]
+                            _kingCoinGet(kingCoinListModelList[5].data[1]
                                 .kingName.name);
                           }
                         }
                     ),
                     _buttonTitleRow(
-                        AppConfig.commissionByRoleLevel
+                        !AppConfig.commissionByRoleLevel
                             ? kingCoinListModelList[6].data[0]
                             : kingCoinListModelList[6].data[1],
                         // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
                         onPressed: () async {
-                          if (AppConfig.commissionByRoleLevel) {
-                            _KingCionGetto(kingCoinListModelList[6].data[0]
+                          if (!AppConfig.commissionByRoleLevel) {
+                            _kingCoinGet(kingCoinListModelList[6].data[0]
                                 .kingName.name);
                           } else {
-                            _KingCionGetto(kingCoinListModelList[6].data[1]
+                            _kingCoinGet(kingCoinListModelList[6].data[1]
                                 .kingName.name);
                           }
                         }
                     ),
                     _buttonTitleRow(
-                        AppConfig.commissionByRoleLevel
+                        !AppConfig.commissionByRoleLevel
                             ? kingCoinListModelList[7].data[0]
                             : kingCoinListModelList[7].data[1],
                         // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
                         onPressed: () async {
-                          if (AppConfig.commissionByRoleLevel) {
-                            _KingCionGetto(kingCoinListModelList[7].data[0]
+                          if (!AppConfig.commissionByRoleLevel) {
+                            _kingCoinGet(kingCoinListModelList[7].data[0]
                                 .kingName.name);
                           } else {
-                            _KingCionGetto(kingCoinListModelList[7].data[1]
+                            _kingCoinGet(kingCoinListModelList[7].data[1]
                                 .kingName.name);
                           }
                         }
                     ),
                     _buttonTitleRow(
-                        AppConfig.commissionByRoleLevel
+                        !AppConfig.commissionByRoleLevel
                             ? kingCoinListModelList[8].data[0]
                             : kingCoinListModelList[8].data[1],
                         // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
                         onPressed: () async {
-                          if (AppConfig.commissionByRoleLevel) {
-                            _KingCionGetto(kingCoinListModelList[8].data[0]
+                          if (!AppConfig.commissionByRoleLevel) {
+                            _kingCoinGet(kingCoinListModelList[8].data[0]
                                 .kingName.name);
                           } else {
-                            _KingCionGetto(kingCoinListModelList[8].data[1]
+                            _kingCoinGet(kingCoinListModelList[8].data[1]
                                 .kingName.name);
                           }
                         }
                     ),
                     _buttonTitleRow(
-                        AppConfig.commissionByRoleLevel
+                        !AppConfig.commissionByRoleLevel
                             ? kingCoinListModelList[9].data[0]
                             : kingCoinListModelList[9].data[1],
                         // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
                         onPressed: () async {
-                          if (AppConfig.commissionByRoleLevel) {
-                            _KingCionGetto(kingCoinListModelList[9].data[0]
+                          if (!AppConfig.commissionByRoleLevel) {
+                            _kingCoinGet(kingCoinListModelList[9].data[0]
                                 .kingName.name);
                           } else {
-                            _KingCionGetto(kingCoinListModelList[9].data[1]
+                            _kingCoinGet(kingCoinListModelList[9].data[1]
                                 .kingName.name);
                           }
                         }
@@ -1294,7 +1323,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     );
   }
 
-  _KingCionGetto(String name) async {
+  _kingCoinGet(String name) async {
     switch(name){
       case '京东优选':
         List<FirstCategory> firstCategoryList = [];
@@ -1308,12 +1337,22 @@ class _HomePageState extends BaseStoreState<HomePage>
         }
         break;
       case '我的权益':
+        if (!UserManager.instance.haveLogin) {
+          AppRouter.push(context, RouteName.LOGIN);
+          return;
+        }
+
         AppRouter.push(
           globalContext,
           RouteName.SHOP_PAGE_USER_RIGHTS_PAGE,
         );
         break;
       case '一键邀请':
+        if (!UserManager.instance.haveLogin) {
+          AppRouter.push(context, RouteName.LOGIN);
+          return;
+        }
+
         ShareTool().inviteShare(context, customTitle: Container());
         break;
       case '热销榜单':
@@ -1487,6 +1526,27 @@ class _HomePageState extends BaseStoreState<HomePage>
   @override
   bool get wantKeepAlive => true;
 
+  _getKeyWords() async {
+    ResultData resultData = await HttpManager.post(APIV2.userAPI.getKeyWords, {});
+    if (resultData.data!=null) {
+      if(resultData.data['data']!=null){
+        setState(() {
+          keyWords = resultData.data['data'];
+        });
+
+      }
+      return;
+    }
+    // BannerListModel model = BannerListModel.fromJson(resultData.data);
+    // if (model.code != HttpStatus.SUCCESS) {
+    //   showError(model.msg);
+    //   return;
+    // }
+    // _bannerState(() {
+    //   _bannerList = model.data;
+    // });
+  }
+
   _getBannerList() async {
     ResultData resultData = await HttpManager.post(HomeApi.banner_list, {});
     if (!resultData.result) {
@@ -1502,6 +1562,8 @@ class _HomePageState extends BaseStoreState<HomePage>
       _bannerList = model.data;
     });
   }
+
+
 
   _getActiviteList() async {
     ResultData resultData = await HttpManager.post(HomeApi.activity_list, {});

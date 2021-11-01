@@ -71,29 +71,29 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
             children: [
               Row(
                 children: [
-                  CustomImageButton(
-                    icon: ImageIcon(
-                      AssetImage(
-                        "assets/navigation_like.png",
-                      ),
-                      size: 18,
-                    ),
-                    title: "收藏",
-                    fontSize: 10,
-                    color: getCurrentAppItemColor(),
-                    onPressed: () {
-                      push(RouteName.MY_FAVORITE_PAGE);
-                    },
-                  ),
-                  10.wb,
+                  // CustomImageButton(
+                  //   icon: ImageIcon(
+                  //     AssetImage(
+                  //       "assets/navigation_like.png",
+                  //     ),
+                  //     size: 18,
+                  //   ),
+                  //   title: "收藏",
+                  //   fontSize: 10,
+                  //   color: getCurrentAppItemColor(),
+                  //   onPressed: () {
+                  //     push(RouteName.MY_FAVORITE_PAGE);
+                  //   },
+                  // ),
+                  // 10.wb,
                   CustomImageButton(
                     // icon: Icon(AppIcons.icon_message),
                     icon: ImageIcon(
                       AssetImage("assets/navigation_msg.png"),
-                      size: 18,
+                      size: 30,
                     ),
                     title: "客服",
-                    fontSize: 10,
+                    fontSize: 12,
                     color: getCurrentAppItemColor(),
                     onPressed: () {
                       MQManager.goToChat(

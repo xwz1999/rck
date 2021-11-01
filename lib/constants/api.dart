@@ -213,6 +213,8 @@ class GoodsApi {
       "/v1/goods/list/purchase/ranking";
 
   static const String goods_code_search = '/v1/goods/code/search';
+
+  static const String keyWords = '/v1/goods/keyWords/es';//分词
 }
 
 class OrderApi {

@@ -8,8 +8,11 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:recook/base/base_store_state.dart';
 
 import 'package:recook/constants/header.dart';
+import 'package:recook/pages/user/my_favorites_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
@@ -28,7 +31,7 @@ class DetailAppBar extends StatefulWidget {
   }
 }
 
-class _DetailAppBarState extends State<DetailAppBar> {
+class _DetailAppBarState extends BaseStoreState<DetailAppBar> {
   // appbar背景色
   Color _appBarBgColor = Colors.transparent;
 
@@ -75,7 +78,7 @@ class _DetailAppBarState extends State<DetailAppBar> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildContext(BuildContext context, {store}) {
     return _buildCustomAppBar(context);
   }
 
@@ -109,7 +112,7 @@ class _DetailAppBarState extends State<DetailAppBar> {
       ),
       actions: <Widget>[
         Container(
-          margin: EdgeInsets.only(right: 10),
+          padding: EdgeInsets.only(right: 10),
           child: Center(
             child: CustomImageButton(
               // icon: Icon(
@@ -117,10 +120,34 @@ class _DetailAppBarState extends State<DetailAppBar> {
               //   size: 16*2.sp,
               //   color: selectedOne ? _itemColor : Colors.black,
               // ),
+              dotPosition: DotPosition(right: rSize(0), top: 0),
+              //dotTextColor: AppColor.themeColor,
+              dotSize: 12,
+              dotFontSize: 7.rsp,
+              dotNum: getStore().state.userBrief.orderCenter.collectionNum == 0
+                  ? ''
+                  : getStore().state.userBrief.orderCenter.collectionNum > 99
+                      ? 99
+                      : getStore()
+                          .state
+                          .userBrief
+                          .orderCenter
+                          .collectionNum
+                          .toString(),
+              dotColor: AppColor.themeColor,
+              icon: ImageIcon(
+                AssetImage(
+                  "assets/navigation_like.png",
+                ),
+                size: 18,
+                color: selectedOne ? _itemColor : Colors.black,
+              ),
               buttonSize: rSize(30),
               borderRadius: BorderRadius.all(Radius.circular(20)),
-              // backgroundColor: selectedOne ? _itemBgColor : Colors.transparent,
-              // onPressed: widget.onShareClick,
+              backgroundColor: selectedOne ? _itemBgColor : Colors.transparent,
+              onPressed: () {
+                Get.to(MyFavoritesPage());
+              },
             ),
           ),
         )

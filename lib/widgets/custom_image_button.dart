@@ -37,6 +37,7 @@ class CustomImageButton extends StatefulWidget {
       this.child,
       this.dotNum = "",
       this.dotColor = Colors.red,
+      this.dotTextColor = Colors.white,
       this.dotPosition = const DotPosition(
         top: 0,
         left: null,
@@ -73,6 +74,7 @@ class CustomImageButton extends StatefulWidget {
   final double dotSize;
   final double dotFontSize;
   final bool greyWhenTapped;
+  final Color dotTextColor;
 
   @override
   State<StatefulWidget> createState() {
@@ -192,7 +194,7 @@ class _CustomImageButtonState extends State<CustomImageButton> {
                           textAlign: TextAlign.center,
                           style: AppTextStyle.generate(
                               widget.dotFontSize.rw,
-                              color: Colors.white,
+                              color: widget.dotTextColor,
                               fontWeight: FontWeight.w500),
                         ),
                       ))

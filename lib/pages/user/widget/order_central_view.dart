@@ -201,13 +201,13 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                   // dotColor: AppColor.themeColor,
                   padding: EdgeInsets.symmetric(vertical: rSize(10)),
                   dotPosition: DotPosition(right: rSize(8), top: 0),
-                  dotNum: getStore().state.userBrief.orderCenter.evaNum == 0
+                  dotNum: getStore().state.userBrief.orderCenter.afterNum == 0
                       ? ''
                       : getStore()
                       .state
                       .userBrief
                       .orderCenter
-                      .evaNum
+                      .afterNum
                       .toString(),
                   dotColor: AppColor.themeColor,
                   icon: Image.asset(

@@ -13,6 +13,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:recook/models/goods_detail_model.dart' hide Data, Promotion;
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:recook/pages/home/function/home_fuc.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
@@ -53,9 +54,10 @@ import 'package:recook/widgets/refresh_widget.dart';
 
 class SearchPage extends StatefulWidget {
   final int countryId;
-  final int jdType; //1为京东商品 空为非jd
+  final int jdType;
+  final String keyWords;//1为京东商品 空为非jd
 
-  const SearchPage({Key key, this.countryId, this.jdType}) : super(key: key);
+  const SearchPage({Key key, this.countryId, this.jdType, this.keyWords}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -79,6 +81,8 @@ class _SearchPageState extends BaseStoreState<SearchPage>
   TextEditingController _textEditController;
 
   List<String> _searchHistory = [];
+
+  List<KeyWordModel> _recommendWords = [];//推荐分词
   List<bool> _barBool = [false, false, false];
   bool _startSearch = false;
 
@@ -113,6 +117,10 @@ class _SearchPageState extends BaseStoreState<SearchPage>
 
   @override
   void initState() {
+    // Future.delayed(Duration.zero, () async {
+    //   _recommendWords = await HomeFuc.recommendWords(widget.keyWords);
+    // });
+
     if (widget.jdType == 1) {
       _jDType = 1;
       _sortType = SortType.priceAsc;
@@ -125,7 +133,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
         period: Duration(milliseconds: 700),
       );
     getSearchListFromSharedPreferences();
-    _textEditController = TextEditingController();
+    _textEditController = TextEditingController(text: widget.keyWords);
     _filterController = FilterToolBarController();
     super.initState();
     _presenter = GoodsListPresenterImpl();
@@ -168,7 +176,20 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                 controller: _filterController,
                 body: Column(
                   children: <Widget>[
+
                     _filterToolBar(context),
+                    Offstage(
+                        offstage: !(_listViewController.getData().length==0),
+                        child: Container(
+                          color: Colors.white,
+                          child: Container(
+                            padding: EdgeInsets.only(top: 5.rw),
+                              child: Column(
+                                children: <Widget>[
+                                  _recommendWidget(),
+                                ],
+                              )),
+                        )),
                     Expanded(child: _buildList(context)),
                   ],
                 ),
@@ -403,7 +424,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
           SliverToBoxAdapter(
             child: NoDataView(
               title: "换个关键词搜索一下吧~",
-              height: 500,
+              height: 200,
             ),
           ),
           SliverToBoxAdapter(
@@ -744,6 +765,9 @@ class _SearchPageState extends BaseStoreState<SearchPage>
       keyword: _searchText,
       JDType: _jDType,
     );
+
+    _recommendWords = await HomeFuc.recommendWords(_searchText);
+
     cancel();
     _startSearch = true;
     setState(() {});
@@ -933,6 +957,71 @@ class _SearchPageState extends BaseStoreState<SearchPage>
       ),
     );
   }
+
+  _keyWordsTitle(){
+    return Container(
+        child: Container(
+          margin: EdgeInsets.only(left: 10, top: 5,right: 10),
+          child:
+          Text(
+            '没找到相关宝贝，试试',
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+              fontSize: 14 * 2.sp,
+            ),
+          ),
+        ));
+  }
+
+  _recommendWidget() {
+    List<Widget> keyWordList = [];
+    int leg = 0;
+    if (_recommendWords != null && _recommendWords.length > 0) {
+      for (int i=0;i<_recommendWords.length;i++) {
+        keyWordList.add(Padding(
+          padding: EdgeInsets.only(right: 10, bottom: 5),
+          child: ChoiceChip(
+            backgroundColor: AppColor.frenchColor,
+            // disabledColor: Colors.blue,
+            labelStyle: TextStyle(fontSize: 15 * 2.sp, color: Colors.black),
+            labelPadding: EdgeInsets.only(left: 20, right: 20),
+            materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            onSelected: (bool value) async {
+              _searchText = _recommendWords[i].token;
+              _textEditController.text = _recommendWords[i].token;
+              FocusManager.instance.primaryFocus.unfocus();
+              _callRefresh();
+              setState(() {});
+            },
+            label: Text(_recommendWords[i].token),
+            selected: false,
+          ),
+        ));
+      }
+      keyWordList.insert(0, _keyWordsTitle());
+    }
+
+
+
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.only(left: 10, right: 10),
+            child: Wrap(
+              children: keyWordList,
+            ),
+          ),
+          // Spacer()
+        ],
+      ),
+    );
+  }
+
 
   getSearchListFromSharedPreferences() async {
     // 获取实例

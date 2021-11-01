@@ -175,6 +175,10 @@ class UserAPI {
   String get wechatUnboundhandle => '/v2/app/command/user/unbundling_wx';
 
 
+  ///搜索栏的关键字
+  String get getKeyWords => '/v2/app/aku_school/search_word';
+
+
 }
 
 class BenefitAPI {

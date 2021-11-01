@@ -184,7 +184,7 @@ class BrandDetailGridItem extends StatelessWidget {
                     ): WidgetSpan(child: SizedBox()),
                     TextSpan(
                       text: this.goods.goodsName,
-                      style: AppTextStyle.generate(14 * 2.sp,
+                      style: AppTextStyle.generate(15 * 2.sp,
                           fontWeight: FontWeight.w600),
                     ),
                   ],
@@ -286,7 +286,7 @@ class BrandDetailGridItem extends StatelessWidget {
                           style: TextStyle(
                               letterSpacing: -1,
                               wordSpacing: -1,
-                              fontSize: 18 * 2.sp,
+                              fontSize: 19 * 2.sp,
                               color: Color(0xFFC92219),
                               fontWeight: FontWeight.w500),
                         ),

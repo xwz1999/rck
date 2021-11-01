@@ -43,6 +43,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
   void initState() {
     super.initState();
 
+
     WidgetsBinding.instance.addPostFrameCallback((callback) async {
       await Future.delayed(Duration(milliseconds: 2450));
       if (HiveStore.appBox.get('privacy_init') == null) {
@@ -60,6 +61,13 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
         } else
           HiveStore.appBox.put('privacy_init', true);
       }
+      Future.delayed(Duration.zero, () async {
+        UserManager.instance.kingCoinListModelList =
+        await UserFunc.getKingCoinList();
+        setState(() {
+
+        });
+      });
       PowerLogger.start(context, debug: AppConfig.debug);//AppConfig.debug  在正式服数据下进行调试
       cameras = await availableCameras();
       PackageInfo _packageInfo = await PackageInfo.fromPlatform();
@@ -75,10 +83,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
           licenseKey: key,
         );
       });
-      Future.delayed(Duration.zero, () async {
-        UserManager.instance.kingCoinListModelList =
-        await UserFunc.getKingCoinList();
-      });
+
 
       AppRouter.fadeAndReplaced(globalContext, RouteName.WELCOME_PAGE);
     });

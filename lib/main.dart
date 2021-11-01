@@ -230,6 +230,7 @@ class MyAppState extends State<MyApp> {
     });
   }
 
+  final botToastBuilder = BotToastInit();
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -252,7 +253,14 @@ class MyAppState extends State<MyApp> {
                   }
                 },
                 child: GetMaterialApp(
-                  builder: BotToastInit(),
+                  builder: (context, child) {
+                    return MediaQuery(
+                      //设置文字大小不随系统设置改变
+                      data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+                      child: BotToastInit().call(context,child),
+                    );
+                  },
+                  //builder:  BotToastInit(),
                   navigatorObservers: [BotToastNavigatorObserver()],
                   localizationsDelegates: [
                     GlobalMaterialLocalizations.delegate,
