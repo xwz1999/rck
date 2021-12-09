@@ -35,8 +35,8 @@ class UserFunc {
   }
 
   //获取金刚区图标
-  static Future<List<KingCoinListModel>> getKingCoinList() async {//new
-    ResultData result = await HttpManager.post(APIV2.userAPI.getKingCionNew, {
+  static Future<List<KingCoin>> getKingCoinList() async {//new
+    ResultData result = await HttpManager.post(APIV2.userAPI.getKingCion, {
       'user_id': UserManager.instance.user.info.id != null
           ? UserManager.instance.user.info.id
           : 0,
@@ -44,7 +44,7 @@ class UserFunc {
     if (result.data != null) {
       if (result.data['data'] != null) {
         return (result.data['data'] as List)
-            .map((e) => KingCoinListModel.fromJson(e))
+            .map((e) => KingCoin.fromJson(e))
             .toList();
       }
     }

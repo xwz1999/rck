@@ -137,9 +137,9 @@ class _OrderReturnAddressPageState
         _addressModel == null ? Container() : _addressWidget(),
         _addressModel == null ? Container() : _expressInfoView(),
         _addressModel == null ? Container() : _inputExpressWidget(),
-        _addressModel == null || _statusModel.data.reasonType == 1
-            ? Container()
-            : _inputExpressFeeWidget(),
+        // _addressModel == null || _statusModel.data.reasonType == 1
+        //     ? Container()
+        //     : _inputExpressFeeWidget(),
         Container(
           height: 60 * 2.h,
         ),

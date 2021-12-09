@@ -33,6 +33,7 @@ import 'package:recook/pages/home/search_page.dart';
 import 'package:recook/pages/home/widget/good_high_commission_page.dart';
 import 'package:recook/pages/home/widget/good_preferential_list_page.dart';
 import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
+import 'package:recook/pages/home/wx_page.dart';
 import 'package:recook/pages/live/models/king_coin_list_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:recook/pages/seckill_activity/seckill_activity_page.dart';
@@ -124,7 +125,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   TabController _tabController;
   int _tabIndex = 0;
 
-  List<KingCoinListModel> kingCoinListModelList;
+  List<KingCoin> kingCoinListModelList;
 //控制额外功能显示（后端控制）
 //false iOS隐藏
 //true 全部显示
@@ -141,17 +142,17 @@ class _HomePageState extends BaseStoreState<HomePage>
   WeatherCityModel _weatherCityModel;
 
 //定位
-  AMapFlutterLocation _amapFlutterLocation;
+  AMapFlutterLocation _amapFlutterLocation ;
   //高度
   double screenWidth = 0;
   double weatherHeight = 0;
   double bannerHeight = 0;
-  double buttonsHeight = 200;
+  double buttonsHeight = 100.rw;
   double t1Height = 0;
   double t23Height = 0;
   double t4Height = 0;
-  double timeHeight = 60;
-  double tabbarHeight = 48;
+  double timeHeight = 60.rw;
+  double tabbarHeight = 40.rw;
   HomeCountdownController _homeCountdownController;
   Color _backgroundColor;
   StateSetter _bannerState;
@@ -494,15 +495,18 @@ class _HomePageState extends BaseStoreState<HomePage>
               color: getCurrentAppItemColor(),
               onPressed: () {
                 if (UserManager.instance.haveLogin) {
-                  MQManager.goToChat(
-                      userId: UserManager.instance.user.info.id.toString(),
-                      userInfo: <String, String>{
-                        "name": UserManager.instance.user.info.nickname ?? "",
-                        "gender": UserManager.instance.user.info.gender == 1
-                            ? "男"
-                            : "女",
-                        "mobile": UserManager.instance.user.info.mobile ?? ""
-                      });
+                  // MQManager.goToChat(
+                  //     userId: UserManager.instance.user.info.id.toString(),
+                  //     userInfo: <String, String>{
+                  //       "name": UserManager.instance.user.info.nickname ?? "",
+                  //       "gender": UserManager.instance.user.info.gender == 1
+                  //           ? "男"
+                  //           : "女",
+                  //       "mobile": UserManager.instance.user.info.mobile ?? ""
+                  //     });
+
+                  //跳转到客服页面
+                  Get.to(()=>WxContactPage());
                 } else {
                   AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
                   // showError("请先登录!");
@@ -596,7 +600,7 @@ class _HomePageState extends BaseStoreState<HomePage>
             Icon(
               Icons.place,
               color: Colors.white,
-              size: 17,
+              size: 16.rw
             ),
             Container(
               width: 2,
@@ -607,11 +611,11 @@ class _HomePageState extends BaseStoreState<HomePage>
               maxLines: 1,
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 18,
+                fontSize: 14.rsp,
               ),
             ),
             Container(
-              width: 5,
+              width: 5.rw,
             ),
           ],
         ),
@@ -670,7 +674,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     t4Height +
                     rSize(62) +
                     timeHeight +
-                    tabbarHeight -
+                     tabbarHeight -
                     ScreenUtil().statusBarHeight +
                     4,
             flexibleSpace: _flexibleSpaceBar(context),
@@ -1095,78 +1099,50 @@ class _HomePageState extends BaseStoreState<HomePage>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     _buttonTitleRow(
-                        !AppConfig.commissionByRoleLevel
-                            ? kingCoinListModelList[0].data[0]
-                            : kingCoinListModelList[0].data[1],
-                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+                       kingCoinListModelList[0],
+
+                        "京东优选",
                         onPressed: () async {
-                          if (!AppConfig.commissionByRoleLevel) {
-                            _kingCoinGet(kingCoinListModelList[0].data[0]
-                                .kingName.name);
-                          } else {
-                            _kingCoinGet(kingCoinListModelList[0].data[1]
-                                .kingName.name);
-                          }
+
+                            _kingCoinGet("京东优选");
+
                         }
                       ),
                     _buttonTitleRow(
-                        !AppConfig.commissionByRoleLevel
-                            ? kingCoinListModelList[1].data[0]
-                            : kingCoinListModelList[1].data[1],
-                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+                       kingCoinListModelList[1],
+                         "高佣特推",
                         onPressed: () async {
-                          if (!AppConfig.commissionByRoleLevel) {
-                            _kingCoinGet(kingCoinListModelList[1].data[0]
-                                .kingName.name);
-                          } else {
-                            _kingCoinGet(kingCoinListModelList[1].data[1]
-                                .kingName.name);
-                          }
+
+                            _kingCoinGet("高佣特推");
+
                         }
                     ),
                     _buttonTitleRow(
-                        !AppConfig.commissionByRoleLevel
-                            ? kingCoinListModelList[2].data[0]
-                            : kingCoinListModelList[2].data[1],
-                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+                        kingCoinListModelList[2],
+                        "特惠专区",
                         onPressed: () async {
-                          if (!AppConfig.commissionByRoleLevel) {
-                            _kingCoinGet(kingCoinListModelList[2].data[0]
-                                .kingName.name);
-                          } else {
-                            _kingCoinGet(kingCoinListModelList[2].data[1]
-                                .kingName.name);
-                          }
+
+                            _kingCoinGet("特惠专区");
+
                         }
                     ),
                     _buttonTitleRow(
-                        !AppConfig.commissionByRoleLevel
-                            ? kingCoinListModelList[3].data[0]
-                            : kingCoinListModelList[3].data[1],
-                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+
+                             kingCoinListModelList[3],
+                         "热销榜单",
                         onPressed: () async {
-                          if (!AppConfig.commissionByRoleLevel) {
-                            _kingCoinGet(kingCoinListModelList[3].data[0]
-                                .kingName.name);
-                          } else {
-                            _kingCoinGet(kingCoinListModelList[3].data[1]
-                                .kingName.name);
-                          }
+
+                            _kingCoinGet("热销榜单");
+
                         }
                     ),
                     _buttonTitleRow(
-                        !AppConfig.commissionByRoleLevel
-                            ? kingCoinListModelList[4].data[0]
-                            : kingCoinListModelList[4].data[1],
-                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+                        kingCoinListModelList[4],
+                        "全部分类",
                         onPressed: () async {
-                          if (!AppConfig.commissionByRoleLevel) {
-                            _kingCoinGet(kingCoinListModelList[4].data[0]
-                                .kingName.name);
-                          } else {
-                            _kingCoinGet(kingCoinListModelList[4].data[1]
-                                .kingName.name);
-                          }
+
+                            _kingCoinGet("全部分类");
+
                         }
                     ),
 
@@ -1176,95 +1152,95 @@ class _HomePageState extends BaseStoreState<HomePage>
               ),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    _buttonTitleRow(
-                        !AppConfig.commissionByRoleLevel
-                            ? kingCoinListModelList[5].data[0]
-                            : kingCoinListModelList[5].data[1],
-                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
-                        onPressed: () async {
-                          if (!AppConfig.commissionByRoleLevel) {
-                            _kingCoinGet(kingCoinListModelList[5].data[0]
-                                .kingName.name);
-                          } else {
-                            _kingCoinGet(kingCoinListModelList[5].data[1]
-                                .kingName.name);
-                          }
-                        }
-                    ),
-                    _buttonTitleRow(
-                        !AppConfig.commissionByRoleLevel
-                            ? kingCoinListModelList[6].data[0]
-                            : kingCoinListModelList[6].data[1],
-                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
-                        onPressed: () async {
-                          if (!AppConfig.commissionByRoleLevel) {
-                            _kingCoinGet(kingCoinListModelList[6].data[0]
-                                .kingName.name);
-                          } else {
-                            _kingCoinGet(kingCoinListModelList[6].data[1]
-                                .kingName.name);
-                          }
-                        }
-                    ),
-                    _buttonTitleRow(
-                        !AppConfig.commissionByRoleLevel
-                            ? kingCoinListModelList[7].data[0]
-                            : kingCoinListModelList[7].data[1],
-                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
-                        onPressed: () async {
-                          if (!AppConfig.commissionByRoleLevel) {
-                            _kingCoinGet(kingCoinListModelList[7].data[0]
-                                .kingName.name);
-                          } else {
-                            _kingCoinGet(kingCoinListModelList[7].data[1]
-                                .kingName.name);
-                          }
-                        }
-                    ),
-                    _buttonTitleRow(
-                        !AppConfig.commissionByRoleLevel
-                            ? kingCoinListModelList[8].data[0]
-                            : kingCoinListModelList[8].data[1],
-                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
-                        onPressed: () async {
-                          if (!AppConfig.commissionByRoleLevel) {
-                            _kingCoinGet(kingCoinListModelList[8].data[0]
-                                .kingName.name);
-                          } else {
-                            _kingCoinGet(kingCoinListModelList[8].data[1]
-                                .kingName.name);
-                          }
-                        }
-                    ),
-                    _buttonTitleRow(
-                        !AppConfig.commissionByRoleLevel
-                            ? kingCoinListModelList[9].data[0]
-                            : kingCoinListModelList[9].data[1],
-                        // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
-                        onPressed: () async {
-                          if (!AppConfig.commissionByRoleLevel) {
-                            _kingCoinGet(kingCoinListModelList[9].data[0]
-                                .kingName.name);
-                          } else {
-                            _kingCoinGet(kingCoinListModelList[9].data[1]
-                                .kingName.name);
-                          }
-                        }
-                    ),
-
-
-                  ],
-                ),
-              ),
-            ],
-          ),
+          // Row(
+          //   mainAxisAlignment: MainAxisAlignment.center,
+          //   children: <Widget>[
+          //     Expanded(
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.center,
+          //         children: <Widget>[
+          //           _buttonTitleRow(
+          //               !AppConfig.commissionByRoleLevel
+          //                   ? kingCoinListModelList[5].data[0]
+          //                   : kingCoinListModelList[5].data[1],
+          //               // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+          //               onPressed: () async {
+          //                 if (!AppConfig.commissionByRoleLevel) {
+          //                   _kingCoinGet(kingCoinListModelList[5].data[0]
+          //                       .kingName.name);
+          //                 } else {
+          //                   _kingCoinGet(kingCoinListModelList[5].data[1]
+          //                       .kingName.name);
+          //                 }
+          //               }
+          //           ),
+          //           _buttonTitleRow(
+          //               !AppConfig.commissionByRoleLevel
+          //                   ? kingCoinListModelList[6].data[0]
+          //                   : kingCoinListModelList[6].data[1],
+          //               // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+          //               onPressed: () async {
+          //                 if (!AppConfig.commissionByRoleLevel) {
+          //                   _kingCoinGet(kingCoinListModelList[6].data[0]
+          //                       .kingName.name);
+          //                 } else {
+          //                   _kingCoinGet(kingCoinListModelList[6].data[1]
+          //                       .kingName.name);
+          //                 }
+          //               }
+          //           ),
+          //           _buttonTitleRow(
+          //               !AppConfig.commissionByRoleLevel
+          //                   ? kingCoinListModelList[7].data[0]
+          //                   : kingCoinListModelList[7].data[1],
+          //               // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+          //               onPressed: () async {
+          //                 if (!AppConfig.commissionByRoleLevel) {
+          //                   _kingCoinGet(kingCoinListModelList[7].data[0]
+          //                       .kingName.name);
+          //                 } else {
+          //                   _kingCoinGet(kingCoinListModelList[7].data[1]
+          //                       .kingName.name);
+          //                 }
+          //               }
+          //           ),
+          //           _buttonTitleRow(
+          //               !AppConfig.commissionByRoleLevel
+          //                   ? kingCoinListModelList[8].data[0]
+          //                   : kingCoinListModelList[8].data[1],
+          //               // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+          //               onPressed: () async {
+          //                 if (!AppConfig.commissionByRoleLevel) {
+          //                   _kingCoinGet(kingCoinListModelList[8].data[0]
+          //                       .kingName.name);
+          //                 } else {
+          //                   _kingCoinGet(kingCoinListModelList[8].data[1]
+          //                       .kingName.name);
+          //                 }
+          //               }
+          //           ),
+          //           _buttonTitleRow(
+          //               !AppConfig.commissionByRoleLevel
+          //                   ? kingCoinListModelList[9].data[0]
+          //                   : kingCoinListModelList[9].data[1],
+          //               // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
+          //               onPressed: () async {
+          //                 if (!AppConfig.commissionByRoleLevel) {
+          //                   _kingCoinGet(kingCoinListModelList[9].data[0]
+          //                       .kingName.name);
+          //                 } else {
+          //                   _kingCoinGet(kingCoinListModelList[9].data[1]
+          //                       .kingName.name);
+          //                 }
+          //               }
+          //           ),
+          //
+          //
+          //         ],
+          //       ),
+          //     ),
+          //   ],
+          // ),
         ],
       ),
     );
@@ -1277,7 +1253,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     );
   }
 
-  _buttonTitleRow(KingCoin kingCoin ,{onPressed}) {
+  _buttonTitleRow(KingCoin kingCoin,String name ,{onPressed}) {
     return Expanded(
       child: CupertinoButton(
         padding: EdgeInsets.zero,
@@ -1305,7 +1281,7 @@ class _HomePageState extends BaseStoreState<HomePage>
             Container(
               margin: EdgeInsets.only(top: 8),
               child: Text(
-                kingCoin.name,
+                name,
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 12 * 2.sp,
@@ -1414,6 +1390,22 @@ class _HomePageState extends BaseStoreState<HomePage>
         break;
       case '美妆护肤':
 
+      case '全部分类':
+
+      final loadingCancel = ReToast.loading();
+      await HomeDao.getCategories(success: (data, code, msg) {
+        loadingCancel();
+        CRoute.push(
+            context,
+            ClassifyPage(
+              data: data,
+              initValue: name,
+            ));
+      }, failure: (code, msg) {
+        Toast.showError(msg);
+      });
+
+
         break;
     }
   }
@@ -1436,20 +1428,22 @@ class _HomePageState extends BaseStoreState<HomePage>
               padding: EdgeInsets.only(left: rSize(10)),
               scrollDirection: Axis.horizontal,
               children: [
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_RICE_PNG, '柴米油盐'),
+                _buildSingleGoodsCard(R.ASSETS_HOME_IC_CLEAN_PNG, '个护清洁'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_DEPARTMENT_PNG, '日用百货'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_WINE_PNG, '酒饮冲调'),
-                _buildSingleGoodsCard(R.ASSETS_HOME_IC_IMPORT_PNG, '进口专区'),
+                //_buildSingleGoodsCard(R.ASSETS_HOME_IC_IMPORT_PNG, '进口专区'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_TEA_PNG, '休闲美食'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_FOOD_PNG, '有机食品'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_VEGETABLES_PNG, '蔬果生鲜'),
-                _buildSingleGoodsCard(R.ASSETS_HOME_IC_RICE_PNG, '柴米油盐'),
+
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_ELECTRICITY_PNG, '家用电器'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_PHONE_PNG, '手机数码'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_BABY_PNG, '母婴用品'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_SPORT_PNG, '运动旅行'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_MEDICALBOX_PNG, '医疗保健'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_HAIR_PNG, '美妆护肤'),
-                _buildSingleGoodsCard(R.ASSETS_HOME_IC_CLEAN_PNG, '个护清洁'),
+
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_BOOK_PNG, '图文教育'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_FURNITURE_PNG, '家具饰品'),
                 _buildSingleGoodsCard(R.ASSETS_HOME_IC_CLOTHES_PNG, '服饰内衣'),

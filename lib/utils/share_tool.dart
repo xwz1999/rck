@@ -57,28 +57,28 @@ class ShareTool {
       return Container();
     } else {
       return Container(
-        alignment: Alignment.center,
-        child: RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(children: <TextSpan>[
-            TextSpan(text: '\n'),
-            TextSpan(
-                text: '导购赚 ',
-                style: TextStyle(color: Colors.red, fontSize: 14 * 2.sp)),
-            TextSpan(
-                text: amount,
-                style: TextStyle(
-                  color: Colors.red,
-                  fontSize: 18 * 2.sp,
-                )),
-            // TextSpan(text: '\n'),
-            // TextSpan(
-            //     text: '分享后好友至少能赚$amount',
-            //     style: TextStyle(
-            //         color: Color(0xff999999),
-            //         fontSize: 10*2.sp)),
-          ]),
-        ),
+        // alignment: Alignment.center,
+        // child: RichText(
+        //   textAlign: TextAlign.center,
+        //   text: TextSpan(children: <TextSpan>[
+        //     TextSpan(text: '\n'),
+        //     TextSpan(
+        //         text: '导购赚 ',
+        //         style: TextStyle(color: Colors.red, fontSize: 14 * 2.sp)),
+        //     TextSpan(
+        //         text: amount,
+        //         style: TextStyle(
+        //           color: Colors.red,
+        //           fontSize: 18 * 2.sp,
+        //         )),
+        //     // TextSpan(text: '\n'),
+        //     // TextSpan(
+        //     //     text: '分享后好友至少能赚$amount',
+        //     //     style: TextStyle(
+        //     //         color: Color(0xff999999),
+        //     //         fontSize: 10*2.sp)),
+        //   ]),
+        // ),
       );
     }
   }
@@ -265,7 +265,7 @@ class ShareTool {
       );
     });
     PlatformItem qrcode = PlatformItem(
-        "小程序海报",
+        "二维码海报",
         Image.asset(
           R.ASSETS_SHARE_BOTTOM_BANNER_PNG,
           width: 36,
@@ -295,7 +295,7 @@ class ShareTool {
     );
 
     PlatformItem ruiCode = PlatformItem(
-      '瑞口令',
+      '云口令',
       Image.asset(
         R.ASSETS_SHARE_BOTTOM_RUI_CODE_PNG,
         width: 36,
@@ -379,12 +379,12 @@ class ShareTool {
       wechatItem,
       // weiboItem,
       // qqItem,
-      copyurl,
+      // copyurl,
     ];
-    if (ShareTool.qqInstalled) {
-      itemList.add(qqItem);
-    }
-    itemList.add(addToLiveGoodsCart);
+    // if (ShareTool.qqInstalled) {
+    //   itemList.add(qqItem);
+    // }
+    // itemList.add(addToLiveGoodsCart);
     itemList.add(ruiCode);
     // if (ShareTool.weiboInstalled){
     //   itemList.add(weiboItem);

@@ -30,8 +30,7 @@ class GoodPriceView extends StatefulWidget {
   final GoodsDetailModel detailModel;
   final VoidCallback shareCallback;
 
-  const GoodPriceView(
-      {Key key, this.detailModel, this.shareCallback})
+  const GoodPriceView({Key key, this.detailModel, this.shareCallback})
       : super(key: key);
 
   @override
@@ -46,11 +45,10 @@ class _GoodPriceViewState extends State<GoodPriceView> {
   int _status = 0;
   String _endTime = '';
 
-
   @override
   void initState() {
     super.initState();
-    if(widget.detailModel.data.secKill!=null){
+    if (widget.detailModel.data.secKill != null) {
       _status = widget.detailModel.data.secKill.secKill;
       _endTime = widget.detailModel.data.secKill.secKillEndTime;
       //_endTime= DateUtil.formatDate(DateTime.parse(_endTime), format: 'HH-mm-ss');
@@ -67,33 +65,44 @@ class _GoodPriceViewState extends State<GoodPriceView> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         _price(),
+        Container(
+          width: double.infinity,
+          height: 8.rw,
+          color: AppColor.frenchColor,
+        ),
         _name(),
+
         _detail(),
-        _label(),
+
         //京东商品隐藏
-        widget.detailModel.data.vendorId == 1800 || widget.detailModel.data.vendorId == 2000 ?SizedBox(): _service() ,
+        widget.detailModel.data.vendorId == 1800 ||
+                widget.detailModel.data.vendorId == 2000
+            ? SizedBox()
+            : Padding(
+                padding: EdgeInsets.only(top: 5.rw),
+                child: _service(),
+              ),
       ],
     );
   }
 
-  _finishedView(){
+  _finishedView() {
     return Container(
-
-      child:
-      Column(
-        //mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            '距活动结束还剩',
-            style: TextStyle(color: Colors.white, fontSize: 10.rw),
-          ),
-          5.hb,
-          CutDownWidget(time:_endTime,white: true,),
-
-        ],
-      )
-    );
+        child: Column(
+      //mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          '距活动结束还剩',
+          style: TextStyle(color: Colors.white, fontSize: 10.rw),
+        ),
+        5.hb,
+        CutDownWidget(
+          time: _endTime,
+          white: true,
+        ),
+      ],
+    ));
   }
 
   Container _price() {
@@ -105,11 +114,13 @@ class _GoodPriceViewState extends State<GoodPriceView> {
         minOriginPrice,
         maxOriginPrice;
     num coupon = 0;
+    int saleNum = 0;
 
     maxCommission = detailModel.data.price.max.commission;
     minCommission = detailModel.data.price.min.commission;
     minPrice = detailModel.data.price.min.discountPrice;
     maxPrice = detailModel.data.price.max.discountPrice;
+    saleNum = detailModel.data.salesVolume;
 
     minOriginPrice = detailModel.data.price.min.originalPrice;
     maxOriginPrice = detailModel.data.price.max.originalPrice;
@@ -151,14 +162,13 @@ class _GoodPriceViewState extends State<GoodPriceView> {
       commission =
           "${_getDoubleText(minCommission)}-${_getDoubleText(maxCommission)}";
     }
-    if(_status==1){
-
-        price = detailModel.data.secKill.secKillMinPrice.toStringAsFixed(2)??'';
-        commission = detailModel.data.secKill.secKillCommission.toStringAsFixed(2)??'';
-
+    if (_status == 1) {
+      price = detailModel.data.secKill.secKillMinPrice.toStringAsFixed(2) ?? '';
+      commission =
+          detailModel.data.secKill.secKillCommission.toStringAsFixed(2) ?? '';
     }
     return _normalPriceWidget(
-        price, commission, originPrice, isTwoPrice, coupon);
+        price, commission, originPrice, isTwoPrice, coupon, saleNum);
   }
 
   _getDoubleText(double number) {
@@ -169,63 +179,14 @@ class _GoodPriceViewState extends State<GoodPriceView> {
     }
   }
 
-  _promotionPrice(price, commission, originPrice, coupon,
+  _promotionPrice(price, commission, originPrice, coupon, saleNum,
       {isTwoPrice = false}) {
     return Container(
-      padding: EdgeInsets.only(top:0,left: 15),
+      padding: EdgeInsets.only(top: 8.rw, left: 12.rw),
       color: Colors.transparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          _status==1&&_endTime!=''?_finishedView():
-          Row(
-            children: <Widget>[
-              (coupon != null && coupon != 0)
-                  ? Container(
-                      height: rSize(23),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: AssetImage(
-                              R.ASSETS_GOODS_DETAILS_BOTTOM_GOLD_PNG),
-                        ),
-                      ),
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                            left: rSize(12),
-                            top: rSize(0),
-                            right: rSize(12),
-                            bottom: rSize(0),
-                           ),
-                        child: Text(
-                          '$coupon\元优惠券',
-                          style: TextStyle(
-                            shadows: [
-                              Shadow(
-                                color: Colors.black26,
-                                blurRadius: rSize(1),
-                                offset: Offset(0, rSize(1)),
-                              ),
-                            ],
-                            fontSize: 14 * 2.sp,
-                            color: Color(0xFFFFFFFF),
-                          ),
-                        ),
-                      ),
-                    )
-                  : SizedBox(),
-              rWBox(10),
-              Text(
-                "$originPrice",
-                style: AppTextStyle.generate(14 * 2.sp,
-                    decoration: TextDecoration.lineThrough,
-                    color: Colors.white.withOpacity(0.5),
-                    fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-          Spacer(),
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
@@ -241,253 +202,306 @@ class _GoodPriceViewState extends State<GoodPriceView> {
               RichText(
                 text: TextSpan(children: [
                   TextSpan(
-                    text: _status==1?"秒杀价":"券后价",
-                    style: TextStyle(color: Colors.yellow, fontSize: 9 * 2.sp),
+                    text: _status == 1 ? "秒杀价" : "券后价",
+                    style: TextStyle(
+                        color: Color(0xFFD5101A),
+                        fontSize: 14.rsp,
+                        fontWeight: FontWeight.bold),
                   ),
                   TextSpan(
-                      text: "￥",
-                      style: AppTextStyle.generate(
-                        ScreenAdapterUtils.setSp(
-                          14,
-                        ),
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                      )),
+                    text: "  ￥",
+                    style: TextStyle(
+                        color: Color(0xFFD5101A),
+                        fontSize: 16.rsp,
+                        fontWeight: FontWeight.w500),
+                  ),
                   TextSpan(
                       text: "$price ",
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 23 * 2.sp,
+                        color: Color(0xFFD5101A),
+                        fontSize: 22.rsp,
                         fontWeight: FontWeight.w500,
                         letterSpacing: 0,
                       )),
-                  TextSpan(
-                    text: (UserLevelTool.currentRoleLevelEnum() ==
-                                UserRoleLevel.None ||
-                            UserLevelTool.currentRoleLevelEnum() ==
-                                UserRoleLevel.Vip)
-                        ? ""
-                        : isTwoPrice
-                            ? "/ "
-                            : " / ",
-                    style: AppTextStyle.generate(15 * 2.sp,
-                        color: Colors.white, fontWeight: FontWeight.w500),
-                  ),
-                  TextSpan(
-                    text: (UserLevelTool.currentRoleLevelEnum() ==
-                                UserRoleLevel.None ||
-                            UserLevelTool.currentRoleLevelEnum() ==
-                                UserRoleLevel.Vip)
-                        ? ""
-                        : "赚",
-                    style:
-                        AppTextStyle.generate(13 * 2.sp, color: Colors.white),
-                  ),
-                  TextSpan(
-                    text: (UserLevelTool.currentRoleLevelEnum() ==
-                                UserRoleLevel.None ||
-                            UserLevelTool.currentRoleLevelEnum() ==
-                                UserRoleLevel.Vip)
-                        ? ""
-                        : "$commission",
-                    style:
-                        AppTextStyle.generate(15 * 2.sp, color: Colors.white),
-                  ),
+                  // TextSpan(
+                  //   text: (UserLevelTool.currentRoleLevelEnum() ==
+                  //       UserRoleLevel.None ||
+                  //       UserLevelTool.currentRoleLevelEnum() ==
+                  //           UserRoleLevel.Vip)
+                  //       ? ""
+                  //       : isTwoPrice
+                  //       ? "/ "
+                  //       : " / ",
+                  //   style: AppTextStyle.generate(15 * 2.sp,
+                  //       color: Colors.white, fontWeight: FontWeight.w500),
+                  // ),
+                  // TextSpan(
+                  //   text: (UserLevelTool.currentRoleLevelEnum() ==
+                  //       UserRoleLevel.None ||
+                  //       UserLevelTool.currentRoleLevelEnum() ==
+                  //           UserRoleLevel.Vip)
+                  //       ? ""
+                  //       : "赚",
+                  //   style:
+                  //   AppTextStyle.generate(13 * 2.sp, color: Colors.white),
+                  // ),
+                  // TextSpan(
+                  //   text: (UserLevelTool.currentRoleLevelEnum() ==
+                  //       UserRoleLevel.None ||
+                  //       UserLevelTool.currentRoleLevelEnum() ==
+                  //           UserRoleLevel.Vip)
+                  //       ? ""
+                  //       : "$commission",
+                  //   style:
+                  //   AppTextStyle.generate(15 * 2.sp, color: Colors.white),
+                  // ),
                 ]),
               ),
+              Spacer(),
+              Text(
+                '已售$saleNum件',
+                style: TextStyle(
+                  // shadows: [
+                  //   Shadow(
+                  //     color: Colors.black26,
+                  //     blurRadius: rSize(1),
+                  //     offset: Offset(0, rSize(1)),
+                  //   ),
+                  // ],
+                  fontSize: 12.rsp,
+                  color: Color(0xFF666666),
+                ),
+              ),
+              24.wb,
             ],
           ),
+          Spacer(),
+          _status == 1 && _endTime != ''
+              ? _finishedView()
+              : Row(
+                  children: <Widget>[
+                    (coupon != null && coupon != 0)
+                        ? Container(
+                            height: rSize(23),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: Color(0xFFD5101A), width: 0.5.rw),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(4.rw))
+                                // image: DecorationImage(
+                                //   fit: BoxFit.fill,
+                                //   image: AssetImage(
+                                //       R.ASSETS_GOODS_DETAILS_BOTTOM_GOLD_PNG),
+                                // ),
+                                ),
+                            alignment: Alignment.center,
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                left: 6.rw,
+                                top: rSize(0),
+                                right: 6.rw,
+                                bottom: rSize(0),
+                              ),
+                              child: Text(
+                                '$coupon\元优惠券',
+                                style: TextStyle(
+                                  // shadows: [
+                                  //   Shadow(
+                                  //     color: Colors.black26,
+                                  //     blurRadius: rSize(1),
+                                  //     offset: Offset(0, rSize(1)),
+                                  //   ),
+                                  // ],
+                                  fontSize: 12.rsp,
+                                  color: Color(0xFFD5101A),
+                                ),
+                              ),
+                            ),
+                          )
+                        : SizedBox(),
+                    rWBox(10),
+                    Text(
+                      "$originPrice",
+                      style: AppTextStyle.generate(
+                        16.rsp,
+                        decoration: TextDecoration.lineThrough,
+                        color: Color(0xFF999999),
+                      ),
+                    ),
+                  ],
+                ),
           rHBox(10),
         ],
       ),
     );
   }
 
-  _normalPriceWidget(price, commission, originPrice, isTwoPrice, coupon) {
+  _normalPriceWidget(
+      price, commission, originPrice, isTwoPrice, coupon, saleNum) {
     return Container(
-      height: _status==0?70: 80,
+      height: 82.rw,
       width: MediaQuery.of(context).size.width,
-      color: Colors.transparent,
-      child: Stack(
-        overflow: Overflow.visible,
-        alignment: AlignmentDirectional.center,
-        children: <Widget>[
-          Positioned(
-            child: Image.asset(
-              R.ASSETS_GOODS_DETAILS_BOTTOM_ANIMAL_PNG,
-              fit: BoxFit.fill,
-              //height: 100.rw,
-            ),
-            left: 0,
-            right: 0,
-            bottom: 0,
-          ),
-
-          _promotionPrice(
-            price,
-            commission,
-            originPrice,
-            coupon,
-            isTwoPrice: isTwoPrice,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Color(0xFFDBDBDB),
+            blurRadius: 4,
+            offset: Offset(0, -2),
           ),
         ],
+      ),
+      child: _promotionPrice(
+        price,
+        commission,
+        originPrice,
+        coupon,
+        saleNum,
+        isTwoPrice: isTwoPrice,
       ),
     );
   }
 
-
-
   Container _name() {
     return Container(
-      margin: EdgeInsets.only(left: 10,top: 10),
+      margin: EdgeInsets.all(12.rw),
+      alignment: Alignment.center,
+      width: double.infinity,
+      color: Colors.white,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                ExtendedText.rich(
-                  TextSpan(
-                    children: [
-                      detailModel.data.isImport == 1
-                          ? ExtendedWidgetSpan(
-                              alignment: PlaceholderAlignment.bottom,
-                              child: Container(
-                                margin: EdgeInsets.only(bottom: 3),
-                                alignment: Alignment.center,
-                                width: 24,
-                                height: 15,
-                                decoration: BoxDecoration(
-                                  color: detailModel.data.countryIcon == null
-                                      ? Color(0xFFCC1B4F)
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(3 * 2.w),
-                                ),
-                                child: detailModel.data.countryIcon == null
-                                    ? Text(
-                                        '进口',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 10 * 2.sp,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      )
-                                    : CustomCacheImage(
-                                        width: rSize(100),
-                                        height: rSize(100),
-                                        imageUrl: Api.getImgUrl(
-                                            detailModel.data.countryIcon),
-                                        fit: BoxFit.cover,
-                                      ),
-                              ),
-                            )
-                          : WidgetSpan(child: SizedBox()),
-                      detailModel.data.isImport == 1
-                          ? WidgetSpan(
-                              child: Container(
-                              width: 5 * 2.w,
-                            ))
-                          : WidgetSpan(child: SizedBox()),
-                      detailModel.data.vendorId==1800||detailModel.data.vendorId==2000?//jd的商品供应商 自营为1800 pop 为2000?
-                      WidgetSpan(
-                          child:  Container(
-                              padding: EdgeInsets.only(right: 5.rw),
-                              child:
-                              Container(
-                                width: 20.rw,
-                                height: 22.rw,
-                                //padding: EdgeInsets.only(left: 1.rw),
-
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: Color(0xFFC92219),
-                                  borderRadius: BorderRadius.all(Radius.circular(4.rw)),
-
-
-                                ),
-
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  //mainAxisAlignment: MainAxisAlignment.center,
-
-                                  children: [
-                                    2.hb,
-                                    Text(
-                                      detailModel.data.vendorId==1800?'京东':detailModel.data.vendorId==2000?'京东':'',
-                                      maxLines: 1,
-
-                                      style: TextStyle(fontSize: 9.rsp,height:1.05),
-                                    ),
-                                    Text(
-                                      detailModel.data.vendorId==1800?'自营':detailModel.data.vendorId==2000?'优选':'',
-                                      maxLines: 1,
-
-                                      style: TextStyle(fontSize: 9.rsp,height:1.05),
-                                    )
-                                  ],
-                                )
-                                ,
-                              )
+          detailModel.data.isImport == 1
+              ? Container(
+                  child: Container(
+                    margin: EdgeInsets.only(right: 8.rw,top: 5.rw),
+                    alignment: Alignment.center,
+                    width: 24.rw,
+                    height: 15.rw,
+                    decoration: BoxDecoration(
+                      color: detailModel.data.countryIcon == null
+                          ? Color(0xFFCC1B4F)
+                          : Colors.transparent,
+                      borderRadius: BorderRadius.circular(3 * 2.w),
+                    ),
+                    child: detailModel.data.countryIcon == null
+                        ? Text(
+                            '进口',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10 * 2.sp,
+                              fontWeight: FontWeight.w600,
+                            ),
                           )
-                      ): WidgetSpan(child: SizedBox()),
-                      TextSpan(
-                        text: detailModel.data.goodsName,
-                        style: AppTextStyle.generate(18 * 2.sp,
-                            fontWeight: FontWeight.w600,
-                            color: Color(0xff333333)),
+                        : CustomCacheImage(
+                            width: rSize(100),
+                            height: rSize(100),
+                            imageUrl:
+                                Api.getImgUrl(detailModel.data.countryIcon),
+                            fit: BoxFit.cover,
+                          ),
+                  ),
+                )
+              : Container(child: SizedBox()),
+          detailModel.data.isImport == 1
+              ? Container(
+                  child: Container(
+                  width: 5 * 2.w,
+                ))
+              : Container(child: SizedBox()),
+          detailModel.data.vendorId == 1800 || detailModel.data.vendorId == 2000
+              ? //jd的商品供应商 自营为1800 pop 为2000?
+              Container(
+                  child: Container(
+                  width: 40.rw,
+                  height: 15.rw,
+                  margin: EdgeInsets.only(right: 8.rw,top: 5.rw),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: Color(0xFFC92219),
+                    borderRadius: BorderRadius.all(Radius.circular(2.rw)),
+                  ),
+                  child: Row(
+                    //crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: [
+                      2.hb,
+                      Text(
+                        detailModel.data.vendorId == 1800
+                            ? '京东自营'
+                            : detailModel.data.vendorId == 2000
+                                ? '京东优选'
+                                : '',
+                        maxLines: 1,
+                        style: TextStyle(fontSize: 9.rsp, height: 1.05),
                       ),
+              
                     ],
                   ),
+                ))
+              : Container(child: SizedBox()),
 
-                ),
-              ],
+          Expanded(
+            child: Text(
+              detailModel.data.goodsName,
+              maxLines: 4,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyle.generate(
+                16.rsp,
+                fontWeight: FontWeight.w600,
+                color: Color(0xff333333),
+              ),
             ),
           ),
-          UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip
-              ? Container()
-              : Container(
-                  margin: EdgeInsets.only(left: 10),
-                  alignment: Alignment.topRight,
-                  child: CustomImageButton(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                    direction: Direction.horizontal,
-                    borderRadius:
-                        BorderRadius.horizontal(left: Radius.circular(20)),
-                    backgroundColor: Colors.grey[200],
-                    color: Colors.grey[500],
-                    fontSize: 13 * 2.sp,
-                    icon: Icon(
-                      AppIcons.icon_share_2,
-                      size: 18,
-                      color: Colors.grey[500],
-                    ),
-                    title: "分享",
-                    contentSpacing: 5,
-                    onPressed: () {
-                      if (widget.shareCallback != null) {
-                        widget.shareCallback();
-                      }
-                      // if (shareCallback != null) {
-                      //   shareCallback();
-                      // }
-                    },
-                  ))
+
+          // UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip
+          //     ? Container()
+          //     : Container(
+          //         margin: EdgeInsets.only(left: 10),
+          //         alignment: Alignment.topRight,
+          //         child: CustomImageButton(
+          //           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+          //           direction: Direction.horizontal,
+          //           borderRadius:
+          //               BorderRadius.horizontal(left: Radius.circular(20)),
+          //           backgroundColor: Colors.grey[200],
+          //           color: Colors.grey[500],
+          //           fontSize: 13 * 2.sp,
+          //           icon: Icon(
+          //             AppIcons.icon_share_2,
+          //             size: 18,
+          //             color: Colors.grey[500],
+          //           ),
+          //           title: "分享",
+          //           contentSpacing: 5,
+          //           onPressed: () {
+          //             if (widget.shareCallback != null) {
+          //               widget.shareCallback();
+          //             }
+          //             // if (shareCallback != null) {
+          //             //   shareCallback();
+          //             // }
+          //           },
+          //         ))
         ],
       ),
     );
   }
 
   /// 详情
-  Padding _detail() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 10.0),
-      child: Text(
-        detailModel.data.description,
-        style: AppTextStyle.generate(14 * 2.sp,
-            fontWeight: FontWeight.w400, color: Color(0xffb5b5b5)),
-      ),
-    );
+  Widget _detail() {
+    return detailModel.data.description != ''
+        ? Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Text(
+              detailModel.data.description,
+              style: AppTextStyle.generate(14 * 2.sp,
+                  fontWeight: FontWeight.w400, color: Color(0xffb5b5b5)),
+            ),
+          )
+        : SizedBox();
   }
 
   /// 标签

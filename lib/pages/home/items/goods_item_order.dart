@@ -18,8 +18,10 @@ import 'package:recook/widgets/custom_image_button.dart';
 class GoodsOrderItem extends StatefulWidget {
   final Brands brand;
   final int shippingMethod;
+  final int index;
+  final int length;
 
-  const GoodsOrderItem({Key key, this.brand, this.shippingMethod})
+  const GoodsOrderItem({Key key, this.brand, this.shippingMethod, this.length, this.index})
       : super(key: key);
 
   @override
@@ -53,15 +55,17 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
 
     return Container(
       margin:
-          EdgeInsets.only(left: rSize(13), right: rSize(13), bottom: rSize(13)),
+          EdgeInsets.only(left: rSize(13), right: rSize(13)),
       padding: EdgeInsets.all(rSize(8)),
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10))),
+          borderRadius: widget.index==0?BorderRadius.vertical(top: Radius.circular(8.rw)):
+          widget.index==widget.length-1?BorderRadius.vertical(bottom: Radius.circular(8.rw)):BorderRadius.vertical(top: Radius.circular(0.rw))
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _brandName(),
+          //_brandName(),
           _goods(context),
           // _tile(
           //     "优惠信息",
@@ -73,7 +77,7 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
           //   offstage: widget.shippingMethod == 1,
           //   child: _tile("运费", expressMsg, needArrow: false),
           // ),
-          _bottomView(goodsNum, commissionPrice)
+          //_bottomView(goodsNum, commissionPrice)
         ],
       ),
     );
@@ -164,13 +168,13 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
           CustomCacheImage(
             imageUrl: Api.getImgUrl(goods.mainPhotoUrl),
             fit: BoxFit.cover,
-            width: rSize(90),
-            height: rSize(90),
+            width: 80.rw,
+            height: 80.rw,
             borderRadius: BorderRadius.all(Radius.circular(rSize(5))),
           ),
-          Expanded(
-            child: Container(
+           Container(
               margin: EdgeInsets.symmetric(horizontal: 8),
+              width: 160.rw,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,7 +183,7 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
                     goods.goodsName,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.generate(14 * 2.sp,
+                    style: AppTextStyle.generate(12.rsp,
                         fontWeight: FontWeight.w400),
                   ),
                   rHBox(5),
@@ -251,25 +255,29 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
                   //           ),
                   //         ],
                   //       ),
-                  Row(children: [
-                    Text(
-                      "￥ ${goods.unitPrice.toStringAsFixed(2)}",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyle.generate(14 * 2.sp,
-                          fontWeight: FontWeight.w300),
-                    ),
-                    Spacer(),
-                    Text(
-                      "x${goods.quantity}",
-                      style: AppTextStyle.generate(13,
-                          color: Colors.grey, fontWeight: FontWeight.w300),
-                    ),
-                  ]),
+
                 ],
               ),
             ),
-          ),
+          Spacer(),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+            Text(
+              "￥ ${goods.unitPrice.toStringAsFixed(2)}",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyle.generate(14 * 2.sp,
+                  fontWeight: FontWeight.w300),
+            ),
+            Text(
+              "x${goods.quantity}",
+              style: AppTextStyle.generate(13,
+                  color: Colors.grey, fontWeight: FontWeight.w300),
+            ),
+          ]),
+
         ],
       ),
     );

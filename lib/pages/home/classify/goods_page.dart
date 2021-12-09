@@ -181,7 +181,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           if (_jDHaveGoods == 1) {
             _showSkuChoosePage(context);
           } else {
-            Toast.showInfo('本地区无货，请选择其他');
+            Toast.showInfo('本地区无货，请选择其他商品');
             widget.openSkuChoosePage.value = false;
           }
         } else {
@@ -446,8 +446,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           ],
         ),
       ),
+
       Container(
-        margin: EdgeInsets.symmetric(vertical: 13),
+        margin: EdgeInsets.only(top: 8.rw),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         color: Colors.white,
         child: _discountContent(context),
@@ -483,10 +484,10 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         color: Colors.white,
         child: _goodsInfoWidget(context),
       ),
-      Container(
-          color: Colors.white,
-          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-          child: _userEvaluation()),
+      // Container(
+      //     color: Colors.white,
+      //     padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+      //     child: _userEvaluation()),
       AppConfig.getShowCommission()
           ? Container(
               color: Colors.white,
@@ -528,39 +529,38 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        GestureDetector(
-          behavior: HitTestBehavior.translucent,
-          onTap: widget.goodsDetail.data.coupons.length == 0
-              ? null
-              : () {
-                  if (UserManager.instance.user.info.id == 0) {
-                    AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
-                    Toast.showError('请先登录...');
-                    return;
-                  }
-                  if(widget.goodsDetail.data.secKill!=null?widget.goodsDetail.data.secKill.secKill==0:true)
-                  {
-                    showCustomModalBottomSheet(
-                        context: context,
-                        builder: (context) {
-                          return CouponListPage(
-                            brandId: widget.goodsDetail.data.brandId,
-                          );
-                        });
-                  }
-
-                },
-          child: Row(children: _coupons()),
-        ),
+        // GestureDetector(
+        //   behavior: HitTestBehavior.translucent,
+        //   onTap: widget.goodsDetail.data.coupons.length == 0
+        //       ? null
+        //       : () {
+        //           if (UserManager.instance.user.info.id == 0) {
+        //             AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+        //             Toast.showError('请先登录...');
+        //             return;
+        //           }
+        //           if(widget.goodsDetail.data.secKill!=null?widget.goodsDetail.data.secKill.secKill==0:true)
+        //           {
+        //             showCustomModalBottomSheet(
+        //                 context: context,
+        //                 builder: (context) {
+        //                   return CouponListPage(
+        //                     brandId: widget.goodsDetail.data.brandId,
+        //                   );
+        //                 });
+        //           }
+        //
+        //         },
+        //   child: Row(children: _coupons()),
+        // ),
         Container(
-          margin: EdgeInsets.only(top: 10),
           child: GestureDetector(
             onTap: () {
               if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
                 if (_jDHaveGoods == 1) {
                   _showSkuChoosePage(context);
                 } else {
-                  Toast.showInfo('本地区无货，请选择其他');
+                  Toast.showInfo('本地区无货，请选择其他商品');
                 }
               } else {
                 _showSkuChoosePage(context);
@@ -1524,17 +1524,17 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     Row row = Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(5)),
-          child: CustomCacheImage(
-              height: rSize(80),
-              width: rSize(80),
-              fit: BoxFit.cover,
-              imageUrl: Api.getImgUrl(widget.goodsDetail.data.brand.logoUrl)),
-        ),
-        Container(
-          width: 10,
-        ),
+        // ClipRRect(
+        //   borderRadius: BorderRadius.all(Radius.circular(5)),
+        //   child: CustomCacheImage(
+        //       height: rSize(80),
+        //       width: rSize(80),
+        //       fit: BoxFit.cover,
+        //       imageUrl: Api.getImgUrl(widget.goodsDetail.data.brand.logoUrl)),
+        // ),
+        // Container(
+        //   width: 10,
+        // ),
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

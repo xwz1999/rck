@@ -28,6 +28,7 @@ import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
 import 'package:recook/widgets/goods_item.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 
 class CommodityDetailPage extends StatefulWidget {
@@ -74,7 +75,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
     _roomId = widget.arguments["roomId"];
     _seckillout = widget.arguments['seckillout']??false;
 
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 2, vsync: this);
     _appBarController = AppBarController();
     _bottomBarController = BottomBarController();
 
@@ -190,7 +191,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
                             MP.MaterialPage(
                               goodsID: _goodsId,
                             ),
-                            GoodsReportPage(goodsId: _goodsId,),
+                            // GoodsReportPage(goodsId: _goodsId,),
                           ]),
                     ),
                     _bottomBar()
@@ -240,10 +241,10 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
             "发现",
             style: TextStyle(color: Colors.black),
           ),
-          Text(
-            "产品画像",
-            style: TextStyle(color: Colors.black),
-          ),
+          // Text(
+          //   "产品画像",
+          //   style: TextStyle(color: Colors.black),
+          // ),
         ]);
   }
 
@@ -277,6 +278,18 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
 //        GoodsDetailModelImpl.
       },
       buyListener: () {
+        num coupon = 0;
+        if (_goodsDetail.data.sku != null && _goodsDetail.data.sku.length > 0) {
+          coupon = _goodsDetail.data.sku[0].coupon;
+          _goodsDetail.data.sku.forEach((element) {
+            if (coupon > element.coupon) coupon = element.coupon;
+          });
+        } else {
+          coupon = 0;
+        }
+        if(coupon>0){
+          Toast.showInfo('$coupon元优惠券已领');
+        }
         _openSkuChoosePage.value = true;
 
       },

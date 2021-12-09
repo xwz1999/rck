@@ -116,7 +116,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
         child: Row(
           children: <Widget>[
             Container(
-              width: 5,
+              width: 20.rw,
             ),
             CustomImageButton(
               dotSize: 13,
@@ -124,7 +124,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
               dotPosition: DotPosition(right: rSize(0), top: 0),
               dotNum: widget.shopCartNum,
               dotColor: AppColor.themeColor,
-              padding: EdgeInsets.symmetric(horizontal: 6),
+              padding: EdgeInsets.symmetric(horizontal: 6.rw),
               title: "购物车",
               contentSpacing: 0,
               icon: Icon(
@@ -134,9 +134,12 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
               fontSize: 10,
               onPressed: widget.addToShopCartListener,
             ),
+            Container(
+              width: 10.rw,
+            ),
             CustomImageButton(
               title: "收藏",
-              padding: EdgeInsets.only(left: 6, top: 5, right: 5),
+              padding: EdgeInsets.only(left: 6.rw, top: 5.rw, right: 5.rw),
               contentSpacing: 3,
               icon: Icon(
                 _collected
@@ -145,41 +148,41 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                 color: _collected ? Colors.red : Colors.grey[900],
                 size: rSize(22),
               ),
-              fontSize: 10,
+              fontSize: 10.rsp,
               onPressed: () {
                 widget.collectListener(!_collected);
               },
             ),
             //1.10x新增客服按钮
-            CustomImageButton(
-              title: "客服",
-              padding: EdgeInsets.only(left: 5, bottom: 2, right: 5),
-              contentSpacing: 0,
-              icon: Icon(
-                AppIcons.icon_message,
-                size: rSize(30),
-              ),
-              fontSize: 10,
-              onPressed: () {
-                MQManager.goToChat(
-                  userId: UserManager.instance.user.info.id.toString(),
-                  userInfo: <String, String>{
-                    "name": UserManager.instance.user.info.nickname ?? "",
-                    "gender": UserManager.instance.user.info.gender == 1
-                        ? "男"
-                        : "女",
-                    "mobile": UserManager.instance.user.info.mobile ?? ""
-
-                  },
-                  goodsName: widget.goodsDetail.data.goodsName??"",
-                  goodsUrl: Api.getImgUrl(widget.goodsDetail.data.mainPhotos.first.url),
-                  );
-
-              },
-            ),
+            // CustomImageButton(
+            //   title: "客服",
+            //   padding: EdgeInsets.only(left: 5, bottom: 2, right: 5),
+            //   contentSpacing: 0,
+            //   icon: Icon(
+            //     AppIcons.icon_message,
+            //     size: rSize(30),
+            //   ),
+            //   fontSize: 10,
+            //   onPressed: () {
+            //     MQManager.goToChat(
+            //       userId: UserManager.instance.user.info.id.toString(),
+            //       userInfo: <String, String>{
+            //         "name": UserManager.instance.user.info.nickname ?? "",
+            //         "gender": UserManager.instance.user.info.gender == 1
+            //             ? "男"
+            //             : "女",
+            //         "mobile": UserManager.instance.user.info.mobile ?? ""
+            //
+            //       },
+            //       goodsName: widget.goodsDetail.data.goodsName??"",
+            //       goodsUrl: Api.getImgUrl(widget.goodsDetail.data.mainPhotos.first.url),
+            //       );
+            //
+            //   },
+            // ),
 
             Container(
-              width: 10,
+              width: 15.rw,
             ),
             widget.seckillout?_oneButtonRow():
             widget.goodsDetail == null || widget.goodsDetail.data.inventory > 0
@@ -187,8 +190,9 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                     ? _twoButtonRow()
                     : _vipTwoButtonRow()
                 : _oneButtonRow(),
+
             Container(
-              width: 10,
+              width: 15.rw,
             ),
           ],
         ),
@@ -385,7 +389,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                                                     UserRoleLevel.None &&
                                                 !AppConfig.showExtraCommission
                                         ? "邀请升级"
-                                        : "导购",
+                                        : "分享",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w300,
                                         fontSize: 14 * 2.sp,

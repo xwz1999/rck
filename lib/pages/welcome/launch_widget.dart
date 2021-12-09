@@ -46,21 +46,21 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
 
     WidgetsBinding.instance.addPostFrameCallback((callback) async {
       await Future.delayed(Duration(milliseconds: 2450));
-      if (HiveStore.appBox.get('privacy_init') == null) {
-        // if (true) {
-        bool agreeResult = (await launchPrivacyDialog(context)) ?? false;
-        if (!agreeResult) {
-          //第1次不同意
-          bool secondAgree =
-              (await launchPrivacySecondDialog(context)) ?? false;
-          //第2次不同意
-          if (!secondAgree)
-            SystemNavigator.pop();
-          else
-            HiveStore.appBox.put('privacy_init', true);
-        } else
-          HiveStore.appBox.put('privacy_init', true);
-      }
+      // if (HiveStore.appBox.get('privacy_init') == null) {
+      //   // if (true) {
+      //   bool agreeResult = (await launchPrivacyDialog(context)) ?? false;
+      //   if (!agreeResult) {
+      //     //第1次不同意
+      //     bool secondAgree =
+      //         (await launchPrivacySecondDialog(context)) ?? false;
+      //     //第2次不同意
+      //     if (!secondAgree)
+      //       SystemNavigator.pop();
+      //     else
+      //       HiveStore.appBox.put('privacy_init', true);
+      //   } else
+      //     HiveStore.appBox.put('privacy_init', true);
+      // }
       Future.delayed(Duration.zero, () async {
         UserManager.instance.kingCoinListModelList =
         await UserFunc.getKingCoinList();
@@ -68,7 +68,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
 
         });
       });
-      PowerLogger.start(context, debug: AppConfig.debug);//AppConfig.debug  在正式服数据下进行调试
+      PowerLogger.start(context, debug: true);//AppConfig.debug  在正式服数据下进行调试
       cameras = await availableCameras();
       PackageInfo _packageInfo = await PackageInfo.fromPlatform();
       AppConfig.versionNumber = _packageInfo.buildNumber;

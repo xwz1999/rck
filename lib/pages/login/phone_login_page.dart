@@ -112,49 +112,49 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                 _smsCode(),
                 _bottomOperation(),
                 120.hb,
-                GestureDetector(
-                  onTap: () {
-                    _chooseAgreement = !_chooseAgreement;
-                    setState(() {});
-                  },
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                          width: 50.w,
-                          height: 50.w,
-                          padding: EdgeInsets.only(top: 6.w, right: 5.w),
-                          child: !_chooseAgreement
-                              ? Icon(CupertinoIcons.circle,
-                              size: 18, color: Color(0xFFdddddd))
-                              : Icon(CupertinoIcons.checkmark_circle,
-                              size: 18 , color: Colors.red)),
-                      RichText(
-                          text: TextSpan(
-                              text: "您已阅读并同意",
-                              style: TextStyle(
-                                  color: Colors.grey[500], fontSize: 12 * 2.sp),
-                              children: [
-                                new TextSpan(
-                                    text: '《用户服务协议》',
-                                    style: new TextStyle(
-                                        color: Colors.black, fontSize: 12 * 2.sp),
-                                    recognizer: _recognizer(context, 2)),
-                                TextSpan(
-                                  text: "和",
-                                  style: TextStyle(
-                                      color: Colors.grey[500], fontSize: 12 * 2.sp),
-                                ),
-                                new TextSpan(
-                                    text: '《用户隐私政策》',
-                                    style: new TextStyle(
-                                        color: Colors.black, fontSize: 12 * 2.sp),
-                                    recognizer: _recognizer(context, 1)),
-                              ])),
-                    ],
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //     _chooseAgreement = !_chooseAgreement;
+                //     setState(() {});
+                //   },
+                //   child: Row(
+                //     mainAxisSize: MainAxisSize.min,
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Container(
+                //           width: 50.w,
+                //           height: 50.w,
+                //           padding: EdgeInsets.only(top: 6.w, right: 5.w),
+                //           child: !_chooseAgreement
+                //               ? Icon(CupertinoIcons.circle,
+                //               size: 18, color: Color(0xFFdddddd))
+                //               : Icon(CupertinoIcons.checkmark_circle,
+                //               size: 18 , color: Colors.red)),
+                //       RichText(
+                //           text: TextSpan(
+                //               text: "您已阅读并同意",
+                //               style: TextStyle(
+                //                   color: Colors.grey[500], fontSize: 12 * 2.sp),
+                //               children: [
+                //                 new TextSpan(
+                //                     text: '《用户服务协议》',
+                //                     style: new TextStyle(
+                //                         color: Colors.black, fontSize: 12 * 2.sp),
+                //                     recognizer: _recognizer(context, 2)),
+                //                 TextSpan(
+                //                   text: "和",
+                //                   style: TextStyle(
+                //                       color: Colors.grey[500], fontSize: 12 * 2.sp),
+                //                 ),
+                //                 new TextSpan(
+                //                     text: '《用户隐私政策》',
+                //                     style: new TextStyle(
+                //                         color: Colors.black, fontSize: 12 * 2.sp),
+                //                     recognizer: _recognizer(context, 1)),
+                //               ])),
+                //     ],
+                //   ),
+                // ),
                 40.hb,
                 _loginButton(context),
 
@@ -443,7 +443,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
       radius: BorderRadius.all(Radius.circular(5)),
       backgroundColor: Theme.of(context).primaryColor,
       onTap: () {
-        if (_chooseAgreement) {
+        if (!_chooseAgreement) {
           GSDialog.of(context).showLoadingDialog(context, "正在登录...");
           _phoneLogin(context);
         } else {

@@ -64,6 +64,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   FocusNode _focusNode = FocusNode();
   List<SelfPickupStoreModel> _storeList;
   String _selectedStoreName;
+  int totalNum = 0;
 
   bool _accept = false;
 
@@ -82,7 +83,9 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   @override
   void initState() {
     super.initState();
+
     _orderModel = widget.arguments["order"];
+    totalNum = _orderModel.data.totalGoodsCount;
     _presenterImpl = OrderPresenterImpl();
     _controller = ScrollController();
     _controller.addListener(() {});
@@ -117,12 +120,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
 
   @override
   Widget buildContext(BuildContext context, {store}) {
-    // int totalNum = 0;
-    // _orderModel.data.brands.forEach((brand) {
-    //   brand.goods.forEach((goods) {
-    //     totalNum += goods.quantity;
-    //   });
-    // });
+
     return Scaffold(
       backgroundColor: AppColor.tableViewGrayColor,
       appBar: CustomAppBar(
@@ -210,7 +208,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                   SliverToBoxAdapter(
                     child: _orderModel.data.shippingMethod == 1
                         ? Container(
-                            height: 10,
+                            height: 10.rw,
                           )
                         : _buildAddress(context),
                     // child: _buildAddress(context),
@@ -223,14 +221,22 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                     return GoodsOrderItem(
                       brand: _orderModel.data.brands[index],
                       shippingMethod: _orderModel.data.shippingMethod,
+                      length: _orderModel.data.brands.length,
+                      index: index,
                     );
                   }, childCount: _orderModel.data.brands.length)),
+                  SliverToBoxAdapter(
+                    child: Container(
+                      height: 10.rw,
+                    )
+                    // child: _buildAddress(context),
+                  ),
                   // SliverToBoxAdapter(
                   //   child: _allAmountTitle(),
                   // ),
-                  SliverToBoxAdapter(
-                    child: _coinTile(),
-                  ),
+                  // SliverToBoxAdapter(
+                  //   child: _coinTile(),
+                  // ),
                   SliverToBoxAdapter(
                     child: _bottomInfoTitle(),
                   ),
@@ -590,7 +596,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
       child: Column(
         children: <Widget>[
           _titleRow("优惠券", "已选择最大优惠",
-              "-￥${(_orderModel.data.brandCouponTotalAmount + _orderModel.data.universeCouponTotalAmount).toStringAsFixed(2)}"),
+              "-￥${(_orderModel.data.brandCouponTotalAmount + _orderModel.data.universeCouponTotalAmount).toStringAsFixed(2)}",''),
           Container(
             height: 5,
           ),
@@ -603,7 +609,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
               return _titleRow(
                 "瑞币",
                 text,
-                "本单抵扣: ￥${isUseCoin ? coin.toStringAsFixed(2) : '0.00'}",
+                "本单抵扣: ￥${isUseCoin ? coin.toStringAsFixed(2) : '0.00'}",'',
                 rightTitleColor: Colors.black,
                 switchValue: isUseCoin, //后台回显 TODO:
                 switchEnable: switchEnabled,
@@ -632,36 +638,38 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
           color: Colors.white),
       child: Column(
         children: <Widget>[
-          _titleRow("商品金额", "",
-              "￥${_orderModel.data.goodsTotalAmount.toStringAsFixed(2)}",
-              rightTitleColor: Colors.black),
-          _titleRow("合计运费", "",
-              "+￥${_orderModel.data.expressTotalFee.toStringAsFixed(2)}",
-              rightTitleColor: Colors.black),
-          Builder(
-            builder: (context) {
-              bool isOversea = false;
-              for (var item in _orderModel.data.brands) {
-                for (var childItem in item.goods) {
-                  if (childItem.storehouse == 2 || childItem.storehouse == 3)
-                    isOversea = true;
-                }
-              }
 
-              return isOversea
-                  ? _titleRow("进口税", "", "+￥${(0).toStringAsFixed(2)}",
-                      rightTitleColor: Colors.black)
-                  : SizedBox();
-            },
-          ),
-          _titleRow(
-            "优惠券",
-            "",
-            "-￥${(_orderModel.data.universeCouponTotalAmount + _orderModel.data.brandCouponTotalAmount).toStringAsFixed(2)}",
-          ),
-          if (!_checkSwitchEnabled)
-            _titleRow("瑞币抵扣", "",
-                "-￥${_orderModel.data.coinTotalAmount.toStringAsFixed(2)}"),
+          _titleRow("商品金额", "",
+              "合计:￥${_orderModel.data.goodsTotalAmount.toStringAsFixed(2)}",'共$totalNum件',subTitleColor: Color(0xFF999999),
+              rightTitleColor: Colors.black),
+
+          _titleRow("合计运费", "",
+              "+￥${_orderModel.data.expressTotalFee.toStringAsFixed(2)}",'',
+              rightTitleColor: Colors.black),
+          // Builder(
+          //   builder: (context) {
+          //     bool isOversea = false;
+          //     for (var item in _orderModel.data.brands) {
+          //       for (var childItem in item.goods) {
+          //         if (childItem.storehouse == 2 || childItem.storehouse == 3)
+          //           isOversea = true;
+          //       }
+          //     }
+          //
+          //     return isOversea
+          //         ? _titleRow("进口税", "", "+￥${(0).toStringAsFixed(2)}",'',
+          //             rightTitleColor: Colors.black)
+          //         : SizedBox();
+          //   },
+          // ),
+          // _titleRow(
+          //   "优惠券",
+          //   "",'',
+          //   "-￥${(_orderModel.data.universeCouponTotalAmount + _orderModel.data.brandCouponTotalAmount).toStringAsFixed(2)}",
+          // ),
+          // if (!_checkSwitchEnabled)
+          //   _titleRow("瑞币抵扣", "",
+          //       "-￥${_orderModel.data.coinTotalAmount.toStringAsFixed(2)}",''),
           Container(
             height: 10,
           ),
@@ -729,7 +737,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
         : SizedBox();
   }
 
-  _titleRow(title, subTitle, rightTitle,
+  _titleRow(title, subTitle, rightTitle,rlTitle,
       {titleColor,
       subTitleColor,
       rightTitleColor,
@@ -766,6 +774,16 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                       fontWeight: FontWeight.w300),
             ),
           ),
+          Container(
+              child: Text(
+                rlTitle,
+                style: TextStyle(
+                    fontSize: 11.rsp,
+
+                    fontWeight: FontWeight.w400,
+                    color: Color(0xFF999999)),
+              )),
+          10.wb,
           Container(
               child: Text(
             rightTitle,

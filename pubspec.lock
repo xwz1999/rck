@@ -1297,7 +1297,7 @@ packages:
       path: sharesdk_plugin
       ref: HEAD
       resolved-ref: "85593f87ec2e1f28834c3190cefd76f6e1587887"
-      url: "https://github.com/customPub/ShareSDK-For-Flutter"
+      url: "https://git.oa00.com/flutter_third/shareSDK-For-Flutter.git"
     source: git
     version: "1.2.9"
   shelf:

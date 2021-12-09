@@ -55,7 +55,7 @@ class UserManager {
   ValueNotifier<bool> openInstallLive = ValueNotifier(false);
   int selectTabbarIndex;
 
-  List<KingCoinListModel> kingCoinListModelList;
+  List<KingCoin> kingCoinListModelList;
 
   bool get haveLogin => login.value;
 

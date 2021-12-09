@@ -70,7 +70,6 @@ class GoodsItemWidget extends StatelessWidget {
   final SeckillModel seckillModel;
   final SecKill secKill;
 
-
   const GoodsItemWidget({
     Key key,
     this.isSingleDayGoods = false,
@@ -98,7 +97,11 @@ class GoodsItemWidget extends StatelessWidget {
     this.specialIcon,
     this.type,
     this.countryIcon,
-    this.living, this.gifController, this.gysId, this.seckillModel, this.secKill,
+    this.living,
+    this.gifController,
+    this.gysId,
+    this.seckillModel,
+    this.secKill,
     //this.special_sale,
   })  : widgetType = GoodsItemType.NONE,
         super(key: key);
@@ -114,7 +117,9 @@ class GoodsItemWidget extends StatelessWidget {
     GoodsSimple model,
     this.notShowAmount = false,
     this.specialSale,
-    this.type, this.gifController, this.seckillModel,
+    this.type,
+    this.gifController,
+    this.seckillModel,
 
     //this.special_sale,
   })  : goodsName = model.goodsName,
@@ -122,9 +127,9 @@ class GoodsItemWidget extends StatelessWidget {
         brandPictureUrl = model.brandImg,
         description = model.description,
         mainPhotoUrl = model.mainPhotoUrl,
-
-        inventory = model.secKill.secKill==1? model.secKill.realStock:model.inventory,
-
+        inventory = model.secKill.secKill == 1
+            ? model.secKill.realStock
+            : model.inventory,
         originalPrice = model.originalPrice,
         percent = model.percent,
         coupon = model.coupon,
@@ -137,10 +142,15 @@ class GoodsItemWidget extends StatelessWidget {
         living = model.living,
         gysId = model.gysId,
         secKill = model.secKill,
-
-        salesVolume = model.secKill.secKill==1? model.secKill.saleNum:model.salesVolume,
-        discountPrice = model.secKill.secKill==1? model.secKill.secKillMinPrice:model.discountPrice,
-        commission = model.secKill.secKill==1? model.secKill.secKillCommission:model.commission,
+        salesVolume = model.secKill.secKill == 1
+            ? model.secKill.saleNum
+            : model.salesVolume,
+        discountPrice = model.secKill.secKill == 1
+            ? model.secKill.secKillMinPrice
+            : model.discountPrice,
+        commission = model.secKill.secKill == 1
+            ? model.secKill.secKillCommission
+            : model.commission,
         //secKill = model.
         super(key: key);
 
@@ -157,14 +167,16 @@ class GoodsItemWidget extends StatelessWidget {
     this.specialSale,
     this.specialIcon,
     this.type,
-    this.living, this.gifController, this.seckillModel,
+    this.living,
+    this.gifController,
+    this.seckillModel,
   })  : goodsName = data.goodsName,
         brandName = data.brandName,
         brandPictureUrl = data.brandImg,
         description = data.description,
         mainPhotoUrl = data.mainPhotoUrl,
-
-        inventory = data.secKill.secKill==1? data.secKill.realStock:data.inventory,
+        inventory =
+            data.secKill.secKill == 1 ? data.secKill.realStock : data.inventory,
         originalPrice = data.originalPrice,
         //TODO hot list unset percent;
         percent = 0,
@@ -177,9 +189,14 @@ class GoodsItemWidget extends StatelessWidget {
         countryIcon = data.countryIcon,
         gysId = data.gysId,
         secKill = data.secKill,
-        salesVolume = data.secKill.secKill==1? data.secKill.saleNum:data.salesVolume,
-        discountPrice = data.secKill.secKill==1? data.secKill.secKillMinPrice:data.discountPrice,
-        commission = data.secKill.secKill==1? data.secKill.secKillCommission:data.commission,
+        salesVolume =
+            data.secKill.secKill == 1 ? data.secKill.saleNum : data.salesVolume,
+        discountPrice = data.secKill.secKill == 1
+            ? data.secKill.secKillMinPrice
+            : data.discountPrice,
+        commission = data.secKill.secKill == 1
+            ? data.secKill.secKillCommission
+            : data.commission,
         super(key: key);
 
   /// 活动列表
@@ -192,16 +209,18 @@ class GoodsItemWidget extends StatelessWidget {
     @required this.buyClick,
     PromotionGoodsModel model,
     this.notShowAmount = false,
-    this.type, this.gifController,  this.seckillModel,
+    this.type,
+    this.gifController,
+    this.seckillModel,
   })  : goodsName = model.goodsName,
         brandName = model.brandName,
         brandPictureUrl = model.brandImg,
         description = model.description,
         mainPhotoUrl = model.picture.url,
-
-        inventory = model.secKill.secKill==1? model.secKill.realStock:model.inventory,
+        inventory = model.secKill.secKill == 1
+            ? model.secKill.realStock
+            : model.inventory,
         originalPrice = model.primePrice,
-
         percent = model.percentage,
         coupon = model.coupon,
         id = model.goodsId,
@@ -214,9 +233,15 @@ class GoodsItemWidget extends StatelessWidget {
         living = model.living,
         gysId = model.gysId,
         secKill = model.secKill,
-        salesVolume = model.secKill.secKill==1? model.secKill.saleNum:model.totalSalesVolume,
-        discountPrice = model.secKill.secKill==1? model.secKill.secKillMinPrice:model.price,
-        commission = model.secKill.secKill==1? model.secKill.secKillCommission:model.commission,
+        salesVolume = model.secKill.secKill == 1
+            ? model.secKill.saleNum
+            : model.totalSalesVolume,
+        discountPrice = model.secKill.secKill == 1
+            ? model.secKill.secKillMinPrice
+            : model.price,
+        commission = model.secKill.secKill == 1
+            ? model.secKill.secKillCommission
+            : model.commission,
         super(key: key);
 
   //秒杀活动
@@ -231,8 +256,17 @@ class GoodsItemWidget extends StatelessWidget {
     SeckillModel seckillModel,
     this.notShowAmount = false,
     this.specialSale,
-
-    this.type, this.gifController,this.originalPrice, this.percent, this.coupon,this.isImport, this.specialIcon, this.promotionStatus, this.living, this.gysId, this.secKill,
+    this.type,
+    this.gifController,
+    this.originalPrice,
+    this.percent,
+    this.coupon,
+    this.isImport,
+    this.specialIcon,
+    this.promotionStatus,
+    this.living,
+    this.gysId,
+    this.secKill,
     //this.special_sale,
   })  : goodsName = model.goodsName,
         brandName = model.brandName,
@@ -247,15 +281,13 @@ class GoodsItemWidget extends StatelessWidget {
         inventory = model.inventory,
         commission = model.commission,
         seckillModel = seckillModel,
-
-      super(key: key);
+        super(key: key);
   final BuildContext buildCtx;
   final VoidCallback shareClick;
   final VoidCallback buyClick;
 
   static Color _shareTextColor = Color(0xffc70404);
   static double _height = 0;
-
 
   @override
   Widget build(BuildContext context) {
@@ -271,7 +303,6 @@ class GoodsItemWidget extends StatelessWidget {
       child: _container(),
     );
   }
-
 
   _container() {
     return Container(
@@ -324,19 +355,19 @@ class GoodsItemWidget extends StatelessWidget {
           color: Colors.white,
           child: Row(
             children: <Widget>[
-              Container(
-                width: 13 * 1.5,
-                height: 13 * 1.5,
-                child: TextUtils.isEmpty(brandPictureUrl)
-                    ? SizedBox()
-                    : ExtendedImage.network(
-                        Api.getImgUrl(brandPictureUrl),
-                        fit: BoxFit.fill,
-                      ),
-              ),
-              SizedBox(
-                width: 4,
-              ),
+              // Container(
+              //   width: 13 * 1.5,
+              //   height: 13 * 1.5,
+              //   child: TextUtils.isEmpty(brandPictureUrl)
+              //       ? SizedBox()
+              //       : ExtendedImage.network(
+              //           Api.getImgUrl(brandPictureUrl),
+              //           fit: BoxFit.fill,
+              //         ),
+              // ),
+              // SizedBox(
+              //   width: 4,
+              // ),
               Expanded(
                 child: Text(
                   TextUtils.isEmpty(brandName) ? "" : brandName,
@@ -408,48 +439,51 @@ class GoodsItemWidget extends StatelessWidget {
                               width: 5 * 2.w,
                             ))
                           : WidgetSpan(child: SizedBox()),
-                      gysId==1800||gysId==2000?//jd的商品供应商 自营为1800 pop 为2000?
-                      WidgetSpan(
-                          child: Container(
-                            padding: EdgeInsets.only(right: 5.rw),
-                            child:
-                            Container(
-                              width: 20.rw,
-                              height: 22.rw,
-                              //padding: EdgeInsets.only(left: 1.rw),
+                      gysId == 1800 || gysId == 2000
+                          ? //jd的商品供应商 自营为1800 pop 为2000?
+                          WidgetSpan(
+                              child: Container(
+                                  padding:
+                                      EdgeInsets.only(right: 5.rw, bottom: 2.w),
+                                  child: Container(
+                                    width: 40.rw,
+                                    height: 15.rw,
+                                    //padding: EdgeInsets.only(left: 1.rw),
 
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFC92219),
-                                borderRadius: BorderRadius.all(Radius.circular(4.rw)),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xFFC92219),
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(2.rw)),
+                                    ),
 
+                                    child: Row(
+                                      //crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
 
-                              ),
-
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                //mainAxisAlignment: MainAxisAlignment.center,
-
-                                children: [
-                                  2.hb,
-                                  Text(
-                                    gysId==1800?'京东':gysId==2000?'京东':'',
-                                    maxLines: 1,
-
-                                    style: TextStyle(fontSize: 9.rsp,height:1.05),
-                                  ),
-                                  Text(
-                                    gysId==1800?'自营':gysId==2000?'优选':'',
-                                    maxLines: 1,
-
-                                    style: TextStyle(fontSize: 9.rsp,height:1.05),
-                                  )
-                                ],
-                              )
-,
-                            )
-                         )
-                      ): WidgetSpan(child: SizedBox()),
+                                      children: [
+                                        2.hb,
+                                        Text(
+                                          gysId == 1800
+                                              ? '京东自营'
+                                              : gysId == 2000
+                                                  ? '京东优选'
+                                                  : '',
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                              fontSize: 9.rsp, height: 1.05),
+                                        ),
+                                        // Text(
+                                        //   gysId==1800?'自营':gysId==2000?'优选':'',
+                                        //   maxLines: 1,
+                                        //
+                                        //   style: TextStyle(fontSize: 9.rsp,height:1.05),
+                                        // )
+                                      ],
+                                    ),
+                                  )))
+                          : WidgetSpan(child: SizedBox()),
                       TextSpan(
                         text: this.goodsName,
                         style: AppTextStyle.generate(16 * 2.sp,
@@ -462,27 +496,27 @@ class GoodsItemWidget extends StatelessWidget {
                 ),
                 this.description == null
                     ? SizedBox()
-                    :Container(
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(top: 2),
-                  child:
-                  // gysId==1800||gysId==2000?//jd的商品供应商 自营为1800 pop 为2000
-                  // Container(
-                  //   width: 30.rw,
-                  //   height: 14.rw,
-                  //   alignment: Alignment.center,
-                  //   decoration: BoxDecoration(
-                  //       color: Color(0xFFC92219),
-                  //       borderRadius: BorderRadius.all(Radius.circular(1.rw))
-                  //
-                  //   ),
-                  //   child: Text(
-                  //     gysId==1800?'自营':gysId==2000?'POP':'',
-                  //     style: TextStyle(height: 1.1),
-                  //   ),
-                  // ):
+                    : Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.only(top: 2),
+                        child:
+                            // gysId==1800||gysId==2000?//jd的商品供应商 自营为1800 pop 为2000
+                            // Container(
+                            //   width: 30.rw,
+                            //   height: 14.rw,
+                            //   alignment: Alignment.center,
+                            //   decoration: BoxDecoration(
+                            //       color: Color(0xFFC92219),
+                            //       borderRadius: BorderRadius.all(Radius.circular(1.rw))
+                            //
+                            //   ),
+                            //   child: Text(
+                            //     gysId==1800?'自营':gysId==2000?'POP':'',
+                            //     style: TextStyle(height: 1.1),
+                            //   ),
+                            // ):
 
-                        Text(
+                            Text(
                           this.description,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
@@ -490,7 +524,7 @@ class GoodsItemWidget extends StatelessWidget {
                               color: Colors.black54,
                               fontWeight: FontWeight.w300),
                         ),
-                ),
+                      ),
               ],
             ),
             // Offstage(
@@ -524,23 +558,23 @@ class GoodsItemWidget extends StatelessWidget {
 
   _image() {
     bool sellout = false;
-    if(this.widgetType == GoodsItemType.SECKILL){
-      if(this.salesVolume>=this.inventory){
+    if (this.widgetType == GoodsItemType.SECKILL) {
+      if (this.salesVolume >= this.inventory) {
         sellout = true;
-      }else{
+      } else {
         sellout = false;
       }
-    }else{
-      if(this.inventory>0){
+    } else {
+      if (this.inventory > 0) {
         sellout = false;
-      }else{
+      } else {
         sellout = true;
       }
-      if(this.secKill!=null){
-        if(secKill.secKill==1){
-          if(secKill.realStock>0){
+      if (this.secKill != null) {
+        if (secKill.secKill == 1) {
+          if (secKill.realStock > 0) {
             sellout = false;
-          }else{
+          } else {
             sellout = true;
           }
 
@@ -550,53 +584,53 @@ class GoodsItemWidget extends StatelessWidget {
     }
     double cir = 5;
     return Container(
-        width: _height - 8,
-        height: _height - 8,
-        decoration: BoxDecoration(
-          color: AppColor.frenchColor,
-          borderRadius: BorderRadius.all(Radius.circular(cir)),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(cir)),
-          child: Stack(children: [
-            Positioned(
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: 0,
-              child: CustomCacheImage(
-                borderRadius: BorderRadius.circular(5),
-                width: _height - 8,
-                height: _height - 8,
-                imageUrl: Api.getImgUrl(this.mainPhotoUrl),
-                fit: BoxFit.cover,
-              ),
+      width: _height - 8,
+      height: _height - 8,
+      decoration: BoxDecoration(
+        color: AppColor.frenchColor,
+        borderRadius: BorderRadius.all(Radius.circular(cir)),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(cir)),
+        child: Stack(children: [
+          Positioned(
+            top: 0,
+            right: 0,
+            left: 0,
+            bottom: 0,
+            child: CustomCacheImage(
+              borderRadius: BorderRadius.circular(5),
+              width: _height - 8,
+              height: _height - 8,
+              imageUrl: Api.getImgUrl(this.mainPhotoUrl),
+              fit: BoxFit.cover,
             ),
-            //暂时隐藏
-            Positioned(
-              top: 0,
-              right: 0,
-              left: 0,
-              bottom: 0,
-              child: Offstage(
-                offstage: !sellout,
-                child: Container(
-                  color: Colors.black38,
-                  child: Center(
-                    child: Image.asset(
-                      'assets/sellout_bg.png',
-                      width: rSize(70),
-                      height: rSize(70),
-                    ),
+          ),
+          //暂时隐藏
+          Positioned(
+            top: 0,
+            right: 0,
+            left: 0,
+            bottom: 0,
+            child: Offstage(
+              offstage: !sellout,
+              child: Container(
+                color: Colors.black38,
+                child: Center(
+                  child: Image.asset(
+                    'assets/sellout_bg.png',
+                    width: rSize(70),
+                    height: rSize(70),
                   ),
                 ),
               ),
             ),
-            living?.status == 1
-                ? Positioned(
-                    top: 6.rw,
-                    right: 6.rw,
-                    child: Container(
+          ),
+          living?.status == 1
+              ? Positioned(
+                  top: 6.rw,
+                  right: 6.rw,
+                  child: Container(
                       width: 16.rw,
                       height: 16.rw,
                       // decoration: BoxDecoration(
@@ -614,94 +648,90 @@ class GoodsItemWidget extends StatelessWidget {
                         image: AssetImage(R.ASSETS_LIVE_PLAY_GIF),
                         height: 16.rw,
                         width: 16.rw,
-                      )
+                      )),
+                )
+              : SizedBox(),
+          isSingleDayGoods
+              ? Positioned(
+                  left: 0,
+                  top: 0,
+                  child: Image.asset(
+                    R.ASSETS_HOME_SINGLE_DAY_PNG,
+                    height: rSize(20),
+                  ),
+                )
+              : SizedBox(),
+          specialSale != null
+              ? Positioned(
+                  left: 5.rw,
+                  top: 5.rw,
+                  child: Container(
+                    ///color: Colors.red,
+                    width: (_height - 8.rw) / 3.rw * 2.rw,
+                    height: specialSale == null
+                        ? 0
+                        : specialSale.length ~/ 2 * 24.rw + 24.rw,
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      //reverse: true,
+                      padding: EdgeInsets.zero,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 2.4,
+                              mainAxisSpacing: 5,
+                              crossAxisSpacing: 5),
+                      itemCount: specialSale.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return
+                            // Container(
+                            //   color: Colors.red,
+                            // );
+                            CustomCacheImage(
+                          borderRadius: BorderRadius.all(Radius.circular(2.rw)),
+                          imageUrl: Api.getImgUrl(specialSale[index]),
+                          fit: BoxFit.fill,
+                        );
+                      },
                     ),
-                  )
-                : SizedBox(),
-            isSingleDayGoods
-                ? Positioned(
-                    left: 0,
-                    top: 0,
-                    child: Image.asset(
-                      R.ASSETS_HOME_SINGLE_DAY_PNG,
-                      height: rSize(20),
+                  ))
+              : SizedBox(),
+          specialIcon != null
+              ? Positioned(
+                  left: 5.rw,
+                  top: 5.rw,
+                  child: Container(
+                    width: (_height - 8.rw) / 3.rw * 2.rw,
+                    height: specialSale == null
+                        ? 0
+                        : specialSale.length ~/ 2 * 26.rw,
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      reverse: true,
+                      padding: EdgeInsets.zero,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 2.4,
+                              mainAxisSpacing: 5,
+                              crossAxisSpacing: 5),
+                      itemCount: specialIcon.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return
+                            // Container(
+                            //   color: Colors.red,
+                            // );
+                            CustomCacheImage(
+                          borderRadius: BorderRadius.all(Radius.circular(2.rw)),
+                          imageUrl: Api.getImgUrl(specialIcon[index]),
+                          fit: BoxFit.fill,
+                        );
+                      },
                     ),
-                  )
-                : SizedBox(),
-            specialSale != null
-                ? Positioned(
-                    left: 5.rw,
-                    top: 5.rw,
-                    child: Container(
-                      ///color: Colors.red,
-                      width: (_height - 8.rw) / 3.rw * 2.rw,
-                      height: specialSale == null
-                          ? 0
-                          : specialSale.length ~/ 2 * 24.rw + 24.rw,
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        //reverse: true,
-                        padding: EdgeInsets.zero,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 2.4,
-                                mainAxisSpacing: 5,
-                                crossAxisSpacing: 5),
-                        itemCount: specialSale.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return
-                              // Container(
-                              //   color: Colors.red,
-                              // );
-                              CustomCacheImage(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(2.rw)),
-                            imageUrl: Api.getImgUrl(specialSale[index]),
-                            fit: BoxFit.fill,
-                          );
-                        },
-                      ),
-                    ))
-                : SizedBox(),
-            specialIcon != null
-                ? Positioned(
-                    left: 5.rw,
-                    top: 5.rw,
-                    child: Container(
-                      width: (_height - 8.rw) / 3.rw * 2.rw,
-                      height: specialSale == null
-                          ? 0
-                          : specialSale.length ~/ 2 * 26.rw,
-                      child: GridView.builder(
-                        shrinkWrap: true,
-                        reverse: true,
-                        padding: EdgeInsets.zero,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 2.4,
-                                mainAxisSpacing: 5,
-                                crossAxisSpacing: 5),
-                        itemCount: specialIcon.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return
-                              // Container(
-                              //   color: Colors.red,
-                              // );
-                              CustomCacheImage(
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(2.rw)),
-                            imageUrl: Api.getImgUrl(specialIcon[index]),
-                            fit: BoxFit.fill,
-                          );
-                        },
-                      ),
-                    ))
-                : SizedBox()
-          ]),
-        ),
-
+                  ))
+              : SizedBox()
+        ]),
+      ),
     );
   }
 
@@ -711,32 +741,31 @@ class GoodsItemWidget extends StatelessWidget {
     // bool sellout = this.inventory <= 0;
     bool sellout = false;
     bool isSeckill = false;
-    if(this.widgetType == GoodsItemType.SECKILL){
-      if(this.seckillModel!=null){
-        if(seckillModel.status==2){
-          isSeckill = true;//秒杀页面的商品 非秒杀状态（2）的情况下 正常显示
-        }
-        else{
+    if (this.widgetType == GoodsItemType.SECKILL) {
+      if (this.seckillModel != null) {
+        if (seckillModel.status == 2) {
+          isSeckill = true; //秒杀页面的商品 非秒杀状态（2）的情况下 正常显示
+        } else {
           isSeckill = false;
         }
       }
-      if(this.salesVolume>=this.inventory){
+      if (this.salesVolume >= this.inventory) {
         sellout = true;
-      }else{
+      } else {
         sellout = false;
       }
-    }else{
-      if(this.inventory>0){
+    } else {
+      if (this.inventory > 0) {
         sellout = false;
-      }else{
+      } else {
         sellout = true;
       }
-      if(this.secKill!=null){
-        if(secKill.secKill==1){
+      if (this.secKill != null) {
+        if (secKill.secKill == 1) {
           isSeckill = true;
-          if(secKill.realStock>0){
+          if (secKill.realStock > 0) {
             sellout = false;
-          }else{
+          } else {
             sellout = true;
           }
           //秒杀中 通过seckill中的库存和销量来判断是否是否售完
@@ -762,58 +791,66 @@ class GoodsItemWidget extends StatelessWidget {
                   width: 1,
                 ),
                 Container(
-                  height: double.infinity,
-                  alignment: Alignment.center,
-                  child: Row(
-                    children: [
-                      ExtendedText.rich(TextSpan(children: [
-                        TextSpan(
-                          text: isSeckill&&this.widgetType == GoodsItemType.SECKILL? "¥": isSeckill&&this.widgetType != GoodsItemType.SECKILL?'¥':"券后 ¥ ",
-                          style: AppTextStyle.generate(isSeckill?18.rsp: 12 * 2.sp,
-                              color: priceColor, fontWeight: FontWeight.w500),
-                        ),
-                        TextSpan(
-                          text:
-                          "${(this.discountPrice - this.discountPrice.toInt()) > 0 ? this.discountPrice.toStringAsFixed(1) : this.discountPrice.toStringAsFixed(0)}",
-                          // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
-                          style: TextStyle(
-                              letterSpacing: -1,
-                              wordSpacing: -1,
-                              fontSize: 19 * 2.sp,
-                              color: priceColor,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        WidgetSpan(
-                            child: SizedBox(
-                              width: 5,
-                            )),
-                        TextSpan(
-                          text: this.widgetType == GoodsItemType.SECKILL?'':"¥${this.originalPrice.toStringAsFixed(0)}",
-                          style: TextStyle(
-                              decoration: TextDecoration.lineThrough,
-                              decorationColor: Color(0xff898989),
-                              fontSize: 12 * 2.sp,
-                              color: Color(0xff898989),
-                              fontWeight: FontWeight.w400),
-                        )
-                      ])),
-
-                      AppConfig.getShowCommission()&&(isSeckill)
-                          ? Container(
-                        alignment: Alignment.center,
-                        child: Text(
-                          "赚" +  (this.commission??0).toStringAsFixed(2),
-                          style: TextStyle(
-                            color: Color(0xFFC92219),
-                            fontSize: 12 * 2.sp,
+                    height: double.infinity,
+                    alignment: Alignment.center,
+                    child: Row(
+                      children: [
+                        ExtendedText.rich(TextSpan(children: [
+                          TextSpan(
+                            text: isSeckill &&
+                                    this.widgetType == GoodsItemType.SECKILL
+                                ? "¥"
+                                : isSeckill &&
+                                        this.widgetType != GoodsItemType.SECKILL
+                                    ? '¥'
+                                    : "券后 ¥ ",
+                            style: AppTextStyle.generate(
+                                isSeckill ? 18.rsp : 12 * 2.sp,
+                                color: priceColor,
+                                fontWeight: FontWeight.w500),
                           ),
-                        ),
-                      )
-                          : SizedBox(),
-                    ],
-                  )
-
-                ),
+                          TextSpan(
+                            text:
+                                "${(this.discountPrice - this.discountPrice.toInt()) > 0 ? this.discountPrice.toStringAsFixed(1) : this.discountPrice.toStringAsFixed(0)}",
+                            // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
+                            style: TextStyle(
+                                letterSpacing: -1,
+                                wordSpacing: -1,
+                                fontSize: 19 * 2.sp,
+                                color: priceColor,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          WidgetSpan(
+                              child: SizedBox(
+                            width: 5,
+                          )),
+                          TextSpan(
+                            text: this.widgetType == GoodsItemType.SECKILL
+                                ? ''
+                                : "¥${this.originalPrice.toStringAsFixed(0)}",
+                            style: TextStyle(
+                                decoration: TextDecoration.lineThrough,
+                                decorationColor: Color(0xff898989),
+                                fontSize: 12 * 2.sp,
+                                color: Color(0xff898989),
+                                fontWeight: FontWeight.w400),
+                          )
+                        ])),
+                        AppConfig.getShowCommission() && (isSeckill)
+                            ? Container(
+                                alignment: Alignment.center,
+                                child: Text(
+                                  "赚" +
+                                      (this.commission ?? 0).toStringAsFixed(2),
+                                  style: TextStyle(
+                                    color: Color(0xFFC92219),
+                                    fontSize: 12 * 2.sp,
+                                  ),
+                                ),
+                              )
+                            : SizedBox(),
+                      ],
+                    )),
                 // Container(
                 //   width: 5,
                 // ),
@@ -897,20 +934,19 @@ class GoodsItemWidget extends StatelessWidget {
                         direction: Direction.horizontal,
                         height: 21,
                         //暂时隐藏
-                        title: sellout?"已售完" : "自购",
+                        title: sellout ? "已售完" : "自购",
 
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 13 * 2.sp,
                         ),
                         padding: EdgeInsets.symmetric(
-                            horizontal:
-                                UserLevelTool.currentRoleLevelEnum() ==
-                                            UserRoleLevel.Vip &&
-                                        this.promotionStatus ==
-                                            PromotionStatus.start
-                                    ? 16.rw
-                                    : 8.rw,
+                            horizontal: UserLevelTool.currentRoleLevelEnum() ==
+                                        UserRoleLevel.Vip &&
+                                    this.promotionStatus ==
+                                        PromotionStatus.start
+                                ? 16.rw
+                                : 8.rw,
                             vertical: rSize(0)),
                         borderRadius: BorderRadius.circular(40),
                         // borderRadius: BorderRadius.only(
@@ -927,8 +963,8 @@ class GoodsItemWidget extends StatelessWidget {
                         //     topRight: Radius.circular(40),
                         //     bottomRight: Radius.circular(40)),
                         backgroundColor:
-                        //暂时隐藏
-                            sellout? AppColor.greyColor : _shareTextColor,
+                            //暂时隐藏
+                            sellout ? AppColor.greyColor : _shareTextColor,
 
                         pureDisplay: true,
                       ),
@@ -946,13 +982,12 @@ class GoodsItemWidget extends StatelessWidget {
                           fontSize: 12.rsp,
                         ),
                         padding: EdgeInsets.symmetric(
-                            horizontal:
-                                UserLevelTool.currentRoleLevelEnum() ==
-                                            UserRoleLevel.Vip &&
-                                        this.promotionStatus ==
-                                            PromotionStatus.start
-                                    ? 32.rw
-                                    : 16.rw,
+                            horizontal: UserLevelTool.currentRoleLevelEnum() ==
+                                        UserRoleLevel.Vip &&
+                                    this.promotionStatus ==
+                                        PromotionStatus.start
+                                ? 32.rw
+                                : 16.rw,
                             vertical: rSize(0)),
                         borderRadius: BorderRadius.circular(40),
                         backgroundColor: _shareTextColor,
@@ -996,24 +1031,21 @@ class GoodsItemWidget extends StatelessWidget {
   // }
 
   _saleNumberWidget() {
-
     bool isSeckill = false;
-    if(this.widgetType == GoodsItemType.SECKILL){
-      if(this.seckillModel!=null){
-        if(seckillModel.status==2){
-          isSeckill = true;//秒杀页面的商品 非秒杀状态（2）的情况下 正常显示
-        }
-        else{
+    if (this.widgetType == GoodsItemType.SECKILL) {
+      if (this.seckillModel != null) {
+        if (seckillModel.status == 2) {
+          isSeckill = true; //秒杀页面的商品 非秒杀状态（2）的情况下 正常显示
+        } else {
           isSeckill = false;
         }
       }
-
-    }else{
-      if(this.secKill!=null){
-        if(secKill.secKill==1){
+    } else {
+      if (this.secKill != null) {
+        if (secKill.secKill == 1) {
           isSeckill = true;
           //秒杀中 通过seckill中的库存和销量来判断是否是否售完
-        }else{
+        } else {
           isSeckill = false;
         }
       }
@@ -1023,59 +1055,67 @@ class GoodsItemWidget extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              isSeckill?SizedBox():
-              (this.coupon != null && this.coupon != 0)
-                  ? Container(
-                      margin: EdgeInsets.only(right: 5),
-                      child: SmallCouponWidget(
-                        height: 18,
-                        number: this.coupon,
-                      ),
-                    )
-                  : SizedBox(),
-              isSeckill?
-                  Container(
-                    child: Image.asset(R.ASSETS_SECKILL_ICON_PNG,width: 69.rw,height: 20.rw,),
-                  ):
-              AppConfig.commissionByRoleLevel
-                  ? Container(
-                      child: Stack(
-                        alignment: Alignment.center,
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 2),
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(2),
-                                border: Border.all(
-                                  color: Color(0xffec294d),
-                                  width: 0.5,
-                                )),
-                            padding: EdgeInsets.symmetric(horizontal: 3),
-                            child: Text(
-                              "赚" + (this.commission??0).toStringAsFixed(2),
-                              style: TextStyle(
-                                color: Colors.white.withAlpha(0),
-                                fontSize: 12 * 2.sp,
-                              ),
-                            ),
+              isSeckill
+                  ? SizedBox()
+                  : (this.coupon != null && this.coupon != 0)
+                      ? Container(
+                          margin: EdgeInsets.only(right: 5),
+                          child: SmallCouponWidget(
+                            height: 18,
+                            number: this.coupon,
                           ),
-                          AppConfig.getShowCommission()
-                              ? Container(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "赚" +  (this.commission??0).toStringAsFixed(2),
-                                    style: TextStyle(
-                                      color: Color(0xffeb0045),
-                                      fontSize: 12 * 2.sp,
-                                    ),
-                                  ),
-                                )
-                              : SizedBox(),
-                        ],
+                        )
+                      : SizedBox(),
+              isSeckill
+                  ? Container(
+                      child: Image.asset(
+                        R.ASSETS_SECKILL_ICON_PNG,
+                        width: 69.rw,
+                        height: 20.rw,
                       ),
                     )
-                  : SizedBox(),
+                  : AppConfig.commissionByRoleLevel
+                      ? Container(
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.symmetric(vertical: 2),
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(2),
+                                    border: Border.all(
+                                      color: Color(0xffec294d),
+                                      width: 0.5,
+                                    )),
+                                padding: EdgeInsets.symmetric(horizontal: 3),
+                                child: Text(
+                                  "赚" +
+                                      (this.commission ?? 0).toStringAsFixed(2),
+                                  style: TextStyle(
+                                    color: Colors.white.withAlpha(0),
+                                    fontSize: 12 * 2.sp,
+                                  ),
+                                ),
+                              ),
+                              AppConfig.getShowCommission()
+                                  ? Container(
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        "赚" +
+                                            (this.commission ?? 0)
+                                                .toStringAsFixed(2),
+                                        style: TextStyle(
+                                          color: Color(0xffeb0045),
+                                          fontSize: 12 * 2.sp,
+                                        ),
+                                      ),
+                                    )
+                                  : SizedBox(),
+                            ],
+                          ),
+                        )
+                      : SizedBox(),
               Spacer(),
             ],
           ),
@@ -1151,23 +1191,23 @@ class GoodsItemWidget extends StatelessWidget {
 
   _buyEvent() {
     bool sellout = false;
-    if(this.widgetType == GoodsItemType.SECKILL){
-      if(this.salesVolume>=this.inventory){
+    if (this.widgetType == GoodsItemType.SECKILL) {
+      if (this.salesVolume >= this.inventory) {
         sellout = true;
-      }else{
+      } else {
         sellout = false;
       }
-    }else{
-      if(this.inventory>0){
+    } else {
+      if (this.inventory > 0) {
         sellout = false;
-      }else{
+      } else {
         sellout = true;
       }
-      if(this.secKill!=null){
-        if(secKill.secKill==1){
-          if(secKill.realStock>0){
+      if (this.secKill != null) {
+        if (secKill.secKill == 1) {
+          if (secKill.realStock > 0) {
             sellout = false;
-          }else{
+          } else {
             sellout = true;
           }
           //秒杀中 通过seckill中的库存和销量来判断是否是否售完
@@ -1178,22 +1218,19 @@ class GoodsItemWidget extends StatelessWidget {
       buyClick();
     } else {
       AppRouter.push(buildCtx, RouteName.COMMODITY_PAGE,
-          arguments: CommodityDetailPage.setArguments(
-            this.id,
-
-            seckillout:sellout
-            // liveStatus: living == null ? null : living.status,
-            // roomId: living == null ? null : living.roomId
-          ));
+          arguments:
+              CommodityDetailPage.setArguments(this.id, seckillout: sellout
+                  // liveStatus: living == null ? null : living.status,
+                  // roomId: living == null ? null : living.roomId
+                  ));
     }
   }
 
-  // _getLivingStatus(int status) {
-  //   if (status == 1) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
+// _getLivingStatus(int status) {
+//   if (status == 1) {
+//     return true;
+//   } else {
+//     return false;
+//   }
+// }
 }
-

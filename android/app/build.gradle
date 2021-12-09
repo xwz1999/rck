@@ -28,6 +28,7 @@ apply plugin: 'com.mob.sdk'
 MobSDK {
     appKey "2e499d0b6a624"
     appSecret "bd3f4abb0124b99db715c062dd280fd1"
+    spEdition "fp"
     ShareSDK {
         loopShare true
         devInfo {
