@@ -108,10 +108,10 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
             height: rSize(30),
             direction: Direction.horizontal,
             pureDisplay: true,
-            icon: CustomCacheImage(
-              borderRadius: BorderRadius.all(Radius.circular(rSize(5))),
-              imageUrl: Api.getResizeImgUrl(widget.model.brandLogo, 200),
-            ),
+            // icon: CustomCacheImage(
+            //   borderRadius: BorderRadius.all(Radius.circular(rSize(5))),
+            //   imageUrl: Api.getResizeImgUrl(widget.model.brandLogo, 200),
+            // ),
             contentSpacing: rSize(8),
             style:
                 AppTextStyle.generate(17 * 2.sp, fontWeight: FontWeight.w500),

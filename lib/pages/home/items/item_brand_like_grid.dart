@@ -133,45 +133,47 @@ class BrandLikeGridItem extends StatelessWidget {
                         : WidgetSpan(child: SizedBox()),
                     this.goods.gysId==1800||this.goods.gysId==2000?//jd的商品供应商 自营为1800 pop 为2000?
                     WidgetSpan(
-                        child:  Container(
-                            padding: EdgeInsets.only(right: 5.rw),
-                            child:
-                            Container(
-                              width: 20.rw,
-                              height: 22.rw,
+                        child: Container(
+                            padding:
+                            EdgeInsets.only(right: 5.rw, bottom: 2.w),
+                            child: Container(
+                              width: 40.rw,
+                              height: 15.rw,
                               //padding: EdgeInsets.only(left: 1.rw),
 
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
                                 color: Color(0xFFC92219),
-                                borderRadius: BorderRadius.all(Radius.circular(4.rw)),
-
-
+                                borderRadius: BorderRadius.all(
+                                    Radius.circular(2.rw)),
                               ),
 
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                //mainAxisAlignment: MainAxisAlignment.center,
+                              child: Row(
+                                //crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment:
+                                MainAxisAlignment.center,
 
                                 children: [
                                   2.hb,
                                   Text(
-                                    this.goods.gysId==1800?'京东':this.goods.gysId==2000?'京东':'',
+                                    this.goods.gysId == 1800
+                                        ? '京东自营'
+                                        : this.goods.gysId == 2000
+                                        ? '京东优选'
+                                        : '',
                                     maxLines: 1,
-
-                                    style: TextStyle(fontSize: 9.rsp,height:1.05),
+                                    style: TextStyle(
+                                        fontSize: 9.rsp, height: 1.05),
                                   ),
-                                  Text(
-                                    this.goods.gysId==1800?'自营':this.goods.gysId==2000?'优选':'',
-                                    maxLines: 1,
-
-                                    style: TextStyle(fontSize: 9.rsp,height:1.05),
-                                  )
+                                  // Text(
+                                  //   gysId==1800?'自营':gysId==2000?'优选':'',
+                                  //   maxLines: 1,
+                                  //
+                                  //   style: TextStyle(fontSize: 9.rsp,height:1.05),
+                                  // )
                                 ],
-                              )
-                              ,
-                            )
-                        )
+                              ),
+                            ))
                     ): WidgetSpan(child: SizedBox()),
                     TextSpan(
                       text: this.goods.goodsName,
@@ -471,19 +473,19 @@ class BrandLikeGridItem extends StatelessWidget {
           color: Colors.white,
           child: Row(
             children: <Widget>[
-              Container(
-                width: 13 * 1.5,
-                height: 13 * 1.5,
-                child: TextUtils.isEmpty(this.goods.brandImg)
-                    ? SizedBox()
-                    : ExtendedImage.network(
-                        Api.getImgUrl(this.goods.brandImg),
-                        fit: BoxFit.fill,
-                      ),
-              ),
-              SizedBox(
-                width: 4,
-              ),
+              // Container(
+              //   width: 13 * 1.5,
+              //   height: 13 * 1.5,
+              //   child: TextUtils.isEmpty(this.goods.brandImg)
+              //       ? SizedBox()
+              //       : ExtendedImage.network(
+              //           Api.getImgUrl(this.goods.brandImg),
+              //           fit: BoxFit.fill,
+              //         ),
+              // ),
+              // SizedBox(
+              //   width: 4,
+              // ),
               Expanded(
                 child: Text(
                   TextUtils.isEmpty(this.goods.brandName)

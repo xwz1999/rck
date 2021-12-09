@@ -28,53 +28,54 @@ class OtherItemViewV2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return VxBox(
       
-      child: Row(
+      child: Column(
         children: [
-          _buildItem(
-            Icon(
-              AppIcons.icon_address,
-              color: _itemColor,
-              size: _iconSize,
-            ),
-            '地址',
-            () => AppRouter.push(context, RouteName.RECEIVING_ADDRESS_PAGE),
+          14.hb,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              20.wb,
+              Text(
+                '我的服务',
+                style:
+                AppTextStyle.generate(16, fontWeight: FontWeight.w700),
+              )
+
+            ],
           ),
-          _buildItem(
-            Icon(
-              AppIcons.icon_help,
-              color: _itemColor,
-              size: _iconSize,
-            ),
-            '帮助',
-            () => MQManager.goToChat(
-                userId: UserManager.instance.user.info.id.toString(),
-                userInfo: <String, String>{
-                  "name": UserManager.instance.user.info.nickname ?? "",
-                  "gender":
-                      UserManager.instance.user.info.gender == 1 ? "男" : "女",
-                  "mobile": UserManager.instance.user.info.mobile ?? ""
-                }),
-          ),
-          _buildItem(
-            Image.asset(
-              R.ASSETS_SHOP_BUSINESS_CORP_PNG,
-              width: 30.rw,
-              height: 30.rw,
-            ),
-            '商务合作',
-            () => AppRouter.push(context, RouteName.BUSSINESS_COOPERATION_PAGE),
-          ),
-          _buildItem(
-            Icon(
-              AppIcons.icon_setting,
-              color: _itemColor,
-              size: _iconSize,
-            ),
-            '设置',
-            () => AppRouter.push(context, RouteName.SETTING_PAGE),
-          ),
+          Row(
+            children: [
+              _buildItem(
+                Image.asset(R.ASSETS_USER_FUNC_LOCATION_PNG, width: 30.rw,
+                  height: 30.rw,),
+                '我的地址',
+                () => AppRouter.push(context, RouteName.RECEIVING_ADDRESS_PAGE),
+              ),
+              _buildItem(
+                Image.asset(R.ASSETS_USER_FUNC_FAVOR_PNG, width: 30.rw,
+                  height: 30.rw,),
+                '我的收藏',
+                () => AppRouter.push(context, RouteName.MY_FAVORITE_PAGE),
+              ),
+              _buildItem(
+                Image.asset(
+                  R.ASSETS_USER_FUNC_BUSINESS_PNG,
+                  width: 30.rw,
+                  height: 30.rw,
+                ),
+                '商务合作',
+                () => AppRouter.push(context, RouteName.BUSSINESS_COOPERATION_PAGE),
+              ),
+              _buildItem(
+                Image.asset(R.ASSETS_USER_FUNC_SETTING_PNG, width: 30.rw,
+                  height: 30.rw,),
+                '设置',
+                () => AppRouter.push(context, RouteName.SETTING_PAGE),
+              ),
+            ],
+          ).pSymmetric(v:18.w ),
         ],
-      ).pSymmetric(v:18.w ),
+      ),
     )
         .color(Color(0xFFFFFFFF))
         .margin(EdgeInsets.all(10).copyWith(top: 0))

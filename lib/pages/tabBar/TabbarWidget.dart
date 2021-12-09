@@ -312,7 +312,7 @@ class _BottomBarState extends State<BottomBar> {
           imageSelected: AssetImage("assets/tabbar_sale_selected.png"),
         ),
         NavigationItemBean(
-          textStr: '阿库学院',
+          textStr: '云学院',
           image: AssetImage("assets/tabbar_aku_normal.png"),
           imageSelected: AssetImage("assets/tabbar_aku_selected.png"),
         ),

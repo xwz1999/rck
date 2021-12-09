@@ -24,8 +24,9 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
       Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
+          30.wb,
           Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.end,
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -86,29 +87,29 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                   //   },
                   // ),
                   // 10.wb,
-                  CustomImageButton(
-                    // icon: Icon(AppIcons.icon_message),
-                    icon: ImageIcon(
-                      AssetImage("assets/navigation_msg.png"),
-                      size: 30,
-                    ),
-                    title: "客服",
-                    fontSize: 12,
-                    color: getCurrentAppItemColor(),
-                    onPressed: () {
-                      MQManager.goToChat(
-                          userId: UserManager.instance.user.info.id.toString(),
-                          userInfo: <String, String>{
-                            "name":
-                                UserManager.instance.user.info.nickname ?? "",
-                            "gender": UserManager.instance.user.info.gender == 1
-                                ? "男"
-                                : "女",
-                            "mobile":
-                                UserManager.instance.user.info.mobile ?? ""
-                          });
-                    },
-                  ),
+                  // CustomImageButton(
+                  //   // icon: Icon(AppIcons.icon_message),
+                  //   icon: ImageIcon(
+                  //     AssetImage("assets/navigation_msg.png"),
+                  //     size: 30,
+                  //   ),
+                  //   title: "客服",
+                  //   fontSize: 12,
+                  //   color: getCurrentAppItemColor(),
+                  //   onPressed: () {
+                  //     MQManager.goToChat(
+                  //         userId: UserManager.instance.user.info.id.toString(),
+                  //         userInfo: <String, String>{
+                  //           "name":
+                  //               UserManager.instance.user.info.nickname ?? "",
+                  //           "gender": UserManager.instance.user.info.gender == 1
+                  //               ? "男"
+                  //               : "女",
+                  //           "mobile":
+                  //               UserManager.instance.user.info.mobile ?? ""
+                  //         });
+                  //   },
+                  // ),
                 ],
               ),
               12.hb,
@@ -132,6 +133,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
       ),
       Row(
         children: [
+          10.wb,
           'NO.${UserManager.instance.indentifier}'
               .text
               .color(Color(0xFF333333))
@@ -162,6 +164,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
               .color(Color(0xFF333333))
               .size(12.rsp)
               .make(),
+          15.wb,
         ],
       ),
     ].column();
@@ -190,7 +193,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
         Positioned(
           left: 30.rw,
           right: 30.rw,
-          bottom: 24.rw,
+          bottom: 35.rw,
           child: _buildInnerInfo(),
         ),
       ],

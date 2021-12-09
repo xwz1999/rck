@@ -1351,7 +1351,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       case '助力抢购':
         Get.to(() => BooStingActivityPage());
         break;
-      case '阿库学院':
+      case '云学院':
         UserManager.instance.selectTabbarIndex = 1;
         bool value = UserManager.instance.selectTabbar.value;
         UserManager.instance.selectTabbar.value = !value;

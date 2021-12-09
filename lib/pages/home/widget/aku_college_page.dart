@@ -44,10 +44,24 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
   @override
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
-      backgroundColor: Color(0xFFFFFFFF),
-      appBar: CustomAppBar(
-        title: "阿库学院".text.bold.size(18.rsp).make(),
-        themeData: AppThemes.themeDataGrey.appBarTheme,
+      backgroundColor: AppColor.tableViewGrayColor,
+      appBar: PreferredSize(
+        child: Stack(
+          children: [
+            Image.asset(
+              R.ASSETS_SCHOOL_TOP_BG_PNG,
+              fit: BoxFit.cover,
+              width: double.infinity,
+            ),
+            AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              centerTitle: true,
+              title: SizedBox(),
+            ),
+          ],
+        ),
+        preferredSize: Size.fromHeight(MediaQuery.of(context).padding.top),
       ),
       body: _bodyWidget(),
     );
@@ -62,7 +76,7 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
             width: double.infinity,
             height: 160.rw,
             child: Image.asset(
-              R.ASSETS_AKU_COLLEGE_PNG,
+              R.ASSETS_SCHOOL_BG_PNG,
               fit: BoxFit.fill,
             ),
           ),

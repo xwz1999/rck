@@ -25,7 +25,7 @@ class _DiscoveryPageState extends State<DiscoveryPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: 1, vsync: this);
   }
 
   @override
@@ -86,8 +86,8 @@ class _DiscoveryPageState extends State<DiscoveryPage>
             ),
           ),
           tabs: [
-            Tab(text: '直播'),
-            Tab(text: '视频'),
+            // Tab(text: '直播'),
+            // Tab(text: '视频'),
             Tab(text: '图文'),
           ],
         ),
@@ -103,8 +103,8 @@ class _DiscoveryPageState extends State<DiscoveryPage>
               child: CacheTabBarView(
             controller: _tabController,
             children: [
-              LiveStreamPage(),
-              VideoPage(),
+              // LiveStreamPage(),
+              // VideoPage(),
               FocusPage(),
             ],
           )),

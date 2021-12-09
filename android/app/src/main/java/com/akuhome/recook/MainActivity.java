@@ -4,6 +4,7 @@ package com.akuhome.recook;
 //import io.flutter.app.FlutterActivity;
 //import io.flutter.plugins.GeneratedPluginRegistrant;
 import android.os.Bundle;
+import android.os.Build;
 import android.os.PersistableBundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -41,6 +42,15 @@ public class MainActivity extends FlutterActivity {
             }
     );
   }
+
+    // 设置状态栏沉浸式透明（修改flutter状态栏黑色半透明为全透明）
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(0);
+        }
+    }
   //  @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);

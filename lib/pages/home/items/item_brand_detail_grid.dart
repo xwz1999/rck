@@ -207,7 +207,7 @@ class BrandDetailGridItem extends StatelessWidget {
                             this.goods.description,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: AppTextStyle.generate(10 * 2.sp,
+                            style: AppTextStyle.generate(12.rsp,
                                 color: Colors.black54,
                                 fontWeight: FontWeight.w300),
                           ),
@@ -502,19 +502,19 @@ class BrandDetailGridItem extends StatelessWidget {
           color: Colors.white,
           child: Row(
             children: <Widget>[
-              Container(
-                width: 13 * 1.5,
-                height: 13 * 1.5,
-                child: TextUtils.isEmpty(this.goods.brandImg)
-                    ? SizedBox()
-                    : ExtendedImage.network(
-                        Api.getImgUrl(this.goods.brandImg),
-                        fit: BoxFit.fill,
-                      ),
-              ),
-              SizedBox(
-                width: 4,
-              ),
+              // Container(
+              //   width: 13 * 1.5,
+              //   height: 13 * 1.5,
+              //   child: TextUtils.isEmpty(this.goods.brandImg)
+              //       ? SizedBox()
+              //       : ExtendedImage.network(
+              //           Api.getImgUrl(this.goods.brandImg),
+              //           fit: BoxFit.fill,
+              //         ),
+              // ),
+              // SizedBox(
+              //   width: 4,
+              // ),
               Expanded(
                 child: Text(
                   TextUtils.isEmpty(this.goods.brandName)
