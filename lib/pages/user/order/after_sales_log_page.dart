@@ -190,7 +190,7 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
   }
 
   _getRichTextWidget(String text) {
-    // text = "退款金额 <black>¥169</black> 将原路退回至您的<black>付款账户</black>，请及时关注到账情况。<gray>若3天内未收到退款/瑞币，请联系客服咨询。</gray> <gray>gray</gray>  <address>寄回地址：浙江省宁波市海曙区翠柏路宁波工程学院翠柏校区 瑞库客 13888888888</address>";
+    // text = "退款金额 <black>¥169</black> 将原路退回至您的<black>付款账户</black>，请及时关注到账情况。<gray>若3天内未收到退款/瑞币，请联系客服咨询。</gray> <gray>gray</gray>  <address>寄回地址：浙江省宁波市海曙区翠柏路宁波工程学院翠柏校区 京耀云 13888888888</address>";
     // text = text.replaceAll("|", "\n");
     List<AfterSalesRichTextModel> richTextList = [];
 

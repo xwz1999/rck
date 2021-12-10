@@ -21,7 +21,7 @@ import 'package:recook/widgets/progress/re_toast.dart';
 
 Future<bool> _checkLiveAgreement() async {
   return Get.dialog(NormalContentDialog(
-    title: '瑞库客直播服务申明',
+    title: '京耀云直播服务申明',
     type: NormalTextDialogType.delete,
     deleteItem: '同意授权',
     items: ['以后再说'],
@@ -38,7 +38,7 @@ Future<bool> _checkLiveAgreement() async {
             child: InkWell(
               splashColor: Colors.blue.withOpacity(0.2),
               child: Text(
-                '《瑞库客直播服务申明》',
+                '《京耀云直播服务申明》',
                 style: TextStyle(
                   color: Colors.blue,
                 ),

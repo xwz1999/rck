@@ -237,7 +237,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
               UserLevelTool.currentRoleLevelEnum() != UserRoleLevel.Vip
                   ? Padding(
                       padding: EdgeInsets.symmetric(
-                        horizontal: 10,
+                        horizontal: 0,
                       ),
                       child: _buildDetailReward(),
                     )
@@ -252,8 +252,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   title: '自购收益',
                   alertTitle: '自购收益',
                   alertContent: '您本人下单并确认收货后，您获得的佣金。'.text.black.make(),
-                  title1: '未到账收益(瑞币)',
-                  title3: '已到账收益(瑞币)',
+                  title1: '未到账收益',
+                  title3: '已到账收益',
                   content1:
                       _userIncomeDataModel?.purchase?.expectAmountValue ?? '0',
                   content2:
@@ -261,13 +261,14 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   content3: _userIncomeDataModel?.purchase?.amountValue ?? '0',
                   content4: _userIncomeDataModel?.purchase?.countValue ?? '0',
                 ),
+
                 _renderBenefitCard(
                   leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
-                  title: '导购收益',
-                  alertTitle: '导购收益',
-                  alertContent: '会员通过您导购的商品链接，购买并确认收货的佣金收益'.text.black.make(),
-                  title1: '未到账收益(瑞币)',
-                  title3: '已到账收益(瑞币)',
+                  title: '分享收益',
+                  alertTitle: '分享收益',
+                  alertContent: '会员通过您分享的商品链接，购买并确认收货的佣金收益'.text.black.make(),
+                  title1: '未到账收益',
+                  title3: '已到账收益',
                   content1:
                       _userIncomeDataModel?.guide?.expectAmountValue ?? '0',
                   content2:
@@ -275,11 +276,25 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   content3: _userIncomeDataModel?.guide?.amountValue ?? '0',
                   content4: _userIncomeDataModel?.guide?.countValue ?? '0',
                 ),
+                _renderBenefitCard(
+                  leadingPath: R.ASSETS_USER_PINK_BUYER_WEBP,
+                  title: '品牌补贴',
+                  alertTitle: '品牌补贴',
+                  alertContent: '您本人下单并确认收货后，您获得的佣金。'.text.black.make(),
+                  title1: '未到账收益',
+                  title3: '已到账收益',
+                  content1:
+                  _userIncomeDataModel?.purchase?.expectAmountValue ?? '0',
+                  content2:
+                  _userIncomeDataModel?.purchase?.expectCountValue ?? '0',
+                  content3: _userIncomeDataModel?.purchase?.amountValue ?? '0',
+                  content4: _userIncomeDataModel?.purchase?.countValue ?? '0',
+                ),
                 if (_userIncomeDataModel?.hasTeamValue ?? false)
                   _renderBenefitCard(
                     leadingPath: R.ASSETS_USER_PINK_GROUP_WEBP,
-                    title: '店铺补贴',
-                    alertTitle: '店铺补贴',
+                    title: '开店补贴',
+                    alertTitle: '开店补贴',
                     alertContent: Builder(
                       builder: (context) {
                         //role == UserRoleLevel.Diamond_1 || role == UserRoleLevel.Diamond_2 || role == UserRoleLevel.Diamond_3
@@ -371,7 +386,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 },
               ),
               20.w.heightBox,
-              ShopManagerView(),
+              // ShopManagerView(),
 
               // OtherItemView(),
               OtherItemViewV2(),
@@ -418,10 +433,12 @@ class _UserPageState extends BaseStoreState<UserPage> {
   }) {
     if (title == "自购收益") {
       type = UserBenefitPageType.SELF;
-    } else if (title == "导购收益") {
+    } else if (title == "分享收益") {
       type = UserBenefitPageType.GUIDE;
-    } else if (title == "店铺补贴") {
+    } else if (title == "开店补贴") {
       type = UserBenefitPageType.TEAM;
+    }else if (title == "开店补贴") {
+      type = UserBenefitPageType.PLATFORM;
     }
 
     return Container(
@@ -449,16 +466,16 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   color: Color(0xFFA5A5A5),
                 ),
                 onPressed: () {
-                  Alert.show(
-                      context,
-                      NormalContentDialog(
-                        title: alertTitle,
-                        content: alertContent,
-                        items: ["确认"],
-                        listener: (index) {
-                          Alert.dismiss(context);
-                        },
-                      ));
+                  // Alert.show(
+                  //     context,
+                  //     NormalContentDialog(
+                  //       title: alertTitle,
+                  //       content: alertContent,
+                  //       items: ["确认"],
+                  //       listener: (index) {
+                  //         Alert.dismiss(context);
+                  //       },
+                  //     ));
                 },
               ),
               Spacer(),
@@ -508,8 +525,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     children: [
                       CustomImageButton(
                         onPressed: () {
-                          Get.to(() => UserBenefitCurrencyPage(
-                              type: type, receivedType: "未到账"));
+                          // Get.to(() => UserBenefitCurrencyPage(
+                          //     type: type, receivedType: "未到账"));
                         },
                         child: Column(
                           children: [
@@ -530,8 +547,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     children: [
                       CustomImageButton(
                         onPressed: () {
-                          Get.to(() => UserBenefitCurrencyPage(
-                              type: type, receivedType: "未到账"));
+                          // Get.to(() => UserBenefitCurrencyPage(
+                          //     type: type, receivedType: "未到账"));
                         },
                         child: Column(
                           children: [
@@ -560,8 +577,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   32.w.widthBox,
                   CustomImageButton(
                     onPressed: () {
-                      Get.to(() => UserBenefitCurrencyPage(
-                          type: type, receivedType: "已到账"));
+                      // Get.to(() => UserBenefitCurrencyPage(
+                      //     type: type, receivedType: "已到账"));
                     },
                     child: Column(
                       children: [
@@ -577,8 +594,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   Spacer(),
                   CustomImageButton(
                     onPressed: () {
-                      Get.to(() => UserBenefitCurrencyPage(
-                          type: type, receivedType: "已到账"));
+                      // Get.to(() => UserBenefitCurrencyPage(
+                      //     type: type, receivedType: "已到账"));
                     },
                     child: Column(
                       children: [
@@ -601,9 +618,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
 
   _buildDetailReward() {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
       child: Container(
-          height: 40,
+          height: 50.rw,
           color: Colors.white,
           child: Stack(
             children: <Widget>[
@@ -619,16 +635,16 @@ class _UserPageState extends BaseStoreState<UserPage> {
               AppConfig.getShowCommission()
                   ? CustomImageButton(
                       onPressed: () {
-                        Get.to(() => UserHistoryBenefitPage());
+                        //Get.to(() => UserHistoryBenefitPage());
                       },
                       child: Container(
-                        padding: EdgeInsets.only(left: 15),
-                        height: 40,
+                        padding: EdgeInsets.only(left: 15.rw),
+                        height: 50.rw,
                         child: Row(
                           children: <Widget>[
                             Text(
-                              "累计收益",
-                              style: AppTextStyle.generate(16,
+                              "累计总收益",
+                              style: AppTextStyle.generate(16.rsp,
                                   fontWeight: FontWeight.w700),
                             ),
                             MaterialButton(
@@ -659,8 +675,9 @@ class _UserPageState extends BaseStoreState<UserPage> {
                             Text(_allBenefitAmount.toStringAsFixed(2),
                                 style: TextStyle(
                                     color: Colors.black, fontSize: 18)),
-                            Icon(Icons.keyboard_arrow_right,
-                                size: 22, color: Color(0xff999999)),
+                            40.wb,
+                            // Icon(Icons.keyboard_arrow_right,
+                            //     size: 22, color: Color(0xff999999)),
                           ],
                         ),
                       ),

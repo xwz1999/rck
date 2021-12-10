@@ -22,7 +22,7 @@ class _LiveAgreementPageState extends State<LiveAgreementPage> {
   @override
   Widget build(BuildContext context) {
     return RecookScaffold(
-      title: '瑞库客直播服务申明',
+      title: '京耀云直播服务申明',
       body: SingleChildScrollView(
         padding: EdgeInsets.all(rSize(15)),
         child: MarkdownBody(

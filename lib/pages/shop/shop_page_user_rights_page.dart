@@ -61,7 +61,7 @@ class _ShopPageUserRightsPageState
                             Positioned(
                               top: 0,
                               left: 0,
-                              child: _appBar("瑞库客8大权益"),
+                              child: _appBar("京耀云8大权益"),
                               //child: Image.asset("assets/shop_page_user_rights_bg.png", width: width, height: bgHeight, fit: BoxFit.fill, ),
                             ),
                           ],

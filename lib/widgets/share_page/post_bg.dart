@@ -236,7 +236,7 @@ class PostBottomInfo {
 
 class PostUserImage {
   String name;
-  PostUserImage({this.name = "瑞库客"});
+  PostUserImage({this.name = "京耀云"});
   init() async {
     image =
         await ShareImageTool.getImageWithAsset(AppImageName.recook_icon_120);

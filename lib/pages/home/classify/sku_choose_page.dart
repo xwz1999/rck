@@ -219,7 +219,7 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
                                   width: 10 * 2.w,
                                 ),
                                 Text(
-                                  '进口税¥${widget.model.data.price.min.ferme.toStringAsFixed(2)},由瑞库客承担',
+                                  '进口税¥${widget.model.data.price.min.ferme.toStringAsFixed(2)},由京耀云承担',
                                   style: TextStyle(
                                       color: Color(0xFF141414),
                                       fontSize: 12 * 2.sp),

@@ -285,7 +285,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
             highlightTextColor: Colors.grey[400],
             border: Border(left: BorderSide(color: Colors.grey[500])),
             onTap: () {
-              if (_chooseAgreement) {
+              if (!_chooseAgreement) {
                 if (!TextUtils.verifyPhone(_phoneController.text)) {
                   showError("手机号码格式不正确!");
                   return;

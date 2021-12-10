@@ -40,11 +40,11 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
   Container _buildBody(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: rSize(10), vertical: rSize(8)),
-      margin: EdgeInsets.only(left: rSize(10), right: rSize(10)),
+      // margin: EdgeInsets.only(left: rSize(10), right: rSize(10)),
       // margin: EdgeInsets.symmetric(
       //     vertical: rSize(8), horizontal: rSize(10)),
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
+          // borderRadius: BorderRadius.all(Radius.circular(8)),
           color: Colors.white),
       child: Column(
         children: <Widget>[

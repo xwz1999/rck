@@ -19,8 +19,9 @@ dependencies:
 
   timeline_tile: 0.1.2
   # 高德定位
-  # amap_location_fluttify: ^0.18.0
-  amap_flutter_location: ^2.0.0
+  amap_flutter_map: 3.0.0
+  amap_flutter_location: ^3.0.0
+  amap_flutter_base: 3.0.0
   # icons
   flutter_icons: 1.1.0
   # 拼音
@@ -41,10 +42,10 @@ dependencies:
   just_audio: ^0.7.3
   # 第三方分享功能
   ## 解决了fluwx冲突的问题
-  sharesdk_plugin:
-    git:
-      url: https://git.oa00.com/flutter_third/shareSDK-For-Flutter.git
-      path: sharesdk_plugin
+#  sharesdk_plugin:
+#    git:
+#      url: https://git.oa00.com/flutter_third/shareSDK-For-Flutter.git
+#      path: sharesdk_plugin
 
   # 展示二维码
   qr_flutter: ^3.2.0

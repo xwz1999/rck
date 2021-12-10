@@ -633,13 +633,13 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                                         //   context,
                                         //   liveId: liveItemId,
                                         //   title:
-                                        //       '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘',
+                                        //       '好友${_streamInfoModel.nickname}正在京耀云直播，快来一起看看😘',
                                         //   des: '让消费服务生活，让生活充满精致',
                                         //   headUrl: _streamInfoModel.headImgUrl,
                                         // );
                                         WeChatUtils.miniProgramShareLive(
                                           id: liveItemId,netWorkThumbnail: Api.getImgUrl(_streamInfoModel.headImgUrl),
-                                          des: '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘'
+                                          des: '好友${_streamInfoModel.nickname}正在京耀云直播，快来一起看看😘'
                                         );
                                       } else {
                                         showToast('未登陆，请先登陆');
@@ -786,7 +786,7 @@ class _LivePageState extends State<LivePage> with WidgetsBindingObserver {
                       //                       context,
                       //                       liveId: liveItemId,
                       //                       title:
-                      //                           '好友${_streamInfoModel.nickname}正在瑞库客直播，快来一起看看😘',
+                      //                           '好友${_streamInfoModel.nickname}正在京耀云直播，快来一起看看😘',
                       //                       des: '',
                       //                       headUrl: _streamInfoModel.headImgUrl,
                       //                     );

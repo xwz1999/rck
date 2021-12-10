@@ -361,7 +361,7 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                                 width: 2 * 2.w,
                               ),
                               Text(
-                                '进口税¥${goods.ferme.toStringAsFixed(2)},由瑞库客承担',
+                                '进口税¥${goods.ferme.toStringAsFixed(2)},由京耀云承担',
                                 style: TextStyle(
                                     color: Color(0xFF666666),
                                     fontSize: 10 * 2.sp),

@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:fluwx/fluwx.dart' as Fluwx;
 import 'package:fluwx/fluwx.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:sharesdk_plugin/sharesdk_plugin.dart';
+// import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/app_image_resources.dart';
@@ -48,7 +48,7 @@ class ShareTool {
         // assetsThumbnail: "assets://${AppImageName.recook_icon_120}",
         netWorkThumbnail: AppImageName.web_app_icon,
         title: "有福同享，才是‘壕’朋友！",
-        description: "瑞库客邀你玩转店铺，快来一起体验吧！",
+        description: "京耀云邀你玩转店铺，快来一起体验吧！",
         scene: scene);
   }
 
@@ -162,108 +162,108 @@ class ShareTool {
         des: miniTitle,
       );
     });
-    PlatformItem weiboItem = PlatformItem(
-        "微博",
-        Image.asset(
-          ShareToolIcon.weibo,
-          width: 36,
-          height: 36,
-        ), itemClick: () {
-      Navigator.maybePop(context);
-      // SSDKMap params = SSDKMap()
-      //   ..setGeneral(
-      //       miniTitle + " | 瑞库客全球精选好货，尊享超值福利！" + goodsUrl,
-      //       miniTitle + " | 瑞库客全球精选好货，尊享超值福利！" + goodsUrl,
-      //       null,
-      //       // "https://cdn.reecook.cn/static/default/appicon.png",
-      //       null,
-      //       AppImageName.recook_icon_60,
-      //       goodsUrl,
-      //       goodsUrl,
-      //       null,
-      //       null,
-      //       AppImageName.recook_icon_60,
-      //       SSDKContentTypes.webpage);
-      SSDKMap params = SSDKMap()
-        ..setGeneral(
-            miniTitle + " | 瑞库客全球精选好货，尊享超值福利！" + goodsUrl,
-            miniTitle + " | 瑞库客全球精选好货，尊享超值福利！" + goodsUrl,
-            null,
-            null,
-            null,
-            goodsUrl,
-            goodsUrl,
-            null,
-            null,
-            null,
-            SSDKContentTypes.webpage);
-      // SSDKMap params = SSDKMap()
-      // ..setSinaLinkCard(
-      //   miniTitle + " | 瑞库客全球精选好货，尊享超值福利！",
-      //   "全球精选好货，尊享超值福利！",
-      //   goodsUrl,
-      //   "全球精选好货，尊享超值福利！",
-      //   "https://cdn.reecook.cn/static/default/appicon.png",
-      //   "120",
-      //   "120",
-      // );
-      SharesdkPlugin.share(ShareSDKPlatforms.sina, params,
-          (SSDKResponseState state, Map userdata, Map contentEntity,
-              SSDKError error) {
-        // if (error != null) {
-        //   Toast.showError(jsonEncode(error.rawData));
-        // }
-      });
-    });
-    PlatformItem qqItem = PlatformItem(
-        "QQ",
-        Image.asset(
-          R.ASSETS_SHARE_BOTTOM_QQ_PNG,
-          width: 36,
-          height: 36,
-        ), itemClick: () {
-      Navigator.maybePop(context);
-      SSDKMap params = SSDKMap()
-        ..setQQ(
-            "$miniTitle | 瑞库客全球精选好货，尊享超值福利！",
-            "全球精选好货，尊享超值福利！",
-            goodsUrl,
-            null,
-            null,
-            null,
-            null,
-            "",
-            "https://cdn.reecook.cn/static/default/appicon.png",
-            null,
-            null,
-            goodsUrl,
-            null,
-            null,
-            SSDKContentTypes.webpage,
-            ShareSDKPlatforms.qq);
-      SharesdkPlugin.share(ShareSDKPlatforms.qq, params,
-          (SSDKResponseState state, Map userdata, Map contentEntity,
-              SSDKError error) {
-        // if (error != null) {
-        //   Toast.showError(jsonEncode(error.rawData));
-        // }
-      });
-    });
-    PlatformItem copyurl = PlatformItem(
-        "复制链接",
-        Image.asset(
-          R.ASSETS_SHARE_BOTTOM_LINK_PNG,
-          width: 36,
-          height: 36,
-        ), itemClick: () {
-      Navigator.maybePop(context);
-      ClipboardData data = new ClipboardData(text: goodsUrl);
-      Clipboard.setData(data);
-      Toast.showCustomSuccess(
-        '链接复制成功',
-        delayedDuration: Duration(seconds: 0),
-      );
-    });
+    // PlatformItem weiboItem = PlatformItem(
+    //     "微博",
+    //     Image.asset(
+    //       ShareToolIcon.weibo,
+    //       width: 36,
+    //       height: 36,
+    //     ), itemClick: () {
+    //   Navigator.maybePop(context);
+    //   // SSDKMap params = SSDKMap()
+    //   //   ..setGeneral(
+    //   //       miniTitle + " | 京耀云全球精选好货，尊享超值福利！" + goodsUrl,
+    //   //       miniTitle + " | 京耀云全球精选好货，尊享超值福利！" + goodsUrl,
+    //   //       null,
+    //   //       // "https://cdn.reecook.cn/static/default/appicon.png",
+    //   //       null,
+    //   //       AppImageName.recook_icon_60,
+    //   //       goodsUrl,
+    //   //       goodsUrl,
+    //   //       null,
+    //   //       null,
+    //   //       AppImageName.recook_icon_60,
+    //   //       SSDKContentTypes.webpage);
+    //   SSDKMap params = SSDKMap()
+    //     ..setGeneral(
+    //         miniTitle + " | 京耀云全球精选好货，尊享超值福利！" + goodsUrl,
+    //         miniTitle + " | 京耀云全球精选好货，尊享超值福利！" + goodsUrl,
+    //         null,
+    //         null,
+    //         null,
+    //         goodsUrl,
+    //         goodsUrl,
+    //         null,
+    //         null,
+    //         null,
+    //         SSDKContentTypes.webpage);
+    //   // SSDKMap params = SSDKMap()
+    //   // ..setSinaLinkCard(
+    //   //   miniTitle + " | 京耀云全球精选好货，尊享超值福利！",
+    //   //   "全球精选好货，尊享超值福利！",
+    //   //   goodsUrl,
+    //   //   "全球精选好货，尊享超值福利！",
+    //   //   "https://cdn.reecook.cn/static/default/appicon.png",
+    //   //   "120",
+    //   //   "120",
+    //   // );
+    //   SharesdkPlugin.share(ShareSDKPlatforms.sina, params,
+    //       (SSDKResponseState state, Map userdata, Map contentEntity,
+    //           SSDKError error) {
+    //     // if (error != null) {
+    //     //   Toast.showError(jsonEncode(error.rawData));
+    //     // }
+    //   });
+    // });
+    // PlatformItem qqItem = PlatformItem(
+    //     "QQ",
+    //     Image.asset(
+    //       R.ASSETS_SHARE_BOTTOM_QQ_PNG,
+    //       width: 36,
+    //       height: 36,
+    //     ), itemClick: () {
+    //   Navigator.maybePop(context);
+    //   SSDKMap params = SSDKMap()
+    //     ..setQQ(
+    //         "$miniTitle | 京耀云全球精选好货，尊享超值福利！",
+    //         "全球精选好货，尊享超值福利！",
+    //         goodsUrl,
+    //         null,
+    //         null,
+    //         null,
+    //         null,
+    //         "",
+    //         "https://cdn.reecook.cn/static/default/appicon.png",
+    //         null,
+    //         null,
+    //         goodsUrl,
+    //         null,
+    //         null,
+    //         SSDKContentTypes.webpage,
+    //         ShareSDKPlatforms.qq);
+    //   SharesdkPlugin.share(ShareSDKPlatforms.qq, params,
+    //       (SSDKResponseState state, Map userdata, Map contentEntity,
+    //           SSDKError error) {
+    //     // if (error != null) {
+    //     //   Toast.showError(jsonEncode(error.rawData));
+    //     // }
+    //   });
+    // });
+    // PlatformItem copyurl = PlatformItem(
+    //     "复制链接",
+    //     Image.asset(
+    //       R.ASSETS_SHARE_BOTTOM_LINK_PNG,
+    //       width: 36,
+    //       height: 36,
+    //     ), itemClick: () {
+    //   Navigator.maybePop(context);
+    //   ClipboardData data = new ClipboardData(text: goodsUrl);
+    //   Clipboard.setData(data);
+    //   Toast.showCustomSuccess(
+    //     '链接复制成功',
+    //     delayedDuration: Duration(seconds: 0),
+    //   );
+    // });
     PlatformItem qrcode = PlatformItem(
         "二维码海报",
         Image.asset(
@@ -305,10 +305,10 @@ class ShareTool {
         ClipboardListenerValue.canListen = false;
         Navigator.pop(context);
         print(goodsId);
-        String code = '【$miniTitle】复制这段描述，打开瑞库客，购全球好物${RUICodeUtil.encrypt(
+        String code = '【$miniTitle】复制这段描述，打开京耀云，购全球好物${RUICodeUtil.encrypt(
           int.parse(goodsId),
           UserManager.instance.user.info.id,
-        )}瑞库客。\n让消费服务生活，让生活充满精致';
+        )}京耀云。\n让消费服务生活，让生活充满精致';
         Clipboard.setData(ClipboardData(text: code));
         bool needWechat = await showDialog(
           context: context,
@@ -420,53 +420,53 @@ class ShareTool {
           url: inviteUrl,
           netWorkThumbnail: AppImageName.web_app_icon,
           title: "有福同享，才是‘壕’朋友！",
-          description: "瑞库客邀你玩转店铺，快来一起体验吧！",
+          description: "京耀云邀你玩转店铺，快来一起体验吧！",
           scene: scene);
     });
 
-    PlatformItem weiboItem = PlatformItem(
-        "微博",
-        Image.asset(
-          ShareToolIcon.weibo,
-          width: 36,
-          height: 36,
-        ), itemClick: () {
-      Navigator.maybePop(context);
-      SSDKMap params = SSDKMap()
-        ..setGeneral(
-            "邀请您加入瑞库客  " + inviteUrl,
-            "邀请您加入瑞库客  " + inviteUrl,
-            null,
-            null,
-            null,
-            inviteUrl,
-            inviteUrl,
-            null,
-            null,
-            null,
-            SSDKContentTypes.webpage);
-//          SSDKMap params = SSDKMap()
-//          ..setSinaLinkCard(
-//            "邀请您加入瑞库客",
-//            "邀请您加入瑞库客",
-//            inviteUrl,
-//            "邀请您加入瑞库客",
-//            "https://cdn.reecook.cn/static/default/appicon.png",
-//            "120",
-//            "120",
-//          );
-      try {
-        SharesdkPlugin.share(ShareSDKPlatforms.sina, params,
-            (SSDKResponseState state, Map userdata, Map contentEntity,
-                SSDKError error) {
-          // if (error != null) {
-          //   Toast.showError(jsonEncode(error.rawData));
-          // }
-        });
-      } catch (e) {
-        Toast.showError(e.toString());
-      }
-    });
+//     PlatformItem weiboItem = PlatformItem(
+//         "微博",
+//         Image.asset(
+//           ShareToolIcon.weibo,
+//           width: 36,
+//           height: 36,
+//         ), itemClick: () {
+//       Navigator.maybePop(context);
+//       SSDKMap params = SSDKMap()
+//         ..setGeneral(
+//             "邀请您加入京耀云  " + inviteUrl,
+//             "邀请您加入京耀云  " + inviteUrl,
+//             null,
+//             null,
+//             null,
+//             inviteUrl,
+//             inviteUrl,
+//             null,
+//             null,
+//             null,
+//             SSDKContentTypes.webpage);
+// //          SSDKMap params = SSDKMap()
+// //          ..setSinaLinkCard(
+// //            "邀请您加入京耀云",
+// //            "邀请您加入京耀云",
+// //            inviteUrl,
+// //            "邀请您加入京耀云",
+// //            "https://cdn.reecook.cn/static/default/appicon.png",
+// //            "120",
+// //            "120",
+// //          );
+//       try {
+//         SharesdkPlugin.share(ShareSDKPlatforms.sina, params,
+//             (SSDKResponseState state, Map userdata, Map contentEntity,
+//                 SSDKError error) {
+//           // if (error != null) {
+//           //   Toast.showError(jsonEncode(error.rawData));
+//           // }
+//         });
+//       } catch (e) {
+//         Toast.showError(e.toString());
+//       }
+//     });
     PlatformItem copyurlItem = PlatformItem(
         "复制链接",
         Image.asset(
@@ -482,40 +482,40 @@ class ShareTool {
         delayedDuration: Duration(seconds: 0),
       );
     });
-    PlatformItem qqItem = PlatformItem(
-        "QQ",
-        Image.asset(
-          ShareToolIcon.qq,
-          width: 36,
-          height: 36,
-        ), itemClick: () {
-      Navigator.maybePop(context);
-      SSDKMap params = SSDKMap()
-        ..setQQ(
-            "瑞库客邀你玩转店铺，快来一起体验吧！",
-            "有福同享，才是‘壕’朋友！",
-            inviteUrl,
-            null,
-            null,
-            null,
-            null,
-            "",
-            "https://cdn.reecook.cn/static/default/appicon.png",
-            null,
-            null,
-            inviteUrl,
-            null,
-            null,
-            SSDKContentTypes.webpage,
-            ShareSDKPlatforms.qq);
-      SharesdkPlugin.share(ShareSDKPlatforms.qq, params,
-          (SSDKResponseState state, Map userdata, Map contentEntity,
-              SSDKError error) {
-        // if (error != null) {
-        //   Toast.showError(jsonEncode(error.rawData));
-        // }
-      });
-    });
+    // PlatformItem qqItem = PlatformItem(
+    //     "QQ",
+    //     Image.asset(
+    //       ShareToolIcon.qq,
+    //       width: 36,
+    //       height: 36,
+    //     ), itemClick: () {
+    //   Navigator.maybePop(context);
+    //   SSDKMap params = SSDKMap()
+    //     ..setQQ(
+    //         "京耀云邀你玩转店铺，快来一起体验吧！",
+    //         "有福同享，才是‘壕’朋友！",
+    //         inviteUrl,
+    //         null,
+    //         null,
+    //         null,
+    //         null,
+    //         "",
+    //         "https://cdn.reecook.cn/static/default/appicon.png",
+    //         null,
+    //         null,
+    //         inviteUrl,
+    //         null,
+    //         null,
+    //         SSDKContentTypes.webpage,
+    //         ShareSDKPlatforms.qq);
+    //   SharesdkPlugin.share(ShareSDKPlatforms.qq, params,
+    //       (SSDKResponseState state, Map userdata, Map contentEntity,
+    //           SSDKError error) {
+    //     // if (error != null) {
+    //     //   Toast.showError(jsonEncode(error.rawData));
+    //     // }
+    //   });
+    // });
     PlatformItem qrcode = PlatformItem(
         "二维码海报",
         Image.asset(
@@ -536,9 +536,9 @@ class ShareTool {
       qrcode,
       // qqItem,
     ];
-    if (ShareTool.qqInstalled) {
-      itemList.add(qqItem);
-    }
+    // if (ShareTool.qqInstalled) {
+    //   itemList.add(qqItem);
+    // }
     // if (ShareTool.weiboInstalled){
     //   itemList.add(weiboItem);
     // }

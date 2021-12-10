@@ -93,7 +93,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
           totalPrice(),
           priceInfo(),
           orderInfo(),
-          contactCustomerService(),
+          //contactCustomerService(),
         ],
       ),
     );

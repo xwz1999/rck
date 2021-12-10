@@ -143,7 +143,7 @@ class PostWeatherWidget extends StatelessWidget {
 class PostUserInfo extends StatelessWidget {
   final String name;
   final int gysId;
-  const PostUserInfo({Key key, this.name = "瑞库客", this.gysId}) : super(key: key);
+  const PostUserInfo({Key key, this.name = "京耀云", this.gysId}) : super(key: key);
 
 
   @override

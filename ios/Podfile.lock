@@ -23,7 +23,6 @@ PODS:
     - AMapFoundation (~> 1.6.4)
   - audio_session (0.0.1):
     - Flutter
-  - Bugly (2.5.90)
   - camera (0.0.1):
     - Flutter
   - clipboard_listener (0.0.1):
@@ -69,9 +68,6 @@ PODS:
     - DKImagePickerController/PhotoGallery
     - Flutter
   - Flutter (1.0.0)
-  - flutter_bugly (0.0.1):
-    - Bugly
-    - Flutter
   - flutter_ffmpeg/min-lts (0.4.2):
     - Flutter
     - mobile-ffmpeg-min (= 4.4.LTS)
@@ -262,7 +258,6 @@ DEPENDENCIES:
   - easy_contact_picker (from `.symlinks/plugins/easy_contact_picker/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
-  - flutter_bugly (from `.symlinks/plugins/flutter_bugly/ios`)
   - flutter_ffmpeg/min-lts (from `.symlinks/plugins/flutter_ffmpeg/ios`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
   - flutter_qr_reader (from `.symlinks/plugins/flutter_qr_reader/ios`)
@@ -300,7 +295,6 @@ SPEC REPOS:
     - AlipaySDK-iOS
     - AMapFoundation
     - AMapLocation
-    - Bugly
     - DKImagePickerController
     - DKPhotoGallery
     - FMDB
@@ -342,8 +336,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
     :path: Flutter
-  flutter_bugly:
-    :path: ".symlinks/plugins/flutter_bugly/ios"
   flutter_ffmpeg:
     :path: ".symlinks/plugins/flutter_ffmpeg/ios"
   flutter_image_compress:
@@ -412,7 +404,6 @@ SPEC CHECKSUMS:
   AMapFoundation: 2d012d9aaa7a5c0d387ddb1a8c5f03e1d6df29b8
   AMapLocation: a46c30d9930d0f3a3bd21139d8f845d10ac3f01d
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
-  Bugly: 88bc32c0acc6fef7b74d610f0319ee7560d6b9fe
   camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
   clipboard_listener: 5bdabc3b4ebabf4b4055ca17aa97b9b4b55160e2
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
@@ -422,7 +413,6 @@ SPEC CHECKSUMS:
   easy_contact_picker: 9ab9dc70e8ddde6e76a19ffc482d7bf899868730
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  flutter_bugly: c9800f4d5bc5bdc27ffdde3417a26ba44266e0c3
   flutter_ffmpeg: 3ec3912c74649851e6c3b1885511eef78142ac4f
   flutter_image_compress: f69d0e0e078ce52b4810695593bc861ee319ae7d
   flutter_qr_reader: 1b4faf9032e9ddc738107fd3dc067d29bd5cc67d

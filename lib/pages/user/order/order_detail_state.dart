@@ -807,9 +807,9 @@ abstract class OrderDetailState<T extends StatefulWidget>
           height: rSize(30),
           direction: Direction.horizontal,
           pureDisplay: true,
-          icon: CustomCacheImage(
-            imageUrl: Api.getResizeImgUrl(brand.brandLogoUrl, 150),
-          ),
+          // icon: CustomCacheImage(
+          //   imageUrl: Api.getResizeImgUrl(brand.brandLogoUrl, 150),
+          // ),
           contentSpacing: rSize(8),
           style: AppTextStyle.generate(
             14 * 2.sp,

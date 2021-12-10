@@ -64,9 +64,6 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
       Future.delayed(Duration.zero, () async {
         UserManager.instance.kingCoinListModelList =
         await UserFunc.getKingCoinList();
-        setState(() {
-
-        });
       });
       PowerLogger.start(context, debug: true);//AppConfig.debug  在正式服数据下进行调试
       cameras = await availableCameras();

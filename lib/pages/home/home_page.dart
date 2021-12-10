@@ -40,7 +40,7 @@ import 'package:recook/pages/seckill_activity/seckill_activity_page.dart';
 import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:recook/utils/storage/hive_store.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:sharesdk_plugin/sharesdk_plugin.dart';
+// import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -183,16 +183,16 @@ class _HomePageState extends BaseStoreState<HomePage>
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
-      UserManager.instance.kingCoinListModelList =
-      await UserFunc.getKingCoinList();
-      setState(() {
-
-      });
-    });
+    // Future.delayed(Duration.zero, () async {
+    //   UserManager.instance.kingCoinListModelList =
+    //   await UserFunc.getKingCoinList();
+    // });
+    _updateSource();
     _getWeather();//部分机型获取地址较慢 所以放在外面先获取
 
     requestPermission().then((value) {
+      AMapFlutterLocation.updatePrivacyAgree(true);
+      AMapFlutterLocation.updatePrivacyShow(true, true);
       if (value) {
         //监听要在设置参数之前 否则无法获取定位
         _amapFlutterLocation.onLocationChanged().listen(
@@ -205,6 +205,7 @@ class _HomePageState extends BaseStoreState<HomePage>
 
         _amapFlutterLocation
             .setLocationOption(AMapLocationOption(onceLocation: true));
+
         _amapFlutterLocation.startLocation();
       } else {
         //ReToast.err(text: '未获取到定位权限，请先在设置中打开定位权限');
@@ -237,8 +238,8 @@ class _HomePageState extends BaseStoreState<HomePage>
 
 
 
-    // 分享注册
-    _mobShareInit();
+    // // 分享注册
+    // _mobShareInit();
     // 判断微信是否登录
     WeChatUtils.initial();
     // meiqia注册
@@ -270,7 +271,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         getStore().state.openinstall.goodsid = "";
       }
     });
-    _updateSource();
+    // _updateSource();
     _sliverListController = ScrollController();
     _gsRefreshController = GSRefreshController();
     _tabController = TabController(length: _promotionList.length, vsync: this);
@@ -322,9 +323,9 @@ class _HomePageState extends BaseStoreState<HomePage>
     Future.delayed(Duration.zero, () async {
       kingCoinListModelList =
       await UserFunc.getKingCoinList();
-      setState(() {
-
-      });
+      // setState(() {
+      //
+      // });
     });
   }
 
@@ -421,7 +422,7 @@ class _HomePageState extends BaseStoreState<HomePage>
               top: 0,
               bottom: 0,
               child: RefreshWidget(
-                header: HomeGifHeader(),
+                // header: HomeGifHeader(),
                 isInNest: true,
                 headerTriggerDistance: ScreenUtil().statusBarHeight,
                 color: Colors.black,
@@ -772,15 +773,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   FlexibleSpaceBar _flexibleSpaceBar(context) {
-    if(kingCoinListModelList == null){
-      Future.delayed(Duration.zero, () async {
-        kingCoinListModelList =
-        await UserFunc.getKingCoinList();
-        setState(() {
 
-        });
-      });
-    }
     return FlexibleSpaceBar(
       collapseMode: CollapseMode.pin,
       background: Container(
@@ -1731,13 +1724,13 @@ class _HomePageState extends BaseStoreState<HomePage>
     if (mounted) setState(() {});
   }
 
-  _mobShareInit() {
-    ShareSDKRegister register = ShareSDKRegister();
-    // register.setupSinaWeibo(
-    //     "3484799074", "0cc08d31b4d63dc81fbb7a2559999fb3", "https://reecook.cn");
-    register.setupQQ("101876843", "6f367bfad98978e22c2e11897dd74f00");
-    SharesdkPlugin.regist(register);
-  }
+  // _mobShareInit() {
+  //   ShareSDKRegister register = ShareSDKRegister();
+  //   // register.setupSinaWeibo(
+  //   //     "3484799074", "0cc08d31b4d63dc81fbb7a2559999fb3", "https://reecook.cn");
+  //   register.setupQQ("101876843", "6f367bfad98978e22c2e11897dd74f00");
+  //   SharesdkPlugin.regist(register);
+  // }
 
   Future<bool> requestPermission() async {
     if (Platform.isIOS) {

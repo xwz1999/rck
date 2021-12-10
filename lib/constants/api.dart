@@ -15,12 +15,12 @@ class Api {
   static String domain;
   static String cdnDomin;
 
-  static const String domainPro = "https://api.reecook.cn";
+  static const String domainPro = "http://jyyapi.reecook.cn";
   static const String domainDev = "https://testapi.reecook.cn";
   // static const String domainDev = "http://192.168.2.68:8080/";
   // static const String domainDev = "https://api.reecook.cn";
 
-  static const String cdnDominPro = "https://cdn.reecook.cn";
+  static const String cdnDominPro = "http://jyyapi.reecook.cn";
   static const String cdnDominDev = "https://testcdn.reecook.cn";
   // static const String cdnDominDev = "https://cdn.reecook.cn";
 

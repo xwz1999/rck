@@ -23,31 +23,31 @@ if (flutterVersionName == null) {
 
 apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-
-apply plugin: 'com.mob.sdk'
-MobSDK {
-    appKey "2e499d0b6a624"
-    appSecret "bd3f4abb0124b99db715c062dd280fd1"
-    spEdition "fp"
-    ShareSDK {
-        loopShare true
-        devInfo {
-            QQ {
-                appId "101876843"
-                appKey "6f367bfad98978e22c2e11897dd74f00"
-            }
-            SinaWeibo {
-                appKey "3484799074"
-                appSecret "0cc08d31b4d63dc81fbb7a2559999fb3"
-                callbackUri "https://reecook.cn"
-            }
-            QZone {
-                appId "101876843"
-                appKey "6f367bfad98978e22c2e11897dd74f00"
-            }
-        }
-    }
-}
+//
+//apply plugin: 'com.mob.sdk'
+//MobSDK {
+//    appKey "2e499d0b6a624"
+//    appSecret "bd3f4abb0124b99db715c062dd280fd1"
+//    spEdition "fp"
+//    ShareSDK {
+//        loopShare true
+//        devInfo {
+//            QQ {
+//                appId "101876843"
+//                appKey "6f367bfad98978e22c2e11897dd74f00"
+//            }
+//            SinaWeibo {
+//                appKey "3484799074"
+//                appSecret "0cc08d31b4d63dc81fbb7a2559999fb3"
+//                callbackUri "https://reecook.cn"
+//            }
+//            QZone {
+//                appId "101876843"
+//                appKey "6f367bfad98978e22c2e11897dd74f00"
+//            }
+//        }
+//    }
+//}
 
 
 
