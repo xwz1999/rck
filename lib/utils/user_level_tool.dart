@@ -50,10 +50,47 @@ enum UserRoleLevel {
   Master,
 
   ///会员
-  Vip
+  Vip,
+
+  ///店铺
+  Shop
 }
 
 class UserLevelTool {
+
+  static UserRoleLevel roleLevelEnum(int level) {
+    UserRoleLevel userRoleLevel;
+    if (level == null) {
+      return UserRoleLevel.Vip;
+    }
+    switch (level) {
+      case 0:
+        userRoleLevel = UserRoleLevel.Vip;
+        break;
+      case 1:
+        userRoleLevel = UserRoleLevel.Master;
+        break;
+      case 2:
+        userRoleLevel = UserRoleLevel.Shop;
+        break;
+      default:
+        userRoleLevel = UserRoleLevel.Vip;
+        break;
+    }
+    return userRoleLevel;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
   static showUpgradeWidget(UserRoleUpgradeModel model, BuildContext context,
       Store<RecookState> store) {
     if (model != null && model.data != null && model.data.upGrade == 1) {
@@ -105,6 +142,7 @@ class UserLevelTool {
   static String currentUpgradeRoleLevelIcon() {
     return upgradeRoleLevelIcon(currentRoleLevelEnum());
   }
+
 
   static String upgradeRoleLevelIcon(UserRoleLevel roleLevel) {
     switch (roleLevel) {
@@ -441,42 +479,10 @@ class UserLevelTool {
   }
 
   static UserRoleLevel currentRoleLevelEnum() {
-    return roleLevelEnum(UserManager.instance.user.info.roleLevel);
+    return roleLevelEnum(UserManager.instance.userBrief.level);
   }
 
-  static UserRoleLevel roleLevelEnum(int level) {
-    UserRoleLevel userRoleLevel;
-    if (level == null) {
-      return UserRoleLevel.Vip;
-    }
-    switch (level) {
-      case 100:
-        userRoleLevel = UserRoleLevel.Diamond_1;
-        break;
-      case 130:
-        userRoleLevel = UserRoleLevel.Diamond_2;
-        break;
-      case 160:
-        userRoleLevel = UserRoleLevel.Diamond_3;
-        break;
-      case 200:
-        userRoleLevel = UserRoleLevel.Gold;
-        break;
-      case 300:
-        userRoleLevel = UserRoleLevel.Silver;
-        break;
-      case 400:
-        userRoleLevel = UserRoleLevel.Master;
-        break;
-      case 500:
-        userRoleLevel = UserRoleLevel.Vip;
-        break;
-      default:
-        userRoleLevel = UserRoleLevel.Vip;
-        break;
-    }
-    return userRoleLevel;
-  }
+
 
   ///获取用户的名片的角色 icon
   static String getRoleLevelIcon(UserRoleLevel level) {

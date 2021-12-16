@@ -26,7 +26,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
         children: [
           30.wb,
           Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.end,
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -46,7 +46,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                     child: FadeInImage.assetNetwork(
                       height: 60.rw,
                       width: 60.rw,
-                      placeholder: AppImageName.placeholder_1x1,
+                      placeholder: R.ASSETS_ICON_RECOOK_ICON_300_PNG,
                       image: TextUtils.isEmpty(
                               UserManager.instance.user.info.headImgUrl)
                           ? ""
@@ -61,7 +61,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                   .text
                   .color(Color(0xFF333333))
                   .size(20.rsp)
-                  .bold
+
                   .make(),
               10.hb,
             ],
@@ -159,7 +159,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
             },
           ),
           Spacer(),
-          '(${UserLevelTool.currentRoleLevel()})'
+          '(店铺)'//'(${UserLevelTool.currentRoleLevel()})'
               .text
               .color(Color(0xFF333333))
               .size(12.rsp)

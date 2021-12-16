@@ -11,6 +11,7 @@ import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_hot_sell_list_model.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
@@ -208,6 +209,7 @@ class _GoodsHighCommissionListPageState extends BaseStoreState<GoodsHighCommissi
     Map<String, dynamic> data = {};
 
     data.putIfAbsent('status', () => 1);
+    data.putIfAbsent('user_id', () => UserManager.instance.user.info.id);
 
     ResultData resultData = await HttpManager.post(
         HomeApi.preferentialList, data);

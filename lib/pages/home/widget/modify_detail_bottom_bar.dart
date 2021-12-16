@@ -388,7 +388,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                                                         .currentRoleLevelEnum() ==
                                                     UserRoleLevel.None &&
                                                 !AppConfig.showExtraCommission
-                                        ? "邀请升级"
+                                        ? "分享"
                                         : "分享",
                                     style: TextStyle(
                                         fontWeight: FontWeight.w300,

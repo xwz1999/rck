@@ -65,21 +65,21 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
         UserManager.instance.kingCoinListModelList =
         await UserFunc.getKingCoinList();
       });
-      PowerLogger.start(context, debug: true);//AppConfig.debug  在正式服数据下进行调试
+      PowerLogger.start(context, debug: false);//AppConfig.debug  在正式服数据下进行调试
       cameras = await availableCameras();
       PackageInfo _packageInfo = await PackageInfo.fromPlatform();
       AppConfig.versionNumber = _packageInfo.buildNumber;
 
-      TencentImPlugin.init(appid: '1400435566');
-      HttpManager.post(LiveAPI.liveLicense, {}).then((resultData) {
-        String key = resultData.data['data']['key'];
-        String licenseURL = resultData.data['data']['licenseUrl'];
-        //初始化腾讯直播
-        TencentLive.instance.init(
-          licenseUrl: licenseURL,
-          licenseKey: key,
-        );
-      });
+      // TencentImPlugin.init(appid: '1400435566');
+      // HttpManager.post(LiveAPI.liveLicense, {}).then((resultData) {
+      //   String key = resultData.data['data']['key'];
+      //   String licenseURL = resultData.data['data']['licenseUrl'];
+      //   //初始化腾讯直播
+      //   TencentLive.instance.init(
+      //     licenseUrl: licenseURL,
+      //     licenseKey: key,
+      //   );
+      // });
 
 
       AppRouter.fadeAndReplaced(globalContext, RouteName.WELCOME_PAGE);
@@ -93,9 +93,20 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
     // double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: Image.asset(
-        R.ASSETS_RECOOK_LAUNCH_IMAGE_RECOOK_SPLASH_WEBP,
-        fit: BoxFit.cover,
+
+      body:  Container(
+        width: double.infinity,
+        height: double.infinity,
+        margin: EdgeInsets.only(top: 150.rw),
+        alignment: Alignment.topCenter,
+
+        child: Image.asset(
+            R.ASSETS_RECOOK_LAUNCH_IMAGE_RECOOK_SPLASH_PNG,
+            width: 200.rw,
+            height: 200.rw,
+            fit: BoxFit.fill,
+
+        ),
       ),
       // body: Container(
       //   child: ImagesAnimation(

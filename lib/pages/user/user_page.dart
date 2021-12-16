@@ -229,10 +229,10 @@ class _UserPageState extends BaseStoreState<UserPage> {
             physics: AlwaysScrollableScrollPhysics(),
             // physics: BouncingScrollPhysics(),
             children: <Widget>[
-              MoneyView(
-                listener: _moneyViewListener,
-                wechatListener: _wechatBindinghandle,
-              ),
+              // MoneyView(
+              //   listener: _moneyViewListener,
+              //   wechatListener: _wechatBindinghandle,
+              // ),
               CapitalView(cardCount: _cardCount),
               UserLevelTool.currentRoleLevelEnum() != UserRoleLevel.Vip
                   ? Padding(
@@ -290,7 +290,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   content3: _userIncomeDataModel?.purchase?.amountValue ?? '0',
                   content4: _userIncomeDataModel?.purchase?.countValue ?? '0',
                 ),
-                if (_userIncomeDataModel?.hasTeamValue ?? false)
+              
                   _renderBenefitCard(
                     leadingPath: R.ASSETS_USER_PINK_GROUP_WEBP,
                     title: '开店补贴',

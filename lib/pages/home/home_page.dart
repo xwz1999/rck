@@ -308,9 +308,9 @@ class _HomePageState extends BaseStoreState<HomePage>
     });
     WidgetsBinding.instance.addObserver(this);
     // 抽奖功能
-    _userLottery();
-    _getNoticeList();
-    _userCardNoticeList();
+    // _userLottery();
+    // _getNoticeList();
+    // _userCardNoticeList();
 
   }
 
@@ -1335,7 +1335,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       case '特惠专区':
         Get.to(()=>GoodsPreferentialListPage());
         break;
-      case '高额返补':
+      case '高佣特推':
         Get.to(()=>GoodsHighCommissionListPage());
         break;
       case '限时秒杀':
@@ -1632,6 +1632,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     ResultData resultData =
         await HttpManager.post(HomeApi.promotion_goods_list, {
       "timeItemID": promotionId,
+          'user_id':UserManager.instance.user.info.id,
     });
     if (!resultData.result) {
       showError(resultData.msg);

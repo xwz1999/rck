@@ -121,19 +121,19 @@ class _SettingItemListViewState extends ResumableState<SettingItemListView> {
                       //           context, RouteName.WEB_VIEW_PAGE, arguments: WebViewPage.setArguments(url: WebApi.feedback, title: "意见反馈"), );
                       // }),
                       SCTile.normalTile("关于我们", needDivide: true, listener: () {
-                        AppRouter.push(context, RouteName.ABOUT_US_PAGE);
+                        //AppRouter.push(context, RouteName.ABOUT_US_PAGE);
                         // AppRouter.push(
                         // context, RouteName.WEB_VIEW_PAGE, arguments: WebViewPage.setArguments(url: WebApi.aboutUs, title: "关于我们"), );
                       }),
                       SCTile.normalTile("隐私政策", listener: () {
-                        AppRouter.push(
-                          context,
-                          RouteName.WEB_VIEW_PAGE,
-                          arguments: WebViewPage.setArguments(
-                              url: WebApi.privacy,
-                              title: "隐私政策",
-                              hideBar: true),
-                        );
+                        // AppRouter.push(
+                        //   context,
+                        //   RouteName.WEB_VIEW_PAGE,
+                        //   arguments: WebViewPage.setArguments(
+                        //       url: WebApi.privacy,
+                        //       title: "隐私政策",
+                        //       hideBar: true),
+                        // );
                         //CRoute.push(context, PrivacyPageV2());
                       }),
 

@@ -74,7 +74,7 @@ class _WxContactPageState extends State<WxContactPage>
           RepaintBoundary(
               key: _globalKey,
               child: Image.asset(
-                R.ASSETS_SHOP_PAGE_USER_RIGHTS_BG_PNG,
+                R.ASSETS_SCANCODE_PNG,
                 width: 239.rw,
                 height: 242.rw,
                 fit: BoxFit.fill,

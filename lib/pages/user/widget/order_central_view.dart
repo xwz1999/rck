@@ -167,33 +167,33 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                   },
                 ),
               ),
-              Expanded(
-                child: CustomImageButton(
-                  padding: EdgeInsets.symmetric(vertical: rSize(10)),
-                  dotPosition: DotPosition(right: rSize(8), top: 0),
-                  dotNum: getStore().state.userBrief.orderCenter.evaNum == 0
-                      ? ''
-                      : getStore()
-                      .state
-                      .userBrief
-                      .orderCenter
-                      .evaNum
-                      .toString(),
-                  dotColor: AppColor.themeColor,
-                  icon: Image.asset(
-                    R.ASSETS_USER_REVIEW_PNG,
-                    width: 30,
-                    height: 30,
-                  ),
-                  title: "评价",
-                  color: Colors.grey[700],
-                  fontSize: _fontSize,
-                  contentSpacing: 8,
-                  onPressed: () {
-                    widget.clickListener(4);
-                  },
-                ),
-              ),
+              // Expanded(
+              //   child: CustomImageButton(
+              //     padding: EdgeInsets.symmetric(vertical: rSize(10)),
+              //     dotPosition: DotPosition(right: rSize(8), top: 0),
+              //     dotNum: getStore().state.userBrief.orderCenter.evaNum == 0
+              //         ? ''
+              //         : getStore()
+              //         .state
+              //         .userBrief
+              //         .orderCenter
+              //         .evaNum
+              //         .toString(),
+              //     dotColor: AppColor.themeColor,
+              //     icon: Image.asset(
+              //       R.ASSETS_USER_REVIEW_PNG,
+              //       width: 30,
+              //       height: 30,
+              //     ),
+              //     title: "评价",
+              //     color: Colors.grey[700],
+              //     fontSize: _fontSize,
+              //     contentSpacing: 8,
+              //     onPressed: () {
+              //       widget.clickListener(4);
+              //     },
+              //   ),
+              // ),
               Expanded(
                 child: CustomImageButton(
                   // dotNum: null,

@@ -161,6 +161,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     WidgetsBinding.instance.addPostFrameCallback((callback) {
       _beginCountDown();
       UserManager.instance.updateUserBriefInfo(getStore());
+      print(UserManager.instance.userBrief);
       if (UserManager.instance.haveLogin) {
         UserManager.instance.activePeople();
       }
@@ -296,13 +297,13 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                         children: <Widget>[
                           // Container(height: 10,),
                           Text(
-                            "让消费服务生活",
+                            "跟着英子去开店",
                             style: textStyle,
                           ),
-                          Text(
-                            "让生活充满精致",
-                            style: textStyle,
-                          ),
+                          // Text(
+                          //   "让生活充满精致",
+                          //   style: textStyle,
+                          // ),
                         ],
                       ),
                       Spacer(),
@@ -363,13 +364,13 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                   children: <Widget>[
                     // Container(height: 10,),
                     Text(
-                      "让消费服务生活",
+                      "跟着英子去开店",
                       style: textStyle,
                     ),
-                    Text(
-                      "让生活充满精致",
-                      style: textStyle,
-                    ),
+                    // Text(
+                    //   "让生活充满精致",
+                    //   style: textStyle,
+                    // ),
                   ],
                 ),
               ),

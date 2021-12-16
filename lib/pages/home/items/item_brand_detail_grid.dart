@@ -146,40 +146,34 @@ class BrandDetailGridItem extends StatelessWidget {
                             padding: EdgeInsets.only(right: 5.rw),
                             child:
                             Container(
-                              width: 20.rw,
-                              height: 22.rw,
-                              //padding: EdgeInsets.only(left: 1.rw),
-
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Color(0xFFC92219),
-                                borderRadius: BorderRadius.all(Radius.circular(4.rw)),
-
-
-                              ),
-
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                //mainAxisAlignment: MainAxisAlignment.center,
-
-                                children: [
-                                  2.hb,
-                                  Text(
-                                    this.goods.gysId==1800?'京东': this.goods.gysId==2000?'京东':'',
-                                    maxLines: 1,
-
-                                    style: TextStyle(fontSize: 9.rsp,height:1.05),
+                                child: Container(
+                                  width: 40.rw,
+                                  height: 15.rw,
+                                  margin: EdgeInsets.only(top: 5.rw),
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFC92219),
+                                    borderRadius: BorderRadius.all(Radius.circular(2.rw)),
                                   ),
-                                  Text(
-                                    this.goods.gysId==1800?'自营': this.goods.gysId==2000?'优选':'',
-                                    maxLines: 1,
+                                  child: Row(
+                                    //crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
 
-                                    style: TextStyle(fontSize: 9.rsp,height:1.05),
-                                  )
-                                ],
-                              )
-                              ,
-                            )
+                                    children: [
+                                      2.hb,
+                                      Text(
+                                        this.goods.gysId == 1800
+                                            ? '京东自营'
+                                            :  this.goods.gysId == 2000
+                                            ? '京东优选'
+                                            : '',
+                                        maxLines: 1,
+                                        style: TextStyle(fontSize: 9.rsp, height: 1.05),
+                                      ),
+
+                                    ],
+                                  ),
+                                ))
                         )
                     ): WidgetSpan(child: SizedBox()),
                     TextSpan(

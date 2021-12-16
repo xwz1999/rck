@@ -127,8 +127,10 @@ class UserManager {
       return false;
     }
     _identifier = model.data == null ? '' : model.data.identifier;
-    _instance.userBrief = model.data;
-    store.dispatch(UpdateUserBriefAction(model.data));
+    if(model.data!=null){
+      _instance.userBrief = model.data;
+      store.dispatch(UpdateUserBriefAction(model.data));
+    }
     return true;
   }
 

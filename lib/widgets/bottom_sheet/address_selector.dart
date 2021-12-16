@@ -132,7 +132,7 @@ class _AddressSelectorState extends State<AddressSelector>
         isScrollable: true,
         indicatorColor: _selectedColor,
         indicatorSize: TabBarIndicatorSize.label,
-        indicatorPadding: EdgeInsets.only(left: 10, right: 10),
+        indicatorPadding: EdgeInsets.only(left: 5.rw, right: 5.rw),
         tabs: _tabItems());
   }
 
@@ -146,8 +146,8 @@ class _AddressSelectorState extends State<AddressSelector>
         continue;
       }
       list.add(Container(
-        margin: EdgeInsets.symmetric(horizontal: 5),
-        height: 30,
+        margin: EdgeInsets.symmetric(horizontal: 5.rw),
+        height: 30.rw,
         alignment: Alignment.center,
         child: Text(
           TextUtils.isEmpty(_result[i]) ? "请选择" : _result[i],

@@ -74,7 +74,7 @@ void main() async {
 
   // 设置当前是否为测试环境
   const bool isDebug =
-  const bool.fromEnvironment('ISDEBUG', defaultValue: false);
+  const bool.fromEnvironment('ISDEBUG', defaultValue:  false);
 
   AppConfig.setDebug(isDebug);
   // WeChatUtils.initial();
@@ -137,7 +137,7 @@ class MyAppState extends State<MyApp> {
     super.initState();
     initPlatformState();
     //BuglyHelper.initialSDK();
-    checkSignature();
+    // checkSignature();
 
     // BuglyHelper.setUserInfo();
     // ShareSDKRegister register = ShareSDKRegister();

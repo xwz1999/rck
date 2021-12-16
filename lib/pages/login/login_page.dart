@@ -54,55 +54,60 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
     if (_context == null) _context = context;
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Stack(
-          children: <Widget>[
-            Positioned(
-                left: 10,
-                top: ScreenUtil().statusBarHeight + 10,
-                child: GestureDetector(
-                  onTap: () {
-                    AppRouter.fadeAndReplaced(globalContext, RouteName.TAB_BAR);
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: <Widget>[
-                      Icon(
-                        Icons.chevron_left,
-                        size: 22,
-                        color: Colors.black.withOpacity(0.45),
-                      ),
-                      Text(
-                        '跳过,看好货',
-                        style: TextStyle(
-                          color: Colors.black.withOpacity(0.55),
-                          fontSize: 15,
+        body: WillPopScope(
+            onWillPop: () async{
+              return false;
+            },
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                  left: 10,
+                  top: ScreenUtil().statusBarHeight + 10,
+                  child: GestureDetector(
+                    onTap: () {
+                      AppRouter.fadeAndReplaced(globalContext, RouteName.TAB_BAR);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Icon(
+                          Icons.chevron_left,
+                          size: 22,
+                          color: Colors.black.withOpacity(0.45),
                         ),
-                      ),
-                    ],
-                  ),
-                )),
-            Positioned(
-                right: 10,
-                top: ScreenUtil().statusBarHeight + 10,
-                child: GestureDetector(
-                  onTap: () {
-                    AppRouter.push(context, RouteName.PHONE_LOGIN);
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: <Widget>[
-                      Text(
-                        '手机号登录',
-                        style: TextStyle(
-                          color: Colors.black.withOpacity(0.55),
-                          fontSize: 15,
+                        Text(
+                          '跳过,看好货',
+                          style: TextStyle(
+                            color: Colors.black.withOpacity(0.55),
+                            fontSize: 15,
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                )),
-            _buildBody(context),
-          ],
+                      ],
+                    ),
+                  )),
+              Positioned(
+                  right: 10,
+                  top: ScreenUtil().statusBarHeight + 10,
+                  child: GestureDetector(
+                    onTap: () {
+                      AppRouter.push(context, RouteName.PHONE_LOGIN);
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: <Widget>[
+                        Text(
+                          '手机号登录',
+                          style: TextStyle(
+                            color: Colors.black.withOpacity(0.55),
+                            fontSize: 15,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
+              _buildBody(context),
+            ],
+          ),
         ));
   }
 
@@ -128,7 +133,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
           Container(
               margin: EdgeInsets.only(top: 10),
               child: Text(
-                "享受指尖的购物乐趣",
+                "跟着英子去开店",
                 style:
                     AppTextStyle.generate(15 * 2.sp, color: Colors.grey[700]),
               )),
@@ -206,38 +211,38 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
       ),
       child: MaterialButton(
         onPressed: () {
-          if (!_chooseAgreement) {
-            DPrint.printf("微信登录");
-            WeChatUtils.wxLogin((WXLoginResult result) {
-              print(result);
-              if (result.errCode == -2) {
-                Toast.showInfo('用户取消登录');
-              } else if (result.errCode != 0) {
-                GSDialog.of(context).dismiss(_context);
-                Toast.showInfo(result.errStr);
-              } else {
-                if (!_weChatLoginLoading) {
-                  _weChatLoginLoading = true;
-                  _weChatLogin(result.code);
-                }
-              }
-            });
-          } else {
-            Alert.show(
-                context,
-                NormalContentDialog(
-                  type: NormalTextDialogType.remind,
-                  title: null,
-                  content: Text(
-                    '请您先阅读并同意《用户服务协议》和《用户隐私政策》',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                  items: ["确认"],
-                  listener: (index) {
-                    Alert.dismiss(context);
-                  },
-                ));
-          }
+          // if (!_chooseAgreement) {
+          //   DPrint.printf("微信登录");
+          //   WeChatUtils.wxLogin((WXLoginResult result) {
+          //     print(result);
+          //     if (result.errCode == -2) {
+          //       Toast.showInfo('用户取消登录');
+          //     } else if (result.errCode != 0) {
+          //       GSDialog.of(context).dismiss(_context);
+          //       Toast.showInfo(result.errStr);
+          //     } else {
+          //       if (!_weChatLoginLoading) {
+          //         _weChatLoginLoading = true;
+          //         _weChatLogin(result.code);
+          //       }
+          //     }
+          //   });
+          // } else {
+          //   Alert.show(
+          //       context,
+          //       NormalContentDialog(
+          //         type: NormalTextDialogType.remind,
+          //         title: null,
+          //         content: Text(
+          //           '请您先阅读并同意《用户服务协议》和《用户隐私政策》',
+          //           style: TextStyle(color: Colors.black),
+          //         ),
+          //         items: ["确认"],
+          //         listener: (index) {
+          //           Alert.dismiss(context);
+          //         },
+          //       ));
+          // }
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

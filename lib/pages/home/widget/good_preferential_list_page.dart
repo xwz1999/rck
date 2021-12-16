@@ -11,6 +11,7 @@ import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_hot_sell_list_model.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
@@ -38,6 +39,8 @@ class _GoodsPreferentialListPageState extends BaseStoreState<GoodsPreferentialLi
     //player.setDataSource('https://testcdn.reecook.cn/static/video/20210727/56baf9fd537e83f7584209528e2bb3ef.mp4', autoPlay: true);
     _getGoodsHotSellList();
   }
+
+
 
   @override
   Widget buildContext(BuildContext context, {store}) {
@@ -352,6 +355,7 @@ class _GoodsPreferentialListPageState extends BaseStoreState<GoodsPreferentialLi
     Map<String, dynamic> data = {};
 
       data.putIfAbsent('status', () => 2);
+      data.putIfAbsent('user_id', () => UserManager.instance.user.info.id);
 
     ResultData resultData = await HttpManager.post(
          HomeApi.preferentialList, data);

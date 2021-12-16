@@ -11,6 +11,7 @@ import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_hot_sell_list_model.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
@@ -32,13 +33,30 @@ class GoodsHotListPage extends StatefulWidget {
 class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
     with TickerProviderStateMixin {
   GoodsHotSellListModel _listModel;
+  GifController _gifController;
+
 
   @override
   void initState() {
+
+    _gifController = GifController(vsync: this)
+      ..repeat(
+        min: 0,
+        max: 20,
+        period: Duration(milliseconds: 700),
+      );
     super.initState();
-    //player.setDataSource('https://testcdn.reecook.cn/static/video/20210727/56baf9fd537e83f7584209528e2bb3ef.mp4', autoPlay: true);
+
     _getGoodsHotSellList();
+    // _brandPresenter.fetchBrandList(widget.argument["brandId"], 0, SortType.comprehensive);
   }
+
+  @override
+  void dispose() {
+    _gifController.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget buildContext(BuildContext context, {store}) {
@@ -160,12 +178,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
       child: Stack(
         children: <Widget>[
           GoodsItemWidget.hotList(
-            gifController: GifController(vsync: this)
-              ..repeat(
-                min: 0,
-                max: 20,
-                period: Duration(milliseconds: 700),
-              ),
+            gifController: _gifController,
             notShowAmount: true,
             onBrandClick: () {
               AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
@@ -356,6 +369,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
     if (!widget.isHot) {
       data.putIfAbsent('status', () => 2);
     }
+    data.putIfAbsent('user_id', () => UserManager.instance.user.info.id);
     ResultData resultData = await HttpManager.post(
         widget.isHot ? HomeApi.hot_sell_list : HomeApi.preferentialList, data);
     if (!resultData.result) {

@@ -51,7 +51,7 @@ class _CapitalViewState extends BaseStoreState<CapitalView> {
       height: 62.rw,
       margin: EdgeInsets.only(top: 12.rw, left: 15.rw, right: 15.rw),
       padding:
-          EdgeInsets.only(left: 15.rw, right: 15.rw, top: 13.rw, bottom: 13.rw),
+          EdgeInsets.only(left: 15.rw, right: 15.rw, top: 10.rw, bottom: 10.rw),
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         image: DecorationImage(

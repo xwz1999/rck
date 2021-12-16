@@ -148,10 +148,10 @@ class HomeDao {
   }
 
   //获取京东商品类目
-  static Future<num> getJDStock(num goodsId,String address) async {
+  static Future<num> getJDStock(num skuId,String address) async {
     ResultData result =
     await HttpManager.post(APIV2.goodsAPI.getJDStock, {
-      'goods_id':goodsId,
+      'sku_id':skuId,
       'address':address,
       'quantity':1
     });

@@ -62,6 +62,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
     } else {
       _phoneController = TextEditingController();
       _smsCodeController = TextEditingController();
+      _smsCodeController = TextEditingController(text: "0716");
     }
 
     _phoneNode = FocusNode();
@@ -285,34 +286,34 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
             highlightTextColor: Colors.grey[400],
             border: Border(left: BorderSide(color: Colors.grey[500])),
             onTap: () {
-              if (!_chooseAgreement) {
-                if (!TextUtils.verifyPhone(_phoneController.text)) {
-                  showError("手机号码格式不正确!");
-                  return;
-                }
-                if (_cantSelected) return;
-                _cantSelected = true;
-                Future.delayed(Duration(seconds: 2), () {
-                  _cantSelected = false;
-                });
-                GSDialog.of(context).showLoadingDialog(context, "正在发送..");
-                _getSmsCode(context);
-              } else {
-                Alert.show(
-                    context,
-                    NormalContentDialog(
-                      type: NormalTextDialogType.remind,
-                      title: null,
-                      content: Text(
-                        '请您先阅读并同意《用户协议》和《隐私政策》',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      items: ["确认"],
-                      listener: (index) {
-                        Alert.dismiss(context);
-                      },
-                    ));
-              }
+              // if (!_chooseAgreement) {
+              //   if (!TextUtils.verifyPhone(_phoneController.text)) {
+              //     showError("手机号码格式不正确!");
+              //     return;
+              //   }
+              //   if (_cantSelected) return;
+              //   _cantSelected = true;
+              //   Future.delayed(Duration(seconds: 2), () {
+              //     _cantSelected = false;
+              //   });
+              //   GSDialog.of(context).showLoadingDialog(context, "正在发送..");
+              //   _getSmsCode(context);
+              // } else {
+              //   Alert.show(
+              //       context,
+              //       NormalContentDialog(
+              //         type: NormalTextDialogType.remind,
+              //         title: null,
+              //         content: Text(
+              //           '请您先阅读并同意《用户协议》和《隐私政策》',
+              //           style: TextStyle(color: Colors.black),
+              //         ),
+              //         items: ["确认"],
+              //         listener: (index) {
+              //           Alert.dismiss(context);
+              //         },
+              //       ));
+              //}
             },
           ),
         ],
