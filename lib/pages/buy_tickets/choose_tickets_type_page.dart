@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'package:amap_flutter_location/amap_flutter_location.dart';
-import 'package:amap_flutter_location/amap_location_option.dart';
+// import 'package:amap_flutter_location/amap_flutter_location.dart';
+// import 'package:amap_flutter_location/amap_location_option.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -50,7 +50,7 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
   String _originText = '出发地';
   String _destinationText = '选择到达';
   //定位
-  AMapFlutterLocation _amapFlutterLocation;
+  // AMapFlutterLocation _amapFlutterLocation;
   Map<String, Object> _location;
   AirportCityModel cityModel;
   DateTime _date = DateTime(
@@ -77,23 +77,23 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
       _cityModelList = await AriportCityTool.getInstance().getCityAirportList();
     });
 
-    _amapFlutterLocation = AMapFlutterLocation();
+    // _amapFlutterLocation = AMapFlutterLocation();
     requestPermission().then((value) {
       if (value) {
         //监听要在设置参数之前 否则无法获取定位
-        _amapFlutterLocation.onLocationChanged().listen(
-          (event) {
-            _location = event;
-            print(_location);
-            _originText = _location['city'];
-            _originText = _originText.replaceAll('市', '');
-            _originText = _originText.replaceAll('区', '');
-            setState(() {});
-          },
-        );
-        _amapFlutterLocation
-            .setLocationOption(AMapLocationOption(onceLocation: true));
-        _amapFlutterLocation.startLocation();
+        // _amapFlutterLocation.onLocationChanged().listen(
+        //   (event) {
+        //     _location = event;
+        //     print(_location);
+        //     _originText = _location['city'];
+        //     _originText = _originText.replaceAll('市', '');
+        //     _originText = _originText.replaceAll('区', '');
+        //     setState(() {});
+        //   },
+        // );
+        // _amapFlutterLocation
+        //     .setLocationOption(AMapLocationOption(onceLocation: true));
+        // _amapFlutterLocation.startLocation();
       } else {
         //ReToast.err(text: '未获取到定位权限，请先在设置中打开定位权限');
       }

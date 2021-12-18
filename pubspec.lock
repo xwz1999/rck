@@ -8,27 +8,6 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
     version: "22.0.0"
-  amap_flutter_base:
-    dependency: "direct main"
-    description:
-      name: amap_flutter_base
-      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
-    source: hosted
-    version: "3.0.0"
-  amap_flutter_location:
-    dependency: "direct main"
-    description:
-      name: amap_flutter_location
-      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
-    source: hosted
-    version: "3.0.0"
-  amap_flutter_map:
-    dependency: "direct main"
-    description:
-      name: amap_flutter_map
-      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
-    source: hosted
-    version: "3.0.0"
   analyzer:
     dependency: transitive
     description:

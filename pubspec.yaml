@@ -19,9 +19,9 @@ dependencies:
 
   timeline_tile: 0.1.2
   # 高德定位
-  amap_flutter_map: 3.0.0
-  amap_flutter_location: ^3.0.0
-  amap_flutter_base: 3.0.0
+##  amap_flutter_map: 3.0.0
+#  amap_flutter_location: ^3.0.0
+#  amap_flutter_base: 3.0.0
   # icons
   flutter_icons: 1.1.0
   # 拼音

@@ -9,6 +9,7 @@
 
 import 'dart:async';
 
+// import 'package:amap_flutter_location/amap_flutter_location.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -67,6 +68,8 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
       });
       PowerLogger.start(context, debug: false);//AppConfig.debug  在正式服数据下进行调试
       cameras = await availableCameras();
+      // AMapFlutterLocation.updatePrivacyShow(true, true);
+      // AMapFlutterLocation.updatePrivacyAgree(true);
       PackageInfo _packageInfo = await PackageInfo.fromPlatform();
       AppConfig.versionNumber = _packageInfo.buildNumber;
 

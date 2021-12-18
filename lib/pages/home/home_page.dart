@@ -12,8 +12,8 @@ import 'dart:collection';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:amap_flutter_location/amap_flutter_location.dart';
-import 'package:amap_flutter_location/amap_location_option.dart';
+// import 'package:amap_flutter_location/amap_flutter_location.dart';
+// import 'package:amap_flutter_location/amap_location_option.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -142,7 +142,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   WeatherCityModel _weatherCityModel;
 
 //定位
-  AMapFlutterLocation _amapFlutterLocation ;
+//   AMapFlutterLocation _amapFlutterLocation ;
   //高度
   double screenWidth = 0;
   double weatherHeight = 0;
@@ -191,22 +191,22 @@ class _HomePageState extends BaseStoreState<HomePage>
     _getWeather();//部分机型获取地址较慢 所以放在外面先获取
 
     requestPermission().then((value) {
-      AMapFlutterLocation.updatePrivacyAgree(true);
-      AMapFlutterLocation.updatePrivacyShow(true, true);
+      // AMapFlutterLocation.updatePrivacyAgree(true);
+      // AMapFlutterLocation.updatePrivacyShow(true, true);
       if (value) {
         //监听要在设置参数之前 否则无法获取定位
-        _amapFlutterLocation.onLocationChanged().listen(
-              (event) {
-            _weatherLocation = event;
-            LoggerData.addData(_weatherLocation['city']);
-            _getWeather();
-          },
-        );
-
-        _amapFlutterLocation
-            .setLocationOption(AMapLocationOption(onceLocation: true));
-
-        _amapFlutterLocation.startLocation();
+        // _amapFlutterLocation.onLocationChanged().listen(
+        //       (event) {
+        //     _weatherLocation = event;
+        //     LoggerData.addData(_weatherLocation['city']);
+        //     _getWeather();
+        //   },
+        // );
+        //
+        // _amapFlutterLocation
+        //     .setLocationOption(AMapLocationOption(onceLocation: true));
+        //
+        // _amapFlutterLocation.startLocation();
       } else {
         //ReToast.err(text: '未获取到定位权限，请先在设置中打开定位权限');
       }
@@ -234,7 +234,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     //已在native配置
     // AMapFlutterLocation.setApiKey(
     //     '7225bca14fe7493f9f469315a933f99c', 'e8a8057cfedcdcadcf4e8f2c7f8de982');
-    _amapFlutterLocation = AMapFlutterLocation();
+    // _amapFlutterLocation = AMapFlutterLocation();
 
 
 
@@ -348,8 +348,8 @@ class _HomePageState extends BaseStoreState<HomePage>
   void dispose() {
     _gifController.dispose();
     _tabController.dispose();
-    _amapFlutterLocation?.stopLocation();
-    _amapFlutterLocation?.destroy();
+    // _amapFlutterLocation?.stopLocation();
+    // _amapFlutterLocation?.destroy();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
