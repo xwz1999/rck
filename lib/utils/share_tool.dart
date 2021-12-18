@@ -48,7 +48,7 @@ class ShareTool {
         // assetsThumbnail: "assets://${AppImageName.recook_icon_120}",
         netWorkThumbnail: AppImageName.web_app_icon,
         title: "有福同享，才是‘壕’朋友！",
-        description: "京耀云邀你玩转店铺，快来一起体验吧！",
+        description: "左家右厨邀你玩转店铺，快来一起体验吧！",
         scene: scene);
   }
 
@@ -172,8 +172,8 @@ class ShareTool {
     //   Navigator.maybePop(context);
     //   // SSDKMap params = SSDKMap()
     //   //   ..setGeneral(
-    //   //       miniTitle + " | 京耀云全球精选好货，尊享超值福利！" + goodsUrl,
-    //   //       miniTitle + " | 京耀云全球精选好货，尊享超值福利！" + goodsUrl,
+    //   //       miniTitle + " | 左家右厨全球精选好货，尊享超值福利！" + goodsUrl,
+    //   //       miniTitle + " | 左家右厨全球精选好货，尊享超值福利！" + goodsUrl,
     //   //       null,
     //   //       // "https://cdn.reecook.cn/static/default/appicon.png",
     //   //       null,
@@ -186,8 +186,8 @@ class ShareTool {
     //   //       SSDKContentTypes.webpage);
     //   SSDKMap params = SSDKMap()
     //     ..setGeneral(
-    //         miniTitle + " | 京耀云全球精选好货，尊享超值福利！" + goodsUrl,
-    //         miniTitle + " | 京耀云全球精选好货，尊享超值福利！" + goodsUrl,
+    //         miniTitle + " | 左家右厨全球精选好货，尊享超值福利！" + goodsUrl,
+    //         miniTitle + " | 左家右厨全球精选好货，尊享超值福利！" + goodsUrl,
     //         null,
     //         null,
     //         null,
@@ -199,7 +199,7 @@ class ShareTool {
     //         SSDKContentTypes.webpage);
     //   // SSDKMap params = SSDKMap()
     //   // ..setSinaLinkCard(
-    //   //   miniTitle + " | 京耀云全球精选好货，尊享超值福利！",
+    //   //   miniTitle + " | 左家右厨全球精选好货，尊享超值福利！",
     //   //   "全球精选好货，尊享超值福利！",
     //   //   goodsUrl,
     //   //   "全球精选好货，尊享超值福利！",
@@ -225,7 +225,7 @@ class ShareTool {
     //   Navigator.maybePop(context);
     //   SSDKMap params = SSDKMap()
     //     ..setQQ(
-    //         "$miniTitle | 京耀云全球精选好货，尊享超值福利！",
+    //         "$miniTitle | 左家右厨全球精选好货，尊享超值福利！",
     //         "全球精选好货，尊享超值福利！",
     //         goodsUrl,
     //         null,
@@ -305,10 +305,10 @@ class ShareTool {
         ClipboardListenerValue.canListen = false;
         Navigator.pop(context);
         print(goodsId);
-        String code = '【$miniTitle】复制这段描述，打开京耀云，购全球好物${RUICodeUtil.encrypt(
+        String code = '【$miniTitle】复制这段描述，打开左家右厨，购全球好物${RUICodeUtil.encrypt(
           int.parse(goodsId),
           UserManager.instance.user.info.id,
-        )}京耀云。\n让消费服务生活，让生活充满精致';
+        )}左家右厨。\n跟着英子去开店';
         Clipboard.setData(ClipboardData(text: code));
         bool needWechat = await showDialog(
           context: context,
@@ -329,7 +329,7 @@ class ShareTool {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      '瑞口令复制成功',
+                      '云口令复制成功',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: rSP(16),
@@ -420,7 +420,7 @@ class ShareTool {
           url: inviteUrl,
           netWorkThumbnail: AppImageName.web_app_icon,
           title: "有福同享，才是‘壕’朋友！",
-          description: "京耀云邀你玩转店铺，快来一起体验吧！",
+          description: "左家右厨邀你玩转店铺，快来一起体验吧！",
           scene: scene);
     });
 
@@ -434,8 +434,8 @@ class ShareTool {
 //       Navigator.maybePop(context);
 //       SSDKMap params = SSDKMap()
 //         ..setGeneral(
-//             "邀请您加入京耀云  " + inviteUrl,
-//             "邀请您加入京耀云  " + inviteUrl,
+//             "邀请您加入左家右厨  " + inviteUrl,
+//             "邀请您加入左家右厨  " + inviteUrl,
 //             null,
 //             null,
 //             null,
@@ -447,10 +447,10 @@ class ShareTool {
 //             SSDKContentTypes.webpage);
 // //          SSDKMap params = SSDKMap()
 // //          ..setSinaLinkCard(
-// //            "邀请您加入京耀云",
-// //            "邀请您加入京耀云",
+// //            "邀请您加入左家右厨",
+// //            "邀请您加入左家右厨",
 // //            inviteUrl,
-// //            "邀请您加入京耀云",
+// //            "邀请您加入左家右厨",
 // //            "https://cdn.reecook.cn/static/default/appicon.png",
 // //            "120",
 // //            "120",
@@ -492,7 +492,7 @@ class ShareTool {
     //   Navigator.maybePop(context);
     //   SSDKMap params = SSDKMap()
     //     ..setQQ(
-    //         "京耀云邀你玩转店铺，快来一起体验吧！",
+    //         "左家右厨邀你玩转店铺，快来一起体验吧！",
     //         "有福同享，才是‘壕’朋友！",
     //         inviteUrl,
     //         null,

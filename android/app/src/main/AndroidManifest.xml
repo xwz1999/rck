@@ -35,7 +35,7 @@
     <!-- android:theme="@style/LaunchTheme" -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="京耀云"
+        android:label="左家右厨"
          android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         tools:replace="android:label,android:allowBackup"

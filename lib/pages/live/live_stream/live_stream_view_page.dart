@@ -55,7 +55,7 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
   bool isAttention;
   List<ChatObj> chatObjects = [
     ChatObj('系统消息',
-        '欢迎来到直播间，京耀云禁止未成年人进行直播，请大家共同遵守、监督。直播间内严禁出现违法违规、低俗色情、吸烟酗酒等内容，如有违规行为请及时举报。请大家注意财产安全，谨防网络诈骗。'),
+        '欢迎来到直播间，左家右厨禁止未成年人进行直播，请大家共同遵守、监督。直播间内严禁出现违法违规、低俗色情、吸烟酗酒等内容，如有违规行为请及时举报。请大家注意财产安全，谨防网络诈骗。'),
   ];
   ScrollController _scrollController = ScrollController();
   TextEditingController _editingController = TextEditingController();
@@ -751,14 +751,14 @@ class _LiveStreamViewPageState extends State<LiveStreamViewPage> {
                                                     //   context,
                                                     //   liveId: widget.id,
                                                     //   title:
-                                                    //       '好友${_streamInfoModel.nickname}正在京耀云直播，快来一起看看😘',
+                                                    //       '好友${_streamInfoModel.nickname}正在左家右厨直播，快来一起看看😘',
                                                     //   des: '',
                                                     //   headUrl: _streamInfoModel
                                                     //       .headImgUrl,
                                                     // );
                                                     WeChatUtils.miniProgramShareLive(
                                                         id: widget.id,netWorkThumbnail: Api.getImgUrl(_streamInfoModel.headImgUrl),
-                                                        des: '好友${_streamInfoModel.nickname}正在京耀云直播，快来一起看看😘'
+                                                        des: '好友${_streamInfoModel.nickname}正在左家右厨直播，快来一起看看😘'
                                                     );
                                                   } else {
                                                     showToast('未登陆，请先登陆');

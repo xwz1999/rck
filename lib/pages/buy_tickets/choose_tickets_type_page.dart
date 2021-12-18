@@ -107,7 +107,7 @@ class _ChooseTicketsTypePageState extends State<ChooseTicketsTypePage> {
         appBar: CustomAppBar(
           appBackground: Color(0xFFF9F9FB),
           elevation: 0,
-          title: '京耀云购票',
+          title: '左家右厨购票',
           themeData: AppThemes.themeDataGrey.appBarTheme,
         ),
         bottomNavigationBar: BottomNavigationBar(

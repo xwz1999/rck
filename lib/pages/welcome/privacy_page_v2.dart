@@ -20,7 +20,7 @@ class _PrivacyPageV2State extends State<PrivacyPageV2> {
   @override
   Widget build(BuildContext context) {
     return RecookScaffold(
-      title: '京耀云App用户使用协议及隐私政策',
+      title: '左家右厨App用户使用协议及隐私政策',
       body: Markdown(
         styleSheet: MarkdownStyleSheet(
           h1: black,

@@ -16,7 +16,7 @@
 		<string>en</string>
 	</array>
 	<key>CFBundleName</key>
-	<string>京耀云</string>
+	<string>左家右厨</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -161,7 +161,7 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>我们需要访问日历权限</string>
 	<key>NSCameraUsageDescription</key>
-	<string>是否允许"京耀云"访问您设备上的照片、媒体内容和文件</string>
+	<string>是否允许"左家右厨"访问您设备上的照片、媒体内容和文件</string>
 	<key>NSContactsUsageDescription</key>
 	<string>我们需要访问您的通讯录权限</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -175,9 +175,9 @@
 	<key>NSMotionUsageDescription</key>
 	<string>我们需要访问健康权限</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>是否允许"京耀云"访问您设备上的照片、媒体内容和文件</string>
+	<string>是否允许"左家右厨"访问您设备上的照片、媒体内容和文件</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>是否允许"京耀云"访问您设备上的照片、媒体内容和文件</string>
+	<string>是否允许"左家右厨"访问您设备上的照片、媒体内容和文件</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>我们需要访问语音识别权限</string>
 	<key>UILaunchStoryboardName</key>

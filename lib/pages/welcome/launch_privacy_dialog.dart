@@ -56,7 +56,7 @@ class __PrivacyDialogState extends State<_PrivacyDialog> {
                     rHBox(26),
                     Center(
                       child: Text(
-                        '感谢您下载京耀云',
+                        '感谢您下载左家右厨',
                         style: TextStyle(
                           color: Color(0xFF333333),
                           fontSize: rSP(16),
@@ -66,7 +66,7 @@ class __PrivacyDialogState extends State<_PrivacyDialog> {
                     ),
                     rHBox(14),
                     Text(
-                      '''请您了解，您需要注册成为京耀云用户后方可使用本软件的网上购物功能，在您注册前您仍可以浏览本软件中的商品和服务内容。请您充分了解在使用本软件过程中我们可能收集、使用、或共享您个人信息的情形，希望您着重关注：
+                      '''请您了解，您需要注册成为左家右厨用户后方可使用本软件的网上购物功能，在您注册前您仍可以浏览本软件中的商品和服务内容。请您充分了解在使用本软件过程中我们可能收集、使用、或共享您个人信息的情形，希望您着重关注：
 为了完成您订单的支付、配送或售后，我们可能会收集使用您订单中的信息，相关必要信息可能需要共享给商家、支付、物流等三方合作方。
                         ''',
                       style: TextStyle(
@@ -244,7 +244,7 @@ class _PrivacySecondDialog extends StatelessWidget {
                             fontSize: rSP(14),
                           ),
                           recognizer: _recognizer(context, 1)),
-                      TextSpan(text: '全文。如您同意我们的政策内容后，您可继续使用京耀云'),
+                      TextSpan(text: '全文。如您同意我们的政策内容后，您可继续使用左家右厨'),
                     ],
                     style: TextStyle(
                       color: Color(0xFF333333),

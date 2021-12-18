@@ -13,7 +13,7 @@ class RUICodeUtil {
   static String secureStr =
       'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKL1234567890';
 
-  ///瑞口令加密
+  ///云口令加密
   static String encrypt(int goodsId, int userId) {
     return '¥¥${_num2String(goodsId)}${split()}${_num2String(userId)}¥¥';
   }
@@ -22,7 +22,7 @@ class RUICodeUtil {
     return value.contains(RegExp('¥¥[a-zA-z0-9]*¥¥'));
   }
 
-  ///瑞口令解密
+  ///云口令解密
   static RUICodeModel decrypt(String value) {
     String temp = value.split('¥¥')[1];
     List<String> raw = temp.split(RegExp('(Z|X|C|V|B|N|M)'));

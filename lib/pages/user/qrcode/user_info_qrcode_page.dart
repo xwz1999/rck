@@ -142,7 +142,7 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
                     )),
                 Center(
                   child: Text(
-                    "扫一扫上面的二维码图案，和我一起加入京耀云",
+                    "扫一扫上面的二维码图案，和我一起加入左家右厨",
                     style: TextStyle(
                         color: Color(0xff999999), fontSize: 11 * 2.sp),
                   ),

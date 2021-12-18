@@ -40,7 +40,7 @@ class RUICodeListener {
     bool isRUICode = RUICodeUtil.isCode(rawData);
     GoodsDetailModel goodsDetailModel;
 
-    //瑞口令
+    //云口令
     if (isRUICode && ClipboardListenerValue.canListen) {
       RUICodeModel model = RUICodeUtil.decrypt(rawData);
 
