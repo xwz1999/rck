@@ -68,7 +68,7 @@ class VersionTool {
     bool safeMarket = ['xiaomi', 'oneplus', 'oppo', 'vivo', 'huawei']
         .any((element) => brand.contains(element));
     if (safeMarket)
-      return 'market://details?id=com.akuhome.recook';
+      return 'market://details?id=com.akuhome.jingyaoyun';
     else
       return WebApi.androidUrl;
   }

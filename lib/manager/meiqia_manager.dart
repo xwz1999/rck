@@ -8,16 +8,16 @@
  */
 
 
-import 'package:meiqia_flutter/meiqia_flutter.dart';
+// import 'package:meiqia_flutter/meiqia_flutter.dart';
 import 'package:recook/constants/header.dart';
 
 class MQManager {
   static const String appKey = "0aff2f19280aa0c2dfa2cc12425a71fd";
 
   static initial() {
-    MeiqiaFlutter.initMeiqia(
-      appKey
-    );
+    // MeiqiaFlutter.initMeiqia(
+    //   appKey
+    // );
     // MeiqiaPlugin.initMeiQia
     //   (appKey,success: (code,msg) {
     //   DPrint.printf("美洽注册成功");
@@ -28,7 +28,7 @@ class MQManager {
   }
 
   static goToChat({String userId, Map userInfo,String goodsName,String goodsUrl}) {
-    MeiqiaFlutter.chat(customId: userId,clientInfo: userInfo,preTxt:goodsName,prePicPath: goodsUrl);
+    // MeiqiaFlutter.chat(customId: userId,clientInfo: userInfo,preTxt:goodsName,prePicPath: goodsUrl);
     //MeiqiaPlugin.chat(userInfo: userInfo,userID: userId);
   }
 }

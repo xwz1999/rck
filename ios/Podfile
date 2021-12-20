@@ -1,10 +1,8 @@
 # Uncomment this line to define a global platform for your project
-# platform :ios, '9.3'
 platform :ios, '9.3'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
-
 def flutter_install_plugin_pods(application_path = nil, relative_symlink_dir, platform)
   # defined_in_file is set by CocoaPods and is a Pathname to the Podfile.
   application_path ||= File.dirname(defined_in_file.realpath) if self.respond_to?(:defined_in_file)
@@ -37,6 +35,7 @@ def flutter_install_plugin_pods(application_path = nil, relative_symlink_dir, pl
   end
 end
 
+
 project 'Runner', {
   'Debug' => :debug,
   'Profile' => :release,
@@ -62,32 +61,25 @@ flutter_ios_podfile_setup
 
 target 'Runner' do
   use_frameworks!
+  use_modular_headers!
+
   flutter_install_all_ios_pods File.dirname(File.realpath(__FILE__))
-  $static_framework = ['flutter_txugcupload']
-  pod 'FMDB'
-  pod 'HandyJSON', '~> 5.0.2'
-  pod 'LBXScan/LBXNative','~> 2.5'
-  pod 'LBXScan/LBXZXing','~> 2.5'
-  pod 'LBXScan/UI','~> 2.5'
-#   pod 'mobile-ffmpeg-full', '~> 4.4'
-  pod 'AMapLocation'
-  pre_install do |installer|
-    Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
-    installer.pod_targets.each do |pod|
-        if $static_framework.include?(pod.name)
-          def pod.build_type;
-            Pod::BuildType.static_library
+    $static_framework = ['flutter_txugcupload']
+    pre_install do |installer|
+      Pod::Installer::Xcode::TargetValidator.send(:define_method, :verify_no_static_framework_transitive_dependencies) {}
+      installer.pod_targets.each do |pod|
+          if $static_framework.include?(pod.name)
+            def pod.build_type;
+              Pod::BuildType.static_library
+            end
           end
         end
-      end
-  end
+    end
+
 end
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)
-    target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '9.0'
-    end
   end
 end

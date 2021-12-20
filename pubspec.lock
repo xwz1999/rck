@@ -8,6 +8,20 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
     version: "22.0.0"
+  amap_flutter_base:
+    dependency: "direct main"
+    description:
+      name: amap_flutter_base
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
+    source: hosted
+    version: "3.0.0"
+  amap_flutter_location:
+    dependency: "direct main"
+    description:
+      name: amap_flutter_location
+      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
+    source: hosted
+    version: "3.0.0"
   analyzer:
     dependency: transitive
     description:
@@ -329,7 +343,7 @@ packages:
       name: device_info_plus_platform_interface
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "2.2.1"
+    version: "2.3.0"
   device_info_plus_web:
     dependency: transitive
     description:
@@ -565,7 +579,7 @@ packages:
       name: flutter_markdown
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "0.6.8"
+    version: "0.6.9"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -595,7 +609,7 @@ packages:
       name: flutter_screenutil
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "5.0.1"
+    version: "5.0.1+2"
   flutter_slidable:
     dependency: "direct main"
     description:
@@ -622,13 +636,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_txugcupload:
-    dependency: "direct main"
-    description:
-      name: flutter_txugcupload
-      url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
-    source: hosted
-    version: "0.0.3"
   flutter_union_pay:
     dependency: "direct main"
     description:
@@ -710,7 +717,7 @@ packages:
       name: hive
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "2.0.4"
+    version: "2.0.5"
   hive_flutter:
     dependency: "direct main"
     description:
@@ -893,15 +900,6 @@ packages:
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
     version: "0.12.10"
-  meiqia_flutter:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "8b4ea696527a6921f248a3f9cfc85387324c1fdb"
-      url: "https://github.com/Mocaris/meiqia_flutter"
-    source: git
-    version: "0.0.2"
   meta:
     dependency: transitive
     description:
@@ -1013,7 +1011,7 @@ packages:
       name: package_signature
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "0.1.1"
+    version: "0.1.2"
   path:
     dependency: "direct main"
     description:
@@ -1048,7 +1046,7 @@ packages:
       name: path_provider_linux
       url: "https://mirrors.tuna.tsinghua.edu.cn/dart-pub"
     source: hosted
-    version: "2.1.2"
+    version: "2.1.4"
   path_provider_macos:
     dependency: transitive
     description:

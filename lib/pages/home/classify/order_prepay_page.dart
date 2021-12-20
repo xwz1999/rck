@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_union_pay/flutter_union_pay.dart';
+// import 'package:flutter_union_pay/flutter_union_pay.dart';
 import 'package:get/get.dart';
 
 import 'package:recook/base/base_store_state.dart';
@@ -98,19 +98,19 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
   @override
   void initState() {
     super.initState();
-    FlutterUnionPay.listen((result) {
-      switch (result.status) {
-        case PaymentStatus.CANCEL:
-          Toast.showError('银联取消支付');
-          break;
-        case PaymentStatus.SUCCESS:
-          Toast.showSuccess('支付成功');
-          break;
-        case PaymentStatus.FAIL:
-          Toast.showError('银联支付失败');
-          break;
-      }
-    });
+    // FlutterUnionPay.listen((result) {
+    //   switch (result.status) {
+    //     case PaymentStatus.CANCEL:
+    //       Toast.showError('银联取消支付');
+    //       break;
+    //     case PaymentStatus.SUCCESS:
+    //       Toast.showSuccess('支付成功');
+    //       break;
+    //     case PaymentStatus.FAIL:
+    //       Toast.showError('银联支付失败');
+    //       break;
+    //   }
+    // });
     UserManager.instance.setPassword.addListener(_setPassword);
     WidgetsBinding.instance.addObserver(this);
     _presenter = OrderPresenterImpl();
@@ -530,11 +530,11 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     });
     dismissLoading();
     if (!TextUtil.isEmpty(resultData?.data['data']['tn'] ?? null)) {
-      FlutterUnionPay.pay(
-        tn: resultData?.data['data']['tn'],
-        mode: AppConfig.debug ? PaymentEnv.DEVELOPMENT : PaymentEnv.PRODUCT,
-        scheme: "RecookUnionPay",
-      );
+      // FlutterUnionPay.pay(
+      //   tn: resultData?.data['data']['tn'],
+      //   mode: AppConfig.debug ? PaymentEnv.DEVELOPMENT : PaymentEnv.PRODUCT,
+      //   scheme: "RecookUnionPay",
+      // );
     }
   }
 
@@ -546,11 +546,11 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     });
     dismissLoading();
     if (!TextUtil.isEmpty(resultData?.data['data']['tn'] ?? null)) {
-      FlutterUnionPay.pay(
-        tn: resultData?.data['data']['tn'],
-        mode: AppConfig.debug ? PaymentEnv.DEVELOPMENT : PaymentEnv.PRODUCT,
-        scheme: "RecookUnionPay",
-      );
+      // FlutterUnionPay.pay(
+      //   tn: resultData?.data['data']['tn'],
+      //   mode: AppConfig.debug ? PaymentEnv.DEVELOPMENT : PaymentEnv.PRODUCT,
+      //   scheme: "RecookUnionPay",
+      // );
     }
   }
 
