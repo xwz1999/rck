@@ -1,6 +1,6 @@
 import 'dart:io';
-// import 'package:amap_flutter_location/amap_flutter_location.dart';
-// import 'package:amap_flutter_location/amap_location_option.dart';
+import 'package:amap_flutter_location/amap_flutter_location.dart';
+import 'package:amap_flutter_location/amap_location_option.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
