@@ -9,8 +9,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
 
 class ImageSelectedView<T> extends StatefulWidget {
   final int maxImages;

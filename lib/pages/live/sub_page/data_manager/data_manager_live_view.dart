@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:common_utils/common_utils.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/live/models/live_data_list_model.dart';
-import 'package:recook/pages/live/sub_page/data_manager/single_data_manager_live_page.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/utils/date/recook_date_util.dart';
-import 'package:recook/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/live/models/live_data_list_model.dart';
+import 'package:jingyaoyun/pages/live/sub_page/data_manager/single_data_manager_live_page.dart';
+import 'package:jingyaoyun/utils/custom_route.dart';
+import 'package:jingyaoyun/utils/date/recook_date_util.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 
 class DatamanagerLiveView extends StatefulWidget {
   DatamanagerLiveView({Key key}) : super(key: key);

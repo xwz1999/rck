@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/app_image_resources.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/pages/user/functions/user_benefit_func.dart';
-import 'package:recook/pages/user/model/user_accumulate_model.dart';
-import 'package:recook/pages/user/model/user_month_income_model.dart';
-import 'package:recook/pages/user/user_benefit_sub_page.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/bottom_time_picker.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/dashed_rect.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/app_image_resources.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/pages/user/functions/user_benefit_func.dart';
+import 'package:jingyaoyun/pages/user/model/user_accumulate_model.dart';
+import 'package:jingyaoyun/pages/user/model/user_month_income_model.dart';
+import 'package:jingyaoyun/pages/user/user_benefit_sub_page.dart';
+import 'package:jingyaoyun/utils/custom_route.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/bottom_time_picker.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/dashed_rect.dart';
 
 class CumulativeIncomePage extends StatefulWidget {
   @override

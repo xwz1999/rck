@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/pages/lottery/widget/lottery_scaffold.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/pages/lottery/widget/lottery_scaffold.dart';
 
 class LotteryHelpPage extends StatefulWidget {
   final dynamic arguments;

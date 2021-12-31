@@ -4,13 +4,13 @@ import 'package:get/get.dart';
 
 import 'package:oktoast/oktoast.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/user/account_and_safety/delete_account_validation_page.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/user/account_and_safety/delete_account_validation_page.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 
 class DeleteAccountPage extends StatefulWidget {
   DeleteAccountPage({Key key}) : super(key: key);
@@ -23,7 +23,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
   final deleteInfo = [
     '您的账户无法登录与使用',
     '身份、账户信息、会员权益将被清空且无法恢复',
-    '您账户内的资产（余额、瑞币、优惠券、权益卡等）将会被清空且无法恢复',
+    '您账户内的资产（余额、优惠券、权益卡等）将会被清空且无法恢复',
     '您已完成的交易将无法处理售后',
     '您将无法便捷地查询帐号历史交易记录',
   ];

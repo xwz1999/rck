@@ -14,31 +14,27 @@ import 'package:flutter_svg/flutter_svg.dart';
 // import 'package:flutter_union_pay/flutter_union_pay.dart';
 import 'package:get/get.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/PayInfoModel.dart';
-import 'package:recook/models/alipay_order_model.dart';
-import 'package:recook/models/base_model.dart';
-import 'package:recook/models/order_prepay_model.dart';
-import 'package:recook/models/pay_result_model.dart';
-import 'package:recook/models/recook_fund_model.dart';
-import 'package:recook/pages/buy_tickets/functions/passager_func.dart';
-import 'package:recook/pages/buy_tickets/models/pay_need_model.dart';
-import 'package:recook/pages/buy_tickets/order_widgt.dart';
-import 'package:recook/pages/buy_tickets/tickets_order_page.dart';
-import 'package:recook/pages/home/classify/mvp/order_mvp/order_presenter_impl.dart';
-import 'package:recook/pages/user/order/order_center_page.dart';
-import 'package:recook/pages/user/order/order_detail_page.dart';
-import 'package:recook/third_party/alipay/alipay_utils.dart';
-import 'package:recook/third_party/wechat/wechat_utils.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/keyboard/bottom_keyboard_widget.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/PayInfoModel.dart';
+import 'package:jingyaoyun/models/alipay_order_model.dart';
+import 'package:jingyaoyun/models/base_model.dart';
+import 'package:jingyaoyun/models/order_prepay_model.dart';
+import 'package:jingyaoyun/models/pay_result_model.dart';
+import 'package:jingyaoyun/models/recook_fund_model.dart';
+import 'package:jingyaoyun/pages/home/classify/mvp/order_mvp/order_presenter_impl.dart';
+import 'package:jingyaoyun/pages/user/order/order_center_page.dart';
+import 'package:jingyaoyun/pages/user/order/order_detail_page.dart';
+import 'package:jingyaoyun/third_party/alipay/alipay_utils.dart';
+import 'package:jingyaoyun/third_party/wechat/wechat_utils.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/keyboard/bottom_keyboard_widget.dart';
+import 'package:jingyaoyun/widgets/progress/re_toast.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 class OrderPrepayPage extends StatefulWidget {
   final Map arguments;
@@ -49,13 +45,13 @@ class OrderPrepayPage extends StatefulWidget {
       {bool goToOrder = false,
       bool canUseBalance = true,
       String fromTo = '',
-      PayNeedModel payNeedModel}) {
+      }) {
     return {
       "model": model,
       "goToOrder": goToOrder,
       "canUseBalance": canUseBalance,
       "fromTo": fromTo,
-      "payNeedModel": payNeedModel
+
     };
   }
 
@@ -71,7 +67,6 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
 
   OrderPresenterImpl _presenter;
   OrderPrepayModel _model;
-  PayNeedModel _payNeedModel;
   int _defaultPayIndex = 1;
   RecookFundModel _recookFundModel;
 
@@ -117,7 +112,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     _model = widget.arguments["model"];
     _goToOrder = widget.arguments["goToOrder"];
     _fromTo = widget.arguments["fromTo"];
-    _payNeedModel = widget.arguments['payNeedModel'];
+
     _canUseBalance = widget.arguments['canUseBalance'] ?? true;
     _presenter
         .queryRecookPayFund(UserManager.instance.user.info.id)
@@ -158,7 +153,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     //TODO 每次应用进入后台返回前台都会进行订单验证操作，这里需要重写
     if (state == AppLifecycleState.resumed && !_lifecycleLock) {
       DPrint.printf("app 进入前台了");
-      _fromTo == '' ? _verifyPayStatus() : _verifyPayStatusLifang();
+     _verifyPayStatus() ;
       _clickPay = false;
     }
   }
@@ -215,14 +210,13 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
                   deleteListener: () async {
                     //_updateUserBrief();
                     Alert.dismiss(context);
-                    String code = await PassagerFunc.changeOrderStatus(
-                        _payNeedModel.lfOrderId);
+
 
                     //设置飞机票为取消
 
                     Navigator.pop(context);
                     Navigator.pop(context);
-                    if (code == 'SUCCESS') Toast.showInfo('订单已取消,请重新下单购买');
+
                   },
                 ));
         return Future.value(false);
@@ -290,15 +284,15 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
             ),
             2),
         //TODO 由于退款原因，暂时隐藏该支付方式
-        _fromTo == ''
-            ? _payTile(
-                "云闪付支付",
-                Image.asset(
-                  R.ASSETS_UNION_PAY_PNG,
-                  height: rSize(30),
-                ),
-                3)
-            : SizedBox(),
+        // _fromTo == ''
+        //     ? _payTile(
+        //         "云闪付支付",
+        //         Image.asset(
+        //           R.ASSETS_UNION_PAY_PNG,
+        //           height: rSize(30),
+        //         ),
+        //         3)
+        //     : SizedBox(),
         Container(
           margin:
               EdgeInsets.symmetric(horizontal: rSize(40), vertical: rSize(150)),
@@ -689,100 +683,6 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         arguments: OrderCenterPage.setArguments(2));
   }
 
-  _verifyPayStatusLifang() async {
-    GSDialog.of(_scaffoldKey.currentContext)
-        .showLoadingDialog(_scaffoldKey.currentContext, "正在验证订单...");
-
-    await Future.delayed(Duration(seconds: 2));
-
-    HttpResultModel<PayResult> resultModel =
-        await _presenter.verifyOrderPayStatusLifang(_model.data.id);
-
-    if (!resultModel.result) {
-      GSDialog.of(_scaffoldKey.currentContext)
-          .showError(_scaffoldKey.currentContext, resultModel.msg);
-      return;
-    }
-
-    if (resultModel.data.status == 0) {
-      await Future.delayed(Duration(seconds: 2));
-      HttpResultModel<PayResult> resultModel =
-          await _presenter.verifyOrderPayStatusLifang(_model.data.id);
-      if (resultModel.data.status == 0) {
-        GSDialog.of(_scaffoldKey.currentContext)
-            .dismiss(_scaffoldKey.currentContext);
-        String code =
-            await PassagerFunc.changeOrderStatus(_payNeedModel.lfOrderId);
-
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Get.to(TicketsOrderPage(
-          ticketType: 1,
-          firstTab: 3,
-        ));
-        if (code == 'SUCCESS')
-          Toast.showInfo('支付失败,订单已取消,请重新下单购买');
-        else
-          Toast.showInfo('支付异常,订单已取消,请重新下单购买');
-      } else if (resultModel.data.status == 1) {
-        GSDialog.of(_scaffoldKey.currentContext)
-            .dismiss(_scaffoldKey.currentContext);
-        if (_payNeedModel != null) {
-          print(_payNeedModel);
-          String msg = await PassagerFunc.airOrderPayLifang(
-              _payNeedModel.lfOrderId,
-              _payNeedModel.seatCode,
-              _payNeedModel.passagers,
-              _payNeedModel.itemId,
-              _payNeedModel.contactName,
-              _payNeedModel.contactTel,
-              _payNeedModel.date,
-              _payNeedModel.from,
-              _payNeedModel.to,
-              _payNeedModel.companyCode,
-              _payNeedModel.flightNo);
-
-          ReToast.success(text: '为您购票中');
-          Navigator.pop(context);
-          Navigator.pop(context);
-          Navigator.pop(context);
-          Get.to(TicketsOrderPage(
-            ticketType: 1,
-          ));
-        }
-
-        //Navigator.pop(context);
-      }
-    } else if (resultModel.data.status == 1) {
-      GSDialog.of(_scaffoldKey.currentContext)
-          .dismiss(_scaffoldKey.currentContext);
-      if (_payNeedModel != null) {
-        String msg = await PassagerFunc.airOrderPayLifang(
-            _payNeedModel.lfOrderId,
-            _payNeedModel.seatCode,
-            _payNeedModel.passagers,
-            _payNeedModel.itemId,
-            _payNeedModel.contactName,
-            _payNeedModel.contactTel,
-            _payNeedModel.date,
-            _payNeedModel.from,
-            _payNeedModel.to,
-            _payNeedModel.companyCode,
-            _payNeedModel.flightNo);
-
-        ReToast.success(text: '为您购票中');
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Navigator.pop(context);
-        Get.to(TicketsOrderPage(
-          ticketType: 1,
-        ));
-      }
-
-      //Navigator.pop(context);
-    }
-  }
 
   _updateUserBrief() {
     UserManager.instance.updateUserBriefInfo(getStore());

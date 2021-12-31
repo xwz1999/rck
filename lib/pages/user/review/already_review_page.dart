@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/constants.dart';
-import 'package:recook/pages/user/review/models/order_review_list_model.dart';
-import 'package:recook/pages/user/review/presenter/review_presenter.dart';
-import 'package:recook/pages/user/review/widgets/review_card.dart';
-import 'package:recook/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/pages/user/review/models/order_review_list_model.dart';
+import 'package:jingyaoyun/pages/user/review/presenter/review_presenter.dart';
+import 'package:jingyaoyun/pages/user/review/widgets/review_card.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 
 class AlreadyReviewPage extends StatefulWidget {
   AlreadyReviewPage({Key key}) : super(key: key);

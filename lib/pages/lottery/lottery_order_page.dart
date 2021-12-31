@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/lottery/lottery_order_detail_page.dart';
-import 'package:recook/pages/lottery/models/lottery_redeem_history_model.dart';
-import 'package:recook/pages/lottery/widget/lottery_scaffold.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/lottery/lottery_order_detail_page.dart';
+import 'package:jingyaoyun/pages/lottery/models/lottery_redeem_history_model.dart';
+import 'package:jingyaoyun/pages/lottery/widget/lottery_scaffold.dart';
+import 'package:jingyaoyun/utils/custom_route.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 
 class LotteryOrderPage extends StatefulWidget {
   LotteryOrderPage({Key key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:redux/redux.dart';
 
-import 'package:recook/models/user_brief_info_model.dart';
+import 'package:jingyaoyun/models/user_brief_info_model.dart';
 
 final UserBriefReducer = combineReducers<UserBrief>([
   TypedReducer<UserBrief, UpdateUserBriefAction>(updateUserBriefInfo)

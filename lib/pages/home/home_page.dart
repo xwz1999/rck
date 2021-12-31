@@ -1,11 +1,3 @@
-/*
- * ====================================================
- * package   : pages.home
- * author    : Created by nansi.
- * time      : 2019/5/5  4:36 PM 
- * remark    : 
- * ====================================================
- */
 
 import 'dart:async';
 import 'dart:collection';
@@ -22,74 +14,68 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide Response;
-import 'package:jpush_flutter/jpush_flutter.dart';
+// import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:power_logger/power_logger.dart';
-import 'package:recook/models/category_model.dart';
-import 'package:recook/models/country_list_model.dart';
-import 'package:recook/pages/boosting_activitiy/boosting_activity.dart';
-import 'package:recook/pages/buy_tickets/choose_tickets_type_page.dart';
-import 'package:recook/pages/home/search_page.dart';
-import 'package:recook/pages/home/widget/good_high_commission_page.dart';
-import 'package:recook/pages/home/widget/good_preferential_list_page.dart';
-import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
-import 'package:recook/pages/home/wx_page.dart';
-import 'package:recook/pages/live/models/king_coin_list_model.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:recook/pages/seckill_activity/seckill_activity_page.dart';
-import 'package:recook/pages/user/functions/user_func.dart';
-import 'package:recook/utils/storage/hive_store.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-// import 'package:sharesdk_plugin/sharesdk_plugin.dart';
+import 'package:jingyaoyun/models/category_model.dart';
+import 'package:jingyaoyun/models/country_list_model.dart';
+import 'package:jingyaoyun/pages/home/search_page.dart';
+import 'package:jingyaoyun/pages/home/widget/good_high_commission_page.dart';
+import 'package:jingyaoyun/pages/home/widget/good_preferential_list_page.dart';
+import 'package:jingyaoyun/pages/home/widget/goods_hot_list_page.dart';
+import 'package:jingyaoyun/pages/home/wx_page.dart';
+import 'package:jingyaoyun/pages/live/models/king_coin_list_model.dart';
+import 'package:jingyaoyun/pages/user/functions/user_func.dart';
+import 'package:jingyaoyun/utils/storage/hive_store.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/api_v2.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/daos/home_dao.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/meiqia_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/banner_list_model.dart';
-import 'package:recook/models/base_model.dart';
-import 'package:recook/models/home_weather_model.dart';
-import 'package:recook/models/promotion_goods_list_model.dart';
-import 'package:recook/models/promotion_list_model.dart';
-import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
-import 'package:recook/pages/home/classify/classify_page.dart';
-import 'package:recook/pages/home/classify/commodity_detail_page.dart';
-import 'package:recook/pages/home/home_page_tabbar.dart';
-import 'package:recook/pages/home/items/item_row_acitivity.dart';
-import 'package:recook/pages/home/promotion_time_tool.dart';
-import 'package:recook/pages/home/widget/animated_home_background.dart';
-import 'package:recook/pages/home/widget/goods_list_temp_page.dart';
-import 'package:recook/pages/home/widget/home_countdown_widget.dart';
-import 'package:recook/pages/home/widget/home_sliver_app_bar.dart';
-import 'package:recook/pages/home/widget/home_weather_view.dart';
-import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
-import 'package:recook/pages/noticeList/notice_list_model.dart';
-import 'package:recook/pages/noticeList/notice_list_tool.dart';
-import 'package:recook/pages/tabBar/rui_code_listener.dart';
-import 'package:recook/pages/upgradeCard/upgrade_card_page_v2.dart';
-import 'package:recook/third_party/wechat/wechat_utils.dart';
-import 'package:recook/utils/android_back_desktop.dart';
-import 'package:recook/utils/app_router.dart';
-import 'package:recook/utils/color_util.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/utils/permission_tool.dart';
-import 'package:recook/utils/share_tool.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/banner.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/goods_item.dart';
-import 'package:recook/widgets/home_gif_header.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
-import 'package:recook/widgets/refresh_widget.dart';
-import 'package:recook/widgets/toast.dart';
-import 'package:recook/widgets/weather_page/weather_city_model.dart';
-import 'package:recook/widgets/weather_page/weather_city_page.dart';
-import 'package:recook/widgets/webView.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/api_v2.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/daos/home_dao.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/meiqia_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/banner_list_model.dart';
+import 'package:jingyaoyun/models/base_model.dart';
+import 'package:jingyaoyun/models/home_weather_model.dart';
+import 'package:jingyaoyun/models/promotion_goods_list_model.dart';
+import 'package:jingyaoyun/models/promotion_list_model.dart';
+import 'package:jingyaoyun/pages/home/classify/brandgoods_list_page.dart';
+import 'package:jingyaoyun/pages/home/classify/classify_page.dart';
+import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
+import 'package:jingyaoyun/pages/home/home_page_tabbar.dart';
+import 'package:jingyaoyun/pages/home/items/item_row_acitivity.dart';
+import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
+import 'package:jingyaoyun/pages/home/widget/animated_home_background.dart';
+import 'package:jingyaoyun/pages/home/widget/goods_list_temp_page.dart';
+import 'package:jingyaoyun/pages/home/widget/home_countdown_widget.dart';
+import 'package:jingyaoyun/pages/home/widget/home_sliver_app_bar.dart';
+import 'package:jingyaoyun/pages/home/widget/home_weather_view.dart';
+import 'package:jingyaoyun/pages/live/live_stream/live_stream_view_page.dart';
+import 'package:jingyaoyun/pages/noticeList/notice_list_model.dart';
+import 'package:jingyaoyun/pages/noticeList/notice_list_tool.dart';
+import 'package:jingyaoyun/pages/tabBar/rui_code_listener.dart';
+import 'package:jingyaoyun/pages/upgradeCard/upgrade_card_page_v2.dart';
+import 'package:jingyaoyun/third_party/wechat/wechat_utils.dart';
+import 'package:jingyaoyun/utils/android_back_desktop.dart';
+import 'package:jingyaoyun/utils/app_router.dart';
+import 'package:jingyaoyun/utils/color_util.dart';
+import 'package:jingyaoyun/utils/custom_route.dart';
+import 'package:jingyaoyun/utils/permission_tool.dart';
+import 'package:jingyaoyun/utils/share_tool.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/banner.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/goods_item.dart';
+import 'package:jingyaoyun/widgets/home_gif_header.dart';
+import 'package:jingyaoyun/widgets/progress/re_toast.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:jingyaoyun/widgets/weather_page/weather_city_model.dart';
+import 'package:jingyaoyun/widgets/weather_page/weather_city_page.dart';
+import 'package:jingyaoyun/widgets/webView.dart';
 import '../../utils/text_utils.dart';
 import 'classify/classify_country_page.dart';
 
@@ -173,26 +159,21 @@ class _HomePageState extends BaseStoreState<HomePage>
   Color getCurrentAppItemColor() {
     return getStore().state.themeData.appBarTheme.iconTheme.color;
   }
-
-  _openInstallGoodsIdListener() {
-    _handleOpenInstallEvents();
-  }
+  //
+  // _openInstallGoodsIdListener() {
+  //   _handleOpenInstallEvents();
+  // }
 
   ///监听剪切板
 
   @override
   void initState() {
     super.initState();
-    // Future.delayed(Duration.zero, () async {
-    //   UserManager.instance.kingCoinListModelList =
-    //   await UserFunc.getKingCoinList();
-    // });
+
     _updateSource();
     _getWeather();//部分机型获取地址较慢 所以放在外面先获取
 
-    requestPermission().then((value) {
-      // AMapFlutterLocation.updatePrivacyAgree(true);
-      // AMapFlutterLocation.updatePrivacyShow(true, true);
+    requestPermission(false).then((value) {
       if (value) {
         //监听要在设置参数之前 否则无法获取定位
         _amapFlutterLocation.onLocationChanged().listen(
@@ -202,13 +183,11 @@ class _HomePageState extends BaseStoreState<HomePage>
             _getWeather();
           },
         );
-
         _amapFlutterLocation
             .setLocationOption(AMapLocationOption(onceLocation: true));
-
         _amapFlutterLocation.startLocation();
       } else {
-        //ReToast.err(text: '未获取到定位权限，请先在设置中打开定位权限');
+        //Toast.showInfo('21312312321');
       }
     });
     _gifController = GifController(vsync: this)
@@ -217,23 +196,21 @@ class _HomePageState extends BaseStoreState<HomePage>
         max: 20,
         period: Duration(milliseconds: 700),
       );
-    bool notificationPermission = HiveStore.appBox.get('notification') ?? false;
-    if (!notificationPermission) {
-      JPush().isNotificationEnabled().then((bool value) {
-        if (!value) {
-          HiveStore.appBox.put('notification', true);
-          PermissionTool.showOpenPermissionDialog(
-              context, "我们为您准备了精彩的内容推荐，试试看吧！");
-        }
-      }).catchError((onError) {
-        print(onError);
-      });
-    }
+    // bool notificationPermission = HiveStore.appBox.get('notification') ?? false;
+    // if (!notificationPermission) {
+    //   JPush().isNotificationEnabled().then((bool value) {
+    //     if (!value) {
+    //       HiveStore.appBox.put('notification', true);
+    //       PermissionTool.showOpenPermissionDialog(
+    //           context, "我们为您准备了精彩的内容推荐，试试看吧！");
+    //     }
+    //   }).catchError((onError) {
+    //     print(onError);
+    //   });
+    // }
 
     kingCoinListModelList = UserManager.instance.kingCoinListModelList;
-    //已在native配置
-    // AMapFlutterLocation.setApiKey(
-    //     '7225bca14fe7493f9f469315a933f99c', 'e8a8057cfedcdcadcf4e8f2c7f8de982');
+
     _amapFlutterLocation = AMapFlutterLocation();
 
 
@@ -243,13 +220,13 @@ class _HomePageState extends BaseStoreState<HomePage>
     // 判断微信是否登录
     WeChatUtils.initial();
     // meiqia注册
-    MQManager.initial();
+    // MQManager.initial();
     ShareTool.init();
     // _backgroundColor = AppColor.themeColor;
     _homeCountdownController = HomeCountdownController();
-
-    UserManager.instance.openInstallGoodsId
-        .addListener(_openInstallGoodsIdListener);
+    //
+    // UserManager.instance.openInstallGoodsId
+    //     .addListener(_openInstallGoodsIdListener);
 
     UserManager.instance.openInstallLive.addListener(() {
       if (getStore().state.openinstall.type == 'live') {
@@ -283,28 +260,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                 CommodityDetailPage.setArguments(getStore().state.goodsId));
         getStore().state.goodsId = 0;
       }
-      _handleOpenInstallEvents();
-      //  Alert.show(
-      //    context,
-      //    NormalTextDialog(
-      //      type: NormalTextDialogType.delete,
-      //      title: "提示",
-      //      content: "同意隐私协议",
-      //      items: ["确认"],
-      //      listener: (index) {
-      //        SharesdkPlugin.uploadPrivacyPermissionStatus(1, (bool success) {
-      //          if(success == true) {
-      //            showSuccess("隐私协议授权提交成功");
-      //          } else {
-      //            showError("隐私协议授权提交失败");
-      //          }
-      //        });
-      //      },
-      //      deleteItem: "取消",
-      //      deleteListener: () {
-      //        Alert.dismiss(context);
-      //      },
-      //    ));
+      // _handleOpenInstallEvents();
     });
     WidgetsBinding.instance.addObserver(this);
     // 抽奖功能
@@ -329,20 +285,20 @@ class _HomePageState extends BaseStoreState<HomePage>
     });
   }
 
-  _handleOpenInstallEvents() {
-    if (!TextUtils.isEmpty(getStore().state.openinstall.goodsid)) {
-      int goodsid = 0;
-      try {
-        goodsid = int.parse(getStore().state.openinstall.goodsid);
-      } catch (e) {
-        getStore().state.openinstall.goodsid = "";
-        return;
-      }
-      AppRouter.push(context, RouteName.COMMODITY_PAGE,
-          arguments: CommodityDetailPage.setArguments(goodsid));
-      getStore().state.openinstall.goodsid = "";
-    }
-  }
+  // _handleOpenInstallEvents() {
+  //   if (!TextUtils.isEmpty(getStore().state.openinstall.goodsid)) {
+  //     int goodsid = 0;
+  //     try {
+  //       goodsid = int.parse(getStore().state.openinstall.goodsid);
+  //     } catch (e) {
+  //       getStore().state.openinstall.goodsid = "";
+  //       return;
+  //     }
+  //     AppRouter.push(context, RouteName.COMMODITY_PAGE,
+  //         arguments: CommodityDetailPage.setArguments(goodsid));
+  //     getStore().state.openinstall.goodsid = "";
+  //   }
+  // }
 
   @override
   void dispose() {
@@ -581,9 +537,24 @@ class _HomePageState extends BaseStoreState<HomePage>
                 : _homeWeatherModel.city
             : "";
     Widget leftContainer = GestureDetector(
-      onTap: () {
-        requestPermission();
-        if(locationCityName!=''){
+      onTap: ()  async {
+        var value =  await requestPermission(true);
+        if (value) {
+          //监听要在设置参数之前 否则无法获取定位
+          _amapFlutterLocation
+              .setLocationOption(AMapLocationOption(onceLocation: true));
+          _amapFlutterLocation.startLocation();
+        }
+
+        String locationCityName =
+        _weatherLocation != null && !TextUtils.isEmpty(_weatherLocation['city'])
+            ? _weatherLocation['city']
+            : "";
+        try {
+          locationCityName = locationCityName.replaceAll("区", "");
+          locationCityName = locationCityName.replaceAll("市", "");
+        } catch (e) {}
+        if (locationCityName != '') {
           AppRouter.push(context, RouteName.WEATHER_CITY_PAGE,
               arguments: WeatherCityPage.setArguments(locationCityName))
               .then((model) {
@@ -593,7 +564,6 @@ class _HomePageState extends BaseStoreState<HomePage>
             }
           });
         }
-
       },
       child: Container(
         child: Row(
@@ -1263,13 +1233,6 @@ class _HomePageState extends BaseStoreState<HomePage>
                   FadeInImage.assetNetwork(
                       placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                       image: Api.getImgUrl(kingCoin.url),)
-                  // Image.asset(
-                  //   icon,
-                  //   fit: BoxFit.fill,
-                  // ),
-              // CustomCacheImage(
-              //         imageUrl: icon,
-              //         fit: BoxFit.fill,),
             ),
             Container(
               margin: EdgeInsets.only(top: 8),
@@ -1305,17 +1268,6 @@ class _HomePageState extends BaseStoreState<HomePage>
           ));
         }
         break;
-      case '我的权益':
-        if (!UserManager.instance.haveLogin) {
-          AppRouter.push(context, RouteName.LOGIN);
-          return;
-        }
-
-        AppRouter.push(
-          globalContext,
-          RouteName.SHOP_PAGE_USER_RIGHTS_PAGE,
-        );
-        break;
       case '一键邀请':
         if (!UserManager.instance.haveLogin) {
           AppRouter.push(context, RouteName.LOGIN);
@@ -1337,12 +1289,6 @@ class _HomePageState extends BaseStoreState<HomePage>
         break;
       case '高佣特推':
         Get.to(()=>GoodsHighCommissionListPage());
-        break;
-      case '限时秒杀':
-        Get.to(()=>SeckillActivityPage());
-        break;
-      case '助力抢购':
-        Get.to(() => BooStingActivityPage());
         break;
       case '学院':
         UserManager.instance.selectTabbarIndex = 1;
@@ -1401,12 +1347,6 @@ class _HomePageState extends BaseStoreState<HomePage>
 
         break;
     }
-  }
-  _placeholder() {
-    return Image.asset(
-      R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-      fit: BoxFit.fill,
-    );
   }
 
   ///首页上方分类功能卡片
@@ -1666,14 +1606,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         }
       }
 
-      //   if (array.length > 3) {
-
-      //   array.insert(3, model.data.activityList.first);
-      // } else {
-      //   array.add(model.data.activityList.first);
-      // }
     }
-    // _promotionGoodsList = model.data.goodsList;
     _promotionGoodsList = array;
     if (mounted) {
       setState(() {
@@ -1733,212 +1666,50 @@ class _HomePageState extends BaseStoreState<HomePage>
   //   SharesdkPlugin.regist(register);
   // }
 
-  Future<bool> requestPermission() async {
+  Future<bool> requestPermission(bool btn) async {
     if (Platform.isIOS) {
       return true;
     }
-    bool permission = await Permission.locationWhenInUse.isRestricted;
-    bool permanentDenied =
-        await Permission.locationWhenInUse.isPermanentlyDenied;
-    if (!permission) {
-      await Permission.locationWhenInUse.request();
-      if (permanentDenied) {
-        await PermissionTool.showOpenPermissionDialog(context, '打开定位权限');
-      }
-      permission = await Permission.locationWhenInUse.isGranted;
+    bool permission = await Permission.location.isGranted;
+    if(permission){
+      HiveStore.appBox.put('location', true);
     }
-    return permission;
-  }
+    print('${HiveStore.appBox.get('location')}');
+    if(HiveStore.appBox.get('location') == null){
+      // bool permission = await Permission.locationWhenInUse.isRestricted;
+      // bool permanentDenied =
+      // await Permission.locationWhenInUse.isDenied;
 
-  //抽奖功能
-  _userLottery() async {
-    //暂时移除抽奖功能（大概率以后用不到）
-    // ResultData resultData = await HttpManager.post(
-    //   UserApi.user_lottery,
-    //   {'userID': UserManager.instance.user.info.id},
-    // );
-    // if (resultData.data != null && resultData.data['data'] != null) {
-    //   if (resultData.data['data']['result'] == 0) {
-    //     ResultData lottery = await HttpManager.post(UserApi.user_do_lottery,
-    //         {'userID': UserManager.instance.user.info.id});
-    //     await Future.delayed(Duration(milliseconds: 500));
-    //     await Navigator.push(
-    //       context,
-    //       PageRouteBuilder(
-    //           opaque: false,
-    //           pageBuilder: (BuildContext context, Animation<double> animation,
-    //               Animation<double> secondaryAnimation) {
-    //             return LotteryPage(
-    //               cardIndex: lottery.data['data']['result'],
-    //             );
-    //           }),
-    //     );
-    //   }
-    // }
-
-    //店铺角色变动
-
-    bool firstTag = false;
-    ResultData shopLevel = await HttpManager.post(
-      APIV2.userAPI.userLottery,
-      {'userID': UserManager.instance.user.info.id},
-    );
-    if (shopLevel.data != null &&
-        shopLevel.data['data'] != null &&
-        shopLevel.data['code'] == 'SUCCESS') {
-      int oldLevel = shopLevel.data['data']['oldRoleLevel'];
-      int nowLevel = shopLevel.data['data']['nowRoleLevel'];
-
-      if (oldLevel == 400 && nowLevel == 400) return;
-
-      if ((oldLevel == 0 || oldLevel == 500) && nowLevel == 400) {
-        firstTag = true;
-        await showDialog(
-          context: context,
-          builder: (context) => Center(
-            child: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Image.asset(R.ASSETS_USER_BE_THE_MASTER_WEBP),
-            ),
-          ),
-        );
-        await HttpManager.post(APIV2.userAPI.agreeLottery, {});
-        await UserManager.instance.updateUserBriefInfo(getStore());
-      }
-      String img;
-      //用户升级
-      if (oldLevel > nowLevel) {
-        switch (UserLevelTool.roleLevelEnum(nowLevel)) {
-          case UserRoleLevel.Diamond_1:
-          case UserRoleLevel.Diamond_2:
-          case UserRoleLevel.Diamond_3:
-            // img = R.ASSETS_USER_UPGRADE_DIAMOND_PNG_WEBP;
-            img = R.ASSETS_USER_UPGRADABLE_DIAMOND_PNG_WEBP;
-            break;
-          case UserRoleLevel.Gold:
-            // img = R.ASSETS_USER_UPGRADE_GOLD_PNG_WEBP;
-            img = R.ASSETS_USER_UPGRADABLE_GOLD_PNG_WEBP;
-            break;
-          case UserRoleLevel.Silver:
-            // img = R.ASSETS_USER_UPGRADE_SILVER_PNG_WEBP;
-            img = R.ASSETS_USER_UPGRADABLE_SILVER_PNG_WEBP;
-            break;
-          case UserRoleLevel.Master:
-            img = R.ASSETS_USER_UPGRADABLE_MASTER_PNG_WEBP;
-            break;
-          default:
-            break;
+      if (!permission) {
+        await Permission.location.request();
+        bool permanentDenied = await Permission.location.isGranted;
+        if (permanentDenied) {
+          //await PermissionTool.showOpenPermissionDialog(context, '打开定位权限');
+          HiveStore.appBox.put('location', true);
+        }else{
+          HiveStore.appBox.put('location', false);
         }
+        permission = await Permission.location.isGranted;
       }
-      //用户降级
-      if (oldLevel < nowLevel) {
-        switch (UserLevelTool.roleLevelEnum(nowLevel)) {
-          case UserRoleLevel.Silver:
-            img = R.ASSETS_USER_DOWNGRADE_SILVER_WEBP;
-            break;
-          case UserRoleLevel.Master:
-            img = R.ASSETS_USER_DOWNGRADE_MASTER_WEBP;
-            break;
-          default:
-            break;
+      return permission;
+    }else{
+
+      if(HiveStore.appBox.get('location')){
+
+        return true;
+      }else{
+
+        if(btn){
+
+          await PermissionTool.showOpenPermissionDialog(context, '如果您想要改变您的定位，请先打开定位权限。');
+
         }
-      }
-      if (img != null && !firstTag) {
-        await showDialog(
-          context: context,
-          builder: (context) => Center(
-            child: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: Padding(
-                padding: const EdgeInsets.all(40),
-                child: Image.asset(img),
-              ),
-            ),
-          ),
-        );
-        await HttpManager.post(APIV2.userAPI.agreeLottery, {});
+        return false;
       }
     }
+
   }
 
-  _getNoticeList() async {
-    if (!UserManager.instance.haveLogin) return;
-    ResultData resultData = await HttpManager.post(
-        HomeApi.notice_list, {"uid": UserManager.instance.user.info.id});
-    if (resultData.data == null) return;
-    NoticeListModel noticeListModel = NoticeListModel.fromJson(resultData.data);
-    if (noticeListModel.data != null && noticeListModel.data.length > 0) {
-      for (NoticeData noticeData in noticeListModel.data) {
-        // 1钻石推荐的提示,2 23层会员登录的提示，3首次改昵称，4需要填写快递的提示
-        if (noticeData.type == 1)
-          await NoticeListTool.diamondRecommendation(context,
-              title: noticeData.content);
-        if (noticeData.type == 2 &&
-            (AppConfig.getShowCommission())) if (noticeData.type == 3)
-          await NoticeListTool.perfectInformation(context, getStore());
-        if (noticeData.type == 4)
-          await NoticeListTool.inputExpressInformation(context);
-      }
-    }
-  }
 
-  _userCardNoticeList() async {
-    await Future.delayed(Duration(milliseconds: 300));
 
-    ResultData resultData =
-        await HttpManager.post(APIV2.userAPI.userCardNoticeList, {});
-    if (resultData.data != null && resultData.data['data'] != null) {
-      List<dynamic> noticeList = resultData.data['data'];
-      for (var item in noticeList) {
-        final int gold = item['gold'];
-        final int silver = item['silver'];
-        final int id = item['id'];
-        String goldValue = '';
-        String silverValue = '';
-        if (gold != null && gold != 0) goldValue = '$gold张黄金卡';
-        if (silver != null && silver != 0) silverValue = '$silver张白银卡';
-        String result = '';
-        if (goldValue.isNotEmpty && silverValue.isNotEmpty)
-          result = '$goldValue,$silverValue';
-        else {
-          result = '$goldValue$silverValue';
-        }
-        await Get.dialog(Center(
-          child: GestureDetector(
-            onTap: () async {
-              await HttpManager.post(
-                APIV2.userAPI.confirmUserCardChange,
-                {"noticeId": id},
-              );
-              await Get.to(UpgradeCardPageV2());
-              Get.back();
-            },
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 50.rw),
-              child: Center(
-                  child: Material(
-                color: Colors.transparent,
-                child: Transform.translate(
-                  offset: Offset(0, 20.rw),
-                  child: Text(
-                    '您有$result已退至您的卡包',
-                    style: TextStyle(
-                      fontSize: 14.rsp,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              )),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(R.ASSETS_USER_NOTICE_CARD_PNG),
-                ),
-              ),
-            ),
-          ),
-        ));
-      }
-    }
-  }
 }

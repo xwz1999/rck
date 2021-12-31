@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/live/functions/live_function.dart';
-import 'package:recook/pages/live/models/live_base_info_model.dart';
-import 'package:recook/pages/live/models/live_stream_info_model.dart';
-import 'package:recook/pages/live/widget/live_user_bar.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/live/functions/live_function.dart';
+import 'package:jingyaoyun/pages/live/models/live_base_info_model.dart';
+import 'package:jingyaoyun/pages/live/models/live_stream_info_model.dart';
+import 'package:jingyaoyun/pages/live/widget/live_user_bar.dart';
 
 class LiveAvatarWithDialog extends StatefulWidget {
   final VoidCallback onTapAvatar;

@@ -8,17 +8,17 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:just_audio/just_audio.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api_v2.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/models/base_model.dart';
-import 'package:recook/models/scan_result_model.dart';
-import 'package:recook/pages/home/barcode/fail_barcode_page.dart';
-import 'package:recook/pages/home/barcode/photos_fail_barcode_page.dart';
-import 'package:recook/pages/home/barcode/qr_scaner_result_page.dart';
-import 'package:recook/utils/app_router.dart';
-import 'package:recook/utils/image_utils.dart';
-import 'package:recook/utils/text_utils.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api_v2.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/models/base_model.dart';
+import 'package:jingyaoyun/models/scan_result_model.dart';
+import 'package:jingyaoyun/pages/home/barcode/fail_barcode_page.dart';
+import 'package:jingyaoyun/pages/home/barcode/photos_fail_barcode_page.dart';
+import 'package:jingyaoyun/pages/home/barcode/qr_scaner_result_page.dart';
+import 'package:jingyaoyun/utils/app_router.dart';
+import 'package:jingyaoyun/utils/image_utils.dart';
+import 'package:jingyaoyun/utils/text_utils.dart';
 
 
 class BarcodeScanPage extends StatefulWidget {

@@ -4,18 +4,18 @@ import 'package:flutter/services.dart';
 
 import 'package:extended_image/extended_image.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/goods_detail_model.dart';
-import 'package:recook/pages/home/classify/commodity_detail_page.dart';
-import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
-import 'package:recook/pages/home/home_page.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/utils/rui_code_util.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/goods_detail_model.dart';
+import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
+import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:jingyaoyun/pages/home/home_page.dart';
+import 'package:jingyaoyun/utils/custom_route.dart';
+import 'package:jingyaoyun/utils/rui_code_util.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 class RUICodeListener {
   final BuildContext context;
@@ -42,7 +42,9 @@ class RUICodeListener {
 
     //云口令
     if (isRUICode && ClipboardListenerValue.canListen) {
+
       RUICodeModel model = RUICodeUtil.decrypt(rawData);
+      print(model);
 
       goodsDetailModel = await _getDetail(model.goodsId);
       //user info

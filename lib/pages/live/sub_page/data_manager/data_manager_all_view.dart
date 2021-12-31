@@ -3,11 +3,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/live/models/live_time_data_model.dart';
-import 'package:recook/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/live/models/live_time_data_model.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 
 class DataManagerAllView extends StatefulWidget {
   DataManagerAllView({Key key}) : super(key: key);

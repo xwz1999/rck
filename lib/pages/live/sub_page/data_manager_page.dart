@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/pages/live/sub_page/data_manager/data_manager_all_view.dart';
-import 'package:recook/pages/live/sub_page/data_manager/data_manager_live_view.dart';
-import 'package:recook/widgets/recook_back_button.dart';
-import 'package:recook/widgets/recook_indicator.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/pages/live/sub_page/data_manager/data_manager_all_view.dart';
+import 'package:jingyaoyun/pages/live/sub_page/data_manager/data_manager_live_view.dart';
+import 'package:jingyaoyun/widgets/recook_back_button.dart';
+import 'package:jingyaoyun/widgets/recook_indicator.dart';
 
 class DataManagerPage extends StatefulWidget {
   DataManagerPage({Key key}) : super(key: key);

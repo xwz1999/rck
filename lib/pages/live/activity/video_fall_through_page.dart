@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/pages/live/activity/activity_preview_page.dart';
-import 'package:recook/pages/live/models/activity_list_model.dart';
-import 'package:recook/pages/live/models/live_base_info_model.dart';
-import 'package:recook/pages/live/models/video_list_model.dart';
+import 'package:jingyaoyun/pages/live/activity/activity_preview_page.dart';
+import 'package:jingyaoyun/pages/live/models/activity_list_model.dart';
+import 'package:jingyaoyun/pages/live/models/live_base_info_model.dart';
+import 'package:jingyaoyun/pages/live/models/video_list_model.dart';
 
 class VideoFallThroughPage extends StatefulWidget {
   final List<VideoListModel> models;

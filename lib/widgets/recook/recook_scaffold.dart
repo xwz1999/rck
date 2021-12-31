@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:recook/constants/styles.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/recook_back_button.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/recook_back_button.dart';
 
 class RecookScaffold extends StatefulWidget {
   ///标题

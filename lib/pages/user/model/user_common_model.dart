@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-import 'package:recook/utils/user_level_tool.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
 
 class UserCommonModel {
   int userId;

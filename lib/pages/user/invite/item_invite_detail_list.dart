@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/app_image_resources.dart';
-import 'package:recook/constants/constants.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/models/invite_list_model.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/app_image_resources.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/models/invite_list_model.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 
 class InviteDetailListItem extends StatelessWidget {
   final InviteModel model;

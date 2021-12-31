@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/base_model.dart';
-import 'package:recook/models/upgrade_card_model.dart';
-import 'package:recook/models/user_role_upgrade_model.dart';
-import 'package:recook/pages/upgradeCard/upgrade_card_send_user_list_page.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/base_model.dart';
+import 'package:jingyaoyun/models/upgrade_card_model.dart';
+import 'package:jingyaoyun/models/user_role_upgrade_model.dart';
+import 'package:jingyaoyun/pages/upgradeCard/upgrade_card_send_user_list_page.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 
 class UpgardeCardWidgetModel {
   String code;

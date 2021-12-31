@@ -1,6 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:recook/pages/goods/model/goods_report_model.dart';
+import 'package:jingyaoyun/pages/goods/model/goods_report_model.dart';
 
 class BarTableWidget extends StatefulWidget {
   final List<TopTen> topTenList;

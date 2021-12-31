@@ -9,24 +9,24 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/address_list_model.dart';
-import 'package:recook/models/order_preview_model.dart';
-import 'package:recook/pages/user/address/mvp/address_mvp_contact.dart';
-import 'package:recook/pages/user/address/mvp/address_presenter_impl.dart';
-import 'package:recook/pages/user/address/new_address_page.dart';
-import 'package:recook/pages/user/address/widgets/item_my_address.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/utils/mvp.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
-import 'package:recook/widgets/no_data_view.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/address_list_model.dart';
+import 'package:jingyaoyun/models/order_preview_model.dart';
+import 'package:jingyaoyun/pages/user/address/mvp/address_mvp_contact.dart';
+import 'package:jingyaoyun/pages/user/address/mvp/address_presenter_impl.dart';
+import 'package:jingyaoyun/pages/user/address/new_address_page.dart';
+import 'package:jingyaoyun/pages/user/address/widgets/item_my_address.dart';
+import 'package:jingyaoyun/utils/custom_route.dart';
+import 'package:jingyaoyun/utils/mvp.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view.dart';
+import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:jingyaoyun/widgets/no_data_view.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 class ReceivingAddressPage extends StatefulWidget {
   final Map arguments;

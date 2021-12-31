@@ -12,17 +12,17 @@ import 'package:flutter_gifimage/flutter_gifimage.dart';
 
 import 'package:waterfall_flow/waterfall_flow.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/models/goods_simple_list_model.dart';
-import 'package:recook/pages/home/classify/commodity_detail_page.dart';
-import 'package:recook/pages/home/items/item_brand_detail_grid.dart';
-import 'package:recook/utils/mvp.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/filter_tool_bar.dart';
-import 'package:recook/widgets/goods_item.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/models/goods_simple_list_model.dart';
+import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
+import 'package:jingyaoyun/pages/home/items/item_brand_detail_grid.dart';
+import 'package:jingyaoyun/utils/mvp.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/filter_tool_bar.dart';
+import 'package:jingyaoyun/widgets/goods_item.dart';
+import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view.dart';
+import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'mvp/goods_list_contact.dart';
 import 'mvp/goods_list_presenter_impl.dart';
 

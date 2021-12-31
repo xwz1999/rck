@@ -47,13 +47,12 @@ android {
            abiFilters 'arm64-v8a', 'armeabi-v7a'//, 'x86', 'x86_64'
           // abiFilters 'armeabi-v7a'
        }
-        manifestPlaceholders = [
-            OPENINSTALL_APPKEY : "uapywo",
-            JPUSH_PKGNAME : "com.akuhome.jingyaoyun",
-            JPUSH_APPKEY : "2dba4439e97b3c0b78146fab", // NOTE: JPush 上注册的包名对应的 Appkey.
-            JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
-
-        ]
+//        manifestPlaceholders = [
+//            OPENINSTALL_APPKEY : "uapywo",
+//            JPUSH_PKGNAME : "com.akuhome.jingyaoyun",
+//            JPUSH_APPKEY : "722dbc6ce24f3c6b99eb2993", // NOTE: JPush 上注册的包名对应的 Appkey.
+//            JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+//        ]
         multiDexEnabled true
     }
 

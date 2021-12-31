@@ -6,18 +6,17 @@ import 'package:extended_text/extended_text.dart';
 import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/agreements/live_agreement_page.dart';
-import 'package:recook/pages/live/live_stream/live_page.dart';
-import 'package:recook/pages/live/models/live_resume_model.dart';
-import 'package:recook/pages/live/widget/live_attention_button.dart';
-import 'package:recook/pages/user/user_verify.dart';
-import 'package:recook/utils/permission_tool.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/live/live_stream/live_page.dart';
+import 'package:jingyaoyun/pages/live/models/live_resume_model.dart';
+import 'package:jingyaoyun/pages/live/widget/live_attention_button.dart';
+import 'package:jingyaoyun/pages/user/user_verify.dart';
+import 'package:jingyaoyun/utils/permission_tool.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 
 Future<bool> _checkLiveAgreement() async {
   return Get.dialog(NormalContentDialog(
@@ -43,7 +42,7 @@ Future<bool> _checkLiveAgreement() async {
                   color: Colors.blue,
                 ),
               ),
-              onTap: () => Get.to(LiveAgreementPage()),
+              // onTap: () => Get.to(LiveAgreementPage()),
             ),
           ),
           TextSpan(

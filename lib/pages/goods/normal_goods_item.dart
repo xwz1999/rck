@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/models/goods_simple_list_model.dart';
-import 'package:recook/pages/goods/small_coupon_widget.dart';
-import 'package:recook/pages/home/classify/commodity_detail_page.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/models/goods_simple_list_model.dart';
+import 'package:jingyaoyun/pages/goods/small_coupon_widget.dart';
+import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 
 class NormalGoodsItem extends StatelessWidget {
   final BuildContext buildCtx;

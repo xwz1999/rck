@@ -5,10 +5,10 @@ import 'package:flutter/widgets.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:recook/constants/app_image_resources.dart';
-import 'package:recook/constants/header.dart';
+import 'package:jingyaoyun/constants/app_image_resources.dart';
+import 'package:jingyaoyun/constants/header.dart';
 
-import 'package:recook/widgets/share_page/share_image_tool.dart';
+import 'package:jingyaoyun/widgets/share_page/share_image_tool.dart';
 
 class PostTimeBannerInfo {
   String timeInfo;

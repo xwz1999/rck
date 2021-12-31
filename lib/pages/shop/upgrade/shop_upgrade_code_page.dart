@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/models/shop_upgrade_code_model.dart';
-import 'package:recook/widgets/cache_tab_bar_view.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/models/shop_upgrade_code_model.dart';
+import 'package:jingyaoyun/widgets/cache_tab_bar_view.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
 
 class ShopUpgradeCodePage extends StatefulWidget {
   final Map arguments;

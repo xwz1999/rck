@@ -7,8 +7,8 @@
  * ====================================================
  */
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/utils/print_util.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/utils/print_util.dart';
 
 class Api {
   static String host;

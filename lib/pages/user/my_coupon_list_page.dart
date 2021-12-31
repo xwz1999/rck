@@ -9,13 +9,13 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/coupon_list_model.dart';
-import 'package:recook/pages/home/classify/mvp/coupon_list_model_impl.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/coupon_list_model.dart';
+import 'package:jingyaoyun/pages/home/classify/mvp/coupon_list_model_impl.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 class MyCouponListPage extends StatefulWidget {
   @override

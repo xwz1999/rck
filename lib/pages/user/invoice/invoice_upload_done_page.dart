@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/pages/user/invoice/invoice_scaffold_widget.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/pages/user/invoice/invoice_scaffold_widget.dart';
 
 class InvoiceUploadDonePage extends StatefulWidget {
   InvoiceUploadDonePage({Key key}) : super(key: key);

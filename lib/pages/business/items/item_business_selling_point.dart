@@ -9,9 +9,9 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
 
 class BusinessSellingPointItem extends StatefulWidget {
   @override

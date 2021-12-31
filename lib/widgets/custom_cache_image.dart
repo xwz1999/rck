@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 import 'package:extended_image/extended_image.dart';
 
-import 'package:recook/constants/header.dart';
+import 'package:jingyaoyun/constants/header.dart';
 
 class CustomCacheImage extends StatefulWidget {
   final String imageUrl;

@@ -7,21 +7,21 @@ import 'package:flutter/rendering.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/goods_detail_model.dart';
-import 'package:recook/models/missing_children_model.dart';
-import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
-import 'package:recook/utils/image_utils.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/share_page/post_all.dart';
-import 'package:recook/widgets/share_page/post_select_image.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/goods_detail_model.dart';
+import 'package:jingyaoyun/models/missing_children_model.dart';
+import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:jingyaoyun/utils/image_utils.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/share_page/post_all.dart';
+import 'package:jingyaoyun/widgets/share_page/post_select_image.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 class ShareGoodsPosterPage extends StatefulWidget {
   final Map arguments;
@@ -124,6 +124,7 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
         await boundary.toImage(pixelRatio: ui.window.devicePixelRatio * 1.2);
     ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
     Uint8List pngBytes = byteData.buffer.asUint8List();
+
     if (pngBytes == null || pngBytes.length == 0) {
       dismissLoading();
       showError("图片获取失败...");

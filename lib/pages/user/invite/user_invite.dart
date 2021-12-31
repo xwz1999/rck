@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/user/invite/user_invite_page.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/searchBar_view.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/user/invite/user_invite_page.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/searchBar_view.dart';
 
 class InvitePage extends StatefulWidget{
 

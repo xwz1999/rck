@@ -18,21 +18,21 @@ import 'package:oktoast/oktoast.dart';
 import 'package:photo/photo.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/media_model.dart';
-import 'package:recook/pages/store/modify_info_page.dart';
-import 'package:recook/pages/user/mvp/user_presenter_impl.dart';
-import 'package:recook/utils/image_utils.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/image_picker.dart';
-import 'package:recook/widgets/sc_tile.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/media_model.dart';
+import 'package:jingyaoyun/pages/store/modify_info_page.dart';
+import 'package:jingyaoyun/pages/user/mvp/user_presenter_impl.dart';
+import 'package:jingyaoyun/utils/image_utils.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/bottom_sheet/action_sheet.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/widgets/image_picker.dart';
+import 'package:jingyaoyun/widgets/sc_tile.dart';
 
 class UserInfoPage extends StatefulWidget {
   @override
@@ -76,13 +76,21 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
       children: <Widget>[
         SCTile.normalTile("头像",
             margin: EdgeInsets.symmetric(vertical: rSize(10)),
-            trailing: CustomCacheImage(
-              borderRadius: BorderRadius.all(Radius.circular(80)),
-              height: rSize(60),
-              width: rSize(60),
-              imageUrl:
-                  Api.getImgUrl(UserManager.instance.user.info.headImgUrl),
-            ), listener: () {
+            trailing:
+            ClipRRect(
+              borderRadius: BorderRadius.circular(30.rw),
+              child: FadeInImage.assetNetwork(
+                height: 60.rw,
+                width: 60.rw,
+                placeholder: R.ASSETS_ICON_RECOOK_ICON_300_PNG,
+                image: TextUtils.isEmpty(
+                    UserManager.instance.user.info.headImgUrl)
+                    ? ""
+                    : Api.getImgUrl(
+                    UserManager.instance.user.info.headImgUrl),
+              ),
+            ),
+           listener: () {
           _chooseHeader();
         }),
         SCTile.normalTile("昵称",

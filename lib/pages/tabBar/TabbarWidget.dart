@@ -1,40 +1,28 @@
-/*
- * ====================================================
- * package   : pages.tabBar
- * author    : Created by nansi.
- * time      : 2019/5/6  1:56 PM 
- * remark    : 
- * ====================================================
- */
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'package:oktoast/oktoast.dart';
 
-import 'package:recook/constants/config.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/business/release_material_page.dart';
-import 'package:recook/pages/home/home_page.dart';
-import 'package:recook/pages/home/widget/aku_college_page.dart';
-import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
-import 'package:recook/pages/live/functions/live_function.dart';
-import 'package:recook/pages/live/pages/discovery_page.dart';
-import 'package:recook/pages/live/video/add_video_page.dart';
-import 'package:recook/pages/live/widget/live_fab_location.dart';
-import 'package:recook/pages/shopping_cart/shopping_cart_page.dart';
-import 'package:recook/pages/tabBar/rui_code_listener.dart';
-import 'package:recook/pages/user/user_page.dart';
-import 'package:recook/third_party/bugly_helper.dart';
-import 'package:recook/utils/app_router.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/utils/print_util.dart';
-import 'package:recook/utils/versionInfo/version_tool.dart';
-import 'package:recook/widgets/cache_tab_bar_view.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/tabbarWidget/ace_bottom_navigation_bar.dart';
+import 'package:jingyaoyun/constants/config.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/business/release_material_page.dart';
+import 'package:jingyaoyun/pages/home/home_page.dart';
+import 'package:jingyaoyun/pages/home/widget/aku_college_page.dart';
+import 'package:jingyaoyun/pages/live/pages/discovery_page.dart';
+import 'package:jingyaoyun/pages/live/widget/live_fab_location.dart';
+import 'package:jingyaoyun/pages/shopping_cart/shopping_cart_page.dart';
+import 'package:jingyaoyun/pages/tabBar/rui_code_listener.dart';
+import 'package:jingyaoyun/pages/user/user_page.dart';
+import 'package:jingyaoyun/utils/app_router.dart';
+import 'package:jingyaoyun/utils/print_util.dart';
+import 'package:jingyaoyun/utils/versionInfo/version_tool.dart';
+import 'package:jingyaoyun/widgets/cache_tab_bar_view.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/tabbarWidget/ace_bottom_navigation_bar.dart';
 
 class TabBarWidget extends StatefulWidget {
   @override
@@ -51,19 +39,15 @@ class _TabBarWidgetState extends State<TabBarWidget>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((callback) {
-      // _showUpDateAlert();
-      // _getVersionInfo();
-      VersionTool.checkVersionInfo(_context);
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((callback) {
+    //   VersionTool.checkVersionInfo(_context);
+    // });
     _tabController = TabController(length: 5, vsync: this);
     _bottomBarController = BottomBarController();
     _tabController.addListener(_tabListener);
 
     UserManager.instance.login.addListener(_loginListener);
     UserManager.instance.selectTabbar.addListener(_selectTabbar);
-    // UserManager.instance.refreshUserRole.addListener(_refreshUserRoleTabBar);
-   // BuglyHelper.setUserInfo();
   }
 
   _loginListener() {
@@ -82,7 +66,6 @@ class _TabBarWidgetState extends State<TabBarWidget>
   }
 
   _showBottomModalSheet() {
-    BuildContext fatherContext = context;
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -130,29 +113,29 @@ class _TabBarWidgetState extends State<TabBarWidget>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    verticalButton(
-                      '直播',
-                      R.ASSETS_LIVE_ADD_STREAM_PNG,
-                      onTap: () {
-                        checkStartLive();
-                      },
-                    ),
-                    verticalButton(
-                      '视频',
-                      R.ASSETS_LIVE_ADD_VIDEO_PNG,
-                      onTap: () => CRoute.pushReplace(context, AddVideoPage()),
-                    ),
+                    // verticalButton(
+                    //   '直播',
+                    //   R.ASSETS_LIVE_ADD_STREAM_PNG,
+                    //   onTap: () {
+                    //     checkStartLive();
+                    //   },
+                    // ),
+                    // verticalButton(
+                    //   '视频',
+                    //   R.ASSETS_LIVE_ADD_VIDEO_PNG,
+                    //   onTap: () => CRoute.pushReplace(context, AddVideoPage()),
+                    // ),
                     verticalButton(
                       '图文',
                       R.ASSETS_LIVE_ADD_IMAGE_PNG,
                       onTap: () =>
-                          CRoute.pushReplace(context, ReleaseMaterialPage()),
+                          Get.off(ReleaseMaterialPage()),
                     ),
                   ],
                 ),
                 CustomImageButton(
                   height: rSize(66),
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () => Get.back(),
                   child: Text('取消',
                       style: TextStyle(
                         color: Color(0xFF333333),
@@ -185,7 +168,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
                   onPressed: () {
                     if (!UserManager.instance.haveLogin) {
                       showToast('未登陆，请先登陆');
-                      CRoute.push(context, UserPage());
+                      Get.to(UserPage());
                     } else {
                       _showBottomModalSheet();
                     }
@@ -207,10 +190,8 @@ class _TabBarWidgetState extends State<TabBarWidget>
             HomePage(
               tabController: _tabController,
             ),
-            //GoodsHotListPage(),
-            AkuCollegePage(), //------akkuxuyaun
+            AkuCollegePage(),
             DiscoveryPage(),
-            // BusinessPage(),
             ShoppingCartPage(),
             UserPage()
           ],

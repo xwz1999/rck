@@ -35,7 +35,7 @@
 
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:recook/models/base_model.dart';
+import 'package:jingyaoyun/models/base_model.dart';
 
 part 'material_list_model.g.dart';
 

@@ -7,9 +7,9 @@
  * ====================================================
  */
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/utils/user_level_tool.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
 
 class AppConfig {
   static String versionNumber;
@@ -19,9 +19,9 @@ class AppConfig {
 
   ///后台控制显示
   static bool showExtraCommission = false;
-  static const String WX_APP_ID = "wx21724a42aebe20cc";
-  static const String WX_APP_SECRET = "83f8932eb742257316e3168ba9e920dc";
-  static const String WX_APP_MINIPRO_USERNAME = "gh_295d15c0ef68";
+  static const String WX_APP_ID = "wx737af52b2ad6d518";
+  static const String WX_APP_SECRET = "ac7c99f7d7c33a430714613ecb49baa2";
+  static const String WX_APP_MINIPRO_USERNAME = "gh_75059c6578e0";
 
   static initial({
     bool dev = true,

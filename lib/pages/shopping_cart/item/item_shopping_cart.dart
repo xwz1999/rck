@@ -12,15 +12,15 @@ import 'package:flutter/material.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:get/get.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/models/goods_simple_list_model.dart';
-import 'package:recook/models/shopping_cart_list_model.dart';
-import 'package:recook/pages/home/widget/plus_minus_view.dart';
-import 'package:recook/pages/shopping_cart/function/shopping_cart_fuc.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/input_view.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/models/goods_simple_list_model.dart';
+import 'package:jingyaoyun/models/shopping_cart_list_model.dart';
+import 'package:jingyaoyun/pages/home/widget/plus_minus_view.dart';
+import 'package:jingyaoyun/pages/shopping_cart/function/shopping_cart_fuc.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/input_view.dart';
 
 import '../similar_goods_page.dart';
 

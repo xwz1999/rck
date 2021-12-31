@@ -1,13 +1,12 @@
-name: recook
-description: Recook Market App.
+name: jingyaoyun
+description: jingyaoyun Market App.
 publish_to: "none"
 
-version: 1.13.6-dev+324
+version: 1.0.0-dev+1
 environment:
   sdk: ">=2.10.0 <3.0.0"
 
 module:
-
   androidX: true
 
 dependencies:
@@ -72,15 +71,12 @@ dependencies:
   # 权限组件
   permission_handler: ^8.0.1
 
-  #邀请码相关第三方安装
-  openinstall_flutter_plugin: ^1.0.1
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
+
+
   cupertino_icons: ^1.0.2
 
   sprintf: 4.0.2
-  # 分享sdk
-  # sharesdk: ^1.1.8
+
   # 全局状态控制
   flutter_redux: ^0.7.0
 
@@ -230,7 +226,7 @@ dependencies:
   #badges: ^2.0.1
 
   #极光推送
-  jpush_flutter: 2.1.4
+#  jpush_flutter: 2.2.1
 
   #flutter 使用原生android的几个生命周期
   need_resume: ^1.0.6
@@ -246,11 +242,9 @@ dependencies:
 
   float_button_overlay: ^0.3.4
 
-  scrollable_positioned_list: ^0.1.7
-  
+  scrollable_positioned_list: ^0.2.3
+
   flutter_markdown:
-
-
 
   package_signature: ^0.1.1
 

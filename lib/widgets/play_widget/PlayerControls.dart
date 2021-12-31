@@ -2,7 +2,7 @@
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:recook/widgets/play_widget/utils.dart';
+import 'package:jingyaoyun/widgets/play_widget/utils.dart';
 import 'package:video_player/video_player.dart';
 
 import 'chewie_progress_colors.dart';

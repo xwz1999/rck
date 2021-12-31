@@ -1,6 +1,6 @@
-import 'package:recook/constants/api.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/home/mvp/purchase_ranking_contact.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/home/mvp/purchase_ranking_contact.dart';
 
 class PurchaseRankingModelImpl extends PurchaseRankingModelI {
   @override

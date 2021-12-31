@@ -8,9 +8,9 @@ import 'package:flutter/rendering.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/utils/image_utils.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/utils/image_utils.dart';
+import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 
 double initScale({Size imageSize, Size size, double initialScale}) {
   var n1 = imageSize.height / imageSize.width;

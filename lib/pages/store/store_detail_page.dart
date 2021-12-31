@@ -9,10 +9,10 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/pages/store/modify_info_page.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/pages/store/modify_info_page.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 
 class StoreDetailPage extends StatefulWidget {
   @override

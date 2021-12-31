@@ -16,9 +16,9 @@ import 'package:image_picker/image_picker.dart' as flutterImgPicker;
 import 'package:photo/photo.dart';
 import 'package:photo_manager/photo_manager.dart';
 
-import 'package:recook/models/media_model.dart';
-import 'package:recook/utils/image_utils.dart';
-import 'package:recook/widgets/no_data_view.dart';
+import 'package:jingyaoyun/models/media_model.dart';
+import 'package:jingyaoyun/utils/image_utils.dart';
+import 'package:jingyaoyun/widgets/no_data_view.dart';
 
 class ImagePicker implements LoadingDelegate {
   int rowCount;

@@ -14,49 +14,48 @@ import 'package:flutter/material.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:get/get.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/daos/home_dao.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/address_list_model.dart';
-import 'package:recook/models/base_model.dart';
-import 'package:recook/models/goods_detail_images_model.dart';
-import 'package:recook/models/goods_detail_model.dart';
-import 'package:recook/models/order_preview_model.dart';
-import 'package:recook/models/order_return_address_model.dart';
-import 'package:recook/models/province_city_model.dart';
-import 'package:recook/pages/home/classify/coupon_list_page.dart';
-import 'package:recook/pages/home/classify/evaluation_list_page.dart';
-import 'package:recook/pages/home/classify/goods_param_page.dart';
-import 'package:recook/pages/home/classify/goods_service_guarantee.dart';
-import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
-import 'package:recook/pages/home/classify/order_preview_page.dart';
-import 'package:recook/pages/home/classify/sku_choose_page.dart';
-import 'package:recook/pages/home/items/item_user_comment.dart';
-import 'package:recook/pages/home/items/item_users_like.dart';
-import 'package:recook/pages/home/model/address_model.dart';
-import 'package:recook/pages/home/widget/good_price_view.dart';
-import 'package:recook/pages/home/widget/goods_image_page_view.dart';
-import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
-import 'package:recook/pages/shopping_cart/mvp/shopping_cart_model_impl.dart';
-import 'package:recook/pages/user/address/mvp/address_model_impl.dart';
-import 'package:recook/utils/file_utils.dart';
-import 'package:recook/utils/image_utils.dart';
-import 'package:recook/utils/share_tool.dart';
-import 'package:recook/widgets/OverlayWidget.dart';
-import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
-import 'package:recook/widgets/bottom_sheet/address_selector.dart';
-import 'package:recook/widgets/bottom_sheet/custom_bottom_sheet.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/empty_view.dart';
-import 'package:recook/widgets/goods_item.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
-import 'package:recook/widgets/selected_list.dart';
-import 'package:recook/widgets/toast.dart';
-import 'package:recook/widgets/video_view.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/daos/home_dao.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/address_list_model.dart';
+import 'package:jingyaoyun/models/base_model.dart';
+import 'package:jingyaoyun/models/goods_detail_images_model.dart';
+import 'package:jingyaoyun/models/goods_detail_model.dart';
+import 'package:jingyaoyun/models/order_preview_model.dart';
+import 'package:jingyaoyun/models/order_return_address_model.dart';
+import 'package:jingyaoyun/models/province_city_model.dart';
+import 'package:jingyaoyun/pages/home/classify/coupon_list_page.dart';
+import 'package:jingyaoyun/pages/home/classify/evaluation_list_page.dart';
+import 'package:jingyaoyun/pages/home/classify/goods_param_page.dart';
+import 'package:jingyaoyun/pages/home/classify/goods_service_guarantee.dart';
+import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:jingyaoyun/pages/home/classify/order_preview_page.dart';
+import 'package:jingyaoyun/pages/home/classify/sku_choose_page.dart';
+import 'package:jingyaoyun/pages/home/items/item_user_comment.dart';
+import 'package:jingyaoyun/pages/home/model/address_model.dart';
+import 'package:jingyaoyun/pages/home/widget/good_price_view.dart';
+import 'package:jingyaoyun/pages/home/widget/goods_image_page_view.dart';
+import 'package:jingyaoyun/pages/shopping_cart/mvp/shopping_cart_model_impl.dart';
+import 'package:jingyaoyun/pages/user/address/mvp/address_model_impl.dart';
+import 'package:jingyaoyun/pages/user/address/receiving_address_page.dart';
+import 'package:jingyaoyun/utils/file_utils.dart';
+import 'package:jingyaoyun/utils/image_utils.dart';
+import 'package:jingyaoyun/utils/share_tool.dart';
+import 'package:jingyaoyun/widgets/OverlayWidget.dart';
+import 'package:jingyaoyun/widgets/bottom_sheet/action_sheet.dart';
+import 'package:jingyaoyun/widgets/bottom_sheet/address_selector.dart';
+import 'package:jingyaoyun/widgets/bottom_sheet/custom_bottom_sheet.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/empty_view.dart';
+import 'package:jingyaoyun/widgets/goods_item.dart';
+import 'package:jingyaoyun/widgets/progress/re_toast.dart';
+import 'package:jingyaoyun/widgets/selected_list.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:jingyaoyun/widgets/video_view.dart';
 import 'commodity_detail_page.dart';
 
 typedef ScrollListener = Function(ScrollUpdateNotification notification);
@@ -556,10 +555,37 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         // ),
         Container(
           child: GestureDetector(
-            onTap: () {
+            onTap: () async {
               if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
                 if (_defaltAddress == null) {
-                  Toast.showInfo('请先选择地址');
+
+                  await  Get.to(ReceivingAddressPage());
+
+
+                  if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
+                    Future.delayed(Duration.zero, () async {
+                      _addressList = await _getDefaultAddress();
+                      if (_addressList != null) {
+                        _addressList.forEach((element) {
+                          if (element.isDefault == 1) _addressModel = element;
+                          if (_addressModel != null) {
+                            _defaltAddress = _addressModel.province +
+                                _addressModel.city +
+                                _addressModel.district;
+                            if (_defaltAddress != null) {
+                              Future.delayed(Duration.zero, () async {
+                                _jDHaveGoods =
+                                await HomeDao.getJDStock(widget.goodsDetail.data.sku.first.id, _defaltAddress);
+                                print(_jDHaveGoods);
+                                setState(() {});
+                              });
+                            }
+                          }
+                        });
+                      }
+                    });
+
+                  }
                 } else {
                   _showSkuChoosePage(context);
 
@@ -609,20 +635,44 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   _addressContent(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (_cityModel == null) {
-          //final cancel = ReToast.loading();
-          bool result = await _getCityAddress();
 
-          //cancel();
-          if (result) {
-            _selectCityAddress(context);
-            // print(_defaltAddress);
-            _jDHaveGoods =
-                await HomeDao.getJDStock(widget.goodsDetail.data.sku.first.id, _defaltAddress);
-          }
-        } else {
-          _selectCityAddress(context);
+        // Toast.showInfo('请先添加地址');
+        await  Get.to(ReceivingAddressPage());
+        if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
+          Future.delayed(Duration.zero, () async {
+            _addressList = await _getDefaultAddress();
+            if (_addressList != null) {
+              _addressList.forEach((element) {
+                if (element.isDefault == 1) _addressModel = element;
+                if (_addressModel != null) {
+                  _defaltAddress = _addressModel.province +
+                      _addressModel.city +
+                      _addressModel.district;
+                  if (_defaltAddress != null) {
+                    Future.delayed(Duration.zero, () async {
+                      _jDHaveGoods =
+                      await HomeDao.getJDStock(widget.goodsDetail.data.sku.first.id, _defaltAddress);
+                      print(_jDHaveGoods);
+                      setState(() {});
+                    });
+                  }
+                }
+              });
+            }
+          });
+
         }
+
+
+
+          // //cancel();
+          // if (result) {
+          //   //_selectCityAddress(context);
+          //   // print(_defaltAddress);
+          //   _jDHaveGoods =
+          //       await HomeDao.getJDStock(widget.goodsDetail.data.sku.first.id, _defaltAddress);
+          // }
+
       },
       child: Container(
         color: Colors.transparent,
@@ -1588,57 +1638,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     );
   }
 
-  _usersLikeGrid() {
-    return Container(
-      height: 180,
-      color: Colors.white,
-      child: NotificationListener<ScrollUpdateNotification>(
-        onNotification: (detail) {
-          return true;
-        },
-        child: GridView.builder(
-            padding: EdgeInsets.all(10),
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemCount: 4,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                mainAxisSpacing: 10, crossAxisCount: 1, childAspectRatio: 1.6),
-            itemBuilder: (context, index) {
-              return UsersLikeItem();
-            }),
-      ),
-    );
-  }
 
-  _shareTitle(String amount) {
-    if (TextUtils.isEmpty(amount)) {
-      return Container();
-    } else {
-      return Container(
-        alignment: Alignment.center,
-        child: RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(children: <TextSpan>[
-            TextSpan(text: '\n'),
-            TextSpan(
-                text: '赚 ',
-                style:
-                    TextStyle(color: Colors.red, fontWeight: FontWeight.w500)),
-            TextSpan(
-                text: amount,
-                style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 35 * 2.sp,
-                    fontWeight: FontWeight.w500)),
-            TextSpan(text: '\n'),
-            TextSpan(
-                text: '分享后好友至少能赚$amount',
-                style: TextStyle(color: Colors.grey, fontSize: 12 * 2.sp)),
-          ]),
-        ),
-      );
-    }
-  }
 
   void _showSkuChoosePage(BuildContext context) {
     showCustomModalBottomSheet(
@@ -1658,7 +1658,36 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
                  if (_defaltAddress == null) {
                    widget.openSkuChoosePage.value = false;
-                   Toast.showInfo('请先选择地址');
+                   Toast.showInfo('请先添加地址');
+
+                   await  Get.to(ReceivingAddressPage());
+
+
+                   if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
+                     Future.delayed(Duration.zero, () async {
+                       _addressList = await _getDefaultAddress();
+                       if (_addressList != null) {
+                         _addressList.forEach((element) {
+                           if (element.isDefault == 1) _addressModel = element;
+                           if (_addressModel != null) {
+                             _defaltAddress = _addressModel.province +
+                                 _addressModel.city +
+                                 _addressModel.district;
+                             if (_defaltAddress != null) {
+                               Future.delayed(Duration.zero, () async {
+                                 _jDHaveGoods =
+                                 await HomeDao.getJDStock(widget.goodsDetail.data.sku.first.id, _defaltAddress);
+                                 print(_jDHaveGoods);
+                                 setState(() {});
+                               });
+                             }
+                           }
+                         });
+                       }
+                     });
+
+                   }
+
                    return;
                  }else{
                    _jDHaveGoods =
@@ -1713,8 +1742,11 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         }).then((value) {
       widget.openSkuChoosePage.value = false;
       if (_stateSetter != null) {
+        guige = '请选择规格';
         _selectedSkuDes();
-        _stateSetter(() {});
+        _stateSetter(() {
+
+        });
       }
     });
   }
@@ -1758,6 +1790,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       // Toast.showError(order.msg);
       Toast.showInfo(order.msg, color: Colors.black87);
       Get.back();
+      if(_addressList.isEmpty){
+        Get.to(ReceivingAddressPage());
+      }
       return;
     }
     AppRouter.push(context, RouteName.GOODS_ORDER_PAGE,

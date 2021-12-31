@@ -13,7 +13,7 @@ import 'package:crypto/crypto.dart';
 import 'package:encrypt/encrypt.dart';
 import 'package:pointycastle/asymmetric/api.dart';
 
-import 'package:recook/utils/print_util.dart';
+import 'package:jingyaoyun/utils/print_util.dart';
 
 class SCEncryptUtil {
   static final String _serverRSAPublicKey = '''-----BEGIN PUBLIC KEY-----

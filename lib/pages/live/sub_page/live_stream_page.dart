@@ -4,19 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/live/live_stream/live_playback_view_page.dart';
-import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
-import 'package:recook/pages/live/models/live_attention_list_model.dart';
-import 'package:recook/pages/live/models/live_list_model.dart';
-import 'package:recook/pages/live/num_tool/live_num_tool.dart';
-import 'package:recook/pages/live/sub_page/user_home_page.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/live/live_stream/live_playback_view_page.dart';
+import 'package:jingyaoyun/pages/live/live_stream/live_stream_view_page.dart';
+import 'package:jingyaoyun/pages/live/models/live_attention_list_model.dart';
+import 'package:jingyaoyun/pages/live/models/live_list_model.dart';
+import 'package:jingyaoyun/pages/live/num_tool/live_num_tool.dart';
+import 'package:jingyaoyun/pages/live/sub_page/user_home_page.dart';
+import 'package:jingyaoyun/utils/custom_route.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 
 class LiveStreamPage extends StatefulWidget {
   LiveStreamPage({Key key}) : super(key: key);

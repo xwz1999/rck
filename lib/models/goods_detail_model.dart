@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/models/base_model.dart';
-import 'package:recook/models/price_model.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/models/base_model.dart';
+import 'package:jingyaoyun/models/price_model.dart';
 
 import 'goods_simple_list_model.dart';
 import 'goods_hot_sell_list_model.dart';

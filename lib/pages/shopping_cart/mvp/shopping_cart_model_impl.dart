@@ -7,8 +7,8 @@
  * ====================================================
  */
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/manager/http_manager.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
 import 'shopping_cart_contact.dart';
 
 class ShoppingCartModelImpl extends ShoppingCartModelI {

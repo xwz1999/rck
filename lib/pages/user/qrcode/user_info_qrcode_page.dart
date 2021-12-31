@@ -3,13 +3,13 @@ import 'package:flutter/widgets.dart';
 
 import 'package:qr_flutter/qr_flutter.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 
 class UserInfoQrCodePage extends StatefulWidget {
   UserInfoQrCodePage({Key key}) : super(key: key);
@@ -68,13 +68,16 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
                   margin: EdgeInsets.only(right: 10),
                   width: 60,
                   height: 60,
-                  child: CustomCacheImage(
-                    borderRadius: BorderRadius.all(Radius.circular(30)),
-                    height: 60,
-                    width: 60,
-                    fit: BoxFit.cover,
-                    imageUrl: Api.getImgUrl(
-                        UserManager.instance.user.info.headImgUrl),
+                  child:
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(30.rw),
+                    child: FadeInImage.assetNetwork(
+                      placeholder: R.ASSETS_ICON_RECOOK_ICON_300_PNG,
+                      image: Api.getImgUrl(UserManager.instance.user.info.headImgUrl),
+                      height: 60.rw,
+                      width: 60.rw,
+                      fit:  BoxFit.cover,
+                    ),
                   ),
                 ),
                 Expanded(

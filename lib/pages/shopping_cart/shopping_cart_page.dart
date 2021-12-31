@@ -10,26 +10,26 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/goods_simple_list_model.dart';
-import 'package:recook/models/order_preview_model.dart';
-import 'package:recook/models/shopping_cart_list_model.dart';
-import 'package:recook/pages/home/classify/commodity_detail_page.dart';
-import 'package:recook/pages/home/classify/order_preview_page.dart';
-import 'package:recook/pages/home/items/item_brand_like_grid.dart';
-import 'package:recook/pages/shopping_cart/item/item_shopping_cart.dart';
-import 'package:recook/pages/shopping_cart/mvp/shopping_cart_contact.dart';
-import 'package:recook/pages/shopping_cart/mvp/shopping_cart_presenter_impl.dart';
-import 'package:recook/utils/mvp.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/goods_simple_list_model.dart';
+import 'package:jingyaoyun/models/order_preview_model.dart';
+import 'package:jingyaoyun/models/shopping_cart_list_model.dart';
+import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
+import 'package:jingyaoyun/pages/home/classify/order_preview_page.dart';
+import 'package:jingyaoyun/pages/home/items/item_brand_like_grid.dart';
+import 'package:jingyaoyun/pages/shopping_cart/item/item_shopping_cart.dart';
+import 'package:jingyaoyun/pages/shopping_cart/mvp/shopping_cart_contact.dart';
+import 'package:jingyaoyun/pages/shopping_cart/mvp/shopping_cart_presenter_impl.dart';
+import 'package:jingyaoyun/utils/mvp.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view.dart';
+import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:jingyaoyun/widgets/progress/re_toast.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 
 import 'function/shopping_cart_fuc.dart';
@@ -110,31 +110,6 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
     super.dispose();
   }
 
-  Color getAppBarColor() {
-    UserRoleLevel level = UserLevelTool.currentRoleLevelEnum();
-    switch (level) {
-      case UserRoleLevel.None:
-        return Color(0xFFdca3ab);
-        break;
-      case UserRoleLevel.Diamond_1:
-      case UserRoleLevel.Diamond_2:
-      case UserRoleLevel.Diamond_3:
-        return Color(0xFFa27cc9);
-        break;
-      case UserRoleLevel.Gold:
-        return Color(0xFFe4be79);
-        break;
-      case UserRoleLevel.Silver:
-        return Color(0xFF6c7c89);
-        break;
-      case UserRoleLevel.Master:
-        return Color(0xFFe1243d);
-        break;
-      case UserRoleLevel.Vip:
-        return Color(0xFFdca3ab);
-        break;
-    }
-  }
 
   @override
   Widget buildContext(BuildContext context, {store}) {
@@ -413,7 +388,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
   _buildLikeWidget() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.rw),
-      height: _likeGoodsList?.length * 381.rw / 2,
+      //height: _likeGoodsList?.length * 381.rw / 2,
       width: double.infinity,
       child: Column(
         children: [
@@ -444,13 +419,13 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
                     child: BrandLikeGridItem(goods: goods));
               }),
           40.hb,
-          Container(
-            alignment: Alignment.center,
-            child: Text(
-              '已经到底啦~',
-              style: TextStyle(color: Color(0xFF999999), fontSize: 14.rsp),
-            ),
-          ),
+          // Container(
+          //   alignment: Alignment.center,
+          //   child: Text(
+          //     '已经到底啦~',
+          //     style: TextStyle(color: Color(0xFF999999), fontSize: 14.rsp),
+          //   ),
+          // ),
         ],
       ),
     );
@@ -531,14 +506,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
   }
 
   ShoppingCartItem _buildItem(BuildContext context, int index) {
-    // ShoppingCartBrandModel model = _controller.getData()[index];
-    // Promotion promotion = new Promotion(11, 11, "1212", "date", 1111, "2020-05-10 11:20:00", "2020-05-11 11:20:00", 100);
-    // for (ShoppingCartGoodsModel goodsModel in model.children) {
-    //   if (goodsModel.promotion == null) {
-    //     goodsModel.promotion = promotion;
-    //     // goodsModel.promotion.startTime = "2020-05-10 11:20:00";
-    //   }
-    // }
+
 
     return ShoppingCartItem(
       isEdit: _manageStatus,

@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 import 'package:common_utils/common_utils.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/live/models/topic_list_model.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/live/models/topic_list_model.dart';
+import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 
 class PickTopicPage extends StatefulWidget {
   final Function(TopicListModel model) onPick;

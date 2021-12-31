@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:recook/pages/goods/report_form/report_form_widget.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/pages/goods/report_form/report_form_widget.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:get/get.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/widgets/recook_back_button.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ReportFormPage extends StatefulWidget {

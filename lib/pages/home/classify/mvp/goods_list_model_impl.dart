@@ -7,10 +7,10 @@
  * ====================================================
  */
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
 import 'goods_list_contact.dart';
 
 class GoodsListModelImpl extends GoodListModelI {
@@ -64,9 +64,9 @@ class GoodsListModelImpl extends GoodListModelI {
       params.putIfAbsent("country_id", () => countryId);
 
     }
-    if(type == SortType.comprehensive){
+
       params.putIfAbsent("user_id", () => UserManager.instance.user.info.id);
-    }
+
 
     if (type == SortType.priceAsc || type == SortType.salesAsc) {
       params.putIfAbsent("order", () => "asc");
@@ -104,7 +104,7 @@ class GoodsListModelImpl extends GoodListModelI {
         break;
     }
 
-    Map<String, dynamic> params = {"brandId": brandId, "page": page};
+    Map<String, dynamic> params = {"brandId": brandId, "page": page,'user_id':UserManager.instance.user.info.id};
 
     if (type == SortType.priceAsc || type == SortType.salesAsc) {
       params.putIfAbsent("order", () => "asc");

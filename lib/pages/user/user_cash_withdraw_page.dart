@@ -4,19 +4,19 @@ import 'package:flutter/widgets.dart';
 
 import 'package:extended_text/extended_text.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/base_model.dart';
-import 'package:recook/utils/amount_format.dart';
-import 'package:recook/utils/storage/hive_store.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/keyboard/bottom_keyboard_widget.dart';
-import 'package:recook/widgets/webView.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/base_model.dart';
+import 'package:jingyaoyun/utils/amount_format.dart';
+import 'package:jingyaoyun/utils/storage/hive_store.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/keyboard/bottom_keyboard_widget.dart';
+import 'package:jingyaoyun/widgets/webView.dart';
 
 class UserCashWithdrawPage extends StatefulWidget {
   final Map arguments;

@@ -1,5 +1,5 @@
 import 'package:flustars/flustars.dart';
-import 'package:recook/pages/home/promotion_time_tool.dart';
+import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
 
 import 'goods_hot_sell_list_model.dart';
 import 'goods_simple_list_model.dart';

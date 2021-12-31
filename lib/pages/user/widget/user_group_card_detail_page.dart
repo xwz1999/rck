@@ -3,14 +3,14 @@ import 'package:flutter/services.dart';
 
 import 'package:velocity_x/velocity_x.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/api_v2.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/user/model/member_info_model.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/recook/recook_scaffold.dart';
-import 'package:recook/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/api_v2.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/user/model/member_info_model.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 
 class UserGroupCardDetailPage extends StatefulWidget {
   final int id;
@@ -83,7 +83,7 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
                       suffix: ClipRRect(
                         borderRadius: BorderRadius.circular(22.rw),
                         child: FadeInImage.assetNetwork(
-                          placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                          placeholder: R.ASSETS_ICON_RECOOK_ICON_300_PNG,
                           image: Api.getImgUrl(_memberInfoModel.headImgUrl),
                           height: 44.rw,
                           width: 44.rw,

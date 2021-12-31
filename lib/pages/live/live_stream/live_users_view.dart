@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:tencent_im_plugin/entity/group_member_entity.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/live/functions/live_function.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/live/functions/live_function.dart';
 
 class LiveUsersView extends StatefulWidget {
   final List<GroupMemberEntity> members;

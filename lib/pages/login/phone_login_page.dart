@@ -1,33 +1,21 @@
-/*
- * ====================================================
- * package   : pages.login
- * author    : Created by nansi.
- * time      : 2019/5/15  1:30 PM 
- * remark    : 
- * ====================================================
- */
 
 import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/daos/user_dao.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/welcome/privacy_page_v2.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/progress/sc_dialog.dart';
-import 'package:recook/widgets/text_button.dart' as TButton;
-import 'package:recook/widgets/toast.dart';
-import 'package:recook/widgets/webView.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/daos/user_dao.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/progress/sc_dialog.dart';
+import 'package:jingyaoyun/widgets/text_button.dart' as TButton;
+import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:jingyaoyun/widgets/webView.dart';
 
 class PhoneLoginPage extends StatefulWidget {
   @override
@@ -55,14 +43,14 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
     super.initState();
 
     if (AppConfig.debug) {
-      _smsCodeController = TextEditingController(text: "0716");
+      // _smsCodeController = TextEditingController(text: "0716");
       _phoneController = TextEditingController(text: "18906611076");
       _loginEnable = true;
       _getCodeEnable = true;
     } else {
       _phoneController = TextEditingController();
       _smsCodeController = TextEditingController();
-      _smsCodeController = TextEditingController(text: "0716");
+      // _smsCodeController = TextEditingController(text: "0716");
     }
 
     _phoneNode = FocusNode();
@@ -286,34 +274,34 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
             highlightTextColor: Colors.grey[400],
             border: Border(left: BorderSide(color: Colors.grey[500])),
             onTap: () {
-              // if (!_chooseAgreement) {
-              //   if (!TextUtils.verifyPhone(_phoneController.text)) {
-              //     showError("手机号码格式不正确!");
-              //     return;
-              //   }
-              //   if (_cantSelected) return;
-              //   _cantSelected = true;
-              //   Future.delayed(Duration(seconds: 2), () {
-              //     _cantSelected = false;
-              //   });
-              //   GSDialog.of(context).showLoadingDialog(context, "正在发送..");
-              //   _getSmsCode(context);
-              // } else {
-              //   Alert.show(
-              //       context,
-              //       NormalContentDialog(
-              //         type: NormalTextDialogType.remind,
-              //         title: null,
-              //         content: Text(
-              //           '请您先阅读并同意《用户协议》和《隐私政策》',
-              //           style: TextStyle(color: Colors.black),
-              //         ),
-              //         items: ["确认"],
-              //         listener: (index) {
-              //           Alert.dismiss(context);
-              //         },
-              //       ));
-              //}
+              if (!_chooseAgreement) {
+                if (!TextUtils.verifyPhone(_phoneController.text)) {
+                  showError("手机号码格式不正确!");
+                  return;
+                }
+                if (_cantSelected) return;
+                _cantSelected = true;
+                Future.delayed(Duration(seconds: 2), () {
+                  _cantSelected = false;
+                });
+                GSDialog.of(context).showLoadingDialog(context, "正在发送..");
+                _getSmsCode(context);
+              } else {
+                Alert.show(
+                    context,
+                    NormalContentDialog(
+                      type: NormalTextDialogType.remind,
+                      title: null,
+                      content: Text(
+                        '请您先阅读并同意《用户协议》和《隐私政策》',
+                        style: TextStyle(color: Colors.black),
+                      ),
+                      items: ["确认"],
+                      listener: (index) {
+                        Alert.dismiss(context);
+                      },
+                    ));
+              }
             },
           ),
         ],

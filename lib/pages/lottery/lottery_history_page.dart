@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/lottery/models/lottery_history_model.dart';
-import 'package:recook/pages/lottery/tools/lottery_tool.dart';
-import 'package:recook/pages/lottery/widget/lottery_result_boxes.dart';
-import 'package:recook/pages/lottery/widget/lottery_scaffold.dart';
-import 'package:recook/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/lottery/models/lottery_history_model.dart';
+import 'package:jingyaoyun/pages/lottery/tools/lottery_tool.dart';
+import 'package:jingyaoyun/pages/lottery/widget/lottery_result_boxes.dart';
+import 'package:jingyaoyun/pages/lottery/widget/lottery_scaffold.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 
 class LotteryHistoryPage extends StatefulWidget {
   final int id;

@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/shop/model/shop_self_income_model.dart';
-import 'package:recook/pages/shop/widget/shop_page_bar_card_widget.dart';
-import 'package:recook/pages/shop/widget/shop_page_income_widget.dart';
-import 'package:recook/widgets/bottom_time_picker.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/shop/model/shop_self_income_model.dart';
+import 'package:jingyaoyun/pages/shop/widget/shop_page_bar_card_widget.dart';
+import 'package:jingyaoyun/pages/shop/widget/shop_page_income_widget.dart';
+import 'package:jingyaoyun/widgets/bottom_time_picker.dart';
 
 class ShopPageSelfIncomeWidget extends StatefulWidget {
   ShopPageSelfIncomeWidget({Key key}) : super(key: key);

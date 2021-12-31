@@ -1,38 +1,22 @@
-/*
- * ====================================================
- * package   : pages.welcome
- * author    : Created by nansi.
- * time      : 2019/5/5  4:47 PM 
- * remark    : 
- * ====================================================
- */
-
 import 'dart:async';
 
 import 'package:amap_flutter_location/amap_flutter_location.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:hive_flutter/adapters.dart';
+import 'package:get/get.dart';
+import 'package:jingyaoyun/pages/welcome/welcome_widget.dart';
 import 'package:package_info/package_info.dart';
-
 import 'package:power_logger/power_logger.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/config.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/user/functions/user_func.dart';
+import 'package:jingyaoyun/utils/app_router.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/config.dart';
-import 'package:recook/constants/constants.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/user/functions/user_func.dart';
-import 'package:recook/pages/welcome/launch_privacy_dialog.dart';
-import 'package:recook/utils/app_router.dart';
-import 'package:recook/utils/storage/hive_store.dart';
-import 'package:recook/utils/test.dart';
-import 'package:tencent_im_plugin/tencent_im_plugin.dart';
-import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 List<CameraDescription> cameras;
+
 class LaunchWidget extends StatefulWidget {
   @override
   _LaunchWidgetState createState() => _LaunchWidgetState();
@@ -44,6 +28,9 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
   void initState() {
     super.initState();
 
+    //初始化AMap  给android和ios
+    AMapFlutterLocation.setApiKey(
+        'cd71676364972b01d9803249f7112bc0', 'a165543d6e2be75f4ac1b6b81ce0dae2');
 
     WidgetsBinding.instance.addPostFrameCallback((callback) async {
       await Future.delayed(Duration(milliseconds: 2450));
@@ -51,7 +38,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
       //   // if (true) {
       //   bool agreeResult = (await launchPrivacyDialog(context)) ?? false;
       //   if (!agreeResult) {
-      //     //第1次不同意
+      //     //第1次不同意`
       //     bool secondAgree =
       //         (await launchPrivacySecondDialog(context)) ?? false;
       //     //第2次不同意
@@ -66,59 +53,36 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
         UserManager.instance.kingCoinListModelList =
         await UserFunc.getKingCoinList();
       });
-      PowerLogger.start(context, debug: false);//AppConfig.debug  在正式服数据下进行调试
+      //初始化日志工具
+      PowerLogger.start(context, debug: true);//AppConfig.debug  在正式服数据下进行调试
+      //初始化
       cameras = await availableCameras();
+      //高德地图隐私协议 在用户同意隐私协议后更新
       AMapFlutterLocation.updatePrivacyShow(true, true);
       AMapFlutterLocation.updatePrivacyAgree(true);
+      //获取apk包的信息(版本)
       PackageInfo _packageInfo = await PackageInfo.fromPlatform();
       AppConfig.versionNumber = _packageInfo.buildNumber;
-
-      // TencentImPlugin.init(appid: '1400435566');
-      // HttpManager.post(LiveAPI.liveLicense, {}).then((resultData) {
-      //   String key = resultData.data['data']['key'];
-      //   String licenseURL = resultData.data['data']['licenseUrl'];
-      //   //初始化腾讯直播
-      //   TencentLive.instance.init(
-      //     licenseUrl: licenseURL,
-      //     licenseKey: key,
-      //   );
-      // });
-
-
-      AppRouter.fadeAndReplaced(globalContext, RouteName.WELCOME_PAGE);
+      Get.offAll(WelcomeWidget());
     });
   }
 
   @override
   Widget buildContext(BuildContext context, {store}) {
     Constants.initial(context);
-    // double width = MediaQuery.of(context).size.width;
-    // double height = MediaQuery.of(context).size.height;
-
     return Scaffold(
-
       body:  Container(
         width: double.infinity,
         height: double.infinity,
         margin: EdgeInsets.only(top: 150.rw),
         alignment: Alignment.topCenter,
-
         child: Image.asset(
             R.ASSETS_RECOOK_LAUNCH_IMAGE_RECOOK_SPLASH_PNG,
             width: 200.rw,
             height: 200.rw,
             fit: BoxFit.fill,
-
         ),
       ),
-      // body: Container(
-      //   child: ImagesAnimation(
-      //       w: width,
-      //       h: height,
-      //       milliseconds: 2000,
-      //       entry: ImagesAnimationEntry(0, 70,
-      //           "assets/recook_launch_image/recook_launch_image_%s.png")),
-      // ),
     );
   }
 }

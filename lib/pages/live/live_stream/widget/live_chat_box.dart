@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:common_utils/common_utils.dart';
 
-import 'package:recook/constants/header.dart';
+import 'package:jingyaoyun/constants/header.dart';
 
 enum ChatType {
   NORMAL,

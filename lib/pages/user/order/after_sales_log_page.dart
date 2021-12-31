@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:timeline_tile/timeline_tile.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/models/after_sales_log_list_model.dart';
-import 'package:recook/utils/text_parse_util.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/models/after_sales_log_list_model.dart';
+import 'package:jingyaoyun/utils/text_parse_util.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 enum AfterSalesRichTextType { black, gray, address, none }
 

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:velocity_x/velocity_x.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/widgets/recook/recook_scaffold.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
 
 class UpgradeUseResultPage extends StatelessWidget {
   final bool result;

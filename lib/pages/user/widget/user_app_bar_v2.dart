@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/meiqia_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
 
 class UserAppBarV2 extends StatefulWidget {
   UserAppBarV2({Key key}) : super(key: key);
@@ -24,7 +23,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
       Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          30.wb,
+          10.wb,
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.end,
@@ -70,62 +69,12 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Row(
-                children: [
-                  // CustomImageButton(
-                  //   icon: ImageIcon(
-                  //     AssetImage(
-                  //       "assets/navigation_like.png",
-                  //     ),
-                  //     size: 18,
-                  //   ),
-                  //   title: "收藏",
-                  //   fontSize: 10,
-                  //   color: getCurrentAppItemColor(),
-                  //   onPressed: () {
-                  //     push(RouteName.MY_FAVORITE_PAGE);
-                  //   },
-                  // ),
-                  // 10.wb,
-                  // CustomImageButton(
-                  //   // icon: Icon(AppIcons.icon_message),
-                  //   icon: ImageIcon(
-                  //     AssetImage("assets/navigation_msg.png"),
-                  //     size: 30,
-                  //   ),
-                  //   title: "客服",
-                  //   fontSize: 12,
-                  //   color: getCurrentAppItemColor(),
-                  //   onPressed: () {
-                  //     MQManager.goToChat(
-                  //         userId: UserManager.instance.user.info.id.toString(),
-                  //         userInfo: <String, String>{
-                  //           "name":
-                  //               UserManager.instance.user.info.nickname ?? "",
-                  //           "gender": UserManager.instance.user.info.gender == 1
-                  //               ? "男"
-                  //               : "女",
-                  //           "mobile":
-                  //               UserManager.instance.user.info.mobile ?? ""
-                  //         });
-                  //   },
-                  // ),
-                ],
-              ),
               12.hb,
-              GestureDetector(
-                onTap: () {
-                  AppRouter.push(
-                    globalContext,
-                    RouteName.SHOP_PAGE_USER_RIGHTS_PAGE,
-                  );
-                },
-                child: Image.asset(
+              Image.asset(
                   UserLevelTool.cardBadge(UserLevelTool.currentRoleLevelEnum()),
                   width: 55.rw,
                   height: 55.rw,
                 ),
-              ),
               4.hb,
             ],
           ),
@@ -159,7 +108,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
             },
           ),
           Spacer(),
-          '(店铺)'//'(${UserLevelTool.currentRoleLevel()})'
+          '(${UserLevelTool.currentRoleLevel()})'
               .text
               .color(Color(0xFF333333))
               .size(12.rsp)
@@ -193,7 +142,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
         Positioned(
           left: 30.rw,
           right: 30.rw,
-          bottom: 35.rw,
+          bottom: 30.rw,
           child: _buildInnerInfo(),
         ),
       ],

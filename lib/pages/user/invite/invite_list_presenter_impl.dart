@@ -7,10 +7,10 @@
  * ====================================================
  */
 
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/models/invite_list_model.dart';
-import 'package:recook/pages/user/invite/invite_list_contact.dart';
-import 'package:recook/pages/user/invite/invite_list_model_impl.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/models/invite_list_model.dart';
+import 'package:jingyaoyun/pages/user/invite/invite_list_contact.dart';
+import 'package:jingyaoyun/pages/user/invite/invite_list_model_impl.dart';
 
 class InviteListPresenterImpl extends InviteListPresenterI {
   @override

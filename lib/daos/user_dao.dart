@@ -13,11 +13,11 @@ import 'package:flutter/material.dart';
 
 import 'package:dio/dio.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/config.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/models/base_model.dart';
-import 'package:recook/models/user_model.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/config.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/models/base_model.dart';
+import 'package:jingyaoyun/models/user_model.dart';
 
 class UserDao {
   static final String openIdUrl =

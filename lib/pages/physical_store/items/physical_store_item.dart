@@ -9,8 +9,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 
 class PhysicalStoreItem extends StatelessWidget {
   final double _qrCodeSize = 35;

@@ -18,8 +18,8 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/utils/print_util.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/utils/print_util.dart';
 
 class ImageUtils {
   static Future<File> cropImage(file) async {

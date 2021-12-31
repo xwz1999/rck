@@ -13,12 +13,12 @@ import 'package:flutter/material.dart';
 
 import 'package:fluwx/fluwx.dart' as fluwx;
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/config.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/utils/user_Authority_util.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/config.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/utils/user_Authority_util.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 typedef WXLoginListener = Function(WXLoginResult result);
 
@@ -79,7 +79,7 @@ class WeChatUtils {
             appId: AppConfig.WX_APP_ID,
             doOnAndroid: true,
             doOnIOS: true,
-            universalLink: "https://reecook.cn/")
+            universalLink: "https://reecook.cn/jingyaoyun/")
         .then((onValue) {
       DPrint.printf("微信registr $onValue");
     });
@@ -121,7 +121,7 @@ class WeChatUtils {
         "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}$id/${UserManager.instance.user.info.invitationNo}";
 
     var model = fluwx.WeChatShareMiniProgramModel(
-      userName: 'gh_530bd0866836',
+      userName: AppConfig.WX_APP_MINIPRO_USERNAME,
       webPageUrl: 'https://h5.reecook.cn/',
       path:
           'pages/goodsDetail/goodsDetail?type=share&id=$id&invite=${UserManager.instance.user.info.invitationNo}',

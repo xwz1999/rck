@@ -9,12 +9,12 @@
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/app_image_resources.dart';
-import 'package:recook/constants/constants.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/models/province_city_model.dart';
-import 'package:recook/utils/text_utils.dart';
-import 'package:recook/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/constants/app_image_resources.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/models/province_city_model.dart';
+import 'package:jingyaoyun/utils/text_utils.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'custom_bottom_sheet.dart';
 
 typedef AddressSelectorCallback = Function(

@@ -13,20 +13,20 @@ import 'package:common_utils/common_utils.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/goods_detail_model.dart';
-import 'package:recook/models/goods_simple_list_model.dart';
-import 'package:recook/pages/goods/small_coupon_widget.dart';
-import 'package:recook/pages/home/classify/commodity_detail_page.dart';
-import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
-import 'package:recook/pages/home/items/item_tag_widget.dart';
-import 'package:recook/pages/home/promotion_time_tool.dart';
-import 'package:recook/utils/share_tool.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/goods_detail_model.dart';
+import 'package:jingyaoyun/models/goods_simple_list_model.dart';
+import 'package:jingyaoyun/pages/goods/small_coupon_widget.dart';
+import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
+import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:jingyaoyun/pages/home/items/item_tag_widget.dart';
+import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
+import 'package:jingyaoyun/utils/share_tool.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
 
 class BrandDetailGridItem extends StatelessWidget {
   // final Goods goods;
@@ -292,9 +292,10 @@ class BrandDetailGridItem extends StatelessWidget {
                     ),
                   ),
                   Spacer(),
-                  UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip
-                      ? Container()
-                      : GestureDetector(
+                  // UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip
+                  //     ? Container()
+                  //     :
+                  GestureDetector(
                     onTap: () {
                       if (shareClick != null) {
                         shareClick();

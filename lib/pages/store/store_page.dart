@@ -9,11 +9,11 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/refresh_widget.dart';
-import 'package:recook/widgets/transparent_app_bar.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/widgets/transparent_app_bar.dart';
 
 class StorePage extends StatefulWidget {
   @override

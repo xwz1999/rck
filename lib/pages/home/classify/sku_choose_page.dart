@@ -9,16 +9,16 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/models/goods_detail_model.dart';
-import 'package:recook/pages/home/widget/plus_minus_view.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/selected_list.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/models/goods_detail_model.dart';
+import 'package:jingyaoyun/pages/home/widget/plus_minus_view.dart';
+import 'package:jingyaoyun/utils/custom_route.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/selected_list.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 typedef ChooseClickListener = Function(SkuChooseModel skuModel);
 

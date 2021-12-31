@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:common_utils/common_utils.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/pages/live/live_stream/live_playback_view_page.dart';
-import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
-import 'package:recook/pages/live/models/activity_video_list_model.dart';
-import 'package:recook/pages/live/widget/user_base_card.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/utils/date/recook_date_util.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/pages/live/live_stream/live_playback_view_page.dart';
+import 'package:jingyaoyun/pages/live/live_stream/live_stream_view_page.dart';
+import 'package:jingyaoyun/pages/live/models/activity_video_list_model.dart';
+import 'package:jingyaoyun/pages/live/widget/user_base_card.dart';
+import 'package:jingyaoyun/utils/custom_route.dart';
+import 'package:jingyaoyun/utils/date/recook_date_util.dart';
 
 class UserPlaybackCard extends StatefulWidget {
   final ActivityVideoListModel model;

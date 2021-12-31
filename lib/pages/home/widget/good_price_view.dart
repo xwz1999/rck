@@ -1,30 +1,16 @@
-/*
- * ====================================================
- * package   : 
- * author    : Created by nansi.
- * time      : 2019-07-11  15:52 
- * remark    : 
- * ====================================================
- */
 
-import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 
-import 'package:extended_text/extended_text.dart';
-import 'package:recook/constants/api.dart';
+import 'package:jingyaoyun/constants/api.dart';
 
-import 'package:recook/constants/app_image_resources.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/models/goods_detail_model.dart';
-import 'package:recook/pages/seckill_activity/cut_down_time_widget.dart';
-import 'package:recook/pages/seckill_activity/cut_down_widget.dart';
-import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
-import 'package:recook/utils/date/date_utils.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/goods_item.dart';
+import 'package:jingyaoyun/constants/app_image_resources.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/models/goods_detail_model.dart';
+
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+
 
 class GoodPriceView extends StatefulWidget {
   final GoodsDetailModel detailModel;
@@ -42,18 +28,11 @@ class GoodPriceView extends StatefulWidget {
 class _GoodPriceViewState extends State<GoodPriceView> {
   GoodsDetailModel detailModel;
   VoidCallback shareCallback;
-  int _status = 0;
-  String _endTime = '';
+
 
   @override
   void initState() {
     super.initState();
-    if (widget.detailModel.data.secKill != null) {
-      _status = widget.detailModel.data.secKill.secKill;
-      _endTime = widget.detailModel.data.secKill.secKillEndTime;
-      //_endTime= DateUtil.formatDate(DateTime.parse(_endTime), format: 'HH-mm-ss');
-    }
-
     detailModel = widget.detailModel;
     shareCallback = widget.shareCallback;
   }
@@ -71,9 +50,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
           color: AppColor.frenchColor,
         ),
         _name(),
-
         _detail(),
-
         //京东商品隐藏
         widget.detailModel.data.vendorId == 1800 ||
                 widget.detailModel.data.vendorId == 2000
@@ -84,25 +61,6 @@ class _GoodPriceViewState extends State<GoodPriceView> {
               ),
       ],
     );
-  }
-
-  _finishedView() {
-    return Container(
-        child: Column(
-      //mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '距活动结束还剩',
-          style: TextStyle(color: Colors.white, fontSize: 10.rw),
-        ),
-        5.hb,
-        CutDownWidget(
-          time: _endTime,
-          white: true,
-        ),
-      ],
-    ));
   }
 
   Container _price() {
@@ -162,11 +120,6 @@ class _GoodPriceViewState extends State<GoodPriceView> {
       commission =
           "${_getDoubleText(minCommission)}-${_getDoubleText(maxCommission)}";
     }
-    if (_status == 1) {
-      price = detailModel.data.secKill.secKillMinPrice.toStringAsFixed(2) ?? '';
-      commission =
-          detailModel.data.secKill.secKillCommission.toStringAsFixed(2) ?? '';
-    }
     return _normalPriceWidget(
         price, commission, originPrice, isTwoPrice, coupon, saleNum);
   }
@@ -190,19 +143,10 @@ class _GoodPriceViewState extends State<GoodPriceView> {
           Row(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              // (coupon != null && coupon != 0)
-              //     ? Padding(
-              //         padding: EdgeInsets.only(right: 10),
-              //         child: SmallCouponWidget(
-              //           couponType: SmallCouponType.white,
-              //           number: coupon,
-              //         ),
-              //       )
-              //     : SizedBox(),
               RichText(
                 text: TextSpan(children: [
                   TextSpan(
-                    text: _status == 1 ? "秒杀价" : "券后价",
+                    text: "券后价",
                     style: TextStyle(
                         color: Color(0xFFD5101A),
                         fontSize: 14.rsp,
@@ -276,9 +220,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
             ],
           ),
           Spacer(),
-          _status == 1 && _endTime != ''
-              ? _finishedView()
-              : Row(
+          Row(
                   children: <Widget>[
                     (coupon != null && coupon != 0)
                         ? Container(
@@ -502,13 +444,6 @@ class _GoodPriceViewState extends State<GoodPriceView> {
             ),
           )
         : SizedBox();
-  }
-
-  /// 标签
-  Widget _label() {
-    return Container(
-      height: 5,
-    );
   }
 
   _serviceLabel(title) {

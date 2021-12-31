@@ -7,8 +7,8 @@
  * ====================================================
  */
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/manager/http_manager.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
 import 'user_mvp_contact.dart';
 
 class UserModelImpl extends UserMvpModelI {

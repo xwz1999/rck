@@ -9,8 +9,8 @@
 
 // import 'package:flutter_bugly/flutter_bugly.dart';
 
-// import 'package:recook/constants/header.dart';
-// import 'package:recook/manager/user_manager.dart';
+// import 'package:jingyaoyun/constants/header.dart';
+// import 'package:jingyaoyun/manager/user_manager.dart';
 //
 // class BuglyHelper {
 //   // static const String appid_ios = "b7f6f8aee0";

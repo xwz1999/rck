@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 
 import 'package:oktoast/oktoast.dart';
 
-import 'package:recook/const/resource.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/lottery/lottery_cart_model.dart';
-import 'package:recook/pages/lottery/lottery_cart_page.dart';
-import 'package:recook/pages/lottery/lottery_history_page.dart';
-import 'package:recook/pages/lottery/models/lottery_list_model.dart';
-import 'package:recook/pages/lottery/redeem_lottery_page.dart';
-import 'package:recook/pages/lottery/tools/lottery_tool.dart';
-import 'package:recook/pages/lottery/widget/lottery_ball.dart';
-import 'package:recook/pages/lottery/widget/lottery_result_boxes.dart';
-import 'package:recook/pages/lottery/widget/lottery_scaffold.dart';
-import 'package:recook/pages/lottery/widget/lottery_view.dart';
-import 'package:recook/pages/user/user_verify.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/const/resource.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/lottery/lottery_cart_model.dart';
+import 'package:jingyaoyun/pages/lottery/lottery_cart_page.dart';
+import 'package:jingyaoyun/pages/lottery/lottery_history_page.dart';
+import 'package:jingyaoyun/pages/lottery/models/lottery_list_model.dart';
+import 'package:jingyaoyun/pages/lottery/redeem_lottery_page.dart';
+import 'package:jingyaoyun/pages/lottery/tools/lottery_tool.dart';
+import 'package:jingyaoyun/pages/lottery/widget/lottery_ball.dart';
+import 'package:jingyaoyun/pages/lottery/widget/lottery_result_boxes.dart';
+import 'package:jingyaoyun/pages/lottery/widget/lottery_scaffold.dart';
+import 'package:jingyaoyun/pages/lottery/widget/lottery_view.dart';
+import 'package:jingyaoyun/pages/user/user_verify.dart';
+import 'package:jingyaoyun/utils/custom_route.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
 
 class LotteryPickerPage extends StatefulWidget {
   final bool isDouble;

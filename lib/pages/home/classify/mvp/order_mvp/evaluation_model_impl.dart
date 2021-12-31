@@ -7,9 +7,9 @@
  * ====================================================
  */
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/home/classify/mvp/order_mvp/evaluation_list_contact.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/home/classify/mvp/order_mvp/evaluation_list_contact.dart';
 
 class EvaluationModelImpl extends EvaluationListModelI{
   @override

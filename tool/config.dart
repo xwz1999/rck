@@ -9,7 +9,7 @@ class Config {
   static const keystorePath = './jks/recook.keystore';
 
   ///包名
-  static const packageName = 'RECOOK';
+  static const packageName = 'ZUOJIAYOUCHU';
 
   ///Android SDK 目录
   static String get androidSdkRoot => '$homeDir/Library/Android/sdk';

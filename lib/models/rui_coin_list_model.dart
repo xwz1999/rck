@@ -199,7 +199,7 @@ class UserCoin {
 // }
 // */
 // import 'package:json_annotation/json_annotation.dart';
-// import 'package:recook/models/base_model.dart';
+// import 'package:jingyaoyun/models/base_model.dart';
 
 // part 'rui_coin_list_model.g.dart';
 

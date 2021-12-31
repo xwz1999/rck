@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:common_utils/common_utils.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/live/models/live_data_detail_model.dart';
-import 'package:recook/widgets/custom_painters/pie_progress_painter.dart';
-import 'package:recook/widgets/recook_back_button.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/live/models/live_data_detail_model.dart';
+import 'package:jingyaoyun/widgets/custom_painters/pie_progress_painter.dart';
+import 'package:jingyaoyun/widgets/recook_back_button.dart';
 
 class SingleDataManagerPage extends StatefulWidget {
   final int id;

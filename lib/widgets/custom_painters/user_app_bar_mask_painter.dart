@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/styles.dart';
+import 'package:jingyaoyun/constants/styles.dart';
 
 class UserAppBarMaskPainter extends CustomPainter {
   @override

@@ -4,21 +4,21 @@ import 'package:flutter/widgets.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/invite_list_model.dart';
-import 'package:recook/pages/user/invite/invite_list_contact.dart';
-import 'package:recook/pages/user/invite/invite_list_presenter_impl.dart';
-import 'package:recook/pages/user/invite/item_invite_detail_list.dart';
-import 'package:recook/pages/user/invite/user_invite_detail.dart';
-import 'package:recook/utils/mvp.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
-import 'package:recook/widgets/no_data_view.dart';
-import 'package:recook/widgets/progress/sc_dialog.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/invite_list_model.dart';
+import 'package:jingyaoyun/pages/user/invite/invite_list_contact.dart';
+import 'package:jingyaoyun/pages/user/invite/invite_list_presenter_impl.dart';
+import 'package:jingyaoyun/pages/user/invite/item_invite_detail_list.dart';
+import 'package:jingyaoyun/pages/user/invite/user_invite_detail.dart';
+import 'package:jingyaoyun/utils/mvp.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view.dart';
+import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:jingyaoyun/widgets/no_data_view.dart';
+import 'package:jingyaoyun/widgets/progress/sc_dialog.dart';
 
 class InviteSearchPage extends StatefulWidget {
   InviteSearchPage({Key key}) : super(key: key);

@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:recook/constants/api.dart';
+import 'package:jingyaoyun/constants/api.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/live/models/follow_list_model.dart';
-import 'package:recook/pages/live/sub_page/user_attention/topic_attention_view.dart';
-import 'package:recook/pages/live/sub_page/user_attention/user_attention_view.dart';
-import 'package:recook/pages/live/sub_page/user_home_page.dart';
-import 'package:recook/pages/live/widget/live_attention_button.dart';
-import 'package:recook/pages/user/user_page.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/recook/recook_scaffold.dart';
-import 'package:recook/widgets/recook_indicator.dart';
-import 'package:recook/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/live/models/follow_list_model.dart';
+import 'package:jingyaoyun/pages/live/sub_page/user_attention/topic_attention_view.dart';
+import 'package:jingyaoyun/pages/live/sub_page/user_attention/user_attention_view.dart';
+import 'package:jingyaoyun/pages/live/sub_page/user_home_page.dart';
+import 'package:jingyaoyun/pages/live/widget/live_attention_button.dart';
+import 'package:jingyaoyun/pages/user/user_page.dart';
+import 'package:jingyaoyun/utils/custom_route.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
+import 'package:jingyaoyun/widgets/recook_indicator.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 
 class UserSupportPage extends StatefulWidget {
   //获赞页面

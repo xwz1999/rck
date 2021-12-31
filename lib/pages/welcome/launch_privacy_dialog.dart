@@ -1,11 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:recook/constants/api.dart';
+import 'package:jingyaoyun/constants/api.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/pages/welcome/privacy_page_v2.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/widgets/webView.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/widgets/webView.dart';
 
 Future<bool> launchPrivacyDialog(BuildContext context) async {
   return await showDialog(

@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 
 import 'package:oktoast/oktoast.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/lottery/lottery_cart_model.dart';
-import 'package:recook/pages/lottery/models/lottery_redeem_detail_model.dart';
-import 'package:recook/pages/lottery/models/lottery_redeem_history_model.dart';
-import 'package:recook/pages/lottery/redeem_lottery_page.dart';
-import 'package:recook/pages/lottery/tools/lottery_tool.dart';
-import 'package:recook/pages/lottery/widget/lottery_grid_view.dart';
-import 'package:recook/pages/lottery/widget/lottery_scaffold.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/lottery/lottery_cart_model.dart';
+import 'package:jingyaoyun/pages/lottery/models/lottery_redeem_detail_model.dart';
+import 'package:jingyaoyun/pages/lottery/models/lottery_redeem_history_model.dart';
+import 'package:jingyaoyun/pages/lottery/redeem_lottery_page.dart';
+import 'package:jingyaoyun/pages/lottery/tools/lottery_tool.dart';
+import 'package:jingyaoyun/pages/lottery/widget/lottery_grid_view.dart';
+import 'package:jingyaoyun/pages/lottery/widget/lottery_scaffold.dart';
 
 class LotteryOrderDetailPage extends StatefulWidget {
   final LotteryRedeemHistoryModel model;

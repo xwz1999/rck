@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import 'package:recook/constants/constants.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/user/functions/user_balance_func.dart';
-import 'package:recook/pages/user/model/user_balance_history_model.dart';
-import 'package:recook/pages/user/model/user_balance_info_model.dart';
-import 'package:recook/pages/user/user_cash_withdraw_page.dart';
-import 'package:recook/widgets/bottom_time_picker.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/recook/recook_scaffold.dart';
-import 'package:recook/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/user/functions/user_balance_func.dart';
+import 'package:jingyaoyun/pages/user/model/user_balance_history_model.dart';
+import 'package:jingyaoyun/pages/user/model/user_balance_info_model.dart';
+import 'package:jingyaoyun/pages/user/user_cash_withdraw_page.dart';
+import 'package:jingyaoyun/widgets/bottom_time_picker.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 
 class UserBalancePage extends StatefulWidget {
   UserBalancePage({Key key}) : super(key: key);
@@ -42,7 +42,7 @@ class _UserBalancePageState extends State<UserBalancePage> {
         2: '订单退款',
         3: '提现',
         4: '提现失败',
-        5: '瑞币转入',
+        // 5: '瑞币转入',
       };
   String get _statusValue {
     return _statusMap[_status];

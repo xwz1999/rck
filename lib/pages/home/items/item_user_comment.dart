@@ -9,10 +9,10 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/models/goods_detail_model.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/models/goods_detail_model.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 
 class UserCommentItem extends StatelessWidget {
   final Evaluation evaluation;

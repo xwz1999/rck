@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 
-import 'package:recook/constants/constants.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/models/promotion_list_model.dart';
-import 'package:recook/pages/home/promotion_time_tool.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/models/promotion_list_model.dart';
+import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
 
 class HomePageTabbar extends StatefulWidget {
   final List<Promotion> promotionList;

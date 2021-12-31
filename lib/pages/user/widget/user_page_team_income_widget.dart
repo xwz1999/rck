@@ -3,18 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/app_image_resources.dart';
-import 'package:recook/constants/constants.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/shop/widget/shop_page_income_widget.dart';
-import 'package:recook/pages/user/model/user_team_income_model.dart';
-import 'package:recook/utils/text_utils.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/bottom_time_picker.dart';
-import 'package:recook/widgets/custom_painters/round_background_painter.dart';
-import 'package:recook/widgets/sort_widget.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/app_image_resources.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/shop/widget/shop_page_income_widget.dart';
+import 'package:jingyaoyun/pages/user/model/user_team_income_model.dart';
+import 'package:jingyaoyun/utils/text_utils.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/bottom_time_picker.dart';
+import 'package:jingyaoyun/widgets/custom_painters/round_background_painter.dart';
+import 'package:jingyaoyun/widgets/sort_widget.dart';
 
 class UserPageTeamIncomeWidget extends StatefulWidget {
   UserPageTeamIncomeWidget({Key key}) : super(key: key);

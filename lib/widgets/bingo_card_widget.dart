@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 import 'package:flip_card/flip_card.dart';
 
-import 'package:recook/constants/constants.dart';
-import 'package:recook/constants/header.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/constants/header.dart';
 
 class BingoCardModel {
   dynamic cardFaceFront;

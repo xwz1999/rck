@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
 
-import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/user_manager.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
 
-import 'package:recook/models/goods_detail_model.dart';
-import 'package:recook/models/goods_hot_sell_list_model.dart';
-import 'package:recook/models/goods_simple_list_model.dart';
-import 'package:recook/models/promotion_goods_list_model.dart';
+import 'package:jingyaoyun/models/goods_detail_model.dart';
+import 'package:jingyaoyun/models/goods_simple_list_model.dart';
+import 'package:jingyaoyun/models/promotion_goods_list_model.dart';
 
-import 'package:recook/pages/goods/small_coupon_widget.dart';
-import 'package:recook/pages/home/classify/commodity_detail_page.dart';
-import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
-import 'package:recook/pages/home/promotion_time_tool.dart';
-import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
-import 'package:recook/utils/share_tool.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/pages/goods/small_coupon_widget.dart';
+import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
+import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
+import 'package:jingyaoyun/utils/share_tool.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
 
-import 'package:recook/models/goods_hot_sell_list_model.dart'
+import 'package:jingyaoyun/models/goods_hot_sell_list_model.dart'
     as GoodsHotSellListModel;
 
 enum GoodsItemType {
@@ -30,7 +27,6 @@ enum GoodsItemType {
   NORMAL,
   HOT_LIST,
   ROW_GOODS,
-  SECKILL,
 }
 
 class GoodsItemWidget extends StatelessWidget {
@@ -67,8 +63,6 @@ class GoodsItemWidget extends StatelessWidget {
   final Living living;
   final GifController gifController;
   final num gysId;
-  final SeckillModel seckillModel;
-  final SecKill secKill;
 
   const GoodsItemWidget({
     Key key,
@@ -100,8 +94,6 @@ class GoodsItemWidget extends StatelessWidget {
     this.living,
     this.gifController,
     this.gysId,
-    this.seckillModel,
-    this.secKill,
     //this.special_sale,
   })  : widgetType = GoodsItemType.NONE,
         super(key: key);
@@ -119,7 +111,6 @@ class GoodsItemWidget extends StatelessWidget {
     this.specialSale,
     this.type,
     this.gifController,
-    this.seckillModel,
 
     //this.special_sale,
   })  : goodsName = model.goodsName,
@@ -127,9 +118,7 @@ class GoodsItemWidget extends StatelessWidget {
         brandPictureUrl = model.brandImg,
         description = model.description,
         mainPhotoUrl = model.mainPhotoUrl,
-        inventory = model.secKill.secKill == 1
-            ? model.secKill.realStock
-            : model.inventory,
+        inventory = model.inventory,
         originalPrice = model.originalPrice,
         percent = model.percent,
         coupon = model.coupon,
@@ -141,17 +130,9 @@ class GoodsItemWidget extends StatelessWidget {
         countryIcon = model.countryIcon,
         living = model.living,
         gysId = model.gysId,
-        secKill = model.secKill,
-        salesVolume = model.secKill.secKill == 1
-            ? model.secKill.saleNum
-            : model.salesVolume,
-        discountPrice = model.secKill.secKill == 1
-            ? model.secKill.secKillMinPrice
-            : model.discountPrice,
-        commission = model.secKill.secKill == 1
-            ? model.secKill.secKillCommission
-            : model.commission,
-        //secKill = model.
+        salesVolume =  model.salesVolume,
+        discountPrice =  model.discountPrice,
+        commission =  model.commission,
         super(key: key);
 
   ///Hot List
@@ -169,14 +150,12 @@ class GoodsItemWidget extends StatelessWidget {
     this.type,
     this.living,
     this.gifController,
-    this.seckillModel,
   })  : goodsName = data.goodsName,
         brandName = data.brandName,
         brandPictureUrl = data.brandImg,
         description = data.description,
         mainPhotoUrl = data.mainPhotoUrl,
-        inventory =
-            data.secKill.secKill == 1 ? data.secKill.realStock : data.inventory,
+        inventory =  data.inventory,
         originalPrice = data.originalPrice,
         //TODO hot list unset percent;
         percent = 0,
@@ -188,15 +167,9 @@ class GoodsItemWidget extends StatelessWidget {
         isImport = data.isImport,
         countryIcon = data.countryIcon,
         gysId = data.gysId,
-        secKill = data.secKill,
-        salesVolume =
-            data.secKill.secKill == 1 ? data.secKill.saleNum : data.salesVolume,
-        discountPrice = data.secKill.secKill == 1
-            ? data.secKill.secKillMinPrice
-            : data.discountPrice,
-        commission = data.secKill.secKill == 1
-            ? data.secKill.secKillCommission
-            : data.commission,
+        salesVolume = data.salesVolume,
+        discountPrice = data.discountPrice,
+        commission =  data.commission,
         super(key: key);
 
   /// 活动列表
@@ -211,7 +184,6 @@ class GoodsItemWidget extends StatelessWidget {
     this.notShowAmount = false,
     this.type,
     this.gifController,
-    this.seckillModel,
   })  : goodsName = model.goodsName,
         brandName = model.brandName,
         brandPictureUrl = model.brandImg,
@@ -232,56 +204,12 @@ class GoodsItemWidget extends StatelessWidget {
         countryIcon = model.countryIcon,
         living = model.living,
         gysId = model.gysId,
-        secKill = model.secKill,
-        salesVolume = model.secKill.secKill == 1
-            ? model.secKill.saleNum
-            : model.totalSalesVolume,
-        discountPrice = model.secKill.secKill == 1
-            ? model.secKill.secKillMinPrice
-            : model.price,
-        commission = model.secKill.secKill == 1
-            ? model.secKill.secKillCommission
-            : model.commission,
+        salesVolume =  model.totalSalesVolume,
+        discountPrice =  model.price,
+        commission =  model.commission,
         super(key: key);
 
-  //秒杀活动
-  GoodsItemWidget.seckillGoodsItem({
-    Key key,
-    this.isSingleDayGoods = false,
-    this.buildCtx,
-    this.shareClick,
-    this.buyClick,
-    this.onBrandClick,
-    SeckillGoods model,
-    SeckillModel seckillModel,
-    this.notShowAmount = false,
-    this.specialSale,
-    this.type,
-    this.gifController,
-    this.originalPrice,
-    this.percent,
-    this.coupon,
-    this.isImport,
-    this.specialIcon,
-    this.promotionStatus,
-    this.living,
-    this.gysId,
-    this.secKill,
-    //this.special_sale,
-  })  : goodsName = model.goodsName,
-        brandName = model.brandName,
-        brandPictureUrl = model.brandUrl,
-        description = model.subTitle,
-        mainPhotoUrl = model.mainPhoto,
-        discountPrice = model.minDiscountPrice,
-        salesVolume = model.saleNum,
-        id = model.goodsId,
-        widgetType = GoodsItemType.SECKILL,
-        countryIcon = model.countryUrl,
-        inventory = model.inventory,
-        commission = model.commission,
-        seckillModel = seckillModel,
-        super(key: key);
+
   final BuildContext buildCtx;
   final VoidCallback shareClick;
   final VoidCallback buyClick;
@@ -558,30 +486,14 @@ class GoodsItemWidget extends StatelessWidget {
 
   _image() {
     bool sellout = false;
-    if (this.widgetType == GoodsItemType.SECKILL) {
-      if (this.salesVolume >= this.inventory) {
-        sellout = true;
-      } else {
-        sellout = false;
-      }
-    } else {
+
       if (this.inventory > 0) {
         sellout = false;
       } else {
         sellout = true;
       }
-      if (this.secKill != null) {
-        if (secKill.secKill == 1) {
-          if (secKill.realStock > 0) {
-            sellout = false;
-          } else {
-            sellout = true;
-          }
 
-          //秒杀中 通过seckill中的库存和销量来判断是否是否售完
-        }
-      }
-    }
+
     double cir = 5;
     return Container(
       width: _height - 8,
@@ -736,42 +648,8 @@ class GoodsItemWidget extends StatelessWidget {
   }
 
   _inventoryView() {
-    //暂时隐藏
-    // bool seckillout = this.salesVolume>=this.inventory&&(this.widgetType == GoodsItemType.SECKILL);
-    // bool sellout = this.inventory <= 0;
-    bool sellout = false;
-    bool isSeckill = false;
-    if (this.widgetType == GoodsItemType.SECKILL) {
-      if (this.seckillModel != null) {
-        if (seckillModel.status == 2) {
-          isSeckill = true; //秒杀页面的商品 非秒杀状态（2）的情况下 正常显示
-        } else {
-          isSeckill = false;
-        }
-      }
-      if (this.salesVolume >= this.inventory) {
-        sellout = true;
-      } else {
-        sellout = false;
-      }
-    } else {
-      if (this.inventory > 0) {
-        sellout = false;
-      } else {
-        sellout = true;
-      }
-      if (this.secKill != null) {
-        if (secKill.secKill == 1) {
-          isSeckill = true;
-          if (secKill.realStock > 0) {
-            sellout = false;
-          } else {
-            sellout = true;
-          }
-          //秒杀中 通过seckill中的库存和销量来判断是否是否售完
-        }
-      }
-    }
+    bool sellout = this.inventory <= 0;
+
     Color priceColor = Color(0xffc70404);
     return Container(
       height: 20 * 2.h,
@@ -797,15 +675,9 @@ class GoodsItemWidget extends StatelessWidget {
                       children: [
                         ExtendedText.rich(TextSpan(children: [
                           TextSpan(
-                            text: isSeckill &&
-                                    this.widgetType == GoodsItemType.SECKILL
-                                ? "¥"
-                                : isSeckill &&
-                                        this.widgetType != GoodsItemType.SECKILL
-                                    ? '¥'
-                                    : "券后 ¥ ",
+                            text:  "券后 ¥ ",
                             style: AppTextStyle.generate(
-                                isSeckill ? 18.rsp : 12 * 2.sp,
+                                 12 * 2.sp,
                                 color: priceColor,
                                 fontWeight: FontWeight.w500),
                           ),
@@ -825,9 +697,7 @@ class GoodsItemWidget extends StatelessWidget {
                             width: 5,
                           )),
                           TextSpan(
-                            text: this.widgetType == GoodsItemType.SECKILL
-                                ? ''
-                                : "¥${this.originalPrice.toStringAsFixed(0)}",
+                            text: "¥${this.originalPrice.toStringAsFixed(0)}",
                             style: TextStyle(
                                 decoration: TextDecoration.lineThrough,
                                 decorationColor: Color(0xff898989),
@@ -836,40 +706,8 @@ class GoodsItemWidget extends StatelessWidget {
                                 fontWeight: FontWeight.w400),
                           )
                         ])),
-                        AppConfig.getShowCommission() && (isSeckill)
-                            ? Container(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "赚" +
-                                      (this.commission ?? 0).toStringAsFixed(2),
-                                  style: TextStyle(
-                                    color: Color(0xFFC92219),
-                                    fontSize: 12 * 2.sp,
-                                  ),
-                                ),
-                              )
-                            : SizedBox(),
                       ],
                     )),
-                // Container(
-                //   width: 5,
-                // ),
-                // Container(
-                //   height: double.infinity,
-                //   alignment: Alignment.center,
-                //   child: RichText(
-                //     text: TextSpan(children: [
-                //       TextSpan(
-                //         text: "¥${this.originalPrice.toStringAsFixed(0)}",
-                //         style: TextStyle(
-                //             decoration: TextDecoration.lineThrough,
-                //             decorationColor: Color(0xff898989),
-                //             fontSize: 12*2.sp,
-                //             color: Color(0xff898989),
-                //             fontWeight: FontWeight.w400),
-                //       ),
-                //     ])),
-                // ),
                 Expanded(child: Container()),
               ],
             ),
@@ -877,9 +715,10 @@ class GoodsItemWidget extends StatelessWidget {
           Row(
             children: <Widget>[
               Spacer(),
-              UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip
-                  ? Container()
-                  : GestureDetector(
+              // UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip
+              //     ? Container()
+              //     :
+              GestureDetector(
                       onTap: () {
                         if (shareClick != null) {
                           shareClick();
@@ -898,33 +737,6 @@ class GoodsItemWidget extends StatelessWidget {
                         ),
                       ),
                     ),
-              // GestureDetector(
-              //     child: CustomImageButton(
-              //       height: 21,
-              //       title: "导购",
-              //       style: TextStyle(
-              //           fontSize: 13*2.sp,
-              //           color: sellout ? Colors.grey : _shareTextColor),
-              //       padding: EdgeInsets.symmetric(
-              //           horizontal: rSize(8),
-              //           vertical: rSize(0)),
-              //       borderRadius: BorderRadius.only(
-              //           topLeft: Radius.circular(40),
-              //           bottomLeft: Radius.circular(40)),
-              //       border: Border.all(
-              //           color: sellout ? Colors.grey : _shareTextColor,
-              //           width: 0.5),
-              //       pureDisplay: true,
-              //     ),
-              //     onTap: () {
-              //       // if (shareClick != null) shareClick();
-              //       if (shareClick != null) {
-              //         shareClick();
-              //       } else {
-              //         _shareEvent();
-              //       }
-              //     },
-              //   ),
               Container(
                 width: 10,
               ),
@@ -1031,33 +843,12 @@ class GoodsItemWidget extends StatelessWidget {
   // }
 
   _saleNumberWidget() {
-    bool isSeckill = false;
-    if (this.widgetType == GoodsItemType.SECKILL) {
-      if (this.seckillModel != null) {
-        if (seckillModel.status == 2) {
-          isSeckill = true; //秒杀页面的商品 非秒杀状态（2）的情况下 正常显示
-        } else {
-          isSeckill = false;
-        }
-      }
-    } else {
-      if (this.secKill != null) {
-        if (secKill.secKill == 1) {
-          isSeckill = true;
-          //秒杀中 通过seckill中的库存和销量来判断是否是否售完
-        } else {
-          isSeckill = false;
-        }
-      }
-    }
     return Container(
       child: Stack(
         children: <Widget>[
           Row(
             children: <Widget>[
-              isSeckill
-                  ? SizedBox()
-                  : (this.coupon != null && this.coupon != 0)
+               (this.coupon != null && this.coupon != 0)
                       ? Container(
                           margin: EdgeInsets.only(right: 5),
                           child: SmallCouponWidget(
@@ -1066,15 +857,7 @@ class GoodsItemWidget extends StatelessWidget {
                           ),
                         )
                       : SizedBox(),
-              isSeckill
-                  ? Container(
-                      child: Image.asset(
-                        R.ASSETS_SECKILL_ICON_PNG,
-                        width: 69.rw,
-                        height: 20.rw,
-                      ),
-                    )
-                  : AppConfig.commissionByRoleLevel
+          AppConfig.commissionByRoleLevel
                       ? Container(
                           child: Stack(
                             alignment: Alignment.center,
@@ -1138,36 +921,6 @@ class GoodsItemWidget extends StatelessWidget {
     );
   }
 
-  // _stockWidget() {
-  //   double height = 4;
-  //   double allWidth = 120;
-  //   double proportion = this.percent / 100.0;
-  //   double width = allWidth * proportion < 4 && allWidth * proportion > 0
-  //       ? 4
-  //       : allWidth * proportion;
-  //   return Container(
-  //     width: allWidth,
-  //     height: height,
-  //     decoration: BoxDecoration(
-  //         borderRadius: BorderRadius.all(Radius.circular(height)),
-  //         // color: AppColor.pinkColor,
-  //         color: Color(0xffdcdddd)),
-  //     child: Stack(
-  //       alignment: AlignmentDirectional.centerStart,
-  //       children: <Widget>[
-  //         Container(
-  //           decoration: BoxDecoration(
-  //             borderRadius: BorderRadius.all(Radius.circular(height)),
-  //             color: AppColor.themeColor,
-  //           ),
-  //           width: width,
-  //           height: height,
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
-
   Future _shareEvent() async {
     String imgUrl;
     GoodsDetailModel imagesModel = await GoodsDetailModelImpl.getDetailInfo(
@@ -1191,29 +944,12 @@ class GoodsItemWidget extends StatelessWidget {
 
   _buyEvent() {
     bool sellout = false;
-    if (this.widgetType == GoodsItemType.SECKILL) {
-      if (this.salesVolume >= this.inventory) {
-        sellout = true;
-      } else {
-        sellout = false;
-      }
-    } else {
       if (this.inventory > 0) {
         sellout = false;
       } else {
         sellout = true;
       }
-      if (this.secKill != null) {
-        if (secKill.secKill == 1) {
-          if (secKill.realStock > 0) {
-            sellout = false;
-          } else {
-            sellout = true;
-          }
-          //秒杀中 通过seckill中的库存和销量来判断是否是否售完
-        }
-      }
-    }
+
     if (buyClick != null) {
       buyClick();
     } else {
@@ -1226,11 +962,4 @@ class GoodsItemWidget extends StatelessWidget {
     }
   }
 
-// _getLivingStatus(int status) {
-//   if (status == 1) {
-//     return true;
-//   } else {
-//     return false;
-//   }
-// }
 }

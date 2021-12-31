@@ -5,17 +5,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/pages/home/function/home_fuc.dart';
-import 'package:recook/pages/home/model/aku_video_list_model.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
-import 'package:recook/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/pages/home/function/home_fuc.dart';
+import 'package:jingyaoyun/pages/home/model/aku_video_list_model.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/widgets/progress/re_toast.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 
@@ -39,6 +39,12 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _refreshController?.dispose();
+    super.dispose();
   }
 
   @override

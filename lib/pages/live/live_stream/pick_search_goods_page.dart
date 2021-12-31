@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:common_utils/common_utils.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/live/live_stream/pick_view/hot_goods_view.dart';
-import 'package:recook/pages/live/live_stream/pick_view/live_goods_card.dart';
-import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
-import 'package:recook/pages/live/models/goods_window_model.dart';
-import 'package:recook/widgets/recook_back_button.dart';
-import 'package:recook/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/live/live_stream/pick_view/hot_goods_view.dart';
+import 'package:jingyaoyun/pages/live/live_stream/pick_view/live_goods_card.dart';
+import 'package:jingyaoyun/pages/live/live_stream/pick_view/pick_cart.dart';
+import 'package:jingyaoyun/pages/live/models/goods_window_model.dart';
+import 'package:jingyaoyun/widgets/recook_back_button.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 
 class PickSearchGoodsPage extends StatefulWidget {
   final Function(GoodsList model) onPick;

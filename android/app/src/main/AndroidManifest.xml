@@ -37,11 +37,11 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="左家右厨"
          android:allowBackup="false"
-        android:icon="@mipmap/launcher_icon"
+        android:icon="@mipmap/ic_launcher"
         tools:replace="android:label,android:allowBackup"
         android:requestLegacyExternalStorage="true"
         >
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="7225bca14fe7493f9f469315a933f99c"/>
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="cd71676364972b01d9803249f7112bc0"/>
         <!-- 配置定位Service -->
         <service android:name="com.amap.api.location.APSService"/>
         <activity
@@ -74,12 +74,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="uapywo"/>
-            </intent-filter>
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.VIEW"/>-->
+<!--                <category android:name="android.intent.category.DEFAULT"/>-->
+<!--                <category android:name="android.intent.category.BROWSABLE"/>-->
+<!--                <data android:scheme="uapywo"/>-->
+<!--            </intent-filter>-->
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.VIEW"/>-->
 <!--                <category android:name="android.intent.category.DEFAULT"/>-->

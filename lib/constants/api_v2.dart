@@ -201,7 +201,7 @@ class BenefitAPI {
   String get monthExpectExtra => '/v2/app/user/income/month_expect_team';
 
   ///会员收益数据
-  String get incomeData => '/v2/app/user/member/income_data';
+  String get incomeData => '/v2/app/user/profit';
 }
 
 class _OrderAPI {

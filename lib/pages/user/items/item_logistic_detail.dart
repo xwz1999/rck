@@ -9,8 +9,8 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/models/logistic_list_model.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/models/logistic_list_model.dart';
 
 class LogisticDetailItem extends StatelessWidget {
   final LogisticStatus expressStatus;

@@ -19,11 +19,11 @@ test() => new TestRunner().testAsync();
 Future releaseApk() async {
   stdout.write("Build APK 📦\n");
   stdout.write("BUILDINGAPK\n");
-  await Process.start('fvm', [
+  await Process.start('fvm', [//arm64向下兼容
     'flutter',
     'build',
     'apk',
-    '--target-platform=android-arm64,android-arm',
+    '--target-platform=android-arm64',
     '--dart-define',
     'ISDEBUG=false',
   ]).then((proc) async {
@@ -52,7 +52,7 @@ Future releaseApk() async {
   stdout.write("opening tencent reinforce 🛠\n");
   await Process.run(
       'open', ['https://console.cloud.tencent.com/ms/reinforce/upload']);
-  stdout.write("请将加固后的文件重命名为RECOOK_reinforce.apk,并移动至builds文件夹");
+  stdout.write("请将加固后的文件重命名为${Config.packageName}_reinforce.apk,并移动至builds文件夹");
 }
 
 @Task()

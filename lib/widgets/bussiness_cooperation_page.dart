@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 
 class BussinessCooperationPage extends StatelessWidget {
   const BussinessCooperationPage({Key key}) : super(key: key);

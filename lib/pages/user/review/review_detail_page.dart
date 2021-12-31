@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/const/resource.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/user/review/models/order_review_list_model.dart';
-import 'package:recook/pages/user/review/models/review_result_model.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/recook_back_button.dart';
+import 'package:jingyaoyun/const/resource.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/user/review/models/order_review_list_model.dart';
+import 'package:jingyaoyun/pages/user/review/models/review_result_model.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/recook_back_button.dart';
 
 class ReviewDetailPage extends StatefulWidget {
   final OrderReviewListModel reviewModel;

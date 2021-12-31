@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 
 import 'package:oktoast/oktoast.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/live/live_stream/pick_search_goods_page.dart';
-import 'package:recook/pages/live/live_stream/pick_view/all_goods_view.dart';
-import 'package:recook/pages/live/live_stream/pick_view/goods_cart_view.dart';
-import 'package:recook/pages/live/live_stream/pick_view/goods_window_view.dart';
-import 'package:recook/pages/live/live_stream/pick_view/hot_goods_view.dart';
-import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
-import 'package:recook/pages/live/models/goods_window_model.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/recook_back_button.dart';
-import 'package:recook/widgets/recook_indicator.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/live/live_stream/pick_search_goods_page.dart';
+import 'package:jingyaoyun/pages/live/live_stream/pick_view/all_goods_view.dart';
+import 'package:jingyaoyun/pages/live/live_stream/pick_view/goods_cart_view.dart';
+import 'package:jingyaoyun/pages/live/live_stream/pick_view/goods_window_view.dart';
+import 'package:jingyaoyun/pages/live/live_stream/pick_view/hot_goods_view.dart';
+import 'package:jingyaoyun/pages/live/live_stream/pick_view/pick_cart.dart';
+import 'package:jingyaoyun/pages/live/models/goods_window_model.dart';
+import 'package:jingyaoyun/utils/custom_route.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/recook_back_button.dart';
+import 'package:jingyaoyun/widgets/recook_indicator.dart';
 
 class LivePickGoodsPage extends StatefulWidget {
   final Function(List<num> ids) onPickGoods;

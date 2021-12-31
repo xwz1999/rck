@@ -2,7 +2,7 @@ import "dart:math";
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/pages/goods/small_coupon_widget.dart';
+import 'package:jingyaoyun/pages/goods/small_coupon_widget.dart';
 
 class CouponPainter extends CustomPainter {
   final SmallCouponType type;

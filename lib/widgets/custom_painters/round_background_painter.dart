@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/constants.dart';
+import 'package:jingyaoyun/constants/constants.dart';
 
 class RoundBackgroundPainter extends CustomPainter {
   @override

@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/pages/live/widget/local_file_video.dart';
-import 'package:recook/pages/live/widget/network_file_video.dart';
+import 'package:jingyaoyun/pages/live/widget/local_file_video.dart';
+import 'package:jingyaoyun/pages/live/widget/network_file_video.dart';
 
 class VideoPreviewPage extends StatefulWidget {
   final File file;

@@ -1,5 +1,5 @@
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 class UserAuthorityUtil{
 

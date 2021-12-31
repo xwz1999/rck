@@ -2,17 +2,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/pages/goods/function/report_functions.dart';
-import 'package:recook/pages/goods/goods_report/widget/bar_table_widget.dart';
-import 'package:recook/pages/goods/goods_report/widget/circle_chart_widget.dart';
-import 'package:recook/pages/goods/goods_report/widget/line_table_widget.dart';
-import 'package:recook/pages/goods/goods_report/widget/map.dart';
-import 'package:recook/pages/goods/goods_report/widget/pie_table_widget.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/pages/goods/function/report_functions.dart';
+import 'package:jingyaoyun/pages/goods/goods_report/widget/bar_table_widget.dart';
+import 'package:jingyaoyun/pages/goods/goods_report/widget/circle_chart_widget.dart';
+import 'package:jingyaoyun/pages/goods/goods_report/widget/line_table_widget.dart';
+import 'package:jingyaoyun/pages/goods/goods_report/widget/map.dart';
+import 'package:jingyaoyun/pages/goods/goods_report/widget/pie_table_widget.dart';
 import 'package:get/get.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/pages/goods/model/goods_report_model.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/pages/goods/model/goods_report_model.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class GoodsReportWidgetPage extends StatefulWidget {

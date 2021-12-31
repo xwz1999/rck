@@ -3,21 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:oktoast/oktoast.dart';
 
-import 'package:recook/const/resource.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/home/widget/plus_minus_view.dart';
-import 'package:recook/pages/lottery/lottery_cart_model.dart';
-import 'package:recook/pages/lottery/redeem_lottery_page.dart';
-import 'package:recook/pages/lottery/tools/lottery_tool.dart';
-import 'package:recook/pages/lottery/widget/lottery_grid_view.dart';
-import 'package:recook/pages/lottery/widget/lottery_scaffold.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
+import 'package:jingyaoyun/const/resource.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/home/widget/plus_minus_view.dart';
+import 'package:jingyaoyun/pages/lottery/lottery_cart_model.dart';
+import 'package:jingyaoyun/pages/lottery/redeem_lottery_page.dart';
+import 'package:jingyaoyun/pages/lottery/tools/lottery_tool.dart';
+import 'package:jingyaoyun/pages/lottery/widget/lottery_grid_view.dart';
+import 'package:jingyaoyun/pages/lottery/widget/lottery_scaffold.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 
 class LotteryCartPage extends StatefulWidget {
   final bool isDouble;

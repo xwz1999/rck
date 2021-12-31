@@ -18,14 +18,14 @@ import 'package:dio/dio.dart';
 import 'package:path/path.dart';
 import 'package:power_logger/power_logger.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/config.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/image_upload_model.dart';
-import 'package:recook/models/media_model.dart';
-import 'package:recook/utils/image_utils.dart';
-import 'package:recook/utils/print_util.dart';
-import 'package:recook/utils/sc_encrypt_util.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/config.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/image_upload_model.dart';
+import 'package:jingyaoyun/models/media_model.dart';
+import 'package:jingyaoyun/utils/image_utils.dart';
+import 'package:jingyaoyun/utils/print_util.dart';
+import 'package:jingyaoyun/utils/sc_encrypt_util.dart';
 
 typedef OnSuccess<T> = Function(T data, String code, String msg);
 typedef OnFailure = Function(String code, String msg);

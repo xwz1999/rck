@@ -9,7 +9,7 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/header.dart';
+import 'package:jingyaoyun/constants/header.dart';
 
 typedef GridItemBuilder = Widget Function(BuildContext context, int index);
 

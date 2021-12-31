@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/pages/lottery/widget/lottery_ball.dart';
+import 'package:jingyaoyun/pages/lottery/widget/lottery_ball.dart';
 
 class LotteryResultBoxes extends StatelessWidget {
   final List<int> redBalls;

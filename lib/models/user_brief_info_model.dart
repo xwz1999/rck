@@ -250,7 +250,7 @@ class VersionInfo {
 //     }
 //   */
 // import 'package:json_annotation/json_annotation.dart';
-// import 'package:recook/models/base_model.dart';
+// import 'package:jingyaoyun/models/base_model.dart';
 
 // part 'user_brief_info_model.g.dart';
 

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:recook/const/resource.dart';
-import 'package:recook/pages/goods/model/goods_report_model.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/const/resource.dart';
+import 'package:jingyaoyun/pages/goods/model/goods_report_model.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 //封装地图实体类
 class MapEntity {

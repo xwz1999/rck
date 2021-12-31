@@ -1,8 +1,8 @@
 
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/business/recommend/mvp/recommend_mvp_contact.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/business/recommend/mvp/recommend_mvp_contact.dart';
 
 class RecommendModelImpl extends RecommendModelI{
   @override

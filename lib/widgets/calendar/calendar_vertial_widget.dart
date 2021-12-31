@@ -1,8 +1,8 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_calendar/flutter_custom_calendar.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/widgets/calendar/xiata_calendar_widget.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/widgets/calendar/xiata_calendar_widget.dart';
 
 typedef DatePickerCallBack = Function(BuildContext context, DateTime start);
 

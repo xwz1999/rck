@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/constants.dart';
-import 'package:recook/widgets/recook/recook_scaffold.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
 
 class OverseaAcceptLicensePage extends StatelessWidget {
   const OverseaAcceptLicensePage({Key key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:recook/pages/user/model/user_benefit_month_detail_model.dart';
+import 'package:jingyaoyun/pages/user/model/user_benefit_month_detail_model.dart';
 
 class UserBenefitModelsTest {
   static runTest() {

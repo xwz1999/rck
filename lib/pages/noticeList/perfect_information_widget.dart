@@ -3,9 +3,9 @@ import 'package:flutter/widgets.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/input_view.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/input_view.dart';
 
 class PerfectInformationWidget extends StatefulWidget {
   final Function(String) onSubmit;

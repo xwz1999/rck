@@ -1,4 +1,4 @@
-import 'package:recook/pages/user/user_benefit_sub_page.dart';
+import 'package:jingyaoyun/pages/user/user_benefit_sub_page.dart';
 
 class UserBenefitSubModel {
   String code;

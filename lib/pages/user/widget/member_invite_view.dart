@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/constants.dart';
-import 'package:recook/constants/styles.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/constants/styles.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 class MemberInviteView extends StatefulWidget {
   final Function listener;

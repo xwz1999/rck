@@ -7,19 +7,19 @@
  * ====================================================
  */
 
-import 'package:recook/base/http_result_model.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/models/base_model.dart';
-import 'package:recook/models/invoice_list_model.dart';
-import 'package:recook/models/logistic_list_model.dart';
-import 'package:recook/models/order_after_sales_list_model.dart';
-import 'package:recook/models/order_detail_model.dart';
-import 'package:recook/models/order_list_model.dart';
-import 'package:recook/models/user_role_upgrade_model.dart';
-import 'package:recook/pages/shop/order/shop_order_list_page.dart';
-import 'package:recook/pages/user/mvp/order_list_contact.dart';
-import 'package:recook/pages/user/mvp/order_list_model_impl.dart';
-import 'package:recook/pages/user/order/order_list_page.dart';
+import 'package:jingyaoyun/base/http_result_model.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/models/base_model.dart';
+import 'package:jingyaoyun/models/invoice_list_model.dart';
+import 'package:jingyaoyun/models/logistic_list_model.dart';
+import 'package:jingyaoyun/models/order_after_sales_list_model.dart';
+import 'package:jingyaoyun/models/order_detail_model.dart';
+import 'package:jingyaoyun/models/order_list_model.dart';
+import 'package:jingyaoyun/models/user_role_upgrade_model.dart';
+import 'package:jingyaoyun/pages/shop/order/shop_order_list_page.dart';
+import 'package:jingyaoyun/pages/user/mvp/order_list_contact.dart';
+import 'package:jingyaoyun/pages/user/mvp/order_list_model_impl.dart';
+import 'package:jingyaoyun/pages/user/order/order_list_page.dart';
 
 class OrderAfterSalesListPresenterImpl extends OrderAfterSalesListPresenterI{
   @override

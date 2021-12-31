@@ -1,25 +1,11 @@
-/*
- * ====================================================
- * package   : 
- * author    : Created by nansi.
- * time      : 2019/6/3  1:49 PM 
- * remark    : 
- * ====================================================
- */
 
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:recook/constants/api.dart';
-
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/meiqia_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/goods_detail_model.dart';
-import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/goods_item.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/models/goods_detail_model.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
 
 typedef VoidListener = Function();
 typedef FavoriteListener = Function(bool favorite);
@@ -35,7 +21,7 @@ class DetailBottomBar extends StatefulWidget {
     this.controller,
     this.goodsDetail,
     this.isLive = false,
-    this.liveId = 0, this.seckillout,
+    this.liveId = 0,
   });
 
   final VoidListener addToShopCartListener;
@@ -50,7 +36,6 @@ class DetailBottomBar extends StatefulWidget {
 
   final bool isLive;
   final int liveId;
-  final bool seckillout;
 
   @override
   State<StatefulWidget> createState() {
@@ -85,20 +70,14 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
   Widget build(BuildContext context) {
     print("改变了");
     return AnimatedOpacity(
-      // If the Widget should be visible, animate to 1.0 (fully visible). If
-      // the Widget should be hidden, animate to 0.0 (invisible).
       opacity: !widget.controller.bottomBarHidden ? 1.0 : 0.0,
       duration: Duration(milliseconds: 500),
-      // The green box needs to be the child of the AnimatedOpacity
       child: Offstage(
         offstage: widget.controller.bottomBarHidden,
         child: _bottomBar(),
       ),
     );
-    // return Offstage(
-    //   offstage: widget.controller.bottomBarHidden,
-    //   child: _bottomBar(),
-    // );
+
   }
 
   _bottomBar() {
@@ -153,38 +132,9 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                 widget.collectListener(!_collected);
               },
             ),
-            //1.10x新增客服按钮
-            // CustomImageButton(
-            //   title: "客服",
-            //   padding: EdgeInsets.only(left: 5, bottom: 2, right: 5),
-            //   contentSpacing: 0,
-            //   icon: Icon(
-            //     AppIcons.icon_message,
-            //     size: rSize(30),
-            //   ),
-            //   fontSize: 10,
-            //   onPressed: () {
-            //     MQManager.goToChat(
-            //       userId: UserManager.instance.user.info.id.toString(),
-            //       userInfo: <String, String>{
-            //         "name": UserManager.instance.user.info.nickname ?? "",
-            //         "gender": UserManager.instance.user.info.gender == 1
-            //             ? "男"
-            //             : "女",
-            //         "mobile": UserManager.instance.user.info.mobile ?? ""
-            //
-            //       },
-            //       goodsName: widget.goodsDetail.data.goodsName??"",
-            //       goodsUrl: Api.getImgUrl(widget.goodsDetail.data.mainPhotos.first.url),
-            //       );
-            //
-            //   },
-            // ),
-
             Container(
               width: 15.rw,
             ),
-            widget.seckillout?_oneButtonRow():
             widget.goodsDetail == null || widget.goodsDetail.data.inventory > 0
                 ? AppConfig.getShowCommission()
                     ? _twoButtonRow()

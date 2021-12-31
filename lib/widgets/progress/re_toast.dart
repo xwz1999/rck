@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:bot_toast/bot_toast.dart';
 
-import 'package:recook/widgets/progress/loading_dialog.dart';
+import 'package:jingyaoyun/widgets/progress/loading_dialog.dart';
 
 class ReToast {
   static Function loading({String text}) {

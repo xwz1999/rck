@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:banner_view/banner_view.dart';
 
-import 'package:recook/constants/header.dart';
+import 'package:jingyaoyun/constants/header.dart';
 
 ///广告banner
 ///author: yinbiao

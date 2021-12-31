@@ -19,12 +19,12 @@ import 'package:flutter/material.dart';
 
 import 'package:redux/redux.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/user_role_upgrade_model.dart';
-import 'package:recook/pages/shop/widget/shop_page_upgrade_alert.dart';
-import 'package:recook/redux/recook_state.dart';
-import 'package:recook/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/user_role_upgrade_model.dart';
+import 'package:jingyaoyun/pages/shop/widget/shop_page_upgrade_alert.dart';
+import 'package:jingyaoyun/redux/recook_state.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
 
 enum UserLevel { None, Partner, Top, First, Second, Others }
 enum UserRoleLevel {
@@ -198,18 +198,13 @@ class UserLevelTool {
 
   static String cardBadge(UserRoleLevel roleLevel) {
     switch (roleLevel) {
-      case UserRoleLevel.Silver:
+      case UserRoleLevel.Master:
         return R.ASSETS_SHOP_SILVER_BADGE_PNG;
         break;
-      case UserRoleLevel.Gold:
-        return R.ASSETS_SHOP_GOLD_BADGE_PNG;
-        break;
-      case UserRoleLevel.Diamond_1:
-      case UserRoleLevel.Diamond_2:
-      case UserRoleLevel.Diamond_3:
+      case UserRoleLevel.Shop:
         return R.ASSETS_SHOP_DIAMOND_BADGE_PNG;
         break;
-      case UserRoleLevel.Master:
+      case UserRoleLevel.Vip:
         return R.ASSETS_SHOP_MASTER_BADGE_PNG;
         break;
       default:
@@ -237,15 +232,13 @@ class UserLevelTool {
 
   static String get userCardBackground {
     switch (UserLevelTool.currentRoleLevelEnum()) {
-      case UserRoleLevel.Diamond_1:
-      case UserRoleLevel.Diamond_2:
-      case UserRoleLevel.Diamond_3:
+      case UserRoleLevel.Vip:
+        return R.ASSETS_USER_NORMAL_WEBP;
+        break;
+      case UserRoleLevel.Shop:
         return R.ASSETS_USER_DIAMOND_WEBP;
         break;
-      case UserRoleLevel.Gold:
-        return R.ASSETS_USER_GOLD_WEBP;
-        break;
-      case UserRoleLevel.Silver:
+      case UserRoleLevel.Master:
         return R.ASSETS_USER_SLIVER_WEBP;
         break;
       default:
@@ -382,7 +375,7 @@ class UserLevelTool {
   }
 
   static String currentRoleLevel() {
-    return roleLevel(UserManager.instance.user.info.roleLevel);
+    return roleLevel(UserManager.instance.userBrief.level);
   }
 
   static String roleLevel(int level) {
@@ -391,24 +384,16 @@ class UserLevelTool {
     }
     String roleLevel = "";
     switch (level) {
-      case 100:
-      case 130:
-      case 160:
-        roleLevel = "钻石店铺";
-        break;
-
-      case 200:
-        roleLevel = "黄金店铺";
-        break;
-      case 300:
-        roleLevel = "白银店铺";
-        break;
-      case 400:
-        roleLevel = "店主";
-        break;
-      case 500:
+      case 0:
         roleLevel = "会员";
         break;
+      case 1:
+        roleLevel = "店主";
+        break;
+      case 2:
+        roleLevel = "店铺";
+        break;
+
       default:
     }
     return roleLevel;

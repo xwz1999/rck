@@ -29,16 +29,6 @@
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>openinstall</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>uapywo</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
 			<string>alipay</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
@@ -62,7 +52,7 @@
 			<string>weixin</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>wx21724a42aebe20cc</string>
+				<string>wx737af52b2ad6d518</string>
 			</array>
 		</dict>
 		<dict>
@@ -197,8 +187,6 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>com.openinstall.APP_KEY</key>
-	<string>uapywo</string>
 	<key>io.flutter.embedded_views_preview</key>
 	<string>YES</string>
 </dict>

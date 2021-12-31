@@ -9,10 +9,10 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/text_button.dart' as TButton;
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/text_button.dart' as TButton;
 
 class GoodsServiceGuarantee extends StatefulWidget {
   // final List<Sku> skus;

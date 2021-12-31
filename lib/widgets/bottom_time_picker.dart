@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:recook/constants/styles.dart';
-import 'package:recook/widgets/month_select_widget.dart';
-import 'package:recook/widgets/title_switch.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/widgets/month_select_widget.dart';
+import 'package:jingyaoyun/widgets/title_switch.dart';
 
 enum BottomTimePickerType {
   BottomTimePickerMonth, 

@@ -4,15 +4,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:recook/utils/image_utils.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/utils/image_utils.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:get/get.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
-import 'package:recook/widgets/recook_back_button.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/progress/re_toast.dart';
+import 'package:jingyaoyun/widgets/recook_back_button.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class WxContactPage extends StatefulWidget {
@@ -91,7 +91,7 @@ class _WxContactPageState extends State<WxContactPage>
           50.hb,
           GestureDetector(
             onTap: () {
-              ClipboardData data = new ClipboardData(text: 'jyy123456');
+              ClipboardData data = new ClipboardData(text: 'wmjbbdsj');
               Clipboard.setData(data);
               ReToast.success(text: '复制成功');
             },
@@ -101,7 +101,7 @@ class _WxContactPageState extends State<WxContactPage>
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "微信号：jyy123456",
+                    "微信号：wmjbbdsj",
                     style: TextStyle(
                       color: Color(0xFF333333),
                       fontSize: 16.rsp,

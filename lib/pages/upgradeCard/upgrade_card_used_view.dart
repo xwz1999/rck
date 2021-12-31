@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/pages/upgradeCard/function/user_card_function.dart';
-import 'package:recook/pages/upgradeCard/model/user_card_%20model.dart';
-import 'package:recook/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/pages/upgradeCard/function/user_card_function.dart';
+import 'package:jingyaoyun/pages/upgradeCard/model/user_card_%20model.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 
 class UpgradeUsedView extends StatefulWidget {
   UpgradeUsedView({Key key}) : super(key: key);

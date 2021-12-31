@@ -14,28 +14,23 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 import 'package:extended_image/extended_image.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:jingyaoyun/pages/tabBar/TabbarWidget.dart';
 import 'package:package_info/package_info.dart';
-import 'package:power_logger/power_logger.dart';
-
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/app_image_resources.dart';
-import 'package:recook/constants/config.dart';
-import 'package:recook/constants/constants.dart';
-import 'package:recook/daos/user_dao.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/user_model.dart';
-import 'package:recook/pages/user/functions/user_func.dart';
-import 'package:recook/utils/app_router.dart';
-import 'package:recook/utils/permission_tool.dart';
-import 'package:recook/utils/print_util.dart';
-import 'package:recook/utils/share_preference.dart';
-import 'package:recook/utils/storage/hive_store.dart';
-import 'package:recook/widgets/toast.dart';
-import 'package:jpush_flutter/jpush_flutter.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/app_image_resources.dart';
+import 'package:jingyaoyun/constants/config.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/daos/user_dao.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/user_model.dart';
+import 'package:jingyaoyun/utils/print_util.dart';
+import 'package:jingyaoyun/utils/share_preference.dart';
+import 'package:jingyaoyun/utils/storage/hive_store.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 class WelcomeWidget extends StatefulWidget {
   @override
@@ -43,29 +38,20 @@ class WelcomeWidget extends StatefulWidget {
 }
 
 class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
-  final JPush jpush = new JPush();
   String debugLable = 'Unknown';
   String _backgroundUrl;
   bool _close = false;
   int _countDownNum = 3;
   int _goodsId = 0;
   Timer _timer;
-  //List<KingCoinListModel> kingCoinListModelList;
   @override
   Widget buildContext(BuildContext context, {store}) {
     Constants.initial(context);
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    // double picHeight = width*1.51>height?height-50:width*1.51;
     double picHeight = height * 0.80;
     double bottomHeight = height - picHeight;
-    double bottomPicHeight = 50;
-    TextStyle textStyle = TextStyle(
-        color: Colors.black.withOpacity(0.7),
-        fontWeight: FontWeight.w300,
-        fontSize: 11 * 2.sp);
     return Scaffold(
-      // backgroundColor: Colors.blueGrey,
       body: Center(
           child: Column(
         children: <Widget>[
@@ -84,36 +70,26 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                   child: Container(
                     child: _backgroundUrl != null
                         ? ExtendedImage.network(Api.getImgUrl(_backgroundUrl),
-                            // 'https://cdn.reecook.cn/static/photo/test01.png',
                             width: width,
                             alignment: Alignment.center,
                             height: picHeight,
-                            // fit: BoxFit.fill,
-                            fit: BoxFit.fitWidth,
+                             fit: BoxFit.fill,
+                            //fit: BoxFit.fitHeight,
                             enableLoadState: false)
                         : Container(),
                   ),
-                  // child: _backgroundUrl != null ?
-                  //   ExtendedImage.network(
-                  //     Api.getImgUrl(_backgroundUrl),
-                  //     width: width,
-                  //     alignment: Alignment.bottomCenter,
-                  //     height: picHeight,
-                  //     fit: BoxFit.fitWidth,
-                  //     enableLoadState:false)
-                  //   : Container(),
                 ),
               ),
               Positioned(
-                top: ScreenUtil().statusBarHeight + 20,
-                right: 30,
+                top: ScreenUtil().statusBarHeight + 20.rw,
+                right: 30.rw,
                 child: GestureDetector(
                   onTap: () {
                     _close = true;
                     _pushToTabbar();
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    padding: EdgeInsets.symmetric(horizontal: 10.rw, vertical: 5.rw),
                     alignment: Alignment.center,
                     child: Text(
                       '跳过' +
@@ -124,8 +100,8 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                           fontSize: 15 * 2.sp),
                     ),
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white, width: 0.6),
-                        borderRadius: BorderRadius.all(Radius.circular(23)),
+                        border: Border.all(color: Colors.white, width: 0.6.rw),
+                        borderRadius: BorderRadius.all(Radius.circular(23.rw)),
                         color: Colors.black.withAlpha(60)),
                   ),
                 ),
@@ -152,8 +128,6 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
   @override
   void initState() {
     super.initState();
-
-    initPlatformState();
     getPackageInfo();
     _autoLogin();
     _showController();
@@ -165,63 +139,6 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
       if (UserManager.instance.haveLogin) {
         UserManager.instance.activePeople();
       }
-    });
-
-  }
-
-  Future<void> initPlatformState() async {
-    String platformVersion;
-
-    try {
-      jpush.addEventHandler(
-          onReceiveNotification: (Map<String, dynamic> message) async {
-        print("flutter onReceiveNotification: $message");
-        setState(() {
-          debugLable = "flutter onReceiveNotification: $message";
-        });
-      }, onOpenNotification: (Map<String, dynamic> message) async {
-        print("flutter onOpenNotification: $message");
-        setState(() {
-          debugLable = "flutter onOpenNotification: $message";
-        });
-      }, onReceiveMessage: (Map<String, dynamic> message) async {
-        print("flutter onReceiveMessage: $message");
-        setState(() {
-          debugLable = "flutter onReceiveMessage: $message";
-        });
-      }, onReceiveNotificationAuthorization:
-              (Map<String, dynamic> message) async {
-        print("flutter onReceiveNotificationAuthorization: $message");
-        setState(() {
-          debugLable = "flutter onReceiveNotificationAuthorization: $message";
-        });
-      });
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    jpush.setup(
-      appKey: "2dba4439e97b3c0b78146fab", //你自己应用的 AppKey
-      channel: "theChannel",
-      production: false,
-      debug: true,
-    );
-    jpush.applyPushAuthority(
-        new NotificationSettingsIOS(sound: true, alert: true, badge: true));
-
-    // Platform messages may fail, so we use a try/catch PlatformException.
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      debugLable = platformVersion;
-    });
-    jpush.getRegistrationID().then((rid) {
-      print("flutter get registration id : $rid");
-      UserManager.instance.jpushRid = rid;
     });
 
   }
@@ -300,10 +217,6 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                             "跟着英子去开店",
                             style: textStyle,
                           ),
-                          // Text(
-                          //   "让生活充满精致",
-                          //   style: textStyle,
-                          // ),
                         ],
                       ),
                       Spacer(),
@@ -344,9 +257,9 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                         ),
                       ],
                       borderRadius:
-                          BorderRadius.all(Radius.circular(rSize(10)))),
+                          BorderRadius.all(Radius.circular(10.rw))),
                   child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(10.rw),
                     child: AspectRatio(
                       aspectRatio: 1.0 / 1.0,
                       child: Image.asset(AppImageName.recook_icon_300,
@@ -358,7 +271,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
             )),
             Expanded(
               child: Container(
-                margin: EdgeInsets.only(top: 10),
+                margin: EdgeInsets.only(top: 10.rw),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
@@ -367,10 +280,6 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                       "跟着英子去开店",
                       style: textStyle,
                     ),
-                    // Text(
-                    //   "让生活充满精致",
-                    //   style: textStyle,
-                    // ),
                   ],
                 ),
               ),
@@ -385,22 +294,6 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     手机登录
    */
   _autoLogin() {
-    _getLaunchInfo();
-    //无效代码
-    // UserDao.autoLogin(
-    //   {'userId': UserManager.instance.user.info.id},
-    //   failure: (String code, String msg) {},
-    //   success: (User data, String code, String msg) {},
-    // );
-  }
-
-  _getLaunchInfo() {
-    // Future.delayed(Duration(seconds: 2), () {
-    // SharePreferenceUtils.getString(AppStrings.key_user).then((value) {
-    //   LoggerData.addData(value);
-    //   _launch(value);
-    // });
-    // });
     var value = HiveStore.appBox.get('key_user');
     _launch(value);
   }
@@ -414,12 +307,6 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
         params.putIfAbsent("userId", () => user.info.id);
       }
     }
-    if (user != null && user.info.id != 0) {
-      // _userLogin(user);
-    } else {
-      // _touristLogin();
-    }
-
     UserDao.launch(params, success: (data, code, msg) {
       Map res = data;
       DPrint.printf('$res');
@@ -446,28 +333,17 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
 
   _userLogin(User user) {
     UserManager.updateUser(user, getStore()).then((login) {});
-
-    //  _delayedFunc(_pushToTabbar);
   }
 
   _touristLogin() {
     UserManager.logout();
     SharePreferenceUtils.remove(AppStrings.key_user);
-    //  _delayedFunc(_pushToTabbar);
-    /// 登录失效先清空个人信息  变成游客模式
   }
 
-// _delayedFunc(Function func){
-//   Future.delayed(Duration(seconds: 4), () {
-//     if (!_close && func != null) {
-//       func();
-//     }
-//   });
-// }
   _pushToTabbar() {
     _timer.cancel();
     _timer = null;
-    AppRouter.fadeAndReplaced(globalContext, RouteName.TAB_BAR);
+    Get.offAll(TabBarWidget());
   }
 
   _beginCountDown() {

@@ -3,11 +3,11 @@ import 'package:flutter_gifimage/flutter_gifimage.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:recook/models/goods_simple_list_model.dart';
-import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/models/goods_simple_list_model.dart';
+import 'package:jingyaoyun/pages/live/live_stream/live_stream_view_page.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
-import 'package:recook/constants/header.dart';
+import 'package:jingyaoyun/constants/header.dart';
 
 class OverlayLivingBtnWidget extends StatefulWidget {
   final Living living;

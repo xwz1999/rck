@@ -9,109 +9,107 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/pages/aftersale/choose_after_sale_type_page.dart';
-import 'package:recook/pages/business/publish_business_district_page.dart';
-import 'package:recook/pages/business/selling_point/selling_point_page.dart';
-import 'package:recook/pages/home/barcode/fail_barcode_page.dart';
-import 'package:recook/pages/home/barcode/input_barcode_page.dart';
-import 'package:recook/pages/home/barcode/photos_fail_barcode_page.dart';
-import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
-import 'package:recook/pages/home/classify/commodity_detail_page.dart';
-import 'package:recook/pages/home/classify/evaluation_list_page.dart';
-import 'package:recook/pages/home/classify/goods_list_page.dart';
-import 'package:recook/pages/home/classify/order_prepay_page.dart';
-import 'package:recook/pages/home/classify/order_preview_page.dart';
-import 'package:recook/pages/home/home_page.dart';
-import 'package:recook/pages/home/newuserDiscount/new_user_discount_page.dart';
-import 'package:recook/pages/home/purchase_ranking_page.dart';
-import 'package:recook/pages/home/search_page.dart';
-import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
-import 'package:recook/pages/home/widget/goods_list_temp_page.dart';
-import 'package:recook/pages/login/input_invitation_code_page.dart';
-import 'package:recook/pages/login/login_page.dart';
-import 'package:recook/pages/login/phone_login_page.dart';
-import 'package:recook/pages/login/wechat_bind_page.dart';
-import 'package:recook/pages/login/wechat_input_invitecode_page.dart';
-import 'package:recook/pages/lottery/lottery_help_page.dart';
-import 'package:recook/pages/lottery/lottery_order_page.dart';
-import 'package:recook/pages/lottery/redeem_lottery_page.dart';
-import 'package:recook/pages/shop/cumulative_income_page.dart';
-import 'package:recook/pages/shop/member_benefits_page.dart';
-import 'package:recook/pages/shop/order/shop_order_center_page.dart';
-import 'package:recook/pages/shop/order/shop_order_detail_page.dart';
-import 'package:recook/pages/shop/shop_commission_info_page.dart';
-import 'package:recook/pages/shop/shop_page_sub_income_page.dart';
-import 'package:recook/pages/shop/shop_page_user_rights_page.dart';
-import 'package:recook/pages/shop/shop_performance_info_page.dart';
-import 'package:recook/pages/shop/upgrade/shop_recommend_upgrade_page.dart';
-import 'package:recook/pages/shop/upgrade/shop_upgrade_code_page.dart';
-import 'package:recook/pages/shopping_cart/shopping_cart_page.dart';
-import 'package:recook/pages/store/modify_info_page.dart';
-import 'package:recook/pages/store/store_detail_page.dart';
-import 'package:recook/pages/store/store_page.dart';
-import 'package:recook/pages/tabBar/TabbarWidget.dart';
-import 'package:recook/pages/upgradeCard/upgrade_card_page.dart';
-import 'package:recook/pages/upgradeCard/upgrade_card_send_user_list_page.dart';
-import 'package:recook/pages/user/about_us_page.dart';
-import 'package:recook/pages/user/account_and_safety/account_and_safety_page.dart';
-import 'package:recook/pages/user/account_and_safety/delete_account_page.dart';
-import 'package:recook/pages/user/address/new_address_page.dart';
-import 'package:recook/pages/user/address/receiving_address_page.dart';
-import 'package:recook/pages/user/balance_page.dart';
-import 'package:recook/pages/user/cash_withdraw_history_page.dart';
-import 'package:recook/pages/user/cash_withdraw_result_page.dart';
-import 'package:recook/pages/user/invite/invite_search_page.dart';
-import 'package:recook/pages/user/invite/user_invite.dart';
-import 'package:recook/pages/user/invite/user_invite_detail.dart';
-import 'package:recook/pages/user/invoice/Invoice_with_goods_page.dart';
-import 'package:recook/pages/user/invoice/invoice_add_title_page.dart';
-import 'package:recook/pages/user/invoice/invoice_detail_page.dart';
-import 'package:recook/pages/user/invoice/invoice_history_page.dart';
-import 'package:recook/pages/user/invoice/invoice_page.dart';
-import 'package:recook/pages/user/invoice/invoice_upload_done_page.dart';
-import 'package:recook/pages/user/invoice/invoice_usually_used_page.dart';
-import 'package:recook/pages/user/my_coupon_list_page.dart';
-import 'package:recook/pages/user/my_favorites_page.dart';
-import 'package:recook/pages/user/order/after_sales_log_page.dart';
-import 'package:recook/pages/user/order/invoice_add_page.dart';
-import 'package:recook/pages/user/order/invoice_list_page.dart';
-import 'package:recook/pages/user/order/logistic_detail_page.dart';
-import 'package:recook/pages/user/order/order_after_sale_page.dart';
-import 'package:recook/pages/user/order/order_center_page.dart';
-import 'package:recook/pages/user/order/order_detail_page.dart';
-import 'package:recook/pages/user/order/order_logistics_list_page.dart';
-import 'package:recook/pages/user/order/order_return_address_page.dart';
-import 'package:recook/pages/user/order/order_return_status_page.dart';
-import 'package:recook/pages/user/order/publish_evaluation_page.dart';
-import 'package:recook/pages/user/order/refund_goods_page.dart';
-import 'package:recook/pages/user/order/return_goods_page.dart';
-import 'package:recook/pages/user/qrcode/user_info_qrcode_page.dart';
-import 'package:recook/pages/user/review/review_page.dart';
-import 'package:recook/pages/user/rui_coin_page.dart';
-import 'package:recook/pages/user/rui_transfer_to_balance_page.dart';
-import 'package:recook/pages/user/setting_page.dart';
-import 'package:recook/pages/user/user_billing_details.dart';
-import 'package:recook/pages/user/user_cash_withdraw_page.dart';
-import 'package:recook/pages/user/user_info_address_page.dart';
-import 'package:recook/pages/user/user_info_page.dart';
-import 'package:recook/pages/user/user_page_sub_income_page.dart';
-import 'package:recook/pages/user/user_set_password.dart';
-import 'package:recook/pages/user/user_set_password_again.dart';
-import 'package:recook/pages/user/user_set_password_varcode.dart';
-import 'package:recook/pages/user/user_verify.dart';
-import 'package:recook/pages/user/user_verify_result.dart';
-import 'package:recook/pages/welcome/welcome_widget.dart';
-import 'package:recook/utils/navigator_utils.dart';
-import 'package:recook/widgets/barcodeScan.dart';
-import 'package:recook/widgets/bussiness_cooperation_page.dart';
-import 'package:recook/widgets/custom_route.dart';
-import 'package:recook/widgets/pic_swiper.dart';
-import 'package:recook/widgets/result_page.dart';
-import 'package:recook/widgets/share_page/share_goods_poster_page.dart';
-import 'package:recook/widgets/share_page/share_url_poster_page.dart';
-import 'package:recook/widgets/text_page.dart';
-import 'package:recook/widgets/weather_page/weather_city_page.dart';
-import 'package:recook/widgets/webView.dart';
+import 'package:jingyaoyun/pages/aftersale/choose_after_sale_type_page.dart';
+import 'package:jingyaoyun/pages/business/publish_business_district_page.dart';
+import 'package:jingyaoyun/pages/business/selling_point/selling_point_page.dart';
+import 'package:jingyaoyun/pages/home/barcode/fail_barcode_page.dart';
+import 'package:jingyaoyun/pages/home/barcode/input_barcode_page.dart';
+import 'package:jingyaoyun/pages/home/barcode/photos_fail_barcode_page.dart';
+import 'package:jingyaoyun/pages/home/classify/brandgoods_list_page.dart';
+import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
+import 'package:jingyaoyun/pages/home/classify/evaluation_list_page.dart';
+import 'package:jingyaoyun/pages/home/classify/goods_list_page.dart';
+import 'package:jingyaoyun/pages/home/classify/order_prepay_page.dart';
+import 'package:jingyaoyun/pages/home/classify/order_preview_page.dart';
+import 'package:jingyaoyun/pages/home/home_page.dart';
+import 'package:jingyaoyun/pages/home/newuserDiscount/new_user_discount_page.dart';
+import 'package:jingyaoyun/pages/home/search_page.dart';
+import 'package:jingyaoyun/pages/home/widget/goods_hot_list_page.dart';
+import 'package:jingyaoyun/pages/home/widget/goods_list_temp_page.dart';
+import 'package:jingyaoyun/pages/login/input_invitation_code_page.dart';
+import 'package:jingyaoyun/pages/login/login_page.dart';
+import 'package:jingyaoyun/pages/login/phone_login_page.dart';
+import 'package:jingyaoyun/pages/login/wechat_bind_page.dart';
+import 'package:jingyaoyun/pages/login/wechat_input_invitecode_page.dart';
+import 'package:jingyaoyun/pages/lottery/lottery_help_page.dart';
+import 'package:jingyaoyun/pages/lottery/lottery_order_page.dart';
+import 'package:jingyaoyun/pages/lottery/redeem_lottery_page.dart';
+import 'package:jingyaoyun/pages/shop/cumulative_income_page.dart';
+import 'package:jingyaoyun/pages/shop/member_benefits_page.dart';
+import 'package:jingyaoyun/pages/shop/order/shop_order_center_page.dart';
+import 'package:jingyaoyun/pages/shop/order/shop_order_detail_page.dart';
+import 'package:jingyaoyun/pages/shop/shop_commission_info_page.dart';
+import 'package:jingyaoyun/pages/shop/shop_page_sub_income_page.dart';
+import 'package:jingyaoyun/pages/shop/shop_performance_info_page.dart';
+import 'package:jingyaoyun/pages/shop/upgrade/shop_recommend_upgrade_page.dart';
+import 'package:jingyaoyun/pages/shop/upgrade/shop_upgrade_code_page.dart';
+import 'package:jingyaoyun/pages/shopping_cart/shopping_cart_page.dart';
+import 'package:jingyaoyun/pages/store/modify_info_page.dart';
+import 'package:jingyaoyun/pages/store/store_detail_page.dart';
+import 'package:jingyaoyun/pages/store/store_page.dart';
+import 'package:jingyaoyun/pages/tabBar/TabbarWidget.dart';
+import 'package:jingyaoyun/pages/upgradeCard/upgrade_card_page.dart';
+import 'package:jingyaoyun/pages/upgradeCard/upgrade_card_send_user_list_page.dart';
+import 'package:jingyaoyun/pages/user/about_us_page.dart';
+import 'package:jingyaoyun/pages/user/account_and_safety/account_and_safety_page.dart';
+import 'package:jingyaoyun/pages/user/account_and_safety/delete_account_page.dart';
+import 'package:jingyaoyun/pages/user/address/new_address_page.dart';
+import 'package:jingyaoyun/pages/user/address/receiving_address_page.dart';
+import 'package:jingyaoyun/pages/user/balance_page.dart';
+import 'package:jingyaoyun/pages/user/cash_withdraw_history_page.dart';
+import 'package:jingyaoyun/pages/user/cash_withdraw_result_page.dart';
+import 'package:jingyaoyun/pages/user/invite/invite_search_page.dart';
+import 'package:jingyaoyun/pages/user/invite/user_invite.dart';
+import 'package:jingyaoyun/pages/user/invite/user_invite_detail.dart';
+import 'package:jingyaoyun/pages/user/invoice/Invoice_with_goods_page.dart';
+import 'package:jingyaoyun/pages/user/invoice/invoice_add_title_page.dart';
+import 'package:jingyaoyun/pages/user/invoice/invoice_detail_page.dart';
+import 'package:jingyaoyun/pages/user/invoice/invoice_history_page.dart';
+import 'package:jingyaoyun/pages/user/invoice/invoice_page.dart';
+import 'package:jingyaoyun/pages/user/invoice/invoice_upload_done_page.dart';
+import 'package:jingyaoyun/pages/user/invoice/invoice_usually_used_page.dart';
+import 'package:jingyaoyun/pages/user/my_coupon_list_page.dart';
+import 'package:jingyaoyun/pages/user/my_favorites_page.dart';
+import 'package:jingyaoyun/pages/user/order/after_sales_log_page.dart';
+import 'package:jingyaoyun/pages/user/order/invoice_add_page.dart';
+import 'package:jingyaoyun/pages/user/order/invoice_list_page.dart';
+import 'package:jingyaoyun/pages/user/order/logistic_detail_page.dart';
+import 'package:jingyaoyun/pages/user/order/order_after_sale_page.dart';
+import 'package:jingyaoyun/pages/user/order/order_center_page.dart';
+import 'package:jingyaoyun/pages/user/order/order_detail_page.dart';
+import 'package:jingyaoyun/pages/user/order/order_logistics_list_page.dart';
+import 'package:jingyaoyun/pages/user/order/order_return_address_page.dart';
+import 'package:jingyaoyun/pages/user/order/order_return_status_page.dart';
+import 'package:jingyaoyun/pages/user/order/publish_evaluation_page.dart';
+import 'package:jingyaoyun/pages/user/order/refund_goods_page.dart';
+import 'package:jingyaoyun/pages/user/order/return_goods_page.dart';
+import 'package:jingyaoyun/pages/user/qrcode/user_info_qrcode_page.dart';
+import 'package:jingyaoyun/pages/user/review/review_page.dart';
+import 'package:jingyaoyun/pages/user/rui_coin_page.dart';
+import 'package:jingyaoyun/pages/user/rui_transfer_to_balance_page.dart';
+import 'package:jingyaoyun/pages/user/setting_page.dart';
+import 'package:jingyaoyun/pages/user/user_billing_details.dart';
+import 'package:jingyaoyun/pages/user/user_cash_withdraw_page.dart';
+import 'package:jingyaoyun/pages/user/user_info_address_page.dart';
+import 'package:jingyaoyun/pages/user/user_info_page.dart';
+import 'package:jingyaoyun/pages/user/user_page_sub_income_page.dart';
+import 'package:jingyaoyun/pages/user/user_set_password.dart';
+import 'package:jingyaoyun/pages/user/user_set_password_again.dart';
+import 'package:jingyaoyun/pages/user/user_set_password_varcode.dart';
+import 'package:jingyaoyun/pages/user/user_verify.dart';
+import 'package:jingyaoyun/pages/user/user_verify_result.dart';
+import 'package:jingyaoyun/pages/welcome/welcome_widget.dart';
+import 'package:jingyaoyun/utils/navigator_utils.dart';
+import 'package:jingyaoyun/widgets/barcodeScan.dart';
+import 'package:jingyaoyun/widgets/bussiness_cooperation_page.dart';
+import 'package:jingyaoyun/widgets/custom_route.dart';
+import 'package:jingyaoyun/widgets/pic_swiper.dart';
+import 'package:jingyaoyun/widgets/result_page.dart';
+import 'package:jingyaoyun/widgets/share_page/share_goods_poster_page.dart';
+import 'package:jingyaoyun/widgets/share_page/share_url_poster_page.dart';
+import 'package:jingyaoyun/widgets/text_page.dart';
+import 'package:jingyaoyun/widgets/weather_page/weather_city_page.dart';
+import 'package:jingyaoyun/widgets/webView.dart';
 import '../pages/user/invoice/invoice_detail_infomation_page.dart';
 
 //图片预览
@@ -189,7 +187,6 @@ class RouteName {
   // 店铺详情
   static const String STORE_PAGE = "/storePage";
   static const String STORE_DETAIL_PAGE = "/storeDetailPage";
-  static const String SHOP_PAGE_USER_RIGHTS_PAGE = "/shopPageUserRightsPage";
 
   // 修改信息
   static const String MODIFY_DETAIL_PAGE = "/modifyDetailPage";
@@ -416,8 +413,6 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.STORE_PAGE: (context, {arguments}) => StorePage(),
   // 店铺详情
   RouteName.STORE_DETAIL_PAGE: (context, {arguments}) => StoreDetailPage(),
-  RouteName.SHOP_PAGE_USER_RIGHTS_PAGE: (context, {arguments}) =>
-      ShopPageUserRightsPage(),
   // 修改店铺信息
   RouteName.MODIFY_DETAIL_PAGE: (context, {arguments}) => ModifyInfoPage(
         arguments: arguments,
@@ -565,9 +560,7 @@ final Map<String, RouteBuilder> _routes = {
       FailBarcodePage(arguments: arguments),
   //  每日上新
   RouteName.SELLING_POINT_PAGE: (context, {arguments}) => SellingPointPage(),
-  //  每日榜单
-  RouteName.PURCHASE_RANKING_PAGE: (context, {arguments}) =>
-      PurchaseRankingPage(),
+
 
   //累计收入
   RouteName.CUMULATIVE_INCOME: (context, {arguments}) => CumulativeIncomePage(),

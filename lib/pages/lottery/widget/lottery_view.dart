@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/pages/lottery/redeem_lottery_page.dart';
-import 'package:recook/pages/lottery/widget/lottery_ball.dart';
-import 'package:recook/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/pages/lottery/redeem_lottery_page.dart';
+import 'package:jingyaoyun/pages/lottery/widget/lottery_ball.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
 
 class LotteryView extends StatefulWidget {
   final LotteryType type;

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 import 'package:redux/redux.dart';
 
-import 'package:recook/constants/styles.dart';
+import 'package:jingyaoyun/constants/styles.dart';
 
 enum AppTheme{
   AppThemeDataLight,

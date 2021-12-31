@@ -1,24 +1,16 @@
 import 'package:flutter/material.dart';
-
-import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:package_info/package_info.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/daos/home_dao.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/category_model.dart';
-import 'package:recook/pages/boosting_activitiy/boosting_activity.dart';
-import 'package:recook/pages/goods/goods_report/goods_report_page.dart';
-import 'package:recook/pages/home/classify/classify_page.dart';
-import 'package:recook/pages/recharge/recharge_page.dart';
-import 'package:recook/pages/seckill_activity/functions/SeckillFunctions.dart';
-import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
-import 'package:recook/pages/seckill_activity/seckill_activity_page.dart';
-import 'package:recook/pages/user/user_info_page.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/sc_tile.dart';
-import 'package:recook/widgets/webView.dart';
+
+import 'package:jingyaoyun/constants/header.dart';
+
+import 'package:jingyaoyun/manager/user_manager.dart';
+
+
+import 'package:jingyaoyun/pages/user/user_info_page.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/sc_tile.dart';
+
 import 'package:need_resume/need_resume.dart';
 import 'package:get/get.dart';
 
@@ -48,31 +40,31 @@ class _SettingItemListViewState extends ResumableState<SettingItemListView> {
   @override
   void initState() {
     super.initState();
-    JPush().isNotificationEnabled().then((bool value) {
-      if (value)
-        perText = '已开启';
-      else
-        perText = '已关闭';
-    }).catchError((onError) {
-      print(onError);
-    });
+  //   JPush().isNotificationEnabled().then((bool value) {
+  //     if (value)
+  //       perText = '已开启';
+  //     else
+  //       perText = '已关闭';
+  //   }).catchError((onError) {
+  //     print(onError);
+  //   });
     getPackageInfo();
   }
 
   @override
   void onResume() {
-    // Implement your code inside here
-    Future.delayed(Duration(milliseconds: 300), () {
-      JPush().isNotificationEnabled().then((bool value) {
-        if (value)
-          perText = '已开启';
-        else
-          perText = '已关闭';
-      }).catchError((onError) {
-        print(onError);
-      });
-      setState(() {});
-    });
+    // // Implement your code inside here
+    // Future.delayed(Duration(milliseconds: 300), () {
+    //   JPush().isNotificationEnabled().then((bool value) {
+    //     if (value)
+    //       perText = '已开启';
+    //     else
+    //       perText = '已关闭';
+    //   }).catchError((onError) {
+    //     print(onError);
+    //   });
+    //   setState(() {});
+    // });
   }
 
   @override
@@ -99,21 +91,21 @@ class _SettingItemListViewState extends ResumableState<SettingItemListView> {
                         //push(RouteName.ACCOUNT_AND_SAFETY_PAGE);
                       }),
 
-                      SCTile.normalTile('接收推送通知',
-                          needArrow: true, value: perText, listener: () async {
-                        JPush().openSettingsForNotification();
-                        //bool result = await openAppSettings();
-
-                        JPush().isNotificationEnabled().then((bool value) {
-                          if (value)
-                            perText = '已开启';
-                          else
-                            perText = '已关闭';
-                        }).catchError((onError) {
-                          print(onError);
-                        });
-                        setState(() {});
-                      }),
+                      // SCTile.normalTile('接收推送通知',
+                      //     needArrow: true, value: perText, listener: () async {
+                      //   JPush().openSettingsForNotification();
+                      //   //bool result = await openAppSettings();
+                      //
+                      //   JPush().isNotificationEnabled().then((bool value) {
+                      //     if (value)
+                      //       perText = '已开启';
+                      //     else
+                      //       perText = '已关闭';
+                      //   }).catchError((onError) {
+                      //     print(onError);
+                      //   });
+                      //   setState(() {});
+                      // }),
                       getEmptyBox(),
                       // SCTile.normalTile("清除缓存", needDivide: true, listener: () {}),
                       // SCTile.normalTile("意见反馈", needDivide: true, listener: () {

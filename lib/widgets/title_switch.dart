@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/styles.dart';
-import 'package:recook/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
 
 class TitleSwitchController {
   Function(int index) changeIndex;

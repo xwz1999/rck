@@ -9,17 +9,17 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/models/goods_list_model.dart';
-import 'package:recook/pages/business/selling_point/mvp/selling_point_list_presenter_impl.dart';
-import 'package:recook/pages/home/classify/commodity_detail_page.dart';
-import 'package:recook/pages/home/items/item_tag_widget.dart';
-import 'package:recook/utils/mvp.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
-import 'package:recook/widgets/no_data_view.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/models/goods_list_model.dart';
+import 'package:jingyaoyun/pages/business/selling_point/mvp/selling_point_list_presenter_impl.dart';
+import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
+import 'package:jingyaoyun/pages/home/items/item_tag_widget.dart';
+import 'package:jingyaoyun/utils/mvp.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view.dart';
+import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:jingyaoyun/widgets/no_data_view.dart';
 
 class SellingPointPage extends StatefulWidget {
   @override

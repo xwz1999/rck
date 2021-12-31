@@ -7,9 +7,9 @@
  * ====================================================
  */
 
-import 'package:recook/models/address_list_model.dart';
-import 'package:recook/utils/mvp.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:jingyaoyun/models/address_list_model.dart';
+import 'package:jingyaoyun/utils/mvp.dart';
+import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
 
 abstract class AddressPresenterI extends MvpListViewPresenterI<Address,AddressViewI,AddressModelI>{
   fetchAddressList(int userId);

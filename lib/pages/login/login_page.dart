@@ -14,19 +14,19 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jpush_flutter/jpush_flutter.dart';
+// import 'package:jpush_flutter/jpush_flutter.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/daos/user_dao.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/login/wechat_bind_page.dart';
-import 'package:recook/third_party/wechat/wechat_utils.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/progress/sc_dialog.dart';
-import 'package:recook/widgets/toast.dart';
-import 'package:recook/widgets/webView.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/daos/user_dao.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/login/wechat_bind_page.dart';
+import 'package:jingyaoyun/third_party/wechat/wechat_utils.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/progress/sc_dialog.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:jingyaoyun/widgets/webView.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -41,6 +41,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
   bool _hasInstallWeChat = false;
   bool _chooseAgreement = false;
   String debugLable = 'Unknown';
+
   @override
   initState() {
     super.initState();
@@ -55,9 +56,9 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
     return Scaffold(
         resizeToAvoidBottomInset: false,
         body: WillPopScope(
-            onWillPop: () async{
-              return false;
-            },
+          onWillPop: () async {
+            return false;
+          },
           child: Stack(
             children: <Widget>[
               Positioned(
@@ -65,7 +66,8 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
                   top: ScreenUtil().statusBarHeight + 10,
                   child: GestureDetector(
                     onTap: () {
-                      AppRouter.fadeAndReplaced(globalContext, RouteName.TAB_BAR);
+                      AppRouter.fadeAndReplaced(
+                          globalContext, RouteName.TAB_BAR);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -144,7 +146,6 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
 
           ///
 
-
           // GestureDetector(
           //   onTap: () {
           //     _chooseAgreement = !_chooseAgreement;
@@ -189,6 +190,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
           //   ),
           // ),
           _buildWeChatLogin(),
+
           ///
           Container(
             height: 20,
@@ -211,38 +213,38 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
       ),
       child: MaterialButton(
         onPressed: () {
-          // if (!_chooseAgreement) {
-          //   DPrint.printf("微信登录");
-          //   WeChatUtils.wxLogin((WXLoginResult result) {
-          //     print(result);
-          //     if (result.errCode == -2) {
-          //       Toast.showInfo('用户取消登录');
-          //     } else if (result.errCode != 0) {
-          //       GSDialog.of(context).dismiss(_context);
-          //       Toast.showInfo(result.errStr);
-          //     } else {
-          //       if (!_weChatLoginLoading) {
-          //         _weChatLoginLoading = true;
-          //         _weChatLogin(result.code);
-          //       }
-          //     }
-          //   });
-          // } else {
-          //   Alert.show(
-          //       context,
-          //       NormalContentDialog(
-          //         type: NormalTextDialogType.remind,
-          //         title: null,
-          //         content: Text(
-          //           '请您先阅读并同意《用户服务协议》和《用户隐私政策》',
-          //           style: TextStyle(color: Colors.black),
-          //         ),
-          //         items: ["确认"],
-          //         listener: (index) {
-          //           Alert.dismiss(context);
-          //         },
-          //       ));
-          // }
+          if (!_chooseAgreement) {
+            DPrint.printf("微信登录");
+            WeChatUtils.wxLogin((WXLoginResult result) {
+              print(result);
+              if (result.errCode == -2) {
+                Toast.showInfo('用户取消登录');
+              } else if (result.errCode != 0) {
+                GSDialog.of(context).dismiss(_context);
+                Toast.showInfo(result.errStr);
+              } else {
+                if (!_weChatLoginLoading) {
+                  _weChatLoginLoading = true;
+                  _weChatLogin(result.code);
+                }
+              }
+            });
+          } else {
+            Alert.show(
+                context,
+                NormalContentDialog(
+                  type: NormalTextDialogType.remind,
+                  title: null,
+                  content: Text(
+                    '请您先阅读并同意《用户服务协议》和《用户隐私政策》',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  items: ["确认"],
+                  listener: (index) {
+                    Alert.dismiss(context);
+                  },
+                ));
+          }
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

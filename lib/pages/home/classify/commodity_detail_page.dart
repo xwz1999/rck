@@ -1,35 +1,27 @@
-/*
- * ====================================================
- * package   : pages.home.classify
- * author    : Created by nansi.
- * time      : 2019/5/20  2:47 PM 
- * remark    : 
- * ====================================================
- */
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/base_model.dart';
-import 'package:recook/models/goods_detail_model.dart';
-import 'package:recook/pages/goods/goods_report/goods_report_page.dart';
-import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
-import 'package:recook/pages/home/classify/goods_page.dart';
-import 'package:recook/pages/home/classify/material_page.dart' as MP;
-import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
-import 'package:recook/pages/home/widget/modify_detail_app_bar.dart';
-import 'package:recook/pages/home/widget/modify_detail_bottom_bar.dart';
-import 'package:recook/pages/seckill_activity/model/SeckillModel.dart';
-import 'package:recook/utils/share_tool.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/cache_tab_bar_view.dart';
-import 'package:recook/widgets/goods_item.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/base_model.dart';
+import 'package:jingyaoyun/models/goods_detail_model.dart';
+import 'package:jingyaoyun/pages/goods/goods_report/goods_report_page.dart';
+import 'package:jingyaoyun/pages/home/classify/brandgoods_list_page.dart';
+import 'package:jingyaoyun/pages/home/classify/goods_page.dart';
+import 'package:jingyaoyun/pages/home/classify/material_page.dart' as MP;
+import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:jingyaoyun/pages/home/widget/modify_detail_app_bar.dart';
+import 'package:jingyaoyun/pages/home/widget/modify_detail_bottom_bar.dart';
+import 'package:jingyaoyun/utils/share_tool.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/cache_tab_bar_view.dart';
+import 'package:jingyaoyun/widgets/goods_item.dart';
+import 'package:jingyaoyun/widgets/progress/re_toast.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 class CommodityDetailPage extends StatefulWidget {
   final Map arguments;
@@ -44,7 +36,7 @@ class CommodityDetailPage extends StatefulWidget {
   }) : super(key: key);
 
   static setArguments(int goodsID, {int liveStatus, int roomId,bool seckillout}) {
-    return {"goodsID": goodsID, 'liveStatus': liveStatus, 'roomId': roomId,'seckillout':seckillout};
+    return {"goodsID": goodsID, 'liveStatus': liveStatus, 'roomId': roomId,};
   }
 
   @override
@@ -253,7 +245,6 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
       goodsDetail: _goodsDetail,
       controller: _bottomBarController,
       collected: _goodsDetail == null ? false : _goodsDetail.data.isFavorite,
-      seckillout:_seckillout,
       shopCartNum: _goodsDetail?.data == null
           ? ''
           : _goodsDetail.data.shoppingTrolleyCount > 99

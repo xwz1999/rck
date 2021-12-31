@@ -1,22 +1,12 @@
-/*
- * ====================================================
- * package   : 
- * author    : Created by nansi.
- * time      : 2019/6/12  2:59 PM 
- * remark    : 
- * ====================================================
- */
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/models/material_list_model.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/nine_grid_view.dart';
-
-// import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/models/material_list_model.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/nine_grid_view.dart';
 
 class BusinessFocusItem extends StatefulWidget {
   final VoidCallback focusListener;
@@ -170,12 +160,12 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
       children: <Widget>[
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(20)),
-          child: CustomCacheImage(
-            fit: BoxFit.cover,
-            imageUrl: Api.getResizeImgUrl(widget.model.headImgUrl, 300),
-            placeholder: AppImageName.placeholder_1x1,
-            height: rSize(40),
-            width: rSize(40),
+          child:
+          FadeInImage.assetNetwork(
+            height: 40.rw,
+            width: 40.rw,
+            placeholder: R.ASSETS_ICON_RECOOK_ICON_300_PNG,
+            image: Api.getResizeImgUrl(widget.model.headImgUrl, 300),
           ),
         ),
         Container(
@@ -196,20 +186,6 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
             ],
           ),
         ),
-        // widget.model.isOfficial
-        //     ? Container()
-        //     : CustomImageButton(
-        //         title: widget.model.isAttention ? "已关注" : "关注",
-        //         color: focusedColor,
-        //         padding: EdgeInsets.symmetric(horizontal: rSize(8)),
-        //         borderRadius: BorderRadius.all(Radius.circular(5)),
-        //         border: Border.all(color: focusedColor, width: 0.8),
-        //         onPressed: () {
-        //           setState(() {
-        //             widget.focusListener();
-        //           });
-        //         },
-        //       )
       ],
     );
   }
@@ -219,28 +195,6 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
       margin: EdgeInsets.only(top: rSize(19)),
       child: Row(
         children: <Widget>[
-          // CustomImageButton(
-          //   icon: Icon(
-          //     AppIcons.icon_wx_circle,
-          //     size: rSize(16),
-          //   ),
-          //   height: rSize(30),
-          //   title: "一键发圈",
-          //   direction: Direction.horizontal,
-          //   color: Colors.white,
-          //   fontSize: 12*2.sp,
-          //   backgroundColor: AppColor.themeColor,
-          //   contentSpacing: 8,
-          //   borderRadius: BorderRadius.all(Radius.circular(20)),
-          //   padding: EdgeInsets.symmetric(horizontal: 10),
-          //   onPressed: () {
-          //     Goods _goods = widget.model.goods;
-          //     WeChatUtils.shareGoodsForMiniProgram(title: _goods.name, goodsId: _goods.id, thumbnail: Api.getImgUrl(_goods.mainPhotoURL));
-          //   },
-          // ),
-          // Container(
-          //   width: 10,
-          // ),
           CustomImageButton(
             icon: Icon(
               AppIcons.icon_download,
@@ -281,16 +235,6 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
             },
           ),
           Expanded(child: Container()),
-          // CustomImageButton(
-          //   icon: Icon(
-          //     AppIcons.icon_ellipsis,
-          //     size: rSize(18),
-          //     color: Colors.grey[700],
-          //   ),
-          //   onPressed: () {
-
-          //   },
-          // )
         ],
       ),
     );

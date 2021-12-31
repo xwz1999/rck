@@ -9,17 +9,17 @@
 
 import 'package:flutter/material.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/models/invite_list_model.dart';
-import 'package:recook/pages/user/invite/invite_list_contact.dart';
-import 'package:recook/pages/user/invite/invite_list_presenter_impl.dart';
-import 'package:recook/pages/user/widget/user_group_card.dart';
-import 'package:recook/utils/mvp.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
-import 'package:recook/widgets/no_data_view.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/models/invite_list_model.dart';
+import 'package:jingyaoyun/pages/user/invite/invite_list_contact.dart';
+import 'package:jingyaoyun/pages/user/invite/invite_list_presenter_impl.dart';
+import 'package:jingyaoyun/pages/user/widget/user_group_card.dart';
+import 'package:jingyaoyun/utils/mvp.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view.dart';
+import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:jingyaoyun/widgets/no_data_view.dart';
 
 class UpgradeChildInvitePageController {
   Function(String searchText) refresh;

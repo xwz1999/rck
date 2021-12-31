@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/const/resource.dart';
-import 'package:recook/widgets/recook/recook_scaffold.dart';
+import 'package:jingyaoyun/const/resource.dart';
+import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
 
 class GetPlatformAwardPage extends StatelessWidget {
   const GetPlatformAwardPage({Key key}) : super(key: key);

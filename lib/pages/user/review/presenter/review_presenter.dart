@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/user/review/models/order_review_list_model.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/user/review/models/order_review_list_model.dart';
 
 class ReviewPresenter {
   Future<List<OrderReviewListModel>> getReviewList(

@@ -15,20 +15,20 @@ import 'package:flutter/services.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/models/order_return_status_model.dart';
-import 'package:recook/pages/user/order/after_sales_log_page.dart';
-import 'package:recook/pages/user/order/order_return_address_page.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/custom_bubble_widget.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/nine_grid_view.dart';
-import 'package:recook/widgets/pic_swiper.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/models/order_return_status_model.dart';
+import 'package:jingyaoyun/pages/user/order/after_sales_log_page.dart';
+import 'package:jingyaoyun/pages/user/order/order_return_address_page.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/custom_bubble_widget.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/nine_grid_view.dart';
+import 'package:jingyaoyun/widgets/pic_swiper.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 class OrderReturnStatusPage extends StatefulWidget {
   final Map arguments;
@@ -856,7 +856,7 @@ class _OrderReturnStatusPageState
             padding:
                 EdgeInsets.symmetric(horizontal: rSize(10), vertical: 5 * 2.h),
             child: Text(
-              "若3天内未收到退款/瑞币，请联系客服咨询。",
+              "若3天内未收到退款，请联系客服咨询。",
               style: greyStyle,
               maxLines: 2,
             ),

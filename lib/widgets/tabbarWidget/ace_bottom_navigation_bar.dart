@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/constants.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/tabBar/TabbarWidget.dart';
-import 'package:recook/widgets/tabbarWidget/navigation_item.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/tabBar/TabbarWidget.dart';
+import 'package:jingyaoyun/widgets/tabbarWidget/navigation_item.dart';
 
 enum ACEBottomNavigationBarType {
   normal,

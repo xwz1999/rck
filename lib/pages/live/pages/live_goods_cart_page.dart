@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:oktoast/oktoast.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/goods/small_coupon_widget.dart';
-import 'package:recook/pages/home/classify/commodity_detail_page.dart';
-import 'package:recook/pages/live/models/goods_window_model.dart';
-import 'package:recook/pages/user/widget/recook_check_box.dart';
-import 'package:recook/widgets/recook/recook_scaffold.dart';
-import 'package:recook/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/goods/small_coupon_widget.dart';
+import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
+import 'package:jingyaoyun/pages/live/models/goods_window_model.dart';
+import 'package:jingyaoyun/pages/user/widget/recook_check_box.dart';
+import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 
 class LiveGoodsCartPage extends StatefulWidget {
   LiveGoodsCartPage({Key key}) : super(key: key);

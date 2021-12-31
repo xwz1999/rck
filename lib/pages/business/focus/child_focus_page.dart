@@ -1,33 +1,26 @@
-/*
- * ====================================================
- * package   : 
- * author    : Created by nansi.
- * time      : 2019/6/12  2:17 PM 
- * remark    : 
- * ====================================================
- */
+
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/base_model.dart';
-import 'package:recook/models/material_list_model.dart';
-import 'package:recook/pages/business/focus/mvp/focus_mvp_contact.dart';
-import 'package:recook/pages/business/focus/mvp/focus_presenter_implementation.dart';
-import 'package:recook/pages/business/items/item_business_focus.dart';
-import 'package:recook/pages/home/classify/commodity_detail_page.dart';
-import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
-import 'package:recook/utils/image_utils.dart';
-import 'package:recook/utils/mvp.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
-import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
-import 'package:recook/widgets/no_data_view.dart';
-import 'package:recook/widgets/pic_swiper.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/base_model.dart';
+import 'package:jingyaoyun/models/material_list_model.dart';
+import 'package:jingyaoyun/pages/business/focus/mvp/focus_mvp_contact.dart';
+import 'package:jingyaoyun/pages/business/focus/mvp/focus_presenter_implementation.dart';
+import 'package:jingyaoyun/pages/business/items/item_business_focus.dart';
+import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
+import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:jingyaoyun/utils/image_utils.dart';
+import 'package:jingyaoyun/utils/mvp.dart';
+import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view.dart';
+import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:jingyaoyun/widgets/no_data_view.dart';
+import 'package:jingyaoyun/widgets/pic_swiper.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 class FocusPage extends StatefulWidget {
   @override
@@ -120,22 +113,12 @@ class _FocusPageState extends BaseStoreState<FocusPage>
                       pics: picSwiperItem,
                     ),
                   );
-              // MaterialModel _picModel = _listViewController.getData()[index];
-              // AppRouter.push(
-              //   context, 
-              //   RouteName.PIC_SWIPER, 
-              //   arguments: PicSwiper.setArguments(
-              //     index: index, 
-              //     pics: _picModel.photos.map<PicSwiperItem>(
-              //       (f) => PicSwiperItem(Api.getResizeImgUrl(f.url, 300))).toList()
-              //       )
-              // );
             },
             focusListener: (){
               _attention(_listViewController.getData()[index]);
             },);
         },
-        noDataView: NoDataView(title: "您还没有关注任何人喔~", height: 500,),
+        noDataView: NoDataView(title: "暂时没有动态~", height: 500,),
       ),
     );
   }

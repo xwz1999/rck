@@ -8,14 +8,14 @@ import 'package:intl/intl.dart';
 import 'package:lunar_calendar_converter/lunar_solar_converter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/app_image_resources.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/goods_detail_model.dart';
-import 'package:recook/models/home_weather_model.dart';
-import 'package:recook/models/missing_children_model.dart';
-import 'package:recook/pages/home/promotion_time_tool.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/app_image_resources.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/goods_detail_model.dart';
+import 'package:jingyaoyun/models/home_weather_model.dart';
+import 'package:jingyaoyun/models/missing_children_model.dart';
+import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
 
 import '../custom_cache_image.dart';
 

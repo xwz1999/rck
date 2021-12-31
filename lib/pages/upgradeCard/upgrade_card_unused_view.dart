@@ -4,15 +4,15 @@ import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import 'package:recook/constants/api_v2.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/upgradeCard/function/user_card_function.dart';
-import 'package:recook/pages/upgradeCard/model/user_card_%20model.dart';
-import 'package:recook/pages/upgradeCard/upgrade_card_send_page_v2.dart';
-import 'package:recook/pages/upgradeCard/upgrade_card_use_result_page.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/constants/api_v2.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/upgradeCard/function/user_card_function.dart';
+import 'package:jingyaoyun/pages/upgradeCard/model/user_card_%20model.dart';
+import 'package:jingyaoyun/pages/upgradeCard/upgrade_card_send_page_v2.dart';
+import 'package:jingyaoyun/pages/upgradeCard/upgrade_card_use_result_page.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 
 class UpgradeUnusedView extends StatefulWidget {
   UpgradeUnusedView({Key key}) : super(key: key);

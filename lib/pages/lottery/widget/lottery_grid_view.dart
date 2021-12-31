@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/constants.dart';
-import 'package:recook/pages/lottery/lottery_cart_model.dart';
-import 'package:recook/pages/lottery/widget/lottery_ball.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/pages/lottery/lottery_cart_model.dart';
+import 'package:jingyaoyun/pages/lottery/widget/lottery_ball.dart';
 
 class LotteryGridView extends StatelessWidget {
   final LotteryCartModel model;

@@ -6,19 +6,19 @@ import 'package:fluwx/fluwx.dart';
 import 'package:oktoast/oktoast.dart';
 // import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/app_image_resources.dart';
-import 'package:recook/constants/constants.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/home/home_page.dart';
-import 'package:recook/third_party/wechat/wechat_utils.dart';
-import 'package:recook/utils/rui_code_util.dart';
-import 'package:recook/widgets/bottom_sheet/bottom_share_dialog.dart';
-import 'package:recook/widgets/share_page/share_goods_poster_page.dart';
-import 'package:recook/widgets/share_page/share_url_poster_page.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/app_image_resources.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/home/home_page.dart';
+import 'package:jingyaoyun/third_party/wechat/wechat_utils.dart';
+import 'package:jingyaoyun/utils/rui_code_util.dart';
+import 'package:jingyaoyun/widgets/bottom_sheet/bottom_share_dialog.dart';
+import 'package:jingyaoyun/widgets/share_page/share_goods_poster_page.dart';
+import 'package:jingyaoyun/widgets/share_page/share_url_poster_page.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 class ShareTool {
   static bool qqInstalled = true;

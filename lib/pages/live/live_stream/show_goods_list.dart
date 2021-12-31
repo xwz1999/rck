@@ -4,24 +4,24 @@ import 'package:get/get.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:tencent_live_fluttify/tencent_live_fluttify.dart';
 
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/goods_detail_model.dart';
-import 'package:recook/pages/goods/small_coupon_widget.dart';
-import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
-import 'package:recook/pages/home/classify/commodity_detail_page.dart';
-import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
-import 'package:recook/pages/home/classify/order_preview_page.dart';
-import 'package:recook/pages/home/widget/plus_minus_view.dart';
-import 'package:recook/pages/live/live_stream/live_sku_widget.dart';
-import 'package:recook/pages/live/live_stream/small_window/small_window_page.dart';
-import 'package:recook/pages/login/login_page.dart';
-import 'package:recook/utils/custom_route.dart';
-import 'package:recook/widgets/toast.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/goods_detail_model.dart';
+import 'package:jingyaoyun/pages/goods/small_coupon_widget.dart';
+import 'package:jingyaoyun/pages/home/classify/brandgoods_list_page.dart';
+import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
+import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:jingyaoyun/pages/home/classify/order_preview_page.dart';
+import 'package:jingyaoyun/pages/home/widget/plus_minus_view.dart';
+import 'package:jingyaoyun/pages/live/live_stream/live_sku_widget.dart';
+import 'package:jingyaoyun/pages/live/live_stream/small_window/small_window_page.dart';
+import 'package:jingyaoyun/pages/login/login_page.dart';
+import 'package:jingyaoyun/utils/custom_route.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
-import 'package:recook/pages/live/models/live_stream_info_model.dart'
+import 'package:jingyaoyun/pages/live/models/live_stream_info_model.dart'
     show GoodsLists;
 
 class GoodsListDialog extends StatefulWidget {

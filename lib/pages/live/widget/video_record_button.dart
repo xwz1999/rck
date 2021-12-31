@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-import 'package:recook/constants/header.dart';
+import 'package:jingyaoyun/constants/header.dart';
 
 class VideoRecordButton extends StatefulWidget {
   final VoidCallback onStart;

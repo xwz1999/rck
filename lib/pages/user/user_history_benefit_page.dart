@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:recook/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
 
 import 'package:velocity_x/velocity_x.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/pages/user/functions/user_benefit_func.dart';
-import 'package:recook/pages/user/model/user_accumulate_model.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/recook_back_button.dart';
-import 'package:recook/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/pages/user/functions/user_benefit_func.dart';
+import 'package:jingyaoyun/pages/user/model/user_accumulate_model.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/recook_back_button.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 
 class UserHistoryBenefitPage extends StatefulWidget {
   UserHistoryBenefitPage({Key key}) : super(key: key);

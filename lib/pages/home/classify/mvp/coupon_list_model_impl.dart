@@ -7,11 +7,11 @@
  * ====================================================
  */
 
-import 'package:recook/base/http_result_model.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/models/base_model.dart';
-import 'package:recook/models/coupon_list_model.dart';
+import 'package:jingyaoyun/base/http_result_model.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/models/base_model.dart';
+import 'package:jingyaoyun/models/coupon_list_model.dart';
 
 class CouponListImpl {
 

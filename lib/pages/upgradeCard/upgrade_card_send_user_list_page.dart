@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/manager/user_manager.dart';
-import 'package:recook/models/base_model.dart';
-import 'package:recook/models/invite_list_model.dart';
-import 'package:recook/pages/upgradeCard/upgrade_child_invite_page.dart';
-import 'package:recook/widgets/SearchBarTextFieldWidget.dart';
-import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/base_model.dart';
+import 'package:jingyaoyun/models/invite_list_model.dart';
+import 'package:jingyaoyun/pages/upgradeCard/upgrade_child_invite_page.dart';
+import 'package:jingyaoyun/widgets/SearchBarTextFieldWidget.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 
 class UpgradeCardSendUserListPage extends StatefulWidget {
   final Map arguments;

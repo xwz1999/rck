@@ -11,7 +11,7 @@ import 'dart:core';
 
 import 'package:json_annotation/json_annotation.dart';
 
-import 'package:recook/models/base_model.dart';
+import 'package:jingyaoyun/models/base_model.dart';
 
 part 'order_list_model.g.dart';
 
@@ -266,7 +266,7 @@ class OrderGoodsModel extends Object {
 //  */
 
 // import 'package:json_annotation/json_annotation.dart';
-// import 'package:recook/models/base_model.dart';
+// import 'package:jingyaoyun/models/base_model.dart';
 
 // part 'order_list_model.g.dart';
 

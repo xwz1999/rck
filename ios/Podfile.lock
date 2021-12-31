@@ -81,13 +81,13 @@ PODS:
     - Flutter
   - image_picker (0.0.1):
     - Flutter
-  - JCore (2.6.2)
-  - JPush (3.6.1):
-    - JCore (< 3.0.0, >= 2.0.0)
+  - JCore (3.1.0)
+  - JPush (4.4.0):
+    - JCore (>= 2.0.0)
   - jpush_flutter (0.0.2):
     - Flutter
-    - JCore (= 2.6.2)
-    - JPush (= 3.6.1)
+    - JCore (= 3.1.0)
+    - JPush (= 4.4.0)
   - just_audio (0.0.1):
     - Flutter
   - LBXScan (2.5.1):
@@ -96,7 +96,6 @@ PODS:
     - LBXScan/Types (~> 2.2)
   - LBXScan/Types (2.5.1)
   - LBXZBarSDK (1.3.5)
-  - libOpenInstallSDK (2.5.4.1)
   - libwebp (1.2.1):
     - libwebp/demux (= 1.2.1)
     - libwebp/mux (= 1.2.1)
@@ -110,9 +109,6 @@ PODS:
     - Mantle/extobjc (= 2.2.0)
   - Mantle/extobjc (2.2.0)
   - mobile-ffmpeg-min (4.4.LTS)
-  - openinstall_flutter_plugin (0.0.1):
-    - Flutter
-    - libOpenInstallSDK
   - package_info (0.0.1):
     - Flutter
   - package_info_plus (0.4.5):
@@ -180,7 +176,6 @@ DEPENDENCIES:
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
   - jpush_flutter (from `.symlinks/plugins/jpush_flutter/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
-  - openinstall_flutter_plugin (from `.symlinks/plugins/openinstall_flutter_plugin/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
@@ -210,7 +205,6 @@ SPEC REPOS:
     - JPush
     - LBXScan
     - LBXZBarSDK
-    - libOpenInstallSDK
     - libwebp
     - Mantle
     - mobile-ffmpeg-min
@@ -262,8 +256,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/jpush_flutter/ios"
   just_audio:
     :path: ".symlinks/plugins/just_audio/ios"
-  openinstall_flutter_plugin:
-    :path: ".symlinks/plugins/openinstall_flutter_plugin/ios"
   package_info:
     :path: ".symlinks/plugins/package_info/ios"
   package_info_plus:
@@ -321,17 +313,15 @@ SPEC CHECKSUMS:
   image_cropper: f1668dd8d2cad2d357955caad15a40547856edcb
   image_gallery_saver: 259eab68fb271cfd57d599904f7acdc7832e7ef2
   image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
-  JCore: 0cb4fc5892bc97af4f27283875369ead3eaa3067
-  JPush: 507d66d7ea307faba1330666d48e4e92af611659
-  jpush_flutter: e75658a5342e3bfe22d9f3de5dfacd3ef44230c5
+  JCore: 4029befb2497adc36b2496e2cfd6b24d9f671784
+  JPush: b7d00f2cc78766e76c8abb30a5741fe94d21e5bc
+  jpush_flutter: bc88cfa9a4ff4481031564b641c3fe24024bb2cb
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   LBXScan: 90ca10d0c38fb4a5a6980d7782354f3f69f50093
   LBXZBarSDK: db826d1265fbb4fbdbb2f30d7d1e96142e32bfff
-  libOpenInstallSDK: b7b2e92256d845d6e74a76c144c4d65ddf57c06d
   libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
   mobile-ffmpeg-min: dd2fd38da2788ccb7be5720fc308cb69160820e7
-  openinstall_flutter_plugin: e6b8486f834eb60b336546442a8b747d4b664cf4
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c

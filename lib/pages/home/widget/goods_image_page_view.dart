@@ -10,17 +10,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:get/get.dart';
-import 'package:recook/constants/api.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/models/goods_detail_model.dart';
-import 'package:recook/models/goods_simple_list_model.dart';
-import 'package:recook/pages/live/live_stream/live_stream_view_page.dart';
-import 'package:recook/widgets/OverlayWidget.dart';
-import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/pic_swiper.dart';
-import 'package:recook/widgets/seckill_activity_widget/live_animate_widget.dart';
-import 'package:recook/widgets/toast.dart';
-import 'package:recook/widgets/video_view.dart';
+import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/models/goods_detail_model.dart';
+import 'package:jingyaoyun/models/goods_simple_list_model.dart';
+import 'package:jingyaoyun/pages/live/live_stream/live_stream_view_page.dart';
+import 'package:jingyaoyun/widgets/OverlayWidget.dart';
+import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/widgets/pic_swiper.dart';
+import 'package:jingyaoyun/widgets/seckill_activity_widget/live_animate_widget.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:jingyaoyun/widgets/video_view.dart';
 
 typedef OnScrolledListener = Function(int index);
 

@@ -1,6 +1,6 @@
-import 'package:recook/constants/api_v2.dart';
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/pages/upgradeCard/model/user_card_%20model.dart';
+import 'package:jingyaoyun/constants/api_v2.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/upgradeCard/model/user_card_%20model.dart';
 
 class UserCardFunction {
   static Future<List<UserCardModel>> fetchList(int index, int type) async {

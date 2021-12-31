@@ -1,7 +1,7 @@
-import 'package:recook/manager/http_manager.dart';
-import 'package:recook/models/goods_list_model.dart';
-import 'package:recook/pages/business/selling_point/mvp/selling_point_list_contact.dart';
-import 'package:recook/pages/business/selling_point/mvp/selling_point_list_model_impl.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/models/goods_list_model.dart';
+import 'package:jingyaoyun/pages/business/selling_point/mvp/selling_point_list_contact.dart';
+import 'package:jingyaoyun/pages/business/selling_point/mvp/selling_point_list_model_impl.dart';
 
 class SellingPointListPresenterImpl extends SellingPointListPresenterI {
   @override

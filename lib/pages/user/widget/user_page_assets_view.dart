@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/pages/user/user_page_sub_income_page.dart';
-import 'package:recook/utils/user_level_tool.dart';
-import 'package:recook/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/base/base_store_state.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/pages/user/user_page_sub_income_page.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
 
 class UserPageAssetsView extends StatefulWidget {
   UserPageAssetsView({Key key}) : super(key: key);

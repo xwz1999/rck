@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/pages/user/review/already_review_page.dart';
-import 'package:recook/pages/user/review/need_review_page.dart';
-import 'package:recook/widgets/recook_back_button.dart';
-import 'package:recook/widgets/recook_indicator.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/pages/user/review/already_review_page.dart';
+import 'package:jingyaoyun/pages/user/review/need_review_page.dart';
+import 'package:jingyaoyun/widgets/recook_back_button.dart';
+import 'package:jingyaoyun/widgets/recook_indicator.dart';
 
 class ReviewPage extends StatefulWidget {
   ReviewPage({Key key}) : super(key: key);

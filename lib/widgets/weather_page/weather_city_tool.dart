@@ -5,8 +5,8 @@ import 'package:flutter/services.dart';
 import 'package:azlistview/azlistview.dart';
 import 'package:lpinyin/lpinyin.dart';
 
-import 'package:recook/constants/header.dart';
-import 'package:recook/widgets/weather_page/weather_city_model.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/widgets/weather_page/weather_city_model.dart';
 
 class WeatherCityTool {
   WeatherCityTool._();
