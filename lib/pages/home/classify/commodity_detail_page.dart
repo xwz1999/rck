@@ -1,15 +1,12 @@
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/base_model.dart';
 import 'package:jingyaoyun/models/goods_detail_model.dart';
-import 'package:jingyaoyun/pages/goods/goods_report/goods_report_page.dart';
 import 'package:jingyaoyun/pages/home/classify/brandgoods_list_page.dart';
 import 'package:jingyaoyun/pages/home/classify/goods_page.dart';
 import 'package:jingyaoyun/pages/home/classify/material_page.dart' as MP;
@@ -19,8 +16,6 @@ import 'package:jingyaoyun/pages/home/widget/modify_detail_bottom_bar.dart';
 import 'package:jingyaoyun/utils/share_tool.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/cache_tab_bar_view.dart';
-import 'package:jingyaoyun/widgets/goods_item.dart';
-import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 
 class CommodityDetailPage extends StatefulWidget {
@@ -35,7 +30,7 @@ class CommodityDetailPage extends StatefulWidget {
     this.liveId = 0,
   }) : super(key: key);
 
-  static setArguments(int goodsID, {int liveStatus, int roomId,bool seckillout}) {
+  static setArguments(int goodsID, {int liveStatus, int roomId}) {
     return {"goodsID": goodsID, 'liveStatus': liveStatus, 'roomId': roomId,};
   }
 
@@ -56,17 +51,12 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
   int _liveStatus;
   int _roomId;
 
-
-  bool _seckillout;//秒杀是否无货
-
   @override
   void initState() {
     super.initState();
     _goodsId = widget.arguments["goodsID"];
     _liveStatus = widget.arguments["liveStatus"];
     _roomId = widget.arguments["roomId"];
-    _seckillout = widget.arguments['seckillout']??false;
-
     _tabController = TabController(length: 2, vsync: this);
     _appBarController = AppBarController();
     _bottomBarController = BottomBarController();

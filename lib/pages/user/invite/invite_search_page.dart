@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
@@ -19,6 +16,7 @@ import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:jingyaoyun/widgets/no_data_view.dart';
 import 'package:jingyaoyun/widgets/progress/sc_dialog.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class InviteSearchPage extends StatefulWidget {
   InviteSearchPage({Key key}) : super(key: key);

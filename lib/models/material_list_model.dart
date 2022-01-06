@@ -33,9 +33,8 @@
 
 */
 
-import 'package:json_annotation/json_annotation.dart';
-
 import 'package:jingyaoyun/models/base_model.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'material_list_model.g.dart';
 

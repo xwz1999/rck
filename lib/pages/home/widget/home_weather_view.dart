@@ -1,15 +1,13 @@
+import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import 'package:extended_text/extended_text.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:lunar_calendar_converter/lunar_solar_converter.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/models/home_weather_model.dart';
 import 'package:jingyaoyun/utils/date/recook_lunar.dart';
+import 'package:lunar_calendar_converter/lunar_solar_converter.dart';
 
 import 'home_date_detail_page.dart';
 import 'home_weather_detail_page.dart';

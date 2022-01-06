@@ -1,13 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_qr_reader/flutter_qr_reader.dart';
 import 'package:flutter_qr_reader/qrcode_reader_view.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:just_audio/just_audio.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
@@ -19,6 +16,7 @@ import 'package:jingyaoyun/pages/home/barcode/qr_scaner_result_page.dart';
 import 'package:jingyaoyun/utils/app_router.dart';
 import 'package:jingyaoyun/utils/image_utils.dart';
 import 'package:jingyaoyun/utils/text_utils.dart';
+import 'package:just_audio/just_audio.dart';
 
 
 class BarcodeScanPage extends StatefulWidget {

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/constants/styles.dart';
@@ -83,7 +82,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
                   _titleWidget(),
                   _phoneTFWidget(),
                   _smsCodeWidget(),
-                  // _inviteWidget(),
+                  _inviteWidget(),
                   Container(
                     height: 50 * 2.h,
                   ),
@@ -304,16 +303,6 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
           Expanded(
             child: Row(
               children: <Widget>[
-                Text(
-                  '邀请码',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w300,
-                      fontSize: _fontSize,
-                      color: Colors.black),
-                ),
-                Container(
-                  width: 10,
-                ),
                 Expanded(
                   child: _inviteInputWidget(),
                 ),
@@ -327,19 +316,6 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
   }
 
   _inviteInputWidget() {
-    String bindString = getStore().state.openinstall.code;
-    // String bindString = 'aaaaaa';
-    if (bindString != null &&
-        (bindString.length == 6 || bindString.length == 8)) {
-      _inviteCodeController.text = bindString;
-      return Text(
-        bindString,
-        style: TextStyle(
-            color: Colors.black,
-            fontSize: _fontSize,
-            fontWeight: FontWeight.w300),
-      );
-    } else {
       return TextField(
         onChanged: (String phone) {
           setState(() {
@@ -356,14 +332,14 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
         cursorColor: Colors.black,
         decoration: InputDecoration(
           border: InputBorder.none,
-          hintText: "填写邀请码",
+          hintText: "邀请码（选填）",
           hintStyle: TextStyle(
               fontWeight: FontWeight.w300,
               color: Colors.grey[400],
               fontSize: _fontSize),
         ),
       );
-    }
+
   }
 
   _loginBtnWidget() {
@@ -434,7 +410,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
     GSDialog.of(context).showLoadingDialog(context, "正在登录...");
     String bindData = getStore().state.openinstall.code;
     UserDao.weChatInvitation(
-        widget.argument[WeChatInputInviteCodePage.KEY_wxUnionId], "000000",
+        widget.argument[WeChatInputInviteCodePage.KEY_wxUnionId], _inviteCodeController.text,
         success: (data, code, msg) {
       GSDialog.of(context).dismiss(context);
       AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);

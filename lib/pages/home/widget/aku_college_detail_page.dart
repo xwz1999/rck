@@ -1,5 +1,8 @@
+import 'package:chewie/chewie.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/constants.dart';
@@ -9,10 +12,7 @@ import 'package:jingyaoyun/pages/home/function/home_fuc.dart';
 import 'package:jingyaoyun/pages/home/model/aku_video_list_model.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:flustars/flustars.dart';
-import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
-import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 
 class AkuCollegeDetailPage extends StatefulWidget {
   final AkuVideo akuVideo;

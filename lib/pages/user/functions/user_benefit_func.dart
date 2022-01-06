@@ -1,5 +1,4 @@
 import 'package:common_utils/common_utils.dart';
-
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/pages/user/model/user_accumulate_model.dart';

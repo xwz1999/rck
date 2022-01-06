@@ -12,14 +12,12 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/models/category_list_model.dart';
-import 'package:jingyaoyun/models/country_list_model.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';

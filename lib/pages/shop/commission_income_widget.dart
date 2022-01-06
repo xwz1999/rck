@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
@@ -9,7 +8,6 @@ import 'package:jingyaoyun/models/commission_income_model.dart';
 import 'package:jingyaoyun/widgets/no_data_view.dart';
 import 'package:jingyaoyun/widgets/progress/sc_dialog.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CommissionIncomeWidget extends StatefulWidget {
   @override

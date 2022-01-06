@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:jingyaoyun/const/resource.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
@@ -15,10 +17,8 @@ import 'package:jingyaoyun/utils/app_router.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:jingyaoyun/const/resource.dart';
 
 class QRScarerResultPage extends StatefulWidget {
   final ScanResultModel model;

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/widgets/tabbarWidget/ace_bottom_navigation_bar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 class NavigationItem extends StatelessWidget {
   final UniqueKey uniqueKey;
   final textStr;

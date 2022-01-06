@@ -1,22 +1,13 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:amap_flutter_base/amap_flutter_base.dart';
-import 'package:amap_flutter_location/amap_flutter_location.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:bot_toast/bot_toast.dart';
-
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:oktoast/oktoast.dart';
-import 'package:redux/redux.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/user_brief_info_model.dart';
 import 'package:jingyaoyun/models/user_model.dart';
 import 'package:jingyaoyun/pages/welcome/launch_widget.dart';
@@ -25,6 +16,9 @@ import 'package:jingyaoyun/redux/recook_state.dart';
 import 'package:jingyaoyun/utils/CommonLocalizationsDelegate.dart';
 import 'package:jingyaoyun/utils/storage/hive_store.dart';
 import 'package:jingyaoyun/utils/test.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:redux/redux.dart';
+
 import 'constants/header.dart';
 import 'utils/app_router.dart';
 

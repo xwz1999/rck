@@ -12,6 +12,7 @@ import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/models/base_model.dart';
 import 'package:jingyaoyun/models/user_brief_info_model.dart';
 import 'package:jingyaoyun/pages/user/mvp/user_model_impl.dart';
+
 import 'user_mvp_contact.dart';
 
 class UserPresenterImpl extends UserMvpPresenterI {

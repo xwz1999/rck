@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-
-import 'package:permission_handler/permission_handler.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 
 class PermissionTool {

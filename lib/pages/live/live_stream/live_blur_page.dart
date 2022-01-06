@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import 'package:qr_flutter/qr_flutter.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class UserInfoQrCodePage extends StatefulWidget {
   UserInfoQrCodePage({Key key}) : super(key: key);

@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-
 import 'package:jingyaoyun/utils/user_level_tool.dart';
 
 class UserCommonModel {
@@ -47,11 +46,11 @@ class UserCommonModel {
 
   UserCommonModel.fromJson(Map<String, dynamic> json) {
     userId = json['userId'];
-    headImgUrl = json['headImgUrl'];
+    headImgUrl = json['head_img_url'];
     nickname = json['nickname'];
     phone = json['phone'];
-    wechatNo = json['wechatNo'];
-    remarkName = json['remarkName'];
+    wechatNo = json['wechat_no'];
+    remarkName = json['remark_name'];
     count = json['count'];
     roleLevel = json['roleLevel'];
     flag = json['flag'];
@@ -61,11 +60,11 @@ class UserCommonModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['userId'] = this.userId;
-    data['headImgUrl'] = this.headImgUrl;
+    data['head_img_url'] = this.headImgUrl;
     data['nickname'] = this.nickname;
     data['phone'] = this.phone;
-    data['wechatNo'] = this.wechatNo;
-    data['remarkName'] = this.remarkName;
+    data['wechat_no'] = this.wechatNo;
+    data['remark_name'] = this.remarkName;
     data['count'] = this.count;
     data['roleLevel'] = this.roleLevel;
     data['flag'] = this.flag;

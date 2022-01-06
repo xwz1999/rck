@@ -1,10 +1,7 @@
 import 'dart:math';
 
-import 'package:flutter/material.dart';
-
 import 'package:common_utils/common_utils.dart';
-import 'package:velocity_x/velocity_x.dart';
-
+import 'package:flutter/material.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/pages/user/functions/user_benefit_func.dart';
 import 'package:jingyaoyun/pages/user/model/user_benefit_day_expect_model.dart';
@@ -17,6 +14,7 @@ import 'package:jingyaoyun/widgets/animated_rotate.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/custom_painters/round_background_painter.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class DisplayCard {
   num benefit = 0;

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/app_image_resources.dart';
 import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/goods_hot_sell_list_model.dart';

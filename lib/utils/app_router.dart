@@ -1,17 +1,6 @@
-/*
- * ====================================================
- * package   : utils
- * author    : Created by nansi.
- * time      : 2019/5/6  1:26 PM 
- * remark    : 
- * ====================================================
- */
-
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/pages/aftersale/choose_after_sale_type_page.dart';
 import 'package:jingyaoyun/pages/business/publish_business_district_page.dart';
-import 'package:jingyaoyun/pages/business/selling_point/selling_point_page.dart';
 import 'package:jingyaoyun/pages/home/barcode/fail_barcode_page.dart';
 import 'package:jingyaoyun/pages/home/barcode/input_barcode_page.dart';
 import 'package:jingyaoyun/pages/home/barcode/photos_fail_barcode_page.dart';
@@ -31,9 +20,6 @@ import 'package:jingyaoyun/pages/login/login_page.dart';
 import 'package:jingyaoyun/pages/login/phone_login_page.dart';
 import 'package:jingyaoyun/pages/login/wechat_bind_page.dart';
 import 'package:jingyaoyun/pages/login/wechat_input_invitecode_page.dart';
-import 'package:jingyaoyun/pages/lottery/lottery_help_page.dart';
-import 'package:jingyaoyun/pages/lottery/lottery_order_page.dart';
-import 'package:jingyaoyun/pages/lottery/redeem_lottery_page.dart';
 import 'package:jingyaoyun/pages/shop/cumulative_income_page.dart';
 import 'package:jingyaoyun/pages/shop/member_benefits_page.dart';
 import 'package:jingyaoyun/pages/shop/order/shop_order_center_page.dart';
@@ -41,16 +27,11 @@ import 'package:jingyaoyun/pages/shop/order/shop_order_detail_page.dart';
 import 'package:jingyaoyun/pages/shop/shop_commission_info_page.dart';
 import 'package:jingyaoyun/pages/shop/shop_page_sub_income_page.dart';
 import 'package:jingyaoyun/pages/shop/shop_performance_info_page.dart';
-import 'package:jingyaoyun/pages/shop/upgrade/shop_recommend_upgrade_page.dart';
-import 'package:jingyaoyun/pages/shop/upgrade/shop_upgrade_code_page.dart';
 import 'package:jingyaoyun/pages/shopping_cart/shopping_cart_page.dart';
 import 'package:jingyaoyun/pages/store/modify_info_page.dart';
 import 'package:jingyaoyun/pages/store/store_detail_page.dart';
 import 'package:jingyaoyun/pages/store/store_page.dart';
 import 'package:jingyaoyun/pages/tabBar/TabbarWidget.dart';
-import 'package:jingyaoyun/pages/upgradeCard/upgrade_card_page.dart';
-import 'package:jingyaoyun/pages/upgradeCard/upgrade_card_send_user_list_page.dart';
-import 'package:jingyaoyun/pages/user/about_us_page.dart';
 import 'package:jingyaoyun/pages/user/account_and_safety/account_and_safety_page.dart';
 import 'package:jingyaoyun/pages/user/account_and_safety/delete_account_page.dart';
 import 'package:jingyaoyun/pages/user/address/new_address_page.dart';
@@ -110,6 +91,7 @@ import 'package:jingyaoyun/widgets/share_page/share_url_poster_page.dart';
 import 'package:jingyaoyun/widgets/text_page.dart';
 import 'package:jingyaoyun/widgets/weather_page/weather_city_page.dart';
 import 'package:jingyaoyun/widgets/webView.dart';
+
 import '../pages/user/invoice/invoice_detail_infomation_page.dart';
 
 //图片预览
@@ -400,14 +382,7 @@ final Map<String, RouteBuilder> _routes = {
   // 会员权益
   RouteName.Member_BENEFITS_PAGE: (context, {arguments}) =>
       MemberBenefitsPage(),
-  // 推荐升级
-  RouteName.SHOP_RECOMMEND_UPGRADE_PAGE: (context, {arguments}) =>
-      ShopRecommendUpgradePage(),
-  // 我的升级码
-  RouteName.SHOP_UPGRADE_CODE_PAGE: (context, {arguments}) =>
-      ShopUpgradeCodePage(
-        arguments: arguments,
-      ),
+
 
   // 我的店铺
   RouteName.STORE_PAGE: (context, {arguments}) => StorePage(),
@@ -558,8 +533,6 @@ final Map<String, RouteBuilder> _routes = {
       PhotosFailBarcodePage(arguments: arguments),
   RouteName.BARCODE_FAIL: (context, {arguments}) =>
       FailBarcodePage(arguments: arguments),
-  //  每日上新
-  RouteName.SELLING_POINT_PAGE: (context, {arguments}) => SellingPointPage(),
 
 
   //累计收入
@@ -584,12 +557,6 @@ final Map<String, RouteBuilder> _routes = {
   // 结果展示界面
   RouteName.RESULT_PAGE: (context, {arguments}) =>
       ResultPage(arguments: arguments),
-  // 晋升卡包 权益卡
-  RouteName.UPGRADE_CARD_PAGE: (context, {arguments}) => UpgradeCardPage(),
-  RouteName.UPGRADE_CARD_SEND_USER_LIST_PAGE: (context, {arguments}) =>
-      UpgradeCardSendUserListPage(
-        arguments: arguments,
-      ),
   RouteName.SHARE_GOODS_POSTER_PAGE: (context, {arguments}) =>
       ShareGoodsPosterPage(
         arguments: arguments,
@@ -597,7 +564,6 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.SHARE_URL_POSTER_PAGE: (context, {arguments}) => ShareUrlPosterPage(
         arguments: arguments,
       ),
-  RouteName.ABOUT_US_PAGE: (context, {arguments}) => AboutUsPage(),
   RouteName.USER_INVOICE: (context, {arguments}) => InvoicePage(),
   RouteName.USER_INVOICE_GOODS: (context, {arguments}) =>
       InvoiceWithGoodsPage(),
@@ -613,11 +579,6 @@ final Map<String, RouteBuilder> _routes = {
       InvoiceAddTitlePage(arguments: arguments),
   RouteName.USER_INVOICE_DETAIL_INFOMATION: (contex, {arguments}) =>
       InvoiceDetailInfomationPage(arguments: arguments),
-  RouteName.REDEEM_LOTTERY_PAGE: (context, {arguments}) => RedeemLotteryPage(),
-
-  RouteName.LOTTERY_HELP_PAGE: (context, {arguments}) =>
-      LotteryHelpPage(arguments: arguments),
-  RouteName.LOTTERY_ORDER_PAGE: (context, {arguments}) => LotteryOrderPage(),
 
   RouteName.BUSSINESS_COOPERATION_PAGE:(context,{arguments}) =>BussinessCooperationPage(),
 };

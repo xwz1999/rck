@@ -8,7 +8,6 @@
  */
 
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';

@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/models/promotion_list_model.dart';
 import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';

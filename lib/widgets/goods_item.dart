@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
-
 import 'package:extended_text/extended_text.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
-
 import 'package:jingyaoyun/models/goods_detail_model.dart';
+import 'package:jingyaoyun/models/goods_hot_sell_list_model.dart'
+    as GoodsHotSellListModel;
 import 'package:jingyaoyun/models/goods_simple_list_model.dart';
 import 'package:jingyaoyun/models/promotion_goods_list_model.dart';
-
 import 'package:jingyaoyun/pages/goods/small_coupon_widget.dart';
 import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
 import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
@@ -18,9 +17,6 @@ import 'package:jingyaoyun/utils/share_tool.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
-
-import 'package:jingyaoyun/models/goods_hot_sell_list_model.dart'
-    as GoodsHotSellListModel;
 
 enum GoodsItemType {
   NONE,
@@ -157,11 +153,9 @@ class GoodsItemWidget extends StatelessWidget {
         mainPhotoUrl = data.mainPhotoUrl,
         inventory =  data.inventory,
         originalPrice = data.originalPrice,
-        //TODO hot list unset percent;
         percent = 0,
         coupon = data.coupon,
         id = data.id,
-        //TODO hot list unset promotion status;
         promotionStatus = PromotionStatus.none,
         widgetType = GoodsItemType.HOT_LIST,
         isImport = data.isImport,
@@ -227,7 +221,6 @@ class GoodsItemWidget extends StatelessWidget {
       color: (this.widgetType == GoodsItemType.ROW_GOODS)
           ? AppColor.frenchColor
           : Colors.transparent,
-      // color: Colors.transparent,
       child: _container(),
     );
   }
@@ -283,19 +276,6 @@ class GoodsItemWidget extends StatelessWidget {
           color: Colors.white,
           child: Row(
             children: <Widget>[
-              // Container(
-              //   width: 13 * 1.5,
-              //   height: 13 * 1.5,
-              //   child: TextUtils.isEmpty(brandPictureUrl)
-              //       ? SizedBox()
-              //       : ExtendedImage.network(
-              //           Api.getImgUrl(brandPictureUrl),
-              //           fit: BoxFit.fill,
-              //         ),
-              // ),
-              // SizedBox(
-              //   width: 4,
-              // ),
               Expanded(
                 child: Text(
                   TextUtils.isEmpty(brandName) ? "" : brandName,
@@ -402,12 +382,6 @@ class GoodsItemWidget extends StatelessWidget {
                                           style: TextStyle(
                                               fontSize: 9.rsp, height: 1.05),
                                         ),
-                                        // Text(
-                                        //   gysId==1800?'自营':gysId==2000?'优选':'',
-                                        //   maxLines: 1,
-                                        //
-                                        //   style: TextStyle(fontSize: 9.rsp,height:1.05),
-                                        // )
                                       ],
                                     ),
                                   )))
@@ -428,22 +402,6 @@ class GoodsItemWidget extends StatelessWidget {
                         alignment: Alignment.centerLeft,
                         margin: EdgeInsets.only(top: 2),
                         child:
-                            // gysId==1800||gysId==2000?//jd的商品供应商 自营为1800 pop 为2000
-                            // Container(
-                            //   width: 30.rw,
-                            //   height: 14.rw,
-                            //   alignment: Alignment.center,
-                            //   decoration: BoxDecoration(
-                            //       color: Color(0xFFC92219),
-                            //       borderRadius: BorderRadius.all(Radius.circular(1.rw))
-                            //
-                            //   ),
-                            //   child: Text(
-                            //     gysId==1800?'自营':gysId==2000?'POP':'',
-                            //     style: TextStyle(height: 1.1),
-                            //   ),
-                            // ):
-
                             Text(
                           this.description,
                           maxLines: 1,
@@ -475,14 +433,6 @@ class GoodsItemWidget extends StatelessWidget {
     );
   }
 
-  // _addGestureDetectorForWidget(Widget widget, VoidCallback click) {
-  //   return GestureDetector(
-  //     child: widget,
-  //     onTap: () {
-  //       if (click != null) click();
-  //     },
-  //   );
-  // }
 
   _image() {
     bool sellout = false;
@@ -545,16 +495,6 @@ class GoodsItemWidget extends StatelessWidget {
                   child: Container(
                       width: 16.rw,
                       height: 16.rw,
-                      // decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.all(Radius.circular(8.rw)),
-                      //     gradient: LinearGradient(
-                      //       begin: Alignment.centerLeft,
-                      //       end: Alignment.centerRight,
-                      //       colors: [
-                      //         Color(0xFFEC4073),
-                      //         Color(0xFFE50043),
-                      //       ],
-                      //     )),
                       child: GifImage(
                         controller: gifController,
                         image: AssetImage(R.ASSETS_LIVE_PLAY_GIF),
@@ -715,9 +655,6 @@ class GoodsItemWidget extends StatelessWidget {
           Row(
             children: <Widget>[
               Spacer(),
-              // UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip
-              //     ? Container()
-              //     :
               GestureDetector(
                       onTap: () {
                         if (shareClick != null) {
@@ -761,19 +698,6 @@ class GoodsItemWidget extends StatelessWidget {
                                 : 8.rw,
                             vertical: rSize(0)),
                         borderRadius: BorderRadius.circular(40),
-                        // borderRadius: BorderRadius.only(
-                        //     topLeft: Radius.circular(
-                        //         UserLevelTool.currentRoleLevelEnum() ==
-                        //                 UserRoleLevel.Vip
-                        //             ? 40
-                        //             : 0),
-                        //     bottomLeft: Radius.circular(
-                        //         UserLevelTool.currentRoleLevelEnum() ==
-                        //                 UserRoleLevel.Vip
-                        //             ? 40
-                        //             : 0),
-                        //     topRight: Radius.circular(40),
-                        //     bottomRight: Radius.circular(40)),
                         backgroundColor:
                             //暂时隐藏
                             sellout ? AppColor.greyColor : _shareTextColor,
@@ -815,32 +739,6 @@ class GoodsItemWidget extends StatelessWidget {
       ),
     );
   }
-
-  // _priceView() {
-  //   if (promotionStatus == PromotionStatus.ready) {
-  //     return Container();
-  //   }
-  //   return Row(
-  //     children: <Widget>[
-  //       _stockWidget(),
-  //       Container(
-  //         width: 10,
-  //       ),
-  //       Expanded(
-  //         child: Text.rich(
-  //           TextSpan(children: [
-  //             TextSpan(
-  //                 text: "已售",
-  //                 style: TextStyle(color: Colors.black, fontSize: 11)),
-  //             TextSpan(
-  //                 text: "${(this.percent / 100.0).toStringAsFixed(0)}%",
-  //                 style: TextStyle(color: Color(0xffec294d), fontSize: 11)),
-  //           ]),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
 
   _saleNumberWidget() {
     return Container(
@@ -943,21 +841,13 @@ class GoodsItemWidget extends StatelessWidget {
   }
 
   _buyEvent() {
-    bool sellout = false;
-      if (this.inventory > 0) {
-        sellout = false;
-      } else {
-        sellout = true;
-      }
 
     if (buyClick != null) {
       buyClick();
     } else {
       AppRouter.push(buildCtx, RouteName.COMMODITY_PAGE,
           arguments:
-              CommodityDetailPage.setArguments(this.id, seckillout: sellout
-                  // liveStatus: living == null ? null : living.status,
-                  // roomId: living == null ? null : living.roomId
+              CommodityDetailPage.setArguments(this.id,
                   ));
     }
   }

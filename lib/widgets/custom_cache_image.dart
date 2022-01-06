@@ -7,10 +7,8 @@
  * ====================================================
  */
 
-import 'package:flutter/material.dart';
-
 import 'package:extended_image/extended_image.dart';
-
+import 'package:flutter/material.dart';
 import 'package:jingyaoyun/constants/header.dart';
 
 class CustomCacheImage extends StatefulWidget {
@@ -81,7 +79,8 @@ class _CustomCacheImageState extends State<CustomCacheImage>
 //  print(widget.imageUrl);
     return ClipRRect(
       borderRadius: widget.borderRadius,
-      child: ExtendedImage.network(
+      child:
+      ExtendedImage.network(
         widget.imageUrl,
         width: widget.width,
         height: widget.width,

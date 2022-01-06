@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/pages/shop/widget/shop_page_self_income_widget.dart';

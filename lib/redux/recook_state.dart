@@ -8,7 +8,6 @@
  */
 
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/models/user_brief_info_model.dart';
 import 'package:jingyaoyun/models/user_model.dart';
 import 'package:jingyaoyun/redux/openinstall_state.dart';

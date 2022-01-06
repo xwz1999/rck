@@ -1,8 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/pages/user/user_benefit_sub_page.dart';
-import 'package:redux/redux.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/constants/header.dart';
@@ -11,16 +8,18 @@ import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/pages/user/model/user_income_data_model.dart';
 import 'package:jingyaoyun/pages/user/order/order_after_sale_page.dart';
 import 'package:jingyaoyun/pages/user/order/order_center_page.dart';
+import 'package:jingyaoyun/pages/user/user_benefit_sub_page.dart';
 import 'package:jingyaoyun/pages/user/widget/capital_view.dart';
 import 'package:jingyaoyun/pages/user/widget/order_central_view.dart';
 import 'package:jingyaoyun/pages/user/widget/other_item_view_v2.dart';
 import 'package:jingyaoyun/pages/user/widget/user_app_bar_v2.dart';
 import 'package:jingyaoyun/redux/recook_state.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
-import 'package:jingyaoyun/utils/versionInfo/version_tool.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:redux/redux.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 
 class UserPage extends StatefulWidget {

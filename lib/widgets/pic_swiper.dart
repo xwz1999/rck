@@ -2,12 +2,10 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/rendering.dart';
-
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/utils/image_utils.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';

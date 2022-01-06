@@ -1,17 +1,7 @@
-/*
- * ====================================================
- * package   : pages.business
- * author    : Created by nansi.
- * time      : 2019/5/13  2:22 PM 
- * remark    : 
- * ====================================================
- */
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/pages/business/focus/child_focus_page.dart';
 import 'package:jingyaoyun/pages/business/recommend/child_recommend_page.dart';

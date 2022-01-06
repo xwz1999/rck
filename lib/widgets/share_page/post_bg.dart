@@ -2,12 +2,9 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:jingyaoyun/constants/app_image_resources.dart';
 import 'package:jingyaoyun/constants/header.dart';
-
 import 'package:jingyaoyun/widgets/share_page/share_image_tool.dart';
 
 class PostTimeBannerInfo {

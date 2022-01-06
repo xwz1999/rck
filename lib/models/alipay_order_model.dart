@@ -1,6 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
-
 import 'package:jingyaoyun/models/base_model.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'alipay_order_model.g.dart';
 

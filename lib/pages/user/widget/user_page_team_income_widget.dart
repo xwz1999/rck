@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:velocity_x/velocity_x.dart';
-
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/app_image_resources.dart';
 import 'package:jingyaoyun/constants/constants.dart';
@@ -15,6 +12,7 @@ import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/bottom_time_picker.dart';
 import 'package:jingyaoyun/widgets/custom_painters/round_background_painter.dart';
 import 'package:jingyaoyun/widgets/sort_widget.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class UserPageTeamIncomeWidget extends StatefulWidget {
   UserPageTeamIncomeWidget({Key key}) : super(key: key);

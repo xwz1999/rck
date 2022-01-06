@@ -1,16 +1,6 @@
-/*
- * ====================================================
- * package   : 
- * author    : Created by nansi.
- * time      : 2019/6/18  2:09 PM 
- * remark    : 
- * ====================================================
- */
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_slidable/flutter_slidable.dart';
-
 import 'package:jingyaoyun/utils/mvp.dart';
 import 'package:jingyaoyun/utils/print_util.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';

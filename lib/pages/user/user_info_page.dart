@@ -11,13 +11,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart' as flutterImagePicker;
-import 'package:oktoast/oktoast.dart';
-import 'package:photo/photo.dart';
-import 'package:velocity_x/velocity_x.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
@@ -30,9 +25,11 @@ import 'package:jingyaoyun/utils/image_utils.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/action_sheet.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/image_picker.dart';
 import 'package:jingyaoyun/widgets/sc_tile.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:photo/photo.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class UserInfoPage extends StatefulWidget {
   @override
@@ -188,42 +185,38 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
             }
           });
         }),
-        SCTile.normalTile("微信号",
-            value: UserManager.instance.user.info.wechatNo,
-            needDivide: true, listener: () {
-          push(RouteName.MODIFY_DETAIL_PAGE,
-                  arguments: ModifyInfoPage.setArguments(
-                      "修改微信号", UserManager.instance.user.info.wechatNo,
-                      maxLength: 100))
-              .then((value) {
-            if (value != null) {
-              _updateWechatNo(value);
-            }
-          });
-        }),
-        (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_1 ||
-                    UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
-                    (Platform.isIOS)) &&
-                !AppConfig.showExtraCommission
-            ? SizedBox()
-            : SCTile.normalTile("我的注册码", needDivide: true, listener: () {
-                push(RouteName.USER_INFO_QRCODE_PAGE);
-              }),
-        UserManager?.instance?.user?.info?.teacherWechatNo?.isEmpty ?? true
-            ? SizedBox()
-            : SCTile.normalTile(
-                "我的服务商",
-                value: '',
+        // SCTile.normalTile("微信号",
+        //     value: UserManager.instance.user.info.wechatNo,
+        //     needDivide: true, listener: () {
+        //   push(RouteName.MODIFY_DETAIL_PAGE,
+        //           arguments: ModifyInfoPage.setArguments(
+        //               "修改微信号", UserManager.instance.user.info.wechatNo,
+        //               maxLength: 100))
+        //       .then((value) {
+        //     if (value != null) {
+        //       _updateWechatNo(value);
+        //     }
+        //   });
+        // }),
+
+        //
+        // SCTile.normalTile("我的邀请码", needDivide: true, listener: () {
+        //         push(RouteName.USER_INFO_QRCODE_PAGE);
+        //       })
+        UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Shop?
+             SCTile.normalTile(
+                "我的邀请码",
+                value: UserManager.instance.user.info.invitationNo,
                 needDivide: true,
                 needArrow: false,
                 trailing: Row(
                   children: [
-                    (UserManager.instance.user.info.teacherWechatNo)
+                    (UserManager.instance.user.info.invitationNo)
                         .text
                         .color(Color(0xFF666666))
                         .size(14.rsp)
                         .make(),
-                    2.wb,
+                    5.wb,
                     Icon(
                       Icons.copy,
                       size: 18.rsp,
@@ -234,11 +227,11 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
                 listener: () async {
                   await Clipboard.setData(
                     ClipboardData(
-                        text: UserManager.instance.user.info.teacherWechatNo),
+                        text: UserManager.instance.user.info.invitationNo),
                   );
                   showToast('已经复制到粘贴板');
                 },
-              ),
+              ):SizedBox(),
       ],
     );
   }

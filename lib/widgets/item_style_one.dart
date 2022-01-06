@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/constants/app_image_resources.dart';
 
 class ItemStyleOne extends StatefulWidget {

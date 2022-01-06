@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/utils/app_router.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FailBarcodePage extends StatefulWidget {
   final Map arguments;

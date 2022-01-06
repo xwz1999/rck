@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/live/sub_page/user_attention/topic_attention_view.dart';
 import 'package:jingyaoyun/pages/live/sub_page/user_attention/user_attention_view.dart';
 import 'package:jingyaoyun/pages/live/widget/live_attention_button.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
-import 'package:jingyaoyun/widgets/recook_indicator.dart';
 
 class UserFansPage extends StatefulWidget {
   final int id;

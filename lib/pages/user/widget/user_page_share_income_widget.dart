@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';

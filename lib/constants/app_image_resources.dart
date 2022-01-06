@@ -69,8 +69,8 @@ class AppImageName {
 }
 
 class AppSvg {
-  static const String svg_balance_pay = 'assets/svg/svg_balance_pay.svg';
-  static const String svg_coin = 'assets/svg/svg_coin.svg';
+  static const String svg_balance_pay = 'assets/svg/svg_balance_pay.png';
+  static const String svg_coin = 'assets/svg/svg_coin.png';
 }
     
   

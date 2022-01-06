@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:oktoast/oktoast.dart';
-
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
@@ -12,6 +9,7 @@ import 'package:jingyaoyun/pages/live/sub_page/user_home_page.dart';
 import 'package:jingyaoyun/pages/user/user_page.dart';
 import 'package:jingyaoyun/utils/custom_route.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:oktoast/oktoast.dart';
 
 class UserAttentionView extends StatefulWidget {
   final int id;

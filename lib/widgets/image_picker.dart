@@ -11,14 +11,12 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
 import 'package:image_picker/image_picker.dart' as flutterImgPicker;
-import 'package:photo/photo.dart';
-import 'package:photo_manager/photo_manager.dart';
-
 import 'package:jingyaoyun/models/media_model.dart';
 import 'package:jingyaoyun/utils/image_utils.dart';
 import 'package:jingyaoyun/widgets/no_data_view.dart';
+import 'package:photo/photo.dart';
+import 'package:photo_manager/photo_manager.dart';
 
 class ImagePicker implements LoadingDelegate {
   int rowCount;

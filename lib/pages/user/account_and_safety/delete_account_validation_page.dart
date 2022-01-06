@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
@@ -13,7 +12,7 @@ import 'package:jingyaoyun/pages/tabBar/TabbarWidget.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class DeleteAcountValidationPage extends StatefulWidget {

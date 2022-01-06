@@ -10,11 +10,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
-import 'package:get/get.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
-
-import 'package:waterfall_flow/waterfall_flow.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/models/category_model.dart';
@@ -28,7 +23,8 @@ import 'package:jingyaoyun/widgets/filter_tool_bar.dart';
 import 'package:jingyaoyun/widgets/goods_item.dart';
 import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
-import '../search_page.dart';
+import 'package:waterfall_flow/waterfall_flow.dart';
+
 import 'mvp/goods_list_contact.dart';
 import 'mvp/goods_list_presenter_impl.dart';
 

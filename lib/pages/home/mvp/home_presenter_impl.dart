@@ -11,6 +11,7 @@ import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/models/banner_list_model.dart';
 import 'package:jingyaoyun/models/promotion_goods_list_model.dart';
 import 'package:jingyaoyun/models/promotion_list_model.dart';
+
 import 'home_model_impl.dart';
 import 'home_mvp_contact.dart';
 

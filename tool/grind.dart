@@ -23,7 +23,7 @@ Future releaseApk() async {
     'flutter',
     'build',
     'apk',
-    '--target-platform=android-arm64',
+    // '--target-platform=android-arm64,android-arm',
     '--dart-define',
     'ISDEBUG=false',
   ]).then((proc) async {
@@ -51,7 +51,7 @@ Future releaseApk() async {
   await Process.run('open', ['${Config.downloadPath}/builds']);
   stdout.write("opening tencent reinforce 🛠\n");
   await Process.run(
-      'open', ['https://console.cloud.tencent.com/ms/reinforce/upload']);
+      'open', ['https://jiagu.360.cn/#/app/android/list']);
   stdout.write("请将加固后的文件重命名为${Config.packageName}_reinforce.apk,并移动至builds文件夹");
 }
 
@@ -130,7 +130,7 @@ buildApk() async {
     'flutter',
     'build',
     'apk',
-    '--target-platform=android-arm64',
+    '--target-platform=android-arm64,android-arm',
     '--dart-define',
     'ISDEBUG=false'
   ]);

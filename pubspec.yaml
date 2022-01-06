@@ -2,7 +2,7 @@ name: jingyaoyun
 description: jingyaoyun Market App.
 publish_to: "none"
 
-version: 1.0.0-dev+1
+version: 1.0.2-dev+3
 environment:
   sdk: ">=2.10.0 <3.0.0"
 
@@ -18,26 +18,19 @@ dependencies:
 
   timeline_tile: 0.1.2
   # 高德定位
-#  amap_flutter_map: 3.0.0
   amap_flutter_location: ^3.0.0
+  #高德基础依赖库
   amap_flutter_base: 3.0.0
-  # icons
-  flutter_icons: 1.1.0
   # 拼音
   lpinyin: 1.0.9
   # 城市列表
   azlistview: 0.1.2
   # 农历
-  lunar_calendar_converter:
-    1.0.4+1
-    # 进度条
+  lunar_calendar_converter: 1.0.4+1
+  # 进度条 视频录制
   percent_indicator: ^2.1.7+4
-  # 头部滚动视图下拉刷新
-  # extended_nested_scroll_view: ^0.3.6
-  # 声音播放
-  # soundpool: 1.0.1
-  ## 暂时关闭声音播放
-  #flutter_audio_player: 0.1.2
+
+  #扫码提示音
   just_audio: ^0.7.3
   # 第三方分享功能
   ## 解决了fluwx冲突的问题
@@ -48,9 +41,6 @@ dependencies:
 
   # 展示二维码
   qr_flutter: ^3.2.0
-  # 二维码
-  # barcode_scan: ^1.0.0
-  ## unknow bug fix
 
   flutter_qr_reader:
     git:
@@ -71,11 +61,7 @@ dependencies:
   # 权限组件
   permission_handler: ^8.0.1
 
-
-
-  cupertino_icons: ^1.0.2
-
-  sprintf: 4.0.2
+#  cupertino_icons: ^1.0.2
 
   # 全局状态控制
   flutter_redux: ^0.7.0
@@ -96,9 +82,6 @@ dependencies:
   # toast提示
   oktoast: 2.3.2
 
-  # 通讯录选择
-  easy_contact_picker: ^0.0.2
-
   # 应用信息
   package_info: ^2.0.0
 
@@ -106,15 +89,16 @@ dependencies:
   #  cached_network_image: ^1.1.0
   extended_text: ^5.0.4
   extended_image: ^3.0.0
-  date_format: 1.0.8
   # image_gallery_saver: ^1.2.1
 
   # 图片压缩
   flutter_image_compress: 0.6.3
   image_cropper: ^1.4.0
 
-  # svg
-  flutter_svg: ^0.21.0-nullsafety.0
+#  # svg
+#  flutter_svg: ^0.21.0-nullsafety.0
+#
+#  sprintf: 4.0.2
 
   # 下拉刷新
   #
@@ -132,7 +116,7 @@ dependencies:
   # 源码 TobiasPlugin.m
   # 判断支付宝是否安装时  源码不正确  应将 alipays 改为 alipay #########################3
   #
-  tobias: 2.0.0-nullsafety.3
+  tobias: ^2.1.2+1
 
   # 小数据缓存
   shared_preferences: ^2.0.5
@@ -140,13 +124,16 @@ dependencies:
   # 屏幕适配
   flutter_screenutil: ^5.0.0
 
-  # banner
-  banner_view: ^1.1.2
+  #轮播图
+  flutter_swiper_null_safety: ^1.0.2
+
+  # icons
+  flutter_icons: 1.1.0
 
   # 腾讯云点播上传SDK
 #  flutter_txugcupload: ^0.0.3
-
-  flutter_union_pay: ^0.0.4
+#
+#  flutter_union_pay: ^0.0.4
 
 #  meiqia_flutter:
 #    git:
@@ -161,7 +148,8 @@ dependencies:
   #日期选择器
   flutter_custom_calendar:
     git:
-      url: https://gitee.com/laiiihz/flutter_custom_calendar
+      url:
+        https://gitee.com/laiiihz/flutter_custom_calendar
 
   # 侧滑item
   flutter_slidable: 0.5.7
@@ -173,7 +161,7 @@ dependencies:
       ref: patch-1
   # wechat_assets_picker: ^2.2.0+2
 
-  image_gallery_saver: 1.6.9
+  image_gallery_saver: ^1.7.1
   # 因为项目compileSdkVersion 28
   # 第三方包compileSdkVersion 是27 所以需要修改 不然build会出错
   #
@@ -188,19 +176,19 @@ dependencies:
   #     url: https://github.com/YuzuWang/flutter_pulltorefresh.git
   #     ref: f07d8ed25b2776e28baddae105a64664cee2922c
 
-  flip_card: ^0.4.4
+#  flip_card: ^0.4.4
 
 
   #腾讯直播
-  tencent_live_fluttify:
-    git:
-      url: https://github.com/customPub/tencent_live_fluttify
+#  tencent_live_fluttify:
+#    git:
+#      url: https://github.com/customPub/tencent_live_fluttify
   #腾讯IM
   #TODO 已经将错误提交到上游代码，后期请使用新版本
   #more at https://github.com/JiangJuHong/FlutterTencentImPlugin/pull/101
-  tencent_im_plugin:
-    git:
-      url: https://github.com/customPub/tencent_im_plugin
+#  tencent_im_plugin:
+#    git:
+#      url: https://github.com/customPub/tencent_im_plugin
   #瀑布流
   waterfall_flow: ^2.0.3
   #相机
@@ -213,8 +201,6 @@ dependencies:
       url: https://github.com/customPub/video_trimmer
       #ref: 1761a6454623f19ef1d1c9b24f26dad47c2587b2
 
-  #点赞组件
-  many_like: ^0.0.6
 
   #加载html
   flutter_widget_from_html_core: ^0.6.2
@@ -228,25 +214,8 @@ dependencies:
   #极光推送
 #  jpush_flutter: 2.2.1
 
-  #flutter 使用原生android的几个生命周期
-  need_resume: ^1.0.6
-
   #缓存图片 解决金刚区图加载缓慢的问题
   cached_network_image: ^3.1.0
-
-  #倒计时组件
-  flutter_countdown_timer: ^4.1.0
-
-  #图表组件
-  fl_chart: ^0.36.4
-
-  float_button_overlay: ^0.3.4
-
-  scrollable_positioned_list: ^0.2.3
-
-  flutter_markdown:
-
-  package_signature: ^0.1.1
 
   hive: ^2.0.0
   hive_flutter: ^1.0.0
@@ -254,9 +223,7 @@ dependencies:
   pin_input_text_field: ^4.0.0
   velocity_x: ^3.3.0
 
-  animations:
   device_info: ^2.0.0
-  clipboard_listener: ^1.0.0
   #日志
   power_logger:
       git:
@@ -286,7 +253,6 @@ flutter:
     - assets/home/
     - assets/user/
     - assets/ticket/
-    - assets/activityImage/
     - assets/recook_launch_image/
     - assets/svg/
     - assets/icon/
@@ -294,14 +260,11 @@ flutter:
     - assets/weatherCake/
     - assets/share_bottom/
     - assets/json/
-    - assets/lottery/
     - assets/static/
-    - assets/lottery_redeem/
     - assets/shop/
     - assets/header/
     - assets/live/
     - assets/weather/
-    - assets/boosting/
   fonts:
     - family: AppIcons
       fonts:

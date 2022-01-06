@@ -1,25 +1,12 @@
-/*
- * ====================================================
- * package   : 
- * author    : Created by nansi.
- * time      : 2019/6/3  3:19 PM 
- * remark    : 
- * ====================================================
- */
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
-import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/models/goods_detail_model.dart';
 import 'package:jingyaoyun/models/goods_simple_list_model.dart';
-import 'package:jingyaoyun/pages/live/live_stream/live_stream_view_page.dart';
-import 'package:jingyaoyun/widgets/OverlayWidget.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/pic_swiper.dart';
-import 'package:jingyaoyun/widgets/seckill_activity_widget/live_animate_widget.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:jingyaoyun/widgets/video_view.dart';
 
 typedef OnScrolledListener = Function(int index);
@@ -190,30 +177,6 @@ class _ImagePageViewState extends State<ImagePageView> with TickerProviderStateM
           //         ),
           //       )
           //     : SizedBox(),
-          widget.living.status == 1
-              ? Positioned(
-                  top: 50.rw,
-                  right: 35.rw,
-                  child: InkWell(
-                    onTap: widget.living.roomId != 0
-                        ? () {
-                            Get.to(
-                                LiveStreamViewPage(id: widget.living.roomId));
-                          }
-                        : () {
-                            Toast.showError('找不到该直播间！');
-                            print('2');
-                          },
-                    child: Container(
-                      width: 60.rw,
-                      height: 70.rw,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(7.rw)),
-                          color: Colors.transparent),
-                    ),
-                  ),
-                )
-              : SizedBox(),
         ]),
       ),
     );

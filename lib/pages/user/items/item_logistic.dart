@@ -8,7 +8,6 @@
  */
 
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/models/logistic_list_model.dart';

@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-
-import 'package:velocity_x/velocity_x.dart';
-
 import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/pages/user/functions/user_benefit_func.dart';
 import 'package:jingyaoyun/pages/user/model/user_benefit_model.dart';
 import 'package:jingyaoyun/pages/user/user_benefit_page.dart';
 import 'package:jingyaoyun/utils/custom_route.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class ShopBenefitView extends StatefulWidget {
   ShopBenefitView({Key key}) : super(key: key);

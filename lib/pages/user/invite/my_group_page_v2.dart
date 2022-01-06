@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:velocity_x/velocity_x.dart';
-
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
@@ -13,6 +10,7 @@ import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class MyGroupPageV2 extends StatefulWidget {
   MyGroupPageV2({Key key}) : super(key: key);
@@ -297,9 +295,10 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
     return RecookScaffold(
       title: '我的店铺',
       whiteBg: true,
-      body: NestedScrollView(
-        headerSliverBuilder: (context, _) =>
-            [SliverToBoxAdapter(child: _renderTopCard())],
+      // body:
+      //   NestedScrollView(
+        // headerSliverBuilder: (context, _) =>
+        //     [SliverToBoxAdapter(child: _renderTopCard())],
         body: RefreshWidget(
           controller: _refreshController,
           onRefresh: () async {
@@ -319,7 +318,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
               ],
             ),
           ),
-        ),
+        // ),
       ).material(color: AppColor.frenchColor),
     );
   }

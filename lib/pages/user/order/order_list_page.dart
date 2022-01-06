@@ -8,7 +8,6 @@
  */
 
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
@@ -24,7 +23,6 @@ import 'package:jingyaoyun/pages/user/order/order_detail_page.dart';
 import 'package:jingyaoyun/pages/user/order/order_list_controller.dart';
 import 'package:jingyaoyun/pages/user/order/publish_evaluation_page.dart';
 import 'package:jingyaoyun/utils/mvp.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
@@ -301,7 +299,7 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
   confirmReceiptSuccess(UserRoleUpgradeModel model) {
     GSDialog.of(context).dismiss(globalContext);
     GSDialog.of(globalContext).showSuccess(globalContext, "确认成功").then((value) {
-      UserLevelTool.showUpgradeWidget(model, globalContext, getStore());
+      // UserLevelTool.showUpgradeWidget(model, globalContext, getStore());
     });
     _presenter.getOrderList(
         UserManager.instance.user.info.id, 0, widget.type, widget.positionType);

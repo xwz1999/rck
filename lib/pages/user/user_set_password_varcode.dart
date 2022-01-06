@@ -2,9 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'package:pin_input_text_field/pin_input_text_field.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
@@ -16,6 +13,7 @@ import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/keyboard/keyboard_widget.dart';
 import 'package:jingyaoyun/widgets/keyboard/pay_password.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:pin_input_text_field/pin_input_text_field.dart';
 
 class UserSetPasswordVarCode extends StatefulWidget {
   @override

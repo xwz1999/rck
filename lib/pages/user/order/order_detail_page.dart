@@ -8,7 +8,6 @@
  */
 
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/order_detail_model.dart';
@@ -20,8 +19,6 @@ import 'package:jingyaoyun/pages/user/mvp/order_list_contact.dart';
 import 'package:jingyaoyun/pages/user/mvp/order_list_presenter_impl.dart';
 import 'package:jingyaoyun/pages/user/order/order_detail_state.dart';
 import 'package:jingyaoyun/pages/user/order/order_logistics_list_page.dart';
-import 'package:jingyaoyun/pages/user/order/publish_evaluation_page.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
@@ -504,7 +501,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
     GSDialog.of(context).dismiss(globalContext);
     GSDialog.of(globalContext).showSuccess(globalContext, "确认成功").then((value) {
       // UserLevelTool.showUpgradeWidget(UserRoleUpgradeModel(data:UpgradeModel(upGrade: 1, roleLevel: 400, userLevel: 30)), globalContext, getStore());
-      UserLevelTool.showUpgradeWidget(model, globalContext, getStore());
+      // UserLevelTool.showUpgradeWidget(model, globalContext, getStore());
     });
     _presenter.getOrderDetail(
         UserManager.instance.user.info.id, orderDetail.id);

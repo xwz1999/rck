@@ -9,36 +9,29 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:power_logger/power_logger.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/address_list_model.dart';
 import 'package:jingyaoyun/models/base_model.dart';
-import 'package:jingyaoyun/models/order_list_model.dart';
 import 'package:jingyaoyun/models/order_prepay_model.dart';
 import 'package:jingyaoyun/models/order_preview_model.dart';
 import 'package:jingyaoyun/models/self_pickup_store_list_model.dart';
 import 'package:jingyaoyun/pages/home/classify/mvp/order_mvp/order_presenter_impl.dart';
 import 'package:jingyaoyun/pages/home/classify/order_prepay_page.dart';
+import 'package:jingyaoyun/pages/home/items/consumer_notification_page.dart';
 import 'package:jingyaoyun/pages/home/items/goods_item_order.dart';
 import 'package:jingyaoyun/pages/home/items/oversea_accept_license_page.dart';
-import 'package:jingyaoyun/pages/home/items/consumer_notification_page.dart';
 import 'package:jingyaoyun/pages/user/address/receiving_address_page.dart';
 import 'package:jingyaoyun/pages/user/user_verify.dart';
 import 'package:jingyaoyun/pages/user/widget/recook_check_box.dart';
-import 'package:jingyaoyun/utils/custom_route.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/bottom_list.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/input_view.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class GoodsOrderPage extends StatefulWidget {
   final Map arguments;

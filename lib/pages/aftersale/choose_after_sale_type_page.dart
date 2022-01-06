@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
-
 import 'package:extended_text/extended_text.dart';
-import 'package:flutter_icons/flutter_icons.dart';
-
+import 'package:flutter/material.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
@@ -221,7 +218,7 @@ class _ChooseAfterSaleTypePageState
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Icon(SimpleLineIcons.arrow_right,
+                Icon(Icons.arrow_right,
                     color: Color(0xffb3b3b3), size: rSize(15)),
               ],
             )

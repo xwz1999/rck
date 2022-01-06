@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
-
-import 'package:velocity_x/velocity_x.dart';
-
 import 'package:jingyaoyun/constants/api.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
-
 import 'package:jingyaoyun/manager/user_manager.dart';
-
 import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 
 class UserPartnerCard extends StatelessWidget {

@@ -10,24 +10,11 @@
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
-		85A11862ADC75D13EC6088CA /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8B0B4E90CD2BD72EBCFA269 /* Pods_Runner.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		93DA9AA227841C3B001E7882 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D8B0B4E90CD2BD72EBCFA269 /* Pods_Runner.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		9705A1C41CF9048500538489 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
@@ -55,7 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				85A11862ADC75D13EC6088CA /* Pods_Runner.framework in Frameworks */,
+				93DA9AA227841C3B001E7882 /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +125,6 @@
 				97C146EA1CF9000F007C117D /* Sources */,
 				97C146EB1CF9000F007C117D /* Frameworks */,
 				97C146EC1CF9000F007C117D /* Resources */,
-				9705A1C41CF9048500538489 /* Embed Frameworks */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				F235CC96A0FEC8D0839D42A2 /* [CP] Embed Pods Frameworks */,
 				0DCF909FEC96EA3592AC15C3 /* [CP] Copy Pods Resources */,
@@ -320,6 +306,7 @@
 /* Begin XCBuildConfiguration section */
 		249021D3217E4FDB00AE95B9 /* Profile */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -392,8 +379,6 @@
 					"-l\"bz2\"",
 					"-l\"c++\"",
 					"-l\"iconv\"",
-					"-l\"jcore-ios-3.1.0\"",
-					"-l\"jpush-ios-4.4.0\"",
 					"-l\"resolv\"",
 					"-l\"sqlite3\"",
 					"-l\"sqlite3.0\"",
@@ -433,10 +418,6 @@
 					"-framework",
 					"\"Foundation\"",
 					"-framework",
-					"\"HandyJSON\"",
-					"-framework",
-					"\"ImSDK\"",
-					"-framework",
 					"\"ImageIO\"",
 					"-framework",
 					"\"LBXScan\"",
@@ -463,8 +444,6 @@
 					"-framework",
 					"\"TOCropViewController\"",
 					"-framework",
-					"\"TXLiteAVSDK_Professional\"",
-					"-framework",
 					"\"UIKit\"",
 					"-framework",
 					"\"VideoToolbox\"",
@@ -475,13 +454,9 @@
 					"-framework",
 					"\"camera\"",
 					"-framework",
-					"\"clipboard_listener\"",
-					"-framework",
 					"\"device_info\"",
 					"-framework",
 					"\"device_info_plus\"",
-					"-framework",
-					"\"easy_contact_picker\"",
 					"-framework",
 					"\"file_picker\"",
 					"-framework",
@@ -493,15 +468,11 @@
 					"-framework",
 					"\"fluwx\"",
 					"-framework",
-					"\"foundation_fluttify\"",
-					"-framework",
 					"\"image_cropper\"",
 					"-framework",
 					"\"image_gallery_saver\"",
 					"-framework",
 					"\"image_picker\"",
-					"-framework",
-					"\"jpush_flutter\"",
 					"-framework",
 					"\"just_audio\"",
 					"-framework",
@@ -537,10 +508,6 @@
 					"-framework",
 					"\"sqflite\"",
 					"-framework",
-					"\"tencent_im_plugin\"",
-					"-framework",
-					"\"tencent_live_fluttify\"",
-					"-framework",
 					"\"tobias\"",
 					"-framework",
 					"\"url_launcher\"",
@@ -570,6 +537,7 @@
 		};
 		97C147031CF9000F007C117D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -625,6 +593,7 @@
 		};
 		97C147041CF9000F007C117D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -697,8 +666,6 @@
 					"-l\"bz2\"",
 					"-l\"c++\"",
 					"-l\"iconv\"",
-					"-l\"jcore-ios-3.1.0\"",
-					"-l\"jpush-ios-4.4.0\"",
 					"-l\"resolv\"",
 					"-l\"sqlite3\"",
 					"-l\"sqlite3.0\"",
@@ -738,10 +705,6 @@
 					"-framework",
 					"\"Foundation\"",
 					"-framework",
-					"\"HandyJSON\"",
-					"-framework",
-					"\"ImSDK\"",
-					"-framework",
 					"\"ImageIO\"",
 					"-framework",
 					"\"LBXScan\"",
@@ -768,8 +731,6 @@
 					"-framework",
 					"\"TOCropViewController\"",
 					"-framework",
-					"\"TXLiteAVSDK_Professional\"",
-					"-framework",
 					"\"UIKit\"",
 					"-framework",
 					"\"VideoToolbox\"",
@@ -780,13 +741,9 @@
 					"-framework",
 					"\"camera\"",
 					"-framework",
-					"\"clipboard_listener\"",
-					"-framework",
 					"\"device_info\"",
 					"-framework",
 					"\"device_info_plus\"",
-					"-framework",
-					"\"easy_contact_picker\"",
 					"-framework",
 					"\"file_picker\"",
 					"-framework",
@@ -798,15 +755,11 @@
 					"-framework",
 					"\"fluwx\"",
 					"-framework",
-					"\"foundation_fluttify\"",
-					"-framework",
 					"\"image_cropper\"",
 					"-framework",
 					"\"image_gallery_saver\"",
 					"-framework",
 					"\"image_picker\"",
-					"-framework",
-					"\"jpush_flutter\"",
 					"-framework",
 					"\"just_audio\"",
 					"-framework",
@@ -841,10 +794,6 @@
 					"\"shared_preferences\"",
 					"-framework",
 					"\"sqflite\"",
-					"-framework",
-					"\"tencent_im_plugin\"",
-					"-framework",
-					"\"tencent_live_fluttify\"",
 					"-framework",
 					"\"tobias\"",
 					"-framework",
@@ -895,8 +844,6 @@
 					"-l\"bz2\"",
 					"-l\"c++\"",
 					"-l\"iconv\"",
-					"-l\"jcore-ios-3.1.0\"",
-					"-l\"jpush-ios-4.4.0\"",
 					"-l\"resolv\"",
 					"-l\"sqlite3\"",
 					"-l\"sqlite3.0\"",
@@ -936,10 +883,6 @@
 					"-framework",
 					"\"Foundation\"",
 					"-framework",
-					"\"HandyJSON\"",
-					"-framework",
-					"\"ImSDK\"",
-					"-framework",
 					"\"ImageIO\"",
 					"-framework",
 					"\"LBXScan\"",
@@ -966,8 +909,6 @@
 					"-framework",
 					"\"TOCropViewController\"",
 					"-framework",
-					"\"TXLiteAVSDK_Professional\"",
-					"-framework",
 					"\"UIKit\"",
 					"-framework",
 					"\"VideoToolbox\"",
@@ -978,13 +919,9 @@
 					"-framework",
 					"\"camera\"",
 					"-framework",
-					"\"clipboard_listener\"",
-					"-framework",
 					"\"device_info\"",
 					"-framework",
 					"\"device_info_plus\"",
-					"-framework",
-					"\"easy_contact_picker\"",
 					"-framework",
 					"\"file_picker\"",
 					"-framework",
@@ -996,15 +933,11 @@
 					"-framework",
 					"\"fluwx\"",
 					"-framework",
-					"\"foundation_fluttify\"",
-					"-framework",
 					"\"image_cropper\"",
 					"-framework",
 					"\"image_gallery_saver\"",
 					"-framework",
 					"\"image_picker\"",
-					"-framework",
-					"\"jpush_flutter\"",
 					"-framework",
 					"\"just_audio\"",
 					"-framework",
@@ -1039,10 +972,6 @@
 					"\"shared_preferences\"",
 					"-framework",
 					"\"sqflite\"",
-					"-framework",
-					"\"tencent_im_plugin\"",
-					"-framework",
-					"\"tencent_live_fluttify\"",
 					"-framework",
 					"\"tobias\"",
 					"-framework",

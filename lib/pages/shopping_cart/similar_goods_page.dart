@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
@@ -14,6 +13,7 @@ import 'package:jingyaoyun/widgets/goods_item.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
+
 import 'function/shopping_cart_fuc.dart';
 
 class SimilarGoodsPage extends StatefulWidget {

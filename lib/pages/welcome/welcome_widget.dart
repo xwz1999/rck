@@ -11,13 +11,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/pages/tabBar/TabbarWidget.dart';
-import 'package:package_info/package_info.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/app_image_resources.dart';
@@ -27,10 +24,12 @@ import 'package:jingyaoyun/daos/user_dao.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/user_model.dart';
+import 'package:jingyaoyun/pages/tabBar/TabbarWidget.dart';
 import 'package:jingyaoyun/utils/print_util.dart';
 import 'package:jingyaoyun/utils/share_preference.dart';
 import 'package:jingyaoyun/utils/storage/hive_store.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:package_info/package_info.dart';
 
 class WelcomeWidget extends StatefulWidget {
   @override

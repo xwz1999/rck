@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/pages/user/model/user_balance_history_model.dart';

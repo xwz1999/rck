@@ -1,19 +1,7 @@
-/*
- * ====================================================
- * package   : 
- * author    : Created by nansi.
- * time      : 2019-07-19  14:17 
- * remark    : 
- * ====================================================
- */
 
-import 'package:flutter/material.dart';
 
 import 'package:common_utils/common_utils.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:flutter_union_pay/flutter_union_pay.dart';
-import 'package:get/get.dart';
-
+import 'package:flutter/material.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
@@ -34,7 +22,6 @@ import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/keyboard/bottom_keyboard_widget.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
 
 class OrderPrepayPage extends StatefulWidget {
   final Map arguments;
@@ -246,7 +233,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         _fromTo == ''
             ? _payTile(
                 "",
-                SvgPicture.asset(
+                Image.asset(
                   AppSvg.svg_balance_pay,
                   width: rSize(30),
                   height: rSize(30),

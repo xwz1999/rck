@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:oktoast/oktoast.dart';
-
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
@@ -16,6 +13,7 @@ import 'package:jingyaoyun/utils/custom_route.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/recook_indicator.dart';
+import 'package:oktoast/oktoast.dart';
 
 class LivePickGoodsPage extends StatefulWidget {
   final Function(List<num> ids) onPickGoods;

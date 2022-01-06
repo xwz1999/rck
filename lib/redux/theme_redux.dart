@@ -8,10 +8,8 @@
  */
 
 import 'package:flutter/material.dart';
-
-import 'package:redux/redux.dart';
-
 import 'package:jingyaoyun/constants/styles.dart';
+import 'package:redux/redux.dart';
 
 enum AppTheme{
   AppThemeDataLight,

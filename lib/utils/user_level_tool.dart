@@ -16,14 +16,8 @@ VipLevel     = 500    会员
 */
 
 import 'package:flutter/material.dart';
-
-import 'package:redux/redux.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/user_role_upgrade_model.dart';
-import 'package:jingyaoyun/pages/shop/widget/shop_page_upgrade_alert.dart';
-import 'package:jingyaoyun/redux/recook_state.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 
 enum UserLevel { None, Partner, Top, First, Second, Others }
@@ -91,29 +85,29 @@ class UserLevelTool {
 
 
 
-  static showUpgradeWidget(UserRoleUpgradeModel model, BuildContext context,
-      Store<RecookState> store) {
-    if (model != null && model.data != null && model.data.upGrade == 1) {
-      UserManager.instance.user.info.roleLevel = model.data.roleLevel;
-      UserManager.instance.user.info.userLevel = model.data.userLevel;
-      UserManager.instance.refreshUserRole.value =
-          !UserManager.instance.refreshUserRole.value;
-      UserManager.updateUserInfo(store);
-      showDialog(
-          context: context,
-          builder: (context) => GestureDetector(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: RoleLevelUpgradeAlert(
-                  userLevel: UserLevelTool.userLevelEnum(model.data.userLevel),
-                  width: MediaQuery.of(context).size.width,
-                  userRoleLevel:
-                      UserLevelTool.roleLevelEnum(model.data.roleLevel),
-                ),
-              ));
-    }
-  }
+  // static showUpgradeWidget(UserRoleUpgradeModel model, BuildContext context,
+  //     Store<RecookState> store) {
+  //   if (model != null && model.data != null && model.data.upGrade == 1) {
+  //     UserManager.instance.user.info.roleLevel = model.data.roleLevel;
+  //     UserManager.instance.user.info.userLevel = model.data.userLevel;
+  //     UserManager.instance.refreshUserRole.value =
+  //         !UserManager.instance.refreshUserRole.value;
+  //     UserManager.updateUserInfo(store);
+  //     showDialog(
+  //         context: context,
+  //         builder: (context) => GestureDetector(
+  //               onTap: () {
+  //                 Navigator.pop(context);
+  //               },
+  //               child: RoleLevelUpgradeAlert(
+  //                 userLevel: UserLevelTool.userLevelEnum(model.data.userLevel),
+  //                 width: MediaQuery.of(context).size.width,
+  //                 userRoleLevel:
+  //                     UserLevelTool.roleLevelEnum(model.data.roleLevel),
+  //               ),
+  //             ));
+  //   }
+  // }
 
   static roleLevelWidget({String level}) {
     return CustomImageButton(
@@ -472,20 +466,14 @@ class UserLevelTool {
   ///获取用户的名片的角色 icon
   static String getRoleLevelIcon(UserRoleLevel level) {
     switch (level) {
-      case UserRoleLevel.Diamond_1:
-      case UserRoleLevel.Diamond_2:
-      case UserRoleLevel.Diamond_3:
+      case UserRoleLevel.Shop:
         return R.ASSETS_USER_ICON_DIAMOND_PNG;
-      case UserRoleLevel.Gold:
-        return R.ASSETS_USER_ICON_GOLD_PNG;
-      case UserRoleLevel.Silver:
-        return R.ASSETS_USER_ICON_SLIVER_PNG;
       case UserRoleLevel.Master:
         return R.ASSETS_USER_ICON_MASTER_PNG;
       case UserRoleLevel.Vip:
         return R.ASSETS_USER_ICON_VIP_PNG;
       default:
-        return R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG;
+        return R.ASSETS_USER_ICON_VIP_PNG;
     }
   }
 

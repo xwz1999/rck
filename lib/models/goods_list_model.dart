@@ -1,7 +1,6 @@
-import 'package:json_annotation/json_annotation.dart';
-
 import 'package:jingyaoyun/models/base_model.dart';
 import 'package:jingyaoyun/models/price_model.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'goods_list_model.g.dart';
 

@@ -1,7 +1,7 @@
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/live/models/king_coin_list_model.dart';
+import 'package:jingyaoyun/pages/home/model/king_coin_list_model.dart';
 import 'package:jingyaoyun/pages/user/model/user_common_model.dart';
 
 enum UsersMode {

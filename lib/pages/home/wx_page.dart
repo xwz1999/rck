@@ -1,19 +1,17 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/utils/image_utils.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class WxContactPage extends StatefulWidget {
   WxContactPage({

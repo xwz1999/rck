@@ -1,10 +1,10 @@
 
 import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
@@ -27,8 +27,10 @@ class PhoneLoginPage extends StatefulWidget {
 class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   TextEditingController _phoneController;
   TextEditingController _smsCodeController;
+  TextEditingController _inviteController;
   FocusNode _phoneNode;
   FocusNode _smsCodeNode;
+  FocusNode _inviteNode;
 
   bool _chooseAgreement = false;
   Timer _timer;
@@ -43,26 +45,31 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
     super.initState();
 
     if (AppConfig.debug) {
-      // _smsCodeController = TextEditingController(text: "0716");
+      _smsCodeController = TextEditingController(text: "0716");
       _phoneController = TextEditingController(text: "18906611076");
+      _inviteController = TextEditingController();
       _loginEnable = true;
       _getCodeEnable = true;
     } else {
       _phoneController = TextEditingController();
       _smsCodeController = TextEditingController();
-      // _smsCodeController = TextEditingController(text: "0716");
+      _inviteController = TextEditingController();
     }
 
     _phoneNode = FocusNode();
     _smsCodeNode = FocusNode();
+    _inviteNode = FocusNode();
   }
 
   @override
   void dispose() {
     _phoneController?.dispose();
     _smsCodeController?.dispose();
+    _inviteController?.dispose();
     _phoneNode?.dispose();
     _smsCodeNode?.dispose();
+    _inviteNode?.dispose();
+
 
     if (_timer != null) {
       _timer.cancel();
@@ -99,51 +106,52 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                 ),
                 _phoneText(),
                 _smsCode(),
+                _inviteText(),
                 _bottomOperation(),
                 120.hb,
-                // GestureDetector(
-                //   onTap: () {
-                //     _chooseAgreement = !_chooseAgreement;
-                //     setState(() {});
-                //   },
-                //   child: Row(
-                //     mainAxisSize: MainAxisSize.min,
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: [
-                //       Container(
-                //           width: 50.w,
-                //           height: 50.w,
-                //           padding: EdgeInsets.only(top: 6.w, right: 5.w),
-                //           child: !_chooseAgreement
-                //               ? Icon(CupertinoIcons.circle,
-                //               size: 18, color: Color(0xFFdddddd))
-                //               : Icon(CupertinoIcons.checkmark_circle,
-                //               size: 18 , color: Colors.red)),
-                //       RichText(
-                //           text: TextSpan(
-                //               text: "您已阅读并同意",
-                //               style: TextStyle(
-                //                   color: Colors.grey[500], fontSize: 12 * 2.sp),
-                //               children: [
-                //                 new TextSpan(
-                //                     text: '《用户服务协议》',
-                //                     style: new TextStyle(
-                //                         color: Colors.black, fontSize: 12 * 2.sp),
-                //                     recognizer: _recognizer(context, 2)),
-                //                 TextSpan(
-                //                   text: "和",
-                //                   style: TextStyle(
-                //                       color: Colors.grey[500], fontSize: 12 * 2.sp),
-                //                 ),
-                //                 new TextSpan(
-                //                     text: '《用户隐私政策》',
-                //                     style: new TextStyle(
-                //                         color: Colors.black, fontSize: 12 * 2.sp),
-                //                     recognizer: _recognizer(context, 1)),
-                //               ])),
-                //     ],
-                //   ),
-                // ),
+                GestureDetector(
+                  onTap: () {
+                    _chooseAgreement = !_chooseAgreement;
+                    setState(() {});
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                          width: 50.w,
+                          height: 50.w,
+                          padding: EdgeInsets.only(top: 6.w, right: 5.w),
+                          child: !_chooseAgreement
+                              ? Icon(CupertinoIcons.circle,
+                              size: 18, color: Color(0xFFdddddd))
+                              : Icon(CupertinoIcons.checkmark_circle,
+                              size: 18 , color: Colors.red)),
+                      RichText(
+                          text: TextSpan(
+                              text: "您已阅读并同意",
+                              style: TextStyle(
+                                  color: Colors.grey[500], fontSize: 12 * 2.sp),
+                              children: [
+                                new TextSpan(
+                                    text: '《用户服务协议》',
+                                    style: new TextStyle(
+                                        color: Colors.black, fontSize: 12 * 2.sp),
+                                    recognizer: _recognizer(context, 2)),
+                                TextSpan(
+                                  text: "和",
+                                  style: TextStyle(
+                                      color: Colors.grey[500], fontSize: 12 * 2.sp),
+                                ),
+                                new TextSpan(
+                                    text: '《用户隐私政策》',
+                                    style: new TextStyle(
+                                        color: Colors.black, fontSize: 12 * 2.sp),
+                                    recognizer: _recognizer(context, 1)),
+                              ])),
+                    ],
+                  ),
+                ),
                 40.hb,
                 _loginButton(context),
 
@@ -212,6 +220,36 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
     );
   }
 
+
+  Container _inviteText() {
+    return Container(
+      margin:
+      EdgeInsets.only(top: rSize(10), right: rSize(20), left: rSize(20)),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey[500], width: 0.5),
+          borderRadius: BorderRadius.all(Radius.circular(3))),
+      child: TextField(
+        controller: _inviteController,
+        focusNode: _inviteNode,
+        keyboardType: TextInputType.number,
+        style: TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
+        inputFormatters: [
+          LengthLimitingTextInputFormatter(11),
+        ],
+        cursorColor: Colors.black,
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(
+                left: rSize(10),
+                top: rSize(13),
+                bottom: _inviteNode.hasFocus ? 0 : rSize(14)),
+            border: InputBorder.none,
+            hintText: "邀请码（选填）",
+            hintStyle: TextStyle(color: Colors.grey[400], fontSize: 15 * 2.sp),
+            suffixIcon: _clearButton(_inviteController, _inviteNode)),
+      ),
+    );
+  }
+
   IconButton _clearButton(TextEditingController controller, FocusNode node) {
     return node.hasFocus
         ? IconButton(
@@ -231,7 +269,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   Container _smsCode() {
     return Container(
       margin:
-          EdgeInsets.only(top: rSize(20), right: rSize(20), left: rSize(20)),
+          EdgeInsets.only(top: rSize(10), right: rSize(20), left: rSize(20)),
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey[500], width: 0.5),
           borderRadius: BorderRadius.all(Radius.circular(3))),
@@ -432,7 +470,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
       radius: BorderRadius.all(Radius.circular(5)),
       backgroundColor: Theme.of(context).primaryColor,
       onTap: () {
-        if (!_chooseAgreement) {
+        if (_chooseAgreement) {
           GSDialog.of(context).showLoadingDialog(context, "正在登录...");
           _phoneLogin(context);
         } else {
@@ -528,7 +566,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
 
   _phoneRegister(BuildContext context) {
     GSDialog.of(context).showLoadingDialog(context, "正在登录...");
-    UserDao.phoneRegister(_phoneController.text, "000000",
+    UserDao.phoneRegister(_phoneController.text, _inviteController.text,
         success: (data, code, msg) {
       GSDialog.of(context).dismiss(context);
       AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);

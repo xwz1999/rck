@@ -6,15 +6,15 @@
  * remark    : 
  * ====================================================
  */
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jingyaoyun/constants/app_image_resources.dart';
 import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/models/province_city_model.dart';
 import 'package:jingyaoyun/utils/text_utils.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
+
 import 'custom_bottom_sheet.dart';
 
 typedef AddressSelectorCallback = Function(
@@ -172,8 +172,9 @@ class _AddressSelectorState extends State<AddressSelector>
             return CustomImageButton(
               padding: EdgeInsets.zero,
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 6),
+                padding: EdgeInsets.symmetric(vertical: 8.rw),
                 child: Row(children: [
+
                   Text(
                     addr,
                     style: TextStyle(

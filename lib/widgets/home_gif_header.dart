@@ -1,9 +1,8 @@
+import 'package:flutter/material.dart'
+    hide RefreshIndicator, RefreshIndicatorState;
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-
-import 'package:flutter/material.dart'
-    hide RefreshIndicator, RefreshIndicatorState;
 
 class HomeGifHeader extends RefreshIndicator {
   HomeGifHeader()

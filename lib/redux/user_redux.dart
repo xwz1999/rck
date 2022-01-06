@@ -1,6 +1,5 @@
-import 'package:redux/redux.dart';
-
 import 'package:jingyaoyun/models/user_model.dart';
+import 'package:redux/redux.dart';
 
 final UserReducer = combineReducers<User>([
   TypedReducer<User, UpdateUserAction>(updateUserInfo)

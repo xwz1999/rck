@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
-
 import 'package:jingyaoyun/models/goods_detail_model.dart'
     show Attributes, Children, Sku;
 

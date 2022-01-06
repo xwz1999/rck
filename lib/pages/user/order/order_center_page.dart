@@ -9,9 +9,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
@@ -22,6 +19,7 @@ import 'package:jingyaoyun/widgets/cache_tab_bar_view.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/tabbarWidget/sc_tab_bar.dart';
 import 'package:jingyaoyun/widgets/title_switch.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderCenterPage extends StatefulWidget {
   final Map arguments;

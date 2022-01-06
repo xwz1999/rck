@@ -7,10 +7,9 @@
  * ====================================================
  */
 
-import 'package:tobias/tobias.dart' as tobias;
-
 import 'package:jingyaoyun/utils/print_util.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:tobias/tobias.dart' as tobias;
 
 enum AliPayResultCode {
   success, // 9000 订单支付成功

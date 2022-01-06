@@ -9,7 +9,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
@@ -26,6 +25,7 @@ import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:jingyaoyun/widgets/no_data_view.dart';
 import 'package:jingyaoyun/widgets/pic_swiper.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
+
 import 'mvp/recommend_mvp_contact.dart';
 import 'mvp/recommend_presenter_implementation.dart';
 
@@ -79,7 +79,7 @@ class _RecommendPageState extends BaseStoreState<RecommendPage>
             downloadListener: (){
               showLoading("保存图片中...");
               List<String> urls = indexModel.photos.map((f){
-                return Api.getResizeImgUrl(f.url, 300);
+                return Api.getResizeImgUrl(f.url, 800);
               }).toList();
               ImageUtils.saveNetworkImagesToPhoto(urls, (index){
                 DPrint.printf("保存好了---$index");

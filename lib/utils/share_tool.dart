@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:fluwx/fluwx.dart' as Fluwx;
 import 'package:fluwx/fluwx.dart';
-import 'package:oktoast/oktoast.dart';
 // import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
 import 'package:jingyaoyun/constants/api.dart';
@@ -19,6 +17,7 @@ import 'package:jingyaoyun/widgets/bottom_sheet/bottom_share_dialog.dart';
 import 'package:jingyaoyun/widgets/share_page/share_goods_poster_page.dart';
 import 'package:jingyaoyun/widgets/share_page/share_url_poster_page.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:oktoast/oktoast.dart';
 
 class ShareTool {
   static bool qqInstalled = true;

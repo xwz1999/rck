@@ -1,21 +1,19 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-
 import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:oktoast/oktoast.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/pages/welcome/launch_widget.dart';
 import 'package:jingyaoyun/pages/live/video/crop_video_page.dart';
 import 'package:jingyaoyun/pages/live/video/video_advance_page.dart';
 import 'package:jingyaoyun/pages/live/widget/local_file_video.dart';
 import 'package:jingyaoyun/pages/live/widget/video_record_button.dart';
+import 'package:jingyaoyun/pages/welcome/launch_widget.dart';
 import 'package:jingyaoyun/utils/custom_route.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AddVideoPage extends StatefulWidget {
   AddVideoPage({Key key}) : super(key: key);

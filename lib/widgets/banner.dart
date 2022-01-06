@@ -1,16 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import 'package:banner_view/banner_view.dart';
-
+import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:jingyaoyun/constants/header.dart';
-
-///广告banner
-///author: yinbiao
-///time:2018-12-5
-///
+import 'package:jingyaoyun/widgets/rectIndicator.dart';
 
 typedef BannerBuilder = Widget Function(BuildContext context, dynamic item);
 
@@ -44,8 +37,6 @@ class BannerListView<T> extends StatefulWidget {
 }
 
 class BannerListViewState<T> extends State<BannerListView> {
-  PageController _controller;
-  Timer timer;
 
   final BannerBuilder builder;
 
@@ -54,7 +45,6 @@ class BannerListViewState<T> extends State<BannerListView> {
   @override
   void initState() {
     super.initState();
-    _controller = new PageController(initialPage: 1);
   }
 
   @override
@@ -67,46 +57,9 @@ class BannerListViewState<T> extends State<BannerListView> {
           borderRadius: BorderRadius.all(Radius.circular(widget.radius)),
           child: widget.data == null || widget.data.length == 0
               ? Container()
-              : BannerView(
-                  _buildBanners(context),
-                  onPageChanged: (index) {
-                    if (widget.onPageChanged != null) {
-                      widget.onPageChanged(index);
-                    }
-                  },
-                  initIndex: 1,
-                  log: false,
-                  controller: _controller,
-                  intervalDuration: Duration(seconds: 2),
-                  indicatorNormal: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.5),
-                        borderRadius: BorderRadius.all(Radius.circular(2))),
-                    width: 4,
-                    height: 4,
-                  ),
-                  indicatorSelected: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.red.withOpacity(0.5),
-                        borderRadius: BorderRadius.all(Radius.circular(2))),
-                    width: 4,
-                    height: 4,
-                  ),
-                  indicatorBuilder: (context, widget) {
-                    return new Align(
-                      alignment: Alignment.bottomCenter,
-                      child: new Opacity(
-                        opacity: 0.3,
-                        child: new Container(
-                          height: rSize(30),
-                          padding: new EdgeInsets.symmetric(horizontal: 16.0),
-                          alignment: Alignment.centerLeft,
-                          child: widget,
-                        ),
-                      ),
-                    );
-                  },
-                )),
+              :
+          _homeSwiper()
+      ),
     );
   }
 
@@ -117,6 +70,59 @@ class BannerListViewState<T> extends State<BannerListView> {
     });
     return banners;
   }
+
+
+  Widget _homeSwiper() {
+    return Container(
+      width: double.infinity,
+      height: 320.w,
+      child: AspectRatio(
+        aspectRatio: 375 / 160,
+        child: Swiper(
+          key: UniqueKey(),
+          itemBuilder: (BuildContext context, int index) {
+            return _buildBanners(context)[index];
+          },
+          index: 1,
+          duration: 2,
+          onIndexChanged: (int index){
+            if (widget.onPageChanged != null) {
+              widget.onPageChanged(index);
+            }
+          },
+          pagination: SwiperPagination(
+              alignment: Alignment.bottomRight,
+              builder: SwiperCustomPagination(
+                  builder: (BuildContext context, SwiperPluginConfig config) {
+                    return RectIndicator(
+                      position: config.activeIndex,
+                      count:  widget.data.length,
+                      activeColor: Color(0x99FFFFFF),
+                      color: Color(0xD9FFFFFF),
+                      //未选中 指示器颜色，选中的颜色key为Color
+                      width: 4,
+                      //指示器宽度
+                      activeWidth: 14,
+                      //选中的指示器宽度
+                      radius: 4,
+                      //指示器圆角角度
+                      height: 4,
+                    ); //指示器高度
+                  })),
+          scrollDirection: Axis.horizontal,
+          // control: new SwiperControl(),
+          autoplay: true,
+
+          onTap: (index) {
+            // Get.to(() =>
+            //     PublicInformationDetailPage(id: _swiperModels[index].newsId!));
+          },
+          itemCount: widget.data.length,
+        ),
+      ),
+    );
+  }
+
 
   @override
   void dispose() {

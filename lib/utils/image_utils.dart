@@ -10,16 +10,14 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
-
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:permission_handler/permission_handler.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/utils/print_util.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ImageUtils {
   static Future<File> cropImage(file) async {
@@ -102,7 +100,7 @@ class ImageUtils {
       var data = await getNetworkImageData(url, useCache: useCache);
       try {
         final Map<dynamic, dynamic> result =
-            await ImageGallerySaver.saveImage(data);
+            await ImageGallerySaver.saveImage(data,quality: 100);
         //只下载单张图片的bug
         // if (Platform.isAndroid) {
         //   if (result.containsValue(true)) {

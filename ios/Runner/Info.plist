@@ -151,7 +151,7 @@
 	<key>NSCalendarsUsageDescription</key>
 	<string>我们需要访问日历权限</string>
 	<key>NSCameraUsageDescription</key>
-	<string>是否允许"左家右厨"访问您设备上的照片、媒体内容和文件</string>
+	<string>我们需要访问相机权限，去扫码获取商品信息</string>
 	<key>NSContactsUsageDescription</key>
 	<string>我们需要访问您的通讯录权限</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
@@ -167,7 +167,7 @@
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>是否允许"左家右厨"访问您设备上的照片、媒体内容和文件</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>是否允许"左家右厨"访问您设备上的照片、媒体内容和文件</string>
+	<string>是否允许"左家右厨"访问您设备上的照片、媒体内容和文件，选取二维码图片进行扫码识别</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>我们需要访问语音识别权限</string>
 	<key>UILaunchStoryboardName</key>

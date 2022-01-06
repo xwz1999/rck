@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
@@ -72,7 +71,7 @@ class _FocusPageState extends BaseStoreState<FocusPage>
             downloadListener: (){
               showLoading("保存图片中...");
               List<String> urls = indexModel.photos.map((f){
-                return Api.getResizeImgUrl(f.url, 300);
+                return Api.getResizeImgUrl(f.url, 800);
               }).toList();
               print(urls);
               ImageUtils.saveNetworkImagesToPhoto(

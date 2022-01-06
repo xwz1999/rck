@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/pages/live/sub_page/data_manager/data_manager_all_view.dart';
 import 'package:jingyaoyun/pages/live/sub_page/data_manager/data_manager_live_view.dart';

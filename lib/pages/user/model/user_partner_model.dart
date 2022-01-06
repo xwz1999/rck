@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-
 import 'package:jingyaoyun/utils/user_level_tool.dart';
 
 class UserPartnerModel {

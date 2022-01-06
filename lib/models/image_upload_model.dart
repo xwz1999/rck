@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'package:jingyaoyun/models/base_model.dart';
 /*
 {
     "code":"SUCCESS",
@@ -21,8 +22,6 @@
 */
 
 import 'package:json_annotation/json_annotation.dart';
-
-import 'package:jingyaoyun/models/base_model.dart';
 
 part 'image_upload_model.g.dart';
 

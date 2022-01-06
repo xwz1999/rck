@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:waterfall_flow/waterfall_flow.dart';
-
 import 'package:jingyaoyun/const/resource.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/constants.dart';
@@ -10,6 +7,7 @@ import 'package:jingyaoyun/pages/live/activity/video_fall_through_page.dart';
 import 'package:jingyaoyun/pages/live/models/video_list_model.dart';
 import 'package:jingyaoyun/utils/custom_route.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:waterfall_flow/waterfall_flow.dart';
 
 class VideoPage extends StatefulWidget {
   VideoPage({Key key}) : super(key: key);

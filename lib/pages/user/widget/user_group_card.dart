@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:oktoast/oktoast.dart';
-import 'package:velocity_x/velocity_x.dart';
-
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/constants/header.dart';
@@ -13,6 +9,8 @@ import 'package:jingyaoyun/utils/custom_route.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class UserGroupCard extends StatefulWidget {
   final String name;

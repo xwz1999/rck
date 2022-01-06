@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 extension WidgetListExt on List {
   List<Widget> sepWidget({Widget separate}) {

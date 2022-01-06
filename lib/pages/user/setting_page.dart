@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:package_info/package_info.dart';
-
+import 'package:get/get.dart';
+import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
-
 import 'package:jingyaoyun/manager/user_manager.dart';
-
-
 import 'package:jingyaoyun/pages/user/user_info_page.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/sc_tile.dart';
-
-import 'package:need_resume/need_resume.dart';
-import 'package:get/get.dart';
+import 'package:jingyaoyun/widgets/webView.dart';
+import 'package:package_info/package_info.dart';
 
 import 'account_and_safety/account_and_safety_page.dart';
 
@@ -34,7 +30,7 @@ class SettingItemListView extends StatefulWidget {
   _SettingItemListViewState createState() => _SettingItemListViewState();
 }
 
-class _SettingItemListViewState extends ResumableState<SettingItemListView> {
+class _SettingItemListViewState extends State<SettingItemListView> {
   PackageInfo _packageInfo;
   String perText = '';
   @override
@@ -118,14 +114,14 @@ class _SettingItemListViewState extends ResumableState<SettingItemListView> {
                         // context, RouteName.WEB_VIEW_PAGE, arguments: WebViewPage.setArguments(url: WebApi.aboutUs, title: "关于我们"), );
                       }),
                       SCTile.normalTile("隐私政策", listener: () {
-                        // AppRouter.push(
-                        //   context,
-                        //   RouteName.WEB_VIEW_PAGE,
-                        //   arguments: WebViewPage.setArguments(
-                        //       url: WebApi.privacy,
-                        //       title: "隐私政策",
-                        //       hideBar: true),
-                        // );
+                        AppRouter.push(
+                          context,
+                          RouteName.WEB_VIEW_PAGE,
+                          arguments: WebViewPage.setArguments(
+                              url: WebApi.privacy,
+                              title: "隐私政策",
+                              hideBar: true),
+                        );
                         //CRoute.push(context, PrivacyPageV2());
                       }),
 

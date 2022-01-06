@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/snackbar/snack.dart';
 
 class InvoiceBillListModel {
   int id;

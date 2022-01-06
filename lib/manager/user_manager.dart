@@ -11,23 +11,20 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:jingyaoyun/base/http_result_model.dart';
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/pages/live/models/king_coin_list_model.dart';
-import 'package:jingyaoyun/utils/storage/hive_store.dart';
-
-import 'package:redux/redux.dart';
-
-import 'package:jingyaoyun/base/http_result_model.dart';
 import 'package:jingyaoyun/models/home_weather_model.dart';
 import 'package:jingyaoyun/models/user_brief_info_model.dart';
 import 'package:jingyaoyun/models/user_model.dart';
-import 'package:jingyaoyun/pages/live/tencent_im/tencent_im_tool.dart';
+import 'package:jingyaoyun/pages/home/model/king_coin_list_model.dart';
 import 'package:jingyaoyun/pages/user/mvp/user_presenter_impl.dart';
 import 'package:jingyaoyun/redux/recook_state.dart';
 import 'package:jingyaoyun/redux/user_brief_redux.dart';
 import 'package:jingyaoyun/utils/print_util.dart';
+import 'package:jingyaoyun/utils/storage/hive_store.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:redux/redux.dart';
 
 class UserManager {
   static bool shouldRefresh = false;
@@ -110,7 +107,6 @@ class UserManager {
 
   static logout() async {
     DPrint.printf("退出登录了 -- ${instance.login.value}");
-    TencentIMTool.model = null;
     instance.user = User.empty();
     instance.login.value = false;
     HiveStore.appBox.delete('key_user');

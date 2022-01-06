@@ -1,10 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/constants.dart';
@@ -12,12 +9,9 @@ import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/pages/home/function/home_fuc.dart';
 import 'package:jingyaoyun/pages/home/model/aku_video_list_model.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
-import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
-
 
 import 'aku_college_detail_page.dart';
 

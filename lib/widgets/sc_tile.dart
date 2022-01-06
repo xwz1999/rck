@@ -8,13 +8,12 @@
  */
 
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jingyaoyun/constants/app_image_resources.dart';
 import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/input_view.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SCTile {
   static TextStyle _titleStyle =

@@ -1,16 +1,14 @@
 import 'dart:io';
 
+import 'package:device_info/device_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-
-import 'package:device_info/device_info.dart';
-import 'package:package_info/package_info.dart';
-import 'package:url_launcher/url_launcher.dart';
-
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/utils/versionInfo/version_info_model.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:package_info/package_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class VersionTool {
   static checkVersionInfo(context) async {

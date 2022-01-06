@@ -1,17 +1,7 @@
-/*
- * ====================================================
- * package   : widgets
- * author    : Created by nansi.
- * time      : 2019/5/20  9:49 AM 
- * remark    : 
- * ====================================================
- */
 
 import 'package:flutter/material.dart';
-
-import 'package:oktoast/oktoast.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
+import 'package:oktoast/oktoast.dart';
 
 enum Gravity { TOP, CENTER, BOTTOM }
 

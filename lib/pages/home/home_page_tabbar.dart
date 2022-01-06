@@ -1,10 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
 import 'package:flutter_gifimage/flutter_gifimage.dart';
-
-import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/models/promotion_list_model.dart';

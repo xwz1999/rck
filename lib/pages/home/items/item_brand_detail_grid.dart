@@ -7,12 +7,9 @@
  * ====================================================
  */
 
-import 'package:flutter/material.dart';
-
 import 'package:common_utils/common_utils.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
-
+import 'package:flutter/material.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';

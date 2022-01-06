@@ -2,9 +2,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'package:oktoast/oktoast.dart';
-
 import 'package:jingyaoyun/constants/config.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/constants/styles.dart';
@@ -19,10 +16,10 @@ import 'package:jingyaoyun/pages/tabBar/rui_code_listener.dart';
 import 'package:jingyaoyun/pages/user/user_page.dart';
 import 'package:jingyaoyun/utils/app_router.dart';
 import 'package:jingyaoyun/utils/print_util.dart';
-import 'package:jingyaoyun/utils/versionInfo/version_tool.dart';
 import 'package:jingyaoyun/widgets/cache_tab_bar_view.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/tabbarWidget/ace_bottom_navigation_bar.dart';
+import 'package:oktoast/oktoast.dart';
 
 class TabBarWidget extends StatefulWidget {
   @override

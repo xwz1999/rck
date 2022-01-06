@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flustars/flustars.dart';
+
 import 'package:dio/dio.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,6 @@ import 'package:flutter_custom_calendar/model/date_model.dart';
 import 'package:flutter_custom_calendar/widget/calendar_view.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/home_weather_model.dart';
 import 'package:jingyaoyun/widgets/calendar/calendar_weekbar_widget.dart';
 import 'package:jingyaoyun/widgets/calendar/holiday_calendar_model.dart';

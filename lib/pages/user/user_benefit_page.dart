@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:velocity_x/velocity_x.dart';
-
 import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/pages/user/benefit_view_gen.dart';
@@ -14,6 +11,7 @@ import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/custom_painters/round_background_painter.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/recook_indicator.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class UserBenefitPage extends StatefulWidget {
   UserBenefitPage({Key key}) : super(key: key);

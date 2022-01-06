@@ -1,16 +1,14 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
-import 'package:video_trimmer/video_trimmer.dart';
-
 import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/pages/live/video/video_advance_page.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
+import 'package:video_trimmer/video_trimmer.dart';
 
 class CropVideoPage extends StatefulWidget {
   final File file;

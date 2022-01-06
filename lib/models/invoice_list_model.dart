@@ -14,10 +14,9 @@
 }
 */
 
-import 'package:json_annotation/json_annotation.dart';
-
 import 'package:jingyaoyun/models/base_model.dart';
 import 'package:jingyaoyun/models/order_detail_model.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 part 'invoice_list_model.g.dart';
 

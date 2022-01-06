@@ -1,9 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
-import 'package:waterfall_flow/waterfall_flow.dart';
-
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
@@ -12,6 +9,7 @@ import 'package:jingyaoyun/pages/live/models/topic_content_list_model.dart';
 import 'package:jingyaoyun/pages/live/widget/live_attention_button.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:waterfall_flow/waterfall_flow.dart';
 
 class TopicPage extends StatefulWidget {
   final int topicId;

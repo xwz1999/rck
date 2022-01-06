@@ -9,7 +9,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
@@ -128,7 +127,8 @@ class _MaterialPageState extends State<MaterialPage>
         downloadListener: () {
           GSDialog.of(context).showLoadingDialog(context, "保存图片中...");
           List<String> urls = model.photos.map((f) {
-            return Api.getResizeImgUrl(f.url, 300);
+            // return Api.getResizeImgUrl(f.url, 300);
+            return Api.getResizeImgUrl(f.url, 800);
           }).toList();
           ImageUtils.saveNetworkImagesToPhoto(urls, (index) {
             DPrint.printf("保存好了---$index");
@@ -137,12 +137,12 @@ class _MaterialPageState extends State<MaterialPage>
             success
                 ? GSDialog.of(context).showSuccess(context, "保存完成!")
                 : GSDialog.of(context).showError(context, "保存失败...");
-            if (!TextUtils.isEmpty(model.text)) {
-              ClipboardData data = new ClipboardData(text: model.text);
-              Clipboard.setData(data);
-              Toast.showCustomSuccess('文字内容已经保存到剪贴板');
-              // Toast.showSuccess('文字内容已经保存到剪贴板');
-            }
+            // if (!TextUtils.isEmpty(model.text)) {
+            //   ClipboardData data = new ClipboardData(text: model.text);
+            //   Clipboard.setData(data);
+            //   Toast.showCustomSuccess('文字内容已经保存到剪贴板');
+            //   // Toast.showSuccess('文字内容已经保存到剪贴板');
+            // }
           });
         },
         copyListener: () {
@@ -176,91 +176,91 @@ class _MaterialPageState extends State<MaterialPage>
     );
   }
 
-  List<Widget> _materialDetail() {
-    if (_model == null) return [];
-
-    List<Widget> children = _model.data.map((MaterialModel model) {
-      return Container(
-        child: PublishMaterialItem(
-          publishMaterialListener: (Goods goods) {
-            WeChatUtils.shareGoodsForMiniProgram(
-                goodsId: goods.id,
-                thumbnail: Api.getImgUrl(goods.mainPhotoURL),
-                title: goods.name);
-          },
-          downloadListener: () {
-            GSDialog.of(context).showLoadingDialog(context, "保存图片中...");
-            List<String> urls = model.photos.map((f) {
-              return Api.getResizeImgUrl(f.url, 300);
-            }).toList();
-            ImageUtils.saveNetworkImagesToPhoto(urls, (index) {
-              DPrint.printf("保存好了---$index");
-            }, (success) {
-              GSDialog.of(context).dismiss(context);
-              success
-                  ? GSDialog.of(context).showSuccess(context, "保存完成")
-                  : GSDialog.of(context).showError(context, "保存失败");
-              if (!TextUtils.isEmpty(model.text)) {
-                ClipboardData data = new ClipboardData(text: model.text);
-                Clipboard.setData(data);
-                Toast.showCustomSuccess('文字内容已经保存到剪贴板');
-                // Toast.showSuccess('文字内容已经保存到剪贴板');
-              }
-            });
-          },
-          copyListener: () {
-            if (!TextUtils.isEmpty(model.text)) {
-              ClipboardData data = new ClipboardData(text: model.text);
-              Clipboard.setData(data);
-              Toast.showCustomSuccess('文字内容已经保存到剪贴板');
-              // showSuccess('文字内容已经保存到剪贴板');
-            }
-          },
-          focusListener: () {
-            DPrint.printf("关注或者取消关注!");
-            _attention(model);
-          },
-          picListener: (index) {
-            List<PicSwiperItem> picSwiperItem = [];
-            for (Photos photo in model.photos) {
-              picSwiperItem.add(PicSwiperItem(Api.getImgUrl(photo.url)));
-            }
-            AppRouter.fade(
-              context,
-              RouteName.PIC_SWIPER,
-              arguments: PicSwiper.setArguments(
-                index: index,
-                pics: picSwiperItem,
-              ),
-            );
-          },
-          model: model,
-        ),
-      );
-    }).toList();
-
-    if (UserManager.instance.haveLogin) {
-      children.add(Container(
-        child: Positioned(
-          bottom: 40,
-          child: CustomImageButton(
-            title: "我要发布",
-            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 25),
-            color: Colors.white,
-            fontSize: 15 * 2.sp,
-            backgroundColor: Color(0xFFFF2810),
-            borderRadius: BorderRadius.all(Radius.circular(20)),
-            onPressed: () {
-              AppRouter.model(context, RouteName.BUSINESS_DISTRICT_PUBLISH_PAGE,
-                  arguments: PublishBusinessDistrictPage.setArguments(
-                      goodsId: widget.goodsID));
-            },
-          ),
-        ),
-      ));
-    }
-    return children;
-  }
+  // List<Widget> _materialDetail() {
+  //   if (_model == null) return [];
+  //
+  //   List<Widget> children = _model.data.map((MaterialModel model) {
+  //     return Container(
+  //       child: PublishMaterialItem(
+  //         publishMaterialListener: (Goods goods) {
+  //           WeChatUtils.shareGoodsForMiniProgram(
+  //               goodsId: goods.id,
+  //               thumbnail: Api.getImgUrl(goods.mainPhotoURL),
+  //               title: goods.name);
+  //         },
+  //         downloadListener: () {
+  //           GSDialog.of(context).showLoadingDialog(context, "保存图片中...");
+  //           List<String> urls = model.photos.map((f) {
+  //             return Api.getResizeImgUrl(f.url, 300);
+  //           }).toList();
+  //           ImageUtils.saveNetworkImagesToPhoto(urls, (index) {
+  //             DPrint.printf("保存好了---$index");
+  //           }, (success) {
+  //             GSDialog.of(context).dismiss(context);
+  //             success
+  //                 ? GSDialog.of(context).showSuccess(context, "保存完成")
+  //                 : GSDialog.of(context).showError(context, "保存失败");
+  //             if (!TextUtils.isEmpty(model.text)) {
+  //               ClipboardData data = new ClipboardData(text: model.text);
+  //               Clipboard.setData(data);
+  //               Toast.showCustomSuccess('文字内容已经保存到剪贴板');
+  //               // Toast.showSuccess('文字内容已经保存到剪贴板');
+  //             }
+  //           });
+  //         },
+  //         copyListener: () {
+  //           if (!TextUtils.isEmpty(model.text)) {
+  //             ClipboardData data = new ClipboardData(text: model.text);
+  //             Clipboard.setData(data);
+  //             Toast.showCustomSuccess('文字内容已经保存到剪贴板');
+  //             // showSuccess('文字内容已经保存到剪贴板');
+  //           }
+  //         },
+  //         focusListener: () {
+  //           DPrint.printf("关注或者取消关注!");
+  //           _attention(model);
+  //         },
+  //         picListener: (index) {
+  //           List<PicSwiperItem> picSwiperItem = [];
+  //           for (Photos photo in model.photos) {
+  //             picSwiperItem.add(PicSwiperItem(Api.getImgUrl(photo.url)));
+  //           }
+  //           AppRouter.fade(
+  //             context,
+  //             RouteName.PIC_SWIPER,
+  //             arguments: PicSwiper.setArguments(
+  //               index: index,
+  //               pics: picSwiperItem,
+  //             ),
+  //           );
+  //         },
+  //         model: model,
+  //       ),
+  //     );
+  //   }).toList();
+  //
+  //   if (UserManager.instance.haveLogin) {
+  //     children.add(Container(
+  //       child: Positioned(
+  //         bottom: 40,
+  //         child: CustomImageButton(
+  //           title: "我要发布",
+  //           padding: EdgeInsets.symmetric(vertical: 8, horizontal: 25),
+  //           color: Colors.white,
+  //           fontSize: 15 * 2.sp,
+  //           backgroundColor: Color(0xFFFF2810),
+  //           borderRadius: BorderRadius.all(Radius.circular(20)),
+  //           onPressed: () {
+  //             AppRouter.model(context, RouteName.BUSINESS_DISTRICT_PUBLISH_PAGE,
+  //                 arguments: PublishBusinessDistrictPage.setArguments(
+  //                     goodsId: widget.goodsID));
+  //           },
+  //         ),
+  //       ),
+  //     ));
+  //   }
+  //   return children;
+  // }
 
   ///关注
   _attention(MaterialModel model) async {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/constants/styles.dart';
 
 class AnimatedHomeBackground extends StatefulWidget {

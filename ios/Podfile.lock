@@ -10,8 +10,6 @@ PODS:
     - Flutter
   - camera (0.0.1):
     - Flutter
-  - clipboard_listener (0.0.1):
-    - Flutter
   - device_info (0.0.1):
     - Flutter
   - device_info_plus (0.0.1):
@@ -47,8 +45,6 @@ PODS:
   - DKPhotoGallery/Resource (0.0.17):
     - SDWebImage
     - SwiftyGif
-  - easy_contact_picker (0.0.1):
-    - Flutter
   - file_picker (0.0.1):
     - DKImagePickerController/PhotoGallery
     - Flutter
@@ -63,17 +59,12 @@ PODS:
     - Flutter
     - LBXScan
     - LBXZBarSDK
-  - flutter_union_pay (0.0.1):
-    - Flutter
   - fluwx (0.0.1):
     - Flutter
     - WechatOpenSDK (= 1.8.7.1)
   - FMDB (2.7.5):
     - FMDB/standard (= 2.7.5)
   - FMDB/standard (2.7.5)
-  - foundation_fluttify (0.0.1):
-    - Flutter
-  - HandyJSON (5.0.2)
   - image_cropper (0.0.4):
     - Flutter
     - TOCropViewController (~> 2.6.0)
@@ -81,13 +72,6 @@ PODS:
     - Flutter
   - image_picker (0.0.1):
     - Flutter
-  - JCore (3.1.0)
-  - JPush (4.4.0):
-    - JCore (>= 2.0.0)
-  - jpush_flutter (0.0.2):
-    - Flutter
-    - JCore (= 3.1.0)
-    - JPush (= 4.4.0)
   - just_audio (0.0.1):
     - Flutter
   - LBXScan (2.5.1):
@@ -128,20 +112,10 @@ PODS:
     - Flutter
     - FMDB (>= 2.7.5)
   - SwiftyGif (5.4.2)
-  - tencent_im_plugin (0.0.1):
-    - Flutter
-    - HandyJSON
-    - TXIMSDK_iOS (= 4.6.58)
-  - tencent_live_fluttify (0.0.1):
-    - Flutter
-    - foundation_fluttify
-    - TXLiteAVSDK_Professional (= 7.2.8927)
   - tobias (0.0.1):
     - AlipaySDK-iOS (~> 15.7.9)
     - Flutter
   - TOCropViewController (2.6.0)
-  - TXIMSDK_iOS (4.6.58)
-  - TXLiteAVSDK_Professional (7.2.8927)
   - url_launcher (0.0.1):
     - Flutter
   - video_player (0.0.1):
@@ -159,22 +133,17 @@ DEPENDENCIES:
   - amap_flutter_location (from `.symlinks/plugins/amap_flutter_location/ios`)
   - audio_session (from `.symlinks/plugins/audio_session/ios`)
   - camera (from `.symlinks/plugins/camera/ios`)
-  - clipboard_listener (from `.symlinks/plugins/clipboard_listener/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
-  - easy_contact_picker (from `.symlinks/plugins/easy_contact_picker/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
   - flutter_ffmpeg/min-lts (from `.symlinks/plugins/flutter_ffmpeg/ios`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
   - flutter_qr_reader (from `.symlinks/plugins/flutter_qr_reader/ios`)
-  - flutter_union_pay (from `.symlinks/plugins/flutter_union_pay/ios`)
   - fluwx (from `.symlinks/plugins/fluwx/ios`)
-  - foundation_fluttify (from `.symlinks/plugins/foundation_fluttify/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
-  - jpush_flutter (from `.symlinks/plugins/jpush_flutter/ios`)
   - just_audio (from `.symlinks/plugins/just_audio/ios`)
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
@@ -183,8 +152,6 @@ DEPENDENCIES:
   - photo_manager (from `.symlinks/plugins/photo_manager/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
-  - tencent_im_plugin (from `.symlinks/plugins/tencent_im_plugin/ios`)
-  - tencent_live_fluttify (from `.symlinks/plugins/tencent_live_fluttify/ios`)
   - tobias (from `.symlinks/plugins/tobias/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
   - video_player (from `.symlinks/plugins/video_player/ios`)
@@ -200,9 +167,6 @@ SPEC REPOS:
     - DKImagePickerController
     - DKPhotoGallery
     - FMDB
-    - HandyJSON
-    - JCore
-    - JPush
     - LBXScan
     - LBXZBarSDK
     - libwebp
@@ -211,8 +175,6 @@ SPEC REPOS:
     - SDWebImage
     - SwiftyGif
     - TOCropViewController
-    - TXIMSDK_iOS
-    - TXLiteAVSDK_Professional
     - WechatOpenSDK
 
 EXTERNAL SOURCES:
@@ -222,14 +184,10 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/audio_session/ios"
   camera:
     :path: ".symlinks/plugins/camera/ios"
-  clipboard_listener:
-    :path: ".symlinks/plugins/clipboard_listener/ios"
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
-  easy_contact_picker:
-    :path: ".symlinks/plugins/easy_contact_picker/ios"
   file_picker:
     :path: ".symlinks/plugins/file_picker/ios"
   Flutter:
@@ -240,20 +198,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_image_compress/ios"
   flutter_qr_reader:
     :path: ".symlinks/plugins/flutter_qr_reader/ios"
-  flutter_union_pay:
-    :path: ".symlinks/plugins/flutter_union_pay/ios"
   fluwx:
     :path: ".symlinks/plugins/fluwx/ios"
-  foundation_fluttify:
-    :path: ".symlinks/plugins/foundation_fluttify/ios"
   image_cropper:
     :path: ".symlinks/plugins/image_cropper/ios"
   image_gallery_saver:
     :path: ".symlinks/plugins/image_gallery_saver/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
-  jpush_flutter:
-    :path: ".symlinks/plugins/jpush_flutter/ios"
   just_audio:
     :path: ".symlinks/plugins/just_audio/ios"
   package_info:
@@ -270,10 +222,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
-  tencent_im_plugin:
-    :path: ".symlinks/plugins/tencent_im_plugin/ios"
-  tencent_live_fluttify:
-    :path: ".symlinks/plugins/tencent_live_fluttify/ios"
   tobias:
     :path: ".symlinks/plugins/tobias/ios"
   url_launcher:
@@ -294,28 +242,20 @@ SPEC CHECKSUMS:
   AMapLocation: 5ef44a1117be7dc541cb7a7d43d03c5ee91e4387
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
-  clipboard_listener: 5bdabc3b4ebabf4b4055ca17aa97b9b4b55160e2
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
-  easy_contact_picker: 9ab9dc70e8ddde6e76a19ffc482d7bf899868730
   file_picker: 3e6c3790de664ccf9b882732d9db5eaf6b8d4eb1
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_ffmpeg: 3ec3912c74649851e6c3b1885511eef78142ac4f
   flutter_image_compress: f69d0e0e078ce52b4810695593bc861ee319ae7d
   flutter_qr_reader: 1b4faf9032e9ddc738107fd3dc067d29bd5cc67d
-  flutter_union_pay: 47a7bf5a4e987745d4378a8b9fb522d0a434793f
   fluwx: 07a55ed66bf3a4961e836a2a411b02dcada32902
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
-  foundation_fluttify: 0c45145e3fad1fb99188e4979daed5b24cd9b278
-  HandyJSON: 9e4e236f5d2dbefad5155a77417bbea438201c03
   image_cropper: f1668dd8d2cad2d357955caad15a40547856edcb
   image_gallery_saver: 259eab68fb271cfd57d599904f7acdc7832e7ef2
   image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
-  JCore: 4029befb2497adc36b2496e2cfd6b24d9f671784
-  JPush: b7d00f2cc78766e76c8abb30a5741fe94d21e5bc
-  jpush_flutter: bc88cfa9a4ff4481031564b641c3fe24024bb2cb
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   LBXScan: 90ca10d0c38fb4a5a6980d7782354f3f69f50093
   LBXZBarSDK: db826d1265fbb4fbdbb2f30d7d1e96142e32bfff
@@ -331,12 +271,8 @@ SPEC CHECKSUMS:
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   SwiftyGif: dec758a9dd3d278e5a855dbf279bf062c923c387
-  tencent_im_plugin: a055ed155fd2cae7f006e756dbec96255b4aa0a3
-  tencent_live_fluttify: 98821d3233cf13a47eadf1555ebd56b050e0a5ca
   tobias: 6872e2198dc30e17c10513b9ee114e28d099bc70
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
-  TXIMSDK_iOS: d4231ccd8a045f54ca04d008dba46fdbf25687fb
-  TXLiteAVSDK_Professional: 43ca7a2f8ad118c052162d961c8c02cd763d8467
   url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
   video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
   video_thumbnail: c4e2a3c539e247d4de13cd545344fd2d26ffafd1

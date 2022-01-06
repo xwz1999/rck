@@ -11,13 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
-import 'package:jingyaoyun/models/goods_detail_model.dart' hide Data, Promotion;
-import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
-import 'package:jingyaoyun/pages/home/function/home_fuc.dart';
-
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:waterfall_flow/waterfall_flow.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/app_image_resources.dart';
@@ -34,12 +27,12 @@ import 'package:jingyaoyun/pages/home/classify/brandgoods_list_page.dart';
 import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
 import 'package:jingyaoyun/pages/home/classify/mvp/goods_list_contact.dart';
 import 'package:jingyaoyun/pages/home/classify/mvp/goods_list_presenter_impl.dart';
+import 'package:jingyaoyun/pages/home/function/home_fuc.dart';
 import 'package:jingyaoyun/pages/home/items/item_brand_detail_grid.dart';
 import 'package:jingyaoyun/pages/home/items/item_tag_widget.dart';
 import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
 import 'package:jingyaoyun/utils/app_router.dart';
 import 'package:jingyaoyun/utils/mvp.dart';
-import 'package:jingyaoyun/utils/share_tool.dart';
 import 'package:jingyaoyun/utils/text_utils.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
@@ -51,6 +44,8 @@ import 'package:jingyaoyun/widgets/no_data_view.dart';
 import 'package:jingyaoyun/widgets/progress/loading_dialog.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:waterfall_flow/waterfall_flow.dart';
 
 class SearchPage extends StatefulWidget {
   final int countryId;

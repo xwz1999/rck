@@ -1,11 +1,11 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/pages/user/banlance/user_balance_page.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CapitalView extends StatefulWidget {
   final Function() listener;

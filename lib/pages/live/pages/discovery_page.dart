@@ -1,16 +1,7 @@
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/pages/business/focus/child_focus_page.dart';
-import 'package:jingyaoyun/pages/live/sub_page/live_stream_page.dart';
-import 'package:jingyaoyun/pages/live/sub_page/user_home_page.dart';
-import 'package:jingyaoyun/pages/live/sub_page/video_page.dart';
-import 'package:jingyaoyun/utils/custom_route.dart';
-import 'package:jingyaoyun/widgets/cache_tab_bar_view.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
-import 'package:jingyaoyun/widgets/recook_indicator.dart';
 
 class DiscoveryPage extends StatefulWidget {
   DiscoveryPage({Key key}) : super(key: key);

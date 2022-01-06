@@ -10,10 +10,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-
-import 'package:common_utils/common_utils.dart';
 import 'package:get/get.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
@@ -25,9 +22,7 @@ import 'package:jingyaoyun/models/base_model.dart';
 import 'package:jingyaoyun/models/goods_detail_images_model.dart';
 import 'package:jingyaoyun/models/goods_detail_model.dart';
 import 'package:jingyaoyun/models/order_preview_model.dart';
-import 'package:jingyaoyun/models/order_return_address_model.dart';
 import 'package:jingyaoyun/models/province_city_model.dart';
-import 'package:jingyaoyun/pages/home/classify/coupon_list_page.dart';
 import 'package:jingyaoyun/pages/home/classify/evaluation_list_page.dart';
 import 'package:jingyaoyun/pages/home/classify/goods_param_page.dart';
 import 'package:jingyaoyun/pages/home/classify/goods_service_guarantee.dart';
@@ -44,18 +39,17 @@ import 'package:jingyaoyun/pages/user/address/receiving_address_page.dart';
 import 'package:jingyaoyun/utils/file_utils.dart';
 import 'package:jingyaoyun/utils/image_utils.dart';
 import 'package:jingyaoyun/utils/share_tool.dart';
-import 'package:jingyaoyun/widgets/OverlayWidget.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/action_sheet.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/address_selector.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/custom_bottom_sheet.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/empty_view.dart';
-import 'package:jingyaoyun/widgets/goods_item.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/selected_list.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:jingyaoyun/widgets/video_view.dart';
+
 import 'commodity_detail_page.dart';
 
 typedef ScrollListener = Function(ScrollUpdateNotification notification);
@@ -238,12 +232,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 ),
               ),
             ),
-            widget.goodsDetail.data.living != null
-                ? widget.goodsDetail.data.living.status == 1
-                    ? OverlayLivingBtnWidget(
-                        living: widget.goodsDetail.data.living)
-                    : SizedBox()
-                : SizedBox(),
           ],
         ));
   }

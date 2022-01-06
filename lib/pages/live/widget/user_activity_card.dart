@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:oktoast/oktoast.dart';
-
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/constants/header.dart';
@@ -13,7 +10,6 @@ import 'package:jingyaoyun/pages/live/models/activity_list_model.dart';
 import 'package:jingyaoyun/pages/live/models/live_base_info_model.dart';
 import 'package:jingyaoyun/pages/live/widget/review_child_cards.dart';
 import 'package:jingyaoyun/pages/live/widget/user_base_card.dart';
-import 'package:jingyaoyun/pages/user/functions/user_func.dart';
 import 'package:jingyaoyun/pages/user/user_page.dart';
 import 'package:jingyaoyun/utils/custom_route.dart';
 import 'package:jingyaoyun/utils/date/recook_date_util.dart';
@@ -22,6 +18,7 @@ import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/recook/recook_like_button.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:oktoast/oktoast.dart';
 
 class UserActivityCard extends StatefulWidget {
   final ActivityListModel model;

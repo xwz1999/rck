@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/constants/app_image_resources.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';

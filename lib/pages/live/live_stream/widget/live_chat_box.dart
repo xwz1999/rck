@@ -1,9 +1,7 @@
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
-
 import 'package:common_utils/common_utils.dart';
-
+import 'package:flutter/material.dart';
 import 'package:jingyaoyun/constants/header.dart';
 
 enum ChatType {

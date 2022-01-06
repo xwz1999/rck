@@ -8,7 +8,6 @@
  */
 
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
 
 typedef SelectedItemClickListener = Function(int section, int index);

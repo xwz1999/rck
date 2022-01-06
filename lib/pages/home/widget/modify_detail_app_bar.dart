@@ -8,11 +8,8 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
-
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/pages/user/my_favorites_page.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 

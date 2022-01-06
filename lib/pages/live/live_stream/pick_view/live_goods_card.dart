@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-
-import 'package:oktoast/oktoast.dart';
-
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:jingyaoyun/pages/live/models/goods_window_model.dart';
 import 'package:jingyaoyun/pages/user/widget/recook_check_box.dart';
+import 'package:oktoast/oktoast.dart';
 
 class LiveGoodsCard extends StatefulWidget {
   final VoidCallback onPick;

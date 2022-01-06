@@ -6,38 +6,24 @@ import 'dart:io';
 
 import 'package:amap_flutter_location/amap_flutter_location.dart';
 import 'package:amap_flutter_location/amap_location_option.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
 import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide Response;
-// import 'package:jpush_flutter/jpush_flutter.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:power_logger/power_logger.dart';
-import 'package:jingyaoyun/models/category_model.dart';
-import 'package:jingyaoyun/models/country_list_model.dart';
-import 'package:jingyaoyun/pages/home/search_page.dart';
-import 'package:jingyaoyun/pages/home/widget/good_high_commission_page.dart';
-import 'package:jingyaoyun/pages/home/widget/good_preferential_list_page.dart';
-import 'package:jingyaoyun/pages/home/widget/goods_hot_list_page.dart';
-import 'package:jingyaoyun/pages/home/wx_page.dart';
-import 'package:jingyaoyun/pages/live/models/king_coin_list_model.dart';
-import 'package:jingyaoyun/pages/user/functions/user_func.dart';
-import 'package:jingyaoyun/utils/storage/hive_store.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/daos/home_dao.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/meiqia_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/banner_list_model.dart';
 import 'package:jingyaoyun/models/base_model.dart';
+import 'package:jingyaoyun/models/category_model.dart';
+import 'package:jingyaoyun/models/country_list_model.dart';
 import 'package:jingyaoyun/models/home_weather_model.dart';
 import 'package:jingyaoyun/models/promotion_goods_list_model.dart';
 import 'package:jingyaoyun/models/promotion_list_model.dart';
@@ -46,17 +32,19 @@ import 'package:jingyaoyun/pages/home/classify/classify_page.dart';
 import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
 import 'package:jingyaoyun/pages/home/home_page_tabbar.dart';
 import 'package:jingyaoyun/pages/home/items/item_row_acitivity.dart';
+import 'package:jingyaoyun/pages/home/model/king_coin_list_model.dart';
 import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
+import 'package:jingyaoyun/pages/home/search_page.dart';
 import 'package:jingyaoyun/pages/home/widget/animated_home_background.dart';
+import 'package:jingyaoyun/pages/home/widget/good_high_commission_page.dart';
+import 'package:jingyaoyun/pages/home/widget/good_preferential_list_page.dart';
 import 'package:jingyaoyun/pages/home/widget/goods_list_temp_page.dart';
 import 'package:jingyaoyun/pages/home/widget/home_countdown_widget.dart';
 import 'package:jingyaoyun/pages/home/widget/home_sliver_app_bar.dart';
 import 'package:jingyaoyun/pages/home/widget/home_weather_view.dart';
-import 'package:jingyaoyun/pages/live/live_stream/live_stream_view_page.dart';
-import 'package:jingyaoyun/pages/noticeList/notice_list_model.dart';
-import 'package:jingyaoyun/pages/noticeList/notice_list_tool.dart';
+import 'package:jingyaoyun/pages/home/wx_page.dart';
 import 'package:jingyaoyun/pages/tabBar/rui_code_listener.dart';
-import 'package:jingyaoyun/pages/upgradeCard/upgrade_card_page_v2.dart';
+import 'package:jingyaoyun/pages/user/functions/user_func.dart';
 import 'package:jingyaoyun/third_party/wechat/wechat_utils.dart';
 import 'package:jingyaoyun/utils/android_back_desktop.dart';
 import 'package:jingyaoyun/utils/app_router.dart';
@@ -64,18 +52,21 @@ import 'package:jingyaoyun/utils/color_util.dart';
 import 'package:jingyaoyun/utils/custom_route.dart';
 import 'package:jingyaoyun/utils/permission_tool.dart';
 import 'package:jingyaoyun/utils/share_tool.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/utils/storage/hive_store.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/banner.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/goods_item.dart';
-import 'package:jingyaoyun/widgets/home_gif_header.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:jingyaoyun/widgets/weather_page/weather_city_model.dart';
 import 'package:jingyaoyun/widgets/weather_page/weather_city_page.dart';
 import 'package:jingyaoyun/widgets/webView.dart';
+// import 'package:jpush_flutter/jpush_flutter.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:power_logger/power_logger.dart';
+
 import '../../utils/text_utils.dart';
 import 'classify/classify_country_page.dart';
 
@@ -229,12 +220,6 @@ class _HomePageState extends BaseStoreState<HomePage>
     //     .addListener(_openInstallGoodsIdListener);
 
     UserManager.instance.openInstallLive.addListener(() {
-      if (getStore().state.openinstall.type == 'live') {
-        CRoute.push(
-            context,
-            LiveStreamViewPage(
-                id: int.parse(getStore().state.openinstall.itemId)));
-      }
       if (!TextUtils.isEmpty(getStore().state.openinstall.type)) {
         int goodsid = 0;
         try {
@@ -807,7 +792,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       }
       BannerListView bannerListView = BannerListView<BannerModel>(
         onPageChanged: (index) {
-          int realIndex = index - 1;
+          int realIndex = index ;
           if (realIndex < 0) return;
           if (realIndex >= _bannerList.length) realIndex = 0;
           BannerModel bannerModel = _bannerList[realIndex];

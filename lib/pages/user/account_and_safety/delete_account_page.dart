@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
-import 'package:oktoast/oktoast.dart';
-
-import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/pages/user/account_and_safety/delete_account_validation_page.dart';
-import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 
 class DeleteAccountPage extends StatefulWidget {

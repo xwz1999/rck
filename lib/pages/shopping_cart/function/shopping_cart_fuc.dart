@@ -1,7 +1,6 @@
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/models/goods_simple_list_model.dart';
-import 'package:jingyaoyun/pages/home/model/aku_video_list_model.dart';
 
 class ShoppingCartFuc {
   //获取可能喜欢列表

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'package:oktoast/oktoast.dart';
-
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/constants/header.dart';
@@ -11,11 +8,9 @@ import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/pages/live/models/live_base_info_model.dart';
 import 'package:jingyaoyun/pages/live/num_tool/live_num_tool.dart';
-import 'package:jingyaoyun/pages/live/sub_page/live_host_center_page.dart';
 import 'package:jingyaoyun/pages/live/sub_page/user_attention_page.dart';
 import 'package:jingyaoyun/pages/live/sub_page/user_fans_page.dart';
 import 'package:jingyaoyun/pages/live/sub_page/user_home/user_activity_view.dart';
-import 'package:jingyaoyun/pages/live/sub_page/user_home/user_playback_view.dart';
 import 'package:jingyaoyun/pages/live/sub_page/user_support_page.dart';
 import 'package:jingyaoyun/pages/live/widget/live_attention_button.dart';
 import 'package:jingyaoyun/pages/live/widget/sliver_bottom_persistent_delegate.dart';
@@ -24,6 +19,7 @@ import 'package:jingyaoyun/utils/custom_route.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/recook_indicator.dart';
+import 'package:oktoast/oktoast.dart';
 
 class UserHomePage extends StatefulWidget {
   final int userId;
@@ -117,20 +113,7 @@ class _UserHomePageState extends State<UserHomePage>
                               ),
                             ),
                           ),
-                          selfFlag
-                              ? MaterialButton(
-                                  minWidth: rSize(60),
-                                  height: rSize(30),
-                                  child: Text('主播中心'),
-                                  color: Color(0xFFDB2D2D),
-                                  onPressed: () {
-                                    CRoute.push(
-                                      context,
-                                      LiveHostCenterPage(model: model),
-                                    );
-                                  },
-                                )
-                              : LiveAttentionButton(
+                         LiveAttentionButton(
                                   filled: true,
                                   rounded: false,
                                   initAttention: widget.initAttention,
@@ -226,21 +209,6 @@ class _UserHomePageState extends State<UserHomePage>
                 id: widget.userId,
                 userModel: model,
                 initAttention: selfFlag ? true : widget.initAttention,
-                onRefresh: () {
-                  HttpManager.post(LiveAPI.baseInfo, {
-                    'findUserId': widget.userId,
-                  }).then((resultData) {
-                    if (resultData?.data['data'] != null) {
-                      setState(() {
-                        model =
-                            LiveBaseInfoModel.fromJson(resultData.data['data']);
-                      });
-                    }
-                  });
-                },
-              ),
-              UserPlaybackView(
-                userId: widget.userId,
                 onRefresh: () {
                   HttpManager.post(LiveAPI.baseInfo, {
                     'findUserId': widget.userId,

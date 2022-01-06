@@ -8,8 +8,7 @@
  */
 
 
-// import 'package:meiqia_flutter/meiqia_flutter.dart';
-import 'package:jingyaoyun/constants/header.dart';
+
 
 class MQManager {
   static const String appKey = "0aff2f19280aa0c2dfa2cc12425a71fd";

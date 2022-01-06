@@ -3,17 +3,20 @@ import 'dart:async';
 import 'package:amap_flutter_location/amap_flutter_location.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/pages/welcome/welcome_widget.dart';
-import 'package:package_info/package_info.dart';
-import 'package:power_logger/power_logger.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/config.dart';
 import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/pages/user/functions/user_func.dart';
-import 'package:jingyaoyun/utils/app_router.dart';
+import 'package:jingyaoyun/pages/welcome/welcome_widget.dart';
+import 'package:jingyaoyun/utils/storage/hive_store.dart';
+import 'package:package_info/package_info.dart';
+import 'package:power_logger/power_logger.dart';
+
+import 'launch_privacy_dialog.dart';
 
 List<CameraDescription> cameras;
 
@@ -34,27 +37,27 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
 
     WidgetsBinding.instance.addPostFrameCallback((callback) async {
       await Future.delayed(Duration(milliseconds: 2450));
-      // if (HiveStore.appBox.get('privacy_init') == null) {
-      //   // if (true) {
-      //   bool agreeResult = (await launchPrivacyDialog(context)) ?? false;
-      //   if (!agreeResult) {
-      //     //第1次不同意`
-      //     bool secondAgree =
-      //         (await launchPrivacySecondDialog(context)) ?? false;
-      //     //第2次不同意
-      //     if (!secondAgree)
-      //       SystemNavigator.pop();
-      //     else
-      //       HiveStore.appBox.put('privacy_init', true);
-      //   } else
-      //     HiveStore.appBox.put('privacy_init', true);
-      // }
+      if (HiveStore.appBox.get('privacy_init') == null) {
+        // if (true) {
+        bool agreeResult = (await launchPrivacyDialog(context)) ?? false;
+        if (!agreeResult) {
+          //第1次不同意`
+          bool secondAgree =
+              (await launchPrivacySecondDialog(context)) ?? false;
+          //第2次不同意
+          if (!secondAgree)
+            SystemNavigator.pop();
+          else
+            HiveStore.appBox.put('privacy_init', true);
+        } else
+          HiveStore.appBox.put('privacy_init', true);
+      }
       Future.delayed(Duration.zero, () async {
         UserManager.instance.kingCoinListModelList =
         await UserFunc.getKingCoinList();
       });
       //初始化日志工具
-      PowerLogger.start(context, debug: true);//AppConfig.debug  在正式服数据下进行调试
+      PowerLogger.start(context, debug: AppConfig.debug);//AppConfig.debug  在正式服数据下进行调试
       //初始化
       cameras = await availableCameras();
       //高德地图隐私协议 在用户同意隐私协议后更新

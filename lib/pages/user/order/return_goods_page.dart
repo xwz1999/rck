@@ -9,13 +9,10 @@
 
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
-
 import 'package:async/async.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' as flutterImagePicker;
-import 'package:photo/photo.dart';
-
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
@@ -34,6 +31,7 @@ import 'package:jingyaoyun/widgets/image_picker.dart';
 import 'package:jingyaoyun/widgets/image_selected_view.dart';
 import 'package:jingyaoyun/widgets/input_view.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:photo/photo.dart';
 
 class GoodsReturnPage extends StatefulWidget {
   final Map arguments;

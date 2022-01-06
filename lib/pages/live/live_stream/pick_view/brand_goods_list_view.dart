@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-
-import 'package:oktoast/oktoast.dart';
-
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
@@ -12,6 +9,7 @@ import 'package:jingyaoyun/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:jingyaoyun/pages/live/models/goods_window_model.dart';
 import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:oktoast/oktoast.dart';
 
 class BrandGoodsListView extends StatefulWidget {
   final VoidCallback onPick;

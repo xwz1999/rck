@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/constants/styles.dart';
+
 import 'CustomJPasswordFieldWidget.dart';
 import 'keyboard_widget.dart';
 import 'pay_password.dart';
