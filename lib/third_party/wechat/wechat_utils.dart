@@ -115,8 +115,8 @@ class WeChatUtils {
     String netWorkThumbnail,
     String des,
   }) {
-    String qrCode =
-        "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}$id/${UserManager.instance.user.info.invitationNo}";
+    // String qrCode =
+    //     "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}$id/${UserManager.instance.user.info.invitationNo}";
 
     var model = fluwx.WeChatShareMiniProgramModel(
       userName: AppConfig.WX_APP_MINIPRO_USERNAME,
@@ -126,6 +126,7 @@ class WeChatUtils {
       thumbnail: fluwx.WeChatImage.network(netWorkThumbnail),
       title: des,
     );
+    print('${UserManager.instance.user.info.invitationNo}');
     fluwx.shareToWeChat(model);
   }
 

@@ -24,10 +24,10 @@ class PermissionTool {
   }
 
   static Future<bool> havePhotoPermission() async {
-    bool permission = await Permission.photos.isGranted;
+    bool permission = await Permission.storage.isGranted;
     if (!permission) {
-      await Permission.photos.request();
-      permission = await Permission.photos.isGranted;
+      await Permission.storage.request();
+      permission = await Permission.storage.isGranted;
     }
     return permission;
   }
@@ -69,6 +69,7 @@ class PermissionTool {
             bool isOpened = await openAppSettings();
           },
         ));
+
     // showCupertinoDialog<int>(
     //     context: context,
     //     builder: (context) {

@@ -93,14 +93,14 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
         _changeBuyerMessage(text);
       }
     });
-    Future.delayed(Duration(milliseconds: 300), () {
-      if (mounted)
-        _changeOrderCoinOnOff().then((_) {
-          if (_orderModel.data.addr.isDeliveryArea == 0) {
-            _canNotDeliver();
-          }
-        });
-    });
+    // Future.delayed(Duration(milliseconds: 300), () {
+    //   if (mounted)
+    //     _changeOrderCoinOnOff().then((_) {
+    //       if (_orderModel.data.addr.isDeliveryArea == 0) {
+    //         _canNotDeliver();
+    //       }
+    //     });
+    // });
   }
 
   @override
@@ -608,7 +608,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                 switchEnable: switchEnabled,
                 switchChange: (change) {
                   // 切换瑞币抵扣状态
-                  _changeOrderCoinOnOff();
+                  //_changeOrderCoinOnOff();
                 },
               );
             },
@@ -1078,21 +1078,21 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
     setState(() {});
   }
 
-  Future _changeOrderCoinOnOff() async {
-    final cancel = ReToast.loading();
-    HttpResultModel<OrderPreviewModel> model =
-        await _presenterImpl.changeCoinOnOff(
-      UserManager.instance.user.info.id,
-      _orderModel.data.id,
-    );
-    cancel();
-    if (!model.result) {
-      ReToast.err(text: model.msg);
-      return;
-    }
-    _orderModel = model.data;
-    setState(() {});
-  }
+  // Future _changeOrderCoinOnOff() async {
+  //   final cancel = ReToast.loading();
+  //   HttpResultModel<OrderPreviewModel> model =
+  //       await _presenterImpl.changeCoinOnOff(
+  //     UserManager.instance.user.info.id,
+  //     _orderModel.data.id,
+  //   );
+  //   cancel();
+  //   if (!model.result) {
+  //     ReToast.err(text: model.msg);
+  //     return;
+  //   }
+  //   _orderModel = model.data;
+  //   setState(() {});
+  // }
 
   // _changeAddressWithShippingMethod(int id) async {
   //   GSDialog.of(context).showLoadingDialog(context, "");

@@ -32,8 +32,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
     super.initState();
 
     //初始化AMap  给android和ios
-    AMapFlutterLocation.setApiKey(
-        'cd71676364972b01d9803249f7112bc0', 'a165543d6e2be75f4ac1b6b81ce0dae2');
+
 
     WidgetsBinding.instance.addPostFrameCallback((callback) async {
       await Future.delayed(Duration(milliseconds: 2450));
@@ -47,26 +46,66 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
           //第2次不同意
           if (!secondAgree)
             SystemNavigator.pop();
-          else
+          else{
             HiveStore.appBox.put('privacy_init', true);
-        } else
+            Future.delayed(Duration.zero, () async {
+              UserManager.instance.kingCoinListModelList =
+              await UserFunc.getKingCoinList();
+            });
+            AMapFlutterLocation.setApiKey(
+                'cd71676364972b01d9803249f7112bc0', 'a165543d6e2be75f4ac1b6b81ce0dae2');
+            //初始化日志工具
+            PowerLogger.start(context, debug: AppConfig.debug);//AppConfig.debug  在正式服数据下进行调试
+            //初始化
+            cameras = await availableCameras();
+            //高德地图隐私协议 在用户同意隐私协议后更新
+            AMapFlutterLocation.updatePrivacyShow(true, true);
+            AMapFlutterLocation.updatePrivacyAgree(true);
+            //获取apk包的信息(版本)
+            PackageInfo _packageInfo = await PackageInfo.fromPlatform();
+            AppConfig.versionNumber = _packageInfo.buildNumber;
+            Get.offAll(WelcomeWidget());
+          }
+
+        } else{
           HiveStore.appBox.put('privacy_init', true);
+          Future.delayed(Duration.zero, () async {
+            UserManager.instance.kingCoinListModelList =
+            await UserFunc.getKingCoinList();
+          });
+          AMapFlutterLocation.setApiKey(
+              'cd71676364972b01d9803249f7112bc0', 'a165543d6e2be75f4ac1b6b81ce0dae2');
+          //初始化日志工具
+          PowerLogger.start(context, debug: AppConfig.debug);//AppConfig.debug  在正式服数据下进行调试
+          //初始化
+          cameras = await availableCameras();
+          //高德地图隐私协议 在用户同意隐私协议后更新
+          AMapFlutterLocation.updatePrivacyShow(true, true);
+          AMapFlutterLocation.updatePrivacyAgree(true);
+          //获取apk包的信息(版本)
+          PackageInfo _packageInfo = await PackageInfo.fromPlatform();
+          AppConfig.versionNumber = _packageInfo.buildNumber;
+          Get.offAll(WelcomeWidget());
+        }
+      }else{
+        Future.delayed(Duration.zero, () async {
+          UserManager.instance.kingCoinListModelList =
+          await UserFunc.getKingCoinList();
+        });
+        AMapFlutterLocation.setApiKey(
+            'cd71676364972b01d9803249f7112bc0', 'a165543d6e2be75f4ac1b6b81ce0dae2');
+        //初始化日志工具
+        PowerLogger.start(context, debug: AppConfig.debug);//AppConfig.debug  在正式服数据下进行调试
+        //初始化
+        cameras = await availableCameras();
+        //高德地图隐私协议 在用户同意隐私协议后更新
+        AMapFlutterLocation.updatePrivacyShow(true, true);
+        AMapFlutterLocation.updatePrivacyAgree(true);
+        //获取apk包的信息(版本)
+        PackageInfo _packageInfo = await PackageInfo.fromPlatform();
+        AppConfig.versionNumber = _packageInfo.buildNumber;
+        Get.offAll(WelcomeWidget());
       }
-      Future.delayed(Duration.zero, () async {
-        UserManager.instance.kingCoinListModelList =
-        await UserFunc.getKingCoinList();
-      });
-      //初始化日志工具
-      PowerLogger.start(context, debug: AppConfig.debug);//AppConfig.debug  在正式服数据下进行调试
-      //初始化
-      cameras = await availableCameras();
-      //高德地图隐私协议 在用户同意隐私协议后更新
-      AMapFlutterLocation.updatePrivacyShow(true, true);
-      AMapFlutterLocation.updatePrivacyAgree(true);
-      //获取apk包的信息(版本)
-      PackageInfo _packageInfo = await PackageInfo.fromPlatform();
-      AppConfig.versionNumber = _packageInfo.buildNumber;
-      Get.offAll(WelcomeWidget());
     });
   }
 

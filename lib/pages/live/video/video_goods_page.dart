@@ -387,7 +387,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                         ),
                       ),
                       Text(
-                        model.originalPrice,
+                        model.originalPrice.toString(),
                         style: TextStyle(
                           color: Color(0xFFC92219),
                           fontSize: rSP(18),
@@ -420,23 +420,27 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
           color: Colors.white,
           child: Row(
             children: <Widget>[
-              Container(
-                width: 13 * 1.5,
-                height: 13 * 1.5,
-                child: FadeInImage.assetNetwork(
-                  placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                  image: Api.getImgUrl(model.brandImg),
-                  fit: BoxFit.fill,
-                ),
-              ),
-              SizedBox(
-                width: 4,
-              ),
-              Text(
-                TextUtils.isEmpty(model.brandName) ? "" : model.brandName,
-                style: TextStyle(
-                  color: Color(0xffc70404),
-                  fontSize: 12 * 2.sp,
+              // Container(
+              //   width: 13 * 1.5,
+              //   height: 13 * 1.5,
+              //   child: FadeInImage.assetNetwork(
+              //     placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+              //     image: Api.getImgUrl(model.brandImg),
+              //     fit: BoxFit.fill,
+              //   ),
+              // ),
+              // SizedBox(
+              //   width: 4,
+              // ),
+              Expanded(
+                child: Text(
+                  TextUtils.isEmpty(model.brandName) ? "" : model.brandName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Color(0xffc70404),
+                    fontSize: 12 * 2.sp,
+                  ),
                 ),
               ),
             ],
@@ -455,7 +459,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                       margin: EdgeInsets.only(right: 5),
                       child: SmallCouponWidget(
                         height: 18,
-                        number: num.parse(model.coupon),
+                        number: model.coupon,
                       ),
                     )
                   : SizedBox(),
@@ -475,7 +479,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                                 )),
                             padding: EdgeInsets.symmetric(horizontal: 3),
                             child: Text(
-                              "赚" + model.commission,
+                              "赚" + model.commission.toString(),
                               style: TextStyle(
                                 color: Colors.white.withAlpha(0),
                                 fontSize: 12 * 2.sp,
@@ -486,7 +490,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                               ? Container(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    "赚" + model.commission,
+                                    "赚" + model.commission.toString(),
                                     style: TextStyle(
                                       color: Color(0xffeb0045),
                                       fontSize: 12 * 2.sp,

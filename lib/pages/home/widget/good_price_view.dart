@@ -5,6 +5,7 @@ import 'package:jingyaoyun/constants/app_image_resources.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/models/goods_detail_model.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 
@@ -150,7 +151,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                         fontWeight: FontWeight.bold),
                   ),
                   TextSpan(
-                    text: "  ￥",
+                    text: " ￥",
                     style: TextStyle(
                         color: Color(0xFFD5101A),
                         fontSize: 16.rsp,
@@ -164,38 +165,38 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                         fontWeight: FontWeight.w500,
                         letterSpacing: 0,
                       )),
-                  // TextSpan(
-                  //   text: (UserLevelTool.currentRoleLevelEnum() ==
-                  //       UserRoleLevel.None ||
-                  //       UserLevelTool.currentRoleLevelEnum() ==
-                  //           UserRoleLevel.Vip)
-                  //       ? ""
-                  //       : isTwoPrice
-                  //       ? "/ "
-                  //       : " / ",
-                  //   style: AppTextStyle.generate(15 * 2.sp,
-                  //       color: Colors.white, fontWeight: FontWeight.w500),
-                  // ),
-                  // TextSpan(
-                  //   text: (UserLevelTool.currentRoleLevelEnum() ==
-                  //       UserRoleLevel.None ||
-                  //       UserLevelTool.currentRoleLevelEnum() ==
-                  //           UserRoleLevel.Vip)
-                  //       ? ""
-                  //       : "赚",
-                  //   style:
-                  //   AppTextStyle.generate(13 * 2.sp, color: Colors.white),
-                  // ),
-                  // TextSpan(
-                  //   text: (UserLevelTool.currentRoleLevelEnum() ==
-                  //       UserRoleLevel.None ||
-                  //       UserLevelTool.currentRoleLevelEnum() ==
-                  //           UserRoleLevel.Vip)
-                  //       ? ""
-                  //       : "$commission",
-                  //   style:
-                  //   AppTextStyle.generate(15 * 2.sp, color: Colors.white),
-                  // ),
+                  TextSpan(
+                    text: (UserLevelTool.currentRoleLevelEnum() ==
+                        UserRoleLevel.None ||
+                        UserLevelTool.currentRoleLevelEnum() ==
+                            UserRoleLevel.Vip)
+                        ? ""
+                        : isTwoPrice
+                        ? "/ "
+                        : " / ",
+                    style: AppTextStyle.generate(14 * 2.sp,
+                        color: Color(0xFFD5101A), fontWeight: FontWeight.w500),
+                  ),
+                  TextSpan(
+                    text: (UserLevelTool.currentRoleLevelEnum() ==
+                        UserRoleLevel.None ||
+                        UserLevelTool.currentRoleLevelEnum() ==
+                            UserRoleLevel.Vip)
+                        ? ""
+                        : "赚",
+                    style:
+                    AppTextStyle.generate(12 * 2.sp, color: Color(0xFFD5101A)),
+                  ),
+                  TextSpan(
+                    text: (UserLevelTool.currentRoleLevelEnum() ==
+                        UserRoleLevel.None ||
+                        UserLevelTool.currentRoleLevelEnum() ==
+                            UserRoleLevel.Vip)
+                        ? ""
+                        : "$commission",
+                    style:
+                    AppTextStyle.generate(14 * 2.sp, color: Color(0xFFD5101A)),
+                  ),
                 ]),
               ),
               Spacer(),

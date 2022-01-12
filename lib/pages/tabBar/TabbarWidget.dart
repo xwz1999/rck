@@ -16,6 +16,7 @@ import 'package:jingyaoyun/pages/tabBar/rui_code_listener.dart';
 import 'package:jingyaoyun/pages/user/user_page.dart';
 import 'package:jingyaoyun/utils/app_router.dart';
 import 'package:jingyaoyun/utils/print_util.dart';
+import 'package:jingyaoyun/utils/versionInfo/version_tool.dart';
 import 'package:jingyaoyun/widgets/cache_tab_bar_view.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/tabbarWidget/ace_bottom_navigation_bar.dart';
@@ -36,9 +37,9 @@ class _TabBarWidgetState extends State<TabBarWidget>
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance.addPostFrameCallback((callback) {
-    //   VersionTool.checkVersionInfo(_context);
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((callback) {
+      VersionTool.checkVersionInfo(_context);
+    });
     _tabController = TabController(length: 5, vsync: this);
     _bottomBarController = BottomBarController();
     _tabController.addListener(_tabListener);

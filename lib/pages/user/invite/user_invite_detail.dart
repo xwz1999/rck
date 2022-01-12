@@ -11,7 +11,7 @@ import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
-import 'package:url_launcher/url_launcher.dart';
+// import 'package:url_launcher/url_launcher.dart';
 
 class UserInviteDetail extends StatefulWidget {
   final Map arguments;
@@ -73,9 +73,9 @@ class _UserInviteDetailState extends BaseStoreState<UserInviteDetail> {
         _rowContainer("注册时间", subTitle: _inviteModel.createdAt),
         Container(height: 20,),
         GestureDetector(
-          onTap: (){
-            if (!TextUtils.isEmpty(_inviteModel.phoneNum)) launch("tel:${_inviteModel.phoneNum}");
-          },
+          // onTap: (){
+          //   if (!TextUtils.isEmpty(_inviteModel.phoneNum)) launch("tel:${_inviteModel.phoneNum}");
+          // },
           child: _rowContainer("手机号", subTitle: TextUtils.isEmpty(_inviteModel.phoneNum)?"未设置":_inviteModel.phoneNum, phone: true),
         ),
         GestureDetector(

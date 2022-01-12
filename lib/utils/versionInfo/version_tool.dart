@@ -10,6 +10,7 @@ import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+
 class VersionTool {
   static checkVersionInfo(context) async {
     ResultData resultData = await HttpManager.post(UserApi.version_info, {});
@@ -32,7 +33,7 @@ class VersionTool {
     if (versionInfo == null) {
       return;
     }
-    if (Platform.isAndroid) _appStoreURL = await _getAndroidURL();
+    if (Platform.isAndroid) _appStoreURL = WebApi.androidUrl;
     if (Platform.isIOS) _appStoreURL = WebApi.iOSUrl;
     //当前版本小于服务器版本
     if (int.parse(packageInfo.buildNumber) < versionInfo.build) {
@@ -58,16 +59,16 @@ class VersionTool {
     }
   }
 
-  static Future<String> _getAndroidURL() async {
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
-    String brand = androidInfo.brand.toLowerCase();
-    print(brand);
-    bool safeMarket = ['xiaomi', 'oneplus', 'oppo', 'vivo', 'huawei']
-        .any((element) => brand.contains(element));
-    if (safeMarket)
-      return 'market://details?id=com.akuhome.jingyaoyun';
-    else
-      return WebApi.androidUrl;
-  }
+  // static Future<String> _getAndroidURL() async {
+  //   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  //   AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+  //   String brand = androidInfo.brand.toLowerCase();
+  //   print(brand);
+  //   bool safeMarket = ['xiaomi', 'oneplus', 'oppo', 'vivo', 'huawei']
+  //       .any((element) => brand.contains(element));
+  //   if (safeMarket)
+  //     return 'market://details?id=com.akuhome.jingyaoyun';
+  //   else
+  //     return WebApi.androidUrl;
+  // }
 }

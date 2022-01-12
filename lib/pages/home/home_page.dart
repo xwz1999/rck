@@ -57,6 +57,7 @@ import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/banner.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/goods_item.dart';
+import 'package:jingyaoyun/widgets/home_gif_header.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
@@ -136,6 +137,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   GlobalKey<AnimatedHomeBackgroundState> _animatedBackgroundState = GlobalKey();
   GlobalKey<HomeSliverAppBarState> _sliverAppBarGlobalKey = GlobalKey();
   String keyWords = '锅';
+  Timer timer;
 
   GifController _gifController;
   @override
@@ -150,10 +152,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   Color getCurrentAppItemColor() {
     return getStore().state.themeData.appBarTheme.iconTheme.color;
   }
-  //
-  // _openInstallGoodsIdListener() {
-  //   _handleOpenInstallEvents();
-  // }
+
 
   ///监听剪切板
 
@@ -163,42 +162,68 @@ class _HomePageState extends BaseStoreState<HomePage>
 
     _updateSource();
     _getWeather();//部分机型获取地址较慢 所以放在外面先获取
+    // timer = Timer(const Duration(milliseconds: 0), () {
+    //   try {
+    //     if (HiveStore.appBox.get('locationPermission') == null&&!Platform.isIOS) {
+    //       Alert.show(
+    //         context,
+    //         NormalContentDialog(
+    //           title: '需要获取以下权限',
+    //           content:
+    //           Row(
+    //             mainAxisAlignment: MainAxisAlignment.start,
+    //             children: [
+    //               Image.asset(R.ASSETS_LOCATION_PER_PNG,width: 44.rw,height: 44.rw,),
+    //               Column(
+    //                 crossAxisAlignment: CrossAxisAlignment.start,
+    //                 children: [
+    //                   Text('定位权限',style: TextStyle(color: Color(0xFF333333),fontSize: 16.rsp,fontWeight: FontWeight.bold),),
+    //                   Container(width:200.rw,child: Text('允许访问您的大概位置来查询城市天气',style: TextStyle(color: Color(0xFF666666),fontSize: 14.rsp),)),
+    //                 ],
+    //               )
+    //             ],
+    //           ),
+    //           items: ["残忍拒绝"],
+    //           listener: (index) {
+    //             HiveStore.appBox.put('locationPermission', false);
+    //             Alert.dismiss(context);
+    //           },
+    //           deleteItem: "立即授权",
+    //           deleteListener: () {
+    //             HiveStore.appBox.put('locationPermission', true);
+    //             Alert.dismiss(context);
+    //             requestPermission(false).then((value) {
+    //               if (value) {
+    //                 //监听要在设置参数之前 否则无法获取定位
+    //                 initLocation();
+    //               } else {
+    //                 //Toast.showInfo('21312312321');
+    //               }
+    //             });
+    //           },
+    //           type: NormalTextDialogType.delete,
+    //         ),
+    //       );
+    //     }
+    //   } catch (e) {}
+    // });
 
-    requestPermission(false).then((value) {
-      if (value) {
-        //监听要在设置参数之前 否则无法获取定位
-        _amapFlutterLocation.onLocationChanged().listen(
-              (event) {
-            _weatherLocation = event;
-            LoggerData.addData(_weatherLocation['city']);
-            _getWeather();
-          },
-        );
-        _amapFlutterLocation
-            .setLocationOption(AMapLocationOption(onceLocation: true));
-        _amapFlutterLocation.startLocation();
-      } else {
-        //Toast.showInfo('21312312321');
+    Future.delayed(Duration.zero, () async {
+      bool location = await Permission.location.isGranted;
+      if(Platform.isIOS){
+        initLocation();
+      }
+      if(location==true){
+        initLocation();
       }
     });
+
     _gifController = GifController(vsync: this)
       ..repeat(
         min: 0,
         max: 20,
         period: Duration(milliseconds: 700),
       );
-    // bool notificationPermission = HiveStore.appBox.get('notification') ?? false;
-    // if (!notificationPermission) {
-    //   JPush().isNotificationEnabled().then((bool value) {
-    //     if (!value) {
-    //       HiveStore.appBox.put('notification', true);
-    //       PermissionTool.showOpenPermissionDialog(
-    //           context, "我们为您准备了精彩的内容推荐，试试看吧！");
-    //     }
-    //   }).catchError((onError) {
-    //     print(onError);
-    //   });
-    // }
 
     kingCoinListModelList = UserManager.instance.kingCoinListModelList;
 
@@ -270,20 +295,18 @@ class _HomePageState extends BaseStoreState<HomePage>
     });
   }
 
-  // _handleOpenInstallEvents() {
-  //   if (!TextUtils.isEmpty(getStore().state.openinstall.goodsid)) {
-  //     int goodsid = 0;
-  //     try {
-  //       goodsid = int.parse(getStore().state.openinstall.goodsid);
-  //     } catch (e) {
-  //       getStore().state.openinstall.goodsid = "";
-  //       return;
-  //     }
-  //     AppRouter.push(context, RouteName.COMMODITY_PAGE,
-  //         arguments: CommodityDetailPage.setArguments(goodsid));
-  //     getStore().state.openinstall.goodsid = "";
-  //   }
-  // }
+  initLocation(){
+    _amapFlutterLocation.onLocationChanged().listen(
+          (event) {
+        _weatherLocation = event;
+        LoggerData.addData(_weatherLocation['city']);
+        _getWeather();
+      },
+    );
+    _amapFlutterLocation
+        .setLocationOption(AMapLocationOption(onceLocation: true));
+    _amapFlutterLocation.startLocation();
+  }
 
   @override
   void dispose() {
@@ -292,6 +315,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     _amapFlutterLocation?.stopLocation();
     _amapFlutterLocation?.destroy();
     WidgetsBinding.instance.removeObserver(this);
+    timer.cancel();
     super.dispose();
   }
 
@@ -363,7 +387,7 @@ class _HomePageState extends BaseStoreState<HomePage>
               top: 0,
               bottom: 0,
               child: RefreshWidget(
-                // header: HomeGifHeader(),
+                header: HomeGifHeader(),
                 isInNest: true,
                 headerTriggerDistance: ScreenUtil().statusBarHeight,
                 color: Colors.black,
@@ -381,29 +405,71 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   _actionsWidget() {
     GestureDetector scanCon = GestureDetector(
+
         onTap: () async {
           if (Platform.isIOS) {
             AppRouter.push(context, RouteName.BARCODE_SCAN);
             //Get.to(QRViewExample());
             return;
           }
-          bool canUseCamera = await PermissionTool.haveCameraPermission();
-          bool canUsePhoto = await PermissionTool.havePhotoPermission();
-          bool canNotification =
-              await PermissionTool.haveNotificationPermission();
-          if (!canNotification) {
-            PermissionTool.showOpenPermissionDialog(context, "没有相机权限,请先授予相机权限");
-          }
-          if (!canUseCamera) {
-            PermissionTool.showOpenPermissionDialog(context, "没有相机权限,请先授予相机权限");
-            return;
-          } else if (!canUsePhoto) {
-            PermissionTool.showOpenPermissionDialog(context, "没有照片权限,请先授予照片权限");
-            return;
-          } else {
+          bool permission = await Permission.camera.isGranted;
+          if(!permission){
+              Alert.show(
+                context,
+                NormalContentDialog(
+                  title: '需要获取相机使用权限',
+                  content:
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //Image.asset(R.ASSETS_LOCATION_PER_PNG,width: 44.rw,height: 44.rw,),
+                      Text('允许应用使用相机来扫码识别商品', style: TextStyle(
+                          color: Color(0xFF666666), fontSize: 14.rsp),),
+                    ],
+                  ),
+                  items: ["残忍拒绝"],
+                  listener: (index) {
+                    Alert.dismiss(context);
+
+                  },
+                  deleteItem: "立即授权",
+                  deleteListener: () async {
+                    Alert.dismiss(context);
+
+                     bool  canUseCamera = await PermissionTool.haveCameraPermission();
+                    if (!canUseCamera) {
+                      PermissionTool.showOpenPermissionDialog(
+                          context, "没有相机使用权限,授予相机使用权限后才能进行扫码");
+                      return;
+                    } else {
+                      AppRouter.push(context, RouteName.BARCODE_SCAN);
+                      //Get.to(QRViewExample());
+                    }
+                  },
+                  type: NormalTextDialogType.delete,
+                ),
+              );
+
+          }else{
             AppRouter.push(context, RouteName.BARCODE_SCAN);
-            //Get.to(QRViewExample());
           }
+
+
+
+
+
+          // bool canUsePhoto = await PermissionTool.havePhotoPermission();
+          // bool canNotification =
+          //     await PermissionTool.haveNotificationPermission();
+          // if (!canNotification) {
+          //   PermissionTool.showOpenPermissionDialog(context, "相机访问权限,允许应用使用相机来扫码识别商品");
+          // }
+
+          // else if (!canUsePhoto) {
+          //   PermissionTool.showOpenPermissionDialog(context, "没有照片权限,请先授予照片权限");
+          //   return;
+          // }
+
         },
         child: Container(
           color: Colors.black.withAlpha(1),
@@ -523,12 +589,58 @@ class _HomePageState extends BaseStoreState<HomePage>
             : "";
     Widget leftContainer = GestureDetector(
       onTap: ()  async {
-        var value =  await requestPermission(true);
-        if (value) {
-          //监听要在设置参数之前 否则无法获取定位
-          _amapFlutterLocation
-              .setLocationOption(AMapLocationOption(onceLocation: true));
-          _amapFlutterLocation.startLocation();
+        if (Platform.isIOS)
+        {
+          print(_weatherLocation);
+        }else{
+          bool permission = await Permission.location.isGranted;
+          if(!permission){
+            Alert.show(
+              context,
+              NormalContentDialog(
+                title: '需要获取以下权限',
+                content:
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Image.asset(R.ASSETS_LOCATION_PER_PNG,width: 44.rw,height: 44.rw,),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('定位权限',style: TextStyle(color: Color(0xFF333333),fontSize: 16.rsp,fontWeight: FontWeight.bold),),
+                        Container(width:200.rw,child: Text('允许访问您的大概位置来查询城市天气',style: TextStyle(color: Color(0xFF666666),fontSize: 14.rsp),)),
+                      ],
+                    )
+                  ],
+                ),
+                items: ["残忍拒绝"],
+                listener: (index) {
+                  Alert.dismiss(context);
+                  HiveStore.appBox.put('locationPermission', false);
+                },
+                deleteItem: "立即授权",
+                deleteListener: ()  async {
+                  Alert.dismiss(context);
+
+                  HiveStore.appBox.put('locationPermission', true);
+                  var value =  await requestPermission(true);
+                  if (value) {
+                    initLocation();
+                  }
+
+                },
+                type: NormalTextDialogType.delete,
+              ),
+            );
+          }else{
+            var value =  await requestPermission(true);
+            if (value) {
+              //监听要在设置参数之前 否则无法获取定位
+              _amapFlutterLocation
+                  .setLocationOption(AMapLocationOption(onceLocation: true));
+              _amapFlutterLocation.startLocation();
+            }
+          }
         }
 
         String locationCityName =
@@ -551,6 +663,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         }
       },
       child: Container(
+        color: Colors.transparent,
         child: Row(
           children: <Widget>[
             Icon(
@@ -579,6 +692,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     );
     return Container(
       height: kToolbarHeight,
+      color: Colors.transparent,
       // child: ges,
       child: Column(
         children: <Widget>[

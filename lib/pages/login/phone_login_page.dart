@@ -27,7 +27,7 @@ class PhoneLoginPage extends StatefulWidget {
 class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   TextEditingController _phoneController;
   TextEditingController _smsCodeController;
-  TextEditingController _inviteController;
+  // TextEditingController _inviteController;
   FocusNode _phoneNode;
   FocusNode _smsCodeNode;
   FocusNode _inviteNode;
@@ -47,25 +47,24 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
     if (AppConfig.debug) {
       _smsCodeController = TextEditingController(text: "0716");
       _phoneController = TextEditingController(text: "18906611076");
-      _inviteController = TextEditingController();
+      // _inviteController = TextEditingController();
       _loginEnable = true;
       _getCodeEnable = true;
     } else {
       _phoneController = TextEditingController();
       _smsCodeController = TextEditingController();
-      _inviteController = TextEditingController();
+      // _inviteController = TextEditingController();
     }
 
     _phoneNode = FocusNode();
     _smsCodeNode = FocusNode();
-    _inviteNode = FocusNode();
+    // _inviteNode = FocusNode();
   }
 
   @override
   void dispose() {
     _phoneController?.dispose();
     _smsCodeController?.dispose();
-    _inviteController?.dispose();
     _phoneNode?.dispose();
     _smsCodeNode?.dispose();
     _inviteNode?.dispose();
@@ -106,7 +105,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                 ),
                 _phoneText(),
                 _smsCode(),
-                _inviteText(),
+                // _inviteText(),
                 _bottomOperation(),
                 120.hb,
                 GestureDetector(
@@ -220,35 +219,35 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
     );
   }
 
-
-  Container _inviteText() {
-    return Container(
-      margin:
-      EdgeInsets.only(top: rSize(10), right: rSize(20), left: rSize(20)),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[500], width: 0.5),
-          borderRadius: BorderRadius.all(Radius.circular(3))),
-      child: TextField(
-        controller: _inviteController,
-        focusNode: _inviteNode,
-        keyboardType: TextInputType.number,
-        style: TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
-        inputFormatters: [
-          LengthLimitingTextInputFormatter(11),
-        ],
-        cursorColor: Colors.black,
-        decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(
-                left: rSize(10),
-                top: rSize(13),
-                bottom: _inviteNode.hasFocus ? 0 : rSize(14)),
-            border: InputBorder.none,
-            hintText: "邀请码（选填）",
-            hintStyle: TextStyle(color: Colors.grey[400], fontSize: 15 * 2.sp),
-            suffixIcon: _clearButton(_inviteController, _inviteNode)),
-      ),
-    );
-  }
+  //
+  // Container _inviteText() {
+  //   return Container(
+  //     margin:
+  //     EdgeInsets.only(top: rSize(10), right: rSize(20), left: rSize(20)),
+  //     decoration: BoxDecoration(
+  //         border: Border.all(color: Colors.grey[500], width: 0.5),
+  //         borderRadius: BorderRadius.all(Radius.circular(3))),
+  //     child: TextField(
+  //       controller: _inviteController,
+  //       focusNode: _inviteNode,
+  //       keyboardType: TextInputType.number,
+  //       style: TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
+  //       inputFormatters: [
+  //         LengthLimitingTextInputFormatter(11),
+  //       ],
+  //       cursorColor: Colors.black,
+  //       decoration: InputDecoration(
+  //           contentPadding: EdgeInsets.only(
+  //               left: rSize(10),
+  //               top: rSize(13),
+  //               bottom: _inviteNode.hasFocus ? 0 : rSize(14)),
+  //           border: InputBorder.none,
+  //           hintText: "邀请码（选填）",
+  //           hintStyle: TextStyle(color: Colors.grey[400], fontSize: 15 * 2.sp),
+  //           suffixIcon: _clearButton(_inviteController, _inviteNode)),
+  //     ),
+  //   );
+  // }
 
   IconButton _clearButton(TextEditingController controller, FocusNode node) {
     return node.hasFocus
@@ -566,7 +565,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
 
   _phoneRegister(BuildContext context) {
     GSDialog.of(context).showLoadingDialog(context, "正在登录...");
-    UserDao.phoneRegister(_phoneController.text, _inviteController.text,
+    UserDao.phoneRegister(_phoneController.text, '',
         success: (data, code, msg) {
       GSDialog.of(context).dismiss(context);
       AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);

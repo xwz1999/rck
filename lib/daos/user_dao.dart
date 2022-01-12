@@ -79,7 +79,7 @@ class UserDao {
     // ResultData res = await HttpManager.post(
     //     UserApi.wx_register, {"wxUnionId":wxUnionId,"mobile":mobile,"sms":sms,"invitationNo":invitationNo.toUpperCase()});
     ResultData res = await HttpManager.post(UserApi.wx_invitation,
-        {"wxUnionId": wxUnionId, "invitationNo": invitationNo.toUpperCase()});
+        {"wxUnionId": wxUnionId, });
     if (!res.result) {
       failure(res.code, res.msg);
     } else {
@@ -190,7 +190,7 @@ class UserDao {
   static phoneRegister(String phone, String invitationNo,
       {@required OnSuccess<User> success, @required OnFailure failure}) async {
     ResultData res = await HttpManager.post(UserApi.phone_register,
-        {"mobile": phone, "invitationNo": invitationNo.toUpperCase()});
+        {"mobile": phone, });
 
     if (!res.result) {
       failure(res.code, "网络错误");

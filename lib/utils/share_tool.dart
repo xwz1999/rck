@@ -124,21 +124,21 @@ class ShareTool {
     String secondPic = "",
   }) {
     // !!!!
-    String goodsUrl =
-        "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}$goodsId/${UserManager.instance.user.info.invitationNo}";
-    PlatformItem miniItem = PlatformItem(
-        "小程序",
-        Image.asset(
-          ShareToolIcon.wechatmini,
-          width: 36,
-          height: 36,
-        ), itemClick: () {
-      Navigator.maybePop(context);
-      WeChatUtils.shareGoodsForMiniProgram(
-          title: miniTitle,
-          goodsId: int.parse(goodsId),
-          thumbnail: Api.getImgUrl(miniPicurl));
-    });
+    // String goodsUrl =
+    //     "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}$goodsId/${UserManager.instance.user.info.invitationNo}";
+    // PlatformItem miniItem = PlatformItem(
+    //     "小程序",
+    //     Image.asset(
+    //       ShareToolIcon.wechatmini,
+    //       width: 36,
+    //       height: 36,
+    //     ), itemClick: () {
+    //   Navigator.maybePop(context);
+    //   WeChatUtils.shareGoodsForMiniProgram(
+    //       title: miniTitle,
+    //       goodsId: int.parse(goodsId),
+    //       thumbnail: Api.getImgUrl(miniPicurl));
+    // });
     PlatformItem wechatItem = PlatformItem(
         "小程序",
         Image.asset(
@@ -147,7 +147,7 @@ class ShareTool {
           height: 36,
         ), itemClick: () {
       Navigator.maybePop(context);
-      WeChatScene scene = WeChatScene.SESSION;
+      // WeChatScene scene = WeChatScene.SESSION;
       // WeChatUtils.shareUrl(
       //     url: goodsUrl,
       //     netWorkThumbnail: Api.getImgUrl(miniPicurl),

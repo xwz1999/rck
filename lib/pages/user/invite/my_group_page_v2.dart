@@ -25,17 +25,11 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
   UsersMode usersMode = UsersMode.MY_GROUP;
   int get _allGroupCount {
     if (usersMode == UsersMode.MY_GROUP) {
-      int value = 1;
-      _models.forEach((element) {
-        value += element.count;
-      });
-      return value;
+
+      return _models.length+1;
     } else {
-      int value = 0;
-      _models.forEach((element) {
-        value += element.count;
-      });
-      return value;
+
+      return _models.length;
     }
   }
 
@@ -44,85 +38,85 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
 
   GSRefreshController _refreshController = GSRefreshController.auto();
 
-  _renderShitTab(String name, UsersMode mode) {
-    bool same = mode == usersMode;
-    return MaterialButton(
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      minWidth: double.infinity,
-      child: name.text
-          .size(14.rsp)
-          .color(same ? Colors.black : Color(0xFFA3A3A3))
-          .make(),
-      onPressed: () {
-        usersMode = mode;
-        _refreshController.requestRefresh();
-        setState(() {});
-      },
-    ).expand();
-  }
+  // _renderShitTab(String name, UsersMode mode) {
+  //   bool same = mode == usersMode;
+  //   return MaterialButton(
+  //     materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+  //     minWidth: double.infinity,
+  //     child: name.text
+  //         .size(14.rsp)
+  //         .color(same ? Colors.black : Color(0xFFA3A3A3))
+  //         .make(),
+  //     onPressed: () {
+  //       usersMode = mode;
+  //       _refreshController.requestRefresh();
+  //       setState(() {});
+  //     },
+  //   ).expand();
+  // }
 
-  String get _renderTitle {
-    switch (usersMode) {
-      case UsersMode.MY_GROUP:
-        return '我的自营店铺';
-      case UsersMode.MY_RECOMMEND:
-        return '我的分销店铺';
-      case UsersMode.MY_REWARD:
-        return '我的代理店铺';
-    }
-    return '';
-  }
+  // String get _renderTitle {
+  //   switch (usersMode) {
+  //     case UsersMode.MY_GROUP:
+  //       return '我的自营店铺';
+  //     case UsersMode.MY_RECOMMEND:
+  //       return '我的分销店铺';
+  //     case UsersMode.MY_REWARD:
+  //       return '我的代理店铺';
+  //   }
+  //   return '';
+  // }
+  //
+  // Widget get _renderShitVerticalLine => Container(
+  //       height: 20.rw,
+  //       width: 1.rw,
+  //       color: Color(0xFF979797),
+  //     );
 
-  Widget get _renderShitVerticalLine => Container(
-        height: 20.rw,
-        width: 1.rw,
-        color: Color(0xFF979797),
-      );
-
-  _renderTopCard() {
-    return Material(
-      color: Colors.white,
-      borderRadius: BorderRadius.circular(4.rw),
-      clipBehavior: Clip.antiAlias,
-      child: Column(
-        children: [
-          Container(
-            height: 76.rw,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(UserLevelTool.currentCardImagePath()),
-                fit: BoxFit.cover,
-              ),
-            ),
-            alignment: Alignment.center,
-            child: Image.asset(
-              UserLevelTool.currentMedalImagePath(),
-              height: 56.rw,
-              width: 56.rw,
-            ),
-          ),
-          Row(
-            children: [
-              50.hb,
-              _renderShitTab('自营店铺', UsersMode.MY_GROUP),
-              role == UserRoleLevel.Diamond_1 || role == UserRoleLevel.Diamond_2
-                  ? _renderShitVerticalLine
-                  : SizedBox(),
-              role == UserRoleLevel.Diamond_1 || role == UserRoleLevel.Diamond_2
-                  ? _renderShitTab('分销店铺', UsersMode.MY_RECOMMEND)
-                  : SizedBox(),
-              role == UserRoleLevel.Diamond_1
-                  ? _renderShitVerticalLine
-                  : SizedBox(),
-              role == UserRoleLevel.Diamond_1
-                  ? _renderShitTab('代理店铺', UsersMode.MY_REWARD)
-                  : SizedBox(),
-            ],
-          ),
-        ],
-      ),
-    ).pSymmetric(h: 36.rw, v: 10.rw);
-  }
+  // _renderTopCard() {
+  //   return Material(
+  //     color: Colors.white,
+  //     borderRadius: BorderRadius.circular(4.rw),
+  //     clipBehavior: Clip.antiAlias,
+  //     child: Column(
+  //       children: [
+  //         Container(
+  //           height: 76.rw,
+  //           decoration: BoxDecoration(
+  //             image: DecorationImage(
+  //               image: AssetImage(UserLevelTool.currentCardImagePath()),
+  //               fit: BoxFit.cover,
+  //             ),
+  //           ),
+  //           alignment: Alignment.center,
+  //           child: Image.asset(
+  //             UserLevelTool.currentMedalImagePath(),
+  //             height: 56.rw,
+  //             width: 56.rw,
+  //           ),
+  //         ),
+  //         Row(
+  //           children: [
+  //             50.hb,
+  //             _renderShitTab('自营店铺', UsersMode.MY_GROUP),
+  //             role == UserRoleLevel.Diamond_1 || role == UserRoleLevel.Diamond_2
+  //                 ? _renderShitVerticalLine
+  //                 : SizedBox(),
+  //             role == UserRoleLevel.Diamond_1 || role == UserRoleLevel.Diamond_2
+  //                 ? _renderShitTab('分销店铺', UsersMode.MY_RECOMMEND)
+  //                 : SizedBox(),
+  //             role == UserRoleLevel.Diamond_1
+  //                 ? _renderShitVerticalLine
+  //                 : SizedBox(),
+  //             role == UserRoleLevel.Diamond_1
+  //                 ? _renderShitTab('代理店铺', UsersMode.MY_REWARD)
+  //                 : SizedBox(),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   ).pSymmetric(h: 36.rw, v: 10.rw);
+  // }
 
   _renderSearchBar() {
     return Material(
@@ -141,7 +135,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
               isDense: true,
               border: InputBorder.none,
               contentPadding: EdgeInsets.symmetric(horizontal: 20.rw),
-              hintText: '请输入昵称/备注/手机号/微信号',
+              hintText: '请输入手机号',
               hintStyle: TextStyle(
                 fontSize: 12.rsp,
                 color: Color(0xFF999999),
@@ -195,33 +189,31 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
             children: [
               54.hb,
               16.wb,
-              role == UserRoleLevel.Diamond_1 || role == UserRoleLevel.Diamond_2
-                  ? _renderTitle.text.bold.size(14.rsp).black.make()
-                  : "我的店铺".text.bold.size(14.rsp).black.make(),
-              MaterialButton(
-                padding: EdgeInsets.all(4.rw),
-                minWidth: 0,
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                child: Icon(
-                  Icons.help_outline,
-                  size: 12.rw,
-                  color: Color(0xFFA5A5A5),
-                ),
-                onPressed: () {
-                  Alert.show(
-                    context,
-                    NormalContentDialog(
-                      title: '店铺贡献榜图标定义',
-                      content: role == UserRoleLevel.Diamond_1 ||
-                              role == UserRoleLevel.Diamond_2
-                          ? Image.asset(R.ASSETS_USER_CARD_DESCRIPTION_PNG)
-                          : Image.asset(R.ASSETS_USER_CARD_DESCRIPTION_WEBP),
-                      items: ["确认"],
-                      listener: (index) => Alert.dismiss(context),
-                    ),
-                  );
-                },
-              ),
+             "我的店铺".text.bold.size(14.rsp).black.make(),
+              // MaterialButton(
+              //   padding: EdgeInsets.all(4.rw),
+              //   minWidth: 0,
+              //   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+              //   child: Icon(
+              //     Icons.help_outline,
+              //     size: 12.rw,
+              //     color: Color(0xFFA5A5A5),
+              //   ),
+              //   onPressed: () {
+              //     Alert.show(
+              //       context,
+              //       NormalContentDialog(
+              //         title: '店铺贡献榜图标定义',
+              //         content: role == UserRoleLevel.Diamond_1 ||
+              //                 role == UserRoleLevel.Diamond_2
+              //             ? Image.asset(R.ASSETS_USER_CARD_DESCRIPTION_PNG)
+              //             : Image.asset(R.ASSETS_USER_CARD_DESCRIPTION_WEBP),
+              //         items: ["确认"],
+              //         listener: (index) => Alert.dismiss(context),
+              //       ),
+              //     );
+              //   },
+              // ),
               Spacer(),
               Image.asset(
                 R.ASSETS_USER_ICON_GROUP_PNG,
@@ -255,7 +247,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
                                   amount: _myPeopleCount,
                                   count: 1,
                                   roleLevel:
-                                      UserManager.instance.user.info.roleLevel,
+                                      UserManager.instance.userBrief.level,
                                 ),
                                 canTap: false)
                           ]

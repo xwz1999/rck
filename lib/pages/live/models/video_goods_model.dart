@@ -9,14 +9,14 @@ class VideoGoodsModel {
   int salesVolume;
   String mainPhotoUrl;
   String promotionName;
-  String originalPrice;
-  String discountPrice;
-  String commission;
+  num originalPrice;
+  num discountPrice;
+  num commission;
   List<String> tags;
   int percent;
   String startTime;
   String endTime;
-  String coupon;
+  num coupon;
 
   VideoGoodsModel(
       {this.id,

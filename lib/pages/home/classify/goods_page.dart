@@ -128,7 +128,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   void initState() {
     super.initState();
     //获取默认地址并且判断有无货源
-    if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
+    if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000|| widget.goodsDetail.data.vendorId == 3000) {
       Future.delayed(Duration.zero, () async {
         _addressList = await _getDefaultAddress();
         if (_addressList != null) {
@@ -441,7 +441,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         color: Colors.white,
         child: _discountContent(context),
       ),
-      widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000
+      widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000||  widget.goodsDetail.data.vendorId == 3000
           ? Container(
               margin: EdgeInsets.only(bottom: 13),
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -544,13 +544,13 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         Container(
           child: GestureDetector(
             onTap: () async {
-              if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
+              if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000 || widget.goodsDetail.data.vendorId == 3000) {
                 if (_defaltAddress == null) {
 
                   await  Get.to(ReceivingAddressPage());
 
 
-                  if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
+                  if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000|| widget.goodsDetail.data.vendorId == 3000) {
                     Future.delayed(Duration.zero, () async {
                       _addressList = await _getDefaultAddress();
                       if (_addressList != null) {
@@ -626,7 +626,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
 
         // Toast.showInfo('请先添加地址');
         await  Get.to(ReceivingAddressPage());
-        if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
+        if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000||widget.goodsDetail.data.vendorId == 3000) {
           Future.delayed(Duration.zero, () async {
             _addressList = await _getDefaultAddress();
             if (_addressList != null) {
@@ -1643,7 +1643,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 return;
               }
               print("${skuModel.sku.id} -- ${skuModel.des} -- ${skuModel.num}");
-               if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
+               if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000 || widget.goodsDetail.data.vendorId == 3000) {
                  if (_defaltAddress == null) {
                    widget.openSkuChoosePage.value = false;
                    Toast.showInfo('请先添加地址');
@@ -1651,7 +1651,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                    await  Get.to(ReceivingAddressPage());
 
 
-                   if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
+                   if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000 || widget.goodsDetail.data.vendorId == 3000) {
                      Future.delayed(Duration.zero, () async {
                        _addressList = await _getDefaultAddress();
                        if (_addressList != null) {
@@ -1866,7 +1866,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
 
     widget.goodsDetail.data.sku.forEach((Sku sku) {
       if (sku.name == guige) {
-        if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
+        if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000 || widget.goodsDetail.data.vendorId == 3000) {
           Future.delayed(Duration.zero, () async {
             _jDHaveGoods =
             await HomeDao.getJDStock(sku.id, _defaltAddress);

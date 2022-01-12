@@ -682,7 +682,7 @@ packages:
       name: image_gallery_saver
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.7.1"
+    version: "1.6.9"
   image_picker:
     dependency: transitive
     description:
@@ -1309,7 +1309,7 @@ packages:
     source: hosted
     version: "3.3.0"
   video_player:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: video_player
       url: "https://pub.flutter-io.cn"

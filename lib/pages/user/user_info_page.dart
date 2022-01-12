@@ -203,35 +203,35 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
         // SCTile.normalTile("我的邀请码", needDivide: true, listener: () {
         //         push(RouteName.USER_INFO_QRCODE_PAGE);
         //       })
-        UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Shop?
-             SCTile.normalTile(
-                "我的邀请码",
-                value: UserManager.instance.user.info.invitationNo,
-                needDivide: true,
-                needArrow: false,
-                trailing: Row(
-                  children: [
-                    (UserManager.instance.user.info.invitationNo)
-                        .text
-                        .color(Color(0xFF666666))
-                        .size(14.rsp)
-                        .make(),
-                    5.wb,
-                    Icon(
-                      Icons.copy,
-                      size: 18.rsp,
-                      color: Color(0xFF999999),
-                    ),
-                  ],
-                ),
-                listener: () async {
-                  await Clipboard.setData(
-                    ClipboardData(
-                        text: UserManager.instance.user.info.invitationNo),
-                  );
-                  showToast('已经复制到粘贴板');
-                },
-              ):SizedBox(),
+        // UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Shop?
+        //      SCTile.normalTile(
+        //         "我的邀请码",
+        //         value: UserManager.instance.user.info.invitationNo,
+        //         needDivide: true,
+        //         needArrow: false,
+        //         trailing: Row(
+        //           children: [
+        //             (UserManager.instance.user.info.invitationNo)
+        //                 .text
+        //                 .color(Color(0xFF666666))
+        //                 .size(14.rsp)
+        //                 .make(),
+        //             5.wb,
+        //             Icon(
+        //               Icons.copy,
+        //               size: 18.rsp,
+        //               color: Color(0xFF999999),
+        //             ),
+        //           ],
+        //         ),
+        //         listener: () async {
+        //           await Clipboard.setData(
+        //             ClipboardData(
+        //                 text: UserManager.instance.user.info.invitationNo),
+        //           );
+        //           showToast('已经复制到粘贴板');
+        //         },
+        //       ):SizedBox(),
       ],
     );
   }

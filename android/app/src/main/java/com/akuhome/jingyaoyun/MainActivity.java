@@ -27,29 +27,49 @@ public class MainActivity extends FlutterActivity {
 
   //通讯名称,回到手机桌面
   private  final String CHANNEL = "android/back/desktop";
-  @Override
-  public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
-    GeneratedPluginRegistrant.registerWith(flutterEngine);
-    new MethodChannel(flutterEngine.getDartExecutor(), CHANNEL).setMethodCallHandler(
-            new MethodChannel.MethodCallHandler() {
-              @Override
-              public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
-                if (call.method.equals("backDesktop")) {
-                  result.success(true);
-                  moveTaskToBack(false);
-                }
-              }
-            }
-    );
-  }
-
-    // 设置状态栏沉浸式透明（修改flutter状态栏黑色半透明为全透明）
+  static final String eventBackDesktop = "backDesktop";
+//  @Override
+//  public void configureFlutterEngine(@NonNull FlutterEngine flutterEngine) {
+//    GeneratedPluginRegistrant.registerWith(flutterEngine);
+//    new MethodChannel(flutterEngine.getDartExecutor(), CHANNEL).setMethodCallHandler(
+//            new MethodChannel.MethodCallHandler() {
+//              @Override
+//              public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
+//                if (call.method.equals("backDesktop")) {
+//                  result.success(true);
+//                  moveTaskToBack(false);
+//                }
+//              }
+//            }
+//    );
+//  }
+    @Override
+    public void configureFlutterEngine(FlutterEngine flutterEngine) {
+        GeneratedPluginRegistrant.registerWith(flutterEngine);
+    }
+        // 设置状态栏沉浸式透明（修改flutter状态栏黑色半透明为全透明）
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initBackToDesktop();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(0);
         }
+    }
+
+    //注册返回到手机桌面事件
+    private void initBackToDesktop() {
+        new MethodChannel(getFlutterEngine().getDartExecutor().getBinaryMessenger(), CHANNEL).setMethodCallHandler(
+                new MethodChannel.MethodCallHandler() {
+                    @Override
+                    public void onMethodCall(MethodCall methodCall, MethodChannel.Result result) {
+                        if (methodCall.method.equals(eventBackDesktop)) {
+                            moveTaskToBack(false);
+                            result.success(true);
+                        }
+                    }
+                }
+        );
     }
   //  @Override
 //    protected void onCreate(Bundle savedInstanceState) {

@@ -31,7 +31,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
 
   FocusNode _phoneFocusNode;
   FocusNode _smsCodeFocusNode;
-  FocusNode _inviteCodeFocusNode;
+  // FocusNode _inviteCodeFocusNode;
   TextEditingController _phoneController;
   TextEditingController _smsCodeController;
   TextEditingController _inviteCodeController;
@@ -50,11 +50,11 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
     super.initState();
     _phoneFocusNode = FocusNode();
     _smsCodeFocusNode = FocusNode();
-    _inviteCodeFocusNode = FocusNode();
+    // _inviteCodeFocusNode = FocusNode();
 
     _phoneController = TextEditingController();
     _smsCodeController = TextEditingController();
-    _inviteCodeController = TextEditingController();
+    // _inviteCodeController = TextEditingController();
   }
 
   @override
@@ -82,7 +82,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
                   _titleWidget(),
                   _phoneTFWidget(),
                   _smsCodeWidget(),
-                  _inviteWidget(),
+                  // _inviteWidget(),
                   Container(
                     height: 50 * 2.h,
                   ),
@@ -294,53 +294,53 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
     });
   }
 
-  _inviteWidget() {
-    return Container(
-      height: 40 * 2.h,
-      margin: EdgeInsets.symmetric(horizontal: rSize(20)),
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: _inviteInputWidget(),
-                ),
-              ],
-            ),
-          ),
-          _bottomLineWidget(),
-        ],
-      ),
-    );
-  }
+  // _inviteWidget() {
+  //   return Container(
+  //     height: 40 * 2.h,
+  //     margin: EdgeInsets.symmetric(horizontal: rSize(20)),
+  //     child: Column(
+  //       children: <Widget>[
+  //         Expanded(
+  //           child: Row(
+  //             children: <Widget>[
+  //               Expanded(
+  //                 child: _inviteInputWidget(),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //         _bottomLineWidget(),
+  //       ],
+  //     ),
+  //   );
+  // }
 
-  _inviteInputWidget() {
-      return TextField(
-        onChanged: (String phone) {
-          setState(() {
-            _loginEnable = _verifyLoginEnable();
-          });
-        },
-        controller: _inviteCodeController,
-        focusNode: _inviteCodeFocusNode,
-        keyboardType: TextInputType.emailAddress,
-        style: TextStyle(color: Colors.black, fontSize: _fontSize),
-        inputFormatters: [
-          LengthLimitingTextInputFormatter(8),
-        ],
-        cursorColor: Colors.black,
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          hintText: "邀请码（选填）",
-          hintStyle: TextStyle(
-              fontWeight: FontWeight.w300,
-              color: Colors.grey[400],
-              fontSize: _fontSize),
-        ),
-      );
-
-  }
+  // _inviteInputWidget() {
+  //     return TextField(
+  //       onChanged: (String phone) {
+  //         setState(() {
+  //           _loginEnable = _verifyLoginEnable();
+  //         });
+  //       },
+  //       controller: _inviteCodeController,
+  //       focusNode: _inviteCodeFocusNode,
+  //       keyboardType: TextInputType.emailAddress,
+  //       style: TextStyle(color: Colors.black, fontSize: _fontSize),
+  //       inputFormatters: [
+  //         LengthLimitingTextInputFormatter(8),
+  //       ],
+  //       cursorColor: Colors.black,
+  //       decoration: InputDecoration(
+  //         border: InputBorder.none,
+  //         hintText: "邀请码（选填）",
+  //         hintStyle: TextStyle(
+  //             fontWeight: FontWeight.w300,
+  //             color: Colors.grey[400],
+  //             fontSize: _fontSize),
+  //       ),
+  //     );
+  //
+  // }
 
   _loginBtnWidget() {
     return Container(
@@ -383,9 +383,9 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
 
   _weChatRegister(BuildContext context) {
     String bindData = getStore().state.openinstall.code;
-    if (bindData.length <= 0) {
-      bindData = _inviteCodeController.text.toUpperCase();
-    }
+    // if (bindData.length <= 0) {
+    //   bindData = _inviteCodeController.text.toUpperCase();
+    // }
     UserDao.weChatRegister(
         widget.argument[WeChatBindPage.KEY_wxUnionId],
         _phoneController.text,

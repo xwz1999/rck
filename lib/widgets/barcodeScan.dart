@@ -15,8 +15,13 @@ import 'package:jingyaoyun/pages/home/barcode/photos_fail_barcode_page.dart';
 import 'package:jingyaoyun/pages/home/barcode/qr_scaner_result_page.dart';
 import 'package:jingyaoyun/utils/app_router.dart';
 import 'package:jingyaoyun/utils/image_utils.dart';
+import 'package:jingyaoyun/utils/permission_tool.dart';
+import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/utils/text_utils.dart';
 import 'package:just_audio/just_audio.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import 'alert.dart';
 
 
 class BarcodeScanPage extends StatefulWidget {
@@ -50,26 +55,111 @@ class _BarcodeScanPageState extends BaseStoreState<BarcodeScanPage> {
             },
             onSelectImage: () async {
               _key.currentState.stopScan();
-              var image =
-                  await ImagePicker.pickImage(source: ImageSource.gallery);
-              if (image == null) {
-                _key.currentState.startScan();
-                return;
-              }
-              File cropFile = await ImageUtils.cropImage(image);
-              if (cropFile == null) {
-                _key.currentState.startScan();
-                return;
-              }
-              File imageFile = cropFile;
-              final rest = await FlutterQrReader.imgScan(imageFile);
-              if (TextUtils.isEmpty(rest)) {
-                showError("图片识别失败...").then((v) {
+              if (Platform.isIOS) {
+                var image =
+                await ImagePicker.pickImage(source: ImageSource.gallery);
+                if (image == null) {
                   _key.currentState.startScan();
-                });
-              } else {
-                onScan(rest, image: imageFile);
+                  return;
+                }
+                File cropFile = await ImageUtils.cropImage(image);
+                if (cropFile == null) {
+                  _key.currentState.startScan();
+                  return;
+                }
+                File imageFile = cropFile;
+                final rest = await FlutterQrReader.imgScan(imageFile);
+                if (TextUtils.isEmpty(rest)) {
+                  showError("图片识别失败...").then((v) {
+                    _key.currentState.startScan();
+                  });
+                } else {
+                  onScan(rest, image: imageFile);
+                }
+                return;
               }
+              bool permission = await Permission.storage.isGranted;
+              if(!permission){
+                Alert.show(
+                  context,
+                  NormalContentDialog(
+                    title: '需要获取相册访问权限',
+                    content:
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        //Image.asset(R.ASSETS_LOCATION_PER_PNG,width: 44.rw,height: 44.rw,),
+                        Expanded(
+                          child: Text('允许访问相册图片用来扫码识别商品', style: TextStyle(
+                              color: Color(0xFF666666), fontSize: 14.rsp),),
+                        ),
+                      ],
+                    ),
+                    items: ["残忍拒绝"],
+                    listener: (index) {
+                      Alert.dismiss(context);
+                      _key.currentState.startScan();
+
+                    },
+                    deleteItem: "立即授权",
+                    deleteListener: () async {
+                      Alert.dismiss(context);
+
+                      bool  canUsePhoto = await PermissionTool.havePhotoPermission();
+
+                      if (!canUsePhoto) {
+                        PermissionTool.showOpenPermissionDialog(
+                            context, "没有访问相册权限,授予权限后才能进入相册");
+                        return;
+                      } else {
+                        var image =
+                        await ImagePicker.pickImage(source: ImageSource.gallery);
+                        if (image == null) {
+                          _key.currentState.startScan();
+                          return;
+                        }
+                        File cropFile = await ImageUtils.cropImage(image);
+                        if (cropFile == null) {
+                          _key.currentState.startScan();
+                          return;
+                        }
+                        File imageFile = cropFile;
+                        final rest = await FlutterQrReader.imgScan(imageFile);
+                        if (TextUtils.isEmpty(rest)) {
+                          showError("图片识别失败...").then((v) {
+                            _key.currentState.startScan();
+                          });
+                        } else {
+                          onScan(rest, image: imageFile);
+                        }
+                      }
+                    },
+                    type: NormalTextDialogType.delete,
+                  ),
+                );
+              }
+              else{
+                var image =
+                await ImagePicker.pickImage(source: ImageSource.gallery);
+                if (image == null) {
+                  _key.currentState.startScan();
+                  return;
+                }
+                File cropFile = await ImageUtils.cropImage(image);
+                if (cropFile == null) {
+                  _key.currentState.startScan();
+                  return;
+                }
+                File imageFile = cropFile;
+                final rest = await FlutterQrReader.imgScan(imageFile);
+                if (TextUtils.isEmpty(rest)) {
+                  showError("图片识别失败...").then((v) {
+                    _key.currentState.startScan();
+                  });
+                } else {
+                  onScan(rest, image: imageFile);
+                }
+               }
             },
             onScan: onScan,
             headerWidget: AppBar(

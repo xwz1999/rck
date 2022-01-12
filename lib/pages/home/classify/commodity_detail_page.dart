@@ -281,13 +281,13 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
   }
 
   _showShare(BuildContext context) {
-    if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
-        UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.None) {
-      //跳到分享邀请
-      // _showInviteShare(context);
-      ShareTool().inviteShare(context);
-      return;
-    }
+    // if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
+    //     UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.None) {
+    //   //跳到分享邀请
+    //   // _showInviteShare(context);
+    //   ShareTool().inviteShare(context);
+    //   return;
+    // }
     String goodsTitle =
         "${_goodsDetail.data.getPriceString()} | ${_goodsDetail.data.goodsName} | ${_goodsDetail.data.description}";
     ShareTool().goodsShare(context,
