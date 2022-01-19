@@ -16,9 +16,7 @@ class ShopManagerView extends StatelessWidget {
     @required String subTitle,
     @required String path,
     VoidCallback onTap,
-    bool show = false,
   }) {
-    if (!show) return null;
     return CustomImageButton(
       padding: EdgeInsets.zero,
       onPressed: onTap,
@@ -45,13 +43,6 @@ class ShopManagerView extends StatelessWidget {
     );
   }
 
-  bool get showTop => true;
-  bool get showMid =>
-      UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_1 ||
-      UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_2;
-  bool get showBottom =>
-      UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Diamond_1;
-
   @override
   Widget build(BuildContext context) {
     return VxBox(
@@ -73,7 +64,6 @@ class ShopManagerView extends StatelessWidget {
                 path: R.ASSETS_SHOP_GROUP_EXPAND_WEBP,
                 onTap: () =>
                     ShareTool().inviteShare(context, customTitle: Container()),
-                show: showTop,
               ),
               _buildGridItem(
                 title: '我的店铺',
@@ -81,7 +71,6 @@ class ShopManagerView extends StatelessWidget {
                 onTap: () => Get.to(() => MyGroupPageV2()),
                 // CRoute.push(context, MyGroupPage(type: UsersMode.MY_GROUP)),
                 path: R.ASSETS_SHOP_MY_GROUP_WEBP,
-                show: showTop,
               ),
               // _buildGridItem(
               //   title: '推荐钻石店铺',

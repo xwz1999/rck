@@ -20,13 +20,9 @@ import 'package:jingyaoyun/pages/login/login_page.dart';
 import 'package:jingyaoyun/pages/login/phone_login_page.dart';
 import 'package:jingyaoyun/pages/login/wechat_bind_page.dart';
 import 'package:jingyaoyun/pages/login/wechat_input_invitecode_page.dart';
-import 'package:jingyaoyun/pages/shop/cumulative_income_page.dart';
 import 'package:jingyaoyun/pages/shop/member_benefits_page.dart';
 import 'package:jingyaoyun/pages/shop/order/shop_order_center_page.dart';
 import 'package:jingyaoyun/pages/shop/order/shop_order_detail_page.dart';
-import 'package:jingyaoyun/pages/shop/shop_commission_info_page.dart';
-import 'package:jingyaoyun/pages/shop/shop_page_sub_income_page.dart';
-import 'package:jingyaoyun/pages/shop/shop_performance_info_page.dart';
 import 'package:jingyaoyun/pages/shopping_cart/shopping_cart_page.dart';
 import 'package:jingyaoyun/pages/store/modify_info_page.dart';
 import 'package:jingyaoyun/pages/store/store_detail_page.dart';
@@ -40,7 +36,6 @@ import 'package:jingyaoyun/pages/user/balance_page.dart';
 import 'package:jingyaoyun/pages/user/cash_withdraw_history_page.dart';
 import 'package:jingyaoyun/pages/user/cash_withdraw_result_page.dart';
 import 'package:jingyaoyun/pages/user/invite/invite_search_page.dart';
-import 'package:jingyaoyun/pages/user/invite/user_invite.dart';
 import 'package:jingyaoyun/pages/user/invite/user_invite_detail.dart';
 import 'package:jingyaoyun/pages/user/invoice/Invoice_with_goods_page.dart';
 import 'package:jingyaoyun/pages/user/invoice/invoice_add_title_page.dart';
@@ -69,11 +64,9 @@ import 'package:jingyaoyun/pages/user/review/review_page.dart';
 import 'package:jingyaoyun/pages/user/rui_coin_page.dart';
 import 'package:jingyaoyun/pages/user/rui_transfer_to_balance_page.dart';
 import 'package:jingyaoyun/pages/user/setting_page.dart';
-import 'package:jingyaoyun/pages/user/user_billing_details.dart';
 import 'package:jingyaoyun/pages/user/user_cash_withdraw_page.dart';
 import 'package:jingyaoyun/pages/user/user_info_address_page.dart';
 import 'package:jingyaoyun/pages/user/user_info_page.dart';
-import 'package:jingyaoyun/pages/user/user_page_sub_income_page.dart';
 import 'package:jingyaoyun/pages/user/user_set_password.dart';
 import 'package:jingyaoyun/pages/user/user_set_password_again.dart';
 import 'package:jingyaoyun/pages/user/user_set_password_varcode.dart';
@@ -285,7 +278,6 @@ class RouteName {
 
   static const String SHARE_GOODS_POSTER_PAGE = "/ShareGoodsPosterPage";
   static const String SHARE_URL_POSTER_PAGE = "/ShareUrlPosterPage";
-  static const String ABOUT_US_PAGE = "/AboutUsPage";
 
   //彩票相关
   ///兑换彩票
@@ -411,15 +403,10 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.USER_VERIFY_RESULT: (context, {arguments}) => VerifyResultPage(
         arguments: arguments,
       ),
-  //我的邀请
-  RouteName.USER_INVITE: (context, {arguments}) => InvitePage(),
   RouteName.USER_INVITE_DETAIL: (context, {arguments}) => UserInviteDetail(
         arguments: arguments,
       ),
   RouteName.USER_INVITE_SEARCH: (context, {arguments}) => InviteSearchPage(),
-  //我的自购省 订单mingxi
-  RouteName.USER_BILLING_DETAILS: (context, {arguments}) =>
-      UserBillingDetails(),
   //设置支付密码
   RouteName.USER_SET_PASSWORD_VARCODE: (context, {arguments}) =>
       UserSetPasswordVarCode(),
@@ -435,10 +422,6 @@ final Map<String, RouteBuilder> _routes = {
       ),
   RouteName.USER_INFO_ADDRESS_PAGE: (context, {arguments}) =>
       UserInfoAddressPage(
-        arguments: arguments,
-      ),
-  RouteName.USER_PAGE_SUB_INCOME_PAGE: (context, {arguments}) =>
-      UserPageSubIncomesPage(
         arguments: arguments,
       ),
   // 瑞币
@@ -534,18 +517,6 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.BARCODE_FAIL: (context, {arguments}) =>
       FailBarcodePage(arguments: arguments),
 
-
-  //累计收入
-  RouteName.CUMULATIVE_INCOME: (context, {arguments}) => CumulativeIncomePage(),
-  RouteName.SHOP_PAGE_SUB_INCOME_PAGE: (context, {arguments}) =>
-      ShopPageSubIncomesPage(
-        arguments: arguments,
-      ),
-  //查看提成明细
-  RouteName.COMMISSION_INFO: (context, {arguments}) => ShopCommissionInfoPage(),
-  //查看业绩明细
-  RouteName.PERFORMANCE_INFO: (context, {arguments}) =>
-      ShopPerformanceInfoPage(),
   //店铺订单中心
   RouteName.SHOP_ORDER_LIST_PAGE: (context, {arguments}) => ShopOrderCenterPage(
         arguments: arguments,

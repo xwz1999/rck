@@ -178,6 +178,16 @@ class UserAPI {
   ///搜索栏的关键字
   String get getKeyWords => '/v2/app/aku_school/search_word';
 
+  ///推荐用户审升级
+  String get recommendUser => '/v2/app/apply/create';
+
+  ///申请记录列表
+  String get recommendUserList => '/v2/app/apply/list';
+
+
+  ///发送验证码
+  String get sendRecommendCode => '/v2/app/apply/send';
+
 
 }
 

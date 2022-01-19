@@ -5,10 +5,12 @@ import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/pages/user/user_info_page.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:jingyaoyun/widgets/bussiness_cooperation_page.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/sc_tile.dart';
 import 'package:jingyaoyun/widgets/webView.dart';
 import 'package:package_info/package_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'account_and_safety/account_and_safety_page.dart';
 
@@ -108,11 +110,6 @@ class _SettingItemListViewState extends State<SettingItemListView> {
                       //   AppRouter.push(
                       //           context, RouteName.WEB_VIEW_PAGE, arguments: WebViewPage.setArguments(url: WebApi.feedback, title: "意见反馈"), );
                       // }),
-                      // SCTile.normalTile("关于我们", needDivide: true, listener: () {
-                      //   //AppRouter.push(context, RouteName.ABOUT_US_PAGE);
-                      //   // AppRouter.push(
-                      //   // context, RouteName.WEB_VIEW_PAGE, arguments: WebViewPage.setArguments(url: WebApi.aboutUs, title: "关于我们"), );
-                      // }),
                       SCTile.normalTile("隐私政策", listener: () {
                         AppRouter.push(
                           context,
@@ -124,6 +121,10 @@ class _SettingItemListViewState extends State<SettingItemListView> {
                         );
                         //CRoute.push(context, PrivacyPageV2());
                       }),
+                      SCTile.normalTile("联系我们", value: '400-889-4489', needDivide: true, listener: () {
+                        launch("tel:400-889-4489");
+                      }),
+
 
                       //助力临时入口
                       // SCTile.normalTile("助力(临时)", listener: () async {

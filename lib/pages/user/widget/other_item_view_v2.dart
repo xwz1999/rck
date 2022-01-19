@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/pages/user/invite/my_group_page_v2.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_home_page.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_shop_page.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import '../recommend_shop_page.dart';
 
 class OtherItemViewV2 extends StatelessWidget {
   OtherItemViewV2({Key key}) : super(key: key);
@@ -57,7 +61,7 @@ class OtherItemViewV2 extends StatelessWidget {
                   UserRoleLevel.Shop?
               _buildItem(
                 Image.asset(
-                  R.ASSETS_USER_FUNC_TEAM_PNG,
+                  R.ASSETS_USER_FUNC_FANS_PNG,
                   width: 30.rw,
                   height: 30.rw,
                 ),
@@ -65,10 +69,30 @@ class OtherItemViewV2 extends StatelessWidget {
                 // () => AppRouter.push(context, RouteName.BUSSINESS_COOPERATION_PAGE),
                 '我的粉丝',()=>  Get.to(() => MyGroupPageV2()),
               ):SizedBox(),
+              (UserLevelTool.currentRoleLevelEnum() ==
+                  UserRoleLevel.Shop|| UserLevelTool.currentRoleLevelEnum() ==UserRoleLevel.physical)?
+              _buildItem(
+                Image.asset(R.ASSETS_USER_FUNC_RECOMMEND_PNG, width: 30.rw,
+                  height: 30.rw,),
+                '店铺推荐',
+                    () => Get.to(() => RecommendShopPage()),
+              ):SizedBox(),
+              _buildItem(
+                Image.asset(R.ASSETS_USER_FUNC_RECOMMEND_PNG, width: 30.rw,
+                  height: 30.rw,),
+                '批发',
+                    () => Get.to(() => WholesaleHomePage()),
+              ),
+              // _buildItem(
+              //   Image.asset(R.ASSETS_USER_FUNC_SETTING_PNG, width: 30.rw,
+              //     height: 30.rw,),
+              //   '店铺推荐',
+              //       () => Get.to(() => WholesaleShopPage()),
+              // ),
               _buildItem(
                 Image.asset(R.ASSETS_USER_FUNC_SETTING_PNG, width: 30.rw,
                   height: 30.rw,),
-                '设置',
+                '我的设置',
                 () => AppRouter.push(context, RouteName.SETTING_PAGE),
               ),
             ],

@@ -66,6 +66,7 @@ class _ImageSelectedViewState extends State<ImageSelectedView> {
                     style: BorderStyle.solid,
                     width: 0.3 * 2.w,
                     color: Colors.grey),
+                borderRadius: BorderRadius.all(Radius.circular(8.rw)),
                 icon: Icon(AppIcons.icon_add, color: Colors.grey),
                 color: Colors.grey,
                 title: "添加图片",
@@ -79,7 +80,7 @@ class _ImageSelectedViewState extends State<ImageSelectedView> {
               );
             }
             return Container(
-              color: Colors.red,
+              color: Colors.transparent,
               child: Stack(
                 children: <Widget>[
                   widget.itemBuilder(index, widget.images[index]),
@@ -92,6 +93,7 @@ class _ImageSelectedViewState extends State<ImageSelectedView> {
                         color: Colors.white,
                         size: rSize(18),
                       ),
+                      borderRadius: BorderRadius.all(Radius.circular(8.rw)),
                       backgroundColor: Colors.black38,
                       onPressed: () {
                         if (widget.deleteListener != null) {

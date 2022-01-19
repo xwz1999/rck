@@ -32,7 +32,8 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
     super.initState();
 
     //初始化AMap  给android和ios
-
+    //初始化日志工具
+    PowerLogger.start(context, debug: true);//AppConfig.debug  在正式服数据下进行调试
 
     WidgetsBinding.instance.addPostFrameCallback((callback) async {
       await Future.delayed(Duration(milliseconds: 2450));
@@ -54,8 +55,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
             });
             AMapFlutterLocation.setApiKey(
                 'cd71676364972b01d9803249f7112bc0', 'a165543d6e2be75f4ac1b6b81ce0dae2');
-            //初始化日志工具
-            PowerLogger.start(context, debug: AppConfig.debug);//AppConfig.debug  在正式服数据下进行调试
+
             //初始化
             cameras = await availableCameras();
             //高德地图隐私协议 在用户同意隐私协议后更新
@@ -75,8 +75,6 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
           });
           AMapFlutterLocation.setApiKey(
               'cd71676364972b01d9803249f7112bc0', 'a165543d6e2be75f4ac1b6b81ce0dae2');
-          //初始化日志工具
-          PowerLogger.start(context, debug: AppConfig.debug);//AppConfig.debug  在正式服数据下进行调试
           //初始化
           cameras = await availableCameras();
           //高德地图隐私协议 在用户同意隐私协议后更新
@@ -94,8 +92,6 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
         });
         AMapFlutterLocation.setApiKey(
             'cd71676364972b01d9803249f7112bc0', 'a165543d6e2be75f4ac1b6b81ce0dae2');
-        //初始化日志工具
-        PowerLogger.start(context, debug: AppConfig.debug);//AppConfig.debug  在正式服数据下进行调试
         //初始化
         cameras = await availableCameras();
         //高德地图隐私协议 在用户同意隐私协议后更新

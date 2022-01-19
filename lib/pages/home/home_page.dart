@@ -137,7 +137,6 @@ class _HomePageState extends BaseStoreState<HomePage>
   GlobalKey<AnimatedHomeBackgroundState> _animatedBackgroundState = GlobalKey();
   GlobalKey<HomeSliverAppBarState> _sliverAppBarGlobalKey = GlobalKey();
   String keyWords = '锅';
-  Timer timer;
 
   GifController _gifController;
   @override
@@ -315,7 +314,6 @@ class _HomePageState extends BaseStoreState<HomePage>
     _amapFlutterLocation?.stopLocation();
     _amapFlutterLocation?.destroy();
     WidgetsBinding.instance.removeObserver(this);
-    timer.cancel();
     super.dispose();
   }
 

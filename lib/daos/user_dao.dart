@@ -12,6 +12,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/constants/config.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/models/base_model.dart';
@@ -100,6 +101,27 @@ class UserDao {
       @required OnFailure failure}) async {
     ResultData res =
         await HttpManager.post(UserApi.phone_login_send_sms, {"mobile": phone});
+
+    if (!res.result) {
+      failure(res.code, res.msg);
+    } else {
+      BaseModel model = BaseModel.fromJson(res.data);
+      if (model.code == HttpStatus.SUCCESS) {
+        success(model, model.code, model.msg);
+      } else {
+        failure(HttpStatus.FAILURE, model.msg);
+      }
+    }
+  }
+
+  /*
+    获取验证码 升级
+   */
+  static sendCode(String phone,
+      {@required OnSuccess<BaseModel> success,
+        @required OnFailure failure}) async {
+    ResultData res =
+    await HttpManager.post(APIV2.userAPI.sendRecommendCode, {"mobile": phone});
 
     if (!res.result) {
       failure(res.code, res.msg);

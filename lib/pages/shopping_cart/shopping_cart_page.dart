@@ -28,6 +28,7 @@ import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
+import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 
@@ -124,6 +125,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
               width: double.infinity,
             ),
             AppBar(
+              leading: RecookBackButton(white: true,),
               backgroundColor: Colors.transparent,
               elevation: 0,
               centerTitle: true,

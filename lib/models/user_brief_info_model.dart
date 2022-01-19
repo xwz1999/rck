@@ -34,6 +34,7 @@ class UserBrief {
   String identifier;
   int secret;
   int level;
+  bool isOffline;
 
   bool get secretValue => secret == 1;
 
@@ -49,6 +50,7 @@ class UserBrief {
     this.identifier,
     this.secret,
     this.level,
+    this.isOffline
   });
 
   UserBrief.empty() {
@@ -64,6 +66,7 @@ class UserBrief {
     this.identifier = "";
     this.secret = 0;
     this.level = 0;
+    this.isOffline = false;
   }
 
   UserBrief.fromJson(Map<String, dynamic> json) {
@@ -90,6 +93,7 @@ class UserBrief {
     identifier = json['identifier'];
     secret = json['secret'];
     level = json['level'];
+    isOffline = json['is_offline'];
   }
 
   Map<String, dynamic> toJson() {
@@ -98,6 +102,7 @@ class UserBrief {
     data['roleLevel'] = this.roleLevel;
     data['identifier'] = this.identifier;
     data['level'] = this.level;
+    data['is_offline'] = this.isOffline;
     if (this.myAssets != null) {
       data['myAssets'] = this.myAssets.toJson();
     }

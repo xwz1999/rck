@@ -28,6 +28,7 @@ class TextButton extends StatefulWidget {
   final Color unableBackgroundColor;
   final double font;
   final FontWeight fontWeight;
+  final Gradient gradient;
 
   TextButton(
       {this.title,
@@ -45,6 +46,7 @@ class TextButton extends StatefulWidget {
       this.enable = true,
       this.width,
       this.height,
+        this.gradient,
         this.font,
         this.fontWeight})
       : assert(!TextUtils.isEmpty(title), "title不能为空");
@@ -111,7 +113,8 @@ class _TextButtonState extends State<TextButton> {
                   ? widget.unableBackgroundColor ?? _backgroundColor
                   : _backgroundColor,
               borderRadius: widget.radius,
-              border: widget.border),
+              border: widget.border,
+              gradient: widget.gradient),
           child: Center(
             child: Text(
               widget.title,

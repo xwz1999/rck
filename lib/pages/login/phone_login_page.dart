@@ -181,10 +181,10 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   Container _phoneText() {
     return Container(
       margin:
-          EdgeInsets.only(top: rSize(10), right: rSize(20), left: rSize(20)),
+          EdgeInsets.only(top: 10.rw, right: 20.rw, left: 20.rw),
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey[500], width: 0.5),
-          borderRadius: BorderRadius.all(Radius.circular(3))),
+          borderRadius: BorderRadius.all(Radius.circular(3.rw))),
       child: TextField(
         controller: _phoneController,
         focusNode: _phoneNode,
@@ -208,9 +208,9 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
         },
         decoration: InputDecoration(
             contentPadding: EdgeInsets.only(
-                left: rSize(10),
-                top: rSize(13),
-                bottom: _phoneNode.hasFocus ? 0 : rSize(14)),
+                left: 10.rw,
+                top: 13.rw,
+                bottom: _phoneNode.hasFocus ? 0 : 14.rw),
             border: InputBorder.none,
             hintText: "请输入手机号",
             hintStyle: TextStyle(color: Colors.grey[400], fontSize: 15 * 2.sp),
@@ -268,7 +268,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   Container _smsCode() {
     return Container(
       margin:
-          EdgeInsets.only(top: rSize(10), right: rSize(20), left: rSize(20)),
+          EdgeInsets.only(top: 10.rw, right:20.rw, left: 20.rw),
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey[500], width: 0.5),
           borderRadius: BorderRadius.all(Radius.circular(3))),
@@ -291,9 +291,9 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
               cursorColor: Colors.black,
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.only(
-                      left: rSize(10),
-                      top: rSize(13),
-                      bottom: _smsCodeNode.hasFocus ? 0 : rSize(14)),
+                      left: 10.rw,
+                      top: 13.rw,
+                      bottom: _smsCodeNode.hasFocus ? 0 : 14.rw),
                   border: InputBorder.none,
                   hintText: "请输入验证码",
                   hintStyle:
@@ -311,9 +311,9 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
             highlightTextColor: Colors.grey[400],
             border: Border(left: BorderSide(color: Colors.grey[500])),
             onTap: () {
-              if (!_chooseAgreement) {
+              if (_chooseAgreement) {
                 if (!TextUtils.verifyPhone(_phoneController.text)) {
-                  showError("手机号码格式不正确!");
+                  Toast.showError("手机号码格式不正确!");
                   return;
                 }
                 if (_cantSelected) return;
@@ -349,7 +349,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   Container _bottomOperation() {
     return Container(
       margin: EdgeInsets.only(
-          top: rSize(10), left: rSize(15), right: rSize(8), bottom: rSize(15)),
+          top: 10.rw, left: 15.rw, right: 8.rw, bottom: 15.rw),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -458,7 +458,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   /// 登录按钮
   TButton.TextButton _loginButton(BuildContext context) {
     return TButton.TextButton(
-      height: 45,
+      height: 45.rw,
       title: "登录",
       textColor: Colors.white,
       unableBackgroundColor: Colors.grey[300],

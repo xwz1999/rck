@@ -410,7 +410,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
     GSDialog.of(context).showLoadingDialog(context, "正在登录...");
     String bindData = getStore().state.openinstall.code;
     UserDao.weChatInvitation(
-        widget.argument[WeChatInputInviteCodePage.KEY_wxUnionId], _inviteCodeController.text,
+        widget.argument[WeChatInputInviteCodePage.KEY_wxUnionId], '',
         success: (data, code, msg) {
       GSDialog.of(context).dismiss(context);
       AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);

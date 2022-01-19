@@ -45,7 +45,8 @@ class CustomImageButton extends StatefulWidget {
       ),
       this.dotSize = 20,
       this.dotFontSize = 12,
-      this.greyWhenTapped = false});
+      this.greyWhenTapped = false,this.gradient}
+  );
 
   final EdgeInsetsGeometry padding;
   final double contentSpacing;
@@ -74,6 +75,7 @@ class CustomImageButton extends StatefulWidget {
   final double dotFontSize;
   final bool greyWhenTapped;
   final Color dotTextColor;
+  final Gradient gradient;
 
   @override
   State<StatefulWidget> createState() {
@@ -143,7 +145,9 @@ class _CustomImageButtonState extends State<CustomImageButton> {
                       : (_isTapping && widget.backgroundColor == null
                           ? Colors.grey[500]
                           : widget.backgroundColor),
-                  border: widget.border),
+                  border: widget.border,
+                  gradient: widget.gradient
+          ),
           child: Stack(alignment: Alignment.center, children: [
             Container(
               padding: widget.padding,

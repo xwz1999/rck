@@ -24,16 +24,11 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
   List<UserCommonModel> _models = [];
   UsersMode usersMode = UsersMode.MY_GROUP;
   int get _allGroupCount {
-    if (usersMode == UsersMode.MY_GROUP) {
-
-      return _models.length+1;
-    } else {
 
       return _models.length;
-    }
+
   }
 
-  num _myPeopleCount = -1;
   UserRoleLevel role = UserLevelTool.currentRoleLevelEnum();
 
   GSRefreshController _refreshController = GSRefreshController.auto();
@@ -189,7 +184,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
             children: [
               54.hb,
               16.wb,
-             "我的店铺".text.bold.size(14.rsp).black.make(),
+             "我的粉丝".text.bold.size(14.rsp).black.make(),
               // MaterialButton(
               //   padding: EdgeInsets.all(4.rw),
               //   minWidth: 0,
@@ -214,7 +209,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
               //     );
               //   },
               // ),
-              Spacer(),
+               Spacer(),
               Image.asset(
                 R.ASSETS_USER_ICON_GROUP_PNG,
                 width: 12.rw,
@@ -228,30 +223,6 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
               .map((e) => GroupInviteCard(
                   model: e, canTap: usersMode == UsersMode.MY_GROUP))
               .toList()
-                ..insertAll(
-                    0,
-                    usersMode == UsersMode.MY_GROUP
-                        ? [
-                            GroupInviteCard(
-                                model: UserCommonModel(
-                                  remarkName: '本人',
-                                  nickname:
-                                      UserManager.instance.user.info.nickname,
-                                  phone: UserManager.instance.user.info.mobile,
-                                  headImgUrl:
-                                      UserManager.instance.user.info.headImgUrl,
-                                  wechatNo:
-                                      UserManager.instance.user.info.wechatNo,
-                                  userId: UserManager.instance.user.info.id,
-                                  flag: 0,
-                                  amount: _myPeopleCount,
-                                  count: 1,
-                                  roleLevel:
-                                      UserManager.instance.userBrief.level,
-                                ),
-                                canTap: false)
-                          ]
-                        : []),
         ],
       ),
       margin: EdgeInsets.symmetric(horizontal: 16.rw),
@@ -276,7 +247,6 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
       if (resultData?.data != null &&
           resultData.data['data'] != null &&
           resultData.data['data'] != null) {
-        _myPeopleCount = resultData.data['data']['amount'];
         setState(() {});
       }
     });
@@ -285,7 +255,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
   @override
   Widget build(BuildContext context) {
     return RecookScaffold(
-      title: '我的店铺',
+      title: '我的粉丝',
       whiteBg: true,
       // body:
       //   NestedScrollView(

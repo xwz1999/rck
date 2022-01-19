@@ -1,12 +1,3 @@
-/*
- * ====================================================
- * package   : pages.home.items
- * author    : Created by nansi.
- * time      : 2019/5/21  9:52 AM 
- * remark    : 
- * ====================================================
- */
-
 import 'package:common_utils/common_utils.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';

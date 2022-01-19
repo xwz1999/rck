@@ -226,7 +226,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 },
                 child: ListView(
                   //ListView 子项不销毁
-                  cacheExtent: double.infinity,
+                  cacheExtent: DeviceInfo.screenHeight,
                   physics: BouncingScrollPhysics(),
                   children: _detailListWidget(),
                 ),
@@ -251,7 +251,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       // Rect imageRect = await WidgetUtil.getImageWH(url: "Url");
 
       // ignore: unnecessary_cast
-      return (GestureDetector(
+      return (
+          GestureDetector(
         onLongPress: () {
           _saveImageWithUrl(image.url);
         },
@@ -458,24 +459,24 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               child: _buildOverseaTax(),
             )
           : SizedBox(),
-      // widget.goodsDetail.data.isImport == 1
-      //     ? Container(
-      //         margin: EdgeInsets.only(bottom: 13),
-      //         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-      //         color: Colors.white,
-      //         child: _buildOverseaCityPicker(),
-      //       )
-      //     : SizedBox(),
+      widget.goodsDetail.data.isImport == 1
+          ? Container(
+              margin: EdgeInsets.only(bottom: 13),
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              color: Colors.white,
+              child: _buildOverseaCityPicker(),
+            )
+          : SizedBox(),
       Container(
         margin: EdgeInsets.only(bottom: 13),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         color: Colors.white,
         child: _goodsInfoWidget(context),
       ),
-      // Container(
-      //     color: Colors.white,
-      //     padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-      //     child: _userEvaluation()),
+      Container(
+          color: Colors.white,
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+          child: _userEvaluation()),
       AppConfig.getShowCommission()
           ? Container(
               color: Colors.white,

@@ -78,7 +78,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
                     widget.model.text,
                     style: AppTextStyle.generate(15 * 2.sp,
                         color: Colors.grey[700], fontWeight: FontWeight.w300),
-                    maxLines: 5,
+                    maxLines: 100,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),

@@ -87,7 +87,9 @@ class _PublishBusinessDistrictPageState
 
   _publish() async {
     showLoading("发布中...");
+    print(_imageFiles);
     await _uploadImages();
+    print(_imageFiles);
     Map<String, dynamic> params = {
       "userId": UserManager.instance.user.info.id,
       "goodsId": widget.arguments["goodsId"],
@@ -197,7 +199,8 @@ class _PublishBusinessDistrictPageState
           if (index == 1) {
             ImagePicker.builder(
                     maxSelected: 9 - _imageFiles.length,
-                    pickType: PickType.onlyImage)
+                    pickType: PickType.onlyImage,
+            )
                 .pickAsset(globalContext)
                 .then((List<MediaModel> medias) {
               if (medias.length == 0) return;

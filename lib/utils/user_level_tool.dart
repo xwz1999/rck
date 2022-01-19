@@ -25,14 +25,6 @@ enum UserRoleLevel {
   ///无
   None,
 
-  ///钻1
-  Diamond_1,
-
-  ///钻2
-  Diamond_2,
-
-  ///钻3
-  Diamond_3,
 
   ///黄金
   Gold,
@@ -47,7 +39,10 @@ enum UserRoleLevel {
   Vip,
 
   ///店铺
-  Shop
+  Shop,
+
+  ///实体店
+  physical
 }
 
 class UserLevelTool {
@@ -65,7 +60,12 @@ class UserLevelTool {
         userRoleLevel = UserRoleLevel.Master;
         break;
       case 2:
-        userRoleLevel = UserRoleLevel.Shop;
+        if(UserManager.instance.userBrief.isOffline){
+          userRoleLevel = UserRoleLevel.physical;
+        }else{
+          userRoleLevel = UserRoleLevel.Shop;
+        }
+
         break;
       default:
         userRoleLevel = UserRoleLevel.Vip;
@@ -73,41 +73,6 @@ class UserLevelTool {
     }
     return userRoleLevel;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-  // static showUpgradeWidget(UserRoleUpgradeModel model, BuildContext context,
-  //     Store<RecookState> store) {
-  //   if (model != null && model.data != null && model.data.upGrade == 1) {
-  //     UserManager.instance.user.info.roleLevel = model.data.roleLevel;
-  //     UserManager.instance.user.info.userLevel = model.data.userLevel;
-  //     UserManager.instance.refreshUserRole.value =
-  //         !UserManager.instance.refreshUserRole.value;
-  //     UserManager.updateUserInfo(store);
-  //     showDialog(
-  //         context: context,
-  //         builder: (context) => GestureDetector(
-  //               onTap: () {
-  //                 Navigator.pop(context);
-  //               },
-  //               child: RoleLevelUpgradeAlert(
-  //                 userLevel: UserLevelTool.userLevelEnum(model.data.userLevel),
-  //                 width: MediaQuery.of(context).size.width,
-  //                 userRoleLevel:
-  //                     UserLevelTool.roleLevelEnum(model.data.roleLevel),
-  //               ),
-  //             ));
-  //   }
-  // }
 
   static roleLevelWidget({String level}) {
     return CustomImageButton(
@@ -146,9 +111,6 @@ class UserLevelTool {
       case UserRoleLevel.Gold:
         return R.ASSETS_UPGRADE_ICON_GOLD_PNG;
         break;
-      // case UserRoleLevel.Diamond:
-      //   return "assets/upgrade_icon_diamond.png";
-      //   break;
       case UserRoleLevel.Master:
         return R.ASSETS_UPGRADE_ICON_MASTER_PNG;
         break;
@@ -163,22 +125,17 @@ class UserLevelTool {
 
   static String userLevelIcon(UserRoleLevel roleLevel) {
     switch (roleLevel) {
-      case UserRoleLevel.Silver:
-        return R.ASSETS_USER_LEVEL_ICON_SILVER_PNG;
+      case UserRoleLevel.Vip:
+        return R.ASSETS_USER_LEVEL_ICON_MASTER_PNG;
         break;
-      case UserRoleLevel.Gold:
-        return R.ASSETS_USER_LEVEL_ICON_GOLD_PNG;
-        break;
-      case UserRoleLevel.Diamond_1:
-      case UserRoleLevel.Diamond_2:
-      case UserRoleLevel.Diamond_3:
+      case UserRoleLevel.Shop:
         return R.ASSETS_USER_LEVEL_ICON_DIAMOND_PNG;
         break;
       case UserRoleLevel.Master:
-        return R.ASSETS_USER_LEVEL_ICON_MASTER_PNG;
+        return R.ASSETS_USER_LEVEL_ICON_SILVER_PNG;
         break;
       default:
-        return R.ASSETS_USER_LEVEL_ICON_VIP_PNG;
+        return R.ASSETS_USER_LEVEL_ICON_MASTER_PNG;
     }
   }
 
@@ -208,16 +165,14 @@ class UserLevelTool {
 
   static String cardImagePath(UserRoleLevel roleLevel) {
     switch (roleLevel) {
-      case UserRoleLevel.Silver:
+      case UserRoleLevel.Master:
         return R.ASSETS_SHOP_SILVER_BG_WEBP;
         break;
-      case UserRoleLevel.Gold:
-        return R.ASSETS_SHOP_GOLD_BG_WEBP;
-        break;
-      case UserRoleLevel.Diamond_1:
-      case UserRoleLevel.Diamond_2:
-      case UserRoleLevel.Diamond_3:
+      case UserRoleLevel.Shop:
         return R.ASSETS_SHOP_DIAMOND_BG_WEBP;
+        break;
+      case UserRoleLevel.Vip:
+        return R.ASSETS_SHOP_MASTER_BG_WEBP;
         break;
       default:
         return R.ASSETS_SHOP_MASTER_BG_WEBP;
@@ -241,21 +196,7 @@ class UserLevelTool {
     }
   }
 
-  static Color cardTitleColor(UserRoleLevel roleLevel) {
-    switch (roleLevel) {
-      case UserRoleLevel.Silver:
-        return Color(0xFF36393F);
-        break;
-      case UserRoleLevel.Gold:
-        return Color(0xFF5F431E);
-      case UserRoleLevel.Diamond_1:
-      case UserRoleLevel.Diamond_2:
-      case UserRoleLevel.Diamond_3:
-        return Color(0xFF2B2B31);
-      default:
-        return Color(0xFF52383D);
-    }
-  }
+
 
   static String currentAppBarBGImagePath() {
     return appBarBGImagePath(UserLevelTool.currentRoleLevelEnum());
@@ -263,110 +204,22 @@ class UserLevelTool {
 
   static String appBarBGImagePath(UserRoleLevel roleLevel) {
     switch (roleLevel) {
-      case UserRoleLevel.Master:
+      case UserRoleLevel.Vip:
         return R.ASSETS_HEADER_MASTER_HEADER_PNG;
         break;
-      case UserRoleLevel.Silver:
-        return R.ASSETS_HEADER_SILVER_HEADER_PNG;
+      case UserRoleLevel.Shop:
+        return R.ASSETS_HEADER_DIAMOND_HEADER_PNG;
         break;
-      case UserRoleLevel.Gold:
-        return R.ASSETS_HEADER_GOLD_HEADER_PNG;
-        break;
-      case UserRoleLevel.Diamond_1:
-      case UserRoleLevel.Diamond_2:
-      case UserRoleLevel.Diamond_3:
-        return R.ASSETS_HEADER_SILVER_HEADER_PNG;
-        break;
-      default:
-        return R.ASSETS_HEADER_VIP_HEADER_PNG;
-        break;
-    }
-  }
-
-  static String currentAppBarIconImagePath() {
-    return appBarIconImagePath(UserLevelTool.currentRoleLevelEnum());
-  }
-
-  static String appBarIconImagePath(UserRoleLevel roleLevel) {
-    switch (roleLevel) {
       case UserRoleLevel.Master:
-        return R.ASSETS_USER_PAGE_APPBAR_ICON_MASTER_PNG;
-        break;
-      case UserRoleLevel.Silver:
-        return R.ASSETS_USER_PAGE_APPBAR_ICON_SILVER_PNG;
-        break;
-      case UserRoleLevel.Gold:
-        return R.ASSETS_USER_PAGE_APPBAR_ICON_GOLD_PNG;
-        break;
-      case UserRoleLevel.Diamond_1:
-      case UserRoleLevel.Diamond_2:
-      case UserRoleLevel.Diamond_3:
-        return R.ASSETS_USER_PAGE_APPBAR_ICON_DIAMOND_PNG;
+        return R.ASSETS_HEADER_SILVER_HEADER_PNG;
         break;
       default:
-        return R.ASSETS_USER_PAGE_APPBAR_ICON_VIP_PNG;
+        return R.ASSETS_HEADER_MASTER_HEADER_PNG;
         break;
     }
   }
 
-  static String currentUserLevel() {
-    return userLevel(UserManager.instance.user.info.userLevel);
-  }
 
-  static String userLevel(int level) {
-    if (level == null) {
-      return "";
-    }
-    String userLevel = "";
-    switch (level) {
-      case 1:
-        userLevel = "合伙人";
-        break;
-      case 10:
-        userLevel = "顶级";
-        break;
-      case 20:
-        userLevel = "一级";
-        break;
-      case 30:
-        userLevel = "二级";
-        break;
-      case 40:
-        userLevel = "其他";
-        break;
-      default:
-    }
-    return userLevel;
-  }
-
-  static UserLevel currentUserLevelEnum() {
-    return userLevelEnum(UserManager.instance.user.info.userLevel);
-  }
-
-  static UserLevel userLevelEnum(int level) {
-    if (level == null) {
-      return UserLevel.None;
-    }
-    switch (level) {
-      case 1:
-        return UserLevel.Partner;
-        break;
-      case 10:
-        return UserLevel.Top;
-        break;
-      case 20:
-        return UserLevel.First;
-        break;
-      case 30:
-        return UserLevel.Second;
-        break;
-      case 40:
-        return UserLevel.Others;
-        break;
-      default:
-    }
-    return UserLevel.None;
-  }
 
   static String currentRoleLevel() {
     return roleLevel(UserManager.instance.userBrief.level);
@@ -385,7 +238,12 @@ class UserLevelTool {
         roleLevel = "店主";
         break;
       case 2:
-        roleLevel = "店铺";
+        if(UserManager.instance.userBrief.isOffline){
+          roleLevel = "实体店";
+        }else{
+          roleLevel = "店铺";
+        }
+
         break;
 
       default:
@@ -399,16 +257,8 @@ class UserLevelTool {
     }
     String roleLevel = "";
     switch (level) {
-      case UserRoleLevel.Diamond_1:
-      case UserRoleLevel.Diamond_2:
-      case UserRoleLevel.Diamond_3:
-        roleLevel = "钻石店铺";
-        break;
-      case UserRoleLevel.Gold:
-        roleLevel = "黄金店铺";
-        break;
-      case UserRoleLevel.Silver:
-        roleLevel = "白银店铺";
+      case UserRoleLevel.Shop:
+        roleLevel = "店铺";
         break;
       case UserRoleLevel.Master:
         roleLevel = "店主";
@@ -416,46 +266,16 @@ class UserLevelTool {
       case UserRoleLevel.Vip:
         roleLevel = "会员";
         break;
+      case UserRoleLevel.physical:
+        roleLevel = "实体店";
+        break;
       default:
-    }
-    return roleLevel;
-  }
-
-  static String currentRoleLevel2() {
-    return roleLevel2(UserManager.instance.user.info.roleLevel);
-  }
-
-  static String roleLevel2(int level) {
-    if (level == null) {
-      return "";
-    }
-    String roleLevel = "";
-    switch (level) {
-      case 100:
-        roleLevel = "钻一";
-        break;
-      case 130:
-        roleLevel = "钻二";
-        break;
-      case 160:
-        roleLevel = "钻三";
-        break;
-      case 200:
-        roleLevel = "黄金";
-        break;
-      case 300:
-        roleLevel = "白银";
-        break;
-      case 400:
-        roleLevel = "店主";
-        break;
-      case 500:
         roleLevel = "会员";
         break;
-      default:
     }
     return roleLevel;
   }
+
 
   static UserRoleLevel currentRoleLevelEnum() {
     return roleLevelEnum(UserManager.instance.userBrief.level);
@@ -469,11 +289,11 @@ class UserLevelTool {
       case UserRoleLevel.Shop:
         return R.ASSETS_USER_ICON_DIAMOND_PNG;
       case UserRoleLevel.Master:
-        return R.ASSETS_USER_ICON_MASTER_PNG;
+        return R.ASSETS_USER_ICON_SLIVER_PNG;
       case UserRoleLevel.Vip:
-        return R.ASSETS_USER_ICON_VIP_PNG;
+        return R.ASSETS_USER_ICON_MASTER_PNG;
       default:
-        return R.ASSETS_USER_ICON_VIP_PNG;
+        return R.ASSETS_USER_ICON_MASTER_PNG;
     }
   }
 
