@@ -29,7 +29,7 @@ class WholesaleFunc {
 
 
   //推荐申请
-  static Future<String> recommendUser(
+  static Future<ResultData> recommendUser(
       int kind,String mobile,String address ,String businessPhoto ,String mainPhoto,String code  //1=云店铺 2=实体店
       ) async {
     ResultData result = await HttpManager.post(APIV2.userAPI.recommendUser, {
@@ -41,11 +41,8 @@ class WholesaleFunc {
       'code':code
     });
 
-    if (result.data != null) {
-      return result.data['code'];
-    }
-    else
-      return 'FAIL';
+        return result;
+
   }
 
   // //获取商品属性

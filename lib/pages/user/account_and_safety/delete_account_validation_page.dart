@@ -182,11 +182,15 @@ class _DeleteAcountValidationPageState
             : () async {
                 await _getValidationCode();
               },
-        child: '${_timer != null ? '验证码已发送' : '点击发送验证码'}'
-            .text
-            .color(Color(0xFFD5101A))
-            .size(34.sp)
-            .make());
+        child: Container(
+          padding: EdgeInsets.all(20.w),
+          color: Colors.transparent,
+          child: '${_timer != null ? '验证码已发送' : '点击发送验证码'}'
+              .text
+              .color(Color(0xFFD5101A))
+              .size(34.sp)
+              .make(),
+        ));
   }
 
   Future _getValidationCode() async {

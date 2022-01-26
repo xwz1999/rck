@@ -72,9 +72,20 @@ class GroupInviteCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             16.hb,
-            model.phone.startsWith('2')
-                ? '【该账户已注销】'.text.black.size(14.rsp).make()
-                : itemName.text.black.size(14.rsp).make(),
+            Row(
+              children: [
+                model.phone.startsWith('2')
+                    ? '【该账户已注销】'.text.black.size(14.rsp).make()
+                    : itemName.text.black.size(14.rsp).make(),
+                Spacer(),
+                '${UserLevelTool.currentRoleLevel()}'
+                    .text
+                    .color(Color(0xFF333333))
+                    .size(12.rsp)
+                    .make(),
+                20.wb,
+              ],
+            ),
             10.hb,
             Row(
               children: [
@@ -87,7 +98,8 @@ class GroupInviteCard extends StatelessWidget {
             10.hb,
             Row(
               children: [
-                _renderItem(R.ASSETS_USER_ICON_GROUP_PNG, model.countValue),
+                UserLevelTool.currentRoleLevelEnum() ==
+                    UserRoleLevel.subsidiary?_renderItem(R.ASSETS_USER_ICON_GROUP_PNG, model.countValue):SizedBox(),
                 _renderItem(
                   R.ASSETS_USER_ICON_MONEY_PNG,
                   model.amountValue,

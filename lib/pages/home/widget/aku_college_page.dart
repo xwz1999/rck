@@ -45,7 +45,9 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
       backgroundColor: AppColor.tableViewGrayColor,
+
       appBar: PreferredSize(
+
         child: Stack(
           children: [
             Image.asset(
@@ -53,6 +55,7 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
               fit: BoxFit.cover,
               width: double.infinity,
             ),
+
             AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,

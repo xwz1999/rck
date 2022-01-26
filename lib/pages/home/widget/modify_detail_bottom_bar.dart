@@ -20,8 +20,7 @@ class DetailBottomBar extends StatefulWidget {
     this.shopCartNum = "",
     this.controller,
     this.goodsDetail,
-    this.isLive = false,
-    this.liveId = 0,
+    this.isWholesale,
   });
 
   final VoidListener addToShopCartListener;
@@ -33,10 +32,7 @@ class DetailBottomBar extends StatefulWidget {
   final BottomBarController controller;
   // final String commission;
   final GoodsDetailModel goodsDetail;
-
-  final bool isLive;
-  final int liveId;
-
+  final bool isWholesale;
   @override
   State<StatefulWidget> createState() {
     return _DetailBottomBarState();
@@ -46,10 +42,14 @@ class DetailBottomBar extends StatefulWidget {
 class _DetailBottomBarState extends State<DetailBottomBar> {
   bool _collected;
   bool _hidden = false;
+  bool isWholesale =false;
 
   @override
   void initState() {
     super.initState();
+    if(widget.isWholesale!=null){
+      isWholesale = widget.isWholesale;
+    }
     _collected = widget.collected;
 
     widget.controller.hidden?.addListener(() {
@@ -97,7 +97,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
             Container(
               width: 20.rw,
             ),
-            CustomImageButton(
+            !isWholesale?CustomImageButton(
               dotSize: 13,
               dotFontSize: 10,
               dotPosition: DotPosition(right: rSize(0), top: 0),
@@ -112,11 +112,23 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
               ),
               fontSize: 10,
               onPressed: widget.addToShopCartListener,
+            ):CustomImageButton(
+              dotSize: 13,
+              dotFontSize: 10,
+              dotPosition: DotPosition(right: rSize(0), top: 0),
+              dotNum: widget.shopCartNum,
+              dotColor: AppColor.themeColor,
+              padding: EdgeInsets.symmetric(horizontal: 6.rw),
+              title: "批发首页",
+              contentSpacing: 0,
+              icon: Image.asset(R.ASSETS_WHOLESALE_HOME_CHOOSE_PNG,width: 30.rw,height: 30.rw,),
+              fontSize: 10,
+              onPressed: widget.addToShopCartListener,
             ),
             Container(
               width: 10.rw,
             ),
-            CustomImageButton(
+            !isWholesale?CustomImageButton(
               title: "收藏",
               padding: EdgeInsets.only(left: 6.rw, top: 5.rw, right: 5.rw),
               contentSpacing: 3,
@@ -131,6 +143,19 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
               onPressed: () {
                 widget.collectListener(!_collected);
               },
+            ):
+            CustomImageButton(
+              dotSize: 13,
+              dotFontSize: 10,
+              dotPosition: DotPosition(right: rSize(0), top: 0),
+              dotNum: widget.shopCartNum,
+              dotColor: AppColor.themeColor,
+              padding: EdgeInsets.symmetric(horizontal: 6.rw),
+              title: "购物车",
+              contentSpacing: 0,
+              icon: Image.asset(R.ASSETS_WHOLESALE_CAR_PNG,width: 30.rw,height: 30.rw,),
+              fontSize: 10,
+              onPressed: widget.addToShopCartListener,
             ),
             Container(
               width: 15.rw,
@@ -287,7 +312,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
 
 
 
-    return Expanded(
+    return !isWholesale? Expanded(
       child: Row(
         children: <Widget>[
           Platform.isAndroid ||
@@ -448,6 +473,140 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                                     fontSize: 9 * 2.sp,
                                     color: Colors.white),
                               ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ):Expanded(
+      child: Row(
+        children: <Widget>[
+          Expanded(
+              child: Stack(
+                children: <Widget>[
+                  CustomImageButton(
+                    padding: EdgeInsets.all(0),
+                    child: ClipRRect(
+                      child: Image.asset(
+                          'assets/goodsdetail_bottom_bar_grey.png'),
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          bottomLeft: Radius.circular(30)),
+                    ),
+                    height: rSize(40),
+                    fontSize: 15 * 2.sp,
+                    onPressed: widget.shareListener,
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    top: 0,
+                    child: GestureDetector(
+                        onTap: widget.shareListener,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                 "加入购物车",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 14 * 2.sp,
+                                      color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ],
+                        )),
+                  ),
+                ],
+              )),
+          Container(
+            width: 1,
+          ),
+          Expanded(
+            child: Stack(
+              children: <Widget>[
+                Positioned(
+                  child: CustomImageButton(
+                    padding: EdgeInsets.all(0),
+                    child: ClipRRect(
+                      child: Image.asset(
+                          'assets/goodsdetail_bottom_bar_red.png',
+                          fit: BoxFit.cover,
+                          width: double.infinity),
+                      borderRadius: BorderRadius.horizontal(
+                        right: Radius.circular(30),
+                        left: Platform.isAndroid ||
+                            !(UserLevelTool.currentRoleLevelEnum() ==
+                                UserRoleLevel.None &&
+                                UserLevelTool.currentRoleLevelEnum() ==
+                                    UserRoleLevel.Vip)
+                            ? Radius.zero
+                            : Radius.circular(30),
+                      ),
+                    ),
+                    width: double.infinity,
+                    height: rSize(40),
+                    fontSize: 15 * 2.sp,
+                    onPressed: widget.buyListener,
+                  ),
+                  right: 0,
+                  left: 0,
+                  top: (55 - rSize(40)) / 2,
+                  bottom: (55 - rSize(40)) / 2,
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  top: 0,
+                  child: GestureDetector(
+                    onTap: widget.buyListener,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Image.asset(
+                              'assets/goodsdetail_bottom_share_white.png',
+                              width: rSize(13),
+                              height: 13 * 2.h,
+                            ),
+                            Container(
+                              width: 2,
+                            ),
+                            Text(
+                              "领券购买",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 14 * 2.sp,
+                                  color: Colors.white),
+                            ),
+                          ],
+                        ),
+                        TextUtils.isEmpty(commission) ||
+                            UserLevelTool.currentRoleLevelEnum() ==
+                                UserRoleLevel.Vip
+                            ? Container(
+                          height: 0,
+                        )
+                            : Text(
+                          "省￥" + commission,
+                          style: TextStyle(
+                              letterSpacing: -0.5,
+                              fontWeight: FontWeight.w300,
+                              fontSize: 9 * 2.sp,
+                              color: Colors.white),
+                        ),
                       ],
                     ),
                   ),

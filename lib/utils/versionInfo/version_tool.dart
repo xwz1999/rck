@@ -7,6 +7,7 @@ import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/utils/versionInfo/version_info_model.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:launch_review/launch_review.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -46,18 +47,21 @@ class VersionTool {
             listener: (int index) async {
               Alert.dismiss(context);
               if (index == 1) {
-                if (await canLaunch(_appStoreURL)) {
-                  launch(_appStoreURL);
-                  if (Theme.of(context).platform == TargetPlatform.iOS) {
-                    Future.delayed(
-                        const Duration(seconds: 3), () => closeWebView());
-                  }
-                }
+                LaunchReview.launch(androidAppId: "com.akuhome.jingyaoyun", iOSAppId: '1601169177');
+                // if (await canLaunch(_appStoreURL)) {
+                //
+                //   launch(_appStoreURL);
+                //   if (Theme.of(context).platform == TargetPlatform.iOS) {
+                //     Future.delayed(
+                //         const Duration(seconds: 3), () => closeWebView());
+                //   }
+                // }
               }
             },
           ));
     }
   }
+
 
   // static Future<String> _getAndroidURL() async {
   //   DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();

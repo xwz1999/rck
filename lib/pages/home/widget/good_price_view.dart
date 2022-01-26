@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/app_image_resources.dart';
@@ -9,12 +8,13 @@ import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 
-
 class GoodPriceView extends StatefulWidget {
   final GoodsDetailModel detailModel;
   final VoidCallback shareCallback;
+  final bool isWholesale;
 
-  const GoodPriceView({Key key, this.detailModel, this.shareCallback})
+  const GoodPriceView(
+      {Key key, this.detailModel, this.shareCallback, this.isWholesale})
       : super(key: key);
 
   @override
@@ -26,11 +26,14 @@ class GoodPriceView extends StatefulWidget {
 class _GoodPriceViewState extends State<GoodPriceView> {
   GoodsDetailModel detailModel;
   VoidCallback shareCallback;
-
+  bool isWholesale;
 
   @override
   void initState() {
     super.initState();
+    if (widget.isWholesale != null) {
+      isWholesale = widget.isWholesale;
+    }
     detailModel = widget.detailModel;
     shareCallback = widget.shareCallback;
   }
@@ -144,7 +147,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
               RichText(
                 text: TextSpan(children: [
                   TextSpan(
-                    text: "券后价",
+                    text: isWholesale ? '批发价' : "券后价",
                     style: TextStyle(
                         color: Color(0xFFD5101A),
                         fontSize: 14.rsp,
@@ -165,43 +168,54 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                         fontWeight: FontWeight.w500,
                         letterSpacing: 0,
                       )),
-                  TextSpan(
-                    text: (UserLevelTool.currentRoleLevelEnum() ==
-                        UserRoleLevel.None ||
-                        UserLevelTool.currentRoleLevelEnum() ==
-                            UserRoleLevel.Vip)
-                        ? ""
-                        : isTwoPrice
-                        ? "/ "
-                        : " / ",
-                    style: AppTextStyle.generate(14 * 2.sp,
-                        color: Color(0xFFD5101A), fontWeight: FontWeight.w500),
-                  ),
-                  TextSpan(
-                    text: (UserLevelTool.currentRoleLevelEnum() ==
-                        UserRoleLevel.None ||
-                        UserLevelTool.currentRoleLevelEnum() ==
-                            UserRoleLevel.Vip)
-                        ? ""
-                        : "赚",
-                    style:
-                    AppTextStyle.generate(12 * 2.sp, color: Color(0xFFD5101A)),
-                  ),
-                  TextSpan(
-                    text: (UserLevelTool.currentRoleLevelEnum() ==
-                        UserRoleLevel.None ||
-                        UserLevelTool.currentRoleLevelEnum() ==
-                            UserRoleLevel.Vip)
-                        ? ""
-                        : "$commission",
-                    style:
-                    AppTextStyle.generate(14 * 2.sp, color: Color(0xFFD5101A)),
-                  ),
+                  !isWholesale
+                      ? TextSpan(
+                          text: (UserLevelTool.currentRoleLevelEnum() ==
+                                      UserRoleLevel.None ||
+                                  UserLevelTool.currentRoleLevelEnum() ==
+                                      UserRoleLevel.Vip)
+                              ? ""
+                              : isTwoPrice
+                                  ? "/ "
+                                  : " / ",
+                          style: AppTextStyle.generate(14 * 2.sp,
+                              color: Color(0xFFD5101A),
+                              fontWeight: FontWeight.w500),
+                        )
+                      : TextSpan(
+                          text: "5件起批",
+                          style: AppTextStyle.generate(14 * 2.sp,
+                              color: Color(0xFF999999)),
+                        ),
+                  !isWholesale
+                      ? TextSpan(
+                          text: (UserLevelTool.currentRoleLevelEnum() ==
+                                      UserRoleLevel.None ||
+                                  UserLevelTool.currentRoleLevelEnum() ==
+                                      UserRoleLevel.Vip)
+                              ? ""
+                              : "赚",
+                          style: AppTextStyle.generate(12 * 2.sp,
+                              color: Color(0xFFD5101A)),
+                        )
+                      : SizedBox(),
+                  !isWholesale
+                      ? TextSpan(
+                          text: (UserLevelTool.currentRoleLevelEnum() ==
+                                      UserRoleLevel.None ||
+                                  UserLevelTool.currentRoleLevelEnum() ==
+                                      UserRoleLevel.Vip)
+                              ? ""
+                              : "$commission",
+                          style: AppTextStyle.generate(14 * 2.sp,
+                              color: Color(0xFFD5101A)),
+                        )
+                      : SizedBox(),
                 ]),
               ),
               Spacer(),
               Text(
-                '已售$saleNum件',
+                isWholesale ? '已定$saleNum件' : '已售$saleNum件',
                 style: TextStyle(
                   // shadows: [
                   //   Shadow(
@@ -219,57 +233,62 @@ class _GoodPriceViewState extends State<GoodPriceView> {
           ),
           Spacer(),
           Row(
-                  children: <Widget>[
-                    (coupon != null && coupon != 0)
-                        ? Container(
-                            height: rSize(23),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Color(0xFFD5101A), width: 0.5.rw),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(4.rw))
-                                // image: DecorationImage(
-                                //   fit: BoxFit.fill,
-                                //   image: AssetImage(
-                                //       R.ASSETS_GOODS_DETAILS_BOTTOM_GOLD_PNG),
-                                // ),
-                                ),
-                            alignment: Alignment.center,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                left: 6.rw,
-                                top: rSize(0),
-                                right: 6.rw,
-                                bottom: rSize(0),
-                              ),
-                              child: Text(
-                                '$coupon\元优惠券',
-                                style: TextStyle(
-                                  // shadows: [
-                                  //   Shadow(
-                                  //     color: Colors.black26,
-                                  //     blurRadius: rSize(1),
-                                  //     offset: Offset(0, rSize(1)),
-                                  //   ),
-                                  // ],
-                                  fontSize: 12.rsp,
-                                  color: Color(0xFFD5101A),
-                                ),
-                              ),
-                            ),
-                          )
-                        : SizedBox(),
-                    rWBox(10),
-                    Text(
-                      "$originPrice",
-                      style: AppTextStyle.generate(
-                        16.rsp,
-                        decoration: TextDecoration.lineThrough,
-                        color: Color(0xFF999999),
+            children: <Widget>[
+              (coupon != null && coupon != 0)
+                  ? Container(
+                      height: rSize(23),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Color(0xFFD5101A), width: 0.5.rw),
+                          borderRadius: BorderRadius.all(Radius.circular(4.rw))
+                          // image: DecorationImage(
+                          //   fit: BoxFit.fill,
+                          //   image: AssetImage(
+                          //       R.ASSETS_GOODS_DETAILS_BOTTOM_GOLD_PNG),
+                          // ),
+                          ),
+                      alignment: Alignment.center,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          left: 6.rw,
+                          top: rSize(0),
+                          right: 6.rw,
+                          bottom: rSize(0),
+                        ),
+                        child: Text(
+                          isWholesale?'赚¥24.00':'$coupon\元优惠券',
+                          style: TextStyle(
+                            // shadows: [
+                            //   Shadow(
+                            //     color: Colors.black26,
+                            //     blurRadius: rSize(1),
+                            //     offset: Offset(0, rSize(1)),
+                            //   ),
+                            // ],
+                            fontSize: 12.rsp,
+                            color: Color(0xFFD5101A),
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                    )
+                  : SizedBox(),
+              rWBox(10),
+              !isWholesale?Text(
+                "$originPrice",
+                style: AppTextStyle.generate(
+                  16.rsp,
+                  decoration: TextDecoration.lineThrough,
+                  color: Color(0xFF999999),
                 ),
+              ):Text(
+                "平台零售价¥124.00",
+                style: AppTextStyle.generate(
+                  16.rsp,
+                  color: Color(0xFF999999),
+                ),
+              ),
+            ],
+          ),
           rHBox(10),
         ],
       ),
@@ -315,7 +334,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
           detailModel.data.isImport == 1
               ? Container(
                   child: Container(
-                    margin: EdgeInsets.only(right: 8.rw,top: 5.rw),
+                    margin: EdgeInsets.only(right: 8.rw, top: 5.rw),
                     alignment: Alignment.center,
                     width: 24.rw,
                     height: 15.rw,
@@ -356,7 +375,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                   child: Container(
                   width: 40.rw,
                   height: 15.rw,
-                  margin: EdgeInsets.only(right: 8.rw,top: 5.rw),
+                  margin: EdgeInsets.only(right: 8.rw, top: 5.rw),
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: Color(0xFFC92219),
@@ -377,7 +396,6 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                         maxLines: 1,
                         style: TextStyle(fontSize: 9.rsp, height: 1.05),
                       ),
-              
                     ],
                   ),
                 ))

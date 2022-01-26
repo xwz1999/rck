@@ -58,7 +58,9 @@ class OtherItemViewV2 extends StatelessWidget {
                 () => AppRouter.push(context, RouteName.MY_FAVORITE_PAGE),
               ),
               UserLevelTool.currentRoleLevelEnum() ==
-                  UserRoleLevel.Shop?
+                  UserRoleLevel.Shop||UserLevelTool.currentRoleLevelEnum() ==
+                  UserRoleLevel.subsidiary||UserLevelTool.currentRoleLevelEnum() ==
+                  UserRoleLevel.physical?
               _buildItem(
                 Image.asset(
                   R.ASSETS_USER_FUNC_FANS_PNG,
@@ -70,25 +72,21 @@ class OtherItemViewV2 extends StatelessWidget {
                 '我的粉丝',()=>  Get.to(() => MyGroupPageV2()),
               ):SizedBox(),
               (UserLevelTool.currentRoleLevelEnum() ==
-                  UserRoleLevel.Shop|| UserLevelTool.currentRoleLevelEnum() ==UserRoleLevel.physical)?
+                  UserRoleLevel.Shop|| UserLevelTool.currentRoleLevelEnum() ==UserRoleLevel.physical||
+                  UserLevelTool.currentRoleLevelEnum() ==UserRoleLevel.subsidiary)?
               _buildItem(
                 Image.asset(R.ASSETS_USER_FUNC_RECOMMEND_PNG, width: 30.rw,
                   height: 30.rw,),
                 '店铺推荐',
                     () => Get.to(() => RecommendShopPage()),
               ):SizedBox(),
+
               _buildItem(
                 Image.asset(R.ASSETS_USER_FUNC_RECOMMEND_PNG, width: 30.rw,
                   height: 30.rw,),
                 '批发',
                     () => Get.to(() => WholesaleHomePage()),
               ),
-              // _buildItem(
-              //   Image.asset(R.ASSETS_USER_FUNC_SETTING_PNG, width: 30.rw,
-              //     height: 30.rw,),
-              //   '店铺推荐',
-              //       () => Get.to(() => WholesaleShopPage()),
-              // ),
               _buildItem(
                 Image.asset(R.ASSETS_USER_FUNC_SETTING_PNG, width: 30.rw,
                   height: 30.rw,),

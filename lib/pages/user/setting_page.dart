@@ -110,7 +110,7 @@ class _SettingItemListViewState extends State<SettingItemListView> {
                       //   AppRouter.push(
                       //           context, RouteName.WEB_VIEW_PAGE, arguments: WebViewPage.setArguments(url: WebApi.feedback, title: "意见反馈"), );
                       // }),
-                      SCTile.normalTile("隐私政策", listener: () {
+                      SCTile.normalTile("隐私政策", needDivide: true, listener: () {
                         AppRouter.push(
                           context,
                           RouteName.WEB_VIEW_PAGE,

@@ -23,7 +23,7 @@ class HomeWeatherModel {
   String airLevel;
   String airTips;
   Alarm alarm;
-  Aqi aqi;
+  dynamic aqi;
 
   HomeWeatherModel(
       {this.cityid,
@@ -77,7 +77,10 @@ class HomeWeatherModel {
     airLevel = json['air_level'];
     airTips = json['air_tips'];
     alarm = json['alarm'] != null ? new Alarm.fromJson(json['alarm']) : null;
-    aqi = json['aqi'] != null ? new Aqi.fromJson(json['aqi']) : null;
+    if(json['aqi'].runtimeType!=List){
+      aqi = ((json['aqi'] != null) ? new Aqi.fromJson(json['aqi']): null);
+    }
+
   }
 
   Map<String, dynamic> toJson() {

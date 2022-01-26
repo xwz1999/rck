@@ -379,10 +379,10 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
           TButton.TextButton(
             title: _countDownStr,
             width: rSize(120),
-            textColor: Colors.grey[700],
+            textColor: Color(0xFFD5101A),
             enable: _getCodeEnable,
             font: 15 * 2.sp,
-            unableTextColor: Colors.grey[400],
+            unableTextColor: Color(0xFFBBBBBB),
             highlightTextColor: Color(0xFFD5101A),
             border: Border(left: BorderSide(color: Colors.grey[500])),
             onTap: () {
@@ -550,7 +550,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
   _publish() async {
     final cancel =  ReToast.loading(text:'提交中...');
 
-    String result = '';
+    ResultData result ;
     if(isEntity){
       await _uploadLicenseImages();
       await _uploadStoreImages();
@@ -587,7 +587,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
     }
 
     cancel();
-    if(result=='SUCCESS'){
+    if(result.data['code']!='FAIL'){
       ReToast.success(text:'推荐成功');
       _smsCodeController.text = '';
       _textEditController.text = '';
@@ -606,7 +606,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
       });
       Get.to(RecommendRecordsPage());
     }else{
-      ReToast.err(text:'推荐失败');
+      ReToast.err(text:result.data['msg']);
     }
   }
 

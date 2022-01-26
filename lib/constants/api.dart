@@ -318,8 +318,12 @@ class WebApi {
   static const String recookHttp = "https://reecook.cn/";
   // static const String inviteRegist = "${recookHttp}download.html?code=";
   static const String goodsDetail = "https://jyyh5.reecook.cn/#/goods/detail/";
+
   static const String inviteRegist =
-      "https://h5.reecook.cn/#/user/appRegister/";
+      "https://jyyh5.reecook.cn/#/user/appRegister/";
+
+
+
   static const String invitePoster = "/v1/shop/share_photo/";
   static const String diamondsInviteRegist =
       "https://h5.reecook.cn/#/user/diamonds/";
@@ -348,7 +352,7 @@ class WebApi {
   static const String agreement = "https://jyycdn.reecook.cn/protocol.html";//用户协议
 
   static const String feedback = "${recookHttp}feedback.html";
-  static const String iOSUrl = "itms-apps://itunes.apple.com/app/d1601169177";
+  static const String iOSUrl = "itms-apps://itunes.apple.com/app/id1601169177";
   // static const String iOSUrl = "https://apps.apple.com/app/id1477928534";
   static const String androidUrl =
       "https://a.app.qq.com/o/simple.jsp?pkgname=com.akuhome.jingyaoyun";

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_car_page.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_order_home_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_shop_page.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:get/get.dart';
@@ -33,7 +34,7 @@ class _WholesaleHomePageState extends State<WholesaleHomePage> with SingleTicker
     _pages = [
       WholesaleCarPage(),
       WholesaleCarPage(),
-      WholesaleCarPage(),
+      WholesaleOrderHomePage(),
     ];
 
     _tabController = TabController(

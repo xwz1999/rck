@@ -1,14 +1,6 @@
-/*
- * ====================================================
- * package   : pages.home.classify
- * author    : Created by nansi.
- * time      : 2019/5/22  9:42 AM 
- * remark    : 
- * ====================================================
- */
+
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
@@ -70,13 +62,7 @@ class GoodsPage extends StatefulWidget {
   final int goodsId;
   final ValueNotifier<bool> openSkuChoosePage;
   final void Function() openbrandList; //打开商家页面
-
-  // final bool isLive;
-  // final int liveId;
-
-  final int liveStatus;
-  final int roomId;
-
+  final bool isWholesale;
 
   const GoodsPage({
     Key key,
@@ -84,11 +70,7 @@ class GoodsPage extends StatefulWidget {
     this.goodsId,
     this.openSkuChoosePage,
     this.goodsDetail,
-    this.openbrandList,
-    // this.isLive = false,
-    // this.liveId = 0,
-    this.liveStatus,
-    this.roomId,
+    this.openbrandList, this.isWholesale,
   }) : super(key: key);
 
   @override
@@ -121,12 +103,16 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   int _jDHaveGoods = -1;
   // int _seckillStatus = 0;//秒杀状态 0为未开始 1为开始
   String guige = '请选择规格';
+  bool isWholesale = false;
   @override
   bool get wantKeepAlive => true;
 
   @override
   void initState() {
     super.initState();
+    if(widget.isWholesale!=null){
+      isWholesale = widget.isWholesale;
+    }
     //获取默认地址并且判断有无货源
     if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000|| widget.goodsDetail.data.vendorId == 3000) {
       Future.delayed(Duration.zero, () async {
@@ -409,7 +395,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           children: <Widget>[
             _headPageView(),
             GoodPriceView(
-
               detailModel: widget.goodsDetail,
               shareCallback: () {
                 String img = '';
@@ -431,6 +416,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                   goodsId: widget.goodsDetail.data.id.toString(),
                 );
               },
+              isWholesale: isWholesale,
             ),
           ],
         ),
@@ -775,7 +761,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               ),
               Expanded(
                   child: Text(
-                "品牌 工艺...",
+                    !isWholesale?"品牌 工艺...":'品牌｜起批量｜规格｜条形码',
                 style:
                     AppTextStyle.generate(13 * 2.sp, color: Color(0xff373737)),
               )),
@@ -1069,36 +1055,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     );
   }
 
-  _selectCityAddress(BuildContext context) {
-    AddressSelectorHelper.show(
-      context,
-      model: _cityModel,
-      city: _cityAddress.city,
-      province: _cityAddress.province,
-      district: _cityAddress.district,
-      callback: (
-        String province,
-        String city,
-        String district,
-      ) {
-        _cityAddress.city = city;
-        _cityAddress.province = province;
-        _cityAddress.district = district;
-        _defaltAddress = province + city + district;
-        // Future.delayed(Duration.zero, () async {
-        //   _jDHaveGoods =
-        //       await HomeDao.getJDStock(widget.goodsDetail.data.sku.first.id, _defaltAddress);
-        //   if (_jDHaveGoods != null) {
-        //     print(_jDHaveGoods);
-        //   }
-        //   setState(() {});
-        // });
-        if (_defaltAddress.length > 3) {
-          setState(() {});
-        }
-      },
-    );
-  }
 
   _buildOverseaCityPicker() {
     return GestureDetector(
@@ -1766,14 +1722,12 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     Get.back();
   }
 
-  Future<dynamic> _createOrder(SkuChooseModel skuModel, BuildContext context,
-      {bool isLive = false, int liveId = 0}) async {
+  Future<dynamic> _createOrder(SkuChooseModel skuModel, BuildContext context) async {
     OrderPreviewModel order = await GoodsDetailModelImpl.createOrderPreview(
       UserManager.instance.user.info.id,
       skuModel.sku.id,
       skuModel.des,
       skuModel.num,
-      // liveId: isLive ? liveId : null,
     );
     if (order.code != HttpStatus.SUCCESS) {
       // Toast.showError(order.msg);

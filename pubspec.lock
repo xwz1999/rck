@@ -407,13 +407,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "6.1.2"
-  file_picker:
-    dependency: transitive
-    description:
-      name: file_picker
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "3.0.4"
   fixnum:
     dependency: transitive
     description:
@@ -463,13 +456,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.5.1"
-  flutter_ffmpeg:
-    dependency: transitive
-    description:
-      name: flutter_ffmpeg
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.4.2"
   flutter_gifimage:
     dependency: "direct main"
     description:
@@ -503,13 +489,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_plugin_android_lifecycle:
-    dependency: transitive
-    description:
-      name: flutter_plugin_android_lifecycle
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "2.0.5"
   flutter_qr_reader:
     dependency: "direct main"
     description:
@@ -577,7 +556,7 @@ packages:
       name: fluwx
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.6.2"
+    version: "3.6.1+4"
   frontend_server_client:
     dependency: transitive
     description:
@@ -753,6 +732,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.3.2"
+  launch_review:
+    dependency: "direct main"
+    description:
+      name: launch_review
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.0.1"
   logger:
     dependency: transitive
     description:
@@ -1329,22 +1315,6 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.5"
-  video_thumbnail:
-    dependency: transitive
-    description:
-      name: video_thumbnail
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "0.3.3"
-  video_trimmer:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: e57ffa996a70358436ba2faa9cd4468118e3ce4a
-      url: "https://github.com/customPub/video_trimmer"
-    source: git
-    version: "0.3.5"
   vxstate:
     dependency: transitive
     description:

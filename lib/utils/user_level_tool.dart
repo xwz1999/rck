@@ -42,7 +42,10 @@ enum UserRoleLevel {
   Shop,
 
   ///实体店
-  physical
+  physical,
+
+  ///子公司
+  subsidiary,
 }
 
 class UserLevelTool {
@@ -65,7 +68,9 @@ class UserLevelTool {
         }else{
           userRoleLevel = UserRoleLevel.Shop;
         }
-
+        break;
+      case 10:
+        userRoleLevel = UserRoleLevel.subsidiary;
         break;
       default:
         userRoleLevel = UserRoleLevel.Vip;
@@ -73,6 +78,12 @@ class UserLevelTool {
     }
     return userRoleLevel;
   }
+
+
+  static UserRoleLevel currentRoleLevelEnum() {
+    return roleLevelEnum(UserManager.instance.userBrief.level);
+  }
+
 
   static roleLevelWidget({String level}) {
     return CustomImageButton(
@@ -245,8 +256,12 @@ class UserLevelTool {
         }
 
         break;
-
+      case 10:
+        roleLevel = "子公司";
+        break;
       default:
+        roleLevel = "会员";
+        break;
     }
     return roleLevel;
   }
@@ -269,6 +284,9 @@ class UserLevelTool {
       case UserRoleLevel.physical:
         roleLevel = "实体店";
         break;
+      case UserRoleLevel.subsidiary:
+        roleLevel = "子公司";
+        break;
       default:
         roleLevel = "会员";
         break;
@@ -276,10 +294,6 @@ class UserLevelTool {
     return roleLevel;
   }
 
-
-  static UserRoleLevel currentRoleLevelEnum() {
-    return roleLevelEnum(UserManager.instance.userBrief.level);
-  }
 
 
 

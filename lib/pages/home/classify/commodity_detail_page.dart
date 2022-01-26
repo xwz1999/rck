@@ -20,14 +20,11 @@ import 'package:jingyaoyun/widgets/toast.dart';
 
 class CommodityDetailPage extends StatefulWidget {
   final Map arguments;
-  final bool isLive;
-  final int liveId;
+  final bool isWholesale;
 
   const CommodityDetailPage({
     Key key,
-    this.arguments,
-    this.isLive = false,
-    this.liveId = 0,
+    this.arguments, this.isWholesale,
   }) : super(key: key);
 
   static setArguments(int goodsID, {int liveStatus, int roomId}) {
@@ -48,18 +45,18 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
   ValueNotifier<bool> _openSkuChoosePage = ValueNotifier(false);
   int _goodsId;
   GoodsDetailModel _goodsDetail;
-  int _liveStatus;
-  int _roomId;
+  bool isWholesale = false;///是否为批发状态 默认不是
 
   @override
   void initState() {
     super.initState();
     _goodsId = widget.arguments["goodsID"];
-    _liveStatus = widget.arguments["liveStatus"];
-    _roomId = widget.arguments["roomId"];
     _tabController = TabController(length: 2, vsync: this);
     _appBarController = AppBarController();
     _bottomBarController = BottomBarController();
+    if(widget.isWholesale!=null){
+      isWholesale = widget.isWholesale;
+    }
 
     _tabController.addListener(() {
       if (_tabController.index == 1||_tabController.index == 2) {
@@ -119,8 +116,6 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
   @override
   Widget buildContext(BuildContext context, {store}) {
     Scaffold scaffold = Scaffold(
-      // return Scaffold(
-      // backgroundColor: AppColor.frenchColor,
       backgroundColor: Colors.white,
       body: SafeArea(
         top: true,
@@ -141,8 +136,6 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
                           children: [
                             _goodsDetail!=null?
                             GoodsPage(
-                              liveStatus: _liveStatus,
-                              roomId: _roomId,
                               openbrandList: () {
                                 // _goodsDetail.data.brandId;
                                 AppRouter.push(
@@ -256,7 +249,6 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
         } else {
           _cancelFavorite();
         }
-//        GoodsDetailModelImpl.
       },
       buyListener: () {
         num coupon = 0;

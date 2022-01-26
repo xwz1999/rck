@@ -100,7 +100,7 @@ class _RecommendListPageState extends State<RecommendListPage> {
 
   _recommendItem(RecommendUserModel item) {
     return Container(
-      height: 142.rw,
+      //height: 142.rw,
       width: double.infinity,
       margin: EdgeInsets.only(top: 8.rw, left: 12.rw, right: 12.rw),
       padding: EdgeInsets.all(16.rw),

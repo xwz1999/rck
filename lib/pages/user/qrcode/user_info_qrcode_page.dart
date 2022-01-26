@@ -1,12 +1,18 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/utils/image_utils.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'dart:ui' as ui;
 
 class UserInfoQrCodePage extends StatefulWidget {
   UserInfoQrCodePage({Key key}) : super(key: key);
@@ -19,6 +25,7 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
   double scale = 610.0 / 466.0;
   double width;
   double height;
+  GlobalKey _globalKey = GlobalKey();
 
   @override
   Widget buildContext(BuildContext context, {store}) {
@@ -29,10 +36,11 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
           background: AppColor.frenchColor,
           appBackground: AppColor.frenchColor,
           elevation: 0,
-          title: "我的邀请码",
+          title: "我的推广码",
           themeData: AppThemes.themeDataGrey.appBarTheme,
         ),
         backgroundColor: AppColor.frenchColor,
+        bottomNavigationBar: _bottomWidget(),
         body: Column(
           children: <Widget>[
             Container(
@@ -40,7 +48,10 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
                   top: (MediaQuery.of(context).size.height - height) / 2 -
                       (MediaQuery.of(context).padding.top + kToolbarHeight)),
               alignment: Alignment.center,
-              child: _body(),
+              child: RepaintBoundary(
+                key: _globalKey,
+                child: _body(),
+              )
             )
           ],
         ));
@@ -175,6 +186,50 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
             ),
           );
         },
+      ),
+    );
+  }
+
+
+  _capturePng() async {
+    // '保存中...'
+    showLoading("");
+    RenderRepaintBoundary boundary =
+    _globalKey.currentContext.findRenderObject();
+    ui.Image image =
+    await boundary.toImage(pixelRatio: ui.window.devicePixelRatio * 1.2);
+    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    Uint8List pngBytes = byteData.buffer.asUint8List();
+
+    if (pngBytes == null || pngBytes.length == 0) {
+      dismissLoading();
+      showError("图片获取失败...");
+      return;
+    }
+    ImageUtils.saveImage([pngBytes], (index) {}, (success) {
+      dismissLoading();
+      if (success) {
+        showSuccess("图片已经保存到相册!");
+      } else {
+        showError("图片保存失败...");
+      }
+    });
+  }
+
+  _bottomWidget() {
+    return Container(
+      margin: EdgeInsets.only(bottom: ScreenUtil().bottomBarHeight),
+      padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+      height: 60,
+      child: CustomImageButton(
+        onPressed: () {
+          _capturePng();
+        },
+        boxDecoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30),
+            color: AppColor.themeColor),
+        title: "保存到相册",
+        style: TextStyle(color: Colors.white, fontSize: 16),
       ),
     );
   }
