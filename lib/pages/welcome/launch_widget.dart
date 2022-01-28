@@ -33,7 +33,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
 
     //初始化AMap  给android和ios
     //初始化日志工具
-    PowerLogger.start(context, debug:true);//AppConfig.debug  在正式服数据下进行调试
+    PowerLogger.start(context, debug:AppConfig.debug);//AppConfig.debug  在正式服数据下进行调试
 
     WidgetsBinding.instance.addPostFrameCallback((callback) async {
       await Future.delayed(Duration(milliseconds: 2450));
@@ -83,7 +83,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
           //获取apk包的信息(版本)
           PackageInfo _packageInfo = await PackageInfo.fromPlatform();
           AppConfig.versionNumber = _packageInfo.buildNumber;
-          Get.offAll(WelcomeWidget());
+          Get.offAll(() => WelcomeWidget());
         }
       }else{
         Future.delayed(Duration.zero, () async {
@@ -100,7 +100,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
         //获取apk包的信息(版本)
         PackageInfo _packageInfo = await PackageInfo.fromPlatform();
         AppConfig.versionNumber = _packageInfo.buildNumber;
-        Get.offAll(WelcomeWidget());
+        Get.offAll(() => WelcomeWidget());
       }
     });
   }

@@ -19,6 +19,7 @@ import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:jingyaoyun/widgets/webView.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -32,7 +33,7 @@ class WholesaleShopPage extends StatefulWidget {
   _WholesaleShopPageState createState() => _WholesaleShopPageState();
 }
 
-class _WholesaleShopPageState extends State<WholesaleShopPage>{
+class _WholesaleShopPageState extends State<WholesaleShopPage> {
   TextEditingController _textEditController;
   String phoneText = '';
   bool isYun = false;
@@ -40,12 +41,13 @@ class _WholesaleShopPageState extends State<WholesaleShopPage>{
   StateSetter _bannerState;
   double bannerHeight = 160.rw;
   List<BannerModel> _bannerList = [];
-
+  GSRefreshController _refreshController;
   @override
   void initState() {
     super.initState();
     _getBannerList();
     _textEditController = TextEditingController();
+    _refreshController = GSRefreshController(initialRefresh: true);
   }
 
   @override
@@ -77,13 +79,12 @@ class _WholesaleShopPageState extends State<WholesaleShopPage>{
             title: "购物车",
             padding: EdgeInsets.symmetric(horizontal: 10),
             fontSize: 14 * 2.sp,
-            onPressed: () async {
-            },
+            onPressed: () async {},
           )
         ],
       ),
       body: Container(
-        padding: EdgeInsets.only(left: 12.rw,right: 12.rw),
+        padding: EdgeInsets.only(left: 12.rw, right: 12.rw),
         child: _bodyWidget(),
       ),
     );
@@ -93,71 +94,84 @@ class _WholesaleShopPageState extends State<WholesaleShopPage>{
     return Column(
       children: [
         CupertinoTextField(
-              keyboardType: TextInputType.phone,
-              textInputAction: TextInputAction.search,
-              controller: _textEditController,
-              onChanged: (text) async {
-                phoneText = text;
-                setState(() {});
-              },
-              placeholder: "厨房小工具",
-              suffix:GestureDetector(
-                child: Container(
-                  width: 60.rw,
-                  height: 32.rw,
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFD5101A),
-                    borderRadius: BorderRadius.all(Radius.circular(14.rw)),
-                  ),
-                  child: '搜索'.text.size(16.rsp).color(Colors.white).make(),
-                ),
-              ),
-              prefix:    Container(
-                padding: EdgeInsets.only(left: 10.rw),
-                child: Icon(
-                  Icons.search,
-                  size: 20,
-                  color: Colors.grey,
-                ),
-              ),
-              placeholderStyle: TextStyle(
-                  color: Color(0xFF999999),
-                  fontSize: 14.rsp,
-                  fontWeight: FontWeight.w300),
+          keyboardType: TextInputType.phone,
+          textInputAction: TextInputAction.search,
+          controller: _textEditController,
+          onChanged: (text) async {
+            phoneText = text;
+            setState(() {});
+          },
+          placeholder: "厨房小工具",
+          suffix: GestureDetector(
+            child: Container(
+              width: 60.rw,
+              height: 32.rw,
+              alignment: Alignment.center,
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(16.rw)),
-                  border: Border.all(color: Color(0xFFD5101A),width: 1.rw)
+                color: Color(0xFFD5101A),
+                borderRadius: BorderRadius.all(Radius.circular(14.rw)),
               ),
-              style: TextStyle(color: Colors.black, fontSize: 16.rsp),
+              child: '搜索'.text.size(16.rsp).color(Colors.white).make(),
             ),
+          ),
+          prefix: Container(
+            padding: EdgeInsets.only(left: 10.rw),
+            child: Icon(
+              Icons.search,
+              size: 20,
+              color: Colors.grey,
+            ),
+          ),
+          placeholderStyle: TextStyle(
+              color: Color(0xFF999999),
+              fontSize: 14.rsp,
+              fontWeight: FontWeight.w300),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(16.rw)),
+              border: Border.all(color: Color(0xFFD5101A), width: 1.rw)),
+          style: TextStyle(color: Colors.black, fontSize: 16.rsp),
+        ),
         16.hb,
 
         Flexible(
-          child: ListView(
+          child: RefreshWidget(
+            controller: _refreshController,
+            onRefresh: () async {
 
-            shrinkWrap: true,
-            // physics: NeverScrollableScrollPhysics(),
-            children: [
-              _bannerView(),
-              8.hb,
-              _goodsItem(),
-              _goodsItem(),
-              _goodsItem(),
-              _goodsItem(),
-            ],
+              setState(() {
 
-          ),
+              });
+              _refreshController.refreshCompleted();
+            },
+            body:ListView(
+              shrinkWrap: true,
+              // physics: NeverScrollableScrollPhysics(),
+              children: [
+                _bannerView(),
+                8.hb,
+                _goodsItem(),
+                _goodsItem(),
+                _goodsItem(),
+                _goodsItem(),
+              ],
+            ),
+          )
+
+
+
+
         ),
       ],
     );
+
+
   }
 
   _bannerView() {
     double screenWidth = MediaQuery.of(context).size.width;
     Widget banner =
-    StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+        StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
       _bannerState = setState;
       if (_bannerList == null || _bannerList.length == 0) {
         return Container(
@@ -165,9 +179,7 @@ class _WholesaleShopPageState extends State<WholesaleShopPage>{
         );
       }
       BannerListView bannerListView = BannerListView<BannerModel>(
-        onPageChanged: (index) {
-
-        },
+        onPageChanged: (index) {},
         margin: EdgeInsets.zero,
         height: 16.rw,
         radius: 10,
@@ -216,7 +228,7 @@ class _WholesaleShopPageState extends State<WholesaleShopPage>{
     );
   }
 
-  _goodsItem(){
+  _goodsItem() {
     return Column(
       children: [
         25.hb,
@@ -262,8 +274,6 @@ class _WholesaleShopPageState extends State<WholesaleShopPage>{
     );
   }
 
-
-
   _getBannerList() async {
     ResultData resultData = await HttpManager.post(HomeApi.banner_list, {});
     if (!resultData.result) {
@@ -279,7 +289,4 @@ class _WholesaleShopPageState extends State<WholesaleShopPage>{
       _bannerList = model.data;
     });
   }
-
-
-
 }

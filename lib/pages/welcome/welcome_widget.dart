@@ -342,7 +342,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
   _pushToTabbar() {
     _timer.cancel();
     _timer = null;
-    Get.offAll(TabBarWidget());
+    Get.offAll(() => TabBarWidget());
   }
 
   _beginCountDown() {

@@ -7,20 +7,20 @@ typedef SelectedItemClickListener = Function(int section, int index);
 typedef ItemClick = Function(int index);
 typedef WidgetBuilder = Function();
 
-class SelectedList<T extends SelectedListItemChildModel>
+class WholesaleSelectedList<T extends SelectedListItemChildModel>
     extends StatefulWidget {
   final List<SelectedListItemModel<T>> data;
   final SelectedItemClickListener listener;
   final WidgetBuilder bottom;
 
-  const SelectedList({Key key, this.data, this.listener, this.bottom})
+  const WholesaleSelectedList({Key key, this.data, this.listener, this.bottom})
       : super(key: key);
 
   @override
-  _SelectedListState createState() => _SelectedListState();
+  _WholesaleSelectedListState createState() => _WholesaleSelectedListState();
 }
 
-class _SelectedListState extends State<SelectedList> {
+class _WholesaleSelectedListState extends State<WholesaleSelectedList> {
   @override
   void initState() {
     super.initState();

@@ -2,7 +2,7 @@ name: jingyaoyun
 description: jingyaoyun Market App.
 publish_to: "none"
 
-version: 1.0.9-dev+13
+version: 1.0.10-dev+14
 environment:
   sdk: ">=2.10.0 <3.0.0"
 
@@ -46,7 +46,7 @@ dependencies:
     git:
       url: https://github.com/customPub/flutter_qr_reader
 
-  webview_flutter: ^1.0.7
+  webview_flutter: ^2.0.0
   # 网页组件
   # webview_flutter:
   #   git:

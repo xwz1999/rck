@@ -44,7 +44,7 @@ void main() async {
 
   // 设置当前是否为测试环境
   const bool isDebug =
-  const bool.fromEnvironment('ISDEBUG', defaultValue:  false);
+  const bool.fromEnvironment('ISDEBUG', defaultValue:  true);
 
   AppConfig.setDebug(isDebug);
   // WeChatUtils.initial();
@@ -79,10 +79,12 @@ void main() async {
     //return FlutterBugly.postCatchedException(() {
       runApp(MyApp(store));
     //});
-  }
-  DPrint.printf("当前为 debug 模式");
-  //return FlutterBugly.postCatchedException(() {
+  }else{
+    DPrint.printf("当前为 debug 模式");
     runApp(MyApp(store));
+  }
+  //return FlutterBugly.postCatchedException(() {
+
   //});
 }
 

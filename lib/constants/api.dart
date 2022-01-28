@@ -16,12 +16,12 @@ class Api {
   static String cdnDomin;
 
   static const String domainPro = "https://jyyapi.reecook.cn";
-  static const String domainDev = "https://testapi.reecook.cn";
+  static const String domainDev = "https://testapi.zjycshop.com";
   // static const String domainDev = "http://192.168.2.68:8080/";
   // static const String domainDev = "https://api.reecook.cn";
 
   static const String cdnDominPro = "https://jyyapi.reecook.cn";
-  static const String cdnDominDev = "https://testcdn.reecook.cn";
+  static const String cdnDominDev = "https://testcdn.zjycshop.com";
   // static const String cdnDominDev = "https://cdn.reecook.cn";
 
   static toggleEnvironment(bool debug) {

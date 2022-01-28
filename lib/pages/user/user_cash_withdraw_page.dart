@@ -524,7 +524,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
                               arguments: WebViewPage.setArguments(
                                   url: WebApi.argumentsUrl,
                                   title: "《共享经济合作伙伴协议》",
-                                  hideBar: false),
+                                  hideBar: true),
                             );
                           },
                           child: Text("《共享经济合作伙伴协议》",

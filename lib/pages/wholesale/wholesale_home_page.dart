@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class WholesaleHomePage extends StatefulWidget {
@@ -28,11 +29,12 @@ class _WholesaleHomePageState extends State<WholesaleHomePage> with SingleTicker
   TabController _tabController;
   int _currentIndex = 0;
 
+
   @override
   void initState() {
     super.initState();
     _pages = [
-      WholesaleCarPage(),
+      WholesaleShopPage(),
       WholesaleCarPage(),
       WholesaleOrderHomePage(),
     ];
