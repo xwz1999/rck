@@ -30,9 +30,6 @@ void main() async {
     // 网络请求加密功能
     // useEncrypt: true
   );
-
-
-
   bool inTest = Test.test();
   if (inTest) {
     return;

@@ -137,7 +137,8 @@ class _SelectedListItemState extends State<SelectedListItem> {
           // widget.itemClick(index);
         }
       }
-      bool selected = index == _index;
+      print(widget.itemModel.selectedIndex);
+      bool selected = index == widget.itemModel.selectedIndex;
       _items.add(GestureDetector(
         onTap: !item.canSelected
             ? null
@@ -205,4 +206,15 @@ class SelectedListItemChildModel {
 
   SelectedListItemChildModel(
       {this.id, this.itemTitle, this.canSelected = true});
+}
+
+
+class GoodsItem{
+  int id;
+  String name;
+  String value;
+
+
+  GoodsItem(
+      {this.id, this.name, this.value});
 }

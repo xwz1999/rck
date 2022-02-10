@@ -257,39 +257,40 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
   }
 
   Expanded _plusMinusView() {
-    return Expanded(
-        child: SelectedList<SelectedListItemChildModel>(
-      data: widget.itemModels,
-      bottom: () {
-        Widget pw = PlusMinusView(
-          minValue: 1,
-          maxValue: _sku != null
-              ? (_sku.inventory < 50 ? _sku.inventory : 50)
-              : (widget.model.data.inventory < 50
-                  ? widget.model.data.inventory
-                  : 50),
-          onInputComplete: (String getNum) {
-            _num = int.parse(getNum);
-          },
-          onValueChanged: (int getNum) {
-            _num = getNum;
-          },
-        );
-        return Row(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.topLeft,
-              child: Text("数量",
-                  style: TextStyle(color: Colors.black, fontSize: 12)),
-            ),
-            Expanded(child: pw),
-          ],
-        );
-      },
-      listener: (int section, int index) {
-        _skuClicked();
-      },
-    ));
+    // return Expanded(
+    //     child: SelectedList<SelectedListItemChildModel>(
+    //   data: widget.itemModels,
+    //   bottom: () {
+    //     Widget pw = PlusMinusView(
+    //       minValue: 1,
+    //       maxValue: _sku != null
+    //           ? (_sku.inventory < 50 ? _sku.inventory : 50)
+    //           : (widget.model.data.inventory < 50
+    //               ? widget.model.data.inventory
+    //               : 50),
+    //       onInputComplete: (String getNum) {
+    //         _num = int.parse(getNum);
+    //       },
+    //       onValueChanged: (int getNum) {
+    //         _num = getNum;
+    //       },
+    //     );
+    //     return Row(
+    //       children: <Widget>[
+    //         Container(
+    //           alignment: Alignment.topLeft,
+    //           child: Text("数量",
+    //               style: TextStyle(color: Colors.black, fontSize: 12)),
+    //         ),
+    //         Expanded(child: pw),
+    //       ],
+    //     );
+    //   },
+    //   listener: (int section, int index) {
+    //     _skuClicked();
+    //   },
+    // )
+    // );
   }
 
   Container _bottomBar() {

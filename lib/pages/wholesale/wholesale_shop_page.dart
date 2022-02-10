@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/models/banner_list_model.dart';
 import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
@@ -24,6 +25,9 @@ import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:jingyaoyun/widgets/webView.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import 'func/wholesale_func.dart';
+import 'models/wholesale_banner_model.dart';
+
 class WholesaleShopPage extends StatefulWidget {
   WholesaleShopPage({
     Key key,
@@ -40,12 +44,12 @@ class _WholesaleShopPageState extends State<WholesaleShopPage> {
   bool isEntity = false;
   StateSetter _bannerState;
   double bannerHeight = 160.rw;
-  List<BannerModel> _bannerList = [];
+  List<WholesaleBannerModel> _bannerList = [];
   GSRefreshController _refreshController;
   @override
   void initState() {
     super.initState();
-    _getBannerList();
+    //_getBannerList();
     _textEditController = TextEditingController();
     _refreshController = GSRefreshController(initialRefresh: true);
   }
@@ -138,7 +142,7 @@ class _WholesaleShopPageState extends State<WholesaleShopPage> {
           child: RefreshWidget(
             controller: _refreshController,
             onRefresh: () async {
-
+              _getBannerList();
               setState(() {
 
               });
@@ -178,32 +182,22 @@ class _WholesaleShopPageState extends State<WholesaleShopPage> {
           height: 160.rw,
         );
       }
-      BannerListView bannerListView = BannerListView<BannerModel>(
+      BannerListView bannerListView = BannerListView<WholesaleBannerModel>(
         onPageChanged: (index) {},
         margin: EdgeInsets.zero,
         height: 16.rw,
         radius: 10,
         data: _bannerList,
-        builder: (context, bannerModel) {
+        builder: (context, wholesaleBannerModel) {
           return GestureDetector(
             onTap: () {
-              if (!TextUtils.isEmpty(
-                  (bannerModel as BannerModel).activityUrl)) {
-                AppRouter.push(
-                  context,
-                  RouteName.WEB_VIEW_PAGE,
-                  arguments: WebViewPage.setArguments(
-                      url: (bannerModel as BannerModel).activityUrl,
-                      title: "活动",
-                      hideBar: true),
-                );
-              } else {
+
                 AppRouter.push(context, RouteName.COMMODITY_PAGE,
                     arguments: CommodityDetailPage.setArguments(
-                        (bannerModel as BannerModel).goodsId));
-              }
+                        (wholesaleBannerModel as BannerModel).goodsId));
+
             },
-            child: ExtendedImage.network(Api.getImgUrl(bannerModel.url),
+            child: ExtendedImage.network(Api.getImgUrl(wholesaleBannerModel.photo),
                 fit: BoxFit.fill, enableLoadState: true),
           );
         },
@@ -275,18 +269,19 @@ class _WholesaleShopPageState extends State<WholesaleShopPage> {
   }
 
   _getBannerList() async {
-    ResultData resultData = await HttpManager.post(HomeApi.banner_list, {});
-    if (!resultData.result) {
-      Toast.showError(resultData.msg);
-      return;
-    }
-    BannerListModel model = BannerListModel.fromJson(resultData.data);
-    if (model.code != HttpStatus.SUCCESS) {
-      Toast.showError(model.msg);
-      return;
-    }
+    _bannerList = await WholesaleFunc.getBannerList();
+    // ResultData resultData = await HttpManager.post(APIV2.wholesaleAPI.getBannerList, {});
+    // if (!resultData.result) {
+    //   Toast.showError(resultData.msg);
+    //   return;
+    // }
+    // WholesaleBannerModel model = WholesaleBannerModel.fromJson(resultData.data['data']);
+    // if (resultData.code != HttpStatus.SUCCESS) {
+    //   Toast.showError(resultData.msg);
+    //   return;
+    // }
     _bannerState(() {
-      _bannerList = model.data;
+
     });
   }
 }

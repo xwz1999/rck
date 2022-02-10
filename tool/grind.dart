@@ -66,7 +66,7 @@ Future releaseDev() async {
     'flutter',
     'build',
     'apk',
-    '--target-platform=android-arm64',
+    //'--target-platform=android-arm64',
     '--dart-define',
     'ISDEBUG=true'
   ]).then((proc) async {

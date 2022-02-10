@@ -1,13 +1,6 @@
-/*
- * ====================================================
- * package   : 
- * author    : Created by nansi.
- * time      : 2019-07-09  09:51 
- * remark    : 
- * ====================================================
- */
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
@@ -16,6 +9,7 @@ import 'package:jingyaoyun/pages/home/widget/plus_minus_view.dart';
 import 'package:jingyaoyun/utils/custom_route.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/pic_swiper.dart';
 import 'package:jingyaoyun/widgets/selected_list.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 
@@ -45,10 +39,10 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
   Sku _sku;
   String _commission, _price;
   List<String> _skuDes;
-  StateSetter _refreshState;
-  StateSetter _headerImageState;
   StringBuffer _stringBuffer;
   int _num;
+  List _photoList = [];
+  List<PicSwiperItem> picSwiperItem = [];
 
   /// 存放 sku id 列表
   List selectedIds = [];
@@ -56,10 +50,19 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
   @override
   void initState() {
     super.initState();
+    ///为了图片和规格选择顺序对应 先进行排序
+    widget.model.data.sku.sort((a,b)=>a.combineId.compareTo(b.combineId));
     _num = 1;
     _stringBuffer = StringBuffer();
     _skuDes = [];
     _skuClicked();
+    ///将所有的规格图片存入
+    widget.model.data.sku.forEach((element) {
+      _photoList.add(element.picUrl);
+      picSwiperItem.add(PicSwiperItem(Api.getImgUrl(element.picUrl)));
+    });
+
+
     // bool hasPromotion = widget.model.data.promotion != null;
     // bool hasPromotion = true;
     double minPrice, maxPrice, maxCommission, minCommission;
@@ -136,10 +139,42 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          StatefulBuilder(
-            builder: (BuildContext context, setState) {
-              _headerImageState = setState;
-              return CustomCacheImage(
+               CustomCacheImage(
+                imageClick: () async{
+                  var data = await  AppRouter.fade(
+                    context,
+                    RouteName.PIC_SWIPER,
+                    arguments: PicSwiper.setArguments(
+                      index: _sku==null?0: widget.model.data.sku.indexOf(_sku),
+                      pics: picSwiperItem,
+                    ),
+                  );
+                  print(data);
+                  _sku = widget.model.data.sku[data];
+
+
+                   for(int i=0;i<widget.itemModels[0].items.length;i++){
+                     if(_sku.combineId.indexOf(widget.itemModels[0].items[i].id.toString())!=-1){
+                       widget.itemModels[0].selectedIndex = i;
+                       widget.itemModels[0].items[i].canSelected = true;
+                     }
+                   }
+
+                  ///规格尺寸选项最多两种
+                  ///combineId用，隔开时 有两种类型
+                  if(_sku.combineId.indexOf(',')!=-1){
+                   for(int i=0;i<widget.itemModels[1].items.length;i++){
+                     if(_sku.combineId.indexOf(widget.itemModels[1].items[i].id.toString())!=-1){
+                       widget.itemModels[1].selectedIndex = i;
+                       widget.itemModels[1].items[i].canSelected = true;
+                     }
+                   }
+                  }
+                  _skuClicked();
+
+
+
+                },
                 width: rSize(100),
                 height: rSize(100),
                 fit: BoxFit.cover,
@@ -147,14 +182,9 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
                 imageUrl: _sku == null
                     ? Api.getImgUrl(widget.model.data.mainPhotos[0].url)
                     : Api.getImgUrl(_sku.picUrl),
-              );
-            },
-          ),
-          StatefulBuilder(
-            builder: (BuildContext context, StateSetter setPartState) {
-              _refreshState = setPartState;
+              ),
 
-              return Expanded(
+               Expanded(
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 10),
                   child: Column(
@@ -237,8 +267,7 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
                     ],
                   ),
                 ),
-              );
-            },
+
           ),
           CustomImageButton(
             icon: Icon(
@@ -381,6 +410,7 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
   void _skuClicked() {
     List<SelectedListItemModel> selectedSections = [];
     List<SelectedListItemModel> unSelectedSections = [];
+
     widget.itemModels.forEach((SelectedListItemModel model) {
       if (model.selectedIndex != null) {
         selectedSections.add(model);
@@ -470,13 +500,16 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
       _sku = null;
       selectedIds.clear();
     }
-    if (_headerImageState != null) {
-      _headerImageState(() {});
-    }
+    setState(() {
 
-    if (_refreshState != null) {
-      _refreshState(() {});
-    }
+    });
+    // if (_headerImageState != null) {
+    //   _headerImageState(() {});
+    // }
+    //
+    // if (_refreshState != null) {
+    //   _refreshState(() {});
+    // }
   }
 }
 

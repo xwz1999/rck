@@ -101,6 +101,8 @@ class ImageUtils {
       try {
         final Map<dynamic, dynamic> result =
             await ImageGallerySaver.saveImage(data,quality: 100);
+       DPrint.printf(result);
+        // ReToast.success(text: result['filePath']);
         //只下载单张图片的bug
         // if (Platform.isAndroid) {
         //   if (result.containsValue(true)) {

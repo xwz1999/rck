@@ -3,6 +3,7 @@ import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/pages/user/model/recommend_user_model.dart';
+import 'package:jingyaoyun/pages/wholesale/models/wholesale_banner_model.dart';
 
 
 class WholesaleFunc {
@@ -27,6 +28,23 @@ class WholesaleFunc {
       return [];
   }
 
+  ///获取banner图
+  static Future<List<WholesaleBannerModel>> getBannerList() async {
+    ResultData result =
+    await HttpManager.post(APIV2.wholesaleAPI.getBannerList, {
+    });
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return (result.data['data'] as List)
+            .map((e) => WholesaleBannerModel.fromJson(e))
+            .toList();
+      }
+      else
+        return [];
+    }
+    else
+      return [];
+  }
 
   //推荐申请
   static Future<ResultData> recommendUser(

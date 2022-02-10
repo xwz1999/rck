@@ -5,6 +5,7 @@ class APIV2 {
   static _InvoiceAoi invoiceApi = _InvoiceAoi();
   static TicketAPI ticketAPI = TicketAPI();
   static GoodsAPI goodsAPI = GoodsAPI();
+  static WholesaleAPI wholesaleAPI = WholesaleAPI();
 }
 
 class UserAPI {
@@ -306,4 +307,15 @@ class TicketAPI {
   //飞机票订单支付
   String get airOrderPayLifang =>
       '/v2/app/liFang_ticketing/plane_ticket/air_order_payBill';
+}
+
+
+class WholesaleAPI{
+  ///获取轮播图
+  String get getBannerList =>
+      '/v2/app/banner/list';
+
+  ///获取批发活动商品
+  String get getActivityShopList =>
+      '/v2/app/activity/list';
 }

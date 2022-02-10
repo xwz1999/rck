@@ -2,7 +2,7 @@ name: jingyaoyun
 description: jingyaoyun Market App.
 publish_to: "none"
 
-version: 1.0.10-dev+14
+version: 1.0.11-dev+15
 environment:
   sdk: ">=2.10.0 <3.0.0"
 
@@ -123,7 +123,7 @@ dependencies:
   shared_preferences: ^2.0.5
 
   # 屏幕适配
-  flutter_screenutil: ^5.0.0
+  flutter_screenutil: 5.0.0
 
   #轮播图
   flutter_swiper_null_safety: ^1.0.2

@@ -186,7 +186,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   content4: _userIncomeDataModel?.count3 ?? 0,
                 ):SizedBox(),
                 UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Shop||
-                    UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.physical?
+                    UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.physical||
+                    UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary?
                   _renderBenefitCard(
                     leadingPath: R.ASSETS_USER_PINK_GROUP_WEBP,
                     title: '开店补贴',

@@ -1,5 +1,4 @@
 PODS:
-  - AlipaySDK-iOS (15.7.9)
   - amap_flutter_location (0.0.1):
     - AMapLocation
     - Flutter
@@ -64,7 +63,6 @@ PODS:
     - Flutter
     - FMDB (>= 2.7.5)
   - tobias (0.0.1):
-    - AlipaySDK-iOS (~> 15.7.9)
     - Flutter
   - TOCropViewController (2.6.0)
   - url_launcher (0.0.1):
@@ -107,7 +105,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - AlipaySDK-iOS
     - AMapFoundation
     - AMapLocation
     - FMDB
@@ -172,7 +169,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
-  AlipaySDK-iOS: 94ff4c0e17c5e7d126b8207596d5033006534c25
   amap_flutter_location: 44ff5beb64f42e0bf5feb402fe299dac0013af6f
   AMapFoundation: 8d8ecbb0b2e9ce5487995360d26c885d94642bfd
   AMapLocation: 5ef44a1117be7dc541cb7a7d43d03c5ee91e4387
@@ -187,7 +183,7 @@ SPEC CHECKSUMS:
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   image_cropper: f1668dd8d2cad2d357955caad15a40547856edcb
   image_gallery_saver: 259eab68fb271cfd57d599904f7acdc7832e7ef2
-  image_picker: e3eacd46b94694dde7cf2705955cece853aa1a8f
+  image_picker: 66aa71bc96850a90590a35d4c4a2907b0d823109
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   launch_review: 75d5a956ba8eaa493e9c9d4bf4c05e505e8d5ed0
   LBXScan: 90ca10d0c38fb4a5a6980d7782354f3f69f50093
@@ -200,7 +196,7 @@ SPEC CHECKSUMS:
   photo_manager: f7c619c2cc8c2adb8d85c63363babac477de9c67
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
-  tobias: 6872e2198dc30e17c10513b9ee114e28d099bc70
+  tobias: 2aded9b83e3663b907360a800d8e3c13284f25c5
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
   url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
   video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e

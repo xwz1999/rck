@@ -6,6 +6,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter/rendering.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/utils/image_utils.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
@@ -30,11 +31,12 @@ double initScale({Size imageSize, Size size, double initialScale}) {
   return initialScale;
 }
 
+
 class PicSwiper extends StatefulWidget {
   // final int index;
   // final List<PicSwiperItem> pics;
   final Map arguments;
-  const PicSwiper({Key key, this.arguments});
+  const PicSwiper({Key key, this.arguments,});
   static setArguments({int index, List<PicSwiperItem> pics}) {
     return {"index": index, "pics": pics};
   }
@@ -66,6 +68,7 @@ class _PicSwiperState extends State<PicSwiper>
   @override
   void initState() {
     currentIndex = widget.arguments["index"];
+
     _animationController = AnimationController(
         duration: const Duration(milliseconds: 150), vsync: this);
     super.initState();
@@ -189,6 +192,7 @@ class _PicSwiperState extends State<PicSwiper>
               itemCount: widget.arguments["pics"].length,
               onPageChanged: (int index) {
                 currentIndex = index;
+
                 rebuildIndex.add(index);
               },
               controller: PageController(
@@ -245,7 +249,11 @@ class _PicSwiperState extends State<PicSwiper>
       },
     );
 
-    return result;
+    return WillPopScope(child: result, onWillPop: () async {
+      Navigator.pop(context, currentIndex);
+      // Get.back(result:currentIndex );
+      return false;
+    },) ;
   }
 }
 
