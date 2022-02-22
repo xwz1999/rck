@@ -273,20 +273,14 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                     )
                   : SizedBox(),
               rWBox(10),
-              !isWholesale?Text(
+              Text(
                 "$originPrice",
                 style: AppTextStyle.generate(
                   16.rsp,
                   decoration: TextDecoration.lineThrough,
                   color: Color(0xFF999999),
                 ),
-              ):Text(
-                "平台零售价¥124.00",
-                style: AppTextStyle.generate(
-                  16.rsp,
-                  color: Color(0xFF999999),
-                ),
-              ),
+              )
             ],
           ),
           rHBox(10),

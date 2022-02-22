@@ -1,20 +1,37 @@
 class UserIncomeDataModel {
   num eCount1;
   num eAmount1;
+  num count1;
+  num amount1;
   num eCount2;
   num eAmount2;
   num eCount3;
   num eAmount3;
   num eCount4;
   num eAmount4;
-  num count1;
-  num amount1;
+
   num count2;
   num amount2;
   num count3;
   num amount3;
   num count4;
   num amount4;
+
+  num eCount5;
+  num eAmount5;
+  num count5;
+  num amount5;
+
+  num eCount6;
+  num eAmount6;
+  num count6;
+  num amount6;
+
+  num eCount7;
+  num eAmount7;
+  num count7;
+  num amount7;
+
   num total;
   num eTotal;
 
@@ -36,7 +53,20 @@ class UserIncomeDataModel {
         this.count4,
         this.amount4,
         this.total,
-        this.eTotal});
+        this.eTotal,
+        this.eAmount5,
+        this.amount5,
+        this.count5,
+        this.eCount5,
+        this.eAmount6,
+        this.amount6,
+        this.count6,
+        this.eCount6,
+        this.eAmount7,
+        this.amount7,
+        this.count7,
+        this.eCount7,
+      });
 
   UserIncomeDataModel.fromJson(Map<String, dynamic> json) {
     eCount1 = json['ECount1'];
@@ -57,6 +87,21 @@ class UserIncomeDataModel {
     amount4 = json['Amount4'];
     total = json['Total'];
     eTotal = json['ETotal'];
+
+    eCount5 = json['ECount5'];
+    eAmount5 = json['EAmount5'];
+    count5 = json['Count5'];
+    amount5 = json['Amount5'];
+
+    eCount6 = json['ECount6'];
+    eAmount6 = json['EAmount6'];
+    count6 = json['Count6'];
+    amount6 = json['Amount6'];
+
+    eCount7 = json['ECount7'];
+    eAmount7 = json['EAmount7'];
+    count7 = json['Count7'];
+    amount7 = json['Amount7'];
   }
 
   Map<String, dynamic> toJson() {
@@ -79,6 +124,21 @@ class UserIncomeDataModel {
     data['Amount4'] = this.amount4;
     data['Total'] = this.total;
     data['ETotal'] = this.eTotal;
+
+    data['ECount5'] = this.eCount5;
+    data['EAmount5'] = this.eAmount5;
+    data['Count5'] = this.count5;
+    data['Amount5'] = this.amount5;
+
+    data['ECount6'] = this.eCount6;
+    data['EAmount6'] = this.eAmount6;
+    data['Count6'] = this.count6;
+    data['Amount6'] = this.amount6;
+
+    data['ECount7'] = this.eCount7;
+    data['EAmount7'] = this.eAmount7;
+    data['Count7'] = this.count7;
+    data['Amount7'] = this.amount7;
     return data;
   }
 }

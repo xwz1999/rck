@@ -39,6 +39,8 @@ class Data {
   num status;
   String auditTime;
   String createdAt;
+  num taxFee;
+  num actualAmount;
 
   Data(
       {this.id,
@@ -51,7 +53,7 @@ class Data {
       this.bankName,
       this.status,
       this.auditTime,
-      this.createdAt});
+      this.createdAt,this.taxFee,this.actualAmount});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -65,6 +67,8 @@ class Data {
     status = json['status'];
     auditTime = json['auditTime'];
     createdAt = json['created_at'];
+    taxFee = json['tax_fee'];
+    actualAmount = json['actual_amount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -80,6 +84,9 @@ class Data {
     data['status'] = this.status;
     data['auditTime'] = this.auditTime;
     data['created_at'] = this.createdAt;
+
+    data['tax_fee'] = this.taxFee;
+    data['actual_amount'] = this.actualAmount;
     return data;
   }
 }

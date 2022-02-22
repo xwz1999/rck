@@ -45,6 +45,10 @@ import 'package:jingyaoyun/pages/home/widget/home_weather_view.dart';
 import 'package:jingyaoyun/pages/home/wx_page.dart';
 import 'package:jingyaoyun/pages/tabBar/rui_code_listener.dart';
 import 'package:jingyaoyun/pages/user/functions/user_func.dart';
+import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
+import 'package:jingyaoyun/pages/wholesale/models/wholesale_customer_model.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_customer_page.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_home_page.dart';
 import 'package:jingyaoyun/third_party/wechat/wechat_utils.dart';
 import 'package:jingyaoyun/utils/android_back_desktop.dart';
 import 'package:jingyaoyun/utils/app_router.dart';
@@ -53,6 +57,7 @@ import 'package:jingyaoyun/utils/custom_route.dart';
 import 'package:jingyaoyun/utils/permission_tool.dart';
 import 'package:jingyaoyun/utils/share_tool.dart';
 import 'package:jingyaoyun/utils/storage/hive_store.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/banner.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
@@ -158,7 +163,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   @override
   void initState() {
     super.initState();
-
+    RUICodeListener(context).clipboardListener();
     _updateSource();
     _getWeather();//部分机型获取地址较慢 所以放在外面先获取
     // timer = Timer(const Duration(milliseconds: 0), () {
@@ -385,7 +390,7 @@ class _HomePageState extends BaseStoreState<HomePage>
               top: 0,
               bottom: 0,
               child: RefreshWidget(
-                header: HomeGifHeader(),
+                //header: HomeGifHeader(),
                 isInNest: true,
                 headerTriggerDistance: ScreenUtil().statusBarHeight,
                 color: Colors.black,
@@ -499,7 +504,7 @@ class _HomePageState extends BaseStoreState<HomePage>
               padding: EdgeInsets.all(0),
               icon: ImageIcon(AssetImage("assets/navigation_msg.png")),
               color: getCurrentAppItemColor(),
-              onPressed: () {
+              onPressed: () async {
                 if (UserManager.instance.haveLogin) {
                   // MQManager.goToChat(
                   //     userId: UserManager.instance.user.info.id.toString(),
@@ -512,7 +517,10 @@ class _HomePageState extends BaseStoreState<HomePage>
                   //     });
 
                   //跳转到客服页面
-                  Get.to(()=>WxContactPage());
+                  WholesaleCustomerModel model = await
+                  WholesaleFunc.getCustomerInfo();
+
+                  Get.to(()=>WholesaleCustomerPage(model: model,));
                 } else {
                   AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
                   // showError("请先登录!");
@@ -601,12 +609,13 @@ class _HomePageState extends BaseStoreState<HomePage>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Image.asset(R.ASSETS_LOCATION_PER_PNG,width: 44.rw,height: 44.rw,),
+                    Image.asset(R.ASSETS_LOCATION_PER_PNG,width: 35.rw,height: 35.rw,),
+                    4.wb,
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('定位权限',style: TextStyle(color: Color(0xFF333333),fontSize: 16.rsp,fontWeight: FontWeight.bold),),
-                        Container(width:200.rw,child: Text('允许访问您的大概位置来查询城市天气',style: TextStyle(color: Color(0xFF666666),fontSize: 14.rsp),)),
+                        Text('定位权限',style: TextStyle(color: Color(0xFF333333),fontSize: 15.rsp,fontWeight: FontWeight.bold),),
+                        Container(width:200.rw, child: Text('允许访问您的大概位置来查询城市天气',style: TextStyle(color: Color(0xFF666666),fontSize: 13.rsp),)),
                       ],
                     )
                   ],
@@ -1196,12 +1205,48 @@ class _HomePageState extends BaseStoreState<HomePage>
 
                         }
                     ),
+                    //
+                    // Expanded(
+                    //   child: CupertinoButton(
+                    //     padding: EdgeInsets.zero,
+                    //     child: Column(
+                    //       children: <Widget>[
+                    //         Container(
+                    //           height: 10,
+                    //         ),
+                    //         Container(
+                    //             margin: EdgeInsets.only(top: 5),
+                    //             width: 48,
+                    //             height: 48,
+                    //             child:Image.asset(R.ASSETS_WHOLESALE_WHOLESALE_KING_ICON_PNG)
+                    //         ),
+                    //         Container(
+                    //           margin: EdgeInsets.only(top: 8),
+                    //           child: Text(
+                    //             '批发商城',
+                    //             style: TextStyle(
+                    //                 fontWeight: FontWeight.w400,
+                    //                 fontSize: 12 * 2.sp,
+                    //                 color: Colors.black.withOpacity(0.8)),
+                    //           ),
+                    //         )
+                    //       ],
+                    //     ),
+                    //     onPressed: () {
+                    //       Get.to(() => WholesaleHomePage());
+                    //
+                    //     },
+                    //   ),
+                    // ),
+                    //     :
+                    //
+                    //
                     _buttonTitleRow(
                         kingCoinListModelList[4],
-                        "全部分类",
+                        "批发商城",
                         onPressed: () async {
 
-                            _kingCoinGet("全部分类");
+                            _kingCoinGet("批发商城");
 
                         }
                     ),
@@ -1425,9 +1470,12 @@ class _HomePageState extends BaseStoreState<HomePage>
 
         break;
       case '美妆护肤':
-
+        break;
       case '全部分类':
-
+        break;
+      case '批发商城':
+        Get.to(() => WholesaleHomePage());
+        break;
       final loadingCancel = ReToast.loading();
       await HomeDao.getCategories(success: (data, code, msg) {
         loadingCancel();
@@ -1618,7 +1666,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   _getPromotionList() async {
-    RUICodeListener(context).clipboardListener();
+
     ResultData resultData = await HttpManager.post(HomeApi.promotion_list, {});
 
     if (_gsRefreshController.isRefresh()) {

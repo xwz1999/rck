@@ -17,6 +17,7 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/utils/print_util.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ImageUtils {
@@ -102,25 +103,6 @@ class ImageUtils {
         final Map<dynamic, dynamic> result =
             await ImageGallerySaver.saveImage(data,quality: 100);
        DPrint.printf(result);
-        // ReToast.success(text: result['filePath']);
-        //只下载单张图片的bug
-        // if (Platform.isAndroid) {
-        //   if (result.containsValue(true)) {
-        //     endBack(true);
-        //     return true;
-        //   } else {
-        //     endBack(false);
-        //     return false;
-        //   }
-        // } else if (Platform.isIOS) {
-        //   if (result.containsValue(true)) {
-        //     endBack(true);
-        //     return true;
-        //   } else {
-        //     endBack(false);
-        //     return false;
-        //   }
-        // }
       } catch (e) {
         if (e is ArgumentError) {
           if (Platform.isIOS) {
@@ -129,7 +111,9 @@ class ImageUtils {
           }
         }
         DPrint.printf(e);
+
         endBack(false);
+
         return false;
       }
     }

@@ -173,7 +173,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
                   children: [
                     RecookCheckBox(state: isEntity,),
                     5.wb,
-                    '实体店铺'.text.size(14.rsp).color(Color(0xFF333333)).make(),
+                    'VIP店铺'.text.size(14.rsp).color(Color(0xFF333333)).make(),
                   ],
                 ),
                 color: Colors.transparent,
@@ -233,7 +233,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
                 NormalContentDialog(
                   title: '申请提示',
                   content:'是否推荐账号{$phoneText}为'.richText.withTextSpanChildren([
-                    (isEntity?'[实体店铺]':'[云店铺]').textSpan.color(Color(0xFFD5101A)).make(),
+                    (isEntity?'[VIP店铺]':'[云店铺]').textSpan.color(Color(0xFFD5101A)).make(),
                   ]).size(14.rsp).color(Color(0xFF333333)).make(),
                   items: ["取消"],
                   listener: (index) {

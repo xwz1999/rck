@@ -13,6 +13,9 @@ import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 
+import 'func/wholesale_func.dart';
+import 'models/goods_dto.dart';
+
 typedef ItemClickListener = Function(OrderModel order, {VoidCallback callback});
 
 class WholesaleOrderItem extends StatefulWidget {
@@ -132,22 +135,7 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
           border: Border(top: BorderSide(color: Colors.grey[300], width: 0.3))),
       child: Row(
         children: <Widget>[
-          widget.orderModel.expressStatus != 0
-              ? CustomImageButton(
-                  title: "查看物流",
-                  color: Colors.grey[600],
-                  fontSize: 12 * 2.sp,
-                  padding: EdgeInsets.symmetric(
-                      vertical: rSize(2), horizontal: rSize(8)),
-                  borderRadius: BorderRadius.all(Radius.circular(40)),
-                  border: Border.all(color: Colors.grey, width: 0.8 * 2.w),
-                  onPressed: () {
-                    AppRouter.push(context, RouteName.ORDER_LOGISTIC,
-                        arguments: OrderLogisticsListPage.setArguments(
-                            orderId: widget.orderModel.id));
-                  },
-                )
-              : Container(),
+          Container(),
           Spacer(),
           RichText(
               text: TextSpan(
@@ -210,9 +198,11 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
                 onSelected:  (String value) {
                         print('加入购物车');
                         if(widget.orderModel.goodsList!=null){
-                          widget.orderModel.goodsList.forEach((element) async {
-                            await _addToShoppingCart(element.skuId,element.skuName,element.quantity);
+                          List<GoodsDTO> list = [];
+                          widget.orderModel.goodsList.forEach((element)  {
+                            list.add(GoodsDTO(skuId:element.skuId,quantity:element.quantity));
                           });
+                          WholesaleFunc.addToShoppingCart(list);
                         }
 
 
@@ -426,18 +416,14 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
           // icon: CustomCacheImage(
           //   imageUrl: Api.getResizeImgUrl(goods.brandLogoUrl, 30),
           // ),
-          // icon: Image.asset('assets/order_item_sell.png', width: 20,),
+          icon: Image.asset(R.ASSETS_WHOLESALE_WHOLESALE_PI_PNG, width: 20,),
           contentSpacing: rSize(8),
           style: AppTextStyle.generate(
             14 * 2.sp,
           ),
-          title: '下单时间 '+widget.orderModel.createdAt,
+          title: widget.orderModel.createdAt,
         ),
-        Icon(
-          AppIcons.icon_next,
-          size: rSize(12),
-          color: Colors.grey,
-        ),
+
         Spacer(),
         _orderStatusText(),
         6.wb,

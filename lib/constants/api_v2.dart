@@ -190,6 +190,15 @@ class UserAPI {
   String get sendRecommendCode => '/v2/app/apply/send';
 
 
+  ///批发收益
+  String get getPifaBenefit => '/v2/app/profit/sale';
+
+  ///批发收益详情
+  String get getPifaBenefitDetail => '/v2/app/profit/sale/detail';
+
+  ///其他收益
+  String get getBenefit => '/v2/app/profit/shop';
+
 }
 
 class BenefitAPI {
@@ -309,13 +318,53 @@ class TicketAPI {
       '/v2/app/liFang_ticketing/plane_ticket/air_order_payBill';
 }
 
-
+///批发商城接口
 class WholesaleAPI{
   ///获取轮播图
   String get getBannerList =>
       '/v2/app/banner/list';
 
-  ///获取批发活动商品
-  String get getActivityShopList =>
+  ///获取批发活动列表
+  String get getActivityList =>
       '/v2/app/activity/list';
+
+  ///获取批发活动商品列表
+  String get getGoodsList =>
+      '/v1/goods/comprehensive/list';
+
+  ///获取批发商品详情
+  String get getDetail =>
+      '/v1/goods/detail/summary_new';
+
+  ///获取你可能还喜欢
+  String get getViewLikeMaybe =>
+      '/v2/app/shopping_cart/view_like_maybe';
+
+  ///获取购物车列表
+  String get getShopCarList =>
+      '/v2/app/shop_cart/list';
+
+  ///添加到购物车
+  String get addShopCar =>
+      '/v2/app/shop_cart/add';
+
+  ///更新购物车
+  String get updateShopCar =>
+      '/v2/app/shop_cart/update';
+
+  ///删除购物车
+  String get deleteShopCar =>
+      '/v2/app/shop_cart/delete';
+
+  ///批发订单预览
+  String get previewOrder =>
+      '/v2/app/order/preview';
+
+  ///预览订单更新
+  String get updatePreviewOrder =>
+      '/v2/app/order/update';
+
+  ///获取客服信息
+  String get getCustomerInfo =>
+      '/v2/app/jyy/contact';
 }

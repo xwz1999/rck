@@ -8,6 +8,7 @@ class GuideOrderItemModel {
   num goodsTotalAmount;
   num actualTotalAmount;
   List<Goods> goods;
+  num totalGoodsCount;
 
   String get statusValue {
     switch (status) {
@@ -37,6 +38,7 @@ class GuideOrderItemModel {
       this.status,
       this.goodsTotalAmount,
       this.actualTotalAmount,
+        this.totalGoodsCount,
       this.goods});
 
   GuideOrderItemModel.fromJson(Map<String, dynamic> json) {
@@ -48,6 +50,7 @@ class GuideOrderItemModel {
     status = json['status'];
     goodsTotalAmount = json['goodsTotalAmount'];
     actualTotalAmount = json['actualTotalAmount'];
+    totalGoodsCount = json['totalGoodsCount'];
     if (json['goods'] != null) {
       goods = [];
       json['goods'].forEach((v) {
@@ -66,6 +69,7 @@ class GuideOrderItemModel {
     data['status'] = this.status;
     data['goodsTotalAmount'] = this.goodsTotalAmount;
     data['actualTotalAmount'] = this.actualTotalAmount;
+    data['totalGoodsCount'] = this.totalGoodsCount;
     if (this.goods != null) {
       data['goods'] = this.goods.map((v) => v.toJson()).toList();
     }

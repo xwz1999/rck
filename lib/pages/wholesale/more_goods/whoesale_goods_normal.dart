@@ -1,32 +1,19 @@
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gifimage/flutter_gifimage.dart';
+import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/goods_detail_model.dart';
-import 'package:jingyaoyun/models/goods_hot_sell_list_model.dart'
-as GoodsHotSellListModel;
-import 'package:jingyaoyun/models/goods_simple_list_model.dart';
-import 'package:jingyaoyun/models/promotion_goods_list_model.dart';
-import 'package:jingyaoyun/pages/goods/small_coupon_widget.dart';
 import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
-import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
-import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
-import 'package:jingyaoyun/utils/share_tool.dart';
+import 'package:jingyaoyun/pages/wholesale/models/wholesale_good_model.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 
-enum GoodsItemType {
-  NONE,
-  NORMAL,
-  HOT_LIST,
-  ROW_GOODS,
-}
+import '../wholeasale_detail_page.dart';
 
-class GoodsItemWidget extends StatelessWidget {
-  final bool isSingleDayGoods;
+
+class WholesaleGoodsItem extends StatelessWidget {
+
   final String goodsName;
   final String description;
   final String mainPhotoUrl;
@@ -38,31 +25,11 @@ class GoodsItemWidget extends StatelessWidget {
   final num commission;
   final num salesVolume;
   final num id;
-  final String brandName;
-  final String brandPictureUrl;
-  final int isImport;
+  final BuildContext buildCtx;
 
-  final GoodsItemType widgetType;
 
-  final bool notShowAmount;
-
-  final List<String> specialSale;
-
-  final List<String> specialIcon;
-
-  // model.getPromotionStatus()
-  final PromotionStatus promotionStatus;
-  final Function onBrandClick;
-  final int type; //type = 4 找相似  type = 3  京东商品
-
-  final String countryIcon;
-  final Living living;
-  final GifController gifController;
-  final num gysId;
-
-  const GoodsItemWidget({
+  const WholesaleGoodsItem({
     Key key,
-    this.isSingleDayGoods = false,
     this.goodsName,
     this.description,
     this.mainPhotoUrl,
@@ -74,54 +41,51 @@ class GoodsItemWidget extends StatelessWidget {
     this.commission,
     this.salesVolume,
     this.id,
-    this.promotionStatus,
     this.buildCtx,
-    this.shareClick,
-    this.buyClick,
-    this.brandName = "",
-    this.brandPictureUrl = "",
-    this.onBrandClick,
-    this.isImport,
-    this.notShowAmount = false,
-    this.specialSale,
-    this.specialIcon,
-    this.type,
-    this.countryIcon,
-    this.living,
-    this.gifController,
-    this.gysId,
-    //this.special_sale,
-  })  : widgetType = GoodsItemType.NONE,
-        super(key: key);
 
+  }) :super(key: key);
 
-
-
-  final BuildContext buildCtx;
-  final VoidCallback shareClick;
-  final VoidCallback buyClick;
 
   static Color _shareTextColor = Color(0xffc70404);
   static double _height = 0;
 
+
+  WholesaleGoodsItem.normalGoodsItem({
+    Key key,
+    WholesaleGood model, this.buildCtx,
+
+    //this.special_sale,
+  })  : goodsName = model.goodsName,
+
+        description = model.description,
+        mainPhotoUrl = model.mainPhotoUrl,
+        inventory = model.inventory,
+        originalPrice = model.discountPrice,
+        percent = model.percent,
+        coupon = model.coupon,
+        id = model.id,
+        salesVolume =  model.salesVolume,
+        discountPrice =  model.salePrice,
+        commission =  model.commission,
+        super(key: key);
+
   @override
   Widget build(BuildContext context) {
-    _height = (MediaQuery.of(context).size.width - 20) * 150.0 / 350.0;
+    _height = 140.rw;
 
     return Container(
       height: _height,
-      padding: EdgeInsets.only(bottom: 3.33, left: 10, right: 10),
-      color: (this.widgetType == GoodsItemType.ROW_GOODS)
-          ? AppColor.frenchColor
-          : Colors.transparent,
+      padding: EdgeInsets.only(top: 8.rw, left: 8.rw, right: 8.rw),
+      color: AppColor.frenchColor,
       child: _container(),
     );
   }
 
   _container() {
     return Container(
+
       height: _height,
-      padding: EdgeInsets.all(4),
+      padding: EdgeInsets.all(7.rw),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -158,37 +122,10 @@ class GoodsItemWidget extends StatelessWidget {
     );
   }
 
-  _brandWidget() {
-    return GestureDetector(
-        onTap: () {
-          if (onBrandClick != null) onBrandClick();
-        },
-        child: Container(
-          width: double.infinity,
-          height: 25,
-          color: Colors.white,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: Text(
-                  TextUtils.isEmpty(brandName) ? "" : brandName,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    color: Color(0xffc70404),
-                    fontSize: 12 * 2.sp,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ));
-  }
-
   _rowInfoWidget() {
     return Expanded(
       child: Container(
-        margin: EdgeInsets.only(left: 7),
+        margin: EdgeInsets.only(left: 7.rw),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,17 +152,12 @@ class GoodsItemWidget extends StatelessWidget {
                 ),
               ],
             ),
-            // Offstage(
-            //   offstage: !(model.getPromotionStatus() == PromotionStatus.start),
-            //   // offstage: !(model.getPromotionStatus() == PromotionStatus.start || model.getPromotionStatus() == PromotionStatus.ready),
-            //   child: _priceView(),
-            // ),
-            AppConfig.getShowCommission() ? _brandWidget() : SizedBox(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
                 _saleNumberWidget(),
+                10.hb,
                 _inventoryView(),
               ],
             ),
@@ -290,100 +222,7 @@ class GoodsItemWidget extends StatelessWidget {
               ),
             ),
           ),
-          living?.status == 1
-              ? Positioned(
-            top: 6.rw,
-            right: 6.rw,
-            child: Container(
-                width: 16.rw,
-                height: 16.rw,
-                child: GifImage(
-                  controller: gifController,
-                  image: AssetImage(R.ASSETS_LIVE_PLAY_GIF),
-                  height: 16.rw,
-                  width: 16.rw,
-                )),
-          )
-              : SizedBox(),
-          isSingleDayGoods
-              ? Positioned(
-            left: 0,
-            top: 0,
-            child: Image.asset(
-              R.ASSETS_HOME_SINGLE_DAY_PNG,
-              height: rSize(20),
-            ),
-          )
-              : SizedBox(),
-          specialSale != null
-              ? Positioned(
-              left: 5.rw,
-              top: 5.rw,
-              child: Container(
-                ///color: Colors.red,
-                width: (_height - 8.rw) / 3.rw * 2.rw,
-                height: specialSale == null
-                    ? 0
-                    : specialSale.length ~/ 2 * 24.rw + 24.rw,
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  //reverse: true,
-                  padding: EdgeInsets.zero,
-                  gridDelegate:
-                  const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 2.4,
-                      mainAxisSpacing: 5,
-                      crossAxisSpacing: 5),
-                  itemCount: specialSale.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return
-                      // Container(
-                      //   color: Colors.red,
-                      // );
-                      CustomCacheImage(
-                        borderRadius: BorderRadius.all(Radius.circular(2.rw)),
-                        imageUrl: Api.getImgUrl(specialSale[index]),
-                        fit: BoxFit.fill,
-                      );
-                  },
-                ),
-              ))
-              : SizedBox(),
-          specialIcon != null
-              ? Positioned(
-              left: 5.rw,
-              top: 5.rw,
-              child: Container(
-                width: (_height - 8.rw) / 3.rw * 2.rw,
-                height: specialSale == null
-                    ? 0
-                    : specialSale.length ~/ 2 * 26.rw,
-                child: GridView.builder(
-                  shrinkWrap: true,
-                  reverse: true,
-                  padding: EdgeInsets.zero,
-                  gridDelegate:
-                  const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 2.4,
-                      mainAxisSpacing: 5,
-                      crossAxisSpacing: 5),
-                  itemCount: specialIcon.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return
-                      // Container(
-                      //   color: Colors.red,
-                      // );
-                      CustomCacheImage(
-                        borderRadius: BorderRadius.all(Radius.circular(2.rw)),
-                        imageUrl: Api.getImgUrl(specialIcon[index]),
-                        fit: BoxFit.fill,
-                      );
-                  },
-                ),
-              ))
-              : SizedBox()
+
         ]),
       ),
     );
@@ -417,7 +256,7 @@ class GoodsItemWidget extends StatelessWidget {
                       children: [
                         ExtendedText.rich(TextSpan(children: [
                           TextSpan(
-                            text:  "券后 ¥ ",
+                            text:  "批发价 ¥ ",
                             style: AppTextStyle.generate(
                                 12 * 2.sp,
                                 color: priceColor,
@@ -425,32 +264,19 @@ class GoodsItemWidget extends StatelessWidget {
                           ),
                           TextSpan(
                             text:
-                            "${(this.discountPrice - this.discountPrice.toInt()) > 0 ? this.discountPrice.toStringAsFixed(1) : this.discountPrice.toStringAsFixed(0)}",
+                            "${this.discountPrice.toStringAsFixed(2)}",
                             // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
                             style: TextStyle(
                                 letterSpacing: -1,
                                 wordSpacing: -1,
-                                fontSize: 19 * 2.sp,
+                                fontSize: 16 * 2.sp,
                                 color: priceColor,
                                 fontWeight: FontWeight.w500),
                           ),
-                          WidgetSpan(
-                              child: SizedBox(
-                                width: 5,
-                              )),
-                          TextSpan(
-                            text: "¥${this.originalPrice.toStringAsFixed(0)}",
-                            style: TextStyle(
-                                decoration: TextDecoration.lineThrough,
-                                decorationColor: Color(0xff898989),
-                                fontSize: 12 * 2.sp,
-                                color: Color(0xff898989),
-                                fontWeight: FontWeight.w400),
-                          )
                         ])),
                       ],
                     )),
-                Expanded(child: Container()),
+
               ],
             ),
           ),
@@ -460,36 +286,26 @@ class GoodsItemWidget extends StatelessWidget {
               Container(
                 width: 10,
               ),
-             GestureDetector(
-                child: CustomImageButton(
-                  direction: Direction.horizontal,
-                  height: 21,
-                  //暂时隐藏
-                  title: sellout ? "已售完" : "批发",
+             CustomImageButton(
+               direction: Direction.horizontal,
+               height: 21,
+               //暂时隐藏
+               title: sellout ? "已售完" : "批发",
 
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 13 * 2.sp,
-                  ),
-                  padding: EdgeInsets.symmetric(
-                      horizontal: UserLevelTool.currentRoleLevelEnum() ==
-                          UserRoleLevel.Vip &&
-                          this.promotionStatus ==
-                              PromotionStatus.start
-                          ? 16.rw
-                          : 8.rw,
-                      vertical: rSize(0)),
-                  borderRadius: BorderRadius.circular(40),
-                  backgroundColor:
-                  //暂时隐藏
-                  sellout ? AppColor.greyColor : _shareTextColor,
+               style: TextStyle(
+                 color: Colors.white,
+                 fontSize: 13 * 2.sp,
+               ),
+               padding: EdgeInsets.symmetric(
+                   horizontal:  8.rw,
+                   vertical: rSize(0)),
+               borderRadius: BorderRadius.circular(40),
+               backgroundColor:
+               //暂时隐藏
+               sellout ? AppColor.greyColor : _shareTextColor,
 
-                  pureDisplay: true,
-                ),
-                onTap: () {
-                  _buyEvent();
-                },
-              )
+               pureDisplay: true,
+             )
             ],
           )
         ],
@@ -498,38 +314,36 @@ class GoodsItemWidget extends StatelessWidget {
   }
 
   _saleNumberWidget() {
-    return Container(
-      child: Stack(
-        children: <Widget>[
-          Positioned(
-            right: 0,
-            bottom: 0,
-            top: 0,
-            child: notShowAmount
-                ? SizedBox()
-                : Text(
-              "已售${this.salesVolume}件",
-              style: TextStyle(
-                color: Color(0xff595757),
+    return Row(
+
+      children: [
+        Container(
+          child: Text(
+            '平台零售价¥${this.originalPrice.toStringAsFixed(2)}',
+            style: TextStyle(
                 fontSize: 12 * 2.sp,
-              ),
-            ),
-          ),
-        ],
-      ),
+                color: Color(0xFF999999),
+                fontWeight: FontWeight.w400),
+          )
+        ),
+        Spacer(),
+        Container(
+          child: Text(
+                  "已订${this.salesVolume}件",
+                  style: TextStyle(
+                    color: Color(0xFF999999),
+                    fontSize: 12 * 2.sp,
+                  ),
+                ),
+
+        ),
+      ],
     );
   }
 
   _buyEvent() {
-
-    if (buyClick != null) {
-      buyClick();
-    } else {
-      AppRouter.push(buildCtx, RouteName.COMMODITY_PAGE,
-          arguments:
-          CommodityDetailPage.setArguments(this.id,
-          ));
-    }
+    Get.to(()=>WholesaleDetailPage(goodsId: this.id,isWholesale: true));
   }
+
 
 }

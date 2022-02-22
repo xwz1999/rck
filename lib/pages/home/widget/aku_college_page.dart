@@ -9,7 +9,9 @@ import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/pages/home/function/home_fuc.dart';
 import 'package:jingyaoyun/pages/home/model/aku_video_list_model.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -44,47 +46,76 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
   @override
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       backgroundColor: AppColor.tableViewGrayColor,
+      appBar: CustomAppBar(
 
-      appBar: PreferredSize(
-
-        child: Stack(
-          children: [
-            Image.asset(
-              R.ASSETS_SCHOOL_TOP_BG_PNG,
-              fit: BoxFit.cover,
-              width: double.infinity,
-            ),
-
-            AppBar(
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              centerTitle: true,
-              title: SizedBox(),
-            ),
-          ],
+        appBackground: Colors.transparent,
+        leading: RecookBackButton(
+          white: true,
         ),
-        preferredSize: Size.fromHeight(MediaQuery.of(context).padding.top),
+        elevation: 0,
       ),
-      body: _bodyWidget(),
+      body: Stack(
+        children: [
+          Positioned(child: Container(
+            height: 130.rw+DeviceInfo.statusBarHeight + DeviceInfo.appBarHeight,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage(R.ASSETS_SCHOOL_BG_PNG),
+                    fit: BoxFit.fill)),
+          )),
+
+          _bodyWidget(),
+        ],
+
+
+
+      ),
+      // appBar: PreferredSize(
+      //
+      //   child: Stack(
+      //     children: [
+      //       Image.asset(
+      //         R.ASSETS_SCHOOL_TOP_BG_PNG,
+      //         fit: BoxFit.cover,
+      //         width: double.infinity,
+      //       ),
+      //
+      //       AppBar(
+      //         backgroundColor: Colors.transparent,
+      //         elevation: 0,
+      //         centerTitle: true,
+      //         title: SizedBox(),
+      //       ),
+      //     ],
+      //   ),
+      //   preferredSize: Size.fromHeight(MediaQuery.of(context).padding.top),
+      // ),
+      //body: _bodyWidget(),
     );
   }
 
   _bodyWidget() {
     return Column(
       children: [
-        GestureDetector(
-          onTap: () {},
-          child: Container(
-            width: double.infinity,
-            height: 160.rw,
-            child: Image.asset(
-              R.ASSETS_SCHOOL_BG_PNG,
-              fit: BoxFit.fill,
-            ),
-          ),
+        // GestureDetector(
+        //   onTap: () {},
+        //   child: Container(
+        //     width: double.infinity,
+        //     height: 160.rw,
+        //     child: Image.asset(
+        //       R.ASSETS_SCHOOL_BG_PNG,
+        //       fit: BoxFit.fill,
+        //     ),
+        //   ),
+        // ),
+        // 50.hb,
+        Container(
+          height:  160.rw+DeviceInfo.statusBarHeight + DeviceInfo.appBarHeight
         ),
-        50.hb,
+
         Container(
             alignment: Alignment.center,
             width: 260.rw,

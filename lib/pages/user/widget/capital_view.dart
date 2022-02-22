@@ -107,6 +107,7 @@ class _CapitalViewState extends BaseStoreState<CapitalView> {
             ],
           ),
           Spacer(),
+          UserLevelTool.currentRoleLevelEnum()==UserRoleLevel.subsidiary?SizedBox():
           GestureDetector(
             onTap: () {
               Get.to(() => UserBalancePage());

@@ -10,6 +10,9 @@ import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/utils/image_utils.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import 'alert.dart';
 
 double initScale({Size imageSize, Size size, double initialScale}) {
   var n1 = imageSize.height / imageSize.width;
@@ -328,7 +331,24 @@ class MySwiperPlugin extends StatelessWidget {
           }, (success) {
             cancel();
             //GSDialog.of(context).dismiss(context);
-            success?ReToast.success(text: '保存完成！'):ReToast.err(text: '保存失败...');
+            success?ReToast.success(text: '保存完成！'):Alert.show(
+              context,
+              NormalContentDialog(
+                title: '提示',
+                content: Text('图片保存失败，请前往应用权限页，设置存储权限为始终允许',style: TextStyle(color: Color(0xFF333333),fontSize: 14.rsp),),
+                items: ["取消"],
+                listener: (index) {
+                  Alert.dismiss(context);
+                },
+                deleteItem: "确认",
+                deleteListener: () async{
+
+                  Alert.dismiss(context);
+                  bool isOpened = await openAppSettings();
+                },
+                type: NormalTextDialogType.delete,
+              ),
+            );;
                 // ? GSDialog.of(context).showSuccess(context, "保存完成!")
                 // : GSDialog.of(context).showError(context, "保存失败...");
 

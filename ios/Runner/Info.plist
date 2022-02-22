@@ -32,7 +32,7 @@
 			<string>alipay</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>recookalipay</string>
+				<string>zjycAlipay</string>
 			</array>
 		</dict>
 		<dict>
@@ -42,7 +42,7 @@
 			<string>unionPay</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>RecookUnionPay</string>
+				<string>zjycUnionPay</string>
 			</array>
 		</dict>
 		<dict>

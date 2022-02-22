@@ -38,10 +38,10 @@ enum UserRoleLevel {
   ///会员
   Vip,
 
-  ///店铺
+  ///云店铺
   Shop,
 
-  ///实体店
+  ///VIP店铺
   physical,
 
   ///子公司
@@ -249,10 +249,11 @@ class UserLevelTool {
         roleLevel = "店主";
         break;
       case 2:
+
         if(UserManager.instance.userBrief.isOffline){
-          roleLevel = "实体店";
+          roleLevel = "VIP店铺";
         }else{
-          roleLevel = "店铺";
+          roleLevel = "云店铺";
         }
 
         break;
@@ -273,7 +274,7 @@ class UserLevelTool {
     String roleLevel = "";
     switch (level) {
       case UserRoleLevel.Shop:
-        roleLevel = "店铺";
+        roleLevel = "云店铺";
         break;
       case UserRoleLevel.Master:
         roleLevel = "店主";
@@ -282,7 +283,7 @@ class UserLevelTool {
         roleLevel = "会员";
         break;
       case UserRoleLevel.physical:
-        roleLevel = "实体店";
+        roleLevel = "VIP店铺";
         break;
       case UserRoleLevel.subsidiary:
         roleLevel = "子公司";

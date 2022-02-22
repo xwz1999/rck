@@ -1,6 +1,7 @@
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/constants.dart';
@@ -10,6 +11,7 @@ import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/order_detail_model.dart';
 import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
 import 'package:jingyaoyun/pages/user/order/order_return_status_page.dart';
+import 'package:jingyaoyun/pages/wholesale/wholeasale_detail_page.dart';
 import 'package:jingyaoyun/utils/goods_status/goods_status_tool.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
@@ -30,7 +32,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
       padding: EdgeInsets.symmetric(horizontal: rSize(8)),
       color: Colors.white,
       child: Column(
-        children: <Widget>[_priceInfoWidget(), _openPriceInfoButton()],
+        children: <Widget>[_priceInfoWidget(),_openPriceInfoButton()],
       ),
     );
   }
@@ -271,6 +273,266 @@ abstract class OrderDetailState<T extends StatefulWidget>
     );
   }
 
+  wholesaleOrderInfo() {
+    int totalQuantity = 0;
+    orderDetail.brands.forEach((brand) {
+      brand.goods.forEach((goods) {
+        totalQuantity += goods.quantity;
+      });
+    });
+    if (orderDetail == null) return Container();
+    return Container(
+      margin: EdgeInsets.only(top: rSize(10)),
+      padding: EdgeInsets.symmetric(horizontal: rSize(8)),
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          _wholesaleTitle("订单编号", orderDetail.id.toString(), needCopy: true),
+          _wholesaleTitle("下单时间", orderDetail.createdAt),
+          _wholesaleTitle("支付方式", orderDetail.payMethod==1?'微信支付':orderDetail.payMethod==1?'支付宝支付':''),
+          !TextUtils.isEmpty(orderDetail.payTime)
+              ? _wholesaleTitle("付款时间", orderDetail.payTime)
+              : Container(),
+
+      Container(
+        margin: EdgeInsets.only(
+          top: 10, bottom: 10,
+          left: rSize(8),
+          // top: rSize(10)
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+                constraints: BoxConstraints(minWidth: rSize(70)),
+                child: Text(
+                  "商品总价",
+                  style:
+                  AppTextStyle.generate(12 * 2.sp, color: Color(0xff333333)),
+                )),
+            Spacer(),
+            Container(
+                child: Text(
+                  "共$totalQuantity件",
+                  style:
+                  AppTextStyle.generate(10 * 2.sp, color: Color(0xFF999999)),
+                )),
+            20.wb,
+            Container(
+                child: Text(
+                  "合计:",
+                  style:
+                  AppTextStyle.generate(10 * 2.sp, color: Color(0xff333333)),
+                )),
+            Container(
+                child: Text(
+                  "${orderDetail.goodsTotalAmount.toStringAsFixed(2)}",
+                  style:
+                  AppTextStyle.generate(12 * 2.sp, color: Color(0xff333333),fontWeight: FontWeight.bold),
+                )),
+            10.wb,
+          ],
+        ),
+      ),
+          Container(
+            margin: EdgeInsets.only(
+              top: 10, bottom: 10,
+              left: rSize(8),
+              // top: rSize(10)
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    constraints: BoxConstraints(minWidth: rSize(70)),
+                    child: Text(
+                      "实付款",
+                      style:
+                      AppTextStyle.generate(12 * 2.sp, color: Color(0xff333333)),
+                    )),
+                Spacer(),
+                Container(
+                  child: Text(
+                      "￥${orderDetail.actualTotalAmount.toStringAsFixed(2)}",
+                      style: TextStyle(color: Color(0xFFC92219), fontSize: 16.rsp)),
+                ),
+                10.wb,
+              ],
+            ),
+          ),
+          // _saleAmountInfo(),
+        ],
+      ),
+    );
+  }
+
+
+  wholesaleCompensate() {
+    return Container(
+      margin: EdgeInsets.only(top: rSize(10)),
+      padding: EdgeInsets.symmetric(horizontal: rSize(8)),
+      color: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(
+              top: 10, bottom: 10,
+              left: rSize(8),
+              // top: rSize(10)
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    constraints: BoxConstraints(minWidth: rSize(70)),
+                    child: Text(
+                      "订单补偿",
+                      style:
+                      AppTextStyle.generate(12 * 2.sp, color: Color(0xff333333)),
+                    )),
+                Spacer(),
+                Container(
+                  child: Text(
+                      "￥${orderDetail.makeUpAmount==null?0:  orderDetail.makeUpAmount.toStringAsFixed(2)}",
+                      style: TextStyle(color: Color(0xFFC92219), fontSize: 16.rsp)),
+                ),
+                10.wb,
+              ],
+            ),
+          ),
+
+          Container(
+            margin: EdgeInsets.only(
+              top: 10, bottom: 10,
+              left: rSize(8),
+              // top: rSize(10)
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    constraints: BoxConstraints(minWidth: rSize(70)),
+                    child: Text(
+                      "补偿原因",
+                      style:
+                      AppTextStyle.generate(12 * 2.sp, color: Color(0xff333333)),
+                    )),
+                Spacer(),
+                Container(
+                  child: Text(
+                      orderDetail.makeUpText,
+                      style: TextStyle(color: Color(0xFFC92219), fontSize: 16.rsp)),
+                ),
+                10.wb,
+              ],
+            ),
+          ),
+          // _saleAmountInfo(),
+        ],
+      ),
+    );
+  }
+  _wholesaleTitle(
+      String title,
+      String value, {
+        bool needCopy = false,
+        CrossAxisAlignment crossAxisAlignment: CrossAxisAlignment.center,
+      }) {
+    return Container(
+      margin: EdgeInsets.only(
+        top: 10, bottom: 10,
+        left: rSize(8),
+        // top: rSize(10)
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Container(
+              constraints: BoxConstraints(minWidth: rSize(70)),
+              child: Text(
+                "$title",
+                style:
+                AppTextStyle.generate(12 * 2.sp, color: Color(0xff333333)),
+              )),
+          needCopy
+              ? GestureDetector(
+            onTap: () {
+              if (!needCopy) {
+                return;
+              }
+              ClipboardData data = new ClipboardData(text: value);
+              Clipboard.setData(data);
+              Toast.showSuccess('$title:' + value + ' -- 已经保存到剪贴板');
+            },
+            child: Container(
+
+              child: Text(
+                "$value",
+                style: AppTextStyle.generate(12 * 2.sp,fontWeight: FontWeight.bold,
+                    color: Color(0xff333333)),
+              ),
+            ),
+          )
+              : Expanded(
+            child: GestureDetector(
+              onTap: () {
+                if (!needCopy) {
+                  return;
+                }
+                ClipboardData data = new ClipboardData(text: value);
+                Clipboard.setData(data);
+                Toast.showSuccess('$title:' + value + ' -- 已经保存到剪贴板');
+              },
+              child: Container(
+
+                child: Text(
+                  "$value",
+                  style: AppTextStyle.generate(12 * 2.sp,fontWeight: FontWeight.bold,
+                      color: Color(0xff333333)),
+                ),
+              ),
+            ),
+          ),
+          needCopy
+              ? GestureDetector(
+            onTap: () {
+              if (!needCopy) {
+                return;
+              }
+              ClipboardData data = new ClipboardData(text: value);
+              Clipboard.setData(data);
+              Toast.showSuccess('$title:' + value + ' -- 已经保存到剪贴板');
+            },
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 3),
+              margin: EdgeInsets.only(left: 5),
+              decoration: BoxDecoration(
+                color: AppColor.frenchColor,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(
+                '复制',
+                style:
+                AppTextStyle.generate(11 * 2.sp, color: Colors.grey),
+              ),
+            ),
+          )
+              : Container(),
+        ],
+      ),
+    );
+  }
+
+
+
+
   _tile(
     String title,
     String value, {
@@ -411,6 +673,31 @@ abstract class OrderDetailState<T extends StatefulWidget>
   //   );
   // }
 
+
+  wholesaleBrandList() {
+    return Container(
+      color: Colors.white,
+      margin: EdgeInsets.only(top: rSize(8)),
+      //padding: EdgeInsets.all(rSize(5)),
+      child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: orderDetail.brands.length,
+          physics: NeverScrollableScrollPhysics(),
+          itemBuilder: (_, index) {
+            return Container(
+              padding: EdgeInsets.only(bottom: rSize(8)),
+              child: Column(
+                children: <Widget>[
+
+                  _wholesaleGoodsList(orderDetail.brands[index], orderDetail.statusList),
+
+                ],
+              ),
+            );
+          }),
+    );
+  }
+
   brandList() {
     return Container(
       color: Colors.white,
@@ -494,9 +781,10 @@ abstract class OrderDetailState<T extends StatefulWidget>
                 }
               });
               if (canPush) {
-                AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                    arguments: CommodityDetailPage.setArguments(
-                        brand.goods[index].goodsId));
+                Get.to(()=>WholesaleDetailPage(goodsId:  brand.goods[index].goodsId,isWholesale: true));
+                // AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                //     arguments: CommodityDetailPage.setArguments(
+                //         brand.goods[index].goodsId));
               } else {
                 ReToast.err(text: '商品已下架');
               }
@@ -504,6 +792,162 @@ abstract class OrderDetailState<T extends StatefulWidget>
             child: _goodsItem(brand.goods[index]),
           );
         }));
+  }
+
+
+  _wholesaleGoodsList(Brands brand, List<StatusList> status) {
+    return ListView.builder(
+        itemCount: brand.goods.length,
+        shrinkWrap: true,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: ((context, index) {
+          return FlatButton(
+            onPressed: () {
+              bool canPush = true;
+              Goods goods = brand.goods[index];
+              status.forEach((element) {
+                if (element.goodsId == goods.goodsId && element.status == 0) {
+                  canPush = false;
+                }
+              });
+              if (canPush) {
+                Get.to(()=>WholesaleDetailPage(goodsId:  brand.goods[index].goodsId,isWholesale: true));
+                // AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                //     arguments: CommodityDetailPage.setArguments(
+                //         brand.goods[index].goodsId));
+              } else {
+                ReToast.err(text: '商品已下架');
+              }
+            },
+            child: _wholesaleGoodsItem(brand.goods[index]),
+          );
+        }));
+  }
+
+  _wholesaleGoodsItem(Goods goods) {
+    // double buttonWidth = (MediaQuery.of(context).size.width-50)/4;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Container(
+          height: rSize(100),
+          padding:
+          EdgeInsets.symmetric(vertical: rSize(8), ),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColor.frenchColor,
+                  borderRadius: BorderRadius.all(Radius.circular(6)),
+                ),
+               // margin: EdgeInsets.symmetric(horizontal: rSize(4)),
+                child: CustomCacheImage(
+                  width: rSize(90),
+                  height: rSize(90),
+                  imageUrl: Api.getImgUrl(goods.mainPhotoUrl),
+                  borderRadius: BorderRadius.all(Radius.circular(6)),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              10.wb,
+              Expanded(
+                child: Container(
+                  // margin: EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+
+                      Row(
+                        children: [
+                          Container(
+                            width: 170.rw,
+                            alignment: Alignment.centerLeft,
+                            padding: EdgeInsets.only(bottom: 10.rw),
+                            child: Text(
+                              goods.goodsName,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyle.generate(14 * 2.sp,
+                                  fontWeight: FontWeight.w600),
+                            ),
+                          ),
+                          Spacer()
+,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Container(
+                                alignment: Alignment.centerLeft,
+                                child: Text(
+                                  "￥${goods.unitPrice.toStringAsFixed(2)}",
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTextStyle.generate(12 * 2.sp,
+                                      color: Color(0xFF333333)),
+                                ),
+                              ),
+                              4.hb,
+                              Container(
+                                alignment: Alignment.centerRight,
+                                child: Text(
+                                  "x${goods.quantity}",
+                                  style: AppTextStyle.generate(12.rsp,
+                                      color: Color(0xFF999999),
+                                      fontWeight: FontWeight.w300),
+                                ),
+                              )
+                            ],
+                          ),
+
+                        ],
+                      ),
+                      Spacer(),
+                      Container(
+                        margin: EdgeInsets.only(top: 10),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                              constraints: BoxConstraints(maxWidth: 150.rw),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(2),
+                                color: Color(0xffeff1f6),
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 3, horizontal: 6),
+                              child: Text(
+                                goods.skuName,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: AppTextStyle.generate(11 * 2.sp,
+                                    color: Colors.grey[600],
+                                    fontWeight: FontWeight.w300),
+                              ),
+                            ),
+                            Spacer(),
+
+                          ],
+                        ),
+                      ),
+                      Spacer(),
+                      Row(
+                        children: <Widget>[
+
+                          Spacer(),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 
   refundClick(Goods goods) {
@@ -834,22 +1278,62 @@ abstract class OrderDetailState<T extends StatefulWidget>
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.all(Radius.circular(10))),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                  margin: EdgeInsets.only(left: 5, right: 10),
+                  child: Image.asset(
+                    AppImageName.address_icon,
+                    width: 40,
+                    height: 40,
+                  )
+                  // child: Icon(
+                  //   AppIcons.icon_address,
+                  //   size: 20*2.sp,
+                  // ),
+                  ),
+              Expanded(child: addressView()),
+            ],
+          ),
+          20.hb,
           Container(
-              margin: EdgeInsets.only(left: 5, right: 10),
-              child: Image.asset(
-                AppImageName.address_icon,
-                width: 40,
-                height: 40,
-              )
-              // child: Icon(
-              //   AppIcons.icon_address,
-              //   size: 20*2.sp,
-              // ),
-              ),
-          Expanded(child: addressView()),
+            padding: EdgeInsets.only(left: 10.rw,right: 10.rw),
+            width: double.infinity,
+            height: 0.5.rw,
+            color: Color(0xFFEEEEEE),
+          ),
+      Container(
+        margin: EdgeInsets.only(
+           top: 10,
+          left: rSize(8),
+          // top: rSize(10)
+        ),
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+                constraints: BoxConstraints(minWidth: rSize(70)),
+                child: Text(
+                  "买家留言",
+                  style:
+                  AppTextStyle.generate(12 * 2.sp, color: Color(0xff333333)),
+                )),
+            Container(
+
+                child: Text(
+                  orderDetail.buyerMessage,
+                  style:
+                  AppTextStyle.generate(12 * 2.sp, color: Color(0xff333333)),
+                )),
+
+          ],
+        ),
+      ),
         ],
       ),
     );

@@ -1165,6 +1165,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
           resultModel.data,
           goToOrder: true,
           canUseBalance: !_checkSwitchEnabled,
+          isPifa: false,
         ));
   }
 }

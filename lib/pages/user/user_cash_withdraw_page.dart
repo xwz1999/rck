@@ -18,7 +18,9 @@ import 'package:jingyaoyun/widgets/webView.dart';
 
 class UserCashWithdrawPage extends StatefulWidget {
   final Map arguments;
+
   const UserCashWithdrawPage({Key key, this.arguments}) : super(key: key);
+
   static setArguments({num amount = 0}) {
     return {
       'amount': amount,
@@ -193,13 +195,32 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
       child: Flex(
         direction: Axis.vertical,
         children: <Widget>[
-          Container(
-            height: 40,
-            alignment: Alignment.bottomLeft,
-            child: Text(
-              "提现金额(元)",
-              style: TextStyle(color: Colors.black, fontSize: 16),
-            ),
+          Row(
+            children: [
+              Container(
+                height: 40,
+                alignment: Alignment.bottomLeft,
+                child: Row(
+                  children: [
+                    Text(
+                      "提现金额(元)",
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+
+                    Offstage(
+                      offstage:
+                      !(!TextUtils.isEmpty(_amountTextEditController.text) &&
+                          double.parse(_amountTextEditController.text) < 10),
+                      child: Text(
+                        "(提现金额至少10元)",
+                        style: TextStyle(
+                            fontSize: 12 * 2.sp, color: AppColor.themeColor),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
           Expanded(
             child: Row(
@@ -208,7 +229,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
                   "¥",
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 40,
+                      fontSize: 24.rsp,
                       fontWeight: FontWeight.w400),
                 ),
                 Expanded(
@@ -228,7 +249,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
                     placeholder: "本次最多可转出${amount.toStringAsFixed(2)}元",
                     placeholderStyle: TextStyle(
                         color: Color(0xffcccccc),
-                        fontSize: 16,
+                        fontSize: 20.rsp,
                         fontWeight: FontWeight.w300),
                     decoration: BoxDecoration(color: Colors.white.withAlpha(0)),
                     style: TextStyle(
@@ -255,21 +276,54 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
         children: <Widget>[
           con,
           Positioned(
-            left: 50,
-            bottom: 10,
+            left: 18.rw,
+            bottom: 5.rw,
             child: Offstage(
               offstage: !(!TextUtils.isEmpty(_amountTextEditController.text) &&
-                  double.parse(_amountTextEditController.text) < 10),
-              child: Text(
-                "提现金额至少10元",
-                style:
-                    TextStyle(fontSize: 12 * 2.sp, color: AppColor.themeColor),
+                  double.parse(_amountTextEditController.text) > 10),
+              child: Container(
+                height: 40,
+                alignment: Alignment.bottomLeft,
+                child: Row(
+                  children: [
+                    Text(
+                      "注：平台代扣付税费${_getTax(_amountTextEditController.text)},实际到账金额",
+                      style:
+                          TextStyle(color: Color(0xFF999999), fontSize: 12.rsp),
+                    ),
+                    Text(
+                      "${_getReal(_amountTextEditController.text, _getTax(_amountTextEditController.text))}",
+                      style:
+                          TextStyle(color: Color(0xFF999999), fontSize: 12.rsp),
+                    ),
+                  ],
+                ),
               ),
             ),
           )
         ],
       ),
     );
+  }
+
+  _getTax(String text) {
+    if (text.isEmpty) {
+      return '';
+    } else {
+      double price = double.parse(text);
+      double tax = price / (1.13) * 0.13 * 1.12;
+      return tax.toStringAsFixed(2);
+    }
+  }
+
+  _getReal(String before, String tax) {
+    if (before.isEmpty || tax.isEmpty) {
+      return '';
+    } else {
+      double b = double.parse(before);
+      double t = double.parse(tax);
+      return (b - t).toStringAsFixed(2);
+    }
   }
 
   _buttonWidget(String title, {isSelect = false, Function click}) {
@@ -400,29 +454,30 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
           left: 18,
         ),
         margin: EdgeInsets.only(bottom: 10),
-        child: GestureDetector(
-          onTap: () {
-            showDialog(
-                context: context,
-                builder: (content) {
-                  return WithdrawAlertWidget(dismissClick: () {
-                    Navigator.pop(context);
-                  });
-                });
-          },
-          child: ExtendedText.rich(TextSpan(children: [
-            TextSpan(
-              text: "提现小助手 ",
-              style: TextStyle(color: Color(0xff666666), fontSize: 10),
-            ),
-            WidgetSpan(
-              child: Icon(
-                Icons.help_outline,
-                size: 12,
-                color: Color(0xff666666),
-              ),
-            ),
-          ])),
+        child: Container(
+          child: GestureDetector(
+              onTap: () {
+                showDialog(
+                    context: context,
+                    builder: (content) {
+                      return WithdrawAlertWidget(dismissClick: () {
+                        Navigator.pop(context);
+                      });
+                    });
+              },
+              child: Row(
+                children: [
+                  Text(
+                    '提现小助手 ',
+                    style: TextStyle(color: Color(0xff666666), fontSize: 10),
+                  ),
+                  Icon(
+                    Icons.help_outline,
+                    size: 12,
+                    color: Color(0xff666666),
+                  ),
+                ],
+              )),
         ));
   }
 
@@ -663,6 +718,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
 
 class WithdrawAlertWidget extends StatelessWidget {
   final Function dismissClick;
+
   const WithdrawAlertWidget({Key key, this.dismissClick}) : super(key: key);
 
   @override

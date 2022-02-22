@@ -9,8 +9,10 @@ import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/utils/image_utils.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'dart:ui' as ui;
 
@@ -211,7 +213,24 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
       if (success) {
         showSuccess("图片已经保存到相册!");
       } else {
-        showError("图片保存失败...");
+        Alert.show(
+          context,
+          NormalContentDialog(
+            title: '提示',
+            content: Text('图片保存失败，请前往应用权限页，设置存储权限为始终允许',style: TextStyle(color: Color(0xFF333333),fontSize: 14.rsp),),
+            items: ["取消"],
+            listener: (index) {
+              Alert.dismiss(context);
+            },
+            deleteItem: "确认",
+            deleteListener: () async{
+
+              Alert.dismiss(context);
+              bool isOpened = await openAppSettings();
+            },
+            type: NormalTextDialogType.delete,
+          ),
+        );
       }
     });
   }

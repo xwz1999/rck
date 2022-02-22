@@ -87,11 +87,21 @@ class _CashWithdrawHistoryPageState extends BaseStoreState<CashWithdrawHistoryPa
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text("提现金额", style: TextStyle(color: Colors.black, fontSize: 15),),
+                      Row(
+                        children: [
+                          Text("提现金额 ", style: TextStyle(color: Color(0xFF333333), fontSize: 16.rsp),),
+                          Text("¥${model.amount}", style: TextStyle(color: Color(0xFF333333), fontSize: 16.rsp),),
+                        ],
+                      ),
                       Container(height: 3,),
-                      Text("¥${model.amount}", style: TextStyle(color: Colors.black, fontSize: 17),),
+                      Row(
+                        children: [
+                          Text("税费${model.taxFee}元，实际到账", style: TextStyle(color: Color(0xFF333333) ,fontSize: 12.rsp),),
+                          Text("${model.taxFee}元", style: TextStyle(color: Color(0xFFD5101A), fontSize: 12.rsp),),
+                        ],
+                      ),
                       Container(height: 3,),
-                      Text("${model.createdAt.toString()}", style: TextStyle(color: Colors.black, fontSize: 12, fontWeight: FontWeight.w300),),
+                      Text("${model.createdAt.toString()}", style: TextStyle(color: Color(0xFF7F7F7F), fontSize: 12, fontWeight: FontWeight.w300),),
                     ],
                   ),
                   Spacer(),

@@ -4,9 +4,17 @@ import 'package:flutter/rendering.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/goods_simple_list_model.dart';
 import 'package:jingyaoyun/models/shopping_cart_list_model.dart';
 import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
+import 'package:jingyaoyun/pages/home/items/item_brand_like_grid.dart';
+import 'package:jingyaoyun/pages/shopping_cart/function/shopping_cart_fuc.dart';
+import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
+import 'package:jingyaoyun/pages/wholesale/models/wholesale_detail_model.dart';
+import 'package:jingyaoyun/pages/wholesale/wholeasale_detail_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_car_item.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_order_preview_page.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_sku_choose_page.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:get/get.dart';
@@ -17,10 +25,18 @@ import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:waterfall_flow/waterfall_flow.dart';
+
+import 'models/goods_dto.dart';
+import 'models/wholesale_car_model.dart';
+import 'models/wholesale_good_model.dart';
+import 'models/wholesale_order_preview_model.dart';
+import 'more_goods/whoesale_goods_grid.dart';
 
 class WholesaleCarPage extends StatefulWidget {
+  final bool canBack;
   WholesaleCarPage({
-    Key key,
+    Key key, this.canBack ,
   }) : super(key: key);
 
   @override
@@ -32,18 +48,23 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
   bool _checkAll = false;//全选
   bool _editting = false;
   GSRefreshController _refreshController;
-  List<ShoppingCartGoodsModel> _selectedGoods = [];
+  List<WholesaleCarModel> _selectedGoods = [];
+  List<WholesaleGood> _likeGoodsList = [];
 
-  List<ShoppingCartBrandModel> _carList = [];
+  List<WholesaleCarModel> _carList = [];
   StateSetter _bottomStateSetter;
   int _totalNum = 0;
+  bool _canback = false;
 
   @override
   void initState() {
     super.initState();
+    if(widget.canBack!=null){
+      _canback = widget.canBack;
+    }
     _refreshController = GSRefreshController(initialRefresh: true);
     Future.delayed(Duration.zero, () async {
-      await getcarList();
+      _carList =  await WholesaleFunc.getCarList();
     });
   }
 
@@ -58,6 +79,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
       backgroundColor: AppColor.frenchColor,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
+        leading: _canback? RecookBackButton():null,
         backgroundColor: Colors.white,
         titleSpacing: 0,
         automaticallyImplyLeading: false,
@@ -88,21 +110,6 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
             Spacer(),
           ],
         ),
-        // title:  Row(
-        //   mainAxisAlignment: MainAxisAlignment.start,
-        //   // crossAxisAlignment: CrossAxisAlignment.center,
-        //   children: [
-        //
-        //     Text(
-        //         "批发购物车",
-        //         style: TextStyle(
-        //           color: Color(0xFF111111),
-        //           fontSize: 20.rsp,
-        //         ),
-        //
-        //     ),
-        //   ],
-        // ),
         elevation: 0,
         actions: [
           CustomImageButton(
@@ -116,13 +123,13 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                 return;
               }
               //切换管理状态  重置所以数据到原始数据
-              for (ShoppingCartBrandModel _brandModel
+              for (WholesaleCarModel _brandModel
               in _carList) {
                 _brandModel.selected = false;
-                for (ShoppingCartGoodsModel _goodsModel
-                in _brandModel.children) {
-                  _goodsModel.selected = false;
-                }
+                // for (ShoppingCartGoodsModel _goodsModel
+                // in _brandModel.children) {
+                //   _goodsModel.selected = false;
+                // }
               }
               _checkAll = false;
               _selectedGoods.clear();
@@ -143,13 +150,13 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
     return RefreshWidget(
       controller: _refreshController,
       onRefresh: () async {
-         await getcarList();
+         _carList =  await WholesaleFunc.getCarList();
+         _likeGoodsList = await WholesaleFunc.getLikeGoodsList(UserManager.instance.user.info.id,isSale: true);
          _checkAll = false;
          _selectedGoods.clear();
          _totalNum = 0;
-         _carList.forEach((brand) {
-           _totalNum += brand.children.length;
-         });
+         _totalNum = _carList.length;
+
         setState(() {
 
         });
@@ -160,48 +167,203 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
       // _recommendUserList.isNotEmpty?
       _carList.isNotEmpty?ListView.builder(
           itemBuilder: (context, index) {
-            return WhosaleCarItem(
-              isEdit: _manageStatus,
-              //isEdit: true,
-              model: _carList[index],
-              selectedListener: (ShoppingCartGoodsModel goods) {
-                bool goodsSelected = goods.selected;
-                if (_selectedGoods.contains(goods)) {
-                  if (!goodsSelected) {
-                    _selectedGoods.remove(goods);
-                  }
-                } else {
-                  if (goodsSelected) {
+            if(index==0){
+              return Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Column(
+                  children: [
+                    WholesaleCarItem(
+                      isEdit: _manageStatus,
+                      //isEdit: true,
+                      model: _carList[index],
+                      selectedListener: (WholesaleCarModel goods) {
+
+                        bool goodsSelected = goods.selected;
+                        if(goodsSelected){
+
+                          _selectedGoods.clear();
+                          _selectedGoods.add(goods);
+
+                          _carList.forEach((element) {
+                            element.selected = false;
+                          });
+                          goods.selected = true;
+                        }else{
+                          _carList.forEach((element) {
+                            element.selected = false;
+                          });
+                          _selectedGoods.clear();
+                        }
+
+                        if (_selectedGoods.length == _totalNum) {
+                          _checkAll = true;
+                        } else {
+                          _checkAll = false;
+                        }
+                        setState(() {
+
+                        });
+                      },
+                      clickListener: (WholesaleCarModel goods) {
+                        if (_editting) {
+                          FocusScope.of(context).requestFocus(FocusNode());
+                          return;
+                        }
+                        Get.to(()=>WholesaleDetailPage(goodsId: goods.goodsId,isWholesale: true,))
+
+
+                            .then((onValue) async {
+                          _carList =  await WholesaleFunc.getCarList();
+                          setState(() {
+
+                          });
+                        });
+                      },
+                      onBeginInput: (value) {
+                        _editting = true;
+                      },
+                      numUpdateCompleteCallback: (goods, num) {
+                        _editting = false;
+                        List<GoodsDTO> list = [];
+                        list.add(GoodsDTO(skuId:goods.skuId,quantity:num));
+                        goods.quantity = num;
+                        WholesaleFunc.UpdateShopCar(list);
+                        setState(() {
+
+                        });
+                      },
+                    ),
+                    _likeGoodsList.isNotEmpty ? _buildLikeWidget() : SizedBox(),
+                  ],
+                )
+              );
+            }else if((index == _carList.length-1)) {
+              return Column(
+                children: [
+                  WholesaleCarItem(
+                    isEdit: _manageStatus,
+                    //isEdit: true,
+                    model: _carList[index],
+                    selectedListener: (WholesaleCarModel goods) {
+
+                      bool goodsSelected = goods.selected;
+                      if(goodsSelected){
+
+                        _selectedGoods.clear();
+                        _selectedGoods.add(goods);
+
+                        _carList.forEach((element) {
+                          element.selected = false;
+                        });
+                        goods.selected = true;
+                      }else{
+                        _carList.forEach((element) {
+                          element.selected = false;
+                        });
+                        _selectedGoods.clear();
+                      }
+
+                      if (_selectedGoods.length == _totalNum) {
+                        _checkAll = true;
+                      } else {
+                        _checkAll = false;
+                      }
+                      setState(() {
+
+                      });
+                    },
+                    clickListener: (WholesaleCarModel goods) {
+                      if (_editting) {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        return;
+                      }
+                      Get.to(()=>WholesaleDetailPage(goodsId: goods.goodsId,isWholesale: true,))
+                          .then((onValue) async {
+                        _carList =  await WholesaleFunc.getCarList();
+                        setState(() {
+
+                        });
+                      });
+                    },
+                    onBeginInput: (value) {
+                      _editting = true;
+                    },
+                    numUpdateCompleteCallback: (goods, num) {
+                      _editting = false;
+                      List<GoodsDTO> list = [];
+                      list.add(GoodsDTO(skuId:goods.skuId,quantity:num));
+                      goods.quantity = num;
+                      WholesaleFunc.UpdateShopCar(list);
+                      setState(() {
+
+                      });
+                    },
+                  ),
+                  _likeGoodsList.isNotEmpty ? _buildLikeWidget() : SizedBox(),
+                ],
+              );
+            }else{
+              return WholesaleCarItem(
+                isEdit: _manageStatus,
+                //isEdit: true,
+                model: _carList[index],
+                selectedListener: (WholesaleCarModel goods) {
+
+                  bool goodsSelected = goods.selected;
+                  if(goodsSelected){
+
+                    _selectedGoods.clear();
                     _selectedGoods.add(goods);
+
+                    _carList.forEach((element) {
+                      element.selected = false;
+                    });
+                    goods.selected = true;
+                  }else{
+                    _carList.forEach((element) {
+                      element.selected = false;
+                    });
+                    _selectedGoods.clear();
                   }
-                }
-                if (_selectedGoods.length == _totalNum) {
-                  _checkAll = true;
-                } else {
-                  _checkAll = false;
-                }
-                _bottomStateSetter(() {});
-              },
-              clickListener: (ShoppingCartGoodsModel goods) {
-                if (_editting) {
-                  FocusScope.of(context).requestFocus(FocusNode());
-                  return;
-                }
-                AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                    arguments: CommodityDetailPage.setArguments(goods.goodsId))
-                    .then((onValue) {
-                  getcarList();
-                });
-              },
-              onBeginInput: (value) {
-                _editting = true;
-              },
-              numUpdateCompleteCallback: (goods, num) {
-                _editting = false;
-                // _presenter.updateQuantity(
-                //     UserManager.instance.user.info.id, goods, num);
-              },
-            );
+
+                  if (_selectedGoods.length == _totalNum) {
+                    _checkAll = true;
+                  } else {
+                    _checkAll = false;
+                  }
+                  setState(() {
+
+                  });
+                },
+                clickListener: (WholesaleCarModel goods) {
+                  if (_editting) {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    return;
+                  }
+                  Get.to(()=>WholesaleDetailPage(goodsId: goods.goodsId,isWholesale: true,))
+                      .then((onValue) async {
+                    _carList =  await WholesaleFunc.getCarList();
+                    setState(() {
+
+                    });
+                  });
+                },
+                onBeginInput: (value) {
+                  _editting = true;
+                },
+                numUpdateCompleteCallback: (goods, num) {
+                  _editting = false;
+                  List<GoodsDTO> list = [];
+                  list.add(GoodsDTO(skuId:goods.skuId,quantity:num));
+                  goods.quantity = num;
+                  WholesaleFunc.UpdateShopCar(list);
+                  setState(() {
+
+                  });
+                },
+              );
+            }
+
           },
           itemCount: _carList.length,
         ):SizedBox(),
@@ -210,32 +372,117 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
     );
   }
 
+  _buildLikeTitle() {
+    return Container(
+      width: double.infinity,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            width: 22.rw,
+            height: 2.rw,
+            decoration: BoxDecoration(color: Color(0xFFC92219)),
+          ),
+          Container(
+            width: 6.rw,
+            height: 6.rw,
+            decoration: BoxDecoration(
+                color: Color(0xFFC92219),
+                borderRadius: BorderRadius.all(Radius.circular(6.rw))),
+          ),
+          20.wb,
+          Text(
+            '您可能还喜欢',
+            style: TextStyle(color: Color(0xFFC92219), fontSize: 14.rsp),
+          ),
+          20.wb,
+          Container(
+            width: 6.rw,
+            height: 6.rw,
+            decoration: BoxDecoration(
+                color: Color(0xFFC92219),
+                borderRadius: BorderRadius.all(Radius.circular(6.rw))),
+          ),
+          Container(
+            width: 22.rw,
+            height: 2.rw,
+            decoration: BoxDecoration(color: Color(0xFFC92219)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  _buildLikeWidget() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.rw),
+      //height: _likeGoodsList?.length * 381.rw / 2,
+      width: double.infinity,
+      child: Column(
+        children: [
+          35.hb,
+          _buildLikeTitle(),
+          50.hb,
+          WaterfallFlow.builder(
+              primary: false,
+              shrinkWrap: true,
+              padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight),
+              physics: NeverScrollableScrollPhysics(),
+              itemCount: _likeGoodsList?.length,
+              gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 10,
+              ),
+              itemBuilder: (context, index) {
+                WholesaleGood goods = _likeGoodsList[index];
+
+                return MaterialButton(
+                    padding: EdgeInsets.zero,
+                    onPressed: () {
+                      Get.to(()=>WholesaleDetailPage(goodsId: goods.id,isWholesale: true,));
+
+                    },
+                    child: WholesaleGoodsGrid(goods: goods,));
+              }),
+          40.hb,
+          // Container(
+          //   alignment: Alignment.center,
+          //   child: Text(
+          //     '已经到底啦~',
+          //     style: TextStyle(color: Color(0xFF999999), fontSize: 14.rsp),
+          //   ),
+          // ),
+        ],
+      ),
+    );
+  }
+
   _bottomTool() {
     return StatefulBuilder(
       builder: (BuildContext context, StateSetter bottomSetState) {
         double totalPrice = 0;
-        double totalCommission = 0;
-        // _selectedGoods.forEach((goods) {
-        //   totalPrice += goods.price * goods.quantity;
-        //   totalCommission += goods.commission * goods.quantity;
-        // });
+
+        _selectedGoods.forEach((goods) {
+          totalPrice += goods.salePrice * goods.quantity;
+        });
         _bottomStateSetter = bottomSetState;
         return Container(
           padding: EdgeInsets.symmetric(horizontal: rSize(8)),
           color: Colors.white,
           height: rSize(65),
           child:  _bottomBarChildren(totalPrice,
-                totalCommission: totalCommission),
+                ),
 
         );
       },
     );
   }
 
-  _bottomBarChildren(totalPrice, {totalCommission = 0}) {
+  _bottomBarChildren(totalPrice,) {
     return Row(
       children: [
-        _checkAllButton(),
+        _manageStatus?_checkAllButton():SizedBox(),
         Spacer(),
         !_manageStatus?Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -256,13 +503,6 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                           style:
                           AppTextStyle.generate(22 * 2.sp, color: Color(0xffc70404),fontWeight: FontWeight.bold))
                     ])),
-            totalCommission > 0 && AppConfig.commissionByRoleLevel
-                ? Text(
-              "赚 ¥${totalCommission.toStringAsFixed(2)}",
-              style: TextStyle(
-                  color: AppColor.themeColor, fontSize: 14 * 2.sp),
-            )
-                : Container()
           ],
         ):SizedBox(),
 
@@ -275,6 +515,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
   }
 
   CustomImageButton _checkAllButton() {
+    ///每个订单只能有一个商品 所有编辑状态下才有全选操作
     return CustomImageButton(
       direction: Direction.horizontal,
       title: "全选",
@@ -296,15 +537,22 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
         // 如果是编辑状态 可以选中所以
         // 如果不是编辑状态 只能选中未下架的商品
         _carList.forEach((brand) {
-          brand.selected = _checkAll;
-          brand.children.forEach((goods) {
-            if (_checkAll) {
-              if(goods.publishStatus!=0){//判断是否下架
-                _selectedGoods.add(goods);
-              }
+          if(brand.salePublish!=0){
+            if(_checkAll){
+              _selectedGoods.add(brand);
             }
-            goods.selected = _checkAll;
-          });
+
+            brand.selected = _checkAll;
+          }
+
+          // brand.children.forEach((goods) {
+          //   if (_checkAll) {
+          //     if(goods.publishStatus!=0){//判断是否下架
+          //
+          //     }
+          //   }
+          //   goods.selected = _checkAll;
+          // });
         });
         setState(() {});
       },
@@ -331,12 +579,10 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
             FocusScope.of(context).requestFocus(FocusNode());
             return;
           }
-
           if (_selectedGoods.length == 0) {
             Toast.showInfo("您还没有选择商品");
             return;
           }
-
           Alert.show(
               context,
               NormalTextDialog(
@@ -347,7 +593,13 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                 },
                 type: NormalTextDialogType.delete,
                 deleteListener: () {
-
+                  List<GoodsDTO> list = [];
+                  _selectedGoods.forEach((element) {
+                    list.add(GoodsDTO(skuId:element.skuId,quantity:element.quantity));
+                  });
+                  WholesaleFunc.deleteShopCart(list);
+                  _refreshController.requestRefresh();
+                  Alert.dismiss(context);
                 },
               ));
         },
@@ -375,27 +627,31 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
             Toast.showInfo("您还没有选择商品");
             return;
           }
-
+          _createOrder(_selectedGoods[0].skuId,_selectedGoods[0].quantity);
         },
       ),
     );
   }
 
+  Future<dynamic> _createOrder(int skuId,int num) async {
+    List<GoodsDTO> list = [];
+    list.add(GoodsDTO(skuId:skuId,quantity:num));
+    WholesaleOrderPreviewModel order = await WholesaleFunc.createOrderPreview(
+      list,
+      0,
+    );
+    if (order==null) {
+      Get.back();
+      return;
+    }else
+    {
 
-   Future<List<ShoppingCartBrandModel>> getcarList() async {
-    ResultData result =
-    await HttpManager.post(GoodsApi.shopping_cart_list, {"userID": UserManager.instance.user.info.id});
-    if (result.data != null) {
-      if (result.data['data'] != null) {
-        _carList =
-         (result.data['data'] as List)
-            .map((e) => ShoppingCartBrandModel.fromJson(e))
-            .toList();
-      }
-      else
-        _carList= [];
+      AppRouter.push(context, RouteName.WHOLESALE_GOODS_ORDER_PAGE,
+          arguments: WholesaleGoodsOrderPage.setArguments(order));
+
+      // Get.to(()=>WholesaleGoodsOrderPage(model: order,));
     }
-    else
-      _carList= [];
+
   }
+
 }

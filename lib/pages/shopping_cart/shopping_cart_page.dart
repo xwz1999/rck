@@ -91,7 +91,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
       // if (goodsSimpleListModel != null) {
       //   _likeGoodsList = goodsSimpleListModel.data;
       // }
-
+      if(mounted)
       setState(() {});
     });
   }
@@ -501,7 +501,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         SizedBox(
           height: rSize(30),
         ),
-        _likeGoodsList != null ? _buildLikeWidget() : SizedBox(),
+        _likeGoodsList.isNotEmpty ? _buildLikeWidget() : SizedBox(),
       ],
     );
   }

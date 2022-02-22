@@ -128,6 +128,9 @@ class UserApi {
   static const String phone_login_send_sms = "/v1/messages/login/sms/send";
   static const String phone_register = "/v1/users/profile/mobile/register";
   static const String phone_login = "/v1/users/profile/mobile/login";
+
+  static const String account_login = "/v1/users/profile/mobile/loginN2";
+
   static const String auto_login = "/v1/users/profile/auto/login";
   static const String launch = "/v1/application/launch";
 
@@ -340,9 +343,10 @@ class WebApi {
       'https://h5.reecook.cn/goods/detail';
 
   static const String testInviteRegist =
-      "http://testh5.reecook.cn/#/user/appRegister/";
+      "http://testh5.zjycshop.com/#/user/appRegister/";
+
   static const String testDiamondsInviteRegist =
-      "http://testh5.reecook.cn/#/user/diamonds/";
+      "http://jyyh5.reecook.cn/#/user/diamonds/";
 
   static const String aboutUs = "${recookHttp}introduction.html";
   static const String businessCooperation = "${recookHttp}business.html";

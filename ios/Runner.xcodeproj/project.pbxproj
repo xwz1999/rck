@@ -923,7 +923,6 @@
 					"\"url_launcher\"",
 					"-framework",
 					"\"video_player\"",
-
 					"-framework",
 					"\"wakelock\"",
 					"-framework",

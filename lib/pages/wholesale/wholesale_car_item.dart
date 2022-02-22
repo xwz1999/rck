@@ -7,22 +7,25 @@ import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/models/shopping_cart_list_model.dart';
 import 'package:jingyaoyun/pages/home/widget/plus_minus_view.dart';
 import 'package:jingyaoyun/pages/shopping_cart/similar_goods_page.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_car_specs.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/input_view.dart';
-typedef GoodsSelectedCallback = Function(ShoppingCartGoodsModel goods);
-typedef GoodsClickCallback = Function(ShoppingCartGoodsModel goods);
-typedef PlusMinusUpdateCallback = Function(
-    ShoppingCartGoodsModel goods, int num);
 
-class WhosaleCarItem extends StatefulWidget {
-  final ShoppingCartBrandModel model;
+import 'models/wholesale_car_model.dart';
+typedef GoodsSelectedCallback = Function(WholesaleCarModel goods);
+typedef GoodsClickCallback = Function(WholesaleCarModel goods);
+typedef PlusMinusUpdateCallback = Function(
+    WholesaleCarModel goods, int num);
+
+class WholesaleCarItem extends StatefulWidget {
+  final WholesaleCarModel model;
   final GoodsSelectedCallback selectedListener;
   final GoodsClickCallback clickListener;
   final PlusMinusUpdateCallback numUpdateCompleteCallback;
   final TextInputChangeCallBack onBeginInput;
   final bool isEdit;
-  const WhosaleCarItem(
+  const WholesaleCarItem(
       {Key key,
         @required this.model,
         @required this.selectedListener,
@@ -33,115 +36,48 @@ class WhosaleCarItem extends StatefulWidget {
       : assert(model != null);
 
   @override
-  _WhosaleCarItemState createState() => _WhosaleCarItemState();
+  _WholesaleCarItemState createState() => _WholesaleCarItemState();
 }
 
-class _WhosaleCarItemState extends State<WhosaleCarItem> {
+class _WholesaleCarItemState extends State<WholesaleCarItem> {
   @override
   Widget build(BuildContext context) {
 
     return Container(
-      padding: EdgeInsets.symmetric(vertical: rSize(13)),
-      margin: EdgeInsets.symmetric(vertical: rSize(5), horizontal: rSize(10)),
+      height: 170.rw,
+      padding: EdgeInsets.only(top: rSize(10)),
+      margin: EdgeInsets.only(bottom: 8.rw),
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10))),
-      child: Column(
-        children: <Widget>[_brandName(), _buildGoodsList()],
-      ),
+          ),
+      child: _goodsItem(widget.model),
     );
   }
 
-  _brandName() {
-    return Padding(
-      padding:
-      EdgeInsets.only(right: rSize(10), left: rSize(10), bottom: rSize(5)),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          // !widget.model.isAllWaitPromotionStart() || widget.isEdit?
-          CustomImageButton(
-            icon: Icon(
-              widget.model.selected
-                  ? AppIcons.icon_check_circle
-                  : AppIcons.icon_circle,
-              color: widget.model.selected
-                  ? AppColor.themeColor
-                  : Colors.grey,
-              size: rSize(20),
-            ),
-            onPressed: () {
-              widget.model.selected = !widget.model.selected;
-              widget.model.children.forEach((goods) {
-                // 只有 不是 活动未开始 的商品才能选择
-                // isEdit 编辑状态下都可以选择
-                // if (!goods.isWaitPromotionStart() || widget.isEdit) {
-                if (goods.publishStatus == 1 || widget.isEdit) {
-                  goods.selected = widget.model.selected;
-                  widget.selectedListener(goods);
-                } else {}
-
-                // }
-              });
-              setState(() {});
-            },
-          ),
-          // : Container(),
-          Container(
-            width: rSize(6),
-          ),
-          CustomImageButton(
-            height: rSize(30),
-            direction: Direction.horizontal,
-            pureDisplay: true,
-            // icon: CustomCacheImage(
-            //   borderRadius: BorderRadius.all(Radius.circular(rSize(5))),
-            //   imageUrl: Api.getResizeImgUrl(widget.model.brandLogo, 200),
-            // ),
-            contentSpacing: rSize(8),
-            style:
-            AppTextStyle.generate(17 * 2.sp, fontWeight: FontWeight.w500),
-            title: widget.model.brandName,
-          ),
-        ],
-      ),
-    );
-  }
-
-  _buildGoodsList() {
-    return ListView.builder(
-      // itemCount: !widget.model.isShowMore &&  widget.model.children.length> 5 ? 5+1 : widget.model.children.length,
-        itemCount: widget.model.children.length,
-        shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
-        itemBuilder: ((context, index) {
-          return _goodsItem(widget.model.children[index]);
-        }));
-  }
-
-  _goodsItemImage(ShoppingCartGoodsModel goods) {
+  _goodsItemImage(WholesaleCarModel goods) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: rSize(4)),
       child: CustomCacheImage(
-        width: rSize(90),
-        height: rSize(90),
+        width: 72.rw,
+        height: 72.rw,
         // imageUrl: Api.getResizeImgUrl(goods.mainPhotoUrl, rSize(80).toInt()),
-        imageUrl: Api.getResizeImgUrl(goods.mainPhotoUrl, rSize(200).toInt()),
-        borderRadius: BorderRadius.all(Radius.circular(6)),
+        imageUrl: Api.getResizeImgUrl(goods.picUrl, rSize(200).toInt()),
+        borderRadius: BorderRadius.all(Radius.circular(8.rw)),
       ),
     );
   }
 
-  _goodsItemSelectIcon(ShoppingCartGoodsModel goods) {
+  _goodsItemSelectIcon(WholesaleCarModel goods) {
     bool selected = goods.selected;
     return Container(
-      height: rSize(90),
+      color: Colors.transparent,
+      height: 72.rw,
       alignment: Alignment.center,
       child: CustomImageButton(
         width: rSize(26),
         // padding: EdgeInsets.only(left: rSize(0)),
         height: double.infinity,
-        icon: goods.publishStatus == 1 || widget.isEdit
+        icon: goods.salePublish == 1 || widget.isEdit
             ? Icon(
           selected ? AppIcons.icon_check_circle : AppIcons.icon_circle,
           color: selected ? AppColor.themeColor : Colors.grey,
@@ -152,17 +88,9 @@ class _WhosaleCarItemState extends State<WhosaleCarItem> {
           width: 20.rw,
           height: 20.rw,
         ),
-        onPressed: goods.publishStatus == 1 || widget.isEdit
+        onPressed: goods.salePublish == 1 || widget.isEdit
             ? () {
           goods.selected = !goods.selected;
-          bool checkAll = true;
-          widget.model.children.forEach((goodsItem) {
-            if (!goodsItem.selected) {
-              checkAll = false;
-              return;
-            }
-          });
-          widget.model.selected = checkAll;
           widget.selectedListener(goods);
           setState(() {});
         }
@@ -171,10 +99,10 @@ class _WhosaleCarItemState extends State<WhosaleCarItem> {
     );
   }
 
-  _goodsItem(ShoppingCartGoodsModel goods) {
+  _goodsItem(WholesaleCarModel goods) {
     return CustomImageButton(
       padding: EdgeInsets.all(0),
-      onPressed: goods.publishStatus == 0
+      onPressed: goods.salePublish == 0
           ? () {}
           : () {
         if (widget.clickListener != null) {
@@ -184,327 +112,97 @@ class _WhosaleCarItemState extends State<WhosaleCarItem> {
       child: Container(
         // height: rSize(130),
         padding:
-        EdgeInsets.symmetric(vertical: rSize(3), horizontal: rSize(10)),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _goodsItemSelectIcon(goods),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                _goodsItemImage(goods),
-                4.hb,
-                goods.publishStatus == 0
-                    ? Text(
-                  '该产品已下架',
-                  style: TextStyle(
-                      fontSize: 12.rsp,
-                      color: Color(0xFFC92219),
-                      fontWeight: FontWeight.bold),
-                )
-                    : SizedBox()
-              ],
-            ),
-            Expanded(
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 8),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    ExtendedText.rich(
-                      TextSpan(
-                        children: [
-                          goods.isImport == 1
-                              ? WidgetSpan(
-                            alignment: PlaceholderAlignment.middle,
-                            child: Container(
-                              alignment: Alignment.center,
-                              width: 24,
-                              height: 15,
-                              decoration: BoxDecoration(
-                                color: goods.countryIcon == null
-                                    ? Color(0xFFCC1B4F)
-                                    : Colors.transparent,
-                                borderRadius:
-                                BorderRadius.circular(3 * 2.w),
-                              ),
-                              child: goods.countryIcon == null
-                                  ? Text(
-                                '进口',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 10 * 2.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              )
-                                  : CustomCacheImage(
-                                width: rSize(100),
-                                height: rSize(100),
-                                imageUrl: Api.getImgUrl(
-                                    goods.countryIcon),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          )
-                              : WidgetSpan(child: SizedBox()),
-                          goods.isImport == 1
-                              ? WidgetSpan(
-                              child: Container(
-                                width: 5 * 2.w,
-                              ))
-                              : WidgetSpan(child: SizedBox()),
-                          TextSpan(
-                            text: goods.goodsName,
-                            style: AppTextStyle.generate(15 * 2.sp,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(top: 5),
-                      decoration: BoxDecoration(
-                        color: AppColor.frenchColor,
-                        borderRadius: BorderRadius.circular(2),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 2, horizontal: 6),
-                      child: Text(
-                        goods.skuName,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.generate(10 * 2.sp,
-                            color: Colors.grey[600],
-                            fontWeight: FontWeight.w300),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 2 * 2.w,
-                    ),
-                    goods.isFerme == 1
-                        ? Row(
-                      children: [
-                        Container(
-                          width: 32 * 2.w,
-                          height: 14 * 2.w,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            color: Color(0xFFFFE5ED),
-                            borderRadius:
-                            BorderRadius.circular(7.5 * 2.w),
-                          ),
-                          child: Text(
-                            '包税',
-                            style: TextStyle(
-                              color: Color(0xFFCC1B4F),
-                              fontSize: 10 * 2.sp,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 2 * 2.w,
-                        ),
-                        Text(
-                          '进口税¥${goods.ferme.toStringAsFixed(2)},由左家右厨承担',
-                          style: TextStyle(
-                              color: Color(0xFF666666),
-                              fontSize: 10 * 2.sp),
-                        ),
-                      ],
-                    )
-                        : SizedBox(),
-
-                    SizedBox(
-                      height: 7 * 2.w,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        AppConfig.commissionByRoleLevel
-                            ? Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  width: 0.4,
-                                  color: AppColor.themeColor)),
-                          margin: EdgeInsets.only(right: 5),
-                          padding: EdgeInsets.symmetric(horizontal: 2),
-                          child: Text(
-                            "赚${goods.commission.toStringAsFixed(2)}",
-                            style: TextStyle(
-                                color: AppColor.themeColor,
-                                fontSize: 11 * 2.sp),
-                          ),
-                        )
-                            : SizedBox(),
-                        // !goods.isWaitPromotionStart()?
-                        // Container()
-                        // :Container(
-                        //   child: Row(
-                        //     children: <Widget>[
-                        //       CustomImageButton(
-                        //         pureDisplay: true,
-                        //         padding: EdgeInsets.symmetric(
-                        //             horizontal: rSize(2),
-                        //             vertical: rSize(2)),
-                        //         borderRadius: BorderRadius.all(Radius.circular(
-                        //             rSize(3))),
-                        //         title:"${dateTime.month}月${dateTime.day}日${dateTime.hour}:${dateTime.minute}开抢",
-                        //         fontSize: 12,
-                        //         color: AppColor.themeColor,
-                        //         // backgroundColor: Colors.pink[50],
-                        //       ),
-                        //     ],
-                        //   )
-                        // ),
-                      ],
-                    ),
-                    Container(
-                      height: 7,
-                    ),
-                    Container(
-                      height: 30,
-                      child: Stack(
+        EdgeInsets.symmetric( horizontal: rSize(10)),
+        child: Column(
+          children: [
+            Container(
+              // color: Colors.lightBlue,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  _goodsItemSelectIcon(goods),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      _goodsItemImage(goods),
+                      4.hb,
+                      goods.salePublish == 0
+                          ? Text(
+                        '该产品已下架',
+                        style: TextStyle(
+                            fontSize: 12.rsp,
+                            color: Color(0xFFC92219),
+                            fontWeight: FontWeight.bold),
+                      )
+                          : SizedBox()
+                    ],
+                  ),
+                  Expanded(
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 8),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Positioned(
-                              left: 0,
-                              right: 0,
-                              top: 0,
-                              bottom: 0,
-                              child: Container(
-                                alignment: Alignment.centerLeft,
-                                child: RichText(
-                                    overflow: TextOverflow.ellipsis,
-                                    text: TextSpan(children: [
-                                      TextSpan(
-                                        text: "￥",
-                                        style: AppTextStyle.generate(10 * 2.sp,
-                                            color: AppColor.themeColor),
-                                      ),
-                                      TextSpan(
-                                        text:
-                                        "${goods.price.toStringAsFixed(2)}",
-                                        style: AppTextStyle.generate(14 * 2.sp,
-                                            color: AppColor.themeColor),
-                                      ),
-                                      // TextSpan(
-                                      //   text: "￥",
-                                      //   style: AppTextStyle.generate(7 * 2.sp,
-                                      //       color: AppColor.greyColor),
-                                      // ),
-                                      // TextSpan(
-                                      //   text:
-                                      //       "${goods.originalPrice.toStringAsFixed(2)}",
-                                      //   style: AppTextStyle.generate(11 * 2.sp,
-                                      //       decoration:
-                                      //           TextDecoration.lineThrough,
-                                      //       color: AppColor.greyColor),
-                                      // ),
-                                    ])),
-                              )),
-                          goods.publishStatus == 1
-                              ? Positioned(
-                            right: 0,
-                            bottom: 0,
-                            top: 0,
-                            left: 0,
-                            child: Row(
-                              children: <Widget>[
-                                Expanded(
-                                    child: PlusMinusView(
-                                      maxValue: 50,
-                                      initialValue: goods.quantity,
-                                      onValueChanged: (int num) {},
-                                      onBeginInput: widget.onBeginInput,
-                                      onInputComplete: (value) {
-                                        if (int.parse(value) ==
-                                            goods.quantity) return;
-                                        if (widget
-                                            .numUpdateCompleteCallback !=
-                                            null) {
-                                          widget.numUpdateCompleteCallback(
-                                              goods, int.parse(value));
-                                        }
-                                      },
-                                    ))
-                              ],
+                          Container(
+                            constraints: BoxConstraints(minHeight: 40.rw),
+                            child: ExtendedText.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: goods.goodsName,
+                                    style: AppTextStyle.generate(15 * 2.sp,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ],
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          )
-                              : Positioned(
-                              right: 0,
-                              bottom: 0,
-                              child: GestureDetector(
-                                onTap: () {
-                                  Get.to(SimilarGoodsPage(
-                                      goodsId: goods.goodsId));
-                                },
-                                child: Container(
-                                    width: 48.rw,
-                                    height: 20.rw,
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(10.rw)),
-                                        border: Border.all(
-                                            color: Color(0xFFC92219),
-                                            width: 1.rw)),
-                                    child: Text(
-                                      '找相似',
-                                      style: TextStyle(
-                                        height: 1.1,
-                                        color: Color(0xFFC92219),
-                                        fontSize: 12.rsp,
-                                      ),
-                                    )),
-                              ))
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 10.rw),
+                            decoration: BoxDecoration(
+                              color: AppColor.frenchColor,
+                              borderRadius: BorderRadius.circular(2),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 6),
+                            child: Text(
+                              '${goods.min}件起批 本品按箱批发 一箱=${goods.limit}件',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyle.generate(12 * 2.sp,
+                                  color: Color(0xFF666666),
+                                  fontWeight: FontWeight.w300),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 2 * 2.w,
+                          ),
+
                         ],
                       ),
-                    )
-                    // Row(
-                    //   children: <Widget>[
-                    //     RichText(
-                    //       overflow: TextOverflow.ellipsis,
-                    //       text: TextSpan(
-                    //         children: [
-                    //           TextSpan(
-                    //             text: "￥",
-                    //             style: AppTextStyle.generate(10*2.sp,color: AppColor.themeColor),
-                    //           ),
-                    //           TextSpan(
-                    //             text: "${goods.price.toStringAsFixed(2)} ",
-                    //             style: AppTextStyle.generate(14*2.sp,color: AppColor.themeColor),
-                    //           ),
-                    //           TextSpan(
-                    //             text: "￥",
-                    //             style: AppTextStyle.generate(7*2.sp,decoration: TextDecoration.lineThrough, color: AppColor.greyColor),
-                    //           ),
-                    //           TextSpan(
-                    //             text: "${goods.originalPrice.toStringAsFixed(2) }",
-                    //             style: AppTextStyle.generate(11*2.sp,decoration: TextDecoration.lineThrough, color: AppColor.greyColor),
-                    //           ),
-                    //         ]
-                    //     )),
-                    //   Expanded(
-                    //     child: PlusMinusView(
-                    //       maxValue: 50,
-                    //       initialValue: goods.quantity,
-                    //       onValueChanged: (int num) {
-
-                    //       },
-                    //       onBeginInput: widget.onBeginInput,
-                    //       onInputComplete: (value) {
-                    //         if (int.parse(value) == goods.quantity) return;
-                    //         if (widget.numUpdateCompleteCallback != null) {
-                    //           widget.numUpdateCompleteCallback(
-                    //               goods, int.parse(value));
-                    //         }
-                    //       },
-                    //     ))
-                    // ],
-                    // )
-                  ],
-                ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            20.hb,
+            Container(
+              padding: EdgeInsets.only(left: 30.rw),
+              child: WholesaleCarSpecs(
+                data: widget.model,
+                listener: (int goodsNum) {
+                  if (goodsNum ==
+                      widget.model.quantity) return;
+                  if (widget
+                      .numUpdateCompleteCallback !=
+                      null) {
+                    widget.numUpdateCompleteCallback(
+                        widget.model, goodsNum);
+                  }
+                },
               ),
             )
           ],
@@ -512,4 +210,8 @@ class _WhosaleCarItemState extends State<WhosaleCarItem> {
       ),
     );
   }
+
 }
+
+
+

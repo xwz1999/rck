@@ -1,8 +1,11 @@
+
+
+
 name: jingyaoyun
 description: jingyaoyun Market App.
 publish_to: "none"
 
-version: 1.0.11-dev+15
+version: 2.0.2-dev+18
 environment:
   sdk: ">=2.10.0 <3.0.0"
 
@@ -143,9 +146,8 @@ dependencies:
   # 加密
   encrypt: ^5.0.0
 
-  # 时间选择器
+  # 时间选择器 #该版本有报错 未修改
   flutter_datetime_picker: ^1.5.1
-
   #日期选择器
   flutter_custom_calendar:
     git:
@@ -271,6 +273,7 @@ flutter:
     - assets/header/
     - assets/live/
     - assets/weather/
+    - assets/wholesale/
   fonts:
     - family: AppIcons
       fonts:

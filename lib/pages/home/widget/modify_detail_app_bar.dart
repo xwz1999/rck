@@ -107,48 +107,6 @@ class _DetailAppBarState extends BaseStoreState<DetailAppBar> {
           },
         ),
       ),
-      // actions: <Widget>[
-      //   Container(
-      //     padding: EdgeInsets.only(right: 10),
-      //     child: Center(
-      //       child: CustomImageButton(
-      //         // icon: Icon(
-      //         //   AppIcons.icon_ellipsis,
-      //         //   size: 16*2.sp,
-      //         //   color: selectedOne ? _itemColor : Colors.black,
-      //         // ),
-      //         dotPosition: DotPosition(right: rSize(0), top: 0),
-      //         //dotTextColor: AppColor.themeColor,
-      //         dotSize: 12,
-      //         dotFontSize: 7.rsp,
-      //         dotNum: getStore().state.userBrief.orderCenter.collectionNum == 0
-      //             ? ''
-      //             : getStore().state.userBrief.orderCenter.collectionNum > 99
-      //                 ? 99
-      //                 : getStore()
-      //                     .state
-      //                     .userBrief
-      //                     .orderCenter
-      //                     .collectionNum
-      //                     .toString(),
-      //         dotColor: AppColor.themeColor,
-      //         icon: ImageIcon(
-      //           AssetImage(
-      //             "assets/navigation_like.png",
-      //           ),
-      //           size: 18,
-      //           color: selectedOne ? _itemColor : Colors.black,
-      //         ),
-      //         buttonSize: rSize(30),
-      //         borderRadius: BorderRadius.all(Radius.circular(20)),
-      //         backgroundColor: selectedOne ? _itemBgColor : Colors.transparent,
-      //         onPressed: () {
-      //           Get.to(MyFavoritesPage());
-      //         },
-      //       ),
-      //     ),
-      //   )
-      // ],
     );
   }
 }

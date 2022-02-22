@@ -73,6 +73,7 @@ import 'package:jingyaoyun/pages/user/user_set_password_varcode.dart';
 import 'package:jingyaoyun/pages/user/user_verify.dart';
 import 'package:jingyaoyun/pages/user/user_verify_result.dart';
 import 'package:jingyaoyun/pages/welcome/welcome_widget.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_order_preview_page.dart';
 import 'package:jingyaoyun/utils/navigator_utils.dart';
 import 'package:jingyaoyun/widgets/barcodeScan.dart';
 import 'package:jingyaoyun/widgets/bussiness_cooperation_page.dart';
@@ -134,6 +135,9 @@ class RouteName {
 
   // 商品订单
   static const String GOODS_ORDER_PAGE = "/goodsOrderPage";
+
+  // 批发商品订单
+  static const String WHOLESALE_GOODS_ORDER_PAGE = "/wholesaleGoodsOrderPage";
 
   // 选择支付选项界面
   static const String ORDER_PREPAY_PAGE = "/orderPrepayPage";
@@ -298,6 +302,11 @@ typedef RouteBuilder = Widget Function(BuildContext context,
 
 /// 定义跳转的路由
 final Map<String, RouteBuilder> _routes = {
+  RouteName.WHOLESALE_GOODS_ORDER_PAGE: (context, {arguments}) => WholesaleGoodsOrderPage(
+    arguments: arguments,
+  ),
+
+
   /// 售后进度
   RouteName.AFTER_SALES_LOG_PAGE: (context, {arguments}) => AfterSalesLogPage(
         arguments: arguments,

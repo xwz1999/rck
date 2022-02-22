@@ -2,6 +2,7 @@
 
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
@@ -15,8 +16,10 @@ import 'package:jingyaoyun/models/recook_fund_model.dart';
 import 'package:jingyaoyun/pages/home/classify/mvp/order_mvp/order_presenter_impl.dart';
 import 'package:jingyaoyun/pages/user/order/order_center_page.dart';
 import 'package:jingyaoyun/pages/user/order/order_detail_page.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_order_home_page.dart';
 import 'package:jingyaoyun/third_party/alipay/alipay_utils.dart';
 import 'package:jingyaoyun/third_party/wechat/wechat_utils.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
@@ -32,13 +35,14 @@ class OrderPrepayPage extends StatefulWidget {
       {bool goToOrder = false,
       bool canUseBalance = true,
       String fromTo = '',
+        bool isPifa = false,
       }) {
     return {
       "model": model,
       "goToOrder": goToOrder,
       "canUseBalance": canUseBalance,
       "fromTo": fromTo,
-
+      'isPifa': isPifa
     };
   }
 
@@ -62,6 +66,10 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
   String _fromTo;
 
   bool _canUseBalance = true;
+
+
+
+  bool _isPifa = false;
 
   /// 用于辅助判断 app 从后台进入前台时，是否需要向后台验证订单状态
   bool _clickPay = false;
@@ -101,6 +109,8 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     _fromTo = widget.arguments["fromTo"];
 
     _canUseBalance = widget.arguments['canUseBalance'] ?? true;
+    _isPifa = widget.arguments['isPifa'] ?? false;
+
     _presenter
         .queryRecookPayFund(UserManager.instance.user.info.id)
         .then((HttpResultModel<RecookFundModel> model) {
@@ -177,7 +187,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
                       AppRouter.pushAndReplaced(
                           globalContext, RouteName.ORDER_DETAIL,
                           arguments:
-                              OrderDetailPage.setArguments(_model.data.id));
+                              OrderDetailPage.setArguments(_model.data.id,_isPifa));
                       return;
                     }
                     Navigator.pop(context);
@@ -230,8 +240,9 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         Container(
           height: rSize(50),
         ),
-        _fromTo == ''
-            ? _payTile(
+        _fromTo != ''//||(UserLevelTool.currentRoleLevelEnum()==UserRoleLevel.subsidiary)
+            ?  SizedBox():
+        _payTile(
                 "",
                 Image.asset(
                   AppSvg.svg_balance_pay,
@@ -254,8 +265,8 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
                 enable: _recookFundModel != null &&
                     (_recookFundModel.data.amount >=
                         _model.data.actualTotalAmount) &&
-                    _canUseBalance)
-            : SizedBox(),
+                    _canUseBalance )
+          ,
         _payTile(
             "微信支付",
             Icon(
@@ -631,8 +642,14 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     Navigator.pop(context);
     _updateUserBrief();
     showSuccess("订单支付成功").then((value) {
-      AppRouter.pushAndReplaced(globalContext, RouteName.ORDER_LIST_PAGE,
-          arguments: OrderCenterPage.setArguments(2));
+      if(_isPifa){
+        Get.off(()=>WholesaleOrderHomePage(initialIndex: 2,));
+        //Get.to(()=>WholesaleOrderHomePage(arguments: ,))
+      }else{
+        AppRouter.pushAndReplaced(globalContext, RouteName.ORDER_LIST_PAGE,
+            arguments: OrderCenterPage.setArguments(2));
+      }
+
     });
   }
 
@@ -658,7 +675,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
 //      Navigator.popUntil(context, ModalRoute.withName(RouteName.ORDER_LIST_PAGE));
       if (_goToOrder) {
         AppRouter.pushAndReplaced(globalContext, RouteName.ORDER_DETAIL,
-            arguments: OrderDetailPage.setArguments(_model.data.id));
+            arguments: OrderDetailPage.setArguments(_model.data.id,_isPifa));
       } else {
         Navigator.pop(context);
       }
@@ -666,8 +683,13 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     }
     UserManager.instance.refreshShoppingCart.value = true;
     _updateUserBrief();
-    AppRouter.pushAndReplaced(globalContext, RouteName.ORDER_LIST_PAGE,
-        arguments: OrderCenterPage.setArguments(2));
+    if(_isPifa){
+      Get.off(()=>WholesaleOrderHomePage(initialIndex: 2,));
+      //Get.to(()=>WholesaleOrderHomePage(arguments: ,))
+    }else{
+      AppRouter.pushAndReplaced(globalContext, RouteName.ORDER_LIST_PAGE,
+          arguments: OrderCenterPage.setArguments(2));
+    }
   }
 
 

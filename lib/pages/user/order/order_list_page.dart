@@ -116,7 +116,7 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
             OrderModel orderModel = _controller.getData()[index];
 
             AppRouter.push(globalContext, RouteName.ORDER_DETAIL,
-                arguments: OrderDetailPage.setArguments(orderModel.id))
+                arguments: OrderDetailPage.setArguments(orderModel.id,false))
                 .then(((result) {
               _controller.requestRefresh();
               if (result == null) return;

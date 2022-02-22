@@ -15,7 +15,6 @@ class ImagePageView extends StatefulWidget {
   final OnScrolledListener onScrolled;
   final List<dynamic> images;
 
-  final Living living;
 
   // final Video video;
 
@@ -23,7 +22,6 @@ class ImagePageView extends StatefulWidget {
     Key key,
     this.onScrolled,
     this.images,
-    this.living,
   });
   //: assert(images != null && images.length > 0, "images 不能为空");
 
@@ -51,7 +49,7 @@ class _ImagePageViewState extends State<ImagePageView> with TickerProviderStateM
       if (photo is MainPhotos) {
         photoList.add(photo);
         // picSwiperItem.add(PicSwiperItem(Api.getResizeImgUrl(photo.url, DeviceInfo.screenWidth.toInt()*2)));
-        picSwiperItem.add(PicSwiperItem(Api.getImgUrl(photo.url)));
+        picSwiperItem.add(PicSwiperItem(Api.getImgUrl(photo.url,print: true),));
       }
     }
 
@@ -127,56 +125,6 @@ class _ImagePageViewState extends State<ImagePageView> with TickerProviderStateM
                         BorderRadius.horizontal(left: Radius.circular(20))),
                 child: _imageCount(),
               )),
-          // widget.living.status == 1
-          //     ? Positioned(
-          //         top: 60.rw,
-          //         right: 35.rw,
-          //         child: InkWell(
-          //           onTap: widget.living.roomId != 0
-          //               ? () {
-          //                   Get.to(
-          //                       LiveStreamViewPage(id: widget.living.roomId));
-          //                 }
-          //               : () {
-          //                   Toast.showError('找不到该直播间！');
-          //                   print('1');
-          //                 },
-          //           child: Container(
-          //             width: 50.rw,
-          //             height: 69.rw,
-          //             decoration: BoxDecoration(
-          //                 borderRadius: BorderRadius.all(Radius.circular(7.rw)),
-          //                 color: Colors.white),
-          //             child: Column(
-          //               children: [
-          //                 10.hb,
-          //                 Container(
-          //
-          //                   alignment: Alignment.center,
-          //                   //color: Colors.blue,
-          //                   // decoration: BoxDecoration(
-          //                   //     color: Color(0xFFFF0000),
-          //                   //     borderRadius:
-          //                   //         BorderRadius.all(Radius.circular(40.rw))),
-          //                   child: GifImage(
-          //                     controller: _gifController,
-          //                     image: AssetImage(R.ASSETS_LIVE_PLAY_GIF),
-          //                     height: 40.rw,
-          //                     width: 40.rw,
-          //                   ),
-          //                 ),
-          //
-          //                 Text(
-          //                   '直播中',
-          //                   style: TextStyle(
-          //                       fontSize: 10.rsp, color: Color(0xFF333333)),
-          //                 )
-          //               ],
-          //             ),
-          //           ),
-          //         ),
-          //       )
-          //     : SizedBox(),
         ]),
       ),
     );

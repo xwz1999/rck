@@ -30,7 +30,7 @@ class OrderDetailPage extends StatefulWidget {
 
   const OrderDetailPage({Key key, this.arguments}) : super(key: key);
 
-  static setArguments(int orderId) {
+  static setArguments(int orderId,bool isPifa) {
     return {"orderId": orderId};
   }
 
@@ -43,12 +43,16 @@ class OrderDetailPage extends StatefulWidget {
 class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
     implements OrderListViewI {
   // OrderPreviewModel _detail;
+  bool isPifa = false;
   OrderListPresenterImpl _presenter;
   GSRefreshController _refreshController = GSRefreshController();
   @override
   void initState() {
     super.initState();
     int orderId = widget.arguments["orderId"];
+    if(widget.arguments["isPifa"]!=null){
+      isPifa = widget.arguments["isPifa"];
+    }
     print(orderId);
     _presenter = OrderListPresenterImpl();
     _presenter.attach(this);
@@ -86,10 +90,11 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
         children: <Widget>[
           orderStatus(),
           buildAddress(),
-          brandList(),
-          totalPrice(),
-          priceInfo(),
-          orderInfo(),
+          isPifa?wholesaleBrandList(): brandList(),
+          isPifa?SizedBox():totalPrice(),
+          isPifa? SizedBox():priceInfo(),
+          isPifa? wholesaleOrderInfo(): orderInfo(),
+          isPifa&&orderDetail.makeUpAmount!=null&&orderDetail.makeUpText!=''?wholesaleCompensate():SizedBox(),
           //contactCustomerService(),
         ],
       ),
@@ -113,7 +118,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
         ? null
         : Container(
             padding:
-                EdgeInsets.symmetric(vertical: rSize(8), horizontal: rSize(10)),
+                EdgeInsets.symmetric(vertical: rSize(10), horizontal: rSize(10)),
             color: Colors.white,
             child: SafeArea(
               bottom: true,
@@ -186,7 +191,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
         title: "取消订单",
         color: Colors.grey,
         fontSize: 13 * 2.sp,
-        padding: EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(8)),
+        padding: EdgeInsets.symmetric(vertical: rSize(8), horizontal: rSize(15)),
         borderRadius: BorderRadius.all(Radius.circular(40)),
         border: Border.all(color: Colors.grey, width: 0.8 * 2.w),
         onPressed: () {
@@ -213,7 +218,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
         title: "继续支付",
         color: AppColor.themeColor,
         fontSize: 13 * 2.sp,
-        padding: EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(8)),
+        padding: EdgeInsets.symmetric(vertical: rSize(8), horizontal: rSize(15)),
         borderRadius: BorderRadius.all(Radius.circular(40)),
         border: Border.all(color: AppColor.themeColor, width: 0.8 * 2.w),
         onPressed: () {
@@ -305,13 +310,15 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
         // ..add(SizedBox(
         //   width: rSize(5),
         // ))
-        ..add(CustomImageButton(
+        ..add(
+            isPifa?SizedBox():
+            CustomImageButton(
             width: buttonWidth,
             title: "查看物流",
             color: Colors.grey[600],
             fontSize: 12 * 2.sp,
             padding:
-                EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(8)),
+            EdgeInsets.symmetric(vertical: rSize(8), horizontal: rSize(15)),
             borderRadius: BorderRadius.all(Radius.circular(40)),
             border: Border.all(color: Colors.grey[600], width: 0.8 * 2.w),
             onPressed: () {
@@ -337,9 +344,8 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
               width: buttonWidth,
               title: "确认收货",
               color: AppColor.themeColor,
-              fontSize: 13 * 2.sp,
-              padding: EdgeInsets.symmetric(
-                  vertical: rSize(2), horizontal: rSize(8)),
+              fontSize: 12 * 2.sp,
+              padding: EdgeInsets.symmetric(vertical: rSize(8), horizontal: rSize(15)),
               borderRadius: BorderRadius.all(Radius.circular(40)),
               border: Border.all(color: AppColor.themeColor, width: 0.8 * 2.w),
               onPressed: () {

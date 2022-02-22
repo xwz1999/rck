@@ -31,6 +31,7 @@ import 'package:jingyaoyun/pages/user/address/receiving_address_page.dart';
 import 'package:jingyaoyun/utils/file_utils.dart';
 import 'package:jingyaoyun/utils/image_utils.dart';
 import 'package:jingyaoyun/utils/share_tool.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/action_sheet.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/address_selector.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/custom_bottom_sheet.dart';
@@ -41,6 +42,7 @@ import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/selected_list.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:jingyaoyun/widgets/video_view.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'commodity_detail_page.dart';
 
@@ -156,16 +158,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       if (_context != null &&
           widget.goodsDetail != null &&
           widget.openSkuChoosePage.value) {
-        // if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000) {
-        //   if (_jDHaveGoods == 1) {
-        //     _showSkuChoosePage(context);
-        //   } else {
-        //     Toast.showInfo('本地区无货，请选择其他商品');
-        //     widget.openSkuChoosePage.value = false;
-        //   }
-        // } else {
-        //   _showSkuChoosePage(context);
-        // }
         _showSkuChoosePage(context);
       }
     });
@@ -380,7 +372,24 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       ImageUtils.saveNetworkImagesToPhoto(
           urls, (index) => DPrint.printf("保存好了---$index"), (success) {
         dismissLoading();
-        success ? showSuccess("保存完成!") : showError("保存失败!!");
+        success ? showSuccess("保存完成!") : Alert.show(
+          context,
+          NormalContentDialog(
+            title: '提示',
+            content: Text('图片保存失败，请前往应用权限页，设置存储权限为始终允许',style: TextStyle(color: Color(0xFF333333),fontSize: 14.rsp),),
+            items: ["取消"],
+            listener: (index) {
+              Alert.dismiss(context);
+            },
+            deleteItem: "确认",
+            deleteListener: () async{
+
+              Alert.dismiss(context);
+              bool isOpened = await openAppSettings();
+            },
+            type: NormalTextDialogType.delete,
+          ),
+        );
       });
     });
   }
@@ -495,7 +504,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     images.addAll(widget.goodsDetail.data.mainPhotos);
     return ImagePageView(
         images: images,
-        living: widget.goodsDetail.data.living,
+
         onScrolled: (index) {});
   }
 
@@ -1399,7 +1408,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   //大家都在买 推荐商品
   _recommendsWidget() {
     return Container(
-      height: 253,
+      height: 200.rw,
       // padding: EdgeInsets.only(left: 10, right: 10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -1418,7 +1427,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             child: ListView.builder(
               physics: AlwaysScrollableScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemCount: widget.goodsDetail.data.recommends.length,
+              itemCount: widget.goodsDetail.data.recommends==null?0: widget.goodsDetail.data.recommends.length,
               itemBuilder: (_, index) {
                 Recommends recommends =
                     widget.goodsDetail.data.recommends[index];
@@ -1433,10 +1442,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               },
             ),
           ),
-          Container(
-            height: 20,
-            color: Colors.white,
-          ),
+
           Container(
             height: 13,
             color: AppColor.frenchColor,
@@ -1448,14 +1454,14 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
 
   _recommendsItemWidget(Recommends recommends) {
     return Container(
-      margin: EdgeInsets.only(left: 10),
-      width: 110,
+      margin: EdgeInsets.only(left: 10,bottom: 10.rw),
+      width: 80.rw,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Container(
-            width: 110,
-            height: 110,
+            width: 80.rw,
+            height: 80.rw,
             child: _img(recommends.mainPhotoUrl),
           ),
           Container(
@@ -1467,7 +1473,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             child: Text(
               recommends.goodsName,
               maxLines: 2,
-              style: TextStyle(color: Color(0xff828282), fontSize: 12),
+              style: TextStyle(color: Color(0xff828282), fontSize: 10.rsp),
             ),
           )),
           Container(
@@ -1483,7 +1489,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w500,
-                          fontSize: 13 * 2.sp),
+                          fontSize: 12 * 2.sp),
                     ),
                   ),
                   Text(
@@ -1491,7 +1497,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.w500,
-                        fontSize: 17 * 2.sp),
+                        fontSize: 12 * 2.sp),
                   ),
                 ],
               )),

@@ -4,10 +4,16 @@ import 'package:jingyaoyun/models/goods_simple_list_model.dart';
 
 class ShoppingCartFuc {
   //获取可能喜欢列表
-  static Future<List<GoodsSimple>> getLikeGoodsList(int user_id) async {
-    ResultData result = await HttpManager.post(APIV2.userAPI.getLikeGoodsList, {
-      'user_id': user_id, //未登录的时候传 0
-    });
+  static Future<List<GoodsSimple>> getLikeGoodsList(int user_id,{isSale}) async {
+    Map<String, dynamic> params = {
+      "user_id": user_id,
+    };
+
+    if (isSale) {
+      params.putIfAbsent("is_sale", () => isSale);
+    }
+
+    ResultData result = await HttpManager.post(APIV2.userAPI.getLikeGoodsList, params);
 
     if (result.data != null) {
       if (result.data['data'] != null) {

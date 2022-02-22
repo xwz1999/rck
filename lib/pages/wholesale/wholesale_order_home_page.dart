@@ -17,13 +17,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class WholesaleOrderHomePage extends StatefulWidget {
-  final Map arguments;
+  // final Map arguments;
+  final int initialIndex;
+  const WholesaleOrderHomePage({Key key, this.initialIndex}) : super(key: key);
 
-  const WholesaleOrderHomePage({Key key, this.arguments}) : super(key: key);
-
-  static setArguments(int initialIndex) {
-    return {"initialIndex": initialIndex};
-  }
+  // static setArguments(int initialIndex) {
+  //   return {"initialIndex": initialIndex};
+  // }
 
   @override
   State<StatefulWidget> createState() {
@@ -33,10 +33,21 @@ class WholesaleOrderHomePage extends StatefulWidget {
 
 class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage>
     with TickerProviderStateMixin {
+  TitleSwitchController _titleSwitchController = TitleSwitchController();
   List<String> _items = ["全部", "未付款", "待发货", "待收货"];
+  TabController _allTabController;
   TabController _tabController;
+  TabController _storeTabController;
   OrderPositionType _positionType = OrderPositionType.onlineOrder;
   List<OrderListController> _orderListControllers = [
+    OrderListController(),
+    OrderListController(),
+    OrderListController(),
+    OrderListController(),
+    OrderListController()
+  ];
+
+  List<OrderListController> _storeOrderListControllers = [
     OrderListController(),
     OrderListController(),
     OrderListController(),
@@ -47,11 +58,16 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
   void initState() {
     super.initState();
     int index = 0;
-    if (widget.arguments != null) {
-      index = widget.arguments["initialIndex"];
+    if (widget.initialIndex != null) {
+      index = widget.initialIndex;
     }
-
+    _allTabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    _allTabController.addListener(() {
+      _titleSwitchController.changeIndex(_allTabController.index);
+    });
     _tabController = TabController(initialIndex: index, length: 4, vsync: this);
+    _storeTabController =
+        TabController(initialIndex: 0, length: 4, vsync: this);
 
   }
 
@@ -61,7 +77,7 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
     return Scaffold(
       backgroundColor: AppColor.frenchColor,
       appBar: CustomAppBar(
-        title: "订单中心",
+        title: _titleView(),
         themeData: AppThemes.themeDataGrey.appBarTheme,
         appBackground: Colors.white,
         elevation: 0,
@@ -71,9 +87,100 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
     );
   }
 
+  // _newBuildBody() {
+  //   return Container(
+  //     child:
+  //         Column(
+  //           children: <Widget>[
+  //             Container(
+  //                 color: Colors.white,
+  //                 child: SCTabBar(
+  //                   labelColor: Colors.white,
+  //                   needRefresh: true,
+  //                   labelPadding: EdgeInsets.symmetric(horizontal: 20.rw),
+  //                   controller: _tabController,
+  //                   indicatorSize: TabBarIndicatorSize.label,
+  //                   indicatorColor: AppColor.themeColor,
+  //                   indicatorPadding:
+  //                   EdgeInsets.symmetric(horizontal: rSize(20)),
+  //                   itemBuilder: (int index) {
+  //                     return _item(index);
+  //                   },
+  //                 )),
+  //
+  //             Expanded(
+  //               child: CacheTabBarView(
+  //                 controller: _tabController,
+  //                 children: <Widget>[
+  //                   WholesaleOrderListPage(
+  //                     controller: _orderListControllers[0],
+  //                     type: WholesaleOrderListType.all,
+  //
+  //                   ),
+  //                   WholesaleOrderListPage(
+  //                     controller: _orderListControllers[1],
+  //                     type: WholesaleOrderListType.unpaid,
+  //
+  //                   ),
+  //                   WholesaleOrderListPage(
+  //                     controller: _orderListControllers[2],
+  //                     type: WholesaleOrderListType.undelivered,
+  //
+  //                   ),
+  //                   WholesaleOrderListPage(
+  //                     controller: _orderListControllers[3],
+  //                     type: WholesaleOrderListType.receipt,
+  //
+  //                   ),
+  //                 ],
+  //               ),
+  //             )
+  //           ],
+  //         ),
+  //
+  //   );
+  // }
+
+  _titleView() {
+    return Container(
+      child: TitleSwitch(
+        controller: _titleSwitchController,
+        height: 30,
+        index: 0,
+        titles: ["自购订单", "店铺订单"],
+        selectIndexBlock: (index) {
+          if (index == 0) {
+            _positionType = OrderPositionType.onlineOrder;
+            _allTabController.index = 0;
+            setState(() {});
+
+          } else {
+            _positionType = OrderPositionType.storeOrder;
+            _allTabController.index = 1;
+            setState(() {});
+
+          }
+        },
+        backgroundWidget: Container(
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(
+              color: Color(0xffE8E8E8),
+              width: 2,
+            ),
+            borderRadius: BorderRadius.circular(15),
+          ),
+        ),
+      ),
+    );
+  }
+
+
   _newBuildBody() {
     return Container(
-      child:
+      child: CacheTabBarView(
+        controller: _allTabController,
+        children: <Widget>[
           Column(
             children: <Widget>[
               Container(
@@ -81,7 +188,7 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
                   child: SCTabBar(
                     labelColor: Colors.white,
                     needRefresh: true,
-                    labelPadding: EdgeInsets.symmetric(horizontal: 20.rw),
+                    labelPadding: EdgeInsets.zero,
                     controller: _tabController,
                     indicatorSize: TabBarIndicatorSize.label,
                     indicatorColor: AppColor.themeColor,
@@ -91,7 +198,6 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
                       return _item(index);
                     },
                   )),
-
               Expanded(
                 child: CacheTabBarView(
                   controller: _tabController,
@@ -99,35 +205,105 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
                     WholesaleOrderListPage(
                       controller: _orderListControllers[0],
                       type: WholesaleOrderListType.all,
-
+                      positionType: _positionType,
                     ),
                     WholesaleOrderListPage(
                       controller: _orderListControllers[1],
                       type: WholesaleOrderListType.unpaid,
-
+                      positionType: _positionType,
                     ),
                     WholesaleOrderListPage(
                       controller: _orderListControllers[2],
                       type: WholesaleOrderListType.undelivered,
-
+                      positionType: _positionType,
                     ),
                     WholesaleOrderListPage(
                       controller: _orderListControllers[3],
                       type: WholesaleOrderListType.receipt,
-
+                      positionType: _positionType,
                     ),
+                    // Container()
+                    // ShopOrderListPage(type: ShopOrderListType.afterSale,),
+                    // OrderAfterSalePage(arguments: OrderAfterSalePage.setArguments(OrderAfterSaleType.shopPage, _positionType, _orderListControllers[4]),),
                   ],
                 ),
               )
             ],
           ),
-
+          Column(
+            children: <Widget>[
+              Container(
+                color: Colors.white,
+                child: SCTabBar(
+                  labelColor: Colors.white,
+                  needRefresh: true,
+                  labelPadding: EdgeInsets.zero,
+                  controller: _storeTabController,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  indicatorColor: AppColor.themeColor,
+                  indicatorPadding: EdgeInsets.symmetric(horizontal: rSize(20)),
+                  itemBuilder: (int index) {
+                    return _storeitem(index);
+                  },
+                ),
+              ),
+              Expanded(
+                child: CacheTabBarView(
+                  controller: _storeTabController,
+                  children: <Widget>[
+                    WholesaleOrderListPage(
+                      controller: _storeOrderListControllers[0],
+                      type: WholesaleOrderListType.all,
+                      positionType: _positionType,
+                    ),
+                    WholesaleOrderListPage(
+                      controller: _storeOrderListControllers[1],
+                      type: WholesaleOrderListType.unpaid,
+                      positionType: _positionType,
+                    ),
+                    WholesaleOrderListPage(
+                      controller: _storeOrderListControllers[2],
+                      type: WholesaleOrderListType.undelivered,
+                      positionType: _positionType,
+                    ),
+                    WholesaleOrderListPage(
+                      controller: _storeOrderListControllers[3],
+                      type: WholesaleOrderListType.receipt,
+                      positionType: _positionType,
+                    ),
+                    // OrderListPage(controller: _storeOrderListControllers[3], type: ShopOrderListType.receipt, positionType: _positionType,),
+                    // Container()
+                    // OrderAfterSalePage(arguments: OrderAfterSalePage.setArguments(OrderAfterSaleType.shopPage, _positionType, _orderListControllers[4]),),
+                  ],
+                ),
+              )
+            ],
+          )
+        ],
+      ),
     );
   }
 
   _item(int index) {
     String title = _items[index];
     bool selected = index == _tabController.index;
+    return Container(
+        height: rSize(30),
+        alignment: Alignment.center,
+        child: Text(
+          title,
+          style: AppTextStyle.generate(
+              ScreenAdapterUtils.setSp(selected ? 14 : 13),
+              color: selected ? AppColor.themeColor : Colors.black,
+              fontWeight: selected
+                  ? FontWeight.w500
+                  : FontWeight.lerp(FontWeight.w300, FontWeight.w400, 0.5)),
+        ));
+  }
+
+  _storeitem(int index) {
+    String title = _items[index];
+    bool selected = index == _storeTabController.index;
     return Container(
         height: rSize(30),
         alignment: Alignment.center,

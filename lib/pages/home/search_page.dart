@@ -44,6 +44,7 @@ import 'package:jingyaoyun/widgets/no_data_view.dart';
 import 'package:jingyaoyun/widgets/progress/loading_dialog.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:power_logger/power_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 
@@ -64,6 +65,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
     with MvpListViewDelegate<GoodsSimple>, TickerProviderStateMixin {
   String _searchText = "";
   FocusNode _contentFocusNode = FocusNode();
+  ScrollController _scrollController = ScrollController();
 
   /// 切换展示形式  true 为 List， false 为grid
   bool _displayList = false;//默认排列方式改为瀑布流
@@ -139,6 +141,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
   @override
   void dispose() {
     _gifController.dispose();
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -491,6 +494,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
       refreshCallback: () {
         if (TextUtils.isEmpty(_searchText)) {
           refreshSuccess([]);
+
           return;
         }
         // _presenter.fetchSearchList(
@@ -600,6 +604,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
 
   _buildNewGridView() {
     return CustomScrollView(
+      controller: _scrollController,
       slivers: [
         SliverWaterfallFlow(
           delegate: SliverChildBuilderDelegate(
@@ -765,6 +770,10 @@ class _SearchPageState extends BaseStoreState<SearchPage>
 
     cancel();
     _startSearch = true;
+    if(_scrollController!=null&&_listViewController.getData().isNotEmpty){
+      _scrollController.jumpTo(0.0);
+    }
+
     setState(() {});
   }
 
@@ -821,7 +830,12 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                 onChanged: (text) {
                   _startSearch = false;
                   _searchText = text;
+                  if(text=='1281228557'){
+                    UserManager.instance.getLoggerData = !UserManager.instance.getLoggerData;
+                    PowerLogger.start(context, debug:UserManager.instance.getLoggerData);
+                  }
                   _listViewController.replaceData([]);
+
                   setState(() {});
                 },
                 placeholder: "请输入想要搜索的内容...",

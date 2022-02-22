@@ -30,6 +30,7 @@ class UserManager {
   static bool shouldRefresh = false;
   User user;
   UserBrief userBrief;
+  bool getLoggerData = false;
   // 天气数据
   HomeWeatherModel homeWeatherModel;
   ValueNotifier<bool> login = ValueNotifier(false);
@@ -134,18 +135,5 @@ class UserManager {
     ResultData result = await HttpManager.post(APIV2.userAPI.activePeople, {
       'id': UserManager.instance.user.info.id,
     });
-  }
-
-  //上传极光id
-  static Future<String> updateJId(String registrationId, int type) async {
-    ResultData result = await HttpManager.post(APIV2.userAPI.updateJId, {
-      "user_id": UserManager.instance.user.info.id,
-      "registration_id": registrationId,
-      "type": type //1:android 2:ios
-    });
-
-    if (result.data != null) {
-      return result.data['code'];
-    }
   }
 }

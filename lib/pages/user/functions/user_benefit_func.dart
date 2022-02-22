@@ -1,6 +1,8 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/user/model/pifa_benefit_model.dart';
 import 'package:jingyaoyun/pages/user/model/user_accumulate_model.dart';
 import 'package:jingyaoyun/pages/user/model/user_benefit_common_model.dart';
 import 'package:jingyaoyun/pages/user/model/user_benefit_day_expect_model.dart';
@@ -22,6 +24,72 @@ enum BenefitDateType {
 }
 
 class UserBenefitFunc {
+  ///子公司批发收益
+  static Future<PifaBenefitModel> getPifaBenefit() async {
+    ResultData result = await HttpManager.post(
+        APIV2.userAPI.getPifaBenefit, {'user_id': UserManager.instance.user.info.id,});
+
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return PifaBenefitModel.fromJson(result.data['data']);
+      }
+    }
+  }
+
+  // ///子公司批发收益
+  // static Future<List<PifaBenefitModel>> getPifaBenefit() async {
+  //   ResultData result = await HttpManager.post(
+  //       APIV2.userAPI.getPifaBenefit, {'user_id': UserManager.instance.user.info.id,});
+  //   if (result.data != null) {
+  //     if (result.data['data'] != null) {
+  //       return (result.data['data'] as List)
+  //           .map((e) => PifaBenefitModel.fromJson(e))
+  //           .toList();
+  //     } else
+  //       return [];
+  //   } else
+  //     return [];
+  // }
+
+
+  ///子公司批发收益详情
+  static Future<PifaBenefitModel> getPifaBenefitDetail(int shopId,String date) async {
+    ResultData result = await HttpManager.post(
+        APIV2.userAPI.getPifaBenefitDetail, {'user_id': UserManager.instance.user.info.id,'shop_id':shopId,'date':date});
+
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return PifaBenefitModel.fromJson(result.data['data']);
+      }
+    }
+  }
+
+  ///子公司获取其他收益
+  static Future<PifaBenefitModel> getBenefit(int kind,{String date}) async {///5=店铺 6=自购  8=分享
+    Map<String, dynamic> params = {'user_id': UserManager.instance.user.info.id,'kind':kind,};
+    if(date!=null){
+      params.putIfAbsent(
+        'date',
+            () => date,
+      );
+    }
+    ResultData result = await HttpManager.post(
+        APIV2.userAPI.getBenefit, params);
+
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return PifaBenefitModel.fromJson(result.data['data']);
+      }
+    }
+  }
+
+
+
+
+
+
+
+
   //已到账收益
   static Future<UserIncomeModel> receicedIncome(
       String date_str, int type) async {

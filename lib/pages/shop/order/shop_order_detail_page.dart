@@ -23,8 +23,8 @@ class ShopOrderDetailPage extends StatefulWidget {
 
   const ShopOrderDetailPage({Key key, this.arguments}) : super(key: key);
 
-  static setArguments(int orderId) {
-    return {"orderId": orderId};
+  static setArguments(int orderId,bool isPifa) {
+    return {"orderId": orderId,'isPifa':isPifa };
   }
 
   @override
@@ -42,6 +42,7 @@ class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage>
   void initState() {
     super.initState();
     isUserOrder = false;
+
     int orderId = widget.arguments["orderId"];
     _presenter = OrderListPresenterImpl();
     _presenter.attach(this);

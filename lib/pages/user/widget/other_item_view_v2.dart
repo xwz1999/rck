@@ -59,7 +59,6 @@ class OtherItemViewV2 extends StatelessWidget {
               ),
               UserLevelTool.currentRoleLevelEnum() ==
                   UserRoleLevel.Shop||UserLevelTool.currentRoleLevelEnum() ==
-                  UserRoleLevel.subsidiary||UserLevelTool.currentRoleLevelEnum() ==
                   UserRoleLevel.physical?
               _buildItem(
                 Image.asset(
@@ -80,7 +79,7 @@ class OtherItemViewV2 extends StatelessWidget {
                 '店铺推荐',
                     () => Get.to(() => RecommendShopPage()),
               ):SizedBox(),
-
+              //
               // _buildItem(
               //   Image.asset(R.ASSETS_USER_FUNC_RECOMMEND_PNG, width: 30.rw,
               //     height: 30.rw,),

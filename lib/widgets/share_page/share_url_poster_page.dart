@@ -15,6 +15,9 @@ import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/share_page/share_invite_model.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import '../alert.dart';
 
 class ShareUrlPosterPage extends StatefulWidget {
   final Map arguments;
@@ -155,7 +158,24 @@ class _ShareUrlPosterPageState extends BaseStoreState<ShareUrlPosterPage>
             if (success) {
               ReToast.success(text: '图片已保存到相册');
             } else {
-              ReToast.err(text: '图片保存失败...');
+              Alert.show(
+                context,
+                NormalContentDialog(
+                  title: '提示',
+                  content: Text('图片保存失败，请前往应用权限页，设置存储权限为始终允许',style: TextStyle(color: Color(0xFF333333),fontSize: 14.rsp),),
+                  items: ["取消"],
+                  listener: (index) {
+                    Alert.dismiss(context);
+                  },
+                  deleteItem: "确认",
+                  deleteListener: () async{
+
+                    Alert.dismiss(context);
+                    bool isOpened = await openAppSettings();
+                  },
+                  type: NormalTextDialogType.delete,
+                ),
+              );
             }
           });
         },

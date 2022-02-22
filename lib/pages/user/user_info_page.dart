@@ -93,15 +93,18 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
         SCTile.normalTile("昵称",
             value: UserManager.instance.user.info.nickname,
             needDivide: true, listener: () {
-          push(RouteName.MODIFY_DETAIL_PAGE,
-                  arguments: ModifyInfoPage.setArguments(
-                      "修改昵称", UserManager.instance.user.info.nickname,
-                      maxLength: 10))
-              .then((value) {
-            if (value != null) {
-              _updateUserNickname(value);
-            }
-          });
+          if(UserLevelTool.currentRoleLevelEnum() != UserRoleLevel.subsidiary){
+            push(RouteName.MODIFY_DETAIL_PAGE,
+                arguments: ModifyInfoPage.setArguments(
+                    "修改昵称", UserManager.instance.user.info.nickname,
+                    maxLength: 10))
+                .then((value) {
+              if (value != null) {
+                _updateUserNickname(value);
+              }
+            });
+          }
+
         }),
         SCTile.normalTile(
           "用户ID",
@@ -201,7 +204,8 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
 
         //
         UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Shop||
-            UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.physical?SCTile.normalTile("我的推广码", needDivide: true, listener: () {
+            UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.physical||
+            UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary?SCTile.normalTile("我的推广码", needDivide: true, listener: () {
                 push(RouteName.USER_INFO_QRCODE_PAGE);
               }):SizedBox(),
              // SCTile.normalTile(

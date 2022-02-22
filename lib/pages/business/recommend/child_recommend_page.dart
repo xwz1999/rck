@@ -20,11 +20,13 @@ import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
 import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:jingyaoyun/utils/image_utils.dart';
 import 'package:jingyaoyun/utils/mvp.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:jingyaoyun/widgets/no_data_view.dart';
 import 'package:jingyaoyun/widgets/pic_swiper.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'mvp/recommend_mvp_contact.dart';
 import 'mvp/recommend_presenter_implementation.dart';
@@ -86,7 +88,24 @@ class _RecommendPageState extends BaseStoreState<RecommendPage>
               },
               (success){
                 dismissLoading();
-                success ? showSuccess("保存完成!") : showError("保存失败!!");
+                success ? showSuccess("保存完成!") : Alert.show(
+                  context,
+                  NormalContentDialog(
+                    title: '提示',
+                    content: Text('图片保存失败，请前往应用权限页，设置存储权限为始终允许',style: TextStyle(color: Color(0xFF333333),fontSize: 14.rsp),),
+                    items: ["取消"],
+                    listener: (index) {
+                      Alert.dismiss(context);
+                    },
+                    deleteItem: "确认",
+                    deleteListener: () async{
+
+                      Alert.dismiss(context);
+                      bool isOpened = await openAppSettings();
+                    },
+                    type: NormalTextDialogType.delete,
+                  ),
+                );
                 if (!TextUtils.isEmpty(indexModel.text)) {
                   ClipboardData data = new ClipboardData(text:indexModel.text);
                   Clipboard.setData(data);

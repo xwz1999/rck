@@ -1,20 +1,23 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/pages/home/widget/plus_minus_view.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_minus_view.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'models/wholesale_detail_model.dart';
 
-typedef SelectedItemClickListener = Function(int section, int index);
-typedef ItemClick = Function(int index);
+typedef SelectedItemClickListener = Function(int index,int goodsNum);
+typedef ItemClick = Function(int index,int goodsNum);
 typedef WidgetBuilder = Function();
 
-class WholesaleSelectedList<T extends SelectedListItemChildModel>
-    extends StatefulWidget {
-  final List<SelectedListItemModel<T>> data;
+class WholesaleSelectedList extends StatefulWidget {
+  final List<SelectedItemModel> data;
   final SelectedItemClickListener listener;
-  final WidgetBuilder bottom;
 
-  const WholesaleSelectedList({Key key, this.data, this.listener, this.bottom})
-      : super(key: key);
+  const WholesaleSelectedList({
+    Key key,
+    this.data,
+    this.listener,
+  }) : super(key: key);
 
   @override
   _WholesaleSelectedListState createState() => _WholesaleSelectedListState();
@@ -31,21 +34,15 @@ class _WholesaleSelectedListState extends State<WholesaleSelectedList> {
     return Container(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 3),
         child: ListView.builder(
-            itemCount: widget.bottom != null
-                ? widget.data.length + 1
-                : widget.data.length,
+            itemCount: widget.data.length,
             itemBuilder: (context, index) {
-              if (index == widget.data.length) {
-                return widget.bottom();
-              }
-
               return SelectedListItem(
-                selectedBorderColor: Color(0xffc92219),
-                selectedTextColor: Color(0xffc92219),
                 itemModel: widget.data[index],
-                itemClick: (int itemIndex) {
+                index: index,
+                data: widget.data,
+                itemClick: (int itemIndex,int num) {
                   if (widget.listener != null) {
-                    widget.listener(index, itemIndex);
+                    widget.listener(itemIndex,num);
                   }
                   setState(() {});
                 },
@@ -55,23 +52,17 @@ class _WholesaleSelectedListState extends State<WholesaleSelectedList> {
 }
 
 class SelectedListItem extends StatefulWidget {
-  final Color selectedBorderColor;
-  final Border radius;
-  final Color selectedTextColor;
-  final Color bgColor;
-  final Color selectedBgColor;
-  final SelectedListItemModel itemModel;
+  final SelectedItemModel itemModel;
+  final int index;
   final ItemClick itemClick;
+  final List<SelectedItemModel> data;
 
   const SelectedListItem({
     Key key,
-    this.selectedBorderColor,
-    this.radius,
-    this.bgColor = AppColor.frenchColor,
-    this.selectedBgColor = const Color.fromARGB(255, 255, 249, 249),
+    this.index,
     this.itemModel,
-    this.selectedTextColor = const Color.fromARGB(255, 248, 57, 12),
     this.itemClick,
+    this.data,
   }) : super(key: key);
 
   @override
@@ -79,130 +70,177 @@ class SelectedListItem extends StatefulWidget {
 }
 
 class _SelectedListItemState extends State<SelectedListItem> {
-  int _index;
   bool _isFirstLoad = true;
+  num goodsNum = 0;
 
   @override
   void initState() {
     super.initState();
-    _index = widget.itemModel.selectedIndex;
-    WidgetsBinding.instance.addPostFrameCallback((callback) {
-      widget.itemClick(widget.itemModel.selectedIndex);
-    });
+
+    goodsNum = widget.itemModel.selectedNum!=null?widget.itemModel.selectedNum: widget.itemModel.sku.min;
   }
 
   @override
   Widget build(BuildContext context) {
+
+    // if (widget.data.length == 1 && _isFirstLoad) {
+    //   _isFirstLoad = false;
+    //   setState(() {
+    //     widget.data[0].selected = true;
+    //     widget.itemClick(0,goodsNum);
+    //   });
+    // }
+
     return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
+      margin: EdgeInsets.only(bottom: 10.rw),
+      //width: 400.rw,
+      height: 60.rw,
+      child: Row(
+        //mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(
-              bottom: 8,
+          CustomImageButton(
+            icon: Icon(
+              widget.itemModel.selected
+                  ? AppIcons.icon_check_circle
+                  : AppIcons.icon_circle,
+              color: widget.itemModel.selected
+                  ? AppColor.themeColor
+                  : Colors.grey,
+              size: rSize(20),
             ),
-            child: Text(
-              widget.itemModel.sectionTitle,
-              style: TextStyle(color: Colors.black, fontSize: 14 * 2.sp),
-            ),
+            onPressed: () {
+              setState(() {
+                for (int i = 0; i < widget.data.length; i++) {
+                  if (i != widget.index) {
+                    widget.data[i].selected = false;
+                  }
+                }
+                widget.itemModel.selected = !widget.itemModel.selected;
+              });
+              if (widget.itemClick != null) {
+                widget.itemClick(widget.index,goodsNum);
+              }
+            },
           ),
-          Wrap(
-              alignment: WrapAlignment.start,
-              spacing: 13,
-              runSpacing: 7,
-              children: _buildItems()),
-          Container(
-            margin: EdgeInsets.symmetric(vertical: 10),
-            height: 0.3,
-            color: Colors.grey[200],
-          )
+
+          Expanded(
+            child: Container(
+
+              //alignment: Alignment.centerLeft,
+              padding: EdgeInsets.symmetric(horizontal:14.rw ),
+                decoration: BoxDecoration(
+                  color: Color(0xFFF6F6F6),
+                  borderRadius: BorderRadius.all(Radius.circular(2.rw)),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+
+                              child: Text(
+                                '规格：${widget.itemModel.sku.name}',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                    color: Color(0xFF666666),
+                                    fontSize: 12 * 2.sp),
+                              ),
+                              width: 190.rw,
+                            ),
+                            // 16.wb,
+                            // Text(
+                            //   '库存：${widget.itemModel.sku.saleInventory}',
+                            //   style: TextStyle(
+                            //       color: Color(0xFF999999),
+                            //       fontSize: 10 * 2.sp),
+                            // ),
+                          ],
+                        ),
+                        10.hb,
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              '批发价：¥${widget.itemModel.sku.salePrice}',
+                              style: TextStyle(
+                                  color: Color(0xFFD5101A),
+                                  fontSize: 14 * 2.sp,fontWeight: FontWeight.bold),
+                            ),
+                            16.wb,
+                            Text(
+                              '零售价：${widget.itemModel.sku.discountPrice.toStringAsFixed(2)}',
+                              style: TextStyle(
+                                color: Color(0xFF999999),
+                                fontSize: 10 * 2.sp,
+                                decoration: TextDecoration.lineThrough,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Spacer(),
+                    WholesaleMinusView(
+                        initialValue:  widget.itemModel.selectedNum!=null? widget.itemModel.selectedNum: widget.itemModel.sku.min,
+                        minValue: widget.itemModel.sku.min,
+                        limit: widget.itemModel.sku.limit,
+                        onInputComplete: (String getNum) {
+                          goodsNum = int.parse(getNum);
+                          widget.itemClick(widget.index,goodsNum);
+                        },
+                        onValueChanged: (int getNum) {
+
+                          goodsNum = getNum;
+                          widget.itemClick(widget.index,goodsNum);
+                        },
+                      ),
+                  ],
+                )),
+          ),
         ],
       ),
     );
   }
-
-  _buildItems() {
-    List<Widget> _items = [];
-
-    for (int index = 0; index < widget.itemModel.items.length; index++) {
-      SelectedListItemChildModel item = widget.itemModel.items[index];
-      if (widget.itemModel.items.length == 1 && _isFirstLoad) {
-        _isFirstLoad = false;
-        setState(() {
-          _index = index;
-          widget.itemModel.selectedIndex = index;
-        });
-        if (widget.itemClick != null) {
-          // widget.itemClick(index);
-        }
-      }
-      bool selected = index == _index;
-      _items.add(GestureDetector(
-        onTap: !item.canSelected
-            ? null
-            : () {
-                setState(() {
-                  if (selected) {
-                    _index = null;
-                    widget.itemModel.selectedIndex = null;
-                  } else {
-                    _index = index;
-                    widget.itemModel.selectedIndex = index;
-                  }
-                });
-                if (widget.itemClick != null) {
-                  widget.itemClick(index);
-                }
-              },
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-          constraints: BoxConstraints(
-            minWidth: 50,
-          ),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              color: selected ? widget.selectedBgColor : widget.bgColor,
-              border: Border.all(
-                  color: selected
-                      ? widget.selectedBorderColor ?? widget.selectedTextColor
-                      : widget.bgColor,
-                  width: 0.6)),
-          child: Opacity(
-            opacity: !item.canSelected ? 0.3 : 1,
-            child: Text(
-              item.itemTitle,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  color: selected ? widget.selectedTextColor : Colors.black,
-//                  fontWeight: FontWeight.w300,
-                  fontSize: 13 * 2.sp),
-            ),
-          ),
-        ),
-      ));
-    }
-
-    return _items;
-  }
-}
-
-class SelectedListItemModel<T extends SelectedListItemChildModel> {
-  String sectionTitle;
-  List<T> items;
-  int selectedIndex;
-
-  SelectedListItemModel(this.sectionTitle, this.items);
 }
 
 /*
   实现淘宝sku 可选不可选
  */
-class SelectedListItemChildModel {
-  String itemTitle;
-  bool canSelected;
-  int id;
+class SelectedItemModel {
+  WholesaleSku sku;
+  bool selected;
+  num selectedNum;
 
-  SelectedListItemChildModel(
-      {this.id, this.itemTitle, this.canSelected = true});
+  SelectedItemModel({this.sku, this.selected = false,this.selectedNum});
 }
+
+//
+// class SelectedListItemModel<T extends SelectedListItemChildModel> {
+//   String sectionTitle;
+//   List<T> items;
+//   int selectedIndex;
+//
+//   SelectedListItemModel(this.sectionTitle, this.items);
+// }
+//
+// /*
+//   实现淘宝sku 可选不可选
+//  */
+// class SelectedListItemChildModel {
+//   String itemTitle;
+//   bool canSelected;
+//   int id;
+//
+//   SelectedListItemChildModel(
+//       {this.id, this.itemTitle, this.canSelected = true});
+// }

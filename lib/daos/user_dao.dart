@@ -155,6 +155,27 @@ class UserDao {
     }
   }
 
+
+  /*
+   * 账号
+   */
+  static accountLogin(String name, String password,
+      {@required OnSuccess<User> success, @required OnFailure failure}) async {
+    ResultData res = await HttpManager.post(
+        UserApi.account_login, {"name": name, "password": password});
+
+    if (!res.result) {
+      failure(res.code, res.msg);
+    } else {
+      UserModel model = UserModel.fromJson(res.data);
+      if (model.code == HttpStatus.SUCCESS) {
+        success(model.data, model.code, model.msg);
+      } else {
+        failure(model.code, model.msg);
+      }
+    }
+  }
+
   /*
     自动登录
    */

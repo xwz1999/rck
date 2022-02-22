@@ -75,7 +75,7 @@ class _ShopOrderListPageState extends BaseStoreState<ShopOrderListPage>
       itemClickListener: (index) {
         OrderModel orderModel = _controller.getData()[index];
         AppRouter.push(globalContext, RouteName.SHOP_ORDER_DETAIL,
-                arguments: ShopOrderDetailPage.setArguments(orderModel.id))
+                arguments: ShopOrderDetailPage.setArguments(orderModel.id,false))
             .then(((result) {
           if (result == null) return;
           DPrint.printf(result);

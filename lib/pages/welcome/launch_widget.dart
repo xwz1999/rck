@@ -33,7 +33,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
 
     //初始化AMap  给android和ios
     //初始化日志工具
-    PowerLogger.start(context, debug:AppConfig.debug);//AppConfig.debug  在正式服数据下进行调试
+    PowerLogger.start(context, debug:AppConfig.debug);//AppConfig.debug  在正式服数据下进行调试\
 
     WidgetsBinding.instance.addPostFrameCallback((callback) async {
       await Future.delayed(Duration(milliseconds: 2450));

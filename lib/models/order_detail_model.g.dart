@@ -67,6 +67,8 @@ OrderDetail _$OrderDetailFromJson(Map<String, dynamic> json) {
         ?.map((e) =>
             e == null ? null : StatusList.fromJson(e as Map<String, dynamic>))
         ?.toList(),
+    json['make_up_text'] as String,
+    json['make_up_amount'] as num,
     // json['balance'] == null
     //     ? null
     //     : Balance.fromJson(json['balance'] as Map<String, dynamic>),
@@ -76,6 +78,7 @@ OrderDetail _$OrderDetailFromJson(Map<String, dynamic> json) {
     // json['invoice'] == null
     //     ? null
     //     : Invoice.fromJson(json['invoice'] as Map<String, dynamic>)
+
   );
 }
 
@@ -111,7 +114,9 @@ Map<String, dynamic> _$OrderDetailToJson(OrderDetail instance) =>
       'coupon': instance.coupon,
       'addr': instance.addr,
       'brands': instance.brands,
-      'canConfirm': instance.canConfirm
+      'canConfirm': instance.canConfirm,
+      'make_up_text':instance.makeUpText,
+      'make_up_amount':instance.makeUpAmount
     };
 
 Addr _$AddrFromJson(Map<String, dynamic> json) {

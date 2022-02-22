@@ -27,10 +27,13 @@ class PhoneLoginPage extends StatefulWidget {
 class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   TextEditingController _phoneController;
   TextEditingController _smsCodeController;
-  // TextEditingController _inviteController;
+  TextEditingController _passController;
+  TextEditingController _accountController;
   FocusNode _phoneNode;
   FocusNode _smsCodeNode;
   FocusNode _inviteNode;
+  FocusNode _passNode;
+  FocusNode _accountNode;
 
   bool _chooseAgreement = false;
   Timer _timer;
@@ -40,6 +43,8 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   bool _loginEnable = false;
   String _errorMsg = "";
   bool _cantSelected = false;
+
+  bool _isPhoneLogin = true;
   @override
   void initState() {
     super.initState();
@@ -55,7 +60,11 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
       _smsCodeController = TextEditingController();
       // _inviteController = TextEditingController();
     }
+    _passController = TextEditingController();
+    _passNode = FocusNode();
 
+    _accountController = TextEditingController();
+    _accountNode = FocusNode();
     _phoneNode = FocusNode();
     _smsCodeNode = FocusNode();
     // _inviteNode = FocusNode();
@@ -68,7 +77,10 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
     _phoneNode?.dispose();
     _smsCodeNode?.dispose();
     _inviteNode?.dispose();
-
+    _passNode?.dispose();
+    _passController?.dispose();
+    _accountController?.dispose();
+    _accountNode?.dispose();
 
     if (_timer != null) {
       _timer.cancel();
@@ -103,8 +115,8 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                     style: AppTextStyle.generate(14 * 2.sp, color: Colors.red),
                   ),
                 ),
-                _phoneText(),
-                _smsCode(),
+                _isPhoneLogin? _phoneText():_accountText(),
+                _isPhoneLogin?_smsCode():_passWordText(),
                 // _inviteText(),
                 _bottomOperation(),
                 120.hb,
@@ -218,6 +230,83 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
       ),
     );
   }
+
+
+  Container _accountText() {
+    return Container(
+      margin:
+      EdgeInsets.only(top: 10.rw, right: 20.rw, left: 20.rw),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey[500], width: 0.5),
+          borderRadius: BorderRadius.all(Radius.circular(3.rw))),
+      child: TextField(
+        controller: _accountController,
+        focusNode: _accountNode,
+        //keyboardType: TextInputType.number,
+        style: TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
+        // inputFormatters: [
+        //   LengthLimitingTextInputFormatter(11),
+        // ],
+        cursorColor: Colors.black,
+        onChanged: (String account) {
+          setState(() {
+            if (account.isNotEmpty) {
+
+              _loginEnable = true;
+            } else {
+              _loginEnable = false;
+            }
+          });
+        },
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(
+                left: 10.rw,
+                top: 13.rw,
+                bottom: _accountNode.hasFocus ? 0 : 14.rw),
+            border: InputBorder.none,
+            hintText: "请输入账号",
+            hintStyle: TextStyle(color: Colors.grey[400], fontSize: 15 * 2.sp),
+            suffixIcon: _clearButton(_accountController, _accountNode)),
+      ),
+    );
+  }
+
+  Container _passWordText() {
+    return Container(
+      margin:
+      EdgeInsets.only(top: 10.rw, right: 20.rw, left: 20.rw),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey[500], width: 0.5),
+          borderRadius: BorderRadius.all(Radius.circular(3.rw))),
+      child: TextField(
+        controller: _passController,
+        focusNode: _passNode,
+        style: TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
+        cursorColor: Colors.black,
+        onChanged: (String pass) {
+          setState(() {
+            if (pass.isNotEmpty) {
+
+              _loginEnable = true;
+            } else {
+              _loginEnable = false;
+            }
+          });
+        },
+        decoration: InputDecoration(
+            contentPadding: EdgeInsets.only(
+                left: 10.rw,
+                top: 13.rw,
+                bottom: _passNode.hasFocus ? 0 : 14.rw),
+            border: InputBorder.none,
+            hintText: "请输入密码",
+            hintStyle: TextStyle(color: Colors.grey[400], fontSize: 15 * 2.sp),
+            suffixIcon: _clearButton(_passController, _passNode)),
+      ),
+    );
+  }
+
+
 
   //
   // Container _inviteText() {
@@ -351,7 +440,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
       margin: EdgeInsets.only(
           top: 10.rw, left: 15.rw, right: 8.rw, bottom: 15.rw),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           // TextButton(
           //   title: "如何注册？",
@@ -360,7 +449,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
           //   highlightTextColor: Colors.grey[400],
           //   onTap: () {},
           // ),
-          TButton.TextButton(
+          !_isPhoneLogin?SizedBox(): TButton.TextButton(
             title: "收不到验证码？",
             font: 14.rsp,
             textColor: Colors.grey[400],
@@ -450,6 +539,28 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                   ));
             },
           ),
+          Spacer(),
+          GestureDetector(
+            onTap: (){
+              _isPhoneLogin = !_isPhoneLogin;
+              setState(() {
+
+              });
+            },
+            child: Container(
+              child: Row(
+                children: [
+                  Text( !_isPhoneLogin?'手机号登录':'子公司账户登录',style:  TextStyle(color: Colors.grey[700],fontSize: 14 * 2.sp,)),
+                  Icon(
+                    Icons.keyboard_arrow_right,
+                    color: Colors.black38,
+                    size: 18 * 2.sp,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          10.wb,
         ],
       ),
     );
@@ -471,7 +582,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
       onTap: () {
         if (_chooseAgreement) {
           GSDialog.of(context).showLoadingDialog(context, "正在登录...");
-          _phoneLogin(context);
+          _isPhoneLogin? _phoneLogin(context):_accountLogin(context);
         } else {
           Alert.show(
               context,
@@ -490,6 +601,27 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
         }
       },
     );
+  }
+
+
+  _accountLogin(BuildContext context) {
+    UserDao.accountLogin(_accountController.text, _passController.text,
+        success: (data, code, msg) {
+          GSDialog.of(context).dismiss(context);
+          if (data.status == 0) {
+            _phoneRegister(context);
+            return;
+            // AppRouter.push(context, RouteName.INPUT_INVITATION, arguments: InvitationCodePage.setArgs(mobile: _phoneController.text));
+          } else {
+            // DPrint.printf(" 转化的json ---- " + json.encode(data.toJson()));
+            // AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
+            AppRouter.fadeAndRemoveUntil(context, RouteName.TAB_BAR);
+            UserManager.updateUser(data, getStore());
+          }
+        }, failure: (code, msg) {
+          GSDialog.of(context).dismiss(context);
+          Toast.showError(msg);
+        });
   }
 
   _beginCountDown() {

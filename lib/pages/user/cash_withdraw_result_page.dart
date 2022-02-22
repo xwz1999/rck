@@ -146,7 +146,8 @@ class _CashWithdrawResultPageState extends BaseStoreState<CashWithdrawResultPage
         children: <Widget>[
           Text("提现小贴士", style: TextStyle(color: titleColor, fontSize: 13),),
           _castInfoRowWidget(title: "本次申请提现金额:", info: "￥${_withdrawDetailModel.data.amount.toStringAsFixed(2)}"),
-          _castInfoRowWidget(title: "手续费:", info: "￥0.00"),
+          _castInfoRowWidget(title: "平台代扣代付税费:", info: "￥${_withdrawDetailModel.data.taxFee??0.toStringAsFixed(2)}"),
+          _castInfoRowWidget(title: "实际到账金额:", info: "￥${_withdrawDetailModel.data.actualAmount??0.toStringAsFixed(2)}"),
           _castInfoRowWidget(title: "申请提现人:", info: _withdrawDetailModel.data.userName),
           _castInfoRowWidget(title: "提现方式:", info: TextUtils.isEmpty(_withdrawDetailModel.data.bankAccount)? "支付宝 | ${_withdrawDetailModel.data.alipay}":"银行 | ${_withdrawDetailModel.data.bankAccount}"),
           _castInfoRowWidget(title: "申请提现时间:", info: _withdrawDetailModel.data.createdAt),
