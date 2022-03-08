@@ -520,6 +520,11 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
         Container(
           child: GestureDetector(
             onTap: () async {
+              if (UserManager.instance.user.info.id == 0) {
+                AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                Toast.showError('请先登录...');
+                return;
+              }
       if (widget.goodsDetail.vendorId == 1800 || widget.goodsDetail.vendorId == 2000 || widget.goodsDetail.vendorId == 3000) {
                 if (_defaltAddress == null) {
 

@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
@@ -78,7 +79,7 @@ class _RecommendPageState extends BaseStoreState<RecommendPage>
             publishMaterialListener: (){
               AppRouter.push(context, RouteName.COMMODITY_PAGE,arguments: CommodityDetailPage.setArguments(indexModel.goods.id));
             },
-            downloadListener: (){
+            downloadListener: (ByteData byteData){
               showLoading("保存图片中...");
               List<String> urls = indexModel.photos.map((f){
                 return Api.getResizeImgUrl(f.url, 800);

@@ -87,6 +87,29 @@ class _WholesaleGoodsParamPageState extends BaseStoreState<WholesaleGoodsParamPa
                   Container(
                     width: rSize(60),
                     child: Text(
+                      '起批量',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 13 * 2.sp,
+                      ),
+                    ),
+                  ),
+                  rWBox(20),
+                  Container(
+                    child: Text(
+                      '${model.sku[0].min}件起批  ',
+                      style: TextStyle(color: Colors.grey, fontSize: 13 * 2.sp),
+                    ),
+                  ),
+                ],
+              ),
+              rHBox(10),
+              Row(
+                children: <Widget>[
+                  rWBox(20),
+                  Container(
+                    width: rSize(60),
+                    child: Text(
                       '条形码',
                       style: TextStyle(
                         color: Colors.black,

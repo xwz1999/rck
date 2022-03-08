@@ -44,7 +44,6 @@ class _WholesaleSelectedListState extends State<WholesaleSelectedList> {
                   if (widget.listener != null) {
                     widget.listener(itemIndex,num);
                   }
-                  setState(() {});
                 },
               );
             }));
@@ -78,18 +77,21 @@ class _SelectedListItemState extends State<SelectedListItem> {
     super.initState();
 
     goodsNum = widget.itemModel.selectedNum!=null?widget.itemModel.selectedNum: widget.itemModel.sku.min;
+
+    Future.delayed(Duration.zero, () async {
+      if (widget.data.length == 1 && _isFirstLoad) {
+        _isFirstLoad = false;
+        widget.data[0].selected = true;
+        widget.itemClick(0,goodsNum);
+      }
+    });
+
   }
 
   @override
   Widget build(BuildContext context) {
 
-    // if (widget.data.length == 1 && _isFirstLoad) {
-    //   _isFirstLoad = false;
-    //   setState(() {
-    //     widget.data[0].selected = true;
-    //     widget.itemClick(0,goodsNum);
-    //   });
-    // }
+
 
     return Container(
       margin: EdgeInsets.only(bottom: 10.rw),
@@ -110,14 +112,15 @@ class _SelectedListItemState extends State<SelectedListItem> {
               size: rSize(20),
             ),
             onPressed: () {
-              setState(() {
+
                 for (int i = 0; i < widget.data.length; i++) {
                   if (i != widget.index) {
                     widget.data[i].selected = false;
                   }
                 }
                 widget.itemModel.selected = !widget.itemModel.selected;
-              });
+
+
               if (widget.itemClick != null) {
                 widget.itemClick(widget.index,goodsNum);
               }

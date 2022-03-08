@@ -1,12 +1,23 @@
+def flutterProjectRoot = rootProject.projectDir.parentFile.toPath()
+def plugins = new Properties()
+def pluginsFile = new File(flutterProjectRoot.toFile(), '.flutter-plugins')
+if (pluginsFile.exists()) {
+    pluginsFile.withReader('UTF-8') { reader -> plugins.load(reader) }
+}
+
+
 buildscript {
     ext.kotlin_version = '1.4.10'
     ext.flutterFFmpegPackage = 'min-lts'
     repositories {
         google()
         jcenter()
+
+        maven { url 'http://download.flutter.io' }
 //        maven {
 //            url "http://mvn.mob.com/android"
 //        }
+//
     }
 
     dependencies {
@@ -22,6 +33,9 @@ allprojects {
     repositories {
         google()
         jcenter()
+        flatDir {
+            dirs "${plugins.get("flutter_tencentplayer")}android/libs"
+        }
     }
 }
 

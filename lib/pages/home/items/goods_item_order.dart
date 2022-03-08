@@ -58,7 +58,7 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
       padding: EdgeInsets.all(rSize(8)),
       decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: widget.index==0?BorderRadius.vertical(top: Radius.circular(8.rw)):
+          borderRadius: widget.length==1? BorderRadius.all(Radius.circular(8.rw)): widget.index==0?BorderRadius.vertical(top: Radius.circular(8.rw)):
           widget.index==widget.length-1?BorderRadius.vertical(bottom: Radius.circular(8.rw)):BorderRadius.vertical(top: Radius.circular(0.rw))
       ),
       child: Column(
@@ -270,6 +270,13 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
               style: AppTextStyle.generate(14 * 2.sp,
                   fontWeight: FontWeight.w300),
             ),
+                Text(
+                  "(券后价)",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyle.generate(12 * 2.sp,color: Color(0xFF999999)),
+                ),
+            5.hb,
             Text(
               "x${goods.quantity}",
               style: AppTextStyle.generate(13,

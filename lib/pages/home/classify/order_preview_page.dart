@@ -27,6 +27,7 @@ import 'package:jingyaoyun/pages/home/items/oversea_accept_license_page.dart';
 import 'package:jingyaoyun/pages/user/address/receiving_address_page.dart';
 import 'package:jingyaoyun/pages/user/user_verify.dart';
 import 'package:jingyaoyun/pages/user/widget/recook_check_box.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/bottom_list.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
@@ -632,9 +633,18 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
       child: Column(
         children: <Widget>[
 
-          _titleRow("商品金额", "",
+          _titleRow("商品总价", "",
               "合计:￥${_orderModel.data.goodsTotalAmount.toStringAsFixed(2)}",'共$totalNum件',subTitleColor: Color(0xFF999999),
               rightTitleColor: Colors.black),
+
+
+          _orderModel.data.coinTotalAmount!=0?10.hb:SizedBox(),
+
+          _orderModel.data.coinTotalAmount!=0?_titleRow( UserLevelTool.currentRoleLevel()!='合伙人'?  "${UserLevelTool.currentRoleLevel()}折扣":'折扣', "",
+              "-￥${_orderModel.data.coinTotalAmount.toStringAsFixed(2)}",'',
+              rightTitleColor: Colors.black):SizedBox(),
+
+          10.hb,
 
           _titleRow("合计运费", "",
               "+￥${_orderModel.data.expressTotalFee.toStringAsFixed(2)}",'',
@@ -932,10 +942,18 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                               )),
                           TextSpan(
                               text:
-                                  "￥${_orderModel.data.actualTotalAmount.toStringAsFixed(2)}",
+                              "￥",
                               style: AppTextStyle.generate(
                                 16 * 2.sp,
-                                color: Color.fromARGB(255, 249, 62, 13),
+                                color: Color(0xffc70404),
+                              )),
+                          TextSpan(
+                              text:
+                              "${_orderModel.data.actualTotalAmount.toStringAsFixed(2)}",
+                              style: AppTextStyle.generate(
+                                22 * 2.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xffc70404),
                               )),
                         ]),
                   ),
@@ -955,7 +973,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                               ])),
                     child: CustomImageButton(
                       padding: EdgeInsets.symmetric(
-                          vertical: rSize(4), horizontal: rSize(25)),
+                          vertical: rSize(10), horizontal: rSize(25)),
                       title: "提交订单",
                       color: Colors.white,
                       disabledColor: Colors.grey[600],

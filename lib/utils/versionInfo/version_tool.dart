@@ -47,7 +47,20 @@ class VersionTool {
             listener: (int index) async {
               Alert.dismiss(context);
               if (index == 1) {
-                LaunchReview.launch(androidAppId: "com.akuhome.jingyaoyun", iOSAppId: '1601169177');
+                if(Platform.isAndroid){
+                  LaunchReview.launch(androidAppId: "com.akuhome.jingyaoyun", iOSAppId: '1601169177');
+                }else{
+                  if (await canLaunch(_appStoreURL)) {
+
+                    launch(_appStoreURL);
+                    if (Theme.of(context).platform == TargetPlatform.iOS) {
+                      Future.delayed(
+                          const Duration(seconds: 3), () => closeWebView());
+                    }
+                  }
+                }
+
+
                 // if (await canLaunch(_appStoreURL)) {
                 //
                 //   launch(_appStoreURL);

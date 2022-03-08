@@ -35,6 +35,8 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   FocusNode _passNode;
   FocusNode _accountNode;
 
+  String _title = "手机号登录";
+
   bool _chooseAgreement = false;
   Timer _timer;
   String _countDownStr = "获取验证码";
@@ -93,7 +95,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
         appBar: CustomAppBar(
-          title: "手机登录",
+          title: _title,
           themeData: AppThemes.themeDataGrey.appBarTheme,
           elevation: 0.2,
         ),
@@ -540,26 +542,32 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
             },
           ),
           Spacer(),
-          GestureDetector(
-            onTap: (){
-              _isPhoneLogin = !_isPhoneLogin;
-              setState(() {
-
-              });
-            },
-            child: Container(
-              child: Row(
-                children: [
-                  Text( !_isPhoneLogin?'手机号登录':'子公司账户登录',style:  TextStyle(color: Colors.grey[700],fontSize: 14 * 2.sp,)),
-                  Icon(
-                    Icons.keyboard_arrow_right,
-                    color: Colors.black38,
-                    size: 18 * 2.sp,
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: (){
+          //     _isPhoneLogin = !_isPhoneLogin;
+          //     if(_isPhoneLogin){
+          //       _title = '手机号登录';
+          //     }else{
+          //       _title = '合伙人账号登录';
+          //     }
+          //
+          //     setState(() {
+          //
+          //     });
+          //   },
+          //   child: Container(
+          //     child: Row(
+          //       children: [
+          //         Text( !_isPhoneLogin?'手机号登录':'合伙人账号登录',style:  TextStyle(color: Colors.grey[700],fontSize: 14 * 2.sp,)),
+          //         Icon(
+          //           Icons.keyboard_arrow_right,
+          //           color: Colors.black38,
+          //           size: 18 * 2.sp,
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           10.wb,
         ],
       ),

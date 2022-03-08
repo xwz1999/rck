@@ -204,22 +204,25 @@ class _OrderReturnStatusPageState
           _tile('订单编号', _statusModel.data.orderId.toString(), needCopy: true),
           _tile('售后编号', _statusModel.data.asId.toString(), needCopy: true),
           _tile(
-            '退款金额',
-            (_statusModel.data.refundAmount + _statusModel.data.refundCoin)
-                .toStringAsFixed(2),
+            '商品状态',
+            _statusModel.data.assType==2?'退货退款':'仅退款',
           ),
           _tile(
-            '申请件数',
-            _statusModel.data.quantity.toString(),
-          ),
-          _tile(
-            '退款原因',
-            _statusModel.data.reasonContent,
+            '售后类型',
+            _statusModel.data.assType==1?'未发货':'已发货',
           ),
           _tileImage(
             '买家凭证',
             _statusModel.data.reasonImg,
           ),
+          _statusModel.data.assType!=1?_tile(
+            '退款原因',
+            _statusModel.data.reasonContent,
+          ):SizedBox(),
+          _statusModel.data.assType!=1?_tileImage(
+            '买家凭证',
+            _statusModel.data.reasonImg,
+          ):SizedBox(),
         ],
       ),
     );
@@ -289,9 +292,11 @@ class _OrderReturnStatusPageState
       padding: EdgeInsets.symmetric(vertical: 3 * 2.h),
       margin: EdgeInsets.only(left: rSize(8), top: rSize(2)),
       child: Row(
+
         children: <Widget>[
           Container(
               constraints: BoxConstraints(minWidth: rSize(70)),
+
               child: Text(
                 "$title:",
                 style:
@@ -306,35 +311,49 @@ class _OrderReturnStatusPageState
               Clipboard.setData(data);
               Toast.showSuccess('$title:' + value + ' -- 已经保存到剪贴板');
             },
-            child: Text(
-              "$value",
-              style: AppTextStyle.generate(14 * 2.sp, color: Color(0xff666666)),
+            child: Container(
+              padding: EdgeInsets.only(top: 2.rw),
+              width: 260.rw,
+              child: Row(
+                children: [
+                  Text(
+
+                    "$value",
+                    style: AppTextStyle.generate(14 * 2.sp, color: Color(0xff666666)),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  10.wb,
+                  needCopy
+                      ? GestureDetector(
+                    onTap: () {
+                      if (!needCopy) {
+                        return;
+                      }
+                      ClipboardData data = new ClipboardData(text: value);
+                      Clipboard.setData(data);
+                      Toast.showSuccess('$title:' + value + ' -- 已经保存到剪贴板');
+                    },
+                    child: Container(
+                      margin: EdgeInsets.only(left: 5),
+                      decoration: BoxDecoration(
+                        color: AppColor.frenchColor,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        '复制',
+                        style:
+                        AppTextStyle.generate(10 * 2.sp, color: Colors.grey),
+                      ),
+                    ),
+                  )
+                      : Container(),
+                ],
+              ),
             ),
           ),
-          needCopy
-              ? GestureDetector(
-                  onTap: () {
-                    if (!needCopy) {
-                      return;
-                    }
-                    ClipboardData data = new ClipboardData(text: value);
-                    Clipboard.setData(data);
-                    Toast.showSuccess('$title:' + value + ' -- 已经保存到剪贴板');
-                  },
-                  child: Container(
-                    margin: EdgeInsets.only(left: 5),
-                    decoration: BoxDecoration(
-                      color: AppColor.frenchColor,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
-                    child: Text(
-                      '复制',
-                      style:
-                          AppTextStyle.generate(10 * 2.sp, color: Colors.grey),
-                    ),
-                  ),
-                )
-              : Container(),
+
+
         ],
       ),
     );
@@ -363,26 +382,6 @@ class _OrderReturnStatusPageState
                       Spacer(),
                       Text(
                         '￥ ${_statusModel.data.refundAmount}',
-                        style: TextStyle(
-                            color: AppColor.themeColor, fontSize: 16 * 2.sp),
-                      )
-                    ],
-                  ),
-                )
-              : Container(),
-          _statusModel.data.refundCoin > 0
-              ? Container(
-                  height: 25 * 2.h,
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        '退回瑞币',
-                        style:
-                            TextStyle(color: Colors.black, fontSize: 16 * 2.sp),
-                      ),
-                      Spacer(),
-                      Text(
-                        '${_statusModel.data.refundCoin}',
                         style: TextStyle(
                             color: AppColor.themeColor, fontSize: 16 * 2.sp),
                       )
@@ -606,6 +605,7 @@ class _OrderReturnStatusPageState
                         fontWeight: FontWeight.w600,
                       ),
                     ),
+                    10.hb,
                     Container(
                       margin: EdgeInsets.symmetric(vertical: 3),
                       decoration: BoxDecoration(
@@ -622,6 +622,7 @@ class _OrderReturnStatusPageState
                             fontSize: 11 * 2.sp,
                           )),
                     ),
+                    10.hb,
                     Row(
                       children: <Widget>[
                         Text(
@@ -630,7 +631,7 @@ class _OrderReturnStatusPageState
                               color: Colors.grey[600]),
                         ),
                         Text(
-                          "￥${(_statusModel.data.refundAmount + _statusModel.data.refundCoin).toStringAsFixed(2)}",
+                          "￥${(_statusModel.data.refundAmount).toStringAsFixed(2)}",
                           style: AppTextStyle.generate(14 * 2.sp,
                               color: Colors.black),
                         ),
@@ -821,19 +822,6 @@ class _OrderReturnStatusPageState
               ),
             ],
           ),
-          _statusModel.data.refundCoin == 0
-              ? SizedBox()
-              : Container(
-                  padding: EdgeInsets.only(top: 5),
-                  child: ExtendedText.rich(TextSpan(children: [
-                    TextSpan(text: "退回瑞币 ", style: greyStyle),
-                    TextSpan(
-                        text: _statusModel.data.refundCoin.toString(),
-                        style: blackStyle),
-                    TextSpan(text: " 已返回至您的", style: greyStyle),
-                    TextSpan(text: "瑞币账户", style: blackStyle),
-                    TextSpan(text: "，请及时核实。", style: greyStyle),
-                  ]))),
           _statusModel.data.refundAmount == 0
               ? SizedBox()
               : Container(

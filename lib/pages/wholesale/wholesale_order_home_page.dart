@@ -8,6 +8,7 @@ import 'package:jingyaoyun/pages/user/order/guide_order_view.dart';
 import 'package:jingyaoyun/pages/user/order/order_list_controller.dart';
 import 'package:jingyaoyun/pages/user/order/order_list_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_order_list_page.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/cache_tab_bar_view.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/tabbarWidget/sc_tab_bar.dart';
@@ -54,6 +55,9 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
     OrderListController(),
     OrderListController()
   ];
+
+  List<String> titles = ["自购订单", "VIP店铺订单"];
+
   @override
   void initState() {
     super.initState();
@@ -61,7 +65,15 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
     if (widget.initialIndex != null) {
       index = widget.initialIndex;
     }
-    _allTabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    if(UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary) {
+      _allTabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    }else{
+      _allTabController = TabController(length: 1, vsync: this, initialIndex: 0);
+      titles = ["自购订单"];
+    }
+
+
+
     _allTabController.addListener(() {
       _titleSwitchController.changeIndex(_allTabController.index);
     });
@@ -82,7 +94,7 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
         appBackground: Colors.white,
         elevation: 0,
       ),
-      body: _newBuildBody(),
+      body: UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary? _newBuildBody():_normalBuildBody(),
       // body: _buildBody(),
     );
   }
@@ -143,23 +155,31 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
 
   _titleView() {
     return Container(
-      child: TitleSwitch(
+      child:
+
+      UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary?
+      TitleSwitch(
         controller: _titleSwitchController,
         height: 30,
         index: 0,
-        titles: ["自购订单", "店铺订单"],
+        titles: titles,
         selectIndexBlock: (index) {
-          if (index == 0) {
-            _positionType = OrderPositionType.onlineOrder;
-            _allTabController.index = 0;
-            setState(() {});
 
-          } else {
-            _positionType = OrderPositionType.storeOrder;
-            _allTabController.index = 1;
-            setState(() {});
+          if(UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary){
+            if (index == 0) {
+              _positionType = OrderPositionType.onlineOrder;
+              _allTabController.index = 0;
 
+              setState(() {});
+
+            } else {
+              _positionType = OrderPositionType.storeOrder;
+              _allTabController.index = 1;
+              setState(() {});
+
+            }
           }
+
         },
         backgroundWidget: Container(
           decoration: BoxDecoration(
@@ -170,6 +190,12 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
             ),
             borderRadius: BorderRadius.circular(15),
           ),
+        ),
+      ):Text(
+        "自购订单",
+        style: TextStyle(
+          color: Color(0xFF333333),
+          fontSize: 18.rsp,
         ),
       ),
     );
@@ -279,6 +305,66 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
               )
             ],
           )
+        ],
+      ),
+    );
+  }
+
+  _normalBuildBody(){
+    return Container(
+      child: CacheTabBarView(
+        controller: _allTabController,
+        children: <Widget>[
+          Column(
+            children: <Widget>[
+              Container(
+                  color: Colors.white,
+                  child: SCTabBar(
+                    labelColor: Colors.white,
+                    needRefresh: true,
+                    labelPadding: EdgeInsets.zero,
+                    controller: _tabController,
+                    indicatorSize: TabBarIndicatorSize.label,
+                    indicatorColor: AppColor.themeColor,
+                    indicatorPadding:
+                    EdgeInsets.symmetric(horizontal: rSize(20)),
+                    itemBuilder: (int index) {
+                      return _item(index);
+                    },
+                  )),
+              Expanded(
+                child: CacheTabBarView(
+                  controller: _tabController,
+                  children: <Widget>[
+                    WholesaleOrderListPage(
+                      controller: _orderListControllers[0],
+                      type: WholesaleOrderListType.all,
+                      positionType: _positionType,
+                    ),
+                    WholesaleOrderListPage(
+                      controller: _orderListControllers[1],
+                      type: WholesaleOrderListType.unpaid,
+                      positionType: _positionType,
+                    ),
+                    WholesaleOrderListPage(
+                      controller: _orderListControllers[2],
+                      type: WholesaleOrderListType.undelivered,
+                      positionType: _positionType,
+                    ),
+                    WholesaleOrderListPage(
+                      controller: _orderListControllers[3],
+                      type: WholesaleOrderListType.receipt,
+                      positionType: _positionType,
+                    ),
+                    // Container()
+                    // ShopOrderListPage(type: ShopOrderListType.afterSale,),
+                    // OrderAfterSalePage(arguments: OrderAfterSalePage.setArguments(OrderAfterSaleType.shopPage, _positionType, _orderListControllers[4]),),
+                  ],
+                ),
+              )
+            ],
+          ),
+
         ],
       ),
     );

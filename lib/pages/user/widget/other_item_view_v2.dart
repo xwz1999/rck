@@ -70,15 +70,15 @@ class OtherItemViewV2 extends StatelessWidget {
                 // () => AppRouter.push(context, RouteName.BUSSINESS_COOPERATION_PAGE),
                 '我的粉丝',()=>  Get.to(() => MyGroupPageV2()),
               ):SizedBox(),
-              (UserLevelTool.currentRoleLevelEnum() ==
-                  UserRoleLevel.Shop|| UserLevelTool.currentRoleLevelEnum() ==UserRoleLevel.physical||
-                  UserLevelTool.currentRoleLevelEnum() ==UserRoleLevel.subsidiary)?
-              _buildItem(
-                Image.asset(R.ASSETS_USER_FUNC_RECOMMEND_PNG, width: 30.rw,
-                  height: 30.rw,),
-                '店铺推荐',
-                    () => Get.to(() => RecommendShopPage()),
-              ):SizedBox(),
+              // (UserLevelTool.currentRoleLevelEnum() ==
+              //     UserRoleLevel.Shop|| UserLevelTool.currentRoleLevelEnum() ==UserRoleLevel.physical||
+              //     UserLevelTool.currentRoleLevelEnum() ==UserRoleLevel.subsidiary)?
+              // _buildItem(
+              //   Image.asset(R.ASSETS_USER_FUNC_RECOMMEND_PNG, width: 30.rw,
+              //     height: 30.rw,),
+              //   '店铺推荐',
+              //       () => Get.to(() => RecommendShopPage()),
+              // ):SizedBox(),
               //
               // _buildItem(
               //   Image.asset(R.ASSETS_USER_FUNC_RECOMMEND_PNG, width: 30.rw,

@@ -13,6 +13,7 @@ import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
 import 'package:jingyaoyun/pages/user/order/order_return_status_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholeasale_detail_page.dart';
 import 'package:jingyaoyun/utils/goods_status/goods_status_tool.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
@@ -96,20 +97,20 @@ abstract class OrderDetailState<T extends StatefulWidget>
     Widget expressFee = _priceItemWidget(
         title: "合计运费",
         info: "+￥" + orderDetail.expressTotalFee.toStringAsFixed(2));
-    Widget coupon = _priceItemWidget(
-        title: "优惠券",
-        info: "-￥" +
-            (orderDetail.brandCouponTotalAmount +
-                    orderDetail.universeCouponTotalAmount)
-                .toStringAsFixed(2));
+    // Widget coupon = _priceItemWidget(
+    //     title: "优惠券",
+    //     info: "-￥" +
+    //         (orderDetail.brandCouponTotalAmount +
+    //                 orderDetail.universeCouponTotalAmount)
+    //             .toStringAsFixed(2));
     Widget coin = _priceItemWidget(
-        title: "瑞币抵扣",
+        title: UserLevelTool.currentRoleLevel()!='合伙人'?  "${UserLevelTool.currentRoleLevel()}折扣":'折扣',
         info: "-￥" + orderDetail.coinTotalAmount.toStringAsFixed(2));
     // 余额抵扣 暂时不需要
     widgetList.add(priceItem);
     if (_openPriceInfo) {
       widgetList.add(expressFee);
-      widgetList.add(coupon);
+      //widgetList.add(coupon);
       widgetList.add(coin);
     }
     widgetList.add(_actualTotalAmountWidget());
@@ -267,7 +268,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
               : Container(),
           _tile("买家留言", orderDetail.buyerMessage,
               crossAxisAlignment: CrossAxisAlignment.start),
-          _saleAmountInfo(),
+          //_saleAmountInfo(),
         ],
       ),
     );
@@ -781,10 +782,10 @@ abstract class OrderDetailState<T extends StatefulWidget>
                 }
               });
               if (canPush) {
-                Get.to(()=>WholesaleDetailPage(goodsId:  brand.goods[index].goodsId,isWholesale: true));
-                // AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                //     arguments: CommodityDetailPage.setArguments(
-                //         brand.goods[index].goodsId));
+                //Get.to(()=>WholesaleDetailPage(goodsId:  brand.goods[index].goodsId,isWholesale: true));
+                AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                    arguments: CommodityDetailPage.setArguments(
+                        brand.goods[index].goodsId));
               } else {
                 ReToast.err(text: '商品已下架');
               }
@@ -1057,6 +1058,13 @@ abstract class OrderDetailState<T extends StatefulWidget>
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyle.generate(14 * 2.sp,
                                 color: AppColor.redColor),
+                          ),
+                          Text(
+                            "(券后价)",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: AppTextStyle.generate(12 * 2.sp,
+                                color: Color(0xFF999999)),
                           ),
                           Spacer(),
                         ],

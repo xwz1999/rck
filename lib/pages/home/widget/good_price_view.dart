@@ -170,10 +170,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                       )),
                   !isWholesale
                       ? TextSpan(
-                          text: (UserLevelTool.currentRoleLevelEnum() ==
-                                      UserRoleLevel.None ||
-                                  UserLevelTool.currentRoleLevelEnum() ==
-                                      UserRoleLevel.Vip)
+                          text:  !AppConfig.commissionByRoleLevel
                               ? ""
                               : isTwoPrice
                                   ? "/ "
@@ -189,10 +186,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                         ),
                   !isWholesale
                       ? TextSpan(
-                          text: (UserLevelTool.currentRoleLevelEnum() ==
-                                      UserRoleLevel.None ||
-                                  UserLevelTool.currentRoleLevelEnum() ==
-                                      UserRoleLevel.Vip)
+                          text:  !AppConfig.commissionByRoleLevel
                               ? ""
                               : "赚",
                           style: AppTextStyle.generate(12 * 2.sp,
@@ -201,10 +195,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                       : SizedBox(),
                   !isWholesale
                       ? TextSpan(
-                          text: (UserLevelTool.currentRoleLevelEnum() ==
-                                      UserRoleLevel.None ||
-                                  UserLevelTool.currentRoleLevelEnum() ==
-                                      UserRoleLevel.Vip)
+                          text: !AppConfig.commissionByRoleLevel
                               ? ""
                               : "$commission",
                           style: AppTextStyle.generate(14 * 2.sp,
@@ -215,7 +206,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
               ),
               Spacer(),
               Text(
-                isWholesale ? '已定$saleNum件' : '已售$saleNum件',
+                isWholesale ? '已定$saleNum单' : '已售$saleNum件',
                 style: TextStyle(
                   // shadows: [
                   //   Shadow(

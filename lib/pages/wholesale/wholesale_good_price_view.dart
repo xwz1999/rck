@@ -66,7 +66,7 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
 
     int saleNum = 0;
 
-    int limit = 0;///起批量
+    int min = 0;///起批量
 
 
 
@@ -83,12 +83,12 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
     minCommission = minOriginPrice - minPrice;
 
     if (detailModel.sku != null && detailModel.sku.length > 0) {
-      limit = detailModel.sku[0].limit;
+      min = detailModel.sku[0].min;
       detailModel.sku.forEach((element) {
-        if (limit < element.limit) limit = element.limit;
+        if (min < element.min) min = element.min;
       });
     } else {
-      limit = 0;
+      min = 0;
     }
 
 //    if (hasPromotion) {
@@ -120,7 +120,7 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
           "${_getDoubleText(minCommission)}-${_getDoubleText(maxCommission)}";
     }
     return _normalPriceWidget(
-        price, commission, originPrice, isTwoPrice, saleNum,limit);
+        price, commission, originPrice, isTwoPrice, saleNum,min);
   }
 
   _getDoubleText(num number) {
@@ -131,7 +131,7 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
     }
   }
 
-  _promotionPrice(price, commission, originPrice, saleNum,limit,
+  _promotionPrice(price, commission, originPrice, saleNum,min,
       {isTwoPrice = false}) {
     return Container(
       padding: EdgeInsets.only(top: 8.rw, left: 12.rw),
@@ -167,7 +167,7 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
                         letterSpacing: 0,
                       )),
                     TextSpan(
-                          text: "$limit件起批",
+                          text: "$min件起批",
                           style: AppTextStyle.generate(12 * 2.sp,
                               color: Color(0xFF666666)),
                         ),
@@ -176,7 +176,7 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
               ),
               Spacer(),
               Text(
-                '已定$saleNum件',
+                '已定$saleNum单',
                 style: TextStyle(
                   // shadows: [
                   //   Shadow(
@@ -216,7 +216,7 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
                           bottom: rSize(0),
                         ),
                         child: Text(
-                          '省¥$commission',
+                          '预估利润¥$commission',
                           style: TextStyle(
                             // shadows: [
                             //   Shadow(
@@ -233,9 +233,9 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
                     ),
               rWBox(10),
              Text(
-                "平台零售价¥$originPrice",
+                "零售价¥$originPrice",
                 style: AppTextStyle.generate(
-                  16.rsp,
+                  14.rsp,
                   color: Color(0xFF999999),
                 ),
               ),

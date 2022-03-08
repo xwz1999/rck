@@ -176,7 +176,7 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
                             color: Color(0xff666666), fontSize: 14 * 2.sp),
                       ),
                       Text(
-                        "￥${_saleModel.refundAmount + _saleModel.refundCoin}",
+                        "￥${_saleModel.refundAmount}",
                         style: TextStyle(
                             color: AppColor.redColor, fontSize: 14 * 2.sp),
                       ),

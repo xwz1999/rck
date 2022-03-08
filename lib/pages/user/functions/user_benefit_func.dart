@@ -24,7 +24,7 @@ enum BenefitDateType {
 }
 
 class UserBenefitFunc {
-  ///子公司批发收益
+  ///合伙人批发收益
   static Future<PifaBenefitModel> getPifaBenefit() async {
     ResultData result = await HttpManager.post(
         APIV2.userAPI.getPifaBenefit, {'user_id': UserManager.instance.user.info.id,});
@@ -36,7 +36,7 @@ class UserBenefitFunc {
     }
   }
 
-  // ///子公司批发收益
+  // ///合伙人批发收益
   // static Future<List<PifaBenefitModel>> getPifaBenefit() async {
   //   ResultData result = await HttpManager.post(
   //       APIV2.userAPI.getPifaBenefit, {'user_id': UserManager.instance.user.info.id,});
@@ -52,7 +52,7 @@ class UserBenefitFunc {
   // }
 
 
-  ///子公司批发收益详情
+  ///合伙人批发收益详情
   static Future<PifaBenefitModel> getPifaBenefitDetail(int shopId,String date) async {
     ResultData result = await HttpManager.post(
         APIV2.userAPI.getPifaBenefitDetail, {'user_id': UserManager.instance.user.info.id,'shop_id':shopId,'date':date});
@@ -64,7 +64,7 @@ class UserBenefitFunc {
     }
   }
 
-  ///子公司获取其他收益
+  ///合伙人获取其他收益
   static Future<PifaBenefitModel> getBenefit(int kind,{String date}) async {///5=店铺 6=自购  8=分享
     Map<String, dynamic> params = {'user_id': UserManager.instance.user.info.id,'kind':kind,};
     if(date!=null){

@@ -85,7 +85,7 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
                   Container(
                     width: rSize(60),
                     child: Text(
-                      '条形码',
+                      '规格/条形码',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 13 * 2.sp,

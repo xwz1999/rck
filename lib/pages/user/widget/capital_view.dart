@@ -54,14 +54,15 @@ class _CapitalViewState extends BaseStoreState<CapitalView> {
             children: [
               Image.asset(
                 R.ASSETS_USER_USER_WITHDRAWAL_VIP_PNG,
-                width: 16.rw,
-                height: 16.rw,
+                width:  UserLevelTool.currentRoleLevel()!='合伙人'? 16.rw:20.rw,
+                height: UserLevelTool.currentRoleLevel()!='合伙人'? 16.rw:20.rw,
               ),
-              8.hb,
-              Text(
+              UserLevelTool.currentRoleLevel()!='合伙人'?8.hb:SizedBox(),
+
+              UserLevelTool.currentRoleLevel()!='合伙人'?Text(
                 '${UserLevelTool.currentRoleLevel()}',
                 style: TextStyle(fontSize: 10.rsp, color: Color(0xFFFFDEAA)),
-              )
+              ):SizedBox()
             ],
           ),
           17.wb,

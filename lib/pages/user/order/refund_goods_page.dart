@@ -51,7 +51,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
     _goodsIds = widget.arguments["goodsIds"];
     _reasonController = TextEditingController();
     _ruiCoinController = TextEditingController(
-      text: _goodsList[0].unitPrice.toStringAsFixed(2),
+      text: _goodsList[0].actualAmount.toStringAsFixed(2),
     );
   }
 
@@ -70,7 +70,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
         },
       ),
       appBar: CustomAppBar(
-        title: "退款申请",
+        title: "订单补偿申请",
         elevation: 0,
         themeData: AppThemes.themeDataMain.appBarTheme,
       ),
@@ -173,10 +173,15 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 3),
+                    20.hb,
+                    Container(
+                      padding: EdgeInsets.only(left: 6.rw,right: 6.rw,top: 4.w,bottom: 4.w),
+                      decoration: BoxDecoration(
+                        color: Color(0xFFEFF1F6),
+                        borderRadius: BorderRadius.circular(2.rw),
+                      ),
                       child: Text(
-                        goods.skuName,
+                        '规格:${goods.skuName}',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyle.generate(13 * 2.sp,
@@ -186,13 +191,21 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
                     ),
                     Spacer(),
                     Row(
-                      children: <Widget>[
+                      children: [
+                        Spacer(),
                         Text(
-                          "￥ ${goods.unitPrice}",
+                          "支付金额",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyle.generate(14 * 2.sp,
-                              color: AppColor.priceColor),
+                              color: Color(0xFF333333)),
+                        ),
+                        Text(
+                          "￥${goods.actualAmount}",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyle.generate(14 * 2.sp,
+                              color: Color(0xFFDB2D2D),fontWeight: FontWeight.bold),
                         ),
                       ],
                     )
@@ -222,7 +235,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
           Row(
             children: <Widget>[
               Text(
-                "退回瑞币",
+                "补偿金额",
                 style: TextStyle(color: Colors.black, fontSize: 14 * 2.sp),
               ),
               Spacer(),
@@ -232,7 +245,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
                   controller: _ruiCoinController,
                   margin: EdgeInsets.zero,
                   padding: EdgeInsets.zero,
-                  hint: '请输入瑞币数量～',
+                  hint: '请输入金额～',
                   maxLength: 0,
                   textAlign: TextAlign.end,
                   hintStyle:
@@ -261,25 +274,27 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
             child: Row(
               children: <Widget>[
                 Text(
-                  "实付款返还到瑞币账户",
+                  "实付款返还到付款账户",
                   style:
                       TextStyle(color: Color(0xff999999), fontSize: 12 * 2.sp),
                 ),
                 Spacer(),
                 Text(
-                  "瑞币数量可修改,最多${_goodsList.first.goodsAmount.toStringAsFixed(2)}",
+                  "最多${_goodsList.first.actualAmount.toStringAsFixed(2)}",
                   style:
                       TextStyle(color: Color(0xff999999), fontSize: 12 * 2.sp),
                 ),
+                15.wb,
               ],
             ),
           ),
+          10.hb,
           Container(
             height: 30 * 2.h,
             child: Row(
               children: <Widget>[
                 Text(
-                  "退款原因",
+                  "补偿原因",
                   style: TextStyle(color: Colors.black, fontSize: 14 * 2.sp),
                 ),
                 Expanded(

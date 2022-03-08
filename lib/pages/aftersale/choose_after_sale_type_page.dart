@@ -77,8 +77,8 @@ class _ChooseAfterSaleTypePageState
                       });
                     },
                     image: R.ASSETS_AFTER_SALE_QIAN_PNG,
-                    title: "我要退款(无需退货)",
-                    info: "没收到货，或与平台协商同意不用退货只退款"),
+                    title: "申请补偿",
+                    info: "产品有瑕疵，不退货只退款"),
                 Container(
                   height: 0.8,
                   color: AppColor.frenchColor,
@@ -100,7 +100,7 @@ class _ChooseAfterSaleTypePageState
                     },
                     image: R.ASSETS_AFTER_SALE_TUI_PNG,
                     title: "我要退货退款",
-                    info: "已收到货，需要退还收到的货物"),
+                    info: "若未收到货，请备注说明"),
                 // _itemWidget(
                 //   image: R.ASSETS_AFTER_SALE_HUAN_PNG,
                 //   title: "我要换货",
@@ -184,13 +184,13 @@ class _ChooseAfterSaleTypePageState
       },
       child: Container(
         color: Colors.white,
-        padding: EdgeInsets.symmetric(vertical: rSize(10)),
-        height: rSize(60),
+        padding: EdgeInsets.symmetric(vertical: rSize(5)),
+        height: rSize(65),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(right: rSize(10)),
+              margin: EdgeInsets.only(right: rSize(10),top: 4.rw),
               width: rSize(20),
               height: rSize(20),
               child:
@@ -208,6 +208,7 @@ class _ChooseAfterSaleTypePageState
                       fontWeight: FontWeight.w600,
                       fontSize: 14 * 2.sp),
                 ),
+                10.hb,
                 Text(
                   info,
                   style: TextStyle(

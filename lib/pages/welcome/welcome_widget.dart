@@ -213,7 +213,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                         children: <Widget>[
                           // Container(height: 10,),
                           Text(
-                            "跟着英子去开店",
+                            "数字化批发零售服务平台",
                             style: textStyle,
                           ),
                         ],
@@ -276,7 +276,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                   children: <Widget>[
                     // Container(height: 10,),
                     Text(
-                      "跟着英子去开店",
+                      "数字化批发零售服务平台",
                       style: textStyle,
                     ),
                   ],

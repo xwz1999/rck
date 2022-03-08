@@ -347,6 +347,7 @@ class _WholesaleShopPageState extends State<WholesaleShopPage> {
 
   _getBannerList() async {
     _bannerList = await WholesaleFunc.getBannerList();
+    if(mounted)
     setState(() {
 
     });

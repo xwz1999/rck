@@ -392,7 +392,7 @@ class _HomePageState extends BaseStoreState<HomePage>
               child: RefreshWidget(
                 //header: HomeGifHeader(),
                 isInNest: true,
-                headerTriggerDistance: ScreenUtil().statusBarHeight,
+
                 color: Colors.black,
                 controller: _gsRefreshController,
                 onRefresh: () async {
@@ -1179,10 +1179,10 @@ class _HomePageState extends BaseStoreState<HomePage>
                       ),
                     _buttonTitleRow(
                        kingCoinListModelList[1],
-                         "高佣特推",
+                         "硬核补贴",
                         onPressed: () async {
 
-                            _kingCoinGet("高佣特推");
+                            _kingCoinGet("硬核补贴");
 
                         }
                     ),
@@ -1429,7 +1429,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       case '特惠专区':
         Get.to(()=>GoodsPreferentialListPage());
         break;
-      case '高佣特推':
+      case '硬核补贴':
         Get.to(()=>GoodsHighCommissionListPage());
         break;
       case '学院':

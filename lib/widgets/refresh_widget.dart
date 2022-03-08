@@ -185,7 +185,10 @@ class _RefreshWidgetState extends State<RefreshWidget> {
                 canLoadingText: '',
               ),
         controller: widget.controller._controller,
-        onRefresh: widget.onRefresh,
+        onRefresh: () {
+          widget.controller.resetNoData();
+          widget.onRefresh();
+        },
         onLoading: widget.onLoadMore,
         child: widget.body,
 //      isNestWrapped: widget.isInNest,

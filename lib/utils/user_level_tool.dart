@@ -44,7 +44,7 @@ enum UserRoleLevel {
   ///VIP店铺
   physical,
 
-  ///子公司
+  ///合伙人
   subsidiary,
 }
 
@@ -105,7 +105,7 @@ class UserLevelTool {
       //   size: rSize(13),
       // ),
       title:
-          TextUtils.isEmpty(level) ? UserLevelTool.currentRoleLevel() : level,
+          TextUtils.isEmpty(level) ? UserLevelTool.currentRoleLevel()!='合伙人'?UserLevelTool.currentRoleLevel():'' : level,
     );
   }
 
@@ -258,7 +258,7 @@ class UserLevelTool {
 
         break;
       case 10:
-        roleLevel = "子公司";
+        roleLevel = "合伙人";
         break;
       default:
         roleLevel = "会员";
@@ -286,7 +286,7 @@ class UserLevelTool {
         roleLevel = "VIP店铺";
         break;
       case UserRoleLevel.subsidiary:
-        roleLevel = "子公司";
+        roleLevel = "合伙人";
         break;
       default:
         roleLevel = "会员";

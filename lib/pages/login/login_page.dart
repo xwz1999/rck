@@ -133,7 +133,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
           Container(
               margin: EdgeInsets.only(top: 10),
               child: Text(
-                "跟着英子去开店",
+                "数字化批发零售服务平台",
                 style:
                     AppTextStyle.generate(15 * 2.sp, color: Colors.grey[700]),
               )),

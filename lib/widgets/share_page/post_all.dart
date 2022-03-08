@@ -146,7 +146,7 @@ class PostUserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String title = "跟着英子去开店";
+    String title = "数字化批发零售服务平台";
     return Container(
       height: gysId==1800||gysId==2000?50:40,
       child: Container(

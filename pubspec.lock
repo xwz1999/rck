@@ -540,6 +540,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.0.2"
+  flutter_tencentplayer:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: bcce6a3937882191008155c4bded1e4ac36a244a
+      url: "https://github.com/qq326646683/flutter_tencentplayer.git"
+    source: git
+    version: "2.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -1072,6 +1081,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "0.27.3"
+  screen:
+    dependency: "direct main"
+    description:
+      name: screen
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "0.0.5"
   shared_preferences:
     dependency: "direct main"
     description:
@@ -1321,7 +1337,7 @@ packages:
       name: video_player_web
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.0.6"
+    version: "2.0.7"
   vxstate:
     dependency: transitive
     description:
@@ -1385,6 +1401,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.0.13"
+  widget_to_image:
+    dependency: "direct main"
+    description:
+      name: widget_to_image
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "2.0.0"
   win32:
     dependency: transitive
     description:

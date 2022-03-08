@@ -452,7 +452,11 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
     }
     _returnReasonModel = model;
     ReasonModel otherModel = ReasonModel(id: 0, content: "其他");
+
+    ReasonModel otherModel1 = ReasonModel(id: 1, content: "质量问题");
+
     _returnReasonModel.data.insert(0, otherModel);
+    _returnReasonModel.data.insert(1, otherModel1);
   }
 
   _return() async {

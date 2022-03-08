@@ -21,6 +21,9 @@ PODS:
     - Flutter
     - LBXScan
     - LBXZBarSDK
+  - flutter_tencentplayer (2.0.0):
+    - Flutter
+    - TXLiteAVSDK_Player (= 9.2.10637)
   - fluwx (0.0.1):
     - Flutter
     - WechatOpenSDK_Fuck (~> 1.9.2)
@@ -57,6 +60,8 @@ PODS:
     - Flutter
   - photo_manager (0.0.1):
     - Flutter
+  - screen (0.0.1):
+    - Flutter
   - shared_preferences (0.0.1):
     - Flutter
   - sqflite (0.0.2):
@@ -65,6 +70,7 @@ PODS:
   - tobias (0.0.1):
     - Flutter
   - TOCropViewController (2.6.0)
+  - TXLiteAVSDK_Player (9.2.10637)
   - url_launcher (0.0.1):
     - Flutter
   - video_player (0.0.1):
@@ -84,6 +90,7 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
   - flutter_qr_reader (from `.symlinks/plugins/flutter_qr_reader/ios`)
+  - flutter_tencentplayer (from `.symlinks/plugins/flutter_tencentplayer/ios`)
   - fluwx (from `.symlinks/plugins/fluwx/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_gallery_saver (from `.symlinks/plugins/image_gallery_saver/ios`)
@@ -95,6 +102,7 @@ DEPENDENCIES:
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - photo_manager (from `.symlinks/plugins/photo_manager/ios`)
+  - screen (from `.symlinks/plugins/screen/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - tobias (from `.symlinks/plugins/tobias/ios`)
@@ -112,6 +120,7 @@ SPEC REPOS:
     - LBXZBarSDK
     - Mantle
     - TOCropViewController
+    - TXLiteAVSDK_Player
     - WechatOpenSDK_Fuck
 
 EXTERNAL SOURCES:
@@ -131,6 +140,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_image_compress/ios"
   flutter_qr_reader:
     :path: ".symlinks/plugins/flutter_qr_reader/ios"
+  flutter_tencentplayer:
+    :path: ".symlinks/plugins/flutter_tencentplayer/ios"
   fluwx:
     :path: ".symlinks/plugins/fluwx/ios"
   image_cropper:
@@ -153,6 +164,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
   photo_manager:
     :path: ".symlinks/plugins/photo_manager/ios"
+  screen:
+    :path: ".symlinks/plugins/screen/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
   sqflite:
@@ -179,6 +192,7 @@ SPEC CHECKSUMS:
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_image_compress: f69d0e0e078ce52b4810695593bc861ee319ae7d
   flutter_qr_reader: 1b4faf9032e9ddc738107fd3dc067d29bd5cc67d
+  flutter_tencentplayer: 6e5006ac8ca0ccd360138d4e1ce0717b7c43a3f7
   fluwx: c192ef1ea3617badb813fa1a761ffc5c9c12208a
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   image_cropper: f1668dd8d2cad2d357955caad15a40547856edcb
@@ -194,10 +208,12 @@ SPEC CHECKSUMS:
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   photo_manager: f7c619c2cc8c2adb8d85c63363babac477de9c67
+  screen: abd91ca7bf3426e1cc3646d27e9b2358d6bf07b0
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   tobias: 2aded9b83e3663b907360a800d8e3c13284f25c5
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
+  TXLiteAVSDK_Player: 300e6fc7262ae095ee13b18d7d821c5fae0996f9
   url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
   video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
   wakelock: b0843b2479edbf6504d8d262c2959446f35373aa

@@ -38,6 +38,9 @@ class ShareGoodsPosterPage extends StatefulWidget {
   _ShareGoodsPosterPageState createState() => _ShareGoodsPosterPageState();
 }
 
+
+
+
 class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
   int _goodsId = 0;
   GoodsDetailModel _goodsDetail;
@@ -124,6 +127,7 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
     ui.Image image =
         await boundary.toImage(pixelRatio: ui.window.devicePixelRatio * 1.2);
     ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+
     Uint8List pngBytes = byteData.buffer.asUint8List();
 
     if (pngBytes == null || pngBytes.length == 0) {

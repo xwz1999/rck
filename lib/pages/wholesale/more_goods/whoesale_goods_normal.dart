@@ -319,7 +319,7 @@ class WholesaleGoodsItem extends StatelessWidget {
       children: [
         Container(
           child: Text(
-            '平台零售价¥${this.originalPrice.toStringAsFixed(2)}',
+            '零售价¥${this.originalPrice.toStringAsFixed(2)}',
             style: TextStyle(
                 fontSize: 12 * 2.sp,
                 color: Color(0xFF999999),

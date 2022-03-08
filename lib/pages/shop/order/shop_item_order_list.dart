@@ -133,7 +133,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
           Spacer(),
           RichText(
               text: TextSpan(
-                  text: "共${widget.orderModel.totalGoodsCount}件商品  总计￥",
+                  text: "共${widget.orderModel.totalGoodsCount}件商品  实付￥",
                   style: AppTextStyle.generate(13 * 2.sp),
                   children: [
                 TextSpan(
@@ -379,7 +379,12 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
                           text: "${goods.unitPrice.toStringAsFixed(2)}",
                           style: AppTextStyle.generate(14 * 2.sp,
                               color: AppColor.priceColor),
-                        )
+                        ),
+                            TextSpan(
+                              text:  " (券后价)",
+                              style: AppTextStyle.generate(12 * 2.sp,
+                                color: Color(0xFF999999)),
+                            )
                       ])),
                       Spacer(),
                       Text(

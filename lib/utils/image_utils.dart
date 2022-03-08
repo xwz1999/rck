@@ -124,7 +124,7 @@ class ImageUtils {
   static Future<bool> saveImage(
       List<Uint8List> fileDatas,
       void Function(int index) callBack,
-      void Function(bool success) endBack) async {
+      void Function(bool success) endBack,{int quality=80}) async {
     //
     if (Platform.isAndroid) {
       bool permissionStorage = await Permission.storage.isGranted;
@@ -142,7 +142,7 @@ class ImageUtils {
       Uint8List data = fileDatas[i];
       try {
         final Map<dynamic, dynamic> result =
-            await ImageGallerySaver.saveImage(data);
+            await ImageGallerySaver.saveImage(data,quality: quality);
         if (Platform.isAndroid) {
           if (result.containsValue(true)) {
             callBack(i);

@@ -372,11 +372,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                                   ),
                                 ],
                               ),
-                              UserLevelTool.currentRoleLevelEnum() ==
-                                          UserRoleLevel.Vip ||
-                                      UserLevelTool.currentRoleLevelEnum() ==
-                                          UserRoleLevel.None ||
-                                      TextUtils.isEmpty(commission)
+                              !AppConfig.commissionByRoleLevel
                                   ? Container(
                                       height: 0,
                                     )
@@ -459,9 +455,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                             ),
                           ],
                         ),
-                        TextUtils.isEmpty(commission) ||
-                                UserLevelTool.currentRoleLevelEnum() ==
-                                    UserRoleLevel.Vip
+                        !AppConfig.commissionByRoleLevel
                             ? Container(
                                 height: 0,
                               )

@@ -239,7 +239,7 @@ class PostUserImage {
         await ShareImageTool.getImageWithAsset(AppImageName.recook_icon_120);
   }
 
-  String title = "跟着英子去开店";
+  String title = "数字化批发零售服务平台";
   ui.Image image;
   Offset offset = Offset(15, 10);
   Size size = Size(50, 50);

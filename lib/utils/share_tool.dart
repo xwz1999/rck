@@ -307,7 +307,7 @@ class ShareTool {
         String code = '【$miniTitle】复制这段描述，打开左家右厨，购全球好物${RUICodeUtil.encrypt(
           int.parse(goodsId),
           UserManager.instance.user.info.id,
-        )}左家右厨。\n跟着英子去开店';
+        )}左家右厨。\n数字化批发零售服务平台';
         Clipboard.setData(ClipboardData(text: code));
         bool needWechat = await showDialog(
           context: context,

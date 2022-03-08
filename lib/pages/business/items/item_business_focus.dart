@@ -1,16 +1,29 @@
+import 'dart:typed_data';
+import 'dart:ui';
 
+import 'package:bot_toast/bot_toast.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/goods_detail_model.dart';
 import 'package:jingyaoyun/models/material_list_model.dart';
+import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/nine_grid_view.dart';
+import 'package:jingyaoyun/widgets/progress/re_toast.dart';
+import 'package:jingyaoyun/widgets/share_page/post_all.dart';
+import 'package:widget_to_image/widget_to_image.dart';
 
 class BusinessFocusItem extends StatefulWidget {
   final VoidCallback focusListener;
   final VoidCallback publishMaterialListener;
-  final VoidCallback downloadListener;
+  final Function(ByteData) downloadListener;
   final VoidCallback copyListener;
   final Function(int) picListener;
   final VoidCallback moreListener;
@@ -34,9 +47,34 @@ class BusinessFocusItem extends StatefulWidget {
 }
 
 class _BusinessFocusItemState extends State<BusinessFocusItem> {
+  GlobalKey _globalKey = GlobalKey();
+  List<MainPhotos> _selectPhotos = [];
+  GoodsDetailModel _goodsDetail;
+  String _bigImageUrl = "";
+  ByteData byteData;
   @override
   void initState() {
     super.initState();
+    Future.delayed(Duration.zero, () async {
+      _goodsDetail = await GoodsDetailModelImpl.getDetailInfo(
+          widget.model.goodsId, UserManager.instance.user.info.id);
+      if (_goodsDetail.code != HttpStatus.SUCCESS) {
+        return;
+      }
+      // _bottomBarController.setFavorite(_goodsDetail.data.isFavorite);
+      MainPhotos photo = _goodsDetail.data.mainPhotos[0];
+      if (_goodsDetail.data.mainPhotos.length >= 1) {
+        photo = _goodsDetail.data.mainPhotos[0];
+      }
+      photo.isSelect = true;
+      photo.isSelectNumber = 1;
+      _bigImageUrl = Api.getImgUrl(photo.url);
+      _selectPhotos.add(photo);
+      setState(() {});
+
+    });
+
+
   }
 
   @override
@@ -50,7 +88,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
       padding: EdgeInsets.symmetric(horizontal: rSize(15), vertical: rSize(15)),
       color: Colors.white,
       child: Column(
-        children: <Widget>[
+        children: [
           _header(focusedColor),
           Container(
             margin: EdgeInsets.only(top: rSize(10), left: rSize(50)),
@@ -86,12 +124,87 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
                 _bottomItems()
               ],
             ),
-          )
+          ),
+
         ],
       ),
     );
   }
 
+
+
+  _getPoster(){
+    double postImageHorizontalMargin = 30;
+    double postHorizontalMargin = 50;
+    double postWidth = 300 - postHorizontalMargin;
+    double truePhotoWidth = postWidth - postImageHorizontalMargin;
+    double truePhotoHeight = truePhotoWidth;
+    return Container(
+      color: Colors.white,
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      width: 370.rw,
+      height: 480.rw,
+      child: Column(
+        children: <Widget>[
+          UserManager.instance.homeWeatherModel != null
+              ? Container(
+            color: Colors.white,
+            padding: EdgeInsets.only(
+              top: postImageHorizontalMargin / 2,
+            ),
+            height: 43.rw,
+            child: PostWeatherWidget(
+              homeWeatherModel: UserManager.instance.homeWeatherModel,
+            ),
+          )
+              : Container(),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 8,
+            ),
+            child: PostUserInfo(
+              name: UserManager.instance.user.info.nickname + "的店铺",
+              gysId: _goodsDetail.data.vendorId,
+            ),
+          ),
+          PostBigImage(
+            url: _bigImageUrl,
+            imageSize: Size(truePhotoWidth, truePhotoHeight),
+          ),
+          PostBannerInfo(
+            timeInfo: _getTimeInfo(),
+          ),
+          PostBottomWidget(
+            goodsDetailModel: _goodsDetail,
+          ),
+          Container(
+            height: postImageHorizontalMargin / 2,
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _getTimeInfo() {
+    if (_goodsDetail.data.promotion != null &&
+        _goodsDetail.data.promotion.id > 0) {
+      if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
+          _goodsDetail) ==
+          PromotionStatus.start) {
+        //活动中
+        DateTime endTime = DateTime.parse(_goodsDetail.data.promotion.endTime);
+        return "结束时间\n${DateUtil.formatDate(endTime, format: 'M月d日 HH:mm')}";
+      }
+      if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
+          _goodsDetail) ==
+          PromotionStatus.ready) {
+        DateTime startTime =
+        DateTime.parse(_goodsDetail.data.promotion.startTime);
+        return "开始时间\n${DateUtil.formatDate(startTime, format: 'M月d日 HH:mm')}";
+      }
+    }
+    return "";
+  }
   _shareLink() {
     if (widget.model.goods == null ||
         TextUtils.isEmpty(widget.model.goods.name)) return Container();
@@ -159,8 +272,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
       children: <Widget>[
         ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(20)),
-          child:
-          FadeInImage.assetNetwork(
+          child: FadeInImage.assetNetwork(
             height: 40.rw,
             width: 40.rw,
             placeholder: R.ASSETS_ICON_RECOOK_ICON_300_PNG,
@@ -208,8 +320,26 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
             contentSpacing: 8,
             borderRadius: BorderRadius.all(Radius.circular(20)),
             padding: EdgeInsets.symmetric(horizontal: 12),
-            onPressed: () {
-              widget.downloadListener();
+            onPressed: () async{
+              var cancel =  ReToast.loading(text:'保存图片中...' );
+              byteData = await WidgetToImage.widgetToImage( Directionality(
+                textDirection: TextDirection.ltr,
+                child: Material(
+                    child:_getPoster()
+                ),
+              ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,465.rw));
+
+              await Future.delayed(Duration(seconds: 1));
+
+              byteData = await WidgetToImage.widgetToImage( Directionality(
+                textDirection: TextDirection.ltr,
+                child: Material(
+                    child:_getPoster()
+                ),
+              ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,465.rw));
+              print('123213213213123213123');
+
+              widget.downloadListener(byteData );
             },
           ),
           SizedBox(

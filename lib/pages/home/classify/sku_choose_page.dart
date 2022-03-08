@@ -43,7 +43,7 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
   int _num;
   List _photoList = [];
   List<PicSwiperItem> picSwiperItem = [];
-
+  StateSetter _refreshState;
   /// 存放 sku id 列表
   List selectedIds = [];
 

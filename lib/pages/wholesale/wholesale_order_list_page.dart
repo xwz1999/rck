@@ -140,6 +140,7 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage>{
         if(widget.positionType==OrderPositionType.onlineOrder) {
           WholesaleFunc.getOrderList(widget.type, _page, widget.positionType)
               .then((value) {
+                if(mounted)
             setState(() {
               orderList.addAll(value);
             });
@@ -151,6 +152,7 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage>{
         }else{
           WholesaleFunc.getSonOrder(widget.type,_page,)
               .then((value) {
+            if(mounted)
             setState(() {
               guideOrderList.addAll(value);
             });
@@ -174,6 +176,7 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage>{
                   _refreshController.requestRefresh();
                   if (result == null) return;
                   DPrint.printf(result);
+                  if(mounted)
                   setState(() {
                     orderModel.status = result;
                   });
@@ -229,6 +232,7 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage>{
                   _refreshController.requestRefresh();
                   if (result == null) return;
                   DPrint.printf(result);
+                  if(mounted)
                   setState(() {
                     orderModel.status = result;
                   });

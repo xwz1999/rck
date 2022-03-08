@@ -78,7 +78,7 @@ class GroupInviteCard extends StatelessWidget {
                     ? '【该账户已注销】'.text.black.size(14.rsp).make()
                     : itemName.text.black.size(14.rsp).make(),
                 Spacer(),
-                '${UserLevelTool.currentRoleLevel()}'
+                '店主'
                     .text
                     .color(Color(0xFF333333))
                     .size(12.rsp)

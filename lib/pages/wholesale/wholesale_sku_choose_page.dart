@@ -111,10 +111,10 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
   @override
   void dispose() {
     super.dispose();
-    if(_sku!=null){
-      widget.listener(
-          WholesaleSkuChooseModel(2, _num, _sku, _skuDes.join("+")));
-    }
+    // if(_sku!=null){
+    //   widget.listener(
+    //       WholesaleSkuChooseModel(2, _num, _sku, _skuDes.join("+")));
+    // }
   }
 
   @override
@@ -408,11 +408,11 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
          widget.itemModels[i].selectedNum = _num;
        }
      }
+     if(mounted)
+       setState(() {
 
+       });
     print(index);
-    setState(() {
-
-    });
   }
 }
 class WholesaleSkuChooseModel {

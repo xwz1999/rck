@@ -124,6 +124,7 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
       trialing: _displayIcon(),
       selectedColor: Theme.of(context).primaryColor,
       listener: (index, item) {
+
         if ((index != 1 && index != 2) && _filterIndex == index) {
           return;
         }
@@ -200,6 +201,7 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
            controller: _refreshController,
            onRefresh: () async {
              _page = 0;
+             _goodsList = [];
              WholesaleFunc.getGoodsList(_page,_sortType,activity_id: widget.activityId,).then((value) {
                _goodsList = value;
                if(_goodsList.isEmpty){
@@ -215,6 +217,7 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
                //   _refreshController.isNoData;
                // else
                  _refreshController.refreshCompleted();
+               // _refreshController.resetNoData();
              });
 
            },
@@ -223,12 +226,12 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
              WholesaleFunc.getGoodsList(_page,_sortType,activity_id: widget.activityId,).then((value) {
                _goodsList.addAll(value);
                setState(() {
-
                });
                if (value.isEmpty)
                  _refreshController.loadNoData();
-               else
+               else{
                  _refreshController.loadComplete();
+               }
              });
            },
            body: isNodata? noDataView('没有找到商品哦~'):

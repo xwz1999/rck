@@ -121,8 +121,8 @@ class _SettingItemListViewState extends State<SettingItemListView> {
                         );
                         //CRoute.push(context, PrivacyPageV2());
                       }),
-                      SCTile.normalTile("联系我们", value: '400-889-4489', needDivide: true, listener: () {
-                        launch("tel:400-889-4489");
+                      SCTile.normalTile("联系我们", value: '400-861-0321', needDivide: true, listener: () {
+                        launch("tel:400-861-0321");
                       }),
 
 
