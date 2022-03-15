@@ -34,6 +34,27 @@ import '../wholesale_order_list_page.dart';
 
 class WholesaleFunc {
 
+  ///获取VIP体验卡
+  // static Future<List<WholesaleGood>> getVipCardList(int user_id,{isSale}) async {
+  //   Map<String, dynamic> params = {
+  //     "user_id": user_id,
+  //   };
+  //
+  //   if (isSale!=null) {
+  //     params.putIfAbsent("is_sale", () => isSale);
+  //   }
+  //
+  //   ResultData result = await HttpManager.post(APIV2.userAPI.getLikeGoodsList, params);
+  //
+  //   if (result.data != null) {
+  //     if (result.data['data'] != null) {
+  //       return (result.data['data'] as List)
+  //           .map((e) => WholesaleGood.fromJson(e))
+  //           .toList();
+  //     }
+  //   }
+  // }
+
 
   static Future<List<WholesaleGood>> getLikeGoodsList(int user_id,{isSale}) async {
     Map<String, dynamic> params = {

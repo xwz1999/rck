@@ -47,6 +47,7 @@ import 'package:jingyaoyun/pages/tabBar/rui_code_listener.dart';
 import 'package:jingyaoyun/pages/user/functions/user_func.dart';
 import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
 import 'package:jingyaoyun/pages/wholesale/models/wholesale_customer_model.dart';
+import 'package:jingyaoyun/pages/wholesale/vip_shop_card_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_customer_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_home_page.dart';
 import 'package:jingyaoyun/third_party/wechat/wechat_utils.dart';
@@ -1430,7 +1431,8 @@ class _HomePageState extends BaseStoreState<HomePage>
         Get.to(()=>GoodsPreferentialListPage());
         break;
       case '硬核补贴':
-        Get.to(()=>GoodsHighCommissionListPage());
+        Get.to(()=>VipShopCardPage());
+        //Get.to(()=>GoodsHighCommissionListPage());
         break;
       case '学院':
         UserManager.instance.selectTabbarIndex = 1;

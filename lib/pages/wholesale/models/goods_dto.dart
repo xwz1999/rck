@@ -16,7 +16,6 @@ class GoodsDTO {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['sku_id'] = this.skuId;
     data['quantity'] = this.quantity;
-
     return data;
   }
 }

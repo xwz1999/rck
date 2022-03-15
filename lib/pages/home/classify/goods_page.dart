@@ -65,6 +65,7 @@ class GoodsPage extends StatefulWidget {
   final ValueNotifier<bool> openSkuChoosePage;
   final void Function() openbrandList; //打开商家页面
   final bool isWholesale;
+  final String invite;
 
   const GoodsPage({
     Key key,
@@ -72,7 +73,7 @@ class GoodsPage extends StatefulWidget {
     this.goodsId,
     this.openSkuChoosePage,
     this.goodsDetail,
-    this.openbrandList, this.isWholesale,
+    this.openbrandList, this.isWholesale, this.invite,
   }) : super(key: key);
 
   @override
@@ -1748,6 +1749,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       skuModel.sku.id,
       skuModel.des,
       skuModel.num,
+      invite: widget.invite,
     );
     if (order.code != HttpStatus.SUCCESS) {
       // Toast.showError(order.msg);

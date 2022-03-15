@@ -7,6 +7,9 @@
  * ====================================================
  */
 
+import 'dart:typed_data';
+
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jingyaoyun/constants/api.dart';
@@ -23,6 +26,7 @@ import 'package:jingyaoyun/utils/image_utils.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/pic_swiper.dart';
+import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -126,8 +130,9 @@ class _MaterialPageState extends State<MaterialPage>
               thumbnail: Api.getImgUrl(goods.mainPhotoURL),
               title: goods.name);
         },
-        downloadListener: () {
-          GSDialog.of(context).showLoadingDialog(context, "保存图片中...");
+        downloadListener: (ByteData byteData) {
+          _capturePng(byteData);
+
           List<String> urls = model.photos.map((f) {
             // return Api.getResizeImgUrl(f.url, 300);
             return Api.getResizeImgUrl(f.url, 800);
@@ -135,7 +140,7 @@ class _MaterialPageState extends State<MaterialPage>
           ImageUtils.saveNetworkImagesToPhoto(urls, (index) {
             DPrint.printf("保存好了---$index");
           }, (success) {
-            GSDialog.of(context).dismiss(context);
+            BotToast.closeAllLoading();
             success
                 ? GSDialog.of(context).showSuccess(context, "保存完成!")
                 : Alert.show(
@@ -193,6 +198,61 @@ class _MaterialPageState extends State<MaterialPage>
         model: model,
       ),
     );
+  }
+
+  _capturePng(ByteData byteData) async {
+    // '保存中...
+    // ui.Image image =
+    // await boundary.toImage(pixelRatio: ui.window.devicePixelRatio * 1.2);
+    // ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png,);
+
+
+    // ByteData byteData = await WidgetToImage.widgetToImage( Directionality(
+    //   textDirection: TextDirection.ltr,
+    //   child: Material(
+    //       child:_getPoster()
+    //   ),
+    // ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,465.rw));
+    //
+    // await Future.delayed(Duration(milliseconds: 3000));
+
+
+    Uint8List pngBytes = byteData.buffer.asUint8List();
+
+    if (pngBytes == null || pngBytes.length == 0) {
+      BotToast.showText(text: '保存失败');
+      return;
+    }
+
+    await ImageUtils.saveImage( [pngBytes], (index) {}, (success) {
+
+      if (success) {
+        //showSuccess("图片已经保存到相册!");
+      } else {
+        Alert.show(
+          context,
+          NormalContentDialog(
+            title: '提示',
+            content: Text(
+              '图片保存失败，请前往应用权限页，设置存储权限为始终允许',
+              style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp),
+            ),
+            items: ["取消"],
+            listener: (index) {
+              Alert.dismiss(context);
+            },
+            deleteItem: "确认",
+            deleteListener: () async {
+              Alert.dismiss(context);
+              bool isOpened = await openAppSettings();
+            },
+            type: NormalTextDialogType.delete,
+          ),
+        );
+      }
+    },quality: 100);
+
+
   }
 
   // List<Widget> _materialDetail() {

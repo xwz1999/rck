@@ -19,6 +19,7 @@ import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/utils/print_util.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:power_logger/power_logger.dart';
 
 class ImageUtils {
   static Future<File> cropImage(file) async {
@@ -126,55 +127,64 @@ class ImageUtils {
       void Function(int index) callBack,
       void Function(bool success) endBack,{int quality=80}) async {
     //
-    if (Platform.isAndroid) {
-      bool permissionStorage = await Permission.storage.isGranted;
-      if (!permissionStorage) {
-        await Permission.storage.request();
-        permissionStorage = await Permission.storage.isGranted;
+    try{
+      if (Platform.isAndroid) {
+        bool permissionStorage = await Permission.storage.isGranted;
         if (!permissionStorage) {
-          print("❌----------has no Permission");
+          await Permission.storage.request();
+          permissionStorage = await Permission.storage.isGranted;
+          if (!permissionStorage) {
+            print("❌----------has no Permission");
+            return false;
+          }
+        }
+      }
+      //
+      for (var i = 0; i < fileDatas.length; i++) {
+        Uint8List data = fileDatas[i];
+        try {
+          final Map<dynamic, dynamic> result =
+          await ImageGallerySaver.saveImage(data,quality: quality);
+
+          LoggerData.addData(result.containsValue(true));
+          if (Platform.isAndroid) {
+            if (result.containsValue(true)) {
+              callBack(i);
+            } else {
+              endBack(false);
+              return false;
+            }
+          } else if (Platform.isIOS) {
+            if (result.containsValue(true)) {
+              callBack(i);
+            } else {
+              endBack(false);
+              return false;
+            }
+          }
+        } catch (e) {
+
+          LoggerData.addData(e.toString());
+          if (e is ArgumentError) {
+            if (Platform.isIOS) {
+              callBack(i);
+              if (i == (fileDatas.length - 1)) {
+                endBack(true);
+                return true;
+              }
+              continue;
+            }
+          }
+          LoggerData.addData(e.toString());
+          DPrint.printf(e);
+          endBack(false);
           return false;
         }
       }
+      endBack(true);
+      return true;
     }
-    //
-    for (var i = 0; i < fileDatas.length; i++) {
-      Uint8List data = fileDatas[i];
-      try {
-        final Map<dynamic, dynamic> result =
-            await ImageGallerySaver.saveImage(data,quality: quality);
-        if (Platform.isAndroid) {
-          if (result.containsValue(true)) {
-            callBack(i);
-          } else {
-            endBack(false);
-            return false;
-          }
-        } else if (Platform.isIOS) {
-          if (result.containsValue(true)) {
-            callBack(i);
-          } else {
-            endBack(false);
-            return false;
-          }
-        }
-      } catch (e) {
-        if (e is ArgumentError) {
-          if (Platform.isIOS) {
-            callBack(i);
-            if (i == (fileDatas.length - 1)) {
-              endBack(true);
-              return true;
-            }
-            continue;
-          }
-        }
-        DPrint.printf(e);
-        endBack(false);
-        return false;
-      }
-    }
-    endBack(true);
-    return true;
-  }
+    catch(e){
+  }}
+
 }

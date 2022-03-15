@@ -114,8 +114,7 @@ class _FocusPageState extends BaseStoreState<FocusPage>
                       arguments:
                           CommodityDetailPage.setArguments(indexModel.goods.id));
                 },
-                downloadListener: (ByteData byteData) {//
-                  //showLoading("");
+                downloadListener: (ByteData byteData) {
                   _capturePng(byteData);
 
                   List<String> urls = indexModel.photos.map((f) {
@@ -151,12 +150,12 @@ class _FocusPageState extends BaseStoreState<FocusPage>
                             ),
                           );
 
-                    if (!TextUtils.isEmpty(indexModel.text)) {
-                      ClipboardData data = new ClipboardData(text: indexModel.text);
-                      Clipboard.setData(data);
-                      Toast.showCustomSuccess('文字内容已经保存到剪贴板');
-                      showSuccess('文字内容已经保存到剪贴板');
-                  }
+                  //   if (!TextUtils.isEmpty(indexModel.text)) {
+                  //     ClipboardData data = new ClipboardData(text: indexModel.text);
+                  //     Clipboard.setData(data);
+                  //     Toast.showCustomSuccess('文字内容已经保存到剪贴板');
+                  //     showSuccess('文字内容已经保存到剪贴板');
+                  // }
                  });
                 },
                 copyListener: () {

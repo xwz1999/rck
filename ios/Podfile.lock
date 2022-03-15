@@ -73,10 +73,6 @@ PODS:
   - TXLiteAVSDK_Player (9.2.10637)
   - url_launcher (0.0.1):
     - Flutter
-  - video_player (0.0.1):
-    - Flutter
-  - wakelock (0.0.1):
-    - Flutter
   - webview_flutter (0.0.1):
     - Flutter
   - WechatOpenSDK_Fuck (1.9.2)
@@ -107,8 +103,6 @@ DEPENDENCIES:
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - tobias (from `.symlinks/plugins/tobias/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
-  - video_player (from `.symlinks/plugins/video_player/ios`)
-  - wakelock (from `.symlinks/plugins/wakelock/ios`)
   - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
 
 SPEC REPOS:
@@ -174,10 +168,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/tobias/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
-  video_player:
-    :path: ".symlinks/plugins/video_player/ios"
-  wakelock:
-    :path: ".symlinks/plugins/wakelock/ios"
   webview_flutter:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
@@ -215,8 +205,6 @@ SPEC CHECKSUMS:
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
   TXLiteAVSDK_Player: 300e6fc7262ae095ee13b18d7d821c5fae0996f9
   url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
-  video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
-  wakelock: b0843b2479edbf6504d8d262c2959446f35373aa
   webview_flutter: 3603125dfd3bcbc9d8d418c3f80aeecf331c068b
   WechatOpenSDK_Fuck: aa8f4b0af902837e887a1d40c62f06c060c1dc98
 

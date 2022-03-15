@@ -17,6 +17,7 @@ import 'package:jingyaoyun/utils/share_tool.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 enum GoodsItemType {
   NONE,
@@ -26,6 +27,7 @@ enum GoodsItemType {
 }
 
 class GoodsItemWidget extends StatelessWidget {
+
   final bool isSingleDayGoods;
   final String goodsName;
   final String description;
@@ -657,6 +659,11 @@ class GoodsItemWidget extends StatelessWidget {
               Spacer(),
               GestureDetector(
                       onTap: () {
+                        if (UserManager.instance.user.info.id == 0) {
+                          AppRouter.pushAndRemoveUntil(buildCtx, RouteName.LOGIN);
+                          Toast.showError('请先登录...');
+                          return;
+                        }
                         if (shareClick != null) {
                           shareClick();
                         } else {

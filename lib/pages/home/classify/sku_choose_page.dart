@@ -20,13 +20,14 @@ class SkuChoosePage extends StatefulWidget {
   final List<SelectedListItemModel> itemModels;
   final List<String> results;
   final ChooseClickListener listener;
+  final int userId;
 
   const SkuChoosePage(
       {Key key,
       this.model,
       @required this.itemModels,
       @required this.results,
-      this.listener})
+      this.listener, this.userId})
       : super(key: key);
 
   @override

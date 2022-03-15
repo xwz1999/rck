@@ -15,6 +15,7 @@ import 'package:jingyaoyun/utils/share_tool.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 class BrandDetailGridItem extends StatelessWidget {
   // final Goods goods;
@@ -285,6 +286,11 @@ class BrandDetailGridItem extends StatelessWidget {
                   //     :
                   GestureDetector(
                     onTap: () {
+                      if (UserManager.instance.user.info.id == 0) {
+                        AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                        Toast.showError('请先登录...');
+                        return;
+                      }
                       if (shareClick != null) {
                         shareClick();
                       } else {

@@ -7,20 +7,35 @@
  * ====================================================
  */
 
+import 'dart:typed_data';
+import 'dart:ui';
+
+import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/goods_detail_model.dart';
 import 'package:jingyaoyun/models/material_list_model.dart';
+import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:jingyaoyun/utils/permission_tool.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/nine_grid_view.dart';
+import 'package:jingyaoyun/widgets/progress/re_toast.dart';
+import 'package:jingyaoyun/widgets/share_page/post_all.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:widget_to_image/widget_to_image.dart';
+
+import '../promotion_time_tool.dart';
 
 class PublishMaterialItem extends StatefulWidget {
   final VoidCallback focusListener;
   // final VoidCallback publishMaterialListener;
   final void Function(Goods) publishMaterialListener;
-  final VoidCallback downloadListener;
+  final Function(ByteData) downloadListener;
   final VoidCallback copyListener;
   final VoidCallback moreListener;
   final void Function(int index) picListener;
@@ -45,10 +60,31 @@ class PublishMaterialItem extends StatefulWidget {
 
 class _PublishMaterialItemState extends State<PublishMaterialItem> {
   // bool _focused;
-
+  ByteData byteData;
+  List<MainPhotos> _selectPhotos = [];
+  GoodsDetailModel _goodsDetail;
+  String _bigImageUrl = "";
   @override
   void initState() {
     super.initState();
+    Future.delayed(Duration.zero, () async {
+      _goodsDetail = await GoodsDetailModelImpl.getDetailInfo(
+          widget.model.goodsId, UserManager.instance.user.info.id);
+      if (_goodsDetail.code != HttpStatus.SUCCESS) {
+        return;
+      }
+      // _bottomBarController.setFavorite(_goodsDetail.data.isFavorite);
+      MainPhotos photo = _goodsDetail.data.mainPhotos[0];
+      if (_goodsDetail.data.mainPhotos.length >= 1) {
+        photo = _goodsDetail.data.mainPhotos[0];
+      }
+      photo.isSelect = true;
+      photo.isSelectNumber = 1;
+      _bigImageUrl = Api.getImgUrl(photo.url);
+      _selectPhotos.add(photo);
+      setState(() {});
+
+    });
     // _focused = false;
   }
 
@@ -74,12 +110,11 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
-                child: CustomCacheImage(
-                  fit: BoxFit.cover,
-                  imageUrl: Api.getResizeImgUrl(widget.model.headImgUrl, 300),
-                  placeholder: AppImageName.placeholder_1x1,
-                  height: 40,
-                  width: 40,
+                child: FadeInImage.assetNetwork(
+                  height: 40.rw,
+                  width: 40.rw,
+                  placeholder: R.ASSETS_ICON_RECOOK_ICON_300_PNG,
+                  image: Api.getResizeImgUrl(widget.model.headImgUrl, 300),
                 ),
               ),
               Container(
@@ -204,8 +239,86 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
           contentSpacing: 8,
           borderRadius: BorderRadius.all(Radius.circular(20)),
           padding: EdgeInsets.symmetric(horizontal: 12),
-          onPressed: () {
-            widget.downloadListener();
+          onPressed: () async {
+            bool permission = await Permission.storage.isGranted;
+            if(!permission){
+              Alert.show(
+                context,
+                NormalContentDialog(
+                  title: '存储权限',
+                  content:
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //Image.asset(R.ASSETS_LOCATION_PER_PNG,width: 44.rw,height: 44.rw,),
+                      Text('允许应用获取存储权限来保存图片', style: TextStyle(
+                          color: Color(0xFF666666), fontSize: 14.rsp),),
+                    ],
+                  ),
+                  items: ["残忍拒绝"],
+                  listener: (index) {
+                    Alert.dismiss(context);
+
+                  },
+                  deleteItem: "立即授权",
+                  deleteListener: () async {
+                    Alert.dismiss(context);
+
+                    bool  canUseCamera = await PermissionTool.haveStoragePermission();
+                    if (!canUseCamera) {
+                      PermissionTool.showOpenPermissionDialog(
+                          context, "没有存储权限,授予后才能保存图片");
+                      return;
+                    } else {
+
+                      var cancel =  ReToast.loading(text:'保存图片中...' );
+                      byteData = await WidgetToImage.widgetToImage( Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: Material(
+                            child:_getPoster()
+                        ),
+                      ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,500.rw));
+
+                      await Future.delayed(Duration(seconds: 1));
+
+                      byteData = await WidgetToImage.widgetToImage( Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: Material(
+                            child:_getPoster()
+                        ),
+                      ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,500.rw));
+                      print('123213213213123213123');
+
+                      widget.downloadListener(byteData );
+                    }
+                  },
+                  type: NormalTextDialogType.delete,
+                ),
+              );
+
+            }else{
+
+              var cancel =  ReToast.loading(text:'保存图片中...' );
+              byteData = await WidgetToImage.widgetToImage( Directionality(
+                textDirection: TextDirection.ltr,
+                child: Material(
+                    child:_getPoster()
+                ),
+              ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,500.rw));
+
+              await Future.delayed(Duration(seconds: 1));
+
+              byteData = await WidgetToImage.widgetToImage( Directionality(
+                textDirection: TextDirection.ltr,
+                child: Material(
+                    child:_getPoster()
+                ),
+              ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,500.rw));
+              print('123213213213123213123');
+
+              widget.downloadListener(byteData );
+            }
+            //widget.downloadListener();
           },
         ),
         SizedBox(
@@ -241,5 +354,78 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
         //     })
       ],
     );
+  }
+
+  _getPoster(){
+    double postImageHorizontalMargin = 30;
+    double postHorizontalMargin = 50;
+    double postWidth = 300 - postHorizontalMargin;
+    double truePhotoWidth = postWidth - postImageHorizontalMargin;
+    double truePhotoHeight = truePhotoWidth;
+    return Container(
+      color: Colors.white,
+      padding: EdgeInsets.symmetric(horizontal: 15),
+      width: 370.rw,
+      height: 500.rw,
+      child: Column(
+        children: <Widget>[
+          UserManager.instance.homeWeatherModel != null
+              ? Container(
+            color: Colors.white,
+            padding: EdgeInsets.only(
+              top: postImageHorizontalMargin / 2,
+            ),
+            height: 43.rw,
+            child: PostWeatherWidget(
+              homeWeatherModel: UserManager.instance.homeWeatherModel,
+            ),
+          )
+              : Container(),
+          Container(
+            padding: EdgeInsets.symmetric(
+              vertical: 8,
+            ),
+            child: PostUserInfo(
+              name: UserManager.instance.user.info.nickname + "的店铺",
+              gysId: _goodsDetail.data.vendorId,
+            ),
+          ),
+          PostBigImage(
+            url: _bigImageUrl,
+            imageSize: Size(truePhotoWidth, truePhotoHeight),
+          ),
+          PostBannerInfo(
+            timeInfo: _getTimeInfo(),
+          ),
+          PostBottomWidget(
+            goodsDetailModel: _goodsDetail,
+          ),
+          Container(
+            height: postImageHorizontalMargin / 2,
+          ),
+        ],
+      ),
+    );
+  }
+
+  String _getTimeInfo() {
+    if (_goodsDetail.data.promotion != null &&
+        _goodsDetail.data.promotion.id > 0) {
+      if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
+          _goodsDetail) ==
+          PromotionStatus.start) {
+        //活动中
+        DateTime endTime = DateTime.parse(_goodsDetail.data.promotion.endTime);
+        return "结束时间\n${DateUtil.formatDate(endTime, format: 'M月d日 HH:mm')}";
+      }
+      if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
+          _goodsDetail) ==
+          PromotionStatus.ready) {
+        DateTime startTime =
+        DateTime.parse(_goodsDetail.data.promotion.startTime);
+        return "开始时间\n${DateUtil.formatDate(startTime, format: 'M月d日 HH:mm')}";
+      }
+    }
+    return "";
   }
 }

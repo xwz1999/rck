@@ -3,9 +3,11 @@ import 'dart:math';
 class RUICodeModel {
   int goodsId;
   int userId;
+  String invite;
   RUICodeModel({
     this.goodsId,
     this.userId,
+    this.invite
   });
 }
 
@@ -14,8 +16,8 @@ class RUICodeUtil {
       'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKL1234567890';
 
   ///云口令加密
-  static String encrypt(int goodsId, int userId) {
-    return '¥¥${_num2String(goodsId)}${split()}${_num2String(userId)}¥¥';
+  static String encrypt(int goodsId, int userId,String invite) {
+    return '¥¥${_num2String(goodsId)}${split()}${_num2String(userId)}¥¥#$invite#';
   }
 
   static bool isCode(String value) {
@@ -28,7 +30,10 @@ class RUICodeUtil {
     List<String> raw = temp.split(RegExp('(Z|X|C|V|B|N|M)'));
     int goodsId = _string2Num(raw[0]);
     int userId = _string2Num(raw[1]);
-    return RUICodeModel(goodsId: goodsId, userId: userId);
+
+    String invite = value.split('#')[1];
+
+    return RUICodeModel(goodsId: goodsId, userId: userId,invite: invite);
   }
 
   static String _num2String(int value) {

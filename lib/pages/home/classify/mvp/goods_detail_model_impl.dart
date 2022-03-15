@@ -50,7 +50,7 @@ class GoodsDetailModelImpl {
   // 立即购买
   static Future<OrderPreviewModel> createOrderPreview(
       int userID, int skuID, String skuName, int quantity,
-      {int liveId}) async {
+      {int liveId,String invite}) async {
     Map param = {
       "userID": userID,
       "skuID": skuID,
@@ -58,6 +58,8 @@ class GoodsDetailModelImpl {
       "quantity": quantity,
     };
     if (liveId != null) param.putIfAbsent('liveId', () => liveId);
+    if (invite != null) param.putIfAbsent('invite', () => invite);
+
     ResultData res = await HttpManager.post(
       OrderApi.order_create_preview,
       param,

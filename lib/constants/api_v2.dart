@@ -199,6 +199,11 @@ class UserAPI {
   ///其他收益
   String get getBenefit => '/v2/app/profit/shop';
 
+
+  ///VIP体验卡
+  String get getVipGoods => '/v2/app/vip_goods';
+
+
 }
 
 class BenefitAPI {

@@ -14,6 +14,15 @@ class PermissionTool {
     return permission;
   }
 
+  static Future<bool> haveStoragePermission() async {
+    bool permission = await Permission.storage.isGranted;
+    if (!permission) {
+      await Permission.storage.request();
+      permission = await Permission.storage.isGranted;
+    }
+    return permission;
+  }
+
   static Future<bool> haveNotificationPermission() async {
     bool permission = await Permission.notification.isGranted;
     if (!permission) {

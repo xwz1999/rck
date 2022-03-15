@@ -61,6 +61,7 @@ class RUICodeListener {
             userName: userName,
             userImg: userImg,
             model: goodsDetailModel,
+            invite: model.invite,
           ),
         );
 
@@ -74,7 +75,8 @@ class _RUICodeDialog extends StatefulWidget {
   final String userImg;
   final String userName;
   final GoodsDetailModel model;
-  _RUICodeDialog({Key key, this.userImg, this.userName, this.model})
+  final String invite;
+  _RUICodeDialog({Key key, this.userImg, this.userName, this.model, this.invite})
       : super(key: key);
 
   @override
@@ -165,10 +167,7 @@ class __RUICodeDialogState extends State<_RUICodeDialog> {
                           fontSize: rSP(18),
                         ),
                       ),
-                      !(UserLevelTool.currentRoleLevelEnum() ==
-                                  UserRoleLevel.Vip ||
-                              UserLevelTool.currentRoleLevelEnum() ==
-                                  UserRoleLevel.None)
+                      (AppConfig.commissionByRoleLevel)
                           ? Text(
                               '/赚${widget.model.data.price.max.commission.toStringAsFixed(1)}',
                               style: TextStyle(
@@ -196,6 +195,7 @@ class __RUICodeDialogState extends State<_RUICodeDialog> {
                             CommodityDetailPage(
                               arguments: CommodityDetailPage.setArguments(
                                 widget.model.data.id,
+                                invite: widget.invite,
                               ),
                             ));
                       },

@@ -5,7 +5,7 @@ name: jingyaoyun
 description: jingyaoyun Market App.
 publish_to: "none"
 
-version: 2.0.8-dev+28
+version: 2.0.9-dev+29
 environment:
   sdk: ">=2.10.0 <3.0.0"
 
@@ -59,7 +59,7 @@ dependencies:
   # 视频组件
 
 #  video_player: ^2.0.0
-  chewie: ^1.0.0
+#  chewie: ^1.0.0
   flutter_tencentplayer:
     git:
       url: https://github.com/qq326646683/flutter_tencentplayer.git
@@ -71,7 +71,7 @@ dependencies:
   # 权限组件
   permission_handler: ^8.0.1
 
-#  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.2
 
   # 全局状态控制
   flutter_redux: ^0.7.0
@@ -170,7 +170,7 @@ dependencies:
       ref: patch-1
   # wechat_assets_picker: ^2.2.0+2
 
-  image_gallery_saver: 1.6.9
+  image_gallery_saver: 1.7.1
   # 因为项目compileSdkVersion 28
   # 第三方包compileSdkVersion 是27 所以需要修改 不然build会出错
   #

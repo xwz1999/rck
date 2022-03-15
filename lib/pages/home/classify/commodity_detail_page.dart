@@ -20,15 +20,14 @@ import 'package:jingyaoyun/widgets/toast.dart';
 
 class CommodityDetailPage extends StatefulWidget {
   final Map arguments;
-  final bool isWholesale;
 
   const CommodityDetailPage({
     Key key,
-    this.arguments, this.isWholesale,
+    this.arguments,
   }) : super(key: key);
 
-  static setArguments(int goodsID, {int liveStatus, int roomId}) {
-    return {"goodsID": goodsID, 'liveStatus': liveStatus, 'roomId': roomId,};
+  static setArguments(int goodsID, {int liveStatus, int roomId,String invite}) {
+    return {"goodsID": goodsID, 'liveStatus': liveStatus, 'roomId': roomId,'invite':invite};
   }
 
   @override
@@ -45,18 +44,18 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
   ValueNotifier<bool> _openSkuChoosePage = ValueNotifier(false);
   int _goodsId;
   GoodsDetailModel _goodsDetail;
-  bool isWholesale = false;///是否为批发状态 默认不是
+  String invite;
 
   @override
   void initState() {
     super.initState();
     _goodsId = widget.arguments["goodsID"];
+    invite = widget.arguments["invite"];
+
     _tabController = TabController(length: 2, vsync: this);
     _appBarController = AppBarController();
     _bottomBarController = BottomBarController();
-    if(widget.isWholesale!=null){
-      isWholesale = widget.isWholesale;
-    }
+
 
     _tabController.addListener(() {
       if (_tabController.index == 1||_tabController.index == 2) {
@@ -136,6 +135,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
                           children: [
                             _goodsDetail!=null?
                             GoodsPage(
+
                               openbrandList: () {
                                 // _goodsDetail.data.brandId;
                                 AppRouter.push(
@@ -159,6 +159,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
                                 //   _tabController.animateTo(1);
                                 // }
                               },
+                              invite: invite,
                             ):SizedBox(),
                             // DetailPage(
                             //   goodsID: _goodsId,

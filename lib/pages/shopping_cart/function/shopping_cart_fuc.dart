@@ -4,7 +4,7 @@ import 'package:jingyaoyun/models/goods_simple_list_model.dart';
 
 class ShoppingCartFuc {
   //获取可能喜欢列表
-  static Future<List<GoodsSimple>> getLikeGoodsList(int user_id,{isSale}) async {
+  static Future<List<GoodsSimple>> getLikeGoodsList(int user_id,{bool isSale = false}) async {
     Map<String, dynamic> params = {
       "user_id": user_id,
     };

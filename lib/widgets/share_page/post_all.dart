@@ -265,8 +265,8 @@ class PostBannerInfo extends StatelessWidget {
 
   _body() {
     List<Widget> widgetList = [];
-    double bannerHeight = 45;
-    double rightBannerWidth = 100;
+    double bannerHeight = 45.rw;
+    double rightBannerWidth = 100.rw;
     String rightBannerImage = "assets/post_right_banner.png";
     String leftBannerImage = "assets/post_left_banner.png";
     if (!TextUtils.isEmpty(timeInfo)) {
@@ -373,7 +373,7 @@ class PostBottomWidget extends StatelessWidget {
     String price = goodsDetailModel.data.getPriceString();
 
     return Container(
-      height: 95,
+      height: 95.rw,
       width: double.infinity,
       child: Row(
         children: <Widget>[

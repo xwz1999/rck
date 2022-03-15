@@ -13,11 +13,14 @@ import 'package:jingyaoyun/models/goods_detail_model.dart';
 import 'package:jingyaoyun/models/material_list_model.dart';
 import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
+import 'package:jingyaoyun/utils/permission_tool.dart';
+import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/nine_grid_view.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/share_page/post_all.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:widget_to_image/widget_to_image.dart';
 
 class BusinessFocusItem extends StatefulWidget {
@@ -143,7 +146,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
       color: Colors.white,
       padding: EdgeInsets.symmetric(horizontal: 15),
       width: 370.rw,
-      height: 480.rw,
+      height: 500.rw,
       child: Column(
         children: <Widget>[
           UserManager.instance.homeWeatherModel != null
@@ -321,25 +324,87 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
             borderRadius: BorderRadius.all(Radius.circular(20)),
             padding: EdgeInsets.symmetric(horizontal: 12),
             onPressed: () async{
-              var cancel =  ReToast.loading(text:'保存图片中...' );
-              byteData = await WidgetToImage.widgetToImage( Directionality(
-                textDirection: TextDirection.ltr,
-                child: Material(
-                    child:_getPoster()
-                ),
-              ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,465.rw));
 
-              await Future.delayed(Duration(seconds: 1));
+              bool permission = await Permission.storage.isGranted;
 
-              byteData = await WidgetToImage.widgetToImage( Directionality(
-                textDirection: TextDirection.ltr,
-                child: Material(
-                    child:_getPoster()
-                ),
-              ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,465.rw));
-              print('123213213213123213123');
+              if(!permission){
+                Alert.show(
+                  context,
+                  NormalContentDialog(
+                    title: '存储权限',
+                    content:
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        //Image.asset(R.ASSETS_LOCATION_PER_PNG,width: 44.rw,height: 44.rw,),
+                        Text('允许应用获取存储权限来保存图片', style: TextStyle(
+                            color: Color(0xFF666666), fontSize: 14.rsp),),
+                      ],
+                    ),
+                    items: ["残忍拒绝"],
+                    listener: (index) {
+                      Alert.dismiss(context);
 
-              widget.downloadListener(byteData );
+                    },
+                    deleteItem: "立即授权",
+                    deleteListener: () async {
+                      Alert.dismiss(context);
+
+                      bool  canUseCamera = await PermissionTool.haveStoragePermission();
+                      if (!canUseCamera) {
+                        PermissionTool.showOpenPermissionDialog(
+                            context, "没有存储权限,授予后才能保存图片");
+                        return;
+                      } else {
+
+                        var cancel =  ReToast.loading(text:'保存图片中...' );
+                        byteData = await WidgetToImage.widgetToImage( Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: Material(
+                              child:_getPoster()
+                          ),
+                        ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,500.rw));
+
+                        await Future.delayed(Duration(seconds: 1));
+
+                        byteData = await WidgetToImage.widgetToImage( Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: Material(
+                              child:_getPoster()
+                          ),
+                        ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,500.rw));
+                        print('123213213213123213123');
+
+                        widget.downloadListener(byteData );
+                      }
+                    },
+                    type: NormalTextDialogType.delete,
+                  ),
+                );
+
+              }else{
+
+                var cancel =  ReToast.loading(text:'保存图片中...' );
+                byteData = await WidgetToImage.widgetToImage( Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Material(
+                      child:_getPoster()
+                  ),
+                ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,500.rw));
+
+                await Future.delayed(Duration(seconds: 1));
+
+                byteData = await WidgetToImage.widgetToImage( Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Material(
+                      child:_getPoster()
+                  ),
+                ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,500.rw));
+                print('123213213213123213123');
+
+                widget.downloadListener(byteData );
+              }
+
             },
           ),
           SizedBox(
