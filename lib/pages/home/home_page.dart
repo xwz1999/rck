@@ -1473,8 +1473,8 @@ class _HomePageState extends BaseStoreState<HomePage>
           AppRouter.push(context, RouteName.LOGIN);
           return;
         }
-        Get.to(()=>VipShopCardPage());
-        //Get.to(()=>GoodsHighCommissionListPage());
+        //Get.to(()=>VipShopCardPage());
+        Get.to(()=>GoodsHighCommissionListPage());
         break;
       case '学院':
         UserManager.instance.selectTabbarIndex = 1;
