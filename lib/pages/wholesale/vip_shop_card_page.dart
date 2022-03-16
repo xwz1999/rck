@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -5,13 +6,27 @@ import 'package:jingyaoyun/constants/header.dart';
 import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/gen/assets.gen.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/order_prepay_model.dart';
+import 'package:jingyaoyun/models/order_preview_model.dart';
+import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:jingyaoyun/pages/home/classify/mvp/order_mvp/order_presenter_impl.dart';
+import 'package:jingyaoyun/pages/home/classify/order_prepay_page.dart';
+import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:oktoast/oktoast.dart';
 
 import 'package:velocity_x/velocity_x.dart';
 
+import 'models/vip_card_model.dart';
+
 class VipShopCardPage extends StatefulWidget {
+
   VipShopCardPage({
     Key key,
   }) : super(key: key);
@@ -23,27 +38,52 @@ class VipShopCardPage extends StatefulWidget {
 class _VipShopCardPageState extends State<VipShopCardPage>
     with TickerProviderStateMixin {
   int _chooseIndex = 0;
-  bool _haveSeven = false;
-  List<CardItem> _haveList = [];///4
-  List<CardItem> _haveNotList = [];///3
+  List<VipCardModel> _cardList = [];///4
+  // List<VipCardModel> _haveNotList = [];///3
+  OrderPresenterImpl _presenterImpl = OrderPresenterImpl();
+  bool _isTap = true;
+  ScrollController _controller = ScrollController();
 
 
   @override
   void initState() {
     super.initState();
-    _haveList = [CardItem(name: '7日卡',price: '0',originalPrice: '',unitPrice: '仅限一次'),
-      CardItem(name: '月卡',price: '36',originalPrice: '60',unitPrice: '¥1.2/天'),
-      CardItem(name: '季卡',price: '99',originalPrice: '135',unitPrice: '¥1.1/天'),
-      CardItem(name: '年卡',price: '365',originalPrice: '',unitPrice: '¥1/天')];
 
-    _haveNotList = [      CardItem(name: 'VIP店铺月卡',price: '36',originalPrice: '60',unitPrice: '折合¥1.2/天'),
-      CardItem(name: 'VIP店铺季卡',price: '99',originalPrice: '135',unitPrice: '折合¥1.1/天'),
-      CardItem(name: 'VIP店铺年卡',price: '365',originalPrice: '',unitPrice: '折合¥1/天')
-      ];
+
+    Future.delayed(Duration.zero,() async{
+      _cardList = await WholesaleFunc.getVipCardList();
+      if(!UserManager.instance.getSeven){
+        _cardList.insert(0, VipCardModel(goodsId: 0,skuId: 0,skuName: '七日卡',discountPrice: 0,coupon: 0,effectDayType: 1,effectTime: 1));
+      }
+
+      setState(() {
+
+      });
+    });
+
+      Future.delayed(Duration.zero,(){
+        _controller.jumpTo(_controller.position.maxScrollExtent);
+      });
+
+
+    }
+
+  _refresh() async {
+    UserManager.instance.getSeven = await WholesaleFunc.get7();
+    _cardList = await WholesaleFunc.getVipCardList();
+    if(!UserManager.instance.getSeven){
+      _cardList.insert(0, VipCardModel(goodsId: 0,skuId: 0,skuName: '七日卡',discountPrice: 0,coupon: 0,effectDayType: 1,effectTime: 1));
+    }
+
+    setState(() {
+
+    });
+
   }
 
   @override
   void dispose() {
+    _controller.dispose();
     super.dispose();
   }
 
@@ -82,6 +122,7 @@ class _VipShopCardPageState extends State<VipShopCardPage>
 
   _bodyWidget() {
     return ListView(
+      controller: _controller,
       shrinkWrap: true,
       children: [
         Container(
@@ -129,7 +170,7 @@ class _VipShopCardPageState extends State<VipShopCardPage>
           ),
           child: Column(
             children: [
-              62.hb,
+              42.hb,
               Text(
                 '权益介绍',
                 style: TextStyle(color: Colors.white, fontSize: 20.rsp),
@@ -159,16 +200,16 @@ class _VipShopCardPageState extends State<VipShopCardPage>
               _getItem(
                   '全面领先的数据分析', '多角度、多方位分析店铺经营状况，助力提高销量', Assets.icCardPi.path),
               48.hb,
-              SizedBox(
-                height: _haveSeven?125.rw: 170.rw,
+              _cardList.isNotEmpty? SizedBox(
+                height: !UserManager.instance.getSeven?125.rw: 170.rw,
                 child: GridView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.symmetric(horizontal: 20.rw),
-                    itemCount: _haveSeven?4:3,
+                    itemCount: !UserManager.instance.getSeven?4:3,
                     //SliverGridDelegateWithFixedCrossAxisCount 构建一个横轴固定数量Widget
                     gridDelegate:
-                    _haveSeven? const SliverGridDelegateWithFixedCrossAxisCount(
+                    !UserManager.instance.getSeven? const SliverGridDelegateWithFixedCrossAxisCount(
                             //横轴元素个数
                             crossAxisCount: 4,
                             //纵轴间距
@@ -188,34 +229,27 @@ class _VipShopCardPageState extends State<VipShopCardPage>
                         childAspectRatio: 78 / 122),
                     itemBuilder: (BuildContext context, int index) {
                       //Widget Function(BuildContext context, int index)
-                      return _getCard(index,_haveSeven?_haveList[index]:_haveNotList[index]);
+                      return _getCard(index,_cardList[index]);
                     }),
-              ),
+              ):SizedBox(height: 125.rw,),
               72.hb,
               GestureDetector(
-                onTap: (){
-                  if(_haveSeven&&_chooseIndex==0){
-                    Alert.show(
-                      context,
-                      NormalContentDialog(
-                        title: '7日卡领取提醒',
-                        content: Text(
-                          'VIP7日体验卡将在领取后开始使用，\n    每个账号仅限一次，是否领取',
-                          style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp),
-                        ),
-                        items: ["取消"],
-                        listener: (index) {
-                          Alert.dismiss(context);
-                        },
-                        deleteItem: "领取",
-                        deleteListener: () {
-                          Alert.dismiss(context);
+                onTap: () async{
+                  if(_isTap){
 
-                        },
-                        type: NormalTextDialogType.delete,
-                      ),
-                    );
+                    if(!UserManager.instance.getSeven&&_chooseIndex==0){
+                      _getListen();
+                    }
+                    else{
+                      _buyListen(_cardList[_chooseIndex]);
+                    }
+                    _isTap = false;
+                    // 500 毫秒内 不能多次点击
+                    Future.delayed(Duration(milliseconds: 1000), () {
+                      _isTap = true;
+                    });
                   }
+
 
                 },
                 child: Container(
@@ -235,7 +269,7 @@ class _VipShopCardPageState extends State<VipShopCardPage>
                     borderRadius: BorderRadius.all(Radius.circular(18.rw)),
                   ),
                   child:       Text(
-                    _haveSeven&&_chooseIndex==0? '立即领取':'立即购买',
+                    !UserManager.instance.getSeven&&_chooseIndex==0? '立即领取':'立即购买',
                     style: TextStyle(
                         color: Color(0xFF8F4A18),
                         fontSize: 14.rsp,
@@ -297,6 +331,67 @@ class _VipShopCardPageState extends State<VipShopCardPage>
     );
   }
 
+  _getListen(){
+    Alert.show(
+      context,
+      NormalContentDialog(
+        title: '7日卡领取提醒',
+        content: Text(
+          'VIP7日体验卡将在领取后开始使用，\n    每个账号仅限一次，是否领取',
+          style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp),
+        ),
+        items: ["取消"],
+        listener: (index) {
+          Alert.dismiss(context);
+        },
+        deleteItem: "领取",
+        deleteListener: () async{
+          Alert.dismiss(context);
+          bool getCard = await WholesaleFunc.active7();
+          if(getCard){
+            BotToast.showText(text: '领取成功');
+            _refresh();
+          }else{
+            BotToast.showText(text: '领取失败');
+          }
+        },
+        type: NormalTextDialogType.delete,
+      ),
+    );
+  }
+
+  _buyListen(VipCardModel model) async{
+    OrderPreviewModel order = await GoodsDetailModelImpl.createOrderPreview(
+      UserManager.instance.user.info.id,
+      model.skuId,
+      model.skuName,
+      1,
+    );
+    if (order.code != HttpStatus.SUCCESS) {
+      // Toast.showError(order.msg);
+      ReToast.err(text: order.msg);
+      // Get.back();
+      return;
+    }else{
+      final cancel = ReToast.loading();
+      HttpResultModel<OrderPrepayModel> resultModel = await _presenterImpl
+          .submitOrder(order.data.id, UserManager.instance.user.info.id);
+      cancel();
+      if (!resultModel.result) {
+        ReToast.err(text: resultModel.msg);
+        return;
+      }
+      AppRouter.push(context, RouteName.ORDER_PREPAY_PAGE,
+          arguments: OrderPrepayPage.setArguments(
+              resultModel.data,
+              goToOrder: false,
+              canUseBalance:  AppConfig.debug?true:false,
+              isPifa: false,
+              fromTo: '123'
+          ));
+    }
+
+  }
   _getItem(String title, String content, String url) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 14.rw),
@@ -348,7 +443,7 @@ class _VipShopCardPageState extends State<VipShopCardPage>
     );
   }
 
-  _getCard(int index,CardItem item) {
+  _getCard(int index,VipCardModel item) {
     return GestureDetector(
       onTap: () {
         _chooseIndex = index;
@@ -374,11 +469,12 @@ class _VipShopCardPageState extends State<VipShopCardPage>
             border: Border.all(color: Color(0xFFB18A4F), width: 1.w),
           ),
           child:
-          _haveSeven?Column(
+          !UserManager.instance.getSeven?Column(
             children: [
               10.hb,
               Text(
-                item.name,
+                index==0?'七日卡':
+                item.skuName.split('|')[1],
                 style: TextStyle(
                     color: index == _chooseIndex ? Color(0xFFC2955B):Color(0xFF858585),
                     fontSize: 14.rsp,
@@ -394,15 +490,15 @@ class _VipShopCardPageState extends State<VipShopCardPage>
                           fontWeight: FontWeight.bold),
                       children: [
                         TextSpan(
-                          text: item.price,
+                          text: item.discountPrice.toString(),
                           style: TextStyle(
                               color: index == _chooseIndex ? Color(0xFF67421F):Color(0xFFC29761),
                               fontSize: 32.rsp,
                               fontWeight: FontWeight.bold),
                         ),
                       ])),
-              item.originalPrice.isNotEmpty?Text(
-                '原价¥${item.originalPrice}/月',
+              item.coupon!=0&&index!=0?Text(
+                '原价¥${item.coupon+item.discountPrice}/月',
                 style: TextStyle(
                     color: index == _chooseIndex ? Color(0xFFA59571):Color(0xFF999999),
                     fontSize: 12.rsp,
@@ -410,7 +506,7 @@ class _VipShopCardPageState extends State<VipShopCardPage>
                   decoration: TextDecoration.lineThrough,
                   decorationColor: index == _chooseIndex ? Color(0xFFA59571):Color(0xFF858585),),
               ): Text(
-                '原价¥${item.originalPrice}/月',
+                '原价',
                 style: TextStyle(
                   color: Colors.transparent,
                   fontSize: 12.rsp,
@@ -425,7 +521,8 @@ class _VipShopCardPageState extends State<VipShopCardPage>
                 height: 32.w,
                 color: Color(0xFF9A7640),
                 child: Text(
-                  item.unitPrice,
+                  index==0?'仅限一次':
+                  '¥${(item.discountPrice/item.effectTime/30).toStringAsFixed(1)}/天',
                   style: TextStyle(
                       color: index == _chooseIndex ? Color(0xFFFFEFCC):Color(0xFFFFFFFF),
                       fontSize: 10.rsp,fontWeight: FontWeight.bold
@@ -440,7 +537,7 @@ class _VipShopCardPageState extends State<VipShopCardPage>
             children: [
               36.hb,
               Text(
-                'VIP店铺${index==0?'月':index==1?'季':'年'}卡',
+                item.skuName.split('|')[0],
                 style: TextStyle(
                     color: index == _chooseIndex ? Color(0xFFC2955B):Color(0xFF858585),
                     fontSize: 14.rsp,
@@ -456,7 +553,7 @@ class _VipShopCardPageState extends State<VipShopCardPage>
                           fontWeight: FontWeight.bold),
                       children: [
                         TextSpan(
-                          text: item.price,
+                          text: item.discountPrice.toString(),
                           style: TextStyle(
                               color: index == _chooseIndex ? Color(0xFF67421F):Color(0xFFC29761),
                               fontSize: 32.rsp,
@@ -471,8 +568,8 @@ class _VipShopCardPageState extends State<VipShopCardPage>
                         )
                       ])),
               16.hb,
-              item.originalPrice.isNotEmpty?Text(
-                '原价¥${item.originalPrice}/月',
+              item.coupon!=0?Text(
+                '原价¥${item.coupon+item.discountPrice}/${index==0?'/月':index==1?'/季':'/年'}',
                 style: TextStyle(
                   color: index == _chooseIndex ? Color(0xFFA59571):Color(0xFF999999),
                   fontSize: 12.rsp,
@@ -480,7 +577,7 @@ class _VipShopCardPageState extends State<VipShopCardPage>
                   decoration: TextDecoration.lineThrough,
                   decorationColor: index == _chooseIndex ? Color(0xFFA59571):Color(0xFF858585),),
               ):Text(
-                '原价¥${item.originalPrice}/月',
+                '月',
                 style: TextStyle(
                   color: Colors.transparent,
                   fontSize: 12.rsp,
@@ -495,7 +592,7 @@ class _VipShopCardPageState extends State<VipShopCardPage>
                 height: 48.w,
                 color: Color(0xFF9A7640),
                 child: Text(
-                  '${item.unitPrice}',
+                  '¥${(item.discountPrice/item.effectTime/30).toStringAsFixed(1)}/天',
                   style: TextStyle(
                       color: index == _chooseIndex ? Color(0xFFFFEFCC):Color(0xFFFFFFFF),
                       fontSize: 12.rsp,fontWeight: FontWeight.bold
@@ -512,19 +609,4 @@ class _VipShopCardPageState extends State<VipShopCardPage>
   }
 }
 
-class CardItem {
-  String name;
-  String price;
-  String originalPrice;
-  String unitPrice;
-
-
-  CardItem({
-    this.name,
-    this.price,
-    this.originalPrice,
-    this.unitPrice,
-  });
-
-}
 

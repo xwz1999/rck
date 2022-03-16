@@ -47,6 +47,7 @@ import 'package:jingyaoyun/pages/tabBar/rui_code_listener.dart';
 import 'package:jingyaoyun/pages/user/functions/user_func.dart';
 import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
 import 'package:jingyaoyun/pages/wholesale/models/wholesale_customer_model.dart';
+import 'package:jingyaoyun/pages/wholesale/seven_card_dialog.dart';
 import 'package:jingyaoyun/pages/wholesale/vip_shop_card_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_customer_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_home_page.dart';
@@ -113,7 +114,6 @@ class _HomePageState extends BaseStoreState<HomePage>
 //控制额外功能显示（后端控制）
 //false iOS隐藏
 //true 全部显示
-  bool _displayExtraFunction = false;
 
   List<BannerModel> _bannerList = [];
   List<Promotion> _promotionList = [];
@@ -165,6 +165,8 @@ class _HomePageState extends BaseStoreState<HomePage>
   void initState() {
     super.initState();
     RUICodeListener(context).clipboardListener();
+
+
     _updateSource();
     _getWeather();//部分机型获取地址较慢 所以放在外面先获取
     // timer = Timer(const Duration(milliseconds: 0), () {
@@ -287,6 +289,41 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   // 获取当前页面需要刷新的数据
   _updateSource() {
+
+    if (UserManager.instance.haveLogin) {
+      Future.delayed(Duration.zero,() async{
+
+        UserManager.instance.getSeven = await  WholesaleFunc.get7();
+
+        if(HiveStore.appBox.get('showSeven${UserManager.instance.user.info.id}') != null){
+
+          if(!HiveStore.appBox.get('showSeven${UserManager.instance.user.info.id}')){
+            if(!UserManager.instance.getSeven){
+              showDialog(
+                context: context,
+                builder: (context) => SevenCardDialog(
+
+                ),
+              );
+            }
+          }
+
+        }else{
+
+          if(!UserManager.instance.getSeven){
+            showDialog(
+              context: context,
+              builder: (context) => SevenCardDialog(
+
+              ),
+            );
+          }
+        }
+
+      });
+    }
+
+
     _getActiviteList();
     _getBannerList();
     _getPromotionList();
@@ -1431,6 +1468,11 @@ class _HomePageState extends BaseStoreState<HomePage>
         Get.to(()=>GoodsPreferentialListPage());
         break;
       case '硬核补贴':
+        if (!UserManager.instance.haveLogin) {
+          ReToast.err(text:'请先登录');
+          AppRouter.push(context, RouteName.LOGIN);
+          return;
+        }
         Get.to(()=>VipShopCardPage());
         //Get.to(()=>GoodsHighCommissionListPage());
         break;

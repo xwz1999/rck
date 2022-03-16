@@ -240,8 +240,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         Container(
           height: rSize(50),
         ),
-        _fromTo != ''//||(UserLevelTool.currentRoleLevelEnum()==UserRoleLevel.subsidiary)
-            ?  SizedBox():
+
         _payTile(
                 "",
                 Image.asset(
@@ -646,8 +645,12 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         Get.off(()=>WholesaleOrderHomePage(initialIndex: 2,));
         //Get.to(()=>WholesaleOrderHomePage(arguments: ,))
       }else{
+        if(_goToOrder)
         AppRouter.pushAndReplaced(globalContext, RouteName.ORDER_LIST_PAGE,
             arguments: OrderCenterPage.setArguments(2));
+        else{
+          Navigator.pop(context);
+        }
       }
 
     });

@@ -11,6 +11,7 @@ import 'package:jingyaoyun/pages/home/home_page.dart';
 import 'package:jingyaoyun/pages/home/widget/aku_college_page.dart';
 import 'package:jingyaoyun/pages/live/pages/discovery_page.dart';
 import 'package:jingyaoyun/pages/live/widget/live_fab_location.dart';
+import 'package:jingyaoyun/pages/message/message_ceter_page.dart';
 import 'package:jingyaoyun/pages/shopping_cart/shopping_cart_page.dart';
 import 'package:jingyaoyun/pages/tabBar/rui_code_listener.dart';
 import 'package:jingyaoyun/pages/user/user_page.dart';
@@ -188,7 +189,8 @@ class _TabBarWidgetState extends State<TabBarWidget>
             HomePage(
               tabController: _tabController,
             ),
-            AkuCollegePage(),
+            MessageCenterPage(),
+            //AkuCollegePage(),
             DiscoveryPage(),
             ShoppingCartPage(),
             UserPage()

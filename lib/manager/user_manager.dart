@@ -31,6 +31,8 @@ class UserManager {
   User user;
   UserBrief userBrief;
   bool getLoggerData = false;
+  ///是否领取过七天体验卡
+  bool getSeven = false;
   // 天气数据
   HomeWeatherModel homeWeatherModel;
   ValueNotifier<bool> login = ValueNotifier(false);

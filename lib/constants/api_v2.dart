@@ -199,9 +199,14 @@ class UserAPI {
   ///其他收益
   String get getBenefit => '/v2/app/profit/shop';
 
-
   ///VIP体验卡
-  String get getVipGoods => '/v2/app/vip_goods';
+  String get getVipGoods => '/v2/app/vip/goods';
+
+  ///7天体验卡激活
+  String get active7 => '/v2/app/vip/active';
+
+  ///是否领取过7天体验卡
+  String get get7 => '/v2/app/vip/is_used';
 
 
 }

@@ -683,6 +683,11 @@ class Assets {
       AssetGenImage('assets/ic_card_zhengping.png');
   static const AssetGenImage icCardZigou =
       AssetGenImage('assets/ic_card_zigou.png');
+  static const AssetGenImage icMessageClear =
+      AssetGenImage('assets/ic_message_clear.png');
+  static const AssetGenImage icMsgBet = AssetGenImage('assets/ic_msg_bet.png');
+  static const AssetGenImage icMsgOrder =
+      AssetGenImage('assets/ic_msg_order.png');
   static const $AssetsIconGen icon = $AssetsIconGen();
   static const AssetGenImage iconIncomeIn =
       AssetGenImage('assets/icon_income_in.png');
@@ -790,6 +795,8 @@ class Assets {
   static const AssetGenImage seckillIcon =
       AssetGenImage('assets/seckill_icon.png');
   static const AssetGenImage selloutBg = AssetGenImage('assets/sellout_bg.png');
+  static const AssetGenImage sevenVipCard =
+      AssetGenImage('assets/seven_vip_card.png');
   static const AssetGenImage share = AssetGenImage('assets/share.png');
   static const $AssetsShareBottomGen shareBottom = $AssetsShareBottomGen();
   static const $AssetsShopGen shop = $AssetsShopGen();
@@ -963,6 +970,8 @@ class Assets {
       AssetGenImage('assets/userpage_member_invite_4.png');
   static const AssetGenImage userpageMemberInvite5 =
       AssetGenImage('assets/userpage_member_invite_5.png');
+  static const AssetGenImage vipCardBtn =
+      AssetGenImage('assets/vip_card_btn.png');
   static const AssetGenImage warning = AssetGenImage('assets/warning.png');
   static const $AssetsWeatherGen weather = $AssetsWeatherGen();
   static const $AssetsWeatherCakeGen weatherCake = $AssetsWeatherCakeGen();

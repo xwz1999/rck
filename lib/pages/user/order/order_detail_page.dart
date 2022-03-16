@@ -230,7 +230,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
               orderDetail.createdAt);
           OrderPrepayModel model = OrderPrepayModel("SUCCESS", data, "");
           AppRouter.push(globalContext, RouteName.ORDER_PREPAY_PAGE,
-              arguments: OrderPrepayPage.setArguments(model));
+              arguments: OrderPrepayPage.setArguments(model,goToOrder: true));
         },
       ));
     return items;

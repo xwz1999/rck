@@ -1755,9 +1755,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       // Toast.showError(order.msg);
       Toast.showInfo(order.msg, color: Colors.black87);
       Get.back();
-      if(_addressList.isEmpty){
-        Get.to(ReceivingAddressPage());
-      }
       return;
     }
     AppRouter.push(context, RouteName.GOODS_ORDER_PAGE,

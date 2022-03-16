@@ -1,22 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/base_model.dart';
-import 'package:jingyaoyun/models/goods_detail_model.dart';
-import 'package:jingyaoyun/models/goods_simple_list_model.dart';
+
 import 'package:jingyaoyun/models/guide_order_item_model.dart';
 import 'package:jingyaoyun/models/order_list_model.dart';
-import 'package:jingyaoyun/models/order_preview_model.dart';
-import 'package:jingyaoyun/models/shopping_cart_list_model.dart';
+
 import 'package:jingyaoyun/pages/home/classify/mvp/goods_list_contact.dart';
-import 'package:jingyaoyun/pages/user/address/receiving_address_page.dart';
+
 import 'package:jingyaoyun/pages/user/model/recommend_user_model.dart';
-import 'package:jingyaoyun/pages/user/order/guide_order_view.dart';
 import 'package:jingyaoyun/pages/user/order/order_list_page.dart';
 import 'package:jingyaoyun/pages/wholesale/models/goods_dto.dart';
+import 'package:jingyaoyun/pages/wholesale/models/vip_card_model.dart';
 import 'package:jingyaoyun/pages/wholesale/models/wholesale_acitivty_model.dart';
 import 'package:jingyaoyun/pages/wholesale/models/wholesale_banner_model.dart';
 import 'package:jingyaoyun/pages/wholesale/models/wholesale_car_model.dart';
@@ -27,7 +24,6 @@ import 'package:jingyaoyun/pages/wholesale/models/wholesale_order_preview_model.
 import 'package:jingyaoyun/utils/print_util.dart';
 import 'package:jingyaoyun/utils/text_utils.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
 
 import '../wholesale_order_list_page.dart';
 
@@ -35,25 +31,51 @@ import '../wholesale_order_list_page.dart';
 class WholesaleFunc {
 
   ///获取VIP体验卡
-  // static Future<List<WholesaleGood>> getVipCardList(int user_id,{isSale}) async {
-  //   Map<String, dynamic> params = {
-  //     "user_id": user_id,
-  //   };
-  //
-  //   if (isSale!=null) {
-  //     params.putIfAbsent("is_sale", () => isSale);
-  //   }
-  //
-  //   ResultData result = await HttpManager.post(APIV2.userAPI.getLikeGoodsList, params);
-  //
-  //   if (result.data != null) {
-  //     if (result.data['data'] != null) {
-  //       return (result.data['data'] as List)
-  //           .map((e) => WholesaleGood.fromJson(e))
-  //           .toList();
-  //     }
-  //   }
-  // }
+  static Future<List<VipCardModel>> getVipCardList() async {
+
+    ResultData result = await HttpManager.post(APIV2.userAPI.getVipGoods, {});
+
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return (result.data['data'] as List)
+            .map((e) => VipCardModel.fromJson(e))
+            .toList();
+      }else
+        return [];
+    }else
+      return [];
+  }
+
+  ///是否领取过7天体验卡
+  static Future<bool> get7() async {
+
+    ResultData result = await HttpManager.post(APIV2.userAPI.get7, {});
+
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return result.data['data']['is_used'];
+      }else
+        return true;
+    }else
+      return true;
+  }
+
+  ///激活7天体验卡
+  static Future<bool> active7() async {
+
+    ResultData result = await HttpManager.post(APIV2.userAPI.active7, {});
+    if (result.data != null) {
+      if (result.data['code'] != null) {
+        if(result.data['code']=='FAIL'){
+          return false;
+        }else{
+          return true;
+        }
+      }else
+        return false;
+    }else
+      return false;
+  }
 
 
   static Future<List<WholesaleGood>> getLikeGoodsList(int user_id,{isSale}) async {

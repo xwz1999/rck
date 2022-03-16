@@ -215,7 +215,7 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
     OrderPrepayModel model = OrderPrepayModel("SUCCESS", data, "");
 
     AppRouter.push(globalContext, RouteName.ORDER_PREPAY_PAGE,
-        arguments: OrderPrepayPage.setArguments(model));
+        arguments: OrderPrepayPage.setArguments(model,goToOrder: true));
 //    Future.delayed(Duration(seconds: 1), ()
 //    {
 //    AppRouter.push(globalContext, RouteName.ORDER_PREPAY_PAGE, arguments: OrderPrepayPage.setArguments(order));
