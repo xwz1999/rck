@@ -533,6 +533,7 @@ class Assets {
   static const AssetGenImage akuSchool = AssetGenImage('assets/aku_school.png');
   static const AssetGenImage ascSort = AssetGenImage('assets/ascSort.png');
   static const AssetGenImage benefitBg = AssetGenImage('assets/benefit_bg.png');
+  static const AssetGenImage brandBg = AssetGenImage('assets/brand_bg.png');
   static const AssetGenImage businessCooperationPng =
       AssetGenImage('assets/businessCooperation.png.webp');
   static const AssetGenImage businessCooperation =
@@ -562,6 +563,7 @@ class Assets {
       AssetGenImage('assets/cell_icon_share_make_money.png');
   static const AssetGenImage cellIconTeamBenefits =
       AssetGenImage('assets/cell_icon_team_benefits.png');
+  static const AssetGenImage couponBg = AssetGenImage('assets/coupon_bg.png');
   static const AssetGenImage couponCommon =
       AssetGenImage('assets/coupon_common.png');
   static const AssetGenImage couponOverallCommon =
@@ -576,10 +578,8 @@ class Assets {
       AssetGenImage('assets/goods_details_bottom_gold.png');
   static const AssetGenImage goodsHighCommissonListTitleBg =
       AssetGenImage('assets/goods_high_commisson_list_title_bg.png');
-  static const AssetGenImage goodsHotListTitleBgPngPng =
-      AssetGenImage('assets/goods_hot_list_title_bg.png.png');
-  static const AssetGenImage goodsHotListTitleBgPngWebp =
-      AssetGenImage('assets/goods_hot_list_title_bg.png.webp');
+  static const AssetGenImage goodsHotListTitleBg =
+      AssetGenImage('assets/goods_hot_list_title_bg.png');
   static const AssetGenImage goodsPageCoupon =
       AssetGenImage('assets/goods_page_coupon.png');
   static const AssetGenImage goodsPreferentialListTitleBg =
@@ -613,8 +613,14 @@ class Assets {
   static const AssetGenImage goodsdetailBottomShareWhite =
       AssetGenImage('assets/goodsdetail_bottom_share_white.png');
   static const AssetGenImage goto1 = AssetGenImage('assets/goto1.png');
+  static const AssetGenImage headPriceBg =
+      AssetGenImage('assets/head_price_bg.png');
   static const $AssetsHeaderGen header = $AssetsHeaderGen();
   static const $AssetsHomeGen home = $AssetsHomeGen();
+  static const AssetGenImage homeBrandBg =
+      AssetGenImage('assets/home_brand_bg.png');
+  static const AssetGenImage homeBrandItem =
+      AssetGenImage('assets/home_brand_item.png');
   static const AssetGenImage homeFormal =
       AssetGenImage('assets/home_formal.png');
   static const AssetGenImage homeInvitation =
@@ -624,6 +630,8 @@ class Assets {
   static const AssetGenImage homeList = AssetGenImage('assets/home_list.png');
   static const AssetGenImage homeListTimes1 =
       AssetGenImage('assets/home_list_times_1.png');
+  static const AssetGenImage homeListTimes2 =
+      AssetGenImage('assets/home_list_times_2.png');
   static const AssetGenImage homeMenuA =
       AssetGenImage('assets/home_menu_a.png');
   static const AssetGenImage homeMenuAir =
@@ -767,6 +775,8 @@ class Assets {
       AssetGenImage('assets/order_item_buy.png');
   static const AssetGenImage orderItemSell =
       AssetGenImage('assets/order_item_sell.png');
+  static const AssetGenImage pifaPriceBg =
+      AssetGenImage('assets/pifa_price_bg.png');
   static const AssetGenImage pinkBottomArrow =
       AssetGenImage('assets/pink_bottom_arrow.png');
   static const AssetGenImage placeholderNew1x1A =
@@ -779,6 +789,10 @@ class Assets {
       AssetGenImage('assets/post_left_banner.png');
   static const AssetGenImage postRightBanner =
       AssetGenImage('assets/post_right_banner.png');
+  static const AssetGenImage priceDetailBg =
+      AssetGenImage('assets/price_detail_bg.png');
+  static const AssetGenImage priceGoodsBg =
+      AssetGenImage('assets/price_goods_bg.png');
   static const $AssetsRecookLaunchImageGen recookLaunchImage =
       $AssetsRecookLaunchImageGen();
   static const AssetGenImage resultFail =
@@ -865,12 +879,6 @@ class Assets {
   static const AssetGenImage storeBg = AssetGenImage('assets/store_bg.png');
   static const AssetGenImage success = AssetGenImage('assets/success.png');
   static const $AssetsSvgGen svg = $AssetsSvgGen();
-  static const AssetGenImage tabBusiness =
-      AssetGenImage('assets/tab_business.png');
-  static const AssetGenImage tabFind = AssetGenImage('assets/tab_find.png');
-  static const AssetGenImage tabShopcart =
-      AssetGenImage('assets/tab_shopcart.png');
-  static const AssetGenImage tabUser = AssetGenImage('assets/tab_user.png');
   static const AssetGenImage tabbarAkuNormal =
       AssetGenImage('assets/tabbar_aku_normal.png');
   static const AssetGenImage tabbarAkuSelected =
@@ -883,14 +891,22 @@ class Assets {
       AssetGenImage('assets/tabbar_find_normal.png');
   static const AssetGenImage tabbarFindSelected =
       AssetGenImage('assets/tabbar_find_selected.png');
-  static const AssetGenImage tabbarMineNormal =
-      AssetGenImage('assets/tabbar_mine_normal.png');
+  static const AssetGenImage tabbarMessage =
+      AssetGenImage('assets/tabbar_message.png');
+  static const AssetGenImage tabbarMessageSelect =
+      AssetGenImage('assets/tabbar_message_select.png');
   static const AssetGenImage tabbarMineNormalNew =
       AssetGenImage('assets/tabbar_mine_normal_new.png');
-  static const AssetGenImage tabbarMineSelected =
-      AssetGenImage('assets/tabbar_mine_selected.png');
   static const AssetGenImage tabbarMineSelectedNew =
       AssetGenImage('assets/tabbar_mine_selected_new.png');
+  static const AssetGenImage tabbarPCar =
+      AssetGenImage('assets/tabbar_p_car.png');
+  static const AssetGenImage tabbarPCarSelect =
+      AssetGenImage('assets/tabbar_p_car_select.png');
+  static const AssetGenImage tabbarPHome =
+      AssetGenImage('assets/tabbar_p_home.png');
+  static const AssetGenImage tabbarPHomeSelect =
+      AssetGenImage('assets/tabbar_p_home_select.png');
   static const AssetGenImage tabbarSaleNormal =
       AssetGenImage('assets/tabbar_sale_normal.png');
   static const AssetGenImage tabbarSaleSelected =
@@ -998,20 +1014,20 @@ class AssetGenImage extends AssetImage {
   const AssetGenImage(String assetName) : super(assetName);
 
   Image image({
-    Key key,
-    ImageFrameBuilder frameBuilder,
-    ImageLoadingBuilder loadingBuilder,
-    ImageErrorWidgetBuilder errorBuilder,
-    String semanticLabel,
+    Key  key,
+    ImageFrameBuilder  frameBuilder,
+    ImageLoadingBuilder  loadingBuilder,
+    ImageErrorWidgetBuilder  errorBuilder,
+    String  semanticLabel,
     bool excludeFromSemantics = false,
-    double width,
-    double height,
-    Color color,
-    BlendMode colorBlendMode,
-    BoxFit fit,
+    double  width,
+    double  height,
+    Color  color,
+    BlendMode  colorBlendMode,
+    BoxFit  fit,
     AlignmentGeometry alignment = Alignment.center,
     ImageRepeat repeat = ImageRepeat.noRepeat,
-    Rect centerSlice,
+    Rect  centerSlice,
     bool matchTextDirection = false,
     bool gaplessPlayback = false,
     bool isAntiAlias = false,

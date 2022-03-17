@@ -87,7 +87,7 @@ class _GoodsHighCommissionListPageState extends BaseStoreState<GoodsHighCommissi
           children: <Widget>[
             Image.asset(
               R.ASSETS_GOODS_HIGH_COMMISSON_LIST_TITLE_BG_PNG,
-              fit: BoxFit.fill,
+              fit: BoxFit.fitWidth,
             ),
             Navigator.canPop(context)
                 ? Positioned(

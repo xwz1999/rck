@@ -204,7 +204,7 @@ class _WholesaleShopPageState extends State<WholesaleShopPage> {
         builder: (context, wholesaleBannerModel) {
           return GestureDetector(
             onTap: () {
-              Get.to(()=>WholesaleDetailPage(goodsId:  (wholesaleBannerModel as WholesaleBannerModel).goodsId,isWholesale: true,));
+              Get.to(()=>WholesaleDetailPage(goodsId:  (wholesaleBannerModel as WholesaleBannerModel).goodsId,));
             },
             child: ExtendedImage.network(
                 Api.getImgUrl(wholesaleBannerModel.photo),
@@ -251,7 +251,6 @@ class _WholesaleShopPageState extends State<WholesaleShopPage> {
               onTap: () {
                 Get.to(() => WholesaleGoodsList(
                       title: item.name,
-                      activityId: item.id,
                     ));
               },
               child: Container(
@@ -317,7 +316,7 @@ class _WholesaleShopPageState extends State<WholesaleShopPage> {
                         builder: (context) {
                           return GestureDetector(
                             onTap: (){
-                              Get.to(()=>WholesaleDetailPage(goodsId: _goodList[activityIndex][index].id,isWholesale: true));
+                              Get.to(()=>WholesaleDetailPage(goodsId: _goodList[activityIndex][index].id));
                             },
                               child: WholesaleGoodsWidget(
                             goods: _goodList[activityIndex][index],

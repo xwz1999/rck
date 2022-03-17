@@ -15,13 +15,10 @@ import 'package:jingyaoyun/models/goods_detail_images_model.dart';
 import 'package:jingyaoyun/models/goods_detail_model.dart';
 import 'package:jingyaoyun/models/order_preview_model.dart';
 import 'package:jingyaoyun/models/province_city_model.dart';
-import 'package:jingyaoyun/pages/home/classify/evaluation_list_page.dart';
-import 'package:jingyaoyun/pages/home/classify/goods_param_page.dart';
+
 import 'package:jingyaoyun/pages/home/classify/goods_service_guarantee.dart';
 import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
-import 'package:jingyaoyun/pages/home/classify/order_preview_page.dart';
-import 'package:jingyaoyun/pages/home/classify/sku_choose_page.dart';
-import 'package:jingyaoyun/pages/home/items/item_user_comment.dart';
+import 'package:velocity_x/velocity_x.dart';
 import 'package:jingyaoyun/pages/home/model/address_model.dart';
 import 'package:jingyaoyun/pages/home/widget/goods_image_page_view.dart';
 import 'package:jingyaoyun/pages/shopping_cart/mvp/shopping_cart_model_impl.dart';
@@ -461,28 +458,10 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
       ),
       widget.goodsDetail.vendorId == 1800 || widget.goodsDetail.vendorId == 2000||  widget.goodsDetail.vendorId == 3000
           ? Container(
-        margin: EdgeInsets.only(bottom: 13),
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         color: Colors.white,
         child: _addressContent(context),
       )
-          : SizedBox(),
-      widget.goodsDetail.storehouse == 2 ||
-              widget.goodsDetail.storehouse == 3
-          ? Container(
-              margin: EdgeInsets.only(bottom: 13),
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              color: Colors.white,
-              child: _buildOverseaTax(),
-            )
-          : SizedBox(),
-      widget.goodsDetail.isImport == 1
-          ? Container(
-              margin: EdgeInsets.only(bottom: 13),
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-              color: Colors.white,
-              child: _buildOverseaCityPicker(),
-            )
           : SizedBox(),
       Container(
         margin: EdgeInsets.only(bottom: 13),
@@ -490,13 +469,6 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
         color: Colors.white,
         child: _goodsInfoWidget(context),
       ),
-      widget.goodsDetail.recommends.isNotEmpty
-          ? Container(
-              //  padding: EdgeInsets.only(left: 10, top: 10, bottom: 5),
-              color: Colors.white,
-              child: _recommendsWidget(),
-            )
-          : SizedBox(),
 //            _usersLikeGrid(),
     ];
   }
@@ -563,29 +535,83 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
             child: StatefulBuilder(
               builder: (BuildContext context, partSetState) {
                 _stateSetter = partSetState;
-                return Row(
-                  children: <Widget>[
-                    Text(
-                      "规格",
-                      style: AppTextStyle.generate(13 * 2.sp,
-                          color: Color(0xff828282),
-                          fontWeight: FontWeight.w300),
+                return Column(
+                  children: [
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          '规格',
+
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyle.generate(13 * 2.sp,
+                            color: Color(0xFFA4A4A4),),
+                        ),
+                        Container(
+                          width: 10,
+                        ),
+
+                        ...widget.goodsDetail.sku.mapIndexed((currentValue, index) {
+                          return index<6? Container(
+                            clipBehavior:Clip.antiAlias,
+                            margin: EdgeInsets.only(right:8.rw ),
+                            width: 32.rw,
+                            height: 32.rw,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2.rw),
+
+                            ),
+                            child:     FadeInImage.assetNetwork(
+                              placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                              image: Api.getImgUrl(currentValue.picUrl) ,
+                            ),
+                          ):SizedBox();
+                        } ).toList(),
+
+                        Container(
+
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2.rw),
+                              color: Color(0xFFF9F9F9)
+                          ),
+                          padding: EdgeInsets.symmetric(vertical: 3.rw,horizontal: 6.rw),
+                          child: Text(
+                            '共${widget.goodsDetail.sku.length}款',
+                            style: TextStyle(color: Color(0xFF666666),fontSize: 12.rsp),
+
+                          ),
+                        )
+
+
+                      ],
                     ),
-                    Container(
-                      width: 20,
-                    ),
-                    Expanded(
-                        child: Text(
-                      guige,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyle.generate(13 * 2.sp,
-                          color: Color(0xff373737)),
-                    )),
-                    Icon(
-                      AppIcons.icon_next,
-                      color: Colors.grey[400],
-                      size: 16 * 2.sp,
+                    24.hb,
+                    Row(
+                      children: [
+                        Text(
+                          '规格',
+
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyle.generate(13 * 2.sp,
+                              color: Colors.transparent),
+                        ),
+                        Container(
+                          width: 10,
+                        ),
+
+                        Expanded(
+                            child: Text(
+                              (guige!='请选择规格'?'已选：':'')+guige,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyle.generate(13 * 2.sp,
+                                  color: Color(0xff373737)),
+                            )),
+                        Icon(
+                          AppIcons.icon_next,
+                          color: Color(0xFF333333),
+                          size: 13 * 2.sp,
+                        )
+                      ],
                     )
                   ],
                 );
@@ -626,18 +652,6 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
               });
             }
           });
-
-
-
-
-
-          // //cancel();
-          // if (result) {
-          //   //_selectCityAddress(context);
-          //   // print(_defaltAddress);
-          //   _jDHaveGoods =
-          //       await HomeDao.getJDStock(widget.goodsDetail.sku.first.id, _defaltAddress);
-          // }
 
       },
       child: Container(
@@ -696,31 +710,33 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
                         ),
                       ),
                 Spacer(),
-                Icon(
-                  AppIcons.icon_next,
-                  color: Colors.grey[400],
-                  size: 16 * 2.sp,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Container(
-                  width: 46.rw,
-                ),
-                Text(
-                  _jDHaveGoods == 1
-                      ? '有货'
-                      : _jDHaveGoods == 0
+                Row(
+                  children: [
+                    Container(
+                      width: 46.rw,
+                    ),
+                    Text(
+                      _jDHaveGoods == 1
+                          ? '有货'
+                          : _jDHaveGoods == 0
                           ? '无货'
                           : '',
-                  style: TextStyle(
-                    color: Color(0xFF525252),
-                    fontSize: rSP(13),
-                  ),
+                      style: TextStyle(
+                        color: Color(0xFF525252),
+                        fontSize: rSP(13),
+                      ),
+                    ),
+                  ],
+                ),
+                10.wb,
+                Icon(
+                  AppIcons.icon_next,
+                  color: Color(0xFF333333),
+                  size: 13 * 2.sp,
                 ),
               ],
             ),
+
           ],
         ),
       ),
@@ -795,8 +811,8 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
                    ),
                 Icon(
                   AppIcons.icon_next,
-                  color: Colors.grey[400],
-                  size: 16 * 2.sp,
+                  color: Color(0xFF333333),
+                  size: 13 * 2.sp,
                 )
               ],
             ),
@@ -815,6 +831,7 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
                 },
                 child: Container(
                   color: Colors.white,
+                  margin: EdgeInsets.only(top: 10.rw),
                   child: Row(
                     children: <Widget>[
                       Text(
@@ -855,39 +872,13 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
                       )),
                       Icon(
                         AppIcons.icon_next,
-                        color: Colors.grey[400],
-                        size: 16 * 2.sp,
+                        color: Color(0xFF333333),
+                        size: 13 * 2.sp,
                       )
                     ],
                   ),
                 )),
-        // Container(
-        //   margin: EdgeInsets.only(top: 10),
-        //   child: GestureDetector(
-        //     onTap: (){
-        //       _showAuthImage();
-        //     },
-        //     child: Row(
-        //       children: <Widget>[
-        //         Text(
-        //           "品牌授权",
-        //           style: AppTextStyle.generate(13*2.sp,
-        //               color: Color(0xff828282), fontWeight: FontWeight.w300),),
-        //         Container(width: 20,),
-        //         Expanded(
-        //           child: Text(
-        //             "查看授权",
-        //             style: AppTextStyle.generate(13*2.sp, color: Color(0xff373737)),
-        //             )),
-        //         Icon(
-        //           AppIcons.icon_next,
-        //           color: Colors.grey[400],
-        //           size: 16*2.sp,
-        //         )
-        //       ],
-        //     ),
-        //   ),
-        // ),
+
       ],
     );
   }
@@ -1091,8 +1082,8 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
                 Spacer(),
                 Icon(
                   AppIcons.icon_next,
-                  color: Colors.grey[400],
-                  size: 16 * 2.sp,
+                  color: Color(0xFF333333),
+                  size: 13 * 2.sp,
                 ),
               ],
             ),
@@ -1235,103 +1226,6 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
     );
   }
 
-
-  //大家都在买 推荐商品
-  _recommendsWidget() {
-    return Container(
-      height: 200.rw,
-      // padding: EdgeInsets.only(left: 10, right: 10),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.only(left: 10),
-            height: 50,
-            child: Text('为你推荐',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16 * 2.sp)),
-            alignment: Alignment.centerLeft,
-          ),
-          Expanded(
-            child: ListView.builder(
-              physics: AlwaysScrollableScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemCount: widget.goodsDetail.recommends==null?0: widget.goodsDetail.recommends.length,
-              itemBuilder: (_, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Get.to(()=>WholesaleDetailPage(goodsId:  widget.goodsDetail.recommends[index].goodsId,isWholesale: true,));
-                  },
-                  child: _recommendsItemWidget( widget.goodsDetail.recommends[index]),
-                );
-              },
-            ),
-          ),
-
-          Container(
-            height: 13,
-            color: AppColor.frenchColor,
-          ),
-        ],
-      ),
-    );
-  }
-
-  _recommendsItemWidget(Recommends recommends) {
-    return Container(
-      margin: EdgeInsets.only(left: 10,bottom: 10.rw),
-      width: 80.rw,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Container(
-            width: 80.rw,
-            height: 80.rw,
-            child: _img(recommends.mainPhotoUrl),
-          ),
-          Container(
-            height: 3,
-          ),
-          Expanded(
-              child: Container(
-            alignment: Alignment.topLeft,
-            child: Text(
-              recommends.goodsName,
-              maxLines: 2,
-              style: TextStyle(color: Color(0xff828282), fontSize: 10.rsp),
-            ),
-          )),
-          Container(
-              alignment: Alignment.centerLeft,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Container(
-                    height: 16,
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      '￥',
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12 * 2.sp),
-                    ),
-                  ),
-                  Text(
-                    '${recommends.price}',
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12 * 2.sp),
-                  ),
-                ],
-              )),
-        ],
-      ),
-    );
-  }
 
   _img(imageUrl) {
     double cir = rSize(8);

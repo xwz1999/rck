@@ -342,7 +342,7 @@ class WholesaleGoodsItem extends StatelessWidget {
   }
 
   _buyEvent() {
-    Get.to(()=>WholesaleDetailPage(goodsId: this.id,isWholesale: true));
+    Get.to(()=>WholesaleDetailPage(goodsId: this.id,));
   }
 
 

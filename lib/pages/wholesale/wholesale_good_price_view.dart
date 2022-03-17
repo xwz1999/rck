@@ -3,6 +3,7 @@ import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/app_image_resources.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/models/goods_detail_model.dart';
 import 'package:jingyaoyun/pages/wholesale/models/wholesale_detail_model.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
@@ -43,7 +44,10 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        _price(),
+        Padding(
+          padding:EdgeInsets.only(left: 10.rw, right: 10.rw,top: 8.rw),
+          child: _price(),
+        ),
         Container(
           width: double.infinity,
           height: 8.rw,
@@ -134,7 +138,7 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
   _promotionPrice(price, commission, originPrice, saleNum,min,
       {isTwoPrice = false}) {
     return Container(
-      padding: EdgeInsets.only(top: 8.rw, left: 12.rw),
+      padding: EdgeInsets.only(top: 10.rw, left: 12.rw),
       color: Colors.transparent,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -147,99 +151,98 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
                   TextSpan(
                     text:  '批发价' ,
                     style: TextStyle(
-                        color: Color(0xFFD5101A),
+                        color: Colors.white,
                         fontSize: 14.rsp,
                         fontWeight: FontWeight.bold),
                   ),
                   TextSpan(
                     text: " ￥",
                     style: TextStyle(
-                        color: Color(0xFFD5101A),
+                        color: Colors.white,
                         fontSize: 16.rsp,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.bold),
                   ),
                   TextSpan(
                       text: "$price ",
                       style: TextStyle(
-                        color: Color(0xFFD5101A),
-                        fontSize: 22.rsp,
-                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                        fontSize: 24.rsp,
+                        fontWeight: FontWeight.bold,
                         letterSpacing: 0,
                       )),
-                    TextSpan(
-                          text: "$min件起批",
+
+                  WidgetSpan(child:
+                  Container(
+                    padding: EdgeInsets.symmetric(
+                        vertical: 2.rw,
+                        horizontal: 8.rw
+                    ),
+                    decoration: BoxDecoration(
+                        image: DecorationImage(image: AssetImage(Assets.priceGoodsBg.path),fit: BoxFit.fill)
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          "赚",
                           style: AppTextStyle.generate(12 * 2.sp,
-                              color: Color(0xFF666666)),
+                              color: Color(0xFFED3D19)),
                         ),
+                        Text(
+                          "¥$commission",
+                          style: AppTextStyle.generate(14 * 2.sp,
+                              color: Color(0xFFED3D19)),
+                        ),
+
+                      ],
+                    ),
+                  )),
+
 
                 ]),
               ),
               Spacer(),
+
               Text(
-                '已定$saleNum单',
+                "$min件起批",
                 style: TextStyle(
-                  // shadows: [
-                  //   Shadow(
-                  //     color: Colors.black26,
-                  //     blurRadius: rSize(1),
-                  //     offset: Offset(0, rSize(1)),
-                  //   ),
-                  // ],
-                  fontSize: 12.rsp,
-                  color: Color(0xFF666666),
+                  fontSize: 14.rsp,
+                  color: Colors.white,
                 ),
               ),
+
               24.wb,
             ],
           ),
           Spacer(),
-          Row(
-            children: <Widget>[
-              Container(
-                      height: rSize(23),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Color(0xFFD5101A), width: 0.5.rw),
-                          borderRadius: BorderRadius.all(Radius.circular(4.rw))
-                          // image: DecorationImage(
-                          //   fit: BoxFit.fill,
-                          //   image: AssetImage(
-                          //       R.ASSETS_GOODS_DETAILS_BOTTOM_GOLD_PNG),
-                          // ),
-                          ),
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          left: 6.rw,
-                          top: rSize(0),
-                          right: 6.rw,
-                          bottom: rSize(0),
-                        ),
-                        child: Text(
-                          '预估利润¥$commission',
-                          style: TextStyle(
-                            // shadows: [
-                            //   Shadow(
-                            //     color: Colors.black26,
-                            //     blurRadius: rSize(1),
-                            //     offset: Offset(0, rSize(1)),
-                            //   ),
-                            // ],
-                            fontSize: 12.rsp,
-                            color: Color(0xFFD5101A),
-                          ),
-                        ),
-                      ),
-                    ),
-              rWBox(10),
-             Text(
-                "零售价¥$originPrice",
-                style: AppTextStyle.generate(
-                  14.rsp,
-                  color: Color(0xFF999999),
+          Container(
+            padding: EdgeInsets.symmetric(
+                vertical: 2.rw,
+                horizontal: 8.rw
+            ),
+            decoration: BoxDecoration(
+                image: DecorationImage(image: AssetImage(Assets.priceDetailBg.path),fit: BoxFit.fill)
+            ),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  "预估利润=$originPrice（官方指导价）",
+                  style: AppTextStyle.generate(
+                    10 .rsp,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-            ],
+
+                Text(
+                  '—¥$price（批发价）',
+                  style: TextStyle(
+                    fontSize: 10.rsp,
+                    color: Colors.white,
+                  ),
+                ),
+                rWBox(10),
+
+              ],
+            ),
           ),
           rHBox(10),
         ],
@@ -253,15 +256,10 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
       height: 82.rw,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Color(0xFFDBDBDB),
-            blurRadius: 4,
-            offset: Offset(0, -2),
-          ),
-        ],
+        image: DecorationImage(
+            fit: BoxFit.fill, image: AssetImage(Assets.pifaPriceBg.path)),
       ),
+
       child: _promotionPrice(
         price,
         commission,
@@ -331,6 +329,21 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
                 fontWeight: FontWeight.w600,
                 color: Color(0xff333333),
               ),
+            ),
+          ),
+
+          Text(
+            '已定${detailModel.salesVolume}单',
+            style: TextStyle(
+              // shadows: [
+              //   Shadow(
+              //     color: Colors.black26,
+              //     blurRadius: rSize(1),
+              //     offset: Offset(0, rSize(1)),
+              //   ),
+              // ],
+              fontSize: 12.rsp,
+              color: Color(0xFF666666),
             ),
           ),
 

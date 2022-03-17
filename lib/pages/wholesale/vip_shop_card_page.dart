@@ -26,9 +26,10 @@ import 'package:velocity_x/velocity_x.dart';
 import 'models/vip_card_model.dart';
 
 class VipShopCardPage extends StatefulWidget {
+  final bool goToBottom;
 
   VipShopCardPage({
-    Key key,
+    Key key, this.goToBottom = false,
   }) : super(key: key);
 
   @override
@@ -62,6 +63,7 @@ class _VipShopCardPageState extends State<VipShopCardPage>
     });
 
       Future.delayed(Duration.zero,(){
+        if(widget.goToBottom)
         _controller.jumpTo(_controller.position.maxScrollExtent);
       });
 

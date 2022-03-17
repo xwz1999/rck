@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
@@ -10,6 +9,7 @@ import 'package:dio/dio.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide Response;
@@ -47,8 +47,11 @@ import 'package:jingyaoyun/pages/tabBar/rui_code_listener.dart';
 import 'package:jingyaoyun/pages/user/functions/user_func.dart';
 import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
 import 'package:jingyaoyun/pages/wholesale/models/wholesale_customer_model.dart';
+import 'package:jingyaoyun/pages/wholesale/models/wholesale_good_model.dart';
+import 'package:jingyaoyun/pages/wholesale/more_goods/whoesale_goods_grid.dart';
 import 'package:jingyaoyun/pages/wholesale/seven_card_dialog.dart';
 import 'package:jingyaoyun/pages/wholesale/vip_shop_card_page.dart';
+import 'package:jingyaoyun/pages/wholesale/wholeasale_detail_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_customer_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_home_page.dart';
 import 'package:jingyaoyun/third_party/wechat/wechat_utils.dart';
@@ -71,29 +74,35 @@ import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:jingyaoyun/widgets/weather_page/weather_city_model.dart';
 import 'package:jingyaoyun/widgets/weather_page/weather_city_page.dart';
 import 'package:jingyaoyun/widgets/webView.dart';
+
 // import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:power_logger/power_logger.dart';
+import 'package:waterfall_flow/waterfall_flow.dart';
 
 import '../../utils/text_utils.dart';
 import 'classify/classify_country_page.dart';
+import 'items/item_brand_detail_grid.dart';
 
 class HomeItem {
   String title;
   String imagePath;
+
   HomeItem(this.title, this.imagePath);
 }
 
 class HomeAcitvityItem {
   String logoUrl;
   String website;
+
   HomeAcitvityItem(this.logoUrl, this.website);
 }
 
 class HomePage extends StatefulWidget {
   final TabController tabController;
 
-  const  HomePage({Key key, this.tabController}) : super(key: key);
+  const HomePage({Key key, this.tabController}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _HomePageState();
@@ -110,7 +119,8 @@ class _HomePageState extends BaseStoreState<HomePage>
   TabController _tabController;
   int _tabIndex = 0;
 
-  List<KingCoin> kingCoinListModelList;
+  List<KingCoinListModel> kingCoinListModelList;
+
 //控制额外功能显示（后端控制）
 //false iOS隐藏
 //true 全部显示
@@ -121,12 +131,14 @@ class _HomePageState extends BaseStoreState<HomePage>
   Map _activityMap;
   GSRefreshController _gsRefreshController;
   ScrollController _sliverListController;
+
   // 天气数据
   HomeWeatherModel _homeWeatherModel;
   WeatherCityModel _weatherCityModel;
 
 //定位
-  AMapFlutterLocation _amapFlutterLocation ;
+  AMapFlutterLocation _amapFlutterLocation;
+
   //高度
   double screenWidth = 0;
   double weatherHeight = 0;
@@ -142,9 +154,12 @@ class _HomePageState extends BaseStoreState<HomePage>
   StateSetter _bannerState;
   GlobalKey<AnimatedHomeBackgroundState> _animatedBackgroundState = GlobalKey();
   GlobalKey<HomeSliverAppBarState> _sliverAppBarGlobalKey = GlobalKey();
+
   String keyWords = '锅';
 
   GifController _gifController;
+  StateSetter _wholesaleState;
+
   @override
   bool needStore() {
     return true;
@@ -158,69 +173,21 @@ class _HomePageState extends BaseStoreState<HomePage>
     return getStore().state.themeData.appBarTheme.iconTheme.color;
   }
 
-
   ///监听剪切板
 
   @override
   void initState() {
     super.initState();
+
     RUICodeListener(context).clipboardListener();
-
-
     _updateSource();
-    _getWeather();//部分机型获取地址较慢 所以放在外面先获取
-    // timer = Timer(const Duration(milliseconds: 0), () {
-    //   try {
-    //     if (HiveStore.appBox.get('locationPermission') == null&&!Platform.isIOS) {
-    //       Alert.show(
-    //         context,
-    //         NormalContentDialog(
-    //           title: '需要获取以下权限',
-    //           content:
-    //           Row(
-    //             mainAxisAlignment: MainAxisAlignment.start,
-    //             children: [
-    //               Image.asset(R.ASSETS_LOCATION_PER_PNG,width: 44.rw,height: 44.rw,),
-    //               Column(
-    //                 crossAxisAlignment: CrossAxisAlignment.start,
-    //                 children: [
-    //                   Text('定位权限',style: TextStyle(color: Color(0xFF333333),fontSize: 16.rsp,fontWeight: FontWeight.bold),),
-    //                   Container(width:200.rw,child: Text('允许访问您的大概位置来查询城市天气',style: TextStyle(color: Color(0xFF666666),fontSize: 14.rsp),)),
-    //                 ],
-    //               )
-    //             ],
-    //           ),
-    //           items: ["残忍拒绝"],
-    //           listener: (index) {
-    //             HiveStore.appBox.put('locationPermission', false);
-    //             Alert.dismiss(context);
-    //           },
-    //           deleteItem: "立即授权",
-    //           deleteListener: () {
-    //             HiveStore.appBox.put('locationPermission', true);
-    //             Alert.dismiss(context);
-    //             requestPermission(false).then((value) {
-    //               if (value) {
-    //                 //监听要在设置参数之前 否则无法获取定位
-    //                 initLocation();
-    //               } else {
-    //                 //Toast.showInfo('21312312321');
-    //               }
-    //             });
-    //           },
-    //           type: NormalTextDialogType.delete,
-    //         ),
-    //       );
-    //     }
-    //   } catch (e) {}
-    // });
-
+    _getWeather();
     Future.delayed(Duration.zero, () async {
       bool location = await Permission.location.isGranted;
-      if(Platform.isIOS){
+      if (Platform.isIOS) {
         initLocation();
       }
-      if(location==true){
+      if (location == true) {
         initLocation();
       }
     });
@@ -236,10 +203,6 @@ class _HomePageState extends BaseStoreState<HomePage>
 
     _amapFlutterLocation = AMapFlutterLocation();
 
-
-
-    // // 分享注册
-    // _mobShareInit();
     // 判断微信是否登录
     WeChatUtils.initial();
     // meiqia注册
@@ -280,66 +243,133 @@ class _HomePageState extends BaseStoreState<HomePage>
       // _handleOpenInstallEvents();
     });
     WidgetsBinding.instance.addObserver(this);
-    // 抽奖功能
-    // _userLottery();
-    // _getNoticeList();
-    // _userCardNoticeList();
+  }
 
+  _change() {
+    return GestureDetector(
+      onTap: () {
+        UserManager.instance.isWholesale = !UserManager.instance.isWholesale;
+        _gsRefreshController.requestRefresh();
+        UserManager.instance.refreshHomeBottomTabbar.value =
+            !UserManager.instance.refreshHomeBottomTabbar.value;
+        setState(() {});
+      },
+      child: Column(
+        children: [
+          15.hb,
+          Container(
+            height: 27.rw,
+            width: 82.rw,
+            alignment: Alignment.center,
+            child: Stack(
+              children: [
+                AnimatedPositioned(
+                    left: !UserManager.instance.isWholesale ? 0.rw : 40.rw,
+                    //right: !isWholesale? 0.rw:null,
+                    curve: Curves.easeIn,
+                    child: Container(
+                      height: 25.rw,
+                      width: 40.rw,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16.rw),
+                        //border: Border.all(color: Colors.white,width: 1.rw),
+                      ),
+                    ),
+                    duration: Duration(milliseconds: 200)),
+                Container(
+                  height: 25.rw,
+                  width: 80.rw,
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                    borderRadius: BorderRadius.circular(16.rw),
+                    border: Border.all(color: Colors.white, width: 1.rw),
+                  ),
+                  child: Stack(
+                    children: [
+                      StatefulBuilder(builder:
+                          (BuildContext context, StateSetter setState) {
+                        _wholesaleState = setState;
+                        return Row(
+                          children: [
+                            10.wb,
+                            Text(
+                              '零售',
+                              style: TextStyle(
+                                  color: UserManager.instance.isWholesale
+                                      ? Colors.white
+                                      : _backgroundColor,
+                                  fontSize: 14.rsp),
+                            ),
+                            Spacer(),
+                            Text(
+                              '批发',
+                              style: TextStyle(
+                                  color: !UserManager.instance.isWholesale
+                                      ? Colors.white
+                                      : _backgroundColor,
+                                  fontSize: 14.rsp),
+                            ),
+                            10.wb,
+                          ],
+                        );
+                      }),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Spacer(),
+        ],
+      ),
+    );
   }
 
   // 获取当前页面需要刷新的数据
   _updateSource() {
-
     if (UserManager.instance.haveLogin) {
-      Future.delayed(Duration.zero,() async{
+      Future.delayed(Duration.zero, () async {
+        UserManager.instance.getSeven = await WholesaleFunc.get7();
 
-        UserManager.instance.getSeven = await  WholesaleFunc.get7();
-
-        if(HiveStore.appBox.get('showSeven${UserManager.instance.user.info.id}') != null){
-
-          if(!HiveStore.appBox.get('showSeven${UserManager.instance.user.info.id}')){
-            if(!UserManager.instance.getSeven){
+        if (HiveStore.appBox
+                .get('showSeven${UserManager.instance.user.info.id}') !=
+            null) {
+          if (!HiveStore.appBox
+              .get('showSeven${UserManager.instance.user.info.id}')) {
+            if (!UserManager.instance.getSeven) {
               showDialog(
                 context: context,
-                builder: (context) => SevenCardDialog(
-
-                ),
+                builder: (context) => SevenCardDialog(),
               );
             }
           }
-
-        }else{
-
-          if(!UserManager.instance.getSeven){
+        } else {
+          if (!UserManager.instance.getSeven) {
             showDialog(
               context: context,
-              builder: (context) => SevenCardDialog(
-
-              ),
+              builder: (context) => SevenCardDialog(),
             );
           }
         }
-
       });
     }
-
 
     _getActiviteList();
     _getBannerList();
     _getPromotionList();
     _getKeyWords();
     Future.delayed(Duration.zero, () async {
-      kingCoinListModelList =
-      await UserFunc.getKingCoinList();
+      kingCoinListModelList = await UserFunc.getKingCoinList();
       // setState(() {
       //
       // });
     });
   }
 
-  initLocation(){
+  initLocation() {
     _amapFlutterLocation.onLocationChanged().listen(
-          (event) {
+      (event) {
         _weatherLocation = event;
         LoggerData.addData(_weatherLocation['city']);
         _getWeather();
@@ -445,132 +475,46 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   _actionsWidget() {
-    GestureDetector scanCon = GestureDetector(
-
-        onTap: () async {
-          if (Platform.isIOS) {
-            AppRouter.push(context, RouteName.BARCODE_SCAN);
-            //Get.to(QRViewExample());
-            return;
-          }
-          bool permission = await Permission.camera.isGranted;
-          if(!permission){
-              Alert.show(
-                context,
-                NormalContentDialog(
-                  title: '需要获取相机使用权限',
-                  content:
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      //Image.asset(R.ASSETS_LOCATION_PER_PNG,width: 44.rw,height: 44.rw,),
-                      Text('允许应用使用相机来扫码识别商品', style: TextStyle(
-                          color: Color(0xFF666666), fontSize: 14.rsp),),
-                    ],
-                  ),
-                  items: ["残忍拒绝"],
-                  listener: (index) {
-                    Alert.dismiss(context);
-
-                  },
-                  deleteItem: "立即授权",
-                  deleteListener: () async {
-                    Alert.dismiss(context);
-
-                     bool  canUseCamera = await PermissionTool.haveCameraPermission();
-                    if (!canUseCamera) {
-                      PermissionTool.showOpenPermissionDialog(
-                          context, "没有相机使用权限,授予相机使用权限后才能进行扫码");
-                      return;
-                    } else {
-                      AppRouter.push(context, RouteName.BARCODE_SCAN);
-                      //Get.to(QRViewExample());
-                    }
-                  },
-                  type: NormalTextDialogType.delete,
-                ),
-              );
-
-          }else{
-            AppRouter.push(context, RouteName.BARCODE_SCAN);
-          }
-
-
-
-
-
-          // bool canUsePhoto = await PermissionTool.havePhotoPermission();
-          // bool canNotification =
-          //     await PermissionTool.haveNotificationPermission();
-          // if (!canNotification) {
-          //   PermissionTool.showOpenPermissionDialog(context, "相机访问权限,允许应用使用相机来扫码识别商品");
-          // }
-
-          // else if (!canUsePhoto) {
-          //   PermissionTool.showOpenPermissionDialog(context, "没有照片权限,请先授予照片权限");
-          //   return;
-          // }
-
-        },
-        child: Container(
-          color: Colors.black.withAlpha(1),
-          height: kToolbarHeight,
-          child: Column(
-            children: <Widget>[
-              Container(
-                width: 40,
-                height: 40,
-                alignment: Alignment.center,
-                child: Image.asset(
-                  "assets/navigation_scan.png",
-                  fit: BoxFit.cover,
-                  width: 20,
-                  height: 20,
-                ),
-              ),
-              Spacer(),
-            ],
-          ),
-        ));
     return <Widget>[
-      Container(
-        height: kToolbarHeight,
-        child: Column(
-          children: <Widget>[
-            CustomImageButton(
-              buttonSize: 40,
-              padding: EdgeInsets.all(0),
-              icon: ImageIcon(AssetImage("assets/navigation_msg.png")),
-              color: getCurrentAppItemColor(),
-              onPressed: () async {
-                if (UserManager.instance.haveLogin) {
-                  // MQManager.goToChat(
-                  //     userId: UserManager.instance.user.info.id.toString(),
-                  //     userInfo: <String, String>{
-                  //       "name": UserManager.instance.user.info.nickname ?? "",
-                  //       "gender": UserManager.instance.user.info.gender == 1
-                  //           ? "男"
-                  //           : "女",
-                  //       "mobile": UserManager.instance.user.info.mobile ?? ""
-                  //     });
-
-                  //跳转到客服页面
-                  WholesaleCustomerModel model = await
-                  WholesaleFunc.getCustomerInfo();
-
-                  Get.to(()=>WholesaleCustomerPage(model: model,));
-                } else {
-                  AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
-                  // showError("请先登录!");
-                  Toast.showError("请先登录");
-                }
-              },
-            ),
-            Spacer(),
-          ],
-        ),
-      ),
-      scanCon,
+      _change(),
+      // Container(
+      //   height: kToolbarHeight,
+      //   child: Column(
+      //     children: <Widget>[
+      //       CustomImageButton(
+      //         buttonSize: 40,
+      //         padding: EdgeInsets.all(0),
+      //         icon: ImageIcon(AssetImage("assets/navigation_msg.png")),
+      //         color: getCurrentAppItemColor(),
+      //         onPressed: () async {
+      //           if (UserManager.instance.haveLogin) {
+      //             // MQManager.goToChat(
+      //             //     userId: UserManager.instance.user.info.id.toString(),
+      //             //     userInfo: <String, String>{
+      //             //       "name": UserManager.instance.user.info.nickname ?? "",
+      //             //       "gender": UserManager.instance.user.info.gender == 1
+      //             //           ? "男"
+      //             //           : "女",
+      //             //       "mobile": UserManager.instance.user.info.mobile ?? ""
+      //             //     });
+      //
+      //             //跳转到客服页面
+      //             WholesaleCustomerModel model = await
+      //             WholesaleFunc.getCustomerInfo();
+      //
+      //             Get.to(()=>WholesaleCustomerPage(model: model,));
+      //           } else {
+      //             AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+      //             // showError("请先登录!");
+      //             Toast.showError("请先登录");
+      //           }
+      //         },
+      //       ),
+      //       Spacer(),
+      //     ],
+      //   ),
+      // ),
+      // scanCon,
       Container(
         width: 10,
       ),
@@ -579,6 +523,67 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   Widget _buildTitle() {
     double iconSize = 18;
+    GestureDetector scanCon = GestureDetector(
+      onTap: () async {
+        if (Platform.isIOS) {
+          AppRouter.push(context, RouteName.BARCODE_SCAN);
+          //Get.to(QRViewExample());
+          return;
+        }
+        bool permission = await Permission.camera.isGranted;
+        if (!permission) {
+          Alert.show(
+            context,
+            NormalContentDialog(
+              title: '需要获取相机使用权限',
+              content: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //Image.asset(R.ASSETS_LOCATION_PER_PNG,width: 44.rw,height: 44.rw,),
+                  Text(
+                    '允许应用使用相机来扫码识别商品',
+                    style:
+                        TextStyle(color: Color(0xFF666666), fontSize: 14.rsp),
+                  ),
+                ],
+              ),
+              items: ["残忍拒绝"],
+              listener: (index) {
+                Alert.dismiss(context);
+              },
+              deleteItem: "立即授权",
+              deleteListener: () async {
+                Alert.dismiss(context);
+
+                bool canUseCamera = await PermissionTool.haveCameraPermission();
+                if (!canUseCamera) {
+                  PermissionTool.showOpenPermissionDialog(
+                      context, "没有相机使用权限,授予相机使用权限后才能进行扫码");
+                  return;
+                } else {
+                  AppRouter.push(context, RouteName.BARCODE_SCAN);
+                  //Get.to(QRViewExample());
+                }
+              },
+              type: NormalTextDialogType.delete,
+            ),
+          );
+        } else {
+          AppRouter.push(context, RouteName.BARCODE_SCAN);
+        }
+      },
+      child: Container(
+        width: 25.rw,
+        height: 25.rw,
+        alignment: Alignment.center,
+        child: Image.asset(
+          "assets/navigation_scan.png",
+          fit: BoxFit.cover,
+          width: 17.rw,
+          height: 17.rw,
+        ),
+      ),
+    );
     GestureDetector ges = GestureDetector(
       child: Container(
         margin: EdgeInsets.only(top: 5, bottom: 5),
@@ -608,12 +613,17 @@ class _HomePageState extends BaseStoreState<HomePage>
                   color: Colors.white.withOpacity(0.9),
                   fontSize: 13 * 2.sp,
                   fontWeight: FontWeight.w300),
-            )
+            ),
+            Spacer(),
+            scanCon,
+            22.wb,
           ],
         ),
       ),
       onTap: () {
-        Get.to(SearchPage(keyWords: keyWords,));
+        Get.to(SearchPage(
+          keyWords: keyWords,
+        ));
         //AppRouter.push(context, RouteName.SEARCH);
       },
     );
@@ -632,28 +642,42 @@ class _HomePageState extends BaseStoreState<HomePage>
                 : _homeWeatherModel.city
             : "";
     Widget leftContainer = GestureDetector(
-      onTap: ()  async {
-        if (Platform.isIOS)
-        {
+      onTap: () async {
+        if (Platform.isIOS) {
           print(_weatherLocation);
-        }else{
+        } else {
           bool permission = await Permission.location.isGranted;
-          if(!permission){
+          if (!permission) {
             Alert.show(
               context,
               NormalContentDialog(
                 title: '需要获取以下权限',
-                content:
-                Row(
+                content: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Image.asset(R.ASSETS_LOCATION_PER_PNG,width: 35.rw,height: 35.rw,),
+                    Image.asset(
+                      R.ASSETS_LOCATION_PER_PNG,
+                      width: 35.rw,
+                      height: 35.rw,
+                    ),
                     4.wb,
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('定位权限',style: TextStyle(color: Color(0xFF333333),fontSize: 15.rsp,fontWeight: FontWeight.bold),),
-                        Container(width:200.rw, child: Text('允许访问您的大概位置来查询城市天气',style: TextStyle(color: Color(0xFF666666),fontSize: 13.rsp),)),
+                        Text(
+                          '定位权限',
+                          style: TextStyle(
+                              color: Color(0xFF333333),
+                              fontSize: 15.rsp,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Container(
+                            width: 200.rw,
+                            child: Text(
+                              '允许访问您的大概位置来查询城市天气',
+                              style: TextStyle(
+                                  color: Color(0xFF666666), fontSize: 13.rsp),
+                            )),
                       ],
                     )
                   ],
@@ -664,21 +688,20 @@ class _HomePageState extends BaseStoreState<HomePage>
                   HiveStore.appBox.put('locationPermission', false);
                 },
                 deleteItem: "立即授权",
-                deleteListener: ()  async {
+                deleteListener: () async {
                   Alert.dismiss(context);
 
                   HiveStore.appBox.put('locationPermission', true);
-                  var value =  await requestPermission(true);
+                  var value = await requestPermission(true);
                   if (value) {
                     initLocation();
                   }
-
                 },
                 type: NormalTextDialogType.delete,
               ),
             );
-          }else{
-            var value =  await requestPermission(true);
+          } else {
+            var value = await requestPermission(true);
             if (value) {
               //监听要在设置参数之前 否则无法获取定位
               _amapFlutterLocation
@@ -688,8 +711,8 @@ class _HomePageState extends BaseStoreState<HomePage>
           }
         }
 
-        String locationCityName =
-        _weatherLocation != null && !TextUtils.isEmpty(_weatherLocation['city'])
+        String locationCityName = _weatherLocation != null &&
+                !TextUtils.isEmpty(_weatherLocation['city'])
             ? _weatherLocation['city']
             : "";
         try {
@@ -698,7 +721,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         } catch (e) {}
         if (locationCityName != '') {
           AppRouter.push(context, RouteName.WEATHER_CITY_PAGE,
-              arguments: WeatherCityPage.setArguments(locationCityName))
+                  arguments: WeatherCityPage.setArguments(locationCityName))
               .then((model) {
             if (model is WeatherCityModel) {
               _weatherCityModel = model;
@@ -711,11 +734,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         color: Colors.transparent,
         child: Row(
           children: <Widget>[
-            Icon(
-              Icons.place,
-              color: Colors.white,
-              size: 16.rw
-            ),
+            Icon(Icons.place, color: Colors.white, size: 16.rw),
             Container(
               width: 2,
             ),
@@ -789,7 +808,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     t4Height +
                     rSize(62) +
                     timeHeight +
-                     tabbarHeight -
+                    tabbarHeight -
                     ScreenUtil().statusBarHeight +
                     4,
             flexibleSpace: _flexibleSpaceBar(context),
@@ -819,8 +838,13 @@ class _HomePageState extends BaseStoreState<HomePage>
                       ),
                     ),
                   )),
-        SliverList(
+        UserManager.instance.isWholesale?SliverToBoxAdapter(
+          child: Container(
+            height: 0.rw,
+          ),
+        ): SliverList(
           delegate: SliverChildListDelegate(
+
             List.generate(
                 _promotionList == null || _promotionList.length == 0
                     ? 0
@@ -843,7 +867,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                 return Container(
                   padding: EdgeInsets.only(bottom: 5),
                   color: AppColor.frenchColor,
-                  child: GoodsItemWidget.rowGoods(
+                    child: GoodsItemWidget.rowGoods(
                     gifController: _gifController,
                     buildCtx: context,
                     isSingleDayGoods: false,
@@ -880,14 +904,115 @@ class _HomePageState extends BaseStoreState<HomePage>
                 return Container();
               }
             }),
+
+
           ),
         ),
+        SliverList(
+          delegate: SliverChildListDelegate(
+            List.generate(
+                _promotionList == null || _promotionList.length == 0
+                    ? 0
+                    : _promotionGoodsList.length, (index) {
+              if (_promotionGoodsList[index] is PromotionActivityModel) {
+                PromotionActivityModel activityModel =
+                    _promotionGoodsList[index];
+                return RowActivityItem(
+                  model: activityModel,
+                  click: () {
+                    AppRouter.push(
+                      context,
+                      RouteName.WEB_VIEW_PAGE,
+                      arguments: WebViewPage.setArguments(
+                          url: activityModel.activityUrl,
+                          title: "活动",
+                          hideBar: true),
+                    );
+                  },
+                );
+              } else {
+                return Container();
+              }
+            }),
+          ),
+        ),
+
+         _promotionList.isEmpty||!UserManager.instance.isWholesale
+    ? SliverToBoxAdapter(
+                child: Container(
+                  height: 0.rw,
+                ),
+              )
+            : SliverWaterfallFlow(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    if (_promotionGoodsList[index] is PromotionGoodsModel) {
+                      PromotionGoodsModel model = _promotionGoodsList[index];
+                      return MaterialButton(
+                          padding: EdgeInsets.zero,
+                          onPressed: () {
+                            Get.to(()=>WholesaleDetailPage(goodsId:model.goodsId,));
+
+                          },
+                          child: WholesaleGoodsGrid(
+                              goods: WholesaleGood(
+                            id: model.goodsId,
+                            goodsName: model.goodsName,
+                            mainPhotoUrl: model.picture.url,
+                            description: model.description,
+                            discountPrice: model.primePrice,
+                            salePrice: model.price,
+                            salesVolume: model.totalSalesVolume,
+                          )));
+                    } else if (index == _promotionGoodsList.length-1) {
+                      return Container(
+                        color: AppColor.frenchColor,
+                        alignment: Alignment.center,
+                        height: 60,
+                        child: Text(
+                          '已经到底啦~',
+                          style: TextStyle(
+                              color: Colors.black.withOpacity(0.4),
+                              fontSize: 13 * 2.sp),
+                        ),
+                      );
+                    } else {
+                      return SizedBox();
+                    }
+                  },
+                  childCount: _promotionGoodsList.length ,
+                ),
+                gridDelegate:
+                    SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ),
+                // ItemTagWidget.getSliverGridDelegate(_displayList, context),
+              ),
+
+        UserManager.instance.isWholesale?    SliverToBoxAdapter(
+          child: Container(
+            color: AppColor.frenchColor,
+            alignment: Alignment.center,
+            height: 60,
+            child: Text(
+              '已经到底啦~',
+              style: TextStyle(
+                  color: Colors.black.withOpacity(0.4),
+                  fontSize: 13 * 2.sp),
+            ),
+          )
+        ):SliverToBoxAdapter(
+          child: Container(
+            height: 0.rw,
+          ),
+        )
       ],
     );
   }
 
   FlexibleSpaceBar _flexibleSpaceBar(context) {
-
     return FlexibleSpaceBar(
       collapseMode: CollapseMode.pin,
       background: Container(
@@ -915,8 +1040,15 @@ class _HomePageState extends BaseStoreState<HomePage>
                       ? _buttonTitle(context)
                       : SizedBox(),
                   _activityImageTitle(),
-                  _activityImageRow(),
-                  _activityT4Image(),
+                  UserManager.instance.isWholesale
+                      ? _activityImage234()
+                      : SizedBox(),
+                  UserManager.instance.isWholesale
+                      ? SizedBox()
+                      : _activityImageRow(),
+                  UserManager.instance.isWholesale
+                      ? SizedBox()
+                      : _activityT4Image(),
                   HomeCountdownWidget(
                     height: timeHeight,
                     controller: _homeCountdownController,
@@ -937,6 +1069,8 @@ class _HomePageState extends BaseStoreState<HomePage>
       if (!TextUtils.isEmpty(bannerModel.color)) {
         Color color = ColorsUtil.hexToColor(bannerModel.color);
         _backgroundColor = color;
+
+        _wholesaleState(() {});
         _animatedBackgroundState.currentState.changeColor(color);
         _sliverAppBarGlobalKey.currentState.updateColor(color);
       }
@@ -951,13 +1085,15 @@ class _HomePageState extends BaseStoreState<HomePage>
       }
       BannerListView bannerListView = BannerListView<BannerModel>(
         onPageChanged: (index) {
-          int realIndex = index ;
+          int realIndex = index;
           if (realIndex < 0) return;
           if (realIndex >= _bannerList.length) realIndex = 0;
           BannerModel bannerModel = _bannerList[realIndex];
           if (!TextUtils.isEmpty(bannerModel.color)) {
             Color color = ColorsUtil.hexToColor(bannerModel.color);
             _backgroundColor = color;
+
+            _wholesaleState(() {});
             _animatedBackgroundState.currentState.changeColor(color);
             _sliverAppBarGlobalKey.currentState.updateColor(color);
           }
@@ -980,9 +1116,16 @@ class _HomePageState extends BaseStoreState<HomePage>
                       hideBar: true),
                 );
               } else {
-                AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                    arguments: CommodityDetailPage.setArguments(
-                        (bannerModel as BannerModel).goodsId));
+                if(UserManager.instance.isWholesale){
+                  Get.to(()=>WholesaleDetailPage(goodsId: (bannerModel as BannerModel).goodsId,));
+                }
+
+                else{
+                  AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                      arguments: CommodityDetailPage.setArguments(
+                          (bannerModel as BannerModel).goodsId));
+                }
+
               }
             },
             child: ExtendedImage.network(Api.getImgUrl(bannerModel.url),
@@ -1188,15 +1331,155 @@ class _HomePageState extends BaseStoreState<HomePage>
     );
   }
 
+  _activityImage234() {
+    HomeAcitvityItem itemB, itemC, itemD;
+    if (_activityMap != null && _activityMap.containsKey('b')) {
+      itemB = _activityMap['b'];
+    }
+    if (_activityMap != null && _activityMap.containsKey('c')) {
+      itemC = _activityMap['c'];
+    }
+    if (_activityMap != null && _activityMap.containsKey('d')) {
+      itemD = _activityMap['d'];
+    }
+    return Container(
+      color: AppColor.frenchColor,
+      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      height: t23Height + t4Height,
+      width: screenWidth,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      if (itemB != null && !TextUtils.isEmpty(itemB.website)) {
+                        AppRouter.push(
+                          context,
+                          RouteName.WEB_VIEW_PAGE,
+                          arguments: WebViewPage.setArguments(
+                              url: itemB.website, title: "活动", hideBar: true),
+                        );
+                      }
+                    },
+                    child: Container(
+                      child: ClipRRect(
+                        child: _activityMap != null &&
+                                _activityMap.containsKey('b')
+                            ? ExtendedImage.network(
+                                Api.getImgUrl(itemB.logoUrl),
+                                fit: BoxFit.fill,
+                                enableLoadState: true)
+                            // CustomCacheImage(imageUrl: Api.getImgUrl(itemB.logoUrl),fit: BoxFit.fill,)
+                            : Container(),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          topRight: Radius.circular(5),
+                          bottomLeft: Radius.circular(5),
+                          bottomRight: Radius.circular(5),
+                        ),
+                      ),
+                      height: t23Height + t4Height,
+                      // width: MediaQuery.of(context).size.width,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          8.wb,
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      if (itemB != null && !TextUtils.isEmpty(itemB.website)) {
+                        AppRouter.push(
+                          context,
+                          RouteName.WEB_VIEW_PAGE,
+                          arguments: WebViewPage.setArguments(
+                              url: itemB.website, title: "活动", hideBar: true),
+                        );
+                      }
+                    },
+                    child: Container(
+                      child: ClipRRect(
+                        child: _activityMap != null &&
+                                _activityMap.containsKey('c')
+                            ? ExtendedImage.network(
+                                Api.getImgUrl(itemB.logoUrl),
+                                fit: BoxFit.fill,
+                                enableLoadState: true)
+                            // CustomCacheImage(imageUrl: Api.getImgUrl(itemB.logoUrl),fit: BoxFit.fill,)
+                            : Container(),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          topRight: Radius.circular(5),
+                          bottomLeft: Radius.circular(5),
+                          bottomRight: Radius.circular(5),
+                        ),
+                      ),
+                      height: t23Height,
+                      // width: MediaQuery.of(context).size.width,
+                    ),
+                  ),
+                ),
+                8.hb,
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      if (itemC != null && !TextUtils.isEmpty(itemC.website)) {
+                        AppRouter.push(
+                          context,
+                          RouteName.WEB_VIEW_PAGE,
+                          arguments: WebViewPage.setArguments(
+                              url: itemC.website, title: "活动", hideBar: true),
+                        );
+                      }
+                    },
+                    child: Container(
+                      child: ClipRRect(
+                        child: _activityMap != null &&
+                                _activityMap.containsKey('d')
+                            ? ExtendedImage.network(
+                                Api.getImgUrl(itemC.logoUrl),
+                                fit: BoxFit.fill,
+                                enableLoadState: true)
+                            // CustomCacheImage(imageUrl: Api.getImgUrl(itemC.logoUrl),fit: BoxFit.fill,)
+                            : Container(),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(5),
+                          topRight: Radius.circular(5),
+                          bottomLeft: Radius.circular(5),
+                          bottomRight: Radius.circular(5),
+                        ),
+                      ),
+                      height: t23Height,
+                      // width: MediaQuery.of(context).size.width,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   _buttonTitle(context) {
     Container titles = Container(
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
       ),
-      child:
-
-      Column(
+      child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -1206,184 +1489,25 @@ class _HomePageState extends BaseStoreState<HomePage>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     _buttonTitleRow(
-                       kingCoinListModelList[0],
-
-                        "京东优选",
-                        onPressed: () async {
-
-                            _kingCoinGet("京东优选");
-
-                        }
-                      ),
-                    _buttonTitleRow(
-                       kingCoinListModelList[1],
-                         "硬核补贴",
-                        onPressed: () async {
-
-                            _kingCoinGet("硬核补贴");
-
-                        }
+                      kingCoinListModelList[0],
                     ),
                     _buttonTitleRow(
-                        kingCoinListModelList[2],
-                        "特惠专区",
-                        onPressed: () async {
-
-                            _kingCoinGet("特惠专区");
-
-                        }
+                      kingCoinListModelList[1],
                     ),
                     _buttonTitleRow(
-
-                             kingCoinListModelList[3],
-                         "热销榜单",
-                        onPressed: () async {
-
-                            _kingCoinGet("热销榜单");
-
-                        }
+                      kingCoinListModelList[2],
                     ),
-                    //
-                    // Expanded(
-                    //   child: CupertinoButton(
-                    //     padding: EdgeInsets.zero,
-                    //     child: Column(
-                    //       children: <Widget>[
-                    //         Container(
-                    //           height: 10,
-                    //         ),
-                    //         Container(
-                    //             margin: EdgeInsets.only(top: 5),
-                    //             width: 48,
-                    //             height: 48,
-                    //             child:Image.asset(R.ASSETS_WHOLESALE_WHOLESALE_KING_ICON_PNG)
-                    //         ),
-                    //         Container(
-                    //           margin: EdgeInsets.only(top: 8),
-                    //           child: Text(
-                    //             '批发商城',
-                    //             style: TextStyle(
-                    //                 fontWeight: FontWeight.w400,
-                    //                 fontSize: 12 * 2.sp,
-                    //                 color: Colors.black.withOpacity(0.8)),
-                    //           ),
-                    //         )
-                    //       ],
-                    //     ),
-                    //     onPressed: () {
-                    //       Get.to(() => WholesaleHomePage());
-                    //
-                    //     },
-                    //   ),
-                    // ),
-                    //     :
-                    //
-                    //
                     _buttonTitleRow(
-                        kingCoinListModelList[4],
-                        "批发商城",
-                        onPressed: () async {
-
-                            _kingCoinGet("批发商城");
-
-                        }
+                      kingCoinListModelList[3],
                     ),
-
-
+                    _buttonTitleRow(
+                      kingCoinListModelList[4],
+                    ),
                   ],
                 ),
               ),
             ],
           ),
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.center,
-          //   children: <Widget>[
-          //     Expanded(
-          //       child: Row(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: <Widget>[
-          //           _buttonTitleRow(
-          //               !AppConfig.commissionByRoleLevel
-          //                   ? kingCoinListModelList[5].data[0]
-          //                   : kingCoinListModelList[5].data[1],
-          //               // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
-          //               onPressed: () async {
-          //                 if (!AppConfig.commissionByRoleLevel) {
-          //                   _kingCoinGet(kingCoinListModelList[5].data[0]
-          //                       .kingName.name);
-          //                 } else {
-          //                   _kingCoinGet(kingCoinListModelList[5].data[1]
-          //                       .kingName.name);
-          //                 }
-          //               }
-          //           ),
-          //           _buttonTitleRow(
-          //               !AppConfig.commissionByRoleLevel
-          //                   ? kingCoinListModelList[6].data[0]
-          //                   : kingCoinListModelList[6].data[1],
-          //               // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
-          //               onPressed: () async {
-          //                 if (!AppConfig.commissionByRoleLevel) {
-          //                   _kingCoinGet(kingCoinListModelList[6].data[0]
-          //                       .kingName.name);
-          //                 } else {
-          //                   _kingCoinGet(kingCoinListModelList[6].data[1]
-          //                       .kingName.name);
-          //                 }
-          //               }
-          //           ),
-          //           _buttonTitleRow(
-          //               !AppConfig.commissionByRoleLevel
-          //                   ? kingCoinListModelList[7].data[0]
-          //                   : kingCoinListModelList[7].data[1],
-          //               // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
-          //               onPressed: () async {
-          //                 if (!AppConfig.commissionByRoleLevel) {
-          //                   _kingCoinGet(kingCoinListModelList[7].data[0]
-          //                       .kingName.name);
-          //                 } else {
-          //                   _kingCoinGet(kingCoinListModelList[7].data[1]
-          //                       .kingName.name);
-          //                 }
-          //               }
-          //           ),
-          //           _buttonTitleRow(
-          //               !AppConfig.commissionByRoleLevel
-          //                   ? kingCoinListModelList[8].data[0]
-          //                   : kingCoinListModelList[8].data[1],
-          //               // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
-          //               onPressed: () async {
-          //                 if (!AppConfig.commissionByRoleLevel) {
-          //                   _kingCoinGet(kingCoinListModelList[8].data[0]
-          //                       .kingName.name);
-          //                 } else {
-          //                   _kingCoinGet(kingCoinListModelList[8].data[1]
-          //                       .kingName.name);
-          //                 }
-          //               }
-          //           ),
-          //           _buttonTitleRow(
-          //               !AppConfig.commissionByRoleLevel
-          //                   ? kingCoinListModelList[9].data[0]
-          //                   : kingCoinListModelList[9].data[1],
-          //               // AppConfig.commissionByRoleLevel ? "京东优选" : "京东优选",
-          //               onPressed: () async {
-          //                 if (!AppConfig.commissionByRoleLevel) {
-          //                   _kingCoinGet(kingCoinListModelList[9].data[0]
-          //                       .kingName.name);
-          //                 } else {
-          //                   _kingCoinGet(kingCoinListModelList[9].data[1]
-          //                       .kingName.name);
-          //                 }
-          //               }
-          //           ),
-          //
-          //
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),
         ],
       ),
     );
@@ -1396,7 +1520,9 @@ class _HomePageState extends BaseStoreState<HomePage>
     );
   }
 
-  _buttonTitleRow(KingCoin kingCoin,String name ,{onPressed}) {
+  _buttonTitleRow(
+    KingCoinListModel kingCoin,
+  ) {
     return Expanded(
       child: CupertinoButton(
         padding: EdgeInsets.zero,
@@ -1406,18 +1532,17 @@ class _HomePageState extends BaseStoreState<HomePage>
               height: 10,
             ),
             Container(
-              margin: EdgeInsets.only(top: 5),
-              width: 48,
-              height: 48,
-              child:
-                  FadeInImage.assetNetwork(
-                      placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                      image: Api.getImgUrl(kingCoin.url),)
-            ),
+                margin: EdgeInsets.only(top: 5),
+                width: 48,
+                height: 48,
+                child: FadeInImage.assetNetwork(
+                  placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                  image: Api.getImgUrl(kingCoin.data.first.url),
+                )),
             Container(
               margin: EdgeInsets.only(top: 8),
               child: Text(
-                name,
+                kingCoin.data.first.name,
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 12 * 2.sp,
@@ -1427,25 +1552,23 @@ class _HomePageState extends BaseStoreState<HomePage>
           ],
         ),
         onPressed: () {
-          if (onPressed != null) {
-            onPressed();
-          }
+          _kingCoinGet(kingCoin.data.first.kingName.name);
         },
       ),
     );
   }
 
   _kingCoinGet(String name) async {
-    switch(name){
+    switch (name) {
       case '京东优选':
         List<FirstCategory> firstCategoryList = [];
         firstCategoryList = await HomeDao.getJDCategoryList();
-        if(firstCategoryList!=null){
+        if (firstCategoryList != null) {
           Get.to(() => ClassifyPage(
-            jdType: 1,
-            data: firstCategoryList,
-            initValue: '全部',
-          ));
+                jdType: 1,
+                data: firstCategoryList,
+                initValue: '全部',
+              ));
         }
         break;
       case '一键邀请':
@@ -1465,16 +1588,18 @@ class _HomePageState extends BaseStoreState<HomePage>
         Get.to(ClassifyCountryPage(data: countryListModelList));
         break;
       case '特惠专区':
-        Get.to(()=>GoodsPreferentialListPage());
+        Get.to(() => GoodsPreferentialListPage());
         break;
       case '硬核补贴':
         if (!UserManager.instance.haveLogin) {
-          ReToast.err(text:'请先登录');
+          ReToast.err(text: '请先登录');
           AppRouter.push(context, RouteName.LOGIN);
           return;
         }
-        //Get.to(()=>VipShopCardPage());
-        Get.to(()=>GoodsHighCommissionListPage());
+        Get.to(() => VipShopCardPage(
+              goToBottom: false,
+            ));
+        //Get.to(() => GoodsHighCommissionListPage());
         break;
       case '学院':
         UserManager.instance.selectTabbarIndex = 1;
@@ -1487,31 +1612,23 @@ class _HomePageState extends BaseStoreState<HomePage>
                 title: "家居生活", type: GoodsListTempType.homeLife));
         break;
       case '数码家电':
-      AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
-          arguments: GoodsListTempPage.setArguments(
-              title: "数码家电",
-              type: GoodsListTempType.homeAppliances));
+        AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
+            arguments: GoodsListTempPage.setArguments(
+                title: "数码家电", type: GoodsListTempType.homeAppliances));
         break;
       case '日用百货':
-
         break;
       case '酒饮冲调':
-
         break;
       case '休闲美食':
-
         break;
       case '茶米油盐':
-
         break;
       case '个护清洁':
-
         break;
       case '家用电器':
-
         break;
       case '母婴用品':
-
         break;
       case '美妆护肤':
         break;
@@ -1520,19 +1637,18 @@ class _HomePageState extends BaseStoreState<HomePage>
       case '批发商城':
         Get.to(() => WholesaleHomePage());
         break;
-      final loadingCancel = ReToast.loading();
-      await HomeDao.getCategories(success: (data, code, msg) {
-        loadingCancel();
-        CRoute.push(
-            context,
-            ClassifyPage(
-              data: data,
-              initValue: name,
-            ));
-      }, failure: (code, msg) {
-        Toast.showError(msg);
-      });
-
+        final loadingCancel = ReToast.loading();
+        await HomeDao.getCategories(success: (data, code, msg) {
+          loadingCancel();
+          CRoute.push(
+              context,
+              ClassifyPage(
+                data: data,
+                initValue: name,
+              ));
+        }, failure: (code, msg) {
+          Toast.showError(msg);
+        });
 
         break;
     }
@@ -1643,13 +1759,13 @@ class _HomePageState extends BaseStoreState<HomePage>
   bool get wantKeepAlive => true;
 
   _getKeyWords() async {
-    ResultData resultData = await HttpManager.post(APIV2.userAPI.getKeyWords, {});
-    if (resultData.data!=null) {
-      if(resultData.data['data']!=null){
+    ResultData resultData =
+        await HttpManager.post(APIV2.userAPI.getKeyWords, {});
+    if (resultData.data != null) {
+      if (resultData.data['data'] != null) {
         setState(() {
           keyWords = resultData.data['data'];
         });
-
       }
       return;
     }
@@ -1664,7 +1780,9 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   _getBannerList() async {
-    ResultData resultData = await HttpManager.post(HomeApi.banner_list, {});
+    ResultData resultData = await HttpManager.post(HomeApi.banner_list, {
+      "is_sale": UserManager.instance.isWholesale,
+    });
     if (!resultData.result) {
       showError(resultData.msg);
       return;
@@ -1679,10 +1797,10 @@ class _HomePageState extends BaseStoreState<HomePage>
     });
   }
 
-
-
   _getActiviteList() async {
-    ResultData resultData = await HttpManager.post(HomeApi.activity_list, {});
+    ResultData resultData = await HttpManager.post(HomeApi.activity_list, {
+      "is_sale": UserManager.instance.isWholesale,
+    });
     if (!resultData.result) {
       showError(resultData.msg);
       return;
@@ -1710,8 +1828,9 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   _getPromotionList() async {
-
-    ResultData resultData = await HttpManager.post(HomeApi.promotion_list, {});
+    ResultData resultData = await HttpManager.post(HomeApi.promotion_list, {
+      "is_sale": UserManager.instance.isWholesale,
+    });
 
     if (_gsRefreshController.isRefresh()) {
       // Future.delayed(Duration(milliseconds: 1500), () {
@@ -1730,6 +1849,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       return;
     }
     _promotionList = model.data;
+    setState(() {});
     if (_promotionList == null || _promotionList.length == 0) {
       _promotionGoodsList = [];
       setState(() {});
@@ -1761,7 +1881,8 @@ class _HomePageState extends BaseStoreState<HomePage>
     ResultData resultData =
         await HttpManager.post(HomeApi.promotion_goods_list, {
       "timeItemID": promotionId,
-          'user_id':UserManager.instance.user.info.id,
+      'user_id': UserManager.instance.user.info.id,
+          "is_sale": UserManager.instance.isWholesale,
     });
     if (!resultData.result) {
       showError(resultData.msg);
@@ -1794,7 +1915,6 @@ class _HomePageState extends BaseStoreState<HomePage>
           array.add(model.data.activityList.first);
         }
       }
-
     }
     _promotionGoodsList = array;
     if (mounted) {
@@ -1860,11 +1980,11 @@ class _HomePageState extends BaseStoreState<HomePage>
       return true;
     }
     bool permission = await Permission.location.isGranted;
-    if(permission){
+    if (permission) {
       HiveStore.appBox.put('location', true);
     }
     print('${HiveStore.appBox.get('location')}');
-    if(HiveStore.appBox.get('location') == null){
+    if (HiveStore.appBox.get('location') == null) {
       // bool permission = await Permission.locationWhenInUse.isRestricted;
       // bool permanentDenied =
       // await Permission.locationWhenInUse.isDenied;
@@ -1875,30 +1995,22 @@ class _HomePageState extends BaseStoreState<HomePage>
         if (permanentDenied) {
           //await PermissionTool.showOpenPermissionDialog(context, '打开定位权限');
           HiveStore.appBox.put('location', true);
-        }else{
+        } else {
           HiveStore.appBox.put('location', false);
         }
         permission = await Permission.location.isGranted;
       }
       return permission;
-    }else{
-
-      if(HiveStore.appBox.get('location')){
-
+    } else {
+      if (HiveStore.appBox.get('location')) {
         return true;
-      }else{
-
-        if(btn){
-
-          await PermissionTool.showOpenPermissionDialog(context, '如果您想要改变您的定位，请先打开定位权限。');
-
+      } else {
+        if (btn) {
+          await PermissionTool.showOpenPermissionDialog(
+              context, '如果您想要改变您的定位，请先打开定位权限。');
         }
         return false;
       }
     }
-
   }
-
-
-
 }

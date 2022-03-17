@@ -7,6 +7,7 @@ import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/app_image_resources.dart';
 import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/goods_hot_sell_list_model.dart';
@@ -107,9 +108,9 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
           children: <Widget>[
             Image.asset(
               widget.isHot
-                  ? R.ASSETS_GOODS_HOT_LIST_TITLE_BG_PNG_WEBP
+                  ? Assets.goodsHotListTitleBg.path
                   : R.ASSETS_GOODS_PREFERENTIAL_LIST_TITLE_BG_PNG,
-              fit: BoxFit.fill,
+              fit: BoxFit.fitHeight,
             ),
             Navigator.canPop(context)
                 ? Positioned(

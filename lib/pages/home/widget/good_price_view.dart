@@ -3,6 +3,7 @@ import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/app_image_resources.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/models/goods_detail_model.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
@@ -11,11 +12,12 @@ import 'package:jingyaoyun/widgets/custom_image_button.dart';
 class GoodPriceView extends StatefulWidget {
   final GoodsDetailModel detailModel;
   final VoidCallback shareCallback;
-  final bool isWholesale;
 
-  const GoodPriceView(
-      {Key key, this.detailModel, this.shareCallback, this.isWholesale})
-      : super(key: key);
+  const GoodPriceView({
+    Key key,
+    this.detailModel,
+    this.shareCallback,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -26,14 +28,13 @@ class GoodPriceView extends StatefulWidget {
 class _GoodPriceViewState extends State<GoodPriceView> {
   GoodsDetailModel detailModel;
   VoidCallback shareCallback;
-  bool isWholesale;
+
+  num _coupon = 0;
 
   @override
   void initState() {
     super.initState();
-    if (widget.isWholesale != null) {
-      isWholesale = widget.isWholesale;
-    }
+
     detailModel = widget.detailModel;
     shareCallback = widget.shareCallback;
   }
@@ -44,11 +45,9 @@ class _GoodPriceViewState extends State<GoodPriceView> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        _price(),
-        Container(
-          width: double.infinity,
-          height: 8.rw,
-          color: AppColor.frenchColor,
+        Padding(
+          padding: EdgeInsets.only(left: 10.rw, right: 10.rw,top: 8.rw),
+          child: _price(),
         ),
         _name(),
         _detail(),
@@ -92,6 +91,8 @@ class _GoodPriceViewState extends State<GoodPriceView> {
     } else {
       coupon = 0;
     }
+
+    _coupon = coupon;
 
 //    if (hasPromotion) {
 //    } else {
@@ -143,136 +144,97 @@ class _GoodPriceViewState extends State<GoodPriceView> {
         children: <Widget>[
           Row(
             mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               RichText(
                 text: TextSpan(children: [
                   TextSpan(
-                    text: isWholesale ? '批发价' : "券后价",
+                    text: "券后价",
                     style: TextStyle(
-                        color: Color(0xFFD5101A),
+                        color: Colors.white,
                         fontSize: 14.rsp,
                         fontWeight: FontWeight.bold),
                   ),
                   TextSpan(
                     text: " ￥",
                     style: TextStyle(
-                        color: Color(0xFFD5101A),
+                        color: Colors.white,
                         fontSize: 16.rsp,
-                        fontWeight: FontWeight.w500),
+                        fontWeight: FontWeight.bold),
                   ),
                   TextSpan(
                       text: "$price ",
                       style: TextStyle(
-                        color: Color(0xFFD5101A),
-                        fontSize: 22.rsp,
-                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                        fontSize: 24.rsp,
+                        fontWeight: FontWeight.bold,
                         letterSpacing: 0,
                       )),
-                  !isWholesale
-                      ? TextSpan(
-                          text:  !AppConfig.commissionByRoleLevel
-                              ? ""
-                              : isTwoPrice
-                                  ? "/ "
-                                  : " / ",
-                          style: AppTextStyle.generate(14 * 2.sp,
-                              color: Color(0xFFD5101A),
-                              fontWeight: FontWeight.w500),
-                        )
-                      : TextSpan(
-                          text: "5件起批",
-                          style: AppTextStyle.generate(14 * 2.sp,
-                              color: Color(0xFF999999)),
-                        ),
-                  !isWholesale
-                      ? TextSpan(
-                          text:  !AppConfig.commissionByRoleLevel
-                              ? ""
-                              : "赚",
+                  WidgetSpan(child:
+                  !AppConfig.commissionByRoleLevel?SizedBox():Container(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 2.rw,
+                      horizontal: 8.rw
+                    ),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(image: AssetImage(Assets.priceGoodsBg.path),fit: BoxFit.fill)
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                           "赚",
                           style: AppTextStyle.generate(12 * 2.sp,
-                              color: Color(0xFFD5101A)),
-                        )
-                      : SizedBox(),
-                  !isWholesale
-                      ? TextSpan(
-                          text: !AppConfig.commissionByRoleLevel
-                              ? ""
-                              : "$commission",
+                              color: Color(0xFFED3D19)),
+                        ),
+                        Text(
+                           "¥$commission",
                           style: AppTextStyle.generate(14 * 2.sp,
-                              color: Color(0xFFD5101A)),
-                        )
-                      : SizedBox(),
+                              color: Color(0xFFED3D19)),
+                        ),
+
+                      ],
+                    ),
+                  )),
+
                 ]),
               ),
               Spacer(),
-              Text(
-                isWholesale ? '已定$saleNum单' : '已售$saleNum件',
-                style: TextStyle(
-                  // shadows: [
-                  //   Shadow(
-                  //     color: Colors.black26,
-                  //     blurRadius: rSize(1),
-                  //     offset: Offset(0, rSize(1)),
-                  //   ),
-                  // ],
-                  fontSize: 12.rsp,
-                  color: Color(0xFF666666),
-                ),
-              ),
+
               24.wb,
             ],
           ),
           Spacer(),
-          Row(
-            children: <Widget>[
-              (coupon != null && coupon != 0)
-                  ? Container(
-                      height: rSize(23),
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color: Color(0xFFD5101A), width: 0.5.rw),
-                          borderRadius: BorderRadius.all(Radius.circular(4.rw))
-                          // image: DecorationImage(
-                          //   fit: BoxFit.fill,
-                          //   image: AssetImage(
-                          //       R.ASSETS_GOODS_DETAILS_BOTTOM_GOLD_PNG),
-                          // ),
-                          ),
-                      alignment: Alignment.center,
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          left: 6.rw,
-                          top: rSize(0),
-                          right: 6.rw,
-                          bottom: rSize(0),
-                        ),
-                        child: Text(
-                          isWholesale?'赚¥24.00':'$coupon\元优惠券',
-                          style: TextStyle(
-                            // shadows: [
-                            //   Shadow(
-                            //     color: Colors.black26,
-                            //     blurRadius: rSize(1),
-                            //     offset: Offset(0, rSize(1)),
-                            //   ),
-                            // ],
-                            fontSize: 12.rsp,
-                            color: Color(0xFFD5101A),
-                          ),
-                        ),
+          Container(
+            padding: EdgeInsets.symmetric(
+                vertical: 2.rw,
+                horizontal: 8.rw
+            ),
+            decoration: BoxDecoration(
+                image: DecorationImage(image: AssetImage(Assets.priceDetailBg.path),fit: BoxFit.fill)
+            ),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  "到手价=$originPrice（官方指导价）",
+                  style: AppTextStyle.generate(
+                    10 .rsp,
+                    color: Colors.white,
+                  ),
+                ),
+
+                (coupon != null && coupon != 0)
+                    ? Text(
+                      '—¥$coupon（优惠券）',
+                      style: TextStyle(
+                        fontSize: 10.rsp,
+                        color: Colors.white,
                       ),
                     )
-                  : SizedBox(),
-              rWBox(10),
-              Text(
-                "$originPrice",
-                style: AppTextStyle.generate(
-                  16.rsp,
-                  decoration: TextDecoration.lineThrough,
-                  color: Color(0xFF999999),
-                ),
-              )
-            ],
+                    : SizedBox(),
+                rWBox(10),
+
+              ],
+            ),
           ),
           rHBox(10),
         ],
@@ -286,14 +248,15 @@ class _GoodPriceViewState extends State<GoodPriceView> {
       height: 82.rw,
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Color(0xFFDBDBDB),
-            blurRadius: 4,
-            offset: Offset(0, -2),
-          ),
-        ],
+        image: DecorationImage(
+            fit: BoxFit.fill, image: AssetImage(Assets.headPriceBg.path)),
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Color(0xFFDBDBDB),
+        //     blurRadius: 4,
+        //     offset: Offset(0, -2),
+        //   ),
+        // ],
       ),
       child: _promotionPrice(
         price,
@@ -309,125 +272,188 @@ class _GoodPriceViewState extends State<GoodPriceView> {
   Container _name() {
     return Container(
       margin: EdgeInsets.all(12.rw),
+
       alignment: Alignment.center,
       width: double.infinity,
       color: Colors.white,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          detailModel.data.isImport == 1
-              ? Container(
-                  child: Container(
-                    margin: EdgeInsets.only(right: 8.rw, top: 5.rw),
-                    alignment: Alignment.center,
-                    width: 24.rw,
-                    height: 15.rw,
-                    decoration: BoxDecoration(
-                      color: detailModel.data.countryIcon == null
-                          ? Color(0xFFCC1B4F)
-                          : Colors.transparent,
-                      borderRadius: BorderRadius.circular(3 * 2.w),
-                    ),
-                    child: detailModel.data.countryIcon == null
-                        ? Text(
-                            '进口',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 10 * 2.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          )
-                        : CustomCacheImage(
-                            width: rSize(100),
-                            height: rSize(100),
-                            imageUrl:
-                                Api.getImgUrl(detailModel.data.countryIcon),
-                            fit: BoxFit.cover,
-                          ),
-                  ),
-                )
-              : Container(child: SizedBox()),
-          detailModel.data.isImport == 1
-              ? Container(
-                  child: Container(
-                  width: 5 * 2.w,
-                ))
-              : Container(child: SizedBox()),
-          detailModel.data.vendorId == 1800 || detailModel.data.vendorId == 2000
-              ? //jd的商品供应商 自营为1800 pop 为2000?
-              Container(
-                  child: Container(
-                  width: 40.rw,
-                  height: 15.rw,
-                  margin: EdgeInsets.only(right: 8.rw, top: 5.rw),
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFC92219),
-                    borderRadius: BorderRadius.all(Radius.circular(2.rw)),
-                  ),
-                  child: Row(
-                    //crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-
-                    children: [
-                      2.hb,
-                      Text(
-                        detailModel.data.vendorId == 1800
-                            ? '京东自营'
-                            : detailModel.data.vendorId == 2000
-                                ? '京东优选'
-                                : '',
-                        maxLines: 1,
-                        style: TextStyle(fontSize: 9.rsp, height: 1.05),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              detailModel.data.isImport == 1
+                  ? Container(
+                      child: Container(
+                        margin: EdgeInsets.only(right: 8.rw, top: 5.rw),
+                        alignment: Alignment.center,
+                        width: 24.rw,
+                        height: 15.rw,
+                        decoration: BoxDecoration(
+                          color: detailModel.data.countryIcon == null
+                              ? Color(0xFFCC1B4F)
+                              : Colors.transparent,
+                          borderRadius: BorderRadius.circular(3 * 2.w),
+                        ),
+                        child: detailModel.data.countryIcon == null
+                            ? Text(
+                                '进口',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10 * 2.sp,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              )
+                            : CustomCacheImage(
+                                width: rSize(100),
+                                height: rSize(100),
+                                imageUrl:
+                                    Api.getImgUrl(detailModel.data.countryIcon),
+                                fit: BoxFit.cover,
+                              ),
                       ),
-                    ],
+                    )
+                  : Container(child: SizedBox()),
+              detailModel.data.isImport == 1
+                  ? Container(
+                      child: Container(
+                      width: 5 * 2.w,
+                    ))
+                  : Container(child: SizedBox()),
+              detailModel.data.vendorId == 1800 || detailModel.data.vendorId == 2000
+                  ? //jd的商品供应商 自营为1800 pop 为2000?
+                  Container(
+                      child: Container(
+                      width: 40.rw,
+                      height: 15.rw,
+                      margin: EdgeInsets.only(right: 8.rw, top: 5.rw),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFC92219),
+                        borderRadius: BorderRadius.all(Radius.circular(2.rw)),
+                      ),
+                      child: Row(
+                        //crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+
+                        children: [
+                          2.hb,
+                          Text(
+                            detailModel.data.vendorId == 1800
+                                ? '京东自营'
+                                : detailModel.data.vendorId == 2000
+                                    ? '京东优选'
+                                    : '',
+                            maxLines: 1,
+                            style: TextStyle(fontSize: 9.rsp, height: 1.05),
+                          ),
+                        ],
+                      ),
+                    ))
+                  : Container(child: SizedBox()),
+
+              Expanded(
+                child: Text(
+                  detailModel.data.goodsName,
+                  maxLines: 4,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTextStyle.generate(
+                    16.rsp,
+                    fontWeight: FontWeight.w600,
+                    color: Color(0xff333333),
                   ),
-                ))
-              : Container(child: SizedBox()),
-
-          Expanded(
-            child: Text(
-              detailModel.data.goodsName,
-              maxLines: 4,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyle.generate(
-                16.rsp,
-                fontWeight: FontWeight.w600,
-                color: Color(0xff333333),
+                ),
               ),
-            ),
-          ),
+              Text(
+                '已售${detailModel.data.salesVolume}件',
+                style: TextStyle(
+                  // shadows: [
+                  //   Shadow(
+                  //     color: Colors.black26,
+                  //     blurRadius: rSize(1),
+                  //     offset: Offset(0, rSize(1)),
+                  //   ),
+                  // ],
+                  fontSize: 12.rsp,
+                  color: Color(0xFF666666),
+                ),
+              ),
 
-          // UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip
-          //     ? Container()
-          //     : Container(
-          //         margin: EdgeInsets.only(left: 10),
-          //         alignment: Alignment.topRight,
-          //         child: CustomImageButton(
-          //           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-          //           direction: Direction.horizontal,
-          //           borderRadius:
-          //               BorderRadius.horizontal(left: Radius.circular(20)),
-          //           backgroundColor: Colors.grey[200],
-          //           color: Colors.grey[500],
-          //           fontSize: 13 * 2.sp,
-          //           icon: Icon(
-          //             AppIcons.icon_share_2,
-          //             size: 18,
-          //             color: Colors.grey[500],
-          //           ),
-          //           title: "分享",
-          //           contentSpacing: 5,
-          //           onPressed: () {
-          //             if (widget.shareCallback != null) {
-          //               widget.shareCallback();
-          //             }
-          //             // if (shareCallback != null) {
-          //             //   shareCallback();
-          //             // }
-          //           },
-          //         ))
+              // UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip
+              //     ? Container()
+              //     : Container(
+              //         margin: EdgeInsets.only(left: 10),
+              //         alignment: Alignment.topRight,
+              //         child: CustomImageButton(
+              //           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+              //           direction: Direction.horizontal,
+              //           borderRadius:
+              //               BorderRadius.horizontal(left: Radius.circular(20)),
+              //           backgroundColor: Colors.grey[200],
+              //           color: Colors.grey[500],
+              //           fontSize: 13 * 2.sp,
+              //           icon: Icon(
+              //             AppIcons.icon_share_2,
+              //             size: 18,
+              //             color: Colors.grey[500],
+              //           ),
+              //           title: "分享",
+              //           contentSpacing: 5,
+              //           onPressed: () {
+              //             if (widget.shareCallback != null) {
+              //               widget.shareCallback();
+              //             }
+              //             // if (shareCallback != null) {
+              //             //   shareCallback();
+              //             // }
+              //           },
+              //         ))
+            ],
+          ),
+          32.hb,
+          Container(
+            width: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: 10.rw,horizontal: 21.rw),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.fill, image: AssetImage(Assets.couponBg.path)),
+            ),
+            child: Row(
+              children: [
+                Text(
+                  '¥',
+                  style: TextStyle(
+                    fontSize: 16.rsp,
+                    color: Colors.white,
+                  ),
+                ),
+                Text(
+                  '$_coupon',
+                  style: TextStyle(
+                    fontSize: 24.rsp,
+                    color: Colors.white,
+                  ),
+                ),
+                32.wb,
+                Text(
+                  '商家补贴优惠券',
+                  style: TextStyle(
+                    fontSize: 14.rsp,
+                    color: Colors.white,
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  '下单直降',
+                  style: TextStyle(
+                    fontSize: 14.rsp,
+                    color: Colors.white,
+                  ),
+                ),
+
+              ],
+            ),
+          )
         ],
       ),
     );

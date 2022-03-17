@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/config.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/pages/business/release_material_page.dart';
 import 'package:jingyaoyun/pages/home/home_page.dart';
@@ -15,6 +16,7 @@ import 'package:jingyaoyun/pages/message/message_ceter_page.dart';
 import 'package:jingyaoyun/pages/shopping_cart/shopping_cart_page.dart';
 import 'package:jingyaoyun/pages/tabBar/rui_code_listener.dart';
 import 'package:jingyaoyun/pages/user/user_page.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_car_page.dart';
 import 'package:jingyaoyun/utils/app_router.dart';
 import 'package:jingyaoyun/utils/print_util.dart';
 import 'package:jingyaoyun/utils/versionInfo/version_tool.dart';
@@ -47,6 +49,11 @@ class _TabBarWidgetState extends State<TabBarWidget>
 
     UserManager.instance.login.addListener(_loginListener);
     UserManager.instance.selectTabbar.addListener(_selectTabbar);
+    UserManager.instance.refreshHomeBottomTabbar.addListener(() {
+      setState(() {
+
+      });
+    });
   }
 
   _loginListener() {
@@ -192,7 +199,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
             //MessageCenterPage(),
             AkuCollegePage(),
             DiscoveryPage(),
-            ShoppingCartPage(),
+            UserManager.instance.isWholesale?WholesaleCarPage(canBack: false,): ShoppingCartPage(),
             UserPage()
           ],
         ),
@@ -288,14 +295,15 @@ class _BottomBarState extends State<BottomBar> {
       // items: AppConfig.getShowCommission()
       items: [
         NavigationItemBean(
-          textStr: '特推',
-          image: AssetImage("assets/tabbar_sale_normal.png"),
-          imageSelected: AssetImage("assets/tabbar_sale_selected.png"),
+
+          textStr: UserManager.instance.isWholesale?'特批':'特推',
+          image: UserManager.instance.isWholesale?AssetImage(Assets.tabbarPHome.path): AssetImage("assets/tabbar_sale_normal.png"),
+          imageSelected:UserManager.instance.isWholesale?AssetImage(Assets.tabbarPHomeSelect.path): AssetImage("assets/tabbar_sale_selected.png"),
         ),
         NavigationItemBean(
-          textStr: '学院',
-          image: AssetImage("assets/tabbar_aku_normal.png"),
-          imageSelected: AssetImage("assets/tabbar_aku_selected.png"),
+          textStr: '消息',
+          image: AssetImage("assets/tabbar_message.png"),
+          imageSelected: AssetImage("assets/tabbar_message_select.png"),
         ),
         NavigationItemBean(
           textStr: '发现',
@@ -303,9 +311,9 @@ class _BottomBarState extends State<BottomBar> {
           imageSelected: AssetImage("assets/tabbar_find_selected.png"),
         ),
         NavigationItemBean(
-          textStr: '购物车',
-          image: AssetImage("assets/tabbar_cart_normal.png"),
-          imageSelected: AssetImage("assets/tabbar_cart_selected.png"),
+          textStr: UserManager.instance.isWholesale?'进货单':'购物车',
+          image: UserManager.instance.isWholesale?AssetImage(Assets.tabbarPCar.path): AssetImage("assets/tabbar_cart_normal.png"),
+          imageSelected: UserManager.instance.isWholesale?AssetImage(Assets.tabbarPCarSelect.path): AssetImage("assets/tabbar_cart_selected.png"),
 //              protrudingIcon: Icons.add
         ),
         NavigationItemBean(

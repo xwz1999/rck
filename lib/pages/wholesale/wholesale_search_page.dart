@@ -209,7 +209,7 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
           return MaterialButton(
               padding: EdgeInsets.zero,
               onPressed: () {
-                Get.to(()=>WholesaleDetailPage(goodsId: goods.id,isWholesale: true,));
+                Get.to(()=>WholesaleDetailPage(goodsId: goods.id,));
               },
               child: _displayList
               // ? BrandDetailListItem(goods: goods)

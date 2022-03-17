@@ -26,10 +26,10 @@ import 'models/wholesale_detail_model.dart';
 
 class WholesaleDetailPage extends StatefulWidget {
   final int goodsId;
-  final bool isWholesale;
+
 
   const WholesaleDetailPage({
-    Key key, this.isWholesale, this.goodsId,
+    Key key, this.goodsId,
   }) : super(key: key);
 
   static setArguments(int goodsID,) {
@@ -50,7 +50,7 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
   ValueNotifier<bool> _openSkuChoosePage = ValueNotifier(false);
   int _goodsId;
   WholesaleDetailModel _goodsDetail;
-  bool isWholesale = false;///是否为批发状态 默认不是
+
 
   @override
   void initState() {
@@ -59,9 +59,6 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
 
     _appBarController = AppBarController();
     _bottomBarController = BottomBarController();
-    if(widget.isWholesale!=null){
-      isWholesale = widget.isWholesale;
-    }
 
     _getDetail();
 

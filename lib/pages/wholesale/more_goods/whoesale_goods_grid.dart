@@ -218,7 +218,7 @@ class WholesaleGoodsGrid extends StatelessWidget {
   }
 
   _buyEvent(BuildContext context) {
-    Get.to(()=>WholesaleDetailPage(goodsId: this.goods.id,isWholesale: true));
+    Get.to(()=>WholesaleDetailPage(goodsId: this.goods.id,));
       //
       // AppRouter.push(context, RouteName.COMMODITY_PAGE,
       //     arguments: CommodityDetailPage.setArguments(this.goods.id));

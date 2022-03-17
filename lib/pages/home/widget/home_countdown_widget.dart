@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/promotion_list_model.dart';
 import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
 
@@ -56,7 +57,7 @@ class _HomeCountdownWidgetState extends State<HomeCountdownWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.asset("assets/home_list_times_1.png", width: 77*1.5, height: 20*1.5),
+          Image.asset(UserManager.instance.isWholesale?"assets/home_list_times_2.png": "assets/home_list_times_1.png", width: 77*1.5, height: 20*1.5),
           // Spacer(),
           // widget.promotionList!=null&&widget.promotionList.length>0?_rightWidget():Container(),
         ],

@@ -271,7 +271,7 @@ class WholesaleFunc {
 
   ///获取批发活动商品列表
   static Future<List<WholesaleGood>> getGoodsList(
-      int page, SortType type,{String keyword,int activity_id, }) async {
+      int page, SortType type,{String keyword,int activity_id, int categoryID}) async {
     String url = '';
     switch (type) {
       case SortType.comprehensive:
@@ -294,6 +294,11 @@ class WholesaleFunc {
 
     if (activity_id!=null) {
       params.putIfAbsent("activity_id", () => activity_id);
+    }
+
+
+    if(categoryID!=null){
+      params.putIfAbsent("secondCategoryID", () => categoryID);
     }
 
     if (!TextUtils.isEmpty(keyword)) {

@@ -7,6 +7,7 @@ import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/daos/home_dao.dart';
+import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/address_list_model.dart';
@@ -43,7 +44,7 @@ import 'package:jingyaoyun/widgets/selected_list.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:jingyaoyun/widgets/video_view.dart';
 import 'package:permission_handler/permission_handler.dart';
-
+import 'package:velocity_x/velocity_x.dart';
 import 'commodity_detail_page.dart';
 
 typedef ScrollListener = Function(ScrollUpdateNotification notification);
@@ -64,7 +65,6 @@ class GoodsPage extends StatefulWidget {
   final int goodsId;
   final ValueNotifier<bool> openSkuChoosePage;
   final void Function() openbrandList; //打开商家页面
-  final bool isWholesale;
   final String invite;
 
   const GoodsPage({
@@ -73,7 +73,7 @@ class GoodsPage extends StatefulWidget {
     this.goodsId,
     this.openSkuChoosePage,
     this.goodsDetail,
-    this.openbrandList, this.isWholesale, this.invite,
+    this.openbrandList,  this.invite,
   }) : super(key: key);
 
   @override
@@ -106,16 +106,14 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   int _jDHaveGoods = -1;
   // int _seckillStatus = 0;//秒杀状态 0为未开始 1为开始
   String guige = '请选择规格';
-  bool isWholesale = false;
+
   @override
   bool get wantKeepAlive => true;
 
   @override
   void initState() {
     super.initState();
-    if(widget.isWholesale!=null){
-      isWholesale = widget.isWholesale;
-    }
+
     //获取默认地址并且判断有无货源
     if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000|| widget.goodsDetail.data.vendorId == 3000) {
       Future.delayed(Duration.zero, () async {
@@ -303,8 +301,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             top: 15,
           ),
           child: Text("图文详情",
-              style: AppTextStyle.generate(16,
-                  fontWeight: FontWeight.w500, color: Colors.black)),
+              style: AppTextStyle.generate(14.rsp,
+                  fontWeight: FontWeight.bold, color: Color(0xFF111111))),
         ));
     // children.add(Container(
     //           margin: EdgeInsets.only(top: 10),
@@ -426,7 +424,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                   goodsId: widget.goodsDetail.data.id.toString(),
                 );
               },
-              isWholesale: isWholesale,
+
             ),
           ],
         ),
@@ -440,12 +438,17 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       ),
       widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000||  widget.goodsDetail.data.vendorId == 3000
           ? Container(
-              margin: EdgeInsets.only(bottom: 13),
+
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               color: Colors.white,
               child: _addressContent(context),
             )
           : SizedBox(),
+      Container(
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        color: Colors.white,
+        child: _goodsInfoWidget(context),
+      ),
       widget.goodsDetail.data.storehouse == 2 ||
               widget.goodsDetail.data.storehouse == 3
           ? Container(
@@ -457,27 +460,18 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           : SizedBox(),
       widget.goodsDetail.data.isImport == 1
           ? Container(
-              margin: EdgeInsets.only(bottom: 13),
+              margin: EdgeInsets.only(bottom: 13.rw),
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               color: Colors.white,
               child: _buildOverseaCityPicker(),
             )
           : SizedBox(),
-      Container(
-        margin: EdgeInsets.only(bottom: 13),
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        color: Colors.white,
-        child: _goodsInfoWidget(context),
-      ),
-      Container(
-          color: Colors.white,
-          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-          child: _userEvaluation()),
+
       AppConfig.getShowCommission()
           ? Container(
               color: Colors.white,
-              margin: EdgeInsets.only(top: 13, bottom: 1),
-              padding: const EdgeInsets.all(10.0),
+              margin: EdgeInsets.only(top: 8.rw, bottom: 8.rw),
+
               child: GestureDetector(
                 child: _storeName(),
                 onTap: () {
@@ -591,29 +585,84 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             child: StatefulBuilder(
               builder: (BuildContext context, partSetState) {
                 _stateSetter = partSetState;
-                return Row(
-                  children: <Widget>[
-                    Text(
-                      "规格",
-                      style: AppTextStyle.generate(13 * 2.sp,
-                          color: Color(0xff828282),
-                          fontWeight: FontWeight.w300),
+                return Column(
+                  children: [
+
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          '规格',
+
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyle.generate(13 * 2.sp,
+                              color: Color(0xFFA4A4A4),),
+                        ),
+                        Container(
+                          width: 10,
+                        ),
+
+                        ...widget.goodsDetail.data.sku.mapIndexed((currentValue, index) {
+                          return index<6? Container(
+                            clipBehavior:Clip.antiAlias,
+                            margin: EdgeInsets.only(right:8.rw ),
+                            width: 32.rw,
+                            height: 32.rw,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2.rw),
+
+                            ),
+                            child:     FadeInImage.assetNetwork(
+                              placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                              image: currentValue.picUrl,
+                            ),
+                          ):SizedBox();
+                        } ).toList(),
+
+                        Container(
+
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(2.rw),
+                            color: Color(0xFFF9F9F9)
+                          ),
+                          padding: EdgeInsets.symmetric(vertical: 3.rw,horizontal: 6.rw),
+                          child: Text(
+                            '共${widget.goodsDetail.data.sku.length}款',
+                            style: TextStyle(color: Color(0xFF666666),fontSize: 12.rsp),
+
+                          ),
+                        )
+
+
+                      ],
                     ),
-                    Container(
-                      width: 20,
-                    ),
-                    Expanded(
-                        child: Text(
-                      guige,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: AppTextStyle.generate(13 * 2.sp,
-                          color: Color(0xff373737)),
-                    )),
-                    Icon(
-                      AppIcons.icon_next,
-                      color: Colors.grey[400],
-                      size: 16 * 2.sp,
+                    24.hb,
+                    Row(
+                      children: [
+                        Text(
+                          '规格',
+
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyle.generate(13 * 2.sp,
+                              color: Colors.transparent),
+                        ),
+                        Container(
+                          width: 10,
+                        ),
+
+                        Expanded(
+                            child: Text(
+                              (guige!='请选择规格'?'已选：':'')+guige,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: AppTextStyle.generate(13 * 2.sp,
+                                  color: Color(0xff373737)),
+                            )),
+                        Icon(
+                          AppIcons.icon_next,
+                          color: Color(0xFF333333),
+                          size: 13 * 2.sp,
+                        )
+                      ],
                     )
                   ],
                 );
@@ -698,7 +747,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 _cityModel == null
                     ? _addressModel != null
                         ? Container(
-                            width: 270.rw,
+                            width: 250.rw,
                             child: Text(
                               '${_addressModel.province}-${_addressModel.city}-${_addressModel.district}',
                               maxLines: 1,
@@ -717,7 +766,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                             ),
                           )
                     : Container(
-                        width: 270.rw,
+                        width: 250.rw,
                         child: Text(
                           '${_cityAddress.province}-${_cityAddress.city}-${_cityAddress.district}',
                           overflow: TextOverflow.ellipsis,
@@ -729,31 +778,26 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                         ),
                       ),
                 Spacer(),
-                Icon(
-                  AppIcons.icon_next,
-                  color: Colors.grey[400],
-                  size: 16 * 2.sp,
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Container(
-                  width: 46.rw,
-                ),
                 Text(
                   _jDHaveGoods == 1
                       ? '有货'
                       : _jDHaveGoods == 0
-                          ? '无货'
-                          : '',
+                      ? '无货'
+                      : '',
                   style: TextStyle(
-                    color: Color(0xFF525252),
-                    fontSize: rSP(13),
+                    color: Color(0xFFD5101A),
+                    fontSize: 13.rsp,
                   ),
+                ),
+                10.wb,
+                Icon(
+                  AppIcons.icon_next,
+                  color: Color(0xFF333333),
+                  size: 13 * 2.sp,
                 ),
               ],
             ),
+
           ],
         ),
       ),
@@ -785,20 +829,20 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               ),
               Expanded(
                   child: Text(
-                    !isWholesale?"品牌 工艺...":'品牌｜起批量｜规格｜条形码',
+                    "品牌 工艺...",
                 style:
                     AppTextStyle.generate(13 * 2.sp, color: Color(0xff373737)),
               )),
               Icon(
                 AppIcons.icon_next,
-                color: Colors.grey[400],
-                size: 16 * 2.sp,
+                color: Color(0xFF333333),
+                size: 13 * 2.sp,
               )
             ],
           ),
         ),
         Container(
-          margin: EdgeInsets.only(top: 10),
+          margin: EdgeInsets.only(top: 20.rw),
           child: widget.goodsDetail.data.isImport == 1
               ? Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -901,8 +945,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                         )),
                         Icon(
                           AppIcons.icon_next,
-                          color: Colors.grey[400],
-                          size: 16 * 2.sp,
+                          color: Color(0xFF333333),
+                          size: 13 * 2.sp,
                         )
                       ],
                     ),
@@ -1138,8 +1182,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 Spacer(),
                 Icon(
                   AppIcons.icon_next,
-                  color: Colors.grey[400],
-                  size: 16 * 2.sp,
+                  color: Color(0xFF333333),
+                  size: 13 * 2.sp,
                 ),
               ],
             ),
@@ -1350,75 +1394,13 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       Expanded(child: Container()),
       Icon(
         AppIcons.icon_next,
-        color: Colors.grey,
-        size: 16 * 2.sp,
+        color: Color(0xFF333333),
+        size: 13 * 2.sp,
       )
     ]);
     return coupons;
   }
 
-  _userEvaluation() {
-    return Column(
-      children: <Widget>[
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              "用户评价",
-              style: AppTextStyle.generate(15 * 2.sp,
-                  fontWeight: FontWeight.w500, color: Color(0xff333333)),
-            ),
-            Text(
-              " (${widget.goodsDetail.data.evaluations.total})",
-              style: AppTextStyle.generate(15 * 2.sp, color: Color(0xffb5b5b5)),
-            ),
-            Expanded(
-                child: GestureDetector(
-              onTap: () {
-                push(RouteName.EVALUATION_LIST_PAGE,
-                    arguments: EvaluationListPage.setArguments(
-                        goodsId: widget.goodsId));
-              },
-              child: Text(
-                "查看全部",
-                textAlign: TextAlign.end,
-                style: AppTextStyle.generate(14 * 2.sp,
-                    color: AppColor.themeColor, fontWeight: FontWeight.w300),
-              ),
-            )),
-            Container(
-              width: 5,
-            ),
-            Icon(
-              AppIcons.icon_next,
-              size: rSize(12),
-            )
-          ],
-        ),
-        widget.goodsDetail.data.evaluations.children.length == 0
-            ? Container()
-            : Container(
-                height: 90,
-                child: GridView.builder(
-                    padding: EdgeInsets.only(top: rSize(5)),
-//                shrinkWrap: true,
-                    itemCount:
-                        widget.goodsDetail.data.evaluations.children.length,
-                    scrollDirection: Axis.horizontal,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        childAspectRatio: 0.35,
-                        mainAxisSpacing: 10,
-                        crossAxisCount: 1),
-                    itemBuilder: (context, index) {
-                      return UserCommentItem(
-                        evaluation:
-                            widget.goodsDetail.data.evaluations.children[index],
-                      );
-                    }),
-              )
-      ],
-    );
-  }
 
   //大家都在买 推荐商品
   _recommendsWidget() {
@@ -1545,17 +1527,17 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     Row row = Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        // ClipRRect(
-        //   borderRadius: BorderRadius.all(Radius.circular(5)),
-        //   child: CustomCacheImage(
-        //       height: rSize(80),
-        //       width: rSize(80),
-        //       fit: BoxFit.cover,
-        //       imageUrl: Api.getImgUrl(widget.goodsDetail.data.brand.logoUrl)),
-        // ),
-        // Container(
-        //   width: 10,
-        // ),
+        ClipRRect(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          child: CustomCacheImage(
+              height: 44.rw,
+              width: 44.rw,
+              fit: BoxFit.cover,
+              imageUrl: Api.getImgUrl(widget.goodsDetail.data.brand.logoUrl)),
+        ),
+        Container(
+          width: 12.rw,
+        ),
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1563,43 +1545,52 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             children: <Widget>[
               Text(
                 widget.goodsDetail.data.brand.name,
-                style: AppTextStyle.generate(18 * 2.sp,
-                    fontWeight: FontWeight.w500),
+                style: AppTextStyle.generate(14 * 2.sp,
+                    fontWeight: FontWeight.bold),
               ),
               Container(
-                height: 16,
+                height: 10.rw,
               ),
               Text(
-                "全部商品： ${widget.goodsDetail.data.brand.goodsCount}",
+                "商品数量： ${widget.goodsDetail.data.brand.goodsCount}",
                 style:
-                    AppTextStyle.generate(13 * 2.sp, color: Colors.grey[700]),
+                    AppTextStyle.generate(12 * 2.sp, color: Color(0xFF666666)),
               )
             ],
           ),
         ),
-        CustomImageButton(
-          title: "进入品牌",
-          style: AppTextStyle.generate(15 * 2.sp, color: Colors.grey[700]),
-          onPressed: () {
+        GestureDetector(
+          onTap: (){
             if (widget.openbrandList != null) widget.openbrandList();
           },
+          child: Container(
+            decoration: BoxDecoration(
+              color: Color(0xFFDB1E1E),
+              borderRadius: BorderRadius.circular(14.5.rw),
+            ),
+            padding: EdgeInsets.symmetric(vertical: 4.rw,horizontal: 12.rw),
+            child: Text('进入',style: AppTextStyle.generate(12 * 2.sp, color: Colors.white),),
+          ),
         ),
+        // CustomImageButton(
+        //   title: "进入",
+        //
+        //   onPressed: () {
+        //     if (widget.openbrandList != null) widget.openbrandList();
+        //   },
+        // ),
         // Text(
         //   "进入品牌",
         //   style: AppTextStyle.generate(15*2.sp, color: Colors.grey[700]),
         // ),
-        Container(
-          width: 5,
-        ),
-        Icon(
-          AppIcons.icon_next,
-          color: Colors.grey,
-          size: 16,
-        )
       ],
     );
     return Container(
-      color: Colors.white,
+      padding: EdgeInsets.symmetric(vertical: 13.rw,horizontal: 12.rw),
+      decoration: BoxDecoration(
+          image: DecorationImage(image: AssetImage(Assets.brandBg.path),fit: BoxFit.fill)
+      ),
+
       child: row,
     );
   }

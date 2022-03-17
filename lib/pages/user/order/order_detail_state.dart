@@ -812,7 +812,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                 }
               });
               if (canPush) {
-                Get.to(()=>WholesaleDetailPage(goodsId:  brand.goods[index].goodsId,isWholesale: true));
+                Get.to(()=>WholesaleDetailPage(goodsId:  brand.goods[index].goodsId,));
                 // AppRouter.push(context, RouteName.COMMODITY_PAGE,
                 //     arguments: CommodityDetailPage.setArguments(
                 //         brand.goods[index].goodsId));

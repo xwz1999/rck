@@ -398,7 +398,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     switch (_defaultPayIndex) {
       case 0:
         // _recookPay();
-        _fromTo == '' ? _submitPassword() : SizedBox();
+         _submitPassword() ;
         break;
       case 1:
         _fromTo == '' ? _weChatPay(context) : _weChatPayLifang(context);

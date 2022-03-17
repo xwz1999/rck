@@ -16,8 +16,11 @@ import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/category_model.dart';
 import 'package:jingyaoyun/pages/home/classify/goods_list_page.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_goods_list_page.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_search_page.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
@@ -96,7 +99,17 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
       child: CustomImageButton(
         onPressed: () {
           //AppRouter.push(context, RouteName.SEARCH);
-          Get.to(SearchPage(jdType: 1,));
+          if(UserManager.instance.isWholesale){
+
+            Get.to(()=>WholesaleSearchPage(jdType: 1,));
+          }
+          else{
+            Get.to(SearchPage(jdType: 1,));
+          }
+
+
+
+
         },
         direction: Direction.horizontal,
         icon: Container(
@@ -257,13 +270,23 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
             contentSpacing: rSize(5),
             fontSize: 13 * 2.sp,
             onPressed: () {
-              AppRouter.push(context, RouteName.GOODS_LIST_PAGE,
-                  arguments: GoodsListPage.setArguments(
-                      title: firstTitle,
-                      index: indexIn,
 
-                      secondCategoryList: secondCategories,
-                      isJD: widget.jdType==1?true:false));
+              if(UserManager.instance.isWholesale){
+                Get.to(() => WholesaleGoodsList(
+                  title: firstTitle,
+                  index: indexIn,
+                  secondCategoryList: secondCategories,
+                ));
+              }else{
+                AppRouter.push(context, RouteName.GOODS_LIST_PAGE,
+                    arguments: GoodsListPage.setArguments(
+                        title: firstTitle,
+                        index: indexIn,
+                        secondCategoryList: secondCategories,
+                        isJD: widget.jdType==1?true:false));
+              }
+
+
 
             },
           );

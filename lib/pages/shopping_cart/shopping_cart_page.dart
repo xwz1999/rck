@@ -116,51 +116,78 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
     _context = context;
     return Scaffold(
       backgroundColor: AppColor.tableViewGrayColor,
-      appBar: PreferredSize(
-        child: Stack(
-          children: [
-            Image.asset(
-              UserLevelTool.currentAppBarBGImagePath(),
-              fit: BoxFit.cover,
-              width: double.infinity,
-            ),
-            AppBar(
-              leading: RecookBackButton(white: true,),
-              backgroundColor: Colors.transparent,
-              elevation: 0,
-              centerTitle: true,
-              title: Text("购物车($_totalNum)"),
-              actions: <Widget>[
-                CustomImageButton(
-                  padding: EdgeInsets.only(right: rSize(10), top: rSize(5)),
-                  title: !_manageStatus ? "管理" : "完成",
-                  color: Colors.white,
-                  fontSize: 15 * 2.sp,
-                  onPressed: () {
-                    if (_editting) {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      return;
-                    }
-                    //切换管理状态  重置所以数据到原始数据
-                    for (ShoppingCartBrandModel _brandModel
-                        in _controller.getData()) {
-                      _brandModel.selected = false;
-                      for (ShoppingCartGoodsModel _goodsModel
-                          in _brandModel.children) {
-                        _goodsModel.selected = false;
-                      }
-                    }
-                    _checkAll = false;
-                    _selectedGoods.clear();
-                    _manageStatus = !_manageStatus;
-                    setState(() {});
-                  },
-                )
+      appBar: AppBar(
+        leading: null,
+        backgroundColor: Colors.white,
+        titleSpacing: 0,
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            // IconButton(
+            //   icon: Icon(Icons.menu),
+            // ),
+            32.wb,
+            Stack(
+              alignment: Alignment.center,
+              children: <Widget>[
+                Positioned(
+                  child: Row(
+                    children: [
+                      Text(
+                        "购物车",
+                        style: TextStyle(
+                          color: Color(0xFF111111),
+                          fontSize: 20.rsp,
+                        ),
+
+                      ),
+                      Text(
+                        " ($_totalNum)",
+                        style: TextStyle(
+                          color: Color(0xFF111111),
+                          fontSize: 15.rsp,
+                        ),
+
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
+            Spacer(),
           ],
         ),
-        preferredSize: Size.fromHeight(30 + MediaQuery.of(context).padding.top),
+        elevation: 0,
+        actions: [
+          CustomImageButton(
+            padding: EdgeInsets.only(right: rSize(10), top: rSize(5)),
+            title: !_manageStatus ? "管理" : "完成",
+            color: Color(0xFF666666),
+            fontSize: 14 * 2.sp,
+            onPressed: () {
+              if (_editting) {
+                FocusScope.of(context).requestFocus(FocusNode());
+                return;
+              }
+              for (ShoppingCartBrandModel _brandModel
+              in _controller.getData()) {
+                _brandModel.selected = false;
+                for (ShoppingCartGoodsModel _goodsModel
+                in _brandModel.children) {
+                  _goodsModel.selected = false;
+                }
+              }
+              _checkAll = false;
+              _selectedGoods.clear();
+              _manageStatus = !_manageStatus;
+              setState(() {});
+            },
+          )
+        ],
+
       ),
       body: _buildList(context),
       bottomNavigationBar:
@@ -242,8 +269,8 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
       decoration: new BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(40)),
           gradient: const LinearGradient(colors: [
-            Color.fromARGB(255, 249, 117, 10),
-            Color.fromARGB(255, 249, 67, 7),
+            Color(0xFFE05346),
+            Color(0xFFDB1E1E),
           ])),
       child: CustomImageButton(
         padding:
@@ -501,7 +528,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         SizedBox(
           height: rSize(30),
         ),
-        _likeGoodsList!=null ? _buildLikeWidget() : SizedBox(),
+        _likeGoodsList.isNotEmpty ? _buildLikeWidget() : SizedBox(),
       ],
     );
   }
@@ -598,7 +625,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
                 UserManager.instance.user.info.id, goods, num);
           },
         ),
-        _likeGoodsList != null ? _buildLikeWidget() : SizedBox(),
+        _likeGoodsList.isNotEmpty ? _buildLikeWidget() : SizedBox(),
       ],
     );
   }

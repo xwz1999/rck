@@ -284,6 +284,11 @@ flutter:
     - family: AppIcons
       fonts:
         - asset: static/font/iconfont.ttf
+
+    - family: HeadFont
+      fonts:
+        - asset: static/font/YouSheBiaoTiHei-2.ttf
+
 import_sorter:
   emojis: true
   comments: false

@@ -116,13 +116,13 @@ class _ImagePageViewState extends State<ImagePageView> with TickerProviderStateM
               }).toList()),
           Positioned(
               bottom: 35,
-              right: 0,
+              right: 20,
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: 15, vertical: 3),
                 decoration: BoxDecoration(
                     color: Color.fromARGB(100, 0, 0, 0),
                     borderRadius:
-                        BorderRadius.horizontal(left: Radius.circular(20))),
+                        BorderRadius.horizontal(left: Radius.circular(20),right:  Radius.circular(20))),
                 child: _imageCount(),
               )),
         ]),

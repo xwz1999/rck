@@ -52,16 +52,23 @@ class UserManager {
   //从webview扫描返回通知
   ValueNotifier<bool> openInstallGoodsId = ValueNotifier(false);
 
+
+  ValueNotifier<bool> refreshHomeBottomTabbar = ValueNotifier(false);
+
   ValueNotifier<bool> openInstallLive = ValueNotifier(false);
   int selectTabbarIndex;
 
-  List<KingCoin> kingCoinListModelList;
+  List<KingCoinListModel> kingCoinListModelList;
 
   bool get haveLogin => login.value;
 
   String _identifier = "";
   String get indentifier => _identifier;
   String jpushRid = '';
+
+
+  bool isWholesale = false;
+
 
   factory UserManager() => _getInstance();
   static UserManager get instance => _getInstance();

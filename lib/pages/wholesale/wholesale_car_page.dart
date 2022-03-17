@@ -96,13 +96,25 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
               alignment: Alignment.center,
               children: <Widget>[
                 Positioned(
-                  child: Text(
-                      "批发购物车",
-                      style: TextStyle(
-                        color: Color(0xFF111111),
-                        fontSize: 20.rsp,
-                      ),
+                  child: Row(
+                    children: [
+                      Text(
+                        "进货单",
+                        style: TextStyle(
+                          color: Color(0xFF111111),
+                          fontSize: 20.rsp,
+                        ),
 
+                      ),
+                      Text(
+                        " ($_totalNum)",
+                        style: TextStyle(
+                          color: Color(0xFF111111),
+                          fontSize: 15.rsp,
+                        ),
+
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -209,7 +221,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                           FocusScope.of(context).requestFocus(FocusNode());
                           return;
                         }
-                        Get.to(()=>WholesaleDetailPage(goodsId: goods.goodsId,isWholesale: true,))
+                        Get.to(()=>WholesaleDetailPage(goodsId: goods.goodsId,))
 
 
                             .then((onValue) async {
@@ -277,7 +289,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                         FocusScope.of(context).requestFocus(FocusNode());
                         return;
                       }
-                      Get.to(()=>WholesaleDetailPage(goodsId: goods.goodsId,isWholesale: true,))
+                      Get.to(()=>WholesaleDetailPage(goodsId: goods.goodsId,))
                           .then((onValue) async {
                         _carList =  await WholesaleFunc.getCarList();
                         setState(() {
@@ -340,7 +352,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                     FocusScope.of(context).requestFocus(FocusNode());
                     return;
                   }
-                  Get.to(()=>WholesaleDetailPage(goodsId: goods.goodsId,isWholesale: true,))
+                  Get.to(()=>WholesaleDetailPage(goodsId: goods.goodsId,))
                       .then((onValue) async {
                     _carList =  await WholesaleFunc.getCarList();
                     setState(() {
@@ -366,9 +378,41 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
 
           },
           itemCount: _carList.length,
-        ):SizedBox(),
+        ):noDataView("购物车是空的~快去逛逛吧"),
 
             // :noDataView('没有申请记录...'),
+    );
+  }
+
+  noDataView(String text, {Widget icon}) {
+    return ListView(
+      //height: double.infinity,
+      children: <Widget>[
+        100.hb,
+        icon ??
+            Image.asset(
+              R.ASSETS_NODATA_PNG,
+              width: rSize(80),
+              height: rSize(80),
+            ),
+//          Icon(AppIcons.icon_no_data_search,size: rSize(80),color: Colors.grey),
+        SizedBox(
+          height: 8,
+        ),
+        Container(
+          alignment: Alignment.center,
+          width: double.infinity,
+          child: Text(
+            text,
+            style: AppTextStyle.generate(14 * 2.sp, color: Colors.grey),
+          ),
+        ),
+
+        SizedBox(
+          height: rSize(30),
+        ),
+        _likeGoodsList.isNotEmpty ? _buildLikeWidget() : SizedBox(),
+      ],
     );
   }
 
@@ -440,7 +484,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                 return MaterialButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
-                      Get.to(()=>WholesaleDetailPage(goodsId: goods.id,isWholesale: true,));
+                      Get.to(()=>WholesaleDetailPage(goodsId: goods.id,));
 
                     },
                     child: WholesaleGoodsGrid(goods: goods,));

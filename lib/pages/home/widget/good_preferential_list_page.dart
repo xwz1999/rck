@@ -89,7 +89,7 @@ class _GoodsPreferentialListPageState extends BaseStoreState<GoodsPreferentialLi
           children: <Widget>[
             Image.asset(
               R.ASSETS_GOODS_PREFERENTIAL_LIST_TITLE_BG_PNG,
-              fit: BoxFit.fill,
+              fit: BoxFit.fitWidth,
             ),
             Navigator.canPop(context)
                 ? Positioned(
