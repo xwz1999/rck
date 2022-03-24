@@ -32,8 +32,19 @@ class UserIncomeDataModel {
   num count7;
   num amount7;
 
+
+
   num total;
   num eTotal;
+
+
+  num yearSale;
+  num monthSale;
+  num yearCount;
+  num monthCount;
+  num totalSale;
+
+
 
   UserIncomeDataModel(
       {this.eCount1,
@@ -66,6 +77,12 @@ class UserIncomeDataModel {
         this.amount7,
         this.count7,
         this.eCount7,
+
+        this.monthCount,
+        this.monthSale,
+        this.totalSale,
+        this.yearCount,
+        this.yearSale
       });
 
   UserIncomeDataModel.fromJson(Map<String, dynamic> json) {
@@ -102,6 +119,16 @@ class UserIncomeDataModel {
     eAmount7 = json['EAmount7'];
     count7 = json['Count7'];
     amount7 = json['Amount7'];
+
+
+
+    monthCount = json['MonthCount'];
+
+    monthSale = json['MonthSale'];
+    totalSale = json['TotalSale'];
+    yearCount = json['YearCount'];
+    yearSale = json['YearSale'];
+
   }
 
   Map<String, dynamic> toJson() {
@@ -139,6 +166,15 @@ class UserIncomeDataModel {
     data['EAmount7'] = this.eAmount7;
     data['Count7'] = this.count7;
     data['Amount7'] = this.amount7;
+
+
+    data['MonthCount'] = this.monthCount;
+
+    data['MonthSale'] = this.monthSale;
+    data['TotalSale'] = this.totalSale;
+    data['YearCount'] = this.yearCount;
+    data['YearSale'] = this.yearSale;
+
     return data;
   }
 }

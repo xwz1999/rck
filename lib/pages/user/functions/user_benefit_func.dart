@@ -3,6 +3,7 @@ import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/pages/user/model/pifa_benefit_model.dart';
+import 'package:jingyaoyun/pages/user/model/pifa_table_model.dart';
 import 'package:jingyaoyun/pages/user/model/user_accumulate_model.dart';
 import 'package:jingyaoyun/pages/user/model/user_benefit_common_model.dart';
 import 'package:jingyaoyun/pages/user/model/user_benefit_day_expect_model.dart';
@@ -36,20 +37,33 @@ class UserBenefitFunc {
     }
   }
 
-  // ///合伙人批发收益
-  // static Future<List<PifaBenefitModel>> getPifaBenefit() async {
-  //   ResultData result = await HttpManager.post(
-  //       APIV2.userAPI.getPifaBenefit, {'user_id': UserManager.instance.user.info.id,});
-  //   if (result.data != null) {
-  //     if (result.data['data'] != null) {
-  //       return (result.data['data'] as List)
-  //           .map((e) => PifaBenefitModel.fromJson(e))
-  //           .toList();
-  //     } else
-  //       return [];
-  //   } else
-  //     return [];
-  // }
+  ///合伙人批发收益
+  static Future<PiFaTableModel> getPiFaTable(int kind,{DateTime start,DateTime end}) async {
+
+    Map<String, dynamic> params = {'user_id': UserManager.instance.user.info.id,'kind':kind,};
+    if(start!=null){
+      params.putIfAbsent(
+        'start',
+            () => start.toIso8601String(),
+      );
+    }
+    if(end!=null){
+      params.putIfAbsent(
+        'end',
+            () => end.toIso8601String(),
+      );
+    }
+
+    ResultData result = await HttpManager.post(
+        APIV2.userAPI.piFaTable, params);
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return PiFaTableModel.fromJson(result.data['data']);
+      } else
+        return null;
+    } else
+      return null;
+  }
 
 
   ///合伙人批发收益详情

@@ -106,8 +106,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
             },
           ),
           Spacer(),
-          UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary?SizedBox():
-          '(${UserLevelTool.currentRoleLevel()})'
+          UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip?'':'(${UserLevelTool.currentRoleLevel()})'
               .text
               .color(Color(0xFF333333))
               .size(12.rsp)

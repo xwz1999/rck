@@ -115,6 +115,7 @@ class _RefreshWidgetState extends State<RefreshWidget> {
       headerTriggerDistance: widget.headerTriggerDistance ?? rSize(60),
       child: SmartRefresher(
         // enableOverScroll: widget.enableOverScroll,
+
         enablePullDown: widget.onRefresh != null,
         enablePullUp: widget.onLoadMore != null,
         header: widget.header != null

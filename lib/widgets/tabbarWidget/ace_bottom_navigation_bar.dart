@@ -277,7 +277,7 @@ class _ACEBottomNavigationBar extends State<ACEBottomNavigationBar>
           alignment: Alignment(0, 0),
           icon: Icon(
             isProtruding ? item.protrudingIcon : item.icon,
-            size: 40.0,
+            size: 22.rw,
             color: Colors.white,
           ),
           onPressed: () {

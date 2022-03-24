@@ -47,7 +47,7 @@ class Api {
     return "$cdnDomin/static$url";
   }
 
-  static String getResizeImgUrl(String url, int width, {bool print = false}) {
+  static String getResizeImgUrl(String url, num width, {bool print = false}) {
     if (url.startsWith("http")) {
       return url;
     }
@@ -226,6 +226,8 @@ class OrderApi {
   static const String order_list_undelivered = "/v1/order/list/undelivered";
   static const String order_list_receipt = "/v1/order/list/receipt";
   static const String order_list_aftersale = "/v1/order/list/unevaluated";
+  static const String order_list_undeal = "/v1/order/list/undeal";
+
 
   static const String order_detail = "/v1/order/detail";
   static const String order_cancel = "/v1/order/cancel";

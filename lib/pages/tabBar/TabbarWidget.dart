@@ -17,6 +17,7 @@ import 'package:jingyaoyun/pages/shopping_cart/shopping_cart_page.dart';
 import 'package:jingyaoyun/pages/tabBar/rui_code_listener.dart';
 import 'package:jingyaoyun/pages/user/user_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_car_page.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_user_page.dart';
 import 'package:jingyaoyun/utils/app_router.dart';
 import 'package:jingyaoyun/utils/print_util.dart';
 import 'package:jingyaoyun/utils/versionInfo/version_tool.dart';
@@ -200,7 +201,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
             AkuCollegePage(),
             DiscoveryPage(),
             UserManager.instance.isWholesale?WholesaleCarPage(canBack: false,): ShoppingCartPage(),
-            UserPage()
+            UserManager.instance.isWholesale?WholesaleUserPage(): UserPage()
           ],
         ),
         bottomNavigationBar: _changeBottomBar(context));

@@ -209,6 +209,44 @@ class UserAPI {
   String get get7 => '/v2/app/vip/is_used';
 
 
+  ///批发报表
+  String get piFaTable => '/v2/app/profit/sale/count';
+
+
+  ///企业提现列表
+  String get withdrawalCompanyList => '/v2/app/company/apply/list';
+
+
+  ///获取企业信息
+  String get getCompanyInfo => '/v2/app/company/info';
+
+
+  ///企业提现
+  String get applyWithdrawal => '/v2/app/company/apply';
+
+  ///联系人信息
+  String get getContractInfo => '/v2/app/company/contact';
+
+  ///预存款充值
+  String get depositRecharge => '/v2/app/company/deposit';
+
+  ///预存款充值列表
+  String get depositList => '/v2/app/company/deposit/list';
+
+  ///预存款钱包记录列表
+  String get depositRecordList => '/v2/app/company/record/list';
+
+
+  ///消息列表
+  String get getMessageList => '/v2/app/message/list';
+
+  ///消息已读
+  String get messageRead => '/v2/app/message/read';
+
+  ///消息全部已读
+  String get messageReadAll => '/v2/app/message/read_all';
+
+
 }
 
 class BenefitAPI {

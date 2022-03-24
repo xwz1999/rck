@@ -290,6 +290,7 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
       ),
       body: RefreshWidget(
         controller: _refreshController,
+
         onRefresh: () async {
           if (_type == PifaBenefit.piFa) {
             _models = await UserBenefitFunc.getPifaBenefit();

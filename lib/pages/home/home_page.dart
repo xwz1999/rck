@@ -54,6 +54,7 @@ import 'package:jingyaoyun/pages/wholesale/vip_shop_card_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholeasale_detail_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_customer_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_home_page.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_search_page.dart';
 import 'package:jingyaoyun/third_party/wechat/wechat_utils.dart';
 import 'package:jingyaoyun/utils/android_back_desktop.dart';
 import 'package:jingyaoyun/utils/app_router.dart';
@@ -621,7 +622,10 @@ class _HomePageState extends BaseStoreState<HomePage>
         ),
       ),
       onTap: () {
-        Get.to(SearchPage(
+        UserManager.instance.isWholesale?
+        Get.to(()=>WholesaleSearchPage()):
+        Get.to(
+            SearchPage(
           keyWords: keyWords,
         ));
         //AppRouter.push(context, RouteName.SEARCH);

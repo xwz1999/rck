@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
@@ -55,10 +56,12 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
   StateSetter _bottomStateSetter;
   int _totalNum = 0;
   bool _canback = false;
+  bool _onLoad = true;
 
   @override
   void initState() {
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
     if(widget.canBack!=null){
       _canback = widget.canBack;
     }
@@ -80,6 +83,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: _canback? RecookBackButton():null,
+        brightness: Brightness.light,
         backgroundColor: Colors.white,
         titleSpacing: 0,
         automaticallyImplyLeading: false,
@@ -168,7 +172,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
          _selectedGoods.clear();
          _totalNum = 0;
          _totalNum = _carList.length;
-
+         _onLoad = false;
         setState(() {
 
         });
@@ -176,7 +180,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
       },
 
       body:
-      // _recommendUserList.isNotEmpty?
+      _onLoad?SizedBox():
       _carList.isNotEmpty?ListView.builder(
           itemBuilder: (context, index) {
             if(index==0){

@@ -130,163 +130,56 @@ class _UserPageState extends BaseStoreState<UserPage> {
           body: ListView(
             physics: AlwaysScrollableScrollPhysics(),
             children: <Widget>[
-              UserLevelTool.currentRoleLevelEnum() != UserRoleLevel.Vip
-                  ? CapitalView()
-                  : SizedBox(),
-              UserLevelTool.currentRoleLevelEnum() != UserRoleLevel.Vip
-                  ? Padding(
+               CapitalView(),
+               Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 0,
                       ),
                       child: _buildDetailReward(),
-                    )
-                  : SizedBox(),
-              ...UserLevelTool.currentRoleLevelEnum() ==
-                      UserRoleLevel.subsidiary
-                  ? [
+                    ),
+
+              ...    [
+
+                UserLevelTool.currentRoleLevelEnum() ==
+                    UserRoleLevel.subsidiary?        _renderBenefitCard(
+                  leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
+                  title: '店铺收益',
+                  alertTitle: '店铺收益',
+                  title1: '未到账收益',
+                  title3: '已到账收益',
+                  content1: _userIncomeDataModel?.eAmount5 ?? 0,
+                  content2: _userIncomeDataModel?.eCount5 ?? 0,
+                  content3: _userIncomeDataModel?.amount5 ?? 0,
+                  content4: _userIncomeDataModel?.count5 ?? 0,
+                ):
                       _renderBenefitCard(
-                        leadingPath: R.ASSETS_USER_PINK_BUYER_WEBP,
-                        title: '批发收益',
-                        alertTitle: '批发收益',
-                        alertContent: ''.text.black.make(),
-                        title1: '未到账收益',
-                        title3: '已到账收益',
-                        content1: _userIncomeDataModel?.eAmount7 ?? 0,
-                        content2: _userIncomeDataModel?.eCount7 ?? 0,
-                        content3: _userIncomeDataModel?.amount7 ?? 0,
-                        content4: _userIncomeDataModel?.count7 ?? 0,
-                      ),
-                      _renderBenefitCard(
-                        leadingPath: R.ASSETS_USER_PINK_BUYER_WEBP,
-                        title: '店铺收益',
-                        alertTitle: '店铺收益',
-                        alertContent: ''.text.black.make(),
-                        title1: '未到账收益',
-                        title3: '已到账收益',
-                        content1: _userIncomeDataModel?.eAmount5 ?? 0,
-                        content2: _userIncomeDataModel?.eCount5 ?? 0,
-                        content3: _userIncomeDataModel?.amount5 ?? 0,
-                        content4: _userIncomeDataModel?.count5 ?? 0,
-                      ),
-                      _renderBenefitCard(
-                        leadingPath: R.ASSETS_USER_PINK_BUYER_WEBP,
-                        title: '自购分享收益',
-                        alertTitle: '自购分享收益',
-                        alertContent: ''.text.black.make(),
-                        title1: '未到账收益',
-                        title3: '已到账收益',
-                        content1: _userIncomeDataModel?.eAmount6 ?? 0,
-                        content2: _userIncomeDataModel?.eCount6 ?? 0,
-                        content3: _userIncomeDataModel?.amount6 ?? 0,
-                        content4: _userIncomeDataModel?.count6 ?? 0,
-                      ),
-                    ].sepWidget(
-              separate: UserLevelTool.currentRoleLevelEnum() ==
-              UserRoleLevel.Vip
-              ? 0.hb
-              : 20.hb)
-                  : [
-                      UserLevelTool.currentRoleLevelEnum() != UserRoleLevel.Vip
-                          ? _renderBenefitCard(
-                              leadingPath: R.ASSETS_USER_PINK_BUYER_WEBP,
-                              title: '自购收益',
-                              alertTitle: '自购收益',
-                              alertContent:
-                                  '您本人下单并确认收货后，您获得的佣金。'.text.black.make(),
-                              title1: '未到账收益',
-                              title3: '已到账收益',
-                              content1: _userIncomeDataModel?.eAmount1 ?? 0,
-                              content2: _userIncomeDataModel?.eCount1 ?? 0,
-                              content3: _userIncomeDataModel?.amount1 ?? 0,
-                              content4: _userIncomeDataModel?.count1 ?? 0,
-                            )
-                          : SizedBox(),
-                      UserLevelTool.currentRoleLevelEnum() != UserRoleLevel.Vip
-                          ? _renderBenefitCard(
                               leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
-                              title: '分享收益',
-                              alertTitle: '分享收益',
-                              alertContent:
-                                  '会员通过您分享的商品链接，购买并确认收货的佣金收益'.text.black.make(),
-                              title1: '未到账收益',
-                              title3: '已到账收益',
+                              title: '分享补贴',
+                              alertTitle: '分享补贴',
+                              title1: '未到账补贴',
+                              title3: '已到账补贴',
                               content1: _userIncomeDataModel?.eAmount2 ?? 0,
                               content2: _userIncomeDataModel?.eCount2 ?? 0,
                               content3: _userIncomeDataModel?.amount2 ?? 0,
                               content4: _userIncomeDataModel?.count2 ?? 0,
-                            )
-                          : SizedBox(),
-                      UserLevelTool.currentRoleLevelEnum() != UserRoleLevel.Vip
-                          ? _renderBenefitCard(
-                              leadingPath: R.ASSETS_USER_PINK_BUYER_WEBP,
-                              title: '品牌补贴',
-                              alertTitle: '品牌补贴',
-                              alertContent:
-                                  '您本人下单并确认收货后，您获得的佣金。'.text.black.make(),
-                              title1: '未到账补贴',
-                              title3: '已到账补贴',
-                              content1: _userIncomeDataModel?.eAmount3 ?? 0,
-                              content2: _userIncomeDataModel?.eCount3 ?? 0,
-                              content3: _userIncomeDataModel?.amount3 ?? 0,
-                              content4: _userIncomeDataModel?.count3 ?? 0,
-                            )
-                          : SizedBox(),
-                      UserLevelTool.currentRoleLevelEnum() ==
-                                  UserRoleLevel.Shop ||
-                              UserLevelTool.currentRoleLevelEnum() ==
-                                  UserRoleLevel.physical
-                          ? _renderBenefitCard(
+                            ),
+
+                UserLevelTool.currentRoleLevelEnum() ==
+                    UserRoleLevel.subsidiary?        _renderBenefitCard(
+                  leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
+                  title: '分享收益',
+                  alertTitle: '分享收益',
+                  title1: '未到账收益',
+                  title3: '已到账收益',
+                  content1: _userIncomeDataModel?.eAmount2 ?? 0,
+                  content2: _userIncomeDataModel?.eCount2 ?? 0,
+                  content3: _userIncomeDataModel?.amount2 ?? 0,
+                  content4: _userIncomeDataModel?.count2 ?? 0,
+                ):
+                    _renderBenefitCard(
                               leadingPath: R.ASSETS_USER_PINK_GROUP_WEBP,
                               title: '开店补贴',
                               alertTitle: '开店补贴',
-                              alertContent: Builder(
-                                builder: (context) {
-                                  //role == UserRoleLevel.Diamond_1 || role == UserRoleLevel.Diamond_2 || role == UserRoleLevel.Diamond_3
-                                  UserRoleLevel role =
-                                      UserLevelTool.currentRoleLevelEnum();
-
-                                  final part1 = [
-                                    TextSpan(
-                                      text: '自营店铺补贴',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    TextSpan(
-                                        text:
-                                            '：每月1日结算您自营店铺上一个自然月确认收货的订单，按自营店铺销售额的3%计算补贴。\n'),
-                                  ];
-                                  final part2 = [
-                                    TextSpan(
-                                      text: '分销店铺补贴',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    TextSpan(
-                                        text:
-                                            '：每月1日结算您分销店铺上一个自然月确认收货的订单，按分销店铺销售额的4%计算补贴。\n'),
-                                  ];
-                                  final part3 = [
-                                    TextSpan(
-                                      text: '代理店铺补贴',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    TextSpan(
-                                        text:
-                                            '：每月1日结算您代理店铺上一个自然月确认收货的订单，按代理店铺销售额的5%计算补贴。\n'),
-                                  ];
-                                  return Text.rich(TextSpan(
-                                    children: [
-                                      ...part1,
-                                      ...part2,
-                                      ...part3,
-                                    ],
-                                    style: TextStyle(
-                                      color: Color(0xFF333333),
-                                    ),
-                                  ));
-                                },
-                              ),
                               title1: '未到账补贴',
                               title3: '已到账补贴',
                               content1: _userIncomeDataModel?.eAmount4 ?? 0,
@@ -294,12 +187,9 @@ class _UserPageState extends BaseStoreState<UserPage> {
                               content3: _userIncomeDataModel?.amount4 ?? 0,
                               content4: _userIncomeDataModel?.count4 ?? 0,
                             )
-                          : SizedBox(),
+                          ,
                     ].sepWidget(
-                      separate: UserLevelTool.currentRoleLevelEnum() ==
-                              UserRoleLevel.Vip
-                          ? 0.hb
-                          : 20.hb),
+                      separate: 1.hb),
               20.w.heightBox,
               OrderCentralView(
                 clickListener: (int index) {
@@ -331,7 +221,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
     @required String leadingPath,
     @required String title,
     @required String alertTitle,
-    @required Widget alertContent,
+    Widget alertContent,
     @required String title1,
     @required String title3,
     @required num content1,
@@ -366,28 +256,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 height: 32.rw,
               ),
               title.text.size(16.rsp).black.make(),
-              MaterialButton(
-                padding: EdgeInsets.all(4.rw),
-                minWidth: 0,
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                child: Icon(
-                  Icons.help_outline,
-                  size: 12.rw,
-                  color: Color(0xFFA5A5A5),
-                ),
-                onPressed: () {
-                  // Alert.show(
-                  //     context,
-                  //     NormalContentDialog(
-                  //       title: alertTitle,
-                  //       content: alertContent,
-                  //       items: ["确认"],
-                  //       listener: (index) {
-                  //         Alert.dismiss(context);
-                  //       },
-                  //     ));
-                },
-              ),
+
               Spacer(),
               UserLevelTool.currentRoleLevelEnum() ==
                   UserRoleLevel.subsidiary? GestureDetector(

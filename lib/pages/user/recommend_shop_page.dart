@@ -167,7 +167,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
             ),
             200.wb,
 
-            UserLevelTool.currentRoleLevelEnum() ==UserRoleLevel.physical?GestureDetector(
+            GestureDetector(
               child: Container(
                 child: Row(
                   children: [
@@ -186,7 +186,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
 
                 });
               },
-            ):SizedBox()
+            )
           ],
         ),
         30.hb,

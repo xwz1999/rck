@@ -30,11 +30,16 @@ class UserBrief {
   MyShopping shareIncome;
   MyShopping teamIncome;
   OrderCenter orderCenter;
-  VersionInfo versionInfo;
   String identifier;
   int secret;
   int level;
   bool isOffline;
+  String start;
+  String end;
+  num deposit;///预存款 可使用
+  bool isEnterPrise;///是否是公司性质的账号 是的话提现走公司提现
+  num allDeposit;///累计充值
+
 
   bool get secretValue => secret == 1;
 
@@ -46,11 +51,15 @@ class UserBrief {
     this.shareIncome,
     this.teamIncome,
     this.orderCenter,
-    this.versionInfo,
     this.identifier,
     this.secret,
     this.level,
-    this.isOffline
+    this.isOffline,
+    this.end,
+    this.start,
+    this.deposit,
+    this.allDeposit,
+    this.isEnterPrise
   });
 
   UserBrief.empty() {
@@ -62,11 +71,15 @@ class UserBrief {
     this.teamIncome = MyShopping();
     this.orderCenter =
         OrderCenter(waitPay: 0, waitSend: 0, waitRecv: 0, afterSales: 0);
-    this.versionInfo = VersionInfo();
     this.identifier = "";
     this.secret = 0;
     this.level = 0;
     this.isOffline = false;
+    this.end = '';
+    this.start = '';
+    this.deposit = 0;
+    this.allDeposit = 0;
+    this.isEnterPrise = false;
   }
 
   UserBrief.fromJson(Map<String, dynamic> json) {
@@ -87,13 +100,15 @@ class UserBrief {
     orderCenter = json['orderCenter'] != null
         ? new OrderCenter.fromJson(json['orderCenter'])
         : null;
-    versionInfo = json['VersionInfo'] != null
-        ? new VersionInfo.fromJson(json['VersionInfo'])
-        : null;
     identifier = json['identifier'];
     secret = json['secret'];
     level = json['level'];
     isOffline = json['is_offline'];
+    start = json['start'];
+    end = json['end'];
+    deposit = json['deposit'];
+    allDeposit = json['all_deposit'];
+    isEnterPrise = json['is_enterprise'];
   }
 
   Map<String, dynamic> toJson() {
@@ -103,6 +118,11 @@ class UserBrief {
     data['identifier'] = this.identifier;
     data['level'] = this.level;
     data['is_offline'] = this.isOffline;
+    data['start'] = this.start;
+    data['end'] = this.end;
+    data['deposit'] = this.deposit;
+    data['all_deposit'] = this.allDeposit;
+    data['is_enterprise'] = this.isEnterPrise;
     if (this.myAssets != null) {
       data['myAssets'] = this.myAssets.toJson();
     }
@@ -117,9 +137,6 @@ class UserBrief {
     }
     if (this.orderCenter != null) {
       data['orderCenter'] = this.orderCenter.toJson();
-    }
-    if (this.versionInfo != null) {
-      data['VersionInfo'] = this.versionInfo.toJson();
     }
     return data;
   }
@@ -169,15 +186,33 @@ class MyShopping {
 }
 
 class OrderCenter {
-  num waitPay;
-  num waitSend;
-  num waitRecv;
-  num afterSales;
-  num evaNum;
-  num afterNum;
-  num collectionNum;
+  int waitPay;
+  int waitSend;
+  int waitRecv;
+  int afterSales;
+  int evaNum;
+  int afterNum;
+  int collectionNum;
+  int saleWaitDeal;
+  int saleWaitPay;
+  int saleWaitSend;
+  int saleWaitRecv;
 
-  OrderCenter({this.waitPay, this.waitSend, this.waitRecv, this.afterSales,this.evaNum,this.afterNum,this.collectionNum});
+
+
+
+  OrderCenter(
+      {this.waitPay,
+        this.waitSend,
+        this.waitRecv,
+        this.afterSales,
+        this.evaNum,
+        this.afterNum,
+        this.collectionNum,
+        this.saleWaitDeal,
+        this.saleWaitPay,
+        this.saleWaitSend,
+        this.saleWaitRecv});
 
   OrderCenter.fromJson(Map<String, dynamic> json) {
     waitPay = json['waitPay'];
@@ -187,6 +222,10 @@ class OrderCenter {
     evaNum = json['eva_num'];
     afterNum = json['after_num'];
     collectionNum = json['collection_num'];
+    saleWaitDeal = json['sale_wait_deal'];
+    saleWaitPay = json['sale_wait_pay'];
+    saleWaitSend = json['sale_wait_send'];
+    saleWaitRecv = json['sale_wait_recv'];
   }
 
   Map<String, dynamic> toJson() {
@@ -196,36 +235,16 @@ class OrderCenter {
     data['waitRecv'] = this.waitRecv;
     data['afterSales'] = this.afterSales;
     data['eva_num'] = this.evaNum;
-    data['after_num']= this.afterNum;
-    data['collection_num']= this.collectionNum;
+    data['after_num'] = this.afterNum;
+    data['collection_num'] = this.collectionNum;
+    data['sale_wait_deal'] = this.saleWaitDeal;
+    data['sale_wait_pay'] = this.saleWaitPay;
+    data['sale_wait_send'] = this.saleWaitSend;
+    data['sale_wait_recv'] = this.saleWaitRecv;
     return data;
   }
 }
 
-class VersionInfo {
-  String version;
-  String desc;
-  String createdAt;
-  num build;
-
-  VersionInfo({this.version, this.desc, this.createdAt, this.build});
-
-  VersionInfo.fromJson(Map<String, dynamic> json) {
-    version = json['version'];
-    desc = json['desc'];
-    createdAt = json['createdAt'];
-    build = json['build'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['version'] = this.version;
-    data['desc'] = this.desc;
-    data['createdAt'] = this.createdAt;
-    data['build'] = this.build;
-    return data;
-  }
-}
 
 // /*
 //  {

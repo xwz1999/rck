@@ -62,14 +62,16 @@ class ListItem {
   String createdAt;
   int incomeType;
   double amount;
+  num orderId;
 
-  ListItem({this.comment, this.createdAt, this.incomeType, this.amount});
+  ListItem({this.comment, this.createdAt, this.incomeType, this.amount,this.orderId});
 
   ListItem.fromJson(Map<String, dynamic> json) {
     comment = json['comment'];
     createdAt = json['createdAt'];
     incomeType = json['incomeType'];
     amount = json['amount'] + .0;
+    orderId = json['order_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -78,6 +80,7 @@ class ListItem {
     data['createdAt'] = this.createdAt;
     data['incomeType'] = this.incomeType;
     data['amount'] = this.amount;
+    data['order_id'] = this.orderId;
     return data;
   }
 }

@@ -8,15 +8,16 @@ import 'package:jingyaoyun/widgets/title_switch.dart';
 enum BottomTimePickerType {
   BottomTimePickerMonth, 
   BottomTimePickerYear, 
-  BottomTimePickerDay}
+  BottomTimePickerDay, }
 
 class BottomTimePicker extends StatefulWidget {
   final Function cancle;
   final Function(DateTime, BottomTimePickerType) submit;
   final List<BottomTimePickerType> timePickerTypes;
+  final bool yearChoose;
   // final BottomTimePickerType customTimePickerType;
   // BottomTimePicker({Key key, this.cancle, this.submit, this.customTimePickerType}) : super(key: key);
-  BottomTimePicker({Key key, this.cancle, this.submit, this.timePickerTypes}) : super(key: key);
+  BottomTimePicker({Key key, this.cancle, this.submit, this.timePickerTypes, this.yearChoose}) : super(key: key);
 
   @override
   _BottomTimePickerState createState() => _BottomTimePickerState();
@@ -149,6 +150,7 @@ class _BottomTimePickerState extends State<BottomTimePicker> {
     return Container(
       child: _timePickerTypes[_index] == BottomTimePickerType.BottomTimePickerMonth
       ? MonthSelectWidget(
+        yearChoose: widget.yearChoose,
         timeChange: (time){
           _dateTime = time;
         },

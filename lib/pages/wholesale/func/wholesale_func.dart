@@ -331,17 +331,17 @@ class WholesaleFunc {
       case WholesaleOrderListType.all:
         url = OrderApi.order_list_all;
         break;
-      case WholesaleOrderListType.unpaid:
+      case WholesaleOrderListType.unPay:
         url = OrderApi.order_list_unpaid;
         break;
       case WholesaleOrderListType.undelivered:
         url = OrderApi.order_list_undelivered;
         break;
-      case WholesaleOrderListType.receipt:
+      case WholesaleOrderListType.unReceipt:
         url = OrderApi.order_list_receipt;
         break;
-      case WholesaleOrderListType.afterSale:
-        url = OrderApi.order_list_aftersale;
+      case WholesaleOrderListType.unDeal:
+        url = OrderApi.order_list_undeal;
         break;
     }
 
@@ -368,14 +368,17 @@ class WholesaleFunc {
       case WholesaleOrderListType.all:
         status = 0;
         break;
-      case WholesaleOrderListType.unpaid:
+      case WholesaleOrderListType.unPay:
         status = 1;
         break;
       case WholesaleOrderListType.undelivered:
         status = 2;
         break;
-      case WholesaleOrderListType.receipt:
+      case WholesaleOrderListType.unReceipt:
         status = 3;
+        break;
+      case WholesaleOrderListType.unDeal:
+        status = 4;
         break;
     }
     Map<String, dynamic> params = {

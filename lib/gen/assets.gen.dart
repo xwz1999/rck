@@ -532,6 +532,8 @@ class Assets {
   static const AssetGenImage airIcon = AssetGenImage('assets/air_icon.png');
   static const AssetGenImage akuSchool = AssetGenImage('assets/aku_school.png');
   static const AssetGenImage ascSort = AssetGenImage('assets/ascSort.png');
+  static const AssetGenImage balanceDetails =
+      AssetGenImage('assets/balance_details.png');
   static const AssetGenImage benefitBg = AssetGenImage('assets/benefit_bg.png');
   static const AssetGenImage brandBg = AssetGenImage('assets/brand_bg.png');
   static const AssetGenImage businessCooperationPng =
@@ -557,10 +559,14 @@ class Assets {
       AssetGenImage('assets/cash_type_select_no.png');
   static const AssetGenImage cashTypeSelectYes =
       AssetGenImage('assets/cash_type_select_yes.png');
+  static const AssetGenImage cellIconP =
+      AssetGenImage('assets/cell_icon_p.png');
   static const AssetGenImage cellIconSaveMoney =
       AssetGenImage('assets/cell_icon_save_money.png');
   static const AssetGenImage cellIconShareMakeMoney =
       AssetGenImage('assets/cell_icon_share_make_money.png');
+  static const AssetGenImage cellIconShop =
+      AssetGenImage('assets/cell_icon_shop.png');
   static const AssetGenImage cellIconTeamBenefits =
       AssetGenImage('assets/cell_icon_team_benefits.png');
   static const AssetGenImage couponBg = AssetGenImage('assets/coupon_bg.png');
@@ -691,11 +697,57 @@ class Assets {
       AssetGenImage('assets/ic_card_zhengping.png');
   static const AssetGenImage icCardZigou =
       AssetGenImage('assets/ic_card_zigou.png');
+  static const AssetGenImage icKefu = AssetGenImage('assets/ic_kefu.png');
+  static const AssetGenImage icLxkf = AssetGenImage('assets/ic_lxkf.png');
   static const AssetGenImage icMessageClear =
       AssetGenImage('assets/ic_message_clear.png');
   static const AssetGenImage icMsgBet = AssetGenImage('assets/ic_msg_bet.png');
   static const AssetGenImage icMsgOrder =
       AssetGenImage('assets/ic_msg_order.png');
+  static const AssetGenImage icRecharge =
+      AssetGenImage('assets/ic_recharge.png');
+  static const AssetGenImage icRechargeBank =
+      AssetGenImage('assets/ic_recharge_bank.png');
+  static const AssetGenImage icRechargeBankRed =
+      AssetGenImage('assets/ic_recharge_bank_red.png');
+  static const AssetGenImage icRechargeF =
+      AssetGenImage('assets/ic_recharge_f.png');
+  static const AssetGenImage icRechargeOrderCancle =
+      AssetGenImage('assets/ic_recharge_order_cancle.png');
+  static const AssetGenImage icRechargeOrderPay =
+      AssetGenImage('assets/ic_recharge_order_pay.png');
+  static const AssetGenImage icRechargeRed =
+      AssetGenImage('assets/ic_recharge_red.png');
+  static const AssetGenImage icUserStorage =
+      AssetGenImage('assets/ic_user_storage.png');
+  static const AssetGenImage icUserWithdrawal =
+      AssetGenImage('assets/ic_user_withdrawal.png');
+  static const AssetGenImage icWithdrawalCopy =
+      AssetGenImage('assets/ic_withdrawal_copy.png');
+  static const AssetGenImage icWithdrawalGoto =
+      AssetGenImage('assets/ic_withdrawal_goto.png');
+  static const AssetGenImage icWithdrawalGotoRed =
+      AssetGenImage('assets/ic_withdrawal_goto_red.png');
+  static const AssetGenImage icWithdrawalKefu =
+      AssetGenImage('assets/ic_withdrawal_kefu.png');
+  static const AssetGenImage icWithdrawalStep1 =
+      AssetGenImage('assets/ic_withdrawal_step1.png');
+  static const AssetGenImage icWithdrawalStep1Red =
+      AssetGenImage('assets/ic_withdrawal_step1_red.png');
+  static const AssetGenImage icWithdrawalStep2 =
+      AssetGenImage('assets/ic_withdrawal_step2.png');
+  static const AssetGenImage icWithdrawalStep2Red =
+      AssetGenImage('assets/ic_withdrawal_step2_red.png');
+  static const AssetGenImage icWithdrawalStep3 =
+      AssetGenImage('assets/ic_withdrawal_step3.png');
+  static const AssetGenImage icWithdrawalStep3Red =
+      AssetGenImage('assets/ic_withdrawal_step3_red.png');
+  static const AssetGenImage icWithdrawalStep4 =
+      AssetGenImage('assets/ic_withdrawal_step4.png');
+  static const AssetGenImage icWithdrawalStep4Fail =
+      AssetGenImage('assets/ic_withdrawal_step4_fail.png');
+  static const AssetGenImage icWithdrawalStep5Success =
+      AssetGenImage('assets/ic_withdrawal_step5_success.png');
   static const $AssetsIconGen icon = $AssetsIconGen();
   static const AssetGenImage iconIncomeIn =
       AssetGenImage('assets/icon_income_in.png');
@@ -709,12 +761,20 @@ class Assets {
       AssetGenImage('assets/img_no_data.png');
   static const AssetGenImage imgNoDataSearch =
       AssetGenImage('assets/img_no_data_search.png');
+  static const AssetGenImage imgYuanquan =
+      AssetGenImage('assets/img_yuanquan.png');
   static const AssetGenImage inviteDetailEdit =
       AssetGenImage('assets/invite_detail_edit.png');
   static const AssetGenImage inviteDetailPhone =
       AssetGenImage('assets/invite_detail_phone.png');
   static const AssetGenImage inviteDetailTime =
       AssetGenImage('assets/invite_detail_time.png');
+  static const AssetGenImage iwPending = AssetGenImage('assets/iw_pending.png');
+  static const AssetGenImage iwReceived =
+      AssetGenImage('assets/iw_received.png');
+  static const AssetGenImage iwShipped = AssetGenImage('assets/iw_shipped.png');
+  static const AssetGenImage iwUnpayment =
+      AssetGenImage('assets/iw_unpayment.png');
   static const $AssetsJsonGen json = $AssetsJsonGen();
   static const AssetGenImage keyboardDeleteLeft =
       AssetGenImage('assets/keyboard_delete_left.png');
@@ -775,8 +835,15 @@ class Assets {
       AssetGenImage('assets/order_item_buy.png');
   static const AssetGenImage orderItemSell =
       AssetGenImage('assets/order_item_sell.png');
+  static const AssetGenImage orderPay = AssetGenImage('assets/order_pay.png');
+  static const AssetGenImage orderRefund =
+      AssetGenImage('assets/order_refund.png');
   static const AssetGenImage pifaPriceBg =
       AssetGenImage('assets/pifa_price_bg.png');
+  static const AssetGenImage pifaSubsidy =
+      AssetGenImage('assets/pifa_subsidy.png');
+  static const AssetGenImage pifaTableBg =
+      AssetGenImage('assets/pifa_table_bg.png');
   static const AssetGenImage pinkBottomArrow =
       AssetGenImage('assets/pink_bottom_arrow.png');
   static const AssetGenImage placeholderNew1x1A =
@@ -813,6 +880,8 @@ class Assets {
       AssetGenImage('assets/seven_vip_card.png');
   static const AssetGenImage share = AssetGenImage('assets/share.png');
   static const $AssetsShareBottomGen shareBottom = $AssetsShareBottomGen();
+  static const AssetGenImage shareSubsidy =
+      AssetGenImage('assets/share_subsidy.png');
   static const $AssetsShopGen shop = $AssetsShopGen();
   static const AssetGenImage shopAftersale =
       AssetGenImage('assets/shop_aftersale.png');
@@ -862,6 +931,8 @@ class Assets {
       AssetGenImage('assets/shop_received.png');
   static const AssetGenImage shopShipped =
       AssetGenImage('assets/shop_shipped.png');
+  static const AssetGenImage shopSubsidy =
+      AssetGenImage('assets/shop_subsidy.png');
   static const AssetGenImage shopUpgradeCodePageNodata =
       AssetGenImage('assets/shop_upgrade_code_page_nodata.png');
   static const AssetGenImage shoppingCartDownArrow =
@@ -934,6 +1005,8 @@ class Assets {
   static const AssetGenImage upgradePageUpgradeUsedCardBg =
       AssetGenImage('assets/upgrade_page_upgrade_used_card_bg.png');
   static const $AssetsUserGen user = $AssetsUserGen();
+  static const AssetGenImage userExtensionBg =
+      AssetGenImage('assets/user_extension_bg.png');
   static const AssetGenImage userInfoQrcodeMan =
       AssetGenImage('assets/user_info_qrcode_man.png');
   static const AssetGenImage userInfoQrcodePattern =
@@ -976,6 +1049,14 @@ class Assets {
       AssetGenImage('assets/user_page_appbar_icon_vip.png');
   static const AssetGenImage userPageIncomeTeamPage =
       AssetGenImage('assets/user_page_income_team_page.png');
+  static const AssetGenImage userPartnerBg =
+      AssetGenImage('assets/user_partner_bg.png');
+  static const AssetGenImage userStorageBg =
+      AssetGenImage('assets/user_storage_bg.png');
+  static const AssetGenImage userVipBg =
+      AssetGenImage('assets/user_vip_bg.png');
+  static const AssetGenImage userWithdrawalBg2 =
+      AssetGenImage('assets/user_withdrawal_bg2.png');
   static const AssetGenImage userpageMemberInvite1 =
       AssetGenImage('assets/userpage_member_invite_1.png');
   static const AssetGenImage userpageMemberInvite2 =
@@ -1008,6 +1089,14 @@ class Assets {
       AssetGenImage('assets/withdraw_alert_red_dialog.png');
   static const AssetGenImage withdrawAlertTopBg =
       AssetGenImage('assets/withdraw_alert_top_bg.png');
+  static const AssetGenImage withdrawalBg =
+      AssetGenImage('assets/withdrawal_bg.png');
+  static const AssetGenImage withdrawalFail =
+      AssetGenImage('assets/withdrawal_fail.png');
+  static const AssetGenImage withdrawalRecord =
+      AssetGenImage('assets/withdrawal_record.png');
+  static const AssetGenImage withdrawalSuccess =
+      AssetGenImage('assets/withdrawal_success.png');
 }
 
 class AssetGenImage extends AssetImage {

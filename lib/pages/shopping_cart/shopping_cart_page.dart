@@ -9,6 +9,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
@@ -60,6 +61,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
   bool _manageStatus;
   bool _editting;
   BuildContext _context;
+  bool _onLoad = true;
 
   // @override
   // bool get wantKeepAlive {
@@ -119,6 +121,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
       appBar: AppBar(
         leading: null,
         backgroundColor: Colors.white,
+        brightness: Brightness.light,
         titleSpacing: 0,
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -189,7 +192,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         ],
 
       ),
-      body: _buildList(context),
+      body:_buildList(context),
       bottomNavigationBar:
           SafeArea(bottom: widget.needSafeArea, child: _bottomTool()),
     );
@@ -470,9 +473,9 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         delegate: this,
         controller: _controller,
         itemBuilder: (context, index) {
-          return index == _controller.getData().length - 1
+          return  _onLoad?SizedBox():  (index == _controller.getData().length - 1
               ? _buildExtraItem(context, index)
-              : _buildItem(context, index);
+              : _buildItem(context, index));
         },
         refreshCallback: () {
           // if (UserManager.instance.haveLogin){
@@ -489,7 +492,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
             // if (goodsSimpleListModel != null) {
             //   _likeGoodsList = goodsSimpleListModel.data;
             // }
-
+            _onLoad = false;
             setState(() {});
           });
           // }else{
@@ -528,7 +531,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         SizedBox(
           height: rSize(30),
         ),
-        _likeGoodsList.isNotEmpty ? _buildLikeWidget() : SizedBox(),
+        _likeGoodsList!=null ? _buildLikeWidget() : SizedBox(),
       ],
     );
   }

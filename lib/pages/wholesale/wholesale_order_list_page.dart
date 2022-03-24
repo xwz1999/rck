@@ -31,11 +31,11 @@ import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
 
 enum WholesaleOrderListType {
-  all,
-  unpaid,
-  undelivered,
-  receipt,
-  afterSale,
+  all,///全部
+  unDeal,///待处理
+  unPay,///未付款
+  undelivered,///待发货
+  unReceipt,///待收货
 }
 
 class WholesaleOrderListPage extends StatefulWidget {

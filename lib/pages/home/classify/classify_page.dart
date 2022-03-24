@@ -101,7 +101,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
           //AppRouter.push(context, RouteName.SEARCH);
           if(UserManager.instance.isWholesale){
 
-            Get.to(()=>WholesaleSearchPage(jdType: 1,));
+            Get.to(()=>WholesaleSearchPage());
           }
           else{
             Get.to(SearchPage(jdType: 1,));

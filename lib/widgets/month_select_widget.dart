@@ -4,7 +4,8 @@ import 'package:flutter/widgets.dart';
 
 class MonthSelectWidget extends StatefulWidget {
   final Function(DateTime) timeChange;
-  MonthSelectWidget({Key key, this.timeChange}) : super(key: key);
+  final bool yearChoose;
+  MonthSelectWidget({Key key, this.timeChange, this.yearChoose = true}) : super(key: key);
 
   @override
   _MonthSelectWidgetState createState() => _MonthSelectWidgetState();
@@ -56,6 +57,7 @@ class _MonthSelectWidgetState extends State<MonthSelectWidget> {
        child: Row(
          children: <Widget>[
           //  Container(width: 40,),
+           widget.yearChoose?
            Expanded(
              child: CupertinoPicker(
                backgroundColor: Colors.white,
@@ -66,7 +68,7 @@ class _MonthSelectWidgetState extends State<MonthSelectWidget> {
                }, 
                children: _yearWidgetList
                ),
-           ),
+           ):SizedBox(),
            Expanded(
              child: CupertinoPicker(
                backgroundColor: Colors.white,

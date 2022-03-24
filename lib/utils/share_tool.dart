@@ -147,122 +147,12 @@ class ShareTool {
           height: 36,
         ), itemClick: () {
       Navigator.maybePop(context);
-      // WeChatScene scene = WeChatScene.SESSION;
-      // WeChatUtils.shareUrl(
-      //     url: goodsUrl,
-      //     netWorkThumbnail: Api.getImgUrl(miniPicurl),
-      //     // netWorkThumbnail: AppImageName.web_app_icon,
-      //     title: "仅$goodsPrice元 | $goodsName",
-      //     description: goodsDescription,
-      //     scene: scene);
       WeChatUtils.miniProgramShare(
         id: goodsId,
         netWorkThumbnail: Api.getImgUrl(miniPicurl),
         des: miniTitle,
       );
     });
-    // PlatformItem weiboItem = PlatformItem(
-    //     "微博",
-    //     Image.asset(
-    //       ShareToolIcon.weibo,
-    //       width: 36,
-    //       height: 36,
-    //     ), itemClick: () {
-    //   Navigator.maybePop(context);
-    //   // SSDKMap params = SSDKMap()
-    //   //   ..setGeneral(
-    //   //       miniTitle + " | 左家右厨全球精选好货，尊享超值福利！" + goodsUrl,
-    //   //       miniTitle + " | 左家右厨全球精选好货，尊享超值福利！" + goodsUrl,
-    //   //       null,
-    //   //       // "https://cdn.reecook.cn/static/default/appicon.png",
-    //   //       null,
-    //   //       AppImageName.recook_icon_60,
-    //   //       goodsUrl,
-    //   //       goodsUrl,
-    //   //       null,
-    //   //       null,
-    //   //       AppImageName.recook_icon_60,
-    //   //       SSDKContentTypes.webpage);
-    //   SSDKMap params = SSDKMap()
-    //     ..setGeneral(
-    //         miniTitle + " | 左家右厨全球精选好货，尊享超值福利！" + goodsUrl,
-    //         miniTitle + " | 左家右厨全球精选好货，尊享超值福利！" + goodsUrl,
-    //         null,
-    //         null,
-    //         null,
-    //         goodsUrl,
-    //         goodsUrl,
-    //         null,
-    //         null,
-    //         null,
-    //         SSDKContentTypes.webpage);
-    //   // SSDKMap params = SSDKMap()
-    //   // ..setSinaLinkCard(
-    //   //   miniTitle + " | 左家右厨全球精选好货，尊享超值福利！",
-    //   //   "全球精选好货，尊享超值福利！",
-    //   //   goodsUrl,
-    //   //   "全球精选好货，尊享超值福利！",
-    //   //   "https://cdn.reecook.cn/static/default/appicon.png",
-    //   //   "120",
-    //   //   "120",
-    //   // );
-    //   SharesdkPlugin.share(ShareSDKPlatforms.sina, params,
-    //       (SSDKResponseState state, Map userdata, Map contentEntity,
-    //           SSDKError error) {
-    //     // if (error != null) {
-    //     //   Toast.showError(jsonEncode(error.rawData));
-    //     // }
-    //   });
-    // });
-    // PlatformItem qqItem = PlatformItem(
-    //     "QQ",
-    //     Image.asset(
-    //       R.ASSETS_SHARE_BOTTOM_QQ_PNG,
-    //       width: 36,
-    //       height: 36,
-    //     ), itemClick: () {
-    //   Navigator.maybePop(context);
-    //   SSDKMap params = SSDKMap()
-    //     ..setQQ(
-    //         "$miniTitle | 左家右厨全球精选好货，尊享超值福利！",
-    //         "全球精选好货，尊享超值福利！",
-    //         goodsUrl,
-    //         null,
-    //         null,
-    //         null,
-    //         null,
-    //         "",
-    //         "https://cdn.reecook.cn/static/default/appicon.png",
-    //         null,
-    //         null,
-    //         goodsUrl,
-    //         null,
-    //         null,
-    //         SSDKContentTypes.webpage,
-    //         ShareSDKPlatforms.qq);
-    //   SharesdkPlugin.share(ShareSDKPlatforms.qq, params,
-    //       (SSDKResponseState state, Map userdata, Map contentEntity,
-    //           SSDKError error) {
-    //     // if (error != null) {
-    //     //   Toast.showError(jsonEncode(error.rawData));
-    //     // }
-    //   });
-    // });
-    // PlatformItem copyurl = PlatformItem(
-    //     "复制链接",
-    //     Image.asset(
-    //       R.ASSETS_SHARE_BOTTOM_LINK_PNG,
-    //       width: 36,
-    //       height: 36,
-    //     ), itemClick: () {
-    //   Navigator.maybePop(context);
-    //   ClipboardData data = new ClipboardData(text: goodsUrl);
-    //   Clipboard.setData(data);
-    //   Toast.showCustomSuccess(
-    //     '链接复制成功',
-    //     delayedDuration: Duration(seconds: 0),
-    //   );
-    // });
     PlatformItem qrcode = PlatformItem(
         "二维码海报",
         Image.asset(
@@ -276,22 +166,6 @@ class ShareTool {
             arguments: ShareGoodsPosterPage.setArguments(goodsId: goodsId));
       });
     });
-    PlatformItem addToLiveGoodsCart = PlatformItem(
-      '加到直播车',
-      Image.asset(
-        R.ASSETS_SHARE_BOTTOM_LIVE_CART_PNG,
-        width: 36,
-        height: 36,
-      ),
-      itemClick: () {
-        HttpManager.post(LiveAPI.addToCart, {
-          'goodsIds': [int.parse(goodsId)],
-        }).then((result) {
-          showToast(result.data['msg']);
-        });
-        Navigator.pop(context);
-      },
-    );
 
     PlatformItem ruiCode = PlatformItem(
       '云口令',
@@ -374,12 +248,10 @@ class ShareTool {
       },
     );
     List<PlatformItem> itemList = [
-      // miniItem,
+
       qrcode,
       wechatItem,
-      // weiboItem,
-      // qqItem,
-      // copyurl,
+
     ];
     // if (ShareTool.qqInstalled) {
     //   itemList.add(qqItem);
@@ -392,6 +264,12 @@ class ShareTool {
     ShareDialog.show(context,
         customTitle: _shareTitle(amount), items: itemList, action: (index) {});
   }
+
+
+
+
+
+
 
   inviteShare(BuildContext context, {Widget customTitle, String code = ""}) {
     if (UserManager.instance.user.info.id == 0) {

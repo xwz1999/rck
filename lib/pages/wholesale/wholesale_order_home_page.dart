@@ -35,7 +35,7 @@ class WholesaleOrderHomePage extends StatefulWidget {
 class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage>
     with TickerProviderStateMixin {
   TitleSwitchController _titleSwitchController = TitleSwitchController();
-  List<String> _items = ["全部", "未付款", "待发货", "待收货"];
+  List<String> _items = ["全部","待处理","未付款", "待发货", "待收货"];
   TabController _allTabController;
   TabController _tabController;
   TabController _storeTabController;
@@ -77,9 +77,9 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
     _allTabController.addListener(() {
       _titleSwitchController.changeIndex(_allTabController.index);
     });
-    _tabController = TabController(initialIndex: index, length: 4, vsync: this);
+    _tabController = TabController(initialIndex: index, length: 5, vsync: this);
     _storeTabController =
-        TabController(initialIndex: 0, length: 4, vsync: this);
+        TabController(initialIndex: 0, length: 5, vsync: this);
 
   }
 
@@ -94,7 +94,7 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
         appBackground: Colors.white,
         elevation: 0,
       ),
-      body: UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary? _newBuildBody():_normalBuildBody(),
+      body: _newBuildBody()
       // body: _buildBody(),
     );
   }
@@ -235,17 +235,22 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
                     ),
                     WholesaleOrderListPage(
                       controller: _orderListControllers[1],
-                      type: WholesaleOrderListType.unpaid,
+                      type: WholesaleOrderListType.unDeal,
                       positionType: _positionType,
                     ),
                     WholesaleOrderListPage(
                       controller: _orderListControllers[2],
-                      type: WholesaleOrderListType.undelivered,
+                      type: WholesaleOrderListType.unPay,
                       positionType: _positionType,
                     ),
                     WholesaleOrderListPage(
                       controller: _orderListControllers[3],
-                      type: WholesaleOrderListType.receipt,
+                      type: WholesaleOrderListType.undelivered,
+                      positionType: _positionType,
+                    ),
+                    WholesaleOrderListPage(
+                      controller: _orderListControllers[4],
+                      type: WholesaleOrderListType.unReceipt,
                       positionType: _positionType,
                     ),
                     // Container()
@@ -284,17 +289,22 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
                     ),
                     WholesaleOrderListPage(
                       controller: _storeOrderListControllers[1],
-                      type: WholesaleOrderListType.unpaid,
+                      type: WholesaleOrderListType.unDeal,
                       positionType: _positionType,
                     ),
                     WholesaleOrderListPage(
                       controller: _storeOrderListControllers[2],
-                      type: WholesaleOrderListType.undelivered,
+                      type: WholesaleOrderListType.unPay,
                       positionType: _positionType,
                     ),
                     WholesaleOrderListPage(
                       controller: _storeOrderListControllers[3],
-                      type: WholesaleOrderListType.receipt,
+                      type: WholesaleOrderListType.undelivered,
+                      positionType: _positionType,
+                    ),
+                    WholesaleOrderListPage(
+                      controller: _storeOrderListControllers[4],
+                      type: WholesaleOrderListType.unReceipt,
                       positionType: _positionType,
                     ),
                     // OrderListPage(controller: _storeOrderListControllers[3], type: ShopOrderListType.receipt, positionType: _positionType,),
@@ -310,65 +320,65 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
     );
   }
 
-  _normalBuildBody(){
-    return Container(
-      child: CacheTabBarView(
-        controller: _allTabController,
-        children: <Widget>[
-          Column(
-            children: <Widget>[
-              Container(
-                  color: Colors.white,
-                  child: SCTabBar(
-                    labelColor: Colors.white,
-                    needRefresh: true,
-                    labelPadding: EdgeInsets.zero,
-                    controller: _tabController,
-                    indicatorSize: TabBarIndicatorSize.label,
-                    indicatorColor: AppColor.themeColor,
-                    indicatorPadding:
-                    EdgeInsets.symmetric(horizontal: rSize(20)),
-                    itemBuilder: (int index) {
-                      return _item(index);
-                    },
-                  )),
-              Expanded(
-                child: CacheTabBarView(
-                  controller: _tabController,
-                  children: <Widget>[
-                    WholesaleOrderListPage(
-                      controller: _orderListControllers[0],
-                      type: WholesaleOrderListType.all,
-                      positionType: _positionType,
-                    ),
-                    WholesaleOrderListPage(
-                      controller: _orderListControllers[1],
-                      type: WholesaleOrderListType.unpaid,
-                      positionType: _positionType,
-                    ),
-                    WholesaleOrderListPage(
-                      controller: _orderListControllers[2],
-                      type: WholesaleOrderListType.undelivered,
-                      positionType: _positionType,
-                    ),
-                    WholesaleOrderListPage(
-                      controller: _orderListControllers[3],
-                      type: WholesaleOrderListType.receipt,
-                      positionType: _positionType,
-                    ),
-                    // Container()
-                    // ShopOrderListPage(type: ShopOrderListType.afterSale,),
-                    // OrderAfterSalePage(arguments: OrderAfterSalePage.setArguments(OrderAfterSaleType.shopPage, _positionType, _orderListControllers[4]),),
-                  ],
-                ),
-              )
-            ],
-          ),
-
-        ],
-      ),
-    );
-  }
+  // _normalBuildBody(){
+  //   return Container(
+  //     child: CacheTabBarView(
+  //       controller: _allTabController,
+  //       children: <Widget>[
+  //         Column(
+  //           children: <Widget>[
+  //             Container(
+  //                 color: Colors.white,
+  //                 child: SCTabBar(
+  //                   labelColor: Colors.white,
+  //                   needRefresh: true,
+  //                   labelPadding: EdgeInsets.zero,
+  //                   controller: _tabController,
+  //                   indicatorSize: TabBarIndicatorSize.label,
+  //                   indicatorColor: AppColor.themeColor,
+  //                   indicatorPadding:
+  //                   EdgeInsets.symmetric(horizontal: rSize(20)),
+  //                   itemBuilder: (int index) {
+  //                     return _item(index);
+  //                   },
+  //                 )),
+  //             Expanded(
+  //               child: CacheTabBarView(
+  //                 controller: _tabController,
+  //                 children: <Widget>[
+  //                   WholesaleOrderListPage(
+  //                     controller: _orderListControllers[0],
+  //                     type: WholesaleOrderListType.all,
+  //                     positionType: _positionType,
+  //                   ),
+  //                   WholesaleOrderListPage(
+  //                     controller: _orderListControllers[1],
+  //                     type: WholesaleOrderListType.unpaid,
+  //                     positionType: _positionType,
+  //                   ),
+  //                   WholesaleOrderListPage(
+  //                     controller: _orderListControllers[2],
+  //                     type: WholesaleOrderListType.undelivered,
+  //                     positionType: _positionType,
+  //                   ),
+  //                   WholesaleOrderListPage(
+  //                     controller: _orderListControllers[3],
+  //                     type: WholesaleOrderListType.receipt,
+  //                     positionType: _positionType,
+  //                   ),
+  //                   // Container()
+  //                   // ShopOrderListPage(type: ShopOrderListType.afterSale,),
+  //                   // OrderAfterSalePage(arguments: OrderAfterSalePage.setArguments(OrderAfterSaleType.shopPage, _positionType, _orderListControllers[4]),),
+  //                 ],
+  //               ),
+  //             )
+  //           ],
+  //         ),
+  //
+  //       ],
+  //     ),
+  //   );
+  // }
 
   _item(int index) {
     String title = _items[index];

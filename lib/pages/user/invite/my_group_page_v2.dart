@@ -184,7 +184,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
             children: [
               54.hb,
               16.wb,
-             "我的粉丝".text.bold.size(14.rsp).black.make(),
+             "我的客户".text.bold.size(14.rsp).black.make(),
               // MaterialButton(
               //   padding: EdgeInsets.all(4.rw),
               //   minWidth: 0,

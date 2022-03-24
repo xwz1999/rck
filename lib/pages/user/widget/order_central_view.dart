@@ -46,7 +46,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
               children: <Widget>[
                 Expanded(
                   child: Text(
-                    '订单中心',
+                    '零售订单',
                     style:
                         AppTextStyle.generate(16, fontWeight: FontWeight.w700),
                   ),
@@ -56,7 +56,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                   // ),
                 ),
                 CustomImageButton(
-                  title: "查看明细",
+                  title: "全部订单",
                   fontSize: 12 * 2.sp,
                   color: Colors.black45,
                   onPressed: () {
