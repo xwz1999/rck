@@ -215,6 +215,20 @@ class OrderPresenterImpl extends OrderPresenterI {
   }
 
   @override
+  Future<HttpResultModel<BaseModel>> createRecookPayOrderDeposit(int userId, int orderId, String password) async {
+    ResultData resultData = await getModel().createRecookPayOrderDeposit(userId, orderId, password);
+    if (!resultData.result) {
+      return HttpResultModel(resultData.code, null, resultData.msg, false);
+    }
+    BaseModel resultModel = BaseModel.fromJson(resultData.data);
+    if (resultModel.code != HttpStatus.SUCCESS) {
+      return HttpResultModel(resultModel.code, null, resultModel.msg, false);
+    }
+    return HttpResultModel(resultModel.code, resultModel, resultModel.msg, true);
+  }
+
+
+  @override
   Future<HttpResultModel<BaseModel>> createZeroPayOrder(int userId, int orderId) async {
     ResultData resultData = await getModel().createZeroPayOrder(userId, orderId);
     if (!resultData.result) {

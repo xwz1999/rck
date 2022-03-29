@@ -18,6 +18,7 @@ import 'package:jingyaoyun/pages/home/items/consumer_notification_page.dart';
 import 'package:jingyaoyun/pages/home/items/goods_item_order.dart';
 import 'package:jingyaoyun/pages/home/items/oversea_accept_license_page.dart';
 import 'package:jingyaoyun/pages/user/address/receiving_address_page.dart';
+import 'package:jingyaoyun/pages/user/order/order_detail_page.dart';
 import 'package:jingyaoyun/pages/user/user_verify.dart';
 import 'package:jingyaoyun/pages/user/widget/recook_check_box.dart';
 import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
@@ -449,33 +450,33 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
               child: Row(
 
                 children: <Widget>[
-                  RichText(
-                    text: TextSpan(
-
-                        style: AppTextStyle.generate(14 * 2.sp,
-                            color: Colors.grey[600]),
-                        children: [
-                          TextSpan(
-                              text: "实付款: ",
-                              style: AppTextStyle.generate(
-                                14 * 2.sp,color: Color(0xFF333333)
-                              )),
-                          TextSpan(
-                              text:
-                              "￥",
-                              style: AppTextStyle.generate(
-                                14 * 2.sp,
-                                color: Color(0xFFC92219),
-                              )),
-                          TextSpan(
-                              text:
-                                  "￥${_orderModel.total.toStringAsFixed(2)}",
-                              style: AppTextStyle.generate(
-                                22 * 2.sp,
-                                color: Color(0xFFC92219),
-                              )),
-                        ]),
-                  ),
+                  // RichText(
+                  //   text: TextSpan(
+                  //
+                  //       style: AppTextStyle.generate(14 * 2.sp,
+                  //           color: Colors.grey[600]),
+                  //       children: [
+                  //         TextSpan(
+                  //             text: "实付款: ",
+                  //             style: AppTextStyle.generate(
+                  //               14 * 2.sp,color: Color(0xFF333333)
+                  //             )),
+                  //         TextSpan(
+                  //             text:
+                  //             "￥",
+                  //             style: AppTextStyle.generate(
+                  //               14 * 2.sp,
+                  //               color: Color(0xFFC92219),
+                  //             )),
+                  //         TextSpan(
+                  //             text:
+                  //                 "￥${_orderModel.total.toStringAsFixed(2)}",
+                  //             style: AppTextStyle.generate(
+                  //               22 * 2.sp,
+                  //               color: Color(0xFFC92219),
+                  //             )),
+                  //       ]),
+                  // ),
                   Spacer(),
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: rSize(14)),
@@ -512,10 +513,20 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
               height: 50.rw,
               alignment: Alignment.center,
               padding: EdgeInsets.only(left: 15.rw,right: 15.rw,top: 5.rw,bottom: 5.rw),
-              color: Color.fromARGB(255, 250, 231, 235),
-              child: Text(
-                "注意：物流费、库存及发货时间请提前跟客服确认，未确认不发货！货款及物流费需要分开支付。",
-                style: TextStyle(color: Colors.red, fontSize: 13 * 2.sp),
+              color: Color(0xFFF3E3E4),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '温馨提示:1、提交订单后，物流费将由平台跟供应商确认并反馈',
+                    style: TextStyle(color: Color(0xFFD5101A), fontSize: 12 * 2.sp),
+                  ),
+                  Text(
+
+                      '                 2、节假日期间批发业务暂不处理。',
+                    style: TextStyle(color: Color(0xFFD5101A), fontSize: 12 * 2.sp),
+                  ),
+                ],
               ),
             ),
             bottomWidget,
@@ -552,13 +563,20 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
     }
     UserManager.instance.refreshShoppingCart.value = true;
     UserManager.instance.refreshShoppingCartNumber.value = true;
-    AppRouter.pushAndReplaced(context, RouteName.ORDER_PREPAY_PAGE,
-        arguments: OrderPrepayPage.setArguments(
-          resultModel.data,
-          goToOrder: true,
-          canUseBalance: true,
-          isPifa: true
-        ));
+
+
+    AppRouter.pushAndReplaced(
+        globalContext, RouteName.ORDER_DETAIL,
+        arguments:
+        OrderDetailPage.setArguments(resultModel.data.data.id,true));
+
+    // AppRouter.pushAndReplaced(context, RouteName.ORDER_PREPAY_PAGE,
+    //     arguments: OrderPrepayPage.setArguments(
+    //       resultModel.data,
+    //       goToOrder: true,
+    //       canUseBalance: true,
+    //       isPifa: true
+    //     ));
   }
 
   _customer(){

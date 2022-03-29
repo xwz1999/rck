@@ -7,9 +7,11 @@ import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/app_image_resources.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/goods_hot_sell_list_model.dart';
 import 'package:jingyaoyun/pages/home/classify/brandgoods_list_page.dart';
 import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
+import 'package:jingyaoyun/pages/wholesale/more_goods/whoesale_goods_normal.dart';
 import 'package:jingyaoyun/utils/app_router.dart';
 import 'package:jingyaoyun/widgets/goods_item.dart';
 
@@ -169,6 +171,12 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> with Tic
       constraints: BoxConstraints(minWidth: 150),
       child: Stack(
         children: <Widget>[
+
+          UserManager.instance.isWholesale?
+          WholesaleGoodsItem.hotList(
+            buildCtx: context,
+            data: data,
+          ):
           GoodsItemWidget.hotList(
             gifController: GifController(vsync: this)
               ..repeat(
@@ -190,13 +198,18 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> with Tic
   }
 
   _getGoodsHotSellList() async {
+    Map<String, dynamic> data = {};
+    if (UserManager.instance.isWholesale) {
+      data.putIfAbsent('is_sale', () => true);
+    }
+
     ResultData resultData = await HttpManager.post(
         _goodsListTempType == GoodsListTempType.recookMake
             ? HomeApi.recook_make
             : _goodsListTempType == GoodsListTempType.homeAppliances
                 ? HomeApi.digital_list
                 : HomeApi.home_live_list,
-        {});
+        data);
     if (!resultData.result) {
       showError(resultData.msg);
       return;

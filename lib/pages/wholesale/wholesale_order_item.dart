@@ -51,7 +51,8 @@ class WholesaleOrderItem extends StatefulWidget {
       this.applySalesReturn,
       this.evaluation,
       this.delete,
-      this.confirm, this.itemClick})
+      this.confirm,
+      this.itemClick})
       : super(key: key);
 
   @override
@@ -70,29 +71,28 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
   _buildContainer(context) {
     _orderStatus();
     return Container(
-        margin: EdgeInsets.symmetric(vertical: rSize(6), horizontal: rSize(10)),
-        padding: EdgeInsets.all(rSize(8)),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(rSize(10))),
-            color: Colors.white),
-        child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                // _orderStatusText(),
-                GestureDetector(
-                  onTap: widget.itemClick,
-                  child: Column(
-                    children: [
-                      _brandList(context),
-                      _orderTotalPrice(),
-                    ],
-                  ),
-                ),
-                _bottomOperations(),
+      margin: EdgeInsets.symmetric(vertical: rSize(6), horizontal: rSize(10)),
+      padding: EdgeInsets.all(rSize(8)),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(Radius.circular(rSize(10))),
+          color: Colors.white),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: <Widget>[
+          // _orderStatusText(),
+          GestureDetector(
+            onTap: widget.itemClick,
+            child: Column(
+              children: [
+                _brandList(context),
+                _orderTotalPrice(),
               ],
             ),
-
-        );
+          ),
+          _bottomOperations(),
+        ],
+      ),
+    );
   }
 
   Text _orderStatusText() {
@@ -144,7 +144,7 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
                   children: [
                 TextSpan(
                     text:
-                        "${widget.orderModel.goodsTotalAmount.toStringAsFixed(2)}",
+                        "${widget.orderModel.actualTotalAmount.toStringAsFixed(2)}",
                     style: AppTextStyle.generate(16 * 2.sp))
               ])),
         ],
@@ -157,114 +157,101 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
     switch (widget.orderModel.status) {
       case 0:
         children
-          ..add(
-          //     CustomImageButton(
-          //   padding:
-          //   EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(10)),
-          //   title: "更多",
-          //   borderRadius: BorderRadius.all(Radius.circular(40)),
-          //   color: Colors.grey[500],
-          //   fontSize: 14 * 2.sp,
-          //   //border: Border.all(color: Colors.grey[700], width: 0.3),
-          //   onPressed: () {
-          //     // if (widget.cancelOrder == null) return;
-          //     // widget.cancelOrder(widget.orderModel, callback: () {
-          //     //   setState(() {});
-          //     // });
-          //   },
+          // ..add(
+          //   PopupMenuButton(
+          //       offset: Offset(0, 0),
+          //       padding: EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(10)),
+          //       color: Colors.white,
+          //       shape: RoundedRectangleBorder(
+          //         borderRadius: BorderRadius.circular(10),
+          //
+          //
+          //       ),
+          //       child:
+          //       Container(
+          //         width: 70.rw,
+          //         height: 28.rw,
+          //         alignment: Alignment.centerLeft,
+          //         padding: EdgeInsets.only(left: 10.rw),
+          //         child:
+          //             Text('更多',
+          //                 style: TextStyle(
+          //                   fontSize: 14.rsp,
+          //                   color: Colors.grey[600],
+          //                 )),
+          //       ),
+          //       onSelected:  (String value) {
+          //               print('加入购物车');
+          //               if(widget.orderModel.goodsList!=null){
+          //                 List<GoodsDTO> list = [];
+          //                 widget.orderModel.goodsList.forEach((element)  {
+          //                   list.add(GoodsDTO(skuId:element.skuId,quantity:element.quantity));
+          //                 });
+          //                 WholesaleFunc.addToShoppingCart(list);
+          //               }
+          //
+          //
+          //       },
+          //       itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+          //             PopupMenuItem(
+          //                 value: "1",
+          //                 child:
+          //                     Text("加入购物车",
+          //                         style: TextStyle(
+          //                           fontWeight: FontWeight.bold,
+          //                           fontSize: 14.rsp,
+          //                           color: Color(0xFF333333),
+          //                         )),
+          //                 ),
+          //             // PopupMenuItem(
+          //             //     value: "2",
+          //             //     child: Text("修改地址",
+          //             //         style: TextStyle(
+          //             //           fontWeight: FontWeight.bold,
+          //             //           fontSize: 14.rsp,
+          //             //           color: Color(0xFF333333),
+          //             //         ))),
+          //
+          //           ]
+          //   ),
           // )
-            PopupMenuButton(
-                offset: Offset(0, 0),
-                padding: EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(10)),
-                color: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-
-
-                ),
-                child:
-                Container(
-                  width: 70.rw,
-                  height: 28.rw,
-                  alignment: Alignment.centerLeft,
-                  padding: EdgeInsets.only(left: 10.rw),
-                  child:
-                      Text('更多',
-                          style: TextStyle(
-                            fontSize: 14.rsp,
-                            color: Colors.grey[600],
-                          )),
-                ),
-                onSelected:  (String value) {
-                        print('加入购物车');
-                        if(widget.orderModel.goodsList!=null){
-                          List<GoodsDTO> list = [];
-                          widget.orderModel.goodsList.forEach((element)  {
-                            list.add(GoodsDTO(skuId:element.skuId,quantity:element.quantity));
-                          });
-                          WholesaleFunc.addToShoppingCart(list);
-                        }
-
-
-                },
-                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                      PopupMenuItem(
-                          value: "1",
-                          child:
-                              Text("加入购物车",
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14.rsp,
-                                    color: Color(0xFF333333),
-                                  )),
-                          ),
-                      // PopupMenuItem(
-                      //     value: "2",
-                      //     child: Text("修改地址",
-                      //         style: TextStyle(
-                      //           fontWeight: FontWeight.bold,
-                      //           fontSize: 14.rsp,
-                      //           color: Color(0xFF333333),
-                      //         ))),
-
-                    ]
-            ),
-          )
           ..add(Spacer())
-          ..add(CustomImageButton(
-            padding:
-                EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(10)),
-            title: "取消订单",
-            borderRadius: BorderRadius.all(Radius.circular(40)),
-            color: Colors.grey[700],
-            fontSize: 14 * 2.sp,
-            border: Border.all(color: Colors.grey[700], width: 0.3),
-            onPressed: () {
-              if (widget.cancelOrder == null) return;
-              widget.cancelOrder(widget.orderModel, callback: () {
-                setState(() {});
-              });
-            },
-          ))
-          ..add(Container(
-            width: rSize(8),
-          ))
-          ..add(CustomImageButton(
-            title: "去付款",
-            padding:
-                EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(10)),
-//            backgroundColor: AppColor.themeColor,
-            color: AppColor.themeColor,
-            fontSize: 14 * 2.sp,
-            border: Border.all(color: AppColor.themeColor, width: 0.3),
-            borderRadius: BorderRadius.all(Radius.circular(40)),
-            onPressed: () {
-              if (widget.goToPay == null) return;
-              widget.goToPay(widget.orderModel, callback: () {
-                setState(() {});
-              });
-            },
-          ));
+          // ..add(CustomImageButton(
+          //   padding:
+          //       EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(10)),
+          //   title: "取消订单",
+          //   borderRadius: BorderRadius.all(Radius.circular(40)),
+          //   color: Colors.grey[700],
+          //   fontSize: 14 * 2.sp,
+          //   border: Border.all(color: Colors.grey[700], width: 0.3),
+          //   onPressed: () {
+          //     if (widget.cancelOrder == null) return;
+          //     widget.cancelOrder(widget.orderModel, callback: () {
+          //       setState(() {});
+          //     });
+          //   },
+          // ))
+          // ..add(Container(
+          //   width: rSize(8),
+          // ))
+
+          ..add(widget.orderModel.canPay
+              ? CustomImageButton(
+                  title: "去支付",
+                  padding: EdgeInsets.symmetric(
+                      vertical: rSize(2), horizontal: rSize(10)),
+                  color: AppColor.themeColor,
+                  fontSize: 14 * 2.sp,
+                  border: Border.all(color: AppColor.themeColor, width: 0.3),
+                  borderRadius: BorderRadius.all(Radius.circular(40)),
+                  onPressed: () {
+                    if (widget.goToPay == null) return;
+                    widget.goToPay(widget.orderModel, callback: () {
+                      setState(() {});
+                    });
+                  },
+                )
+              : SizedBox());
         break;
       case 1:
         break;
@@ -335,12 +322,10 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
     );
   }
 
-  Future<dynamic> _addToShoppingCart(int skuID, String skuName, int quantity) async {
+  Future<dynamic> _addToShoppingCart(
+      int skuID, String skuName, int quantity) async {
     ResultData resultData = await addToShoppingCart(
-        UserManager.instance.user.info.id,
-        skuID,
-        skuName,
-        quantity);
+        UserManager.instance.user.info.id, skuID, skuName, quantity);
     if (!resultData.result) {
       ReToast.err(text: resultData.msg);
 
@@ -356,7 +341,6 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
     UserManager.instance.refreshShoppingCartNumber.value = true;
     UserManager.instance.refreshShoppingCartNumberWithPage.value = true;
     ReToast.success(text: '加入成功');
-
   }
 
   Future<ResultData> addToShoppingCart(
@@ -416,7 +400,10 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
           // icon: CustomCacheImage(
           //   imageUrl: Api.getResizeImgUrl(goods.brandLogoUrl, 30),
           // ),
-          icon: Image.asset(R.ASSETS_WHOLESALE_WHOLESALE_PI_PNG, width: 20,),
+          icon: Image.asset(
+            R.ASSETS_WHOLESALE_WHOLESALE_PI_PNG,
+            width: 20,
+          ),
           contentSpacing: rSize(8),
           style: AppTextStyle.generate(
             14 * 2.sp,
@@ -438,32 +425,50 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
   _orderStatus() {
     switch (widget.orderModel.status) {
       case 0:
-        _status = "未付款";
+        if (widget.orderModel.canPay)
+          _status = "待付款";
+        else {
+          _status = "待处理";
+        }
         _color = Color.fromARGB(255, 249, 61, 6);
         break;
       case 1:
-        _status = "支付成功";
+
+        _status =  _expressStatus();
         _color = Colors.red;
-//        _expressStatus(status, color);
+
         break;
       case 2:
-        _status = "订单已取消";
+        _status = "已取消";
         _color = Colors.grey;
         break;
       case 3:
-        _status = "订单已过期";
+        _status = "已过期";
         _color = Colors.grey;
         break;
       case 4:
-        _status = "交易已完成";
+        _status = "已完成";
         _color = AppColor.priceColor;
         break;
       case 5:
-        _status = "交易已关闭";
+        _status = "已关闭";
         _color = Colors.red[300];
         break;
     }
   }
+
+  _expressStatus() {
+
+    switch (widget.orderModel.expressStatus) {
+      case 0:
+        return "待发货";
+      case 2:
+        return "已发货";
+      case 1:
+        return "已发货";
+    }
+  }
+
 
   _goodsList() {
     return ListView.builder(
@@ -543,7 +548,8 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
                                           color: Color(0xFFCC1B4F),
-                                          borderRadius: BorderRadius.circular(3.rw),
+                                          borderRadius:
+                                              BorderRadius.circular(3.rw),
                                         ),
                                         child: Text(
                                           '自提',
@@ -563,10 +569,11 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
                                         width: 24.rw,
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
-                                                                                color: goods.countryIcon == null
+                                          color: goods.countryIcon == null
                                               ? Color(0xFFCC1B4F)
                                               : Colors.transparent,
-                                          borderRadius: BorderRadius.circular(3.rw),
+                                          borderRadius:
+                                              BorderRadius.circular(3.rw),
                                         ),
                                         child: goods.countryIcon == null
                                             ? Text(
@@ -587,7 +594,9 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
                                       )
                                     : SizedBox(),
                               ),
-                              TextSpan(text: goods.goodsName,style: TextStyle(fontSize: 12.rsp)),
+                              TextSpan(
+                                  text: goods.goodsName,
+                                  style: TextStyle(fontSize: 12.rsp)),
                             ],
                           ),
                           maxLines: 2,
@@ -601,8 +610,11 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
                       Spacer(),
                       Column(
                         children: [
-                          "¥${goods.unitPrice.toStringAsFixed(2)}".text.size(12.rsp).color(Color(0xFF333333)).make(),
-
+                          "¥${goods.unitPrice.toStringAsFixed(2)}"
+                              .text
+                              .size(12.rsp)
+                              .color(Color(0xFF333333))
+                              .make(),
                         ],
                       )
                     ],
@@ -618,7 +630,8 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
                             borderRadius: BorderRadius.circular(2),
                             color: Color(0xffeff1f6),
                           ),
-                          constraints: BoxConstraints(maxWidth: 150.rw),//增加最大宽度
+                          constraints: BoxConstraints(maxWidth: 150.rw),
+                          //增加最大宽度
                           padding: const EdgeInsets.symmetric(
                               vertical: 3, horizontal: 6),
                           child: Text(

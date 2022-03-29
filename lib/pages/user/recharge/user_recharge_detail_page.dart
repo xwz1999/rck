@@ -19,6 +19,7 @@ import 'package:jingyaoyun/pages/user/user_cash_withdraw_page.dart';
 import 'package:jingyaoyun/widgets/bottom_time_picker.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/image_scaffold.dart';
+import 'package:jingyaoyun/widgets/no_data_view.dart';
 import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
@@ -40,20 +41,21 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
   ///查询的月份
   DateTime _date = DateTime.now();
 
-  String get _month => DateUtil.formatDate(_date, format: 'yyyy-MM');
+  String get _start =>  DateTime(_date.year,_date.month,1).toIso8601String();
+  
+  String get _end => DateTime(_date.year,_date.month+1,1).toIso8601String();
 
-  /// 余额类型 1=订单支付 2=订单退款 3=提现 4=提现失败 5=瑞币转入
   int _status = 0;
 
   List _chooseItems = ['全部明细', '订单支付', '订单取消', '预存款充值'];
 
   String _choose = '全部明细';
 
-  GSRefreshController _refreshController = GSRefreshController();
-
+  GSRefreshController _refreshController = GSRefreshController(initialRefresh: true);
 
 
   int _page = 0;
+  bool _onLoad = true;
 
   List<RechargeHistory> list = [];
 
@@ -265,7 +267,8 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
   @override
   void initState() {
     super.initState();
-
+    _refreshController =
+    GSRefreshController(initialRefresh: true);
 
   }
 
@@ -287,7 +290,7 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
               white: true,
             ),
             Text(
-              '余额明细',
+              '交易明细',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 18.rsp,
@@ -387,6 +390,21 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
                         } else {
                           _choose = '全部明细';
                         }
+                        switch(_choose){
+                          case '全部明细':
+                            _status = 0;
+                            break;
+                          case '订单支付':
+                            _status = 1;
+                            break;
+                          case '订单取消':
+                            _status = 2;
+                            break;
+                          case '预存款充值':
+                            _status = 3;
+                            break;
+                        }
+                        _refreshController.requestRefresh();
                         setState(() {});
                       });
                     },
@@ -450,26 +468,19 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
             ),
             Flexible(
               child: RefreshWidget(
-                color: Colors.white,
+                color: Color(0xFF999999),
                 controller: _refreshController,
                 onRefresh: () {
-                  _page = 1;
-                  getRechargeHistoryList().then((models) {
+                  _page = 0;
+                  getRechargeHistoryList(_status,_start,_end).then((models) {
                     setState(() {
                       list = models;
+                      _onLoad = false;
                     });
+
                     _refreshController.refreshCompleted();
                   });
                 },
-                // onLoadMore: () {
-                //   _page++;
-                //   getRechargeHistoryList().then((models) {
-                //     setState(() {
-                //       list.addAll(models);
-                //     });
-                //     _refreshController.loadComplete();
-                //   });
-                // },
 
                 onLoadMore: () {
                   _page++;
@@ -478,7 +489,7 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
                     _refreshController.loadComplete();
                     _refreshController.loadNoData();
                   }else{
-                    getRechargeHistoryList().then((models) {
+                    getRechargeHistoryList(_status,_start,_end).then((models) {
                       setState(() {
                         list.addAll(models);
                       });
@@ -487,7 +498,11 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
                   }
 
                 },
-                body: ListView.separated(
+                body:
+                _onLoad?SizedBox():
+                list == null ||list.length == 0
+                    ? NoDataView(title:'没有数据哦～' ,):
+                ListView.separated(
                   itemBuilder: (context, index) =>
                       _buildListItem(list[index]),
                   separatorBuilder: (context, index) => Divider(
@@ -506,11 +521,14 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
 
   }
 
-  Future<List<RechargeHistory>> getRechargeHistoryList() async {
+  Future<List<RechargeHistory>> getRechargeHistoryList(int kind,String start,String end) async {
     ResultData resultData =
     await HttpManager.post(APIV2.userAPI.depositRecordList, {
       'page': _page,
       'limit': 10,
+      'start':start,
+      'end':end,
+      'kind':kind
     });
     if (!resultData.result) {
       Toast.showError(resultData.msg);

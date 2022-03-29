@@ -87,6 +87,7 @@ class OrderModel extends Object {
   List<OrderGoodsModel> goodsList;
 
   bool canConfirm;
+  bool canPay;
   // List<OrderBrandsModel> brands;
 
   OrderModel(
@@ -120,6 +121,7 @@ class OrderModel extends Object {
     this.totalGoodsCount,
     this.goodsList,
     this.canConfirm,
+      this.canPay
   );
 
   factory OrderModel.fromJson(Map<String, dynamic> srcJson) =>

@@ -83,18 +83,11 @@ class _UserBalancePageState extends State<UserBalancePage> {
           ],
         ),
       ),
-      body: Flexible(
-        child:           RefreshWidget(
-            controller: _refreshController,
-            color: Colors.white,
-            onRefresh: () async {
-              //await UserBenefitFunc.getPiFaTable(1);
-              setState(() {});
-              _refreshController.refreshCompleted();
-            },
+
+
             body: _bodyWidget()
-        )
-      ),
+
+
 
     );
 
@@ -138,7 +131,7 @@ class _UserBalancePageState extends State<UserBalancePage> {
               ),
               70.hb,
 
-              Padding(
+              UserManager.instance.userBrief.isEnterPrise?SizedBox():  Padding(
                 padding:  EdgeInsets.symmetric(horizontal:38.rw ),
                 child: GestureDetector(
                   onTap: () async{
@@ -149,7 +142,6 @@ class _UserBalancePageState extends State<UserBalancePage> {
                     }else{
                       Get.to(()=>WithDrawPage());
                     }
-
 
                   },
                   child: Container(

@@ -38,7 +38,7 @@ enum WholesaleOrderListType {
   unReceipt,///待收货
 }
 
-class WholesaleOrderListPage extends StatefulWidget {
+class WholesaleOrderListPage extends StatefulWidget  {
   final WholesaleOrderListType type;
   final OrderPositionType positionType;
   final OrderListController controller;
@@ -56,19 +56,21 @@ class WholesaleOrderListPage extends StatefulWidget {
   }
 }
 
-class _WholesaleOrderListPageState extends State<WholesaleOrderListPage>{
+class _WholesaleOrderListPageState extends State<WholesaleOrderListPage> with AutomaticKeepAliveClientMixin{
 
   GSRefreshController _refreshController;
   List<OrderModel> orderList = [];
   List<GuideOrderItemModel> guideOrderList = [];
   int _page = 0;
   bool isNodata = false;
+  OrderListPresenterImpl _presenter;
 
   @override
   void initState() {
     super.initState();
      _refreshController =
     GSRefreshController(initialRefresh: true);
+    _presenter = OrderListPresenterImpl();
 
   }
 
@@ -181,8 +183,6 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage>{
                     orderModel.status = result;
                   });
                 }));
-//        GSDialog.of(context).showLoadingDialog(context, "");
-//        _presenter.getOrderDetail(UserManager.instance.user.info.id, _controller.getData()[index].id);
               },
               orderModel: orderList[index],
               cancelOrder: (OrderModel order, {callback}) {
@@ -296,8 +296,9 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage>{
           listener: (int index) {
             Alert.dismiss(context);
             if (index == 0) return;
-            GSDialog.of(context).showLoadingDialog(context, "");
-            //_presenter.deleteOrder(UserManager.instance.user.info.id, order.id);
+            //GSDialog.of(context).showLoadingDialog(context, "");
+            _presenter.deleteOrder(UserManager.instance.user.info.id, order.id);
+            _refreshController.requestRefresh();
           },
         ));
   }
@@ -311,9 +312,10 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage>{
           listener: (int index) {
             Alert.dismiss(context);
             if (index == 0) return;
-            GSDialog.of(context).showLoadingDialog(context, "");
-            //_presenter.cancelOrder(UserManager.instance.user.info.id, order.id,
-            //    order: order);
+           // GSDialog.of(context).showLoadingDialog(context, "");
+            _presenter.cancelOrder(UserManager.instance.user.info.id, order.id,
+               order: order);
+            _refreshController.requestRefresh();
           },
         ));
   }
@@ -324,7 +326,7 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage>{
     OrderPrepayModel model = OrderPrepayModel("SUCCESS", data, "");
 
     AppRouter.push(context, RouteName.ORDER_PREPAY_PAGE,
-        arguments: OrderPrepayPage.setArguments(model,isPifa: true));
+        arguments: OrderPrepayPage.setArguments(model,isPifa: true,fromTo: '1'));
 //    Future.delayed(Duration(seconds: 1), ()
 //    {
 //    AppRouter.push(globalContext, RouteName.ORDER_PREPAY_PAGE, arguments: OrderPrepayPage.setArguments(order));
@@ -332,7 +334,7 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage>{
   }
 
   _confirmReceiptClick(OrderModel orderModel) {
-    //_confirmModel = null;
+
     Alert.show(
         context,
         NormalContentDialog(
@@ -351,10 +353,11 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage>{
               Alert.dismiss(context);
             } else {
               Alert.dismiss(context);
-              GSDialog.of(context).showLoadingDialog(context, "");
-              // _presenter.confirmReceipt(
-              //     UserManager.instance.user.info.id, orderModel.id);
-              // _confirmModel = orderModel;
+             // GSDialog.of(context).showLoadingDialog(context, "");
+              _presenter.confirmReceipt(
+                  UserManager.instance.user.info.id, orderModel.id);
+              _refreshController.requestRefresh();
+
             }
           },
         ));
@@ -388,4 +391,8 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage>{
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

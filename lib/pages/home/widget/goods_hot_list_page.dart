@@ -13,6 +13,7 @@ import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/goods_hot_sell_list_model.dart';
 import 'package:jingyaoyun/pages/home/classify/brandgoods_list_page.dart';
 import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
+import 'package:jingyaoyun/pages/wholesale/more_goods/whoesale_goods_normal.dart';
 import 'package:jingyaoyun/utils/app_router.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/goods_item.dart';
@@ -175,6 +176,13 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
       constraints: BoxConstraints(minWidth: 150),
       child: Stack(
         children: <Widget>[
+
+          UserManager.instance.isWholesale?
+          WholesaleGoodsItem.hotList(
+            buildCtx: context,
+            data: data,
+          ):
+
           GoodsItemWidget.hotList(
             gifController: _gifController,
             notShowAmount: true,
@@ -186,6 +194,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
             buildCtx: context,
             data: data,
           ),
+
           Positioned(
             width: 20,
             height: 23,
@@ -368,6 +377,9 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
       data.putIfAbsent('status', () => 2);
     }
     data.putIfAbsent('user_id', () => UserManager.instance.user.info.id);
+    if (UserManager.instance.isWholesale) {
+      data.putIfAbsent('is_sale', () => true);
+    }
     ResultData resultData = await HttpManager.post(
         widget.isHot ? HomeApi.hot_sell_list : HomeApi.preferentialList, data);
     if (!resultData.result) {

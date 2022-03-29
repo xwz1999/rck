@@ -28,12 +28,14 @@ Data _$DataFromJson(Map<String, dynamic> json) {
     (json['amount'] as num)?.toDouble(),
     (json['unrecordedAmount'] as num)?.toDouble(),
     json['havePassword'] as bool,
+    json['balance'] as num
     );
 }
 
 Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'id': instance.id,
       'amount': instance.amount,
+      'balance':instance.balance,
       'unrecordedAmount': instance.unrecordedAmount,
       'havePassword': instance.havePassword,
     };

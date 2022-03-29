@@ -492,6 +492,8 @@ class $AssetsWeatherCakeGen {
 class $AssetsWholesaleGen {
   const $AssetsWholesaleGen();
 
+  AssetGenImage get waitDealImg =>
+      const AssetGenImage('assets/wholesale/wait_deal_img.png');
   AssetGenImage get wholesaleCall =>
       const AssetGenImage('assets/wholesale/wholesale_call.png');
   AssetGenImage get wholesaleCopyt =>
@@ -722,6 +724,8 @@ class Assets {
       AssetGenImage('assets/ic_user_storage.png');
   static const AssetGenImage icUserWithdrawal =
       AssetGenImage('assets/ic_user_withdrawal.png');
+  static const AssetGenImage icWaitPay =
+      AssetGenImage('assets/ic_wait_pay.png');
   static const AssetGenImage icWithdrawalCopy =
       AssetGenImage('assets/ic_withdrawal_copy.png');
   static const AssetGenImage icWithdrawalGoto =

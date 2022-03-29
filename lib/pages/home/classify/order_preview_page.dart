@@ -634,17 +634,17 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
         children: <Widget>[
 
           _titleRow("商品总价", "",
-              "合计:￥${_orderModel.data.goodsTotalAmount.toStringAsFixed(2)}",'共$totalNum件',subTitleColor: Color(0xFF999999),
+              "合计:￥${(_orderModel.data.actualTotalAmount-_orderModel.data.coinTotalAmount).toStringAsFixed(2)}",'共$totalNum件',subTitleColor: Color(0xFF999999),
               rightTitleColor: Colors.black),
 
 
           _orderModel.data.coinTotalAmount!=0?10.hb:SizedBox(),
 
-          _orderModel.data.coinTotalAmount!=0?_titleRow( UserLevelTool.currentRoleLevel()!='合伙人'?  "${UserLevelTool.currentRoleLevel()}折扣":'折扣', "",
-              "-￥${_orderModel.data.coinTotalAmount.toStringAsFixed(2)}",'',
-              rightTitleColor: Colors.black):SizedBox(),
-
-          10.hb,
+          // _orderModel.data.coinTotalAmount!=0?_titleRow( UserLevelTool.currentRoleLevel()!='合伙人'?  "${UserLevelTool.currentRoleLevel()}折扣":'折扣', "",
+          //     "-￥${_orderModel.data.coinTotalAmount.toStringAsFixed(2)}",'',
+          //     rightTitleColor: Colors.black):SizedBox(),
+          //
+          // 10.hb,
 
           _titleRow("合计运费", "",
               "+￥${_orderModel.data.expressTotalFee.toStringAsFixed(2)}",'',

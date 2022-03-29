@@ -50,7 +50,9 @@ class Data extends Object {
 
   bool havePassword;
 
-  Data(this.id,this.amount,this.unrecordedAmount, this.havePassword);
+  num balance;
+
+  Data(this.id,this.amount,this.unrecordedAmount, this.havePassword,this.balance);
 
   factory Data.fromJson(Map<String, dynamic> srcJson) => _$DataFromJson(srcJson);
 

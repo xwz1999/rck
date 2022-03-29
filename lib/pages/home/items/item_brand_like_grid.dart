@@ -35,24 +35,14 @@ class BrandLikeGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // bool isSoldOut = goods.inventory <= 0 ? true : false;
     bool sellout = false;
-    bool isSeckill = false;
+   
 
     if(this.goods.inventory>0){
       sellout = false;
     }else{
       sellout = true;
     }
-    if(this.goods.secKill!=null){
-      if(this.goods.secKill.secKill==1){
-        isSeckill = true;
-        if(this.goods.secKill.realStock>0){
-          sellout = false;
-        }else{
-          sellout = true;
-        }
-        //秒杀中 通过seckill中的库存和销量来判断是否是否售完
-      }
-    }
+
     double width = (MediaQuery.of(context).size.width - 10) / 2;
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(8)),
@@ -209,16 +199,7 @@ class BrandLikeGridItem extends StatelessWidget {
             ),
             Row(
               children: [
-                isSeckill?Container(
-                  alignment: Alignment.center,
-                  child: Text(
-                    "赚" +  (this.goods.secKill.secKillCommission??0).toStringAsFixed(2),
-                    style: TextStyle(
-                      color: Color(0xFFC92219),
-                      fontSize: 12 * 2.sp,
-                    ),
-                  ),
-                ):
+
                 Text(
                   '¥${this.goods.originalPrice.toStringAsFixed(2)}',
                   style: TextStyle(
@@ -230,7 +211,7 @@ class BrandLikeGridItem extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  isSeckill?"已售${this.goods.secKill.saleNum}件":"已售${this.goods.salesVolume}件",
+                 "已售${this.goods.salesVolume}件",
                   style: TextStyle(
                     color: Color(0xff595757),
                     fontSize: 12 * 2.sp,
@@ -256,20 +237,13 @@ class BrandLikeGridItem extends StatelessWidget {
                     child: ExtendedText.rich(
                       TextSpan(children: [
                         TextSpan(
-                          text: isSeckill?"¥":"券后¥",
-                          style: AppTextStyle.generate(isSeckill?18.rsp:12 * 2.sp,
+                          text: "到手价 ¥",
+                          style: AppTextStyle.generate(12 * 2.sp,
                               color: Color(0xffc70404),
                               fontWeight: FontWeight.w500),
                         ),
                         TextSpan(
-                          text:
-                          isSeckill?"${(this.goods.secKill.secKillMinPrice -
-                              this.goods.secKill.secKillMinPrice.toInt()) > 0
-                              ? this.goods.secKill.secKillMinPrice.toStringAsFixed(1)
-                              : this.goods.secKill.secKillMinPrice.toStringAsFixed(0)}"
-                              :"${(this.goods.discountPrice - this.goods.discountPrice.toInt()) > 0
-                              ? this.goods.discountPrice.toStringAsFixed(1)
-                              : this.goods.discountPrice.toStringAsFixed(0)}",
+                          text: "${(this.goods.discountPrice-this.goods.commission).toStringAsFixed(2)}",
                           // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
                           style: TextStyle(
                               letterSpacing: -1,

@@ -263,6 +263,10 @@ class OrderApi {
   static const String order_recook_pay_order_create =
       "/v1/pay/recookpay/order/create";
 
+
+  static const String order_recook_pay_order_create_deposit =
+      "/v1/pay/recookpay/order/create_deposit";
+
   static const String order_verify_pay_status = "/v1/pay/order/query";
   static const String order_verify_pay_status_lifang =
       "/v2/app/liFang_ticketing/order_pay/pay/status";

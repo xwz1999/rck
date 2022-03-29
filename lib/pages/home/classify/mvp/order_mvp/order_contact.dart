@@ -41,9 +41,13 @@ abstract class OrderModelI extends MvpModel {
   createAliPayOrderLifang(int userId, int orderId);
   createWeChatOrderLifang(int userId, int orderId);
   createRecookPayOrder(int userId, int orderId, String password);
+  createRecookPayOrderDeposit (int userId, int orderId, String password);
   createZeroPayOrder(int userId, int orderId);
   verifyOrderPayStatus(int orderId);
   verifyOrderPayStatusLifang(int orderId);
+
+
+
 }
 
 abstract class OrderViewI extends MvpView {}

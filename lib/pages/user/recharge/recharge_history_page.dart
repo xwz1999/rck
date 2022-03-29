@@ -8,26 +8,30 @@ import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/models/RechargehistoryModel.dart';
+import 'package:jingyaoyun/models/recharge_record_mdel.dart';
 import 'package:jingyaoyun/models/withdraw_history_model.dart';
 import 'package:jingyaoyun/models/withdraw_historyc_model.dart';
 import 'package:jingyaoyun/pages/user/banlance/withdraw_page_third.dart';
 import 'package:jingyaoyun/pages/user/banlance/withdraw_result_page.dart';
 import 'package:jingyaoyun/pages/user/cash_withdraw_result_page.dart';
+import 'package:jingyaoyun/pages/user/recharge/recharge_result_page.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 
-class WithdrawHistoryPage extends StatefulWidget {
+class RechargeHistoryPage extends StatefulWidget {
   @override
-  _WithdrawHistoryPageState createState() => _WithdrawHistoryPageState();
+  _RechargeHistoryPageState createState() => _RechargeHistoryPageState();
 }
 
-class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
+class _RechargeHistoryPageState extends BaseStoreState<RechargeHistoryPage> {
   GSRefreshController _refreshController;
-  WithdrawHistoryCModel _withdrawHistoryModel;
-  List<History> list;
-  bool _onLoad = true;
+  RechargeRecordModel _withdrawHistoryModel;
+  List<RechargeRecord> list;
+
   int _page = 0;
+  bool _onLoad = true;
 
   @override
   void initState() {
@@ -40,7 +44,7 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
     return Scaffold(
       backgroundColor: AppColor.frenchColor,
       appBar: CustomAppBar(
-        title: "提现记录",
+        title: "审核记录",
         themeData: AppThemes.themeDataGrey.appBarTheme,
         elevation: 0,
         background: AppColor.frenchColor,
@@ -60,8 +64,8 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
                     getWithdrawHistoryList().then((models) {
                       setState(() {
                         list = models;
+                        _onLoad = false;
                       });
-                      _onLoad = false;
                       _refreshController.refreshCompleted();
                     });
                   },
@@ -82,7 +86,6 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
 
                   },
                   body:
-
                   _onLoad?SizedBox():
                   list == null || list.length == 0
                       ? noDataView("没有记录...")
@@ -90,10 +93,10 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
                           padding: EdgeInsets.zero,
                           itemCount: list.length,
                           itemBuilder: (BuildContext context, int index) {
-                            History data = list[index];
+                            RechargeRecord data = list[index];
                             return GestureDetector(
                               onTap: () {
-                                Get.to(() => WithDrawResultPage(history: data,));
+                                Get.to(() => RechargeResultPage(history: data,));
                                 // AppRouter.push(context,
                                 //     RouteName.CASH_WITHDRAW_RESULT_PAGE,
                                 //     arguments:
@@ -109,7 +112,7 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
     );
   }
 
-  _itemWidget(History model) {
+  _itemWidget(RechargeRecord model) {
     return Container(
       color: Colors.white,
       height: 88,
@@ -126,8 +129,8 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
                       ? Color(0xFFFF9628)
                       : model.state == 2
                           ? Color(0xFFD5101A)
-                          : model.state == 3
-                              ? Color(0xFFD5101A)
+                          : model.state == 99
+                              ? Color(0xFFAAAAAA)
                               : Color(0xFFAAAAAA),
                 ),
                 Flexible(
@@ -141,7 +144,7 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
                           Row(
                             children: [
                               Text(
-                                "提现金额 ",
+                                "充值 ",
                                 style: TextStyle(
                                     color: Color(0xFF333333), fontSize: 16.rsp),
                               ),
@@ -169,9 +172,7 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
                         model.state == 1
                             ? "待审核"
                             : model.state == 2
-                                ? "待打款"
-                                : model.state == 3
-                                    ? '提现成功'
+                                ? "充值成功"
                                     : model.state == 99
                                         ? '已驳回'
                                         : '',
@@ -180,8 +181,8 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
                                 ? Color(0xFFFF9628)
                                 : model.state == 2
                                     ? Color(0xFFD5101A)
-                                    : model.state == 3
-                                        ? Color(0xFFD5101A)
+                                    : model.state == 99
+                                        ? Color(0xFFAAAAAA)
                                         : Color(0xFFAAAAAA),
                             fontSize: 15),
                       ),
@@ -201,9 +202,9 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
     );
   }
 
-  Future<List<History>> getWithdrawHistoryList() async {
+  Future<List<RechargeRecord>> getWithdrawHistoryList() async {
     ResultData resultData =
-        await HttpManager.post(APIV2.userAPI.withdrawalCompanyList, {
+        await HttpManager.post(APIV2.userAPI.depositList, {
       'page': _page,
       'limit': 10,
     });
@@ -211,8 +212,8 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
       Toast.showError(resultData.msg);
       return [];
     }
-    WithdrawHistoryCModel model =
-        WithdrawHistoryCModel.fromJson(resultData.data);
+    RechargeRecordModel model =
+    RechargeRecordModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
       Toast.showError(model.msg);
       return [];

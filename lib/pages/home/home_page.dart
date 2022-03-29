@@ -281,6 +281,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                 Container(
                   height: 25.rw,
                   width: 80.rw,
+                  alignment: Alignment.center,
                   decoration: BoxDecoration(
                     color: Colors.transparent,
                     borderRadius: BorderRadius.circular(16.rw),
@@ -292,6 +293,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                           (BuildContext context, StateSetter setState) {
                         _wholesaleState = setState;
                         return Row(
+                          //mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             10.wb,
                             Text(
@@ -300,7 +302,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                                   color: UserManager.instance.isWholesale
                                       ? Colors.white
                                       : _backgroundColor,
-                                  fontSize: 14.rsp),
+                                  fontSize: 14.rsp,height: 1.1),
                             ),
                             Spacer(),
                             Text(
@@ -309,7 +311,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                                   color: !UserManager.instance.isWholesale
                                       ? Colors.white
                                       : _backgroundColor,
-                                  fontSize: 14.rsp),
+                                  fontSize: 14.rsp,height: 1.1),
                             ),
                             10.wb,
                           ],

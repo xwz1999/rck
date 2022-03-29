@@ -22,6 +22,7 @@ import 'package:jingyaoyun/pages/user/order/order_logistics_list_page.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 
@@ -31,7 +32,7 @@ class OrderDetailPage extends StatefulWidget {
   const OrderDetailPage({Key key, this.arguments}) : super(key: key);
 
   static setArguments(int orderId,bool isPifa) {
-    return {"orderId": orderId};
+    return {"orderId": orderId,'isPifa':isPifa};
   }
 
   @override
@@ -63,9 +64,12 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: "订单详情",
-        themeData: AppThemes.themeDataGrey.appBarTheme,
-      ),
+      title: orderDetail==null?'':getTitle(),
+      themeData: AppThemes.themeDataGrey.appBarTheme,
+      elevation: 0,
+      background: AppColor.frenchColor,
+      appBackground: AppColor.frenchColor,
+    ),
       body: orderDetail == null ? loadingView() : _buildBody(),
       backgroundColor: AppColor.frenchColor,
       bottomNavigationBar: orderDetail == null ? null : _bottomBar(),
@@ -88,7 +92,9 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
         physics: AlwaysScrollableScrollPhysics(),
         // physics: BouncingScrollPhysics(),
         children: <Widget>[
-          orderStatus(),
+          !orderDetail.canPay&&isPifa && orderDetail.status==0? waitDeal():SizedBox(),
+
+          !isPifa&& orderDetail.status==0? payTimeView():SizedBox(),
           buildAddress(),
           isPifa?wholesaleBrandList(): brandList(),
           isPifa?SizedBox():totalPrice(),
@@ -100,6 +106,55 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
       ),
     );
   }
+
+  getTitle() {
+    switch (orderDetail.status) {
+      case 0:
+        if(!orderDetail.canPay&&isPifa)
+        return "待处理";
+        else{
+          return "待付款";
+        }
+        break;
+      case 1:
+        String status =
+        getStatus();
+        return status;
+
+      case 2:
+        return "已取消";
+
+        break;
+      case 3:
+        return "已过期";
+
+        break;
+      case 4:
+        return "已完成";
+
+        break;
+      case 5:
+        return "已关闭";
+
+        break;
+    }
+  }
+
+  getStatus() {
+    if (orderDetail.expressStatus == 0) {
+      return "已付款";
+
+    }
+    if (orderDetail.expressStatus == 1) {
+
+      return  "部分商品已发货";
+    }
+    if (orderDetail.expressStatus == 2) {
+
+      return "已发货";
+    }
+  }
+
 
   // _brandExpressStatus(Brands brand) {
   //   if (_detail.status != 1) return "";
@@ -133,9 +188,13 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
   List<Widget> _bottomBarItems() {
     switch (orderDetail.status) {
       case 0:
-
         /// 未支付
-        return _unpaidItems();
+        if(!orderDetail.canPay&&isPifa){
+          return null;
+        }else{
+          return _unpaidItems();
+        }
+        break;
       case 1:
 
         /// 已支付 包括未发货和已发货
@@ -187,7 +246,10 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
   _unpaidItems() {
     List<Widget> items = [];
     items
-      ..add(CustomImageButton(
+      ..add(
+        orderDetail.canPay&&isPifa?SizedBox():
+
+          CustomImageButton(
         title: "取消订单",
         color: Colors.grey,
         fontSize: 13 * 2.sp,
@@ -214,11 +276,13 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
         width: rSize(10),
         height: 1,
       ))
-      ..add(CustomImageButton(
-        title: "继续支付",
+      ..add(
+
+          CustomImageButton(
+        title:  orderDetail.canPay&&isPifa?'去支付': "继续支付",
         color: AppColor.themeColor,
         fontSize: 13 * 2.sp,
-        padding: EdgeInsets.symmetric(vertical: rSize(8), horizontal: rSize(15)),
+        padding: EdgeInsets.symmetric(vertical: 8.rw, horizontal: 18.rw),
         borderRadius: BorderRadius.all(Radius.circular(40)),
         border: Border.all(color: AppColor.themeColor, width: 0.8 * 2.w),
         onPressed: () {
@@ -230,7 +294,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
               orderDetail.createdAt);
           OrderPrepayModel model = OrderPrepayModel("SUCCESS", data, "");
           AppRouter.push(globalContext, RouteName.ORDER_PREPAY_PAGE,
-              arguments: OrderPrepayPage.setArguments(model,goToOrder: true));
+              arguments: OrderPrepayPage.setArguments(model,goToOrder: true,fromTo: orderDetail.canPay&&isPifa?'1':''));
         },
       ));
     return items;

@@ -369,49 +369,49 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                     SizedBox(
                       height: 7 * 2.w,
                     ),
-                    Row(
-                      children: <Widget>[
-                        AppConfig.commissionByRoleLevel
-                            ? Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        width: 0.4,
-                                        color: AppColor.themeColor)),
-                                margin: EdgeInsets.only(right: 5),
-                                padding: EdgeInsets.symmetric(horizontal: 2),
-                                child: Text(
-                                  isSeckill?"赚${goods.secKill.secKillCommission.toStringAsFixed(2)}":"赚${goods.commission.toStringAsFixed(2)}",
-                                  style: TextStyle(
-                                      color: AppColor.themeColor,
-                                      fontSize: 11 * 2.sp),
-                                ),
-                              )
-                            : SizedBox(),
-                        // !goods.isWaitPromotionStart()?
-                        // Container()
-                        // :Container(
-                        //   child: Row(
-                        //     children: <Widget>[
-                        //       CustomImageButton(
-                        //         pureDisplay: true,
-                        //         padding: EdgeInsets.symmetric(
-                        //             horizontal: rSize(2),
-                        //             vertical: rSize(2)),
-                        //         borderRadius: BorderRadius.all(Radius.circular(
-                        //             rSize(3))),
-                        //         title:"${dateTime.month}月${dateTime.day}日${dateTime.hour}:${dateTime.minute}开抢",
-                        //         fontSize: 12,
-                        //         color: AppColor.themeColor,
-                        //         // backgroundColor: Colors.pink[50],
-                        //       ),
-                        //     ],
-                        //   )
-                        // ),
-                      ],
-                    ),
-                    Container(
-                      height: 7,
-                    ),
+                    // Row(
+                    //   children: <Widget>[
+                    //     AppConfig.commissionByRoleLevel
+                    //         ? Container(
+                    //             decoration: BoxDecoration(
+                    //                 border: Border.all(
+                    //                     width: 0.4,
+                    //                     color: AppColor.themeColor)),
+                    //             margin: EdgeInsets.only(right: 5),
+                    //             padding: EdgeInsets.symmetric(horizontal: 2),
+                    //             child: Text(
+                    //               isSeckill?"赚${goods.secKill.secKillCommission.toStringAsFixed(2)}":"赚${goods.commission.toStringAsFixed(2)}",
+                    //               style: TextStyle(
+                    //                   color: AppColor.themeColor,
+                    //                   fontSize: 11 * 2.sp),
+                    //             ),
+                    //           )
+                    //         : SizedBox(),
+                    //     // !goods.isWaitPromotionStart()?
+                    //     // Container()
+                    //     // :Container(
+                    //     //   child: Row(
+                    //     //     children: <Widget>[
+                    //     //       CustomImageButton(
+                    //     //         pureDisplay: true,
+                    //     //         padding: EdgeInsets.symmetric(
+                    //     //             horizontal: rSize(2),
+                    //     //             vertical: rSize(2)),
+                    //     //         borderRadius: BorderRadius.all(Radius.circular(
+                    //     //             rSize(3))),
+                    //     //         title:"${dateTime.month}月${dateTime.day}日${dateTime.hour}:${dateTime.minute}开抢",
+                    //     //         fontSize: 12,
+                    //     //         color: AppColor.themeColor,
+                    //     //         // backgroundColor: Colors.pink[50],
+                    //     //       ),
+                    //     //     ],
+                    //     //   )
+                    //     // ),
+                    //   ],
+                    // ),
+                    // Container(
+                    //   height: 7,
+                    // ),
                     Container(
                       height: 30,
                       child: Stack(

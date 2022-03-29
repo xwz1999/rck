@@ -1,11 +1,11 @@
-class RechargeHistoryModel {
+class RechargeRecordModel {
   String code;
   String msg;
   Data data;
 
-  RechargeHistoryModel({this.code, this.msg, this.data});
+  RechargeRecordModel({this.code, this.msg, this.data});
 
-  RechargeHistoryModel.fromJson(Map<String, dynamic> json) {
+  RechargeRecordModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     msg = json['msg'];
     data = json['data'] != null ? new Data.fromJson(json['data']) : null;
@@ -23,7 +23,7 @@ class RechargeHistoryModel {
 }
 
 class Data {
-  List<RechargeHistory> list;
+  List<RechargeRecord> list;
   int total;
 
   Data({this.list, this.total});
@@ -32,7 +32,7 @@ class Data {
     if (json['list'] != null) {
       list = [];
       json['list'].forEach((v) {
-        list.add(new RechargeHistory.fromJson(v));
+        list.add(new RechargeRecord.fromJson(v));
       });
     }
     total = json['total'];
@@ -48,33 +48,42 @@ class Data {
   }
 }
 
-class RechargeHistory {
+
+class RechargeRecord {
   int id;
   num amount;
-  int kind;
-
-  String createdAt;
-
   String attach;
-  num orderId;
+  String createdAt;
+  int state;
+  int companyId;
+  String reason;
+  bool isCompany;
+  String applyUserName;
+  String applyTime;
 
-
-  RechargeHistory(
+  RechargeRecord(
       {this.id,
         this.amount,
-
+        this.attach,
         this.createdAt,
-      this.kind,
-        this.orderId,
-      this.attach});
+        this.state,
+        this.companyId,
+        this.reason,
+        this.isCompany,
+        this.applyUserName,
+        this.applyTime});
 
-  RechargeHistory.fromJson(Map<String, dynamic> json) {
+  RechargeRecord.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     amount = json['amount'];
-    kind = json['kind'];
-    createdAt = json['created_at'];
     attach = json['attach'];
-    orderId = json['order_id'];
+    createdAt = json['created_at'];
+    state = json['state'];
+    companyId = json['company_id'];
+    reason = json['reason'];
+    isCompany = json['is_company'];
+    applyUserName = json['apply_user_name'];
+    applyTime = json['apply_time'];
   }
 
   Map<String, dynamic> toJson() {
@@ -83,8 +92,12 @@ class RechargeHistory {
     data['amount'] = this.amount;
     data['attach'] = this.attach;
     data['created_at'] = this.createdAt;
-    data['kind'] = this.kind;
-    data['order_id'] = this.orderId;
+    data['state'] = this.state;
+    data['company_id'] = this.companyId;
+    data['reason'] = this.reason;
+    data['is_company'] = this.isCompany;
+    data['apply_user_name'] = this.applyUserName;
+    data['apply_time'] = this.applyTime;
     return data;
   }
 }

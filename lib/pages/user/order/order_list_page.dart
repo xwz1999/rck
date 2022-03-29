@@ -62,7 +62,7 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
     implements OrderListViewI {
   OrderListPresenterImpl _presenter;
   MvpListViewController<OrderModel> _controller;
-  OrderModel _confirmModel;
+
   VoidCallback _cancelCallback;
 
   @override
@@ -223,7 +223,7 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
   }
 
   _confirmReceiptClick(OrderModel orderModel) {
-    _confirmModel = null;
+
     Alert.show(
         context,
         NormalContentDialog(
@@ -245,7 +245,7 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
               GSDialog.of(globalContext).showLoadingDialog(context, "");
               _presenter.confirmReceipt(
                   UserManager.instance.user.info.id, orderModel.id);
-              _confirmModel = orderModel;
+
             }
           },
         ));

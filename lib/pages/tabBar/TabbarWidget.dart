@@ -197,9 +197,10 @@ class _TabBarWidgetState extends State<TabBarWidget>
             HomePage(
               tabController: _tabController,
             ),
-            //MessageCenterPage(),
-            AkuCollegePage(),
+            MessageCenterPage(),
+            //AkuCollegePage(),
             DiscoveryPage(),
+
             UserManager.instance.isWholesale?WholesaleCarPage(canBack: false,): ShoppingCartPage(),
             UserManager.instance.isWholesale?WholesaleUserPage(): UserPage()
           ],

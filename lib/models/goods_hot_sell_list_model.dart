@@ -49,6 +49,8 @@ class Data {
   String countryIcon;
   int gysId;
   SecKill secKill;
+  num salePrice;
+
   Data({
     this.id,
     this.goodsName,
@@ -70,7 +72,8 @@ class Data {
     this.storehouse,
     this.countryIcon,
     this.gysId,
-    this.secKill
+    this.secKill,
+    this.salePrice
   });
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -93,6 +96,7 @@ class Data {
     storehouse = json['storehouse'];
     countryIcon = json['country_icon'];
     gysId = json['gys_id'];
+    salePrice = json['sale_price'];
     secKill = json['sec_kill'] != null
         ? new SecKill.fromJson(json['sec_kill'])
         : null;
@@ -116,6 +120,7 @@ class Data {
     data['storehouse'] = this.storehouse;
     data['country_icon'] = this.countryIcon;
     data['gys_id'] = this.gysId;
+    data['sale_price'] = this.salePrice;
     if (this.secKill != null) {
       data['sec_kill'] = this.secKill.toJson();
     }

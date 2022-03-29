@@ -251,20 +251,13 @@ class BrandDetailGridItem extends StatelessWidget {
                     child: ExtendedText.rich(
                       TextSpan(children: [
                         TextSpan(
-                          text: isSeckill?"¥":"券后¥",
+                          text: "到手价¥",
                           style: AppTextStyle.generate(isSeckill?18.rsp:12 * 2.sp,
                               color: Color(0xffc70404),
                               fontWeight: FontWeight.w500),
                         ),
                         TextSpan(
-                          text:
-                          isSeckill?"${(this.goods.secKill.secKillMinPrice -
-                              this.goods.secKill.secKillMinPrice.toInt()) > 0
-                              ? this.goods.secKill.secKillMinPrice.toStringAsFixed(1)
-                              : this.goods.secKill.secKillMinPrice.toStringAsFixed(0)}"
-                              :"${(this.goods.discountPrice - this.goods.discountPrice.toInt()) > 0
-                              ? this.goods.discountPrice.toStringAsFixed(1)
-                              : this.goods.discountPrice.toStringAsFixed(0)}",
+                          text:"${(this.goods.discountPrice-this.goods.commission).toStringAsFixed(2)}",
                           // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
                           style: TextStyle(
                               letterSpacing: -1,

@@ -95,6 +95,7 @@ class OrderDetail extends Object {
 
   String makeUpText;
   num makeUpAmount;
+  bool canPay;
 
   OrderDetail(
     this.id,
@@ -128,7 +129,7 @@ class OrderDetail extends Object {
     this.addr,
     this.brands,
     this.canConfirm,
-    this.statusList,this.makeUpText,this.makeUpAmount
+    this.statusList,this.makeUpText,this.makeUpAmount,this.canPay
   );
 
   factory OrderDetail.fromJson(Map<String, dynamic> srcJson) =>

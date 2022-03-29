@@ -1,15 +1,25 @@
 import 'package:bot_toast/bot_toast.dart';
+import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/gen/assets.gen.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/pages/user/banlance/user_balance_page.dart';
+import 'package:jingyaoyun/pages/user/order/order_detail_page.dart';
+import 'package:jingyaoyun/widgets/no_data_view.dart';
+import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:jingyaoyun/widgets/toast.dart';
 
 
 import 'package:velocity_x/velocity_x.dart';
+
+import 'message_model.dart';
 
 class MessageCenterPage extends StatefulWidget {
   MessageCenterPage({
@@ -20,33 +30,27 @@ class MessageCenterPage extends StatefulWidget {
   _MessageCenterPageState createState() => _MessageCenterPageState();
 }
 
+
+
 class _MessageCenterPageState extends State<MessageCenterPage> {
-  List<MessageModel> messageList = [];
+  List<Message> messageList = [];
+  MessageModel messageModel;
+
+  GSRefreshController _refreshController = GSRefreshController(initialRefresh: true);
+
+
+  int _page = 0;
+  bool _onLoad = true;
+
+  num _num = 0;
+
+
 
   @override
   void initState() {
     super.initState();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
-    messageList = [
-      MessageModel(
-          picPath: Assets.icMsgOrder.path,
-          title: '订单通知',
-          tip: '商家已录入运输费，请及时付款>>>',
-          date: '07:12',
-          isRead: false),
-      MessageModel(
-          picPath: Assets.icMsgBet.path,
-          title: '收益到账',
-          tip: '您的批发收益已到账，立即查看>>>',
-          date: '01-03 07:12',
-          isRead: false),
-      MessageModel(
-          picPath: Assets.icMsgBet.path,
-          title: '收益到账',
-          tip: '您的店铺补贴已到账，立即查看>>>',
-          date: '2021-12-23 07:12',
-          isRead: false),
-    ];
+
   }
 
   @override
@@ -80,19 +84,22 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
                     color: Color(0xFF111111),
                     fontSize: 20.rsp,
                   )),
-              Text('(2)',
+              Text('($_num)',
                   style: TextStyle(
                     color: Color(0xFF111111),
                     fontSize: 16.rsp,
                   )),
               GestureDetector(
-                onTap: () {
-                  messageList.forEach((element) {
-                    element.isRead = true;
-                    setState(() {
+                onTap: () async{
+                  // messageList.forEach((element) {
+                  //   element.isRead = true;
+                  //
+                  // });
+                  await messageReadAll();
 
-                    });
-                  });
+                  _refreshController.requestRefresh();
+
+
 
                 },
                 child: Container(
@@ -126,33 +133,99 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
             color: Colors.white,
             borderRadius: BorderRadius.vertical(top: Radius.circular(12.rw)),
           ),
-          child: ListView.separated(
-            padding: EdgeInsets.symmetric(horizontal: 12.rw),
-            shrinkWrap: true,
-            itemBuilder: (context, index) =>
-                _getItem(messageList[index]),
+          child:
+          RefreshWidget(
+            color: Color(0xFF999999),
+            controller: _refreshController,
+            onRefresh: ()async {
+              _page = 0;
 
-            separatorBuilder: (context, index) => Divider(
-              indent: 50.rw,
-              endIndent: 0.rw,
-              color: Color(0xFFEEEEEE),
-              height: 0.5.rw,
-              thickness: 1.rw,
+
+              await getMessageList();
+              await getMessageNum();
+              _refreshController.refreshCompleted();
+              getMessageList().then((value) {
+                setState(() {
+                  messageList = value;
+                  _onLoad = false;
+                });
+                _refreshController.refreshCompleted();
+              });
+
+              // getRechargeHistoryList().then((models) {
+              //   setState(() {
+              //     list = models;
+              //     _onLoad = false;
+              //   });
+              //
+              //   _refreshController.refreshCompleted();
+              // });
+            },
+
+            onLoadMore: () {
+              _page++;
+              if (messageList.length >=
+                  messageModel.total) {
+                _refreshController.loadComplete();
+                _refreshController.loadNoData();
+              }else{
+                getMessageList().then((value) {
+                  setState(() {
+                    messageList.addAll(value);
+
+                  });
+                  _refreshController.loadComplete();
+                });
+
+              }
+
+            },
+            body:
+            _onLoad?SizedBox():
+            messageList == null ||messageList.length == 0
+                ? NoDataView(title:'没有数据哦～' ,):
+            ListView.separated(
+              padding: EdgeInsets.symmetric(horizontal: 12.rw),
+              shrinkWrap: true,
+              itemBuilder: (context, index) =>
+                  _getItem(messageList[index]),
+
+              separatorBuilder: (context, index) => Divider(
+                indent: 50.rw,
+                endIndent: 0.rw,
+                color: Color(0xFFEEEEEE),
+                height: 0.5.rw,
+                thickness: 1.rw,
+              ),
+              itemCount: messageList.length,
             ),
-            itemCount: messageList.length,
           ),
+
         ),
       ],
     );
   }
   
-  _getItem(MessageModel item){
+  _getItem(Message item){
     return GestureDetector(
-      onTap: (){
-        item.isRead = true;
-        setState(() {
+      onTap: ()async{
+        ///订单跳转到付款页面
+        ///收益跳转到钱包
 
-        });
+
+
+        messageRead(item.id);
+        _refreshController.requestRefresh();
+        if(item.kind==1){
+          Get.to(() => UserBalancePage());
+        }else{
+          AppRouter.push(
+              context, RouteName.ORDER_DETAIL,
+              arguments: OrderDetailPage.setArguments(item.subId,true));
+        }
+
+
+
       },
       child: Container(
         width: double.infinity,
@@ -162,7 +235,7 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(item.picPath,width: 48.rw,height: 48.rw,),
+            Image.asset(item.kind==1?Assets.icMsgBet.path:Assets.icMsgOrder.path,width: 48.rw,height: 48.rw,),
             16.wb,
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -172,14 +245,16 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
-                      Text(item.title,
+                      Text(item.kind==1?'收益到账':'订单通知',
                           style: TextStyle(
                             color: Color(0xFF961B1B),
                             fontSize: 16.rsp,
                           )),
                       Spacer(),
 
-                      Text(item.date,
+                      Text(
+                          item.createdAt==null?'':
+                          "${DateUtil.formatDate(DateTime.parse("${item.createdAt.substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}",
                           style: TextStyle(
                             color: Color(0xFF999999),
                             fontSize: 14.rsp,
@@ -194,7 +269,7 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Text(item.tip,
+                        child: Text(item.message+'>>>',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -220,20 +295,94 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
       ),
     );
   }
+
+  Future<List<Message>> getMessageList() async {
+    ResultData resultData =
+    await HttpManager.post(APIV2.userAPI.getMessageList, {
+      'page': _page,
+      'limit': 10,
+    });
+    if (!resultData.result) {
+      Toast.showError(resultData.msg);
+      return [];
+    }
+
+    if (resultData.data != null) {
+      if (resultData.data['data'] != null) {
+        if(resultData.data['data']['list'] != null)
+          messageModel = MessageModel.fromJson(resultData.data['data']);
+        return (resultData.data['data']['list'] as List)
+            .map((e) => Message.fromJson(e))
+            .toList();
+      }else{
+        return [];
+      }
+    }else{
+      return [];
+    }
+  }
+
+  Future getMessageNum() async {
+    ResultData resultData =
+    await HttpManager.post(APIV2.userAPI.getMessageNum, {
+    });
+    if (!resultData.result) {
+      Toast.showError(resultData.msg);
+      return '';
+    }
+
+    if (resultData.data != null) {
+      if (resultData.data['data'] != null) {
+        _num =  resultData.data['data']['count'];
+      }
+    }
+  }
+
+  Future<String> messageReadAll() async {
+    ResultData resultData =
+    await HttpManager.post(APIV2.userAPI.messageReadAll, {
+    });
+    if (!resultData.result) {
+      Toast.showError(resultData.msg);
+      return '';
+    }
+
+    if (resultData.data != null) {
+      if (resultData.data['data'] != null) {
+
+      }else{
+        return '';
+      }
+    }else{
+      return '';
+    }
+  }
+
+
+  Future<String> messageRead(int id) async {
+    ResultData resultData =
+    await HttpManager.post(APIV2.userAPI.messageRead, {
+      'id':id
+    });
+    if (!resultData.result) {
+      Toast.showError(resultData.msg);
+      return '';
+    }
+
+    if (resultData.data != null) {
+      if (resultData.data['data'] != null) {
+
+      }else{
+        return '';
+      }
+    }else{
+      return '';
+    }
+  }
+
+
+
 }
 
-class MessageModel {
-  String picPath;
-  String title;
-  String tip;
-  String date;
-  bool isRead;
 
-  MessageModel({
-    this.picPath,
-    this.title,
-    this.tip,
-    this.date,
-    this.isRead,
-  });
-}
+

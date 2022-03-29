@@ -11,7 +11,6 @@ import 'package:jingyaoyun/pages/home/classify/goods_list_page.dart';
 import 'package:jingyaoyun/pages/home/classify/order_prepay_page.dart';
 import 'package:jingyaoyun/pages/home/classify/order_preview_page.dart';
 import 'package:jingyaoyun/pages/home/home_page.dart';
-import 'package:jingyaoyun/pages/home/newuserDiscount/new_user_discount_page.dart';
 import 'package:jingyaoyun/pages/home/search_page.dart';
 import 'package:jingyaoyun/pages/home/widget/goods_hot_list_page.dart';
 import 'package:jingyaoyun/pages/home/widget/goods_list_temp_page.dart';
@@ -344,9 +343,7 @@ final Map<String, RouteBuilder> _routes = {
       ),
   // 首页
   RouteName.HOME: (context, {arguments}) => HomePage(),
-  // 新人特惠
-  RouteName.NEW_USER_DISCOUNT_PAGE: (context, {arguments}) =>
-      NewUserDiscountPage(),
+
   // 热销榜单
   RouteName.GOODS_HOT_LIST: (context, {arguments}) => GoodsHotListPage(),
   //商品列表(只供显示)

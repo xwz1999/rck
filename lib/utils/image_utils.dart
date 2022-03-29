@@ -83,43 +83,51 @@ class ImageUtils {
     void Function(bool success) endBack, {
     bool useCache: true,
   }) async {
-    //
-    if (Platform.isAndroid) {
-      bool permissionStorage = await Permission.storage.isGranted;
-      if (!permissionStorage) {
-        await Permission.storage.request();
-        permissionStorage = await Permission.storage.isGranted;
+    try{
+      if (Platform.isAndroid) {
+        bool permissionStorage = await Permission.storage.isGranted;
         if (!permissionStorage) {
-          print("❌----------has no Permission");
+          await Permission.storage.request();
+          permissionStorage = await Permission.storage.isGranted;
+          if (!permissionStorage) {
+            print("❌----------has no Permission");
+            return false;
+          }
+        }
+        else{
+          print("----------has Permission");
+        }
+      }
+      //
+
+      for (var i = 0; i < urls.length; i++) {
+        String url = urls[i];
+        var data = await getNetworkImageData(url, useCache: useCache);
+        try {
+          final Map<dynamic, dynamic> result =
+          await ImageGallerySaver.saveImage(data,quality: 100);
+          DPrint.printf(result);
+        } catch (e) {
+          if (e is ArgumentError) {
+            if (Platform.isIOS) {
+              callBack(i);
+              continue;
+            }
+          }
+          DPrint.printf(e);
+
+          endBack(false);
+
           return false;
         }
       }
+      endBack(true);
+      return true;
+    }catch(e){
+      print(e);
+      callBack(99);
     }
-    //
 
-    for (var i = 0; i < urls.length; i++) {
-      String url = urls[i];
-      var data = await getNetworkImageData(url, useCache: useCache);
-      try {
-        final Map<dynamic, dynamic> result =
-            await ImageGallerySaver.saveImage(data,quality: 100);
-       DPrint.printf(result);
-      } catch (e) {
-        if (e is ArgumentError) {
-          if (Platform.isIOS) {
-            callBack(i);
-            continue;
-          }
-        }
-        DPrint.printf(e);
-
-        endBack(false);
-
-        return false;
-      }
-    }
-    endBack(true);
-    return true;
   }
 
   static Future<bool> saveImage(

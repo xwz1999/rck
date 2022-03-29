@@ -125,10 +125,20 @@ class OrderModelImpl extends OrderModelI {
     return resultData;
   }
 
+
+
   @override
   createZeroPayOrder(int userId, int orderId) async {
     ResultData resultData = await HttpManager.post(
         OrderApi.order_pay_zero, {"userId": userId, "orderId": orderId});
+    return resultData;
+  }
+
+  @override
+  createRecookPayOrderDeposit(int userId, int orderId, String password) async {
+    ResultData resultData = await HttpManager.post(
+        OrderApi.order_recook_pay_order_create_deposit,
+        {"userId": userId, "orderId": orderId, 'password': password});
     return resultData;
   }
 }

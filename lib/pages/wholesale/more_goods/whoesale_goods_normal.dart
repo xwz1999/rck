@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
+import 'package:jingyaoyun/models/goods_hot_sell_list_model.dart';
+import 'package:jingyaoyun/models/goods_hot_sell_list_model.dart'
+as GoodsHotSellListModel;
 import 'package:jingyaoyun/pages/wholesale/models/wholesale_good_model.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
@@ -20,7 +22,7 @@ class WholesaleGoodsItem extends StatelessWidget {
   final num inventory;
   final num discountPrice;
   final num originalPrice;
-  final num percent;
+  // final num percent;
   final num coupon;
   final num commission;
   final num salesVolume;
@@ -36,7 +38,7 @@ class WholesaleGoodsItem extends StatelessWidget {
     this.inventory,
     this.discountPrice,
     this.originalPrice,
-    this.percent,
+    // this.percent,
     this.coupon,
     this.commission,
     this.salesVolume,
@@ -61,12 +63,36 @@ class WholesaleGoodsItem extends StatelessWidget {
         mainPhotoUrl = model.mainPhotoUrl,
         inventory = model.inventory,
         originalPrice = model.discountPrice,
-        percent = model.percent,
+        // percent = model.percent,
         coupon = model.coupon,
         id = model.id,
         salesVolume =  model.salesVolume,
         discountPrice =  model.salePrice,
         commission =  model.commission,
+        super(key: key);
+
+
+
+  WholesaleGoodsItem.hotList({
+    Key key,
+    this.buildCtx,
+
+
+    GoodsHotSellListModel.Data data,
+
+
+  })  : goodsName = data.goodsName,
+
+        description = data.description,
+        mainPhotoUrl = data.mainPhotoUrl,
+        inventory =  data.inventory,
+        originalPrice = data.discountPrice,
+
+        coupon = data.coupon,
+        id = data.id,
+        salesVolume = data.salesVolume,
+        discountPrice = data.salePrice,
+        commission =  data.commission,
         super(key: key);
 
   @override
@@ -76,7 +102,7 @@ class WholesaleGoodsItem extends StatelessWidget {
     return Container(
       height: _height,
       padding: EdgeInsets.only(top: 8.rw, left: 8.rw, right: 8.rw),
-      color: AppColor.frenchColor,
+      color: Colors.transparent,
       child: _container(),
     );
   }

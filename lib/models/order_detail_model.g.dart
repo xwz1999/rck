@@ -51,6 +51,7 @@ OrderDetail _$OrderDetailFromJson(Map<String, dynamic> json) {
     json['payMethod'] as int,
     json['completedAt'] as String,
     json['totalGoodsCount'] as int,
+
     json['coupon'] == null
         ? null
         : Coupon.fromJson(json['coupon'] as Map<String, dynamic>),
@@ -69,6 +70,7 @@ OrderDetail _$OrderDetailFromJson(Map<String, dynamic> json) {
         ?.toList(),
     json['make_up_text'] as String,
     json['make_up_amount'] as num,
+    json['can_pay'] as bool,
     // json['balance'] == null
     //     ? null
     //     : Balance.fromJson(json['balance'] as Map<String, dynamic>),
@@ -116,7 +118,8 @@ Map<String, dynamic> _$OrderDetailToJson(OrderDetail instance) =>
       'brands': instance.brands,
       'canConfirm': instance.canConfirm,
       'make_up_text':instance.makeUpText,
-      'make_up_amount':instance.makeUpAmount
+      'make_up_amount':instance.makeUpAmount,
+      'can_pay':instance.canPay
     };
 
 Addr _$AddrFromJson(Map<String, dynamic> json) {

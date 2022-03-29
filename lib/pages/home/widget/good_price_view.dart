@@ -76,8 +76,9 @@ class _GoodPriceViewState extends State<GoodPriceView> {
 
     maxCommission = detailModel.data.price.max.commission;
     minCommission = detailModel.data.price.min.commission;
-    minPrice = detailModel.data.price.min.discountPrice;
-    maxPrice = detailModel.data.price.max.discountPrice;
+    minPrice = detailModel.data.price.min.discountPrice - detailModel.data.price.min.commission;
+
+    maxPrice = detailModel.data.price.max.discountPrice - detailModel.data.price.max.commission;
     saleNum = detailModel.data.salesVolume;
 
     minOriginPrice = detailModel.data.price.min.originalPrice;
@@ -149,7 +150,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
               RichText(
                 text: TextSpan(children: [
                   TextSpan(
-                    text: "券后价",
+                    text: "到手价",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 14.rsp,
@@ -231,6 +232,13 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                       ),
                     )
                     : SizedBox(),
+                Text(
+                  '—¥$commission（自购折扣）',
+                  style: TextStyle(
+                    fontSize: 10.rsp,
+                    color: Colors.white,
+                  ),
+                ),
                 rWBox(10),
 
               ],

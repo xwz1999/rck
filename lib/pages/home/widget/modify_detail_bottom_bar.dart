@@ -269,20 +269,20 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                             ),
                           ],
                         ),
-                        TextUtils.isEmpty(commission) ||
-                                UserLevelTool.currentRoleLevelEnum() ==
-                                    UserRoleLevel.Vip
-                            ? Container(
-                                height: 0,
-                              )
-                            : Text(
-                                "省￥" + commission,
-                                style: TextStyle(
-                                    letterSpacing: -0.5,
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 9 * 2.sp,
-                                    color: Colors.white),
-                              ),
+                        // TextUtils.isEmpty(commission) ||
+                        //         UserLevelTool.currentRoleLevelEnum() ==
+                        //             UserRoleLevel.Vip
+                        //     ? Container(
+                        //         height: 0,
+                        //       )
+                        //     : Text(
+                        //         "省￥" + commission,
+                        //         style: TextStyle(
+                        //             letterSpacing: -0.5,
+                        //             fontWeight: FontWeight.w300,
+                        //             fontSize: 9 * 2.sp,
+                        //             color: Colors.white),
+                        //       ),
                       ],
                     ),
                   ),
@@ -455,18 +455,18 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                             ),
                           ],
                         ),
-                        !AppConfig.commissionByRoleLevel
-                            ? Container(
-                                height: 0,
-                              )
-                            : Text(
-                                "省￥" + commission,
-                                style: TextStyle(
-                                    letterSpacing: -0.5,
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 9 * 2.sp,
-                                    color: Colors.white),
-                              ),
+                        // !AppConfig.commissionByRoleLevel
+                        //     ? Container(
+                        //         height: 0,
+                        //       )
+                        //     : Text(
+                        //         "省￥" + commission,
+                        //         style: TextStyle(
+                        //             letterSpacing: -0.5,
+                        //             fontWeight: FontWeight.w300,
+                        //             fontSize: 9 * 2.sp,
+                        //             color: Colors.white),
+                        //       ),
                       ],
                     ),
                   ),
@@ -587,20 +587,20 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                             ),
                           ],
                         ),
-                        TextUtils.isEmpty(commission) ||
-                            UserLevelTool.currentRoleLevelEnum() ==
-                                UserRoleLevel.Vip
-                            ? Container(
-                          height: 0,
-                        )
-                            : Text(
-                          "省￥" + commission,
-                          style: TextStyle(
-                              letterSpacing: -0.5,
-                              fontWeight: FontWeight.w300,
-                              fontSize: 9 * 2.sp,
-                              color: Colors.white),
-                        ),
+                        // TextUtils.isEmpty(commission) ||
+                        //     UserLevelTool.currentRoleLevelEnum() ==
+                        //         UserRoleLevel.Vip
+                        //     ? Container(
+                        //   height: 0,
+                        // )
+                        //     : Text(
+                        //   "省￥" + commission,
+                        //   style: TextStyle(
+                        //       letterSpacing: -0.5,
+                        //       fontWeight: FontWeight.w300,
+                        //       fontSize: 9 * 2.sp,
+                        //       color: Colors.white),
+                        // ),
                       ],
                     ),
                   ),

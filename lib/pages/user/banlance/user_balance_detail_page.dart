@@ -17,6 +17,7 @@ import 'package:jingyaoyun/pages/user/user_cash_withdraw_page.dart';
 import 'package:jingyaoyun/widgets/bottom_time_picker.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/image_scaffold.dart';
+import 'package:jingyaoyun/widgets/no_data_view.dart';
 import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
@@ -51,6 +52,9 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
 
   num _allBenefitAmount = 0;
   UserIncomeDataModel _userIncomeDataModel;
+
+
+  bool _onLoad = true;///首次加载数据
 
   _buildListItem(ListItem item) {
     return Container(
@@ -398,7 +402,7 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
             Row(
               children: [
                 MaterialButton(
-                    color: Colors.white,
+                    color: Colors.transparent,
                     shape: StadiumBorder(),
                     elevation: 0,
                     onPressed: () {
@@ -411,7 +415,33 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
                         } else {
                           _choose = '全部明细';
                         }
+                        switch(_choose){
+                          case '全部明细':
+                            _status = 0;
+                           break;
+                          case '分享补贴':
+                            _status = 12;
+                            break;
+                          case '开店补贴':
+                            _status = 14;
+                            break;
+                          case '订单支付':
+                            _status = 1;
+                            break;
+                          case '订单退款':
+                            _status = 2;
+                            break;
+                          case '提现成功':
+                            _status = 3;
+                            break;
+                          case '提现失败':
+                            _status = 4;
+                            break;
+                        }
+
+
                         setState(() {});
+                        _refreshController.requestRefresh();
                       });
                     },
                     child: Row(
@@ -428,7 +458,7 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
                     )),
                 Spacer(),
                 MaterialButton(
-                  color: Colors.white,
+                  color: Colors.transparent,
                   shape: StadiumBorder(),
                   elevation: 0,
                   onPressed: () {
@@ -474,16 +504,21 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
             ),
             Flexible(
               child: RefreshWidget(
-                color: Colors.white,
+                color: Color(0xFF666666),
                 controller: _refreshController,
                 onRefresh: () async {
                   _historyModel = await UserBalanceFunc.history(
                       month: _month, status: _status);
                   _updateNewBenefit();
                   _refreshController.refreshCompleted();
+                  _onLoad = false;
                   setState(() {});
                 },
-                body: ListView.separated(
+                body:
+                _onLoad?SizedBox():
+                _historyModel.data.list == null || _historyModel.data.list.length == 0
+                    ? NoDataView(title:'没有数据哦～' ,):
+                ListView.separated(
                   itemBuilder: (context, index) =>
                       _buildListItem(_historyModel.data.list[index]),
                   separatorBuilder: (context, index) => Divider(

@@ -65,14 +65,14 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
     if (widget.initialIndex != null) {
       index = widget.initialIndex;
     }
-    if(UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary) {
-      _allTabController = TabController(length: 2, vsync: this, initialIndex: 0);
-    }else{
-      _allTabController = TabController(length: 1, vsync: this, initialIndex: 0);
-      titles = ["自购订单"];
-    }
+    // if(UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary) {
+    //   _allTabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    // }else{
+    //   _allTabController = TabController(length: 1, vsync: this, initialIndex: 0);
+    //   titles = ["自购订单"];
+    // }
 
-
+    _allTabController = TabController(length: 2, vsync: this, initialIndex: 0);
 
     _allTabController.addListener(() {
       _titleSwitchController.changeIndex(_allTabController.index);
@@ -157,7 +157,7 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
     return Container(
       child:
 
-      UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary?
+
       TitleSwitch(
         controller: _titleSwitchController,
         height: 30,
@@ -165,7 +165,7 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
         titles: titles,
         selectIndexBlock: (index) {
 
-          if(UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary){
+
             if (index == 0) {
               _positionType = OrderPositionType.onlineOrder;
               _allTabController.index = 0;
@@ -178,7 +178,7 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
               setState(() {});
 
             }
-          }
+
 
         },
         backgroundWidget: Container(
@@ -191,13 +191,7 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
             borderRadius: BorderRadius.circular(15),
           ),
         ),
-      ):Text(
-        "自购订单",
-        style: TextStyle(
-          color: Color(0xFF333333),
-          fontSize: 18.rsp,
-        ),
-      ),
+      )
     );
   }
 

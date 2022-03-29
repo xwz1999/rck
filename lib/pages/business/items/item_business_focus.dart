@@ -155,7 +155,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
             padding: EdgeInsets.only(
               top: postImageHorizontalMargin / 2,
             ),
-            height: 43.rw,
+            height: 50.rw,
             child: PostWeatherWidget(
               homeWeatherModel: UserManager.instance.homeWeatherModel,
             ),
@@ -170,6 +170,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
               gysId: _goodsDetail.data.vendorId,
             ),
           ),
+
           PostBigImage(
             url: _bigImageUrl,
             imageSize: Size(truePhotoWidth, truePhotoHeight),

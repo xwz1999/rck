@@ -119,7 +119,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         return;
       }
       setState(() {
-        if (model.data.data.amount > _model.data.actualTotalAmount) {
+        if (model.data.data.balance > _model.data.actualTotalAmount) {
           _defaultPayIndex = 0;
         }
         //在保税仓或海外仓商品时，无法使用余额支付
@@ -193,29 +193,9 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
                     Navigator.pop(context);
                   },
                 ))
-            : Alert.show(
-                context,
-                NormalTextDialog(
-                  type: NormalTextDialogType.delete,
-                  title: "确认要离开收银台?",
-                  content: "您的订单将在您退出收银台后取消,请尽快支付！",
-                  items: ["继续支付"],
-                  listener: (index) {
-                    Alert.dismiss(context);
-                  },
-                  deleteItem: "确认离开",
-                  deleteListener: () async {
-                    //_updateUserBrief();
-                    Alert.dismiss(context);
+            :
+          Navigator.pop(context);
 
-
-                    //设置飞机票为取消
-
-                    Navigator.pop(context);
-                    Navigator.pop(context);
-
-                  },
-                ));
         return Future.value(false);
       },
     );
@@ -230,18 +210,12 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
           textAlign: TextAlign.center,
           style: AppTextStyle.generate(15 * 2.sp, color: Colors.grey),
         ),
-        _fromTo != ''
-            ? Text(
-                _fromTo,
-                textAlign: TextAlign.center,
-                style: AppTextStyle.generate(15 * 2.sp, color: Colors.grey),
-              )
-            : SizedBox(),
+
         Container(
           height: rSize(50),
         ),
 
-        _payTile(
+        _isPifa? _payTile(
                 "",
                 Image.asset(
                   AppSvg.svg_balance_pay,
@@ -251,20 +225,21 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
                 0,
                 widgetTitle: RichText(
                   text: TextSpan(
-                      text: "余额支付 ",
+                      text: "预存款支付 ",
                       style: AppTextStyle.generate(17 * 2.sp),
                       children: [
                         TextSpan(
                             style: AppTextStyle.generate(14 * 2.sp,
                                 color: Colors.grey),
-                            text:
-                                "(可用余额: ￥${_recookFundModel == null ? "--" : _recookFundModel.data.amount})")
+                            text:"(可用预存款: ￥${_recookFundModel == null ? "--" : _recookFundModel.data.balance})"
+
+                        )
                       ]),
                 ),
                 enable: _recookFundModel != null &&
-                    (_recookFundModel.data.amount >=
+                    (_recookFundModel.data.balance >=
                         _model.data.actualTotalAmount) &&
-                    _canUseBalance )
+                    _canUseBalance ):SizedBox()
           ,
         _payTile(
             "微信支付",
@@ -401,13 +376,13 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
          _submitPassword() ;
         break;
       case 1:
-        _fromTo == '' ? _weChatPay(context) : _weChatPayLifang(context);
+         _weChatPay(context);
         break;
       case 2:
-        _fromTo == '' ? _aliPay(context) : _aliPayLifang(context);
+         _aliPay(context) ;
         break;
       case 3:
-        _fromTo == '' ? _unionPay(context) : SizedBox();
+         _unionPay(context);
         break;
     }
   }
@@ -592,7 +567,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
               Navigator.pop(context);
             },
             passwordReturn: (password) {
-              _recookPay(password);
+              _recookPayDeposit(password);
             },
             forgetPassword: () {
               Navigator.pop(context);
@@ -655,6 +630,39 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
 
     });
   }
+
+  _recookPayDeposit(password) async {
+    showLoading("");
+    HttpResultModel<BaseModel> resultModel =
+    await _presenter.createRecookPayOrderDeposit(
+        UserManager.instance.user.info.id, _model.data.id, password);
+    dismissLoading();
+    if (!resultModel.result) {
+      _bottomKeyBoardController.clearPassWord();
+      showError(resultModel.msg, duration: Duration(milliseconds: 2000));
+      return;
+    }
+    UserManager.instance.refreshShoppingCart.value = true;
+    Navigator.pop(context);
+    _updateUserBrief();
+    showSuccess("订单支付成功").then((value) {
+      if(_isPifa){
+        Get.off(()=>WholesaleOrderHomePage(initialIndex: 3,));
+        //Get.to(()=>WholesaleOrderHomePage(arguments: ,))
+      }else{
+        if(_goToOrder)
+          AppRouter.pushAndReplaced(globalContext, RouteName.ORDER_LIST_PAGE,
+              arguments: OrderCenterPage.setArguments(2));
+        else{
+          Navigator.pop(context);
+        }
+      }
+
+    });
+  }
+
+
+
 
   _verifyPayStatus() async {
     GSDialog.of(_scaffoldKey.currentContext)

@@ -679,7 +679,7 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
                 _cityModel == null
                     ? _addressModel != null
                         ? Container(
-                            width: 270.rw,
+                            width: 200.rw,
                             child: Text(
                               '${_addressModel.province}-${_addressModel.city}-${_addressModel.district}',
                               maxLines: 1,
@@ -712,9 +712,7 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
                 Spacer(),
                 Row(
                   children: [
-                    Container(
-                      width: 46.rw,
-                    ),
+
                     Text(
                       _jDHaveGoods == 1
                           ? '有货'

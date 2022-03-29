@@ -240,11 +240,17 @@ class UserAPI {
   ///消息列表
   String get getMessageList => '/v2/app/message/list';
 
+  ///消息列表数量
+  String get getMessageNum => '/v2/app/message/count';
+
   ///消息已读
   String get messageRead => '/v2/app/message/read';
 
   ///消息全部已读
   String get messageReadAll => '/v2/app/message/read_all';
+
+
+
 
 
 }

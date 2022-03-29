@@ -173,9 +173,12 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
          _totalNum = 0;
          _totalNum = _carList.length;
          _onLoad = false;
-        setState(() {
+         if(mounted){
+           setState(() {
 
-        });
+           });
+         }
+
         _refreshController.refreshCompleted();
       },
 

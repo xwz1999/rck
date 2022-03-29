@@ -222,7 +222,7 @@ dependencies:
   #badges: ^2.0.1
 
   #极光推送
-#  jpush_flutter: 2.2.1
+  jpush_flutter: 2.2.3
 
   #缓存图片 解决金刚区图加载缓慢的问题
   cached_network_image: ^3.1.0

@@ -473,7 +473,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         delegate: this,
         controller: _controller,
         itemBuilder: (context, index) {
-          return  _onLoad?SizedBox():  (index == _controller.getData().length - 1
+          return  (index == _controller.getData().length - 1
               ? _buildExtraItem(context, index)
               : _buildItem(context, index));
         },
@@ -492,7 +492,6 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
             // if (goodsSimpleListModel != null) {
             //   _likeGoodsList = goodsSimpleListModel.data;
             // }
-            _onLoad = false;
             setState(() {});
           });
           // }else{

@@ -80,7 +80,7 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
 
     saleNum = detailModel.salesVolume;
 
-    minOriginPrice = detailModel.price.min.discountPrice;///批发的零售价为券后价
+    minOriginPrice = detailModel.price.min.discountPrice;///批发的零售价为到手价
     maxOriginPrice = detailModel.price.max.discountPrice;
 
     maxCommission = maxOriginPrice - maxPrice;

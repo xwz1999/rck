@@ -10,6 +10,7 @@ import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/pages/user/banlance/user_balance_detail_page.dart';
 import 'package:jingyaoyun/pages/user/banlance/withdraw_history_page.dart';
 import 'package:jingyaoyun/pages/user/banlance/withdraw_page.dart';
+import 'package:jingyaoyun/pages/user/recharge/recharge_history_page.dart';
 import 'package:jingyaoyun/pages/user/recharge/recharge_page.dart';
 import 'package:jingyaoyun/pages/user/recharge/user_recharge_detail_page.dart';
 
@@ -83,18 +84,7 @@ class _UserRechargePageState extends State<UserRechargePage> {
           ],
         ),
       ),
-      body: Flexible(
-          child:           RefreshWidget(
-              controller: _refreshController,
-              color: Colors.white,
-              onRefresh: () async {
-                //await UserBenefitFunc.getPiFaTable(1);
-                setState(() {});
-                _refreshController.refreshCompleted();
-              },
               body: _bodyWidget()
-          )
-      ),
 
     );
 
@@ -217,7 +207,7 @@ class _UserRechargePageState extends State<UserRechargePage> {
             GestureDetector(
               onTap: (){
                 //AppRouter.push(context, RouteName.CASH_WITHDRAW_HISTORY_PAGE);
-                Get.to(()=>WithdrawHistoryPage());
+                Get.to(()=>RechargeHistoryPage());
               },
               child: Container(
                 width: 172.rw,

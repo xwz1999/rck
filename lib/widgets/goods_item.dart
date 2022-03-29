@@ -617,7 +617,7 @@ class GoodsItemWidget extends StatelessWidget {
                       children: [
                         ExtendedText.rich(TextSpan(children: [
                           TextSpan(
-                            text:  "券后 ¥ ",
+                            text:  "到手价 ¥ ",
                             style: AppTextStyle.generate(
                                  12 * 2.sp,
                                 color: priceColor,
@@ -625,7 +625,7 @@ class GoodsItemWidget extends StatelessWidget {
                           ),
                           TextSpan(
                             text:
-                                "${(this.discountPrice - this.discountPrice.toInt()) > 0 ? this.discountPrice.toStringAsFixed(1) : this.discountPrice.toStringAsFixed(0)}",
+                                "${(this.discountPrice-this.commission).toStringAsFixed(2)}",
                             // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
                             style: TextStyle(
                                 letterSpacing: -1,
@@ -639,7 +639,7 @@ class GoodsItemWidget extends StatelessWidget {
                             width: 5,
                           )),
                           TextSpan(
-                            text: "¥${this.originalPrice.toStringAsFixed(0)}",
+                            text: "¥${this.originalPrice.toStringAsFixed(1)}",
                             style: TextStyle(
                                 decoration: TextDecoration.lineThrough,
                                 decorationColor: Color(0xff898989),
@@ -682,7 +682,7 @@ class GoodsItemWidget extends StatelessWidget {
                       ),
                     ),
               Container(
-                width: 10,
+                width: 5.rw,
               ),
               type != 4
                   ? GestureDetector(

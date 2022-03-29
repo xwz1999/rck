@@ -59,6 +59,7 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) {
             : OrderGoodsModel.fromJson(e as Map<String, dynamic>))
         ?.toList(),
     json['canConfirm'] as bool,
+    json['can_pay'] as bool,
   );
 }
 
@@ -94,6 +95,7 @@ Map<String, dynamic> _$OrderModelToJson(OrderModel instance) =>
       'totalGoodsCount': instance.totalGoodsCount,
       'goodsList': instance.goodsList,
       'canConfirm': instance.canConfirm,
+      'can_pay': instance.canPay,
     };
 
 // OrderBrandsModel _$OrderBrandsModelFromJson(Map<String, dynamic> json) {

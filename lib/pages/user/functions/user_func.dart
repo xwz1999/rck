@@ -63,4 +63,19 @@ class UserFunc {
   }
 
 
+
+  static Future<List<KingCoinListModel>> getMessageList() async {//new
+    ResultData result = await HttpManager.post(APIV2.userAPI.getMessageList, {
+      'page':0,
+      'limit':10,
+    });
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return (result.data['data'] as List)
+            .map((e) => KingCoinListModel.fromJson(e))
+            .toList();
+      }
+    }
+  }
+
 }

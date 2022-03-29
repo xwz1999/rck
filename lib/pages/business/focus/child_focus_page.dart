@@ -114,15 +114,24 @@ class _FocusPageState extends BaseStoreState<FocusPage>
                       arguments:
                           CommodityDetailPage.setArguments(indexModel.goods.id));
                 },
-                downloadListener: (ByteData byteData) {
-                  _capturePng(byteData);
+                downloadListener: (ByteData byteData) async{
+                  await _capturePng(byteData);
 
                   List<String> urls = indexModel.photos.map((f) {
                     return Api.getResizeImgUrl(f.url, 800);
                   }).toList();
                   print(urls);
-                  ImageUtils.saveNetworkImagesToPhoto(urls, (index) {
-                    DPrint.printf("保存好了---$index");
+
+                 await ImageUtils.saveNetworkImagesToPhoto(urls, (index) {
+                   BotToast.closeAllLoading();
+                   if(index==99){
+
+                     BotToast.showText(text: '图片保存失败');
+                   }else{
+
+                     DPrint.printf("保存好了---$index");
+                   }
+
                   }, (success) {
                     BotToast.closeAllLoading();
                     //dismissLoading();
@@ -264,7 +273,9 @@ class _FocusPageState extends BaseStoreState<FocusPage>
         return;
       }
 
-      await ImageUtils.saveImage( [pngBytes], (index) {}, (success) {
+      await ImageUtils.saveImage( [pngBytes], (index) {
+
+      }, (success) {
 
         if (success) {
           //showSuccess("图片已经保存到相册!");
