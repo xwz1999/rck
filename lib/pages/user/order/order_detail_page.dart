@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/order_detail_model.dart';
@@ -19,8 +20,12 @@ import 'package:jingyaoyun/pages/user/mvp/order_list_contact.dart';
 import 'package:jingyaoyun/pages/user/mvp/order_list_presenter_impl.dart';
 import 'package:jingyaoyun/pages/user/order/order_detail_state.dart';
 import 'package:jingyaoyun/pages/user/order/order_logistics_list_page.dart';
+import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
+import 'package:jingyaoyun/pages/wholesale/models/wholesale_customer_model.dart';
+import 'package:jingyaoyun/pages/wholesale/wholesale_customer_page.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/custom_floating_action_button_location.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
@@ -60,9 +65,41 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
     _presenter.getOrderDetail(UserManager.instance.user.info.id, orderId);
   }
 
+
+
+  _customer(){
+    return GestureDetector(
+      onTap: () async{
+        WholesaleCustomerModel model = await
+        WholesaleFunc.getCustomerInfo();
+
+        Get.to(()=>WholesaleCustomerPage(model: model,));
+
+
+      },
+      child: Container(
+        width: 46.rw,
+        height: 46.rw,
+        decoration: BoxDecoration(
+          color: Color(0xFF000000).withOpacity(0.7),
+          borderRadius: BorderRadius.all(Radius.circular(23.rw)),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(R.ASSETS_WHOLESALE_WHOLESALE_CUSTOMER_PNG,width: 20.rw,height: 20.rw,),
+            5.hb,
+            Text('客服',style: TextStyle(color: Colors.white,fontSize: 10.rw),)
+          ],
+        ),
+      ),
+    );
+  }
   @override
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
+      floatingActionButton: isPifa? _customer():SizedBox(),
+      floatingActionButtonLocation:CustomFloatingActionButtonLocation(FloatingActionButtonLocation.endDocked, 0, -120.rw),
       appBar: CustomAppBar(
       title: orderDetail==null?'':getTitle(),
       themeData: AppThemes.themeDataGrey.appBarTheme,
@@ -294,7 +331,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
               orderDetail.createdAt);
           OrderPrepayModel model = OrderPrepayModel("SUCCESS", data, "");
           AppRouter.push(globalContext, RouteName.ORDER_PREPAY_PAGE,
-              arguments: OrderPrepayPage.setArguments(model,goToOrder: true,fromTo: orderDetail.canPay&&isPifa?'1':''));
+              arguments: OrderPrepayPage.setArguments(model,isPifa: true, goToOrder: true,fromTo: orderDetail.canPay&&isPifa?'1':''));
         },
       ));
     return items;

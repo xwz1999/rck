@@ -200,21 +200,13 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
                             text: TextSpan(children: [
                               TextSpan(
                                 text:
-                                    "￥${_sku != null ? _sku.discountPrice.toStringAsFixed(2) : _price}${skuNotNull && AppConfig.commissionByRoleLevel ? "/" : ""}",
+                                    "￥${_sku != null ? (_sku.discountPrice-_sku.commission).toStringAsFixed(2) : _price}",
                                 // "￥ ${_sku.discountPrice}",
                                 style: AppTextStyle.generate(18 * 2.sp,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.black),
                               ),
-                              TextSpan(
-                                text: skuNotNull &&
-                                        AppConfig.commissionByRoleLevel
-                                    ? " 赚${_sku.commission.toStringAsFixed(2)}"
-                                    : "",
-                                // "￥ ${_sku.discountPrice}",
-                                style: AppTextStyle.generate(12 * 2.sp,
-                                    color: Color(0xffC92219)),
-                              ),
+
                             ]),
                           );
                         },

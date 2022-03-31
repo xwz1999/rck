@@ -249,7 +249,8 @@ class UserAPI {
   ///消息全部已读
   String get messageReadAll => '/v2/app/message/read_all';
 
-
+  ///激活jpush
+  String get activePush => '/v2/app/push/active';
 
 
 

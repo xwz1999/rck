@@ -617,7 +617,7 @@ class GoodsItemWidget extends StatelessWidget {
                       children: [
                         ExtendedText.rich(TextSpan(children: [
                           TextSpan(
-                            text:  "到手价 ¥ ",
+                            text:  "到手 ¥",
                             style: AppTextStyle.generate(
                                  12 * 2.sp,
                                 color: priceColor,
@@ -630,7 +630,7 @@ class GoodsItemWidget extends StatelessWidget {
                             style: TextStyle(
                                 letterSpacing: -1,
                                 wordSpacing: -1,
-                                fontSize: 19 * 2.sp,
+                                fontSize: 17 * 2.sp,
                                 color: priceColor,
                                 fontWeight: FontWeight.w500),
                           ),
@@ -643,7 +643,7 @@ class GoodsItemWidget extends StatelessWidget {
                             style: TextStyle(
                                 decoration: TextDecoration.lineThrough,
                                 decorationColor: Color(0xff898989),
-                                fontSize: 12 * 2.sp,
+                                fontSize: 11 * 2.sp,
                                 color: Color(0xff898989),
                                 fontWeight: FontWeight.w400),
                           )

@@ -409,7 +409,9 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
             _refreshController.loadComplete();
         });
       },
-      body:isNodata? noDataView('没有订单数据哦~'):  _goodsList.isNotEmpty?
+      body:isNodata? NoDataView(
+        title: "换个关键词搜索一下吧~",
+      ):  _goodsList.isNotEmpty?
       _buildGridView():SizedBox(),
 
     );

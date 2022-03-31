@@ -44,7 +44,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
   Map<UserBenefitPageType, String> _typeTitleMap = {
     UserBenefitPageType.SELF: '自购收益',
     UserBenefitPageType.GUIDE: '导购收益',
-    UserBenefitPageType.TEAM: '店铺补贴',
+    UserBenefitPageType.TEAM: '品牌补贴',
   };
   String get _title => _typeTitleMap[widget.type];
 

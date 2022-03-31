@@ -64,6 +64,23 @@ class UserFunc {
 
 
 
+  ///激活jpush
+  static Future<bool> activeJpush(int type,String registerId ) async {
+    ResultData result =
+    await HttpManager.post(APIV2.userAPI.activePush, {
+      'register_id':registerId,
+      'type': type
+    });
+    if (result.data != null) {
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+
+
+
   static Future<List<KingCoinListModel>> getMessageList() async {//new
     ResultData result = await HttpManager.post(APIV2.userAPI.getMessageList, {
       'page':0,

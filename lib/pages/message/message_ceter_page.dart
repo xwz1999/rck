@@ -13,6 +13,7 @@ import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/pages/user/banlance/user_balance_page.dart';
 import 'package:jingyaoyun/pages/user/order/order_detail_page.dart';
 import 'package:jingyaoyun/widgets/no_data_view.dart';
+import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 
@@ -22,8 +23,9 @@ import 'package:velocity_x/velocity_x.dart';
 import 'message_model.dart';
 
 class MessageCenterPage extends StatefulWidget {
+   final bool canback;
   MessageCenterPage({
-    Key key,
+    Key key, this.canback,
   }) : super(key: key);
 
   @override
@@ -79,6 +81,8 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               24.wb,
+
+             widget.canback? RecookBackButton(white: false,):SizedBox(),
               Text('消息',
                   style: TextStyle(
                     color: Color(0xFF111111),
@@ -211,8 +215,6 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
       onTap: ()async{
         ///订单跳转到付款页面
         ///收益跳转到钱包
-
-
 
         messageRead(item.id);
         _refreshController.requestRefresh();

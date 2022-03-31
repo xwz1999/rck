@@ -127,6 +127,7 @@ class PromotionGoodsModel {
   List<String> specialIcon;
   String countryIcon;
   SecKill secKill;
+  num salePrice;
 
   PromotionGoodsModel(
       {this.goodsId,
@@ -160,7 +161,7 @@ class PromotionGoodsModel {
       this.gysId,
       this.specialIcon,
       this.countryIcon,
-        this.secKill});
+        this.secKill,this.salePrice});
 
   PromotionGoodsModel.fromJson(Map<String, dynamic> json) {
     goodsId = json['goodsId'];
@@ -199,6 +200,7 @@ class PromotionGoodsModel {
         json['spec_icon'] != null ? json['spec_icon'].cast<String>() : null;
     gysId = json['gys_id'];
     countryIcon = json['country_icon'];
+    salePrice = json['sale_price'];
     secKill = json['sec_kill'] != null
         ? new SecKill.fromJson(json['sec_kill'])
         : null;
@@ -244,6 +246,7 @@ class PromotionGoodsModel {
     if (this.secKill != null) {
       data['sec_kill'] = this.secKill.toJson();
     }
+     data['sale_price']= this.salePrice;
     return data;
   }
 

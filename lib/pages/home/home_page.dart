@@ -75,6 +75,7 @@ import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:jingyaoyun/widgets/weather_page/weather_city_model.dart';
 import 'package:jingyaoyun/widgets/weather_page/weather_city_page.dart';
 import 'package:jingyaoyun/widgets/webView.dart';
+import 'package:jpush_flutter/jpush_flutter.dart';
 
 // import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -160,6 +161,10 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   GifController _gifController;
   StateSetter _wholesaleState;
+
+
+  String debugLable = 'Unknown';   /*错误信息*/
+  final JPush jpush = new JPush();
 
   @override
   bool needStore() {
@@ -249,6 +254,22 @@ class _HomePageState extends BaseStoreState<HomePage>
   _change() {
     return GestureDetector(
       onTap: () {
+        var fireDate = DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch + 1000);
+        var localNotification = LocalNotification(
+          id: 234,
+          title: '我是推送测试标题wwwwwwwww',
+          buildId: 1,
+          content: '看到了说明已经成功了hahahaha',
+          fireTime: fireDate,
+          subtitle: '一个测试qqqqqqqq',
+        );
+        jpush.sendLocalNotification(localNotification).then((res) {
+          print('sddd');
+          setState(() {
+            debugLable = res;
+          });
+        });
+        _activityMap = null;
         UserManager.instance.isWholesale = !UserManager.instance.isWholesale;
         _gsRefreshController.requestRefresh();
         UserManager.instance.refreshHomeBottomTabbar.value =
@@ -966,8 +987,8 @@ class _HomePageState extends BaseStoreState<HomePage>
                             goodsName: model.goodsName,
                             mainPhotoUrl: model.picture.url,
                             description: model.description,
-                            discountPrice: model.primePrice,
-                            salePrice: model.price,
+                            discountPrice: model.price,
+                            salePrice: model.salePrice,
                             salesVolume: model.totalSalesVolume,
                           )));
                     } else if (index == _promotionGoodsList.length-1) {
@@ -1134,8 +1155,14 @@ class _HomePageState extends BaseStoreState<HomePage>
 
               }
             },
-            child: ExtendedImage.network(Api.getImgUrl(bannerModel.url),
-                fit: BoxFit.fill, enableLoadState: true),
+            child:
+            FadeInImage.assetNetwork(
+              placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+              image:  Api.getImgUrl(bannerModel.url),
+              fit: BoxFit.fill,
+            ),
+            // child: ExtendedImage.network(Api.getImgUrl(bannerModel.url),
+            //     fit: BoxFit.fill, enableLoadState: true),
           );
         },
       );
@@ -1183,13 +1210,20 @@ class _HomePageState extends BaseStoreState<HomePage>
         ),
         child: ClipRRect(
           child: _activityMap != null && _activityMap.containsKey('a')
-              ? ExtendedImage.network(
-                  Api.getImgUrl(item.logoUrl),
-                  fit: BoxFit.fill,
-                  enableLoadState: true,
-                )
+              ?
+          FadeInImage.assetNetwork(
+              placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+              image:  Api.getImgUrl(item.logoUrl),
+            fit: BoxFit.fill,
+            )
+          //
+          // ExtendedImage.network(
+          //         Api.getImgUrl(item.logoUrl),
+          //         fit: BoxFit.fill,
+          //         enableLoadState: true,
+          //       )
               // CustomCacheImage(imageUrl: Api.getImgUrl(item.logoUrl),fit: BoxFit.fill, height: rSize(300),width: MediaQuery.of(context).size.width,)
-              : Container(),
+              : Image.asset(R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,fit: BoxFit.fitWidth,),
           borderRadius: BorderRadius.all(
             Radius.circular(5),
           ),
@@ -1212,12 +1246,18 @@ class _HomePageState extends BaseStoreState<HomePage>
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: ClipRRect(
         child: _activityMap != null && _activityMap.containsKey('d')
-            ? ExtendedImage.network(
-                Api.getImgUrl(itemD.logoUrl),
-                fit: BoxFit.fill,
-                enableLoadState: true,
-              )
-            : Container(),
+            ?
+        // ExtendedImage.network(
+        //         Api.getImgUrl(itemD.logoUrl),
+        //         fit: BoxFit.fill,
+        //         enableLoadState: true,
+        //       )
+        FadeInImage.assetNetwork(
+          placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+          image:  Api.getImgUrl(itemD.logoUrl),
+          fit: BoxFit.fill,
+        )
+            : Image.asset(R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,fit: BoxFit.fitWidth,),
         borderRadius: BorderRadius.all(
           Radius.circular(5),
         ),
@@ -1274,12 +1314,18 @@ class _HomePageState extends BaseStoreState<HomePage>
                       child: ClipRRect(
                         child: _activityMap != null &&
                                 _activityMap.containsKey('b')
-                            ? ExtendedImage.network(
-                                Api.getImgUrl(itemB.logoUrl),
-                                fit: BoxFit.fill,
-                                enableLoadState: true)
+                            ?
+                        // ExtendedImage.network(
+                        //         Api.getImgUrl(itemB.logoUrl),
+                        //         fit: BoxFit.fill,
+                        //         enableLoadState: true)
+                        FadeInImage.assetNetwork(
+                          placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                          image:  Api.getImgUrl(itemB.logoUrl),
+                          fit: BoxFit.fill,
+                        )
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemB.logoUrl),fit: BoxFit.fill,)
-                            : Container(),
+                            : Image.asset(R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,fit: BoxFit.fitWidth,),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(5),
                           topRight: Radius.circular(5),
@@ -1311,12 +1357,18 @@ class _HomePageState extends BaseStoreState<HomePage>
                       child: ClipRRect(
                         child: _activityMap != null &&
                                 _activityMap.containsKey('c')
-                            ? ExtendedImage.network(
-                                Api.getImgUrl(itemC.logoUrl),
-                                fit: BoxFit.fill,
-                                enableLoadState: true)
+                            ?
+                        // ExtendedImage.network(
+                        //         Api.getImgUrl(itemC.logoUrl),
+                        //         fit: BoxFit.fill,
+                        //         enableLoadState: true)
+                        FadeInImage.assetNetwork(
+                          placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                          image:  Api.getImgUrl(itemC.logoUrl),
+                          fit: BoxFit.fill,
+                        )
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemC.logoUrl),fit: BoxFit.fill,)
-                            : Container(),
+                            : Image.asset(R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,fit: BoxFit.fitWidth,),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(5),
                           topRight: Radius.circular(5),
@@ -1376,12 +1428,18 @@ class _HomePageState extends BaseStoreState<HomePage>
                       child: ClipRRect(
                         child: _activityMap != null &&
                                 _activityMap.containsKey('b')
-                            ? ExtendedImage.network(
-                                Api.getImgUrl(itemB.logoUrl),
-                                fit: BoxFit.fill,
-                                enableLoadState: true)
+                            ?
+                        // ExtendedImage.network(
+                        //         Api.getImgUrl(itemB.logoUrl),
+                        //         fit: BoxFit.fill,
+                        //         enableLoadState: true)
+                        FadeInImage.assetNetwork(
+                          placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                          image:  Api.getImgUrl(itemB.logoUrl),
+                          fit: BoxFit.fill,
+                        )
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemB.logoUrl),fit: BoxFit.fill,)
-                            : Container(),
+                            : Image.asset(R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,fit: BoxFit.fill,),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(5),
                           topRight: Radius.circular(5),
@@ -1415,15 +1473,23 @@ class _HomePageState extends BaseStoreState<HomePage>
                       }
                     },
                     child: Container(
+
                       child: ClipRRect(
                         child: _activityMap != null &&
                                 _activityMap.containsKey('c')
-                            ? ExtendedImage.network(
-                                Api.getImgUrl(itemB.logoUrl),
-                                fit: BoxFit.fill,
-                                enableLoadState: true)
+                            ?
+                        // ExtendedImage.network(
+                        //         Api.getImgUrl(itemB.logoUrl),
+                        //         fit: BoxFit.fill,
+                        //         enableLoadState: true)
+                        FadeInImage.assetNetwork(
+                          placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+
+                          image:  Api.getImgUrl(itemB.logoUrl),
+                          fit: BoxFit.fitWidth,
+                        )
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemB.logoUrl),fit: BoxFit.fill,)
-                            : Container(),
+                            :Image.asset(R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,fit: BoxFit.fitWidth,width: double.infinity,),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(5),
                           topRight: Radius.circular(5),
@@ -1453,12 +1519,18 @@ class _HomePageState extends BaseStoreState<HomePage>
                       child: ClipRRect(
                         child: _activityMap != null &&
                                 _activityMap.containsKey('d')
-                            ? ExtendedImage.network(
-                                Api.getImgUrl(itemC.logoUrl),
-                                fit: BoxFit.fill,
-                                enableLoadState: true)
+                            ?
+                        // ExtendedImage.network(
+                        //         Api.getImgUrl(itemC.logoUrl),
+                        //         fit: BoxFit.fill,
+                        //         enableLoadState: true)
+                        FadeInImage.assetNetwork(
+                          placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                          image:  Api.getImgUrl(itemC.logoUrl),
+                          fit: BoxFit.fitWidth,
+                        )
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemC.logoUrl),fit: BoxFit.fill,)
-                            : Container(),
+                            : Image.asset(R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,fit: BoxFit.fitWidth,width: double.infinity,),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(5),
                           topRight: Radius.circular(5),
@@ -1641,6 +1713,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       case '全部分类':
         break;
       case '批发商城':
+
         Get.to(() => WholesaleHomePage());
         break;
         final loadingCancel = ReToast.loading();
@@ -1804,6 +1877,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   _getActiviteList() async {
+
     ResultData resultData = await HttpManager.post(HomeApi.activity_list, {
       "is_sale": UserManager.instance.isWholesale,
     });

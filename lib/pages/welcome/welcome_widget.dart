@@ -25,7 +25,9 @@ import 'package:jingyaoyun/daos/user_dao.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/user_model.dart';
+import 'package:jingyaoyun/pages/message/message_ceter_page.dart';
 import 'package:jingyaoyun/pages/tabBar/TabbarWidget.dart';
+import 'package:jingyaoyun/pages/user/functions/user_func.dart';
 import 'package:jingyaoyun/utils/print_util.dart';
 import 'package:jingyaoyun/utils/share_preference.dart';
 import 'package:jingyaoyun/utils/storage/hive_store.dart';
@@ -133,7 +135,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     getPackageInfo();
     _autoLogin();
     _showController();
-
+    initPlatformState();
     WidgetsBinding.instance.addPostFrameCallback((callback) {
       _beginCountDown();
       UserManager.instance.updateUserBriefInfo(getStore());
@@ -151,15 +153,24 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     try {
       jpush.addEventHandler(
           onReceiveNotification: (Map<String, dynamic> message) async {
-        print("flutter onReceiveNotification: $message");
-        setState(() {
-          debugLable = "flutter onReceiveNotification: $message";
-        });
+
+
+        print("123213123546897045769876458907543248935743895743805: $message");
+        // setState(() {
+        //   debugLable = "flutter onReceiveNotification: $message";
+        // });
+
       }, onOpenNotification: (Map<String, dynamic> message) async {
-        print("flutter onOpenNotification: $message");
-        setState(() {
-          debugLable = "flutter onOpenNotification: $message";
-        });
+
+        print("123213123546897045769876458907543248935743895743805: $message");
+
+
+        Get.to(() => MessageCenterPage(canback: true,));
+
+        // print("flutter onOpenNotification: $message");
+        // setState(() {
+        //   debugLable = "flutter onOpenNotification: $message";
+        // });
       }, onReceiveMessage: (Map<String, dynamic> message) async {
         print("flutter onReceiveMessage: $message");
         setState(() {
@@ -195,9 +206,12 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     setState(() {
       debugLable = platformVersion;
     });
-    jpush.getRegistrationID().then((rid) {
+    jpush.getRegistrationID().then((rid) async {
       print("flutter get registration id : $rid");
       UserManager.instance.jpushRid = rid;
+
+      await  UserFunc.activeJpush(Platform.isIOS?2:1,rid);
+
     });
 
   }

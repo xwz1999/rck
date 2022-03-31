@@ -679,26 +679,25 @@ class Assets {
       AssetGenImage('assets/hot_sell_icon_three.png');
   static const AssetGenImage hotSellIconTwo =
       AssetGenImage('assets/hot_sell_icon_two.png');
-  static const AssetGenImage icCardButie =
-      AssetGenImage('assets/ic_card_butie.png');
-  static const AssetGenImage icCardFenxiang =
-      AssetGenImage('assets/ic_card_fenxiang.png');
-  static const AssetGenImage icCardJd = AssetGenImage('assets/ic_card_jd.png');
-  static const AssetGenImage icCardKefu =
-      AssetGenImage('assets/ic_card_kefu.png');
+  static const AssetGenImage icCardDaogou =
+      AssetGenImage('assets/ic_card_daogou.png');
+  static const AssetGenImage icCardFenxi =
+      AssetGenImage('assets/ic_card_fenxi.png');
+  static const AssetGenImage icCardKehu =
+      AssetGenImage('assets/ic_card_kehu.png');
   static const AssetGenImage icCardMian =
       AssetGenImage('assets/ic_card_mian.png');
   static const AssetGenImage icCardPi = AssetGenImage('assets/ic_card_pi.png');
   static const AssetGenImage icCardSafe =
       AssetGenImage('assets/ic_card_safe.png');
-  static const AssetGenImage icCardTui =
-      AssetGenImage('assets/ic_card_tui.png');
+  static const AssetGenImage icCardShop =
+      AssetGenImage('assets/ic_card_shop.png');
   static const AssetGenImage icCardVip =
       AssetGenImage('assets/ic_card_vip.png');
+  static const AssetGenImage icCardVvip =
+      AssetGenImage('assets/ic_card_vvip.png');
   static const AssetGenImage icCardZhengping =
       AssetGenImage('assets/ic_card_zhengping.png');
-  static const AssetGenImage icCardZigou =
-      AssetGenImage('assets/ic_card_zigou.png');
   static const AssetGenImage icKefu = AssetGenImage('assets/ic_kefu.png');
   static const AssetGenImage icLxkf = AssetGenImage('assets/ic_lxkf.png');
   static const AssetGenImage icMessageClear =

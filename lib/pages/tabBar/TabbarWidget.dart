@@ -197,7 +197,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
             HomePage(
               tabController: _tabController,
             ),
-            MessageCenterPage(),
+            MessageCenterPage(canback: false,),
             //AkuCollegePage(),
             DiscoveryPage(),
 

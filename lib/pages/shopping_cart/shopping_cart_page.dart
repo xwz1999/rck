@@ -250,13 +250,6 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
                     style:
                         AppTextStyle.generate(22 * 2.sp, color: Color(0xffc70404),fontWeight: FontWeight.bold))
               ])),
-          totalCommission > 0 && AppConfig.commissionByRoleLevel
-              ? Text(
-                  "赚 ¥${totalCommission.toStringAsFixed(2)}",
-                  style: TextStyle(
-                      color: AppColor.themeColor, fontSize: 14 * 2.sp),
-                )
-              : Container()
         ],
       ))
       ..add(Container(

@@ -106,22 +106,22 @@ class _GoodPriceViewState extends State<GoodPriceView> {
       price = maxPrice.toStringAsFixed(2);
     } else {
       // price = "${minPrice.toStringAsFixed(2)}-${maxPrice.toStringAsFixed(2)}";
-      price = "${_getDoubleText(minPrice)}-${_getDoubleText(maxPrice)}";
+      price = minPrice.toStringAsFixed(2); //"${_getDoubleText(minPrice)}-${_getDoubleText(maxPrice)}";
     }
     bool isTwoPrice = false;
     if (minOriginPrice == maxOriginPrice) {
       originPrice = maxOriginPrice.toStringAsFixed(2);
     } else {
-      originPrice =
-          "${_getDoubleText(minOriginPrice)}-${_getDoubleText(maxOriginPrice)}";
+      originPrice =_getDoubleText(minOriginPrice);
+          //"${_getDoubleText(minOriginPrice)}-${_getDoubleText(maxOriginPrice)}";
       isTwoPrice = true;
     }
 
     if (maxCommission == minCommission) {
       commission = maxCommission.toStringAsFixed(2);
     } else {
-      commission =
-          "${_getDoubleText(minCommission)}-${_getDoubleText(maxCommission)}";
+      commission =_getDoubleText(minCommission);
+          //"${_getDoubleText(minCommission)}-${_getDoubleText(maxCommission)}";
     }
     return _normalPriceWidget(
         price, commission, originPrice, isTwoPrice, coupon, saleNum);
@@ -216,7 +216,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
             child: Row(
               children: <Widget>[
                 Text(
-                  "到手价=$originPrice（官方指导价）",
+                  "到手价=$originPrice(官方指导价)",
                   style: AppTextStyle.generate(
                     10 .rsp,
                     color: Colors.white,
@@ -225,7 +225,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
 
                 (coupon != null && coupon != 0)
                     ? Text(
-                      '—¥$coupon（优惠券）',
+                      '—¥$coupon(优惠券)',
                       style: TextStyle(
                         fontSize: 10.rsp,
                         color: Colors.white,
@@ -233,7 +233,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                     )
                     : SizedBox(),
                 Text(
-                  '—¥$commission（自购折扣）',
+                  '—¥$commission(自购折扣)',
                   style: TextStyle(
                     fontSize: 10.rsp,
                     color: Colors.white,

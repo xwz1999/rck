@@ -96,7 +96,7 @@ class _UserOldHistoryBenefitPageState extends State<UserOldHistoryBenefitPage> {
                 _renderDivider(),
                 _renderColumn('导购收益', _guide.toStringAsFixed(2) ?? ''),
                 _renderDivider(),
-                _renderColumn('店铺补贴', _team.toStringAsFixed(2) ?? ''),
+                _renderColumn('品牌补贴', _team.toStringAsFixed(2) ?? ''),
               ],
             ),
           ),
