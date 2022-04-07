@@ -11,6 +11,7 @@ import 'package:jingyaoyun/models/home_weather_model.dart';
 import 'package:jingyaoyun/pages/user/functions/user_benefit_func.dart';
 import 'package:jingyaoyun/pages/user/model/pifa_table_model.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_table_month_page.dart';
+import 'package:jingyaoyun/utils/share_tool.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/bottom_time_picker.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
@@ -89,7 +90,7 @@ class _VipShopPushPageState extends State<VipShopPushPage> {
                         white: true,
                       ),
                       Text(
-                        "批发报表",
+                        "VIP店推广",
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 18.rsp,
@@ -135,9 +136,42 @@ class _VipShopPushPageState extends State<VipShopPushPage> {
                             child: Row(
                               children: [
                                 Text(
-                                  '批发总额',
+                                  '推广次数',
                                   style: TextStyle(fontSize: 14.rsp, color: Color(0xFF333333)),
                                 ),
+                                32.wb,
+                                Text(
+                                  '6',
+                                  style: TextStyle(fontSize: 18.rsp, color: Color(0xFFD5101A),fontWeight: FontWeight.bold),
+                                ),
+                                Spacer(),
+                                GestureDetector(
+                                  onTap: (){
+                                    _showShare(context);
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 2.rw,horizontal: 6.rw),
+                                    decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                          colors: [
+                                            Color(0xFFF14F49),
+                                            Color(0xFFE21830),
+                                          ],
+                                        ),
+                                        borderRadius: BorderRadius.circular(2.rw)
+                                    ),
+                                    child: Text(
+                                      '推广 >',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 12.rsp,
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                           ),
@@ -149,7 +183,12 @@ class _VipShopPushPageState extends State<VipShopPushPage> {
                               children: [
                                 Text(
                                   '推广收益',
-                                  style: TextStyle(fontSize: 14.rsp, color: Color(0xFF333333)),
+                                  style: TextStyle(fontSize: 14.rsp, color: Color(0xFF333333),),
+                                ),
+                                32.wb,
+                                Text(
+                                  '¥4,000.00',
+                                  style: TextStyle(fontSize: 18.rsp, color: Color(0xFFD5101A),fontWeight: FontWeight.bold),
                                 ),
                               ],
                             ),
@@ -429,4 +468,24 @@ class _VipShopPushPageState extends State<VipShopPushPage> {
       if (mounted) {}
     });
   }
+
+  _showShare(BuildContext context) {
+    // if (UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
+    //     UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.None) {
+    //   //跳到分享邀请
+    //   // _showInviteShare(context);
+    //   ShareTool().inviteShare(context);
+    //   return;
+    // }
+
+    ShareTool().goodsShare(context,
+        goodsPrice: '',
+        miniTitle: '',
+        goodsName:'',
+        goodsDescription: '',
+        miniPicurl:"",
+        goodsId:'',
+        amount:  "");
+  }
+
 }

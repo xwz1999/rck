@@ -13,6 +13,7 @@ import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/pages/user/banlance/withdraw_page_third.dart';
 import 'package:jingyaoyun/pages/user/functions/user_balance_func.dart';
+import 'package:jingyaoyun/pages/user/model/withdraw_amount_model.dart';
 
 import 'package:jingyaoyun/pages/user/widget/recook_check_box.dart';
 import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
@@ -27,8 +28,9 @@ import 'package:velocity_x/velocity_x.dart';
 import 'package:jingyaoyun/constants/header.dart';
 
 class WithDrawPageSecond extends StatefulWidget {
+  final WithdrawAmountModel amount;
   WithDrawPageSecond({
-    Key key,
+    Key key, @required this.amount,
   }) : super(key: key);
 
   @override
@@ -37,8 +39,6 @@ class WithDrawPageSecond extends StatefulWidget {
 
 class _WithDrawPageSecondState extends State<WithDrawPageSecond>
     with TickerProviderStateMixin {
-  TextEditingController _amountTextEditController;
-  FocusNode _amountContentFocusNode = FocusNode();
 
   TextEditingController _companyTextEditController;
   FocusNode _companyContentFocusNode = FocusNode();
@@ -55,17 +55,16 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
   @override
   void initState() {
     super.initState();
-    _amountTextEditController = TextEditingController();
+
     _companyTextEditController = TextEditingController();
     _numberTextEditController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _amountTextEditController?.dispose();
+
     _companyTextEditController?.dispose();
     _numberTextEditController?.dispose();
-    _amountContentFocusNode?.dispose();
     _companyContentFocusNode?.dispose();
     _numberContentFocusNode?.dispose();
     super.dispose();
@@ -283,91 +282,114 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
           padding: EdgeInsets.symmetric(horizontal: 20.rw),
           child: Container(
             width: double.infinity,
-            height: 136.rw,
+            height: 72.rw,
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(8.rw)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Row(
               children: [
-                20.hb,
-                Padding(
-                  padding: EdgeInsets.only(left: 16.rw),
-                  child: Text(
-                    "提现金额",
-                    style: TextStyle(
-                      color: Color(0xFF333333),
-                      fontSize: 14.rsp,
-                    ),
-                  ),
-                ),
-                30.hb,
-                Padding(
-                  padding: EdgeInsets.only(left: 16.rw),
-                  child: Row(
-                    children: <Widget>[
-                      Text(
-                        "¥",
-                        style: TextStyle(
-                          color: Color(0xFFD5101A),
-                          fontSize: 24.rsp,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      20.hb,
+                      Padding(
+                        padding: EdgeInsets.only(left: 16.rw),
+                        child: Text(
+                          '结算金额',
+                          style: TextStyle(
+                            color: Color(0xFF333333),
+                            fontSize: 14.rsp,
+                          ),
                         ),
                       ),
-                      Text(
-                        TextUtils.getCount1(
-                            (UserManager.instance.userBrief.balance ?? 0.0)),
-                        style: TextStyle(
-                          color: Color(0xFFD5101A),
-                          fontSize: 36.rsp,
+                      10.hb,
+                      Padding(
+                        padding: EdgeInsets.only(left: 16.rw),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              "¥",
+                              style: TextStyle(
+                                color: Color(0xFF333333),
+                                fontSize: 18.rsp,
+                                fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            Text(
+                              TextUtils.getCount1(
+                                  (widget.amount.balance ?? 0.0)),
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                color: Color(0xFF333333),
+                                fontSize: 18.rsp,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                      // Expanded(
-                      //   child: CupertinoTextField(
-                      //     keyboardType:
-                      //         TextInputType.numberWithOptions(signed: true),
-                      //     inputFormatters: [AmountFormat()],
-                      //     controller: _amountTextEditController,
-                      //     textInputAction: TextInputAction.done,
-                      //     onSubmitted: (_submitted) {
-                      //       _amountContentFocusNode.unfocus();
-                      //       setState(() {});
-                      //     },
-                      //     focusNode: _amountContentFocusNode,
-                      //     onChanged: (text) {
-                      //       setState(() {});
-                      //     },
-                      //     placeholderStyle: TextStyle(
-                      //         color: Color(0xffcccccc),
-                      //         fontSize: 20.rsp,
-                      //         fontWeight: FontWeight.w300),
-                      //     decoration:
-                      //         BoxDecoration(color: Colors.white.withAlpha(0)),
-                      //     style: TextStyle(
-                      //         color: Color(0xFFD5101A),
-                      //         fontSize: 30.rsp,
-                      //         fontWeight: FontWeight.bold,
-                      //         textBaseline: TextBaseline.ideographic),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
-                Divider(
-                  color: Color(0xFFEEEEEE),
-                  height: 2.rw,
-                  indent: 16.rw,
-                  endIndent: 16.rw,
-                ),
-                20.hb,
-                Padding(
-                  padding: EdgeInsets.only(left: 16.rw),
-                  child: Text(
-                    "请与发票金额填写一致",
-                    style: TextStyle(
-                      color: Color(0xFF999999),
-                      fontSize: 12.rsp,
+
+                Container(
+                  height: 40.rw,
+                  width: 1.rw,
+
+                  decoration: BoxDecoration(
+                    gradient:LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: <Color>[ Color(0x00EEEEEE),Color(0xFFE8E8E8), Color(0x00D8D8D8),],
                     ),
                   ),
                 ),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      20.hb,
+                      Padding(
+                        padding: EdgeInsets.only(left: 16.rw),
+                        child: Text(
+                          "到账金额",
+                          style: TextStyle(
+                            color: Color(0xFF333333),
+                            fontSize: 14.rsp,
+                          ),
+                        ),
+                      ),
+                      10.hb,
+                      Padding(
+                        padding: EdgeInsets.only(left: 16.rw),
+                        child: Row(
+                          children: <Widget>[
+                            Text(
+                              "¥",
+                              style: TextStyle(
+                                  color: Color(0xFFD5101A),
+                                  fontSize: 18.rsp,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                            Text(
+                              TextUtils.getCount1(
+                                  (widget.amount.actualAmount?? 0.0)),
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                              style: TextStyle(
+
+                                  color: Color(0xFFD5101A),
+                                  fontSize: 18.rsp,
+                                  fontWeight: FontWeight.bold
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               ],
             ),
           ),
@@ -377,7 +399,7 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
           padding: EdgeInsets.symmetric(horizontal: 20.rw),
           child: Container(
             width: double.infinity,
-            height: 120.rw,
+            height:isElectronics?46.rw: 120.rw,
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(8.rw)),
             child: Column(
@@ -402,20 +424,23 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
                           isPaper = false;
                           setState(() {});
                         },
-                        child: Row(
-                          children: [
-                            RecookCheckBox(
-                              state: isElectronics,
-                            ),
-                            16.wb,
-                            Text(
-                              "电子发票",
-                              style: TextStyle(
-                                color: Color(0xFF333333),
-                                fontSize: 14.rsp,
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Row(
+                            children: [
+                              RecookCheckBox(
+                                state: isElectronics,
                               ),
-                            ),
-                          ],
+                              16.wb,
+                              Text(
+                                "电子发票",
+                                style: TextStyle(
+                                  color: Color(0xFF333333),
+                                  fontSize: 14.rsp,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       40.wb,
@@ -425,20 +450,23 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
                           isElectronics = false;
                           setState(() {});
                         },
-                        child: Row(
-                          children: [
-                            RecookCheckBox(
-                              state: isPaper,
-                            ),
-                            16.wb,
-                            Text(
-                              "纸质发票",
-                              style: TextStyle(
-                                color: Color(0xFF333333),
-                                fontSize: 14.rsp,
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Row(
+                            children: [
+                              RecookCheckBox(
+                                state: isPaper,
                               ),
-                            ),
-                          ],
+                              16.wb,
+                              Text(
+                                "纸质发票",
+                                style: TextStyle(
+                                  color: Color(0xFF333333),
+                                  fontSize: 14.rsp,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       )
                     ],
@@ -450,16 +478,7 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
                         height: 5.rw,
                       ),
                 isElectronics
-                    ? Padding(
-                        padding: EdgeInsets.only(left: 16.rw, bottom: 16.rw),
-                        child: Text(
-                          "*注：邮件请备注公司名称",
-                          style: TextStyle(
-                            color: Color(0xFFD5101A),
-                            fontSize: 12.rsp,
-                          ),
-                        ),
-                      )
+                    ? SizedBox()
                     : Padding(
                         padding: EdgeInsets.only(left: 16.rw, right: 16.rw),
                         child: Column(
@@ -576,24 +595,33 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
           ),
           child: GestureDetector(
             onTap: () async {
-              bool apply = await UserBalanceFunc.applyWithdrawal(
-                  UserManager.instance.userBrief.balance, isElectronics ? 1 : 2,
-                  logistics_name: logistics, waybill_code: logisticsNumber);
 
-              if (apply) {
-                ReToast.success(text: '提交成功');
-                Get.back();
-                Get.back();
-                Get.to(()=>WithDrawPageThird(amount: '¥'+TextUtils.getCount1((UserManager
-                    .instance.userBrief.balance ??
-                    0.0)),type: isElectronics?'电子发票':'纸质发票', time: DateUtil.formatDate(DateTime.now(), format: 'yyyy-MM-dd HH:mm:ss'),
-                    logistics: logistics,
-                  logisticsNumber: logisticsNumber,
+              Get.to(()=>WithDrawPageThird(amount: '¥'+TextUtils.getCount1((UserManager
+                  .instance.userBrief.balance ??
+                  0.0)),type: isElectronics?'电子发票':'纸质发票', time: DateUtil.formatDate(DateTime.now(), format: 'yyyy-MM-dd HH:mm:ss'),
+                logistics: logistics,
+                logisticsNumber: logisticsNumber,
 
-                ));
-              } else {
-                ReToast.success(text: '提交失败');
-              }
+              ));
+
+              // bool apply = await UserBalanceFunc.applyWithdrawal(
+              //     UserManager.instance.userBrief.balance, isElectronics ? 1 : 2,
+              //     logistics_name: logistics, waybill_code: logisticsNumber);
+              //
+              // if (apply) {
+              //   ReToast.success(text: '提交成功');
+              //   Get.back();
+              //   Get.back();
+              //   Get.to(()=>WithDrawPageThird(amount: '¥'+TextUtils.getCount1((UserManager
+              //       .instance.userBrief.balance ??
+              //       0.0)),type: isElectronics?'电子发票':'纸质发票', time: DateUtil.formatDate(DateTime.now(), format: 'yyyy-MM-dd HH:mm:ss'),
+              //       logistics: logistics,
+              //     logisticsNumber: logisticsNumber,
+              //
+              //   ));
+              // } else {
+              //   ReToast.success(text: '提交失败');
+              // }
               //
               //
             },

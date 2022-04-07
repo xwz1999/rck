@@ -45,6 +45,10 @@ class TextUtils {
   static String getCount1(num number){
     var fotmat;
 
+
+
+
+
       if(number<1000&&number>=100){
         fotmat = NumberFormat('000.00');
       }else if(number<100&&number>=10){

@@ -254,7 +254,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
             children: [
               GestureDetector(
                 onTap: (){
-                  Get.to(()=>WithdrawRulePage());
+                  Get.to(()=>WithdrawRulePage(type: 1,));
                 },
                 child: Row(
                   children: [

@@ -93,6 +93,8 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
                             History data = list[index];
                             return GestureDetector(
                               onTap: () {
+
+                                ///根据状态来判断进入的是3还是4
                                 Get.to(() => WithDrawResultPage(history: data,));
                                 // AppRouter.push(context,
                                 //     RouteName.CASH_WITHDRAW_RESULT_PAGE,

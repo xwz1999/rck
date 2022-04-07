@@ -43,6 +43,8 @@ class UserBrief {
 
   bool get secretValue => secret == 1;
 
+  String tax;
+
   UserBrief({
     this.balance,
     this.roleLevel,
@@ -59,7 +61,8 @@ class UserBrief {
     this.start,
     this.deposit,
     this.allDeposit,
-    this.isEnterPrise
+    this.isEnterPrise,
+    this.tax
   });
 
   UserBrief.empty() {
@@ -80,6 +83,7 @@ class UserBrief {
     this.deposit = 0;
     this.allDeposit = 0;
     this.isEnterPrise = false;
+    this.tax = '';
   }
 
   UserBrief.fromJson(Map<String, dynamic> json) {
@@ -109,6 +113,7 @@ class UserBrief {
     deposit = json['deposit'];
     allDeposit = json['all_deposit'];
     isEnterPrise = json['is_enterprise'];
+    tax = json['tax'];
   }
 
   Map<String, dynamic> toJson() {
@@ -123,6 +128,7 @@ class UserBrief {
     data['deposit'] = this.deposit;
     data['all_deposit'] = this.allDeposit;
     data['is_enterprise'] = this.isEnterPrise;
+    data['tax'] = this.tax;
     if (this.myAssets != null) {
       data['myAssets'] = this.myAssets.toJson();
     }

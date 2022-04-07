@@ -7,14 +7,17 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/gen/assets.gen.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/shop_summary_model.dart';
 import 'package:jingyaoyun/pages/user/banlance/withdraw_page_second.dart';
 import 'package:jingyaoyun/pages/user/functions/user_balance_func.dart';
 import 'package:jingyaoyun/pages/user/model/company_info_model.dart';
 import 'package:jingyaoyun/pages/user/model/contact_info_model.dart';
+import 'package:jingyaoyun/pages/user/model/withdraw_amount_model.dart';
 import 'package:jingyaoyun/pages/user/widget/MySeparator.dart';
 import 'package:jingyaoyun/pages/user/withdraw_rule_page.dart';
 import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
@@ -40,6 +43,10 @@ class _WithDrawPageState extends State<WithDrawPage>
     with TickerProviderStateMixin {
 
   ContactInfoModel _model = ContactInfoModel(address: '',email: '',name: '',mobile: '');
+
+
+  WithdrawAmountModel _amount = WithdrawAmountModel(balance: 0,taxAmount: 0,withdrawal: 0,actualAmount: 0);
+
   @override
   void initState() {
     super.initState();
@@ -50,6 +57,7 @@ class _WithDrawPageState extends State<WithDrawPage>
 
       });
     });
+    getAllAmount();
   }
 
   @override
@@ -106,7 +114,7 @@ class _WithDrawPageState extends State<WithDrawPage>
                       height: 36.rw,
                     ),
                     10.hb,
-                    Text(
+                     Text(
                       "开发票",
                       style: TextStyle(
                         color: Color(0xFF333333),
@@ -305,8 +313,7 @@ class _WithDrawPageState extends State<WithDrawPage>
                                     Spacer(),
                                     Text(
                                       '¥' +
-                                          TextUtils.getCount1((UserManager
-                                                  .instance.userBrief.balance ??
+                                          TextUtils.getCount1((_amount.balance??
                                               0.0)),
                                       style: TextStyle(
                                           height: 1,
@@ -324,7 +331,7 @@ class _WithDrawPageState extends State<WithDrawPage>
                                     32.wb,
                                     GestureDetector(
                                       onTap: (){
-                                        Get.to(()=>WithdrawRulePage());
+                                        Get.to(()=>WithdrawRulePage(type: UserManager.instance.userBrief.tax=='一般纳税人'?2:UserManager.instance.userBrief.tax==''?1:3,));///通过userInfo里的字段来判读
                                       },
                                       child: Row(
                                         children: [
@@ -346,8 +353,7 @@ class _WithDrawPageState extends State<WithDrawPage>
                                     Spacer(),
                                     Text(
                                       '¥' +
-                                          TextUtils.getCount1((UserManager
-                                              .instance.userBrief.balance ??
+                                          TextUtils.getCount1((_amount.taxAmount ??
                                               0.0)),
                                       style: TextStyle(
                                           height: 1,
@@ -373,8 +379,7 @@ class _WithDrawPageState extends State<WithDrawPage>
                                     Spacer(),
                                     Text(
                                       '¥' +
-                                          TextUtils.getCount1((UserManager
-                                              .instance.userBrief.balance ??
+                                          TextUtils.getCount1((_amount.actualAmount??
                                               0.0)),
                                       style: TextStyle(
                                           height: 1,
@@ -519,7 +524,7 @@ class _WithDrawPageState extends State<WithDrawPage>
                                   ),
                                   child: GestureDetector(
                                     onTap: (){
-                                      Get.to(()=>WithDrawPageSecond());
+                                      Get.to(()=>WithDrawPageSecond(amount: _amount, ));
                                     },
                                     child: Container(
                                       alignment: Alignment.center,
@@ -702,6 +707,36 @@ class _WithDrawPageState extends State<WithDrawPage>
             ),
           );
   }
+
+  Future<WithdrawAmountModel> getAllAmount(
+      ) async {
+    ///channel 1 购物车购买 0直接购买
+    ResultData res = await HttpManager.post(APIV2.userAPI.allAmount, {
+    });
+
+    WithdrawAmountModel model;
+
+    if(res.data!=null){
+      if(res.data['code']=='FAIL'){
+        ReToast.err(text: res.data['msg']);
+      }
+
+      if(res.data['data']!=null){
+        _amount = WithdrawAmountModel.fromJson(res.data['data']);
+
+      }else
+        _amount = null;
+    }else
+      _amount = null;
+
+
+    setState(() {
+
+    });
+
+    return model;
+  }
+
 
   _bottomWidget() {
     List<Widget> tiles = [];

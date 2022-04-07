@@ -91,7 +91,7 @@ static Future<CompanyInfoModel> getCompanyInfo() async {
 
   static Future<bool> applyWithdrawal(num amount,num tax, {String logistics_name,String waybill_code}  ) async {
     Map<String, dynamic> params = {
-      "amount": 100,
+      "amount": amount,
       'tax':tax,
     };
     if (logistics_name != null) {

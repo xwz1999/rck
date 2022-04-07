@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -137,14 +138,20 @@ class _UserBalancePageState extends State<UserBalancePage> {
                   onTap: () async{
                     Get.to(()=>WithDrawPage());
 
-
-                    // if(!UserManager.instance.userBrief.isEnterPrise){
-                    //   AppRouter.push(context, RouteName.USER_CASH_WITHDRAW_PAGE,
-                    //       arguments: UserCashWithdrawPage.setArguments(
-                    //           amount: UserManager.instance.userBrief.balance.toDouble()));
+                    // if(UserManager.instance.userBrief.balance<=0){
+                    //   BotToast.showText(text: '余额不足，无法提现');
                     // }else{
-                    //   Get.to(()=>WithDrawPage());
+                    //   if(!UserManager.instance.userBrief.isEnterPrise){
+                    //     AppRouter.push(context, RouteName.USER_CASH_WITHDRAW_PAGE,
+                    //         arguments: UserCashWithdrawPage.setArguments(
+                    //             amount: UserManager.instance.userBrief.balance.toDouble()));
+                    //   }else{
+                    //     Get.to(()=>WithDrawPage());
+                    //   }
                     // }
+
+
+
 
                   },
                   child: Container(

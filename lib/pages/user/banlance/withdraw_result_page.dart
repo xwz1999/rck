@@ -30,7 +30,7 @@ import 'package:jingyaoyun/constants/header.dart';
 class WithDrawResultPage extends StatefulWidget {
   final History history;
 
-  WithDrawResultPage({
+   WithDrawResultPage({
     Key key,
     this.history,
   }) : super(key: key);
