@@ -94,8 +94,10 @@ class WholesaleFunc {
         return (result.data['data'] as List)
             .map((e) => WholesaleGood.fromJson(e))
             .toList();
-      }
-    }
+      }else
+        return [];
+    }else
+      return [];
   }
 
   ///获取客服信息

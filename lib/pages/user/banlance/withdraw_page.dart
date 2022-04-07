@@ -16,6 +16,7 @@ import 'package:jingyaoyun/pages/user/functions/user_balance_func.dart';
 import 'package:jingyaoyun/pages/user/model/company_info_model.dart';
 import 'package:jingyaoyun/pages/user/model/contact_info_model.dart';
 import 'package:jingyaoyun/pages/user/widget/MySeparator.dart';
+import 'package:jingyaoyun/pages/user/withdraw_rule_page.dart';
 import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
 import 'package:jingyaoyun/pages/wholesale/models/wholesale_customer_model.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_customer_page.dart';
@@ -294,29 +295,108 @@ class _WithDrawPageState extends State<WithDrawPage>
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     32.wb,
-                                    Padding(
-                                      padding: EdgeInsets.only(bottom: 5.rw),
-                                      child: Text(
-                                        "当前可提现金额",
-                                        style: TextStyle(
-                                          color: Color(0xFF333333),
-                                          fontSize: 14.rsp,
-                                        ),
+                                    Text(
+                                      "结算金额",
+                                      style: TextStyle(
+                                        color: Color(0xFF333333),
+                                        fontSize: 14.rsp,
                                       ),
                                     ),
-                                    16.wb,
+                                    Spacer(),
                                     Text(
                                       '¥' +
                                           TextUtils.getCount1((UserManager
                                                   .instance.userBrief.balance ??
                                               0.0)),
                                       style: TextStyle(
+                                          height: 1,
                                           color: Color(0xFF333333),
                                           fontSize: 14.rsp,
                                           fontWeight: FontWeight.bold),
                                     ),
+                                    34.wb,
                                   ],
                                 ),
+                                20.hb,
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    32.wb,
+                                    GestureDetector(
+                                      onTap: (){
+                                        Get.to(()=>WithdrawRulePage());
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "需缴税费金额",
+                                            style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp),
+                                          ),
+                                          Padding(
+                                            padding:  EdgeInsets.only(top: 2.rw),
+                                            child: Icon(
+                                              Icons.help_outline,
+                                              size: 12,
+                                              color: Color(0xff666666),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      '¥' +
+                                          TextUtils.getCount1((UserManager
+                                              .instance.userBrief.balance ??
+                                              0.0)),
+                                      style: TextStyle(
+                                          height: 1,
+                                          color: Color(0xFF333333),
+                                          fontSize: 14.rsp,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    34.wb,
+                                  ],
+                                ),
+                                20.hb,
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    32.wb,
+                                    Text(
+                                      "实际结算金额",
+                                      style: TextStyle(
+                                        color: Color(0xFF333333),
+                                        fontSize: 14.rsp,
+                                      ),
+                                    ),
+                                    Spacer(),
+                                    Text(
+                                      '¥' +
+                                          TextUtils.getCount1((UserManager
+                                              .instance.userBrief.balance ??
+                                              0.0)),
+                                      style: TextStyle(
+                                          height: 1,
+                                          color: Color(0xFF333333),
+                                          fontSize: 14.rsp,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    34.wb,
+                                  ],
+                                ),
+                                20.hb,
+                                Padding(
+                                  padding: EdgeInsets.only(left: 16.rw,right: 16.rw),
+                                  child: Text(
+                                    "请开增值税专用发票，收到发票后的10个工作日内安排付款，注意查收！",
+                                    style: TextStyle(
+                                      color: Color(0xFF999999),
+                                      fontSize: 12.rsp,
+                                    ),
+                                  ),
+                                ),
+
                                 40.hb,
                                 Padding(
                                   padding:
@@ -350,6 +430,13 @@ class _WithDrawPageState extends State<WithDrawPage>
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 16.rw,
                                   ),
+                                  child: _textItem('开票内容', '现代服务*推广服务费或营销服务费'),
+                                ),
+                                48.hb,
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 16.rw,
+                                  ),
                                   child: _textItem('单位全称', '浙江京耀云供应链管理有限公司'),
                                 ),
                                 48.hb,
@@ -357,7 +444,7 @@ class _WithDrawPageState extends State<WithDrawPage>
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 16.rw,
                                   ),
-                                  child: _textItem('税号', '91330201MA7E4AA99L'),
+                                  child: _textItem('税号', '91330201MA7E4AA99L',height: 1),
                                 ),
                                 48.hb,
                                 Padding(
@@ -380,7 +467,7 @@ class _WithDrawPageState extends State<WithDrawPage>
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 16.rw,
                                   ),
-                                  child: _textItem('银行账户', '94170078801800002166'),
+                                  child: _textItem('银行账户', '94170078801800002166',height: 1),
                                 ),
                                 40.hb,
                                 _copyMsg(),
@@ -423,7 +510,7 @@ class _WithDrawPageState extends State<WithDrawPage>
                                     horizontal: 16.rw,
                                   ),
                                   child: _textItem('收件邮箱', _model.email,
-                                      show: true),
+                                      show: true,height: 1),
                                 ),
                                 60.hb,
                                 Padding(
@@ -458,7 +545,7 @@ class _WithDrawPageState extends State<WithDrawPage>
                     ),
                   ),
                   Positioned(
-                      top: 58.rw,
+                      top: 160.rw,
                       left: 0,
                       child: Container(
                         width: 16.rw,
@@ -468,7 +555,7 @@ class _WithDrawPageState extends State<WithDrawPage>
                             borderRadius: BorderRadius.circular(8.rw)),
                       )),
                   Positioned(
-                      top: 58.rw,
+                      top: 160.rw,
                       right: 0,
                       child: Container(
                         width: 16.rw,
@@ -509,49 +596,73 @@ class _WithDrawPageState extends State<WithDrawPage>
     );
   }
 
-  _textItem(String title, String content, {bool show = false}) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 60.rw,
-          child: Text(
-            title,
-            style: TextStyle(
-              color: Color(0xFF999999),
-              fontSize: 14.rsp,
-              fontWeight: FontWeight.bold,
+  _textItem(String title, String content, {bool show = false,double height = -1}) {
+    return Container(
+      color: Colors.transparent,
+
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+
+        children: [
+          SizedBox(
+            width: 60.rw,
+            child: Text(
+              title,
+              style: TextStyle(
+
+                color: Color(0xFF999999),
+                fontSize: 14.rsp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-        16.wb,
-        Expanded(
-          child: Text(
-            content,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: Color(0xFF333333),
-              fontSize: 14.rsp,
-              fontWeight: FontWeight.bold,
+          16.wb,
+          Expanded(
+            child:
+          height!=-1?
+          Padding(
+            padding:  EdgeInsets.only(top: 2.rw),
+            child: Text(
+              content,
+              maxLines: 3,
+
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color: Color(0xFF333333),
+                fontSize: 14.rsp,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ):
+            Text(
+              content,
+              maxLines: 3,
+
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+
+                color: Color(0xFF333333),
+                fontSize: 14.rsp,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
-        ),
-        show
-            ? GestureDetector(
-                onTap: () {
-                  ClipboardData data = new ClipboardData(text: content);
-                  Clipboard.setData(data);
-                  ReToast.success(text: '复制成功');
-                },
-                child: Image.asset(
-                  Assets.icWithdrawalCopy.path,
-                  width: 16.rw,
-                  height: 16.rw,
-                ),
-              )
-            : SizedBox(),
-      ],
+          show
+              ? GestureDetector(
+                  onTap: () {
+                    ClipboardData data = new ClipboardData(text: content);
+                    Clipboard.setData(data);
+                    ReToast.success(text: '复制成功');
+                  },
+                  child: Image.asset(
+                    Assets.icWithdrawalCopy.path,
+                    width: 16.rw,
+                    height: 16.rw,
+                  ),
+                )
+              : SizedBox(),
+        ],
+      ),
     );
   }
 

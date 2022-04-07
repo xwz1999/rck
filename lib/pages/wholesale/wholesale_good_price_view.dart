@@ -171,31 +171,31 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
                         letterSpacing: 0,
                       )),
 
-                  WidgetSpan(child:
-                  Container(
-                    padding: EdgeInsets.symmetric(
-                        vertical: 2.rw,
-                        horizontal: 8.rw
-                    ),
-                    decoration: BoxDecoration(
-                        image: DecorationImage(image: AssetImage(Assets.priceGoodsBg.path),fit: BoxFit.fill)
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          "赚",
-                          style: AppTextStyle.generate(12 * 2.sp,
-                              color: Color(0xFFED3D19)),
-                        ),
-                        Text(
-                          "¥$commission",
-                          style: AppTextStyle.generate(14 * 2.sp,
-                              color: Color(0xFFED3D19)),
-                        ),
-
-                      ],
-                    ),
-                  )),
+                  // WidgetSpan(child:
+                  // Container(
+                  //   padding: EdgeInsets.symmetric(
+                  //       vertical: 2.rw,
+                  //       horizontal: 8.rw
+                  //   ),
+                  //   decoration: BoxDecoration(
+                  //       image: DecorationImage(image: AssetImage(Assets.priceGoodsBg.path),fit: BoxFit.fill)
+                  //   ),
+                  //   child: Row(
+                  //     children: [
+                  //       Text(
+                  //         "赚",
+                  //         style: AppTextStyle.generate(12 * 2.sp,
+                  //             color: Color(0xFFED3D19)),
+                  //       ),
+                  //       Text(
+                  //         "¥$commission",
+                  //         style: AppTextStyle.generate(14 * 2.sp,
+                  //             color: Color(0xFFED3D19)),
+                  //       ),
+                  //
+                  //     ],
+                  //   ),
+                  // )),
 
 
                 ]),
@@ -225,7 +225,7 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
             child: Row(
               children: <Widget>[
                 Text(
-                  "预估利润=$originPrice（官方指导价）",
+                  "预估利润¥$commission（官方指导价¥$originPrice",
                   style: AppTextStyle.generate(
                     10 .rsp,
                     color: Colors.white,
@@ -233,7 +233,7 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
                 ),
 
                 Text(
-                  '—¥$price（批发价）',
+                  '—批发价¥$price）',
                   style: TextStyle(
                     fontSize: 10.rsp,
                     color: Colors.white,
@@ -411,17 +411,6 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
   }
 
   /// 服务
-  _service() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: <Widget>[
-        _serviceLabel("全球精品"),
-        _serviceLabel("正品保障"),
-        _serviceLabel("一件包邮"),
-        _serviceLabel("售后无忧"),
-      ],
-    );
-  }
 
   //数字格式化，将 0~9 的时间转换为 00~09
   String formatTime(int timeNum) {

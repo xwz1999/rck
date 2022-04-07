@@ -107,7 +107,11 @@ class _WholesaleUserAppBarState extends BaseStoreState<WholesaleUserAppBar> {
             },
           ),
           Spacer(),
-          UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip?'':'(${UserLevelTool.currentRoleLevel()})'
+          UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip?''.text
+        .color(Color(0xFF333333))
+        .size(12.rsp)
+        .make()
+              :'(${UserLevelTool.currentRoleLevel()})'
               .text
               .color(Color(0xFF333333))
               .size(12.rsp)
@@ -176,7 +180,7 @@ class _WholesaleUserAppBarState extends BaseStoreState<WholesaleUserAppBar> {
                             borderRadius: BorderRadius.circular(2.rw)),
                         child: Text(
 
-                          'VIP店',
+                          'VIP店铺',
                           style: TextStyle(
                               fontSize: 10.rsp, color: Color(0xFF512309)),
                         ),
@@ -187,7 +191,7 @@ class _WholesaleUserAppBarState extends BaseStoreState<WholesaleUserAppBar> {
                             color: Color(0xFFFEC17C),
                             borderRadius: BorderRadius.circular(2.rw)),
                         child: Text(
-                          'VIP店有效期至 '+DateUtil.formatDate(
+                          'VIP店铺有效期至 '+DateUtil.formatDate(
                               DateTime.parse(getStore().state.userBrief.end),
                               format: 'yyyy-MM-dd'),
                           style: TextStyle(

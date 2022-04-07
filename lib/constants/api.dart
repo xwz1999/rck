@@ -149,6 +149,8 @@ class UserApi {
   static const String income_unaccounted_list = "/v1/wallet/income/own/list";
   static const String withdraw_list = "/v1/wallet/balance/withdraw_list";
   static const String withdraw_detail = "/v1/wallet/balance/withdraw_detail";
+
+  ///提现
   static const String balance_withdraw = "/v1/wallet/balance/balance_withdraw";
 
   static const String verify_sms_send = "/v1/messages/verify/sms/send";

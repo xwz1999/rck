@@ -109,7 +109,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     _fromTo = widget.arguments["fromTo"];
 
     _canUseBalance = widget.arguments['canUseBalance'] ?? true;
-    _isPifa = widget.arguments['isPifa'] ?? false;
+    _isPifa = UserManager.instance.isWholesale;
 
     _presenter
         .queryRecookPayFund(UserManager.instance.user.info.id)
@@ -215,7 +215,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
           height: rSize(50),
         ),
 
-        _isPifa? _payTile(
+        !UserManager.instance.isWholesale? _payTile(
                 "",
                 Image.asset(
                   AppSvg.svg_balance_pay,

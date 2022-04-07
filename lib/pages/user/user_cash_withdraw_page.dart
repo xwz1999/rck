@@ -2,19 +2,26 @@ import 'package:extended_text/extended_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
+import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/base_model.dart';
+import 'package:jingyaoyun/pages/user/withdraw_rule_page.dart';
+import 'package:jingyaoyun/pages/wholesale/models/wholesale_order_preview_model.dart';
 import 'package:jingyaoyun/utils/amount_format.dart';
 import 'package:jingyaoyun/utils/storage/hive_store.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/keyboard/bottom_keyboard_widget.dart';
+import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/webView.dart';
+
+import 'model/withdraw_amount_model.dart';
 
 class UserCashWithdrawPage extends StatefulWidget {
   final Map arguments;
@@ -44,7 +51,9 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
       BottomKeyBoardController();
   bool _isCashToAlipay = true;
   bool _isAgreeTheProtocol = false;
-  bool _isNeedUserVerify = true; // 是否需要实名认证
+  bool _isNeedUserVerify = true;
+  WithdrawAmountModel _model;
+  // 是否需要实名认证
   @override
   void initState() {
     super.initState();
@@ -55,7 +64,37 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
     _accountTextEditController = TextEditingController(text: lastAlipayAccount);
     _bankAccountTextEditController =
         TextEditingController(text: lastBankAccount);
+
+
+     getAllAmount();
   }
+
+  /// 获取税费
+  Future<WithdrawAmountModel> getAllAmount(
+      ) async {
+    ///channel 1 购物车购买 0直接购买
+    ResultData res = await HttpManager.post(APIV2.userAPI.allAmount, {
+    });
+
+    WithdrawAmountModel model;
+
+
+    if(res.data!=null){
+      if(res.data['code']=='FAIL'){
+        ReToast.err(text: res.data['msg']);
+      }
+
+      if(res.data['data']!=null){
+        _model = WithdrawAmountModel.fromJson(res.data['data']);
+
+      }else
+        _model = null;
+    }else
+      _model = null;
+
+    return model;
+  }
+
 
   @override
   void dispose() {
@@ -98,8 +137,8 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
             children: <Widget>[
               _isNeedUserVerify ? _verifyWidget() : Container(),
               Container(
-                height: 0.5,
-                color: AppColor.frenchColor,
+                height: 1.rw,
+                color: Color(0xFFE9E9E9),
               ),
               _contentWidget()
               // IgnorePointer(
@@ -165,18 +204,21 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
     return Container(
       width: double.infinity,
       color: Colors.white,
+
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
+          20.hb,
           _amountWidget(),
+          20.hb,
           Container(
-            height: 0.5,
-            color: AppColor.frenchColor,
+            height: 1.rw,
+            color: Color(0xFFE9E9E9),
           ),
           _alipayOrCardWidget(),
           Container(
-            height: 0.5,
-            color: AppColor.frenchColor,
+            height: 1.rw,
+            color: Color(0xFFE9E9E9),
           ),
           _withdrawAlertWidget(),
           _bottomWidget(),
@@ -185,124 +227,153 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
     );
   }
 
-  _amountWidget() {
+   _amountWidget() {
     double amount = widget.arguments['amount'];
     Container con = Container(
       padding: EdgeInsets.symmetric(horizontal: 17),
       width: MediaQuery.of(context).size.width,
-      height: 120.0,
       color: Colors.white,
       child: Flex(
         direction: Axis.vertical,
         children: <Widget>[
           Row(
             children: [
-              Container(
-                height: 40,
-                alignment: Alignment.bottomLeft,
+              Text(
+                "提现金额(元)",
+                style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp),
+              ),
+              Spacer(),
+              Text(
+                  _model==null?'¥0':   '¥'+ _model.balance.toStringAsFixed(2),
+                style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp,fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+          12.hb,
+          Row(
+            children: [
+              GestureDetector(
+                onTap: (){
+                  Get.to(()=>WithdrawRulePage());
+                },
                 child: Row(
                   children: [
                     Text(
-                      "提现金额(元)",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
+                      "需缴税费金额",
+                      style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp),
                     ),
-
-                    Offstage(
-                      offstage:
-                      !(!TextUtils.isEmpty(_amountTextEditController.text) &&
-                          double.parse(_amountTextEditController.text) < 10),
-                      child: Text(
-                        "(提现金额至少10元)",
-                        style: TextStyle(
-                            fontSize: 12 * 2.sp, color: AppColor.themeColor),
+                    Padding(
+                      padding:  EdgeInsets.only(top: 2.rw),
+                      child: Icon(
+                        Icons.help_outline,
+                        size: 12,
+                        color: Color(0xff666666),
                       ),
                     ),
                   ],
                 ),
               ),
+
+              Spacer(),
+              Text(
+                _model==null?'¥0':'¥'+_model.taxAmount.toStringAsFixed(2),
+                style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp,fontWeight: FontWeight.bold),
+              ),
             ],
           ),
-          Expanded(
-            child: Row(
-              children: <Widget>[
-                Text(
-                  "¥",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24.rsp,
-                      fontWeight: FontWeight.w400),
-                ),
-                Expanded(
-                  child: CupertinoTextField(
-                    keyboardType: TextInputType.numberWithOptions(signed: true),
-                    inputFormatters: [AmountFormat()],
-                    controller: _amountTextEditController,
-                    textInputAction: TextInputAction.done,
-                    onSubmitted: (_submitted) {
-                      _amountContentFocusNode.unfocus();
-                      setState(() {});
-                    },
-                    focusNode: _amountContentFocusNode,
-                    onChanged: (text) {
-                      setState(() {});
-                    },
-                    placeholder: "本次最多可转出${amount.toStringAsFixed(2)}元",
-                    placeholderStyle: TextStyle(
-                        color: Color(0xffcccccc),
-                        fontSize: 20.rsp,
-                        fontWeight: FontWeight.w300),
-                    decoration: BoxDecoration(color: Colors.white.withAlpha(0)),
-                    style: TextStyle(
-                        color: Colors.black,
-                        textBaseline: TextBaseline.ideographic),
-                  ),
-                ),
-                CustomImageButton(
-                  onPressed: () {
-                    _amountTextEditController.text = amount.toStringAsFixed(2);
-                    setState(() {});
-                  },
-                  title: "全部",
-                  style: TextStyle(color: AppColor.themeColor, fontSize: 16),
-                ),
-              ],
-            ),
+          12.hb,
+          Row(
+            children: [
+              Text(
+                "实际提现金额",
+                style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp),
+              ),
+              Spacer(),
+              Text(
+                _model==null?'¥0': '¥'+_model.actualAmount.toStringAsFixed(2),
+                style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp,fontWeight: FontWeight.bold),
+              ),
+            ],
           ),
+
+          // Row(
+          //   children: [
+          //     Container(
+          //       height: 40,
+          //       alignment: Alignment.bottomLeft,
+          //       child: Row(
+          //         children: [
+          //           Text(
+          //             "提现金额(元)",
+          //             style: TextStyle(color: Colors.black, fontSize: 16),
+          //           ),
+          //
+          //           Offstage(
+          //             offstage:
+          //             !(!TextUtils.isEmpty(_amountTextEditController.text) &&
+          //                 double.parse(_amountTextEditController.text) < 10),
+          //             child: Text(
+          //               "(提现金额至少10元)",
+          //               style: TextStyle(
+          //                   fontSize: 12 * 2.sp, color: AppColor.themeColor),
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   ],
+          // ),
+          // Expanded(
+          //   child: Row(
+          //     children: <Widget>[
+          //       Text(
+          //         "¥",
+          //         style: TextStyle(
+          //             color: Colors.black,
+          //             fontSize: 24.rsp,
+          //             fontWeight: FontWeight.w400),
+          //       ),
+          //       Expanded(
+          //         child: CupertinoTextField(
+          //           keyboardType: TextInputType.numberWithOptions(signed: true),
+          //           inputFormatters: [AmountFormat()],
+          //           controller: _amountTextEditController,
+          //           textInputAction: TextInputAction.done,
+          //           onSubmitted: (_submitted) {
+          //             _amountContentFocusNode.unfocus();
+          //             setState(() {});
+          //           },
+          //           focusNode: _amountContentFocusNode,
+          //           onChanged: (text) {
+          //             setState(() {});
+          //           },
+          //           placeholder: "本次最多可转出${amount.toStringAsFixed(2)}元",
+          //           placeholderStyle: TextStyle(
+          //               color: Color(0xffcccccc),
+          //               fontSize: 20.rsp,
+          //               fontWeight: FontWeight.w300),
+          //           decoration: BoxDecoration(color: Colors.white.withAlpha(0)),
+          //           style: TextStyle(
+          //               color: Colors.black,
+          //               textBaseline: TextBaseline.ideographic),
+          //         ),
+          //       ),
+          //       CustomImageButton(
+          //         onPressed: () {
+          //           _amountTextEditController.text = amount.toStringAsFixed(2);
+          //           setState(() {});
+          //         },
+          //         title: "全部",
+          //         style: TextStyle(color: AppColor.themeColor, fontSize: 16),
+          //       ),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );
     return Container(
-      child: Stack(
-        children: <Widget>[
-          con,
-          Positioned(
-            left: 18.rw,
-            bottom: 5.rw,
-            child: Offstage(
-              offstage: !(!TextUtils.isEmpty(_amountTextEditController.text) &&
-                  double.parse(_amountTextEditController.text) > 10),
-              child: Container(
-                height: 40,
-                alignment: Alignment.bottomLeft,
-                child: Row(
-                  children: [
-                    Text(
-                      "注：平台代扣付税费${_getTax(_amountTextEditController.text)},实际到账金额",
-                      style:
-                          TextStyle(color: Color(0xFF999999), fontSize: 12.rsp),
-                    ),
-                    Text(
-                      "${_getReal(_amountTextEditController.text, _getTax(_amountTextEditController.text))}",
-                      style:
-                          TextStyle(color: Color(0xFF999999), fontSize: 12.rsp),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
+      child: con,
     );
   }
 
@@ -368,8 +439,8 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
                 ),
                 Container(
                   height: 13,
-                  width: 1,
-                  color: AppColor.frenchColor,
+                  width: 1.rw,
+                  color: Color(0xFFE9E9E9),
                 ),
                 Expanded(
                   child: _buttonWidget("提现到银行卡", isSelect: !_isCashToAlipay,
@@ -382,8 +453,8 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
             ),
           ),
           Container(
-            height: 0.5,
-            color: AppColor.frenchColor,
+            height: 1.rw,
+            color:Color(0xFFE9E9E9),
           ),
           UserManager.instance.user.info.realInfoStatus &&
                   !TextUtils.isEmpty(UserManager.instance.user.info.realName)
@@ -392,7 +463,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
                   height: 40,
                   child: Row(
                     children: <Widget>[
-                      Text("姓名:${UserManager.instance.user.info.realName}",
+                      Text("姓名：${UserManager.instance.user.info.realName}",
                           style: TextStyle(color: Colors.black, fontSize: 14)),
                       Container(
                         margin: EdgeInsets.only(left: 10),
@@ -411,8 +482,8 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
                   ))
               : Container(),
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            height: 40,
+            padding: EdgeInsets.symmetric(horizontal: 15.rw,),
+            height: 50.rw,
             child: CupertinoTextField(
               padding: EdgeInsets.all(0),
               keyboardType: TextInputType.text,
@@ -510,10 +581,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
             onPressed: !_isAgreeTheProtocol ||
                     TextUtils.isEmpty(_isCashToAlipay
                         ? _accountTextEditController.text
-                        : _bankAccountTextEditController.text) ||
-                    TextUtils.isEmpty(_isCashToAlipay
-                        ? _amountTextEditController.text
-                        : _bankAccountTextEditController.text)
+                        : _bankAccountTextEditController.text)||_model==null||_model.actualAmount==0
                 ? null
                 : () {
                     if (_isNeedUserVerify) {
@@ -645,7 +713,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
               String account = _accountTextEditController.text;
               String bankAccount = _bankAccountTextEditController.text;
               withdraw(
-                _amountTextEditController.text,
+               _model.actualAmount,
                 password,
                 alipay: _isCashToAlipay ? account : "",
                 bankAccount: _isCashToAlipay ? "" : bankAccount,
@@ -677,13 +745,9 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
   }
 
   withdraw(amount, password, {alipay = "", bankAccount = ""}) async {
-    if (num.parse(amount) < 10.0) {
-      showError("提现金额必须大于10.0元");
-      return;
-    }
     Map requestMap = {
       "userId": UserManager.instance.user.info.id,
-      "amount": num.parse(amount),
+      "amount": amount,
       "password": password
     };
     if (!TextUtils.isEmpty(alipay)) {
@@ -779,15 +843,15 @@ class WithdrawAlertWidget extends StatelessWidget {
                               "(你的真实姓名：${!TextUtils.isEmpty(UserManager.instance.user.info.realName) ? UserManager.instance.user.info.realName : ""}）",
                           style: redTextStyle),
                     ]))),
-                    _cellWidget(Text.rich(TextSpan(style: textStyle, children: [
-                      TextSpan(
-                        text: "单笔金额需",
-                      ),
-                      TextSpan(text: "大于10元", style: redTextStyle),
-                      TextSpan(
-                        text: "以上才可提现",
-                      ),
-                    ])))
+                    // _cellWidget(Text.rich(TextSpan(style: textStyle, children: [
+                    //   TextSpan(
+                    //     text: "单笔金额需",
+                    //   ),
+                    //   TextSpan(text: "大于10元", style: redTextStyle),
+                    //   TextSpan(
+                    //     text: "以上才可提现",
+                    //   ),
+                    // ])))
                   ],
                 ),
               ),
@@ -891,4 +955,8 @@ class WithdrawAlertWidget extends StatelessWidget {
       ),
     );
   }
+  ///
+
+
+
 }

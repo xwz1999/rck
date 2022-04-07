@@ -184,7 +184,38 @@ class _HomePageState extends BaseStoreState<HomePage>
   @override
   void initState() {
     super.initState();
-
+    if (UserManager.instance.haveLogin) {
+      Future.delayed(Duration.zero, () async {
+        UserManager.instance.getSeven = await WholesaleFunc.get7();
+        if (!UserManager.instance.getSeven) {
+          showDialog(
+            context: context,
+            builder: (context) => SevenCardDialog(),
+          );
+        }
+        //
+        // if (HiveStore.appBox
+        //         .get('showSeven${UserManager.instance.user.info.id}') !=
+        //     null) {
+        //   if (!HiveStore.appBox
+        //       .get('showSeven${UserManager.instance.user.info.id}')) {
+        //     if (!UserManager.instance.getSeven) {
+        //       showDialog(
+        //         context: context,
+        //         builder: (context) => SevenCardDialog(),
+        //       );
+        //     }
+        //   }
+        // } else {
+        //   if (!UserManager.instance.getSeven) {
+        //     showDialog(
+        //       context: context,
+        //       builder: (context) => SevenCardDialog(),
+        //     );
+        //   }
+        // }
+      });
+    }
     RUICodeListener(context).clipboardListener();
     _updateSource();
     _getWeather();
@@ -236,7 +267,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     });
     // _updateSource();
     _sliverListController = ScrollController();
-    _gsRefreshController = GSRefreshController();
+    _gsRefreshController = GSRefreshController(initialRefresh: true);
     _tabController = TabController(length: _promotionList.length, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((callback) {
       if (getStore().state.goodsId != null && getStore().state.goodsId > 0) {
@@ -254,21 +285,6 @@ class _HomePageState extends BaseStoreState<HomePage>
   _change() {
     return GestureDetector(
       onTap: () {
-        var fireDate = DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch + 1000);
-        var localNotification = LocalNotification(
-          id: 234,
-          title: '我是推送测试标题wwwwwwwww',
-          buildId: 1,
-          content: '看到了说明已经成功了hahahaha',
-          fireTime: fireDate,
-          subtitle: '一个测试qqqqqqqq',
-        );
-        jpush.sendLocalNotification(localNotification).then((res) {
-          print('sddd');
-          setState(() {
-            debugLable = res;
-          });
-        });
         _activityMap = null;
         UserManager.instance.isWholesale = !UserManager.instance.isWholesale;
         _gsRefreshController.requestRefresh();
@@ -285,8 +301,9 @@ class _HomePageState extends BaseStoreState<HomePage>
             alignment: Alignment.center,
             child: Stack(
               children: [
+
                 AnimatedPositioned(
-                    left: !UserManager.instance.isWholesale ? 0.rw : 40.rw,
+                    left: UserManager.instance.isWholesale ? 0.rw : 40.rw,
                     //right: !isWholesale? 0.rw:null,
                     curve: Curves.easeIn,
                     child: Container(
@@ -299,6 +316,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                       ),
                     ),
                     duration: Duration(milliseconds: 200)),
+
                 Container(
                   height: 25.rw,
                   width: 80.rw,
@@ -318,18 +336,18 @@ class _HomePageState extends BaseStoreState<HomePage>
                           children: [
                             10.wb,
                             Text(
-                              '零售',
+                              '批发',
                               style: TextStyle(
-                                  color: UserManager.instance.isWholesale
+                                  color: !UserManager.instance.isWholesale
                                       ? Colors.white
                                       : _backgroundColor,
                                   fontSize: 14.rsp,height: 1.1),
                             ),
                             Spacer(),
                             Text(
-                              '批发',
+                              '零售',
                               style: TextStyle(
-                                  color: !UserManager.instance.isWholesale
+                                  color: UserManager.instance.isWholesale
                                       ? Colors.white
                                       : _backgroundColor,
                                   fontSize: 14.rsp,height: 1.1),
@@ -352,32 +370,7 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   // 获取当前页面需要刷新的数据
   _updateSource() {
-    if (UserManager.instance.haveLogin) {
-      Future.delayed(Duration.zero, () async {
-        UserManager.instance.getSeven = await WholesaleFunc.get7();
 
-        if (HiveStore.appBox
-                .get('showSeven${UserManager.instance.user.info.id}') !=
-            null) {
-          if (!HiveStore.appBox
-              .get('showSeven${UserManager.instance.user.info.id}')) {
-            if (!UserManager.instance.getSeven) {
-              showDialog(
-                context: context,
-                builder: (context) => SevenCardDialog(),
-              );
-            }
-          }
-        } else {
-          if (!UserManager.instance.getSeven) {
-            showDialog(
-              context: context,
-              builder: (context) => SevenCardDialog(),
-            );
-          }
-        }
-      });
-    }
 
     _getActiviteList();
     _getBannerList();
@@ -821,7 +814,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     buttonsHeight +
                     t1Height +
                     t23Height +
-                    t4Height +
+                (UserManager.instance.isWholesale?50.rw:  t4Height) +
                     rSize(62) +
                     timeHeight +
                     tabbarHeight -
@@ -832,7 +825,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     buttonsHeight +
                     t1Height +
                     t23Height +
-                    t4Height +
+                (UserManager.instance.isWholesale?50.rw:  t4Height) +
                     rSize(62) +
                     timeHeight +
                     tabbarHeight -
@@ -1403,7 +1396,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     return Container(
       color: AppColor.frenchColor,
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      height: t23Height + t4Height,
+      height: t23Height +50.rw,
       width: screenWidth,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -1447,7 +1440,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                           bottomRight: Radius.circular(5),
                         ),
                       ),
-                      height: t23Height + t4Height,
+                      height: t23Height + 50.rw,
                       // width: MediaQuery.of(context).size.width,
                     ),
                   ),
@@ -1485,8 +1478,8 @@ class _HomePageState extends BaseStoreState<HomePage>
                         FadeInImage.assetNetwork(
                           placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
 
-                          image:  Api.getImgUrl(itemB.logoUrl),
-                          fit: BoxFit.fitWidth,
+                          image:  Api.getImgUrl(itemC.logoUrl),
+                          fit: BoxFit.fill,
                         )
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemB.logoUrl),fit: BoxFit.fill,)
                             :Image.asset(R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,fit: BoxFit.fitWidth,width: double.infinity,),
@@ -1526,8 +1519,8 @@ class _HomePageState extends BaseStoreState<HomePage>
                         //         enableLoadState: true)
                         FadeInImage.assetNetwork(
                           placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-                          image:  Api.getImgUrl(itemC.logoUrl),
-                          fit: BoxFit.fitWidth,
+                          image:  Api.getImgUrl(itemD.logoUrl),
+                          fit: BoxFit.fill,
                         )
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemC.logoUrl),fit: BoxFit.fill,)
                             : Image.asset(R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,fit: BoxFit.fitWidth,width: double.infinity,),

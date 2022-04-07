@@ -44,7 +44,7 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
   /// 余额类型 1=订单支付 2=订单退款 3=提现 4=提现失败 5=瑞币转入
   int _status = 0;
 
-  List _chooseItems = ['全部明细', '分享补贴', '开店补贴', '订单支付', '订单退款', '提现成功', '提现失败'];
+  List _chooseItems = ['全部明细', '分享收益', '开店补贴', '订单支付', '订单退款', '提现成功', '提现失败'];
 
   String _choose = '全部明细';
 
@@ -419,7 +419,7 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
                           case '全部明细':
                             _status = 0;
                            break;
-                          case '分享补贴':
+                          case '分享收益':
                             _status = 12;
                             break;
                           case '开店补贴':

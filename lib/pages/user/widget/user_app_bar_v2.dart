@@ -183,7 +183,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                             borderRadius: BorderRadius.circular(2.rw)),
                         child: Text(
 
-                          'VIP店',
+                          'VIP店铺',
                           style: TextStyle(
                               fontSize: 10.rsp, color: Color(0xFF512309)),
                         ),
@@ -194,7 +194,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                             color: Color(0xFFFEC17C),
                             borderRadius: BorderRadius.circular(2.rw)),
                         child: Text(
-                          'VIP店有效期至 '+DateUtil.formatDate(
+                          'VIP店铺有效期至 '+DateUtil.formatDate(
                               DateTime.parse(getStore().state.userBrief.end),
                               format: 'yyyy-MM-dd'),
                           style: TextStyle(

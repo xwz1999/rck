@@ -100,10 +100,10 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
     _title = widget.type;
     if (widget.type == '批发收益') {
       _type = PifaBenefit.piFa;
-    } else if (widget.type == '店铺收益') {
+    } else if (widget.type == '品牌补贴') {
       _type = PifaBenefit.dianPu;
-    } else if (widget.type == '自购分享收益') {
-      isSelfAndGuide = true;
+    } else if (widget.type == '分享收益') {
+      // isSelfAndGuide = false;
       _type = PifaBenefit.self;
 
       ///默认为自购收益
@@ -168,7 +168,7 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
   }
 
   Widget _buildCard() {
-    String CumulativeText = '累计批发收益';
+    String CumulativeText = '累计$_title';
 
     return Container(
       margin:
@@ -298,8 +298,6 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
             _models = await UserBenefitFunc.getBenefit(5);
           } else if (_type == PifaBenefit.self) {
             _models = await UserBenefitFunc.getBenefit(6);
-          } else if (_type == PifaBenefit.guide) {
-            _models = await UserBenefitFunc.getBenefit(8);
           }
           if (_models != null) {
             _all = _models.all.toStringAsFixed(2);

@@ -900,7 +900,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                     showCustomModalBottomSheet(
                         context: context,
                         builder: (context) {
-                          return GoodsServiceGuarantee();
+                          return GoodsServiceGuarantee(model: widget.goodsDetail,);
                         });
                   },
                   child: Container(
@@ -934,10 +934,10 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                             Text(
                               " | ",
                               style: AppTextStyle.generate(13 * 2.sp,
-                                  color: Colors.grey.withOpacity(0.3)),
+                                  color:  Color(0xff373737)),
                             ),
                             Text(
-                              "售后无忧",
+                              widget.goodsDetail.data.isAllow?'支持七天无理由退换货':"售后无忧",
                               style: AppTextStyle.generate(13 * 2.sp,
                                   color: Color(0xff373737)),
                             ),
@@ -1527,17 +1527,17 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     Row row = Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        ClipRRect(
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          child: CustomCacheImage(
-              height: 44.rw,
-              width: 44.rw,
-              fit: BoxFit.cover,
-              imageUrl: Api.getImgUrl(widget.goodsDetail.data.brand.logoUrl)),
-        ),
-        Container(
-          width: 12.rw,
-        ),
+        // ClipRRect(
+        //   borderRadius: BorderRadius.all(Radius.circular(8)),
+        //   child: CustomCacheImage(
+        //       height: 44.rw,
+        //       width: 44.rw,
+        //       fit: BoxFit.cover,
+        //       imageUrl: Api.getImgUrl(widget.goodsDetail.data.brand.logoUrl)),
+        // ),
+        // Container(
+        //   width: 12.rw,
+        // ),
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -341,7 +341,8 @@ class _VipShopCardPageState extends State<VipShopCardPage>
       NormalContentDialog(
         title: '7日卡领取提醒',
         content: Text(
-          'VIP7日体验卡将在领取后开始使用，\n    每个账号仅限一次，是否领取',
+          'VIP7日体验卡将在领取后开始使用，\n每个账号仅限一次，是否领取',
+          textAlign: TextAlign.center,
           style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp),
         ),
         items: ["取消"],
@@ -353,8 +354,27 @@ class _VipShopCardPageState extends State<VipShopCardPage>
           Alert.dismiss(context);
           bool getCard = await WholesaleFunc.active7();
           if(getCard){
-            BotToast.showText(text: '领取成功');
-            _refresh();
+            Alert.show(
+              context,
+              NormalContentDialog(
+                title: '提示',
+                content: Text(
+                  '领取成功，您已成为VIP店铺，享受\nVIP店铺批发权益',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp),
+                ),
+                items: ["确认"],
+                listener: (index) {
+                  Alert.dismiss(context);
+                  _refresh();
+                },
+
+                type: NormalTextDialogType.normal,
+              ),
+            );
+            //BotToast.showText(text: '领取成功，您已成为VIP店铺，享受VIP店铺批发权益');
+
+
           }else{
             BotToast.showText(text: '领取失败');
           }
@@ -365,6 +385,9 @@ class _VipShopCardPageState extends State<VipShopCardPage>
   }
 
   _buyListen(VipCardModel model) async{
+
+
+
     OrderPreviewModel order = await GoodsDetailModelImpl.createOrderPreview(
       UserManager.instance.user.info.id,
       model.skuId,

@@ -513,6 +513,8 @@ class $AssetsWholesaleGen {
 class Assets {
   Assets._();
 
+  static const AssetGenImage vipShopImg =
+      AssetGenImage('assets/ vip_shop_img.png');
   static const AssetGenImage homeRefreshHeader3 =
       AssetGenImage('assets/HomeRefreshHeader3.gif');
   static const AssetGenImage addressIcon =
@@ -1072,6 +1074,10 @@ class Assets {
       AssetGenImage('assets/userpage_member_invite_5.png');
   static const AssetGenImage vipCardBtn =
       AssetGenImage('assets/vip_card_btn.png');
+  static const AssetGenImage vipPushLine =
+      AssetGenImage('assets/vip_push_line.png');
+  static const AssetGenImage vipShopCardImg =
+      AssetGenImage('assets/vip_shop_card_img.png');
   static const AssetGenImage warning = AssetGenImage('assets/warning.png');
   static const $AssetsWeatherGen weather = $AssetsWeatherGen();
   static const $AssetsWeatherCakeGen weatherCake = $AssetsWeatherCakeGen();
@@ -1106,20 +1112,20 @@ class AssetGenImage extends AssetImage {
   const AssetGenImage(String assetName) : super(assetName);
 
   Image image({
-    Key  key,
-    ImageFrameBuilder  frameBuilder,
-    ImageLoadingBuilder  loadingBuilder,
-    ImageErrorWidgetBuilder  errorBuilder,
-    String  semanticLabel,
+    Key   key,
+    ImageFrameBuilder   frameBuilder,
+    ImageLoadingBuilder   loadingBuilder,
+    ImageErrorWidgetBuilder   errorBuilder,
+    String   semanticLabel,
     bool excludeFromSemantics = false,
-    double  width,
-    double  height,
-    Color  color,
-    BlendMode  colorBlendMode,
-    BoxFit  fit,
+    double   width,
+    double   height,
+    Color   color,
+    BlendMode   colorBlendMode,
+    BoxFit   fit,
     AlignmentGeometry alignment = Alignment.center,
     ImageRepeat repeat = ImageRepeat.noRepeat,
-    Rect  centerSlice,
+    Rect   centerSlice,
     bool matchTextDirection = false,
     bool gaplessPlayback = false,
     bool isAntiAlias = false,

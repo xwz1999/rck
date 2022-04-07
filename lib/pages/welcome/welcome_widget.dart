@@ -206,11 +206,11 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     setState(() {
       debugLable = platformVersion;
     });
-    jpush.getRegistrationID().then((rid) async {
+    jpush.getRegistrationID().then((rid)  {
       print("flutter get registration id : $rid");
       UserManager.instance.jpushRid = rid;
 
-      await  UserFunc.activeJpush(Platform.isIOS?2:1,rid);
+
 
     });
 

@@ -253,6 +253,8 @@ class UserAPI {
   String get activePush => '/v2/app/push/active';
 
 
+  ///提现数据
+  String get allAmount => '/v2/app/company/apply/all_amount';
 
 }
 

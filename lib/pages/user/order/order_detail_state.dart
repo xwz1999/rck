@@ -1524,7 +1524,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
               ),
               16.hb,
               Text(
-                '您的订单正在被火速处理中，预计一个工作日',
+                '供应商正在确认物流费，预计一个工作日',
                 style: TextStyle(fontSize: 14.rsp, color: Color(0xFF333333)),
               )
             ],

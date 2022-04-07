@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/home/vip_shop_push_page.dart';
 import 'package:jingyaoyun/pages/user/model/user_income_data_model.dart';
 import 'package:jingyaoyun/pages/user/order/order_after_sale_page.dart';
 import 'package:jingyaoyun/pages/user/order/order_center_page.dart';
@@ -143,8 +145,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 UserLevelTool.currentRoleLevelEnum() ==
                     UserRoleLevel.subsidiary?        _renderBenefitCard(
                   leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
-                  title: '店铺收益',
-                  alertTitle: '店铺收益',
+                  title: '品牌补贴',
+                  alertTitle: '品牌补贴',
                   title1: '未到账收益',
                   title3: '已到账收益',
                   content1: _userIncomeDataModel?.eAmount5 ?? 0,
@@ -154,10 +156,10 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 ):
                       _renderBenefitCard(
                               leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
-                              title: '分享补贴',
-                              alertTitle: '分享补贴',
-                              title1: '未到账补贴',
-                              title3: '已到账补贴',
+                              title: '分享收益',
+                              alertTitle: '分享收益',
+                        title1: '未到账收益',
+                        title3: '已到账收益',
                               content1: _userIncomeDataModel?.eAmount2 ?? 0,
                               content2: _userIncomeDataModel?.eCount2 ?? 0,
                               content3: _userIncomeDataModel?.amount2 ?? 0,
@@ -171,17 +173,17 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   alertTitle: '分享收益',
                   title1: '未到账收益',
                   title3: '已到账收益',
-                  content1: _userIncomeDataModel?.eAmount2 ?? 0,
-                  content2: _userIncomeDataModel?.eCount2 ?? 0,
-                  content3: _userIncomeDataModel?.amount2 ?? 0,
-                  content4: _userIncomeDataModel?.count2 ?? 0,
+                  content1: _userIncomeDataModel?.eAmount6 ?? 0,
+                  content2: _userIncomeDataModel?.eCount6 ?? 0,
+                  content3: _userIncomeDataModel?.amount6 ?? 0,
+                  content4: _userIncomeDataModel?.count6 ?? 0,
                 ):
                     _renderBenefitCard(
                               leadingPath: R.ASSETS_USER_PINK_GROUP_WEBP,
                               title: '开店补贴',
                               alertTitle: '开店补贴',
-                              title1: '未到账补贴',
-                              title3: '已到账补贴',
+                      title1: '未到账收益',
+                      title3: '已到账收益',
                               content1: _userIncomeDataModel?.eAmount4 ?? 0,
                               content2: _userIncomeDataModel?.eCount4 ?? 0,
                               content3: _userIncomeDataModel?.amount4 ?? 0,
@@ -209,6 +211,76 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 },
               ),
               20.w.heightBox,
+              //
+              GestureDetector(
+                onTap: (){
+                  Get.to(()=>VipShopPushPage());
+                },
+                child: Container(
+                  color: Colors.white,
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 10.rw,horizontal: 12.rw),
+
+                  child: Stack(
+                    children: [
+                      Image.asset(Assets.userExtensionBg.path,fit: BoxFit.fitWidth,),
+                      Align(
+                        alignment:Alignment.centerLeft,
+                        child: Row(
+                          children: [
+                            40.wb,
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                30.hb,
+                                RichText(
+                                  text: TextSpan(
+                                      text: "VIP店推广",
+                                      style: AppTextStyle.generate(16 * 2.sp,color: Color(0xFFD5101A)),
+                                      children: [
+                                        TextSpan(
+                                            style: AppTextStyle.generate(12 * 2.sp,
+                                                color: Color(0xFFD5101A).withOpacity(0.5)),
+                                            text:"    0元创业·轻松赚"
+                                        )
+                                      ]),
+                                ),
+                                28.hb,
+                                Container(
+                                  padding: EdgeInsets.symmetric(vertical: 2.rw,horizontal: 4.rw),
+                                  decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        begin: Alignment.centerLeft,
+                                        end: Alignment.centerRight,
+                                        colors: [
+                                          Color(0xFFF14F49),
+                                          Color(0xFFE21830),
+                                        ],
+                                      ),
+                                    borderRadius: BorderRadius.circular(2.rw)
+                                  ),
+                                  child: Text(
+                                    '立即推广 >',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12.rsp,
+                                      fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              20.w.heightBox,
+
+
               OtherItemViewV2(),
             ],
           ),
@@ -230,15 +302,15 @@ class _UserPageState extends BaseStoreState<UserPage> {
     @required num content4,
     UserBenefitPageType type = UserBenefitPageType.SELF,
   }) {
-    if (title == "自购收益") {
-      type = UserBenefitPageType.SELF;
-    } else if (title == "分享收益") {
-      type = UserBenefitPageType.GUIDE;
-    } else if (title == "开店补贴") {
-      type = UserBenefitPageType.TEAM;
-    } else if (title == "开店补贴") {
-      type = UserBenefitPageType.PLATFORM;
-    }
+    // if (title == "自购收益") {
+    //   type = UserBenefitPageType.SELF;
+    // } else if (title == "分享收益") {
+    //   type = UserBenefitPageType.GUIDE;
+    // } else if (title == "开店补贴") {
+    //   type = UserBenefitPageType.TEAM;
+    // } else if (title == "开店补贴") {
+    //   type = UserBenefitPageType.PLATFORM;
+    // }
 
 
     return Container(

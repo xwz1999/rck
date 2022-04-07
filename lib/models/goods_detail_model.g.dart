@@ -70,14 +70,17 @@ Data _$DataFromJson(Map<String, dynamic> json) {
         ?.toList(),
     json['isImport'],
     json['isFerme'],
+
     json['storehouse'],
     json['notice'] == null
         ? null
         : Notice.fromJson(json['notice'] as Map<String, dynamic>),
     json['country_icon'],
+
     json['living'] == null ? null : new Living.fromJson(json['living']),
     json['sec_kill'] == null ? null : new SecKill.fromJson(json['sec_kill']),
     json['vendorId'] as int,
+    json['isAllow'] as bool,
   );
 }
 
@@ -104,7 +107,8 @@ Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
       'country_icon': instance.countryIcon,
       'living': instance.living,
       'sec_kill':instance.secKill,
-      'vendorId':instance.vendorId
+      'vendorId':instance.vendorId,
+      'isAllow':instance.isAllow
     };
 
 MainPhotos _$MainPhotosFromJson(Map<String, dynamic> json) {

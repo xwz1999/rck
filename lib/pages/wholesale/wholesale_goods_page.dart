@@ -18,6 +18,8 @@ import 'package:jingyaoyun/models/province_city_model.dart';
 
 import 'package:jingyaoyun/pages/home/classify/goods_service_guarantee.dart';
 import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:jingyaoyun/pages/wholesale/vip_shop_card_page.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:jingyaoyun/pages/home/model/address_model.dart';
 import 'package:jingyaoyun/pages/home/widget/goods_image_page_view.dart';
@@ -1357,6 +1359,43 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
 
 
   Future<dynamic> _createOrder(WholesaleSkuChooseModel skuModel) async {
+    if(UserLevelTool.currentRoleLevelEnum() !=
+        UserRoleLevel.subsidiary&&UserLevelTool.currentRoleLevelEnum() !=
+        UserRoleLevel.physical){
+
+      Alert.show(
+        context,
+        NormalContentDialog(
+          title: '提示',
+          content: Text(
+            '批发下单需开通VIP店铺',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp),
+          ),
+          items: ["取消"],
+          listener: (index) {
+            Alert.dismiss(context);
+
+          },
+          deleteItem: "去开通",
+          deleteListener: () async{
+            Alert.dismiss(context);
+
+            Get.off(() => VipShopCardPage(
+              goToBottom: false,
+            ));
+          },
+          type: NormalTextDialogType.delete,
+        ),
+      );
+
+
+      return;
+
+    }
+
+
+
     List<GoodsDTO> list = [];
     list.add(GoodsDTO(skuId:skuModel.sku.id,quantity:skuModel.num));
     WholesaleOrderPreviewModel order = await WholesaleFunc.createOrderPreview(

@@ -123,7 +123,7 @@ class WholesaleGoodsGrid extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  "已订${this.goods.salesVolume}件",
+                  "已订${this.goods.salesVolume}单",
                   style: TextStyle(
                     color: Color(0xFF999999),
                     fontSize: 12 * 2.sp,

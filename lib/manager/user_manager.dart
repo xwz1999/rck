@@ -18,11 +18,13 @@ import 'package:jingyaoyun/models/home_weather_model.dart';
 import 'package:jingyaoyun/models/user_brief_info_model.dart';
 import 'package:jingyaoyun/models/user_model.dart';
 import 'package:jingyaoyun/pages/home/model/king_coin_list_model.dart';
+import 'package:jingyaoyun/pages/user/functions/user_func.dart';
 import 'package:jingyaoyun/pages/user/mvp/user_presenter_impl.dart';
 import 'package:jingyaoyun/redux/recook_state.dart';
 import 'package:jingyaoyun/redux/user_brief_redux.dart';
 import 'package:jingyaoyun/utils/print_util.dart';
 import 'package:jingyaoyun/utils/storage/hive_store.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:redux/redux.dart';
 
@@ -95,15 +97,12 @@ class UserManager {
     // store.dispatch(UpdateUserAction(user));
     HiveStore.appBox.put('key_user', jsonStr);
     UserManager.instance.updateUserBriefInfo(store);
-    int type;
-    if (Platform.isIOS) {
-      type = 2;
-    } else if (Platform.isAndroid) {
-      type = 1;
-    }
-    // String code =
-    //     await UserManager.updateJId(UserManager.instance.jpushRid, type);
-    // print(code);
+
+
+    await  UserFunc.activeJpush(Platform.isIOS?2:1,UserManager.instance.jpushRid);
+
+
+
 
     return true;
   }
@@ -137,6 +136,16 @@ class UserManager {
       _instance.userBrief = model.data;
       store.dispatch(UpdateUserBriefAction(model.data));
     }
+
+    // if(UserLevelTool.currentRoleLevelEnum() ==
+    //     UserRoleLevel.subsidiary||UserLevelTool.currentRoleLevelEnum() ==
+    //     UserRoleLevel.physical){
+    //   UserManager.instance.isWholesale = true;
+    // }else{
+    //   UserManager.instance.isWholesale = false;
+    // }
+
+
     return true;
   }
 

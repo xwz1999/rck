@@ -175,10 +175,13 @@ class Data extends Object {
   num isFerme;
   num storehouse;
   String countryIcon;
+
+
   Living living;
 
   SecKill secKill;
   int vendorId;
+  bool isAllow;
 
 
   Data(
@@ -208,8 +211,10 @@ class Data extends Object {
       this.notice,
       this.countryIcon,
       this.living,
+
       this.secKill,
-      this.vendorId
+      this.vendorId,
+      this.isAllow,
       );
 
   factory Data.fromJson(Map<String, dynamic> srcJson) =>

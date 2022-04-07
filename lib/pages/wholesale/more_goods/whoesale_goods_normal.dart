@@ -355,7 +355,7 @@ class WholesaleGoodsItem extends StatelessWidget {
         Spacer(),
         Container(
           child: Text(
-                  "已订${this.salesVolume}件",
+                  "已订${this.salesVolume}单",
                   style: TextStyle(
                     color: Color(0xFF999999),
                     fontSize: 12 * 2.sp,

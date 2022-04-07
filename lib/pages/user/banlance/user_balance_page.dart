@@ -135,13 +135,16 @@ class _UserBalancePageState extends State<UserBalancePage> {
                 padding:  EdgeInsets.symmetric(horizontal:38.rw ),
                 child: GestureDetector(
                   onTap: () async{
-                    if(!UserManager.instance.userBrief.isEnterPrise){
-                      AppRouter.push(context, RouteName.USER_CASH_WITHDRAW_PAGE,
-                          arguments: UserCashWithdrawPage.setArguments(
-                              amount: UserManager.instance.userBrief.balance.toDouble()));
-                    }else{
-                      Get.to(()=>WithDrawPage());
-                    }
+                    Get.to(()=>WithDrawPage());
+
+
+                    // if(!UserManager.instance.userBrief.isEnterPrise){
+                    //   AppRouter.push(context, RouteName.USER_CASH_WITHDRAW_PAGE,
+                    //       arguments: UserCashWithdrawPage.setArguments(
+                    //           amount: UserManager.instance.userBrief.balance.toDouble()));
+                    // }else{
+                    //   Get.to(()=>WithDrawPage());
+                    // }
 
                   },
                   child: Container(
