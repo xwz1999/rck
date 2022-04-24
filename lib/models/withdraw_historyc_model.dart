@@ -67,26 +67,10 @@ class History {
   String comapnyName;
   String mobile;
   String nickname;
-
-  History(
-      {this.id,
-        this.amount,
-        this.state,
-        this.createdAt,
-        this.content,
-        this.proof,
-        this.tax,
-        this.logisticsName,
-        this.waybillCode,
-        this.applyUserName,
-        this.applyTime,
-        this.processUserName,
-        this.processTime,
-        this.bank,
-        this.code,
-        this.comapnyName,
-        this.mobile,
-        this.nickname});
+  num balance;
+  num taxAmount;
+  num withdrawal;
+  num actualAmount;
 
   History.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -107,6 +91,10 @@ class History {
     comapnyName = json['comapny_name'];
     mobile = json['mobile'];
     nickname = json['nickname'];
+    balance = json['balance'];
+    taxAmount = json['tax_amount'];
+    withdrawal = json['withdrawal'];
+    actualAmount = json['actual_amount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -129,6 +117,37 @@ class History {
     data['comapny_name'] = this.comapnyName;
     data['mobile'] = this.mobile;
     data['nickname'] = this.nickname;
+
+    data['balance'] = balance;
+    data['tax_amount'] = taxAmount;
+    data['withdrawal'] = withdrawal;
+    data['actual_amount'] = actualAmount;
+
     return data;
   }
+
+  History({
+    this.id,
+    this.amount,
+    this.state,
+    this.createdAt,
+    this.content,
+    this.proof,
+    this.tax,
+    this.logisticsName,
+    this.waybillCode,
+    this.applyUserName,
+    this.applyTime,
+    this.processUserName,
+    this.processTime,
+    this.bank,
+    this.code,
+    this.comapnyName,
+    this.mobile,
+    this.nickname,
+    this.balance,
+    this.taxAmount,
+    this.withdrawal,
+    this.actualAmount,
+  });
 }

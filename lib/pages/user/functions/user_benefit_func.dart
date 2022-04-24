@@ -2,6 +2,7 @@ import 'package:common_utils/common_utils.dart';
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/home/model/profit_card_model.dart';
 import 'package:jingyaoyun/pages/user/model/pifa_benefit_model.dart';
 import 'package:jingyaoyun/pages/user/model/pifa_table_model.dart';
 import 'package:jingyaoyun/pages/user/model/user_accumulate_model.dart';
@@ -36,6 +37,26 @@ class UserBenefitFunc {
       }
     }
   }
+
+  static Future<List<ProfitCardModel>> getProfitCard(String date,) async {
+
+    Map<String, dynamic> params = {'date':date,};
+
+
+    ResultData result = await HttpManager.post(
+        APIV2.userAPI.cardProfit, params);
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return (result.data['data'] as List)
+            .map((e) => ProfitCardModel.fromJson(e))
+            .toList();
+      } else
+        return [];
+    } else
+      return [];
+  }
+
+
 
   ///合伙人批发收益
   static Future<PiFaTableModel> getPiFaTable(int kind,{DateTime start,DateTime end}) async {

@@ -32,10 +32,11 @@ class WithDrawPageThird extends StatefulWidget {
   final String time;
   final String type;
   final String logistics;
+  final String actualAmount;
   final String logisticsNumber;
 
   WithDrawPageThird({
-    Key key, this.amount, this.time, this.type, this.logistics, this.logisticsNumber,
+    Key key, this.amount, this.time, this.type, this.logistics, this.logisticsNumber, this.actualAmount,
   }) : super(key: key);
 
   @override
@@ -287,7 +288,12 @@ class _WithDrawPageThirdState extends State<WithDrawPageThird>
                 20.hb,
                 Padding(
                   padding: EdgeInsets.only(left: 16.rw,right: 16.rw),
-                  child: _textItem('提现金额',widget.amount,isRed:true),
+                  child: _textItem('结算金额',widget.amount,isRed:true),
+                ),
+                35.hb,
+                Padding(
+                  padding: EdgeInsets.only(left: 16.rw,right: 16.rw),
+                  child: _textItem('到账金额',widget.actualAmount,isRed:true),
                 ),
                 35.hb,
                 Padding(
@@ -337,7 +343,7 @@ class _WithDrawPageThirdState extends State<WithDrawPageThird>
                 30.hb,
                 _textItem1('开户银行',model.taxBank),
                 30.hb,
-                _textItem1('银行账户',model.taxNumber),
+                _textItem1('银行账户',model.taxNumber,height: 1),
                 30.hb,
 
               ],
@@ -381,7 +387,7 @@ class _WithDrawPageThirdState extends State<WithDrawPageThird>
     );
   }
 
-  _textItem1(String title, String content,) {
+  _textItem1(String title, String content,{double height = -1}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -398,7 +404,20 @@ class _WithDrawPageThirdState extends State<WithDrawPageThird>
         ),
         16.wb,
         Expanded(
-          child: Text(
+          child:       height!=-1?
+          Padding(
+            padding:  EdgeInsets.only(top: 3.rw),
+            child: Text(
+              content,
+              maxLines: 3,
+
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                color:Colors.white,
+                fontSize: 14.rsp,
+              ),
+            ),
+          ):Text(
             content,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,

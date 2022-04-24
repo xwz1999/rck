@@ -629,8 +629,8 @@ class Assets {
   static const $AssetsHomeGen home = $AssetsHomeGen();
   static const AssetGenImage homeBrandBg =
       AssetGenImage('assets/home_brand_bg.png');
-  static const AssetGenImage homeBrandItem =
-      AssetGenImage('assets/home_brand_item.png');
+  static const AssetGenImage homeBrandGoodBg =
+      AssetGenImage('assets/home_brand_good_bg.png');
   static const AssetGenImage homeFormal =
       AssetGenImage('assets/home_formal.png');
   static const AssetGenImage homeInvitation =
@@ -1106,26 +1106,28 @@ class Assets {
       AssetGenImage('assets/withdrawal_record.png');
   static const AssetGenImage withdrawalSuccess =
       AssetGenImage('assets/withdrawal_success.png');
+  static const AssetGenImage wxShareCardBg =
+      AssetGenImage('assets/wx_share_card_bg.png');
 }
 
 class AssetGenImage extends AssetImage {
   const AssetGenImage(String assetName) : super(assetName);
 
   Image image({
-    Key   key,
-    ImageFrameBuilder   frameBuilder,
-    ImageLoadingBuilder   loadingBuilder,
-    ImageErrorWidgetBuilder   errorBuilder,
-    String   semanticLabel,
+    Key  key,
+    ImageFrameBuilder  frameBuilder,
+    ImageLoadingBuilder  loadingBuilder,
+    ImageErrorWidgetBuilder  errorBuilder,
+    String  semanticLabel,
     bool excludeFromSemantics = false,
-    double   width,
-    double   height,
-    Color   color,
-    BlendMode   colorBlendMode,
-    BoxFit   fit,
+    double  width,
+    double  height,
+    Color  color,
+    BlendMode  colorBlendMode,
+    BoxFit  fit,
     AlignmentGeometry alignment = Alignment.center,
     ImageRepeat repeat = ImageRepeat.noRepeat,
-    Rect   centerSlice,
+    Rect  centerSlice,
     bool matchTextDirection = false,
     bool gaplessPlayback = false,
     bool isAntiAlias = false,

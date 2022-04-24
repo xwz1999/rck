@@ -2,10 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
 import 'package:jingyaoyun/pages/home/widget/modify_detail_app_bar.dart';
+import 'package:jingyaoyun/pages/wholesale/wholeasale_detail_page.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -75,9 +78,19 @@ class _WebViewState extends BaseStoreState<WebViewPage> {
                 if (subMap.containsKey("goods_id") &&
                     subMap["goods_id"] != null) {
                   //跳转详情页面
-                  AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                      arguments:
-                          CommodityDetailPage.setArguments(subMap["goods_id"]));
+                  if (UserManager.instance.isWholesale) {
+                    Get.to(() => WholesaleDetailPage(
+                      goodsId:subMap["goods_id"],
+                    ));
+                  } else {
+                    AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                        arguments: CommodityDetailPage.setArguments(
+                            subMap["goods_id"]));
+                  }
+                  //
+                  // AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                  //     arguments:
+                  //         CommodityDetailPage.setArguments(subMap["goods_id"]));
                 }
               }
             }

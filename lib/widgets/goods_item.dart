@@ -617,7 +617,7 @@ class GoodsItemWidget extends StatelessWidget {
                       children: [
                         ExtendedText.rich(TextSpan(children: [
                           TextSpan(
-                            text:  "到手 ¥",
+                            text:  "折后 ¥",
                             style: AppTextStyle.generate(
                                  12 * 2.sp,
                                 color: priceColor,

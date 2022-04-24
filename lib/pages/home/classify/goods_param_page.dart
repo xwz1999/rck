@@ -12,6 +12,7 @@ import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/models/goods_detail_model.dart';
 import 'package:jingyaoyun/widgets/text_button.dart' as TButton;
+import 'package:jingyaoyun/utils/text_line_util.dart';
 
 class GoodsParamPage extends StatefulWidget {
   // final List<Sku> skus;
@@ -57,9 +58,9 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
               rHBox(30),
               Row(
                 children: <Widget>[
-                  rWBox(20),
+                 10.wb,
                   Container(
-                    width: rSize(60),
+                    width: rSize(50),
                     child: Text(
                       '品牌',
                       style: TextStyle(
@@ -80,10 +81,11 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
               ),
               rHBox(10),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  rWBox(20),
+                  10.wb,
                   Container(
-                    width: rSize(60),
+                    width: rSize(50),
                     child: Text(
                       '规格/条形码',
                       style: TextStyle(
@@ -92,34 +94,59 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
                       ),
                     ),
                   ),
-                  rWBox(20),
-                  Container(
-                    child: Text(
-                      '${model.data.sku[0].name}  ${model.data.sku[0].code}',
-                      style: TextStyle(color: Colors.grey, fontSize: 13 * 2.sp),
-                    ),
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  rWBox(100),
+                  rWBox(10),
                   Column(
-                    children: model.data.sku
-                        .sublist(1)
-                        .map(
-                          (e) => Container(
-                            child: Text(
-                              '${e.name}  ${e.code}',
-                              style: TextStyle(
-                                  color: Colors.grey, fontSize: 13 * 2.sp),
-                            ),
-                          ),
-                        )
-                        .toList(),
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        child: Text(
+                          '${model.data.sku[0].name}  ${model.data.sku[0].code}',
+                          style: TextStyle(color: Colors.grey, fontSize: 13 * 2.sp),
+                        ),
+                      ),
+                      ...
+                      model.data.sku
+                          .sublist(1)
+                          .map(
+                            (e) {
+                              String a = (e.name+' '+e.code);
+                              return Container(
+                                width: 280.rw,
+                                child: Text(
+                                  Strings.autoLineString(a),
+
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                      color: Colors.grey, fontSize: 13 * 2.sp),
+                                ),
+                              );
+                            }
+                      )
+                          .toList(),
+                    ],
                   ),
                 ],
               ),
+              // Row(
+              //   children: [
+              //     rWBox(100),
+              //     Column(
+              //       children: model.data.sku
+              //           .sublist(1)
+              //           .map(
+              //             (e) => Container(
+              //               child: Text(
+              //                 '${e.name}  ${e.code}',
+              //                 style: TextStyle(
+              //                     color: Colors.grey, fontSize: 13 * 2.sp),
+              //               ),
+              //             ),
+              //           )
+              //           .toList(),
+              //     ),
+              //   ],
+              // ),
               Spacer(),
               TButton.TextButton(
                 margin: EdgeInsets.only(top: 8, left: 20, right: 20),

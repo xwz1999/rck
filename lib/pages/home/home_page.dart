@@ -18,6 +18,7 @@ import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/daos/home_dao.dart';
+import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/banner_list_model.dart';
@@ -162,8 +163,9 @@ class _HomePageState extends BaseStoreState<HomePage>
   GifController _gifController;
   StateSetter _wholesaleState;
 
+  String debugLable = 'Unknown';
 
-  String debugLable = 'Unknown';   /*错误信息*/
+  /*错误信息*/
   final JPush jpush = new JPush();
 
   @override
@@ -216,7 +218,8 @@ class _HomePageState extends BaseStoreState<HomePage>
         // }
       });
     }
-    RUICodeListener(context).clipboardListener();
+
+
     _updateSource();
     _getWeather();
     Future.delayed(Duration.zero, () async {
@@ -301,7 +304,6 @@ class _HomePageState extends BaseStoreState<HomePage>
             alignment: Alignment.center,
             child: Stack(
               children: [
-
                 AnimatedPositioned(
                     left: UserManager.instance.isWholesale ? 0.rw : 40.rw,
                     //right: !isWholesale? 0.rw:null,
@@ -316,7 +318,6 @@ class _HomePageState extends BaseStoreState<HomePage>
                       ),
                     ),
                     duration: Duration(milliseconds: 200)),
-
                 Container(
                   height: 25.rw,
                   width: 80.rw,
@@ -341,7 +342,8 @@ class _HomePageState extends BaseStoreState<HomePage>
                                   color: !UserManager.instance.isWholesale
                                       ? Colors.white
                                       : _backgroundColor,
-                                  fontSize: 14.rsp,height: 1.1),
+                                  fontSize: 14.rsp,
+                                  height: 1.1),
                             ),
                             Spacer(),
                             Text(
@@ -350,7 +352,8 @@ class _HomePageState extends BaseStoreState<HomePage>
                                   color: UserManager.instance.isWholesale
                                       ? Colors.white
                                       : _backgroundColor,
-                                  fontSize: 14.rsp,height: 1.1),
+                                  fontSize: 14.rsp,
+                                  height: 1.1),
                             ),
                             10.wb,
                           ],
@@ -370,7 +373,9 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   // 获取当前页面需要刷新的数据
   _updateSource() {
-
+    Future.delayed(Duration.zero, () async {
+      RUICodeListener(context).clipboardListener();
+    });
 
     _getActiviteList();
     _getBannerList();
@@ -411,6 +416,7 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
+
     if (state == AppLifecycleState.paused) _updateTag = true;
     if (state == AppLifecycleState.resumed) {
       //TODO 修复订单无法下单的问题，该问题只在华为设备中发生，
@@ -638,12 +644,11 @@ class _HomePageState extends BaseStoreState<HomePage>
         ),
       ),
       onTap: () {
-        UserManager.instance.isWholesale?
-        Get.to(()=>WholesaleSearchPage()):
-        Get.to(
-            SearchPage(
-          keyWords: keyWords,
-        ));
+        UserManager.instance.isWholesale
+            ? Get.to(() => WholesaleSearchPage())
+            : Get.to(SearchPage(
+                keyWords: keyWords,
+              ));
         //AppRouter.push(context, RouteName.SEARCH);
       },
     );
@@ -814,7 +819,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     buttonsHeight +
                     t1Height +
                     t23Height +
-                (UserManager.instance.isWholesale?50.rw:  t4Height) +
+                    (UserManager.instance.isWholesale ? 50.rw : t4Height) +
                     rSize(62) +
                     timeHeight +
                     tabbarHeight -
@@ -825,7 +830,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                     buttonsHeight +
                     t1Height +
                     t23Height +
-                (UserManager.instance.isWholesale?50.rw:  t4Height) +
+                    (UserManager.instance.isWholesale ? 50.rw : t4Height) +
                     rSize(62) +
                     timeHeight +
                     tabbarHeight -
@@ -858,76 +863,82 @@ class _HomePageState extends BaseStoreState<HomePage>
                       ),
                     ),
                   )),
-        UserManager.instance.isWholesale?SliverToBoxAdapter(
-          child: Container(
-            height: 0.rw,
-          ),
-        ): SliverList(
-          delegate: SliverChildListDelegate(
-
-            List.generate(
-                _promotionList == null || _promotionList.length == 0
-                    ? 0
-                    : _promotionGoodsList.length + 1, (index) {
-              if (index == _promotionGoodsList.length) {
-                return Container(
-                  color: AppColor.frenchColor,
-                  alignment: Alignment.center,
-                  height: 60,
-                  child: Text(
-                    '已经到底啦~',
-                    style: TextStyle(
-                        color: Colors.black.withOpacity(0.4),
-                        fontSize: 13 * 2.sp),
-                  ),
-                );
-              }
-              if (_promotionGoodsList[index] is PromotionGoodsModel) {
-                PromotionGoodsModel model = _promotionGoodsList[index];
-                return Container(
-                  padding: EdgeInsets.only(bottom: 5),
-                  color: AppColor.frenchColor,
-                    child: GoodsItemWidget.rowGoods(
-                    gifController: _gifController,
-                    buildCtx: context,
-                    isSingleDayGoods: false,
-                    onBrandClick: () {
-                      AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
-                          arguments: BrandGoodsListPage.setArguments(
-                              model.brandId, model.brandName));
-                    },
-                    model: model,
-                    buyClick: () {
-                      AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                          arguments:
-                              CommodityDetailPage.setArguments(model.goodsId));
-                    },
-                  ),
-                );
-              } else if (_promotionGoodsList[index] is PromotionActivityModel) {
-                PromotionActivityModel activityModel =
-                    _promotionGoodsList[index];
-                return RowActivityItem(
-                  model: activityModel,
-                  click: () {
-                    AppRouter.push(
-                      context,
-                      RouteName.WEB_VIEW_PAGE,
-                      arguments: WebViewPage.setArguments(
-                          url: activityModel.activityUrl,
-                          title: "活动",
-                          hideBar: true),
-                    );
-                  },
-                );
-              } else {
-                return Container();
-              }
-            }),
-
-
-          ),
-        ),
+        // SliverToBoxAdapter(
+        //   child: !UserManager.instance.isWholesale
+        //       ? _brandWidget()
+        //       : SizedBox(),
+        // ),
+        UserManager.instance.isWholesale
+            ? SliverToBoxAdapter(
+                child: Container(
+                  height: 0.rw,
+                ),
+              )
+            : SliverList(
+                delegate: SliverChildListDelegate(
+                  List.generate(
+                      _promotionList == null || _promotionList.length == 0
+                          ? 0
+                          : _promotionGoodsList.length + 1, (index) {
+                    if (index == _promotionGoodsList.length) {
+                      return Container(
+                        color: AppColor.frenchColor,
+                        alignment: Alignment.center,
+                        height: 60,
+                        child: Text(
+                          '已经到底啦~',
+                          style: TextStyle(
+                              color: Colors.black.withOpacity(0.4),
+                              fontSize: 13 * 2.sp),
+                        ),
+                      );
+                    }
+                    if (_promotionGoodsList[index] is PromotionGoodsModel) {
+                      PromotionGoodsModel model = _promotionGoodsList[index];
+                      return Container(
+                        padding: EdgeInsets.only(bottom: 5),
+                        color: AppColor.frenchColor,
+                        child: GoodsItemWidget.rowGoods(
+                          gifController: _gifController,
+                          buildCtx: context,
+                          isSingleDayGoods: false,
+                          onBrandClick: () {
+                            AppRouter.push(
+                                context, RouteName.BRANDGOODS_LIST_PAGE,
+                                arguments: BrandGoodsListPage.setArguments(
+                                    model.brandId, model.brandName));
+                          },
+                          model: model,
+                          buyClick: () {
+                            AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                                arguments: CommodityDetailPage.setArguments(
+                                    model.goodsId));
+                          },
+                        ),
+                      );
+                    } else if (_promotionGoodsList[index]
+                        is PromotionActivityModel) {
+                      PromotionActivityModel activityModel =
+                          _promotionGoodsList[index];
+                      return RowActivityItem(
+                        model: activityModel,
+                        click: () {
+                          AppRouter.push(
+                            context,
+                            RouteName.WEB_VIEW_PAGE,
+                            arguments: WebViewPage.setArguments(
+                                url: activityModel.activityUrl,
+                                title: "活动",
+                                hideBar: true),
+                          );
+                        },
+                      );
+                    } else {
+                      return Container();
+                    }
+                  }),
+                ),
+              ),
         SliverList(
           delegate: SliverChildListDelegate(
             List.generate(
@@ -956,9 +967,8 @@ class _HomePageState extends BaseStoreState<HomePage>
             }),
           ),
         ),
-
-         _promotionList.isEmpty||!UserManager.instance.isWholesale
-    ? SliverToBoxAdapter(
+        _promotionList.isEmpty || !UserManager.instance.isWholesale
+            ? SliverToBoxAdapter(
                 child: Container(
                   height: 0.rw,
                 ),
@@ -971,8 +981,9 @@ class _HomePageState extends BaseStoreState<HomePage>
                       return MaterialButton(
                           padding: EdgeInsets.zero,
                           onPressed: () {
-                            Get.to(()=>WholesaleDetailPage(goodsId:model.goodsId,));
-
+                            Get.to(() => WholesaleDetailPage(
+                                  goodsId: model.goodsId,
+                                ));
                           },
                           child: WholesaleGoodsGrid(
                               goods: WholesaleGood(
@@ -984,7 +995,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                             salePrice: model.salePrice,
                             salesVolume: model.totalSalesVolume,
                           )));
-                    } else if (index == _promotionGoodsList.length-1) {
+                    } else if (index == _promotionGoodsList.length - 1) {
                       return Container(
                         color: AppColor.frenchColor,
                         alignment: Alignment.center,
@@ -1000,7 +1011,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                       return SizedBox();
                     }
                   },
-                  childCount: _promotionGoodsList.length ,
+                  childCount: _promotionGoodsList.length,
                 ),
                 gridDelegate:
                     SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
@@ -1010,25 +1021,282 @@ class _HomePageState extends BaseStoreState<HomePage>
                 ),
                 // ItemTagWidget.getSliverGridDelegate(_displayList, context),
               ),
-
-        UserManager.instance.isWholesale?    SliverToBoxAdapter(
-          child: Container(
-            color: AppColor.frenchColor,
-            alignment: Alignment.center,
-            height: 60,
-            child: Text(
-              '已经到底啦~',
-              style: TextStyle(
-                  color: Colors.black.withOpacity(0.4),
-                  fontSize: 13 * 2.sp),
-            ),
-          )
-        ):SliverToBoxAdapter(
-          child: Container(
-            height: 0.rw,
-          ),
-        )
+        UserManager.instance.isWholesale
+            ? SliverToBoxAdapter(
+                child: Container(
+                color: AppColor.frenchColor,
+                alignment: Alignment.center,
+                height: 60,
+                child: Text(
+                  '已经到底啦~',
+                  style: TextStyle(
+                      color: Colors.black.withOpacity(0.4),
+                      fontSize: 13 * 2.sp),
+                ),
+              ))
+            : SliverToBoxAdapter(
+                child: Container(
+                  height: 0.rw,
+                ),
+              )
       ],
+    );
+  }
+
+
+  _brandWidget(){
+    return Container(
+      color: AppColor.frenchColor,
+      padding: EdgeInsets.all(8.rw),
+      child: Container(
+        //margin: EdgeInsets.symmetric(horizontal:8.rw ,vertical: 8.rw),
+        height: 146.rw,
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          image: DecorationImage(
+            image: AssetImage(Assets.homeBrandBg.path),
+            fit: BoxFit.cover,
+            //alignment: Alignment.center,
+          ),
+        ),
+        child: Row(
+          children: [
+            18.wb,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 36.rw,
+                  width: 36.rw,
+                  color: Colors.white,
+                ),
+                16.hb,
+                Text(
+                  '三足松鼠品牌馆',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10 * 2.sp),
+                ),
+                8.hb,
+                Text(
+                  '健康轻食新主张',
+                  style: TextStyle(
+                      color: Colors.white.withOpacity(0.7),
+                      fontSize: 8 * 2.sp),
+                ),
+                16.hb,
+                Container(
+                  width: 52.rw,
+                  height: 18.rw,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.rw),
+                    border: Border.all(color: Color(0xFFFFC8A5)),
+                    boxShadow: [
+                      BoxShadow(
+                        offset: Offset(0, 1.rw),
+                        color: Color(0xFFD42E20),
+                        blurRadius: 3.rw,
+                      ),
+                    ],
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: <Color>[
+                        Color(0xFFFFE4AA),
+                        Color(0xFFEE6E4D),
+                      ],
+                    ),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    '立即查看',
+                    style: TextStyle(
+                        color: Color(0xFFD5101A),
+                        fontWeight: FontWeight.bold,
+                        fontSize: 9 * 2.sp),
+                  ),
+                )
+              ],
+            ),
+            Expanded(
+              child: Row(
+                children: [
+                  42.wb,
+                  Expanded(
+                    child: Padding(
+                      padding:  EdgeInsets.symmetric(vertical: 10.rw),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(Assets.homeBrandGoodBg.path),
+                            fit: BoxFit.fill,
+                            //alignment: Alignment.center,
+                          ),
+                        ),
+                        child: Column(
+
+                          children: [
+                            16.hb,
+                            Container(
+                              width: 62.rw,
+                              height: 62.rw,
+                              color: Colors.red,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding:  EdgeInsets.symmetric(horizontal: 6.rw),
+                                child: Column(
+                                  children: [
+                                    5.hb,
+                                    Text(
+                                      '三只松鼠 夏威夷果 3大包',
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: Color(0xFF333333),
+                                        fontSize: 10.rsp,
+
+                                      ),
+
+                                    ),
+                                    5.hb,
+                                    Row(
+                                      children: [
+                                        Text(' ¥', style: TextStyle(color: Color(0xFFC92219), fontSize: 10.rsp,fontWeight: FontWeight.bold)),
+                                        Text('30.00', style: TextStyle(color: Color(0xFFC92219), fontSize: 12.rsp,fontWeight: FontWeight.bold)),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  15.wb,
+                  Expanded(
+                    child: Padding(
+                      padding:  EdgeInsets.symmetric(vertical: 10.rw),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(Assets.homeBrandGoodBg.path),
+                            fit: BoxFit.fill,
+                            //alignment: Alignment.center,
+                          ),
+                        ),
+                        child: Column(
+
+                          children: [
+                            16.hb,
+                            Container(
+                              width: 62.rw,
+                              height: 62.rw,
+                              color: Colors.red,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding:  EdgeInsets.symmetric(horizontal: 6.rw),
+                                child: Column(
+                                  children: [
+                                    5.hb,
+                                    Text(
+                                      '三只松鼠 夏威夷果 3大包',
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: Color(0xFF333333),
+                                        fontSize: 10.rsp,
+
+                                      ),
+
+                                    ),
+                                    5.hb,
+                                    Row(
+                                      children: [
+                                        Text(' ¥', style: TextStyle(color: Color(0xFFC92219), fontSize: 10.rsp,fontWeight: FontWeight.bold)),
+                                        Text('30.00', style: TextStyle(color: Color(0xFFC92219), fontSize: 12.rsp,fontWeight: FontWeight.bold)),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  15.wb,
+                  Expanded(
+                    child: Padding(
+                      padding:  EdgeInsets.symmetric(vertical: 10.rw),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(Assets.homeBrandGoodBg.path),
+                            fit: BoxFit.fill,
+                            //alignment: Alignment.center,
+                          ),
+                        ),
+                        child: Column(
+
+                          children: [
+                            16.hb,
+                            Container(
+                              width: 62.rw,
+                              height: 62.rw,
+                              color: Colors.red,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding:  EdgeInsets.symmetric(horizontal: 6.rw),
+                                child: Column(
+                                  children: [
+                                    5.hb,
+                                    Text(
+                                      '三只松鼠 夏威夷果 3大包',
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        color: Color(0xFF333333),
+                                        fontSize: 10.rsp,
+
+                                      ),
+
+                                    ),
+                                    5.hb,
+                                    Row(
+                                      children: [
+                                        Text(' ¥', style: TextStyle(color: Color(0xFFC92219), fontSize: 10.rsp,fontWeight: FontWeight.bold)),
+                                        Text('30.00', style: TextStyle(color: Color(0xFFC92219), fontSize: 12.rsp,fontWeight: FontWeight.bold)),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+
+
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  20.wb,
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 
@@ -1136,22 +1404,20 @@ class _HomePageState extends BaseStoreState<HomePage>
                       hideBar: true),
                 );
               } else {
-                if(UserManager.instance.isWholesale){
-                  Get.to(()=>WholesaleDetailPage(goodsId: (bannerModel as BannerModel).goodsId,));
-                }
-
-                else{
+                if (UserManager.instance.isWholesale) {
+                  Get.to(() => WholesaleDetailPage(
+                        goodsId: (bannerModel as BannerModel).goodsId,
+                      ));
+                } else {
                   AppRouter.push(context, RouteName.COMMODITY_PAGE,
                       arguments: CommodityDetailPage.setArguments(
                           (bannerModel as BannerModel).goodsId));
                 }
-
               }
             },
-            child:
-            FadeInImage.assetNetwork(
+            child: FadeInImage.assetNetwork(
               placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-              image:  Api.getImgUrl(bannerModel.url),
+              image: Api.getImgUrl(bannerModel.url),
               fit: BoxFit.fill,
             ),
             // child: ExtendedImage.network(Api.getImgUrl(bannerModel.url),
@@ -1203,20 +1469,22 @@ class _HomePageState extends BaseStoreState<HomePage>
         ),
         child: ClipRRect(
           child: _activityMap != null && _activityMap.containsKey('a')
-              ?
-          FadeInImage.assetNetwork(
-              placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-              image:  Api.getImgUrl(item.logoUrl),
-            fit: BoxFit.fill,
-            )
-          //
-          // ExtendedImage.network(
-          //         Api.getImgUrl(item.logoUrl),
-          //         fit: BoxFit.fill,
-          //         enableLoadState: true,
-          //       )
+              ? FadeInImage.assetNetwork(
+                  placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                  image: Api.getImgUrl(item.logoUrl),
+                  fit: BoxFit.fill,
+                )
+              //
+              // ExtendedImage.network(
+              //         Api.getImgUrl(item.logoUrl),
+              //         fit: BoxFit.fill,
+              //         enableLoadState: true,
+              //       )
               // CustomCacheImage(imageUrl: Api.getImgUrl(item.logoUrl),fit: BoxFit.fill, height: rSize(300),width: MediaQuery.of(context).size.width,)
-              : Image.asset(R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,fit: BoxFit.fitWidth,),
+              : Image.asset(
+                  R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                  fit: BoxFit.fitWidth,
+                ),
           borderRadius: BorderRadius.all(
             Radius.circular(5),
           ),
@@ -1240,17 +1508,20 @@ class _HomePageState extends BaseStoreState<HomePage>
       child: ClipRRect(
         child: _activityMap != null && _activityMap.containsKey('d')
             ?
-        // ExtendedImage.network(
-        //         Api.getImgUrl(itemD.logoUrl),
-        //         fit: BoxFit.fill,
-        //         enableLoadState: true,
-        //       )
-        FadeInImage.assetNetwork(
-          placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-          image:  Api.getImgUrl(itemD.logoUrl),
-          fit: BoxFit.fill,
-        )
-            : Image.asset(R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,fit: BoxFit.fitWidth,),
+            // ExtendedImage.network(
+            //         Api.getImgUrl(itemD.logoUrl),
+            //         fit: BoxFit.fill,
+            //         enableLoadState: true,
+            //       )
+            FadeInImage.assetNetwork(
+                placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                image: Api.getImgUrl(itemD.logoUrl),
+                fit: BoxFit.fill,
+              )
+            : Image.asset(
+                R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                fit: BoxFit.fitWidth,
+              ),
         borderRadius: BorderRadius.all(
           Radius.circular(5),
         ),
@@ -1308,17 +1579,20 @@ class _HomePageState extends BaseStoreState<HomePage>
                         child: _activityMap != null &&
                                 _activityMap.containsKey('b')
                             ?
-                        // ExtendedImage.network(
-                        //         Api.getImgUrl(itemB.logoUrl),
-                        //         fit: BoxFit.fill,
-                        //         enableLoadState: true)
-                        FadeInImage.assetNetwork(
-                          placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-                          image:  Api.getImgUrl(itemB.logoUrl),
-                          fit: BoxFit.fill,
-                        )
+                            // ExtendedImage.network(
+                            //         Api.getImgUrl(itemB.logoUrl),
+                            //         fit: BoxFit.fill,
+                            //         enableLoadState: true)
+                            FadeInImage.assetNetwork(
+                                placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                                image: Api.getImgUrl(itemB.logoUrl),
+                                fit: BoxFit.fill,
+                              )
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemB.logoUrl),fit: BoxFit.fill,)
-                            : Image.asset(R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,fit: BoxFit.fitWidth,),
+                            : Image.asset(
+                                R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                                fit: BoxFit.fitWidth,
+                              ),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(5),
                           topRight: Radius.circular(5),
@@ -1351,17 +1625,20 @@ class _HomePageState extends BaseStoreState<HomePage>
                         child: _activityMap != null &&
                                 _activityMap.containsKey('c')
                             ?
-                        // ExtendedImage.network(
-                        //         Api.getImgUrl(itemC.logoUrl),
-                        //         fit: BoxFit.fill,
-                        //         enableLoadState: true)
-                        FadeInImage.assetNetwork(
-                          placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-                          image:  Api.getImgUrl(itemC.logoUrl),
-                          fit: BoxFit.fill,
-                        )
+                            // ExtendedImage.network(
+                            //         Api.getImgUrl(itemC.logoUrl),
+                            //         fit: BoxFit.fill,
+                            //         enableLoadState: true)
+                            FadeInImage.assetNetwork(
+                                placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                                image: Api.getImgUrl(itemC.logoUrl),
+                                fit: BoxFit.fill,
+                              )
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemC.logoUrl),fit: BoxFit.fill,)
-                            : Image.asset(R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,fit: BoxFit.fitWidth,),
+                            : Image.asset(
+                                R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                                fit: BoxFit.fitWidth,
+                              ),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(5),
                           topRight: Radius.circular(5),
@@ -1396,7 +1673,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     return Container(
       color: AppColor.frenchColor,
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-      height: t23Height +50.rw,
+      height: t23Height + 50.rw,
       width: screenWidth,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -1409,6 +1686,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                   child: GestureDetector(
                     onTap: () {
                       if (itemB != null && !TextUtils.isEmpty(itemB.website)) {
+                        LoggerData.addData(itemB.website,tag: "BB");
                         AppRouter.push(
                           context,
                           RouteName.WEB_VIEW_PAGE,
@@ -1422,17 +1700,17 @@ class _HomePageState extends BaseStoreState<HomePage>
                         child: _activityMap != null &&
                                 _activityMap.containsKey('b')
                             ?
-                        // ExtendedImage.network(
-                        //         Api.getImgUrl(itemB.logoUrl),
-                        //         fit: BoxFit.fill,
-                        //         enableLoadState: true)
-                        FadeInImage.assetNetwork(
-                          placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                          image:  Api.getImgUrl(itemB.logoUrl),
-                          fit: BoxFit.fill,
-                        )
-                            // CustomCacheImage(imageUrl: Api.getImgUrl(itemB.logoUrl),fit: BoxFit.fill,)
-                            : Image.asset(R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,fit: BoxFit.fill,),
+
+                            FadeInImage.assetNetwork(
+                                placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                image: Api.getImgUrl(itemB.logoUrl),
+                                fit: BoxFit.fill,
+                              )
+
+                            : Image.asset(
+                                R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                                fit: BoxFit.fill,
+                              ),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(5),
                           topRight: Radius.circular(5),
@@ -1456,33 +1734,32 @@ class _HomePageState extends BaseStoreState<HomePage>
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      if (itemB != null && !TextUtils.isEmpty(itemB.website)) {
+                      if (itemC != null && !TextUtils.isEmpty(itemC.website)) {
+                        LoggerData.addData(itemC.website,tag: "cc");
                         AppRouter.push(
                           context,
                           RouteName.WEB_VIEW_PAGE,
                           arguments: WebViewPage.setArguments(
-                              url: itemB.website, title: "活动", hideBar: true),
+                              url: itemC.website, title: "活动", hideBar: true),
                         );
                       }
                     },
                     child: Container(
-
                       child: ClipRRect(
                         child: _activityMap != null &&
                                 _activityMap.containsKey('c')
                             ?
-                        // ExtendedImage.network(
-                        //         Api.getImgUrl(itemB.logoUrl),
-                        //         fit: BoxFit.fill,
-                        //         enableLoadState: true)
-                        FadeInImage.assetNetwork(
-                          placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                            FadeInImage.assetNetwork(
+                                placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                                image: Api.getImgUrl(itemC.logoUrl),
+                                fit: BoxFit.fill,
+                              )
 
-                          image:  Api.getImgUrl(itemC.logoUrl),
-                          fit: BoxFit.fill,
-                        )
-                            // CustomCacheImage(imageUrl: Api.getImgUrl(itemB.logoUrl),fit: BoxFit.fill,)
-                            :Image.asset(R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,fit: BoxFit.fitWidth,width: double.infinity,),
+                            : Image.asset(
+                                R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                                fit: BoxFit.fitWidth,
+                                width: double.infinity,
+                              ),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(5),
                           topRight: Radius.circular(5),
@@ -1499,12 +1776,13 @@ class _HomePageState extends BaseStoreState<HomePage>
                 Expanded(
                   child: GestureDetector(
                     onTap: () {
-                      if (itemC != null && !TextUtils.isEmpty(itemC.website)) {
+                      if (itemD != null && !TextUtils.isEmpty(itemD.website)) {
+                        LoggerData.addData(itemD.website,tag: "DD");
                         AppRouter.push(
                           context,
                           RouteName.WEB_VIEW_PAGE,
                           arguments: WebViewPage.setArguments(
-                              url: itemC.website, title: "活动", hideBar: true),
+                              url: itemD.website, title: "活动", hideBar: true),
                         );
                       }
                     },
@@ -1513,17 +1791,21 @@ class _HomePageState extends BaseStoreState<HomePage>
                         child: _activityMap != null &&
                                 _activityMap.containsKey('d')
                             ?
-                        // ExtendedImage.network(
-                        //         Api.getImgUrl(itemC.logoUrl),
-                        //         fit: BoxFit.fill,
-                        //         enableLoadState: true)
-                        FadeInImage.assetNetwork(
-                          placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-                          image:  Api.getImgUrl(itemD.logoUrl),
-                          fit: BoxFit.fill,
-                        )
+                            // ExtendedImage.network(
+                            //         Api.getImgUrl(itemC.logoUrl),
+                            //         fit: BoxFit.fill,
+                            //         enableLoadState: true)
+                            FadeInImage.assetNetwork(
+                                placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                                image: Api.getImgUrl(itemD.logoUrl),
+                                fit: BoxFit.fill,
+                              )
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemC.logoUrl),fit: BoxFit.fill,)
-                            : Image.asset(R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,fit: BoxFit.fitWidth,width: double.infinity,),
+                            : Image.asset(
+                                R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                                fit: BoxFit.fitWidth,
+                                width: double.infinity,
+                              ),
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(5),
                           topRight: Radius.circular(5),
@@ -1661,7 +1943,16 @@ class _HomePageState extends BaseStoreState<HomePage>
       case '特惠专区':
         Get.to(() => GoodsPreferentialListPage());
         break;
-      case '硬核补贴':
+      case '高额返补':
+        if (!UserManager.instance.haveLogin) {
+          ReToast.err(text: '请先登录');
+          AppRouter.push(context, RouteName.LOGIN);
+          return;
+        }
+        Get.to(() => GoodsHighCommissionListPage());
+        break;
+
+      case 'VIP权益':
         if (!UserManager.instance.haveLogin) {
           ReToast.err(text: '请先登录');
           AppRouter.push(context, RouteName.LOGIN);
@@ -1704,10 +1995,29 @@ class _HomePageState extends BaseStoreState<HomePage>
       case '美妆护肤':
         break;
       case '全部分类':
+        await HomeDao.getCategories(success: (data, code, msg) {
+          CRoute.push(
+              context,
+              ClassifyPage(
+                data: data,
+                initValue: '分类',
+              ));
+        }, failure: (code, msg) {
+          Toast.showError(msg);
+        });
         break;
       case '批发商城':
-
-        Get.to(() => WholesaleHomePage());
+        await HomeDao.getCategories(success: (data, code, msg) {
+          CRoute.push(
+              context,
+              ClassifyPage(
+                data: data,
+                initValue: '分类',
+              ));
+        }, failure: (code, msg) {
+          Toast.showError(msg);
+        });
+        //Get.to(() => WholesaleHomePage());
         break;
         final loadingCancel = ReToast.loading();
         await HomeDao.getCategories(success: (data, code, msg) {
@@ -1870,7 +2180,6 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   _getActiviteList() async {
-
     ResultData resultData = await HttpManager.post(HomeApi.activity_list, {
       "is_sale": UserManager.instance.isWholesale,
     });
@@ -1955,7 +2264,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         await HttpManager.post(HomeApi.promotion_goods_list, {
       "timeItemID": promotionId,
       'user_id': UserManager.instance.user.info.id,
-          "is_sale": UserManager.instance.isWholesale,
+      "is_sale": UserManager.instance.isWholesale,
     });
     if (!resultData.result) {
       showError(resultData.msg);

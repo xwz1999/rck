@@ -53,8 +53,7 @@ class RUICodeListener {
         userImg = resultData.data['data']['headImgUrl'];
         userName = resultData.data['data']['nickname'];
       }
-      if (goodsDetailModel != null &&
-          userName != UserManager.instance.user.info.nickname)
+      if (goodsDetailModel != null)
         showDialog(
           context: context,
           builder: (context) => _RUICodeDialog(
@@ -65,7 +64,7 @@ class RUICodeListener {
           ),
         );
 
-      if (userName != UserManager.instance.user.info.nickname)
+      // if (userName != UserManager.instance.user.info.nickname)
         Clipboard.setData(ClipboardData(text: ''));
     }
   }

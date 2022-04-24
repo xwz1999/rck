@@ -237,8 +237,8 @@ class BrandLikeGridItem extends StatelessWidget {
                     child: ExtendedText.rich(
                       TextSpan(children: [
                         TextSpan(
-                          text: "到手价 ¥",
-                          style: AppTextStyle.generate(12 * 2.sp,
+                          text: "折后价 ¥",
+                          style: AppTextStyle.generate(11 * 2.sp,
                               color: Color(0xffc70404),
                               fontWeight: FontWeight.w500),
                         ),
@@ -248,14 +248,10 @@ class BrandLikeGridItem extends StatelessWidget {
                           style: TextStyle(
                               letterSpacing: -1,
                               wordSpacing: -1,
-                              fontSize: 18 * 2.sp,
+                              fontSize: 16 * 2.sp,
                               color: Color(0xFFC92219),
                               fontWeight: FontWeight.w500),
                         ),
-                        WidgetSpan(
-                            child: SizedBox(
-                              width: 5,
-                            )),
                       ]),
                     ),
                   ),

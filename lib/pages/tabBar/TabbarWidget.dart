@@ -325,7 +325,6 @@ class _BottomBarState extends State<BottomBar> {
         )
       ],
       onTabChangedListener: (index) {
-        RUICodeListener(context).clipboardListener();
         print(" $index");
         if (widget.tabChangeListener != null) {
           // if ((index == 4 || index == 5) && !UserManager.instance.haveLogin) {

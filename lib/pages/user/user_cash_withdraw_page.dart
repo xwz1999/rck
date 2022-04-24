@@ -66,7 +66,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
         TextEditingController(text: lastBankAccount);
 
 
-     getAllAmount();
+    getAllAmount();
   }
 
   /// 获取税费
@@ -80,9 +80,9 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
 
 
     if(res.data!=null){
-      if(res.data['code']=='FAIL'){
-        ReToast.err(text: res.data['msg']);
-      }
+      // if(res.data['code']=='FAIL'){
+      //   ReToast.err(text: res.data['msg']);
+      // }
 
       if(res.data['data']!=null){
         _model = WithdrawAmountModel.fromJson(res.data['data']);
@@ -92,6 +92,10 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
     }else
       _model = null;
 
+
+    setState(() {
+
+    });
     return model;
   }
 
@@ -108,17 +112,17 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
       appBar: CustomAppBar(
-        actions: <Widget>[
-          CustomImageButton(
-            padding: EdgeInsets.only(right: 16),
-            title: "提现记录",
-            color: Colors.black,
-            fontSize: 15,
-            onPressed: () {
-              AppRouter.push(context, RouteName.CASH_WITHDRAW_HISTORY_PAGE);
-            },
-          )
-        ],
+        // actions: <Widget>[
+        //   CustomImageButton(
+        //     padding: EdgeInsets.only(right: 16),
+        //     title: "提现记录",
+        //     color: Colors.black,
+        //     fontSize: 15,
+        //     onPressed: () {
+        //       AppRouter.push(context, RouteName.CASH_WITHDRAW_HISTORY_PAGE);
+        //     },
+        //   )
+        // ],
         themeData: AppThemes.themeDataGrey.appBarTheme,
         elevation: 0,
         title: "提现",
@@ -581,7 +585,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
             onPressed: !_isAgreeTheProtocol ||
                     TextUtils.isEmpty(_isCashToAlipay
                         ? _accountTextEditController.text
-                        : _bankAccountTextEditController.text)||_model==null||_model.actualAmount==0
+                        : _bankAccountTextEditController.text)||_model==null||_model.actualAmount==-1
                 ? null
                 : () {
                     if (_isNeedUserVerify) {

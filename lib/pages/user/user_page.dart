@@ -211,7 +211,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 },
               ),
               20.w.heightBox,
-              //
+              UserLevelTool.currentRoleLevelEnum() ==
+                  UserRoleLevel.subsidiary?
               GestureDetector(
                 onTap: (){
                   Get.to(()=>VipShopPushPage());
@@ -277,7 +278,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     ],
                   ),
                 ),
-              ),
+              ):SizedBox(),
               20.w.heightBox,
 
 

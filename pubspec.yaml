@@ -5,7 +5,7 @@ name: jingyaoyun
 description: jingyaoyun Market App.
 publish_to: "none"
 
-version: 3.0.1-dev+34
+version: 3.1.1-dev+40
 environment:
   sdk: ">=2.10.0 <3.0.0"
 

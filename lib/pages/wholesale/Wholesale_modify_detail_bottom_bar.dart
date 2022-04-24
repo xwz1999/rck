@@ -106,7 +106,7 @@ class _WholesaleDetailBottomBarrState extends State<WholesaleDetailBottomBar> {
               dotNum: widget.shopCartNum,
               dotColor: AppColor.themeColor,
               padding: EdgeInsets.symmetric(horizontal: 6.rw),
-              title: "购物车",
+              title: "进货单",
               contentSpacing: 0,
               icon: Icon(
                 AppIcons.icon_shopcart,
@@ -331,7 +331,7 @@ class _WholesaleDetailBottomBarrState extends State<WholesaleDetailBottomBar> {
                                   //   width: 2,
                                   // ),
                                   Text(
-                                  "加入购物车",
+                                  "加入进货单",
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 14 * 2.sp,

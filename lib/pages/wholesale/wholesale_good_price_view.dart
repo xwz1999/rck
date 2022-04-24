@@ -333,7 +333,7 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
           ),
 
           Text(
-            '已定${detailModel.salesVolume}单',
+            '已订${detailModel.salesVolume}单',
             style: TextStyle(
               // shadows: [
               //   Shadow(

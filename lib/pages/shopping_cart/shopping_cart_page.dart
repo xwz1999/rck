@@ -204,7 +204,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         double totalPrice = 0;
         double totalCommission = 0;
         _selectedGoods.forEach((goods) {
-          totalPrice += goods.price * goods.quantity;
+          totalPrice += (goods.price - goods.commission) * goods.quantity;
           totalCommission += goods.commission * goods.quantity;
         });
         _bottomStateSetter = bottomSetState;

@@ -138,6 +138,7 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
                     await HomeDao.getJDStock(
                         widget.goodsDetail.sku.first.id, _defaltAddress);
                     print(_jDHaveGoods);
+                    if(mounted)
                     setState(() {});
                   });
                 }

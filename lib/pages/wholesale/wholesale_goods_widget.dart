@@ -142,7 +142,7 @@ class _WholesaleGoodsWidgetState extends State<WholesaleGoodsWidget> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   Text(
-                    "已定${widget.goods.salesVolume}单",
+                    "已订${widget.goods.salesVolume}单",
                     style: TextStyle(
                       color: Color(0xff595757),
                       fontSize: 12 * 2.sp,

@@ -59,7 +59,7 @@ class OrderDetail extends Object {
   double goodsTotalCommission; // 商品总返还金额
   double actualTotalAmount; // 实际支付的金额
   int shippingMethod; // 0快递 1自提
-  String buyerMessage; // 买家留言
+  String buyerMsg; // 买家留言
   int status; // 0未付款 1支付成功 2订单取消 3订单过期 4交易成功 5订单关闭
   int expressStatus; // 快递状态 0 没有发货 1部分发货 2全部发货
   // int isApplyInvoice;// 是否申请过开票
@@ -111,7 +111,7 @@ class OrderDetail extends Object {
     this.goodsTotalCommission,
     this.actualTotalAmount,
     this.shippingMethod,
-    this.buyerMessage,
+    this.buyerMsg,
     this.status,
     this.expressStatus,
     this.invoiceStatus,

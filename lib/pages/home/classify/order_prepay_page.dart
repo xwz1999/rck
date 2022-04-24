@@ -215,7 +215,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
           height: rSize(50),
         ),
 
-        !UserManager.instance.isWholesale? _payTile(
+        UserManager.instance.isWholesale? _payTile(
                 "",
                 Image.asset(
                   AppSvg.svg_balance_pay,

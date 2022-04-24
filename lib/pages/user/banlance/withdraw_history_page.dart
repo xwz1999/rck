@@ -148,7 +148,7 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
                                     color: Color(0xFF333333), fontSize: 16.rsp),
                               ),
                               Text(
-                                "¥${model.amount}",
+                                "¥${model.balance}",
                                 style: TextStyle(
                                     color: Color(0xFF333333), fontSize: 16.rsp),
                               ),

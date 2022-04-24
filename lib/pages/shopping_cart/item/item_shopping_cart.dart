@@ -433,7 +433,7 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                                       ),
                                       TextSpan(
                                         text:
-                                        isSeckill?"${goods.secKill.secKillMinPrice.toStringAsFixed(2)}":"${goods.price.toStringAsFixed(2)}",
+                                       "${(goods.price-goods.commission).toStringAsFixed(2)}",
                                         style: AppTextStyle.generate(14 * 2.sp,
                                             color: AppColor.themeColor),
                                       ),

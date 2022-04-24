@@ -11,6 +11,7 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
+import 'package:fluwx/fluwx.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/config.dart';
 import 'package:jingyaoyun/constants/header.dart';
@@ -131,6 +132,33 @@ class WeChatUtils {
   }
 
 
+
+  static miniProgramBugCard({
+    String userName,
+    String id,
+    String netWorkThumbnail,
+    String des,
+  }) {
+    // String qrCode =
+    //     "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}$id/${UserManager.instance.user.info.invitationNo}";
+    var model = fluwx.WeChatShareMiniProgramModel(
+      userName: AppConfig.WX_APP_MINIPRO_USERNAME,
+      webPageUrl: 'https://h5.reecook.cn/',
+      path:
+      'pages/vip/vipBuy?type=share&invite=${UserManager.instance.user.info.invitationNo}',
+      thumbnail: fluwx.WeChatImage.network(netWorkThumbnail),
+      title: des,
+      compressThumbnail: false,
+      miniProgramType: WXMiniProgramType.RELEASE,
+    );
+    print('${UserManager.instance.user.info.invitationNo}');
+    fluwx.shareToWeChat(model);
+  }
+
+
+
+
+
   static miniProgramShareLive({
     String userName,
     int id,
@@ -231,6 +259,7 @@ class WeChatUtils {
         listener(result);
       }
     });
+
     fluwx
         .sendWeChatAuth(
             scope: "snsapi_userinfo", state: "wechat_sdk_demo_reecook")

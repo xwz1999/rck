@@ -664,12 +664,12 @@ class _OrderListItemState extends State<OrderListItem> {
                               color: AppColor.priceColor),
                         ),
                         TextSpan(
-                          text: "${(goods.unitPrice-goods.coinAmount).toStringAsFixed(2)}",
+                          text: "${(goods.goodsAmount-goods.coinAmount).toStringAsFixed(2)}",
                           style: AppTextStyle.generate(14 * 2.sp,
                               color: AppColor.priceColor),
                         ),
                             TextSpan(
-                              text:  " (到手价)",
+                              text:  " (折后价)",
                               style: AppTextStyle.generate(12 * 2.sp,
                                   color: Color(0xFF999999)),
                             )

@@ -202,7 +202,7 @@ class _VipShopCardPageState extends State<VipShopCardPage>
               _getItem(
                   '全面领先的数据分析', '多角度、多方位分析店铺经营状况，助力提高销量', Assets.icCardFenxi.path),
               24.hb,
-              _getItem('正品保障', '多角度、多方位分析店铺经营状况，助力提', Assets.icCardZhengping.path),
+              _getItem('正品保障', '共享京东优选好货，品质过硬，正品有保障', Assets.icCardZhengping.path),
               48.hb,
               _cardList.isNotEmpty? SizedBox(
                 height: !UserManager.instance.getSeven?125.rw: 170.rw,
@@ -385,8 +385,6 @@ class _VipShopCardPageState extends State<VipShopCardPage>
   }
 
   _buyListen(VipCardModel model) async{
-
-
 
     OrderPreviewModel order = await GoodsDetailModelImpl.createOrderPreview(
       UserManager.instance.user.info.id,

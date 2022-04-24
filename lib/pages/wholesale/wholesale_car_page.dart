@@ -252,7 +252,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                         });
                       },
                     ),
-                    _likeGoodsList.isNotEmpty ? _buildLikeWidget() : SizedBox(),
+                    // _likeGoodsList.isNotEmpty ? _buildLikeWidget() : SizedBox(),
                   ],
                 )
               );

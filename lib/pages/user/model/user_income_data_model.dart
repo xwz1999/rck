@@ -32,6 +32,8 @@ class UserIncomeDataModel {
   num count7;
   num amount7;
 
+  num count10;
+  num amount10;
 
 
   num total;
@@ -77,7 +79,8 @@ class UserIncomeDataModel {
         this.amount7,
         this.count7,
         this.eCount7,
-
+        this.amount10,
+        this.count10,
         this.monthCount,
         this.monthSale,
         this.totalSale,
@@ -120,7 +123,8 @@ class UserIncomeDataModel {
     count7 = json['Count7'];
     amount7 = json['Amount7'];
 
-
+    count10 = json['Count10'];
+    amount10 = json['Amount10'];
 
     monthCount = json['MonthCount'];
 
@@ -166,6 +170,9 @@ class UserIncomeDataModel {
     data['EAmount7'] = this.eAmount7;
     data['Count7'] = this.count7;
     data['Amount7'] = this.amount7;
+
+    data['Count10'] = this.count10;
+    data['Amount10'] = this.amount10;
 
 
     data['MonthCount'] = this.monthCount;

@@ -634,7 +634,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
         children: <Widget>[
 
           _titleRow("商品总价", "",
-              "合计:￥${(_orderModel.data.actualTotalAmount).toStringAsFixed(2)}",'共$totalNum件',subTitleColor: Color(0xFF999999),
+              "合计:￥${(_orderModel.data.actualTotalAmount - _orderModel.data.expressTotalFee ).toStringAsFixed(2)}",'共$totalNum件',subTitleColor: Color(0xFF999999),
               rightTitleColor: Colors.black),
 
 

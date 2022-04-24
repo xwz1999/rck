@@ -66,23 +66,37 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
 
     // bool hasPromotion = widget.model.data.promotion != null;
     // bool hasPromotion = true;
-    double minPrice, maxPrice, maxCommission, minCommission;
+    double minPrice=0.0, maxPrice, maxCommission, minCommission;
 
-    maxCommission = widget.model.data.price.max.commission;
-    minCommission = widget.model.data.price.min.commission;
 
-    // if (hasPromotion) {
-    minPrice = widget.model.data.price.min.discountPrice;
-    maxPrice = widget.model.data.price.max.discountPrice;
-    // } else {
-    // minPrice = widget.model.data.price.min.originalPrice;
-    // maxPrice = widget.model.data.price.max.originalPrice;
-    // }
+
+
+    widget.model.data.sku.forEach((element) {
+      if(minPrice==0.0){
+        minPrice = element.discountPrice;
+        minCommission = element.commission;
+
+        maxPrice = element.discountPrice;
+        maxCommission = element.commission;
+
+      }else
+      if(element.discountPrice<minPrice){
+        minPrice = element.discountPrice;
+        minCommission = element.commission;
+
+      }else{
+
+        maxPrice = element.discountPrice;
+        maxCommission = element.commission;
+      }
+
+    });
+
 
     if (maxPrice == minPrice) {
-      _price = maxPrice.toStringAsFixed(2);
+      _price = (maxPrice-maxCommission).toStringAsFixed(2);
     } else {
-      _price = "${minPrice.toStringAsFixed(2)}-${maxPrice.toStringAsFixed(2)}";
+      _price = "${(minPrice-minCommission).toStringAsFixed(2)}-${(maxPrice-maxCommission).toStringAsFixed(2)}";
     }
 
     if (maxCommission == minCommission) {

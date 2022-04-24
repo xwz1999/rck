@@ -147,6 +147,7 @@ class ShareTool {
           height: 36,
         ), itemClick: () {
       Navigator.maybePop(context);
+
       WeChatUtils.miniProgramShare(
         id: goodsId,
         netWorkThumbnail: Api.getImgUrl(miniPicurl),

@@ -596,32 +596,31 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
           child: GestureDetector(
             onTap: () async {
 
-              Get.to(()=>WithDrawPageThird(amount: '¥'+TextUtils.getCount1((UserManager
-                  .instance.userBrief.balance ??
-                  0.0)),type: isElectronics?'电子发票':'纸质发票', time: DateUtil.formatDate(DateTime.now(), format: 'yyyy-MM-dd HH:mm:ss'),
-                logistics: logistics,
-                logisticsNumber: logisticsNumber,
+              if(widget.amount.balance<=0){
+                ReToast.err(text: '余额不足，无法提现');
+              }
+              else{
+                bool apply = await UserBalanceFunc.applyWithdrawal(
+                    UserManager.instance.userBrief.balance, isElectronics ? 1 : 2,
+                    logistics_name: logistics, waybill_code: logisticsNumber);
 
-              ));
+                if (apply) {
+                  ReToast.success(text: '提交成功');
+                  Get.back();
+                  Get.back();
+                  Get.to(()=>WithDrawPageThird(amount: '¥'+ TextUtils.getCount1(
+                      (widget.amount.balance ?? 0.0)),actualAmount: '¥'+ TextUtils.getCount1(
+                      (widget.amount.actualAmount ?? 0.0)), type: isElectronics?'电子发票':'纸质发票', time: DateUtil.formatDate(DateTime.now(), format: 'yyyy-MM-dd HH:mm:ss'),
+                    logistics: logistics,
+                    logisticsNumber: logisticsNumber,
 
-              // bool apply = await UserBalanceFunc.applyWithdrawal(
-              //     UserManager.instance.userBrief.balance, isElectronics ? 1 : 2,
-              //     logistics_name: logistics, waybill_code: logisticsNumber);
-              //
-              // if (apply) {
-              //   ReToast.success(text: '提交成功');
-              //   Get.back();
-              //   Get.back();
-              //   Get.to(()=>WithDrawPageThird(amount: '¥'+TextUtils.getCount1((UserManager
-              //       .instance.userBrief.balance ??
-              //       0.0)),type: isElectronics?'电子发票':'纸质发票', time: DateUtil.formatDate(DateTime.now(), format: 'yyyy-MM-dd HH:mm:ss'),
-              //       logistics: logistics,
-              //     logisticsNumber: logisticsNumber,
-              //
-              //   ));
-              // } else {
-              //   ReToast.success(text: '提交失败');
-              // }
+                  ));
+
+                } else {
+                  ReToast.success(text: '提交失败');
+                }
+              }
+
               //
               //
             },

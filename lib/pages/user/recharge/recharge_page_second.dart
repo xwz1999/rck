@@ -420,27 +420,30 @@ class _RechargePageSecondState extends State<RechargePageSecond>
           ),
           child: GestureDetector(
             onTap: () async {
-              final cancel =  ReToast.loading(text:'提交中...');
-              await _uploadLicenseImages();
-              for (MediaModel media in _licenseFiles) {
-                if (TextUtils.isEmpty(media.result.url)) {
-                  ReToast.err(text:"第${_licenseFiles.indexOf(media) + 1}图片${media.result.msg}");
-                  return;
-                }
-                if(media !=_licenseFiles[_licenseFiles.length
-                    -1]){
-                  _licenseImages+=(media.result.url+';');
-                }else{
-                  _licenseImages+=(media.result.url);
-                }
+              if(_amount.isEmpty){
+                ReToast.err(text:'请先输入充值金额');
+              } else{
+                final cancel =  ReToast.loading(text:'提交中...');
+                await _uploadLicenseImages();
+                for (MediaModel media in _licenseFiles) {
+                  if (TextUtils.isEmpty(media.result.url)) {
+                    ReToast.err(text:"第${_licenseFiles.indexOf(media) + 1}图片${media.result.msg}");
+                    return;
+                  }
+                  if(media !=_licenseFiles[_licenseFiles.length
+                      -1]){
+                    _licenseImages+=(media.result.url+';');
+                  }else{
+                    _licenseImages+=(media.result.url);
+                  }
 
-              }
-              ResultData result ;
-              result = await UserBalanceFunc.depositRecharge(double.parse(_amount),_licenseImages);
-              cancel();
+                }
+                ResultData result ;
+                result = await UserBalanceFunc.depositRecharge(double.parse(_amount),_licenseImages);
+                cancel();
 
-              if(result.data['code']!='FAIL'){
-                ReToast.success(text:'提交成功');
+                if(result.data['code']!='FAIL'){
+                  ReToast.success(text:'提交成功');
                   Get.back();
                   Get.back();
                   Get.to(()=>RechargePageThird(amount: '¥'+TextUtils.getCount1((double.parse(_amount)  ??
@@ -448,9 +451,12 @@ class _RechargePageSecondState extends State<RechargePageSecond>
                     licenseFiles: _licenseImages,
 
                   ));
-              }else{
-                ReToast.err(text:result.data['msg']);
+                }else{
+                  ReToast.err(text:result.data['msg']);
+                }
               }
+
+
 
             },
             child: Container(

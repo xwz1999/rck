@@ -136,19 +136,17 @@ class _UserBalancePageState extends State<UserBalancePage> {
                 padding:  EdgeInsets.symmetric(horizontal:38.rw ),
                 child: GestureDetector(
                   onTap: () async{
-                    Get.to(()=>WithDrawPage());
+                    //Get.to(()=>WithDrawPage());
 
-                    // if(UserManager.instance.userBrief.balance<=0){
-                    //   BotToast.showText(text: '余额不足，无法提现');
-                    // }else{
-                    //   if(!UserManager.instance.userBrief.isEnterPrise){
-                    //     AppRouter.push(context, RouteName.USER_CASH_WITHDRAW_PAGE,
-                    //         arguments: UserCashWithdrawPage.setArguments(
-                    //             amount: UserManager.instance.userBrief.balance.toDouble()));
-                    //   }else{
-                    //     Get.to(()=>WithDrawPage());
-                    //   }
-                    // }
+
+                      if(!UserManager.instance.userBrief.isEnterPrise){
+                        AppRouter.push(context, RouteName.USER_CASH_WITHDRAW_PAGE,
+                            arguments: UserCashWithdrawPage.setArguments(
+                                amount: UserManager.instance.userBrief.balance.toDouble()));
+                      }else{
+                        Get.to(()=>WithDrawPage());
+                      }
+
 
 
 
@@ -225,8 +223,18 @@ class _UserBalancePageState extends State<UserBalancePage> {
             14.wb,
             GestureDetector(
               onTap: (){
-                //AppRouter.push(context, RouteName.CASH_WITHDRAW_HISTORY_PAGE);
-                Get.to(()=>WithdrawHistoryPage());
+
+
+                if(!UserManager.instance.userBrief.isEnterPrise){
+                  AppRouter.push(context, RouteName.CASH_WITHDRAW_HISTORY_PAGE);
+                }else{
+                  Get.to(()=>WithdrawHistoryPage());
+                }
+
+
+
+
+
               },
               child: Container(
                 width: 172.rw,

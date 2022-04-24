@@ -15,6 +15,7 @@ import '../wholeasale_detail_page.dart';
 
 
 class WholesaleGoodsItem extends StatelessWidget {
+  final bool isShowSales;
 
   final String goodsName;
   final String description;
@@ -44,6 +45,7 @@ class WholesaleGoodsItem extends StatelessWidget {
     this.salesVolume,
     this.id,
     this.buildCtx,
+    this.isShowSales = true,
 
   }) :super(key: key);
 
@@ -55,6 +57,7 @@ class WholesaleGoodsItem extends StatelessWidget {
   WholesaleGoodsItem.normalGoodsItem({
     Key key,
     WholesaleGood model, this.buildCtx,
+    this.isShowSales = true
 
     //this.special_sale,
   })  : goodsName = model.goodsName,
@@ -77,7 +80,7 @@ class WholesaleGoodsItem extends StatelessWidget {
     Key key,
     this.buildCtx,
 
-
+    this.isShowSales = false,
     GoodsHotSellListModel.Data data,
 
 
@@ -353,6 +356,7 @@ class WholesaleGoodsItem extends StatelessWidget {
           )
         ),
         Spacer(),
+        isShowSales?
         Container(
           child: Text(
                   "已订${this.salesVolume}单",
@@ -362,7 +366,7 @@ class WholesaleGoodsItem extends StatelessWidget {
                   ),
                 ),
 
-        ),
+        ):SizedBox(),
       ],
     );
   }

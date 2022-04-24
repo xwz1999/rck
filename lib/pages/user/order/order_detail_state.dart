@@ -273,8 +273,6 @@ abstract class OrderDetailState<T extends StatefulWidget>
           !TextUtils.isEmpty(orderDetail.payTime)
               ? _tile("付款时间", orderDetail.payTime)
               : Container(),
-          _tile("买家留言", orderDetail.buyerMessage,
-              crossAxisAlignment: CrossAxisAlignment.start),
           //_saleAmountInfo(),
         ],
       ),
@@ -1142,14 +1140,14 @@ abstract class OrderDetailState<T extends StatefulWidget>
                       Row(
                         children: <Widget>[
                           Text(
-                            "￥${(goods.unitPrice - goods.coinAmount).toStringAsFixed(2)}",
+                            "￥${(goods.goodsAmount-goods.coinAmount).toStringAsFixed(2)}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyle.generate(14 * 2.sp,
                                 color: AppColor.redColor),
                           ),
                           Text(
-                            "(到手价)",
+                            "(折后价)",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyle.generate(12 * 2.sp,
@@ -1423,7 +1421,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                     )),
                 Container(
                     child: Text(
-                  orderDetail.buyerMessage,
+                  orderDetail.buyerMsg,
                   style: AppTextStyle.generate(12 * 2.sp,
                       color: Color(0xff333333)),
                 )),

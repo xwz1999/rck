@@ -256,6 +256,10 @@ class UserAPI {
   ///提现数据
   String get allAmount => '/v2/app/company/apply/all_amount';
 
+
+  ///获取买卡收益
+  String get cardProfit => '/v2/app/user/profit/card';
+
 }
 
 class BenefitAPI {

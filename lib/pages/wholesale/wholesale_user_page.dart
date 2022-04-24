@@ -4,8 +4,10 @@ import 'package:get/get.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:jingyaoyun/pages/home/vip_shop_push_page.dart';
 import 'package:jingyaoyun/pages/user/model/user_income_data_model.dart';
 import 'package:jingyaoyun/pages/user/order/order_after_sale_page.dart';
 import 'package:jingyaoyun/pages/user/order/order_center_page.dart';
@@ -203,6 +205,76 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
                 },
               ),
               20.w.heightBox,
+
+      UserLevelTool.currentRoleLevelEnum() ==
+          UserRoleLevel.subsidiary?
+      GestureDetector(
+        onTap: (){
+          Get.to(()=>VipShopPushPage());
+        },
+        child: Container(
+          color: Colors.white,
+          width: double.infinity,
+          padding: EdgeInsets.symmetric(vertical: 10.rw,horizontal: 12.rw),
+
+          child: Stack(
+            children: [
+              Image.asset(Assets.userExtensionBg.path,fit: BoxFit.fitWidth,),
+              Align(
+                alignment:Alignment.centerLeft,
+                child: Row(
+                  children: [
+                    40.wb,
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        30.hb,
+                        RichText(
+                          text: TextSpan(
+                              text: "VIP店推广",
+                              style: AppTextStyle.generate(16 * 2.sp,color: Color(0xFFD5101A)),
+                              children: [
+                                TextSpan(
+                                    style: AppTextStyle.generate(12 * 2.sp,
+                                        color: Color(0xFFD5101A).withOpacity(0.5)),
+                                    text:"    0元创业·轻松赚"
+                                )
+                              ]),
+                        ),
+                        28.hb,
+                        Container(
+                          padding: EdgeInsets.symmetric(vertical: 2.rw,horizontal: 4.rw),
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.centerLeft,
+                                end: Alignment.centerRight,
+                                colors: [
+                                  Color(0xFFF14F49),
+                                  Color(0xFFE21830),
+                                ],
+                              ),
+                              borderRadius: BorderRadius.circular(2.rw)
+                          ),
+                          child: Text(
+                            '立即推广 >',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 12.rsp,
+                                fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ):SizedBox(),
+      20.w.heightBox,
               OtherItemViewV2(),
             ],
           ),

@@ -251,8 +251,8 @@ class BrandDetailGridItem extends StatelessWidget {
                     child: ExtendedText.rich(
                       TextSpan(children: [
                         TextSpan(
-                          text: "到手价¥",
-                          style: AppTextStyle.generate(isSeckill?18.rsp:12 * 2.sp,
+                          text: "折后价¥",
+                          style: AppTextStyle.generate(isSeckill?18.rsp:11 * 2.sp,
                               color: Color(0xffc70404),
                               fontWeight: FontWeight.w500),
                         ),
@@ -262,7 +262,7 @@ class BrandDetailGridItem extends StatelessWidget {
                           style: TextStyle(
                               letterSpacing: -1,
                               wordSpacing: -1,
-                              fontSize: 19 * 2.sp,
+                              fontSize: 17 * 2.sp,
                               color: Color(0xFFC92219),
                               fontWeight: FontWeight.w500),
                         ),

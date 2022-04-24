@@ -65,24 +65,37 @@ class _GoodPriceViewState extends State<GoodPriceView> {
 
   Container _price() {
     // bool hasPromotion = detailModel.data.promotion != null;
-    double minPrice,
-        maxPrice,
-        maxCommission,
-        minCommission,
-        minOriginPrice,
-        maxOriginPrice;
+    double minPrice = 0.0,
+        //maxPrice,
+        // maxCommission,
+        minCommission = 0.0,
+        minOriginPrice = 0.0;
+        //maxOriginPrice;
     num coupon = 0;
     int saleNum = 0;
+    //
+    // maxCommission = detailModel.data.price.max.commission;
+    // minCommission = detailModel.data.price.min.commission;
 
-    maxCommission = detailModel.data.price.max.commission;
-    minCommission = detailModel.data.price.min.commission;
-    minPrice = detailModel.data.price.min.discountPrice - detailModel.data.price.min.commission;
+    detailModel.data.sku.forEach((element) {
+      if(minPrice==0.0){
+        minPrice = element.discountPrice;
+        minCommission = element.commission;
+        minOriginPrice = element.originalPrice;
+      }else
+        if(element.discountPrice<minPrice){
+          minPrice = element.discountPrice;
+          minCommission = element.commission;
+          minOriginPrice = element.originalPrice;
+        }
 
-    maxPrice = detailModel.data.price.max.discountPrice - detailModel.data.price.max.commission;
+    });
+
+
     saleNum = detailModel.data.salesVolume;
 
-    minOriginPrice = detailModel.data.price.min.originalPrice;
-    maxOriginPrice = detailModel.data.price.max.originalPrice;
+    // minOriginPrice = detailModel.data.price.min.originalPrice;
+
 
     if (detailModel.data.sku != null && detailModel.data.sku.length > 0) {
       coupon = detailModel.data.sku[0].coupon;
@@ -102,29 +115,40 @@ class _GoodPriceViewState extends State<GoodPriceView> {
 //    }
 
     String commission, price, originPrice;
-    if (maxPrice == minPrice) {
-      price = maxPrice.toStringAsFixed(2);
-    } else {
-      // price = "${minPrice.toStringAsFixed(2)}-${maxPrice.toStringAsFixed(2)}";
-      price = minPrice.toStringAsFixed(2); //"${_getDoubleText(minPrice)}-${_getDoubleText(maxPrice)}";
-    }
-    bool isTwoPrice = false;
-    if (minOriginPrice == maxOriginPrice) {
-      originPrice = maxOriginPrice.toStringAsFixed(2);
-    } else {
-      originPrice =_getDoubleText(minOriginPrice);
-          //"${_getDoubleText(minOriginPrice)}-${_getDoubleText(maxOriginPrice)}";
-      isTwoPrice = true;
-    }
 
-    if (maxCommission == minCommission) {
-      commission = maxCommission.toStringAsFixed(2);
-    } else {
-      commission =_getDoubleText(minCommission);
-          //"${_getDoubleText(minCommission)}-${_getDoubleText(maxCommission)}";
-    }
+
+    commission = minCommission.toStringAsFixed(2);
+
+    price = (minPrice - minCommission).toStringAsFixed(2);
+
+
+    originPrice = minOriginPrice.toStringAsFixed(2);
+
+
+    //
+    // if (maxPrice == minPrice) {
+    //   price = maxPrice.toStringAsFixed(2);
+    // } else {
+    //   // price = "${minPrice.toStringAsFixed(2)}-${maxPrice.toStringAsFixed(2)}";
+    //   price = minPrice.toStringAsFixed(2); //"${_getDoubleText(minPrice)}-${_getDoubleText(maxPrice)}";
+    // }
+    // bool isTwoPrice = false;
+    // if (minOriginPrice == maxOriginPrice) {
+    //   originPrice = maxOriginPrice.toStringAsFixed(2);
+    // } else {
+    //   originPrice =_getDoubleText(minOriginPrice);
+    //       //"${_getDoubleText(minOriginPrice)}-${_getDoubleText(maxOriginPrice)}";
+    //   isTwoPrice = true;
+    // }
+    //
+    // if (maxCommission == minCommission) {
+    //   commission = maxCommission.toStringAsFixed(2);
+    // } else {
+    //   commission =_getDoubleText(minCommission);
+    //       //"${_getDoubleText(minCommission)}-${_getDoubleText(maxCommission)}";
+    // }
     return _normalPriceWidget(
-        price, commission, originPrice, isTwoPrice, coupon, saleNum);
+        price, commission, originPrice, coupon, saleNum);
   }
 
   _getDoubleText(double number) {
@@ -150,7 +174,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
               RichText(
                 text: TextSpan(children: [
                   TextSpan(
-                    text: "到手价",
+                    text: "折后价",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 14.rsp,
@@ -183,7 +207,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                     child: Row(
                       children: [
                         Text(
-                           "赚",
+                           "分享赚",
                           style: AppTextStyle.generate(12 * 2.sp,
                               color: Color(0xFFED3D19)),
                         ),
@@ -216,7 +240,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
             child: Row(
               children: <Widget>[
                 Text(
-                  "到手价=$originPrice(官方指导价)",
+                  "折后价=$originPrice(官方指导价)",
                   style: AppTextStyle.generate(
                     10 .rsp,
                     color: Colors.white,
@@ -233,7 +257,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                     )
                     : SizedBox(),
                 Text(
-                  '—¥$commission(自购折扣)',
+                  '—¥$commission(折扣额)',
                   style: TextStyle(
                     fontSize: 10.rsp,
                     color: Colors.white,
@@ -251,7 +275,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
   }
 
   _normalPriceWidget(
-      price, commission, originPrice, isTwoPrice, coupon, saleNum) {
+      price, commission, originPrice, coupon, saleNum) {
     return Container(
       height: 82.rw,
       width: MediaQuery.of(context).size.width,
@@ -272,7 +296,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
         originPrice,
         coupon,
         saleNum,
-        isTwoPrice: isTwoPrice,
+
       ),
     );
   }

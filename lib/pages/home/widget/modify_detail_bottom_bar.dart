@@ -509,7 +509,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Text(
-                                 "加入购物车",
+                                 "加入进货单",
                                   style: TextStyle(
                                       fontWeight: FontWeight.w300,
                                       fontSize: 14 * 2.sp,

@@ -836,7 +836,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                   }
                   _listViewController.replaceData([]);
 
-                  setState(() {});
+
                 },
                 placeholder: "请输入想要搜索的内容...",
                 placeholderStyle: TextStyle(

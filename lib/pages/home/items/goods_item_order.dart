@@ -264,14 +264,14 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
             crossAxisAlignment: CrossAxisAlignment.end,
               children: [
             Text(
-              "￥ ${(goods.unitPrice-goods.coinAmount).toStringAsFixed(2)}",
+              "￥ ${(goods.goodsAmount-goods.coinAmount).toStringAsFixed(2)}",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyle.generate(14 * 2.sp,
                   fontWeight: FontWeight.w300),
             ),
                 Text(
-                  "(到手价)",
+                  "(折后价)",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.generate(12 * 2.sp,color: Color(0xFF999999)),

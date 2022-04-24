@@ -289,17 +289,23 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
               children: [
                 20.hb,
                 Padding(
-                  padding: EdgeInsets.only(left: 16.rw, right: 16.rw),
-                  child: _textItem('提现金额',
-                      '¥' + TextUtils.getCount1((widget.history.amount ?? 0.0)),
-                      isRed: true),
+                  padding: EdgeInsets.only(left: 16.rw,right: 16.rw),
+                  child: _textItem('结算金额','¥'+ TextUtils.getCount1(
+                      (widget.history.balance ?? 0.0)),isRed:true,height: 1),
                 ),
                 35.hb,
+                Padding(
+                  padding: EdgeInsets.only(left: 16.rw,right: 16.rw),
+                  child: _textItem('到账金额','¥'+ TextUtils.getCount1(
+                      (widget.history.actualAmount ?? 0.0)),isRed:true,height: 1),
+                ),
+                35.hb,
+
                 Padding(
                   padding: EdgeInsets.only(left: 16.rw, right: 16.rw),
                   child: _textItem(
                     '申请时间',
-                    widget.history.createdAt==null?'': "${DateUtil.formatDate(DateTime.parse("${widget.history.createdAt.substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}",
+                    widget.history.createdAt==null?'': "${DateUtil.formatDate(DateTime.parse("${widget.history.createdAt.substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}", height: 1
                   ),
                 ),
                 35.hb,
@@ -316,7 +322,7 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
                     bottom: 35.w,
                   ),
                   child: widget.history.tax == 1
-                      ? _textItem('邮箱地址', _info.email)
+                      ? _textItem('邮箱地址', _info.email,height: 1)
                       : _textItem('快递公司', widget.history.logisticsName),
                 ),
                 widget.history.tax == 1
@@ -324,20 +330,20 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
                     : Padding(
                         padding: EdgeInsets.only(
                             left: 16.rw, right: 16.rw, bottom: 35.w),
-                        child: _textItem('快递单号', widget.history.waybillCode),
+                        child: _textItem('快递单号', widget.history.waybillCode,height: 1),
                       ),
                 (widget.history.state == 3 || widget.history.state == 99)
                     ? Padding(
                         padding: EdgeInsets.only(
                             left: 16.rw, right: 16.rw, bottom: 35.w),
-                        child: _textItem('申请时间',widget.history.createdAt==null?'': "${DateUtil.formatDate(DateTime.parse("${widget.history.createdAt.substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}", ),
+                        child: _textItem('申请时间',widget.history.createdAt==null?'': "${DateUtil.formatDate(DateTime.parse("${widget.history.createdAt.substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}",height: 1 ),
                       )
                     : SizedBox(),
                 (widget.history.state == 3 || widget.history.state == 99)
                     ? Padding(
                   padding: EdgeInsets.only(
                       left: 16.rw, right: 16.rw, bottom: 35.w),
-                  child: _textItem('审核时间',widget.history.processTime==null?'': "${DateUtil.formatDate(DateTime.parse("${(widget.history.processTime).substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}",),
+                  child: _textItem('审核时间',widget.history.processTime==null?'': "${DateUtil.formatDate(DateTime.parse("${(widget.history.processTime).substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}",height: 1),
                 )
                     : SizedBox(),
                 ( widget.history.state == 99)
@@ -369,14 +375,11 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
                             fontWeight: FontWeight.bold),
                       ),
                       40.hb,
-                      _textItem1(
-                        '账户名',
-                        model.companyName,
-                      ),
+                      _textItem1('账户名', model.companyName,),
                       30.hb,
-                      _textItem1('开户银行', model.taxBank),
+                      _textItem1('开户银行',model.taxBank),
                       30.hb,
-                      _textItem1('银行账户', model.taxNumber),
+                      _textItem1('银行账户',model.taxNumber,height: 1),
                       30.hb,
                     ],
                   ),
@@ -386,7 +389,7 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
     );
   }
 
-  _textItem(String title, String content, {bool isRed = false}) {
+  _textItem(String title, String content, {bool isRed = false,int height = -1}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -402,7 +405,21 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
         ),
         16.wb,
         Expanded(
-          child: Text(
+          child:
+        height!=-1?
+            Padding(padding: EdgeInsets.only(top: 1.rw),child:
+            Text(
+              content,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                height: 1.4,
+                color: isRed ? Color(0xFFD5101A) : Color(0xFF333333),
+                fontSize: 14.rsp,
+              ),
+            ),):
+
+          Text(
             content,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
@@ -419,7 +436,8 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
 
   _textItem1(
     String title,
-    String content,
+    String content,{int height = -1}
+
   ) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -436,7 +454,19 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
         ),
         16.wb,
         Expanded(
-          child: Text(
+          child:
+          height!=-1?
+          Padding(padding: EdgeInsets.only(top: 2.rw),child:
+          Text(
+            content,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 14.rsp,
+            ),
+          ),):
+          Text(
             content,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
