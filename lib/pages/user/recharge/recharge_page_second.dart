@@ -1,42 +1,33 @@
-import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
+
+import 'package:async/async.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flustars/flustars.dart';
-import 'package:image_picker/image_picker.dart' as flutterImagePicker;
-import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/styles.dart';
+import 'package:image_picker/image_picker.dart' as flutterImagePicker;
+import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/media_model.dart';
-import 'package:jingyaoyun/pages/user/banlance/withdraw_page_third.dart';
 import 'package:jingyaoyun/pages/user/functions/user_balance_func.dart';
 import 'package:jingyaoyun/pages/user/recharge/recharge_page_third.dart';
-
-import 'package:jingyaoyun/pages/user/widget/recook_check_box.dart';
 import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
 import 'package:jingyaoyun/pages/wholesale/models/wholesale_customer_model.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_customer_page.dart';
+import 'package:jingyaoyun/utils/amount_format.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/action_sheet.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/image_picker.dart';
 import 'package:jingyaoyun/widgets/image_selected_view.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
-import 'package:jingyaoyun/utils/amount_format.dart';
 import 'package:photo/photo.dart';
-import 'package:velocity_x/velocity_x.dart';
-import 'package:jingyaoyun/constants/header.dart';
-
-import 'package:async/async.dart';
 
 
 

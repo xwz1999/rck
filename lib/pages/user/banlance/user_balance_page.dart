@@ -1,21 +1,17 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/pages/user/banlance/user_balance_detail_page.dart';
 import 'package:jingyaoyun/pages/user/banlance/withdraw_history_page.dart';
 import 'package:jingyaoyun/pages/user/banlance/withdraw_page.dart';
-
 import 'package:jingyaoyun/widgets/image_scaffold.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 import '../user_cash_withdraw_page.dart';
 

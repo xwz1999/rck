@@ -4,7 +4,6 @@ import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/models/goods_detail_model.dart';
-import 'package:jingyaoyun/models/goods_simple_list_model.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/pic_swiper.dart';
 import 'package:jingyaoyun/widgets/video_view.dart';

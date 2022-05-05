@@ -19,7 +19,6 @@ import 'package:jingyaoyun/pages/user/order/order_detail_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_order_home_page.dart';
 import 'package:jingyaoyun/third_party/alipay/alipay_utils.dart';
 import 'package:jingyaoyun/third_party/wechat/wechat_utils.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';

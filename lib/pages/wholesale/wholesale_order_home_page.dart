@@ -3,17 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/user/order/guide_order_view.dart';
 import 'package:jingyaoyun/pages/user/order/order_list_controller.dart';
 import 'package:jingyaoyun/pages/user/order/order_list_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_order_list_page.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/cache_tab_bar_view.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/tabbarWidget/sc_tab_bar.dart';
 import 'package:jingyaoyun/widgets/title_switch.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 
 

@@ -10,7 +10,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart' as flutterImagePicker;
 import 'package:jingyaoyun/base/base_store_state.dart';
@@ -27,9 +26,7 @@ import 'package:jingyaoyun/widgets/bottom_sheet/action_sheet.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/image_picker.dart';
 import 'package:jingyaoyun/widgets/sc_tile.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:photo/photo.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 class UserInfoPage extends StatefulWidget {
   @override

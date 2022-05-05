@@ -4,7 +4,6 @@ import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/pages/user/invite/my_group_page_v2.dart';
 import 'package:jingyaoyun/utils/share_tool.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 

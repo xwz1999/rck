@@ -1,11 +1,4 @@
-/*
- * ====================================================
- * package   : 
- * author    : Created by nansi.
- * time      : 2019-07-23  14:10 
- * remark    : 
- * ====================================================
- */
+
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -23,13 +16,13 @@ import 'package:jingyaoyun/pages/shopping_cart/item/item_shopping_cart.dart';
 import 'package:jingyaoyun/pages/shopping_cart/mvp/shopping_cart_contact.dart';
 import 'package:jingyaoyun/pages/shopping_cart/mvp/shopping_cart_presenter_impl.dart';
 import 'package:jingyaoyun/utils/mvp.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
+
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
-import 'package:jingyaoyun/widgets/recook_back_button.dart';
+
 import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 

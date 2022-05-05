@@ -1,29 +1,21 @@
-import 'dart:math';
 
-import 'package:expandable/expandable.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/shop/order/shop_order_detail_page.dart';
-import 'package:jingyaoyun/pages/user/order/order_detail_page.dart';
-import 'package:jingyaoyun/pages/user/user_benefit_shop_page.dart';
-import 'package:jingyaoyun/pages/user/user_benefit_sub_page.dart';
-import 'package:jingyaoyun/pages/user/widget/user_group_card.dart';
-import 'package:jingyaoyun/widgets/animated_rotate.dart';
-import 'package:jingyaoyun/widgets/bottom_time_picker.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
-
-import 'package:velocity_x/velocity_x.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/pages/user/functions/user_benefit_func.dart';
 import 'package:jingyaoyun/pages/user/model/user_accumulate_model.dart';
+import 'package:jingyaoyun/pages/user/order/order_detail_page.dart';
+import 'package:jingyaoyun/pages/user/user_benefit_shop_page.dart';
+import 'package:jingyaoyun/pages/user/user_benefit_sub_page.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:jingyaoyun/widgets/bottom_time_picker.dart';
+import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:velocity_x/velocity_x.dart';
 
-import 'model/user_benefit_extra_detail_model.dart';
 import 'model/user_income_model.dart';
 
 class UserBenefitCurrencyPage extends StatefulWidget {

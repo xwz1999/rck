@@ -4,17 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/goods_detail_model.dart';
-import 'package:jingyaoyun/models/goods_simple_list_model.dart';
-import 'package:jingyaoyun/pages/goods/small_coupon_widget.dart';
-import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
-import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
-import 'package:jingyaoyun/pages/home/items/item_tag_widget.dart';
-import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
 import 'package:jingyaoyun/pages/wholesale/models/wholesale_good_model.dart';
-import 'package:jingyaoyun/utils/share_tool.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 

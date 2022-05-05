@@ -1,12 +1,8 @@
 
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/models/shopping_cart_list_model.dart';
-import 'package:jingyaoyun/pages/home/widget/plus_minus_view.dart';
-import 'package:jingyaoyun/pages/shopping_cart/similar_goods_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_car_specs.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';

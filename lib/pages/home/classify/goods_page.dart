@@ -1,6 +1,7 @@
 
 
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
@@ -16,13 +17,11 @@ import 'package:jingyaoyun/models/goods_detail_images_model.dart';
 import 'package:jingyaoyun/models/goods_detail_model.dart';
 import 'package:jingyaoyun/models/order_preview_model.dart';
 import 'package:jingyaoyun/models/province_city_model.dart';
-import 'package:jingyaoyun/pages/home/classify/evaluation_list_page.dart';
 import 'package:jingyaoyun/pages/home/classify/goods_param_page.dart';
 import 'package:jingyaoyun/pages/home/classify/goods_service_guarantee.dart';
 import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:jingyaoyun/pages/home/classify/order_preview_page.dart';
 import 'package:jingyaoyun/pages/home/classify/sku_choose_page.dart';
-import 'package:jingyaoyun/pages/home/items/item_user_comment.dart';
 import 'package:jingyaoyun/pages/home/model/address_model.dart';
 import 'package:jingyaoyun/pages/home/widget/good_price_view.dart';
 import 'package:jingyaoyun/pages/home/widget/goods_image_page_view.dart';
@@ -37,7 +36,6 @@ import 'package:jingyaoyun/widgets/bottom_sheet/action_sheet.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/address_selector.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/custom_bottom_sheet.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/empty_view.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/selected_list.dart';
@@ -45,6 +43,7 @@ import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:jingyaoyun/widgets/video_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:velocity_x/velocity_x.dart';
+
 import 'commodity_detail_page.dart';
 
 typedef ScrollListener = Function(ScrollUpdateNotification notification);

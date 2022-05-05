@@ -7,14 +7,9 @@ import 'package:jingyaoyun/pages/user/invite/my_group_page_v2.dart';
 import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
 import 'package:jingyaoyun/pages/wholesale/models/wholesale_customer_model.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_customer_page.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_home_page.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_shop_page.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:velocity_x/velocity_x.dart';
-
-import '../recommend_shop_page.dart';
 
 class OtherItemViewV2 extends StatelessWidget {
   OtherItemViewV2({Key key}) : super(key: key);

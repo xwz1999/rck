@@ -12,7 +12,6 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:fluwx/fluwx.dart';
-import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/config.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';

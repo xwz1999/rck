@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_tencentplayer/flutter_tencentplayer.dart';
 import 'package:jingyaoyun/utils/date/date_utils.dart';
 import 'package:screen/screen.dart';

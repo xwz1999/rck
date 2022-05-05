@@ -40,13 +40,17 @@ void main() async {
   await HiveStore.initBox();
 
   // 设置当前是否为测试环境
-  const bool isDebug = false;
-   //= const bool.fromEnvironment('ISDEBUG', defaultValue:  true);
+  const bool isDebug
+   = const bool.fromEnvironment('ISDEBUG', defaultValue:  true);
 
-  AppConfig.setDebug(isDebug);
-  // WeChatUtils.initial();
-  // MQManager.initial();
-  // 奔溃界面修改!!!!
+
+  var env = const String.fromEnvironment('ENV', defaultValue: 'dev');
+
+  print('env :$env');
+
+  AppConfig.setDebug(env == 'dev');
+
+
   ErrorWidget.builder = (FlutterErrorDetails flutterErrorDetails) {
     print(flutterErrorDetails.toString());
     if (isDebug) return ErrorWidget(flutterErrorDetails.exception);

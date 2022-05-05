@@ -6,7 +6,6 @@ import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/pages/user/banlance/user_balance_page.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
 
 class CapitalView extends StatefulWidget {
   final Function() listener;

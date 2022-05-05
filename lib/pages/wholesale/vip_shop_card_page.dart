@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
@@ -18,10 +17,6 @@ import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
-import 'package:oktoast/oktoast.dart';
-
-import 'package:velocity_x/velocity_x.dart';
 
 import 'models/vip_card_model.dart';
 

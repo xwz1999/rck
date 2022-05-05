@@ -12,7 +12,6 @@ import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart'
 import 'package:jingyaoyun/pages/home/home_page.dart';
 import 'package:jingyaoyun/utils/custom_route.dart';
 import 'package:jingyaoyun/utils/rui_code_util.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 
 class RUICodeListener {

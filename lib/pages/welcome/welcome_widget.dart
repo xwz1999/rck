@@ -27,7 +27,6 @@ import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/user_model.dart';
 import 'package:jingyaoyun/pages/message/message_ceter_page.dart';
 import 'package:jingyaoyun/pages/tabBar/TabbarWidget.dart';
-import 'package:jingyaoyun/pages/user/functions/user_func.dart';
 import 'package:jingyaoyun/utils/print_util.dart';
 import 'package:jingyaoyun/utils/share_preference.dart';
 import 'package:jingyaoyun/utils/storage/hive_store.dart';

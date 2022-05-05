@@ -1,6 +1,7 @@
 
 
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
@@ -10,23 +11,16 @@ import 'package:jingyaoyun/daos/home_dao.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/address_list_model.dart';
-import 'package:jingyaoyun/models/base_model.dart';
 import 'package:jingyaoyun/models/goods_detail_images_model.dart';
-import 'package:jingyaoyun/models/goods_detail_model.dart';
-import 'package:jingyaoyun/models/order_preview_model.dart';
 import 'package:jingyaoyun/models/province_city_model.dart';
-
 import 'package:jingyaoyun/pages/home/classify/goods_service_guarantee.dart';
 import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
-import 'package:jingyaoyun/pages/wholesale/vip_shop_card_page.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
-import 'package:velocity_x/velocity_x.dart';
 import 'package:jingyaoyun/pages/home/model/address_model.dart';
 import 'package:jingyaoyun/pages/home/widget/goods_image_page_view.dart';
 import 'package:jingyaoyun/pages/shopping_cart/mvp/shopping_cart_model_impl.dart';
 import 'package:jingyaoyun/pages/user/address/mvp/address_model_impl.dart';
 import 'package:jingyaoyun/pages/user/address/receiving_address_page.dart';
-import 'package:jingyaoyun/pages/wholesale/wholeasale_detail_page.dart';
+import 'package:jingyaoyun/pages/wholesale/vip_shop_card_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_good_price_view.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_goods_param_page.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_order_preview_page.dart';
@@ -35,18 +29,18 @@ import 'package:jingyaoyun/pages/wholesale/wholesale_sku_choose_page.dart';
 import 'package:jingyaoyun/utils/file_utils.dart';
 import 'package:jingyaoyun/utils/image_utils.dart';
 import 'package:jingyaoyun/utils/share_tool.dart';
+import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/action_sheet.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/address_selector.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/custom_bottom_sheet.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/empty_view.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
-import 'package:jingyaoyun/widgets/selected_list.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:jingyaoyun/widgets/video_view.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import 'func/wholesale_func.dart';
 import 'models/goods_dto.dart';

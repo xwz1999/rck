@@ -24,7 +24,6 @@ import 'package:jingyaoyun/redux/recook_state.dart';
 import 'package:jingyaoyun/redux/user_brief_redux.dart';
 import 'package:jingyaoyun/utils/print_util.dart';
 import 'package:jingyaoyun/utils/storage/hive_store.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:redux/redux.dart';
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/constants/header.dart';
@@ -81,7 +82,7 @@ class _UserGroupCardState extends State<UserGroupCard> {
     return CustomImageButton(
       color: Colors.white,
       onPressed: widget.onTap ??
-          () => CRoute.push(context, UserGroupCardDetailPage(id: widget.id)),
+          () => Get.to(UserGroupCardDetailPage(id: widget.id)),
       child: VxBox(
         child: [
           ClipRRect(

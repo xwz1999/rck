@@ -1,12 +1,11 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
@@ -16,9 +15,6 @@ import 'package:jingyaoyun/widgets/no_data_view.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
-
-
-import 'package:velocity_x/velocity_x.dart';
 
 import 'message_model.dart';
 

@@ -14,7 +14,6 @@ import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart'
 import 'package:jingyaoyun/pages/home/widget/modify_detail_app_bar.dart';
 import 'package:jingyaoyun/pages/home/widget/modify_detail_bottom_bar.dart';
 import 'package:jingyaoyun/utils/share_tool.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/cache_tab_bar_view.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 

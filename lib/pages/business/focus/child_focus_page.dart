@@ -1,15 +1,16 @@
 import 'dart:typed_data';
 import 'dart:ui';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flustars/flustars.dart';
-import 'package:flutter/rendering.dart';
-import 'package:jingyaoyun/constants/header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/base_model.dart';
 import 'package:jingyaoyun/models/goods_detail_model.dart';
@@ -30,9 +31,6 @@ import 'package:jingyaoyun/widgets/pic_swiper.dart';
 import 'package:jingyaoyun/widgets/share_page/post_all.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:widget_to_image/widget_to_image.dart';
-import 'package:flutter/widgets.dart';
-import 'dart:ui' as ui;
 
 
 

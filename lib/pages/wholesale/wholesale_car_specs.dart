@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/pages/home/widget/plus_minus_view.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_minus_view.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+
 import 'models/wholesale_car_model.dart';
 import 'models/wholesale_detail_model.dart';
 

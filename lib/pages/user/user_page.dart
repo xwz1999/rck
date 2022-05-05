@@ -11,7 +11,6 @@ import 'package:jingyaoyun/pages/user/model/user_income_data_model.dart';
 import 'package:jingyaoyun/pages/user/order/order_after_sale_page.dart';
 import 'package:jingyaoyun/pages/user/order/order_center_page.dart';
 import 'package:jingyaoyun/pages/user/pifa_benefit_page.dart';
-import 'package:jingyaoyun/pages/user/user_benefit_currency_pag.dart';
 import 'package:jingyaoyun/pages/user/user_benefit_sub_page.dart';
 import 'package:jingyaoyun/pages/user/widget/capital_view.dart';
 import 'package:jingyaoyun/pages/user/widget/order_central_view.dart';

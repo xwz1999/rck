@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/models/goods_hot_sell_list_model.dart';
 import 'package:jingyaoyun/models/goods_hot_sell_list_model.dart'
 as GoodsHotSellListModel;
 import 'package:jingyaoyun/pages/wholesale/models/wholesale_good_model.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 

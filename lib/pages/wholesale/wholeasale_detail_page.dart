@@ -16,7 +16,6 @@ import 'package:jingyaoyun/utils/share_tool.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_floating_action_button_location.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
-import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 
 import 'Wholesale_modify_detail_bottom_bar.dart';

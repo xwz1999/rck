@@ -27,7 +27,6 @@ import 'package:jingyaoyun/pages/home/items/oversea_accept_license_page.dart';
 import 'package:jingyaoyun/pages/user/address/receiving_address_page.dart';
 import 'package:jingyaoyun/pages/user/user_verify.dart';
 import 'package:jingyaoyun/pages/user/widget/recook_check_box.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/bottom_list.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';

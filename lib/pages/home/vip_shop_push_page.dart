@@ -4,27 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/home_weather_model.dart';
 import 'package:jingyaoyun/pages/user/functions/user_benefit_func.dart';
-import 'package:jingyaoyun/pages/user/model/pifa_table_model.dart';
 import 'package:jingyaoyun/pages/user/model/user_income_data_model.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_table_month_page.dart';
 import 'package:jingyaoyun/third_party/wechat/wechat_utils.dart';
-import 'package:jingyaoyun/utils/share_tool.dart';
-import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/bottom_time_picker.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/image_scaffold.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
 import 'package:jingyaoyun/widgets/refresh_widget.dart';
-import 'package:velocity_x/velocity_x.dart';
 
 import 'model/profit_card_model.dart';
 

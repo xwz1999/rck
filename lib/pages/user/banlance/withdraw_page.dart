@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
@@ -8,14 +7,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/api_v2.dart';
-import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/shop_summary_model.dart';
 import 'package:jingyaoyun/pages/user/banlance/withdraw_page_second.dart';
 import 'package:jingyaoyun/pages/user/functions/user_balance_func.dart';
-import 'package:jingyaoyun/pages/user/model/company_info_model.dart';
 import 'package:jingyaoyun/pages/user/model/contact_info_model.dart';
 import 'package:jingyaoyun/pages/user/model/withdraw_amount_model.dart';
 import 'package:jingyaoyun/pages/user/widget/MySeparator.dart';
@@ -26,9 +23,6 @@ import 'package:jingyaoyun/pages/wholesale/wholesale_customer_page.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
-import 'package:jingyaoyun/widgets/refresh_widget.dart';
-import 'package:velocity_x/velocity_x.dart';
-import 'package:jingyaoyun/constants/header.dart';
 
 class WithDrawPage extends StatefulWidget {
   WithDrawPage({

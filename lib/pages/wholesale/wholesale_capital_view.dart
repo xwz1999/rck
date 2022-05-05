@@ -8,7 +8,6 @@ import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/pages/user/banlance/user_balance_page.dart';
 import 'package:jingyaoyun/pages/user/recharge/user_recharge_page.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
 
 class WholesaleCapitalView extends StatefulWidget {
   final Function() listener;

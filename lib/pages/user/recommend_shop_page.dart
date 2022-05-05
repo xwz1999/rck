@@ -1,38 +1,35 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:async/async.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart' as flutterImagePicker;
+import 'package:jingyaoyun/constants/header.dart';
+import 'package:jingyaoyun/constants/styles.dart';
 import 'package:jingyaoyun/daos/user_dao.dart';
+import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/models/media_model.dart';
 import 'package:jingyaoyun/pages/user/recommend_records_page.dart';
 import 'package:jingyaoyun/pages/user/widget/recook_check_box.dart';
 import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/bottom_sheet/action_sheet.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/image_picker.dart';
 import 'package:jingyaoyun/widgets/image_selected_view.dart';
 import 'package:jingyaoyun/widgets/progress/re_toast.dart';
 import 'package:jingyaoyun/widgets/recook_back_button.dart';
+import 'package:jingyaoyun/widgets/text_button.dart' as TButton;
 import 'package:jingyaoyun/widgets/toast.dart';
 import 'package:photo/photo.dart';
 import 'package:velocity_x/velocity_x.dart';
-import 'package:jingyaoyun/widgets/text_button.dart' as TButton;
-import 'package:image_picker/image_picker.dart' as flutterImagePicker;
-
-import 'package:async/async.dart';
-
-import 'package:jingyaoyun/manager/http_manager.dart';
 
 
 class RecommendShopPage extends StatefulWidget {

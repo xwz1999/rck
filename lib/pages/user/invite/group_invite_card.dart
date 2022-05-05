@@ -1,16 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/api_v2.dart';
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/pages/user/model/user_common_model.dart';
-import 'package:jingyaoyun/pages/user/widget/user_group_card_detail_page.dart';
 import 'package:jingyaoyun/utils/user_level_tool.dart';
-import 'package:jingyaoyun/widgets/alert.dart';
-import 'package:jingyaoyun/widgets/progress/re_toast.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class GroupInviteCard extends StatelessWidget {

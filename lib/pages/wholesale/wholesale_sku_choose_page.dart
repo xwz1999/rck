@@ -1,18 +1,12 @@
 
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:jingyaoyun/base/base_store_state.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/models/goods_detail_model.dart';
-import 'package:jingyaoyun/pages/home/classify/sku_choose_page.dart';
-import 'package:jingyaoyun/pages/home/widget/plus_minus_view.dart';
 import 'package:jingyaoyun/pages/wholesale/wholesale_selected_list.dart';
-import 'package:jingyaoyun/utils/custom_route.dart';
 import 'package:jingyaoyun/widgets/custom_cache_image.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/pic_swiper.dart';
-import 'package:jingyaoyun/widgets/selected_list.dart';
 import 'package:jingyaoyun/widgets/toast.dart';
 
 import 'models/wholesale_detail_model.dart';

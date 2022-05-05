@@ -1,9 +1,9 @@
 
 
-import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/header.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/pages/wholesale/vip_shop_card_page.dart';

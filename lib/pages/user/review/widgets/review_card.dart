@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jingyaoyun/constants/api.dart';
 import 'package:jingyaoyun/constants/constants.dart';
 import 'package:jingyaoyun/constants/header.dart';
@@ -137,7 +138,7 @@ class  ReviewCard extends StatelessWidget {
                       onBack();
                     });
                   } else {
-                    CRoute.push(context, ReviewDetailPage(reviewModel: model));
+                    Get.to(ReviewDetailPage(reviewModel: model));
                   }
                 },
                 shape: RoundedRectangleBorder(

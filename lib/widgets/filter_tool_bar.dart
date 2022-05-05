@@ -8,12 +8,10 @@
  */
 
 import 'package:flutter/material.dart';
-
 import 'package:jingyaoyun/constants/app_image_resources.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/utils/text_utils.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/constants/styles.dart';
+import 'package:jingyaoyun/utils/text_utils.dart';
 
 /// 自筛选列表点击监听
 typedef SelectedListener = Function(int selectedIndex, FilterItemModel item);

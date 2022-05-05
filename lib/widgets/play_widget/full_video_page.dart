@@ -1,18 +1,17 @@
 import 'dart:async';
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_tencentplayer/flutter_tencentplayer.dart';
+import 'package:jingyaoyun/constants/constants.dart';
+import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/gen/assets.gen.dart';
 import 'package:jingyaoyun/utils/date/date_utils.dart';
 import 'package:jingyaoyun/widgets/play_widget/tencent_player_bottom_widget.dart';
 import 'package:jingyaoyun/widgets/play_widget/tencent_player_gesture_cover.dart';
 import 'package:jingyaoyun/widgets/play_widget/tencent_player_loading.dart';
-
-import 'package:jingyaoyun/constants/constants.dart';
-import 'package:jingyaoyun/constants/header.dart';
-
 import 'package:screen/screen.dart';
-import 'package:flutter_tencentplayer/flutter_tencentplayer.dart';
 enum PlayType {
   network,
   asset,

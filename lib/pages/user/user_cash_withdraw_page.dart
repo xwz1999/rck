@@ -11,14 +11,14 @@ import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/manager/user_manager.dart';
 import 'package:jingyaoyun/models/base_model.dart';
 import 'package:jingyaoyun/pages/user/withdraw_rule_page.dart';
-import 'package:jingyaoyun/pages/wholesale/models/wholesale_order_preview_model.dart';
-import 'package:jingyaoyun/utils/amount_format.dart';
+
+
 import 'package:jingyaoyun/utils/storage/hive_store.dart';
 import 'package:jingyaoyun/widgets/alert.dart';
 import 'package:jingyaoyun/widgets/custom_app_bar.dart';
 import 'package:jingyaoyun/widgets/custom_image_button.dart';
 import 'package:jingyaoyun/widgets/keyboard/bottom_keyboard_widget.dart';
-import 'package:jingyaoyun/widgets/progress/re_toast.dart';
+
 import 'package:jingyaoyun/widgets/webView.dart';
 
 import 'model/withdraw_amount_model.dart';
