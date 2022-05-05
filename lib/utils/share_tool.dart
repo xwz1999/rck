@@ -432,7 +432,7 @@ class ShareTool {
       //       //   size: rSize(35),
       //       //   color: Color(0xFF51B14F),
       //       // )
-      //       ),
+      //       ) ,
       //   wechatItem,
       //   weiboItem,
       //   copyurlItem,
