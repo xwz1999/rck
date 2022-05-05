@@ -62,13 +62,6 @@ class $AssetsIconGen {
 
   AssetGenImage get icLauncherPlaystore =>
       const AssetGenImage('assets/icon/ic_launcher-playstore.png');
-  AssetGenImage get icon => const AssetGenImage('assets/icon/icon.png');
-  AssetGenImage get recookIcon120 =>
-      const AssetGenImage('assets/icon/recook_icon_120.png');
-  AssetGenImage get recookIcon300 =>
-      const AssetGenImage('assets/icon/recook_icon_300.png');
-  AssetGenImage get recookIcon60 =>
-      const AssetGenImage('assets/icon/recook_icon_60.png');
 }
 
 class $AssetsJsonGen {
@@ -157,9 +150,7 @@ class $AssetsLiveGen {
 class $AssetsRecookLaunchImageGen {
   const $AssetsRecookLaunchImageGen();
 
-  AssetGenImage get recookSplashPng =>
-      const AssetGenImage('assets/recook_launch_image/recook_splash.png');
-  AssetGenImage get recookSplashWebp =>
+  AssetGenImage get recookSplash =>
       const AssetGenImage('assets/recook_launch_image/recook_splash.webp');
 }
 
@@ -1116,20 +1107,20 @@ class AssetGenImage extends AssetImage {
   const AssetGenImage(String assetName) : super(assetName);
 
   Image image({
-    Key key,
-    ImageFrameBuilder frameBuilder,
-    ImageLoadingBuilder loadingBuilder,
-    ImageErrorWidgetBuilder errorBuilder,
-    String semanticLabel,
+    Key  key,
+    ImageFrameBuilder  frameBuilder,
+    ImageLoadingBuilder  loadingBuilder,
+    ImageErrorWidgetBuilder  errorBuilder,
+    String  semanticLabel,
     bool excludeFromSemantics = false,
-    double width,
-    double height,
-    Color color,
-    BlendMode colorBlendMode,
-    BoxFit fit,
+    double  width,
+    double  height,
+    Color  color,
+    BlendMode  colorBlendMode,
+    BoxFit  fit,
     AlignmentGeometry alignment = Alignment.center,
     ImageRepeat repeat = ImageRepeat.noRepeat,
-    Rect centerSlice,
+    Rect  centerSlice,
     bool matchTextDirection = false,
     bool gaplessPlayback = false,
     bool isAntiAlias = false,
