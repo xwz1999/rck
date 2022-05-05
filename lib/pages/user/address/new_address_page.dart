@@ -10,20 +10,20 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/address_list_model.dart';
-import 'package:jingyaoyun/models/base_model.dart';
-import 'package:jingyaoyun/models/province_city_model.dart';
-import 'package:jingyaoyun/pages/user/address/mvp/address_model_impl.dart';
-import 'package:jingyaoyun/utils/file_utils.dart';
-import 'package:jingyaoyun/widgets/bottom_sheet/address_selector.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
-import 'package:jingyaoyun/widgets/edit_tile.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/address_list_model.dart';
+import 'package:recook/models/base_model.dart';
+import 'package:recook/models/province_city_model.dart';
+import 'package:recook/pages/user/address/mvp/address_model_impl.dart';
+import 'package:recook/utils/file_utils.dart';
+import 'package:recook/widgets/bottom_sheet/address_selector.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/edit_tile.dart';
+import 'package:recook/widgets/toast.dart';
 
 class NewAddressPage extends StatefulWidget {
   final bool isFirstAdd;

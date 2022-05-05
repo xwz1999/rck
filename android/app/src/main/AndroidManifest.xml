@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.akuhome.jingyaoyun">
+    package="com.akuhome.recook">
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
@@ -35,13 +35,13 @@
     <!-- android:theme="@style/LaunchTheme" -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="左家右厨"
+        android:label="瑞库客"
          android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         tools:replace="android:label,android:allowBackup"
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="cd71676364972b01d9803249f7112bc0"/>
+        <meta-data android:name="com.amap.api.v2.apikey" android:value="7225bca14fe7493f9f469315a933f99c"/>
         <!-- 配置定位Service -->
         <service android:name="com.amap.api.location.APSService"/>
         <activity

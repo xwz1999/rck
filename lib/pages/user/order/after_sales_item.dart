@@ -1,11 +1,11 @@
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/constants.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/models/order_after_sales_list_model.dart';
-import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/constants/styles.dart';
+import 'package:recook/models/order_after_sales_list_model.dart';
+import 'package:recook/widgets/custom_cache_image.dart';
 
 class AfterSalesItem extends StatefulWidget {
   final OrderAfterSalesModel saleModel;

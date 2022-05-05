@@ -1,16 +1,16 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/pages/live/models/topic_list_model.dart';
-import 'package:jingyaoyun/pages/live/models/video_goods_model.dart';
-import 'package:jingyaoyun/pages/live/video/pick_topic_page.dart';
-import 'package:jingyaoyun/pages/live/video/video_goods_page.dart';
-import 'package:jingyaoyun/pages/live/video/video_preview_page.dart';
-import 'package:jingyaoyun/utils/custom_route.dart';
-import 'package:jingyaoyun/widgets/recook/recook_list_tile.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/live/models/topic_list_model.dart';
+import 'package:recook/pages/live/models/video_goods_model.dart';
+import 'package:recook/pages/live/video/pick_topic_page.dart';
+import 'package:recook/pages/live/video/video_goods_page.dart';
+import 'package:recook/pages/live/video/video_preview_page.dart';
+import 'package:recook/utils/custom_route.dart';
+import 'package:recook/widgets/recook/recook_list_tile.dart';
 // import 'package:flutter_txugcupload/flutter_txugcupload.dart';
 import 'package:oktoast/oktoast.dart';
 

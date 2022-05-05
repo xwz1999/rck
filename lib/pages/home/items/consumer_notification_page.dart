@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/constants.dart';
-import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
+import 'package:recook/constants/constants.dart';
+import 'package:recook/widgets/recook/recook_scaffold.dart';
 
 class ConsumerNotificationPage extends StatelessWidget {
   const ConsumerNotificationPage({Key key}) : super(key: key);
@@ -17,9 +17,9 @@ class ConsumerNotificationPage extends StatelessWidget {
           rSize(40),
         ),
         child: Text(
-          '''为方便您更好的选购左家右厨跨境商品，请仔细阅读并理解以下告知书的内容：
+          '''为方便您更好的选购瑞库客跨境商品，请仔细阅读并理解以下告知书的内容：
 
-1、消费者在左家右厨购买的跨境商品依据原产地或原销售地有关质量、安全、卫生、环保、标识等标准或技术规范要求生产和销售，可能与我国标准存在差异，消费者应自行承担相关风险。
+1、消费者在瑞库客购买的跨境商品依据原产地或原销售地有关质量、安全、卫生、环保、标识等标准或技术规范要求生产和销售，可能与我国标准存在差异，消费者应自行承担相关风险。
 
 2、相关商品直接购自境外，可能无中文标签。消费者可以通过网站查看商品中文电子标签。
 

@@ -1,12 +1,12 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/gen/assets.gen.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/utils/user_level_tool.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class UserAppBarV2 extends StatefulWidget {
@@ -45,7 +45,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                     child: FadeInImage.assetNetwork(
                       height: 60.rw,
                       width: 60.rw,
-                      placeholder: R.ASSETS_ICON_RECOOK_ICON_300_PNG,
+                      placeholder: Assets.icon.icLauncherPlaystore.path,
                       image: TextUtils.isEmpty(
                               UserManager.instance.user.info.headImgUrl)
                           ? ""
@@ -152,7 +152,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                       child: FadeInImage.assetNetwork(
                         height: 48.rw,
                         width: 48.rw,
-                        placeholder: R.ASSETS_ICON_RECOOK_ICON_300_PNG,
+                        placeholder: Assets.icon.icLauncherPlaystore.path,
                         image: TextUtils.isEmpty(
                             UserManager.instance.user.info.headImgUrl)
                             ? ""
@@ -345,7 +345,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                       child: FadeInImage.assetNetwork(
                         height: 48.rw,
                         width: 48.rw,
-                        placeholder: R.ASSETS_ICON_RECOOK_ICON_300_PNG,
+                        placeholder: Assets.icon.icLauncherPlaystore.path,
                         image: TextUtils.isEmpty(
                             UserManager.instance.user.info.headImgUrl)
                             ? ""

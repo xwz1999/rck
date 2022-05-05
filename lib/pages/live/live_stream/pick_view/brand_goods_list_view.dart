@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/models/goods_simple_list_model.dart';
-import 'package:jingyaoyun/pages/live/live_stream/live_pick_goods_page.dart';
-import 'package:jingyaoyun/pages/live/live_stream/pick_view/live_goods_card.dart';
-import 'package:jingyaoyun/pages/live/live_stream/pick_view/pick_cart.dart';
-import 'package:jingyaoyun/pages/live/models/goods_window_model.dart';
-import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
-import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/models/goods_simple_list_model.dart';
+import 'package:recook/pages/live/live_stream/live_pick_goods_page.dart';
+import 'package:recook/pages/live/live_stream/pick_view/live_goods_card.dart';
+import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
+import 'package:recook/pages/live/models/goods_window_model.dart';
+import 'package:recook/widgets/recook/recook_scaffold.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 import 'package:oktoast/oktoast.dart';
 
 class BrandGoodsListView extends StatefulWidget {

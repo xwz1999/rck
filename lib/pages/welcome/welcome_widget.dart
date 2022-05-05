@@ -16,21 +16,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/app_image_resources.dart';
-import 'package:jingyaoyun/constants/config.dart';
-import 'package:jingyaoyun/constants/constants.dart';
-import 'package:jingyaoyun/daos/user_dao.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/user_model.dart';
-import 'package:jingyaoyun/pages/message/message_ceter_page.dart';
-import 'package:jingyaoyun/pages/tabBar/TabbarWidget.dart';
-import 'package:jingyaoyun/utils/print_util.dart';
-import 'package:jingyaoyun/utils/share_preference.dart';
-import 'package:jingyaoyun/utils/storage/hive_store.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/app_image_resources.dart';
+import 'package:recook/constants/config.dart';
+import 'package:recook/constants/constants.dart';
+import 'package:recook/daos/user_dao.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/user_model.dart';
+import 'package:recook/pages/message/message_ceter_page.dart';
+import 'package:recook/pages/tabBar/TabbarWidget.dart';
+import 'package:recook/utils/print_util.dart';
+import 'package:recook/utils/share_preference.dart';
+import 'package:recook/utils/storage/hive_store.dart';
+import 'package:recook/widgets/toast.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:package_info/package_info.dart';
 
@@ -187,7 +188,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     }
 
     jpush.setup(
-      appKey: "722dbc6ce24f3c6b99eb2993", //你自己应用的 AppKey
+      appKey: "2dba4439e97b3c0b78146fab", //你自己应用的 AppKey
       channel: "theChannel",
       production: false,
       debug: true,
@@ -264,7 +265,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                         borderRadius: BorderRadius.circular(10),
                         child: AspectRatio(
                           aspectRatio: 1.0 / 1.0,
-                          child: Image.asset(AppImageName.recook_icon_300,
+                          child: Image.asset(Assets.icon.icLauncherPlaystore.path,
                               fit: BoxFit.fill),
                         ),
                       ),
@@ -334,7 +335,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                     borderRadius: BorderRadius.circular(10.rw),
                     child: AspectRatio(
                       aspectRatio: 1.0 / 1.0,
-                      child: Image.asset(AppImageName.recook_icon_300,
+                      child: Image.asset(Assets.icon.icLauncherPlaystore.path,
                           fit: BoxFit.fill),
                     ),
                   ),

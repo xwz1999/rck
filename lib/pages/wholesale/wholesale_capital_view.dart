@@ -2,12 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/gen/assets.gen.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/user/banlance/user_balance_page.dart';
-import 'package:jingyaoyun/pages/user/recharge/user_recharge_page.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/user/banlance/user_balance_page.dart';
+import 'package:recook/pages/user/recharge/user_recharge_page.dart';
 
 class WholesaleCapitalView extends StatefulWidget {
   final Function() listener;

@@ -6,15 +6,15 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/gen/assets.gen.dart';
-import 'package:jingyaoyun/pages/user/recharge/recharge_page_second.dart';
-import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
-import 'package:jingyaoyun/pages/wholesale/models/wholesale_customer_model.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_customer_page.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/progress/re_toast.dart';
-import 'package:jingyaoyun/widgets/recook_back_button.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/pages/user/recharge/recharge_page_second.dart';
+import 'package:recook/pages/wholesale/func/wholesale_func.dart';
+import 'package:recook/pages/wholesale/models/wholesale_customer_model.dart';
+import 'package:recook/pages/wholesale/wholesale_customer_page.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
+import 'package:recook/widgets/recook_back_button.dart';
 
 class RechargePage extends StatefulWidget {
   RechargePage({

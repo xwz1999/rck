@@ -12,17 +12,17 @@ import 'dart:typed_data';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' as flutterImagePicker;
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/constants.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/models/media_model.dart';
-import 'package:jingyaoyun/pages/user/order/publish_evaluation_page.dart';
-import 'package:jingyaoyun/widgets/bottom_sheet/action_sheet.dart';
-import 'package:jingyaoyun/widgets/custom_cache_image.dart';
-import 'package:jingyaoyun/widgets/image_picker.dart';
-import 'package:jingyaoyun/widgets/image_selected_view.dart';
-import 'package:jingyaoyun/widgets/input_view.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/models/media_model.dart';
+import 'package:recook/pages/user/order/publish_evaluation_page.dart';
+import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
+import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:recook/widgets/image_picker.dart';
+import 'package:recook/widgets/image_selected_view.dart';
+import 'package:recook/widgets/input_view.dart';
 import 'package:photo/photo.dart';
 
 class EvaluationItem extends StatefulWidget {

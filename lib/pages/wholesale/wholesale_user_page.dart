@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/api_v2.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/gen/assets.gen.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/home/vip_shop_push_page.dart';
-import 'package:jingyaoyun/pages/user/model/user_income_data_model.dart';
-import 'package:jingyaoyun/pages/user/pifa_benefit_page.dart';
-import 'package:jingyaoyun/pages/user/user_benefit_sub_page.dart';
-import 'package:jingyaoyun/pages/user/widget/other_item_view_v2.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_capital_view.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_order_central_view.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_order_home_page.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_table_page.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_user_app_bar.dart';
-import 'package:jingyaoyun/redux/recook_state.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
-import 'package:jingyaoyun/widgets/alert.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
-import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api_v2.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/home/vip_shop_push_page.dart';
+import 'package:recook/pages/user/model/user_income_data_model.dart';
+import 'package:recook/pages/user/pifa_benefit_page.dart';
+import 'package:recook/pages/user/user_benefit_sub_page.dart';
+import 'package:recook/pages/user/widget/other_item_view_v2.dart';
+import 'package:recook/pages/wholesale/wholesale_capital_view.dart';
+import 'package:recook/pages/wholesale/wholesale_order_central_view.dart';
+import 'package:recook/pages/wholesale/wholesale_order_home_page.dart';
+import 'package:recook/pages/wholesale/wholesale_table_page.dart';
+import 'package:recook/pages/wholesale/wholesale_user_app_bar.dart';
+import 'package:recook/redux/recook_state.dart';
+import 'package:recook/utils/user_level_tool.dart';
+import 'package:recook/widgets/alert.dart';
+import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 import 'package:redux/redux.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -596,7 +596,7 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
                   borderRadius: BorderRadius.circular(10),
                   child: AspectRatio(
                     aspectRatio: 1.0 / 1.0,
-                    child: Image.asset(AppImageName.recook_icon_300,
+                    child: Image.asset(Assets.icon.icLauncherPlaystore.path,
                         fit: BoxFit.fill),
                   ),
                 ),

@@ -1,10 +1,10 @@
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/pages/home/items/item_tag_widget.dart';
-import 'package:jingyaoyun/widgets/custom_cache_image.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/pages/home/items/item_tag_widget.dart';
+import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 
 import 'models/wholesale_good_model.dart';
 

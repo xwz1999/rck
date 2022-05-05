@@ -37,10 +37,10 @@ class AppImageName {
   static const String asc_sort = "assets/ascSort.png";
 
   static const String web_app_icon = 'https://cdn.reecook.cn/static/default/appicon.png';
-  static const String app_icon = 'assets/icon/recook_icon_120.png';
-  static const String recook_icon_120 = 'assets/icon/recook_icon_120.png';
-  static const String recook_icon_60 = 'assets/icon/recook_icon_60.png';
-  static const String recook_icon_300 = 'assets/icon/recook_icon_300.png';
+  // static const String app_icon = 'assets/icon/recook_icon_120.png';
+  // static const String recook_icon_120 = 'assets/icon/recook_icon_120.png';
+  // static const String recook_icon_60 = 'assets/icon/recook_icon_60.png';
+  // static const String recook_icon_300 = 'assets/icon/recook_icon_300.png';
 
   static const String placeholder_1x1 = 'assets/placeholder_new_1x1_a.png';
   static const String placeholder_2x1 = 'assets/placeholder_new_2x1_a.png';

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/constants.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/pages/user/review/add_review_page.dart';
-import 'package:jingyaoyun/pages/user/review/models/order_review_list_model.dart';
-import 'package:jingyaoyun/pages/user/review/review_detail_page.dart';
-import 'package:jingyaoyun/utils/custom_route.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/pages/user/review/add_review_page.dart';
+import 'package:recook/pages/user/review/models/order_review_list_model.dart';
+import 'package:recook/pages/user/review/review_detail_page.dart';
+import 'package:recook/utils/custom_route.dart';
 
 class  ReviewCard extends StatelessWidget {
   final OrderReviewListModel model;

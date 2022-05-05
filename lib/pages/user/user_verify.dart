@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/user/mvp/user_presenter_impl.dart';
-import 'package:jingyaoyun/pages/user/user_verify_result.dart';
-import 'package:jingyaoyun/widgets/alert.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/user/mvp/user_presenter_impl.dart';
+import 'package:recook/pages/user/user_verify_result.dart';
+import 'package:recook/widgets/alert.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 
 class VerifyPage extends StatefulWidget {
   final Map arguments;
@@ -234,7 +234,7 @@ class _VerifyPageState extends BaseStoreState<VerifyPage> {
               type: NormalTextDialogType.remind,
               title: null,
               content: Text(
-                '根据海关规定，购买跨境商品需要办理清关手续，请您配合进行实名认证，以确保购买的商品顺利通过海关检查。（左家右厨承诺用户上传的身份信息将仅用于办理跨境商品的清关手续，不作他途使用，并对身份信息加密）实名认证的规则：购买跨境商品需填写左家右厨账号注册人的真实姓名及身份证号码。',
+                '根据海关规定，购买跨境商品需要办理清关手续，请您配合进行实名认证，以确保购买的商品顺利通过海关检查。（瑞库客承诺用户上传的身份信息将仅用于办理跨境商品的清关手续，不作他途使用，并对身份信息加密）实名认证的规则：购买跨境商品需填写瑞库客账号注册人的真实姓名及身份证号码。',
                 style: TextStyle(color: Colors.black),
               ),
               items: ["我知道了"],
@@ -307,15 +307,15 @@ class _VerifyPageState extends BaseStoreState<VerifyPage> {
 }
 
 // import 'package:flutter/material.dart';
-// import 'package:jingyaoyun/base/base_store_state.dart';
-// import 'package:jingyaoyun/constants/header.dart';
-// import 'package:jingyaoyun/manager/http_manager.dart';
-// import 'package:jingyaoyun/manager/user_manager.dart';
-// import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-// import 'package:jingyaoyun/widgets/custom_image_button.dart';
-// import 'package:jingyaoyun/widgets/edit_tile.dart';
-// import 'package:jingyaoyun/widgets/toast.dart';
-// import 'package:jingyaoyun/pages/user/mvp/user_presenter_impl.dart';
+// import 'package:recook/base/base_store_state.dart';
+// import 'package:recook/constants/header.dart';
+// import 'package:recook/manager/http_manager.dart';
+// import 'package:recook/manager/user_manager.dart';
+// import 'package:recook/widgets/custom_app_bar.dart';
+// import 'package:recook/widgets/custom_image_button.dart';
+// import 'package:recook/widgets/edit_tile.dart';
+// import 'package:recook/widgets/toast.dart';
+// import 'package:recook/pages/user/mvp/user_presenter_impl.dart';
 
 // class VerifyPage extends StatefulWidget{
 //   @override

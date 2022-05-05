@@ -7,10 +7,10 @@
  * ====================================================
  */
 
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 
 import 'goods_list_contact.dart';
 

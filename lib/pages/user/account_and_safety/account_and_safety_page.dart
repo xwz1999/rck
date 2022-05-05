@@ -2,21 +2,21 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/api_v2.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/user_model.dart';
-import 'package:jingyaoyun/pages/user/functions/user_func.dart';
-import 'package:jingyaoyun/third_party/wechat/wechat_utils.dart';
-import 'package:jingyaoyun/utils/storage/hive_store.dart';
-import 'package:jingyaoyun/widgets/alert.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/progress/re_toast.dart';
-import 'package:jingyaoyun/widgets/sc_tile.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/api_v2.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/user_model.dart';
+import 'package:recook/pages/user/functions/user_func.dart';
+import 'package:recook/third_party/wechat/wechat_utils.dart';
+import 'package:recook/utils/storage/hive_store.dart';
+import 'package:recook/widgets/alert.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
+import 'package:recook/widgets/sc_tile.dart';
+import 'package:recook/widgets/toast.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class AccountAndSafetyPage extends StatefulWidget {

@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/api_v2.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/gen/assets.gen.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/pages/user/functions/user_benefit_func.dart';
-import 'package:jingyaoyun/pages/user/model/user_income_data_model.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_table_month_page.dart';
-import 'package:jingyaoyun/third_party/wechat/wechat_utils.dart';
-import 'package:jingyaoyun/widgets/bottom_time_picker.dart';
-import 'package:jingyaoyun/widgets/recook_back_button.dart';
-import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:recook/constants/api_v2.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/user/functions/user_benefit_func.dart';
+import 'package:recook/pages/user/model/user_income_data_model.dart';
+import 'package:recook/pages/wholesale/wholesale_table_month_page.dart';
+import 'package:recook/third_party/wechat/wechat_utils.dart';
+import 'package:recook/widgets/bottom_time_picker.dart';
+import 'package:recook/widgets/recook_back_button.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 
 import 'model/profit_card_model.dart';
 
@@ -522,7 +522,7 @@ class _VipShopPushPageState extends State<VipShopPushPage> {
     WeChatUtils.miniProgramBugCard(
       id: id,
       netWorkThumbnail: 'https://jyycdn.reecook.cn/static/photo/20220419/a2ae64107a4c02a4e023c9eeb21b6826.jpg',
-      des: '左家右厨VIP店铺权益卡｜尊享底价批发，每天低至一块钱！',
+      des: '瑞库客VIP店铺权益卡｜尊享底价批发，每天低至一块钱！',
     );
   }
 }

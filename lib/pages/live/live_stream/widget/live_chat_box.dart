@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/header.dart';
+import 'package:recook/constants/header.dart';
 
 enum ChatType {
   NORMAL,

@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/app_image_resources.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/goods_detail_model.dart';
-import 'package:jingyaoyun/models/home_weather_model.dart';
-import 'package:jingyaoyun/models/missing_children_model.dart';
-import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/app_image_resources.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/goods_detail_model.dart';
+import 'package:recook/models/home_weather_model.dart';
+import 'package:recook/models/missing_children_model.dart';
+import 'package:recook/pages/home/promotion_time_tool.dart';
 import 'package:lunar_calendar_converter/lunar_solar_converter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -141,7 +142,7 @@ class PostWeatherWidget extends StatelessWidget {
 class PostUserInfo extends StatelessWidget {
   final String name;
   final int gysId;
-  const PostUserInfo({Key key, this.name = "左家右厨", this.gysId}) : super(key: key);
+  const PostUserInfo({Key key, this.name = "瑞库客", this.gysId}) : super(key: key);
 
 
   @override
@@ -155,7 +156,7 @@ class PostUserInfo extends StatelessWidget {
           children: <Widget>[
             ClipRRect(
               borderRadius: BorderRadius.circular(10),
-              child: Image.asset(AppImageName.recook_icon_120),
+              child: Image.asset(Assets.icon.icLauncherPlaystore.path),
             ),
             Container(
               width: 15,

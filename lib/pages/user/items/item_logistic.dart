@@ -8,10 +8,10 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/models/logistic_list_model.dart';
-import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/models/logistic_list_model.dart';
+import 'package:recook/widgets/custom_cache_image.dart';
 
 class LogisticItem extends StatelessWidget {
   final LogisticDetailModel model;

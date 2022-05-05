@@ -12,20 +12,21 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:image_picker/image_picker.dart' as flutterImagePicker;
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/media_model.dart';
-import 'package:jingyaoyun/pages/store/modify_info_page.dart';
-import 'package:jingyaoyun/pages/user/mvp/user_presenter_impl.dart';
-import 'package:jingyaoyun/utils/image_utils.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
-import 'package:jingyaoyun/widgets/bottom_sheet/action_sheet.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/image_picker.dart';
-import 'package:jingyaoyun/widgets/sc_tile.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/media_model.dart';
+import 'package:recook/pages/store/modify_info_page.dart';
+import 'package:recook/pages/user/mvp/user_presenter_impl.dart';
+import 'package:recook/utils/image_utils.dart';
+import 'package:recook/utils/user_level_tool.dart';
+import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/image_picker.dart';
+import 'package:recook/widgets/sc_tile.dart';
 import 'package:photo/photo.dart';
 
 class UserInfoPage extends StatefulWidget {
@@ -76,7 +77,7 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
               child: FadeInImage.assetNetwork(
                 height: 60.rw,
                 width: 60.rw,
-                placeholder: R.ASSETS_ICON_RECOOK_ICON_300_PNG,
+                placeholder: Assets.icon.icLauncherPlaystore.path,
                 image: TextUtils.isEmpty(
                     UserManager.instance.user.info.headImgUrl)
                     ? ""

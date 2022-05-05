@@ -8,7 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
 
 class BaseScaffold extends Scaffold {
   BaseScaffold(

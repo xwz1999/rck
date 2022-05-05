@@ -1,13 +1,13 @@
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_selected_list.dart';
-import 'package:jingyaoyun/widgets/custom_cache_image.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
-import 'package:jingyaoyun/widgets/pic_swiper.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/pages/wholesale/wholesale_selected_list.dart';
+import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/pic_swiper.dart';
+import 'package:recook/widgets/toast.dart';
 
 import 'models/wholesale_detail_model.dart';
 

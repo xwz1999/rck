@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/constants.dart';
+import 'package:recook/constants/constants.dart';
 
 class RecookCheckBox extends StatelessWidget {
   final bool state;

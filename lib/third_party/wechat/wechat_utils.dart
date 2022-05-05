@@ -12,11 +12,11 @@ import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:fluwx/fluwx.dart';
-import 'package:jingyaoyun/constants/config.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/utils/user_Authority_util.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:recook/constants/config.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/utils/user_Authority_util.dart';
+import 'package:recook/widgets/toast.dart';
 
 typedef WXLoginListener = Function(WXLoginResult result);
 

@@ -1,11 +1,11 @@
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/models/guide_order_item_model.dart';
-import 'package:jingyaoyun/models/order_list_model.dart';
-import 'package:jingyaoyun/widgets/custom_cache_image.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/models/guide_order_item_model.dart';
+import 'package:recook/models/order_list_model.dart';
+import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 typedef ItemClickListener = Function(OrderModel order, {VoidCallback callback});

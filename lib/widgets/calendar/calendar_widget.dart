@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_calendar/constants/constants.dart';
 import 'package:flutter_custom_calendar/controller.dart';
 import 'package:flutter_custom_calendar/widget/calendar_view.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/widgets/calendar/perpetual_calendar_model.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/widgets/calendar/perpetual_calendar_model.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'calendar_weekbar_widget.dart';

@@ -2,6 +2,7 @@
 /// *****************************************************
 ///  FlutterGen
 /// *****************************************************
+
 import 'package:flutter/widgets.dart';
 
 class $AssetsHeaderGen {
@@ -59,6 +60,8 @@ class $AssetsHomeGen {
 class $AssetsIconGen {
   const $AssetsIconGen();
 
+  AssetGenImage get icLauncherPlaystore =>
+      const AssetGenImage('assets/icon/ic_launcher-playstore.png');
   AssetGenImage get icon => const AssetGenImage('assets/icon/icon.png');
   AssetGenImage get recookIcon120 =>
       const AssetGenImage('assets/icon/recook_icon_120.png');
@@ -1113,20 +1116,20 @@ class AssetGenImage extends AssetImage {
   const AssetGenImage(String assetName) : super(assetName);
 
   Image image({
-    Key  key,
-    ImageFrameBuilder  frameBuilder,
-    ImageLoadingBuilder  loadingBuilder,
-    ImageErrorWidgetBuilder  errorBuilder,
-    String  semanticLabel,
+    Key key,
+    ImageFrameBuilder frameBuilder,
+    ImageLoadingBuilder loadingBuilder,
+    ImageErrorWidgetBuilder errorBuilder,
+    String semanticLabel,
     bool excludeFromSemantics = false,
-    double  width,
-    double  height,
-    Color  color,
-    BlendMode  colorBlendMode,
-    BoxFit  fit,
+    double width,
+    double height,
+    Color color,
+    BlendMode colorBlendMode,
+    BoxFit fit,
     AlignmentGeometry alignment = Alignment.center,
     ImageRepeat repeat = ImageRepeat.noRepeat,
-    Rect  centerSlice,
+    Rect centerSlice,
     bool matchTextDirection = false,
     bool gaplessPlayback = false,
     bool isAntiAlias = false,

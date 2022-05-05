@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/pages/user/invoice/invoice_presenter.dart';
-import 'package:jingyaoyun/pages/user/invoice/invoice_scaffold_widget.dart';
-import 'package:jingyaoyun/pages/user/invoice/models/invoice_get_bill_model.dart';
-import 'package:jingyaoyun/pages/user/widget/recook_check_box.dart';
-import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/constants/styles.dart';
+import 'package:recook/pages/user/invoice/invoice_presenter.dart';
+import 'package:recook/pages/user/invoice/invoice_scaffold_widget.dart';
+import 'package:recook/pages/user/invoice/models/invoice_get_bill_model.dart';
+import 'package:recook/pages/user/widget/recook_check_box.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 
 class InvoiceWithGoodsPage extends StatefulWidget {
   InvoiceWithGoodsPage({Key key}) : super(key: key);

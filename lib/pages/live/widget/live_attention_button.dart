@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/header.dart';
+import 'package:recook/constants/header.dart';
 
 ///关注按钮
 class LiveAttentionButton extends StatefulWidget {

@@ -7,11 +7,11 @@
  * ====================================================
  */
 
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/models/address_list_model.dart';
-import 'package:jingyaoyun/models/base_model.dart';
-import 'package:jingyaoyun/pages/user/address/mvp/address_model_impl.dart';
-import 'package:jingyaoyun/pages/user/address/mvp/address_mvp_contact.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/models/address_list_model.dart';
+import 'package:recook/models/base_model.dart';
+import 'package:recook/pages/user/address/mvp/address_model_impl.dart';
+import 'package:recook/pages/user/address/mvp/address_mvp_contact.dart';
 
 class AddressPresenterImpl extends AddressPresenterI {
   @override

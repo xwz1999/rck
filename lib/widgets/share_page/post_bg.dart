@@ -3,9 +3,10 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jingyaoyun/constants/app_image_resources.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/widgets/share_page/share_image_tool.dart';
+import 'package:recook/constants/app_image_resources.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/widgets/share_page/share_image_tool.dart';
 
 class PostTimeBannerInfo {
   String timeInfo;
@@ -233,10 +234,10 @@ class PostBottomInfo {
 
 class PostUserImage {
   String name;
-  PostUserImage({this.name = "左家右厨"});
+  PostUserImage({this.name = "瑞库客"});
   init() async {
     image =
-        await ShareImageTool.getImageWithAsset(AppImageName.recook_icon_120);
+        await ShareImageTool.getImageWithAsset(Assets.icon.icLauncherPlaystore.path);
   }
 
   String title = "数字化批发零售服务平台";

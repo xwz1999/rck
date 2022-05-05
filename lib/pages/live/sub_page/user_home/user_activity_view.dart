@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/const/resource.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/live/models/activity_list_model.dart';
-import 'package:jingyaoyun/pages/live/models/live_base_info_model.dart';
-import 'package:jingyaoyun/pages/live/widget/user_activity_card.dart';
-import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:recook/const/resource.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/live/models/activity_list_model.dart';
+import 'package:recook/pages/live/models/live_base_info_model.dart';
+import 'package:recook/pages/live/widget/user_activity_card.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 
 class UserActivityView extends StatefulWidget {
   final int id;

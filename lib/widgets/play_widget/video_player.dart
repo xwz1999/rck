@@ -4,12 +4,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tencentplayer/controller/tencent_player_controller.dart';
 import 'package:flutter_tencentplayer/view/tencent_player.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/gen/assets.gen.dart';
-import 'package:jingyaoyun/widgets/play_widget/tencent_player_bottom_widget.dart';
-import 'package:jingyaoyun/widgets/play_widget/tencent_player_gesture_cover.dart';
-import 'package:jingyaoyun/widgets/play_widget/tencent_player_loading.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/widgets/play_widget/tencent_player_bottom_widget.dart';
+import 'package:recook/widgets/play_widget/tencent_player_gesture_cover.dart';
+import 'package:recook/widgets/play_widget/tencent_player_loading.dart';
 
 import 'full_video_page.dart';
 

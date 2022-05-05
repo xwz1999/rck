@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/api_v2.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/pages/user/functions/user_func.dart';
-import 'package:jingyaoyun/pages/user/invite/group_invite_card.dart';
-import 'package:jingyaoyun/pages/user/model/user_common_model.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
-import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
-import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:recook/constants/api_v2.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/user/functions/user_func.dart';
+import 'package:recook/pages/user/invite/group_invite_card.dart';
+import 'package:recook/pages/user/model/user_common_model.dart';
+import 'package:recook/utils/user_level_tool.dart';
+import 'package:recook/widgets/recook/recook_scaffold.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class MyGroupPageV2 extends StatefulWidget {

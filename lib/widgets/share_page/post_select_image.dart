@@ -1,10 +1,10 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/models/goods_detail_model.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/styles.dart';
+import 'package:recook/models/goods_detail_model.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 
 class PostSelectImage extends StatefulWidget {
   final GoodsDetailModel goodsDetailModel;

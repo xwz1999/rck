@@ -7,17 +7,17 @@
  * ====================================================
  */
 
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/api_v2.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/base_model.dart';
-import 'package:jingyaoyun/models/goods_detail_images_model.dart';
-import 'package:jingyaoyun/models/goods_detail_model.dart';
-import 'package:jingyaoyun/models/material_list_model.dart';
-import 'package:jingyaoyun/models/missing_children_model.dart';
-import 'package:jingyaoyun/models/order_preview_model.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/api_v2.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/base_model.dart';
+import 'package:recook/models/goods_detail_images_model.dart';
+import 'package:recook/models/goods_detail_model.dart';
+import 'package:recook/models/material_list_model.dart';
+import 'package:recook/models/missing_children_model.dart';
+import 'package:recook/models/order_preview_model.dart';
 
 class GoodsDetailModelImpl {
   ///获取失踪儿童信息

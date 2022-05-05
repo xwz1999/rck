@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/pages/user/account_and_safety/delete_account_validation_page.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/pages/user/account_and_safety/delete_account_validation_page.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
 
 class DeleteAccountPage extends StatefulWidget {
   DeleteAccountPage({Key key}) : super(key: key);

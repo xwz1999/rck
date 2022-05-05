@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/constants.dart';
-import 'package:jingyaoyun/constants/header.dart';
+import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
 
 class UserBaseCard extends StatefulWidget {
   final String date;

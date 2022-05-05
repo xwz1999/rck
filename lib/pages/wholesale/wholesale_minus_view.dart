@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/widgets/input_view.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/widgets/input_view.dart';
+import 'package:recook/widgets/toast.dart';
 
 typedef PlusMinusViewCallback = Function(int num);
 

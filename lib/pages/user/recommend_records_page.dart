@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/pages/user/recmmend_list_page.dart';
-import 'package:jingyaoyun/widgets/cache_tab_bar_view.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/recook_back_button.dart';
-import 'package:jingyaoyun/widgets/tabbarWidget/sc_tab_bar.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/constants/styles.dart';
+import 'package:recook/pages/user/recmmend_list_page.dart';
+import 'package:recook/widgets/cache_tab_bar_view.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/recook_back_button.dart';
+import 'package:recook/widgets/tabbarWidget/sc_tab_bar.dart';
 
 class RecommendRecordsPage extends StatefulWidget {
   RecommendRecordsPage({

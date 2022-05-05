@@ -4,15 +4,16 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/utils/image_utils.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
-import 'package:jingyaoyun/widgets/alert.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/utils/image_utils.dart';
+import 'package:recook/utils/user_level_tool.dart';
+import 'package:recook/widgets/alert.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -82,7 +83,7 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(30.rw),
                     child: FadeInImage.assetNetwork(
-                      placeholder: R.ASSETS_ICON_RECOOK_ICON_300_PNG,
+                      placeholder: Assets.icon.icLauncherPlaystore.path,
                       image: Api.getImgUrl(UserManager.instance.user.info.headImgUrl),
                       height: 60.rw,
                       width: 60.rw,
@@ -155,7 +156,7 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
                     )),
                 Center(
                   child: Text(
-                    "扫一扫上面的二维码图案，和我一起加入左家右厨",
+                    "扫一扫上面的二维码图案，和我一起加入瑞库客",
                     style: TextStyle(
                         color: Color(0xff999999), fontSize: 11 * 2.sp),
                   ),

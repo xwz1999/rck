@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/goods_detail_model.dart';
-import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
-import 'package:jingyaoyun/widgets/share_page/post_bg.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/goods_detail_model.dart';
+import 'package:recook/pages/home/promotion_time_tool.dart';
+import 'package:recook/widgets/share_page/post_bg.dart';
 
 enum Status { loading, complete }
 

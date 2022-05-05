@@ -8,14 +8,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:jingyaoyun/models/user_brief_info_model.dart';
-import 'package:jingyaoyun/models/user_model.dart';
-import 'package:jingyaoyun/pages/welcome/launch_widget.dart';
-import 'package:jingyaoyun/redux/openinstall_state.dart';
-import 'package:jingyaoyun/redux/recook_state.dart';
-import 'package:jingyaoyun/utils/CommonLocalizationsDelegate.dart';
-import 'package:jingyaoyun/utils/storage/hive_store.dart';
-import 'package:jingyaoyun/utils/test.dart';
+import 'package:recook/models/user_brief_info_model.dart';
+import 'package:recook/models/user_model.dart';
+import 'package:recook/pages/welcome/launch_widget.dart';
+import 'package:recook/redux/openinstall_state.dart';
+import 'package:recook/redux/recook_state.dart';
+import 'package:recook/utils/CommonLocalizationsDelegate.dart';
+import 'package:recook/utils/storage/hive_store.dart';
+import 'package:recook/utils/test.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:redux/redux.dart';
 
@@ -152,7 +152,7 @@ class MyAppState extends State<MyApp> {
                     const Locale('zh', 'CN'),
                     const Locale('en', 'US'),
                   ],
-                  title: '左家右厨',
+                  title: '瑞库客',
                   debugShowCheckedModeBanner: false,
                   // 设置这一属性即可
                   checkerboardOffscreenLayers: false,

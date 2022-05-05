@@ -2,11 +2,11 @@ import 'package:common_utils/common_utils.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/pages/wholesale/models/wholesale_good_model.dart';
-import 'package:jingyaoyun/widgets/custom_cache_image.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/pages/wholesale/models/wholesale_good_model.dart';
+import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 
 import '../wholeasale_detail_page.dart';
 

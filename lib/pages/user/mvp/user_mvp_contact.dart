@@ -7,7 +7,7 @@
  * ====================================================
  */
 
-import 'package:jingyaoyun/utils/mvp.dart';
+import 'package:recook/utils/mvp.dart';
 
 abstract class UserMvpPresenterI extends MvpPresenter<UserMvpViewI, UserMvpModelI> {
   getUserBriefInfo(int userId);

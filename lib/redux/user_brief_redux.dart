@@ -1,4 +1,4 @@
-import 'package:jingyaoyun/models/user_brief_info_model.dart';
+import 'package:recook/models/user_brief_info_model.dart';
 import 'package:redux/redux.dart';
 
 final UserBriefReducer = combineReducers<UserBrief>([

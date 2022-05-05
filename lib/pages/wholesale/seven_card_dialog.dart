@@ -3,11 +3,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/gen/assets.gen.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/wholesale/vip_shop_card_page.dart';
-import 'package:jingyaoyun/utils/storage/hive_store.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/wholesale/vip_shop_card_page.dart';
+import 'package:recook/utils/storage/hive_store.dart';
 
 class SevenCardDialog extends StatefulWidget {
 

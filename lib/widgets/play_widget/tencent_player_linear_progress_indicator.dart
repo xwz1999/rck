@@ -12,7 +12,7 @@ import 'dart:typed_data';
 import 'dart:ui' as ui show instantiateImageCodec, Codec, Image;
 import 'dart:ui';
 
-import 'package:jingyaoyun/gen/assets.gen.dart';
+import 'package:recook/gen/assets.gen.dart';
 
 
 

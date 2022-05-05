@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/app_image_resources.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:recook/constants/app_image_resources.dart';
+import 'package:recook/constants/styles.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
 
 class InvoiceScaffoldWidget extends StatefulWidget {
   final Widget body;

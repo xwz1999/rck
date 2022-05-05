@@ -2,14 +2,14 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/live/models/live_exit_model.dart';
-import 'package:jingyaoyun/pages/live/models/live_stream_info_model.dart';
-import 'package:jingyaoyun/utils/date/recook_date_util.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/live/models/live_exit_model.dart';
+import 'package:recook/pages/live/models/live_stream_info_model.dart';
+import 'package:recook/utils/date/recook_date_util.dart';
+import 'package:recook/widgets/toast.dart';
 
 class LiveBlurPage extends StatefulWidget {
   final bool isLive;

@@ -7,10 +7,10 @@
  * ====================================================
  */
 
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/models/material_list_model.dart';
-import 'package:jingyaoyun/pages/business/recommend/mvp/recommend_model_impl.dart';
-import 'package:jingyaoyun/pages/business/recommend/mvp/recommend_mvp_contact.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/models/material_list_model.dart';
+import 'package:recook/pages/business/recommend/mvp/recommend_model_impl.dart';
+import 'package:recook/pages/business/recommend/mvp/recommend_mvp_contact.dart';
 
 class RecommendPresenterImpl extends RecommendPresenterI{
   @override

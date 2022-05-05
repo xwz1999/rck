@@ -9,7 +9,7 @@
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/widgets/cache_view_page.dart';
+import 'package:recook/widgets/cache_view_page.dart';
 
 /// A page view that displays the widget which corresponds to the currently
 /// selected tab. Typically used in conjunction with a [TabBar].

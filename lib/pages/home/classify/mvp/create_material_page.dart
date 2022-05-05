@@ -9,16 +9,16 @@
 
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/base_model.dart';
-import 'package:jingyaoyun/models/media_model.dart';
-import 'package:jingyaoyun/pages/user/items/item_evaluation.dart';
-import 'package:jingyaoyun/pages/user/mvp/order_list_presenter_impl.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/base_model.dart';
+import 'package:recook/models/media_model.dart';
+import 'package:recook/pages/user/items/item_evaluation.dart';
+import 'package:recook/pages/user/mvp/order_list_presenter_impl.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 
 class EvaluationGoodsModel {
   int id;

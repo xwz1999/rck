@@ -9,8 +9,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 
 typedef ShareAction = Function(int index);
 

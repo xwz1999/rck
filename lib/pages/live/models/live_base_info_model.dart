@@ -1,4 +1,4 @@
-import 'package:jingyaoyun/pages/live/models/video_list_model.dart';
+import 'package:recook/pages/live/models/video_list_model.dart';
 
 class LiveBaseInfoModel {
   int follows;

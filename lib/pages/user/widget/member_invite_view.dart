@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jingyaoyun/constants/constants.dart';
-import 'package:jingyaoyun/constants/styles.dart';
+import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/styles.dart';
 class MemberInviteView extends StatefulWidget {
   final Function listener;
   const MemberInviteView({Key key, this.listener}) : super(key: key);

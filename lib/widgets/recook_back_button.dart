@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/app_image_resources.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/constants/styles.dart';
+import 'package:recook/constants/app_image_resources.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/constants/styles.dart';
 
 class RecookBackButton extends StatelessWidget {
   final bool white;

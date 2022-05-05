@@ -16,9 +16,9 @@ VipLevel     = 500    会员
 */
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 
 enum UserLevel { None, Partner, Top, First, Second, Others }
 enum UserRoleLevel {

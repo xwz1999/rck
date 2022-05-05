@@ -2,17 +2,17 @@ import 'dart:async';
 
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/pages/user/functions/user_benefit_func.dart';
-import 'package:jingyaoyun/pages/user/model/user_benefit_day_team_model.dart';
-import 'package:jingyaoyun/pages/user/model/user_benefit_month_team_model.dart';
-import 'package:jingyaoyun/pages/user/user_partner_card.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
-import 'package:jingyaoyun/widgets/alert.dart';
-import 'package:jingyaoyun/widgets/bottom_time_picker.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/custom_painters/round_background_painter.dart';
-import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/pages/user/functions/user_benefit_func.dart';
+import 'package:recook/pages/user/model/user_benefit_day_team_model.dart';
+import 'package:recook/pages/user/model/user_benefit_month_team_model.dart';
+import 'package:recook/pages/user/user_partner_card.dart';
+import 'package:recook/utils/user_level_tool.dart';
+import 'package:recook/widgets/alert.dart';
+import 'package:recook/widgets/bottom_time_picker.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/custom_painters/round_background_painter.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class UserBenefitShopPage extends StatefulWidget {

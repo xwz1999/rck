@@ -1,12 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:jingyaoyun/utils/mvp.dart';
-import 'package:jingyaoyun/utils/print_util.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
-import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
-import 'package:jingyaoyun/widgets/refresh_widget.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:recook/utils/mvp.dart';
+import 'package:recook/utils/print_util.dart';
+import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:recook/widgets/refresh_widget.dart';
+import 'package:recook/widgets/toast.dart';
 
 typedef RefreshCallback = Function();
 typedef LoadMoreCallback = Function(int page);

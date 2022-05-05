@@ -1,9 +1,9 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/widgets/custom_cache_image.dart';
 
 import 'models/wholesale_order_preview_model.dart';
 

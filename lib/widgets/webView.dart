@@ -3,14 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
-import 'package:jingyaoyun/pages/home/widget/modify_detail_app_bar.dart';
-import 'package:jingyaoyun/pages/wholesale/wholeasale_detail_page.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/home/classify/commodity_detail_page.dart';
+import 'package:recook/pages/home/widget/modify_detail_app_bar.dart';
+import 'package:recook/pages/wholesale/wholeasale_detail_page.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewPage extends StatefulWidget {

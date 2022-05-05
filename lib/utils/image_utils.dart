@@ -15,8 +15,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/utils/print_util.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/utils/print_util.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:power_logger/power_logger.dart';
 

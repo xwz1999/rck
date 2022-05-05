@@ -7,8 +7,8 @@
  * ====================================================
  */
 
-import 'package:jingyaoyun/utils/mvp.dart';
-import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:recook/utils/mvp.dart';
+import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 
 abstract class OrderPresenterI
     extends MvpListViewPresenterI<Object, OrderViewI, OrderModelI> {

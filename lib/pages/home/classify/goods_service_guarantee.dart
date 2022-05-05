@@ -8,12 +8,12 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/goods_detail_model.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
-import 'package:jingyaoyun/widgets/text_button.dart' as TButton;
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/goods_detail_model.dart';
+import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/text_button.dart' as TButton;
 
 class GoodsServiceGuarantee extends StatefulWidget {
   // final List<Sku> skus;
@@ -68,8 +68,8 @@ class _GoodsServiceGuaranteeState
                 children: <Widget>[
                   _contentView('正品保证', '本商品由海内外认证的供应商或品牌商直供货源,保证100%正品'),
                   _contentView('发货&售后',
-                      '由平台认证供应商或者品牌商直接发货,也可直接在左家右厨门店提货;由认证供应商或者品牌商提供售后服务'),
-                  _contentView('售后无忧', '左家右厨购无忧,售后更无忧,您的售后,由左家右厨平台客服全力护航'),
+                      '由平台认证供应商或者品牌商直接发货,也可直接在瑞库客门店提货;由认证供应商或者品牌商提供售后服务'),
+                  _contentView('售后无忧', '瑞库客购无忧,售后更无忧,您的售后,由瑞库客平台客服全力护航'),
                   UserManager.instance.isWholesale?SizedBox():widget.model.data.isAllow?  _contentView('支持七天无理由退换货', '该商品支持七天无理由退货(未使用)'):SizedBox(),
                 ],
               )),

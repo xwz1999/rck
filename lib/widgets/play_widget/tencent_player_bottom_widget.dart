@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tencentplayer/flutter_tencentplayer.dart';
-import 'package:jingyaoyun/gen/assets.gen.dart';
-import 'package:jingyaoyun/utils/date/date_utils.dart';
-import 'package:jingyaoyun/widgets/play_widget/tencent_player_linear_progress_indicator.dart';
-import 'package:jingyaoyun/widgets/triangle_painter.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/utils/date/date_utils.dart';
+import 'package:recook/widgets/play_widget/tencent_player_linear_progress_indicator.dart';
+import 'package:recook/widgets/triangle_painter.dart';
 
 const List<double> rateList = [1.0, 1.2, 1.5, 2.0];
 

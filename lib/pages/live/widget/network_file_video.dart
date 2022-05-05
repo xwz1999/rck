@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/widgets/play_widget/video_player.dart';
+import 'package:recook/widgets/play_widget/video_player.dart';
 
 
 class NetworkFileVideo extends StatefulWidget {

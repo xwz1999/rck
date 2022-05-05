@@ -12,12 +12,14 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:jingyaoyun/constants/constants.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/redux/recook_state.dart';
-import 'package:jingyaoyun/utils/app_router.dart';
-import 'package:jingyaoyun/utils/print_util.dart';
+import 'package:recook/const/resource.dart';
+import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/constants/styles.dart';
+import 'package:recook/redux/recook_state.dart';
+import 'package:recook/utils/app_router.dart';
+import 'package:recook/utils/print_util.dart';
+import 'package:recook/widgets/progress/sc_dialog.dart';
 import 'package:redux/redux.dart';
 
 abstract class BaseStoreState<T extends StatefulWidget> extends State<T>

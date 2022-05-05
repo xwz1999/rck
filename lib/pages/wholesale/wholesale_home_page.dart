@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_car_page.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_order_home_page.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_shop_page.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/constants/styles.dart';
+import 'package:recook/pages/wholesale/wholesale_car_page.dart';
+import 'package:recook/pages/wholesale/wholesale_order_home_page.dart';
+import 'package:recook/pages/wholesale/wholesale_shop_page.dart';
 
 class WholesaleHomePage extends StatefulWidget {
   WholesaleHomePage({

@@ -7,9 +7,9 @@
  * ====================================================
  */
 
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/models/evaluation_list_model.dart';
-import 'package:jingyaoyun/pages/home/classify/mvp/order_mvp/evaluation_list_contact.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/models/evaluation_list_model.dart';
+import 'package:recook/pages/home/classify/mvp/order_mvp/evaluation_list_contact.dart';
 
 import 'evaluation_model_impl.dart';
 

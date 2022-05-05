@@ -1,21 +1,21 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/home/classify/commodity_detail_page.dart';
-import 'package:jingyaoyun/pages/live/models/activity_list_model.dart';
-import 'package:jingyaoyun/pages/live/models/live_base_info_model.dart';
-import 'package:jingyaoyun/pages/live/sub_page/topic_page.dart';
-import 'package:jingyaoyun/pages/live/widget/live_user_bar.dart';
-import 'package:jingyaoyun/pages/live/widget/network_file_video.dart';
-import 'package:jingyaoyun/pages/live/widget/review_child_cards.dart';
-import 'package:jingyaoyun/pages/user/user_page.dart';
-import 'package:jingyaoyun/utils/custom_route.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
-import 'package:jingyaoyun/widgets/recook/recook_like_button.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/home/classify/commodity_detail_page.dart';
+import 'package:recook/pages/live/models/activity_list_model.dart';
+import 'package:recook/pages/live/models/live_base_info_model.dart';
+import 'package:recook/pages/live/sub_page/topic_page.dart';
+import 'package:recook/pages/live/widget/live_user_bar.dart';
+import 'package:recook/pages/live/widget/network_file_video.dart';
+import 'package:recook/pages/live/widget/review_child_cards.dart';
+import 'package:recook/pages/user/user_page.dart';
+import 'package:recook/utils/custom_route.dart';
+import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/recook/recook_like_button.dart';
 import 'package:oktoast/oktoast.dart';
 
 class ActivityPreviewPage extends StatefulWidget {

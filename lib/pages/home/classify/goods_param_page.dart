@@ -8,11 +8,11 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/models/goods_detail_model.dart';
-import 'package:jingyaoyun/utils/text_line_util.dart';
-import 'package:jingyaoyun/widgets/text_button.dart' as TButton;
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/models/goods_detail_model.dart';
+import 'package:recook/utils/text_line_util.dart';
+import 'package:recook/widgets/text_button.dart' as TButton;
 
 class GoodsParamPage extends StatefulWidget {
   // final List<Sku> skus;

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/commission_income_model.dart';
-import 'package:jingyaoyun/widgets/no_data_view.dart';
-import 'package:jingyaoyun/widgets/progress/sc_dialog.dart';
-import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/styles.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/commission_income_model.dart';
+import 'package:recook/widgets/no_data_view.dart';
+import 'package:recook/widgets/progress/sc_dialog.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 
 class CommissionIncomeWidget extends StatefulWidget {
   @override

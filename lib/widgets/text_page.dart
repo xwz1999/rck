@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/styles.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
 
 class TextPage extends StatefulWidget {
   final Map arguments;

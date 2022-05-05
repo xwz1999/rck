@@ -8,13 +8,13 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/constants.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/models/my_favorites_list_model.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
-import 'package:jingyaoyun/widgets/custom_cache_image.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/constants/styles.dart';
+import 'package:recook/models/my_favorites_list_model.dart';
+import 'package:recook/utils/user_level_tool.dart';
+import 'package:recook/widgets/custom_cache_image.dart';
 
 class MyFavoriteItem extends StatelessWidget {
   final FavoriteModel model;

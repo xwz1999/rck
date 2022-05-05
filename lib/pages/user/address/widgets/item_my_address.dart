@@ -8,9 +8,9 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/models/address_list_model.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/models/address_list_model.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 
 // ignore: must_be_immutable
 class MyAddressItem extends StatelessWidget {

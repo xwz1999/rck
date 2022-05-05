@@ -2,11 +2,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/pages/home/widget/modify_detail_bottom_bar.dart';
-import 'package:jingyaoyun/pages/wholesale/models/wholesale_detail_model.dart';
-import 'package:jingyaoyun/utils/user_level_tool.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/pages/home/widget/modify_detail_bottom_bar.dart';
+import 'package:recook/pages/wholesale/models/wholesale_detail_model.dart';
+import 'package:recook/utils/user_level_tool.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 
 typedef VoidListener = Function();
 typedef FavoriteListener = Function(bool favorite);

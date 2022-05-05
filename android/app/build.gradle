@@ -36,7 +36,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.akuhome.jingyaoyun"
+        applicationId "com.akuhome.recook"
         minSdkVersion 23
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
@@ -49,8 +49,8 @@ android {
        }
         manifestPlaceholders = [
             OPENINSTALL_APPKEY : "uapywo",
-            JPUSH_PKGNAME : "com.akuhome.jingyaoyun",
-            JPUSH_APPKEY : "722dbc6ce24f3c6b99eb2993", // NOTE: JPush 上注册的包名对应的 Appkey.
+            JPUSH_PKGNAME : "com.akuhome.recook",
+            JPUSH_APPKEY : "2dba4439e97b3c0b78146fab", // NOTE: JPush 上注册的包名对应的 Appkey.
             JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
         ]
         multiDexEnabled true

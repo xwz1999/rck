@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/pages/business/focus/child_focus_page.dart';
-import 'package:jingyaoyun/pages/business/recommend/child_recommend_page.dart';
-import 'package:jingyaoyun/widgets/cache_tab_bar_view.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/pages/business/focus/child_focus_page.dart';
+import 'package:recook/pages/business/recommend/child_recommend_page.dart';
+import 'package:recook/widgets/cache_tab_bar_view.dart';
 
 class BusinessPage extends StatefulWidget {
   @override

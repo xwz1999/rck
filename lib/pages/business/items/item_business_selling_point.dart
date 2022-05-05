@@ -8,9 +8,9 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/widgets/custom_cache_image.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 
 class BusinessSellingPointItem extends StatefulWidget {
   @override
@@ -37,7 +37,7 @@ class _BusinessSellingPointItemState extends State<BusinessSellingPointItem> {
           Container(
             color: Colors.white,
             padding: EdgeInsets.only(top: 5, left: 5, right: 5),
-            child: Text("左家右厨韩式煎锅班戟不粘鸡蛋饼可丽饼皮烙饼牛排...", maxLines: 1, overflow: TextOverflow.ellipsis,style: AppTextStyle.generate(15, fontWeight: FontWeight.w300),),
+            child: Text("瑞库客韩式煎锅班戟不粘鸡蛋饼可丽饼皮烙饼牛排...", maxLines: 1, overflow: TextOverflow.ellipsis,style: AppTextStyle.generate(15, fontWeight: FontWeight.w300),),
           ),
           Container(
             color: Colors.white,

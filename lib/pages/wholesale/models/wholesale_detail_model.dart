@@ -1,4 +1,4 @@
-import 'package:jingyaoyun/models/goods_detail_model.dart';
+import 'package:recook/models/goods_detail_model.dart';
 
 class WholesaleDetailModel {
   num id;

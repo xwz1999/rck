@@ -7,17 +7,17 @@
  * ====================================================
  */
 
-import 'package:jingyaoyun/base/http_result_model.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/models/PayInfoModel.dart';
-import 'package:jingyaoyun/models/alipay_order_model.dart';
-import 'package:jingyaoyun/models/base_model.dart';
-import 'package:jingyaoyun/models/order_prepay_model.dart';
-import 'package:jingyaoyun/models/order_preview_model.dart';
-import 'package:jingyaoyun/models/pay_result_model.dart';
-import 'package:jingyaoyun/models/recook_fund_model.dart';
-import 'package:jingyaoyun/models/self_pickup_store_list_model.dart';
-import 'package:jingyaoyun/pages/home/classify/mvp/order_mvp/order_model_impl.dart';
+import 'package:recook/base/http_result_model.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/models/PayInfoModel.dart';
+import 'package:recook/models/alipay_order_model.dart';
+import 'package:recook/models/base_model.dart';
+import 'package:recook/models/order_prepay_model.dart';
+import 'package:recook/models/order_preview_model.dart';
+import 'package:recook/models/pay_result_model.dart';
+import 'package:recook/models/recook_fund_model.dart';
+import 'package:recook/models/self_pickup_store_list_model.dart';
+import 'package:recook/pages/home/classify/mvp/order_mvp/order_model_impl.dart';
 
 import 'order_contact.dart';
 

@@ -5,14 +5,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/utils/image_utils.dart';
-import 'package:jingyaoyun/widgets/alert.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/progress/re_toast.dart';
-import 'package:jingyaoyun/widgets/recook_back_button.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/constants/styles.dart';
+import 'package:recook/utils/image_utils.dart';
+import 'package:recook/widgets/alert.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
+import 'package:recook/widgets/recook_back_button.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -230,11 +230,11 @@ class _WholesaleCustomerPageState extends State<WholesaleCustomerPage>
                   Row(
                     children: [
                       Text('公众号：',style: TextStyle(color: Color(0xFF333333),fontSize: 16.rw),),
-                      Text('左家右厨',style: TextStyle(color: Color(0xFF111111),fontSize: 16.rw,fontWeight: FontWeight.bold),),
+                      Text('瑞库客APP',style: TextStyle(color: Color(0xFF111111),fontSize: 16.rw,fontWeight: FontWeight.bold),),
                       5.wb,
                       GestureDetector(
                           onTap: (){
-                            ClipboardData data = new ClipboardData(text: '左家右厨');
+                            ClipboardData data = new ClipboardData(text: '瑞库客APP');
                             Clipboard.setData(data);
                             ReToast.success(text: '复制成功');
                           },

@@ -1,7 +1,7 @@
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/models/goods_detail_model.dart';
-import 'package:jingyaoyun/models/goods_simple_list_model.dart';
-import 'package:jingyaoyun/models/promotion_goods_list_model.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/models/goods_detail_model.dart';
+import 'package:recook/models/goods_simple_list_model.dart';
+import 'package:recook/models/promotion_goods_list_model.dart';
 
 enum PromotionStatus{
   none,

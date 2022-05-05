@@ -8,11 +8,11 @@
  */
 
 
-import 'package:jingyaoyun/models/banner_list_model.dart';
-import 'package:jingyaoyun/models/promotion_goods_list_model.dart';
-import 'package:jingyaoyun/models/promotion_list_model.dart';
-import 'package:jingyaoyun/utils/mvp.dart';
-import 'package:jingyaoyun/widgets/mvp_list_view/mvp_list_view_contact.dart';
+import 'package:recook/models/banner_list_model.dart';
+import 'package:recook/models/promotion_goods_list_model.dart';
+import 'package:recook/models/promotion_list_model.dart';
+import 'package:recook/utils/mvp.dart';
+import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 
 abstract class HomeMvpPresenterI
     extends MvpListViewPresenterI<PromotionGoodsModel, HomeMvpViewI, HomeMvpModelI> {

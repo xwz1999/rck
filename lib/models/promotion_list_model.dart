@@ -1,5 +1,5 @@
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/models/base_model.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/models/base_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'promotion_list_model.g.dart';

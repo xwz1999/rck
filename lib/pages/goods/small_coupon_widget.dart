@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jingyaoyun/widgets/custom_painters/coupon_painter_new.dart';
+import 'package:recook/widgets/custom_painters/coupon_painter_new.dart';
 
 enum SmallCouponType { white, red }
 

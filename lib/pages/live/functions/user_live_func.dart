@@ -1,6 +1,6 @@
 
-import 'package:jingyaoyun/constants/api_v2.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
+import 'package:recook/constants/api_v2.dart';
+import 'package:recook/manager/http_manager.dart';
 
 class UserLiveFunc {
 

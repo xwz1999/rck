@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/live/models/follow_list_model.dart';
-import 'package:jingyaoyun/widgets/recook/recook_scaffold.dart';
-import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/live/models/follow_list_model.dart';
+import 'package:recook/widgets/recook/recook_scaffold.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 
 class UserSupportPage extends StatefulWidget {
   //获赞页面

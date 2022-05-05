@@ -4,18 +4,18 @@ import 'package:fluwx/fluwx.dart' as Fluwx;
 import 'package:fluwx/fluwx.dart';
 // import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/app_image_resources.dart';
-import 'package:jingyaoyun/constants/constants.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/home/home_page.dart';
-import 'package:jingyaoyun/third_party/wechat/wechat_utils.dart';
-import 'package:jingyaoyun/utils/rui_code_util.dart';
-import 'package:jingyaoyun/widgets/bottom_sheet/bottom_share_dialog.dart';
-import 'package:jingyaoyun/widgets/share_page/share_goods_poster_page.dart';
-import 'package:jingyaoyun/widgets/share_page/share_url_poster_page.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/app_image_resources.dart';
+import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/home/home_page.dart';
+import 'package:recook/third_party/wechat/wechat_utils.dart';
+import 'package:recook/utils/rui_code_util.dart';
+import 'package:recook/widgets/bottom_sheet/bottom_share_dialog.dart';
+import 'package:recook/widgets/share_page/share_goods_poster_page.dart';
+import 'package:recook/widgets/share_page/share_url_poster_page.dart';
+import 'package:recook/widgets/toast.dart';
 
 class ShareTool {
   static bool qqInstalled = true;
@@ -45,7 +45,7 @@ class ShareTool {
         // assetsThumbnail: "assets://${AppImageName.recook_icon_120}",
         netWorkThumbnail: AppImageName.web_app_icon,
         title: "有福同享，才是‘壕’朋友！",
-        description: "左家右厨邀你玩转店铺，快来一起体验吧！",
+        description: "瑞库客邀你玩转店铺，快来一起体验吧！",
         scene: scene);
   }
 
@@ -177,11 +177,11 @@ class ShareTool {
         ClipboardListenerValue.canListen = false;
         Navigator.pop(context);
         print(goodsId);
-        String code = '【$miniTitle】复制这段描述，打开左家右厨，购全球好物${RUICodeUtil.encrypt(
+        String code = '【$miniTitle】复制这段描述，打开瑞库客，购全球好物${RUICodeUtil.encrypt(
           int.parse(goodsId),
           UserManager.instance.user.info.id,
             UserManager.instance.user.info.invitationNo
-        )}左家右厨。\n数字化批发零售服务平台';
+        )}瑞库客。\n数字化批发零售服务平台';
         Clipboard.setData(ClipboardData(text: code));
         bool needWechat = await showDialog(
           context: context,
@@ -297,7 +297,7 @@ class ShareTool {
           url: inviteUrl,
           netWorkThumbnail: AppImageName.web_app_icon,
           title: "有福同享，才是‘壕’朋友！",
-          description: "左家右厨邀你玩转店铺，快来一起体验吧！",
+          description: "瑞库客邀你玩转店铺，快来一起体验吧！",
           scene: scene);
     });
 
@@ -311,8 +311,8 @@ class ShareTool {
 //       Navigator.maybePop(context);
 //       SSDKMap params = SSDKMap()
 //         ..setGeneral(
-//             "邀请您加入左家右厨  " + inviteUrl,
-//             "邀请您加入左家右厨  " + inviteUrl,
+//             "邀请您加入瑞库客  " + inviteUrl,
+//             "邀请您加入瑞库客  " + inviteUrl,
 //             null,
 //             null,
 //             null,
@@ -324,10 +324,10 @@ class ShareTool {
 //             SSDKContentTypes.webpage);
 // //          SSDKMap params = SSDKMap()
 // //          ..setSinaLinkCard(
-// //            "邀请您加入左家右厨",
-// //            "邀请您加入左家右厨",
+// //            "邀请您加入瑞库客",
+// //            "邀请您加入瑞库客",
 // //            inviteUrl,
-// //            "邀请您加入左家右厨",
+// //            "邀请您加入瑞库客",
 // //            "https://cdn.reecook.cn/static/default/appicon.png",
 // //            "120",
 // //            "120",
@@ -369,7 +369,7 @@ class ShareTool {
     //   Navigator.maybePop(context);
     //   SSDKMap params = SSDKMap()
     //     ..setQQ(
-    //         "左家右厨邀你玩转店铺，快来一起体验吧！",
+    //         "瑞库客邀你玩转店铺，快来一起体验吧！",
     //         "有福同享，才是‘壕’朋友！",
     //         inviteUrl,
     //         null,

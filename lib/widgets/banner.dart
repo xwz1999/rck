@@ -2,8 +2,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/widgets/rectIndicator.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/widgets/rectIndicator.dart';
 
 typedef BannerBuilder = Widget Function(BuildContext context, dynamic item);
 

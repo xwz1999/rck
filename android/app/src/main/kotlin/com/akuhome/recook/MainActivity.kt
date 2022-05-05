@@ -1,4 +1,4 @@
-package com.akuhome.jingyaoyun
+package com.akuhome.recook
 
 import io.flutter.embedding.android.FlutterActivity
 

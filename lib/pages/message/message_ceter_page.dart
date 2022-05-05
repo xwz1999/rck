@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/api_v2.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/gen/assets.gen.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/pages/user/banlance/user_balance_page.dart';
-import 'package:jingyaoyun/pages/user/order/order_detail_page.dart';
-import 'package:jingyaoyun/widgets/no_data_view.dart';
-import 'package:jingyaoyun/widgets/recook_back_button.dart';
-import 'package:jingyaoyun/widgets/refresh_widget.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:recook/constants/api_v2.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/constants/styles.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/user/banlance/user_balance_page.dart';
+import 'package:recook/pages/user/order/order_detail_page.dart';
+import 'package:recook/widgets/no_data_view.dart';
+import 'package:recook/widgets/recook_back_button.dart';
+import 'package:recook/widgets/refresh_widget.dart';
+import 'package:recook/widgets/toast.dart';
 
 import 'message_model.dart';
 

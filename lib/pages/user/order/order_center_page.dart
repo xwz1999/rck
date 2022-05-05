@@ -9,16 +9,16 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/user/order/guide_order_view.dart';
-import 'package:jingyaoyun/pages/user/order/order_list_controller.dart';
-import 'package:jingyaoyun/pages/user/order/order_list_page.dart';
-import 'package:jingyaoyun/widgets/cache_tab_bar_view.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/tabbarWidget/sc_tab_bar.dart';
-import 'package:jingyaoyun/widgets/title_switch.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/user/order/guide_order_view.dart';
+import 'package:recook/pages/user/order/order_list_controller.dart';
+import 'package:recook/pages/user/order/order_list_page.dart';
+import 'package:recook/widgets/cache_tab_bar_view.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/tabbarWidget/sc_tab_bar.dart';
+import 'package:recook/widgets/title_switch.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderCenterPage extends StatefulWidget {
@@ -41,7 +41,7 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
   bool _showAlert = true;
   TitleSwitchController _titleSwitchController = TitleSwitchController();
   final String _alertMessage =
-      "重要提醒：请谨防网络及客服诈骗！左家右厨不会以订单异常、系统维护等情况为由，要求你进行退款操作。";
+      "重要提醒：请谨防网络及客服诈骗！瑞库客不会以订单异常、系统维护等情况为由，要求你进行退款操作。";
   // List<String> _items = ["全部", "未付款", "待发货", "待收货", "售后/退款"];
   List<String> _items = ["全部", "未付款", "待发货", "待收货"];
   List<String> _storeItems = ["全部", "待发货", "已发货", "已收货"];

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/api_v2.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/pages/user/model/company_info_model.dart';
-import 'package:jingyaoyun/pages/user/model/contact_info_model.dart';
-import 'package:jingyaoyun/pages/user/model/user_balance_history_model.dart';
-import 'package:jingyaoyun/pages/user/model/user_balance_info_model.dart';
+import 'package:recook/constants/api_v2.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/pages/user/model/company_info_model.dart';
+import 'package:recook/pages/user/model/contact_info_model.dart';
+import 'package:recook/pages/user/model/user_balance_history_model.dart';
+import 'package:recook/pages/user/model/user_balance_info_model.dart';
 
 class UserBalanceFunc {
   static Future<UserBalanceInfoModel> info() async {

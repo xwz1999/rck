@@ -7,7 +7,7 @@
  * ====================================================
  */
 
-import 'package:jingyaoyun/models/base_model.dart';
+import 'package:recook/models/base_model.dart';
 /*
 {
     "code":"SUCCESS",

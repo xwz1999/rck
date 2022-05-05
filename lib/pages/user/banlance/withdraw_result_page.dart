@@ -6,17 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/gen/assets.gen.dart';
-import 'package:jingyaoyun/models/withdraw_historyc_model.dart';
-import 'package:jingyaoyun/pages/user/functions/user_balance_func.dart';
-import 'package:jingyaoyun/pages/user/model/company_info_model.dart';
-import 'package:jingyaoyun/pages/user/model/contact_info_model.dart';
-import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
-import 'package:jingyaoyun/pages/wholesale/models/wholesale_customer_model.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_customer_page.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/recook_back_button.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/models/withdraw_historyc_model.dart';
+import 'package:recook/pages/user/functions/user_balance_func.dart';
+import 'package:recook/pages/user/model/company_info_model.dart';
+import 'package:recook/pages/user/model/contact_info_model.dart';
+import 'package:recook/pages/wholesale/func/wholesale_func.dart';
+import 'package:recook/pages/wholesale/models/wholesale_customer_model.dart';
+import 'package:recook/pages/wholesale/wholesale_customer_page.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/recook_back_button.dart';
 
 class WithDrawResultPage extends StatefulWidget {
   final History history;

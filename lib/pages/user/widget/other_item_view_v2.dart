@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/gen/assets.gen.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/user/invite/my_group_page_v2.dart';
-import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
-import 'package:jingyaoyun/pages/wholesale/models/wholesale_customer_model.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_customer_page.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/user/invite/my_group_page_v2.dart';
+import 'package:recook/pages/wholesale/func/wholesale_func.dart';
+import 'package:recook/pages/wholesale/models/wholesale_customer_model.dart';
+import 'package:recook/pages/wholesale/wholesale_customer_page.dart';
+import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/toast.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class OtherItemViewV2 extends StatelessWidget {

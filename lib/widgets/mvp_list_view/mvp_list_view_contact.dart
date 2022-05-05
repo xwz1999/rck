@@ -7,7 +7,7 @@
  * ====================================================
  */
 
-import 'package:jingyaoyun/utils/mvp.dart';
+import 'package:recook/utils/mvp.dart';
 
 abstract class MvpListViewPresenterI<T, V extends MvpView, M extends MvpModel> extends MvpPresenter<V,M>{
   MvpRefreshViewI<T> _mRefreshView;

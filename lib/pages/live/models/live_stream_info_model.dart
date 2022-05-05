@@ -1,4 +1,4 @@
-import 'package:jingyaoyun/pages/live/models/live_resume_model.dart';
+import 'package:recook/pages/live/models/live_resume_model.dart';
 
 class LiveStreamInfoModel {
   String nickname;

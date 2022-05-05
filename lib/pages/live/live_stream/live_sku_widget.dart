@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/models/goods_detail_model.dart'
+import 'package:recook/constants/header.dart';
+import 'package:recook/models/goods_detail_model.dart'
     show Attributes, Children, Sku;
 
 class LiveSKUWidget extends StatefulWidget {

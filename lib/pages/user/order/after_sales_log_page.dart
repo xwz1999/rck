@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/models/after_sales_log_list_model.dart';
-import 'package:jingyaoyun/utils/text_parse_util.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/constants/styles.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/models/after_sales_log_list_model.dart';
+import 'package:recook/utils/text_parse_util.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/toast.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
 enum AfterSalesRichTextType { black, gray, address, none }
@@ -188,7 +188,7 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
   }
 
   _getRichTextWidget(String text) {
-    // text = "退款金额 <black>¥169</black> 将原路退回至您的<black>付款账户</black>，请及时关注到账情况。<gray>若3天内未收到退款/瑞币，请联系客服咨询。</gray> <gray>gray</gray>  <address>寄回地址：浙江省宁波市海曙区翠柏路宁波工程学院翠柏校区 左家右厨 13888888888</address>";
+    // text = "退款金额 <black>¥169</black> 将原路退回至您的<black>付款账户</black>，请及时关注到账情况。<gray>若3天内未收到退款/瑞币，请联系客服咨询。</gray> <gray>gray</gray>  <address>寄回地址：浙江省宁波市海曙区翠柏路宁波工程学院翠柏校区 瑞库客 13888888888</address>";
     // text = text.replaceAll("|", "\n");
     List<AfterSalesRichTextModel> richTextList = [];
 

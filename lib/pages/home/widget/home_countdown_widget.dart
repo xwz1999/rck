@@ -2,10 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/promotion_list_model.dart';
-import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/promotion_list_model.dart';
+import 'package:recook/pages/home/promotion_time_tool.dart';
 
 class HomeCountdownController{
   Function(int) indexChange;

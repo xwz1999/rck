@@ -9,26 +9,26 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/order_detail_model.dart';
-import 'package:jingyaoyun/models/order_list_model.dart';
-import 'package:jingyaoyun/models/order_prepay_model.dart';
-import 'package:jingyaoyun/pages/aftersale/choose_after_sale_type_page.dart';
-import 'package:jingyaoyun/pages/home/classify/order_prepay_page.dart';
-import 'package:jingyaoyun/pages/user/mvp/order_list_contact.dart';
-import 'package:jingyaoyun/pages/user/mvp/order_list_presenter_impl.dart';
-import 'package:jingyaoyun/pages/user/order/order_detail_state.dart';
-import 'package:jingyaoyun/pages/user/order/order_logistics_list_page.dart';
-import 'package:jingyaoyun/pages/wholesale/func/wholesale_func.dart';
-import 'package:jingyaoyun/pages/wholesale/models/wholesale_customer_model.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_customer_page.dart';
-import 'package:jingyaoyun/widgets/alert.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/custom_floating_action_button_location.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
-import 'package:jingyaoyun/widgets/refresh_widget.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/order_detail_model.dart';
+import 'package:recook/models/order_list_model.dart';
+import 'package:recook/models/order_prepay_model.dart';
+import 'package:recook/pages/aftersale/choose_after_sale_type_page.dart';
+import 'package:recook/pages/home/classify/order_prepay_page.dart';
+import 'package:recook/pages/user/mvp/order_list_contact.dart';
+import 'package:recook/pages/user/mvp/order_list_presenter_impl.dart';
+import 'package:recook/pages/user/order/order_detail_state.dart';
+import 'package:recook/pages/user/order/order_logistics_list_page.dart';
+import 'package:recook/pages/wholesale/func/wholesale_func.dart';
+import 'package:recook/pages/wholesale/models/wholesale_customer_model.dart';
+import 'package:recook/pages/wholesale/wholesale_customer_page.dart';
+import 'package:recook/widgets/alert.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/custom_floating_action_button_location.dart';
+import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/refresh_widget.dart';
+import 'package:recook/widgets/toast.dart';
 
 class OrderDetailPage extends StatefulWidget {
   final Map arguments;

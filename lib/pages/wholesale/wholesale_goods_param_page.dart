@@ -8,9 +8,9 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/widgets/text_button.dart' as TButton;
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/widgets/text_button.dart' as TButton;
 
 import 'models/wholesale_detail_model.dart';
 

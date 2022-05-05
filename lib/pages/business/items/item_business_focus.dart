@@ -4,21 +4,22 @@ import 'dart:ui';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/goods_detail_model.dart';
-import 'package:jingyaoyun/models/material_list_model.dart';
-import 'package:jingyaoyun/pages/home/classify/mvp/goods_detail_model_impl.dart';
-import 'package:jingyaoyun/pages/home/promotion_time_tool.dart';
-import 'package:jingyaoyun/utils/permission_tool.dart';
-import 'package:jingyaoyun/widgets/alert.dart';
-import 'package:jingyaoyun/widgets/custom_cache_image.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
-import 'package:jingyaoyun/widgets/nine_grid_view.dart';
-import 'package:jingyaoyun/widgets/progress/re_toast.dart';
-import 'package:jingyaoyun/widgets/share_page/post_all.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/goods_detail_model.dart';
+import 'package:recook/models/material_list_model.dart';
+import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:recook/pages/home/promotion_time_tool.dart';
+import 'package:recook/utils/permission_tool.dart';
+import 'package:recook/widgets/alert.dart';
+import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/nine_grid_view.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
+import 'package:recook/widgets/share_page/post_all.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:widget_to_image/widget_to_image.dart';
 
@@ -278,7 +279,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
           child: FadeInImage.assetNetwork(
             height: 40.rw,
             width: 40.rw,
-            placeholder: R.ASSETS_ICON_RECOOK_ICON_300_PNG,
+            placeholder: Assets.icon.icLauncherPlaystore.path,
             image: Api.getResizeImgUrl(widget.model.headImgUrl, 300),
           ),
         ),

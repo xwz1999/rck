@@ -8,15 +8,15 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/base_model.dart';
-import 'package:jingyaoyun/models/coupon_list_model.dart';
-import 'package:jingyaoyun/pages/home/classify/mvp/coupon_list_model_impl.dart';
-import 'package:jingyaoyun/utils/time_transition_util.dart';
-import 'package:jingyaoyun/widgets/text_button.dart' as TButton;
-import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/base_model.dart';
+import 'package:recook/models/coupon_list_model.dart';
+import 'package:recook/pages/home/classify/mvp/coupon_list_model_impl.dart';
+import 'package:recook/utils/time_transition_util.dart';
+import 'package:recook/widgets/text_button.dart' as TButton;
+import 'package:recook/widgets/toast.dart';
 
 class CouponItem extends StatefulWidget {
   final Coupon coupon;

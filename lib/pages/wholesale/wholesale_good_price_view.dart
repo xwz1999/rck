@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/app_image_resources.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/constants/styles.dart';
-import 'package:jingyaoyun/gen/assets.gen.dart';
-import 'package:jingyaoyun/pages/wholesale/models/wholesale_detail_model.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:recook/constants/app_image_resources.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/constants/styles.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/pages/wholesale/models/wholesale_detail_model.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 
 class WholesaleGoodPriceView extends StatefulWidget {
   final WholesaleDetailModel detailModel;

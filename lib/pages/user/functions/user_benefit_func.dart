@@ -1,24 +1,24 @@
 import 'package:common_utils/common_utils.dart';
-import 'package:jingyaoyun/constants/api_v2.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/home/model/profit_card_model.dart';
-import 'package:jingyaoyun/pages/user/model/pifa_benefit_model.dart';
-import 'package:jingyaoyun/pages/user/model/pifa_table_model.dart';
-import 'package:jingyaoyun/pages/user/model/user_accumulate_model.dart';
-import 'package:jingyaoyun/pages/user/model/user_benefit_common_model.dart';
-import 'package:jingyaoyun/pages/user/model/user_benefit_day_expect_model.dart';
-import 'package:jingyaoyun/pages/user/model/user_benefit_day_team_model.dart';
-import 'package:jingyaoyun/pages/user/model/user_benefit_expect_extra_model.dart';
-import 'package:jingyaoyun/pages/user/model/user_benefit_extra_detail_model.dart';
-import 'package:jingyaoyun/pages/user/model/user_benefit_model.dart';
-import 'package:jingyaoyun/pages/user/model/user_benefit_month_detail_model.dart';
-import 'package:jingyaoyun/pages/user/model/user_benefit_month_expect_model.dart';
-import 'package:jingyaoyun/pages/user/model/user_benefit_month_team_model.dart';
-import 'package:jingyaoyun/pages/user/model/user_benefit_sub_model.dart';
-import 'package:jingyaoyun/pages/user/model/user_income_model.dart';
-import 'package:jingyaoyun/pages/user/model/user_month_income_model.dart';
-import 'package:jingyaoyun/pages/user/user_benefit_sub_page.dart';
+import 'package:recook/constants/api_v2.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/home/model/profit_card_model.dart';
+import 'package:recook/pages/user/model/pifa_benefit_model.dart';
+import 'package:recook/pages/user/model/pifa_table_model.dart';
+import 'package:recook/pages/user/model/user_accumulate_model.dart';
+import 'package:recook/pages/user/model/user_benefit_common_model.dart';
+import 'package:recook/pages/user/model/user_benefit_day_expect_model.dart';
+import 'package:recook/pages/user/model/user_benefit_day_team_model.dart';
+import 'package:recook/pages/user/model/user_benefit_expect_extra_model.dart';
+import 'package:recook/pages/user/model/user_benefit_extra_detail_model.dart';
+import 'package:recook/pages/user/model/user_benefit_model.dart';
+import 'package:recook/pages/user/model/user_benefit_month_detail_model.dart';
+import 'package:recook/pages/user/model/user_benefit_month_expect_model.dart';
+import 'package:recook/pages/user/model/user_benefit_month_team_model.dart';
+import 'package:recook/pages/user/model/user_benefit_sub_model.dart';
+import 'package:recook/pages/user/model/user_income_model.dart';
+import 'package:recook/pages/user/model/user_month_income_model.dart';
+import 'package:recook/pages/user/user_benefit_sub_page.dart';
 
 enum BenefitDateType {
   DAY,

@@ -9,14 +9,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/daos/user_dao.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/progress/sc_dialog.dart';
-import 'package:jingyaoyun/widgets/text_button.dart' as TButton;
-import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/daos/user_dao.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/progress/sc_dialog.dart';
+import 'package:recook/widgets/text_button.dart' as TButton;
+import 'package:recook/widgets/toast.dart';
 
 class InvitationCodePage extends StatefulWidget {
   static const String KEY_MODE = "mode";

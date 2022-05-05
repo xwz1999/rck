@@ -1,4 +1,4 @@
-import 'package:jingyaoyun/utils/user_level_tool.dart';
+import 'package:recook/utils/user_level_tool.dart';
 
 class UserBenefitExtraDetailModel {
   String code;

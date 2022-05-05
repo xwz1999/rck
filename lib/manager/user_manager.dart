@@ -11,20 +11,20 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/base/http_result_model.dart';
-import 'package:jingyaoyun/constants/api_v2.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/models/home_weather_model.dart';
-import 'package:jingyaoyun/models/user_brief_info_model.dart';
-import 'package:jingyaoyun/models/user_model.dart';
-import 'package:jingyaoyun/pages/home/model/king_coin_list_model.dart';
-import 'package:jingyaoyun/pages/user/functions/user_func.dart';
-import 'package:jingyaoyun/pages/user/mvp/user_presenter_impl.dart';
-import 'package:jingyaoyun/redux/recook_state.dart';
-import 'package:jingyaoyun/redux/user_brief_redux.dart';
-import 'package:jingyaoyun/utils/print_util.dart';
-import 'package:jingyaoyun/utils/storage/hive_store.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
+import 'package:recook/base/http_result_model.dart';
+import 'package:recook/constants/api_v2.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/models/home_weather_model.dart';
+import 'package:recook/models/user_brief_info_model.dart';
+import 'package:recook/models/user_model.dart';
+import 'package:recook/pages/home/model/king_coin_list_model.dart';
+import 'package:recook/pages/user/functions/user_func.dart';
+import 'package:recook/pages/user/mvp/user_presenter_impl.dart';
+import 'package:recook/redux/recook_state.dart';
+import 'package:recook/redux/user_brief_redux.dart';
+import 'package:recook/utils/print_util.dart';
+import 'package:recook/utils/storage/hive_store.dart';
+import 'package:recook/widgets/toast.dart';
 import 'package:redux/redux.dart';
 
 class UserManager {

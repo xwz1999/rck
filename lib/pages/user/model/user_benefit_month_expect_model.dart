@@ -1,4 +1,4 @@
-import 'package:jingyaoyun/pages/user/benefit_view_gen.dart';
+import 'package:recook/pages/user/benefit_view_gen.dart';
 
 class UserBenefitMonthExpectModel {
   Purchase purchase;

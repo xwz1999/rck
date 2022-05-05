@@ -1,27 +1,19 @@
-/*
- * ====================================================
- * package   : constants
- * author    : Created by nansi.
- * time      : 2019/5/22  10:53 AM 
- * remark    : 
- * ====================================================
- */
 
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/utils/print_util.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/utils/print_util.dart';
 
 class Api {
   static String host;
   static String domain;
   static String cdnDomin;
 
-  static const String domainPro = "https://jyyapi.reecook.cn";
-  static const String domainDev = "https://testapi.zjycshop.com";
+  static const String domainPro = "https://mallapi.reecook.cn";
+  static const String domainDev = "https://mallapi.reecook.cn";
   // static const String domainDev = "http://192.168.2.68:8080/";
   // static const String domainDev = "https://api.reecook.cn";
 
-  static const String cdnDominPro = "https://jyyapi.reecook.cn";
-  static const String cdnDominDev = "https://testcdn.zjycshop.com";
+  static const String cdnDominPro = "https://mallcdn.reecook.cn";
+  static const String cdnDominDev = "https://mallcdn.reecook.cn";
   // static const String cdnDominDev = "https://cdn.reecook.cn";
 
   static toggleEnvironment(bool debug) {
@@ -328,10 +320,10 @@ class AttentionApi {
 class WebApi {
   static const String recookHttp = "https://reecook.cn/";
   // static const String inviteRegist = "${recookHttp}download.html?code=";
-  static const String goodsDetail = "https://jyyh5.reecook.cn/#/goods/detail/";
+  static const String goodsDetail = "https://h5.reecook.cn/#/goods/detail/";
 
   static const String inviteRegist =
-      "https://jyyh5.reecook.cn/#/user/appRegister/";
+      "https://h5.reecook.cn/#/user/appRegister/";
 
 
 
@@ -360,14 +352,14 @@ class WebApi {
   static const String businessCooperation = "${recookHttp}business.html";
   static const String argumentsUrl = "https://h5.reecook.cn/agreement.html";
 
-  static const String privacy = "https://jyycdn.reecook.cn/privacy.html";//隐私政策
-  static const String agreement = "https://jyycdn.reecook.cn/protocol.html";//用户协议
+  static const String privacy = "https://h5.reecook.cn/privacy.html";//隐私政策
+  static const String agreement = "https://h5.reecook.cn/protocol.html";//用户协议
 
   static const String feedback = "${recookHttp}feedback.html";
-  static const String iOSUrl = "itms-apps://itunes.apple.com/app/id1601169177";
+  static const String iOSUrl = "itms-apps://itunes.apple.com/app/id1477928534";
   // static const String iOSUrl = "https://apps.apple.com/app/id1477928534";
   static const String androidUrl =
-      "https://a.app.qq.com/o/simple.jsp?pkgname=com.akuhome.jingyaoyun";
+      "https://a.app.qq.com/o/simple.jsp?pkgname=com.akuhome.recook";
 
   ///直播分享链接（正式服务器）
   static const String liveUrl = 'https://h5.reecook.cn/#/live/item/';

@@ -5,14 +5,15 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/config.dart';
-import 'package:jingyaoyun/constants/constants.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/user/functions/user_func.dart';
-import 'package:jingyaoyun/pages/welcome/welcome_widget.dart';
-import 'package:jingyaoyun/utils/storage/hive_store.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/config.dart';
+import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/user/functions/user_func.dart';
+import 'package:recook/pages/welcome/welcome_widget.dart';
+import 'package:recook/utils/storage/hive_store.dart';
 import 'package:package_info/package_info.dart';
 import 'package:power_logger/power_logger.dart';
 
@@ -54,7 +55,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
               await UserFunc.getKingCoinList();
             });
             AMapFlutterLocation.setApiKey(
-                'cd71676364972b01d9803249f7112bc0', 'a165543d6e2be75f4ac1b6b81ce0dae2');
+                '7225bca14fe7493f9f469315a933f99c', 'e8a8057cfedcdcadcf4e8f2c7f8de982');
 
             //初始化
             cameras = await availableCameras();
@@ -74,7 +75,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
             await UserFunc.getKingCoinList();
           });
           AMapFlutterLocation.setApiKey(
-              'cd71676364972b01d9803249f7112bc0', 'a165543d6e2be75f4ac1b6b81ce0dae2');
+              '7225bca14fe7493f9f469315a933f99c', 'e8a8057cfedcdcadcf4e8f2c7f8de982');
           //初始化
           cameras = await availableCameras();
           //高德地图隐私协议 在用户同意隐私协议后更新
@@ -91,7 +92,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
           await UserFunc.getKingCoinList();
         });
         AMapFlutterLocation.setApiKey(
-            'cd71676364972b01d9803249f7112bc0', 'a165543d6e2be75f4ac1b6b81ce0dae2');
+            '7225bca14fe7493f9f469315a933f99c', 'e8a8057cfedcdcadcf4e8f2c7f8de982');
         //初始化
         cameras = await availableCameras();
         //高德地图隐私协议 在用户同意隐私协议后更新
@@ -112,13 +113,29 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
       body:  Container(
         width: double.infinity,
         height: double.infinity,
-        margin: EdgeInsets.only(top: 150.rw),
+        margin: EdgeInsets.only(top: 200.rw),
         alignment: Alignment.topCenter,
-        child: Image.asset(
-            R.ASSETS_RECOOK_LAUNCH_IMAGE_RECOOK_SPLASH_PNG,
-            width: 200.rw,
-            height: 200.rw,
-            fit: BoxFit.fill,
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(30.rw),
+              child: Image.asset(
+                  Assets.icon.icLauncherPlaystore.path,
+                  width: 120.rw,
+                  height: 120.rw,
+                  fit: BoxFit.fill,
+              ),
+            ),
+            50.hb,
+
+            Text(
+                '数字化批发零售服务平台',
+              style: TextStyle(
+                color: Color(0xFF7f7f7f),
+                fontSize: 50.sp
+              ),
+            )
+          ],
         ),
       ),
     );

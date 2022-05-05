@@ -1,12 +1,12 @@
 
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/pages/wholesale/wholesale_car_specs.dart';
-import 'package:jingyaoyun/widgets/custom_cache_image.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
-import 'package:jingyaoyun/widgets/input_view.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/pages/wholesale/wholesale_car_specs.dart';
+import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/input_view.dart';
 
 import 'models/wholesale_car_model.dart';
 typedef GoodsSelectedCallback = Function(WholesaleCarModel goods);

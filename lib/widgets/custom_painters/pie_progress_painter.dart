@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/header.dart';
+import 'package:recook/constants/header.dart';
 
 class PieProgressPainter extends CustomPainter {
   final List<PieDataStructure> values;

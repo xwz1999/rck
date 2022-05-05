@@ -1,13 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/models/category_model.dart';
-import 'package:jingyaoyun/pages/live/live_stream/pick_view/brand_goods_list_view.dart';
-import 'package:jingyaoyun/pages/live/live_stream/pick_view/pick_cart.dart';
-import 'package:jingyaoyun/utils/custom_route.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/models/category_model.dart';
+import 'package:recook/pages/live/live_stream/pick_view/brand_goods_list_view.dart';
+import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
+import 'package:recook/utils/custom_route.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 
 class AllGoodsView extends StatefulWidget {
   AllGoodsView({Key key}) : super(key: key);

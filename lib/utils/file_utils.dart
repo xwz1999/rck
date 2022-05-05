@@ -9,7 +9,7 @@
 
 import 'dart:io';
 
-import 'package:jingyaoyun/utils/print_util.dart';
+import 'package:recook/utils/print_util.dart';
 import 'package:path_provider/path_provider.dart';
 
 typedef ReadFileCallback = Function(bool success, File file, String msg);

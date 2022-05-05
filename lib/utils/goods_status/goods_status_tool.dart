@@ -1,5 +1,5 @@
-import 'package:jingyaoyun/models/order_detail_model.dart' as order_detail_model;
-import 'package:jingyaoyun/models/order_list_model.dart';
+import 'package:recook/models/order_detail_model.dart' as order_detail_model;
+import 'package:recook/models/order_list_model.dart';
 
 class GoodsStatusTool {
   static goodsExpressStatusOrderDetailModel(order_detail_model.Goods goods) {

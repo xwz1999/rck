@@ -11,7 +11,7 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:encrypt/encrypt.dart';
-import 'package:jingyaoyun/utils/print_util.dart';
+import 'package:recook/utils/print_util.dart';
 import 'package:pointycastle/asymmetric/api.dart';
 
 class SCEncryptUtil {

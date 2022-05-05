@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/utils/versionInfo/version_info_model.dart';
-import 'package:jingyaoyun/widgets/alert.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/utils/versionInfo/version_info_model.dart';
+import 'package:recook/widgets/alert.dart';
 import 'package:launch_review/launch_review.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -47,7 +47,7 @@ class VersionTool {
               Alert.dismiss(context);
               if (index == 1) {
                 if(Platform.isAndroid){
-                  LaunchReview.launch(androidAppId: "com.akuhome.jingyaoyun", iOSAppId: '1601169177');
+                  LaunchReview.launch(androidAppId: "com.akuhome.recook", iOSAppId: '1601169177');
                 }else{
                   if (await canLaunch(_appStoreURL)) {
 

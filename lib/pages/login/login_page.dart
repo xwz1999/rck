@@ -14,17 +14,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:jpush_flutter/jpush_flutter.dart';
 
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/daos/user_dao.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/pages/login/wechat_bind_page.dart';
-import 'package:jingyaoyun/third_party/wechat/wechat_utils.dart';
-import 'package:jingyaoyun/widgets/alert.dart';
-import 'package:jingyaoyun/widgets/progress/sc_dialog.dart';
-import 'package:jingyaoyun/widgets/toast.dart';
-import 'package:jingyaoyun/widgets/webView.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/daos/user_dao.dart';
+import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/login/wechat_bind_page.dart';
+import 'package:recook/third_party/wechat/wechat_utils.dart';
+import 'package:recook/widgets/alert.dart';
+import 'package:recook/widgets/progress/sc_dialog.dart';
+import 'package:recook/widgets/toast.dart';
+import 'package:recook/widgets/webView.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -126,7 +127,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
               child: AspectRatio(
                 aspectRatio: 1.0 / 1.0,
                 child:
-                    Image.asset(AppImageName.recook_icon_120, fit: BoxFit.fill),
+                    Image.asset(Assets.icon.icLauncherPlaystore.path, fit: BoxFit.fill),
               ),
             ),
           ),

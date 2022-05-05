@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_tencentplayer/flutter_tencentplayer.dart';
-import 'package:jingyaoyun/gen/assets.gen.dart';
+import 'package:recook/gen/assets.gen.dart';
 
 
 class TencentPlayerLoading extends StatelessWidget {

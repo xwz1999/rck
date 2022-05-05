@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/base/base_store_state.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/manager/http_manager.dart';
-import 'package:jingyaoyun/manager/user_manager.dart';
-import 'package:jingyaoyun/models/rui_coin_list_model.dart';
-import 'package:jingyaoyun/pages/user/rui_transfer_to_balance_page.dart';
-import 'package:jingyaoyun/widgets/bottom_time_picker.dart';
-import 'package:jingyaoyun/widgets/custom_app_bar.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
-import 'package:jingyaoyun/widgets/refresh_widget.dart';
+import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/rui_coin_list_model.dart';
+import 'package:recook/pages/user/rui_transfer_to_balance_page.dart';
+import 'package:recook/widgets/bottom_time_picker.dart';
+import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/refresh_widget.dart';
 
 class RuiCoinPage extends StatefulWidget {
   @override

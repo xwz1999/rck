@@ -1,4 +1,4 @@
-import 'package:jingyaoyun/models/address_list_model.dart';
+import 'package:recook/models/address_list_model.dart';
 
 class WholesaleOrderPreviewModel {
   int previewId;

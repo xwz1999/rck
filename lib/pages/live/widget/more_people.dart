@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
 
 class MorePeople extends StatefulWidget {
   final List<String> images;

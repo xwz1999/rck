@@ -10,13 +10,13 @@
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jingyaoyun/constants/api.dart';
-import 'package:jingyaoyun/constants/header.dart';
-import 'package:jingyaoyun/models/shopping_cart_list_model.dart';
-import 'package:jingyaoyun/pages/home/widget/plus_minus_view.dart';
-import 'package:jingyaoyun/widgets/custom_cache_image.dart';
-import 'package:jingyaoyun/widgets/custom_image_button.dart';
-import 'package:jingyaoyun/widgets/input_view.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/models/shopping_cart_list_model.dart';
+import 'package:recook/pages/home/widget/plus_minus_view.dart';
+import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/input_view.dart';
 
 import '../similar_goods_page.dart';
 
@@ -357,7 +357,7 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                                 width: 2 * 2.w,
                               ),
                               Text(
-                                '进口税¥${goods.ferme.toStringAsFixed(2)},由左家右厨承担',
+                                '进口税¥${goods.ferme.toStringAsFixed(2)},由瑞库客承担',
                                 style: TextStyle(
                                     color: Color(0xFF666666),
                                     fontSize: 10 * 2.sp),
