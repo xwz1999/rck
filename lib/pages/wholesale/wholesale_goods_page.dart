@@ -496,30 +496,83 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
               }
       if (widget.goodsDetail.vendorId == 1800 || widget.goodsDetail.vendorId == 2000 || widget.goodsDetail.vendorId == 3000) {
                 if (_defaltAddress == null) {
+                  final Map<String, dynamic> results = <String, dynamic>{
+                    'canBack': true,
+                  };
 
-                  await  Get.to(ReceivingAddressPage());
+                  Address address = await Get.to(() => ReceivingAddressPage(
+                    arguments: results,
+                  ));
 
-                    Future.delayed(Duration.zero, () async {
-                      _addressList = await _getDefaultAddress();
-                      if (_addressList != null) {
-                        _addressList.forEach((element) {
-                          if (element.isDefault == 1) _addressModel = element;
-                          if (_addressModel != null) {
-                            _defaltAddress = _addressModel.province +
-                                _addressModel.city +
-                                _addressModel.district;
-                            if (_defaltAddress != null) {
-                              Future.delayed(Duration.zero, () async {
-                                _jDHaveGoods =
-                                await HomeDao.getJDStock(widget.goodsDetail.sku.first.id, _defaltAddress);
-                                print(_jDHaveGoods);
-                                setState(() {});
-                              });
+
+                  if (address == null) {
+                    if (widget.goodsDetail.vendorId == 1800 ||
+                        widget.goodsDetail.vendorId == 2000 ||
+                        widget.goodsDetail.vendorId == 3000) {
+                      Future.delayed(Duration.zero, () async {
+                        _addressList = await _getDefaultAddress();
+                        if (_addressList != null) {
+                          _addressList.forEach((element) {
+                            if (element.isDefault == 1) _addressModel = element;
+                            if (_addressModel != null) {
+                              _defaltAddress = _addressModel.province +
+                                  _addressModel.city +
+                                  _addressModel.district;
+                              if (_defaltAddress != null) {
+                                Future.delayed(Duration.zero, () async {
+                                  _jDHaveGoods = await HomeDao.getJDStock(
+                                      widget.goodsDetail.sku.first.id,
+                                      _defaltAddress);
+                                  print(_jDHaveGoods);
+                                  setState(() {});
+                                });
+                              }
                             }
-                          }
+                          });
+                        }
+                      });
+                    }
+                  } else {
+                    if (widget.goodsDetail.vendorId == 1800 ||
+                        widget.goodsDetail.vendorId == 2000 ||
+                        widget.goodsDetail.vendorId == 3000) {
+                      _defaltAddress =
+                          address.province + address.city + address.district;
+                      if (_defaltAddress != null) {
+                        Future.delayed(Duration.zero, () async {
+                          _jDHaveGoods = await HomeDao.getJDStock(
+                              widget.goodsDetail.sku.first.id,
+                              _defaltAddress);
+
+                          setState(() {});
                         });
                       }
-                    });
+                    }
+                  }
+
+                  // await  Get.to(ReceivingAddressPage());
+                  //
+                  //   Future.delayed(Duration.zero, () async {
+                  //     _addressList = await _getDefaultAddress();
+                  //     if (_addressList != null) {
+                  //       _addressList.forEach((element) {
+                  //         if (element.isDefault == 1) _addressModel = element;
+                  //         if (_addressModel != null) {
+                  //           _defaltAddress = _addressModel.province +
+                  //               _addressModel.city +
+                  //               _addressModel.district;
+                  //           if (_defaltAddress != null) {
+                  //             Future.delayed(Duration.zero, () async {
+                  //               _jDHaveGoods =
+                  //               await HomeDao.getJDStock(widget.goodsDetail.sku.first.id, _defaltAddress);
+                  //               print(_jDHaveGoods);
+                  //               setState(() {});
+                  //             });
+                  //           }
+                  //         }
+                  //       });
+                  //     }
+                  //   });
                 } else {
                   _showSkuChoosePage(context);
 
@@ -624,31 +677,75 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
     return GestureDetector(
       onTap: () async {
 
-        // Toast.showInfo('请先添加地址');
-        await  Get.to(ReceivingAddressPage());
-          Future.delayed(Duration.zero, () async {
-            _addressList = await _getDefaultAddress();
-            if (_addressList != null) {
-              _addressList.forEach((element) {
-                if (element.isDefault == 1) _addressModel = element;
-                if (_addressModel != null) {
-                  _defaltAddress = _addressModel.province +
-                      _addressModel.city +
-                      _addressModel.district;
-                  if (_defaltAddress != null) {
+        if (UserManager.instance.user.info.id == 0) {
+          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+          Toast.showError('请先登录...');
+          return;
+        }
 
-                    Future.delayed(Duration.zero, () async {
-                      _jDHaveGoods =
-                      await HomeDao.getJDStock(widget.goodsDetail.sku.first.id, _defaltAddress);
-                      print(_jDHaveGoods);
-                      setState(() {});
-                    });
+        final Map<String, dynamic> results = <String, dynamic>{
+          'canBack': true,
+        };
+
+        Address address = await Get.to(() => ReceivingAddressPage(
+          arguments: results,
+        ));
+
+        if (address == null) {
+          if (widget.goodsDetail.vendorId == 1800 ||
+              widget.goodsDetail.vendorId == 2000 ||
+              widget.goodsDetail.vendorId == 3000) {
+            Future.delayed(Duration.zero, () async {
+              _addressList = await _getDefaultAddress();
+              if (_addressList != null) {
+                _addressList.forEach((element) {
+                  if (element.isDefault == 1) _addressModel = element;
+                  if (_addressModel != null) {
+                    _defaltAddress = _addressModel.province +
+                        _addressModel.city +
+                        _addressModel.district;
+                    if (_defaltAddress != null) {
+                      Future.delayed(Duration.zero, () async {
+                        _jDHaveGoods = await HomeDao.getJDStock(
+                            widget.goodsDetail.sku.first.id,
+                            _defaltAddress);
+                        print(_jDHaveGoods);
+                        setState(() {});
+                      });
+                    }
                   }
+                });
+              }
+            });
+          }
+        } else {
+          if (widget.goodsDetail.vendorId == 1800 ||
+              widget.goodsDetail.vendorId == 2000 ||
+              widget.goodsDetail.vendorId == 3000) {
+            _addressModel = AddressDefaultModel(
+              id: address.id,
+              name: address.name,
+              mobile: address.mobile,
+              province: address.province,
+              city: address.city,
+              district:address.district,
+              address: address.address,
+              isDefault:address.isDefault,
+            );
+            _defaltAddress = address.province + address.city + address.district;
+            if (_defaltAddress != null) {
+              Future.delayed(Duration.zero, () async {
+                _jDHaveGoods = await HomeDao.getJDStock(
+                    widget.goodsDetail.sku.first.id, _defaltAddress);
 
-                }
+                if(mounted)
+                  setState(() {});
               });
             }
-          });
+          }
+        }
+
+
 
       },
       child: Container(
@@ -1265,34 +1362,67 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
                    widget.openSkuChoosePage.value = false;
                    Toast.showInfo('请先添加地址');
 
-                   await  Get.to(ReceivingAddressPage());
+                   final Map<String, dynamic> results = <String, dynamic>{
+                     'canBack': true,
+                   };
 
-                     Future.delayed(Duration.zero, () async {
-                       _addressList = await _getDefaultAddress();
-                       if (_addressList != null) {
-                         _addressList.forEach((element) {
-                           if (element.isDefault == 1) _addressModel = element;
-                           if (_addressModel != null) {
-                             _defaltAddress = _addressModel.province +
-                                 _addressModel.city +
-                                 _addressModel.district;
-                             if (_defaltAddress != null) {
-                               if (widget.goodsDetail.vendorId == 1800 || widget.goodsDetail.vendorId == 2000 || widget.goodsDetail.vendorId == 3000) {
-                               Future.delayed(Duration.zero, () async {
-                                 _jDHaveGoods =
-                                 await HomeDao.getJDStock(
-                                     widget.goodsDetail.sku.first.id,
-                                     _defaltAddress);
-                                 print(_jDHaveGoods);
-                                 setState(() {});
-                               });
+                   Address address = await Get.to(() => ReceivingAddressPage(
+                     arguments: results,
+                   ));
+
+                   if (address == null) {
+                     if (widget.goodsDetail.vendorId == 1800 ||
+                         widget.goodsDetail.vendorId == 2000 ||
+                         widget.goodsDetail.vendorId == 3000) {
+                       Future.delayed(Duration.zero, () async {
+                         _addressList = await _getDefaultAddress();
+                         if (_addressList != null) {
+                           _addressList.forEach((element) {
+                             if (element.isDefault == 1) _addressModel = element;
+                             if (_addressModel != null) {
+                               _defaltAddress = _addressModel.province +
+                                   _addressModel.city +
+                                   _addressModel.district;
+                               if (_defaltAddress != null) {
+                                 Future.delayed(Duration.zero, () async {
+                                   _jDHaveGoods = await HomeDao.getJDStock(
+                                       widget.goodsDetail.sku.first.id,
+                                       _defaltAddress);
+                                   print(_jDHaveGoods);
+                                   setState(() {});
+                                 });
+                               }
                              }
-                             }
-                           }
+                           });
+                         }
+                       });
+                     }
+                   } else {
+                     if (widget.goodsDetail.vendorId == 1800 ||
+                         widget.goodsDetail.vendorId == 2000 ||
+                         widget.goodsDetail.vendorId == 3000) {
+                       _addressModel = AddressDefaultModel(
+                         id: address.id,
+                         name: address.name,
+                         mobile: address.mobile,
+                         province: address.province,
+                         city: address.city,
+                         district:address.district,
+                         address: address.address,
+                         isDefault:address.isDefault,
+                       );
+                       _defaltAddress = address.province + address.city + address.district;
+                       if (_defaltAddress != null) {
+                         Future.delayed(Duration.zero, () async {
+                           _jDHaveGoods = await HomeDao.getJDStock(
+                               widget.goodsDetail.sku.first.id, _defaltAddress);
+
+                           if(mounted)
+                             setState(() {});
                          });
                        }
-                     });
-
+                     }
+                   }
 
                    return;
                  }else{

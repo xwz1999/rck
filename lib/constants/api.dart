@@ -320,40 +320,42 @@ class AttentionApi {
 class WebApi {
   static const String recookHttp = "https://reecook.cn/";
   // static const String inviteRegist = "${recookHttp}download.html?code=";
-  static const String goodsDetail = "https://h5.reecook.cn/#/goods/detail/";
+  static const String goodsDetail = "https://mallh5.reecook.cn/#/goods/detail/";
+
 
   static const String inviteRegist =
-      "https://h5.reecook.cn/#/user/appRegister/";
+      "https://mallh5.reecook.cn/#/user/appRegister/";
 
 
 
   static const String invitePoster = "/v1/shop/share_photo/";
+
   static const String diamondsInviteRegist =
-      "https://h5.reecook.cn/#/user/diamonds/";
+      "https://mallh5.reecook.cn/#/user/diamonds/";
 
   static const String testGoodsDetail =
-      "http://testh5.reecook.cn/#/goods/detail/";
+      "http://mallh5.reecook.cn/#/goods/detail/";
 
   ///小程序二维码测试服
   static const String testMiniQrcodeGoodsDetail =
-      'http://testh5.reecook.cn/goods/detail';
+      'http://mallh5.reecook.cn/goods/detail';
 
   ///小程序二维码
   static const String miniQrcodeGoodsDetail =
-      'https://h5.reecook.cn/goods/detail';
+      'https://mallh5.reecook.cn/goods/detail';
 
   static const String testInviteRegist =
-      "http://testh5.zjycshop.com/#/user/appRegister/";
+      "http://mallh5.reecook.cn/#/user/appRegister/";
 
   static const String testDiamondsInviteRegist =
-      "http://jyyh5.reecook.cn/#/user/diamonds/";
+      "http://mallh5.reecook.cn/#/user/diamonds/";
 
   static const String aboutUs = "${recookHttp}introduction.html";
   static const String businessCooperation = "${recookHttp}business.html";
-  static const String argumentsUrl = "https://h5.reecook.cn/agreement.html";
+  static const String argumentsUrl = "https://mallh5.reecook.cn/agreement.html";
 
-  static const String privacy = "https://h5.reecook.cn/privacy.html";//隐私政策
-  static const String agreement = "https://h5.reecook.cn/protocol.html";//用户协议
+  static const String privacy = "https://mallh5.reecook.cn/privacy.html";//隐私政策
+  static const String agreement = "https://mallh5.reecook.cn/protocol.html";//用户协议
 
   static const String feedback = "${recookHttp}feedback.html";
   static const String iOSUrl = "itms-apps://itunes.apple.com/app/id1477928534";

@@ -33,22 +33,22 @@ class ShareTool {
 //    });
   }
 
-  diamondsInviteShare({String code = ""}) {
-    WeChatScene scene = WeChatScene.SESSION;
-    String inviteCode = TextUtils.isEmpty(code)
-        ? UserManager.instance.user.info.invitationNo
-        : code;
-    WeChatUtils.shareUrl(
-        // url: "http://h5test.reecook.cn/index/index/register?code=9A59AQ",
-        url:
-            "${AppConfig.debug ? WebApi.testDiamondsInviteRegist : WebApi.diamondsInviteRegist}$inviteCode",
-        // assetsThumbnail: "assets://${AppImageName.recook_icon_120}",
-        netWorkThumbnail: AppImageName.web_app_icon,
-        title: "有福同享，才是‘壕’朋友！",
-        description: "瑞库客邀你玩转店铺，快来一起体验吧！",
-        scene: scene);
-  }
-
+  // diamondsInviteShare({String code = ""}) {
+  //   WeChatScene scene = WeChatScene.SESSION;
+  //   String inviteCode = TextUtils.isEmpty(code)
+  //       ? UserManager.instance.user.info.invitationNo
+  //       : code;
+  //   WeChatUtils.shareUrl(
+  //       // url: "http://h5test.reecook.cn/index/index/register?code=9A59AQ",
+  //       url:
+  //           "${AppConfig.debug ? WebApi.testDiamondsInviteRegist : WebApi.diamondsInviteRegist}$inviteCode",
+  //       // assetsThumbnail: "assets://${AppImageName.recook_icon_120}",
+  //       netWorkThumbnail: AppImageName.web_app_icon,
+  //       title: "有福同享，才是‘壕’朋友！",
+  //       description: "瑞库客邀你玩转店铺，快来一起体验吧！",
+  //       scene: scene);
+  // }
+  //
   _shareTitle(String amount) {
     if (TextUtils.isEmpty(amount)) {
       return Container();
@@ -121,22 +121,7 @@ class ShareTool {
     String goodsId = "",
     String secondPic = "",
   }) {
-    // !!!!
-    // String goodsUrl =
-    //     "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}$goodsId/${UserManager.instance.user.info.invitationNo}";
-    // PlatformItem miniItem = PlatformItem(
-    //     "小程序",
-    //     Image.asset(
-    //       ShareToolIcon.wechatmini,
-    //       width: 36,
-    //       height: 36,
-    //     ), itemClick: () {
-    //   Navigator.maybePop(context);
-    //   WeChatUtils.shareGoodsForMiniProgram(
-    //       title: miniTitle,
-    //       goodsId: int.parse(goodsId),
-    //       thumbnail: Api.getImgUrl(miniPicurl));
-    // });
+
     PlatformItem wechatItem = PlatformItem(
         "小程序",
         Image.asset(
@@ -167,7 +152,7 @@ class ShareTool {
     });
 
     PlatformItem ruiCode = PlatformItem(
-      '云口令',
+      '瑞口令',
       Image.asset(
         R.ASSETS_SHARE_BOTTOM_RUI_CODE_PNG,
         width: 36,
@@ -202,7 +187,7 @@ class ShareTool {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      '云口令复制成功',
+                      '瑞',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: rSP(16),
@@ -421,28 +406,6 @@ class ShareTool {
     // }
     ShareDialog.show(
       context, customTitle: customTitle, items: itemList,
-      // [
-      //   PlatformItem(
-      //       "小程序",
-      //       Image.asset(ShareToolIcon.wechatmini, width: 36, height: 36,),
-      //       // Icon(
-      //       //   AppIcons.icon_we_chat_circle,
-      //       //   size: rSize(35),
-      //       //   color: Color(0xFF51B14F),
-      //       // )
-      //       ) ,
-      //   wechatItem,
-      //   weiboItem,
-      //   copyurlItem,
-      //   qqItem,
-      //   PlatformItem(
-      //       "微信朋友圈",
-      //       Icon(
-      //         AppIcons.icon_we_chat_circle,
-      //         size: rSize(35),
-      //         color: Color(0xFF51B14F),
-      //       )),
-      // ],
       action: (int index) {},
     );
   }

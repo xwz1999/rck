@@ -185,7 +185,7 @@ class _VipShopCardPageState extends State<VipShopCardPage>
               24.hb,
               _getItem('0元创业平台', '零成本、零库存、零风险、零门槛', Assets.icCardMian.path),
               24.hb,
-              _getItem('在线选品商城', '让销售场景无处不在，助力用户一键打造私', Assets.icCardShop.path),
+              _getItem('在线选品商城', '让销售场景无处不在，助力用户一键打造私属商城', Assets.icCardShop.path),
               24.hb,
               _getItem('VIP店铺专属折扣', '享受VIP店铺专属折扣价，下单直降', Assets.icCardVvip.path),
               24.hb,

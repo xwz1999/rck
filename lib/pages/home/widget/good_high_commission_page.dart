@@ -125,9 +125,10 @@ class _GoodsHighCommissionListPageState extends BaseStoreState<GoodsHighCommissi
         itemBuilder: (_, index) {
           return GestureDetector(
             onTap: () {
-              AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                  arguments: CommodityDetailPage.setArguments(
-                      _listModel.data[index].id));
+              // AppRouter.push(context, RouteName.COMMODITY_PAGE,
+              //     arguments: CommodityDetailPage.setArguments(
+              //         _listModel.data[index].id));
+              // print('222222222222222');
             },
             child: _itemWidget(_listModel.data[index]),
           );
@@ -170,6 +171,7 @@ class _GoodsHighCommissionListPageState extends BaseStoreState<GoodsHighCommissi
               AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                   arguments: BrandGoodsListPage.setArguments(
                       data.brandId, data.brandName));
+              print('12312321930-8120-938210-3912-039');
             },
             buildCtx: context,
             data: data,

@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -72,7 +70,8 @@ class GoodsPage extends StatefulWidget {
     this.goodsId,
     this.openSkuChoosePage,
     this.goodsDetail,
-    this.openbrandList,  this.invite,
+    this.openbrandList,
+    this.invite,
   }) : super(key: key);
 
   @override
@@ -103,6 +102,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   AddressDefaultModel _addressModel;
   String _defaltAddress;
   int _jDHaveGoods = -1;
+
   // int _seckillStatus = 0;//秒杀状态 0为未开始 1为开始
   String guige = '请选择规格';
 
@@ -114,7 +114,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     super.initState();
 
     //获取默认地址并且判断有无货源
-    if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000|| widget.goodsDetail.data.vendorId == 3000) {
+    if (widget.goodsDetail.data.vendorId == 1800 ||
+        widget.goodsDetail.data.vendorId == 2000 ||
+        widget.goodsDetail.data.vendorId == 3000) {
       Future.delayed(Duration.zero, () async {
         _addressList = await _getDefaultAddress();
         if (_addressList != null) {
@@ -126,8 +128,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                   _addressModel.district;
               if (_defaltAddress != null) {
                 Future.delayed(Duration.zero, () async {
-                  _jDHaveGoods =
-                  await HomeDao.getJDStock(widget.goodsDetail.data.sku.first.id, _defaltAddress);
+                  _jDHaveGoods = await HomeDao.getJDStock(
+                      widget.goodsDetail.data.sku.first.id, _defaltAddress);
                   print(_jDHaveGoods);
                   setState(() {});
                 });
@@ -136,10 +138,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           });
         }
       });
-
     }
     //goodsDetail.data.vendorId为1800或者2000
-
 
     GoodsDetailModelImpl.getDetailImages(widget.goodsId)
         .then((GoodsDetailImagesModel model) {
@@ -159,8 +159,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         _showSkuChoosePage(context);
       }
     });
-
-
   }
 
   @override
@@ -172,7 +170,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   @override
   Widget buildContext(BuildContext context, {store}) {
     if (widget.goodsDetail != null) {
-
       _skuCombinations();
       _itemModels = _chooseValues();
     }
@@ -182,8 +179,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   }
 
   MediaQuery _buildBody(BuildContext context) {
-
-
     _context = context;
     return MediaQuery.removePadding(
         key: myGlobals.scaffoldKey,
@@ -213,7 +208,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   }
 
   List<Widget> _detailListWidget() {
-
     List<Widget> children = [];
     children.addAll(_goodHeadDetail());
     children.addAll(_goodDetailImages());
@@ -227,8 +221,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       // Rect imageRect = await WidgetUtil.getImageWH(url: "Url");
 
       // ignore: unnecessary_cast
-      return (
-          GestureDetector(
+      return (GestureDetector(
         onLongPress: () {
           _saveImageWithUrl(image.url);
         },
@@ -327,29 +320,27 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     //           ),
     //         ));
     insertFirst() {
-      if (widget.goodsDetail.data.notice.img!=null)
-        for(int i=0;i<widget.goodsDetail.data.notice.img.length;i++){
+      if (widget.goodsDetail.data.notice.img != null)
+        for (int i = 0; i < widget.goodsDetail.data.notice.img.length; i++) {
           children.insert(
             0,
-
             FadeInImage.assetNetwork(
               placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
               image: Api.getImgUrl(widget.goodsDetail.data.notice.img[i]),
             ),
           );
         }
-
     }
 
     insertLast() {
-      if (widget.goodsDetail.data.notice.img!=null)
-        for(int i=0;i<widget.goodsDetail.data.notice.img.length;i++){
-        children.add(
-          FadeInImage.assetNetwork(
-            placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-            image: Api.getImgUrl(widget.goodsDetail.data.notice.img[i]),
-          ),
-        );
+      if (widget.goodsDetail.data.notice.img != null)
+        for (int i = 0; i < widget.goodsDetail.data.notice.img.length; i++) {
+          children.add(
+            FadeInImage.assetNetwork(
+              placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+              image: Api.getImgUrl(widget.goodsDetail.data.notice.img[i]),
+            ),
+          );
         }
     }
 
@@ -370,24 +361,29 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       ImageUtils.saveNetworkImagesToPhoto(
           urls, (index) => DPrint.printf("保存好了---$index"), (success) {
         dismissLoading();
-        success ? showSuccess("保存完成!") : Alert.show(
-          context,
-          NormalContentDialog(
-            title: '提示',
-            content: Text('图片保存失败，请前往应用权限页，设置存储权限为始终允许',style: TextStyle(color: Color(0xFF333333),fontSize: 14.rsp),),
-            items: ["取消"],
-            listener: (index) {
-              Alert.dismiss(context);
-            },
-            deleteItem: "确认",
-            deleteListener: () async{
-
-              Alert.dismiss(context);
-              bool isOpened = await openAppSettings();
-            },
-            type: NormalTextDialogType.delete,
-          ),
-        );
+        success
+            ? showSuccess("保存完成!")
+            : Alert.show(
+                context,
+                NormalContentDialog(
+                  title: '提示',
+                  content: Text(
+                    '图片保存失败，请前往应用权限页，设置存储权限为始终允许',
+                    style:
+                        TextStyle(color: Color(0xFF333333), fontSize: 14.rsp),
+                  ),
+                  items: ["取消"],
+                  listener: (index) {
+                    Alert.dismiss(context);
+                  },
+                  deleteItem: "确认",
+                  deleteListener: () async {
+                    Alert.dismiss(context);
+                    bool isOpened = await openAppSettings();
+                  },
+                  type: NormalTextDialogType.delete,
+                ),
+              );
       });
     });
   }
@@ -423,7 +419,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                   goodsId: widget.goodsDetail.data.id.toString(),
                 );
               },
-
             ),
           ],
         ),
@@ -435,9 +430,10 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         color: Colors.white,
         child: _discountContent(context),
       ),
-      widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000||  widget.goodsDetail.data.vendorId == 3000
+      widget.goodsDetail.data.vendorId == 1800 ||
+              widget.goodsDetail.data.vendorId == 2000 ||
+              widget.goodsDetail.data.vendorId == 3000
           ? Container(
-
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               color: Colors.white,
               child: _addressContent(context),
@@ -470,7 +466,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           ? Container(
               color: Colors.white,
               margin: EdgeInsets.only(top: 8.rw, bottom: 8.rw),
-
               child: GestureDetector(
                 child: _storeName(),
                 onTap: () {
@@ -496,10 +491,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     //   images.add(widget.goodsDetail.data.video);
     // }
     images.addAll(widget.goodsDetail.data.mainPhotos);
-    return ImagePageView(
-        images: images,
-
-        onScrolled: (index) {});
+    return ImagePageView(images: images, onScrolled: (index) {});
   }
 
   /// 优惠券  规格等
@@ -507,78 +499,77 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        // GestureDetector(
-        //   behavior: HitTestBehavior.translucent,
-        //   onTap: widget.goodsDetail.data.coupons.length == 0
-        //       ? null
-        //       : () {
-        //           if (UserManager.instance.user.info.id == 0) {
-        //             AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
-        //             Toast.showError('请先登录...');
-        //             return;
-        //           }
-        //           if(widget.goodsDetail.data.secKill!=null?widget.goodsDetail.data.secKill.secKill==0:true)
-        //           {
-        //             showCustomModalBottomSheet(
-        //                 context: context,
-        //                 builder: (context) {
-        //                   return CouponListPage(
-        //                     brandId: widget.goodsDetail.data.brandId,
-        //                   );
-        //                 });
-        //           }
-        //
-        //         },
-        //   child: Row(children: _coupons()),
-        // ),
         Container(
           child: GestureDetector(
             onTap: () async {
-
               if (UserManager.instance.user.info.id == 0) {
                 AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
                 Toast.showError('请先登录...');
                 return;
               }
 
-
-              if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000 || widget.goodsDetail.data.vendorId == 3000) {
+              if (widget.goodsDetail.data.vendorId == 1800 ||
+                  widget.goodsDetail.data.vendorId == 2000 ||
+                  widget.goodsDetail.data.vendorId == 3000) {
                 if (_defaltAddress == null) {
+                  final Map<String, dynamic> results = <String, dynamic>{
+                    'canBack': true,
+                  };
 
-                  await  Get.to(ReceivingAddressPage());
+                  Address address = await Get.to(() => ReceivingAddressPage(
+                        arguments: results,
+                      ));
 
 
-                  if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000|| widget.goodsDetail.data.vendorId == 3000) {
-                    Future.delayed(Duration.zero, () async {
-                      _addressList = await _getDefaultAddress();
-                      if (_addressList != null) {
-                        _addressList.forEach((element) {
-                          if (element.isDefault == 1) _addressModel = element;
-                          if (_addressModel != null) {
-                            _defaltAddress = _addressModel.province +
-                                _addressModel.city +
-                                _addressModel.district;
-                            if (_defaltAddress != null) {
-                              Future.delayed(Duration.zero, () async {
-                                _jDHaveGoods =
-                                await HomeDao.getJDStock(widget.goodsDetail.data.sku.first.id, _defaltAddress);
-                                print(_jDHaveGoods);
-                                setState(() {});
-                              });
+                  if (address == null) {
+                    if (widget.goodsDetail.data.vendorId == 1800 ||
+                        widget.goodsDetail.data.vendorId == 2000 ||
+                        widget.goodsDetail.data.vendorId == 3000) {
+                      Future.delayed(Duration.zero, () async {
+                        _addressList = await _getDefaultAddress();
+                        if (_addressList != null) {
+                          _addressList.forEach((element) {
+                            if (element.isDefault == 1) _addressModel = element;
+                            if (_addressModel != null) {
+                              _defaltAddress = _addressModel.province +
+                                  _addressModel.city +
+                                  _addressModel.district;
+                              if (_defaltAddress != null) {
+                                Future.delayed(Duration.zero, () async {
+                                  _jDHaveGoods = await HomeDao.getJDStock(
+                                      widget.goodsDetail.data.sku.first.id,
+                                      _defaltAddress);
+                                  print(_jDHaveGoods);
+                                  setState(() {});
+                                });
+                              }
                             }
-                          }
+                          });
+                        }
+                      });
+                    }
+                  } else {
+                    if (widget.goodsDetail.data.vendorId == 1800 ||
+                        widget.goodsDetail.data.vendorId == 2000 ||
+                        widget.goodsDetail.data.vendorId == 3000) {
+                      _defaltAddress =
+                          address.province + address.city + address.district;
+                      if (_defaltAddress != null) {
+                        Future.delayed(Duration.zero, () async {
+                          _jDHaveGoods = await HomeDao.getJDStock(
+                              widget.goodsDetail.data.sku.first.id,
+                              _defaltAddress);
+
+                          setState(() {});
                         });
                       }
-                    });
-
+                    }
                   }
                 } else {
                   _showSkuChoosePage(context);
-
                 }
               } else {
                 _showSkuChoosePage(context);
-
               }
             },
             child: StatefulBuilder(
@@ -586,52 +577,50 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 _stateSetter = partSetState;
                 return Column(
                   children: [
-
                     Row(
                       children: <Widget>[
                         Text(
                           '规格',
-
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyle.generate(13 * 2.sp,
-                              color: Color(0xFFA4A4A4),),
+                          style: AppTextStyle.generate(
+                            13 * 2.sp,
+                            color: Color(0xFFA4A4A4),
+                          ),
                         ),
                         Container(
                           width: 10,
                         ),
-
-                        ...widget.goodsDetail.data.sku.mapIndexed((currentValue, index) {
-                          return index<6? Container(
-                            clipBehavior:Clip.antiAlias,
-                            margin: EdgeInsets.only(right:8.rw ),
-                            width: 32.rw,
-                            height: 32.rw,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(2.rw),
-
-                            ),
-                            child:     FadeInImage.assetNetwork(
-                              placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-                              image: currentValue.picUrl,
-                            ),
-                          ):SizedBox();
-                        } ).toList(),
-
+                        ...widget.goodsDetail.data.sku
+                            .mapIndexed((currentValue, index) {
+                          return index < 6
+                              ? Container(
+                                  clipBehavior: Clip.antiAlias,
+                                  margin: EdgeInsets.only(right: 8.rw),
+                                  width: 32.rw,
+                                  height: 32.rw,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(2.rw),
+                                  ),
+                                  child: FadeInImage.assetNetwork(
+                                    placeholder:
+                                        R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
+                                    image: currentValue.picUrl,
+                                  ),
+                                )
+                              : SizedBox();
+                        }).toList(),
                         Container(
-
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(2.rw),
-                            color: Color(0xFFF9F9F9)
-                          ),
-                          padding: EdgeInsets.symmetric(vertical: 3.rw,horizontal: 6.rw),
+                              borderRadius: BorderRadius.circular(2.rw),
+                              color: Color(0xFFF9F9F9)),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 3.rw, horizontal: 6.rw),
                           child: Text(
                             '共${widget.goodsDetail.data.sku.length}款',
-                            style: TextStyle(color: Color(0xFF666666),fontSize: 12.rsp),
-
+                            style: TextStyle(
+                                color: Color(0xFF666666), fontSize: 12.rsp),
                           ),
                         )
-
-
                       ],
                     ),
                     24.hb,
@@ -639,7 +628,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                       children: [
                         Text(
                           '规格',
-
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyle.generate(13 * 2.sp,
                               color: Colors.transparent),
@@ -647,15 +635,14 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                         Container(
                           width: 10,
                         ),
-
                         Expanded(
                             child: Text(
-                              (guige!='请选择规格'?'已选：':'')+guige,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: AppTextStyle.generate(13 * 2.sp,
-                                  color: Color(0xff373737)),
-                            )),
+                          (guige != '请选择规格' ? '已选：' : '') + guige,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyle.generate(13 * 2.sp,
+                              color: Color(0xff373737)),
+                        )),
                         Icon(
                           AppIcons.icon_next,
                           color: Color(0xFF333333),
@@ -676,49 +663,73 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   _addressContent(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-
         if (UserManager.instance.user.info.id == 0) {
           AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
           Toast.showError('请先登录...');
           return;
         }
 
-        // Toast.showInfo('请先添加地址');
-        await  Get.to(ReceivingAddressPage());
-        if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000||widget.goodsDetail.data.vendorId == 3000) {
-          Future.delayed(Duration.zero, () async {
-            _addressList = await _getDefaultAddress();
-            if (_addressList != null) {
-              _addressList.forEach((element) {
-                if (element.isDefault == 1) _addressModel = element;
-                if (_addressModel != null) {
-                  _defaltAddress = _addressModel.province +
-                      _addressModel.city +
-                      _addressModel.district;
-                  if (_defaltAddress != null) {
-                    Future.delayed(Duration.zero, () async {
-                      _jDHaveGoods =
-                      await HomeDao.getJDStock(widget.goodsDetail.data.sku.first.id, _defaltAddress);
-                      print(_jDHaveGoods);
-                      setState(() {});
-                    });
+        final Map<String, dynamic> results = <String, dynamic>{
+          'canBack': true,
+        };
+
+        Address address = await Get.to(() => ReceivingAddressPage(
+              arguments: results,
+            ));
+
+        if (address == null) {
+          if (widget.goodsDetail.data.vendorId == 1800 ||
+              widget.goodsDetail.data.vendorId == 2000 ||
+              widget.goodsDetail.data.vendorId == 3000) {
+            Future.delayed(Duration.zero, () async {
+              _addressList = await _getDefaultAddress();
+              if (_addressList != null) {
+                _addressList.forEach((element) {
+                  if (element.isDefault == 1) _addressModel = element;
+                  if (_addressModel != null) {
+                    _defaltAddress = _addressModel.province +
+                        _addressModel.city +
+                        _addressModel.district;
+                    if (_defaltAddress != null) {
+                      Future.delayed(Duration.zero, () async {
+                        _jDHaveGoods = await HomeDao.getJDStock(
+                            widget.goodsDetail.data.sku.first.id,
+                            _defaltAddress);
+                        print(_jDHaveGoods);
+                        setState(() {});
+                      });
+                    }
                   }
-                }
+                });
+              }
+            });
+          }
+        } else {
+          if (widget.goodsDetail.data.vendorId == 1800 ||
+              widget.goodsDetail.data.vendorId == 2000 ||
+              widget.goodsDetail.data.vendorId == 3000) {
+            _addressModel = AddressDefaultModel(
+                id: address.id,
+                name: address.name,
+                mobile: address.mobile,
+                province: address.province,
+                city: address.city,
+                district:address.district,
+                address: address.address,
+                isDefault:address.isDefault,
+            );
+            _defaltAddress = address.province + address.city + address.district;
+            if (_defaltAddress != null) {
+              Future.delayed(Duration.zero, () async {
+                _jDHaveGoods = await HomeDao.getJDStock(
+                    widget.goodsDetail.data.sku.first.id, _defaltAddress);
+
+                if(mounted)
+                setState(() {});
               });
             }
-          });
-
+          }
         }
-
-
-
-          // //cancel();
-          // if (result) {
-          //   //_selectCityAddress(context);
-          //   // print(_defaltAddress);
-          //   _jDHaveGoods =
-          //       await HomeDao.getJDStock(widget.goodsDetail.data.sku.first.id, _defaltAddress);
-          // }
 
       },
       child: Container(
@@ -781,8 +792,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                   _jDHaveGoods == 1
                       ? '有货'
                       : _jDHaveGoods == 0
-                      ? '无货'
-                      : '',
+                          ? '无货'
+                          : '',
                   style: TextStyle(
                     color: Color(0xFFD5101A),
                     fontSize: 13.rsp,
@@ -796,7 +807,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 ),
               ],
             ),
-
           ],
         ),
       ),
@@ -828,7 +838,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               ),
               Expanded(
                   child: Text(
-                    "品牌 工艺...",
+                "品牌 工艺...",
                 style:
                     AppTextStyle.generate(13 * 2.sp, color: Color(0xff373737)),
               )),
@@ -899,7 +909,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                     showCustomModalBottomSheet(
                         context: context,
                         builder: (context) {
-                          return GoodsServiceGuarantee(model: widget.goodsDetail,);
+                          return GoodsServiceGuarantee(
+                            model: widget.goodsDetail,
+                          );
                         });
                   },
                   child: Container(
@@ -933,10 +945,12 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                             Text(
                               " | ",
                               style: AppTextStyle.generate(13 * 2.sp,
-                                  color:  Color(0xff373737)),
+                                  color: Color(0xff373737)),
                             ),
                             Text(
-                              widget.goodsDetail.data.isAllow?'支持七天无理由退换货':"售后无忧",
+                              widget.goodsDetail.data.isAllow
+                                  ? '支持七天无理由退换货'
+                                  : "售后无忧",
                               style: AppTextStyle.generate(13 * 2.sp,
                                   color: Color(0xff373737)),
                             ),
@@ -1067,7 +1081,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         result.data != null &&
         result.data != [] &&
         result.data.toString().length > 0) {
-
       _cityModel = ProvinceCityModel.fromJson(json.decode(result.data));
       return true;
     }
@@ -1121,7 +1134,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       },
     );
   }
-
 
   _buildOverseaCityPicker() {
     return GestureDetector(
@@ -1337,8 +1349,11 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       ),
     ];
 
-    if (widget.goodsDetail.data.coupons.length == 0||
-        (widget.goodsDetail.data.secKill!=null?widget.goodsDetail.data.secKill.secKill==1:false)) {//秒杀中的商品都没有优惠券
+    if (widget.goodsDetail.data.coupons.length == 0 ||
+        (widget.goodsDetail.data.secKill != null
+            ? widget.goodsDetail.data.secKill.secKill == 1
+            : false)) {
+      //秒杀中的商品都没有优惠券
       coupons.add(
         Text(
           "暂无优惠劵",
@@ -1352,7 +1367,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       );
       return coupons;
     }
-
 
     for (int i = 0; i < widget.goodsDetail.data.coupons.length; i++) {
       if (i > 2) break;
@@ -1400,7 +1414,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     return coupons;
   }
 
-
   //大家都在买 推荐商品
   _recommendsWidget() {
     return Container(
@@ -1423,7 +1436,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             child: ListView.builder(
               physics: AlwaysScrollableScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemCount: widget.goodsDetail.data.recommends==null?0: widget.goodsDetail.data.recommends.length,
+              itemCount: widget.goodsDetail.data.recommends == null
+                  ? 0
+                  : widget.goodsDetail.data.recommends.length,
               itemBuilder: (_, index) {
                 Recommends recommends =
                     widget.goodsDetail.data.recommends[index];
@@ -1438,7 +1453,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               },
             ),
           ),
-
           Container(
             height: 13,
             color: AppColor.frenchColor,
@@ -1450,7 +1464,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
 
   _recommendsItemWidget(Recommends recommends) {
     return Container(
-      margin: EdgeInsets.only(left: 10,bottom: 10.rw),
+      margin: EdgeInsets.only(left: 10, bottom: 10.rw),
       width: 80.rw,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -1526,17 +1540,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     Row row = Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
-        // ClipRRect(
-        //   borderRadius: BorderRadius.all(Radius.circular(8)),
-        //   child: CustomCacheImage(
-        //       height: 44.rw,
-        //       width: 44.rw,
-        //       fit: BoxFit.cover,
-        //       imageUrl: Api.getImgUrl(widget.goodsDetail.data.brand.logoUrl)),
-        // ),
-        // Container(
-        //   width: 12.rw,
-        // ),
         Expanded(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1559,7 +1562,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           ),
         ),
         GestureDetector(
-          onTap: (){
+          onTap: () {
             if (widget.openbrandList != null) widget.openbrandList();
           },
           child: Container(
@@ -1567,34 +1570,23 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               color: Color(0xFFDB1E1E),
               borderRadius: BorderRadius.circular(14.5.rw),
             ),
-            padding: EdgeInsets.symmetric(vertical: 4.rw,horizontal: 12.rw),
-            child: Text('进入',style: AppTextStyle.generate(12 * 2.sp, color: Colors.white),),
+            padding: EdgeInsets.symmetric(vertical: 4.rw, horizontal: 12.rw),
+            child: Text(
+              '进入',
+              style: AppTextStyle.generate(12 * 2.sp, color: Colors.white),
+            ),
           ),
         ),
-        // CustomImageButton(
-        //   title: "进入",
-        //
-        //   onPressed: () {
-        //     if (widget.openbrandList != null) widget.openbrandList();
-        //   },
-        // ),
-        // Text(
-        //   "进入品牌",
-        //   style: AppTextStyle.generate(15*2.sp, color: Colors.grey[700]),
-        // ),
       ],
     );
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 13.rw,horizontal: 12.rw),
+      padding: EdgeInsets.symmetric(vertical: 13.rw, horizontal: 12.rw),
       decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(Assets.brandBg.path),fit: BoxFit.fill)
-      ),
-
+          image: DecorationImage(
+              image: AssetImage(Assets.brandBg.path), fit: BoxFit.fill)),
       child: row,
     );
   }
-
-
 
   void _showSkuChoosePage(BuildContext context) {
     showCustomModalBottomSheet(
@@ -1604,64 +1596,95 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             model: widget.goodsDetail,
             results: _validSkuResult,
             itemModels: _itemModels,
-            listener:  (SkuChooseModel skuModel) async {
+            listener: (SkuChooseModel skuModel) async {
               if (UserManager.instance.user.info.id == 0) {
                 AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
                 Toast.showError('请先登录...');
                 return;
               }
               print("${skuModel.sku.id} -- ${skuModel.des} -- ${skuModel.num}");
-               if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000 || widget.goodsDetail.data.vendorId == 3000) {
-                 if (_defaltAddress == null) {
-                   widget.openSkuChoosePage.value = false;
-                   Toast.showInfo('请先添加地址');
+              if (widget.goodsDetail.data.vendorId == 1800 ||
+                  widget.goodsDetail.data.vendorId == 2000 ||
+                  widget.goodsDetail.data.vendorId == 3000) {
+                if (_defaltAddress == null) {
+                  widget.openSkuChoosePage.value = false;
+                  Toast.showInfo('请先添加地址');
+                  final Map<String, dynamic> results = <String, dynamic>{
+                    'canBack': true,
+                  };
 
-                   await  Get.to(ReceivingAddressPage());
+                  Address address = await Get.to(() => ReceivingAddressPage(
+                    arguments: results,
+                  ));
+
+                  if (address == null) {
+                    if (widget.goodsDetail.data.vendorId == 1800 ||
+                        widget.goodsDetail.data.vendorId == 2000 ||
+                        widget.goodsDetail.data.vendorId == 3000) {
+                      Future.delayed(Duration.zero, () async {
+                        _addressList = await _getDefaultAddress();
+                        if (_addressList != null) {
+                          _addressList.forEach((element) {
+                            if (element.isDefault == 1) _addressModel = element;
+                            if (_addressModel != null) {
+                              _defaltAddress = _addressModel.province +
+                                  _addressModel.city +
+                                  _addressModel.district;
+                              if (_defaltAddress != null) {
+                                Future.delayed(Duration.zero, () async {
+                                  _jDHaveGoods = await HomeDao.getJDStock(
+                                      widget.goodsDetail.data.sku.first.id,
+                                      _defaltAddress);
+                                  print(_jDHaveGoods);
+                                  setState(() {});
+                                });
+                              }
+                            }
+                          });
+                        }
+                      });
+                    }
+                  } else {
+                    if (widget.goodsDetail.data.vendorId == 1800 ||
+                        widget.goodsDetail.data.vendorId == 2000 ||
+                        widget.goodsDetail.data.vendorId == 3000) {
+                      _addressModel = AddressDefaultModel(
+                        id: address.id,
+                        name: address.name,
+                        mobile: address.mobile,
+                        province: address.province,
+                        city: address.city,
+                        district:address.district,
+                        address: address.address,
+                        isDefault:address.isDefault,
+                      );
+                      _defaltAddress = address.province + address.city + address.district;
+                      if (_defaltAddress != null) {
+                        Future.delayed(Duration.zero, () async {
+                          _jDHaveGoods = await HomeDao.getJDStock(
+                              widget.goodsDetail.data.sku.first.id, _defaltAddress);
+
+                          if(mounted)
+                            setState(() {});
+                        });
+                      }
+                    }
+                  }
 
 
-                   if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000 || widget.goodsDetail.data.vendorId == 3000) {
-                     Future.delayed(Duration.zero, () async {
-                       _addressList = await _getDefaultAddress();
-                       if (_addressList != null) {
-                         _addressList.forEach((element) {
-                           if (element.isDefault == 1) _addressModel = element;
-                           if (_addressModel != null) {
-                             _defaltAddress = _addressModel.province +
-                                 _addressModel.city +
-                                 _addressModel.district;
-                             if (_defaltAddress != null) {
-                               Future.delayed(Duration.zero, () async {
-                                 _jDHaveGoods =
-                                 await HomeDao.getJDStock(widget.goodsDetail.data.sku.first.id, _defaltAddress);
-                                 print(_jDHaveGoods);
-                                 setState(() {});
-                               });
-                             }
-                           }
-                         });
-                       }
-                     });
+                  return;
+                } else {
+                  _jDHaveGoods =
+                      await HomeDao.getJDStock(skuModel.sku.id, _defaltAddress);
+                  setState(() {});
 
-                   }
-
-                   return;
-                 }else{
-                   _jDHaveGoods =
-                   await HomeDao.getJDStock(skuModel.sku.id, _defaltAddress);
-                   setState(() {
-
-                   });
-
-                   if (_jDHaveGoods != 1) {
-                     Toast.showInfo('本地区无货，请选择其他商品');
-                     _selectedSkuDes();
-                     setState(() {
-
-                     });
-                     return;
-                   }
-                 }
-
+                  if (_jDHaveGoods != 1) {
+                    Toast.showInfo('本地区无货，请选择其他商品');
+                    _selectedSkuDes();
+                    setState(() {});
+                    return;
+                  }
+                }
               }
 
               if (skuModel.num > 50) {
@@ -1700,9 +1723,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       if (_stateSetter != null) {
         guige = '请选择规格';
         _selectedSkuDes();
-        _stateSetter(() {
-
-        });
+        _stateSetter(() {});
       }
     });
   }
@@ -1733,7 +1754,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     Get.back();
   }
 
-  Future<dynamic> _createOrder(SkuChooseModel skuModel, BuildContext context) async {
+  Future<dynamic> _createOrder(
+      SkuChooseModel skuModel, BuildContext context) async {
     OrderPreviewModel order = await GoodsDetailModelImpl.createOrderPreview(
       UserManager.instance.user.info.id,
       skuModel.sku.id,
@@ -1813,38 +1835,31 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     bool hasSelected = false;
 
     DPrint.printf(_itemModels.length);
-    _itemModels.forEach((SelectedListItemModel model)  {
+    _itemModels.forEach((SelectedListItemModel model) {
       if (model.selectedIndex != null) {
         hasSelected = true;
         stringBuffer.write(" ");
         stringBuffer.write("\“${model.items[model.selectedIndex].itemTitle}\”");
-        if(guige == '请选择规格'){
+        if (guige == '请选择规格') {
           guige = model.items[model.selectedIndex].itemTitle;
-        }else{
-          guige += ('+'+model.items[model.selectedIndex].itemTitle);
+        } else {
+          guige += ('+' + model.items[model.selectedIndex].itemTitle);
         }
-
-
       }
     });
 
     widget.goodsDetail.data.sku.forEach((Sku sku) {
       if (sku.name == guige) {
-        if (widget.goodsDetail.data.vendorId == 1800 || widget.goodsDetail.data.vendorId == 2000 || widget.goodsDetail.data.vendorId == 3000) {
+        if (widget.goodsDetail.data.vendorId == 1800 ||
+            widget.goodsDetail.data.vendorId == 2000 ||
+            widget.goodsDetail.data.vendorId == 3000) {
           Future.delayed(Duration.zero, () async {
-            _jDHaveGoods =
-            await HomeDao.getJDStock(sku.id, _defaltAddress);
+            _jDHaveGoods = await HomeDao.getJDStock(sku.id, _defaltAddress);
             setState(() {});
           });
-          setState(() {
-          });
+          setState(() {});
         }
       }
     });
-
-
-
-
-
   }
 }

@@ -335,7 +335,7 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
         children: <Widget>[
           Expanded(
             child: CustomImageButton(
-              title: "加入购物车",
+              title: "加入进货单",
               color: Colors.white,
               height: 40,
               boxDecoration: BoxDecoration(

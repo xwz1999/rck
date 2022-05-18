@@ -149,7 +149,7 @@ class _HomePageState extends BaseStoreState<HomePage>
   GlobalKey<AnimatedHomeBackgroundState> _animatedBackgroundState = GlobalKey();
   GlobalKey<HomeSliverAppBarState> _sliverAppBarGlobalKey = GlobalKey();
 
-  String keyWords = '锅';
+  String keyWords = '';
 
   GifController _gifController;
   StateSetter _wholesaleState;
@@ -371,7 +371,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     _getActiviteList();
     _getBannerList();
     _getPromotionList();
-    _getKeyWords();
+    // _getKeyWords();
     Future.delayed(Duration.zero, () async {
       kingCoinListModelList = await UserFunc.getKingCoinList();
       // setState(() {

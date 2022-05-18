@@ -77,7 +77,7 @@ class WeChatUtils {
             appId: AppConfig.WX_APP_ID,
             doOnAndroid: true,
             doOnIOS: true,
-            universalLink: "https://reecook.cn/jingyaoyun/")
+            universalLink: "https://reecook.cn/recook/")
         .then((onValue) {
       DPrint.printf("微信registr $onValue");
     });
@@ -119,14 +119,16 @@ class WeChatUtils {
     //     "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}$id/${UserManager.instance.user.info.invitationNo}";
 
     var model = fluwx.WeChatShareMiniProgramModel(
-      userName: AppConfig.WX_APP_MINIPRO_USERNAME,
-      webPageUrl: 'https://h5.reecook.cn/',
+      userName: 'gh_530bd0866836',
+      webPageUrl: 'https://mallh5.reecook.cn/',
+        miniProgramType: AppConfig.debug ? WXMiniProgramType.PREVIEW:fluwx.WXMiniProgramType.RELEASE,
       path:
           'pages/goodsDetail/goodsDetail?type=share&id=$id&invite=${UserManager.instance.user.info.invitationNo}',
       thumbnail: fluwx.WeChatImage.network(netWorkThumbnail),
+
       title: des,
     );
-    print('${UserManager.instance.user.info.invitationNo}');
+    print('${UserManager.instance.user.info.invitationNo}'+'-----$id');
     fluwx.shareToWeChat(model);
   }
 
@@ -142,7 +144,7 @@ class WeChatUtils {
     //     "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}$id/${UserManager.instance.user.info.invitationNo}";
     var model = fluwx.WeChatShareMiniProgramModel(
       userName: AppConfig.WX_APP_MINIPRO_USERNAME,
-      webPageUrl: 'https://h5.reecook.cn/',
+      webPageUrl: 'https://mallh5.reecook.cn/',
       path:
       'pages/vip/vipBuy?type=share&invite=${UserManager.instance.user.info.invitationNo}',
       thumbnail: fluwx.WeChatImage.network(netWorkThumbnail),
@@ -170,7 +172,7 @@ class WeChatUtils {
 
     var model = fluwx.WeChatShareMiniProgramModel(
       userName: 'gh_530bd0866836',
-      webPageUrl: 'https://h5.reecook.cn/',
+      webPageUrl: 'https://mallh5.reecook.cn/',
       path:
       '/packageA/livePlayback/livePlayback?id=' + '$id' + "&isLive=1",
       thumbnail: fluwx.WeChatImage.network(netWorkThumbnail),

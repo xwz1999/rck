@@ -253,7 +253,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
   @override
   Widget build(BuildContext context) {
     return RecookScaffold(
-      title: '我的粉丝',
+      title: '我的客户',
       whiteBg: true,
       // body:
       //   NestedScrollView(

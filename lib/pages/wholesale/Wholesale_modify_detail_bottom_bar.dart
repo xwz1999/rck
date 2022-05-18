@@ -147,7 +147,7 @@ class _WholesaleDetailBottomBarrState extends State<WholesaleDetailBottomBar> {
               dotNum: widget.shopCartNum,
               dotColor: AppColor.themeColor,
               padding: EdgeInsets.symmetric(horizontal: 6.rw),
-              title: "购物车",
+              title: "进货单",
               contentSpacing: 0,
               icon: Image.asset(R.ASSETS_WHOLESALE_CAR_PNG,width: 30.rw,height: 30.rw,),
               fontSize: 10,

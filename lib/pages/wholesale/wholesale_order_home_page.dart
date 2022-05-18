@@ -6,6 +6,7 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/order/order_list_controller.dart';
 import 'package:recook/pages/user/order/order_list_page.dart';
 import 'package:recook/pages/wholesale/wholesale_order_list_page.dart';
+import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/tabbarWidget/sc_tab_bar.dart';
@@ -61,12 +62,12 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
     if (widget.initialIndex != null) {
       index = widget.initialIndex;
     }
-    // if(UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary) {
-    //   _allTabController = TabController(length: 2, vsync: this, initialIndex: 0);
-    // }else{
-    //   _allTabController = TabController(length: 1, vsync: this, initialIndex: 0);
-    //   titles = ["自购订单"];
-    // }
+    if(UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary) {
+      _allTabController = TabController(length: 2, vsync: this, initialIndex: 0);
+    }else{
+      _allTabController = TabController(length: 1, vsync: this, initialIndex: 0);
+      titles = ["自购订单"];
+    }
 
     _allTabController = TabController(length: 2, vsync: this, initialIndex: 0);
 
@@ -85,7 +86,20 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
     return Scaffold(
       backgroundColor: AppColor.frenchColor,
       appBar: CustomAppBar(
-        title: _titleView(),
+        title:
+        // titles.length==1?Container(
+        //     height: rSize(30),
+        //     alignment: Alignment.center,
+        //     child: Text(
+        //       titles.first,
+        //       style: AppTextStyle.generate(
+        //           ScreenAdapterUtils.setSp(selected ? 14 : 13),
+        //           color: selected ? AppColor.themeColor : Colors.black,
+        //           fontWeight: selected
+        //               ? FontWeight.w500
+        //               : FontWeight.lerp(FontWeight.w300, FontWeight.w400, 0.5)),
+        //     )):
+        _titleView(),
         themeData: AppThemes.themeDataGrey.appBarTheme,
         appBackground: Colors.white,
         elevation: 0,

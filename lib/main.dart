@@ -42,13 +42,15 @@ void main() async {
   // 设置当前是否为测试环境
   const bool isDebug
    = const bool.fromEnvironment('ISDEBUG', defaultValue:  true);
+  AppConfig.setDebug(isDebug);
 
 
-  var env = const String.fromEnvironment('ENV', defaultValue: 'dev');
-
-  print('env :$env');
-
-  AppConfig.setDebug(env == 'dev');
+  //
+  // var env = const String.fromEnvironment('ENV', defaultValue: 'dev');
+  //
+  // print('env :$env');
+  //
+  // AppConfig.setDebug(env == 'dev');
 
 
   ErrorWidget.builder = (FlutterErrorDetails flutterErrorDetails) {

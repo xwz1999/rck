@@ -106,21 +106,21 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
         themeData: AppThemes.themeDataGrey.appBarTheme,
         appBackground: Colors.white,
         elevation: 0,
-        // actions: [
-        //   MaterialButton(
-        //     minWidth: rSize(74),
-        //     onPressed: () {
-        //       AppRouter.push(context, RouteName.USER_INVOICE);
-        //     },
-        //     child: Text(
-        //       '开发票',
-        //       style: TextStyle(
-        //         color: AppColor.blackColor,
-        //         fontSize: 14*2.sp,
-        //       ),
-        //     ),
-        //   ),
-        // ],
+        actions: [
+          MaterialButton(
+            minWidth: rSize(74),
+            onPressed: () {
+              AppRouter.push(context, RouteName.USER_INVOICE);
+            },
+            child: Text(
+              '开发票',
+              style: TextStyle(
+                color: AppColor.blackColor,
+                fontSize: 14*2.sp,
+              ),
+            ),
+          ),
+        ],
       ),
       body: _newBuildBody(),
       // body: _buildBody(),

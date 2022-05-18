@@ -294,6 +294,7 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
     setState(() {
       UserManager.instance.user.info.headImgUrl = result.url;
     });
+    print(UserManager.instance.user.info.headImgUrl);
     UserManager.updateUserInfo(getStore());
   }
 

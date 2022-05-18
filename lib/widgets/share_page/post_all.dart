@@ -365,9 +365,10 @@ class PostBottomWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(AppConfig.debug);
     String qrCode =
         "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}${goodsDetailModel.data.id}/${UserManager.instance.user.info.invitationNo}";
-
+    print(qrCode);
     String info = goodsDetailModel.data.goodsName;
     String crossedPrice =
         goodsDetailModel.data.price.max.originalPrice.toStringAsFixed(2);
