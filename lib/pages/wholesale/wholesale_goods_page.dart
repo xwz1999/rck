@@ -1507,7 +1507,7 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
             Alert.dismiss(context);
 
             Get.off(() => VipShopCardPage(
-              goToBottom: false,
+
             ));
           },
           type: NormalTextDialogType.delete,

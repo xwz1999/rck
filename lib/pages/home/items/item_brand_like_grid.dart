@@ -290,7 +290,7 @@ class BrandLikeGridItem extends StatelessWidget {
                     child: CustomImageButton(
                       direction: Direction.horizontal,
                       height: 21,
-                      title: sellout ? "已售完" : "详情",
+                      title: sellout ? "已售完" : "自购",
                       style: TextStyle(
                         height: 1.2,
                         color: Colors.white,

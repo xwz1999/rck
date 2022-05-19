@@ -21,10 +21,8 @@ import 'package:recook/widgets/recook_back_button.dart';
 import 'models/vip_card_model.dart';
 
 class VipShopCardPage extends StatefulWidget {
-  final bool goToBottom;
-
   VipShopCardPage({
-    Key key, this.goToBottom = false,
+    Key key,
   }) : super(key: key);
 
   @override
@@ -57,10 +55,6 @@ class _VipShopCardPageState extends State<VipShopCardPage>
       });
     });
 
-      Future.delayed(Duration.zero,(){
-        if(widget.goToBottom)
-        _controller.jumpTo(_controller.position.maxScrollExtent);
-      });
 
 
     }
@@ -92,7 +86,7 @@ class _VipShopCardPageState extends State<VipShopCardPage>
       extendBodyBehindAppBar: true,
       extendBody: true,
       appBar: CustomAppBar(
-        appBackground: Colors.transparent,
+        appBackground: Colors.white,
         leading: RecookBackButton(
           white: false,
         ),
@@ -108,7 +102,6 @@ class _VipShopCardPageState extends State<VipShopCardPage>
           Positioned(
               child: Image.asset(
             Assets.imgCardBg.path,
-            width: double.infinity,
             fit: BoxFit.fitWidth,
           )),
           _bodyWidget()
@@ -167,38 +160,7 @@ class _VipShopCardPageState extends State<VipShopCardPage>
           ),
           child: Column(
             children: [
-              42.hb,
-              Text(
-                '权益介绍',
-                style: TextStyle(color: Colors.white, fontSize: 20.rsp),
-              ),
-              34.hb,
-              _getItem(
-                  '底价批发',
-                  'VIP店铺可享受平台数字化底价批发进货的'
-                      '权益。线上进货，各大品牌随你挑选，想进'
-                      '多少货你说了算。最低一件起批，避免囤货'
-                      '压资金；打破线下五公里生活圈的地域壁'
-                      '垒；不再受品牌授权期限制约；没有年采购'
-                      '销售指标考核',
-                  Assets.icCardPi.path),
-              24.hb,
-              _getItem('0元创业平台', '零成本、零库存、零风险、零门槛', Assets.icCardMian.path),
-              24.hb,
-              _getItem('在线选品商城', '让销售场景无处不在，助力用户一键打造私属商城', Assets.icCardShop.path),
-              24.hb,
-              _getItem('VIP店铺专属折扣', '享受VIP店铺专属折扣价，下单直降', Assets.icCardVvip.path),
-              24.hb,
-              _getItem(
-                  '智能导购系统', '全面提高客户卖货积极性，促进零售线上和线下融合', Assets.icCardDaogou.path),
-              24.hb,
-              _getItem('SCRM客户资源管理', '会员精准化营业，提高客户忠诚度', Assets.icCardKehu.path),
-              24.hb,
-              _getItem(
-                  '全面领先的数据分析', '多角度、多方位分析店铺经营状况，助力提高销量', Assets.icCardFenxi.path),
-              24.hb,
-              _getItem('正品保障', '共享京东优选好货，品质过硬，正品有保障', Assets.icCardZhengping.path),
-              48.hb,
+              72.hb,
               _cardList.isNotEmpty? SizedBox(
                 height: !UserManager.instance.getSeven?125.rw: 170.rw,
                 child: GridView.builder(
@@ -252,7 +214,7 @@ class _VipShopCardPageState extends State<VipShopCardPage>
 
                 },
                 child: Container(
-                  height: 36.rw,
+                  height: 50.rw,
                   width: double.infinity,
                   margin: EdgeInsets.symmetric(horizontal: 36.rw),
                   alignment:Alignment.center,
@@ -265,62 +227,97 @@ class _VipShopCardPageState extends State<VipShopCardPage>
                           Color(0xFFD1B272),
                           Color(0xFFFFDFA5)
                         ]),
-                    borderRadius: BorderRadius.all(Radius.circular(18.rw)),
+                    borderRadius: BorderRadius.all(Radius.circular(25.rw)),
                   ),
                   child:       Text(
                     !UserManager.instance.getSeven&&_chooseIndex==0? '立即领取':'立即购买',
                     style: TextStyle(
                         color: Color(0xFF8F4A18),
-                        fontSize: 14.rsp,
+                        fontSize: 18.rsp,
                         fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
               48.hb,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding:  EdgeInsets.only(top: 2.rw),
-                    child: Image.asset(Assets.icCardSafe.path,width: 20.rw,height: 20.rw,),
-                  ),
-                  5.wb,
+              Container(
+                color: Colors.white,
+                padding: EdgeInsets.only(top: 15.rw,bottom: 15.rw),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding:  EdgeInsets.only(top: 2.rw),
+                      child: Image.asset(Assets.icCardSafe.path,width: 20.rw,height: 20.rw,),
+                    ),
+                    5.wb,
 
-                  RichText(
-                      text: TextSpan(
-                          text: '安心保障  ',
-                          style: TextStyle(
-                              color:  Color(0xFF278022),
-                              fontSize: 14.rsp,
-                              fontWeight: FontWeight.bold),
-                          children: [
-                            WidgetSpan(
-                              alignment: PlaceholderAlignment.middle,
-                              child: Container(
+                    RichText(
+                        text: TextSpan(
+                            text: '安心保障  ',
+                            style: TextStyle(
                                 color:  Color(0xFF278022),
-                                height: 10.rw,
-                                width: 2.w,
-                              )
-                            ),
-                            TextSpan(
-                              text: '  不自动续费 无任何附带扣费项目 无广告无插件',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12.rsp,
-                                  ),
-                            ),
-                            // TextSpan(
-                            //   text: '/月',
-                            //   style: TextStyle(
-                            //       color: Color(0xFFC29761),
-                            //       fontSize: 16.rsp,
-                            //       fontWeight: FontWeight.bold),
-                            // )
-                          ])),
-                ],
+                                fontSize: 14.rsp,
+                                fontWeight: FontWeight.bold),
+                            children: [
+                              WidgetSpan(
+                                alignment: PlaceholderAlignment.middle,
+                                child: Container(
+                                  color:  Color(0xFF278022),
+                                  height: 10.rw,
+                                  width: 2.w,
+                                )
+                              ),
+                              TextSpan(
+                                text: '  不自动续费 无任何附带扣费项目 无广告无插件',
+                                style: TextStyle(
+                                    color: Color(0xFF333333),
+                                    fontSize: 12.rsp,
+                                    ),
+                              ),
+                              // TextSpan(
+                              //   text: '/月',
+                              //   style: TextStyle(
+                              //       color: Color(0xFFC29761),
+                              //       fontSize: 16.rsp,
+                              //       fontWeight: FontWeight.bold),
+                              // )
+                            ])),
+                  ],
+                ),
               ),
-              72.hb,
 
+              42.hb,
+              Text(
+                '权益介绍',
+                style: TextStyle(color: Colors.white, fontSize: 20.rsp),
+              ),
+              34.hb,
+              _getItem(
+                  '底价批发',
+                  'VIP店铺可享受平台数字化底价批发进货的'
+                      '权益。线上进货，各大品牌随你挑选，想进'
+                      '多少货你说了算。最低一件起批，避免囤货'
+                      '压资金；打破线下五公里生活圈的地域壁'
+                      '垒；不再受品牌授权期限制约；没有年采购'
+                      '销售指标考核',
+                  Assets.icCardPi.path),
+              24.hb,
+              _getItem('0元创业平台', '零成本、零库存、零风险、零门槛', Assets.icCardMian.path),
+              24.hb,
+              _getItem('在线选品商城', '让销售场景无处不在，助力用户一键打造私属商城', Assets.icCardShop.path),
+              24.hb,
+              _getItem('VIP店铺专属折扣', '享受VIP店铺专属折扣价，下单直降', Assets.icCardVvip.path),
+              24.hb,
+              _getItem(
+                  '智能导购系统', '全面提高客户卖货积极性，促进零售线上和线下融合', Assets.icCardDaogou.path),
+              24.hb,
+              _getItem('SCRM客户资源管理', '会员精准化营业，提高客户忠诚度', Assets.icCardKehu.path),
+              24.hb,
+              _getItem(
+                  '全面领先的数据分析', '多角度、多方位分析店铺经营状况，助力提高销量', Assets.icCardFenxi.path),
+              24.hb,
+              _getItem('正品保障', '共享京东优选好货，品质过硬，正品有保障', Assets.icCardZhengping.path),
+              48.hb,
 
             ],
             //

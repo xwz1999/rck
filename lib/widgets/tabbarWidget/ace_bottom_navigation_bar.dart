@@ -14,7 +14,7 @@ enum ACEBottomNavigationBarType {
 
 class ACEBottomNavigationBar extends StatefulWidget {
   final Key key;
-  final BottomBarController barController;
+  final HomeBottomBarController barController;
   final List<NavigationItemBean> items;
   final int initSelectedIndex;
   final Color bgColor;

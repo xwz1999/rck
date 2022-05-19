@@ -57,7 +57,7 @@ class _WholesaleCarItemState extends State<WholesaleCarItem> {
         width: 72.rw,
         height: 72.rw,
         // imageUrl: Api.getResizeImgUrl(goods.mainPhotoUrl, rSize(80).toInt()),
-        imageUrl: Api.getResizeImgUrl(goods.picUrl, rSize(200).toInt()),
+        imageUrl: Api.getResizeImgUrl(goods.picUrl, rSize(200).toInt(),print: true),
         borderRadius: BorderRadius.all(Radius.circular(8.rw)),
       ),
     );

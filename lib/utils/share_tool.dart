@@ -133,7 +133,7 @@ class ShareTool {
 
       WeChatUtils.miniProgramShare(
         id: goodsId,
-        netWorkThumbnail: Api.getImgUrl(miniPicurl),
+        netWorkThumbnail: Api.getResizeImgUrl(miniPicurl,500.w),
         des: miniTitle,
       );
     });
@@ -248,6 +248,8 @@ class ShareTool {
     ShareDialog.show(context,
         customTitle: _shareTitle(amount), items: itemList, action: (index) {});
   }
+
+
 
 
 

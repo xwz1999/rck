@@ -643,7 +643,7 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
                         Container(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            "¥共${goods.quantity}件",
+                            "共${goods.quantity}件",
                             style: AppTextStyle.generate(13,
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w300),

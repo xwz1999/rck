@@ -12,6 +12,7 @@ import 'package:recook/models/user_model.dart';
 import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/utils/storage/hive_store.dart';
+import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
@@ -70,10 +71,10 @@ class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
       body: ListView(
         padding: EdgeInsets.only(top: rSize(16)),
         children: [
-          SCTile.normalTile("支付密码设置", needDivide: true, listener: () {
-            // push(RouteName.USER_SET_PASSWORD);
-            AppRouter.push(context, RouteName.USER_SET_PASSWORD_VARCODE);
-          }),
+          // SCTile.normalTile("支付密码设置", needDivide: true, listener: () {
+          //   // push(RouteName.USER_SET_PASSWORD);
+          //   AppRouter.push(context, RouteName.USER_SET_PASSWORD_VARCODE);
+          // }),
           SCTile.normalTile("注销账户", needDivide: true, listener: () {
             AppRouter.push(context, RouteName.USER_DELETE_ACCOUNT_PAGE);
           }),
@@ -89,6 +90,9 @@ class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
                 : _wechatUnboundhandle();
           }),
           16.hb,
+          UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.physical||
+              UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary?
+
           MaterialButton(
             color: Colors.white,
             elevation: 0,
@@ -119,7 +123,7 @@ class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
                 ),
               ],
             ),
-          ),
+          ):SizedBox(),
         ],
       ),
     );

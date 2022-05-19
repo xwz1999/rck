@@ -362,7 +362,7 @@ class _WholesaleGuideOrderItemState extends State<WholesaleGuideOrderItem> {
                         Container(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            "¥共${goods.quantity}件",
+                            "共${goods.quantity}件",
                             style: AppTextStyle.generate(13,
                                 color: Colors.grey,
                                 fontWeight: FontWeight.w300),

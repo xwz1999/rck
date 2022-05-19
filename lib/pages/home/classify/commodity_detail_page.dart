@@ -228,13 +228,14 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
       goodsDetail: _goodsDetail,
       controller: _bottomBarController,
       collected: _goodsDetail == null ? false : _goodsDetail.data.isFavorite,
-      shopCartNum: _goodsDetail?.data == null
-          ? ''
-          : _goodsDetail.data.shoppingTrolleyCount > 99
-              ? "99+"
-              : _goodsDetail.data.shoppingTrolleyCount == 0
-                  ? ""
-                  : _goodsDetail.data.shoppingTrolleyCount.toString(),
+      shopCartNum: '',
+      // _goodsDetail?.data == null
+      //     ? ''
+      //     : _goodsDetail.data.shoppingTrolleyCount > 99
+      //         ? "99+"
+      //         : _goodsDetail.data.shoppingTrolleyCount == 0
+      //             ? ""
+      //             : _goodsDetail.data.shoppingTrolleyCount.toString(),
       addToShopCartListener: () {
         AppRouter.push(context, RouteName.GOODS_SHOPPING_CART);
       },

@@ -73,7 +73,7 @@ class _PlusMinusViewState extends State<PlusMinusView> {
                 size: 10,
               ),
               disabledColor: Colors.red,
-              onPressed: int.parse(_controller.text) <= widget.minValue
+              onPressed: _controller.text==null||_controller.text==''?null: int.parse(_controller.text) <= widget.minValue
                   ? null
                   : () {
                       int num = int.parse(_controller.text);
@@ -134,7 +134,13 @@ class _PlusMinusViewState extends State<PlusMinusView> {
                 },
                 controller: _controller,
                 onValueChanged: (string) {
-                  widget.onValueChanged(int.parse(_controller.text));
+                  if(string==null){
+                    widget.onValueChanged(0);
+                    _controller.text = '0';
+                  }else{
+                    widget.onValueChanged(int.parse(_controller.text));
+                  }
+
                 },
               ),
             ),
@@ -147,7 +153,7 @@ class _PlusMinusViewState extends State<PlusMinusView> {
                 color: Colors.grey[500],
                 size: 10,
               ),
-              onPressed: int.parse(_controller.text) >= widget.maxValue
+              onPressed: _controller.text==null||_controller.text==''?null:  int.parse(_controller.text) >= widget.maxValue
                   ? () {
                       showToast("已经达到最大购买数量!",
                           textStyle: TextStyle(fontSize: 14 * 2.sp),

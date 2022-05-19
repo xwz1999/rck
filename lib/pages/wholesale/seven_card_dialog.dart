@@ -56,7 +56,7 @@ class _SevenCardDialogState extends State<SevenCardDialog> {
                 onTap: (){
                   HiveStore.appBox.put('showSeven${UserManager.instance.user.info.id}', true);
                   Get.back();
-                  Get.to(()=>VipShopCardPage(goToBottom: true,));
+                  Get.to(()=>VipShopCardPage());
                 },
                 child: Container(
                   width: 128.rw,

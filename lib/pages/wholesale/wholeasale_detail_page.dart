@@ -7,8 +7,10 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:recook/pages/home/home_page.dart';
 import 'package:recook/pages/home/widget/modify_detail_app_bar.dart';
 import 'package:recook/pages/home/widget/modify_detail_bottom_bar.dart';
+import 'package:recook/pages/tabBar/TabbarWidget.dart';
 import 'package:recook/pages/wholesale/wholesale_car_page.dart';
 import 'package:recook/pages/wholesale/wholesale_customer_page.dart';
 import 'package:recook/pages/wholesale/wholesale_goods_page.dart';
@@ -235,7 +237,7 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
       },
       shareListener: () {
         ///批发首页
-        Get.back();
+        Get.offAll(() => TabBarWidget());
       },
     );
   }

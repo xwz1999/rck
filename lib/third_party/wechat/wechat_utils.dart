@@ -8,8 +8,11 @@
  */
 
 import 'dart:core';
+import 'dart:typed_data';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:fluwx/fluwx.dart';
 import 'package:recook/constants/config.dart';
@@ -109,14 +112,47 @@ class WeChatUtils {
     fluwx.shareToWeChat(model);
   }
 
+  static Future<Uint8List> compressList(Uint8List list) async {
+    ///小程序分享的图片限制在128kb
+    int quality = 100;
+    if(list.lengthInBytes/1024 <128){
+      return list;
+    }else {
+      quality =  (128/(list.lengthInBytes/1024)*100).toInt();
+
+      print(quality);
+
+      var result = await FlutterImageCompress.compressWithList(
+        list,
+        minHeight: 400,
+        minWidth: 500,
+        quality: quality,
+      );
+      print(list.length);
+      print(result.length);
+      return Uint8List.fromList(result)  ;
+    }
+  }
+
+
   static miniProgramShare({
     String userName,
     String id,
     String netWorkThumbnail,
     String des,
-  }) {
-    // String qrCode =
-    //     "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}$id/${UserManager.instance.user.info.invitationNo}";
+  }) async {
+
+
+
+      ///专程
+      var response = await Dio().get(
+          netWorkThumbnail,
+          options: Options(responseType: ResponseType.bytes));
+
+
+      Uint8List list = await compressList(Uint8List.fromList(response.data));
+
+
 
     var model = fluwx.WeChatShareMiniProgramModel(
       userName: 'gh_530bd0866836',
@@ -124,8 +160,8 @@ class WeChatUtils {
         miniProgramType: AppConfig.debug ? WXMiniProgramType.PREVIEW:fluwx.WXMiniProgramType.RELEASE,
       path:
           'pages/goodsDetail/goodsDetail?type=share&id=$id&invite=${UserManager.instance.user.info.invitationNo}',
-      thumbnail: fluwx.WeChatImage.network(netWorkThumbnail),
-
+      thumbnail: fluwx.WeChatImage.binary(list),
+      compressThumbnail:false,
       title: des,
     );
     print('${UserManager.instance.user.info.invitationNo}'+'-----$id');

@@ -34,7 +34,7 @@ class TabBarWidget extends StatefulWidget {
 class _TabBarWidgetState extends State<TabBarWidget>
     with TickerProviderStateMixin {
   TabController _tabController;
-  BottomBarController _bottomBarController;
+  HomeBottomBarController _bottomBarController;
   BuildContext _context;
   @override
   void initState() {
@@ -43,7 +43,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
       VersionTool.checkVersionInfo(_context);
     });
     _tabController = TabController(length: 5, vsync: this);
-    _bottomBarController = BottomBarController();
+    _bottomBarController = HomeBottomBarController();
     _tabController.addListener(_tabListener);
 
     UserManager.instance.login.addListener(_loginListener);
@@ -255,7 +255,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
 typedef TabChangeListener = Function(int index);
 
 class BottomBar extends StatefulWidget {
-  final BottomBarController barController;
+  final HomeBottomBarController barController;
   final TabChangeListener tabChangeListener;
   final TabChangeListener onCenterItemClick;
 
@@ -342,7 +342,7 @@ class _BottomBarState extends State<BottomBar> {
   }
 }
 
-class BottomBarController {
+class HomeBottomBarController {
   ValueNotifier<ACEBottomNavigationBarType> type =
       ValueNotifier(ACEBottomNavigationBarType.normal);
   ValueNotifier<int> selectIndex = ValueNotifier(0);

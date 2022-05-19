@@ -1950,7 +1950,7 @@ class _HomePageState extends BaseStoreState<HomePage>
           return;
         }
         Get.to(() => VipShopCardPage(
-              goToBottom: false,
+
             ));
         //Get.to(() => GoodsHighCommissionListPage());
         break;

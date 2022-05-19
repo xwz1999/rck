@@ -838,7 +838,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               ),
               Expanded(
                   child: Text(
-                "品牌 工艺...",
+                "品牌 规格 条码",
                 style:
                     AppTextStyle.generate(13 * 2.sp, color: Color(0xff373737)),
               )),
@@ -1713,7 +1713,6 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 //     return;
                 //   }
                 // }
-                ReToast.loading(text: '');
                 _addToShoppingCart(context, skuModel);
               }
             },
@@ -1751,7 +1750,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     UserManager.instance.refreshShoppingCartNumberWithPage.value = true;
     ReToast.success(text: '加入成功');
     Get.back();
-    Get.back();
+    // Get.back();
   }
 
   Future<dynamic> _createOrder(

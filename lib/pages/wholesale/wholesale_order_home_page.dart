@@ -87,18 +87,19 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
       backgroundColor: AppColor.frenchColor,
       appBar: CustomAppBar(
         title:
-        // titles.length==1?Container(
-        //     height: rSize(30),
-        //     alignment: Alignment.center,
-        //     child: Text(
-        //       titles.first,
-        //       style: AppTextStyle.generate(
-        //           ScreenAdapterUtils.setSp(selected ? 14 : 13),
-        //           color: selected ? AppColor.themeColor : Colors.black,
-        //           fontWeight: selected
-        //               ? FontWeight.w500
-        //               : FontWeight.lerp(FontWeight.w300, FontWeight.w400, 0.5)),
-        //     )):
+        titles.length==1?Padding(
+          padding:  EdgeInsets.only(right: 45.rw),
+          child: Container(
+              height: rSize(30),
+              alignment: Alignment.center,
+              child: Text(
+                titles.first,
+                style: AppTextStyle.generate(
+                    16.rsp,
+                    color: Colors.black,
+                    fontWeight: FontWeight.lerp(FontWeight.w300, FontWeight.w400, 0.5)),
+              )),
+        ):
         _titleView(),
         themeData: AppThemes.themeDataGrey.appBarTheme,
         appBackground: Colors.white,

@@ -374,7 +374,7 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
                       bottomRight: Radius.circular(30))),
               fontSize: 16 * 2.sp,
               onPressed: () {
-                if (_sku == null) {
+                if (!haveSelected) {
                   Toast.showInfo('请先选择规格', color: Colors.black);
                   return;
                 }

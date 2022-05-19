@@ -127,9 +127,9 @@ class _GoodsPreferentialListPageState extends BaseStoreState<GoodsPreferentialLi
         itemBuilder: (_, index) {
           return GestureDetector(
             onTap: () {
-              AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                  arguments: CommodityDetailPage.setArguments(
-                      _listModel.data[index].id));
+              // AppRouter.push(context, RouteName.COMMODITY_PAGE,
+              //     arguments: CommodityDetailPage.setArguments(
+              //         _listModel.data[index].id));
             },
             child: _itemWidget(_listModel.data[index]),
           );

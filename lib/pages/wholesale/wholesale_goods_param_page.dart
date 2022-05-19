@@ -58,7 +58,7 @@ class _WholesaleGoodsParamPageState extends BaseStoreState<WholesaleGoodsParamPa
               rHBox(30),
               Row(
                 children: <Widget>[
-                  rWBox(20),
+                  rWBox(10),
                   Container(
                     width: rSize(60),
                     child: Text(
@@ -82,7 +82,7 @@ class _WholesaleGoodsParamPageState extends BaseStoreState<WholesaleGoodsParamPa
               rHBox(10),
               Row(
                 children: <Widget>[
-                  rWBox(20),
+                  rWBox(10),
                   Container(
                     width: rSize(60),
                     child: Text(
@@ -105,18 +105,18 @@ class _WholesaleGoodsParamPageState extends BaseStoreState<WholesaleGoodsParamPa
               rHBox(10),
               Row(
                 children: <Widget>[
-                  rWBox(20),
+                  rWBox(10),
                   Container(
-                    width: rSize(60),
+                    width: rSize(80),
                     child: Text(
-                      '条形码',
+                      '规格/条形码',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 13 * 2.sp,
                       ),
                     ),
                   ),
-                  rWBox(20),
+                  // rWBox(10),
                   Container(
                     child: Text(
                       '${model.sku[0].name}  ${model.sku[0].code}',

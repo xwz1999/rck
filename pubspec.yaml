@@ -2,7 +2,7 @@ name: recook
 description: Recook Market App.
 publish_to: "none"
 
-version: 2.0.0-dev+329
+version: 2.0.0-dev+400
 environment:
   sdk: ">=2.10.0 <3.0.0"
 
@@ -105,7 +105,7 @@ dependencies:
   flutter_gifimage: ^1.0.0
 
   # 微信登录 支付等
-  fluwx: ^3.6.1+4
+  fluwx: 3.6.1+4
     # git:
     #   url: http://test.akuhotel.com:8099/laiiihz/fluwx.git
 
