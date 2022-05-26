@@ -7,6 +7,7 @@ import 'package:flutter_custom_calendar/constants/constants.dart';
 import 'package:flutter_custom_calendar/controller.dart';
 import 'package:flutter_custom_calendar/model/date_model.dart';
 import 'package:flutter_custom_calendar/widget/calendar_view.dart';
+import 'package:flutter_custom_calendar/widget/month_view_pager.dart';
 import 'package:jingyaoyun/constants/header.dart';
 import 'package:jingyaoyun/manager/http_manager.dart';
 import 'package:jingyaoyun/models/home_weather_model.dart';
@@ -51,7 +52,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
       maxYearMonth: 12,
       nowYear: dateNow.year,
       nowMonth: dateNow.month,
-      showMode: CalendarConstants.MODE_SHOW_ONLY_MONTH,
+      showMode: CalendarConstants.MODE_SHOW_WEEK_AND_MONTH,
       selectedDateTimeList: _dates,
       selectMode: CalendarSelectedMode.singleSelect,
       offset: 0,
@@ -205,6 +206,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
                 54.wb,
               ],
             ),
+
             ClipRRect(
               borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
               child: CalendarViewWidget(
