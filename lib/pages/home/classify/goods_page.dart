@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
@@ -508,67 +509,68 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 return;
               }
 
-              if (widget.goodsDetail.data.vendorId == 1800 ||
-                  widget.goodsDetail.data.vendorId == 2000 ||
-                  widget.goodsDetail.data.vendorId == 3000) {
-                if (_defaltAddress == null) {
-                  final Map<String, dynamic> results = <String, dynamic>{
-                    'canBack': true,
-                  };
-
-                  Address address = await Get.to(() => ReceivingAddressPage(
-                        arguments: results,
-                      ));
-
-
-                  if (address == null) {
-                    if (widget.goodsDetail.data.vendorId == 1800 ||
-                        widget.goodsDetail.data.vendorId == 2000 ||
-                        widget.goodsDetail.data.vendorId == 3000) {
-                      Future.delayed(Duration.zero, () async {
-                        _addressList = await _getDefaultAddress();
-                        if (_addressList != null) {
-                          _addressList.forEach((element) {
-                            if (element.isDefault == 1) _addressModel = element;
-                            if (_addressModel != null) {
-                              _defaltAddress = _addressModel.province +
-                                  _addressModel.city +
-                                  _addressModel.district;
-                              if (_defaltAddress != null) {
-                                Future.delayed(Duration.zero, () async {
-                                  _jDHaveGoods = await HomeDao.getJDStock(
-                                      widget.goodsDetail.data.sku.first.id,
-                                      _defaltAddress);
-                                  print(_jDHaveGoods);
-                                  setState(() {});
-                                });
-                              }
-                            }
-                          });
-                        }
-                      });
-                    }
-                  } else {
-                    if (widget.goodsDetail.data.vendorId == 1800 ||
-                        widget.goodsDetail.data.vendorId == 2000 ||
-                        widget.goodsDetail.data.vendorId == 3000) {
-                      _defaltAddress =
-                          address.province + address.city + address.district;
-                      if (_defaltAddress != null) {
-                        Future.delayed(Duration.zero, () async {
-                          _jDHaveGoods = await HomeDao.getJDStock(
-                              widget.goodsDetail.data.sku.first.id,
-                              _defaltAddress);
-
-                          setState(() {});
-                        });
-                      }
-                    }
-                  }
-                } else {
-                  _showSkuChoosePage(context);
-                }
-              } else {
+              // if (widget.goodsDetail.data.vendorId == 1800 ||
+              //     widget.goodsDetail.data.vendorId == 2000 ||
+              //     widget.goodsDetail.data.vendorId == 3000) {
+              //   if (_defaltAddress == null) {
+              //     final Map<String, dynamic> results = <String, dynamic>{
+              //       'canBack': true,
+              //     };
+              //
+              //     Address address = await Get.to(() => ReceivingAddressPage(
+              //           arguments: results,
+              //         ));
+              //
+              //
+              //     if (address == null) {
+              //       if (widget.goodsDetail.data.vendorId == 1800 ||
+              //           widget.goodsDetail.data.vendorId == 2000 ||
+              //           widget.goodsDetail.data.vendorId == 3000) {
+              //         Future.delayed(Duration.zero, () async {
+              //           _addressList = await _getDefaultAddress();
+              //           if (_addressList != null) {
+              //             _addressList.forEach((element) {
+              //               if (element.isDefault == 1) _addressModel = element;
+              //               if (_addressModel != null) {
+              //                 _defaltAddress = _addressModel.province +
+              //                     _addressModel.city +
+              //                     _addressModel.district;
+              //                 if (_defaltAddress != null) {
+              //                   Future.delayed(Duration.zero, () async {
+              //                     _jDHaveGoods = await HomeDao.getJDStock(
+              //                         widget.goodsDetail.data.sku.first.id,
+              //                         _defaltAddress);
+              //                     print(_jDHaveGoods);
+              //                     setState(() {});
+              //                   });
+              //                 }
+              //               }
+              //             });
+              //           }
+              //         });
+              //       }
+              //     } else {
+              //       if (widget.goodsDetail.data.vendorId == 1800 ||
+              //           widget.goodsDetail.data.vendorId == 2000 ||
+              //           widget.goodsDetail.data.vendorId == 3000) {
+              //         _defaltAddress =
+              //             address.province + address.city + address.district;
+              //         if (_defaltAddress != null) {
+              //           Future.delayed(Duration.zero, () async {
+              //             _jDHaveGoods = await HomeDao.getJDStock(
+              //                 widget.goodsDetail.data.sku.first.id,
+              //                 _defaltAddress);
+              //
+              //             setState(() {});
+              //           });
+              //         }
+              //       }
+              //     }
+              //   } else {
+              //     _showSkuChoosePage(context);
+              //   }
+              // }
+              else {
                 _showSkuChoosePage(context);
               }
             },
@@ -1623,7 +1625,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                         widget.goodsDetail.data.vendorId == 3000) {
                       Future.delayed(Duration.zero, () async {
                         _addressList = await _getDefaultAddress();
-                        if (_addressList != null) {
+                        if (_addressList.isNotEmpty) {
                           _addressList.forEach((element) {
                             if (element.isDefault == 1) _addressModel = element;
                             if (_addressModel != null) {
@@ -1641,6 +1643,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                               }
                             }
                           });
+                        }else{
+                          Get.back();
                         }
                       });
                     }
@@ -1748,7 +1752,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     UserManager.instance.refreshShoppingCart.value = true;
     UserManager.instance.refreshShoppingCartNumber.value = true;
     UserManager.instance.refreshShoppingCartNumberWithPage.value = true;
-    ReToast.success(text: '加入成功');
+    BotToast.showText(text: '加入成功');
+    //ReToast.success(text: '加入成功');
     Get.back();
     // Get.back();
   }

@@ -91,7 +91,7 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
         SCTile.normalTile("昵称",
             value: UserManager.instance.user.info.nickname,
             needDivide: true, listener: () {
-          if(UserLevelTool.currentRoleLevelEnum() != UserRoleLevel.subsidiary){
+
             push(RouteName.MODIFY_DETAIL_PAGE,
                 arguments: ModifyInfoPage.setArguments(
                     "修改昵称", UserManager.instance.user.info.nickname,
@@ -101,7 +101,7 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
                 _updateUserNickname(value);
               }
             });
-          }
+
 
         }),
         SCTile.normalTile(

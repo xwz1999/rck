@@ -18,6 +18,7 @@ import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/keyboard/bottom_keyboard_widget.dart';
+import 'package:recook/widgets/progress/re_toast.dart';
 
 import 'package:recook/widgets/webView.dart';
 
@@ -585,7 +586,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
             onPressed: !_isAgreeTheProtocol ||
                     TextUtils.isEmpty(_isCashToAlipay
                         ? _accountTextEditController.text
-                        : _bankAccountTextEditController.text)||_model==null||_model.actualAmount==-1
+                        : _bankAccountTextEditController.text)||_model==null||_model.actualAmount==-1||UserManager.instance.userBrief.balance<=0
                 ? null
                 : () {
                     if (_isNeedUserVerify) {
@@ -597,6 +598,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
                     }
                     _submitPassword();
                   },
+
             borderRadius: BorderRadius.circular(3),
             height: 45,
             width: double.infinity,
@@ -723,13 +725,13 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
                 bankAccount: _isCashToAlipay ? "" : bankAccount,
               );
 
-              if (_isCashToAlipay) {
-                HiveStore.appBox
-                    .put('last_alipay', _accountTextEditController.text);
-              } else {
-                HiveStore.appBox.put(
-                    'last_bank_ccount', _bankAccountTextEditController.text);
-              }
+              // if (_isCashToAlipay) {
+              //   HiveStore.appBox
+              //       .put('last_alipay', _accountTextEditController.text);
+              // } else {
+              //   HiveStore.appBox.put(
+              //       'last_bank_ccount', _bankAccountTextEditController.text);
+              // }
             },
             forgetPassword: () {
               Navigator.pop(context);
@@ -767,20 +769,25 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
       showError(resultData.msg, duration: Duration(milliseconds: 2000));
       return;
     }
+    getStore().state.userBrief.balance =
+        getStore().state.userBrief.balance.toDouble() - num.parse(amount);
+    if (getStore().state.userBrief.balance.toDouble() < 0) {
+      getStore().state.userBrief.balance = 0;
+    }
+
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
       _bottomKeyBoardController.clearPassWord();
       // Toast.showError(model.msg,);
       showError(model.msg, duration: Duration(milliseconds: 2000));
       return;
+    }else{
+      Get.back();
+      ReToast.success(text: '提现成功');
+      //AppRouter.pushAndReplaced(context, RouteName.CASH_WITHDRAW_HISTORY_PAGE);
+      setState(() {});
     }
-    getStore().state.userBrief.balance =
-        getStore().state.userBrief.balance.toDouble() - num.parse(amount);
-    if (getStore().state.userBrief.balance.toDouble() < 0) {
-      getStore().state.userBrief.balance = 0;
-    }
-    AppRouter.pushAndReplaced(context, RouteName.CASH_WITHDRAW_HISTORY_PAGE);
-    setState(() {});
+
   }
 }
 

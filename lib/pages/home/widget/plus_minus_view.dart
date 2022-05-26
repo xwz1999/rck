@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -73,26 +74,31 @@ class _PlusMinusViewState extends State<PlusMinusView> {
                 size: 10,
               ),
               disabledColor: Colors.red,
-              onPressed: _controller.text==null||_controller.text==''?null: int.parse(_controller.text) <= widget.minValue
-                  ? null
-                  : () {
-                      int num = int.parse(_controller.text);
-                      num--;
-                      if (num <= widget.minValue) {
-                        num = widget.minValue;
-                      }
+              onPressed: _controller.text == null || _controller.text == ''
+                  ? (){
 
-                      _controller.text = "$num";
-                      DPrint.printf("${_controller.text}, ${lastValue}");
+              }
+                  : int.parse(_controller.text) <= widget.minValue
+                      ? () {
+                BotToast.showText(text: '已是最低数量');
 
-                      if ((num == widget.minValue &&
-                              lastValue != widget.minValue) ||
-                          (lastValue == widget.maxValue)) {
-                        setState(() {});
-                      }
-                      lastValue = num;
-                      widget.onInputComplete(num.toString());
-                    },
+              }
+                      : () {
+                          int num = int.parse(_controller.text);
+                          num--;
+                          if (num <= widget.minValue) {
+                            num = widget.minValue;
+                          }
+                          _controller.text = "$num";
+                          DPrint.printf("${_controller.text}, ${lastValue}");
+                          if ((num == widget.minValue &&
+                                  lastValue != widget.minValue) ||
+                              (lastValue == widget.maxValue)) {
+                            setState(() {});
+                          }
+                          lastValue = num;
+                          widget.onInputComplete(num.toString());
+                        },
             ),
             Container(
               height: 25,
@@ -137,10 +143,9 @@ class _PlusMinusViewState extends State<PlusMinusView> {
                   if(string==null){
                     widget.onValueChanged(0);
                     _controller.text = '0';
-                  }else{
+                  } else {
                     widget.onValueChanged(int.parse(_controller.text));
                   }
-
                 },
               ),
             ),
@@ -153,32 +158,36 @@ class _PlusMinusViewState extends State<PlusMinusView> {
                 color: Colors.grey[500],
                 size: 10,
               ),
-              onPressed: _controller.text==null||_controller.text==''?null:  int.parse(_controller.text) >= widget.maxValue
-                  ? () {
-                      showToast("已经达到最大购买数量!",
-                          textStyle: TextStyle(fontSize: 14 * 2.sp),
-                          textPadding: EdgeInsets.only(
-                              left: 15, right: 15, top: 5, bottom: 5),
-                          backgroundColor: Colors.red,
-                          duration: Duration(milliseconds: 2500),
-                          position: ToastPosition(
-                              align: Alignment.topCenter,
-                              offset: MediaQuery.of(context).size.height / 2),
-                          dismissOtherToast: true);
-                    }
-                  : () {
-                      int num = int.parse(_controller.text);
-                      num++;
-                      _controller.text = "$num";
-                      if (lastValue == widget.minValue ||
-                          (num == widget.maxValue &&
-                              lastValue != widget.maxValue)) {
-                        setState(() {});
-                      }
-                      lastValue = num;
-                      widget.onInputComplete(num.toString());
-                    },
+              onPressed: _controller.text == null || _controller.text == ''
+                  ? null
+                  : int.parse(_controller.text) >= widget.maxValue
+                      ? () {
+                          showToast("已经达到最大购买数量!",
+                              textStyle: TextStyle(fontSize: 14 * 2.sp),
+                              textPadding: EdgeInsets.only(
+                                  left: 15, right: 15, top: 5, bottom: 5),
+                              backgroundColor: Colors.red,
+                              duration: Duration(milliseconds: 2500),
+                              position: ToastPosition(
+                                  align: Alignment.topCenter,
+                                  offset:
+                                      MediaQuery.of(context).size.height / 2),
+                              dismissOtherToast: true);
+                        }
+                      : () {
+                          int num = int.parse(_controller.text);
+                          num++;
+                          _controller.text = "$num";
+                          if (lastValue == widget.minValue ||
+                              (num == widget.maxValue &&
+                                  lastValue != widget.maxValue)) {
+                            setState(() {});
+                          }
+                          lastValue = num;
+                          widget.onInputComplete(num.toString());
+                        },
             ),
+            20.wb,
           ],
         ),
       ),

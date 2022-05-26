@@ -877,6 +877,7 @@ class Assets {
   static const AssetGenImage sevenVipCard =
       AssetGenImage('assets/seven_vip_card.png');
   static const AssetGenImage share = AssetGenImage('assets/share.png');
+  static const AssetGenImage shareBg = AssetGenImage('assets/share_bg.jpg');
   static const $AssetsShareBottomGen shareBottom = $AssetsShareBottomGen();
   static const AssetGenImage shareSubsidy =
       AssetGenImage('assets/share_subsidy.png');
@@ -1107,20 +1108,20 @@ class AssetGenImage extends AssetImage {
   const AssetGenImage(String assetName) : super(assetName);
 
   Image image({
-    Key  key,
-    ImageFrameBuilder  frameBuilder,
-    ImageLoadingBuilder  loadingBuilder,
-    ImageErrorWidgetBuilder  errorBuilder,
-    String  semanticLabel,
+    Key key,
+    ImageFrameBuilder frameBuilder,
+    ImageLoadingBuilder loadingBuilder,
+    ImageErrorWidgetBuilder errorBuilder,
+    String semanticLabel,
     bool excludeFromSemantics = false,
-    double  width,
-    double  height,
-    Color  color,
-    BlendMode  colorBlendMode,
-    BoxFit  fit,
+    double width,
+    double height,
+    Color color,
+    BlendMode colorBlendMode,
+    BoxFit fit,
     AlignmentGeometry alignment = Alignment.center,
     ImageRepeat repeat = ImageRepeat.noRepeat,
-    Rect  centerSlice,
+    Rect centerSlice,
     bool matchTextDirection = false,
     bool gaplessPlayback = false,
     bool isAntiAlias = false,

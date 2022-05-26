@@ -178,7 +178,6 @@ class _WholesaleUserAppBarState extends BaseStoreState<WholesaleUserAppBar> {
                             color: Color(0xFFFEC17C),
                             borderRadius: BorderRadius.circular(2.rw)),
                         child: Text(
-
                           'VIP店铺',
                           style: TextStyle(
                               fontSize: 10.rsp, color: Color(0xFF512309)),

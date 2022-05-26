@@ -521,7 +521,7 @@ class _VipShopPushPageState extends State<VipShopPushPage> {
   _showShare(String id,) {
     WeChatUtils.miniProgramBugCard(
       id: id,
-      netWorkThumbnail: 'https://jyycdn.reecook.cn/static/photo/20220419/a2ae64107a4c02a4e023c9eeb21b6826.jpg',
+      netWorkThumbnail: Assets.shareBg.path,
       des: '瑞库客VIP店铺权益卡｜尊享底价批发，每天低至一块钱！',
     );
   }

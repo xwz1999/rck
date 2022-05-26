@@ -979,7 +979,14 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                       fontSize: 14 * 2.sp,
                       onPressed: !canDeliver
                           ? null
-                          : () {
+                          : () async{
+                              ///防止焦点未变化直接点击提交订单
+                              String text = _editController.text;
+                              if (text  != _orderModel.data.buyerMessage) {
+                                await  _changeBuyerMessage(text);
+                              }
+
+
                               if (_overseaNeedIdentifier) {
                                 if (!UserManager
                                     .instance.user.info.realInfoStatus) {
@@ -1153,12 +1160,9 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   }
 
   _changeBuyerMessage(String msg) async {
-    final cancel = ReToast.loading();
     HttpResultModel<BaseModel> resultModel =
         await _presenterImpl.changeBuyerMessage(
             UserManager.instance.user.info.id, _orderModel.data.id, msg);
-    // GSDialog.of(context).dismiss(context);
-    cancel();
     if (!resultModel.result) {
       ReToast.err(text: resultModel.code);
       return;

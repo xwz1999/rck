@@ -40,8 +40,7 @@ void main() async {
   await HiveStore.initBox();
 
   // 设置当前是否为测试环境
-  const bool isDebug
-   = const bool.fromEnvironment('ISDEBUG', defaultValue:  true);
+  const bool isDebug = const bool.fromEnvironment('ISDEBUG', defaultValue:  true);
   AppConfig.setDebug(isDebug);
 
 

@@ -97,7 +97,7 @@ class _CashWithdrawHistoryPageState extends BaseStoreState<CashWithdrawHistoryPa
                       Row(
                         children: [
                           Text("税费${model.taxFee}元，实际到账", style: TextStyle(color: Color(0xFF333333) ,fontSize: 12.rsp),),
-                          Text("${model.taxFee}元", style: TextStyle(color: Color(0xFFD5101A), fontSize: 12.rsp),),
+                          Text("${model.actualAmount}元", style: TextStyle(color: Color(0xFFD5101A), fontSize: 12.rsp),),
                         ],
                       ),
                       Container(height: 3,),

@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/input_view.dart';
@@ -78,7 +79,9 @@ class _WholesaleMinusViewState extends State<WholesaleMinusView> {
             Spacer(),
             GestureDetector(
               onTap: int.parse(_controller.text==''?widget.minValue.toString():_controller.text) <= widget.minValue
-                  ? null
+                  ? (){
+                BotToast.showText(text: '已是最低数量');
+              }
                   : () {
                 int num = int.parse(_controller.text==''?widget.minValue.toString():_controller.text);
                 num = num - widget.limit;
@@ -86,6 +89,8 @@ class _WholesaleMinusViewState extends State<WholesaleMinusView> {
                 if (num <= widget.minValue) {
                   num = widget.minValue;
                 }
+
+
 
                 _controller.text = "$num";
                 //DPrint.printf("${_controller.text}, ${lastValue}");

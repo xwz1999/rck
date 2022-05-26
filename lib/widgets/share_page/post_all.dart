@@ -432,6 +432,7 @@ class PostBottomWidget extends StatelessWidget {
                   size: 60,
                   gapless: true,
                 ),
+                10.hb,
                 Container(
                     // margin: EdgeInsets.only(top: 5),
                     child: Text(

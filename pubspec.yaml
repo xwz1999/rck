@@ -2,7 +2,7 @@ name: recook
 description: Recook Market App.
 publish_to: "none"
 
-version: 2.0.0-dev+400
+version: 2.0.2-dev+403
 environment:
   sdk: ">=2.10.0 <3.0.0"
 
@@ -90,7 +90,7 @@ dependencies:
 
   # 图片压缩
   flutter_image_compress: 0.6.3
-  image_cropper: ^1.4.0
+  image_cropper: 1.4.0
 
 #  # svg
 #  flutter_svg: ^0.21.0-nullsafety.0

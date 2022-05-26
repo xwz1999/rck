@@ -52,16 +52,16 @@ class OtherItemViewV2 extends StatelessWidget {
                 '我的地址',
                 () => AppRouter.push(context, RouteName.RECEIVING_ADDRESS_PAGE),
               ),
-              _buildItem(
-                Image.asset(
-                  R.ASSETS_USER_FUNC_FANS_PNG,
-                  width: 30.rw,
-                  height: 30.rw,
-                ),
-                // '商务合作',
-                // () => AppRouter.push(context, RouteName.BUSSINESS_COOPERATION_PAGE),
-                '我的客户', () => Get.to(() => MyGroupPageV2()),
-              ),
+              // _buildItem(
+              //   Image.asset(
+              //     R.ASSETS_USER_FUNC_FANS_PNG,
+              //     width: 30.rw,
+              //     height: 30.rw,
+              //   ),
+              //   // '商务合作',
+              //   // () => AppRouter.push(context, RouteName.BUSSINESS_COOPERATION_PAGE),
+              //   '我的客户', () => Get.to(() => MyGroupPageV2()),
+              // ),
                !UserManager.instance.isWholesale?   _buildItem(
                 Image.asset(
                   R.ASSETS_USER_FUNC_FAVOR_PNG,
@@ -114,7 +114,7 @@ class OtherItemViewV2 extends StatelessWidget {
               //       () => Get.to(() => WholesaleHomePage()),
               // ),
 
-              !UserManager.instance.isWholesale?SizedBox(): _buildItem(
+              _buildItem(
                 Image.asset(
                   R.ASSETS_USER_FUNC_SETTING_PNG,
                   width: 30.rw,
@@ -125,25 +125,25 @@ class OtherItemViewV2 extends StatelessWidget {
               ),
             ],
           ).pSymmetric(v: 18.w),
-         UserManager.instance.isWholesale?SizedBox():
-         Row(
-           mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              46.wb,
-              CustomImageButton(
-                padding: EdgeInsets.zero,
-                onPressed:  () => AppRouter.push(context, RouteName.SETTING_PAGE),
-                child: <Widget>[
-                  Image.asset(
-                    R.ASSETS_USER_FUNC_SETTING_PNG,
-                    width: 30.rw,
-                    height: 30.rw,
-                  ),
-             '我的设置'.text.color(Color(0xFF666666)).size(12.rsp).make(),
-                ].column(),
-              )
-            ],
-          ).pSymmetric(v: 18.w),
+         // UserManager.instance.isWholesale?SizedBox():
+         // Row(
+         //   mainAxisAlignment: MainAxisAlignment.start,
+         //    children: [
+         //      46.wb,
+         //      CustomImageButton(
+         //        padding: EdgeInsets.zero,
+         //        onPressed:  () => AppRouter.push(context, RouteName.SETTING_PAGE),
+         //        child: <Widget>[
+         //          Image.asset(
+         //            R.ASSETS_USER_FUNC_SETTING_PNG,
+         //            width: 30.rw,
+         //            height: 30.rw,
+         //          ),
+         //     '我的设置'.text.color(Color(0xFF666666)).size(12.rsp).make(),
+         //        ].column(),
+         //      )
+         //    ],
+         //  ).pSymmetric(v: 18.w),
         ],
       ),
     ).color(Color(0xFFFFFFFF)).make();

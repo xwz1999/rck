@@ -8,6 +8,7 @@
  */
 
 import 'dart:core';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
@@ -17,6 +18,7 @@ import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:fluwx/fluwx.dart';
 import 'package:recook/constants/config.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/utils/user_Authority_util.dart';
 import 'package:recook/widgets/toast.dart';
@@ -112,6 +114,37 @@ class WeChatUtils {
     fluwx.shareToWeChat(model);
   }
 
+
+
+  static Future<Uint8List> compressFile(File file) async {
+    ///小程序分享的图片限制在128kb
+    int quality = 100;
+    if(file.readAsBytesSync().lengthInBytes/1024 <128){
+
+      var result = await FlutterImageCompress.compressWithFile(
+        file.absolute.path,
+        minHeight: 400,
+        minWidth: 500,
+        quality: 1,
+      );
+      return result;
+    }else {
+      quality =  (128/(file.readAsBytesSync().lengthInBytes/1024)*100).toInt();
+
+      print(quality);
+
+      var result = await FlutterImageCompress.compressWithFile(
+        file.absolute.path,
+        minHeight: 400,
+        minWidth: 500,
+        quality: quality,
+      );
+      print(file.readAsBytesSync().lengthInBytes);
+      print(result.length);
+      return result  ;
+    }
+  }
+
   static Future<Uint8List> compressList(Uint8List list) async {
     ///小程序分享的图片限制在128kb
     int quality = 100;
@@ -143,8 +176,6 @@ class WeChatUtils {
   }) async {
 
 
-
-      ///专程
       var response = await Dio().get(
           netWorkThumbnail,
           options: Options(responseType: ResponseType.bytes));
@@ -175,18 +206,17 @@ class WeChatUtils {
     String id,
     String netWorkThumbnail,
     String des,
-  }) {
-    // String qrCode =
-    //     "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}$id/${UserManager.instance.user.info.invitationNo}";
+  }) async {
+
     var model = fluwx.WeChatShareMiniProgramModel(
       userName: AppConfig.WX_APP_MINIPRO_USERNAME,
       webPageUrl: 'https://mallh5.reecook.cn/',
       path:
       'pages/vip/vipBuy?type=share&invite=${UserManager.instance.user.info.invitationNo}',
-      thumbnail: fluwx.WeChatImage.network(netWorkThumbnail),
+      thumbnail: fluwx.WeChatImage.asset(netWorkThumbnail),
       title: des,
       compressThumbnail: false,
-      miniProgramType: WXMiniProgramType.RELEASE,
+      miniProgramType: AppConfig.debug ? WXMiniProgramType.PREVIEW:fluwx.WXMiniProgramType.RELEASE,
     );
     print('${UserManager.instance.user.info.invitationNo}');
     fluwx.shareToWeChat(model);

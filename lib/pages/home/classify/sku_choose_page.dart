@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:recook/base/base_store_state.dart';
@@ -27,7 +26,8 @@ class SkuChoosePage extends StatefulWidget {
       this.model,
       @required this.itemModels,
       @required this.results,
-      this.listener, this.userId})
+      this.listener,
+      this.userId})
       : super(key: key);
 
   @override
@@ -45,58 +45,52 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
   List _photoList = [];
   List<PicSwiperItem> picSwiperItem = [];
   StateSetter _refreshState;
+
   /// 存放 sku id 列表
   List selectedIds = [];
 
   @override
   void initState() {
     super.initState();
+
     ///为了图片和规格选择顺序对应 先进行排序
-    widget.model.data.sku.sort((a,b)=>a.combineId.compareTo(b.combineId));
+    widget.model.data.sku.sort((a, b) => a.combineId.compareTo(b.combineId));
     _num = 1;
     _stringBuffer = StringBuffer();
     _skuDes = [];
     _skuClicked();
+
     ///将所有的规格图片存入
     widget.model.data.sku.forEach((element) {
       _photoList.add(element.picUrl);
       picSwiperItem.add(PicSwiperItem(Api.getImgUrl(element.picUrl)));
     });
 
-
     // bool hasPromotion = widget.model.data.promotion != null;
     // bool hasPromotion = true;
-    double minPrice=0.0, maxPrice, maxCommission, minCommission;
-
-
-
+    double minPrice = 0.0, maxPrice, maxCommission, minCommission;
 
     widget.model.data.sku.forEach((element) {
-      if(minPrice==0.0){
+      if (minPrice == 0.0) {
         minPrice = element.discountPrice;
         minCommission = element.commission;
 
         maxPrice = element.discountPrice;
         maxCommission = element.commission;
-
-      }else
-      if(element.discountPrice<minPrice){
+      } else if (element.discountPrice < minPrice) {
         minPrice = element.discountPrice;
         minCommission = element.commission;
-
-      }else{
-
+      } else {
         maxPrice = element.discountPrice;
         maxCommission = element.commission;
       }
-
     });
 
-
     if (maxPrice == minPrice) {
-      _price = (maxPrice-maxCommission).toStringAsFixed(2);
+      _price = (maxPrice - maxCommission).toStringAsFixed(2);
     } else {
-      _price = "${(minPrice-minCommission).toStringAsFixed(2)}-${(maxPrice-maxCommission).toStringAsFixed(2)}";
+      _price =
+          "${(minPrice - minCommission).toStringAsFixed(2)}-${(maxPrice - maxCommission).toStringAsFixed(2)}";
     }
 
     if (maxCommission == minCommission) {
@@ -140,6 +134,31 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
               margin: EdgeInsets.symmetric(vertical: 10),
             ),
             _plusMinusView(),
+          Row(
+            children: <Widget>[
+              10.wb,
+              Container(
+                alignment: Alignment.topLeft,
+                child: Text("数量",
+                    style: TextStyle(color: Colors.black, fontSize: 12)),
+              ),
+              Expanded(child: PlusMinusView(
+                minValue: 1,
+                maxValue: _sku != null
+                    ? (_sku.inventory < 50 ? _sku.inventory : 50)
+                    : (widget.model.data.inventory < 50
+                    ? widget.model.data.inventory
+                    : 50),
+                onInputComplete: (String getNum) {
+                  _num = int.parse(getNum);
+                },
+                onValueChanged: (int getNum) {
+                  _num = getNum;
+                },
+              )),
+            ],
+          ),
+            50.hb,
             _bottomBar(),
           ],
         ),
@@ -154,127 +173,123 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-               CustomCacheImage(
-                imageClick: () async{
-                  var data = await  AppRouter.fade(
-                    context,
-                    RouteName.PIC_SWIPER,
-                    arguments: PicSwiper.setArguments(
-                      index: _sku==null?0: widget.model.data.sku.indexOf(_sku),
-                      pics: picSwiperItem,
-                    ),
-                  );
-                  print(data);
-                  _sku = widget.model.data.sku[data];
-
-
-                   for(int i=0;i<widget.itemModels[0].items.length;i++){
-                     if(_sku.combineId.indexOf(widget.itemModels[0].items[i].id.toString())!=-1){
-                       widget.itemModels[0].selectedIndex = i;
-                       widget.itemModels[0].items[i].canSelected = true;
-                     }
-                   }
-
-                  ///规格尺寸选项最多两种
-                  ///combineId用，隔开时 有两种类型
-                  if(_sku.combineId.indexOf(',')!=-1){
-                   for(int i=0;i<widget.itemModels[1].items.length;i++){
-                     if(_sku.combineId.indexOf(widget.itemModels[1].items[i].id.toString())!=-1){
-                       widget.itemModels[1].selectedIndex = i;
-                       widget.itemModels[1].items[i].canSelected = true;
-                     }
-                   }
-                  }
-                  _skuClicked();
-
-
-
-                },
-                width: rSize(100),
-                height: rSize(100),
-                fit: BoxFit.cover,
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-                imageUrl: _sku == null
-                    ? Api.getImgUrl(widget.model.data.mainPhotos[0].url)
-                    : Api.getImgUrl(_sku.picUrl),
-              ),
-
-               Expanded(
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Builder(
-                        builder: (context) {
-                          final skuNotNull =
-                              _sku != null && _sku.commission != null;
-                          return RichText(
-                            text: TextSpan(children: [
-                              TextSpan(
-                                text:
-                                    "￥${_sku != null ? (_sku.discountPrice-_sku.commission).toStringAsFixed(2) : _price}",
-                                // "￥ ${_sku.discountPrice}",
-                                style: AppTextStyle.generate(18 * 2.sp,
-                                    fontWeight: FontWeight.w500,
-                                    color: Colors.black),
-                              ),
-
-                            ]),
-                          );
-                        },
-                      ),
-                      Text(
-                        "库存 ${_sku != null ? _sku.inventory : widget.model.data.inventory}件",
-                        style: AppTextStyle.generate(13 * 2.sp,
-                            // fontWeight: FontWeight.w300,
-                            color: Colors.grey),
-                      ),
-                      widget.model.data.isFerme == 1
-                          ? Row(
-                              children: [
-                                Container(
-                                  width: 32 * 2.w,
-                                  height: 14 * 2.w,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xFFFFE5ED),
-                                    borderRadius:
-                                        BorderRadius.circular(7.5 * 2.w),
-                                  ),
-                                  child: Text(
-                                    '包税',
-                                    style: TextStyle(
-                                      color: Color(0xFFCC1B4F),
-                                      fontSize: 10 * 2.sp,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10 * 2.w,
-                                ),
-                                Text(
-                                  '进口税¥${widget.model.data.price.min.ferme.toStringAsFixed(2)},由瑞库客承担',
-                                  style: TextStyle(
-                                      color: Color(0xFF141414),
-                                      fontSize: 12 * 2.sp),
-                                ),
-                              ],
-                            )
-                          : SizedBox(),
-                      Text(
-                        "${_stringBuffer.toString()}",
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: AppTextStyle.generate(14 * 2.sp,
-                            // fontWeight: FontWeight.w300,
-                            color: Colors.black),
-                      )
-                    ],
-                  ),
+          CustomCacheImage(
+            imageClick: () async {
+              var data = await AppRouter.fade(
+                context,
+                RouteName.PIC_SWIPER,
+                arguments: PicSwiper.setArguments(
+                  index: _sku == null ? 0 : widget.model.data.sku.indexOf(_sku),
+                  pics: picSwiperItem,
                 ),
+              );
+              print(data);
+              _sku = widget.model.data.sku[data];
 
+              for (int i = 0; i < widget.itemModels[0].items.length; i++) {
+                if (_sku.combineId
+                        .indexOf(widget.itemModels[0].items[i].id.toString()) !=
+                    -1) {
+                  widget.itemModels[0].selectedIndex = i;
+                  widget.itemModels[0].items[i].canSelected = true;
+                }
+              }
+
+              ///规格尺寸选项最多两种
+              ///combineId用，隔开时 有两种类型
+              if (_sku.combineId.indexOf(',') != -1) {
+                for (int i = 0; i < widget.itemModels[1].items.length; i++) {
+                  if (_sku.combineId.indexOf(
+                          widget.itemModels[1].items[i].id.toString()) !=
+                      -1) {
+                    widget.itemModels[1].selectedIndex = i;
+                    widget.itemModels[1].items[i].canSelected = true;
+                  }
+                }
+              }
+              _skuClicked();
+            },
+            width: rSize(100),
+            height: rSize(100),
+            fit: BoxFit.cover,
+            borderRadius: BorderRadius.all(Radius.circular(8)),
+            imageUrl: _sku == null
+                ? Api.getImgUrl(widget.model.data.mainPhotos[0].url)
+                : Api.getImgUrl(_sku.picUrl),
+          ),
+          Expanded(
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 10),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Builder(
+                    builder: (context) {
+                      final skuNotNull =
+                          _sku != null && _sku.commission != null;
+                      return RichText(
+                        text: TextSpan(children: [
+                          TextSpan(
+                            text:
+                                "￥${_sku != null ? (_sku.discountPrice - _sku.commission).toStringAsFixed(2) : _price}",
+                            // "￥ ${_sku.discountPrice}",
+                            style: AppTextStyle.generate(18 * 2.sp,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.black),
+                          ),
+                        ]),
+                      );
+                    },
+                  ),
+                  Text(
+                    "库存 ${_sku != null ? _sku.inventory : widget.model.data.inventory}件",
+                    style: AppTextStyle.generate(13 * 2.sp,
+                        // fontWeight: FontWeight.w300,
+                        color: Colors.grey),
+                  ),
+                  widget.model.data.isFerme == 1
+                      ? Row(
+                          children: [
+                            Container(
+                              width: 32 * 2.w,
+                              height: 14 * 2.w,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFFFE5ED),
+                                borderRadius: BorderRadius.circular(7.5 * 2.w),
+                              ),
+                              child: Text(
+                                '包税',
+                                style: TextStyle(
+                                  color: Color(0xFFCC1B4F),
+                                  fontSize: 10 * 2.sp,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 10 * 2.w,
+                            ),
+                            Text(
+                              '进口税¥${widget.model.data.price.min.ferme.toStringAsFixed(2)},由瑞库客承担',
+                              style: TextStyle(
+                                  color: Color(0xFF141414),
+                                  fontSize: 12 * 2.sp),
+                            ),
+                          ],
+                        )
+                      : SizedBox(),
+                  Text(
+                    "${_stringBuffer.toString()}",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyle.generate(14 * 2.sp,
+                        // fontWeight: FontWeight.w300,
+                        color: Colors.black),
+                  )
+                ],
+              ),
+            ),
           ),
           CustomImageButton(
             icon: Icon(
@@ -297,30 +312,6 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
         child: SelectedList<SelectedListItemChildModel>(
       data: widget.itemModels,
       bottom: () {
-        Widget pw = PlusMinusView(
-          minValue: 1,
-          maxValue: _sku != null
-              ? (_sku.inventory < 50 ? _sku.inventory : 50)
-              : (widget.model.data.inventory < 50
-                  ? widget.model.data.inventory
-                  : 50),
-          onInputComplete: (String getNum) {
-            _num = int.parse(getNum);
-          },
-          onValueChanged: (int getNum) {
-            _num = getNum;
-          },
-        );
-        return Row(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.topLeft,
-              child: Text("数量",
-                  style: TextStyle(color: Colors.black, fontSize: 12)),
-            ),
-            Expanded(child: pw),
-          ],
-        );
       },
       listener: (int section, int index) {
         _skuClicked();
@@ -507,9 +498,7 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
       _sku = null;
       selectedIds.clear();
     }
-    setState(() {
-
-    });
+    setState(() {});
     // if (_headerImageState != null) {
     //   _headerImageState(() {});
     // }

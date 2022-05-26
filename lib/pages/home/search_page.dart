@@ -756,6 +756,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
         text: '马上就好，请稍等～',
       ),
     ));
+    _listViewController.replaceData([]);
 
     await _presenter.fetchList(
       -99,
@@ -834,7 +835,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                     UserManager.instance.getLoggerData = !UserManager.instance.getLoggerData;
                     PowerLogger.start(context, debug:UserManager.instance.getLoggerData);
                   }
-                  _listViewController.replaceData([]);
+
 
 
                 },

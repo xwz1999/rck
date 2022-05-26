@@ -384,10 +384,10 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                   : Container(child: SizedBox()),
 
               Expanded(
-                child: Text(
+                child: SelectableText(
                   detailModel.data.goodsName,
                   maxLines: 4,
-                  overflow: TextOverflow.ellipsis,
+                  // overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.generate(
                     16.rsp,
                     fontWeight: FontWeight.w600,

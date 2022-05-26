@@ -21,7 +21,7 @@ class AppConfig {
   static bool showExtraCommission = false;
   static const String WX_APP_ID = "wx21724a42aebe20cc";
   static const String WX_APP_SECRET = "83f8932eb742257316e3168ba9e920dc";
-  static const String WX_APP_MINIPRO_USERNAME = "gh_295d15c0ef68";
+  static const String WX_APP_MINIPRO_USERNAME = "gh_530bd0866836";
 
   static initial({
     bool dev = true,

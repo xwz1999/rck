@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -31,38 +32,72 @@ class SettingItemListView extends StatefulWidget {
   _SettingItemListViewState createState() => _SettingItemListViewState();
 }
 
-class _SettingItemListViewState extends State<SettingItemListView> {
+class _SettingItemListViewState extends State<SettingItemListView> with WidgetsBindingObserver {
   PackageInfo _packageInfo;
   String perText = '';
   @override
   void initState() {
     super.initState();
-  //   JPush().isNotificationEnabled().then((bool value) {
-  //     if (value)
-  //       perText = '已开启';
-  //     else
-  //       perText = '已关闭';
-  //   }).catchError((onError) {
-  //     print(onError);
-  //   });
+    WidgetsBinding.instance?.addObserver(this);
+
+
+    JPush().isNotificationEnabled().then((bool value) {
+      if (value)
+        perText = '已开启';
+      else
+        perText = '已关闭';
+    }).catchError((onError) {
+      print(onError);
+    });
     getPackageInfo();
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    WidgetsBinding.instance?.removeObserver(this);
   }
 
   @override
-  void onResume() {
-    // // Implement your code inside here
-    // Future.delayed(Duration(milliseconds: 300), () {
-    //   JPush().isNotificationEnabled().then((bool value) {
-    //     if (value)
-    //       perText = '已开启';
-    //     else
-    //       perText = '已关闭';
-    //   }).catchError((onError) {
-    //     print(onError);
-    //   });
-    //   setState(() {});
-    // });
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // TODO: implement didChangeAppLifecycleState
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+    //进入应用时候不会触发该状态 应用程序处于可见状态，并且可以响应用户的输入事件。它相当于 Android 中Activity的onResume
+      case AppLifecycleState.resumed:
+
+
+          JPush().isNotificationEnabled().then((bool value) {
+            if (value)
+              perText = '已开启';
+            else
+              perText = '已关闭';
+
+            setState(() {});
+          }).catchError((onError) {
+            print(onError);
+          });
+
+
+
+        print("应用进入前台======");
+        break;
+    //应用状态处于闲置状态，并且没有用户的输入事件，
+    // 注意：这个状态切换到 前后台 会触发，所以流程应该是先冻结窗口，然后停止UI
+      case AppLifecycleState.inactive:
+        print("应用处于闲置状态，这种状态的应用应该假设他们可能在任何时候暂停 切换到后台会触发======");
+        break;
+    //当前页面即将退出
+      case AppLifecycleState.detached:
+        print("当前页面即将退出======");
+        break;
+    // 应用程序处于不可见状态
+      case AppLifecycleState.paused:
+        print("应用处于不可见状态 后台======");
+        break;
+    }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -88,21 +123,23 @@ class _SettingItemListViewState extends State<SettingItemListView> {
                         //push(RouteName.ACCOUNT_AND_SAFETY_PAGE);
                       }),
 
-                      // SCTile.normalTile('接收推送通知',
-                      //     needArrow: true, value: perText, listener: () async {
-                      //   JPush().openSettingsForNotification();
-                      //   //bool result = await openAppSettings();
-                      //
-                      //   JPush().isNotificationEnabled().then((bool value) {
-                      //     if (value)
-                      //       perText = '已开启';
-                      //     else
-                      //       perText = '已关闭';
-                      //   }).catchError((onError) {
-                      //     print(onError);
-                      //   });
-                      //   setState(() {});
-                      // }),
+                      SCTile.normalTile('接收推送通知',
+                          needArrow: true, value: perText, listener: () async {
+                        JPush().openSettingsForNotification();
+                        //bool result = await openAppSettings();
+
+                        // JPush().isNotificationEnabled().then((bool value) {
+                        //   if (value)
+                        //     perText = '已开启';
+                        //   else
+                        //     perText = '已关闭';
+                        //
+                        //   setState(() {});
+                        // }).catchError((onError) {
+                        //   print(onError);
+                        // });
+
+                      }),
                       getEmptyBox(),
                       // SCTile.normalTile("清除缓存", needDivide: true, listener: () {}),
                       // SCTile.normalTile("意见反馈", needDivide: true, listener: () {
