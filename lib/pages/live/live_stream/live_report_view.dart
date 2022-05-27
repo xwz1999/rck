@@ -22,6 +22,7 @@ class _LiveReportViewState extends State<LiveReportView> {
   int type = 1;
   List<LiveReportModel> models;
   File _imageFile;
+  String path;
   TextEditingController _textController = TextEditingController();
   @override
   void initState() {
@@ -103,11 +104,12 @@ class _LiveReportViewState extends State<LiveReportView> {
                   ),
                   CustomImageButton(
                     onPressed: () {
-                      ImagePicker.pickImage(source: ImageSource.gallery)
+                      final picker =  ImagePicker();
+                      picker.getImage(source: ImageSource.gallery)
                           .then((value) {
                         if (value != null) {
                           setState(() {
-                            _imageFile = value;
+                            _imageFile =File(value.path) ;
                           });
                         }
                       });

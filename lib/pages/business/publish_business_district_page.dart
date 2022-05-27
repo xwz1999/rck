@@ -178,7 +178,7 @@ class _PublishBusinessDistrictPageState
         ActionSheet.show(context, items: ['拍照', '从手机相册选择'], listener: (index) {
           ActionSheet.dismiss(context);
           if (index == 0) {
-            ImagePicker.builder()
+            ImagePick.builder()
                 .pickImage(
               source: flutterImagePicker.ImageSource.camera,
               cropImage: false,
@@ -197,7 +197,7 @@ class _PublishBusinessDistrictPageState
             });
           }
           if (index == 1) {
-            ImagePicker.builder(
+            ImagePick.builder(
                     maxSelected: 9 - _imageFiles.length,
                     pickType: PickType.onlyImage,
             )

@@ -486,7 +486,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
         ActionSheet.show(context, items: ['拍照', '从手机相册选择'], listener: (index) {
           ActionSheet.dismiss(context);
           if (index == 0) {
-            ImagePicker.builder()
+            ImagePick.builder()
                 .pickImage(
               source: flutterImagePicker.ImageSource.camera,
               cropImage: false,
@@ -505,7 +505,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
             });
           }
           if (index == 1) {
-            ImagePicker.builder(
+            ImagePick.builder(
                 maxSelected: 3 - list.length,
                 pickType: PickType.onlyImage)
                 .pickAsset(context)

@@ -1,9 +1,9 @@
 /*
  * ====================================================
- * package   : 
+ * package   :
  * author    : Created by nansi.
- * time      : 2019-08-27  16:21 
- * remark    : 
+ * time      : 2019-08-27  16:21
+ * remark    :
  * ====================================================
  */
 
@@ -12,13 +12,14 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' as flutterImgPicker;
+import 'package:image_picker/image_picker.dart';
 import 'package:recook/models/media_model.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/widgets/no_data_view.dart';
 import 'package:photo/photo.dart';
 import 'package:photo_manager/photo_manager.dart';
 
-class ImagePicker implements LoadingDelegate {
+class ImagePick implements LoadingDelegate {
   int rowCount;
   int maxSelected;
   double padding;
@@ -36,7 +37,7 @@ class ImagePicker implements LoadingDelegate {
   BadgeDelegate badgeDelegate;
   List<AssetPathEntity> photoPathList;
 
-  ImagePicker(
+  ImagePick(
       {this.rowCount,
       this.maxSelected,
       this.padding,
@@ -54,7 +55,7 @@ class ImagePicker implements LoadingDelegate {
       this.badgeDelegate = const DefaultBadgeDelegate(),
       this.photoPathList});
 
-  static ImagePicker builder({
+  static ImagePick builder({
     int rowCount = 4,
     int maxSelected = 9,
     double padding = 0,
@@ -71,7 +72,7 @@ class ImagePicker implements LoadingDelegate {
     BadgeDelegate badgeDelegate = const DefaultBadgeDelegate(),
     List<AssetPathEntity> photoPathList,
   }) {
-    ImagePicker picker = ImagePicker(
+    ImagePick picker = ImagePick(
       rowCount: rowCount,
       maxSelected: maxSelected,
       padding: padding = 3,
@@ -103,7 +104,11 @@ class ImagePicker implements LoadingDelegate {
       double maxHeight,
       int imageQuality,
       }) async {
-      File imageFile = await flutterImgPicker.ImagePicker.pickImage(source: source, maxWidth: maxWidth, maxHeight: maxHeight, imageQuality: imageQuality);
+    final picker = ImagePicker();
+
+    var imagePath = await picker.getImage(source: source, maxWidth: maxWidth, maxHeight: maxHeight, imageQuality: imageQuality);
+
+      File imageFile =File(imagePath.path);
       if (imageFile == null) {
         return null;
       }

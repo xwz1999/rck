@@ -59,6 +59,7 @@ import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/permission_tool.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/storage/hive_store.dart';
+import 'package:recook/widgets/QRViewExample.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/banner.dart';
 import 'package:recook/widgets/goods_item.dart';
@@ -541,7 +542,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       onTap: () async {
         if (Platform.isIOS) {
           AppRouter.push(context, RouteName.BARCODE_SCAN);
-          //Get.to(QRViewExample());
+
           return;
         }
         bool permission = await Permission.camera.isGranted;
@@ -575,7 +576,8 @@ class _HomePageState extends BaseStoreState<HomePage>
                       context, "没有相机使用权限,授予相机使用权限后才能进行扫码");
                   return;
                 } else {
-                  AppRouter.push(context, RouteName.BARCODE_SCAN);
+
+                  //AppRouter.push(context, RouteName.BARCODE_SCAN);
                   //Get.to(QRViewExample());
                 }
               },
@@ -583,7 +585,8 @@ class _HomePageState extends BaseStoreState<HomePage>
             ),
           );
         } else {
-          AppRouter.push(context, RouteName.BARCODE_SCAN);
+          // AppRouter.push(context, RouteName.BARCODE_SCAN);
+
         }
       },
       child: Container(

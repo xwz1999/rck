@@ -69,7 +69,7 @@ class _EvaluationItemState extends BaseStoreState<EvaluationItem> {
                   listener: (index) {
                 ActionSheet.dismiss(context);
                 if (index == 0) {
-                  ImagePicker.builder()
+                  ImagePick.builder()
                       .pickImage(
                           source: flutterImagePicker.ImageSource.camera,
                           cropImage: false)
@@ -87,7 +87,7 @@ class _EvaluationItemState extends BaseStoreState<EvaluationItem> {
                   });
                 }
                 if (index == 1) {
-                  ImagePicker.builder(
+                  ImagePick.builder(
                           maxSelected: widget.maxSelectImage -
                               widget.evaluationModel.imageFiles.length,
                           pickType: PickType.onlyImage)

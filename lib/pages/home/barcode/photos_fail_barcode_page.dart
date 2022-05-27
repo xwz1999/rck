@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_qr_reader/flutter_qr_reader.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recook/base/base_store_state.dart';
@@ -40,6 +39,8 @@ class _PhotosFailBarcodePageState
   String _code;
   String _message;
   File _image;
+
+  final picker  = ImagePicker();
   @override
   void initState() {
     super.initState();
@@ -103,15 +104,21 @@ class _PhotosFailBarcodePageState
               color: Colors.white,
               fontSize: 16,
               onPressed: () async {
-                var image =
-                    await ImagePicker.pickImage(source: ImageSource.gallery);
-                File cropFile = await ImageUtils.cropImage(image);
+
+
+
+                var image = await picker.getImage(source: ImageSource.gallery);
+
+
+                // var image =
+                //     await ImagePicker.pickImage(source: ImageSource.gallery);
+                File cropFile = await ImageUtils.cropImage(File(image.path));
                 if (cropFile == null) {
                   return;
                 }
-                File imageFile = cropFile;
-                final rest = await FlutterQrReader.imgScan(imageFile);
-                onScan(rest, image: imageFile);
+                // File imageFile = cropFile;
+                // final rest = await FlutterQrReader.imgScan(imageFile);
+                // onScan(rest, image: imageFile);
               },
             ),
           ),

@@ -242,7 +242,7 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
     ActionSheet.show(context, items: ['拍照', '从手机相册选择'], listener: (index) {
       ActionSheet.dismiss(context);
       if (index == 0) {
-        ImagePicker.builder()
+        ImagePick.builder()
             .pickImage(
           source: flutterImagePicker.ImageSource.camera,
         )
@@ -254,7 +254,7 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
         });
       }
       if (index == 1) {
-        ImagePicker.builder(maxSelected: 1, pickType: PickType.onlyImage)
+        ImagePick.builder(maxSelected: 1, pickType: PickType.onlyImage)
             .pickAsset(globalContext)
             .then((List<MediaModel> medias) {
           if (medias.length > 0) {

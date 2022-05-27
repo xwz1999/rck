@@ -140,7 +140,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
                               items: ['拍照', '从手机相册选择'],
                               listener: (index) {
                                 if (index == 0) {
-                                  ImagePicker.builder()
+                                  ImagePick.builder()
                                       .pickImage(
                                     source:
                                         flutterImagePicker.ImageSource.camera,
@@ -153,7 +153,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
                                     },
                                   );
                                 } else if (index == 1) {
-                                  ImagePicker.builder(
+                                  ImagePick.builder(
                                     maxSelected: 6 - _mediaModels.length,
                                     pickType: PickType.onlyImage,
                                   ).pickAsset(context).then(

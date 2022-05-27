@@ -21,6 +21,7 @@ class VideoAdvancePage extends StatefulWidget {
 
 class _VideoAdvancePageState extends State<VideoAdvancePage> {
   File _coverFile;
+  final picker  = ImagePicker();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,16 +70,21 @@ class _VideoAdvancePageState extends State<VideoAdvancePage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+
                 _buildButton(
+
                   '封面',
                   () {
-                    ImagePicker.pickImage(
+
+
+
+                    picker.getImage(
                       source: ImageSource.gallery,
                       maxWidth: 500,
                       maxHeight: 500,
                     ).then((file) {
                       if (file != null) {
-                        _coverFile = file;
+                        _coverFile = File(file.path);
                         showToast('封面选择完成');
                       } else {
                         showToast('未选择封面');

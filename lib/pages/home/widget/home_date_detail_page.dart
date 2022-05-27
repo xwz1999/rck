@@ -51,7 +51,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
       maxYearMonth: 12,
       nowYear: dateNow.year,
       nowMonth: dateNow.month,
-      showMode: CalendarConstants.MODE_SHOW_ONLY_MONTH,
+      showMode: CalendarConstants.MODE_SHOW_MONTH_AND_WEEK,
       selectedDateTimeList: _dates,
       selectMode: CalendarSelectedMode.singleSelect,
       offset: 0,
