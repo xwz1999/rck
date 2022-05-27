@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -13,7 +12,7 @@ import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/models/home_weather_model.dart';
 import 'package:recook/models/missing_children_model.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
-import 'package:lunar_calendar_converter/lunar_solar_converter.dart';
+import 'package:lunar_calendar_converter_new/lunar_solar_converter.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../custom_cache_image.dart';

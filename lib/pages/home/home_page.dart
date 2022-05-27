@@ -577,7 +577,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                   return;
                 } else {
 
-                  //AppRouter.push(context, RouteName.BARCODE_SCAN);
+                  AppRouter.push(context, RouteName.BARCODE_SCAN);
                   //Get.to(QRViewExample());
                 }
               },
@@ -585,7 +585,7 @@ class _HomePageState extends BaseStoreState<HomePage>
             ),
           );
         } else {
-          // AppRouter.push(context, RouteName.BARCODE_SCAN);
+          AppRouter.push(context, RouteName.BARCODE_SCAN);
 
         }
       },

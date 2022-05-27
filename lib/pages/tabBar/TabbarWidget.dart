@@ -9,6 +9,7 @@ import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/business/release_material_page.dart';
 import 'package:recook/pages/home/home_page.dart';
+import 'package:recook/pages/home/widget/aku_college_page.dart';
 import 'package:recook/pages/live/pages/discovery_page.dart';
 import 'package:recook/pages/live/widget/live_fab_location.dart';
 import 'package:recook/pages/message/message_ceter_page.dart';
@@ -195,8 +196,8 @@ class _TabBarWidgetState extends State<TabBarWidget>
             HomePage(
               tabController: _tabController,
             ),
-            MessageCenterPage(canback: false,),
-            //AkuCollegePage(),
+            //MessageCenterPage(canback: false,),
+            AkuCollegePage(),
             DiscoveryPage(),
 
             UserManager.instance.isWholesale?WholesaleCarPage(canBack: false,): ShoppingCartPage(),

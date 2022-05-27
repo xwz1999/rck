@@ -1,21 +1,35 @@
+import 'package:flutter/services.dart';
 /// GENERATED CODE - DO NOT MODIFY BY HAND
 /// *****************************************************
 ///  FlutterGen
 /// *****************************************************
+
+// coverage:ignore-file
+// ignore_for_file: type=lint
+// ignore_for_file: directives_ordering,unnecessary_import
 
 import 'package:flutter/widgets.dart';
 
 class $AssetsHeaderGen {
   const $AssetsHeaderGen();
 
+  /// File path: assets/header/diamond_header.png
   AssetGenImage get diamondHeader =>
       const AssetGenImage('assets/header/diamond_header.png');
+
+  /// File path: assets/header/gold_header.png
   AssetGenImage get goldHeader =>
       const AssetGenImage('assets/header/gold_header.png');
+
+  /// File path: assets/header/master_header.png
   AssetGenImage get masterHeader =>
       const AssetGenImage('assets/header/master_header.png');
+
+  /// File path: assets/header/silver_header.png
   AssetGenImage get silverHeader =>
       const AssetGenImage('assets/header/silver_header.png');
+
+  /// File path: assets/header/vip_header.png
   AssetGenImage get vipHeader =>
       const AssetGenImage('assets/header/vip_header.png');
 }
@@ -23,36 +37,79 @@ class $AssetsHeaderGen {
 class $AssetsHomeGen {
   const $AssetsHomeGen();
 
+  /// File path: assets/home/ic_baby.png
   AssetGenImage get icBaby => const AssetGenImage('assets/home/ic_baby.png');
+
+  /// File path: assets/home/ic_bag.png
   AssetGenImage get icBag => const AssetGenImage('assets/home/ic_bag.png');
+
+  /// File path: assets/home/ic_book.png
   AssetGenImage get icBook => const AssetGenImage('assets/home/ic_book.png');
+
+  /// File path: assets/home/ic_classification.png
   AssetGenImage get icClassification =>
       const AssetGenImage('assets/home/ic_classification.png');
+
+  /// File path: assets/home/ic_clean.png
   AssetGenImage get icClean => const AssetGenImage('assets/home/ic_clean.png');
+
+  /// File path: assets/home/ic_clothes.png
   AssetGenImage get icClothes =>
       const AssetGenImage('assets/home/ic_clothes.png');
+
+  /// File path: assets/home/ic_department.png
   AssetGenImage get icDepartment =>
       const AssetGenImage('assets/home/ic_department.png');
+
+  /// File path: assets/home/ic_electricity.png
   AssetGenImage get icElectricity =>
       const AssetGenImage('assets/home/ic_electricity.png');
+
+  /// File path: assets/home/ic_food.png
   AssetGenImage get icFood => const AssetGenImage('assets/home/ic_food.png');
+
+  /// File path: assets/home/ic_furniture.png
   AssetGenImage get icFurniture =>
       const AssetGenImage('assets/home/ic_furniture.png');
+
+  /// File path: assets/home/ic_hair.png
   AssetGenImage get icHair => const AssetGenImage('assets/home/ic_hair.png');
+
+  /// File path: assets/home/ic_import.png
   AssetGenImage get icImport =>
       const AssetGenImage('assets/home/ic_import.png');
+
+  /// File path: assets/home/ic_medicalbox.png
   AssetGenImage get icMedicalbox =>
       const AssetGenImage('assets/home/ic_medicalbox.png');
+
+  /// File path: assets/home/ic_members.png
   AssetGenImage get icMembers =>
       const AssetGenImage('assets/home/ic_members.png');
+
+  /// File path: assets/home/ic_phone.png
   AssetGenImage get icPhone => const AssetGenImage('assets/home/ic_phone.png');
+
+  /// File path: assets/home/ic_rice.png
   AssetGenImage get icRice => const AssetGenImage('assets/home/ic_rice.png');
+
+  /// File path: assets/home/ic_sport.png
   AssetGenImage get icSport => const AssetGenImage('assets/home/ic_sport.png');
+
+  /// File path: assets/home/ic_tea.png
   AssetGenImage get icTea => const AssetGenImage('assets/home/ic_tea.png');
+
+  /// File path: assets/home/ic_vegetables.png
   AssetGenImage get icVegetables =>
       const AssetGenImage('assets/home/ic_vegetables.png');
+
+  /// File path: assets/home/ic_wine.png
   AssetGenImage get icWine => const AssetGenImage('assets/home/ic_wine.png');
+
+  /// File path: assets/home/invite.webp
   AssetGenImage get invite => const AssetGenImage('assets/home/invite.webp');
+
+  /// File path: assets/home/single_day.png
   AssetGenImage get singleDay =>
       const AssetGenImage('assets/home/single_day.png');
 }
@@ -60,6 +117,7 @@ class $AssetsHomeGen {
 class $AssetsIconGen {
   const $AssetsIconGen();
 
+  /// File path: assets/icon/ic_launcher-playstore.png
   AssetGenImage get icLauncherPlaystore =>
       const AssetGenImage('assets/icon/ic_launcher-playstore.png');
 }
@@ -67,82 +125,166 @@ class $AssetsIconGen {
 class $AssetsJsonGen {
   const $AssetsJsonGen();
 
+  /// File path: assets/json/weatherCity.json
   String get weatherCity => 'assets/json/weatherCity.json';
 }
 
 class $AssetsLiveGen {
   const $AssetsLiveGen();
 
+  /// File path: assets/live/add_image.png
   AssetGenImage get addImage =>
       const AssetGenImage('assets/live/add_image.png');
+
+  /// File path: assets/live/add_stream.png
   AssetGenImage get addStream =>
       const AssetGenImage('assets/live/add_stream.png');
+
+  /// File path: assets/live/add_video.png
   AssetGenImage get addVideo =>
       const AssetGenImage('assets/live/add_video.png');
+
+  /// File path: assets/live/all_share.png
   AssetGenImage get allShare =>
       const AssetGenImage('assets/live/all_share.png');
+
+  /// File path: assets/live/count_down.png
   AssetGenImage get countDown =>
       const AssetGenImage('assets/live/count_down.png');
+
+  /// File path: assets/live/cover.png
   AssetGenImage get cover => const AssetGenImage('assets/live/cover.png');
+
+  /// File path: assets/live/detail_close.png
   AssetGenImage get detailClose =>
       const AssetGenImage('assets/live/detail_close.png');
+
+  /// File path: assets/live/fancy_cart.png
   AssetGenImage get fancyCart =>
       const AssetGenImage('assets/live/fancy_cart.png');
+
+  /// File path: assets/live/fancy_cart_red.png
   AssetGenImage get fancyCartRed =>
       const AssetGenImage('assets/live/fancy_cart_red.png');
+
+  /// File path: assets/live/favorite.png
   AssetGenImage get favorite => const AssetGenImage('assets/live/favorite.png');
+
+  /// File path: assets/live/favorite_black.png
   AssetGenImage get favoriteBlack =>
       const AssetGenImage('assets/live/favorite_black.png');
+
+  /// File path: assets/live/flip_cam.png
   AssetGenImage get flipCam => const AssetGenImage('assets/live/flip_cam.png');
+
+  /// File path: assets/live/like.png
   AssetGenImage get like => const AssetGenImage('assets/live/like.png');
+
+  /// File path: assets/live/like_on.png
   AssetGenImage get likeOn => const AssetGenImage('assets/live/like_on.png');
+
+  /// File path: assets/live/live_animal.png
   AssetGenImage get liveAnimal =>
       const AssetGenImage('assets/live/live_animal.png');
+
+  /// File path: assets/live/live_cart.png
   AssetGenImage get liveCart =>
       const AssetGenImage('assets/live/live_cart.png');
+
+  /// File path: assets/live/live_cart_round.png
   AssetGenImage get liveCartRound =>
       const AssetGenImage('assets/live/live_cart_round.png');
+
+  /// File path: assets/live/live_detail.png
   AssetGenImage get liveDetail =>
       const AssetGenImage('assets/live/live_detail.png');
+
+  /// File path: assets/live/live_good.png
   AssetGenImage get liveGood =>
       const AssetGenImage('assets/live/live_good.png');
+
+  /// File path: assets/live/live_hold_placeholder.png
   AssetGenImage get liveHoldPlaceholder =>
       const AssetGenImage('assets/live/live_hold_placeholder.png');
+
+  /// File path: assets/live/live_like.png
   AssetGenImage get liveLike =>
       const AssetGenImage('assets/live/live_like.png');
+
+  /// File path: assets/live/live_more.png
   AssetGenImage get liveMore =>
       const AssetGenImage('assets/live/live_more.png');
+
+  /// File path: assets/live/live_playback.png
   AssetGenImage get livePlayback =>
       const AssetGenImage('assets/live/live_playback.png');
+
+  /// File path: assets/live/live_share.png
   AssetGenImage get liveShare =>
       const AssetGenImage('assets/live/live_share.png');
+
+  /// File path: assets/live/more.png
   AssetGenImage get more => const AssetGenImage('assets/live/more.png');
+
+  /// File path: assets/live/on_stream.png
   AssetGenImage get onStream =>
       const AssetGenImage('assets/live/on_stream.png');
+
+  /// File path: assets/live/play.gif
   AssetGenImage get play => const AssetGenImage('assets/live/play.gif');
+
+  /// File path: assets/live/recook_fab.png
   AssetGenImage get recookFab =>
       const AssetGenImage('assets/live/recook_fab.png');
+
+  /// File path: assets/live/review.png
   AssetGenImage get review => const AssetGenImage('assets/live/review.png');
+
+  /// File path: assets/live/shop.png
   AssetGenImage get shop => const AssetGenImage('assets/live/shop.png');
+
+  /// File path: assets/live/shutdown.png
   AssetGenImage get shutdown => const AssetGenImage('assets/live/shutdown.png');
+
+  /// File path: assets/live/small_red_cart.png
   AssetGenImage get smallRedCart =>
       const AssetGenImage('assets/live/small_red_cart.png');
+
+  /// File path: assets/live/stream_play_back.png
   AssetGenImage get streamPlayBack =>
       const AssetGenImage('assets/live/stream_play_back.png');
+
+  /// File path: assets/live/topic.png
   AssetGenImage get topic => const AssetGenImage('assets/live/topic.png');
+
+  /// File path: assets/live/upload_cart.png
   AssetGenImage get uploadCart =>
       const AssetGenImage('assets/live/upload_cart.png');
+
+  /// File path: assets/live/user.png
   AssetGenImage get user => const AssetGenImage('assets/live/user.png');
+
+  /// File path: assets/live/video_comment.png
   AssetGenImage get videoComment =>
       const AssetGenImage('assets/live/video_comment.png');
+
+  /// File path: assets/live/video_like.png
   AssetGenImage get videoLike =>
       const AssetGenImage('assets/live/video_like.png');
+
+  /// File path: assets/live/video_play.png
   AssetGenImage get videoPlay =>
       const AssetGenImage('assets/live/video_play.png');
+
+  /// File path: assets/live/video_share.png
   AssetGenImage get videoShare =>
       const AssetGenImage('assets/live/video_share.png');
+
+  /// File path: assets/live/video_upload.png
   AssetGenImage get videoUpload =>
       const AssetGenImage('assets/live/video_upload.png');
+
+  /// File path: assets/live/white_cart.png
   AssetGenImage get whiteCart =>
       const AssetGenImage('assets/live/white_cart.png');
 }
@@ -150,6 +292,7 @@ class $AssetsLiveGen {
 class $AssetsRecookLaunchImageGen {
   const $AssetsRecookLaunchImageGen();
 
+  /// File path: assets/recook_launch_image/recook_splash.webp
   AssetGenImage get recookSplash =>
       const AssetGenImage('assets/recook_launch_image/recook_splash.webp');
 }
@@ -157,26 +300,49 @@ class $AssetsRecookLaunchImageGen {
 class $AssetsShareBottomGen {
   const $AssetsShareBottomGen();
 
+  /// File path: assets/share_bottom/banner.png
   AssetGenImage get banner =>
       const AssetGenImage('assets/share_bottom/banner.png');
+
+  /// File path: assets/share_bottom/link.png
   AssetGenImage get link => const AssetGenImage('assets/share_bottom/link.png');
+
+  /// File path: assets/share_bottom/live_cart.png
   AssetGenImage get liveCart =>
       const AssetGenImage('assets/share_bottom/live_cart.png');
+
+  /// File path: assets/share_bottom/qq.png
   AssetGenImage get qq => const AssetGenImage('assets/share_bottom/qq.png');
+
+  /// File path: assets/share_bottom/rui_code.png
   AssetGenImage get ruiCode =>
       const AssetGenImage('assets/share_bottom/rui_code.png');
+
+  /// File path: assets/share_bottom/share_bottom_copyurl.png
   AssetGenImage get shareBottomCopyurl =>
       const AssetGenImage('assets/share_bottom/share_bottom_copyurl.png');
+
+  /// File path: assets/share_bottom/share_bottom_qq.png
   AssetGenImage get shareBottomQq =>
       const AssetGenImage('assets/share_bottom/share_bottom_qq.png');
+
+  /// File path: assets/share_bottom/share_bottom_qrcode_poster.png
   AssetGenImage get shareBottomQrcodePoster =>
       const AssetGenImage('assets/share_bottom/share_bottom_qrcode_poster.png');
+
+  /// File path: assets/share_bottom/share_bottom_wechat.png
   AssetGenImage get shareBottomWechat =>
       const AssetGenImage('assets/share_bottom/share_bottom_wechat.png');
+
+  /// File path: assets/share_bottom/share_bottom_wechatmini.png
   AssetGenImage get shareBottomWechatmini =>
       const AssetGenImage('assets/share_bottom/share_bottom_wechatmini.png');
+
+  /// File path: assets/share_bottom/share_bottom_weibo.png
   AssetGenImage get shareBottomWeibo =>
       const AssetGenImage('assets/share_bottom/share_bottom_weibo.png');
+
+  /// File path: assets/share_bottom/wechat_mini_p.png
   AssetGenImage get wechatMiniP =>
       const AssetGenImage('assets/share_bottom/wechat_mini_p.png');
 }
@@ -184,33 +350,66 @@ class $AssetsShareBottomGen {
 class $AssetsShopGen {
   const $AssetsShopGen();
 
+  /// File path: assets/shop/business_corp.png
   AssetGenImage get businessCorp =>
       const AssetGenImage('assets/shop/business_corp.png');
+
+  /// File path: assets/shop/diamond_badge.png
   AssetGenImage get diamondBadge =>
       const AssetGenImage('assets/shop/diamond_badge.png');
+
+  /// File path: assets/shop/diamond_bg.webp
   AssetGenImage get diamondBg =>
       const AssetGenImage('assets/shop/diamond_bg.webp');
+
+  /// File path: assets/shop/gold_badge.png
   AssetGenImage get goldBadge =>
       const AssetGenImage('assets/shop/gold_badge.png');
+
+  /// File path: assets/shop/gold_bg.webp
   AssetGenImage get goldBg => const AssetGenImage('assets/shop/gold_bg.webp');
+
+  /// File path: assets/shop/group_expand.webp
   AssetGenImage get groupExpand =>
       const AssetGenImage('assets/shop/group_expand.webp');
+
+  /// File path: assets/shop/helper.png
   AssetGenImage get helper => const AssetGenImage('assets/shop/helper.png');
+
+  /// File path: assets/shop/master_badge.png
   AssetGenImage get masterBadge =>
       const AssetGenImage('assets/shop/master_badge.png');
+
+  /// File path: assets/shop/master_bg.webp
   AssetGenImage get masterBg =>
       const AssetGenImage('assets/shop/master_bg.webp');
+
+  /// File path: assets/shop/my_award.webp
   AssetGenImage get myAward => const AssetGenImage('assets/shop/my_award.webp');
+
+  /// File path: assets/shop/my_group.webp
   AssetGenImage get myGroup => const AssetGenImage('assets/shop/my_group.webp');
+
+  /// File path: assets/shop/my_recommand.webp
   AssetGenImage get myRecommand =>
       const AssetGenImage('assets/shop/my_recommand.webp');
+
+  /// File path: assets/shop/platform_award.webp
   AssetGenImage get platformAward =>
       const AssetGenImage('assets/shop/platform_award.webp');
+
+  /// File path: assets/shop/qr_box.png
   AssetGenImage get qrBox => const AssetGenImage('assets/shop/qr_box.png');
+
+  /// File path: assets/shop/recommand_diamond.webp
   AssetGenImage get recommandDiamond =>
       const AssetGenImage('assets/shop/recommand_diamond.webp');
+
+  /// File path: assets/shop/silver_badge.png
   AssetGenImage get silverBadge =>
       const AssetGenImage('assets/shop/silver_badge.png');
+
+  /// File path: assets/shop/silver_bg.webp
   AssetGenImage get silverBg =>
       const AssetGenImage('assets/shop/silver_bg.webp');
 }
@@ -218,48 +417,86 @@ class $AssetsShopGen {
 class $AssetsSoundGen {
   const $AssetsSoundGen();
 
+  /// File path: assets/sound/recook_scan.mp3
   String get recookScan => 'assets/sound/recook_scan.mp3';
 }
 
 class $AssetsStaticGen {
   const $AssetsStaticGen();
 
+  /// File path: assets/static/full_screen_on.png
   AssetGenImage get fullScreenOn =>
       const AssetGenImage('assets/static/full_screen_on.png');
+
+  /// File path: assets/static/icon_back.png
   AssetGenImage get iconBack =>
       const AssetGenImage('assets/static/icon_back.png');
+
+  /// File path: assets/static/oversea_box.png
   AssetGenImage get overseaBox =>
       const AssetGenImage('assets/static/oversea_box.png');
+
+  /// File path: assets/static/oversea_box_g.png
   AssetGenImage get overseaBoxG =>
       const AssetGenImage('assets/static/oversea_box_g.png');
+
+  /// File path: assets/static/oversea_box_g_on.png
   AssetGenImage get overseaBoxGOn =>
       const AssetGenImage('assets/static/oversea_box_g_on.png');
+
+  /// File path: assets/static/oversea_box_on.png
   AssetGenImage get overseaBoxOn =>
       const AssetGenImage('assets/static/oversea_box_on.png');
+
+  /// File path: assets/static/oversea_flight.png
   AssetGenImage get overseaFlight =>
       const AssetGenImage('assets/static/oversea_flight.png');
+
+  /// File path: assets/static/oversea_flight_on.png
   AssetGenImage get overseaFlightOn =>
       const AssetGenImage('assets/static/oversea_flight_on.png');
+
+  /// File path: assets/static/oversea_location.png
   AssetGenImage get overseaLocation =>
       const AssetGenImage('assets/static/oversea_location.png');
+
+  /// File path: assets/static/oversea_location_on.png
   AssetGenImage get overseaLocationOn =>
       const AssetGenImage('assets/static/oversea_location_on.png');
+
+  /// File path: assets/static/oversea_zheng.png
   AssetGenImage get overseaZheng =>
       const AssetGenImage('assets/static/oversea_zheng.png');
+
+  /// File path: assets/static/place_nodata.png
   AssetGenImage get placeNodata =>
       const AssetGenImage('assets/static/place_nodata.png');
+
+  /// File path: assets/static/player_lock.png
   AssetGenImage get playerLock =>
       const AssetGenImage('assets/static/player_lock.png');
+
+  /// File path: assets/static/player_pause.png
   AssetGenImage get playerPause =>
       const AssetGenImage('assets/static/player_pause.png');
+
+  /// File path: assets/static/player_play.png
   AssetGenImage get playerPlay =>
       const AssetGenImage('assets/static/player_play.png');
+
+  /// File path: assets/static/player_progress_img.png
   AssetGenImage get playerProgressImg =>
       const AssetGenImage('assets/static/player_progress_img.png');
+
+  /// File path: assets/static/player_rotate.png
   AssetGenImage get playerRotate =>
       const AssetGenImage('assets/static/player_rotate.png');
+
+  /// File path: assets/static/player_unlock.png
   AssetGenImage get playerUnlock =>
       const AssetGenImage('assets/static/player_unlock.png');
+
+  /// File path: assets/static/video_loading.png
   AssetGenImage get videoLoading =>
       const AssetGenImage('assets/static/video_loading.png');
 }
@@ -267,47 +504,85 @@ class $AssetsStaticGen {
 class $AssetsSvgGen {
   const $AssetsSvgGen();
 
+  /// File path: assets/svg/svg_balance_pay.png
   AssetGenImage get svgBalancePayPng =>
       const AssetGenImage('assets/svg/svg_balance_pay.png');
+
+  /// File path: assets/svg/svg_balance_pay.svg
   String get svgBalancePaySvg => 'assets/svg/svg_balance_pay.svg';
+
+  /// File path: assets/svg/svg_coin.png
   AssetGenImage get svgCoinPng =>
       const AssetGenImage('assets/svg/svg_coin.png');
+
+  /// File path: assets/svg/svg_coin.svg
   String get svgCoinSvg => 'assets/svg/svg_coin.svg';
 }
 
 class $AssetsTicketGen {
   const $AssetsTicketGen();
 
+  /// File path: assets/ticket/ screen_icon.png
   AssetGenImage get screenIcon =>
       const AssetGenImage('assets/ticket/ screen_icon.png');
+
+  /// File path: assets/ticket/add_icon.png
   AssetGenImage get addIcon =>
       const AssetGenImage('assets/ticket/add_icon.png');
+
+  /// File path: assets/ticket/air_backgroud.png
   AssetGenImage get airBackgroud =>
       const AssetGenImage('assets/ticket/air_backgroud.png');
+
+  /// File path: assets/ticket/air_icon.png
   AssetGenImage get airIcon =>
       const AssetGenImage('assets/ticket/air_icon.png');
+
+  /// File path: assets/ticket/bus_icon.png
   AssetGenImage get busIcon =>
       const AssetGenImage('assets/ticket/bus_icon.png');
+
+  /// File path: assets/ticket/come_go_icon.png
   AssetGenImage get comeGoIcon =>
       const AssetGenImage('assets/ticket/come_go_icon.png');
+
+  /// File path: assets/ticket/edit_icon.png
   AssetGenImage get editIcon =>
       const AssetGenImage('assets/ticket/edit_icon.png');
+
+  /// File path: assets/ticket/goto1_icon.png
   AssetGenImage get goto1Icon =>
       const AssetGenImage('assets/ticket/goto1_icon.png');
+
+  /// File path: assets/ticket/goto2_icon.png
   AssetGenImage get goto2Icon =>
       const AssetGenImage('assets/ticket/goto2_icon.png');
+
+  /// File path: assets/ticket/order_tab_icon.png
   AssetGenImage get orderTabIcon =>
       const AssetGenImage('assets/ticket/order_tab_icon.png');
+
+  /// File path: assets/ticket/passager_icon.png
   AssetGenImage get passagerIcon =>
       const AssetGenImage('assets/ticket/passager_icon.png');
+
+  /// File path: assets/ticket/passager_tab_icon.png
   AssetGenImage get passagerTabIcon =>
       const AssetGenImage('assets/ticket/passager_tab_icon.png');
+
+  /// File path: assets/ticket/phone_icon.png
   AssetGenImage get phoneIcon =>
       const AssetGenImage('assets/ticket/phone_icon.png');
+
+  /// File path: assets/ticket/screen_choose_icon.png
   AssetGenImage get screenChooseIcon =>
       const AssetGenImage('assets/ticket/screen_choose_icon.png');
+
+  /// File path: assets/ticket/ticket_nodata_icon.png
   AssetGenImage get ticketNodataIcon =>
       const AssetGenImage('assets/ticket/ticket_nodata_icon.png');
+
+  /// File path: assets/ticket/train_icon.png
   AssetGenImage get trainIcon =>
       const AssetGenImage('assets/ticket/train_icon.png');
 }
@@ -315,129 +590,262 @@ class $AssetsTicketGen {
 class $AssetsUserGen {
   const $AssetsUserGen();
 
+  /// File path: assets/user/after_sale.png
   AssetGenImage get afterSale =>
       const AssetGenImage('assets/user/after_sale.png');
+
+  /// File path: assets/user/be_the_master.webp
   AssetGenImage get beTheMaster =>
       const AssetGenImage('assets/user/be_the_master.webp');
+
+  /// File path: assets/user/card_description.png
   AssetGenImage get cardDescriptionPng =>
       const AssetGenImage('assets/user/card_description.png');
+
+  /// File path: assets/user/card_description.webp
   AssetGenImage get cardDescriptionWebp =>
       const AssetGenImage('assets/user/card_description.webp');
+
+  /// File path: assets/user/card_description_simple.png
   AssetGenImage get cardDescriptionSimple =>
       const AssetGenImage('assets/user/card_description_simple.png');
+
+  /// File path: assets/user/copy.png
   AssetGenImage get copy => const AssetGenImage('assets/user/copy.png');
+
+  /// File path: assets/user/deliver.png
   AssetGenImage get deliver => const AssetGenImage('assets/user/deliver.png');
+
+  /// File path: assets/user/diamond.webp
   AssetGenImage get diamond => const AssetGenImage('assets/user/diamond.webp');
+
+  /// File path: assets/user/downgrade_master.webp
   AssetGenImage get downgradeMaster =>
       const AssetGenImage('assets/user/downgrade_master.webp');
+
+  /// File path: assets/user/downgrade_silver.webp
   AssetGenImage get downgradeSilver =>
       const AssetGenImage('assets/user/downgrade_silver.webp');
+
+  /// File path: assets/user/func_business.png
   AssetGenImage get funcBusiness =>
       const AssetGenImage('assets/user/func_business.png');
+
+  /// File path: assets/user/func_fans.png
   AssetGenImage get funcFans =>
       const AssetGenImage('assets/user/func_fans.png');
+
+  /// File path: assets/user/func_favor.png
   AssetGenImage get funcFavor =>
       const AssetGenImage('assets/user/func_favor.png');
+
+  /// File path: assets/user/func_location.png
   AssetGenImage get funcLocation =>
       const AssetGenImage('assets/user/func_location.png');
+
+  /// File path: assets/user/func_recommend.png
   AssetGenImage get funcRecommend =>
       const AssetGenImage('assets/user/func_recommend.png');
+
+  /// File path: assets/user/func_setting.png
   AssetGenImage get funcSetting =>
       const AssetGenImage('assets/user/func_setting.png');
+
+  /// File path: assets/user/func_team.png
   AssetGenImage get funcTeam =>
       const AssetGenImage('assets/user/func_team.png');
+
+  /// File path: assets/user/gold.webp
   AssetGenImage get gold => const AssetGenImage('assets/user/gold.webp');
+
+  /// File path: assets/user/group_recommend_bg.png
   AssetGenImage get groupRecommendBg =>
       const AssetGenImage('assets/user/group_recommend_bg.png');
+
+  /// File path: assets/user/icon_diamond.png
   AssetGenImage get iconDiamond =>
       const AssetGenImage('assets/user/icon_diamond.png');
+
+  /// File path: assets/user/icon_gold.png
   AssetGenImage get iconGold =>
       const AssetGenImage('assets/user/icon_gold.png');
+
+  /// File path: assets/user/icon_group.png
   AssetGenImage get iconGroup =>
       const AssetGenImage('assets/user/icon_group.png');
+
+  /// File path: assets/user/icon_master.png
   AssetGenImage get iconMaster =>
       const AssetGenImage('assets/user/icon_master.png');
+
+  /// File path: assets/user/icon_money.png
   AssetGenImage get iconMoney =>
       const AssetGenImage('assets/user/icon_money.png');
+
+  /// File path: assets/user/icon_order.png
   AssetGenImage get iconOrder =>
       const AssetGenImage('assets/user/icon_order.png');
+
+  /// File path: assets/user/icon_phone.png
   AssetGenImage get iconPhone =>
       const AssetGenImage('assets/user/icon_phone.png');
+
+  /// File path: assets/user/icon_sliver.png
   AssetGenImage get iconSliver =>
       const AssetGenImage('assets/user/icon_sliver.png');
+
+  /// File path: assets/user/icon_sort_group.png
   AssetGenImage get iconSortGroup =>
       const AssetGenImage('assets/user/icon_sort_group.png');
+
+  /// File path: assets/user/icon_sort_group_c.png
   AssetGenImage get iconSortGroupC =>
       const AssetGenImage('assets/user/icon_sort_group_c.png');
+
+  /// File path: assets/user/icon_sort_money.png
   AssetGenImage get iconSortMoney =>
       const AssetGenImage('assets/user/icon_sort_money.png');
+
+  /// File path: assets/user/icon_sort_money_c.png
   AssetGenImage get iconSortMoneyC =>
       const AssetGenImage('assets/user/icon_sort_money_c.png');
+
+  /// File path: assets/user/icon_sort_order.png
   AssetGenImage get iconSortOrder =>
       const AssetGenImage('assets/user/icon_sort_order.png');
+
+  /// File path: assets/user/icon_sort_order_c.png
   AssetGenImage get iconSortOrderC =>
       const AssetGenImage('assets/user/icon_sort_order_c.png');
+
+  /// File path: assets/user/icon_vip.png
   AssetGenImage get iconVip => const AssetGenImage('assets/user/icon_vip.png');
+
+  /// File path: assets/user/icon_wechat.png
   AssetGenImage get iconWechat =>
       const AssetGenImage('assets/user/icon_wechat.png');
+
+  /// File path: assets/user/logistics.png
   AssetGenImage get logistics =>
       const AssetGenImage('assets/user/logistics.png');
+
+  /// File path: assets/user/normal.webp
   AssetGenImage get normal => const AssetGenImage('assets/user/normal.webp');
+
+  /// File path: assets/user/notice_card.png
   AssetGenImage get noticeCard =>
       const AssetGenImage('assets/user/notice_card.png');
+
+  /// File path: assets/user/pay.png
   AssetGenImage get pay => const AssetGenImage('assets/user/pay.png');
+
+  /// File path: assets/user/pink_buyer.png
   AssetGenImage get pinkBuyerPng =>
       const AssetGenImage('assets/user/pink_buyer.png');
+
+  /// File path: assets/user/pink_buyer.webp
   AssetGenImage get pinkBuyerWebp =>
       const AssetGenImage('assets/user/pink_buyer.webp');
+
+  /// File path: assets/user/pink_great.png
   AssetGenImage get pinkGreat =>
       const AssetGenImage('assets/user/pink_great.png');
+
+  /// File path: assets/user/pink_group.png
   AssetGenImage get pinkGroupPng =>
       const AssetGenImage('assets/user/pink_group.png');
+
+  /// File path: assets/user/pink_group.webp
   AssetGenImage get pinkGroupWebp =>
       const AssetGenImage('assets/user/pink_group.webp');
+
+  /// File path: assets/user/pink_platform.png
   AssetGenImage get pinkPlatform =>
       const AssetGenImage('assets/user/pink_platform.png');
+
+  /// File path: assets/user/pink_share.png
   AssetGenImage get pinkSharePng =>
       const AssetGenImage('assets/user/pink_share.png');
+
+  /// File path: assets/user/pink_share.webp
   AssetGenImage get pinkShareWebp =>
       const AssetGenImage('assets/user/pink_share.webp');
+
+  /// File path: assets/user/platform_award.webp
   AssetGenImage get platformAward =>
       const AssetGenImage('assets/user/platform_award.webp');
+
+  /// File path: assets/user/review.png
   AssetGenImage get review => const AssetGenImage('assets/user/review.png');
+
+  /// File path: assets/user/sliver.webp
   AssetGenImage get sliver => const AssetGenImage('assets/user/sliver.webp');
+
+  /// File path: assets/user/upgradable_diamond.png.webp
   AssetGenImage get upgradableDiamondPng =>
       const AssetGenImage('assets/user/upgradable_diamond.png.webp');
+
+  /// File path: assets/user/upgradable_gold.png.webp
   AssetGenImage get upgradableGoldPng =>
       const AssetGenImage('assets/user/upgradable_gold.png.webp');
+
+  /// File path: assets/user/upgradable_gold_keep.png.webp
   AssetGenImage get upgradableGoldKeepPng =>
       const AssetGenImage('assets/user/upgradable_gold_keep.png.webp');
+
+  /// File path: assets/user/upgradable_master.png.webp
   AssetGenImage get upgradableMasterPng =>
       const AssetGenImage('assets/user/upgradable_master.png.webp');
+
+  /// File path: assets/user/upgradable_silver.png.webp
   AssetGenImage get upgradableSilverPng =>
       const AssetGenImage('assets/user/upgradable_silver.png.webp');
+
+  /// File path: assets/user/upgrade_diamond.png.webp
   AssetGenImage get upgradeDiamondPng =>
       const AssetGenImage('assets/user/upgrade_diamond.png.webp');
+
+  /// File path: assets/user/upgrade_gold.png.webp
   AssetGenImage get upgradeGoldPng =>
       const AssetGenImage('assets/user/upgrade_gold.png.webp');
+
+  /// File path: assets/user/upgrade_gold_card.webp
   AssetGenImage get upgradeGoldCard =>
       const AssetGenImage('assets/user/upgrade_gold_card.webp');
+
+  /// File path: assets/user/upgrade_silver.png.webp
   AssetGenImage get upgradeSilverPng =>
       const AssetGenImage('assets/user/upgrade_silver.png.webp');
+
+  /// File path: assets/user/upgrade_silver_card.webp
   AssetGenImage get upgradeSilverCard =>
       const AssetGenImage('assets/user/upgrade_silver_card.webp');
+
+  /// File path: assets/user/upload_images.png
   AssetGenImage get uploadImagesPng =>
       const AssetGenImage('assets/user/upload_images.png');
+
+  /// File path: assets/user/upload_images.webp
   AssetGenImage get uploadImagesWebp =>
       const AssetGenImage('assets/user/upload_images.webp');
+
+  /// File path: assets/user/user_app_bar_bg.webp
   AssetGenImage get userAppBarBg =>
       const AssetGenImage('assets/user/user_app_bar_bg.webp');
+
+  /// File path: assets/user/user_recommend.png
   AssetGenImage get userRecommend =>
       const AssetGenImage('assets/user/user_recommend.png');
+
+  /// File path: assets/user/user_recommend_single.png
   AssetGenImage get userRecommendSingle =>
       const AssetGenImage('assets/user/user_recommend_single.png');
+
+  /// File path: assets/user/user_withdrawal_bg.png
   AssetGenImage get userWithdrawalBg =>
       const AssetGenImage('assets/user/user_withdrawal_bg.png');
+
+  /// File path: assets/user/user_withdrawal_vip.png
   AssetGenImage get userWithdrawalVip =>
       const AssetGenImage('assets/user/user_withdrawal_vip.png');
 }
@@ -445,60 +853,117 @@ class $AssetsUserGen {
 class $AssetsWeatherGen {
   const $AssetsWeatherGen();
 
+  /// File path: assets/weather/bingbao_bg.jpg
   AssetGenImage get bingbaoBg =>
       const AssetGenImage('assets/weather/bingbao_bg.jpg');
+
+  /// File path: assets/weather/lei_bg.jpg
   AssetGenImage get leiBg => const AssetGenImage('assets/weather/lei_bg.jpg');
+
+  /// File path: assets/weather/qing_bg.jpg
   AssetGenImage get qingBg => const AssetGenImage('assets/weather/qing_bg.jpg');
+
+  /// File path: assets/weather/shachen_bg.jpg
   AssetGenImage get shachenBg =>
       const AssetGenImage('assets/weather/shachen_bg.jpg');
+
+  /// File path: assets/weather/weather_location.png
   AssetGenImage get weatherLocation =>
       const AssetGenImage('assets/weather/weather_location.png');
+
+  /// File path: assets/weather/weather_waning.png
   AssetGenImage get weatherWaning =>
       const AssetGenImage('assets/weather/weather_waning.png');
+
+  /// File path: assets/weather/wu_bg.jpg
   AssetGenImage get wuBg => const AssetGenImage('assets/weather/wu_bg.jpg');
+
+  /// File path: assets/weather/xun_bg.jpg
   AssetGenImage get xunBg => const AssetGenImage('assets/weather/xun_bg.jpg');
+
+  /// File path: assets/weather/yin_bg.jpg
   AssetGenImage get yinBg => const AssetGenImage('assets/weather/yin_bg.jpg');
+
+  /// File path: assets/weather/yu_bg.jpg
   AssetGenImage get yuBg => const AssetGenImage('assets/weather/yu_bg.jpg');
+
+  /// File path: assets/weather/yun_bg.jpg
   AssetGenImage get yunBg => const AssetGenImage('assets/weather/yun_bg.jpg');
 }
 
 class $AssetsWeatherCakeGen {
   const $AssetsWeatherCakeGen();
 
+  /// File path: assets/weatherCake/airquality.png
   AssetGenImage get airquality =>
       const AssetGenImage('assets/weatherCake/airquality.png');
+
+  /// File path: assets/weatherCake/lei.png
   AssetGenImage get lei => const AssetGenImage('assets/weatherCake/lei.png');
+
+  /// File path: assets/weatherCake/qing.png
   AssetGenImage get qing => const AssetGenImage('assets/weatherCake/qing.png');
+
+  /// File path: assets/weatherCake/shachen.png
   AssetGenImage get shachen =>
       const AssetGenImage('assets/weatherCake/shachen.png');
+
+  /// File path: assets/weatherCake/wu.png
   AssetGenImage get wu => const AssetGenImage('assets/weatherCake/wu.png');
+
+  /// File path: assets/weatherCake/xiaoyu.png
   AssetGenImage get xiaoyu =>
       const AssetGenImage('assets/weatherCake/xiaoyu.png');
+
+  /// File path: assets/weatherCake/xue.png
   AssetGenImage get xue => const AssetGenImage('assets/weatherCake/xue.png');
+
+  /// File path: assets/weatherCake/yin.png
   AssetGenImage get yin => const AssetGenImage('assets/weatherCake/yin.png');
+
+  /// File path: assets/weatherCake/yu.png
   AssetGenImage get yu => const AssetGenImage('assets/weatherCake/yu.png');
+
+  /// File path: assets/weatherCake/yujiaxue.png
   AssetGenImage get yujiaxue =>
       const AssetGenImage('assets/weatherCake/yujiaxue.png');
+
+  /// File path: assets/weatherCake/yun.png
   AssetGenImage get yun => const AssetGenImage('assets/weatherCake/yun.png');
 }
 
 class $AssetsWholesaleGen {
   const $AssetsWholesaleGen();
 
+  /// File path: assets/wholesale/wait_deal_img.png
   AssetGenImage get waitDealImg =>
       const AssetGenImage('assets/wholesale/wait_deal_img.png');
+
+  /// File path: assets/wholesale/wholesale_call.png
   AssetGenImage get wholesaleCall =>
       const AssetGenImage('assets/wholesale/wholesale_call.png');
+
+  /// File path: assets/wholesale/wholesale_copyt.png
   AssetGenImage get wholesaleCopyt =>
       const AssetGenImage('assets/wholesale/wholesale_copyt.png');
+
+  /// File path: assets/wholesale/wholesale_customer.png
   AssetGenImage get wholesaleCustomer =>
       const AssetGenImage('assets/wholesale/wholesale_customer.png');
+
+  /// File path: assets/wholesale/wholesale_dian.png
   AssetGenImage get wholesaleDian =>
       const AssetGenImage('assets/wholesale/wholesale_dian.png');
+
+  /// File path: assets/wholesale/wholesale_dowload.png
   AssetGenImage get wholesaleDowload =>
       const AssetGenImage('assets/wholesale/wholesale_dowload.png');
+
+  /// File path: assets/wholesale/wholesale_king_icon.png
   AssetGenImage get wholesaleKingIcon =>
       const AssetGenImage('assets/wholesale/wholesale_king_icon.png');
+
+  /// File path: assets/wholesale/wholesale_pi.png
   AssetGenImage get wholesalePi =>
       const AssetGenImage('assets/wholesale/wholesale_pi.png');
 }
@@ -986,6 +1451,15 @@ class Assets {
   static const AssetGenImage tabbarShopSelected =
       AssetGenImage('assets/tabbar_shop_selected.png');
   static const $AssetsTicketGen ticket = $AssetsTicketGen();
+  static const AssetGenImage toolFlashlightClose =
+      AssetGenImage('assets/tool_flashlight_close.png');
+  static const AssetGenImage toolFlashlightOpen =
+      AssetGenImage('assets/tool_flashlight_open.png');
+  static const AssetGenImage toolImg = AssetGenImage('assets/tool_img.png');
+  static const AssetGenImage toolImgInput =
+      AssetGenImage('assets/tool_img_input.png');
+  static const AssetGenImage toolQrcode =
+      AssetGenImage('assets/tool_qrcode.png');
   static const AssetGenImage unionPay = AssetGenImage('assets/union_pay.png');
   static const AssetGenImage upgradeIconGold =
       AssetGenImage('assets/upgrade_icon_gold.png');
@@ -1104,37 +1578,45 @@ class Assets {
       AssetGenImage('assets/wx_share_card_bg.png');
 }
 
-class AssetGenImage extends AssetImage {
-  const AssetGenImage(String assetName) : super(assetName);
+class AssetGenImage {
+  const AssetGenImage(this._assetName);
+
+  final String _assetName;
 
   Image image({
-    Key key,
-    ImageFrameBuilder frameBuilder,
-    ImageLoadingBuilder loadingBuilder,
-    ImageErrorWidgetBuilder errorBuilder,
-    String semanticLabel,
+    Key  key,
+    AssetBundle  bundle,
+    ImageFrameBuilder  frameBuilder,
+    ImageErrorWidgetBuilder  errorBuilder,
+    String  semanticLabel,
     bool excludeFromSemantics = false,
-    double width,
-    double height,
-    Color color,
-    BlendMode colorBlendMode,
-    BoxFit fit,
+    double  scale = 1.0,
+    double  width,
+    double  height,
+    Color  color,
+    Animation<double>  opacity,
+    BlendMode  colorBlendMode,
+    BoxFit  fit,
     AlignmentGeometry alignment = Alignment.center,
     ImageRepeat repeat = ImageRepeat.noRepeat,
-    Rect centerSlice,
+    Rect  centerSlice,
     bool matchTextDirection = false,
     bool gaplessPlayback = false,
     bool isAntiAlias = false,
+    String  package,
     FilterQuality filterQuality = FilterQuality.low,
+    int  cacheWidth,
+    int  cacheHeight,
   }) {
-    return Image(
+    return Image.asset(
+      _assetName,
       key: key,
-      image: this,
+      bundle: bundle,
       frameBuilder: frameBuilder,
-      loadingBuilder: loadingBuilder,
       errorBuilder: errorBuilder,
       semanticLabel: semanticLabel,
       excludeFromSemantics: excludeFromSemantics,
+      scale: scale,
       width: width,
       height: height,
       color: color,
@@ -1146,9 +1628,12 @@ class AssetGenImage extends AssetImage {
       matchTextDirection: matchTextDirection,
       gaplessPlayback: gaplessPlayback,
       isAntiAlias: isAntiAlias,
+      package: package,
       filterQuality: filterQuality,
+      cacheWidth: cacheWidth,
+      cacheHeight: cacheHeight,
     );
   }
 
-  String get path => assetName;
+  String get path => _assetName;
 }

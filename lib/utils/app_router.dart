@@ -74,7 +74,7 @@ import 'package:recook/pages/user/user_verify_result.dart';
 import 'package:recook/pages/welcome/welcome_widget.dart';
 import 'package:recook/pages/wholesale/wholesale_order_preview_page.dart';
 import 'package:recook/utils/navigator_utils.dart';
-import 'package:recook/widgets/barcodeScan.dart';
+import 'package:recook/widgets/scan/barcodeScan.dart';
 import 'package:recook/widgets/bussiness_cooperation_page.dart';
 import 'package:recook/widgets/custom_route.dart';
 import 'package:recook/widgets/pic_swiper.dart';

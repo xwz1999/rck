@@ -3,10 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lpinyin/lpinyin.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/weather_page/models.dart';
 import 'package:recook/widgets/weather_page/weather_city_model.dart';
 import 'package:recook/widgets/weather_page/weather_city_tool.dart';
 
@@ -34,6 +36,8 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
   List<WeatherCityModel> _searchResultCityList = [];
   TextEditingController _textEditingController;
   FocusNode _focusNode = FocusNode();
+  List<CityModel> _list = [];
+
 
   @override
   void initState() {
@@ -45,9 +49,41 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
     if (!TextUtils.isEmpty(cityName)) _selectCity = cityName;
     WeatherCityTool.getInstance().getCityList().then((onValue) {
       _cityList = onValue;
+
+      _cityList.forEach((element) {
+        _list.add(CityModel(name:element.cityZh,namePinyin: element.namePinyin));
+      });
+
+      _handleList(_list);
       setState(() {});
     });
+
+
+
     super.initState();
+  }
+
+  void _handleList(List<CityModel> list) {
+    if (list.isEmpty) return;
+    for (int i = 0, length = list.length; i < length; i++) {
+      String pinyin = PinyinHelper.getPinyinE(list[i].name);
+      String tag = pinyin.substring(0, 1).toUpperCase();
+      list[i].namePinyin = pinyin;
+      if (RegExp('[A-Z]').hasMatch(tag)) {
+        list[i].tagIndex = tag;
+      } else {
+        list[i].tagIndex = '#';
+      }
+    }
+    // A-Z sort.
+    SuspensionUtil.sortListBySuspensionTag(list);
+
+    // add hotCityList.
+
+    // show sus tag.
+    SuspensionUtil.setShowSuspensionStatus(_list);
+
+    setState(() {});
   }
 
   @override
@@ -93,26 +129,56 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
                         ),
                         Expanded(
                           child: AzListView(
-                            shrinkWrap: false,
-                            data: _cityList,
-                            topData: null,
-                            itemBuilder: (context, model) =>
-                                _buildListItem(model),
-                            suspensionWidget: _buildSusWidget(_suspensionTag),
-                            isUseRealIndex: true,
-                            itemHeight: _itemHeight,
-                            suspensionHeight: _suspensionHeight,
-                            onSusTagChanged: (tag) {
-                              setState(() {
-                                _suspensionTag = tag;
-                              });
+
+                            data: _list,
+                            itemCount: _list.length,
+                            itemBuilder: (context, index) =>
+                                _buildListItem(_cityList[index]),
+
+                            padding: EdgeInsets.zero,
+                            susItemBuilder: (BuildContext context, int index) {
+                              CityModel model = _list[index];
+                              String tag = model.getSuspensionTag();
+                              return getSusItem(context, tag);
                             },
+                            // suspensionWidget: _buildSusWidget(_suspensionTag),
+                            // isUseRealIndex: true,
+                            // itemHeight: _itemHeight,
+                            // suspensionHeight: _suspensionHeight,
+                            // onSusTagChanged: (tag) {
+                            //   setState(() {
+                            //     _suspensionTag = tag;
+                            //   });
+                            // },
                           ),
                         )
                       ],
                     ),
                   )
           ],
+        ),
+      ),
+    );
+  }
+
+
+   Widget getSusItem(BuildContext context, String tag,
+      {double susHeight = 40}) {
+    if (tag == '★') {
+      tag = '★ 热门城市';
+    }
+    return Container(
+      height: susHeight,
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.only(left: 16.0),
+      color: Color(0xFFF3F4F5),
+      alignment: Alignment.centerLeft,
+      child: Text(
+        '$tag',
+        softWrap: false,
+        style: TextStyle(
+          fontSize: 14.0,
+          color: Color(0xFF666666),
         ),
       ),
     );
