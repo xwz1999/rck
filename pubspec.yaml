@@ -178,9 +178,6 @@ dependencies:
 
   image_gallery_saver: 1.7.1
 
-#
-#  wechat_assets_picker: ^6.2.0
-
 
 
   # 因为项目compileSdkVersion 28
