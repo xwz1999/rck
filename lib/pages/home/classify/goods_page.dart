@@ -21,6 +21,7 @@ import 'package:recook/pages/home/classify/goods_service_guarantee.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/home/classify/order_preview_page.dart';
 import 'package:recook/pages/home/classify/sku_choose_page.dart';
+import 'package:recook/pages/home/items/item_user_comment.dart';
 import 'package:recook/pages/home/model/address_model.dart';
 import 'package:recook/pages/home/widget/good_price_view.dart';
 import 'package:recook/pages/home/widget/goods_image_page_view.dart';
@@ -44,6 +45,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'commodity_detail_page.dart';
+import 'evaluation_list_page.dart';
 
 typedef ScrollListener = Function(ScrollUpdateNotification notification);
 
@@ -106,6 +108,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
 
   // int _seckillStatus = 0;//秒杀状态 0为未开始 1为开始
   String guige = '请选择规格';
+  
+  ScrollController _scrollController = ScrollController();
 
   @override
   bool get wantKeepAlive => true;
@@ -179,6 +183,30 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         : _buildBody(context);
   }
 
+
+  _customer(){
+    return GestureDetector(
+      onTap: () async{
+
+        _scrollController.jumpTo(0);
+      },
+      child: Container(
+        width: 46.rw,
+        height: 46.rw,
+        decoration: BoxDecoration(
+          color: Color(0xFF000000).withOpacity(0.7),
+          borderRadius: BorderRadius.all(Radius.circular(23.rw)),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(Assets.totop.path,width: 30.rw,height: 30.rw,color: Colors.white,),
+          ],
+        ),
+      ),
+    );
+  }
+  
   MediaQuery _buildBody(BuildContext context) {
     _context = context;
     return MediaQuery.removePadding(
@@ -198,12 +226,14 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 },
                 child: ListView(
                   //ListView 子项不销毁
+                  controller: _scrollController,
                   cacheExtent: DeviceInfo.screenHeight,
                   physics: BouncingScrollPhysics(),
                   children: _detailListWidget(),
                 ),
               ),
             ),
+            Positioned(child: _customer(),bottom: 20.rw,right: 10.rw,)
           ],
         ));
   }
@@ -462,6 +492,11 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               child: _buildOverseaCityPicker(),
             )
           : SizedBox(),
+
+      Container(
+          color: Colors.white,
+          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+          child: _userEvaluation()),
 
       AppConfig.getShowCommission()
           ? Container(
@@ -1415,6 +1450,70 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     ]);
     return coupons;
   }
+
+  _userEvaluation() {
+    return Column(
+      children: <Widget>[
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              "用户评价",
+              style: AppTextStyle.generate(15 * 2.sp,
+                  fontWeight: FontWeight.w500, color: Color(0xff333333)),
+            ),
+            Text(
+              " (${widget.goodsDetail.data.evaluations.total})",
+              style: AppTextStyle.generate(15 * 2.sp, color: Color(0xffb5b5b5)),
+            ),
+            Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    push(RouteName.EVALUATION_LIST_PAGE,
+                        arguments: EvaluationListPage.setArguments(
+                            goodsId: widget.goodsId));
+                  },
+                  child: Text(
+                    "查看全部",
+                    textAlign: TextAlign.end,
+                    style: AppTextStyle.generate(14 * 2.sp,
+                        color: AppColor.themeColor, fontWeight: FontWeight.w300),
+                  ),
+                )),
+            Container(
+              width: 5,
+            ),
+            Icon(
+              AppIcons.icon_next,
+              size: rSize(12),
+            )
+          ],
+        ),
+        widget.goodsDetail.data.evaluations.children.length == 0
+            ? Container()
+            : Container(
+          height: 90,
+          child: GridView.builder(
+              padding: EdgeInsets.only(top: rSize(5)),
+//                shrinkWrap: true,
+              itemCount:
+              widget.goodsDetail.data.evaluations.children.length,
+              scrollDirection: Axis.horizontal,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  childAspectRatio: 0.35,
+                  mainAxisSpacing: 10,
+                  crossAxisCount: 1),
+              itemBuilder: (context, index) {
+                return UserCommentItem(
+                  evaluation:
+                  widget.goodsDetail.data.evaluations.children[index],
+                );
+              }),
+        )
+      ],
+    );
+  }
+
 
   //大家都在买 推荐商品
   _recommendsWidget() {

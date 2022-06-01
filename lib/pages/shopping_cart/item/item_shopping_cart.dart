@@ -49,6 +49,7 @@ class ShoppingCartItem extends StatefulWidget {
 class _ShoppingCartItemState extends State<ShoppingCartItem> {
   @override
   Widget build(BuildContext context) {
+    // print("${widget.model.children.first.quantity}"+widget.model.brandName);
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: rSize(13)),

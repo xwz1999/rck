@@ -102,18 +102,19 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
     return TimelineTile(
       isFirst: isFirst,
       alignment: TimelineAlign.manual,
-      lineX: 0,
-      topLineStyle: LineStyle(color: Color(0xffe5e5e5), width: 2),
+      // lineX: 0,
+      // topLineStyle: LineStyle(color: Color(0xffe5e5e5), width: 2),
+      afterLineStyle: LineStyle(color: Color(0xffe5e5e5), thickness: 2),
       hasIndicator: true,
       indicatorStyle: IndicatorStyle(
           padding: EdgeInsets.zero,
           color: isFirst ? AppColor.redColor : Color(0xffe5e5e5),
-          indicatorY: 0.0,
+          indicatorXY: 0.0,
           drawGap: false,
           width: rSize(8),
           height: rSize(8)),
       isLast: isLast,
-      rightChild: Transform.translate(
+      endChild: Transform.translate(
         offset: Offset(0, -10),
         child: Padding(
           padding: const EdgeInsets.only(left: 16, right: 10, bottom: 10),

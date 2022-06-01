@@ -111,7 +111,8 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
 //        _presenter.getOrderDetail(UserManager.instance.user.info.id, _controller.getData()[index].id);
       },
       itemBuilder: (context, index) {
-        return OrderListItem(
+        return
+          OrderListItem(
           itemClick: () {
             OrderModel orderModel = _controller.getData()[index];
 

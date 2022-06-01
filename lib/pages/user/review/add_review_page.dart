@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart' as flutterImagePicker;
 import 'package:recook/constants/api.dart';
@@ -13,7 +16,9 @@ import 'package:recook/widgets/image_picker.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:photo/photo.dart';
+import 'package:wechat_assets_picker/wechat_assets_picker.dart';
+import 'package:wechat_camera_picker/wechat_camera_picker.dart';
+// import 'package:photo/photo.dart';
 
 class AddReviewPage extends StatefulWidget {
   final int goodsDetailId;
@@ -138,31 +143,85 @@ class _AddReviewPageState extends State<AddReviewPage> {
                             ActionSheet.show(
                               context,
                               items: ['拍照', '从手机相册选择'],
-                              listener: (index) {
+                              listener: (index) async{
                                 if (index == 0) {
-                                  ImagePick.builder()
-                                      .pickImage(
-                                    source:
-                                        flutterImagePicker.ImageSource.camera,
-                                  )
-                                      .then(
-                                    (model) {
-                                      if (model != null)
-                                        _mediaModels.add(model);
-                                      setState(() {});
-                                    },
-                                  );
+                                  // ImagePick.builder()
+                                  //     .pickImage(
+                                  //   source:
+                                  //       flutterImagePicker.ImageSource.camera,
+                                  // )
+                                  //     .then(
+                                  //   (model) {
+                                  //     if (model != null)
+                                  //       _mediaModels.add(model);
+                                  //     setState(() {});
+                                  //   },
+                                  // );
+
+                                  List<AssetEntity> entitys = [];
+                                  var values = await CameraPicker.pickFromCamera(context);
+                                  entitys.add(values);
+
+                                  if (entitys == null) {
+                                    return;
+                                  }
+
+                                  for (var element in entitys) {
+                                    File file = await element.file;
+                                    Uint8List thumbData = await element.thumbData;
+                                    if (_mediaModels.length < 6) {
+                                      _mediaModels.add(MediaModel(
+                                        width: element.width,
+                                        height: element.height,
+                                        type: element.typeInt == 1 ? MediaType.image : MediaType.video,
+                                        file: file,
+                                        thumbData: thumbData,
+                                      ));
+                                    } else {
+                                      _mediaModels.removeAt(0);
+                                      _mediaModels.add(MediaModel(
+                                        width: element.width,
+                                        height: element.height,
+                                        type: element.typeInt == 1 ? MediaType.image : MediaType.video,
+                                        file: file,
+                                        thumbData: thumbData,
+                                      ));
+                                    }
+
+                                  }
+                                  setState(() {});
+
                                 } else if (index == 1) {
-                                  ImagePick.builder(
-                                    maxSelected: 6 - _mediaModels.length,
-                                    pickType: PickType.onlyImage,
-                                  ).pickAsset(context).then(
-                                    (models) {
-                                      if (models != null && models.isNotEmpty)
-                                        _mediaModels.addAll(models);
-                                      setState(() {});
-                                    },
-                                  );
+                                  // ImagePick.builder(
+                                  //   maxSelected: 6 - _mediaModels.length,
+                                  //   pickType: PickType.onlyImage,
+                                  // ).pickAsset(context).then(
+                                  //   (models) {
+                                  //     if (models != null && models.isNotEmpty)
+                                  //       _mediaModels.addAll(models);
+                                  //     setState(() {});
+                                  //   },
+                                  // );
+                                  var values = await AssetPicker.pickAssets(context, maxAssets: 6-_mediaModels.length);
+                                  List<AssetEntity> entitys = [];
+                                  if (values == null) return;
+                                  entitys.addAll(values);
+                                  for (var element in entitys) {
+                                    File file = await element.file;
+                                    Uint8List thumbData = await element.thumbData;
+                                    _mediaModels.add(MediaModel(
+                                      width: element.width,
+                                      height: element.height,
+                                      type: element.typeInt == 1 ? MediaType.image : MediaType.video,
+                                      file: file,
+                                      thumbData: thumbData,
+                                    ));
+                                  }
+                                  while (_mediaModels.length > 6) {
+                                    _mediaModels.removeAt(0);
+                                  }
+                                  print(_mediaModels.length);
+                                  setState(() {});
                                 }
                                 Navigator.pop(context);
                               },

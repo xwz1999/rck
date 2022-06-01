@@ -484,7 +484,8 @@ class _HomePageState extends BaseStoreState<HomePage>
                 },
                 body: _buildBody(context),
               ),
-            )
+            ),
+            
           ],
         )));
   }

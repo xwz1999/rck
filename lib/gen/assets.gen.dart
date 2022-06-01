@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 /// GENERATED CODE - DO NOT MODIFY BY HAND
 /// *****************************************************
 ///  FlutterGen
@@ -1460,6 +1459,7 @@ class Assets {
       AssetGenImage('assets/tool_img_input.png');
   static const AssetGenImage toolQrcode =
       AssetGenImage('assets/tool_qrcode.png');
+  static const AssetGenImage totop = AssetGenImage('assets/totop.png');
   static const AssetGenImage unionPay = AssetGenImage('assets/union_pay.png');
   static const AssetGenImage upgradeIconGold =
       AssetGenImage('assets/upgrade_icon_gold.png');
@@ -1585,7 +1585,6 @@ class AssetGenImage {
 
   Image image({
     Key  key,
-    AssetBundle  bundle,
     ImageFrameBuilder  frameBuilder,
     ImageErrorWidgetBuilder  errorBuilder,
     String  semanticLabel,
@@ -1611,7 +1610,6 @@ class AssetGenImage {
     return Image.asset(
       _assetName,
       key: key,
-      bundle: bundle,
       frameBuilder: frameBuilder,
       errorBuilder: errorBuilder,
       semanticLabel: semanticLabel,

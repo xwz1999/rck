@@ -17,6 +17,7 @@ import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/constants/styles.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_hot_sell_list_model.dart';
@@ -35,6 +36,7 @@ import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/mvp.dart';
 import 'package:recook/utils/text_utils.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/custom_floating_action_button_location.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/filter_tool_bar.dart';
 import 'package:recook/widgets/goods_item.dart';
@@ -145,10 +147,42 @@ class _SearchPageState extends BaseStoreState<SearchPage>
     super.dispose();
   }
 
+  _customer(){
+    return GestureDetector(
+      onTap: () async{
+
+        _scrollController.jumpTo(0);
+      },
+      child: Container(
+        width: 46.rw,
+        height: 46.rw,
+        decoration: BoxDecoration(
+          color: Color(0xFF000000).withOpacity(0.7),
+          borderRadius: BorderRadius.all(Radius.circular(23.rw)),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(Assets.totop.path,width: 30.rw,height: 30.rw,color: Colors.white,),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
       backgroundColor: AppColor.frenchColor,
+      floatingActionButton:  !TextUtils.isEmpty(_textEditController.text) &&
+          _startSearch? _customer():SizedBox(),
+      floatingActionButtonLocation:CustomFloatingActionButtonLocation(FloatingActionButtonLocation.endDocked, 0, -70.rw),
+
+
+
+
+
+
       // appBar: CustomAppBar(title: "搜索"),
       appBar: CustomAppBar(
         elevation: 0,

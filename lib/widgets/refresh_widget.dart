@@ -110,7 +110,7 @@ class _RefreshWidgetState extends State<RefreshWidget> {
   @override
   Widget build(BuildContext context) {
     return RefreshConfiguration(
-      autoLoad: true,
+     // autoLoad: true,
       hideFooterWhenNotFull: true,
       headerTriggerDistance: widget.headerTriggerDistance ?? rSize(60),
       child: SmartRefresher(

@@ -94,7 +94,9 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
   _refreshShoppingCart() {
     if (UserManager.instance.refreshShoppingCart.value) {
       UserManager.instance.refreshShoppingCart.value = false;
+
       _controller.requestRefresh();
+
     }
   }
 
@@ -463,11 +465,12 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
               ? _buildExtraItem(context, index)
               : _buildItem(context, index));
         },
-        refreshCallback: () {
+        refreshCallback: ()async {
           // if (UserManager.instance.haveLogin){
+          //_controller.getData().clear();
+          FocusManager.instance.primaryFocus.unfocus();
           _presenter.getShoppingCartList(UserManager.instance.user.info.id);
 
-          Future.delayed(Duration.zero, () async {
             int userid;
             if (UserManager.instance.user.info.id == null) {
               userid = 0;
@@ -479,7 +482,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
             //   _likeGoodsList = goodsSimpleListModel.data;
             // }
             setState(() {});
-          });
+
           // }else{
           //   _presenter.getShoppingCartList(0);
           // }
@@ -613,7 +616,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
                 UserManager.instance.user.info.id, goods, num);
           },
         ),
-        _likeGoodsList.isNotEmpty ? _buildLikeWidget() : SizedBox(),
+        _likeGoodsList!=null ? _buildLikeWidget() : SizedBox(),
       ],
     );
   }
@@ -621,6 +624,8 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
   @override
   refreshSuccess(data) {
     // refreshSuccess(List<ShoppingCartBrandModel> data) {
+
+
     _checkAll = false;
     _selectedGoods.clear();
     _totalNum = 0;

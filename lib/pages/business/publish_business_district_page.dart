@@ -26,11 +26,15 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/image_picker.dart';
 import 'package:recook/widgets/image_selected_view.dart';
 import 'package:recook/widgets/input_view.dart';
-import 'package:photo/photo.dart';
+import 'package:wechat_assets_picker/wechat_assets_picker.dart';
+import 'package:wechat_camera_picker/wechat_camera_picker.dart';
+// import 'package:photo/photo.dart';
 
 class PublishBusinessDistrictPage extends StatefulWidget {
   final Map arguments;
+
   PublishBusinessDistrictPage({Key key, this.arguments}) : super(key: key);
+
   static setArguments({int goodsId}) {
     return {"goodsId": goodsId};
   }
@@ -44,7 +48,11 @@ class PublishBusinessDistrictPage extends StatefulWidget {
 class _PublishBusinessDistrictPageState
     extends BaseStoreState<PublishBusinessDistrictPage> {
   String _contentText = "";
+
+  List<AssetEntity> entitys = [];
+
   List<MediaModel> _imageFiles = [];
+
 //  GoodsDetailModelImpl _presenter;
 
   @override
@@ -175,44 +183,49 @@ class _PublishBusinessDistrictPageState
         }
       },
       addListener: () {
-        ActionSheet.show(context, items: ['拍照', '从手机相册选择'], listener: (index) {
-          ActionSheet.dismiss(context);
-          if (index == 0) {
-            ImagePick.builder()
-                .pickImage(
-              source: flutterImagePicker.ImageSource.camera,
-              cropImage: false,
-            )
-                .then((MediaModel media) {
-              if (media == null) {
-                return;
+        ActionSheet.show(context, items: ['拍照', '从手机相册选择'],
+            listener: (index) async {
+              ActionSheet.dismiss(context);
+              if (index == 0) {
+                List<AssetEntity> entitys = [];
+                var values = await CameraPicker.pickFromCamera(context);
+                entitys.add(values);
+                for (var element in entitys) {
+                  File file = await element.file;
+                  Uint8List thumbData = await element.thumbData;
+                  _imageFiles.add(MediaModel(
+                    width: element.width,
+                    height: element.height,
+                    type: element.typeInt == 1 ? MediaType.image : MediaType.video,
+                    file: file,
+                    thumbData: thumbData,
+                  ));
+                }
+                setState(() {});
               }
-              if (_imageFiles.length < 9) {
-                _imageFiles.add(media);
-              } else {
-                _imageFiles.removeAt(0);
-                _imageFiles.add(media);
+              if (index == 1) {
+                var values = await AssetPicker.pickAssets(context, maxAssets: 9);
+                List<AssetEntity> entitys = [];
+                if (values == null) return;
+                entitys.addAll(values);
+                for (var element in entitys) {
+                  File file = await element.file;
+                  Uint8List thumbData = await element.thumbData;
+                  _imageFiles.add(MediaModel(
+                    width: element.width,
+                    height: element.height,
+                    type: element.typeInt == 1 ? MediaType.image : MediaType.video,
+                    file: file,
+                    thumbData: thumbData,
+                  ));
+                }
+                while (_imageFiles.length > 9) {
+                  _imageFiles.removeAt(0);
+                }
+                print(_imageFiles.length);
+                setState(() {});
               }
-              setState(() {});
             });
-          }
-          if (index == 1) {
-            ImagePick.builder(
-                    maxSelected: 9 - _imageFiles.length,
-                    pickType: PickType.onlyImage,
-            )
-                .pickAsset(globalContext)
-                .then((List<MediaModel> medias) {
-              if (medias.length == 0) return;
-              // _imageFiles = medias;
-              _imageFiles.addAll(medias);
-              while (_imageFiles.length > 9) {
-                _imageFiles.removeAt(0);
-              }
-              setState(() {});
-            });
-          }
-        });
       },
       itemBuilder: (int index, dynamic item) {
         return ExtendedImage.memory(

@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
+// import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:recook/utils/mvp.dart';
 import 'package:recook/utils/print_util.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -13,42 +13,42 @@ typedef LoadMoreCallback = Function(int page);
 typedef ItemClickListener = Function(int index);
 typedef GridViewBuilder = Widget Function();
 
-class SwipeItem extends SlideAction {
-  SwipeItem({
-    Key key,
-    @required Widget child,
-    VoidCallback onTap,
-    Color color,
-    Decoration decoration,
-    bool closeOnTap = true,
-  }) : super(
-          key: key,
-          child: child,
-          color: color,
-          decoration: decoration,
-          onTap: onTap,
-        );
-}
-
-class SwipeIconItem extends IconSlideAction {
-  SwipeIconItem({
-    Key key,
-    icon,
-    iconWidget,
-    caption,
-    Color color,
-    foregroundColor,
-    VoidCallback onTap,
-    bool closeOnTap = true,
-  }) : super(
-          icon: icon,
-          iconWidget: iconWidget,
-          caption: caption,
-          color: color,
-          foregroundColor: foregroundColor,
-          onTap: onTap,
-        );
-}
+// class SwipeItem extends SlideAction {
+//   SwipeItem({
+//     Key key,
+//     @required Widget child,
+//     VoidCallback onTap,
+//     Color color,
+//     Decoration decoration,
+//     bool closeOnTap = true,
+//   }) : super(
+//           key: key,
+//           child: child,
+//           color: color,
+//           decoration: decoration,
+//           onTap: onTap,
+//         );
+// }
+//
+// class SwipeIconItem extends IconSlideAction {
+//   SwipeIconItem({
+//     Key key,
+//     icon,
+//     iconWidget,
+//     caption,
+//     Color color,
+//     foregroundColor,
+//     VoidCallback onTap,
+//     bool closeOnTap = true,
+//   }) : super(
+//           icon: icon,
+//           iconWidget: iconWidget,
+//           caption: caption,
+//           color: color,
+//           foregroundColor: foregroundColor,
+//           onTap: onTap,
+//         );
+// }
 
 abstract class MvpListViewDelegate<T> {
   MvpListViewPresenterI<T, MvpView, MvpModel> getPresenter();
@@ -82,7 +82,7 @@ class MvpListView<T> extends StatefulWidget {
   final List<Widget> Function(int index) swipeLeadingItems;
   final List<Widget> Function(int index) swipeTrailingItems;
   final double swipeItemWidthRatio;
-  final SlidableController slidableController;
+  // final SlidableController slidableController;
   const MvpListView(
       {@required this.delegate,
       this.itemBuilder,
@@ -99,7 +99,8 @@ class MvpListView<T> extends StatefulWidget {
       this.swipeLeadingItems,
       this.swipeTrailingItems,
       this.swipeItemWidthRatio = 0.2,
-      this.slidableController});
+      //this.slidableController
+      });
 
   @override
   State<StatefulWidget> createState() {
@@ -110,18 +111,18 @@ class MvpListView<T> extends StatefulWidget {
 class _MvpListViewState<T> extends State<MvpListView>
     implements MvpRefreshViewI<T> {
   MvpListViewController<T> _mvpController;
-  SlidableController _slidableController;
+  // SlidableController _slidableController;
 
   int _page = 0;
   BuildContext _context;
 
   @override
   void initState() {
-    if (widget.slidableController == null) {
-      _slidableController = SlidableController();
-    } else {
-      _slidableController = widget.slidableController;
-    }
+    // if (widget.slidableController == null) {
+    //   _slidableController = SlidableController();
+    // } else {
+    //   _slidableController = widget.slidableController;
+    // }
 
     GSRefreshController gsRefreshController =
         GSRefreshController(initialRefresh: widget.autoRefresh);
@@ -182,12 +183,14 @@ class _MvpListViewState<T> extends State<MvpListView>
         itemCount: _mvpController.getData().length,
         itemBuilder: (_, index) {
           if (widget.itemClickListener == null) {
-            return _listItem(_, index);
+            return  widget.itemBuilder(context, index);
+              //_listItem(_, index);
           }
           return CustomImageButton(
             padding: EdgeInsets.zero,
 //            child: widget.itemBuilder(_, index),
-            child: _listItem(_, index),
+            child:widget.itemBuilder(context, index),
+            //_listItem(_, index),
             onPressed: () {
               widget.itemClickListener(index);
             },
@@ -201,22 +204,22 @@ class _MvpListViewState<T> extends State<MvpListView>
   }
 
   // final SlidableController slidableController = SlidableController();
-  _listItem(BuildContext context, int index) {
-    Slidable.of(context)?.open();
-    return Slidable(
-      closeOnScroll: false,
-      controller: _slidableController,
-      actionExtentRatio: widget.swipeItemWidthRatio,
-      child: widget.itemBuilder(context, index),
-      actionPane: SlidableDrawerActionPane(),
-      actions: widget.swipeLeadingItems == null
-          ? null
-          : widget.swipeLeadingItems(index),
-      secondaryActions: widget.swipeTrailingItems == null
-          ? null
-          : widget.swipeTrailingItems(index),
-    );
-  }
+  // _listItem(BuildContext context, int index) {
+  //   Slidable.of(context)?.open();
+  //   return Slidable(
+  //     closeOnScroll: false,
+  //     controller: _slidableController,
+  //     actionExtentRatio: widget.swipeItemWidthRatio,
+  //     child: widget.itemBuilder(context, index),
+  //     actionPane: SlidableDrawerActionPane(),
+  //     actions: widget.swipeLeadingItems == null
+  //         ? null
+  //         : widget.swipeLeadingItems(index),
+  //     secondaryActions: widget.swipeTrailingItems == null
+  //         ? null
+  //         : widget.swipeTrailingItems(index),
+  //   );
+  // }
 
   @override
   loadMoreFailure({String error}) {

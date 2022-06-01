@@ -31,7 +31,9 @@ import 'package:recook/widgets/image_picker.dart';
 import 'package:recook/widgets/image_selected_view.dart';
 import 'package:recook/widgets/input_view.dart';
 import 'package:recook/widgets/toast.dart';
-import 'package:photo/photo.dart';
+import 'package:wechat_assets_picker/wechat_assets_picker.dart';
+import 'package:wechat_camera_picker/wechat_camera_picker.dart';
+// import 'package:photo/photo.dart';
 
 class GoodsReturnPage extends StatefulWidget {
   final Map arguments;
@@ -549,41 +551,63 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
         }
       },
       addListener: () {
-        ActionSheet.show(context, items: ['拍照', '从手机相册选择'], listener: (index) {
+        ActionSheet.show(context, items: ['拍照', '从手机相册选择'], listener: (index) async{
           ActionSheet.dismiss(context);
           if (index == 0) {
-            ImagePick.builder()
-                .pickImage(
-              source: flutterImagePicker.ImageSource.camera,
-              cropImage: false,
-            )
-                .then((MediaModel media) {
-              if (media == null) {
-                return;
-              }
-              if (_imageFiles.length < 9) {
-                _imageFiles.add(media);
+            List<AssetEntity> entitys = [];
+            var values = await CameraPicker.pickFromCamera(context);
+            entitys.add(values);
+
+            if (entitys == null) {
+              return;
+            }
+
+            for (var element in entitys) {
+              File file = await element.file;
+              Uint8List thumbData = await element.thumbData;
+              if (_imageFiles.length < maxImages) {
+                _imageFiles.add(MediaModel(
+                  width: element.width,
+                  height: element.height,
+                  type: element.typeInt == 1 ? MediaType.image : MediaType.video,
+                  file: file,
+                  thumbData: thumbData,
+                ));
               } else {
                 _imageFiles.removeAt(0);
-                _imageFiles.add(media);
+                _imageFiles.add(MediaModel(
+                  width: element.width,
+                  height: element.height,
+                  type: element.typeInt == 1 ? MediaType.image : MediaType.video,
+                  file: file,
+                  thumbData: thumbData,
+                ));
               }
-              setState(() {});
-            });
+
+            }
+            setState(() {});
           }
           if (index == 1) {
-            ImagePick.builder(
-                    maxSelected: maxImages - _imageFiles.length,
-                    pickType: PickType.onlyImage)
-                .pickAsset(globalContext)
-                .then((List<MediaModel> medias) {
-              if (medias.length == 0) return;
-              // _imageFiles = medias;
-              _imageFiles.addAll(medias);
-              while (_imageFiles.length > maxImages) {
-                _imageFiles.removeAt(0);
-              }
-              setState(() {});
-            });
+            var values = await AssetPicker.pickAssets(context, maxAssets: maxImages-_imageFiles.length);
+            List<AssetEntity> entitys = [];
+            if (values == null) return;
+            entitys.addAll(values);
+            for (var element in entitys) {
+              File file = await element.file;
+              Uint8List thumbData = await element.thumbData;
+              _imageFiles.add(MediaModel(
+                width: element.width,
+                height: element.height,
+                type: element.typeInt == 1 ? MediaType.image : MediaType.video,
+                file: file,
+                thumbData: thumbData,
+              ));
+            }
+            while (_imageFiles.length > maxImages) {
+              _imageFiles.removeAt(0);
+            }
+            print(_imageFiles.length);
+            setState(() {});
           }
         });
       },

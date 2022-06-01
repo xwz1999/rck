@@ -164,6 +164,7 @@ class ActionSheet {
   }
 
   static dismiss(BuildContext context) {
-    Navigator.maybePop(context);
+    Navigator.pop(context);
+    //Navigator.maybePop(context);
   }
 }

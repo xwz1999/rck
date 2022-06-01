@@ -192,7 +192,7 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
 
   Container _header(BuildContext context) {
     return Container(
-      height: rSize(110),
+      //height: rSize(110),
       padding: EdgeInsets.symmetric(vertical: 10.rw),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -211,7 +211,7 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
 
             },
             width: rSize(100),
-            height: rSize(100),
+            //height: rSize(100),
             fit: BoxFit.cover,
             borderRadius: BorderRadius.all(Radius.circular(8)),
             imageUrl: _sku == null
@@ -229,11 +229,10 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    _sku!=null?_sku.name: widget.model.goodsName,
+                    widget.model.goodsName,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: AppTextStyle.generate(16.rsp,
-                        fontWeight: FontWeight.bold,
+                    style: AppTextStyle.generate(15.rsp,
                         color: Colors.black),
                   ),
                   // Builder(

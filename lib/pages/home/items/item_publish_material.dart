@@ -288,7 +288,6 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
                             child:_getPoster()
                         ),
                       ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,500.rw));
-                      print('123213213213123213123');
 
                       widget.downloadListener(byteData );
                     }
@@ -315,7 +314,6 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
                     child:_getPoster()
                 ),
               ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,500.rw));
-              print('123213213213123213123');
 
               widget.downloadListener(byteData );
             }

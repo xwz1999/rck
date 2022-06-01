@@ -605,7 +605,7 @@ class _PostAllWidgetState extends State<PostAllWidget> {
                   padding: EdgeInsets.only(
                     top: postImageHorizontalMargin / 2,
                   ),
-                  height: 43.rw,
+                  height: 45.rw,
                   child: PostWeatherWidget(
                     homeWeatherModel: UserManager.instance.homeWeatherModel,
                   ),

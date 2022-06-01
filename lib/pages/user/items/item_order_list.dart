@@ -248,7 +248,8 @@ class _OrderListItemState extends State<OrderListItem> {
             ),
           )
           ..add(Spacer())
-          ..add(CustomImageButton(
+          ..add(
+              CustomImageButton(
             padding:
                 EdgeInsets.symmetric(vertical: rSize(2), horizontal: rSize(10)),
             title: "取消订单",

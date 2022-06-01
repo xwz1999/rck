@@ -25,7 +25,7 @@ class PlusMinusView extends StatefulWidget {
   final TextInputChangeCallBack onInputComplete;
 
   const PlusMinusView(
-      {this.minValue = 1,
+      {Key key, this.minValue = 1,
       this.maxValue = 9999,
       @required this.onValueChanged,
       this.onInputComplete,
@@ -49,7 +49,25 @@ class _PlusMinusViewState extends State<PlusMinusView> {
     super.initState();
     int initial = widget.initialValue ?? widget.minValue;
     _controller = TextEditingController(text: initial.toString());
+
   }
+
+
+  // @override
+  // void didUpdateWidget(covariant PlusMinusView oldWidget) {
+  //   _controller.text=widget.initialValue.toString();
+  //   super.didUpdateWidget(oldWidget);
+  // }
+
+@override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _controller.dispose();
+  }
+
+
+
 
   @override
   Widget build(BuildContext context) {

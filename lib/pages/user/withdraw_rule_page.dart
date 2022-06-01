@@ -43,7 +43,7 @@ class _WithdrawRulePageState extends BaseStoreState<WithdrawRulePage> {
       child: ListView(
         children: <Widget>[
           40.hb,
-          Text('1.计算公式',
+          Text('税费计算公式',
               style: TextStyle(
                   color: Color(0xFF333333),
                   fontSize: 16.rsp,
@@ -51,7 +51,7 @@ class _WithdrawRulePageState extends BaseStoreState<WithdrawRulePage> {
           24.hb,
           Text(
               widget.type == 1
-                  ? '提现金额*税率'
+                  ? '提现金额*综合税率\n货物类综合税率=13%(含增值税、增值税附加税、个人所得税\n服务类综合税率=7%(含增值税、增值税附加税、个人所得税)'
                   : widget.type == 2
                       ? '结算金额/（1+增值税税率）*（增值税税率-6%）*（1+12%）'
                       : '结算金额/（1+增值税税率）*增值税税率*（1+12%）',
@@ -60,7 +60,7 @@ class _WithdrawRulePageState extends BaseStoreState<WithdrawRulePage> {
                 fontSize: 14.rsp,
                )),
           48.hb,
-          Text('2.增值税',
+          Text('1.增值税',
               style: TextStyle(
                   color: Color(0xFF333333),
                   fontSize: 16.rsp,
@@ -78,7 +78,7 @@ class _WithdrawRulePageState extends BaseStoreState<WithdrawRulePage> {
             ),
           ),
           48.hb,
-          Text('3.增值税附加税（增值税*12%）',
+          Text('2.增值税附加税（增值税*12%）',
               style: TextStyle(
                   color: Color(0xFF333333),
                   fontSize: 16.rsp,
@@ -98,7 +98,7 @@ class _WithdrawRulePageState extends BaseStoreState<WithdrawRulePage> {
             ),
           ),
           widget.type == 1?48.hb:SizedBox(),
-          widget.type == 1?  Text('4.个人所得税的综合税率',
+          widget.type == 1?  Text('3.个人所得税的综合税率',
               style: TextStyle(
                   color: Color(0xFF333333),
                   fontSize: 16.rsp,

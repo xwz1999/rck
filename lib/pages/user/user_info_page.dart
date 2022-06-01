@@ -8,9 +8,11 @@
  */
 
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart' as flutterImagePicker;
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -27,7 +29,9 @@ import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/image_picker.dart';
 import 'package:recook/widgets/sc_tile.dart';
-import 'package:photo/photo.dart';
+import 'package:wechat_assets_picker/wechat_assets_picker.dart';
+import 'package:wechat_camera_picker/wechat_camera_picker.dart';
+// import 'package:photo/photo.dart';
 
 class UserInfoPage extends StatefulWidget {
   @override
@@ -38,6 +42,7 @@ class UserInfoPage extends StatefulWidget {
 
 class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
   UserPresenterImpl _presenter;
+  List<MediaModel> _imageFiles = [];
 
   @override
   Widget buildContext(BuildContext context, {store}) {
@@ -239,36 +244,83 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
   }
 
   _chooseHeader() {
-    ActionSheet.show(context, items: ['拍照', '从手机相册选择'], listener: (index) {
-      ActionSheet.dismiss(context);
+    // ActionSheet.show(context, items: ['拍照', '从手机相册选择'], listener: (index) {
+    //   ActionSheet.dismiss(context);
+    //   if (index == 0) {
+    //     ImagePick.builder()
+    //         .pickImage(
+    //       source: flutterImagePicker.ImageSource.camera,
+    //     )
+    //         .then((MediaModel media) {
+    //       if (media == null) {
+    //         return;
+    //       }
+    //       _upload(media.file);
+    //     });
+    //   }
+    //   if (index == 1) {
+    //     ImagePick.builder(maxSelected: 1, pickType: PickType.onlyImage)
+    //         .pickAsset(globalContext)
+    //         .then((List<MediaModel> medias) {
+    //       if (medias.length > 0) {
+    //         _upload(medias[0].file);
+    //       }
+    //     });
+    //   }
+    // });
+
+
+    ActionSheet.show(context, items: ['拍照', '从手机相册选择'], listener: (index) async{
+      Get.back();
       if (index == 0) {
-        ImagePick.builder()
-            .pickImage(
-          source: flutterImagePicker.ImageSource.camera,
-        )
-            .then((MediaModel media) {
-          if (media == null) {
-            return;
-          }
-          _upload(media.file);
-        });
+        List<AssetEntity> entitys = [];
+        var values = await CameraPicker.pickFromCamera(context);
+        entitys.add(values);
+        if (entitys == null) {
+          return;
+        }
+        for (var element in entitys) {
+          File file = await element.file;
+          Uint8List thumbData = await element.thumbData;
+          _imageFiles.clear();
+
+          _imageFiles.add(MediaModel(
+              width: element.width,
+              height: element.height,
+              type: element.typeInt == 1 ? MediaType.image : MediaType.video,
+              file: file,
+              thumbData: thumbData,
+            ));
+
+        }
+        _upload(_imageFiles[0].file);
+
+
+
       }
       if (index == 1) {
-        ImagePick.builder(maxSelected: 1, pickType: PickType.onlyImage)
-            .pickAsset(globalContext)
-            .then((List<MediaModel> medias) {
-          if (medias.length > 0) {
-            _upload(medias[0].file);
-          }
-        });
+        var values = await AssetPicker.pickAssets(context, maxAssets: 1);
+        List<AssetEntity> entitys = [];
+        if (values == null) return;
+        entitys.addAll(values);
+        for (var element in entitys) {
+          File file = await element.file;
+          Uint8List thumbData = await element.thumbData;
+          _imageFiles.clear();
+          _imageFiles.add(MediaModel(
+            width: element.width,
+            height: element.height,
+            type: element.typeInt == 1 ? MediaType.image : MediaType.video,
+            file: file,
+            thumbData: thumbData,
+          ));
+        }
+        _upload(_imageFiles[0].file);
+
+
       }
     });
 
-    // ImagePicker.builder(maxSelected: 1).pickAsset(globalContext).then((List<MediaModel> medias) {
-    //   if (medias.length > 0) {
-    //     _upload(medias[0].file);
-    //   }
-    // });
   }
 
   _upload(File file) async {
