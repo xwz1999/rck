@@ -71,7 +71,6 @@ import 'package:recook/widgets/weather_page/weather_city_model.dart';
 import 'package:recook/widgets/weather_page/weather_city_page.dart';
 import 'package:recook/widgets/webView.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
-// import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:power_logger/power_logger.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
@@ -280,6 +279,19 @@ class _HomePageState extends BaseStoreState<HomePage>
   _change() {
     return GestureDetector(
       onTap: () {
+        // var fireDate = DateTime.fromMillisecondsSinceEpoch(
+        //     DateTime.now().millisecondsSinceEpoch + 5000);
+        // var noti = LocalNotification(
+        //     id: 234,
+        //     title: '测试',
+        //     buildId: 1,
+        //     content: '推送测试，测试测试',
+        //     fireTime: fireDate,
+        //     extra: {"fa": "0"});
+        // jpush.sendLocalNotification(noti).then((value) => null);
+
+
+
         _activityMap = null;
         UserManager.instance.isWholesale = !UserManager.instance.isWholesale;
         _gsRefreshController.requestRefresh();
