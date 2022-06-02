@@ -210,9 +210,8 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
       print("flutter get registration id : $rid");
       UserManager.instance.jpushRid = rid;
 
-
-
     });
+
 
   }
 
