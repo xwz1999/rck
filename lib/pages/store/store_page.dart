@@ -9,7 +9,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:recook/widgets/transparent_app_bar.dart';
@@ -22,7 +21,7 @@ class StorePage extends StatefulWidget {
 }
 
 class _StorePageState extends State<StorePage> with AutomaticKeepAliveClientMixin{
-  SliverAppBarController _appBarController;
+  SliverAppBarController? _appBarController;
 
   @override
   void initState() {

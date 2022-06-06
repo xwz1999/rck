@@ -20,32 +20,32 @@ class EvaluationPresenterImpl extends EvaluationListPresenterI{
   }
 
   @override
-  getEvaluationList(int userId, int goodsId, int page) async {
-    ResultData resultData = await getModel().getEvaluationList(userId, goodsId, page);
+  getEvaluationList(int? userId, int? goodsId, int page) async {
+    ResultData resultData = await getModel()!.getEvaluationList(userId, goodsId, page);
     if (!resultData.result) {
-      getRefreshView().failure(resultData.msg);
+      getRefreshView()!.failure(resultData.msg);
       return;
     }
     EvaluationListModel listModel = EvaluationListModel.fromJson(resultData.data);
     if (listModel.code != HttpStatus.SUCCESS) {
-      getRefreshView().failure(resultData.msg);
+      getRefreshView()!.failure(resultData.msg);
       return;
     }
-    getRefreshView().refreshSuccess(listModel.data);
+    getRefreshView()!.refreshSuccess(listModel.data);
   }
 
   @override
   loadMore(int userId, int goodsId, int page) async {
-    ResultData resultData = await getModel().getEvaluationList(userId, goodsId, page);
+    ResultData resultData = await getModel()!.getEvaluationList(userId, goodsId, page);
     if (!resultData.result) {
-      getRefreshView().loadMoreFailure(error: resultData.msg);
+      getRefreshView()!.loadMoreFailure(error: resultData.msg);
       return;
     }
     EvaluationListModel listModel = EvaluationListModel.fromJson(resultData.data);
     if (listModel.code != HttpStatus.SUCCESS) {
-      getRefreshView().loadMoreFailure(error: resultData.msg);
+      getRefreshView()!.loadMoreFailure(error: resultData.msg);
       return;
     }
-    getRefreshView().loadMoreSuccess(listModel.data);
+    getRefreshView()!.loadMoreSuccess(listModel.data);
   }
 }

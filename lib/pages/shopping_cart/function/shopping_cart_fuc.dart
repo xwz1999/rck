@@ -4,9 +4,9 @@ import 'package:recook/models/goods_simple_list_model.dart';
 
 class ShoppingCartFuc {
   //获取可能喜欢列表
-  static Future<List<GoodsSimple>> getLikeGoodsList(int user_id,{bool isSale = false}) async {
+  static Future<List<GoodsSimple>?> getLikeGoodsList(int? userId,{bool isSale = false}) async {
     Map<String, dynamic> params = {
-      "user_id": user_id,
+      "user_id": userId,
     };
 
     if (isSale) {
@@ -22,13 +22,14 @@ class ShoppingCartFuc {
             .toList();
       }
     }
+    return null;
   }
 
   //找相似
-  static Future<List<GoodsSimple>> getSimilarGoodsList(int goods_id) async {
+  static Future<List<GoodsSimple>?> getSimilarGoodsList(int? goodsId) async {
     ResultData result =
         await HttpManager.post(APIV2.userAPI.getSimilarGoodsList, {
-      'goods_id': goods_id,
+      'goods_id': goodsId,
     });
 
     if (result.data != null) {
@@ -38,6 +39,7 @@ class ShoppingCartFuc {
             .toList();
       }
     }
+    return null;
   }
 
   //视频列表

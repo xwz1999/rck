@@ -17,7 +17,7 @@ class HomeGifHeader extends RefreshIndicator {
 
 class _HomeGifHeaderState extends RefreshIndicatorState<HomeGifHeader>
     with SingleTickerProviderStateMixin {
-  GifController _gifController;
+  late GifController _gifController;
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _HomeGifHeaderState extends RefreshIndicatorState<HomeGifHeader>
   }
 
   @override
-  void onModeChange(RefreshStatus mode) {
+  void onModeChange(RefreshStatus? mode) {
     if (mode == RefreshStatus.refreshing) {
       _gifController.repeat(
           min: 0, max: 38, period: Duration(milliseconds: 1000));

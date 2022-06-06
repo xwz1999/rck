@@ -27,8 +27,8 @@ class OrderAfterSalesListPresenterImpl extends OrderAfterSalesListPresenterI{
     return OrderAfterSalesListModelImpl();
   }
   @override
-  getAfterSalesList(int userId, int page, int type) async {
-    ResultData resultData = await getModel().getAfterSalesList(userId, page, type);
+  getAfterSalesList(int? userId, int page, int type) async {
+    ResultData resultData = await getModel()!.getAfterSalesList(userId, page, type);
     if (!resultData.result) {
       getView()?.failure(resultData.msg);
       return;
@@ -42,13 +42,13 @@ class OrderAfterSalesListPresenterImpl extends OrderAfterSalesListPresenterI{
     if (page == 0) {
       getRefreshView()?.refreshSuccess(orderListModel.data);
     } else {
-      getRefreshView().loadMoreSuccess(orderListModel.data);
+      getRefreshView()!.loadMoreSuccess(orderListModel.data);
     }
   }
 
   @override
-  getShopAfterSalesList(int userId, int page, OrderPositionType positionType, int type) async {
-    ResultData resultData = await getModel().getShopAfterSalesList(userId, page, positionType, type);
+  getShopAfterSalesList(int? userId, int page, OrderPositionType? positionType, int type) async {
+    ResultData resultData = await getModel()!.getShopAfterSalesList(userId, page, positionType, type);
     if (!resultData.result) {
       getView()?.failure(resultData.msg);
       return;
@@ -62,7 +62,7 @@ class OrderAfterSalesListPresenterImpl extends OrderAfterSalesListPresenterI{
     if (page == 0) {
       getRefreshView()?.refreshSuccess(orderListModel.data);
     } else {
-      getRefreshView().loadMoreSuccess(orderListModel.data);
+      getRefreshView()!.loadMoreSuccess(orderListModel.data);
     }
   }
   
@@ -75,8 +75,8 @@ class OrderListPresenterImpl extends OrderListPresenterI {
   }
 
   @override
-  getOrderList(int userId, int page, OrderListType type, OrderPositionType positionType) async {
-    ResultData resultData = await getModel().getOrderList(userId, page, type, positionType);
+  getOrderList(int? userId, int page, OrderListType? type, OrderPositionType positionType) async {
+    ResultData resultData = await getModel()!.getOrderList(userId, page, type, positionType);
     if (!resultData.result) {
       getView()?.failure(resultData.msg);
       return;
@@ -90,13 +90,13 @@ class OrderListPresenterImpl extends OrderListPresenterI {
     if (page == 0) {
       getRefreshView()?.refreshSuccess(orderListModel.data);
     } else {
-      getRefreshView().loadMoreSuccess(orderListModel.data);
+      getRefreshView()!.loadMoreSuccess(orderListModel.data);
     }
   }
 
   @override
-  getShopOrderList(int userId, int page, ShopOrderListType type, OrderPositionType positionType) async {
-    ResultData resultData = await getModel().getShopOrderList(userId, page, type, positionType);
+  getShopOrderList(int? userId, int page, ShopOrderListType? type, OrderPositionType positionType) async {
+    ResultData resultData = await getModel()!.getShopOrderList(userId, page, type, positionType);
     if (!resultData.result) {
       getView()?.failure(resultData.msg);
       return;
@@ -109,13 +109,13 @@ class OrderListPresenterImpl extends OrderListPresenterI {
     if (page == 0) {
       getRefreshView()?.refreshSuccess(orderListModel.data);
     } else {
-      getRefreshView().loadMoreSuccess(orderListModel.data);
+      getRefreshView()!.loadMoreSuccess(orderListModel.data);
     }
   }
 
   @override
-  Future<OrderDetailModel> getOrderDetail(int userId, int orderId) async {
-    ResultData resultData = await getModel().getOrderDetail(userId, orderId);
+  Future<OrderDetailModel?> getOrderDetail(int? userId, int? orderId) async {
+    ResultData resultData = await getModel()!.getOrderDetail(userId, orderId);
     if (!resultData.result) {
       getView()?.failure(resultData.msg);
       return null;
@@ -130,8 +130,8 @@ class OrderListPresenterImpl extends OrderListPresenterI {
   }
 
   @override
-  getShopOrderDetail(int userId, int orderId) async {
-    ResultData resultData = await getModel().getShopOrderDetail(userId, orderId);
+  getShopOrderDetail(int? userId, int? orderId) async {
+    ResultData resultData = await getModel()!.getShopOrderDetail(userId, orderId);
     if (!resultData.result) {
       getView()?.failure(resultData.msg);
       return null;
@@ -146,8 +146,8 @@ class OrderListPresenterImpl extends OrderListPresenterI {
   }
 
   @override
-  applyRefund(int usrId, List<int> goodsIds,{num coin, String reasonContent, String reasonImg}) async {
-    ResultData resultData = await getModel().applyRefund(usrId, goodsIds,coin: coin, reasonContent: reasonContent, reasonImg: reasonImg);
+  applyRefund(int? usrId, List<int?> goodsIds,{num? coin, String? reasonContent, String? reasonImg}) async {
+    ResultData resultData = await getModel()!.applyRefund(usrId, goodsIds,coin: coin, reasonContent: reasonContent, reasonImg: reasonImg);
     if (!resultData.result) {
       getView()?.failure(resultData.msg);
       return;
@@ -157,15 +157,15 @@ class OrderListPresenterImpl extends OrderListPresenterI {
       getView()?.failure(model.msg);
       return;
     }
-    getView()?.refundSuccess(model.msg);
+    getView()?.refundSuccess(model.msg!);
   }
 
   @override
   applySalesReturn() {}
 
   @override
-  cancelOrder(int userId, int orderId, {OrderModel order}) async {
-    ResultData resultData = await getModel().cancelOrder(userId, orderId);
+  cancelOrder(int? userId, int? orderId, {OrderModel? order}) async {
+    ResultData resultData = await getModel()!.cancelOrder(userId, orderId);
     if (!resultData.result) {
       getView()?.failure(resultData.msg);
       return;
@@ -179,8 +179,8 @@ class OrderListPresenterImpl extends OrderListPresenterI {
   }
 
   @override
-  deleteOrder(int userId, int orderId,) async {
-    ResultData resultData = await getModel().deleteOrder(userId, orderId);
+  deleteOrder(int? userId, int? orderId,) async {
+    ResultData resultData = await getModel()!.deleteOrder(userId, orderId);
     if (!resultData.result) {
       getView()?.failure(resultData.msg);
       return;
@@ -195,8 +195,8 @@ class OrderListPresenterImpl extends OrderListPresenterI {
   }
 
   @override
-  Future<HttpResultModel<LogisticListModel>> queryLogistic(int userId, int orderId) async {
-    ResultData resultData = await getModel().queryLogistic(userId, orderId);
+  Future<HttpResultModel<LogisticListModel?>> queryLogistic(int? userId, int? orderId) async {
+    ResultData resultData = await getModel()!.queryLogistic(userId, orderId);
     if (!resultData.result) {
       getView()?.failure(resultData.msg);
       return HttpResultModel(resultData.code, null, resultData.msg, false);
@@ -207,13 +207,13 @@ class OrderListPresenterImpl extends OrderListPresenterI {
       getView()?.failure(model.msg);
       return HttpResultModel(model.code, null, model.msg, false);
     }
-    return HttpResultModel(model.code, model ?? [], model.msg, true);
+    return HttpResultModel(model.code, (model ), model.msg, true);
   }
 
   @override
-  Future<HttpResultModel<BaseModel>> addInvoice(
-      int userId, int type, String title, String taxNo) async {
-    ResultData resultData = await getModel().addInvoice(userId, type, title, taxNo);
+  Future<HttpResultModel<BaseModel?>> addInvoice(
+      int? userId, int type, String title, String taxNo) async {
+    ResultData resultData = await getModel()!.addInvoice(userId, type, title, taxNo);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -225,8 +225,8 @@ class OrderListPresenterImpl extends OrderListPresenterI {
   }
 
   @override
-  Future<HttpResultModel<List<Invoice>>> getInvoiceList(int userId) async {
-    ResultData resultData = await getModel().getInvoiceList(userId);
+  Future<HttpResultModel<List<Invoice>?>> getInvoiceList(int? userId) async {
+    ResultData resultData = await getModel()!.getInvoiceList(userId);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -239,7 +239,7 @@ class OrderListPresenterImpl extends OrderListPresenterI {
 
   @override
   applyInvoice(int userId, int orderId, int invoiceId) async {
-    ResultData resultData = await getModel().applyInvoice(userId, orderId, invoiceId);
+    ResultData resultData = await getModel()!.applyInvoice(userId, orderId, invoiceId);
     if (!resultData.result) {
       getView()?.failure(resultData.msg);
       return;
@@ -255,8 +255,8 @@ class OrderListPresenterImpl extends OrderListPresenterI {
   }
 
   @override
-  Future<HttpResultModel<BaseModel>> publishEvaluation(Map<String, dynamic> params) async {
-    ResultData resultData = await getModel().publishEvaluation(params);
+  Future<HttpResultModel<BaseModel?>> publishEvaluation(Map<String, dynamic> params) async {
+    ResultData resultData = await getModel()!.publishEvaluation(params);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -269,8 +269,8 @@ class OrderListPresenterImpl extends OrderListPresenterI {
   }
 
   @override
-  confirmReceipt(int userId, int orderId) async {
-    ResultData resultData = await getModel().confirmReceipt(userId, orderId);
+  confirmReceipt(int? userId, int? orderId) async {
+    ResultData resultData = await getModel()!.confirmReceipt(userId, orderId);
     if (!resultData.result) {
       getView()?.failure(resultData.msg);
       return;

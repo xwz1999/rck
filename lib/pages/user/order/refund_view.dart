@@ -16,13 +16,13 @@ import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 typedef RefundViewCallback = Function(
-    List<int> selectedGoodsIds, List<Goods> selectedGoodsList);
+    List<int?> selectedGoodsIds, List<Goods> selectedGoodsList);
 
 class RefundView extends StatefulWidget {
-  final List<Goods> goodsList;
-  final RefundViewCallback callback;
+  final List<Goods>? goodsList;
+  final RefundViewCallback? callback;
 
-  const RefundView({Key key, this.goodsList, this.callback}) : super(key: key);
+  const RefundView({Key? key, this.goodsList, this.callback}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -45,7 +45,7 @@ class _RefundViewState extends BaseStoreState<RefundView> {
               color: Colors.white,
               borderRadius:
                   BorderRadius.vertical(top: Radius.circular(rSize(10)))),
-          height: DeviceInfo.screenHeight * 0.65,
+          height: DeviceInfo.screenHeight! * 0.65,
           child: Column(
             children: <Widget>[
               Text(
@@ -56,9 +56,9 @@ class _RefundViewState extends BaseStoreState<RefundView> {
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: rSize(5)),
                   child: ListView.builder(
-                      itemCount: widget.goodsList.length,
+                      itemCount: widget.goodsList!.length,
                       itemBuilder: (_, index) {
-                        return _goodsItem(widget.goodsList[index]);
+                        return _goodsItem(widget.goodsList![index]);
                       }),
                 ),
               ),
@@ -96,14 +96,14 @@ class _RefundViewState extends BaseStoreState<RefundView> {
                           onPressed: () {
                             if (widget.callback == null) return;
                             List<Goods> selectedGoods = [];
-                            List<int> selectedGoodsIds = [];
-                            widget.goodsList.forEach((goods) {
-                              if (goods.selected) {
+                            List<int?> selectedGoodsIds = [];
+                            widget.goodsList!.forEach((goods) {
+                              if (goods.selected!) {
                                 selectedGoods.add(goods);
                                 selectedGoodsIds.add(goods.goodsDetailId);
                               }
                             });
-                            widget.callback(selectedGoodsIds, selectedGoods);
+                            widget.callback!(selectedGoodsIds, selectedGoods);
                           },
                         ),
                       ),
@@ -120,7 +120,7 @@ class _RefundViewState extends BaseStoreState<RefundView> {
     return CustomImageButton(
       onPressed: () {
         setState(() {
-          goods.selected = !goods.selected;
+          goods.selected = !goods.selected!;
         });
       },
       child: Container(
@@ -137,15 +137,15 @@ class _RefundViewState extends BaseStoreState<RefundView> {
                 padding: EdgeInsets.only(right: rSize(5)),
                 height: double.infinity,
                 icon: Icon(
-                  goods.selected
+                  goods.selected!
                       ? AppIcons.icon_check_circle
                       : AppIcons.icon_circle,
-                  color: goods.selected ? AppColor.priceColor : Colors.grey,
+                  color: goods.selected! ? AppColor.priceColor : Colors.grey,
                   size: rSize(19),
                 ),
                 onPressed: () {
                   setState(() {
-                    goods.selected = !goods.selected;
+                    goods.selected = !goods.selected!;
                   });
                 },
               ),
@@ -168,7 +168,7 @@ class _RefundViewState extends BaseStoreState<RefundView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      goods.goodsName,
+                      goods.goodsName!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyle.generate(14 * 2.sp,
@@ -177,7 +177,7 @@ class _RefundViewState extends BaseStoreState<RefundView> {
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 3),
                       child: Text(
-                        goods.skuName,
+                        goods.skuName!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyle.generate(13 * 2.sp,

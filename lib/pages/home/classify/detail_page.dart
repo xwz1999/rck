@@ -17,9 +17,9 @@ import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/toast.dart';
 
 class DetailPage extends StatefulWidget {
-  final int goodsID;
+  final int? goodsID;
 
-  const DetailPage({Key key, this.goodsID}) : super(key: key);
+  const DetailPage({Key? key, this.goodsID}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -29,7 +29,7 @@ class DetailPage extends StatefulWidget {
 
 class _DetailPageState extends State<DetailPage>
     with AutomaticKeepAliveClientMixin {
-  GoodsDetailImagesModel _model;
+  GoodsDetailImagesModel? _model;
 
   @override
   void initState() {
@@ -49,7 +49,7 @@ class _DetailPageState extends State<DetailPage>
   Widget build(BuildContext context, {store}) {
     super.build(context);
     print("build ---------- detail");
-    double topPadding = (DeviceInfo.statusBarHeight + DeviceInfo.appBarHeight);
+    double topPadding = (DeviceInfo.statusBarHeight! + DeviceInfo.appBarHeight);
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
@@ -66,9 +66,9 @@ class _DetailPageState extends State<DetailPage>
   List<Widget> _goodDetailImages() {
     if (_model == null) return [];
 
-    List<Widget> children = _model.data.list.map((Images image) {
-      double width = DeviceInfo.screenWidth;
-      double height = image.height * (width / image.width);
+    List<Widget> children = _model!.data!.list!.map((Images image) {
+      double width = DeviceInfo.screenWidth!;
+      double height = image.height! * (width / image.width!);
 
       // String placeHolder;
       // if (width > height) {

@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_hot_sell_list_model.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
-import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/wholesale/more_goods/whoesale_goods_normal.dart';
-import 'package:recook/utils/app_router.dart';
 import 'package:recook/widgets/goods_item.dart';
 
 class GoodsHighCommissionListPage extends StatefulWidget {
 
-  const GoodsHighCommissionListPage({Key key}) : super(key: key);
+  const GoodsHighCommissionListPage({Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -27,7 +23,7 @@ class GoodsHighCommissionListPage extends StatefulWidget {
 
 class _GoodsHighCommissionListPageState extends BaseStoreState<GoodsHighCommissionListPage>
     with TickerProviderStateMixin {
-  GoodsHotSellListModel _listModel;
+  GoodsHotSellListModel? _listModel;
 
   @override
   void initState() {
@@ -102,7 +98,7 @@ class _GoodsHighCommissionListPageState extends BaseStoreState<GoodsHighCommissi
   }
 
   _backButton(context) {
-    Widget lead;
+    Widget? lead;
     if (Navigator.canPop(context)) {
       lead = IconButton(
           icon: Icon(
@@ -130,10 +126,10 @@ class _GoodsHighCommissionListPageState extends BaseStoreState<GoodsHighCommissi
               //         _listModel.data[index].id));
               // print('222222222222222');
             },
-            child: _itemWidget(_listModel.data[index]),
+            child: _itemWidget(_listModel!.data![index]),
           );
         },
-        itemCount: _listModel.data.length,
+        itemCount: _listModel!.data!.length,
       ),
     );
   }
@@ -154,7 +150,7 @@ class _GoodsHighCommissionListPageState extends BaseStoreState<GoodsHighCommissi
       constraints: BoxConstraints(minWidth: 150),
       child: Stack(
         children: <Widget>[
-          UserManager.instance.isWholesale?
+          UserManager.instance!.isWholesale?
           WholesaleGoodsItem.hotList(
             buildCtx: context,
             data: data,
@@ -170,7 +166,7 @@ class _GoodsHighCommissionListPageState extends BaseStoreState<GoodsHighCommissi
             onBrandClick: () {
               AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                   arguments: BrandGoodsListPage.setArguments(
-                      data.brandId, data.brandName));
+                      data.brandId as int?, data.brandName));
               print('12312321930-8120-938210-3912-039');
             },
             buildCtx: context,
@@ -194,7 +190,7 @@ class _GoodsHighCommissionListPageState extends BaseStoreState<GoodsHighCommissi
               child: Container(
                 alignment: Alignment.center,
                 child: Text(
-                  (data.index + 1).toString(),
+                  (data.index! + 1).toString(),
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
@@ -212,24 +208,24 @@ class _GoodsHighCommissionListPageState extends BaseStoreState<GoodsHighCommissi
     Map<String, dynamic> data = {};
 
     data.putIfAbsent('status', () => 1);
-    data.putIfAbsent('user_id', () => UserManager.instance.user.info.id);
-    if (UserManager.instance.isWholesale) {
+    data.putIfAbsent('user_id', () => UserManager.instance!.user.info!.id);
+    if (UserManager.instance!.isWholesale) {
       data.putIfAbsent('is_sale', () => true);
     }
     ResultData resultData = await HttpManager.post(
         HomeApi.preferentialList, data);
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     GoodsHotSellListModel model =
     GoodsHotSellListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
-    for (Data data in model.data) {
-      data.index = model.data.indexOf(data);
+    for (Data data in model.data!) {
+      data.index = model.data!.indexOf(data);
     }
     _listModel = model;
     setState(() {});

@@ -10,11 +10,9 @@ SelfPickupStoreListModel _$SelfPickupStoreListModelFromJson(
     Map<String, dynamic> json) {
   return SelfPickupStoreListModel(
       json['code'],
-      (json['data'] as List)
-          ?.map((e) => e == null
-              ? null
-              : SelfPickupStoreModel.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+      (json['data'] as List?)
+          ?.map((e) => SelfPickupStoreModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       json['msg']);
 }
 
@@ -27,8 +25,8 @@ Map<String, dynamic> _$SelfPickupStoreListModelToJson(
     };
 
 SelfPickupStoreModel _$SelfPickupStoreModelFromJson(Map<String, dynamic> json) {
-  return SelfPickupStoreModel(json['id'] as int, json['token'] as String,
-      json['name'] as String, json['address'] as String);
+  return SelfPickupStoreModel(json['id'] as int?, json['token'] as String?,
+      json['name'] as String?, json['address'] as String?);
 }
 
 Map<String, dynamic> _$SelfPickupStoreModelToJson(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
@@ -13,9 +12,9 @@ import 'package:recook/widgets/keyboard/pay_password.dart';
 import 'package:recook/widgets/toast.dart';
 
 class UserSetPasswordAgain extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  const UserSetPasswordAgain({Key key, this.arguments}) : super(key: key);
+  const UserSetPasswordAgain({Key? key, this.arguments}) : super(key: key);
 
   static setArguments(String password) {
     return {"password": password};
@@ -30,7 +29,7 @@ class UserSetPasswordAgain extends StatefulWidget {
 class _UserSetPasswordAgainState extends BaseStoreState<UserSetPasswordAgain> {
   String pwdData = '';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  VoidCallback _showBottomSheetCallback;
+  late VoidCallback _showBottomSheetCallback;
   @override
   void initState() {
     super.initState();
@@ -106,8 +105,8 @@ class _UserSetPasswordAgainState extends BaseStoreState<UserSetPasswordAgain> {
               ),
             ),
             onTap: () {
-              if (!TextUtils.isEmpty(widget.arguments['password']) &&
-                  pwdData == widget.arguments['password']) {
+              if (!TextUtils.isEmpty(widget.arguments!['password']) &&
+                  pwdData == widget.arguments!['password']) {
                 _passwordSave();
               } else {
                 showError("两次输入的密码不同...");
@@ -121,7 +120,7 @@ class _UserSetPasswordAgainState extends BaseStoreState<UserSetPasswordAgain> {
 
   /// 底部弹出 自定义键盘  下滑消失
   void _showBottomSheet() {
-    _scaffoldKey.currentState
+    _scaffoldKey.currentState!
         .showBottomSheet<void>((BuildContext context) {
           return Container(
             height: MediaQuery.of(context).size.height,
@@ -133,7 +132,7 @@ class _UserSetPasswordAgainState extends BaseStoreState<UserSetPasswordAgain> {
                       color: Colors.white.withAlpha(0),
                     ),
                     onTap: () {
-                      Navigator.pop(_scaffoldKey.currentContext);
+                      Navigator.pop(_scaffoldKey.currentContext!);
                     },
                   ),
                 ),
@@ -180,23 +179,23 @@ class _UserSetPasswordAgainState extends BaseStoreState<UserSetPasswordAgain> {
   _passwordSave() async {
     showLoading("");
     ResultData resultData = await HttpManager.post(UserApi.password_save,
-        {"userId": UserManager.instance.user.info.id, "password": pwdData});
+        {"userId": UserManager.instance!.user.info!.id, "password": pwdData});
     dismissLoading();
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
     // AppRouter.pushAndReplaced(context, RouteName.USER_SET_PASSWORD);
     // AppRouter.canPop(context);
     // AppRouter.popAndPushNamed(context, RouteName.SETTING_PAGE);
-    UserManager.instance.setPassword.value =
-        !UserManager.instance.setPassword.value;
-    UserManager.instance.user.info.isSetPayPwd = true;
+    UserManager.instance!.setPassword.value =
+        !UserManager.instance!.setPassword.value;
+    UserManager.instance!.user.info!.isSetPayPwd = true;
     UserManager.updateUserInfo(getStore());
     Navigator.pop(context, true);
     Navigator.pop(context, true);

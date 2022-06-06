@@ -6,7 +6,7 @@ import 'package:recook/pages/business/recommend/mvp/recommend_mvp_contact.dart';
 
 class RecommendModelImpl extends RecommendModelI{
   @override
-  Future<ResultData> fetchList(int userId, int page) async {
+  Future<ResultData> fetchList(int? userId, int page) async {
     String url = AttentionApi.attention_recommend_list;
     Map<String, dynamic> params = {
       "page": page,

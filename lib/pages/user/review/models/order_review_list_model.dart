@@ -1,7 +1,7 @@
 class OrderReviewListModel {
-  MyOrderGoodsDea myOrderGoodsDea;
-  int passEvaluation;
-  int compliance;
+  MyOrderGoodsDea? myOrderGoodsDea;
+  int? passEvaluation;
+  int? compliance;
 
   OrderReviewListModel(
       {this.myOrderGoodsDea, this.passEvaluation, this.compliance});
@@ -17,7 +17,7 @@ class OrderReviewListModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.myOrderGoodsDea != null) {
-      data['my_order_goods_dea'] = this.myOrderGoodsDea.toJson();
+      data['my_order_goods_dea'] = this.myOrderGoodsDea!.toJson();
     }
     data['pass_evaluation'] = this.passEvaluation;
     data['compliance'] = this.compliance;
@@ -26,55 +26,55 @@ class OrderReviewListModel {
 }
 
 class MyOrderGoodsDea {
-  int goodsDetailId;
-  int orderId;
-  int parentId;
-  int sharerId;
-  int userId;
-  int vendorId;
-  String vendorName;
-  int brandId;
-  String brandName;
-  String cateName;
-  int goodsId;
-  String goodsName;
-  int skuId;
-  String skuName;
-  String skuCode;
-  String mainPhotoUrl;
-  int quantity;
-  String promotionName;
-  num unitPrice;
-  num purchasePrice;
-  num totalCommission;
-  num brandCouponAmount;
-  num universeBrandCouponAmount;
-  num coinAmount;
-  num goodsAmount;
-  num expressFee;
-  num actualAmount;
-  String buyerMessage;
-  String orderTime;
-  int payStatus;
-  String createdAt;
-  int expressStatus;
+  int? goodsDetailId;
+  int? orderId;
+  int? parentId;
+  int? sharerId;
+  int? userId;
+  int? vendorId;
+  String? vendorName;
+  int? brandId;
+  String? brandName;
+  String? cateName;
+  int? goodsId;
+  String? goodsName;
+  int? skuId;
+  String? skuName;
+  String? skuCode;
+  String? mainPhotoUrl;
+  int? quantity;
+  String? promotionName;
+  num? unitPrice;
+  num? purchasePrice;
+  num? totalCommission;
+  num? brandCouponAmount;
+  num? universeBrandCouponAmount;
+  num? coinAmount;
+  num? goodsAmount;
+  num? expressFee;
+  num? actualAmount;
+  String? buyerMessage;
+  String? orderTime;
+  int? payStatus;
+  String? createdAt;
+  int? expressStatus;
   Null expressTime;
-  String expressCompName;
-  String expressCompCode;
-  String expressNo;
-  int assType;
-  int refundStatus;
-  int status;
-  Addr addr;
-  int shippingMethod;
-  int isClosed;
-  String rStatus;
-  String detailInfo;
-  int bill;
-  String fpqqlsh;
-  int isExport;
-  String bomaoNo;
-  int evaluatedId;
+  String? expressCompName;
+  String? expressCompCode;
+  String? expressNo;
+  int? assType;
+  int? refundStatus;
+  int? status;
+  Addr? addr;
+  int? shippingMethod;
+  int? isClosed;
+  String? rStatus;
+  String? detailInfo;
+  int? bill;
+  String? fpqqlsh;
+  int? isExport;
+  String? bomaoNo;
+  int? evaluatedId;
 
   MyOrderGoodsDea(
       {this.goodsDetailId,
@@ -221,7 +221,7 @@ class MyOrderGoodsDea {
     data['refundStatus'] = this.refundStatus;
     data['status'] = this.status;
     if (this.addr != null) {
-      data['Addr'] = this.addr.toJson();
+      data['Addr'] = this.addr!.toJson();
     }
     data['ShippingMethod'] = this.shippingMethod;
     data['isClosed'] = this.isClosed;
@@ -237,15 +237,15 @@ class MyOrderGoodsDea {
 }
 
 class Addr {
-  int id;
-  int orderId;
-  int addressId;
-  String province;
-  String city;
-  String district;
-  String address;
-  String receiverName;
-  String mobile;
+  int? id;
+  int? orderId;
+  int? addressId;
+  String? province;
+  String? city;
+  String? district;
+  String? address;
+  String? receiverName;
+  String? mobile;
 
   Addr(
       {this.id,

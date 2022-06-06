@@ -1,7 +1,7 @@
 class UserRoleUpgradeModel {
-  String code;
-  String msg;
-  UpgradeModel data;
+  String? code;
+  String? msg;
+  UpgradeModel? data;
 
   UserRoleUpgradeModel({this.code, this.msg, this.data});
 
@@ -16,16 +16,16 @@ class UserRoleUpgradeModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class UpgradeModel {
-  int roleLevel;
-  int upGrade;
-  int userLevel;
+  int? roleLevel;
+  int? upGrade;
+  int? userLevel;
 
   UpgradeModel({this.roleLevel, this.upGrade, this.userLevel});
 

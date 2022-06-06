@@ -50,7 +50,7 @@ part 'evaluation_list_model.g.dart';
 @JsonSerializable()
 class EvaluationListModel extends BaseModel {
 
-  List<Data> data;
+  List<Data>? data;
 
   EvaluationListModel(code,msg,this.data,) : super(code,msg);
 
@@ -64,21 +64,21 @@ class EvaluationListModel extends BaseModel {
 @JsonSerializable()
 class Data extends Object {
 
-  int id;
+  int? id;
 
-  int goodsId;
+  int? goodsId;
 
-  int userId;
+  int? userId;
 
-  String nickname;
+  String? nickname;
 
-  String headImgUrl;
+  String? headImgUrl;
 
-  String content;
+  String? content;
 
-  String createdAt;
+  String? createdAt;
 
-  List<Photos> photos;
+  List<Photos>? photos;
 
   Data(this.id,this.goodsId,this.userId,this.nickname,this.headImgUrl,this.content,this.createdAt,this.photos,);
 
@@ -92,13 +92,13 @@ class Data extends Object {
 @JsonSerializable()
 class Photos extends Object {
 
-  int id;
+  int? id;
 
-  String url;
+  String? url;
 
-  int width;
+  int? width;
 
-  int height;
+  int? height;
 
   Photos(this.id,this.url,this.width,this.height,);
 

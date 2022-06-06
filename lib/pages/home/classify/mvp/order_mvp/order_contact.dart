@@ -30,20 +30,20 @@ abstract class OrderPresenterI
 abstract class OrderModelI extends MvpModel {
   getStoreList();
   changeCoinOnOff(int userId, int orderId);
-  changeAddress(int userId, int orderId, int addressId);
+  changeAddress(int? userId, int? orderId, int? addressId);
   changeShippingMethod(
-      int userId, int orderId, int shippingMethod, int storeId);
-  changeBuyerMessage(int userId, int orderId, String message);
-  submitOrder(int orderPreviewId, int userId);
-  queryRecookPayFund(int userId);
-  createAliPayOrder(int userId, int orderId);
-  createWeChatOrder(int userId, int orderId);
-  createAliPayOrderLifang(int userId, int orderId);
-  createWeChatOrderLifang(int userId, int orderId);
-  createRecookPayOrder(int userId, int orderId, String password);
-  createRecookPayOrderDeposit (int userId, int orderId, String password);
-  createZeroPayOrder(int userId, int orderId);
-  verifyOrderPayStatus(int orderId);
+      int? userId, int? orderId, int shippingMethod, int? storeId);
+  changeBuyerMessage(int? userId, int? orderId, String message);
+  submitOrder(int? orderPreviewId, int? userId);
+  queryRecookPayFund(int? userId);
+  createAliPayOrder(int? userId, int? orderId);
+  createWeChatOrder(int? userId, int? orderId);
+  createAliPayOrderLifang(int? userId, int? orderId);
+  createWeChatOrderLifang(int? userId, int? orderId);
+  createRecookPayOrder(int? userId, int? orderId, String password);
+  createRecookPayOrderDeposit (int? userId, int? orderId, String password);
+  createZeroPayOrder(int? userId, int? orderId);
+  verifyOrderPayStatus(int? orderId);
   verifyOrderPayStatusLifang(int orderId);
 
 

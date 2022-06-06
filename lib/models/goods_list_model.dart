@@ -8,7 +8,7 @@ part 'goods_list_model.g.dart';
 @JsonSerializable()
 class GoodsListModel extends BaseModel {
 
-  List<Goods> data;
+  List<Goods>? data;
 
   GoodsListModel(code,this.data,msg,) : super(code, msg);
 
@@ -22,31 +22,31 @@ class GoodsListModel extends BaseModel {
 @JsonSerializable()
 class Goods extends Object {
 
-  int id;
+  int? id;
 
-  int brandId;
+  int? brandId;
 
-  String goodsName;
+  String? goodsName;
 
-  String description;
+  String? description;
 
-  int firstCategoryId;
+  int? firstCategoryId;
 
-  int secondCategoryId;
+  int? secondCategoryId;
 
-  int commissionRate;
+  int? commissionRate;
 
-  double discount;
+  double? discount;
 
-  Price price;
+  Price? price;
 
-  int inventory;
+  int? inventory;
 
-  int salesVolume;
+  int? salesVolume;
 
-  String url;
+  String? url;
 
-  String promotionName;
+  String? promotionName;
 
   Goods(this.id,this.brandId,this.goodsName,this.description,this.firstCategoryId,this.secondCategoryId,this.commissionRate,this.discount,this.price,this.inventory,this.salesVolume,this.url,this.promotionName);
 

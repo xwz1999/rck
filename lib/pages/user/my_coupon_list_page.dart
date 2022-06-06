@@ -24,7 +24,7 @@ class MyCouponListPage extends StatefulWidget {
 }
 
 class _MyCouponListPageState extends BaseStoreState<MyCouponListPage> {
-  List<Coupon> _couponList;
+  List<Coupon>? _couponList;
 
   @override
   void initState() {
@@ -41,7 +41,7 @@ class _MyCouponListPageState extends BaseStoreState<MyCouponListPage> {
         themeData: AppThemes.themeDataGrey.appBarTheme,
       ),
       backgroundColor: AppColor.frenchColor,
-      body: _couponList == null || _couponList.length == 0
+      body: _couponList == null || _couponList!.length == 0
           ? noDataView("您当前没有可用的优惠券")
           : _buildBody(),
     );
@@ -49,9 +49,9 @@ class _MyCouponListPageState extends BaseStoreState<MyCouponListPage> {
 
   _buildBody() {
     return ListView.builder(
-        itemCount: _couponList.length,
+        itemCount: _couponList!.length,
         itemBuilder: (_, index) {
-          return _item(_couponList[index]);
+          return _item(_couponList![index]);
         });
   }
 
@@ -98,14 +98,14 @@ class _MyCouponListPageState extends BaseStoreState<MyCouponListPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      coupon.name,
+                      coupon.name!,
                       style: AppTextStyle.generate(17 * 2.sp,
                           color: Colors.white, fontWeight: FontWeight.w300),
                     ),
                     Text(
-                      coupon.startTime.substring(0, 10) +
+                      coupon.startTime!.substring(0, 10) +
                           "-" +
-                          coupon.endTime.substring(0, 10),
+                          coupon.endTime!.substring(0, 10),
                       style: AppTextStyle.generate(13 * 2.sp,
                           color: Colors.white, fontWeight: FontWeight.w300),
                     ),
@@ -125,7 +125,7 @@ class _MyCouponListPageState extends BaseStoreState<MyCouponListPage> {
                 color: AppColor.rgbColor(0, 0, 0, a: 30),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  coupon.explanation,
+                  coupon.explanation!,
                   textAlign: TextAlign.left,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -139,15 +139,15 @@ class _MyCouponListPageState extends BaseStoreState<MyCouponListPage> {
   }
 
   _getList() async {
-    HttpResultModel<CouponListModel> resultModel =
+    HttpResultModel<CouponListModel?> resultModel =
         await CouponListImpl.getReceiveCouponList(
-            UserManager.instance.user.info.id);
+            UserManager.instance!.user.info!.id);
     if (!resultModel.result) {
       Toast.showInfo(resultModel.msg);
       return;
     }
     setState(() {
-      _couponList = resultModel.data.data;
+      _couponList = resultModel.data!.data;
     });
   }
 }

@@ -8,6 +8,6 @@ class BaseController {
   }
 
   void dispose() {
-    _cacheList.forEach((e) => e?.dispose());
+    _cacheList.forEach((e) => e.dispose());
   }
 }

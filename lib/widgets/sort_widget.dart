@@ -6,17 +6,17 @@ enum SortType {SortAscending, SortDescending}
 
 class SortWidget extends StatefulWidget {
   final SortType sortType;
-  final Size size;
-  final Function(SortType sortType) onChange;
-  SortWidget({Key key, this.sortType=SortType.SortDescending, this.size, this.onChange}) : super(key: key);
+  final Size? size;
+  final Function(SortType? sortType)? onChange;
+  SortWidget({Key? key, this.sortType=SortType.SortDescending, this.size, this.onChange}) : super(key: key);
 
   @override
   _SortWidgetState createState() => _SortWidgetState();
 }
 
 class _SortWidgetState extends State<SortWidget> {
-  SortType _sortType;
-  Size _size;
+  SortType? _sortType;
+  Size? _size;
   @override
   void initState() { 
     super.initState();
@@ -34,11 +34,11 @@ class _SortWidgetState extends State<SortWidget> {
       onTap: (){
         _sortType = _sortType == SortType.SortAscending? SortType.SortDescending: SortType.SortAscending;
         setState(() { });
-        if(widget.onChange!=null) widget.onChange(_sortType);
+        if(widget.onChange!=null) widget.onChange!(_sortType);
       },
       child: Container(
         color: Colors.white,
-        width: _size.width, height: _size.height,
+        width: _size!.width, height: _size!.height,
         child: Image.asset(_sortType == SortType.SortDescending? AppImageName.desc_sort: AppImageName.asc_sort, fit: BoxFit.fill,),
       ),
     );

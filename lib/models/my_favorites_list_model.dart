@@ -55,7 +55,7 @@ part 'my_favorites_list_model.g.dart';
 @JsonSerializable()
 class MyFavoritesListModel extends BaseModel {
 
-  List<FavoriteModel> data;
+  List<FavoriteModel>? data;
 
   MyFavoritesListModel(code,this.data,msg) : super(code,msg);
 
@@ -69,9 +69,9 @@ class MyFavoritesListModel extends BaseModel {
 @JsonSerializable()
 class FavoriteModel extends Object {
 
-  int favoriteId;
+  int? favoriteId;
 
-  FavoriteGoods goods;
+  FavoriteGoods? goods;
 
   FavoriteModel(this.favoriteId,this.goods,);
 
@@ -85,13 +85,13 @@ class FavoriteModel extends Object {
 @JsonSerializable()
 class FavoriteGoods extends Object {
 
-  int id;
-  String description;
-  String goodsName;
+  int? id;
+  String? description;
+  String? goodsName;
 
-  String mainPhotoUrl;
+  String? mainPhotoUrl;
 
-  double discountPrice;
+  double? discountPrice;
 
   FavoriteGoods(
     this.id,

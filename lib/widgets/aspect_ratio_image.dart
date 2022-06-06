@@ -23,7 +23,7 @@ class AspectRatioImage extends StatelessWidget {
   final ImageProvider provider;
   final AsyncImageWidgetBuilder<ui.Image> builder;
  
-  AspectRatioImage.network(url, {Key key, @required this.builder})
+  AspectRatioImage.network(url, {Key? key, required this.builder})
       : provider = NetworkImage(url),
         this.url = url;
  
@@ -33,13 +33,13 @@ class AspectRatioImage extends StatelessWidget {
     final ImageConfiguration config = createLocalImageConfiguration(context);
     final Completer<ui.Image> completer = Completer<ui.Image>();
     final ImageStream stream = provider.resolve(config);
-    ImageStreamListener listener;
+    late ImageStreamListener listener;
     listener = ImageStreamListener(
           (ImageInfo image, bool sync) {
         completer.complete(image.image);
         stream.removeListener(listener);
       },
-      onError: (dynamic exception, StackTrace stackTrace) {
+      onError: (dynamic exception, StackTrace? stackTrace) {
         completer.complete();
         stream.removeListener(listener);
           FlutterError.reportError(FlutterErrorDetails(

@@ -11,7 +11,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:jpush_flutter/jpush_flutter.dart';
 
 import 'package:recook/base/base_store_state.dart';
@@ -23,7 +22,6 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/login/wechat_bind_page.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/widgets/alert.dart';
-import 'package:recook/widgets/progress/sc_dialog.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:recook/widgets/webView.dart';
 
@@ -35,7 +33,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends BaseStoreState<LoginPage> {
-  BuildContext _context;
+  BuildContext? _context;
   bool _weChatLoginLoading = false;
   bool _hasInstallWeChat = false;
   bool _chooseAgreement = false;
@@ -66,7 +64,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
                   child: GestureDetector(
                     onTap: () {
                       AppRouter.fadeAndReplaced(
-                          globalContext, RouteName.TAB_BAR);
+                          globalContext!, RouteName.TAB_BAR);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -219,7 +217,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
               if (result.errCode == -2) {
                 Toast.showInfo('用户取消登录');
               } else if (result.errCode != 0) {
-                GSDialog.of(context).dismiss(_context);
+                GSDialog.of(context).dismiss(_context!);
                 Toast.showInfo(result.errStr);
               } else {
                 if (!_weChatLoginLoading) {
@@ -272,7 +270,7 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
       margin: EdgeInsets.symmetric(horizontal: 30),
       height: rSize(40),
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[700], width: 0.7),
+          border: Border.all(color: Colors.grey[700]!, width: 0.7),
           borderRadius: BorderRadius.all(Radius.circular(3))),
       child: MaterialButton(
         onPressed: () {
@@ -316,15 +314,15 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
     return recognizer;
   }
 
-  _weChatLogin(String code) {
+  _weChatLogin(String? code) {
     GSDialog.of(context).showLoadingDialog(context, "登录中...");
     UserDao.weChatLogin(code, success: (user, code, msg) {
       GSDialog.of(context).dismiss(context);
-      DPrint.printf("user.status ----------------- ${user.status}");
+      DPrint.printf("user.status ----------------- ${user!.status}");
       _weChatLoginLoading = false;
       if (user.status == 0) {
         AppRouter.push(context, RouteName.WECHAT_BIND,
-            arguments: WeChatBindPage.setArgument(user.info.wxUnionId));
+            arguments: WeChatBindPage.setArgument(user.info!.wxUnionId));
         // AppRouter.push(context, RouteName.INPUT_INVITATION,
         //     arguments: InvitationCodePage.setArgs(
         //         mode: 1, userID: user.info.id, nickName: user.info.nickname));

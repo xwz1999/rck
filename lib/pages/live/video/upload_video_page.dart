@@ -16,9 +16,9 @@ import 'package:oktoast/oktoast.dart';
 
 class UploadVideoPage extends StatefulWidget {
   final File videoFile;
-  final File coverImageFile;
+  final File? coverImageFile;
   UploadVideoPage(
-      {Key key, @required this.videoFile, @required this.coverImageFile})
+      {Key? key, required this.videoFile, required this.coverImageFile})
       : super(key: key);
 
   @override
@@ -26,10 +26,10 @@ class UploadVideoPage extends StatefulWidget {
 }
 
 class _UploadVideoPageState extends State<UploadVideoPage> {
-  TopicListModel _topicListModel;
-  VideoGoodsModel _videoGoodsModel;
+  TopicListModel? _topicListModel;
+  VideoGoodsModel? _videoGoodsModel;
   TextEditingController _editingController = TextEditingController();
-  File uploadFile;
+  File? uploadFile;
   @override
   void initState() {
     super.initState();
@@ -40,7 +40,7 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
 
   @override
   void dispose() {
-    _editingController?.dispose();
+    _editingController.dispose();
     super.dispose();
   }
 
@@ -92,11 +92,11 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
                   //     customKey: '${UserManager.instance.user.info.id}');
                   HttpManager.post(LiveAPI.uploadKey, {}).then((resultData) {
                     GSDialog.of(context).dismiss(context);
-                    if (resultData?.data['data'] == null)
-                      showToast(resultData?.data['msg']);
+                    if (resultData.data['data'] == null)
+                      showToast(resultData.data['msg']);
                     else {
                       GSDialog.of(context).showLoadingDialog(context, '上传视频中');
-                      String sign = resultData?.data['data']['sign'];
+                      String? sign = resultData.data['data']['sign'];
                       // txugcPublish.setVideoPublishListener(VideoPublishListener(
                       //   onVideoPublishProgress: (uploadBytes, totalBytes) {
                       //     int progress =
@@ -173,7 +173,7 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
                 tag: 'preview_video',
                 child: Material(
                   child: Ink.image(
-                    image: FileImage(widget.coverImageFile),
+                    image: FileImage(widget.coverImageFile!),
                     fit: BoxFit.cover,
                     child: InkWell(
                       onTap: () {
@@ -217,7 +217,7 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
                       ),
                     ],
                   )
-                : _topicListModel.title,
+                : _topicListModel!.title,
             titleColor: Color(0xFFEB8A49),
             prefix: Image.asset(
               R.ASSETS_LIVE_TOPIC_PNG,
@@ -240,7 +240,7 @@ class _UploadVideoPageState extends State<UploadVideoPage> {
           RecookListTile(
             title: _videoGoodsModel == null
                 ? '添加关联产品'
-                : _videoGoodsModel.goodsName,
+                : _videoGoodsModel!.goodsName,
             prefix: Image.asset(
               R.ASSETS_LIVE_UPLOAD_CART_PNG,
               width: rSize(16),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ImageTextPage extends StatefulWidget {
-  ImageTextPage({Key key}) : super(key: key);
+  ImageTextPage({Key? key}) : super(key: key);
 
   @override
   _ImageTextPageState createState() => _ImageTextPageState();

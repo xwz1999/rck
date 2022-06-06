@@ -1,17 +1,16 @@
-import 'package:flutter/foundation.dart';
 import 'package:recook/utils/user_level_tool.dart';
 
 class UserCommonModel {
-  int userId;
-  String headImgUrl;
-  String nickname;
-  String phone;
-  String wechatNo;
-  String remarkName;
-  int count;
-  int roleLevel;
-  int flag;
-  num amount;
+  int? userId;
+  String? headImgUrl;
+  String? nickname;
+  String? phone;
+  String? wechatNo;
+  String? remarkName;
+  int? count;
+  int? roleLevel;
+  int? flag;
+  num? amount;
 
   UserRoleLevel get roleLevelEnum => UserLevelTool.roleLevelEnum(roleLevel);
 
@@ -32,16 +31,16 @@ class UserCommonModel {
   }
 
   UserCommonModel({
-    @required this.userId,
-    @required this.headImgUrl,
-    @required this.nickname,
-    @required this.phone,
-    @required this.wechatNo,
-    @required this.remarkName,
-    @required this.count,
-    @required this.roleLevel,
-    @required this.flag,
-    @required this.amount,
+    required this.userId,
+    required this.headImgUrl,
+    required this.nickname,
+    required this.phone,
+    required this.wechatNo,
+    required this.remarkName,
+    required this.count,
+    required this.roleLevel,
+    required this.flag,
+    required this.amount,
   });
 
   UserCommonModel.fromJson(Map<String, dynamic> json) {

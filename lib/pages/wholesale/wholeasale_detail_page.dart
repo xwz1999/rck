@@ -7,7 +7,6 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
-import 'package:recook/pages/home/home_page.dart';
 import 'package:recook/pages/home/widget/modify_detail_app_bar.dart';
 import 'package:recook/pages/home/widget/modify_detail_bottom_bar.dart';
 import 'package:recook/pages/tabBar/TabbarWidget.dart';
@@ -26,11 +25,11 @@ import 'models/wholesale_customer_model.dart';
 import 'models/wholesale_detail_model.dart';
 
 class WholesaleDetailPage extends StatefulWidget {
-  final int goodsId;
+  final int? goodsId;
 
 
   const WholesaleDetailPage({
-    Key key, this.goodsId,
+    Key? key, this.goodsId,
   }) : super(key: key);
 
   static setArguments(int goodsID,) {
@@ -46,11 +45,11 @@ class WholesaleDetailPage extends StatefulWidget {
 class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
     with TickerProviderStateMixin {
 
-  AppBarController _appBarController;
-  BottomBarController _bottomBarController;
+  AppBarController? _appBarController;
+  BottomBarController? _bottomBarController;
   ValueNotifier<bool> _openSkuChoosePage = ValueNotifier(false);
-  int _goodsId;
-  WholesaleDetailModel _goodsDetail;
+  int? _goodsId;
+  WholesaleDetailModel? _goodsDetail;
 
 
   @override
@@ -63,7 +62,7 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
 
     _getDetail();
 
-    UserManager.instance.refreshGoodsDetailPromotionState
+    UserManager.instance!.refreshGoodsDetailPromotionState
         .addListener(_refreshPromotionState);
   }
 
@@ -77,7 +76,7 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
     _bottomBarController?.dispose();
     _appBarController?.dispose();
 
-    UserManager.instance.refreshGoodsDetailPromotionState
+    UserManager.instance!.refreshGoodsDetailPromotionState
         .removeListener(_refreshPromotionState);
     super.dispose();
   }
@@ -123,7 +122,7 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
                                 double scale = offset / 180;
                                 scale = scale.clamp(0.0, 1.0);
 
-                                _appBarController.scale.value = scale;
+                                _appBarController!.scale.value = scale;
 
                                 // if (offset > maxScroll + 5) {
                                 //   _tabController.animateTo(1);
@@ -184,7 +183,7 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
   _customer(){
     return GestureDetector(
       onTap: () async{
-        WholesaleCustomerModel model = await
+        WholesaleCustomerModel? model = await
         WholesaleFunc.getCustomerInfo();
 
         Get.to(()=>WholesaleCustomerPage(model: model,));
@@ -216,7 +215,7 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
       isWholesale: true,
       goodsDetail: _goodsDetail,
       controller: _bottomBarController,
-      collected: _goodsDetail == null ? false : _goodsDetail.isFavorite,
+      collected: _goodsDetail == null ? false : _goodsDetail!.isFavorite,
       // shopCartNum: _goodsDetail == null
       //     ? ''
       //     : _goodsDetail.shoppingTrolleyCount > 99
@@ -278,26 +277,26 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
     //   return;
     // }
     String goodsTitle =
-        "${_goodsDetail.getPriceString()} | ${_goodsDetail.goodsName} | ${_goodsDetail.description}";
+        "${_goodsDetail!.getPriceString()} | ${_goodsDetail!.goodsName} | ${_goodsDetail!.description}";
     ShareTool().goodsShare(context,
-        goodsPrice: _goodsDetail.getPriceString(),
+        goodsPrice: _goodsDetail!.getPriceString(),
         miniTitle: goodsTitle,
-        goodsName: _goodsDetail.goodsName,
-        goodsDescription: _goodsDetail.description,
-        miniPicurl: _goodsDetail.mainPhotos.length > 0
-            ? _goodsDetail.mainPhotos[0].url
+        goodsName: _goodsDetail!.goodsName,
+        goodsDescription: _goodsDetail!.description,
+        miniPicurl: _goodsDetail!.mainPhotos!.length > 0
+            ? _goodsDetail!.mainPhotos![0].url
             : "",
-        goodsId: _goodsDetail.id.toString(),
-        amount: _goodsDetail.price.min.commission > 0
-            ? _goodsDetail.price.min.commission.toString()
+        goodsId: _goodsDetail!.id.toString(),
+        amount: _goodsDetail!.price!.min!.commission! > 0
+            ? _goodsDetail!.price!.min!.commission.toString()
             : "");
   }
 
   _getDetail() async {
     _goodsDetail = await WholesaleFunc.getDetailInfo(
-        _goodsId, UserManager.instance.user.info.id);
+        _goodsId, UserManager.instance!.user.info!.id);
 
-    _bottomBarController.setFavorite(_goodsDetail.isFavorite);
+    _bottomBarController!.setFavorite(_goodsDetail!.isFavorite);
     if(mounted){
       setState(() {});
     }
@@ -305,25 +304,25 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
   }
 
   _addFavorite() async {
-    HttpResultModel<BaseModel> resultModel =
+    HttpResultModel<BaseModel?> resultModel =
         await GoodsDetailModelImpl.favoriteAdd(
-            UserManager.instance.user.info.id, _goodsDetail.id);
+            UserManager.instance!.user.info!.id, _goodsDetail!.id as int?);
     if (!resultModel.result) {
       Toast.showInfo(resultModel.msg);
       return;
     }
-    _bottomBarController.setFavorite(true);
+    _bottomBarController!.setFavorite(true);
   }
 
   _cancelFavorite() async {
-    HttpResultModel<BaseModel> resultModel =
+    HttpResultModel<BaseModel?> resultModel =
         await GoodsDetailModelImpl.favoriteCancel(
-            UserManager.instance.user.info.id, _goodsDetail.id);
+            UserManager.instance!.user.info!.id, _goodsDetail!.id as int?);
     if (!resultModel.result) {
       Toast.showInfo(resultModel.msg);
       return;
     }
-    _bottomBarController.setFavorite(false);
+    _bottomBarController!.setFavorite(false);
   }
 
 

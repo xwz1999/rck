@@ -11,24 +11,24 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 
 class TextButton extends StatefulWidget {
-  final String title;
-  final double width;
-  final double height;
-  final GestureTapCallback onTap;
+  final String? title;
+  final double? width;
+  final double? height;
+  final GestureTapCallback? onTap;
   final EdgeInsetsGeometry margin;
   final EdgeInsetsGeometry padding;
-  final Color textColor;
-  final Color highlightTextColor;
-  final Color backgroundColor;
-  final Color highlightBackgroundColor;
+  final Color? textColor;
+  final Color? highlightTextColor;
+  final Color? backgroundColor;
+  final Color? highlightBackgroundColor;
   final Border border;
-  final BorderRadius radius;
+  final BorderRadius? radius;
   final bool enable;
-  final Color unableTextColor;
-  final Color unableBackgroundColor;
-  final double font;
-  final FontWeight fontWeight;
-  final Gradient gradient;
+  final Color? unableTextColor;
+  final Color? unableBackgroundColor;
+  final double? font;
+  final FontWeight? fontWeight;
+  final Gradient? gradient;
 
   TextButton(
       {this.title,
@@ -58,8 +58,8 @@ class TextButton extends StatefulWidget {
 }
 
 class _TextButtonState extends State<TextButton> {
-  Color _textColor;
-  Color _backgroundColor;
+  Color? _textColor;
+  Color? _backgroundColor;
   double _opacity = 1;
 
   @override
@@ -117,7 +117,7 @@ class _TextButtonState extends State<TextButton> {
               gradient: widget.gradient),
           child: Center(
             child: Text(
-              widget.title,
+              widget.title!,
               style: TextStyle(
                 fontSize: widget.font,
                   fontWeight: widget.fontWeight,

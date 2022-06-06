@@ -29,13 +29,13 @@ import 'package:redux/redux.dart';
 
 class UserManager {
   static bool shouldRefresh = false;
-  User user;
-  UserBrief userBrief;
+  late User user;
+  UserBrief? userBrief;
   bool getLoggerData = false;
   ///是否领取过七天体验卡
-  bool getSeven = false;
+  bool? getSeven = false;
   // 天气数据
-  HomeWeatherModel homeWeatherModel;
+  HomeWeatherModel? homeWeatherModel;
   ValueNotifier<bool> login = ValueNotifier(false);
   ValueNotifier<bool> refreshShoppingCart = ValueNotifier(false);
   ValueNotifier<bool> refreshShoppingCartNumber = ValueNotifier(false);
@@ -57,48 +57,48 @@ class UserManager {
   ValueNotifier<bool> refreshHomeBottomTabbar = ValueNotifier(false);
 
   ValueNotifier<bool> openInstallLive = ValueNotifier(false);
-  int selectTabbarIndex;
+  int? selectTabbarIndex;
 
-  List<KingCoinListModel> kingCoinListModelList;
+  List<KingCoinListModel>? kingCoinListModelList;
 
   bool get haveLogin => login.value;
 
-  String _identifier = "";
-  String get indentifier => _identifier;
+  String? _identifier = "";
+  String? get indentifier => _identifier;
   String jpushRid = '';
 
 
   bool isWholesale = false;
 
 
-  factory UserManager() => _getInstance();
-  static UserManager get instance => _getInstance();
-  static UserManager _instance;
+  factory UserManager() => _getInstance()!;
+  static UserManager? get instance => _getInstance();
+  static UserManager? _instance;
   UserManager._internal() {
     // 初始化
   }
-  static UserManager _getInstance() {
+  static UserManager? _getInstance() {
     if (_instance == null) {
       _instance = new UserManager._internal();
-      _instance.user = User.empty();
-      _instance.selectTabbarIndex = 0;
-      _instance.userBrief = UserBrief.empty();
+      _instance!.user = User.empty();
+      _instance!.selectTabbarIndex = 0;
+      _instance!.userBrief = UserBrief.empty();
     }
     return _instance;
   }
 
   static Future<bool> updateUser(User user, Store<RecookState> store) async {
-    instance.user = user;
-    instance.login.value = true;
-    UserManager.instance.activePeople();
+    instance!.user = user;
+    instance!.login.value = true;
+    UserManager.instance!.activePeople();
     String jsonStr = json.encode(user.toJson());
     // await SharePreferenceUtils.setString(AppStrings.key_user, jsonStr);
     // store.dispatch(UpdateUserAction(user));
-    HiveStore.appBox.put('key_user', jsonStr);
-    UserManager.instance.updateUserBriefInfo(store);
+    HiveStore.appBox!.put('key_user', jsonStr);
+    UserManager.instance!.updateUserBriefInfo(store);
 
 
-    await  UserFunc.activeJpush(Platform.isIOS?2:1,UserManager.instance.jpushRid);
+    await  UserFunc.activeJpush(Platform.isIOS?2:1,UserManager.instance!.jpushRid);
 
 
 
@@ -107,32 +107,32 @@ class UserManager {
   }
 
   static updateUserInfo(Store<RecookState> store) async {
-    String jsonStr = json.encode(instance.user.toJson());
+    String jsonStr = json.encode(instance!.user.toJson());
     // await SharePreferenceUtils.setString(AppStrings.key_user, jsonStr);
     // store.dispatch(UpdateUserAction(instance.user));
-    HiveStore.appBox.put('key_user', jsonStr);
+    HiveStore.appBox!.put('key_user', jsonStr);
   }
 
   static logout() async {
-    DPrint.printf("退出登录了 -- ${instance.login.value}");
-    instance.user = User.empty();
-    instance.login.value = false;
-    HiveStore.appBox.delete('key_user');
+    DPrint.printf("退出登录了 -- ${instance!.login.value}");
+    instance!.user = User.empty();
+    instance!.login.value = false;
+    HiveStore.appBox!.delete('key_user');
     // await SharePreferenceUtils.remove(AppStrings.key_user);
 //    store.dispatch(UpdateUserAction(User.empty()));
   }
 
   Future<bool> updateUserBriefInfo(Store<RecookState> store) async {
     UserPresenterImpl presenterImpl = UserPresenterImpl();
-    HttpResultModel<UserBrief> model =
-        await presenterImpl.getUserBriefInfo(instance.user.info.id);
+    HttpResultModel<UserBrief?> model =
+        await presenterImpl.getUserBriefInfo(instance!.user.info!.id);
     if (!model.result) {
       Toast.showInfo(model.msg);
       return false;
     }
-    _identifier = model.data == null ? '' : model.data.identifier;
+    _identifier = model.data == null ? '' : model.data!.identifier;
     if(model.data!=null){
-      _instance.userBrief = model.data;
+      _instance!.userBrief = model.data;
       store.dispatch(UpdateUserBriefAction(model.data));
     }
 
@@ -148,9 +148,10 @@ class UserManager {
     return true;
   }
 
-  Future<bool> activePeople() async {
+  Future<bool?> activePeople() async {
     ResultData result = await HttpManager.post(APIV2.userAPI.activePeople, {
-      'id': UserManager.instance.user.info.id,
+      'id': UserManager.instance!.user.info!.id,
     });
+    return null;
   }
 }

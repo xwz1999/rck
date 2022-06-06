@@ -10,9 +10,9 @@ class VideoRecordButton extends StatefulWidget {
   final VoidCallback onEnd;
   final bool disabled;
   VideoRecordButton({
-    Key key,
-    @required this.onStart,
-    @required this.onEnd,
+    Key? key,
+    required this.onStart,
+    required this.onEnd,
     this.disabled = false,
   }) : super(key: key);
 
@@ -22,9 +22,9 @@ class VideoRecordButton extends StatefulWidget {
 
 class _VideoRecordButtonState extends State<VideoRecordButton> {
   bool _isOnTap = false;
-  Timer _timer;
+  Timer? _timer;
   int _seconds = 0;
-  Timer _timer60;
+  Timer? _timer60;
 
   @override
   void dispose() {
@@ -36,8 +36,7 @@ class _VideoRecordButtonState extends State<VideoRecordButton> {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      overflow: Overflow.visible,
-      alignment: Alignment.center,
+      clipBehavior: Clip.none, alignment: Alignment.center,
       children: [
         Positioned(
           top: -rSize(34 + 20.0),

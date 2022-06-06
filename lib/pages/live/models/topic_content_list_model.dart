@@ -1,14 +1,14 @@
 class TopicContentListModel {
-  int userId;
-  String nickname;
-  String headImgUrl;
-  String content;
-  String coverUrl;
-  int trendId;
-  int originId;
-  int trendType;
-  int praise;
-  int isPraise;
+  int? userId;
+  String? nickname;
+  String? headImgUrl;
+  String? content;
+  String? coverUrl;
+  int? trendId;
+  int? originId;
+  int? trendType;
+  int? praise;
+  int? isPraise;
 
   TopicContentListModel(
       {this.userId,

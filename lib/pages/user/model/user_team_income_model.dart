@@ -1,7 +1,7 @@
 class UserTeamIncomeModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   UserTeamIncomeModel({this.code, this.msg, this.data});
 
@@ -16,17 +16,17 @@ class UserTeamIncomeModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  TeamIncome teamIncome;
-  String date;
-  IncomeDetail incomeDetail;
-  List<Billboard> billboard;
+  TeamIncome? teamIncome;
+  String? date;
+  IncomeDetail? incomeDetail;
+  List<Billboard>? billboard;
 
   Data({this.teamIncome, this.date, this.incomeDetail, this.billboard});
 
@@ -41,7 +41,7 @@ class Data {
     if (json['billboard'] != null) {
       billboard = [];
       json['billboard'].forEach((v) {
-        billboard.add(new Billboard.fromJson(v));
+        billboard!.add(new Billboard.fromJson(v));
       });
     }
   }
@@ -49,23 +49,23 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.teamIncome != null) {
-      data['teamIncome'] = this.teamIncome.toJson();
+      data['teamIncome'] = this.teamIncome!.toJson();
     }
     data['date'] = this.date;
     if (this.incomeDetail != null) {
-      data['incomeDetail'] = this.incomeDetail.toJson();
+      data['incomeDetail'] = this.incomeDetail!.toJson();
     }
     if (this.billboard != null) {
-      data['billboard'] = this.billboard.map((v) => v.toJson()).toList();
+      data['billboard'] = this.billboard!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class TeamIncome {
-  num teamAmount;
-  num historyIncome;
-  num memberNum;
+  num? teamAmount;
+  num? historyIncome;
+  num? memberNum;
 
   TeamIncome({this.teamAmount, this.historyIncome, this.memberNum});
 
@@ -85,12 +85,12 @@ class TeamIncome {
 }
 
 class IncomeDetail {
-  num id;
-  num userId;
+  num? id;
+  num? userId;
   // Null period;
-  num percent;
-  num amount;
-  num income;
+  num? percent;
+  num? amount;
+  num? income;
   // Null createdAt;
 
   IncomeDetail({
@@ -127,12 +127,12 @@ class IncomeDetail {
 }
 
 class Billboard {
-  num userId;
-  String username;
-  String mobile;
-  num roleLevel;
-  num amount;
-  String headImgUrl;
+  num? userId;
+  String? username;
+  String? mobile;
+  num? roleLevel;
+  num? amount;
+  String? headImgUrl;
   Billboard(
       {this.userId,
       this.username,

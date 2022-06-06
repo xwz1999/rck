@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/widgets/month_select_widget.dart';
 import 'package:recook/widgets/title_switch.dart';
@@ -11,22 +10,22 @@ enum BottomTimePickerType {
   BottomTimePickerDay, }
 
 class BottomTimePicker extends StatefulWidget {
-  final Function cancle;
+  final Function? cancle;
   final Function(DateTime, BottomTimePickerType) submit;
-  final List<BottomTimePickerType> timePickerTypes;
-  final bool yearChoose;
+  final List<BottomTimePickerType>? timePickerTypes;
+  final bool? yearChoose;
   // final BottomTimePickerType customTimePickerType;
   // BottomTimePicker({Key key, this.cancle, this.submit, this.customTimePickerType}) : super(key: key);
-  BottomTimePicker({Key key, this.cancle, this.submit, this.timePickerTypes, this.yearChoose}) : super(key: key);
+  BottomTimePicker({Key? key, this.cancle, required this.submit, this.timePickerTypes, this.yearChoose}) : super(key: key);
 
   @override
   _BottomTimePickerState createState() => _BottomTimePickerState();
 }
 
 class _BottomTimePickerState extends State<BottomTimePicker> {
-  List<BottomTimePickerType> _timePickerTypes;
+  List<BottomTimePickerType>? _timePickerTypes;
   // BottomTimePickerType _customTimePickerType;
-  DateTime _dateTime;
+  DateTime? _dateTime;
   int _index = 0;
   @override
   void initState() { 
@@ -44,7 +43,7 @@ class _BottomTimePickerState extends State<BottomTimePicker> {
   }
   _titleSwitchTitles(){
     List<String> titles = [];
-    for (BottomTimePickerType type in _timePickerTypes) {
+    for (BottomTimePickerType type in _timePickerTypes!) {
       switch (type) {
         case BottomTimePickerType.BottomTimePickerDay:
           titles.add("按天");
@@ -72,7 +71,7 @@ class _BottomTimePickerState extends State<BottomTimePicker> {
               height: 0.5,
               color: Colors.black.withOpacity(0.1).withAlpha(30),
             ),
-            _timePickerTypes.length == 1 ? 
+            _timePickerTypes!.length == 1 ? 
             Container():
             Container(
               margin: EdgeInsets.only(top: 20, bottom: 10),
@@ -111,7 +110,7 @@ class _BottomTimePickerState extends State<BottomTimePicker> {
         children: <Widget>[
           TextButton(
             onPressed: (){
-              if (widget.cancle!=null) widget.cancle();
+              if (widget.cancle!=null) widget.cancle!();
             }, 
             child: Text("取消", style: TextStyle(color: Color(0xff999999), fontSize: 15),)
           ),
@@ -120,9 +119,7 @@ class _BottomTimePickerState extends State<BottomTimePicker> {
           ),
           TextButton(
             onPressed: (){
-              if (widget.submit!=null){
-                widget.submit(_dateTime, _timePickerTypes[_index]);
-              }
+              widget.submit(_dateTime!, _timePickerTypes![_index]);
             }, 
             child: Text("确认", style: TextStyle(color: AppColor.themeColor, fontSize: 15),),
           )
@@ -148,14 +145,14 @@ class _BottomTimePickerState extends State<BottomTimePicker> {
     }
 
     return Container(
-      child: _timePickerTypes[_index] == BottomTimePickerType.BottomTimePickerMonth
+      child: _timePickerTypes![_index] == BottomTimePickerType.BottomTimePickerMonth
       ? MonthSelectWidget(
         yearChoose: widget.yearChoose,
         timeChange: (time){
           _dateTime = time;
         },
       )
-      : _timePickerTypes[_index] == BottomTimePickerType.BottomTimePickerYear 
+      : _timePickerTypes![_index] == BottomTimePickerType.BottomTimePickerYear 
       ? CupertinoPicker(
         backgroundColor: Colors.white,
         itemExtent: 30, 
@@ -170,7 +167,7 @@ class _BottomTimePickerState extends State<BottomTimePicker> {
       //     _dateTime = time;
       //   },
       // )
-      : _timePickerTypes[_index] == BottomTimePickerType.BottomTimePickerDay 
+      : _timePickerTypes![_index] == BottomTimePickerType.BottomTimePickerDay 
       ? CupertinoDatePicker(
         mode: CupertinoDatePickerMode.date,
         onDateTimeChanged: (dateTime){
@@ -190,11 +187,11 @@ class _BottomTimePickerState extends State<BottomTimePicker> {
 
 
 class TimeSelectTitleWidget extends StatefulWidget {
-  final Function click;
-  final String title;
+  final Function? click;
+  final String? title;
   final Color backgroundColor;
-  final Color color;
-  TimeSelectTitleWidget({Key key, this.title, this.click, this.backgroundColor = Colors.white, this.color}) : super(key: key);
+  final Color? color;
+  TimeSelectTitleWidget({Key? key, this.title, this.click, this.backgroundColor = Colors.white, this.color}) : super(key: key);
 
   @override
   _TimeSelectTitleWidgetState createState() => _TimeSelectTitleWidgetState();
@@ -205,10 +202,10 @@ class _TimeSelectTitleWidgetState extends State<TimeSelectTitleWidget> {
   Widget build(BuildContext context) {
     return Container(
        child: GestureDetector(
-         child: _selectWidget(widget.title),
+         child: _selectWidget(widget.title!),
          onTap: (){
            if(widget.click!=null){
-             widget.click();
+             widget.click!();
            }
          },
        ),

@@ -15,19 +15,18 @@ import 'package:recook/widgets/custom_image_button.dart';
 // ignore: must_be_immutable
 class MyAddressItem extends StatelessWidget {
   final Address addressModel;
-  final VoidCallback setDefaultListener;
-  final VoidCallback deleteListener;
-  final VoidCallback editListener;
+  final VoidCallback? setDefaultListener;
+  final VoidCallback? deleteListener;
+  final VoidCallback? editListener;
 
   Color _titleColor = Colors.black;
   Color _defaultColor = AppColor.themeColor;
 
   MyAddressItem(
-      {@required this.addressModel,
+      {required this.addressModel,
       this.deleteListener,
       this.editListener,
-      this.setDefaultListener})
-      : assert(addressModel != null);
+      this.setDefaultListener});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +43,7 @@ class MyAddressItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Text(
-                  addressModel.name,
+                  addressModel.name!,
                   style: AppTextStyle.generate(16 * 2.sp,
                       fontWeight: FontWeight.w400),
                 ),
@@ -53,7 +52,7 @@ class MyAddressItem extends StatelessWidget {
                   width: rSize(10),
                 ),
                 Text(
-                  addressModel.mobile,
+                  addressModel.mobile!,
                   style: AppTextStyle.generate(15 * 2.sp,
                       fontWeight: FontWeight.w400),
                 ),

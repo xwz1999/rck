@@ -1,10 +1,7 @@
 import 'dart:ui';
 
 import 'package:flustars/flustars.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -18,10 +15,10 @@ import 'package:recook/widgets/pic_swiper.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
 class RechargeResultPage extends StatefulWidget {
-  final RechargeRecord history;
+  final RechargeRecord? history;
 
   RechargeResultPage({
-    Key key,
+    Key? key,
     this.history,
   }) : super(key: key);
 
@@ -36,7 +33,7 @@ class _RechargeResultPageState extends State<RechargeResultPage>
   @override
   void initState() {
     super.initState();
-    images = widget.history.attach.split(';');
+    images = widget.history!.attach!.split(';');
   }
 
   @override
@@ -165,7 +162,7 @@ class _RechargeResultPageState extends State<RechargeResultPage>
                   children: [
                     20.hb,
                     Image.asset(
-                      widget.history.state != 1
+                      widget.history!.state != 1
                           ? Assets.icWithdrawalGotoRed.path
                           : Assets.icWithdrawalGoto.path,
                       width: 15.rw,
@@ -177,9 +174,9 @@ class _RechargeResultPageState extends State<RechargeResultPage>
                     child: Column(
                   children: [
                     Image.asset(
-                      widget.history.state == 2
+                      widget.history!.state == 2
                           ? Assets.icWithdrawalStep5Success.path
-                          : widget.history.state == 99
+                          : widget.history!.state == 99
                               ? Assets.icWithdrawalStep4Fail.path
                               : Assets.icWithdrawalStep4.path,
                       width: 36.rw,
@@ -187,14 +184,14 @@ class _RechargeResultPageState extends State<RechargeResultPage>
                     ),
                     10.hb,
                     Text(
-                      widget.history.state == 2
+                      widget.history!.state == 2
                           ? "充值成功"
-                          : widget.history.state == 99
+                          : widget.history!.state == 99
                               ? '审核驳回'
                               : '充值成功',
                       style: TextStyle(
-                        color: widget.history.state == 2 ||
-                                widget.history.state == 99
+                        color: widget.history!.state == 2 ||
+                                widget.history!.state == 99
                             ? Color(0xFF333333)
                             : Color(0xFFCDCDCD),
                         fontSize: 12.rsp,
@@ -236,7 +233,7 @@ class _RechargeResultPageState extends State<RechargeResultPage>
                     Spacer(),
                     GestureDetector(
                       onTap: () async {
-                        WholesaleCustomerModel model =
+                        WholesaleCustomerModel? model =
                             await WholesaleFunc.getCustomerInfo();
 
                         Get.to(() => WholesaleCustomerPage(
@@ -278,7 +275,7 @@ class _RechargeResultPageState extends State<RechargeResultPage>
                 Padding(
                   padding: EdgeInsets.only(left: 16.rw, right: 16.rw),
                   child: _textItem('充值金额',
-                      '¥' + TextUtils.getCount1((widget.history.amount ?? 0.0)),
+                      '¥' + TextUtils.getCount1((widget.history!.amount ?? 0.0))!,
                       isRed: true),
                 ),
                 35.hb,
@@ -319,14 +316,19 @@ class _RechargeResultPageState extends State<RechargeResultPage>
                                       PicSwiperItem(Api.getImgUrl(element)));
                                 });
 
-                                AppRouter.fade(
-                                  context,
-                                  RouteName.PIC_SWIPER,
-                                  arguments: PicSwiper.setArguments(
-                                    index: index,
-                                    pics: picSwiperItem,
-                                  ),
-                                );
+                                // AppRouter.fade(
+                                //   context,
+                                //   RouteName.PIC_SWIPER,
+                                //   arguments: PicSwiper.setArguments(
+                                //     index: index,
+                                //     pics: picSwiperItem,
+                                //   ),
+                                // );
+
+                                Get.to(()=>PicSwiper(arguments: PicSwiper.setArguments(
+                                  index: index,
+                                  pics: picSwiperItem,
+                                )));
                               },
                               child: Container(
                                   margin: EdgeInsets.only(top: 5),
@@ -337,7 +339,7 @@ class _RechargeResultPageState extends State<RechargeResultPage>
                                         R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                                     image: Api.getImgUrl(
                                       images[index],
-                                    ),
+                                    )!,
                                   )),
                             );
                           }),
@@ -349,29 +351,29 @@ class _RechargeResultPageState extends State<RechargeResultPage>
                   padding: EdgeInsets.only(left: 16.rw, right: 16.rw),
                   child: _textItem(
                     '申请时间',
-                    widget.history.createdAt == null
+                    widget.history!.createdAt == null
                         ? ''
-                        : "${DateUtil.formatDate(DateTime.parse("${widget.history.createdAt.substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}",
+                        : "${DateUtil.formatDate(DateTime.parse("${widget.history!.createdAt!.substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}",
                   ),
                 ),
                 35.hb,
-                (widget.history.state == 2|| widget.history.state == 99)
+                (widget.history!.state == 2|| widget.history!.state == 99)
                     ? Padding(
                         padding: EdgeInsets.only(
                             left: 16.rw, right: 16.rw, bottom: 35.w),
                         child: _textItem(
                           '审核时间',
-                          widget.history.applyTime == null
+                          widget.history!.applyTime == null
                               ? ''
-                              : "${DateUtil.formatDate(DateTime.parse("${(widget.history.applyTime).substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}",
+                              : "${DateUtil.formatDate(DateTime.parse("${widget.history!.applyTime!.substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}",
                         ),
                       )
                     : SizedBox(),
-                (widget.history.state == 99)
+                (widget.history!.state == 99)
                     ? Padding(
                         padding: EdgeInsets.only(
                             left: 16.rw, right: 16.rw, bottom: 35.w),
-                        child: _textItem('驳回原因', widget.history.reason),
+                        child: _textItem('驳回原因', widget.history!.reason!),
                       )
                     : SizedBox(),
               ],

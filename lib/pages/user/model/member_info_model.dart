@@ -1,15 +1,15 @@
 import 'package:recook/utils/user_level_tool.dart';
 
 class MemberInfoModel {
-  int id;
-  String nickname;
-  String headImgUrl;
-  int roleLevel;
-  String remarkName;
-  int createdAt;
-  int roleUpdateTime;
-  String phone;
-  String wechatNo;
+  int? id;
+  String? nickname;
+  String? headImgUrl;
+  int? roleLevel;
+  String? remarkName;
+  int? createdAt;
+  int? roleUpdateTime;
+  String? phone;
+  String? wechatNo;
 
   UserRoleLevel get roleLevelEnum => UserLevelTool.roleLevelEnum(roleLevel);
 

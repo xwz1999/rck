@@ -22,7 +22,7 @@ part 'self_pickup_store_list_model.g.dart';
 @JsonSerializable()
 class SelfPickupStoreListModel extends BaseModel {
 
-  List<SelfPickupStoreModel> data;
+  List<SelfPickupStoreModel>? data;
 
   SelfPickupStoreListModel(code,this.data,msg,) : super(code,msg);
 
@@ -36,13 +36,13 @@ class SelfPickupStoreListModel extends BaseModel {
 @JsonSerializable()
 class SelfPickupStoreModel extends Object {
 
-  int id;
+  int? id;
 
-  String token;
+  String? token;
 
-  String name;
+  String? name;
 
-  String address;
+  String? address;
 
   SelfPickupStoreModel(this.id,this.token,this.name,this.address,);
 

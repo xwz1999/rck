@@ -8,9 +8,9 @@ import 'package:lpinyin/lpinyin.dart';
 
 class WeatherCityTool {
   WeatherCityTool._();
-  static WeatherCityTool _instance;
+  static WeatherCityTool? _instance;
   static List<WeatherCityModel> cityList = [];
-  static WeatherCityTool getInstance() {
+  static WeatherCityTool? getInstance() {
     if (_instance == null) {
       _instance = WeatherCityTool._();
     }
@@ -28,12 +28,12 @@ class WeatherCityTool {
   }
 
   _handleList(List<WeatherCityModel> list) {
-    if (list == null || list.isEmpty) return;
+    if (list.isEmpty) return;
     for (int i = 0, length = list.length; i < length; i++) {
-      String pinyin = PinyinHelper.getPinyinE(list[i].cityZh);
+      String pinyin = PinyinHelper.getPinyinE(list[i].cityZh!);
       String tag = pinyin.substring(0, 1).toUpperCase();
       list[i].namePinyin = pinyin;
-      list[i].provinceZhPingyin = PinyinHelper.getPinyinE(list[i].provinceZh);
+      list[i].provinceZhPingyin = PinyinHelper.getPinyinE(list[i].provinceZh!);
       if (RegExp("[A-Z]").hasMatch(tag)) {
         list[i].tagIndex = tag;
       } else {
@@ -44,16 +44,16 @@ class WeatherCityTool {
   }
 
   searchWithQuery(String query, Function(List<WeatherCityModel>) searchBack) {
-    WeatherCityTool.getInstance().getCityList().then((list) {
+    WeatherCityTool.getInstance()!.getCityList().then((list) {
       if (!(list is List) || TextUtils.isEmpty(query)) {
         searchBack([]);
       }
       List<WeatherCityModel> modelList = list;
       List<WeatherCityModel> resultList = modelList.where((item) {
-        if (item.cityZh.startsWith(query) ||
-            item.namePinyin.toLowerCase().startsWith(query.toLowerCase()) ||
-            item.provinceZh.startsWith(query) ||
-            item.provinceZhPingyin
+        if (item.cityZh!.startsWith(query) ||
+            item.namePinyin!.toLowerCase().startsWith(query.toLowerCase()) ||
+            item.provinceZh!.startsWith(query) ||
+            item.provinceZhPingyin!
                 .toLowerCase()
                 .startsWith(query.toLowerCase())) {
           return true;

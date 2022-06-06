@@ -9,10 +9,10 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'models/wholesale_good_model.dart';
 
 class WholesaleGoodsWidget extends StatefulWidget {
-  final WholesaleGood goods;
-  final VoidCallback buyClick;
+  final WholesaleGood? goods;
+  final VoidCallback? buyClick;
 
-  const WholesaleGoodsWidget({Key key, this.buyClick, this.goods,})
+  const WholesaleGoodsWidget({Key? key, this.buyClick, this.goods,})
       : super(key: key);
   static final Color colorGrey = Color(0xff999999);
 
@@ -27,7 +27,7 @@ class _WholesaleGoodsWidgetState extends State<WholesaleGoodsWidget> {
   @override
   Widget build(BuildContext context) {
     bool sellout = false;
-    if(widget.goods.inventory>0){
+    if(widget.goods!.inventory!>0){
       sellout = false;
     }else{
       sellout = true;
@@ -53,7 +53,7 @@ class _WholesaleGoodsWidgetState extends State<WholesaleGoodsWidget> {
                         child: CustomCacheImage(
                             fit: BoxFit.cover,
                             placeholder: AppImageName.placeholder_1x1,
-                            imageUrl:Api.getImgUrl(widget.goods.mainPhotoUrl) ),
+                            imageUrl:Api.getImgUrl(widget.goods!.mainPhotoUrl) ),
                       )),
                   Positioned(
                     child: sellout
@@ -72,7 +72,7 @@ class _WholesaleGoodsWidgetState extends State<WholesaleGoodsWidget> {
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: widget.goods.goodsName,
+                      text: widget.goods!.goodsName,
                       style: AppTextStyle.generate(15 * 2.sp,
                           fontWeight: FontWeight.w600),
                     ),
@@ -86,7 +86,7 @@ class _WholesaleGoodsWidgetState extends State<WholesaleGoodsWidget> {
             Container(
               padding: EdgeInsets.only(left: 6.rw,right: 6.rw),
               child: Text(
-                '零售价¥ ${widget.goods.discountPrice}',
+                '零售价¥ ${widget.goods!.discountPrice}',
                 style: TextStyle(
                     decoration: TextDecoration.lineThrough,
                     decorationColor: Color(0xff898989),
@@ -108,7 +108,7 @@ class _WholesaleGoodsWidgetState extends State<WholesaleGoodsWidget> {
                         fontWeight: FontWeight.w500),
                   ),
                   TextSpan(
-                    text: '${widget.goods.salePrice}',
+                    text: '${widget.goods!.salePrice}',
                     // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
                     style: TextStyle(
                         letterSpacing: -1,
@@ -132,7 +132,7 @@ class _WholesaleGoodsWidgetState extends State<WholesaleGoodsWidget> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   Text(
-                    "已订${widget.goods.salesVolume}单",
+                    "已订${widget.goods!.salesVolume}单",
                     style: TextStyle(
                       color: Color(0xff595757),
                       fontSize: 12 * 2.sp,
@@ -184,7 +184,7 @@ class _WholesaleGoodsWidgetState extends State<WholesaleGoodsWidget> {
 
   _buyEvent(BuildContext context) {
     if (widget.buyClick != null) {
-      widget.buyClick();
+      widget.buyClick!();
     } else {
       // AppRouter.push(context, RouteName.COMMODITY_PAGE,
       //     arguments: CommodityDetailPage.setArguments(this.goods.id));

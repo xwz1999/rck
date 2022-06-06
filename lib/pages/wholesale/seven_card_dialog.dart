@@ -1,6 +1,5 @@
 
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
@@ -11,7 +10,7 @@ import 'package:recook/utils/storage/hive_store.dart';
 
 class SevenCardDialog extends StatefulWidget {
 
-  SevenCardDialog({Key key,})
+  SevenCardDialog({Key? key,})
       : super(key: key);
 
   @override
@@ -33,7 +32,7 @@ class _SevenCardDialogState extends State<SevenCardDialog> {
             children: [
               GestureDetector(
                 onTap: (){
-                  HiveStore.appBox.put('showSeven${UserManager.instance.user.info.id}', true);
+                  HiveStore.appBox!.put('showSeven${UserManager.instance!.user.info!.id}', true);
                   Get.back();
                 },
                 child: Container(
@@ -54,7 +53,7 @@ class _SevenCardDialogState extends State<SevenCardDialog> {
               50.wb,
               GestureDetector(
                 onTap: (){
-                  HiveStore.appBox.put('showSeven${UserManager.instance.user.info.id}', true);
+                  HiveStore.appBox!.put('showSeven${UserManager.instance!.user.info!.id}', true);
                   Get.back();
                   Get.to(()=>VipShopCardPage());
                 },

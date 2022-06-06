@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:recook/utils/print_util.dart';
@@ -16,7 +17,7 @@ typedef ReadFileCallback = Function(bool success, File file, String msg);
 typedef WriteFileCallback = Function(bool success, File file, String msg);
 
 class FileOperationResult {
-  Object data;
+  Object? data;
   String msg;
   bool success;
 
@@ -24,7 +25,7 @@ class FileOperationResult {
 }
 
 class FileUtils {
-  static Future<String> tempPath() async {
+  static Future<String?> tempPath() async {
     try {
       var tempDir = await getTemporaryDirectory();
       String tempPath = tempDir.path;
@@ -35,7 +36,7 @@ class FileUtils {
     }
   }
 
-  static Future<String> appDocPath() async {
+  static Future<String?> appDocPath() async {
     try {
       var appDocDir = await getApplicationDocumentsDirectory();
       String appDocPath = appDocDir.path;
@@ -49,7 +50,7 @@ class FileUtils {
   // 读取 json 数据
   static Future<FileOperationResult> readJSON(String path) async {
     try {
-      String filePath = await appDocPath();
+      String filePath = await (appDocPath() as FutureOr<String>);
       final File file = await localFile(filePath+path);
       String str = await file.readAsString();
       return FileOperationResult(str, "读取成功", true);
@@ -61,7 +62,7 @@ class FileUtils {
 // 写入 json 数据
   static Future<FileOperationResult> writeJSON(String path, String jsonStr) async {
     try {
-      String filePath = await appDocPath();
+      String filePath = await (appDocPath() as FutureOr<String>);
       final File file = await localFile(filePath+path);
       await file.writeAsString(jsonStr);
       return FileOperationResult(file, "写入成功", true);

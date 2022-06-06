@@ -7,8 +7,8 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
 
 class UserFansPage extends StatefulWidget {
-  final int id;
-  UserFansPage({Key key, @required this.id}) : super(key: key);
+  final int? id;
+  UserFansPage({Key? key, required this.id}) : super(key: key);
 
   @override
   _UserFansPageState createState() => _UserFansPageState();
@@ -16,9 +16,9 @@ class UserFansPage extends StatefulWidget {
 
 class _UserFansPageState extends State<UserFansPage>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  TabController? _tabController;
 
-  bool get selfFlag => widget.id == UserManager.instance.user.info.id;
+  bool get selfFlag => widget.id == UserManager.instance!.user.info!.id;
 
   @override
   void initState() {
@@ -42,13 +42,13 @@ class _UserFansPageState extends State<UserFansPage>
 }
 
 Widget buildUserBaseCard({
-  Widget prefix,
-  @required String title,
-  String subTitlePrefix,
-  String subTitleSuffix,
-  @required VoidCallback onTap,
+  required Widget prefix,
+  required String title,
+  required String subTitlePrefix,
+  required String subTitleSuffix,
+  required VoidCallback onTap,
   bool initAttention = false,
-  @required Function(bool oldState) onAttention,
+  required Function(bool oldState) onAttention,
 }) {
   return CustomImageButton(
     onPressed: onTap,

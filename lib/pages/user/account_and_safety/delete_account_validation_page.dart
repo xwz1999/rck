@@ -16,7 +16,7 @@ import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class DeleteAcountValidationPage extends StatefulWidget {
-  DeleteAcountValidationPage({Key key}) : super(key: key);
+  DeleteAcountValidationPage({Key? key}) : super(key: key);
 
   @override
   _DeleteAcountValidationPageState createState() =>
@@ -26,7 +26,7 @@ class DeleteAcountValidationPage extends StatefulWidget {
 class _DeleteAcountValidationPageState
     extends State<DeleteAcountValidationPage> {
   TextEditingController _controller = TextEditingController();
-  Timer _timer;
+  Timer? _timer;
   int _timeCount = 60;
 
   @override
@@ -52,7 +52,7 @@ class _DeleteAcountValidationPageState
             '请输入短信验证码'.text.color(Color(0xFF333333)).size(60.sp).make(),
             30.w.heightBox,
             '我们将发送短信验证码到你的手机号'.text.color(Color(0xFF888888)).size(34.sp).make(),
-            hidePhone(UserManager.instance.user.info.phone)
+            hidePhone(UserManager.instance!.user.info!.phone!)
                 .text
                 .color(Color(0xFF333333))
                 .size(48.sp)
@@ -119,18 +119,18 @@ class _DeleteAcountValidationPageState
   Future _deleteAcount() async {
     ResultData resultData =
         await HttpManager.post(APIV2.userAPI.deleteAccount, {
-      "user_id": UserManager.instance.user.info.id,
+      "user_id": UserManager.instance!.user.info!.id,
       "code": _controller.text,
     });
 
     if (!resultData.result) {
-      _controller?.clear();
+      _controller.clear();
       ReToast.err(text: resultData.msg);
       return;
     }
     BaseModel baseModel = BaseModel.fromJson(resultData.data);
     if (baseModel.code != HttpStatus.SUCCESS) {
-      _controller?.clear();
+      _controller.clear();
       ReToast.err(text: resultData.msg);
       return;
     }
@@ -213,8 +213,8 @@ class _DeleteAcountValidationPageState
     _timer = Timer.periodic(Duration(milliseconds: 1000), (timer) {
       if (_timeCount <= 0) {
         _timeCount = 60;
-        _controller?.clear();
-        _timer.cancel();
+        _controller.clear();
+        _timer!.cancel();
         _timer = null;
         setState(() {});
       }

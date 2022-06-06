@@ -14,7 +14,7 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class OtherItemView extends StatelessWidget {
-  final Color _itemColor = Colors.grey[500];
+  final Color? _itemColor = Colors.grey[500];
   final double _iconSize = rSize(30);
   final double _fontSize = 12 * 2.sp;
 
@@ -63,13 +63,13 @@ class OtherItemView extends StatelessWidget {
                     contentSpacing: 8,
                     onPressed: () {
                       MQManager.goToChat(
-                          userId: UserManager.instance.user.info.id.toString(),
+                          userId: UserManager.instance!.user.info!.id.toString(),
                           userInfo: <String, String>{
-                            "name": UserManager.instance.user.info.nickname ?? "",
-                            "gender": UserManager.instance.user.info.gender == 1
+                            "name": UserManager.instance!.user.info!.nickname ?? "",
+                            "gender": UserManager.instance!.user.info!.gender == 1
                                 ? "男"
                                 : "女",
-                            "mobile": UserManager.instance.user.info.mobile ?? ""
+                            "mobile": UserManager.instance!.user.info!.mobile ?? ""
                           });
                     },
                   ),

@@ -95,7 +95,7 @@ class _StoreDetailPageState extends State<StoreDetailPage> {
                       ModifyInfoPage.setArguments(info.title, info.value))
               .then((value) {
             if (value != null) {
-              info.value = value;
+              info.value = value as String;
             }
           });
 //          ActionSheet.show(context, items: ["拍照", "从相册选择"], subTitles: ["选一个呗"]);

@@ -9,10 +9,10 @@ part of 'address_list_model.dart';
 AddressListModel _$AddressListModelFromJson(Map<String, dynamic> json) {
   return AddressListModel(
       json['code'],
-      (json['data'] as List)
+      (json['data'] as List<dynamic>?)
           ?.map((e) =>
-              e == null ? null : Address.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+               Address.fromJson(e as Map<String, dynamic>))
+          .toList(),
       json['msg']);
 }
 
@@ -25,14 +25,14 @@ Map<String, dynamic> _$AddressListModelToJson(AddressListModel instance) =>
 
 Address _$AddressFromJson(Map<String, dynamic> json) {
   return Address(
-      json['id'] as int,
-      json['name'] as String,
-      json['mobile'] as String,
-      json['province'] as String,
-      json['city'] as String,
-      json['district'] as String,
-      json['address'] as String,
-      json['isDefault'] as int);
+      json['id'] as int?,
+      json['name'] as String?,
+      json['mobile'] as String?,
+      json['province'] as String?,
+      json['city'] as String?,
+      json['district'] as String?,
+      json['address'] as String?,
+      json['isDefault'] as int?);
 }
 
 Map<String, dynamic> _$AddressToJson(Address instance) => <String, dynamic>{

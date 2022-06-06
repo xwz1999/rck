@@ -28,12 +28,12 @@ enum WholesaleOrderListType {
 }
 
 class WholesaleOrderListPage extends StatefulWidget  {
-  final WholesaleOrderListType type;
-  final OrderPositionType positionType;
-  final OrderListController controller;
+  final WholesaleOrderListType? type;
+  final OrderPositionType? positionType;
+  final OrderListController? controller;
 
   const WholesaleOrderListPage(
-      {Key key,
+      {Key? key,
       this.type,
 
       this.controller, this.positionType})
@@ -47,12 +47,12 @@ class WholesaleOrderListPage extends StatefulWidget  {
 
 class _WholesaleOrderListPageState extends State<WholesaleOrderListPage> with AutomaticKeepAliveClientMixin{
 
-  GSRefreshController _refreshController;
+  GSRefreshController? _refreshController;
   List<OrderModel> orderList = [];
   List<GuideOrderItemModel> guideOrderList = [];
   int _page = 0;
   bool isNodata = false;
-  OrderListPresenterImpl _presenter;
+  late OrderListPresenterImpl _presenter;
 
   @override
   void initState() {
@@ -103,7 +103,7 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage> with Au
             if (mounted) {
               setState(() {});
             }
-            _refreshController.refreshCompleted();
+            _refreshController!.refreshCompleted();
           });
         }else{
           WholesaleFunc.getSonOrder(widget.type,_page,).then((value) {
@@ -121,7 +121,7 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage> with Au
             if (mounted) {
               setState(() {});
             }
-            _refreshController.refreshCompleted();
+            _refreshController!.refreshCompleted();
           });
         }
 
@@ -136,9 +136,9 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage> with Au
               orderList.addAll(value);
             });
             if (value.isEmpty)
-              _refreshController.loadNoData();
+              _refreshController!.loadNoData();
             else
-              _refreshController.loadComplete();
+              _refreshController!.loadComplete();
           });
         }else{
           WholesaleFunc.getSonOrder(widget.type,_page,)
@@ -148,9 +148,9 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage> with Au
               guideOrderList.addAll(value);
             });
             if (value.isEmpty)
-              _refreshController.loadNoData();
+              _refreshController!.loadNoData();
             else
-              _refreshController.loadComplete();
+              _refreshController!.loadComplete();
           });
         }
       },
@@ -166,12 +166,12 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage> with Au
                 AppRouter.push(context, RouteName.ORDER_DETAIL,
                     arguments: OrderDetailPage.setArguments(orderModel.id,true))
                     .then(((result) {
-                  _refreshController.requestRefresh();
+                  _refreshController!.requestRefresh();
                   if (result == null) return;
                   DPrint.printf(result);
                   if(mounted)
                   setState(() {
-                    orderModel.status = result;
+                    orderModel.status = result as int?;
                   });
                 }));
               },
@@ -192,7 +192,7 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage> with Au
               applyRefund: (OrderModel order, {callback}) {},
               evaluation: (OrderModel order, {callback}) {
                 List<EvaluationGoodsModel> goodsList = [];
-                order.goodsList.forEach((goods) {
+                order.goodsList!.forEach((goods) {
                   if (goods.assType == 0) {
                     goodsList.add(EvaluationGoodsModel(
                         id: goods.goodsId,
@@ -220,12 +220,12 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage> with Au
                 AppRouter.push(context, RouteName.ORDER_DETAIL,
                     arguments: OrderDetailPage.setArguments(orderModel.orderId,true))
                     .then(((result) {
-                  _refreshController.requestRefresh();
+                  _refreshController!.requestRefresh();
                   if (result == null) return;
                   DPrint.printf(result);
                   if(mounted)
                   setState(() {
-                    orderModel.status = result;
+                    orderModel.status = result as int?;
                   });
                 }));
 //        GSDialog.of(context).showLoadingDialog(context, "");
@@ -248,7 +248,7 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage> with Au
               applyRefund: (OrderModel order, {callback}) {},
               evaluation: (OrderModel order, {callback}) {
                 List<EvaluationGoodsModel> goodsList = [];
-                order.goodsList.forEach((goods) {
+                order.goodsList!.forEach((goods) {
                   if (goods.assType == 0) {
                     goodsList.add(EvaluationGoodsModel(
                         id: goods.goodsId,
@@ -288,8 +288,8 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage> with Au
             Alert.dismiss(context);
             if (index == 0) return;
             //GSDialog.of(context).showLoadingDialog(context, "");
-            _presenter.deleteOrder(UserManager.instance.user.info.id, order.id);
-            _refreshController.requestRefresh();
+            _presenter.deleteOrder(UserManager.instance!.user.info!.id, order.id);
+            _refreshController!.requestRefresh();
           },
         ));
   }
@@ -304,9 +304,9 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage> with Au
             Alert.dismiss(context);
             if (index == 0) return;
            // GSDialog.of(context).showLoadingDialog(context, "");
-            _presenter.cancelOrder(UserManager.instance.user.info.id, order.id,
+            _presenter.cancelOrder(UserManager.instance!.user.info!.id, order.id,
                order: order);
-            _refreshController.requestRefresh();
+            _refreshController!.requestRefresh();
           },
         ));
   }
@@ -346,15 +346,15 @@ class _WholesaleOrderListPageState extends State<WholesaleOrderListPage> with Au
               Alert.dismiss(context);
              // GSDialog.of(context).showLoadingDialog(context, "");
               _presenter.confirmReceipt(
-                  UserManager.instance.user.info.id, orderModel.id);
-              _refreshController.requestRefresh();
+                  UserManager.instance!.user.info!.id, orderModel.id);
+              _refreshController!.requestRefresh();
 
             }
           },
         ));
   }
 
-  noDataView(String text, {Widget icon}) {
+  noDataView(String text, {Widget? icon}) {
     return Container(
       height: double.infinity,
       width: double.infinity,

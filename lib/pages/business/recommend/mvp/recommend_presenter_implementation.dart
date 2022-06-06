@@ -20,24 +20,24 @@ class RecommendPresenterImpl extends RecommendPresenterI{
 
 
   @override
-  fetchList(int userId,int page,) {
-    getModel().fetchList(userId, page).then((ResultData response) {
+  fetchList(int? userId,int page,) {
+    getModel()!.fetchList(userId, page).then((ResultData response) {
       if (!response.result) {
-        getRefreshView().refreshFailure(response.msg);
+        getRefreshView()!.refreshFailure(response.msg);
       } else {
 //        getRefreshView().refreshSuccess([]);
         MaterialListModel model = MaterialListModel.fromJson(response.data);
         if (model.code == HttpStatus.SUCCESS) {
           if (page == 0) {
-            getRefreshView().refreshSuccess(model.data);
+            getRefreshView()!.refreshSuccess(model.data);
           } else {
-            getRefreshView().loadMoreSuccess(model.data);
+            getRefreshView()!.loadMoreSuccess(model.data);
           }
         } else {
           if (page == 0) {
-            getRefreshView().refreshFailure(model.msg);
+            getRefreshView()!.refreshFailure(model.msg);
           } else {
-            getRefreshView().loadMoreFailure(error : model.msg);
+            getRefreshView()!.loadMoreFailure(error : model.msg);
           }
         }
       }

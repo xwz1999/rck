@@ -9,7 +9,6 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
@@ -34,9 +33,9 @@ import 'package:recook/widgets/input_view.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 
 class GoodsOrderPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  const GoodsOrderPage({Key key, this.arguments}) : super(key: key);
+  const GoodsOrderPage({Key? key, this.arguments}) : super(key: key);
 
   static setArguments(OrderPreviewModel model) {
     return {"order": model};
@@ -49,15 +48,15 @@ class GoodsOrderPage extends StatefulWidget {
 }
 
 class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
-  OrderPreviewModel _orderModel;
-  OrderPresenterImpl _presenterImpl;
-  ScrollController _controller;
+  OrderPreviewModel? _orderModel;
+  late OrderPresenterImpl _presenterImpl;
+  ScrollController? _controller;
 
-  TextEditingController _editController;
+  TextEditingController? _editController;
   FocusNode _focusNode = FocusNode();
-  List<SelfPickupStoreModel> _storeList;
-  String _selectedStoreName;
-  int totalNum = 0;
+  List<SelfPickupStoreModel>? _storeList;
+  String? _selectedStoreName;
+  int? totalNum = 0;
 
   bool _accept = false;
 
@@ -67,27 +66,27 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
       return false;
     }
 
-    return _orderModel.data?.coinStatus?.isEnable ?? true;
+    return _orderModel!.data?.coinStatus?.isEnable ?? true;
   }
 
   //瑞币按钮状态
-  bool get isUseCoin => _orderModel.data?.coinStatus?.isUseCoin ?? false;
+  bool get isUseCoin => _orderModel!.data?.coinStatus?.isUseCoin ?? false;
 
   @override
   void initState() {
     super.initState();
 
-    _orderModel = widget.arguments["order"];
-    totalNum = _orderModel.data.totalGoodsCount;
+    _orderModel = widget.arguments!["order"];
+    totalNum = _orderModel!.data!.totalGoodsCount;
     _presenterImpl = OrderPresenterImpl();
     _controller = ScrollController();
-    _controller.addListener(() {});
+    _controller!.addListener(() {});
     _editController =
-        TextEditingController(text: _orderModel.data?.buyerMessage ?? '');
+        TextEditingController(text: _orderModel!.data?.buyerMessage ?? '');
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
-        String text = _editController.text;
-        if (text == _orderModel.data.buyerMessage) {
+        String text = _editController!.text;
+        if (text == _orderModel!.data!.buyerMessage) {
           return;
         }
         _changeBuyerMessage(text);
@@ -107,7 +106,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   void dispose() {
     _controller?.dispose();
     _editController?.dispose();
-    _focusNode?.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -133,7 +132,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
             child: GestureDetector(
               onVerticalDragDown: (detail) {
                 if (globalContext != null) {
-                  FocusScope.of(globalContext).requestFocus(FocusNode());
+                  FocusScope.of(globalContext!).requestFocus(FocusNode());
                 }
               },
               child: CustomScrollView(
@@ -141,8 +140,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                 physics: AlwaysScrollableScrollPhysics(),
                 slivers: <Widget>[
                   SliverToBoxAdapter(
-                    child: _orderModel.data.hasAuth
-                        ? UserManager.instance.user.info.realInfoStatus
+                    child: _orderModel!.data!.hasAuth!
+                        ? UserManager.instance!.user.info!.realInfoStatus!
                             ? SizedBox()
                             : CustomImageButton(
                                 onPressed: () {
@@ -199,7 +198,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                         : SizedBox(),
                   ),
                   SliverToBoxAdapter(
-                    child: _orderModel.data.shippingMethod == 1
+                    child: _orderModel!.data!.shippingMethod == 1
                         ? Container(
                             height: 10.rw,
                           )
@@ -212,12 +211,12 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                   SliverList(
                       delegate: SliverChildBuilderDelegate((context, index) {
                     return GoodsOrderItem(
-                      brand: _orderModel.data.brands[index],
-                      shippingMethod: _orderModel.data.shippingMethod,
-                      length: _orderModel.data.brands.length,
+                      brand: _orderModel!.data!.brands![index],
+                      shippingMethod: _orderModel!.data!.shippingMethod,
+                      length: _orderModel!.data!.brands!.length,
                       index: index,
                     );
-                  }, childCount: _orderModel.data.brands.length)),
+                  }, childCount: _orderModel!.data!.brands!.length)),
                   SliverToBoxAdapter(
                     child: Container(
                       height: 10.rw,
@@ -248,7 +247,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
         ]),
         Align(
           alignment: Alignment.bottomCenter,
-          child: _bottomBar(context, _orderModel.data.totalGoodsCount),
+          child: _bottomBar(context, _orderModel!.data!.totalGoodsCount),
         ),
       ],
     );
@@ -260,13 +259,13 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
       onPressed: () {
         AppRouter.push(context, RouteName.RECEIVING_ADDRESS_PAGE,
                 arguments: ReceivingAddressPage.setArguments(
-                    canBack: true, addr: _orderModel.data.addr))
+                    canBack: true, addr: _orderModel!.data!.addr))
             .then((address) {
           DPrint.printf(address.runtimeType);
           if (address != null && address is Address) {
 //            if (_orderModel.data.addr != null && address.id == _orderModel.data.addr.addressId) return;
             _changeAddress(address).then((value) {
-              if (_orderModel.data.addr.isDeliveryArea == 0) {
+              if (_orderModel!.data!.addr!.isDeliveryArea == 0) {
                 _canNotDeliver();
               }
             });
@@ -305,7 +304,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   }
 
   _addressView() {
-    return _orderModel.data.addr == null
+    return _orderModel!.data!.addr == null
         ? Text(
             "请先选择地址",
             style: AppTextStyle.generate(15),
@@ -316,23 +315,23 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
             children: <Widget>[
               RichText(
                   text: TextSpan(
-                      text: _orderModel.data.addr.receiverName,
+                      text: _orderModel!.data!.addr!.receiverName,
                       style: AppTextStyle.generate(15 * 2.sp),
                       children: [
                     TextSpan(
-                        text: "   ${_orderModel.data.addr.mobile}",
+                        text: "   ${_orderModel!.data!.addr!.mobile}",
                         style: AppTextStyle.generate(14 * 2.sp,
                             color: Colors.grey))
                   ])),
               Container(
                 margin: EdgeInsets.only(top: 8 * 2.sp),
                 child: Text(
-                  TextUtils.isEmpty(_orderModel.data.addr.address)
+                  TextUtils.isEmpty(_orderModel!.data!.addr!.address)
                       ? "空地址"
-                      : _orderModel.data.addr.province +
-                          _orderModel.data.addr.city +
-                          _orderModel.data.addr.district +
-                          _orderModel.data.addr.address,
+                      : _orderModel!.data!.addr!.province! +
+                          _orderModel!.data!.addr!.city! +
+                          _orderModel!.data!.addr!.district! +
+                          _orderModel!.data!.addr!.address!,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.generate(14 * 2.sp,
@@ -401,7 +400,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
 
   _otherTiles() {
     String shippingMethod = "门店自提";
-    if (_orderModel.data.shippingMethod == 0) {
+    if (_orderModel!.data!.shippingMethod == 0) {
       shippingMethod = "快递配送";
     }
     return Container(
@@ -429,12 +428,12 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
             // });
           }),
           Offstage(
-            offstage: _orderModel.data.shippingMethod == 0,
+            offstage: _orderModel!.data!.shippingMethod == 0,
             child: _expressTile(
                 "附近门店",
                 TextUtils.isEmpty(_selectedStoreName)
                     ? "请选择自提门店"
-                    : _selectedStoreName, listener: () {
+                    : _selectedStoreName!, listener: () {
               _selectedSelfPickupStore();
             }),
           ),
@@ -457,9 +456,9 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
               child: Container(
                   margin: EdgeInsets.symmetric(horizontal: rSize(8)),
                   child: Text(
-                    _orderModel.data.coupon == null
+                    _orderModel!.data!.coupon == null
                         ? "暂无优惠券"
-                        : _orderModel.data.coupon.couponName,
+                        : _orderModel!.data!.coupon!.couponName!,
                     style: AppTextStyle.generate(13 * 2.sp,
                         color: Color(0xff373737)),
                     // style: AppTextStyle.generate(13*2.sp,
@@ -477,7 +476,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   }
 
   _expressTile(String title, String value,
-      {Widget customTitle, VoidCallback listener, bool needArrow = true}) {
+      {Widget? customTitle, VoidCallback? listener, bool needArrow = true}) {
     return GestureDetector(
       onTap: listener,
       behavior: HitTestBehavior.translucent,
@@ -564,8 +563,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   ///找到包含 2，3类型的仓库返回true
   bool get _checkSwitchEnabled {
     bool reslut = false;
-    _orderModel.data.brands.forEach((element) {
-      element.goods.forEach((v) {
+    _orderModel!.data!.brands!.forEach((element) {
+      element.goods!.forEach((v) {
         if (v.storehouse == 2 || v.storehouse == 3) {
           reslut = true;
         }
@@ -575,8 +574,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   }
 
   _coinTile() {
-    String text = _orderModel.data.coinStatus.coin > 0
-        ? "可用：¥${_orderModel.data.coinStatus.coin.toStringAsFixed(2)}"
+    String text = _orderModel!.data!.coinStatus!.coin! > 0
+        ? "可用：¥${_orderModel!.data!.coinStatus!.coin!.toStringAsFixed(2)}"
         : "可用：¥0.0";
     // _orderModel.data.coupon = null;
     return Container(
@@ -589,20 +588,20 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
       child: Column(
         children: <Widget>[
           _titleRow("优惠券", "已选择最大优惠",
-              "-￥${(_orderModel.data.brandCouponTotalAmount + _orderModel.data.universeCouponTotalAmount).toStringAsFixed(2)}",''),
+              "-￥${(_orderModel!.data!.brandCouponTotalAmount! + _orderModel!.data!.universeCouponTotalAmount!).toStringAsFixed(2)}",''),
           Container(
             height: 5,
           ),
           Builder(
             builder: (context) {
-              double coin = _orderModel.data.goodsTotalAmount >
-                      _orderModel.data.coinStatus.coin.toDouble()
-                  ? _orderModel.data.coinStatus.coin.toDouble()
-                  : _orderModel.data.goodsTotalAmount;
+              double? coin = _orderModel!.data!.goodsTotalAmount! >
+                      _orderModel!.data!.coinStatus!.coin!.toDouble()
+                  ? _orderModel!.data!.coinStatus!.coin!.toDouble()
+                  : _orderModel!.data!.goodsTotalAmount;
               return _titleRow(
                 "瑞币",
                 text,
-                "本单抵扣: ￥${isUseCoin ? coin.toStringAsFixed(2) : '0.00'}",'',
+                "本单抵扣: ￥${isUseCoin ? coin!.toStringAsFixed(2) : '0.00'}",'',
                 rightTitleColor: Colors.black,
                 switchValue: isUseCoin, //后台回显 TODO:
                 switchEnable: switchEnabled,
@@ -633,11 +632,11 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
         children: <Widget>[
 
           _titleRow("商品总价", "",
-              "合计:￥${(_orderModel.data.actualTotalAmount - _orderModel.data.expressTotalFee ).toStringAsFixed(2)}",'共$totalNum件',subTitleColor: Color(0xFF999999),
+              "合计:￥${(_orderModel!.data!.actualTotalAmount! - _orderModel!.data!.expressTotalFee! ).toStringAsFixed(2)}",'共$totalNum件',subTitleColor: Color(0xFF999999),
               rightTitleColor: Colors.black),
 
 
-          _orderModel.data.coinTotalAmount!=0?10.hb:SizedBox(),
+          _orderModel!.data!.coinTotalAmount!=0?10.hb:SizedBox(),
 
           // _orderModel.data.coinTotalAmount!=0?_titleRow( UserLevelTool.currentRoleLevel()!='合伙人'?  "${UserLevelTool.currentRoleLevel()}折扣":'折扣', "",
           //     "-￥${_orderModel.data.coinTotalAmount.toStringAsFixed(2)}",'',
@@ -646,7 +645,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
           // 10.hb,
 
           _titleRow("合计运费", "",
-              "+￥${_orderModel.data.expressTotalFee.toStringAsFixed(2)}",'',
+              "+￥${_orderModel!.data!.expressTotalFee!.toStringAsFixed(2)}",'',
               rightTitleColor: Colors.black),
           // Builder(
           //   builder: (context) {
@@ -682,8 +681,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
 
   _buildOverseaTitle() {
     bool isOversea = false;
-    for (var item in _orderModel.data.brands) {
-      for (var childItem in item.goods) {
+    for (var item in _orderModel!.data!.brands!) {
+      for (var childItem in item.goods!) {
         if (childItem.isImport == 1) isOversea = true;
       }
     }
@@ -743,7 +742,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
       {titleColor,
       subTitleColor,
       rightTitleColor,
-      Function(bool) switchChange,
+      Function(bool)? switchChange,
       bool switchValue = false,
       bool switchEnable = false}) {
     return Container(
@@ -823,8 +822,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
 
   bool get _overseaNeedIdentifier {
     bool reslut = false;
-    _orderModel.data.brands.forEach((element) {
-      element.goods.forEach((v) {
+    _orderModel!.data!.brands!.forEach((element) {
+      element.goods!.forEach((v) {
         if (v.storehouse == 2 || v.storehouse == 3) {
           reslut = true;
         }
@@ -834,8 +833,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   }
 
   bool get identicalName =>
-      UserManager.instance.user.info.realName.removeAllWhitespace ==
-      _orderModel.data.addr.receiverName.removeAllWhitespace;
+      UserManager.instance!.user.info!.realName!.removeAllWhitespace ==
+      _orderModel!.data!.addr!.receiverName!.removeAllWhitespace;
 
   _allAmountTitle() {
     return Container(
@@ -855,7 +854,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
           )),
           Expanded(
             child: Text(
-              "(共${_orderModel.data.totalGoodsCount}件)",
+              "(共${_orderModel!.data!.totalGoodsCount}件)",
               maxLines: 1,
               style: AppTextStyle.generate(27.sp,
                   color: Colors.grey[600], fontWeight: FontWeight.w300),
@@ -863,7 +862,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
           ),
           Container(
               child: Text(
-            "￥${_orderModel.data.goodsTotalAmount.toStringAsFixed(2)}",
+            "￥${_orderModel!.data!.goodsTotalAmount!.toStringAsFixed(2)}",
             style: AppTextStyle.generate(27.sp,
                 fontWeight: FontWeight.w400,
                 color: Color.fromARGB(255, 249, 62, 13)),
@@ -876,25 +875,25 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
     );
   }
 
-  Container _bottomBar(BuildContext context, int totalNum) {
+  Container _bottomBar(BuildContext context, int? totalNum) {
     bool isOversea = false;
-    for (var item in _orderModel.data.brands) {
-      for (var childItem in item.goods) {
+    for (var item in _orderModel!.data!.brands!) {
+      for (var childItem in item.goods!) {
         if (childItem.isImport == 1) isOversea = true;
       }
     }
     // bool canDeliver = _orderModel.data.addr?.isDeliveryArea == 1 ||
     // (_orderModel.data.addr?.isDeliveryArea == 0 && _orderModel.data.shippingMethod == 1);
-    bool canDeliver = _orderModel.data.addr?.isDeliveryArea == 1 ||
-        (_orderModel.data.shippingMethod == 1);
+    bool canDeliver = _orderModel!.data!.addr?.isDeliveryArea == 1 ||
+        (_orderModel!.data!.shippingMethod == 1);
     if (isOversea) {
       if (!_accept) canDeliver = false;
     }
 
     double ruiCoin = 0;
-    _orderModel.data.brands.forEach((brand) {
-      brand.goods.forEach((good) {
-        ruiCoin += good.totalCommission;
+    _orderModel!.data!.brands!.forEach((brand) {
+      brand.goods!.forEach((good) {
+        ruiCoin += good.totalCommission!;
       });
     });
     Container bottomWidget = Container(
@@ -948,7 +947,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                               )),
                           TextSpan(
                               text:
-                              "${_orderModel.data.actualTotalAmount.toStringAsFixed(2)}",
+                              "${_orderModel!.data!.actualTotalAmount!.toStringAsFixed(2)}",
                               style: AppTextStyle.generate(
                                 22 * 2.sp,
                                 fontWeight: FontWeight.bold,
@@ -981,15 +980,15 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
                           ? null
                           : () async{
                               ///防止焦点未变化直接点击提交订单
-                              String text = _editController.text;
-                              if (text  != _orderModel.data.buyerMessage) {
+                              String text = _editController!.text;
+                              if (text  != _orderModel!.data!.buyerMessage) {
                                 await  _changeBuyerMessage(text);
                               }
 
 
                               if (_overseaNeedIdentifier) {
                                 if (!UserManager
-                                    .instance.user.info.realInfoStatus) {
+                                    .instance!.user.info!.realInfoStatus!) {
                                   Get.to(() => VerifyPage());
                                 } else if (!identicalName) {
                                   ReToast.err(
@@ -1015,8 +1014,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
       ),
     );
     if (_orderModel != null &&
-        _orderModel.data.goodsTotalCommission > 0 &&
-        _orderModel.data.userRole > 0) {
+        _orderModel!.data!.goodsTotalCommission! > 0 &&
+        _orderModel!.data!.userRole! > 0) {
       return Container(
         height: kToolbarHeight + 30 + ScreenUtil().bottomBarHeight,
         child: Column(
@@ -1026,7 +1025,7 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
               alignment: Alignment.center,
               color: Color.fromARGB(255, 250, 231, 235),
               child: Text(
-                "下单可返￥${_orderModel.data.goodsTotalCommission}",
+                "下单可返￥${_orderModel!.data!.goodsTotalCommission}",
                 style: TextStyle(color: Colors.red, fontSize: 11 * 2.sp),
               ),
             ),
@@ -1040,14 +1039,14 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   }
 
   _getStoreList(int method) async {
-    HttpResultModel<SelfPickupStoreListModel> model =
+    HttpResultModel<SelfPickupStoreListModel?> model =
         await _presenterImpl.getStoreList();
     if (!model.result) {
       // GSDialog.of(context).showError(globalContext, model.msg);
       ReToast.err(text: model.msg);
       return;
     }
-    _storeList = model.data.data;
+    _storeList = model.data!.data;
     _selectedSelfPickupStore();
   }
 
@@ -1056,8 +1055,8 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
       _getStoreList(1);
       return;
     }
-    DPrint.printf("${_storeList.length}");
-    BottomList.show<SelfPickupStoreModel>(globalContext,
+    DPrint.printf("${_storeList!.length}");
+    BottomList.show<SelfPickupStoreModel>(globalContext!,
         title: "请选择自提门店",
         data: _storeList, itemBuilder: (int index, SelfPickupStoreModel model) {
       return Container(
@@ -1070,11 +1069,11 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              model.name,
+              model.name!,
               style: AppTextStyle.generate(13),
             ),
             Text(
-              model.address,
+              model.address!,
               style: AppTextStyle.generate(11),
             ),
           ],
@@ -1087,10 +1086,10 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
 
   Future _changeAddress(Address address) async {
     final cancel = ReToast.loading();
-    HttpResultModel<OrderPreviewModel> model =
+    HttpResultModel<OrderPreviewModel?> model =
         await _presenterImpl.changeAddress(
-      UserManager.instance.user.info.id,
-      _orderModel.data.id,
+      UserManager.instance!.user.info!.id,
+      _orderModel!.data!.id,
       address.id,
     );
     cancel();
@@ -1130,16 +1129,16 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   //   _orderModel = model.data;
   //   setState(() {});
   // }
-  _changeShippingMethod(int method, int storeId, String name) async {
+  _changeShippingMethod(int method, int? storeId, String? name) async {
     if (method == 1 && name == _selectedStoreName) {
       return;
     }
     // GSDialog.of(context).showLoadingDialog(context, "");
     ReToast.loading(text: '');
-    HttpResultModel<OrderPreviewModel> resultModel =
+    HttpResultModel<OrderPreviewModel?> resultModel =
         await _presenterImpl.changeShippingMethod(
-            UserManager.instance.user.info.id,
-            _orderModel.data.id,
+            UserManager.instance!.user.info!.id,
+            _orderModel!.data!.id,
             method,
             storeId);
     // GSDialog.of(context).dismiss(context);
@@ -1160,27 +1159,27 @@ class _GoodsOrderPageState extends BaseStoreState<GoodsOrderPage> {
   }
 
   _changeBuyerMessage(String msg) async {
-    HttpResultModel<BaseModel> resultModel =
+    HttpResultModel<BaseModel?> resultModel =
         await _presenterImpl.changeBuyerMessage(
-            UserManager.instance.user.info.id, _orderModel.data.id, msg);
+            UserManager.instance!.user.info!.id, _orderModel!.data!.id, msg);
     if (!resultModel.result) {
       ReToast.err(text: resultModel.code);
       return;
     }
-    _orderModel.data.buyerMessage = msg;
+    _orderModel!.data!.buyerMessage = msg;
   }
 
   _submit(BuildContext context) async {
     final cancel = ReToast.loading();
-    HttpResultModel<OrderPrepayModel> resultModel = await _presenterImpl
-        .submitOrder(_orderModel.data.id, UserManager.instance.user.info.id);
+    HttpResultModel<OrderPrepayModel?> resultModel = await _presenterImpl
+        .submitOrder(_orderModel!.data!.id, UserManager.instance!.user.info!.id);
     cancel();
     if (!resultModel.result) {
       ReToast.err(text: resultModel.msg);
       return;
     }
-    UserManager.instance.refreshShoppingCart.value = true;
-    UserManager.instance.refreshShoppingCartNumber.value = true;
+    UserManager.instance!.refreshShoppingCart.value = true;
+    UserManager.instance!.refreshShoppingCartNumber.value = true;
     AppRouter.pushAndReplaced(context, RouteName.ORDER_PREPAY_PAGE,
         arguments: OrderPrepayPage.setArguments(
           resultModel.data,

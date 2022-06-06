@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -24,12 +23,12 @@ class UserActivityCard extends StatefulWidget {
   final ActivityListModel model;
   final LiveBaseInfoModel userModel;
   final bool initAttention;
-  final GSRefreshController controller;
+  final GSRefreshController? controller;
   UserActivityCard({
-    Key key,
-    @required this.model,
-    @required this.userModel,
-    @required this.initAttention,
+    Key? key,
+    required this.model,
+    required this.userModel,
+    required this.initAttention,
     this.controller,
   }) : super(key: key);
 
@@ -42,7 +41,7 @@ class _UserActivityCardState extends State<UserActivityCard> {
     if (widget.model.imgList == null) {
       return 0;
     } else {
-      return widget.model.imgList.length;
+      return widget.model.imgList!.length;
     }
   }
 
@@ -57,7 +56,7 @@ class _UserActivityCardState extends State<UserActivityCard> {
 
   @override
   Widget build(BuildContext context) {
-    final recookDateUtil = RecookDateUtil.fromString(widget.model.updatedAt);
+    final recookDateUtil = RecookDateUtil.fromString(widget.model.updatedAt!);
 
     return UserBaseCard(
       date: recookDateUtil.prefixDay,
@@ -145,7 +144,7 @@ class _UserActivityCardState extends State<UserActivityCard> {
           },
           child: Builder(builder: (context) {
             if (widget.model.trendType == 1)
-              return widget.model.imgList.isEmpty
+              return widget.model.imgList!.isEmpty
                   ? SizedBox()
                   : GridView(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -154,10 +153,10 @@ class _UserActivityCardState extends State<UserActivityCard> {
                         mainAxisSpacing: rSize(9),
                       ),
                       physics: NeverScrollableScrollPhysics(),
-                      children: widget.model.imgList
+                      children: widget.model.imgList!
                           .map((e) => FadeInImage.assetNetwork(
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                                image: Api.getImgUrl(e.url),
+                                image: Api.getImgUrl(e.url)!,
                               ))
                           .toList(),
                       shrinkWrap: true,
@@ -167,7 +166,7 @@ class _UserActivityCardState extends State<UserActivityCard> {
                 children: [
                   FadeInImage.assetNetwork(
                     placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                    image: Api.getImgUrl(widget.model.short.coverUrl),
+                    image: Api.getImgUrl(widget.model.short!.coverUrl)!,
                   ),
                   Positioned(
                     left: 0,
@@ -195,7 +194,7 @@ class _UserActivityCardState extends State<UserActivityCard> {
             vertical: rSize(10),
           ),
           child: Text(
-            widget.model.content,
+            widget.model.content!,
             style: TextStyle(
               color: Color(0xFF333333),
               fontSize: rSP(14),
@@ -209,7 +208,7 @@ class _UserActivityCardState extends State<UserActivityCard> {
             children: [
               FadeInImage.assetNetwork(
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                image: Api.getImgUrl(widget.model.goods.mainPhotoURL),
+                image: Api.getImgUrl(widget.model.goods!.mainPhotoURL)!,
                 height: rSize(48),
                 width: rSize(48),
               ),
@@ -219,7 +218,7 @@ class _UserActivityCardState extends State<UserActivityCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.model.goods.name,
+                      widget.model.goods!.name!,
                       maxLines: 1,
                       style: TextStyle(
                         color: Color(0xFF333333),
@@ -228,7 +227,7 @@ class _UserActivityCardState extends State<UserActivityCard> {
                     ),
                     SizedBox(height: rSize(6)),
                     Text(
-                      '¥${widget.model.goods.price}',
+                      '¥${widget.model.goods!.price}',
                       maxLines: 1,
                       style: TextStyle(
                         color: Color(0xFF333333),
@@ -284,11 +283,11 @@ class _UserActivityCardState extends State<UserActivityCard> {
                       deleteItem: '删除',
                       deleteListener: () async {
                         Alert.dismiss(context);
-                        String code =
+                        String? code =
                             await UserLiveFunc.delImageOrVideo(widget.model.id);
                         if (code == 'SUCCESS') {
                           ReToast.success(text: '删除成功');
-                          widget.controller.requestRefresh();
+                          widget.controller!.requestRefresh();
                         } else {
                           ReToast.success(text: '删除失败');
                         }
@@ -316,7 +315,7 @@ class _UserActivityCardState extends State<UserActivityCard> {
                 initValue: widget.model.isPraise == 1,
                 size: 18,
                 onChange: (oldState) {
-                  if (UserManager.instance.haveLogin)
+                  if (UserManager.instance!.haveLogin)
                     HttpManager.post(
                       oldState ? LiveAPI.dislikeActivity : LiveAPI.likeActivity,
                       {'trendId': widget.model.id},
@@ -335,7 +334,7 @@ class _UserActivityCardState extends State<UserActivityCard> {
   }
 
   _showReviewDialog() {
-    if (UserManager.instance.haveLogin)
+    if (UserManager.instance!.haveLogin)
       showGeneralDialog(
         context: context,
         barrierDismissible: true,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -18,8 +17,8 @@ class CashWithdrawHistoryPage extends StatefulWidget {
 
 class _CashWithdrawHistoryPageState extends BaseStoreState<CashWithdrawHistoryPage> {
 
-  GSRefreshController _refreshController;
-  WithdrawHistoryModel _withdrawHistoryModel;
+  GSRefreshController? _refreshController;
+  WithdrawHistoryModel? _withdrawHistoryModel;
   @override
   void initState() {
     super.initState();
@@ -48,12 +47,12 @@ class _CashWithdrawHistoryPageState extends BaseStoreState<CashWithdrawHistoryPa
               onRefresh: (){
                 getWithdrawHistoryList();
               },
-              body: _withdrawHistoryModel==null || _withdrawHistoryModel.data.length==0 ? 
+              body: _withdrawHistoryModel==null || _withdrawHistoryModel!.data!.length==0 ? 
               noDataView("没有记录...")
               :ListView.builder(
-                itemCount: _withdrawHistoryModel.data.length,
+                itemCount: _withdrawHistoryModel!.data!.length,
                 itemBuilder: (BuildContext context, int index) {
-                  Data data = _withdrawHistoryModel.data[index];
+                  Data data = _withdrawHistoryModel!.data![index];
                   return GestureDetector(
                     onTap: (){
                       AppRouter.push(context, RouteName.CASH_WITHDRAW_RESULT_PAGE, arguments: CashWithdrawResultPage.setArguments(id: data.id));
@@ -119,10 +118,10 @@ class _CashWithdrawHistoryPageState extends BaseStoreState<CashWithdrawHistoryPa
 
   getWithdrawHistoryList() async {
     ResultData resultData = await HttpManager.post(UserApi.withdraw_list, {
-      "userId": UserManager.instance.user.info.id,
+      "userId": UserManager.instance!.user.info!.id,
       // "date": "2020-04",	//string 非必须 预留的日期，可以不传，传递到月份“2020-04“
     });
-    _refreshController.refreshCompleted();
+    _refreshController!.refreshCompleted();
     if (!resultData.result) {
        Toast.showError(resultData.msg);
       return;

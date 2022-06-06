@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/models/home_weather_model.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -10,9 +7,9 @@ import 'package:recook/widgets/recook_back_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class HomeWeatherDetailPage extends StatefulWidget {
-  final HomeWeatherModel homeWeatherModel;
+  final HomeWeatherModel? homeWeatherModel;
   HomeWeatherDetailPage({
-    Key key,
+    Key? key,
     this.homeWeatherModel,
   }) : super(key: key);
 
@@ -21,7 +18,7 @@ class HomeWeatherDetailPage extends StatefulWidget {
 }
 
 class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
-  HomeWeatherModel _homeWeatherModel;
+  HomeWeatherModel? _homeWeatherModel;
   @override
   void initState() {
     super.initState();
@@ -42,13 +39,13 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
       appBar: CustomAppBar(
         appBackground: Colors.transparent,
         leading: RecookBackButton(
-          white: _boolWhite(_homeWeatherModel.weaImg),
+          white: _boolWhite(_homeWeatherModel!.weaImg),
         ),
         elevation: 0,
         title: Text(
           "天气",
           style: TextStyle(
-            color: _getBackColor(_homeWeatherModel.weaImg),
+            color: _getBackColor(_homeWeatherModel!.weaImg),
             fontSize: 18.rsp,
           ),
         ),
@@ -56,11 +53,11 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
       body: Stack(
         children: [
           Positioned(child: Container(
-            height: 379.rw+DeviceInfo.statusBarHeight + DeviceInfo.appBarHeight,
+            height: 379.rw+DeviceInfo.statusBarHeight! + DeviceInfo.appBarHeight,
             width: double.infinity,
             decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(_getBackGroud(_homeWeatherModel.weaImg)),
+                    image: AssetImage(_getBackGroud(_homeWeatherModel!.weaImg)),
                     fit: BoxFit.fill)),
           )),
           _bodyWidget(),
@@ -88,7 +85,7 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      _homeWeatherModel.city,
+                      _homeWeatherModel!.city!,
                       style: TextStyle(fontSize: 20.rsp, color: Colors.white),
                     ),
                     5.wb,
@@ -110,7 +107,7 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
                           fontSize: 35.rsp, color: Colors.transparent),
                     ),
                     Text(
-                      _homeWeatherModel.tem,
+                      _homeWeatherModel!.tem!,
                       style: TextStyle(fontSize: 90.rsp, color: Colors.white),
                     ),
                     Text(
@@ -124,7 +121,7 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      _homeWeatherModel.tem1,
+                      _homeWeatherModel!.tem1!,
                       style: TextStyle(fontSize: 18.rsp, color: Colors.white),
                     ),
                     Text(
@@ -136,7 +133,7 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
                       style: TextStyle(fontSize: 18.rsp, color: Colors.white),
                     ),
                     Text(
-                      _homeWeatherModel.tem2,
+                      _homeWeatherModel!.tem2!,
                       style: TextStyle(fontSize: 18.rsp, color: Colors.white),
                     ),
                     Text(
@@ -147,7 +144,7 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
                 ),
                 12.hb,
                 Text(
-                  _homeWeatherModel.wea,
+                  _homeWeatherModel!.wea!,
                   style: TextStyle(fontSize: 18.rsp, color: Colors.white),
                 ),
                 Spacer(),
@@ -159,7 +156,7 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
                       style: TextStyle(fontSize: 18.rsp, color: Colors.white),
                     ),
                     Text(
-                      _homeWeatherModel.airLevel,
+                      _homeWeatherModel!.airLevel!,
                       style: TextStyle(fontSize: 18.rsp, color: Colors.white),
                     ),
                     20.wb,
@@ -168,14 +165,14 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
                 Row(
                   children: [
                     GestureDetector(
-                      onTap: _homeWeatherModel.alarm.alarmContent != ''
+                      onTap: _homeWeatherModel!.alarm!.alarmContent != ''
                           ? () {
                               Alert.show(
                                   context,
                                   NormalTextDialog(
                                     title: '预警',
                                     content:
-                                        _homeWeatherModel.alarm.alarmContent,
+                                        _homeWeatherModel!.alarm!.alarmContent!,
                                     titleColor: Color(0xFFEE0000),
                                     //deleteItem: '确认',
                                     items: ['确认'],
@@ -221,7 +218,7 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
                       style: TextStyle(fontSize: 14.rsp, color: Colors.white),
                     ),
                     Text(
-                      _homeWeatherModel.updateTime,
+                      _homeWeatherModel!.updateTime!,
                       style: TextStyle(fontSize: 14.rsp, color: Colors.white),
                     ),
                     20.wb,
@@ -234,29 +231,29 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
         ),
         Container(
           width: double.infinity,
-          color: _getColor(_homeWeatherModel.weaImg),
+          color: _getColor(_homeWeatherModel!.weaImg),
           child: Column(
             children: [
               _getDivider(),
-              _bottomItem('湿度', '能见度', _homeWeatherModel.humidity,
-                  _homeWeatherModel.visibility),
+              _bottomItem('湿度', '能见度', _homeWeatherModel!.humidity!,
+                  _homeWeatherModel!.visibility!),
               _getDivider(),
               _bottomItem1(),
               _getDivider(),
-              _bottomItem('PM2.5', 'PM10', _homeWeatherModel.aqi.pm25Desc,
-                  _homeWeatherModel.aqi.pm10Desc),
+              _bottomItem('PM2.5', 'PM10', _homeWeatherModel!.aqi.pm25Desc,
+                  _homeWeatherModel!.aqi.pm10Desc),
               _getDivider(),
-              _bottomItem('O3', 'NO2', _homeWeatherModel.aqi.o3Desc,
-                  _homeWeatherModel.aqi.no2Desc),
+              _bottomItem('O3', 'NO2', _homeWeatherModel!.aqi.o3Desc,
+                  _homeWeatherModel!.aqi.no2Desc),
               _getDivider(),
-              _bottomItem('SO2', '是否需要佩戴口罩', _homeWeatherModel.aqi.so2Desc,
-                  _homeWeatherModel.aqi.kouzhao),
+              _bottomItem('SO2', '是否需要佩戴口罩', _homeWeatherModel!.aqi.so2Desc,
+                  _homeWeatherModel!.aqi.kouzhao),
               _getDivider(),
-              _bottomItem('风向', '风速', _homeWeatherModel.win,
-                  _homeWeatherModel.winSpeed),
+              _bottomItem('风向', '风速', _homeWeatherModel!.win!,
+                  _homeWeatherModel!.winSpeed!),
               _getDivider(),
-              _bottomItem('外出适宜', '开窗适宜', _homeWeatherModel.aqi.waichu,
-                  _homeWeatherModel.aqi.kaichuang),
+              _bottomItem('外出适宜', '开窗适宜', _homeWeatherModel!.aqi.waichu,
+                  _homeWeatherModel!.aqi.kaichuang),
             ],
           ),
         )
@@ -294,7 +291,7 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
                         style: TextStyle(color: Colors.white, fontSize: 16.rsp),
                       ),
                       Text(
-                        _homeWeatherModel.airLevel,
+                        _homeWeatherModel!.airLevel!,
                         style: TextStyle(color: Colors.white, fontSize: 24.rsp),
                       )
                     ],
@@ -308,7 +305,7 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  _homeWeatherModel.airTips,
+                  _homeWeatherModel!.airTips!,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(color: Colors.white, fontSize: 12.rsp),
@@ -361,7 +358,7 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
         ));
   }
 
-  _getBackGroud(String weather) {
+  _getBackGroud(String? weather) {
     switch (weather) {
       case 'xue':
         return R.ASSETS_WEATHER_XUN_BG_JPG;
@@ -384,7 +381,7 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
     }
   }
 
-  _getColor(String weather) {
+  _getColor(String? weather) {
     switch (weather) {
       case 'xue':
         return Color(0xFF27080E);
@@ -407,7 +404,7 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
     }
   }
 
-  _getBackColor(String weather) {
+  _getBackColor(String? weather) {
     switch (weather) {
       case 'xue':
         return Color(0xFF333333);
@@ -430,7 +427,7 @@ class _HomeWeatherDetailPageState extends State<HomeWeatherDetailPage> {
     }
   }
 
-  _boolWhite(String weather) {
+  _boolWhite(String? weather) {
     switch (weather) {
       case 'xue':
         return false;

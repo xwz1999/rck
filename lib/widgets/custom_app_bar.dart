@@ -14,15 +14,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final title;
   final double titleSpacing;
   final double elevation;
-  final AppBarTheme themeData;
-  final Color appBackground;
-  final Color background;
-  final List<Widget> actions;
-  final Widget leading;
-  final VoidCallback backEvent;
+  final AppBarTheme? themeData;
+  final Color? appBackground;
+  final Color? background;
+  final List<Widget>? actions;
+  final Widget? leading;
+  final VoidCallback? backEvent;
 
   // 可用于设置背景渐变色
-  final Widget flexibleSpace;
+  final Widget? flexibleSpace;
 
   /// This widget appears across the bottom of the app bar.
   ///
@@ -32,7 +32,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// See also:
   ///
   ///  * [PreferredSize], which can be used to give an arbitrary widget a preferred size.
-  final PreferredSizeWidget bottom;
+  final PreferredSizeWidget? bottom;
 
   CustomAppBar(
       {this.title,
@@ -47,7 +47,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       this.flexibleSpace,
       this.backEvent})
       : preferredSize = Size.fromHeight(
-            kToolbarHeight + (bottom?.preferredSize?.height ?? 0.0));
+            kToolbarHeight + (bottom?.preferredSize.height ?? 0.0));
 
   @override
   Widget build(BuildContext context) {
@@ -64,11 +64,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           flexibleSpace: flexibleSpace,
           titleSpacing: titleSpacing,
           brightness:
-              themeData == null ? Brightness.dark : themeData.brightness,
+              themeData == null ? Brightness.dark : themeData!.brightness,
           backgroundColor:
-              appBackground ?? (themeData == null ? null : themeData.color),
-          iconTheme: themeData == null ? null : themeData.iconTheme,
-          textTheme: themeData == null ? null : themeData.textTheme,
+              appBackground ?? (themeData == null ? null : themeData!.color),
+          iconTheme: themeData == null ? null : themeData!.iconTheme,
+          textTheme: themeData == null ? null : themeData!.textTheme,
           elevation: elevation,
           toolbarOpacity: 1,
           centerTitle: true,
@@ -78,7 +78,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   _backButton(context) {
-    Widget lead = this.leading;
+    Widget? lead = this.leading;
     if (lead == null) {
       if (Navigator.canPop(context)) {
         lead = IconButton(
@@ -87,7 +87,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               size: 17,
               color: themeData == null
                   ? Colors.white
-                  : themeData.textTheme.title.color,
+                  : themeData!.textTheme!.headline6!.color,
             ),
             onPressed: backEvent ??
                 () {

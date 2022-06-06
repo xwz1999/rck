@@ -7,26 +7,25 @@ import 'package:recook/widgets/toast.dart';
 typedef PlusMinusViewCallback = Function(int num);
 
 class WholesaleMinusView extends StatefulWidget {
-  final int minValue;
+  final int? minValue;
 
   ///起批量
-  final int initialValue;
+  final int? initialValue;
 
   ///每手量（每次加减的量）
-  final int limit;
+  final int? limit;
 
-  final TextInputChangeCallBack onBeginInput;
+  final TextInputChangeCallBack? onBeginInput;
   final PlusMinusViewCallback onValueChanged;
-  final TextInputChangeCallBack onInputComplete;
+  final TextInputChangeCallBack? onInputComplete;
 
   const WholesaleMinusView(
       {this.minValue = 0,
-      @required this.onValueChanged,
+      required this.onValueChanged,
       this.onInputComplete,
       this.initialValue = 0,
       this.onBeginInput,
-      this.limit = 1})
-      : assert(onValueChanged != null);
+      this.limit = 1});
 
   @override
   State<StatefulWidget> createState() {
@@ -35,31 +34,31 @@ class WholesaleMinusView extends StatefulWidget {
 }
 
 class _WholesaleMinusViewState extends State<WholesaleMinusView> {
-  TextEditingController _controller;
+  TextEditingController? _controller;
   String textValue = '';
   int lastValue = 0;
-  FocusNode _focusNode;
+  FocusNode? _focusNode;
 
   @override
   void initState() {
     super.initState();
     _focusNode = FocusNode();
-    _focusNode.addListener(() {
+    _focusNode!.addListener(() {
       setState(() {
 
       });
-      if (!_focusNode.hasFocus) {
-        if( _controller.text==null||_controller.text=='')
-          _controller.text = widget.minValue.toString();
+      if (!_focusNode!.hasFocus) {
+        if( _controller!.text=='')
+          _controller!.text = widget.minValue.toString();
 
       } else {
-        _controller.text = '';
+        _controller!.text = '';
         setState(() {
 
         });
       }
     });
-    int initial = widget.initialValue ?? widget.minValue;
+    int? initial = widget.initialValue ?? widget.minValue;
     _controller = TextEditingController(text: initial.toString());
   }
 
@@ -78,21 +77,21 @@ class _WholesaleMinusViewState extends State<WholesaleMinusView> {
           children: <Widget>[
             Spacer(),
             GestureDetector(
-              onTap: int.parse(_controller.text==''?widget.minValue.toString():_controller.text) <= widget.minValue
+              onTap: int.parse(_controller!.text==''?widget.minValue.toString():_controller!.text) <= widget.minValue!
                   ? (){
                 BotToast.showText(text: '已是最低数量');
               }
                   : () {
-                int num = int.parse(_controller.text==''?widget.minValue.toString():_controller.text);
-                num = num - widget.limit;
+                int num = int.parse(_controller!.text==''?widget.minValue.toString():_controller!.text);
+                num = num - widget.limit!;
 
-                if (num <= widget.minValue) {
-                  num = widget.minValue;
+                if (num <= widget.minValue!) {
+                  num = widget.minValue!;
                 }
 
 
 
-                _controller.text = "$num";
+                _controller!.text = "$num";
                 //DPrint.printf("${_controller.text}, ${lastValue}");
 
                 if ((num == widget.minValue &&
@@ -100,7 +99,7 @@ class _WholesaleMinusViewState extends State<WholesaleMinusView> {
                   setState(() {});
                 }
                 lastValue = num;
-                widget.onInputComplete(num.toString());
+                widget.onInputComplete!(num.toString());
               },
               child: Container(
                 clipBehavior: Clip.antiAlias,
@@ -109,7 +108,7 @@ class _WholesaleMinusViewState extends State<WholesaleMinusView> {
                   borderRadius: BorderRadius.only(topLeft: Radius.circular(4.rw),bottomLeft:Radius.circular(4.rw), ),
                   border: Border(
                       left: BorderSide(
-                          color: int.parse(_controller.text==''?widget.minValue.toString():_controller.text) <= widget.minValue
+                          color: int.parse(_controller!.text==''?widget.minValue.toString():_controller!.text) <= widget.minValue!
                               ? Color(
                             0xFFDDDDDD,
                           )
@@ -118,7 +117,7 @@ class _WholesaleMinusViewState extends State<WholesaleMinusView> {
                           ),
                           width: 1.rw),
                       top: BorderSide(
-                          color: int.parse(_controller.text==''?widget.minValue.toString():_controller.text) <= widget.minValue
+                          color: int.parse(_controller!.text==''?widget.minValue.toString():_controller!.text) <= widget.minValue!
                               ? Color(
                             0xFFDDDDDD,
                           )
@@ -127,7 +126,7 @@ class _WholesaleMinusViewState extends State<WholesaleMinusView> {
                           ),
                           width: 1.rw),
                       bottom: BorderSide(
-                          color: int.parse(_controller.text==''?widget.minValue.toString():_controller.text) <= widget.minValue
+                          color: int.parse(_controller!.text==''?widget.minValue.toString():_controller!.text) <= widget.minValue!
                               ? Color(
                             0xFFDDDDDD,
                           )
@@ -136,7 +135,7 @@ class _WholesaleMinusViewState extends State<WholesaleMinusView> {
                           ),
                           width: 1.rw),
                       right: BorderSide(
-                          color: int.parse(_controller.text==''?widget.minValue.toString():_controller.text) <= widget.minValue
+                          color: int.parse(_controller!.text==''?widget.minValue.toString():_controller!.text) <= widget.minValue!
                               ? Color(
                             0xFFDDDDDD,
                           )
@@ -190,23 +189,23 @@ class _WholesaleMinusViewState extends State<WholesaleMinusView> {
                 focusNode: _focusNode,
                 onInputComplete: (value) {
                   if (TextUtils.isEmpty(value, whiteSpace: true)) {
-                    _controller.text = lastValue.toString();
+                    _controller!.text = lastValue.toString();
                     // value = lastValue.toString();
                   } else {
-                    if (int.parse(value) <= widget.minValue) {
-                      _controller.text = "${widget.minValue}";
+                    if (int.parse(value) <= widget.minValue!) {
+                      _controller!.text = "${widget.minValue}";
                     }else{
-                      if(int.parse(value)%widget.limit>0){
+                      if(int.parse(value)%widget.limit!>0){
                         Toast.showInfo('请输入装箱率${widget.limit}的倍数');
-                        _controller.text = (((int.parse(value))~/(widget.limit))*(widget.limit)).toString();
+                        _controller!.text = (((int.parse(value))~/widget.limit!)*widget.limit!).toString();
                       }
 
                     }
-                    lastValue = int.parse(_controller.text==''?widget.minValue.toString():_controller.text);
+                    lastValue = int.parse(_controller!.text==''?widget.minValue.toString():_controller!.text);
                     setState(() {});
 
                   }
-                  widget.onInputComplete(lastValue.toString());
+                  widget.onInputComplete!(lastValue.toString());
 
                 },
                 controller: _controller,
@@ -217,14 +216,14 @@ class _WholesaleMinusViewState extends State<WholesaleMinusView> {
             ),
             GestureDetector(
               onTap: (){
-                int num = int.parse(_controller.text);
-                num = num + widget.limit;
-                _controller.text = "$num";
+                int num = int.parse(_controller!.text);
+                num = num + widget.limit!;
+                _controller!.text = "$num";
                 if (lastValue == widget.minValue) {
                   setState(() {});
                 }
                 lastValue = num;
-                widget.onInputComplete(num.toString());
+                widget.onInputComplete!(num.toString());
               },
               child: Container(
                 clipBehavior: Clip.antiAlias,

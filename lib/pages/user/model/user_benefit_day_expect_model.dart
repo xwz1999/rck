@@ -1,8 +1,8 @@
 import 'package:recook/pages/user/benefit_view_gen.dart';
 
 class UserBenefitDayExpectModel {
-  Purchase purchase;
-  Purchase guide;
+  Purchase? purchase;
+  Purchase? guide;
 
   UserBenefitDayExpectModel({this.purchase, this.guide});
 
@@ -16,19 +16,19 @@ class UserBenefitDayExpectModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.purchase != null) {
-      data['purchase'] = this.purchase.toJson();
+      data['purchase'] = this.purchase!.toJson();
     }
     if (this.guide != null) {
-      data['guide'] = this.guide.toJson();
+      data['guide'] = this.guide!.toJson();
     }
     return data;
   }
 }
 
 class Purchase {
-  int count;
-  num salesVolume;
-  num amount;
+  int? count;
+  num? salesVolume;
+  num? amount;
 
   DisplayCard get card => DisplayCard(
         count: count,

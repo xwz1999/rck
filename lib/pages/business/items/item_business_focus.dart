@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
@@ -24,19 +23,19 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:widget_to_image/widget_to_image.dart';
 
 class BusinessFocusItem extends StatefulWidget {
-  final VoidCallback focusListener;
-  final VoidCallback publishMaterialListener;
+  final VoidCallback? focusListener;
+  final VoidCallback? publishMaterialListener;
   final Function(ByteData) downloadListener;
-  final VoidCallback copyListener;
-  final Function(int) picListener;
-  final VoidCallback moreListener;
-  final MaterialModel model;
+  final VoidCallback? copyListener;
+  final Function(int)? picListener;
+  final VoidCallback? moreListener;
+  final MaterialModel? model;
 
   const BusinessFocusItem(
-      {Key key,
+      {Key? key,
       this.focusListener,
       this.publishMaterialListener,
-      this.downloadListener,
+      required this.downloadListener,
       this.picListener,
       this.moreListener,
       this.model,
@@ -52,27 +51,28 @@ class BusinessFocusItem extends StatefulWidget {
 class _BusinessFocusItemState extends State<BusinessFocusItem> {
   GlobalKey _globalKey = GlobalKey();
   List<MainPhotos> _selectPhotos = [];
-  GoodsDetailModel _goodsDetail;
-  String _bigImageUrl = "";
-  ByteData byteData;
+  GoodsDetailModel? _goodsDetail;
+  String? _bigImageUrl = "";
+  ByteData? byteData;
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
       _goodsDetail = await GoodsDetailModelImpl.getDetailInfo(
-          widget.model.goodsId, UserManager.instance.user.info.id);
-      if (_goodsDetail.code != HttpStatus.SUCCESS) {
+          widget.model!.goodsId, UserManager.instance!.user.info!.id);
+      if (_goodsDetail!.code != HttpStatus.SUCCESS) {
         return;
       }
-      // _bottomBarController.setFavorite(_goodsDetail.data.isFavorite);
-      MainPhotos photo = _goodsDetail.data.mainPhotos[0];
-      if (_goodsDetail.data.mainPhotos.length >= 1) {
-        photo = _goodsDetail.data.mainPhotos[0];
+      //_bottomBarController.setFavorite(_goodsDetail.data.isFavorite);
+      MainPhotos photo = _goodsDetail!.data!.mainPhotos![0];
+      if (_goodsDetail!.data!.mainPhotos!.length >= 1) {
+        photo = _goodsDetail!.data!.mainPhotos![0];
       }
       photo.isSelect = true;
       photo.isSelectNumber = 1;
       _bigImageUrl = Api.getImgUrl(photo.url);
       _selectPhotos.add(photo);
+      if(mounted)
       setState(() {});
 
     });
@@ -82,9 +82,9 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
 
   @override
   Widget build(BuildContext context) {
-    int itemCount = widget.model.photos.length;
-    Color focusedColor =
-        !widget.model.isAttention ? Color(0xFFFF1E31) : Colors.grey[600];
+    int itemCount = widget.model!.photos!.length;
+    Color? focusedColor =
+        !widget.model!.isAttention! ? Color(0xFFFF1E31) : Colors.grey[600];
 
     return Container(
       margin: EdgeInsets.only(bottom: rSize(5), top: rSize(5)),
@@ -103,10 +103,10 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
                     return CustomCacheImage(
                         imageClick: () {
                           // DPrint.printf("点击了图片----${widget.model.goods.mainPhotoURL}");
-                          widget.picListener(index);
+                          widget.picListener!(index);
                         },
                         imageUrl: Api.getResizeImgUrl(
-                            widget.model.photos[index].url, 300),
+                            widget.model!.photos![index].url!, 300),
                         placeholder: AppImageName.placeholder_1x1,
                         fit: itemCount != 1 ? BoxFit.cover : BoxFit.scaleDown);
                   },
@@ -116,7 +116,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
                 Container(
                   margin: EdgeInsets.symmetric(vertical: rSize(10)),
                   child: Text(
-                    widget.model.text,
+                    widget.model!.text!,
                     style: AppTextStyle.generate(15 * 2.sp,
                         color: Colors.grey[700], fontWeight: FontWeight.w300),
                     maxLines: 100,
@@ -149,7 +149,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
       height: 500.rw,
       child: Column(
         children: <Widget>[
-          UserManager.instance.homeWeatherModel != null
+          UserManager.instance!.homeWeatherModel != null
               ? Container(
             color: Colors.white,
             padding: EdgeInsets.only(
@@ -157,7 +157,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
             ),
             height: 50.rw,
             child: PostWeatherWidget(
-              homeWeatherModel: UserManager.instance.homeWeatherModel,
+              homeWeatherModel: UserManager.instance!.homeWeatherModel,
             ),
           )
               : Container(),
@@ -166,8 +166,8 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
               vertical: 8,
             ),
             child: PostUserInfo(
-              name: UserManager.instance.user.info.nickname + "的店铺",
-              gysId: _goodsDetail.data.vendorId,
+              name: UserManager.instance!.user.info!.nickname! + "的店铺",
+              gysId: _goodsDetail!.data!.vendorId,
             ),
           ),
 
@@ -190,35 +190,35 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
   }
 
   String _getTimeInfo() {
-    if (_goodsDetail.data.promotion != null &&
-        _goodsDetail.data.promotion.id > 0) {
+    if (_goodsDetail!.data!.promotion != null &&
+        _goodsDetail!.data!.promotion!.id! > 0) {
       if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
-          _goodsDetail) ==
+          _goodsDetail!) ==
           PromotionStatus.start) {
         //活动中
-        DateTime endTime = DateTime.parse(_goodsDetail.data.promotion.endTime);
+        DateTime endTime = DateTime.parse(_goodsDetail!.data!.promotion!.endTime!);
         return "结束时间\n${DateUtil.formatDate(endTime, format: 'M月d日 HH:mm')}";
       }
       if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
-          _goodsDetail) ==
+          _goodsDetail!) ==
           PromotionStatus.ready) {
         DateTime startTime =
-        DateTime.parse(_goodsDetail.data.promotion.startTime);
+        DateTime.parse(_goodsDetail!.data!.promotion!.startTime!);
         return "开始时间\n${DateUtil.formatDate(startTime, format: 'M月d日 HH:mm')}";
       }
     }
     return "";
   }
   _shareLink() {
-    if (widget.model.goods == null ||
-        TextUtils.isEmpty(widget.model.goods.name)) return Container();
+    if (widget.model!.goods == null ||
+        TextUtils.isEmpty(widget.model!.goods!.name)) return Container();
     Widget content = Container(
       padding: EdgeInsets.all(10),
       color: Color(0xFFF2F4F7),
       child: Row(
         children: <Widget>[
           CustomCacheImage(
-            imageUrl: Api.getResizeImgUrl(widget.model.goods.mainPhotoURL, 100),
+            imageUrl: Api.getResizeImgUrl(widget.model!.goods!.mainPhotoURL!, 100),
             placeholder: AppImageName.placeholder_1x1,
             height: rSize(50),
             width: rSize(50),
@@ -232,7 +232,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    widget.model.goods.name,
+                    widget.model!.goods!.name!,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: AppTextStyle.generate(14 * 2.sp,
@@ -241,7 +241,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
                   Container(
                     margin: EdgeInsets.only(top: rSize(5)),
                     child: Text(
-                      "￥${widget.model.goods.price.toString()}",
+                      "￥${widget.model!.goods!.price.toString()}",
                       style: AppTextStyle.generate(14 * 2.sp,
                           fontWeight: FontWeight.w300, color: Colors.grey[600]),
                     ),
@@ -254,7 +254,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
             icon: Icon(AppIcons.icon_share),
             onPressed: () {
               if (widget.publishMaterialListener != null) {
-                widget.publishMaterialListener();
+                widget.publishMaterialListener!();
               }
             },
           )
@@ -265,13 +265,13 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
       child: content,
       onTap: () {
         if (widget.publishMaterialListener != null) {
-          widget.publishMaterialListener();
+          widget.publishMaterialListener!();
         }
       },
     );
   }
 
-  Row _header(Color focusedColor) {
+  Row _header(Color? focusedColor) {
     return Row(
       children: <Widget>[
         ClipRRect(
@@ -280,7 +280,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
             height: 40.rw,
             width: 40.rw,
             placeholder: Assets.icon.icLauncherPlaystore.path,
-            image: Api.getResizeImgUrl(widget.model.headImgUrl, 300),
+            image: Api.getResizeImgUrl(widget.model!.headImgUrl!, 300),
           ),
         ),
         Container(
@@ -291,11 +291,11 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                widget.model.nickname,
+                widget.model!.nickname!,
                 style: AppTextStyle.generate(15),
               ),
               Text(
-                widget.model.createdAt,
+                widget.model!.createdAt!,
                 style: AppTextStyle.generate(12, color: Colors.grey),
               ),
             ],
@@ -376,7 +376,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
                         ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,500.rw));
                         print('123213213213123213123');
 
-                        widget.downloadListener(byteData );
+                        widget.downloadListener(byteData! );
                       }
                     },
                     type: NormalTextDialogType.delete,
@@ -403,7 +403,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
                 ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,500.rw));
                 print('123213213213123213123');
 
-                widget.downloadListener(byteData );
+                widget.downloadListener(byteData! );
               }
 
             },
@@ -426,7 +426,7 @@ class _BusinessFocusItemState extends State<BusinessFocusItem> {
             borderRadius: BorderRadius.all(Radius.circular(20)),
             padding: EdgeInsets.symmetric(horizontal: 12),
             onPressed: () {
-              widget.copyListener();
+              widget.copyListener!();
             },
           ),
           Expanded(child: Container()),

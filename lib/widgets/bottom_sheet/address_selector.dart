@@ -18,23 +18,21 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'custom_bottom_sheet.dart';
 
 typedef AddressSelectorCallback = Function(
-    String province, String city, String disctrict);
+    String? province, String? city, String? disctrict);
 
 class AddressSelector extends StatefulWidget {
   final ProvinceCityModel model;
-  final String province;
-  final String city;
-  final String district;
+  final String? province;
+  final String? city;
+  final String? district;
   final AddressSelectorCallback callback;
 
   const AddressSelector(
-      {@required this.model,
+      {required this.model,
       this.province = "",
       this.city = "",
       this.district = "",
-      this.callback})
-      : assert(model != null),
-        assert(callback != null);
+      required this.callback});
 
   @override
   _AddressSelectorState createState() => _AddressSelectorState();
@@ -42,16 +40,16 @@ class AddressSelector extends StatefulWidget {
 
 class _AddressSelectorState extends State<AddressSelector>
     with TickerProviderStateMixin {
-  ScrollController _scrollController;
-  TabController _tabController;
-  List<List<String>> _items;
-  List<String> _result;
-  List<int> _indexs;
-  Province _province;
-  City _city;
-  District _district;
+  ScrollController? _scrollController;
+  TabController? _tabController;
+  late List<List<String?>> _items;
+  late List<String?> _result;
+  late List<int?> _indexs;
+  late Province _province;
+  City? _city;
+  District? _district;
   Color _selectedColor = AppColor.themeColor;
-  BuildContext _context;
+  late BuildContext _context;
 
   @override
   void initState() {
@@ -81,7 +79,7 @@ class _AddressSelectorState extends State<AddressSelector>
 
   Container _buildBody() {
     return Container(
-      height: (DeviceInfo.screenHeight * 0.75).rw,
+      height: (DeviceInfo.screenHeight! * 0.75).rw,
       padding: EdgeInsets.symmetric(horizontal: 15),
       decoration: BoxDecoration(
           color: Colors.white,
@@ -139,9 +137,9 @@ class _AddressSelectorState extends State<AddressSelector>
   _tabItems() {
     List<Widget> list = [];
     // for (int i = 0; i < _items.length; ++i) {
-    for (int i = 0; i < _tabController.length; ++i) {
+    for (int i = 0; i < _tabController!.length; ++i) {
       List addressModels = _items[i];
-      if (addressModels == null || addressModels.length == 0) {
+      if (addressModels.length == 0) {
         list.add(Container());
         continue;
       }
@@ -150,10 +148,10 @@ class _AddressSelectorState extends State<AddressSelector>
         height: 30.rw,
         alignment: Alignment.center,
         child: Text(
-          TextUtils.isEmpty(_result[i]) ? "请选择" : _result[i],
+          TextUtils.isEmpty(_result[i]) ? "请选择" : _result[i]!,
           style: TextStyle(
               fontSize: 16 * 2.sp,
-              color: _tabController.index == i ? _selectedColor : Colors.black),
+              color: _tabController!.index == i ? _selectedColor : Colors.black),
         ),
       ));
     }
@@ -165,10 +163,10 @@ class _AddressSelectorState extends State<AddressSelector>
     return Expanded(
       child: ListView.builder(
           controller: _scrollController,
-          itemCount: _items[_tabController.index].length,
+          itemCount: _items[_tabController!.index].length,
           itemBuilder: (context, index) {
-            String addr = _items[_tabController.index][index];
-            bool selected = addr == _result[_tabController.index];
+            String addr = _items[_tabController!.index][index]!;
+            bool selected = addr == _result[_tabController!.index];
             return CustomImageButton(
               padding: EdgeInsets.zero,
               child: Container(
@@ -200,9 +198,9 @@ class _AddressSelectorState extends State<AddressSelector>
 
   void _filterAddress() {
     int index = 1;
-    for (int i = 0; i < widget.model.data.length; ++i) {
-      Province province = widget.model.data[i];
-      String proAddressStr = province.name;
+    for (int i = 0; i < widget.model.data!.length; ++i) {
+      Province province = widget.model.data![i];
+      String? proAddressStr = province.name;
       _items[0].add(proAddressStr);
       if (proAddressStr != widget.province) {
         continue;
@@ -211,9 +209,9 @@ class _AddressSelectorState extends State<AddressSelector>
       // index++;
       _province = province;
 
-      for (int m = 0; m < province.cities.length; ++m) {
-        City city = province.cities[m];
-        String cityAddressStr = city.name;
+      for (int m = 0; m < province.cities!.length; ++m) {
+        City city = province.cities![m];
+        String? cityAddressStr = city.name;
         _items[1].add(cityAddressStr);
         if (cityAddressStr != widget.city) {
           continue;
@@ -222,9 +220,9 @@ class _AddressSelectorState extends State<AddressSelector>
         _indexs[1] = m;
         index++;
 
-        for (int n = 0; n < city.districts.length; ++n) {
-          District district = city.districts[n];
-          String disAddressStr = district.name;
+        for (int n = 0; n < city.districts!.length; ++n) {
+          District district = city.districts![n];
+          String? disAddressStr = district.name;
           _items[2].add(disAddressStr);
           if (disAddressStr != widget.district) {
             continue;
@@ -241,16 +239,16 @@ class _AddressSelectorState extends State<AddressSelector>
   void _resetTabBar(int index) {
     _tabController?.removeListener(_tabBarListener);
     _tabController = TabController(length: index, vsync: this);
-    _tabController.addListener(_tabBarListener);
-    _tabController.index = index - 1;
+    _tabController!.addListener(_tabBarListener);
+    _tabController!.index = index - 1;
   }
 
   _itemSelected(int index) {
-    switch (_tabController.index) {
+    switch (_tabController!.index) {
       case 0:
         {
           /// 选城市
-          Province province = widget.model.data[index];
+          Province province = widget.model.data![index];
           _items[1].clear();
           _items[2].clear();
           _province = province;
@@ -263,62 +261,62 @@ class _AddressSelectorState extends State<AddressSelector>
           _city = null;
 
           /// 没有次级列表返回
-          if (_province.cities.length == 0) {
+          if (_province.cities!.length == 0) {
             _dismiss();
             widget.callback(_province.name, null, null);
             return;
           }
 
-          province.cities.forEach((City city) {
+          province.cities!.forEach((City city) {
             _items[1].add(city.name);
           });
           _resetTabBar(2);
-          _scrollController.jumpTo(0);
+          _scrollController!.jumpTo(0);
           setState(() {});
         }
         break;
       case 1:
         {
           /// 选城市
-          City city = _province.cities[index];
+          City city = _province.cities![index];
           _city = city;
           _district = null;
           _items[2].clear();
-          _result[1] = _city.name;
+          _result[1] = _city!.name;
           _indexs[1] = index;
           _result[2] = "";
           _indexs[2] = null;
 
           /// 没有次级列表返回
-          if (city.districts.length == 0) {
+          if (city.districts!.length == 0) {
             _dismiss();
-            widget.callback(_province.name, _city.name, null);
+            widget.callback(_province.name, _city!.name, null);
             return;
           }
 
-          city.districts.forEach((District district) {
+          city.districts!.forEach((District district) {
             _items[2].add(district.name);
           });
           _resetTabBar(3);
           setState(() {});
-          _scrollController.jumpTo(0);
+          _scrollController!.jumpTo(0);
         }
         break;
       case 2:
         {
           /// 选区
-          District district = _city.districts[index];
+          District district = _city!.districts![index];
           _district = district;
-          _result[2] = _district.name;
+          _result[2] = _district!.name;
           _indexs[2] = index;
           _dismiss();
-          widget.callback(_province.name, _city.name, _district.name);
+          widget.callback(_province.name, _city!.name, _district!.name);
         }
     }
   }
 
   _tabBarListener() {
-    if (_scrollController.hasClients) {
+    if (_scrollController!.hasClients) {
       _scrollController?.jumpTo(0);
       setState(() {});
     }
@@ -331,20 +329,20 @@ class _AddressSelectorState extends State<AddressSelector>
 
 class AddressSelectorHelper {
   static show(BuildContext context,
-      {@required ProvinceCityModel model,
-      String province,
-      String city,
-      String district,
-      AddressSelectorCallback callback}) {
+      {required ProvinceCityModel? model,
+      String? province,
+      String? city,
+      String? district,
+      AddressSelectorCallback? callback}) {
     showCustomModalBottomSheet(
         context: context,
         builder: (context) {
           return AddressSelector(
-            model: model,
+            model: model!,
             province: province,
             city: city,
             district: district,
-            callback: callback,
+            callback: callback!,
           );
         });
   }

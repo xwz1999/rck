@@ -1,10 +1,7 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
@@ -18,7 +15,7 @@ import 'package:recook/widgets/recook_back_button.dart';
 
 class RechargePage extends StatefulWidget {
   RechargePage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -219,7 +216,7 @@ class _RechargePageState extends State<RechargePage>
                     Spacer(),
                     GestureDetector(
                       onTap: () async{
-                        WholesaleCustomerModel model =
+                        WholesaleCustomerModel? model =
                         await WholesaleFunc.getCustomerInfo();
 
                         Get.to(() => WholesaleCustomerPage(
@@ -382,7 +379,7 @@ class _RechargePageState extends State<RechargePage>
     );
   }
 
-  _textItem(String title, String content, {bool show = false,double height }) {
+  _textItem(String title, String content, {bool show = false,double? height }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

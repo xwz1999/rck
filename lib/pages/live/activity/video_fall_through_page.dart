@@ -7,7 +7,7 @@ import 'package:recook/pages/live/models/video_list_model.dart';
 class VideoFallThroughPage extends StatefulWidget {
   final List<VideoListModel> models;
   final int index;
-  VideoFallThroughPage({Key key, @required this.models, @required this.index})
+  VideoFallThroughPage({Key? key, required this.models, required this.index})
       : super(key: key);
 
   @override
@@ -15,7 +15,7 @@ class VideoFallThroughPage extends StatefulWidget {
 }
 
 class _VideoFallThroughPageState extends State<VideoFallThroughPage> {
-  PageController _pageController;
+  PageController? _pageController;
   @override
   void initState() {
     super.initState();

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -12,17 +10,16 @@ import 'package:recook/models/goods_hot_sell_list_model.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/wholesale/more_goods/whoesale_goods_normal.dart';
-import 'package:recook/utils/app_router.dart';
 import 'package:recook/widgets/goods_item.dart';
 
 enum GoodsListTempType { recookMake, homeAppliances, homeLife ,highCommission,preferential }//瑞库制品  数码家电 家居生活  高佣特推 特惠专区
 
 class GoodsListTempPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  const GoodsListTempPage({Key key, this.arguments}) : super(key: key);
+  const GoodsListTempPage({Key? key, this.arguments}) : super(key: key);
   static setArguments(
-      {String title, GoodsListTempType type = GoodsListTempType.recookMake}) {
+      {String? title, GoodsListTempType type = GoodsListTempType.recookMake}) {
     return {"title": title, "type": type};
   }
 
@@ -33,14 +30,14 @@ class GoodsListTempPage extends StatefulWidget {
 }
 
 class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> with TickerProviderStateMixin {
-  GoodsHotSellListModel _listModel;
-  String _title;
-  GoodsListTempType _goodsListTempType;
+  GoodsHotSellListModel? _listModel;
+  String? _title;
+  GoodsListTempType? _goodsListTempType;
   @override
   void initState() {
     super.initState();
-    _goodsListTempType = widget.arguments["type"];
-    _title = widget.arguments['title'];
+    _goodsListTempType = widget.arguments!["type"];
+    _title = widget.arguments!['title'];
     _getGoodsHotSellList();
   }
 
@@ -130,7 +127,7 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> with Tic
   }
 
   _backButton(context) {
-    Widget lead;
+    Widget? lead;
     if (Navigator.canPop(context)) {
       lead = IconButton(
           icon: Icon(
@@ -155,12 +152,12 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> with Tic
             onTap: () {
               AppRouter.push(context, RouteName.COMMODITY_PAGE,
                   arguments: CommodityDetailPage.setArguments(
-                      _listModel.data[index].id));
+                      _listModel!.data![index].id));
             },
-            child: _itemWidget(_listModel.data[index]),
+            child: _itemWidget(_listModel!.data![index]),
           );
         },
-        itemCount: _listModel.data.length,
+        itemCount: _listModel!.data!.length,
       ),
     );
   }
@@ -172,7 +169,7 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> with Tic
       child: Stack(
         children: <Widget>[
 
-          UserManager.instance.isWholesale?
+          UserManager.instance!.isWholesale?
           WholesaleGoodsItem.hotList(
             buildCtx: context,
             data: data,
@@ -187,7 +184,7 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> with Tic
             onBrandClick: () {
               AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                   arguments: BrandGoodsListPage.setArguments(
-                      data.brandId, data.brandName));
+                      data.brandId as int?, data.brandName));
             },
             buildCtx: context,
             data: data,
@@ -199,7 +196,7 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> with Tic
 
   _getGoodsHotSellList() async {
     Map<String, dynamic> data = {};
-    if (UserManager.instance.isWholesale) {
+    if (UserManager.instance!.isWholesale) {
       data.putIfAbsent('is_sale', () => true);
     }
 
@@ -211,17 +208,17 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> with Tic
                 : HomeApi.home_live_list,
         data);
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     GoodsHotSellListModel model =
         GoodsHotSellListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
-    for (Data data in model.data) {
-      data.index = model.data.indexOf(data);
+    for (Data data in model.data!) {
+      data.index = model.data!.indexOf(data);
     }
     _listModel = model;
     setState(() {});

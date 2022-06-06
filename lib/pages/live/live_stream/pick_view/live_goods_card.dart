@@ -9,7 +9,7 @@ import 'package:oktoast/oktoast.dart';
 class LiveGoodsCard extends StatefulWidget {
   final VoidCallback onPick;
   final GoodsList model;
-  LiveGoodsCard({Key key, @required this.onPick, @required this.model})
+  LiveGoodsCard({Key? key, required this.onPick, required this.model})
       : super(key: key);
 
   @override
@@ -92,7 +92,7 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
                 color: AppColor.frenchColor,
                 child: FadeInImage.assetNetwork(
                   placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                  image: Api.getImgUrl(widget.model.mainPhotoUrl),
+                  image: Api.getImgUrl(widget.model.mainPhotoUrl)!,
                   height: rSize(100),
                   width: rSize(100),
                 ),
@@ -104,7 +104,7 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.model.goodsName,
+                    widget.model.goodsName!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -121,7 +121,7 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
                   //       color: Colors.black54, fontWeight: FontWeight.w300),
                   // ),
                   Spacer(),
-                  AppConfig.getShowCommission()
+                  AppConfig.getShowCommission()!
                       ? Row(
                           children: [
                             InkWell(
@@ -130,13 +130,13 @@ class _LiveGoodsCardState extends State<LiveGoodsCard> {
                                   FadeInImage.assetNetwork(
                                     placeholder:
                                         R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                                    image: Api.getImgUrl(widget.model.brandImg),
+                                    image: Api.getImgUrl(widget.model.brandImg)!,
                                     width: rSize(13),
                                     height: rSize(13),
                                   ),
                                   rWBox(4),
                                   Text(
-                                    widget.model.brandName,
+                                    widget.model.brandName!,
                                     style: TextStyle(
                                       color: Color(0xffc70404),
                                       fontSize: 12 * 2.sp,

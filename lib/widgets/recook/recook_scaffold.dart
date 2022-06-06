@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/recook_back_button.dart';
@@ -11,13 +10,13 @@ class RecookScaffold extends StatefulWidget {
   ///红色背景
   final bool red;
   final bool whiteBg;
-  final List<Widget> actions;
-  final Widget body;
-  final Widget bottomNavi;
-  final PreferredSizeWidget appBarBottom;
+  final List<Widget>? actions;
+  final Widget? body;
+  final Widget? bottomNavi;
+  final PreferredSizeWidget? appBarBottom;
   RecookScaffold({
-    Key key,
-    @required this.title,
+    Key? key,
+    required this.title,
     this.red = false,
     this.actions,
     this.body,

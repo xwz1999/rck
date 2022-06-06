@@ -8,13 +8,10 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/utils/text_utils.dart';
 
 /// 自筛选列表点击监听
-typedef SelectedListener = Function(int selectedIndex, FilterItemModel item);
+typedef SelectedListener = Function(int? selectedIndex, FilterItemModel? item);
 
 /// 下拉列表状态变更
 typedef PopOptionHandle = Function(OptionListStatus status);
@@ -23,11 +20,11 @@ typedef PopOptionHandle = Function(OptionListStatus status);
 typedef FilterToolBarListener = Function(bool update);
 
 class FilterToolBarController {
-  FilterResultContainerHelper helper;
-  int selectedIndex;
-  FilterItemModel item;
-  GlobalKey _containerKey;
-  GlobalKey _toolBarKey;
+  FilterResultContainerHelper? helper;
+  int? selectedIndex;
+  FilterItemModel? item;
+  GlobalKey? _containerKey;
+  GlobalKey? _toolBarKey;
 
   /// [update] 是否需要通知外层  sublist 点击的index 和上次一致时，不通知外层
   FilterToolBarListener updateToolBarState = (bool update) {};
@@ -37,15 +34,15 @@ class FilterToolBarController {
   }
 
   get toolBarDx {
-    RenderBox box = _toolBarKey.currentContext.findRenderObject();
+    RenderBox box = _toolBarKey!.currentContext!.findRenderObject() as RenderBox;
     Offset offset = box.localToGlobal(Offset.zero);
     return offset.dx;
   }
 
   double get toolBarDy {
     /// toolbar 距离top 的间距 - container外层距离top的间距
-    RenderBox containerBox = _containerKey.currentContext.findRenderObject();
-    RenderBox box = _toolBarKey.currentContext.findRenderObject();
+    RenderBox containerBox = _containerKey!.currentContext!.findRenderObject() as RenderBox;
+    RenderBox box = _toolBarKey!.currentContext!.findRenderObject() as RenderBox;
     Offset containerTopOffset = containerBox.localToGlobal(Offset.zero);
     Offset toolBarTopOffset = box.localToGlobal(Offset.zero);
     return toolBarTopOffset.dy - containerTopOffset.dy;
@@ -69,9 +66,9 @@ class FilterResultContainerHelper {
   final PopOptionHandle handle;
 
   /// 字筛选列表弹出状态
-  OptionListStatus status;
+  OptionListStatus? status;
 
-  FilterResultContainerHelper({@required this.handle});
+  FilterResultContainerHelper({required this.handle});
 
   changeOptionListStatus(OptionListStatus status) {
     this.status = status;
@@ -82,11 +79,10 @@ class FilterResultContainerHelper {
 /// 筛选下拉列表容器  与 FilterToolBar 一起使用
 class FilterToolBarResultContainer extends StatefulWidget {
   final FilterToolBarController controller;
-  final Widget body;
+  final Widget? body;
 
   const FilterToolBarResultContainer(
-      {GlobalKey key, this.controller, this.body})
-      : assert(controller != null, "controller 不为空");
+      {GlobalKey? key, required this.controller, this.body});
 
   @override
   State<StatefulWidget> createState() {
@@ -97,7 +93,7 @@ class FilterToolBarResultContainer extends StatefulWidget {
 class _FilterToolBarResultContainerState
     extends State<FilterToolBarResultContainer> with TickerProviderStateMixin {
   /// 子列表行数
-  int _lines;
+  late int _lines;
 
   int maxLines = 3;
 
@@ -111,7 +107,7 @@ class _FilterToolBarResultContainerState
   double _topSpacing = 8.0;
 
   /// 未选中颜色
-  Color _unselectedColor = Colors.grey[700];
+  Color? _unselectedColor = Colors.grey[700];
 
   /// toolbar 字体大小
   // double _toolBarTitleFont = 14.0;
@@ -122,8 +118,8 @@ class _FilterToolBarResultContainerState
   /// 子列表单行内边距  因为点击要整行选中，所以在row上设置左右边距
   EdgeInsetsGeometry _subtitleRowPadding = EdgeInsets.only(left: 15, right: 15);
 
-  AnimationController _animationController;
-  Animation<double> _animation;
+  AnimationController? _animationController;
+  Animation<double>? _animation;
 
   @override
   void initState() {
@@ -134,17 +130,17 @@ class _FilterToolBarResultContainerState
 
     widget.controller.helper = FilterResultContainerHelper(handle: (status) {
       if (status == OptionListStatus.open) {
-        _buildAnimation(widget.controller.item);
-        _animationController.forward();
+        _buildAnimation(widget.controller.item!);
+        _animationController!.forward();
       } else {
-        _animationController.reset();
+        _animationController!.reset();
       }
     });
 
     if (widget.key == null) {
       widget.controller._containerKey = GlobalKey();
     } else {
-      widget.controller._containerKey = widget.key;
+      widget.controller._containerKey = widget.key as GlobalKey<State<StatefulWidget>>?;
     }
 
     super.initState();
@@ -204,11 +200,11 @@ class _FilterToolBarResultContainerState
               child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
-                  widget.controller.helper.changeOptionListStatus(
+                  widget.controller.helper!.changeOptionListStatus(
                     OptionListStatus.close,
                   );
                   widget.controller.updateToolBarState(false);
-                  _animationController.reset();
+                  _animationController!.reset();
                 },
                 child: Opacity(
                   opacity: 0.3,
@@ -218,7 +214,7 @@ class _FilterToolBarResultContainerState
                 ),
               ),
               offstage: _animation == null ||
-                  (_animation.status == AnimationStatus.dismissed),
+                  (_animation!.status == AnimationStatus.dismissed),
             ),
           );
   }
@@ -227,12 +223,12 @@ class _FilterToolBarResultContainerState
   /// 否则以最大行数为准，选中时切换动画,
   _buildAnimation(FilterItemModel item) {
     _lines =
-        item.subtitles.length > maxLines ? maxLines : item.subtitles.length;
+        item.subtitles!.length > maxLines ? maxLines : item.subtitles!.length;
 
     _animation = new Tween(
             begin: 0.0 - _lines * _lineHeight - _bottomSpacing - _topSpacing,
             end: 0.0)
-        .animate(_animationController)
+        .animate(_animationController!)
           ..addListener(() {
             setState(() {
               // the state that has changed here is the animation object’s value
@@ -242,16 +238,16 @@ class _FilterToolBarResultContainerState
 
   /// 筛选子列表
   Positioned _buildList(context) {
-    FilterItemModel item = widget.controller.item;
+    FilterItemModel item = widget.controller.item!;
     return Positioned(
-      top: _animation.value,
+      top: _animation!.value,
       left: 0,
       right: 0,
       child: LimitedBox(
         maxHeight: _lineHeight * _lines + _topSpacing + _bottomSpacing,
         child: Container(
           padding: EdgeInsets.only(bottom: _bottomSpacing, top: 5),
-          height: _lineHeight * item.subtitles.length +
+          height: _lineHeight * item.subtitles!.length +
               _bottomSpacing +
               _topSpacing,
           decoration: BoxDecoration(
@@ -265,23 +261,23 @@ class _FilterToolBarResultContainerState
             child: ListView.builder(
                 physics: NeverScrollableScrollPhysics(),
                 controller: PrimaryScrollController.of(context),
-                itemCount: item.subtitles.length,
+                itemCount: item.subtitles!.length,
                 itemBuilder: (context, index) {
                   bool subTitleSelected = item.selectedSubIndex == index;
                   return Container(
                     height: _lineHeight,
                     child: RawMaterialButton(
                       onPressed: () {
-                        widget.controller.helper
+                        widget.controller.helper!
                             .changeOptionListStatus(OptionListStatus.close);
                         widget.controller.updateToolBarState(false);
                         if (item.selectedSubIndex == index) return;
 
                         item.selectedSubIndex = index;
                         String title = item.subtitleShort == null ||
-                                TextUtils.isEmpty(item.subtitleShort[index])
-                            ? item.subtitles[index]
-                            : item.subtitleShort[index];
+                                TextUtils.isEmpty(item.subtitleShort![index])
+                            ? item.subtitles![index]
+                            : item.subtitleShort![index];
                         item.title = title;
 
                         widget.controller.updateToolBarState(true);
@@ -316,7 +312,7 @@ class _FilterToolBarResultContainerState
           ),
           Expanded(
               child: Text(
-            item.subtitles[index],
+            item.subtitles![index],
             style: AppTextStyle.generate(_subTitleFont,
                 color: _unselectedColor,
                 fontWeight:
@@ -331,24 +327,23 @@ class _FilterToolBarResultContainerState
 class FilterToolBar extends StatefulWidget {
 
   FilterToolBar({
-    @required this.titles,
-    @required this.listener,
-    @required this.controller,
+    required this.titles,
+    required this.listener,
+    required this.controller,
     this.selectedColor,
     this.maxLines = 4,
     this.trialing,
     this.startWidget,
     this.fontSize = 15.0,
     this.height = 40,
-  })  : assert(listener != null, "请设置监听事件"),
-        assert(controller != null, "请设置controller");
+  });
 
   final List<FilterItemModel> titles;
-  final Color selectedColor;
+  final Color? selectedColor;
   final int maxLines;
   final SelectedListener listener;
-  final Widget trialing;
-  final Widget startWidget;
+  final Widget? trialing;
+  final Widget? startWidget;
   final FilterToolBarController controller;
   final double fontSize;
   final double height;
@@ -361,7 +356,7 @@ class FilterToolBar extends StatefulWidget {
 
 class _FilterToolBarState extends State<FilterToolBar>
     with TickerProviderStateMixin {
-  Color _unselectedColor = Colors.grey[700];
+  Color? _unselectedColor = Colors.grey[700];
 
   GlobalKey _key = GlobalKey();
 
@@ -369,13 +364,13 @@ class _FilterToolBarState extends State<FilterToolBar>
   void initState() {
     super.initState();
 
-    widget.controller?.selectedIndex = widget.controller.selectedIndex != null
+    widget.controller.selectedIndex = widget.controller.selectedIndex != null
         ? widget.controller.selectedIndex
         : 0;
 
-    widget.controller?._toolBarKey = _key;
+    widget.controller._toolBarKey = _key;
 
-    widget.controller?.updateToolBarState = (bool update) {
+    widget.controller.updateToolBarState = (bool update) {
 //      print("----- ${widget.controller.selectedIndex}");
       if (update) {
         widget.listener(
@@ -398,12 +393,12 @@ class _FilterToolBarState extends State<FilterToolBar>
     List<Widget> items = <Widget>[];
     if (widget.startWidget != null) {
       items.add(SizedBox(width: 30.rw,));
-      items.add(widget.startWidget);
+      items.add(widget.startWidget!);
       items.add(SizedBox(width: 10.rw,));
     }
     items.addAll(_buildToolBarItem());
     if (widget.trialing != null) {
-      items.add(widget.trialing);
+      items.add(widget.trialing!);
     }
 
     return Container(
@@ -412,8 +407,8 @@ class _FilterToolBarState extends State<FilterToolBar>
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border(
-              top: BorderSide(color: Colors.grey[200], width: 0.5),
-              bottom: BorderSide(color: Colors.grey[200], width: 0.5))),
+              top: BorderSide(color: Colors.grey[200]!, width: 0.5),
+              bottom: BorderSide(color: Colors.grey[200]!, width: 0.5))),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: items,
@@ -425,7 +420,7 @@ class _FilterToolBarState extends State<FilterToolBar>
     return widget.titles.map((item) {
       int index = widget.titles.indexOf(item);
       bool selected = index == widget.controller.selectedIndex;
-      Color color = selected ? widget.selectedColor : _unselectedColor;
+      Color? color = selected ? widget.selectedColor : _unselectedColor;
       return Expanded(
         child: GestureDetector(
           onTap: () {
@@ -433,8 +428,8 @@ class _FilterToolBarState extends State<FilterToolBar>
 
             /// 列表弹出后直接点击toolbar上按钮  列表消失
             if (widget.controller.helper != null &&
-                widget.controller.helper.status == OptionListStatus.open) {
-              widget.controller.helper.changeOptionListStatus(
+                widget.controller.helper!.status == OptionListStatus.open) {
+              widget.controller.helper!.changeOptionListStatus(
                 OptionListStatus.close,
               );
             } else {
@@ -442,7 +437,7 @@ class _FilterToolBarState extends State<FilterToolBar>
                 /// 当前已选中，再次点击弹出列表
                 if (widget.controller.selectedIndex == index) {
                   if (widget.controller.helper != null) {
-                    widget.controller.helper.changeOptionListStatus(
+                    widget.controller.helper!.changeOptionListStatus(
                       OptionListStatus.open,
                     );
                   } else {
@@ -458,14 +453,14 @@ class _FilterToolBarState extends State<FilterToolBar>
             /// 上下箭头选项点击
             if (item.type == FilterItemType.double) {
               if (widget.controller.selectedIndex != index) {
-               item.selectedList[index] = true;
-                item.topSelected = item.selectedList[index];
+               item.selectedList![index] = true;
+                item.topSelected = item.selectedList![index];
               } else {
                  //print(item.topSelected);
                  //item.topSelected = !item.topSelected;
                 // print(widget.titles[index].topSelected);
-                 item.selectedList[index] = ! item.selectedList[index];
-                 item.topSelected = item.selectedList[index];
+                 item.selectedList![index] = ! item.selectedList![index];
+                 item.topSelected = item.selectedList![index];
               }
               widget.listener(index, item);
             }
@@ -504,7 +499,7 @@ class _FilterToolBarState extends State<FilterToolBar>
       return Icon(
         selected
             ? (widget.controller.helper != null &&
-                    widget.controller.helper.status == OptionListStatus.open
+                    widget.controller.helper!.status == OptionListStatus.open
                 ? Icons.arrow_drop_up
                 : Icons.arrow_drop_down)
             : Icons.arrow_drop_down,
@@ -516,7 +511,7 @@ class _FilterToolBarState extends State<FilterToolBar>
         return Padding(
           padding: const EdgeInsets.only(left: 2.0),
           child: Icon(
-            item.selectedList[index] ? AppIcons.icon_top : AppIcons.icon_down,
+            item.selectedList![index] ? AppIcons.icon_top : AppIcons.icon_down,
             size: 7,
             color: color,
           ),
@@ -561,17 +556,17 @@ enum FilterItemType {
 class FilterItemModel {
   final FilterItemType type;
   String title;
-  final List<String> subtitles;
+  final List<String>? subtitles;
 
   /// 列表下拉时的子标题
-  final List<String> subtitleShort;
-  List<bool> selectedList;
+  final List<String>? subtitleShort;
+  List<bool>? selectedList;
   bool topSelected;
   int selectedSubIndex = 0;
 
   FilterItemModel({
-    @required this.type,
-    @required this.title,
+    required this.type,
+    required this.title,
     this.selectedList,
     this.subtitles,
     this.subtitleShort,

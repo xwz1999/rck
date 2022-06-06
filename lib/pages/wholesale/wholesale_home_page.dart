@@ -1,14 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/pages/wholesale/wholesale_car_page.dart';
 import 'package:recook/pages/wholesale/wholesale_order_home_page.dart';
 import 'package:recook/pages/wholesale/wholesale_shop_page.dart';
 
 class WholesaleHomePage extends StatefulWidget {
   WholesaleHomePage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -20,7 +18,7 @@ class _WholesaleHomePageState extends State<WholesaleHomePage> with SingleTicker
 
   //页面列表
   List<Widget> _pages = <Widget>[];
-  TabController _tabController;
+  TabController? _tabController;
   int _currentIndex = 0;
 
 

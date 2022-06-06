@@ -14,20 +14,20 @@ import 'package:velocity_x/velocity_x.dart';
 import 'calendar_weekbar_widget.dart';
 
 class CalendarWidget extends StatefulWidget {
-  CalendarWidget({Key key}) : super(key: key);
+  CalendarWidget({Key? key}) : super(key: key);
 
   @override
   _CalendarWidgetState createState() => _CalendarWidgetState();
 }
 
 class _CalendarWidgetState extends State<CalendarWidget> {
-  CalendarController _calendarController;
-  PerpetualCalendarModel _perpetualCalendarModel;
+  late CalendarController _calendarController;
+  PerpetualCalendarModel? _perpetualCalendarModel;
   Set<DateTime> _dates = Set<DateTime>();
 
   final DateTime dateNow = DateTime.now();
-  int _year = DateTime.now().year;
-  int _month = DateTime.now().month;
+  int? _year = DateTime.now().year;
+  int? _month = DateTime.now().month;
   @override
   void initState() {
     super.initState();
@@ -50,7 +50,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
       })
       ..addOnCalendarSelectListener((dateModel) {
         _getPerpetual(
-            DateUtil.formatDate(dateModel.getDateTime(), format: 'yyyy-MM-dd'));
+            DateUtil.formatDate(dateModel!.getDateTime(), format: 'yyyy-MM-dd'));
       });
   }
 
@@ -161,7 +161,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                       color: Colors.white,
                       border: dateModel.isCurrentDay
                           ? Border.all(color: Color(0xFFDB2D2D), width: 1.rw)
-                          : dateModel.isSelected
+                          : dateModel.isSelected!
                               ? Border.all(
                                   color: Color(0xFF007BFF), width: 1.rw)
                               : null),
@@ -174,7 +174,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                         style: AppTextStyle.generate(
                           12.rsp,
                           fontWeight: FontWeight.w500,
-                          color: dateModel.isCurrentMonth
+                          color: dateModel.isCurrentMonth!
                               ? AppColor.textMainColor
                               : Color(0xFF999999),
                         ),
@@ -187,7 +187,7 @@ class _CalendarWidgetState extends State<CalendarWidget> {
                                   dateModel.solarTerm.isNotEmpty ||
                                   dateModel.gregorianFestival.isNotEmpty
                               ? Color(0xFFDB2D2D)
-                              : dateModel.isCurrentMonth
+                              : dateModel.isCurrentMonth!
                                   ? AppColor.textMainColor
                                   : Color(0xFF999999),
                         ),
@@ -207,9 +207,9 @@ class _CalendarWidgetState extends State<CalendarWidget> {
   _getPerpetual(String time) async {
     String url =
         "http://v.juhe.cn/laohuangli/d?date=$time&key=edfd263c72451fd0b50c348259445879";
-    Response res = await HttpManager.netFetchNormal(url, null, null, null);
+    Response? res = await HttpManager.netFetchNormal(url, null, null, null);
     Map map = json.decode(res.toString());
-    _perpetualCalendarModel = PerpetualCalendarModel.fromJson(map);
+    _perpetualCalendarModel = PerpetualCalendarModel.fromJson(map as Map<String, dynamic>);
 
     setState(() {
           

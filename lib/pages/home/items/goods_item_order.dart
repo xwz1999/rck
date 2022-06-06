@@ -15,12 +15,12 @@ import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class GoodsOrderItem extends StatefulWidget {
-  final Brands brand;
-  final int shippingMethod;
-  final int index;
-  final int length;
+  final Brands? brand;
+  final int? shippingMethod;
+  final int? index;
+  final int? length;
 
-  const GoodsOrderItem({Key key, this.brand, this.shippingMethod, this.length, this.index})
+  const GoodsOrderItem({Key? key, this.brand, this.shippingMethod, this.length, this.index})
       : super(key: key);
 
   @override
@@ -38,17 +38,17 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
   Container _buildBody(BuildContext context) {
     int goodsNum = 0;
     double commissionPrice = 0;
-    widget.brand.goods.forEach((goods) {
-      goodsNum += goods.quantity;
-      commissionPrice += goods.totalCommission;
+    widget.brand!.goods!.forEach((goods) {
+      goodsNum += goods.quantity!;
+      commissionPrice += goods.totalCommission!;
     });
 
     String expressMsg = "";
     if (widget.shippingMethod == 0) {
-      if (widget.brand.brandExpressTotalAmount <= 0) {
+      if (widget.brand!.brandExpressTotalAmount! <= 0) {
         expressMsg = "免邮";
       } else {
-        expressMsg = "${widget.brand.brandExpressTotalAmount}元";
+        expressMsg = "${widget.brand!.brandExpressTotalAmount}元";
       }
     }
 
@@ -59,7 +59,7 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
       decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: widget.length==1? BorderRadius.all(Radius.circular(8.rw)): widget.index==0?BorderRadius.vertical(top: Radius.circular(8.rw)):
-          widget.index==widget.length-1?BorderRadius.vertical(bottom: Radius.circular(8.rw)):BorderRadius.vertical(top: Radius.circular(0.rw))
+          widget.index==widget.length!-1?BorderRadius.vertical(bottom: Radius.circular(8.rw)):BorderRadius.vertical(top: Radius.circular(0.rw))
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -90,12 +90,12 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
       pureDisplay: true,
       contentSpacing: 10,
       fontSize: 16 * 2.sp,
-      title: widget.brand.brandName,
+      title: widget.brand!.brandName,
       padding: EdgeInsets.symmetric(horizontal: 3),
       icon: CustomCacheImage(
         height: rSize(25),
         width: rSize(25),
-        imageUrl: Api.getResizeImgUrl(widget.brand.brandLogoUrl, 40),
+        imageUrl: Api.getResizeImgUrl(widget.brand!.brandLogoUrl!, 40),
         borderRadius: BorderRadius.all(Radius.circular(rSize(5))),
       ),
     );
@@ -118,7 +118,7 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
                 )),
             TextSpan(
                 text:
-                    "￥${widget.brand.brandGoodsTotalAmount.toStringAsFixed(2)}",
+                    "￥${widget.brand!.brandGoodsTotalAmount!.toStringAsFixed(2)}",
                 style: AppTextStyle.generate(
                   13 * 2.sp,
                   color: Color.fromARGB(255, 249, 62, 13),
@@ -149,9 +149,9 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
       child: ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: widget.brand.goods.length,
+        itemCount: widget.brand!.goods!.length,
         itemBuilder: ((context, index) {
-          return _buildSku(widget.brand.goods[index]);
+          return _buildSku(widget.brand!.goods![index]);
         }),
       ),
     );
@@ -179,7 +179,7 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    goods.goodsName,
+                    goods.goodsName!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyle.generate(12.rsp,
@@ -194,7 +194,7 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
                     padding:
                         const EdgeInsets.symmetric(vertical: 3, horizontal: 6),
                     child: Text(
-                      goods.skuName,
+                      goods.skuName!,
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyle.generate(11 * 2.sp,
@@ -264,7 +264,7 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
             crossAxisAlignment: CrossAxisAlignment.end,
               children: [
             Text(
-              "￥ ${((goods.goodsAmount-goods.coinAmount)/goods.quantity).toStringAsFixed(2)}",
+              "￥ ${((goods.goodsAmount!-goods.coinAmount!)/goods.quantity!).toStringAsFixed(2)}",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyle.generate(14 * 2.sp,
@@ -290,7 +290,7 @@ class _GoodsOrderItemState extends State<GoodsOrderItem> {
   }
 
   _tile(String title, String value,
-      {VoidCallback listener, bool needArrow = true}) {
+      {VoidCallback? listener, bool needArrow = true}) {
     return GestureDetector(
       onTap: listener,
       behavior: HitTestBehavior.translucent,

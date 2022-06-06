@@ -1,28 +1,28 @@
 class HomeWeatherModel {
-  String cityid;
-  String date;
-  String week;
-  String updateTime;
-  String city;
-  String cityEn;
-  String country;
-  String countryEn;
-  String wea;
-  String weaImg;
-  String tem;
-  String tem1;
-  String tem2;
-  String win;
-  String winSpeed;
-  String winMeter;
-  String humidity;
-  String visibility;
-  String pressure;
-  String air;
-  String airPm25;
-  String airLevel;
-  String airTips;
-  Alarm alarm;
+  String? cityid;
+  String? date;
+  String? week;
+  String? updateTime;
+  String? city;
+  String? cityEn;
+  String? country;
+  String? countryEn;
+  String? wea;
+  String? weaImg;
+  String? tem;
+  String? tem1;
+  String? tem2;
+  String? win;
+  String? winSpeed;
+  String? winMeter;
+  String? humidity;
+  String? visibility;
+  String? pressure;
+  String? air;
+  String? airPm25;
+  String? airLevel;
+  String? airTips;
+  Alarm? alarm;
   dynamic aqi;
 
   HomeWeatherModel(
@@ -109,7 +109,7 @@ class HomeWeatherModel {
     data['air_level'] = this.airLevel;
     data['air_tips'] = this.airTips;
     if (this.alarm != null) {
-      data['alarm'] = this.alarm.toJson();
+      data['alarm'] = this.alarm!.toJson();
     }
     if (this.aqi != null) {
       data['aqi'] = this.aqi.toJson();
@@ -119,9 +119,9 @@ class HomeWeatherModel {
 }
 
 class Alarm {
-  String alarmType;
-  String alarmLevel;
-  String alarmContent;
+  String? alarmType;
+  String? alarmLevel;
+  String? alarmContent;
 
   Alarm({this.alarmType, this.alarmLevel, this.alarmContent});
 
@@ -141,28 +141,28 @@ class Alarm {
 }
 
 class Aqi {
-  String air;
-  String airLevel;
-  String airTips;
-  String pm25;
-  String pm25Desc;
-  String pm10;
-  String pm10Desc;
-  String o3;
-  String o3Desc;
-  String no2;
-  String no2Desc;
-  String so2;
-  String so2Desc;
-  String kouzhao;
-  String waichu;
-  String kaichuang;
-  String jinghuaqi;
-  String cityid;
-  String city;
-  String cityEn;
-  String country;
-  String countryEn;
+  String? air;
+  String? airLevel;
+  String? airTips;
+  String? pm25;
+  String? pm25Desc;
+  String? pm10;
+  String? pm10Desc;
+  String? o3;
+  String? o3Desc;
+  String? no2;
+  String? no2Desc;
+  String? so2;
+  String? so2Desc;
+  String? kouzhao;
+  String? waichu;
+  String? kaichuang;
+  String? jinghuaqi;
+  String? cityid;
+  String? city;
+  String? cityEn;
+  String? country;
+  String? countryEn;
 
   Aqi(
       {this.air,

@@ -8,11 +8,11 @@ part of 'order_detail_model.dart';
 
 OrderDetailModel _$OrderDetailModelFromJson(Map<String, dynamic> json) {
   return OrderDetailModel(
-      json['code'] as String,
+      json['code'] as String?,
       json['data'] == null
           ? null
           : OrderDetail.fromJson(json['data'] as Map<String, dynamic>),
-      json['msg'] as String);
+      json['msg'] as String?);
 }
 
 Map<String, dynamic> _$OrderDetailModelToJson(OrderDetailModel instance) =>
@@ -24,33 +24,33 @@ Map<String, dynamic> _$OrderDetailModelToJson(OrderDetailModel instance) =>
 
 OrderDetail _$OrderDetailFromJson(Map<String, dynamic> json) {
   return OrderDetail(
-    json['id'] as int,
-    json['parentId'] as int,
-    json['userId'] as int,
-    json['isSubordinate'] as int,
-    json['title'] as String,
-    (json['brandCouponTotalAmount'] as num)?.toDouble(),
-    (json['universeCouponTotalAmount'] as num)?.toDouble(),
-    (json['coinTotalAmount'] as num)?.toDouble(),
-    (json['expressTotalFee'] as num)?.toDouble(),
-    (json['goodsTotalAmount'] as num)?.toDouble(),
-    (json['goodsTotalCommission'] as num)?.toDouble(),
-    (json['actualTotalAmount'] as num)?.toDouble(),
-    json['shippingMethod'] as int,
-    json['buyerMsg'] as String,
-    json['status'] as int,
-    json['expressStatus'] as int,
-    json['invoiceStatus'] as int,
-    json['isAss'] as int,
-    json['evaluatedAt'] as String,
-    json['createdAt'] as String,
-    json['expireTime'] as String,
-    json['payIp'] as String,
-    json['tradeNo'] as String,
-    json['payTime'] as String,
-    json['payMethod'] as int,
-    json['completedAt'] as String,
-    json['totalGoodsCount'] as int,
+    json['id'] as int?,
+    json['parentId'] as int?,
+    json['userId'] as int?,
+    json['isSubordinate'] as int?,
+    json['title'] as String?,
+    (json['brandCouponTotalAmount'] as num?)?.toDouble(),
+    (json['universeCouponTotalAmount'] as num?)?.toDouble(),
+    (json['coinTotalAmount'] as num?)?.toDouble(),
+    (json['expressTotalFee'] as num?)?.toDouble(),
+    (json['goodsTotalAmount'] as num?)?.toDouble(),
+    (json['goodsTotalCommission'] as num?)?.toDouble(),
+    (json['actualTotalAmount'] as num?)?.toDouble(),
+    json['shippingMethod'] as int?,
+    json['buyerMsg'] as String?,
+    json['status'] as int?,
+    json['expressStatus'] as int?,
+    json['invoiceStatus'] as int?,
+    json['isAss'] as int?,
+    json['evaluatedAt'] as String?,
+    json['createdAt'] as String?,
+    json['expireTime'] as String?,
+    json['payIp'] as String?,
+    json['tradeNo'] as String?,
+    json['payTime'] as String?,
+    json['payMethod'] as int?,
+    json['completedAt'] as String?,
+    json['totalGoodsCount'] as int?,
 
     json['coupon'] == null
         ? null
@@ -58,19 +58,19 @@ OrderDetail _$OrderDetailFromJson(Map<String, dynamic> json) {
     json['addr'] == null
         ? null
         : Addr.fromJson(json['addr'] as Map<String, dynamic>),
-    (json['brands'] as List)
+    (json['brands'] as List?)
         ?.map((e) =>
-            e == null ? null : Brands.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
-    json['canConfirm'] as bool,
+            Brands.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    json['canConfirm'] as bool?,
 
-    (json['status_list'] as List)
+    (json['status_list'] as List?)
         ?.map((e) =>
-            e == null ? null : StatusList.fromJson(e as Map<String, dynamic>))
-        ?.toList(),
-    json['make_up_text'] as String,
-    json['make_up_amount'] as num,
-    json['can_pay'] as bool,
+          StatusList.fromJson(e as Map<String, dynamic>))
+        .toList(),
+    json['make_up_text'] as String?,
+    json['make_up_amount'] as num?,
+    json['can_pay'] as bool?,
     // json['balance'] == null
     //     ? null
     //     : Balance.fromJson(json['balance'] as Map<String, dynamic>),
@@ -124,15 +124,15 @@ Map<String, dynamic> _$OrderDetailToJson(OrderDetail instance) =>
 
 Addr _$AddrFromJson(Map<String, dynamic> json) {
   return Addr(
-      json['id'] as int,
-      json['orderId'] as int,
-      json['addressId'] as int,
-      json['province'] as String,
-      json['city'] as String,
-      json['district'] as String,
-      json['address'] as String,
-      json['receiverName'] as String,
-      json['mobile'] as String);
+      json['id'] as int?,
+      json['orderId'] as int?,
+      json['addressId'] as int?,
+      json['province'] as String?,
+      json['city'] as String?,
+      json['district'] as String?,
+      json['address'] as String?,
+      json['receiverName'] as String?,
+      json['mobile'] as String?);
 }
 
 Map<String, dynamic> _$AddrToJson(Addr instance) => <String, dynamic>{
@@ -149,16 +149,16 @@ Map<String, dynamic> _$AddrToJson(Addr instance) => <String, dynamic>{
 
 Brands _$BrandsFromJson(Map<String, dynamic> json) {
   return Brands(
-      json['brandId'] as int,
-      json['brandName'] as String,
-      json['brandLogoUrl'] as String,
-      (json['brandExpressTotalAmount'] as num)?.toDouble(),
-      (json['brandGoodsTotalAmount'] as num)?.toDouble(),
-      json['brandGoodsTotalCount'] as int,
-      (json['goods'] as List)
+      json['brandId'] as int?,
+      json['brandName'] as String?,
+      json['brandLogoUrl'] as String?,
+      (json['brandExpressTotalAmount'] as num?)?.toDouble(),
+      (json['brandGoodsTotalAmount'] as num?)?.toDouble(),
+      json['brandGoodsTotalCount'] as int?,
+      (json['goods'] as List?)
           ?.map((e) =>
-              e == null ? null : Goods.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+               Goods.fromJson(e as Map<String, dynamic>))
+          .toList(),
       json['coupon'] == null
           ? null
           : Coupon.fromJson(json['coupon'] as Map<String, dynamic>));
@@ -177,40 +177,40 @@ Map<String, dynamic> _$BrandsToJson(Brands instance) => <String, dynamic>{
 
 Goods _$GoodsFromJson(Map<String, dynamic> json) {
   return Goods(
-    json['goodsDetailId'] as int,
-    json['orderId'] as int,
-    json['vendorId'] as int,
-    json['brandId'] as int,
-    json['brandName'] as String,
-    json['goodsId'] as int,
-    json['goodsName'] as String,
-    json['skuId'] as int,
-    json['skuName'] as String,
-    json['skuCode'] as String,
-    json['mainPhotoUrl'] as String,
-    json['quantity'] as int,
-    json['promotionName'] as String,
-    (json['unitPrice'] as num)?.toDouble(),
-    (json['totalCommission'] as num)?.toDouble(),
-    (json['brandCouponAmount'] as num)?.toDouble(),
-    (json['universeBrandCouponAmount'] as num)?.toDouble(),
-    (json['coinAmount'] as num)?.toDouble(),
-    (json['goodsAmount'] as num)?.toDouble(),
-    (json['expressFee'] as num)?.toDouble(),
-    (json['actualAmount'] as num)?.toDouble(),
-    json['expressStatus'] as int,
-    json['expressCompName'] as String,
-    json['expressCompCode'] as String,
-    json['expressNo'] as String,
-    json['assType'] as int,
-    json['refundStatus'] as int,
-    json['returnStatus'] as int,
-    json['returnReason'] as String,
-    json['returnRejectReason'] as String,
-    json['selected'] as bool,
-    json['rStatus'] as String,
-    json['IsClosed'] as int,
-    json['asId'] as int,
+    json['goodsDetailId'] as int?,
+    json['orderId'] as int?,
+    json['vendorId'] as int?,
+    json['brandId'] as int?,
+    json['brandName'] as String?,
+    json['goodsId'] as int?,
+    json['goodsName'] as String?,
+    json['skuId'] as int?,
+    json['skuName'] as String?,
+    json['skuCode'] as String?,
+    json['mainPhotoUrl'] as String?,
+    json['quantity'] as int?,
+    json['promotionName'] as String?,
+    (json['unitPrice'] as num?)?.toDouble(),
+    (json['totalCommission'] as num?)?.toDouble(),
+    (json['brandCouponAmount'] as num?)?.toDouble(),
+    (json['universeBrandCouponAmount'] as num?)?.toDouble(),
+    (json['coinAmount'] as num?)?.toDouble(),
+    (json['goodsAmount'] as num?)?.toDouble(),
+    (json['expressFee'] as num?)?.toDouble(),
+    (json['actualAmount'] as num?)?.toDouble(),
+    json['expressStatus'] as int?,
+    json['expressCompName'] as String?,
+    json['expressCompCode'] as String?,
+    json['expressNo'] as String?,
+    json['assType'] as int?,
+    json['refundStatus'] as int?,
+    json['returnStatus'] as int?,
+    json['returnReason'] as String?,
+    json['returnRejectReason'] as String?,
+    json['selected'] as bool?,
+    json['rStatus'] as String?,
+    json['IsClosed'] as int?,
+    json['asId'] as int?,
   );
 }
 
@@ -252,8 +252,8 @@ Map<String, dynamic> _$GoodsToJson(Goods instance) => <String, dynamic>{
     };
 
 Balance _$BalanceFromJson(Map<String, dynamic> json) {
-  return Balance(json['id'] as int, json['orderId'] as int,
-      (json['deductedAmount'] as num)?.toDouble());
+  return Balance(json['id'] as int?, json['orderId'] as int?,
+      (json['deductedAmount'] as num?)?.toDouble());
 }
 
 Map<String, dynamic> _$BalanceToJson(Balance instance) => <String, dynamic>{
@@ -264,13 +264,13 @@ Map<String, dynamic> _$BalanceToJson(Balance instance) => <String, dynamic>{
 
 Payment _$PaymentFromJson(Map<String, dynamic> json) {
   return Payment(
-      json['tradeNo'] as String,
-      json['method'] as int,
-      (json['amount'] as num)?.toDouble(),
-      json['status'] as int,
-      json['createdAt'] as String,
-      json['completeTime'] as String,
-      json['expireTime'] as String);
+      json['tradeNo'] as String?,
+      json['method'] as int?,
+      (json['amount'] as num?)?.toDouble(),
+      json['status'] as int?,
+      json['createdAt'] as String?,
+      json['completeTime'] as String?,
+      json['expireTime'] as String?);
 }
 
 Map<String, dynamic> _$PaymentToJson(Payment instance) => <String, dynamic>{
@@ -285,12 +285,12 @@ Map<String, dynamic> _$PaymentToJson(Payment instance) => <String, dynamic>{
 
 Invoice _$InvoiceFromJson(Map<String, dynamic> json) {
   return Invoice(
-      json['id'] as int,
-      json['userId'] as int,
-      json['type'] as int,
-      json['title'] as String,
-      json['taxNo'] as String,
-      json['createdAt'] as String);
+      json['id'] as int?,
+      json['userId'] as int?,
+      json['type'] as int?,
+      json['title'] as String?,
+      json['taxNo'] as String?,
+      json['createdAt'] as String?);
 }
 
 Map<String, dynamic> _$InvoiceToJson(Invoice instance) => <String, dynamic>{
@@ -304,11 +304,11 @@ Map<String, dynamic> _$InvoiceToJson(Invoice instance) => <String, dynamic>{
 
 Coupon _$CouponFromJson(Map<String, dynamic> json) {
   return Coupon(
-      json['id'] as int,
-      json['brandId'] as int,
-      json['scope'] as int,
-      json['couponName'] as String,
-      (json['deductedAmount'] as num)?.toDouble());
+      json['id'] as int?,
+      json['brandId'] as int?,
+      json['scope'] as int?,
+      json['couponName'] as String?,
+      (json['deductedAmount'] as num?)?.toDouble());
 }
 
 Map<String, dynamic> _$CouponToJson(Coupon instance) => <String, dynamic>{

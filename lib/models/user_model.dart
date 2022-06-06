@@ -52,8 +52,8 @@ part 'user_model.g.dart';
 
 @JsonSerializable()
 class UserModel extends BaseModel {
-  User data;
-  UserModel(this.data, String code, String msg) : super(code, msg);
+  User? data;
+  UserModel(this.data, String? code, String? msg) : super(code, msg);
 
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
@@ -63,9 +63,9 @@ class UserModel extends BaseModel {
 
 @JsonSerializable()
 class User {
-  Tkn auth;
-  Info   info;
-  int status;
+  Tkn? auth;
+  Info?   info;
+  int? status;
 
   User(this.auth, this.info, this.status);
 
@@ -124,45 +124,45 @@ class User {
 
 @JsonSerializable()
 class Info {
-  int id;
-  String nickname;
-  String headImgUrl;
-  String wxOpenId;
-  String wxUnionId;
-  String mobile;
-  String identityCardName;
-  String identityCardNo;
-  int gender;
-  String birthday;
-  String invitationNo;
-  int offlineStoreId;
-  int level;
-  int balance;
-  int coin;
-  String createdAt;
-  String updatedAt;
-  String deletedAt;
-  bool isVerified;
+  int? id;
+  String? nickname;
+  String? headImgUrl;
+  String? wxOpenId;
+  String? wxUnionId;
+  String? mobile;
+  String? identityCardName;
+  String? identityCardNo;
+  int? gender;
+  String? birthday;
+  String? invitationNo;
+  int? offlineStoreId;
+  int? level;
+  int? balance;
+  int? coin;
+  String? createdAt;
+  String? updatedAt;
+  String? deletedAt;
+  bool? isVerified;
 
-  int role;
+  int? role;
 
-  String addr;
-  String phone;
-  String wechatNo;
+  String? addr;
+  String? phone;
+  String? wechatNo;
 
-  String remarkName;
-  String introCode;
-  String upgradeCode;
-  int roleId;
-  int roleLevel;
-  int userLevel;
-  bool isSetPayPwd; //是否设置过支付密码 支付和提现需要用到
-  bool realInfoStatus; // 是否实名认证
-  String realName;//真实姓名
-  String idCard;
+  String? remarkName;
+  String? introCode;
+  String? upgradeCode;
+  int? roleId;
+  int? roleLevel;
+  int? userLevel;
+  bool? isSetPayPwd; //是否设置过支付密码 支付和提现需要用到
+  bool? realInfoStatus; // 是否实名认证
+  String? realName;//真实姓名
+  String? idCard;
 
   ///导师微信号
-  String teacherWechatNo;
+  String? teacherWechatNo;
   Info(
     this.id,
     this.nickname,
@@ -217,8 +217,8 @@ class Info {
 
 @JsonSerializable()
 class Tkn {
-  int id;
-  String token;
+  int? id;
+  String? token;
 
   Tkn(this.id, this.token);
 

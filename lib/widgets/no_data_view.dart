@@ -14,7 +14,7 @@ class NoDataView extends StatelessWidget {
   final double height;
   final String title;
 
-  const NoDataView({Key key, this.height = 500, this.title = "没有数据喔~"})
+  const NoDataView({Key? key, this.height = 500, this.title = "没有数据喔~"})
       : super(key: key);
 
   @override

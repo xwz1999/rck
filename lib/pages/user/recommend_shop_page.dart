@@ -4,14 +4,10 @@ import 'dart:typed_data';
 import 'package:async/async.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flustars/flustars.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart' as flutterImagePicker;
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/media_model.dart';
@@ -22,7 +18,6 @@ import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/image_picker.dart';
 import 'package:recook/widgets/image_selected_view.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook_back_button.dart';
@@ -35,7 +30,7 @@ import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 
 class RecommendShopPage extends StatefulWidget {
   RecommendShopPage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -44,23 +39,23 @@ class RecommendShopPage extends StatefulWidget {
 
 
 class _RecommendShopPageState extends State<RecommendShopPage>{
-  TextEditingController _textEditController;
+  TextEditingController? _textEditController;
   String phoneText = '';
   String address = '';
 
   bool isYun = false;
   bool isEntity = false;
 
-  TextEditingController _smsCodeController;
+  TextEditingController? _smsCodeController;
 
-  TextEditingController _addressCodeController;
+  TextEditingController? _addressCodeController;
 
-  FocusNode _smsCodeNode;
-  FocusNode _phoneNode;
+  FocusNode? _smsCodeNode;
+  FocusNode? _phoneNode;
 
-  FocusNode _addressCodeNode;
+  FocusNode? _addressCodeNode;
   String _errorMsg = "";
-  Timer _timer;
+  Timer? _timer;
   String _countDownStr = "获取验证码";
   int _countDownNum = 59;
   bool _getCodeEnable = false;
@@ -85,12 +80,12 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
 
   @override
   void dispose() {
-    _textEditController.dispose();
-    _smsCodeController.dispose();
-    _addressCodeController.dispose();
-    _phoneNode.dispose();
-    _smsCodeNode.dispose();
-    _addressCodeNode.dispose();
+    _textEditController!.dispose();
+    _smsCodeController!.dispose();
+    _addressCodeController!.dispose();
+    _phoneNode!.dispose();
+    _smsCodeNode!.dispose();
+    _addressCodeNode!.dispose();
     super.dispose();
   }
 
@@ -271,7 +266,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
       // EdgeInsets.only(top: 10.rw, right: 20.rw, left: 20.rw),
       height: 40.rw,
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[500], width: 0.5),
+          border: Border.all(color: Colors.grey[500]!, width: 0.5),
           borderRadius: BorderRadius.all(Radius.circular(3.rw))),
       child: TextField(
         controller: _textEditController,
@@ -298,11 +293,11 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
         },
         decoration: InputDecoration(
             contentPadding: EdgeInsets.only(
-                left: 10.rw,top: 5.rw, bottom: _phoneNode.hasFocus?5.rw:15.rw),
+                left: 10.rw,top: 5.rw, bottom: _phoneNode!.hasFocus?5.rw:15.rw),
             border: InputBorder.none,
             hintText: "请输入手机号",
             hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14 * 2.sp),
-            suffixIcon: _clearButton(_textEditController, _phoneNode)),
+            suffixIcon: _clearButton(_textEditController, _phoneNode!)),
       ),
     );
   }
@@ -314,7 +309,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
       // EdgeInsets.only(top: 10.rw, right: 20.rw, left: 20.rw),
       height: 40.rw,
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[500], width: 0.5),
+          border: Border.all(color: Colors.grey[500]!, width: 0.5),
           borderRadius: BorderRadius.all(Radius.circular(3.rw))),
       child: TextField(
         controller: _addressCodeController,
@@ -330,11 +325,11 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
         },
         decoration: InputDecoration(
             contentPadding: EdgeInsets.only(
-                left: 10.rw,top: 5.rw, bottom: _addressCodeNode.hasFocus?5.rw:15.rw),
+                left: 10.rw,top: 5.rw, bottom: _addressCodeNode!.hasFocus?5.rw:15.rw),
             border: InputBorder.none,
             hintText: "请输入店铺经营地址",
             hintStyle: TextStyle(color: Colors.grey[400], fontSize: 14 * 2.sp),
-            suffixIcon: _clearButton(_addressCodeController, _addressCodeNode)),
+            suffixIcon: _clearButton(_addressCodeController, _addressCodeNode!)),
       ),
     );
   }
@@ -345,7 +340,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
     return Container(
       height: 40.rw,
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[500], width: 0.5),
+          border: Border.all(color: Colors.grey[500]!, width: 0.5),
           borderRadius: BorderRadius.all(Radius.circular(3))),
       child: Row(
         children: <Widget>[
@@ -366,12 +361,12 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
               cursorColor: Colors.black,
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.only(
-                      left: 10.rw,top: 5.rw, bottom: _smsCodeNode.hasFocus?5.rw:15.rw),
+                      left: 10.rw,top: 5.rw, bottom: _smsCodeNode!.hasFocus?5.rw:15.rw),
                   border: InputBorder.none,
                   hintText: "请输入验证码",
                   hintStyle:
                   TextStyle(color: Colors.grey[400], fontSize: 14 * 2.sp),
-                  suffixIcon: _clearButton(_smsCodeController, _smsCodeNode)),
+                  suffixIcon: _clearButton(_smsCodeController, _smsCodeNode!)),
             ),
           ),
           TButton.TextButton(
@@ -382,10 +377,10 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
             font: 15 * 2.sp,
             unableTextColor: Color(0xFFBBBBBB),
             highlightTextColor: Color(0xFFD5101A),
-            border: Border(left: BorderSide(color: Colors.grey[500])),
+            border: Border(left: BorderSide(color: Colors.grey[500]!)),
             onTap: () {
 
-                if (!TextUtils.verifyPhone(_textEditController.text)) {
+                if (!TextUtils.verifyPhone(_textEditController!.text)) {
                   Toast.showError("手机号码格式不正确!");
                   return;
                 }
@@ -404,7 +399,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
     );
   }
 
-  IconButton _clearButton(TextEditingController controller, FocusNode node) {
+  IconButton? _clearButton(TextEditingController? controller, FocusNode node) {
     return node.hasFocus
         ? IconButton(
         padding: EdgeInsets.zero,
@@ -414,7 +409,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
           color: Colors.grey[300],
         ),
         onPressed: () {
-          controller.clear();
+          controller!.clear();
         })
         : null;
   }
@@ -433,7 +428,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
           _countDownNum = 59;
           _countDownStr = "获取验证码";
           _getCodeEnable = true;
-          _timer.cancel();
+          _timer!.cancel();
           _timer = null;
           return;
         }
@@ -443,13 +438,13 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
   }
 
   _verifyLoginEnable() {
-    if (!TextUtils.verifyPhone(_textEditController.text)) {
+    if (!TextUtils.verifyPhone(_textEditController!.text)) {
       setState(() {
         _errorMsg = "手机号格式不正确,请检查";
       });
       return false;
     }
-    return _smsCodeController.text.length == 4;
+    return _smsCodeController!.text.length == 4;
   }
 
   /*
@@ -469,7 +464,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
 
 
   _imageSelect(List<MediaModel> list) {
-    return ImageSelectedView<Uint8List>(
+    return ImageSelectedView<Uint8List?>(
       padding: EdgeInsets.only(right: 50.rw),
       maxImages: 3,
       crossAxisCount: 3,
@@ -487,15 +482,15 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
         ActionSheet.show(context, items: ['拍照', '从手机相册选择'], listener: (index) async{
           ActionSheet.dismiss(context);
           if (index == 0) {
-            List<AssetEntity> entitys = [];
+            List<AssetEntity?> entitys = [];
             var values = await CameraPicker.pickFromCamera(context);
             entitys.add(values);
             if (entitys == null) {
               return;
             }
             for (var element in entitys) {
-              File file = await element.file;
-              Uint8List thumbData = await element.thumbData;
+              File? file = await element!.file;
+              Uint8List? thumbData = await element.thumbData;
               if (list.length < 3) {
                 list.add(MediaModel(
                   width: element.width,
@@ -523,8 +518,8 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
             if (values == null) return;
             entitys.addAll(values);
             for (var element in entitys) {
-              File file = await element.file;
-              Uint8List thumbData = await element.thumbData;
+              File? file = await element.file;
+              Uint8List? thumbData = await element.thumbData;
               list.add(MediaModel(
                 width: element.width,
                 height: element.height,
@@ -572,45 +567,45 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
       await _uploadStoreImages();
 
       for (MediaModel media in _licenseFiles) {
-        if (TextUtils.isEmpty(media.result.url)) {
-          ReToast.err(text:"第${_licenseFiles.indexOf(media) + 1}图片${media.result.msg}");
+        if (TextUtils.isEmpty(media.result!.url)) {
+          ReToast.err(text:"第${_licenseFiles.indexOf(media) + 1}图片${media.result!.msg}");
           return;
         }
         if(media !=_licenseFiles[_licenseFiles.length
             -1]){
-          _licenseImages+=(media.result.url+';');
+          _licenseImages+=(media.result!.url!+';');
         }else{
-          _licenseImages+=(media.result.url);
+          _licenseImages+=media.result!.url!;
         }
 
       }
 
       for (MediaModel media in _storeFiles) {
-        if (TextUtils.isEmpty(media.result.url)) {
-          ReToast.err(text:"第${_storeFiles.indexOf(media) + 1}图片${media.result.msg}");
+        if (TextUtils.isEmpty(media.result!.url)) {
+          ReToast.err(text:"第${_storeFiles.indexOf(media) + 1}图片${media.result!.msg}");
           return;
         }
         if(media !=_storeFiles[_storeFiles.length
             -1]){
-          _storeImages+=(media.result.url+';');
+          _storeImages+=(media.result!.url!+';');
         }else{
-          _storeImages+=(media.result.url);
+          _storeImages+=media.result!.url!;
         }
       }
-      result  =   await   WholesaleFunc.recommendUser(2,phoneText,address,_licenseImages,_storeImages,_smsCodeController.text);
+      result  =   await   WholesaleFunc.recommendUser(2,phoneText,address,_licenseImages,_storeImages,_smsCodeController!.text);
     }else{
-      result  =   await   WholesaleFunc.recommendUser(1,phoneText,'','','',_smsCodeController.text);
+      result  =   await   WholesaleFunc.recommendUser(1,phoneText,'','','',_smsCodeController!.text);
     }
 
     cancel();
     if(result.data['code']!='FAIL'){
       ReToast.success(text:'推荐成功');
-      _smsCodeController.text = '';
-      _textEditController.text = '';
-      _addressCodeController.text = '';
-      _phoneNode.unfocus();
-      _addressCodeNode.unfocus();
-      _smsCodeNode.unfocus();
+      _smsCodeController!.text = '';
+      _textEditController!.text = '';
+      _addressCodeController!.text = '';
+      _phoneNode!.unfocus();
+      _addressCodeNode!.unfocus();
+      _smsCodeNode!.unfocus();
        isYun = false;
        isEntity = false;
       _licenseFiles = [];

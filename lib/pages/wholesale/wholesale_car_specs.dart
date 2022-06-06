@@ -10,11 +10,11 @@ typedef ItemClick = Function(int goodsNum);
 typedef WidgetBuilder = Function();
 
 class WholesaleCarSpecs extends StatefulWidget {
-  final WholesaleCarModel data;
-  final SelectedItemClickListener listener;
+  final WholesaleCarModel? data;
+  final SelectedItemClickListener? listener;
 
   const WholesaleCarSpecs({
-    Key key,
+    Key? key,
     this.data,
     this.listener,
   }) : super(key: key);
@@ -36,7 +36,7 @@ class _WholesaleCarSpecsState extends State<WholesaleCarSpecs> {
                 itemModel: widget.data,
                 itemClick: (int num) {
                   if (widget.listener != null) {
-                    widget.listener(num);
+                    widget.listener!(num);
                   }
                   setState(() {});
                 },
@@ -46,15 +46,15 @@ class _WholesaleCarSpecsState extends State<WholesaleCarSpecs> {
 }
 
 class SelectedListItem extends StatefulWidget {
-  final WholesaleCarModel itemModel;
+  final WholesaleCarModel? itemModel;
 
   final ItemClick itemClick;
 
 
   const SelectedListItem({
-    Key key,
+    Key? key,
     this.itemModel,
-    this.itemClick,
+    required this.itemClick,
 
   }) : super(key: key);
 
@@ -64,12 +64,12 @@ class SelectedListItem extends StatefulWidget {
 
 class _SelectedListItemState extends State<SelectedListItem> {
   bool _isFirstLoad = true;
-  num goodsNum = 0;
+  num? goodsNum = 0;
 
   @override
   void initState() {
     super.initState();
-    goodsNum = widget.itemModel.quantity;
+    goodsNum = widget.itemModel!.quantity;
   }
 
   @override
@@ -131,7 +131,7 @@ class _SelectedListItemState extends State<SelectedListItem> {
                             Container(
 
                               child: Text(
-                                '规格：${widget.itemModel.skuName}',
+                                '规格：${widget.itemModel!.skuName}',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
@@ -155,14 +155,14 @@ class _SelectedListItemState extends State<SelectedListItem> {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Text(
-                              '批发价：¥${widget.itemModel.salePrice}',
+                              '批发价：¥${widget.itemModel!.salePrice}',
                               style: TextStyle(
                                   color: Color(0xFFD5101A),
                                   fontSize: 14 * 2.sp,fontWeight: FontWeight.bold),
                             ),
                             16.wb,
                             Text(
-                              '零售价：¥${widget.itemModel.discountPrice.toStringAsFixed(2)}',
+                              '零售价：¥${widget.itemModel!.discountPrice!.toStringAsFixed(2)}',
                               style: TextStyle(
                                 color: Color(0xFF999999),
                                 fontSize: 10 * 2.sp,
@@ -175,16 +175,16 @@ class _SelectedListItemState extends State<SelectedListItem> {
                     ),
                     Spacer(),
                     WholesaleMinusView(
-                        initialValue:  widget.itemModel.quantity!=null? widget.itemModel.quantity: widget.itemModel.min,
-                        minValue: widget.itemModel.min,
-                        limit: widget.itemModel.limit,
+                        initialValue:  widget.itemModel!.quantity!=null? widget.itemModel!.quantity: widget.itemModel!.min,
+                        minValue: widget.itemModel!.min,
+                        limit: widget.itemModel!.limit,
                         onInputComplete: (String getNum) {
                           goodsNum = int.parse(getNum);
-                          widget.itemClick(goodsNum);
+                          widget.itemClick((goodsNum as int?)!);
                         },
                         onValueChanged: (int getNum) {
                           goodsNum = getNum;
-                          widget.itemClick(goodsNum);
+                          widget.itemClick((goodsNum as int?)!);
                         },
                       ),
                   ],
@@ -200,9 +200,9 @@ class _SelectedListItemState extends State<SelectedListItem> {
   实现淘宝sku 可选不可选
  */
 class SelectedItemModel {
-  WholesaleSku sku;
+  WholesaleSku? sku;
   bool selected;
-  num selectedNum;
+  num? selectedNum;
 
   SelectedItemModel({this.sku, this.selected = false,this.selectedNum});
 }

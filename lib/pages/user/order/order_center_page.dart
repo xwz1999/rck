@@ -7,7 +7,6 @@
  * ====================================================
  */
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
@@ -23,9 +22,9 @@ import 'package:recook/widgets/title_switch.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderCenterPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  const OrderCenterPage({Key key, this.arguments}) : super(key: key);
+  const OrderCenterPage({Key? key, this.arguments}) : super(key: key);
 
   static setArguments(int initialIndex) {
     return {"initialIndex": initialIndex};
@@ -46,9 +45,9 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
   // List<String> _items = ["全部", "未付款", "待发货", "待收货", "售后/退款"];
   List<String> _items = ["全部", "未付款", "待发货", "待收货"];
   List<String> _storeItems = ["全部", "待发货", "已发货", "已收货"];
-  TabController _allTabController;
-  TabController _tabController;
-  TabController _storeTabController;
+  TabController? _allTabController;
+  TabController? _tabController;
+  TabController? _storeTabController;
   OrderPositionType _positionType = OrderPositionType.onlineOrder;
   List<OrderListController> _orderListControllers = [
     OrderListController(),
@@ -78,15 +77,15 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
     }
 
 
-    int index = 0;
+    int? index = 0;
     if (widget.arguments != null) {
-      index = widget.arguments["initialIndex"];
+      index = widget.arguments!["initialIndex"];
     }
     _allTabController = TabController(length: 2, vsync: this, initialIndex: 0);
-    _allTabController.addListener(() {
-      _titleSwitchController.changeIndex(_allTabController.index);
+    _allTabController!.addListener(() {
+      _titleSwitchController.changeIndex(_allTabController!.index);
     });
-    _tabController = TabController(initialIndex: index, length: 4, vsync: this);
+    _tabController = TabController(initialIndex: index!, length: 4, vsync: this);
     _storeTabController =
         TabController(initialIndex: 0, length: 4, vsync: this);
   }
@@ -94,7 +93,7 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
   _getHaveReadAlertMessage() async {
     // 获取实例
     var prefs = await SharedPreferences.getInstance();
-    String key = 'HaveReadAlertMessage+${UserManager.instance.user.info.id}';
+    String key = 'HaveReadAlertMessage+${UserManager.instance!.user.info!.id}';
     if (prefs.getKeys().contains(key)) {
       // 获取存储数据
       bool have = prefs.getBool(key) ?? false;
@@ -107,7 +106,7 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
     var prefs = await SharedPreferences.getInstance();
     // 存储数据
     prefs.setBool(
-        'HaveReadAlertMessage+${UserManager.instance.user.info.id}', true);
+        'HaveReadAlertMessage+${UserManager.instance!.user.info!.id}', true);
   }
 
   @override
@@ -164,7 +163,7 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
         selectIndexBlock: (index) {
           if (index == 0) {
             _positionType = OrderPositionType.onlineOrder;
-            _allTabController.index = 0;
+            _allTabController!.index = 0;
             setState(() {});
             // if (_orderListControllers[_tabController.index]!=null
             // && _orderListControllers[_tabController.index].refresh!=null) {
@@ -172,7 +171,7 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
             // }
           } else {
             _positionType = OrderPositionType.storeOrder;
-            _allTabController.index = 1;
+            _allTabController!.index = 1;
             setState(() {});
             // if (_storeOrderListControllers[_storeTabController.index] != null
             // && _storeOrderListControllers[_storeTabController.index].refresh != null) {
@@ -482,7 +481,7 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
 
   _item(int index) {
     String title = _items[index];
-    bool selected = index == _tabController.index;
+    bool selected = index == _tabController!.index;
     return Container(
         height: rSize(30),
         alignment: Alignment.center,
@@ -499,7 +498,7 @@ class _OrderCenterPageState extends BaseStoreState<OrderCenterPage>
 
   _storeItem(int index) {
     String title = _storeItems[index];
-    bool selected = index == _storeTabController.index;
+    bool selected = index == _storeTabController!.index;
     return Container(
         height: rSize(30),
         alignment: Alignment.center,

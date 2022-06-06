@@ -23,11 +23,11 @@ import 'package:recook/widgets/sc_tile.dart';
 import 'package:recook/widgets/toast.dart';
 
 class OrderReturnAddressPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  const OrderReturnAddressPage({Key key, this.arguments}) : super(key: key);
+  const OrderReturnAddressPage({Key? key, this.arguments}) : super(key: key);
 
-  static setArguments(OrderReturnStatusModel statusModel) {
+  static setArguments(OrderReturnStatusModel? statusModel) {
     return {"statusModel": statusModel};
   }
 
@@ -40,24 +40,24 @@ class OrderReturnAddressPage extends StatefulWidget {
 class _OrderReturnAddressPageState
     extends BaseStoreState<OrderReturnAddressPage> {
   TextStyle textStyle = TextStyle(color: Colors.grey[500], fontSize: 13 * 2.sp);
-  OrderReturnAddressModel _addressModel;
+  OrderReturnAddressModel? _addressModel;
 
-  FocusNode _expressFocusNode;
-  TextEditingController _expressController;
-  FocusNode _expressFeeFocusNode;
-  TextEditingController _expressFeeController;
+  FocusNode? _expressFocusNode;
+  TextEditingController? _expressController;
+  FocusNode? _expressFeeFocusNode;
+  TextEditingController? _expressFeeController;
 
   bool _commitButtonEnable = false;
 
-  String _expressCompany;
-  List<String> _expressCompanies;
-  OrderReturnStatusModel _statusModel;
+  String? _expressCompany;
+  List<String>? _expressCompanies;
+  OrderReturnStatusModel? _statusModel;
 
   @override
   void initState() {
     super.initState();
     _getAddressDetail();
-    _statusModel = widget.arguments['statusModel'];
+    _statusModel = widget.arguments!['statusModel'];
 
     _expressController = TextEditingController();
     _expressFocusNode = FocusNode();
@@ -85,10 +85,10 @@ class _OrderReturnAddressPageState
   _returnExpressFill() async {
     ResultData resultData =
         await HttpManager.post(OrderApi.after_sales_express_fill, {
-      'asId': _statusModel.data.asId,
+      'asId': _statusModel!.data!.asId,
       'expressCompName': _expressCompany,
-      'expressNo': _expressController.text,
-      'expressFree': _expressFeeController.text
+      'expressNo': _expressController!.text,
+      'expressFree': _expressFeeController!.text
     });
     if (!resultData.result) {
       Toast.showError(resultData.msg);
@@ -269,17 +269,17 @@ class _OrderReturnAddressPageState
           ),
           Container(
             alignment: Alignment.centerLeft,
-            child: Text('收件人: ${_addressModel.data.name}', style: textStyle),
+            child: Text('收件人: ${_addressModel!.data!.name}', style: textStyle),
           ),
           Container(
             margin: EdgeInsets.only(top: 8 * 2.h),
             alignment: Alignment.centerLeft,
-            child: Text('电话: ${_addressModel.data.mobile}', style: textStyle),
+            child: Text('电话: ${_addressModel!.data!.mobile}', style: textStyle),
           ),
           Container(
             margin: EdgeInsets.only(top: 8 * 2.h, bottom: 8 * 2.h),
             alignment: Alignment.centerLeft,
-            child: Text('地址: ${_addressModel.data.address}', style: textStyle),
+            child: Text('地址: ${_addressModel!.data!.address}', style: textStyle),
           ),
         ],
       ),
@@ -300,7 +300,7 @@ class _OrderReturnAddressPageState
             Toast.showError('请先选择快递公司!');
             return;
           }
-          if (TextUtils.isEmpty(_expressController.text)) {
+          if (TextUtils.isEmpty(_expressController!.text)) {
             Toast.showError('请输入正确的快单号!');
             return;
           }
@@ -310,7 +310,7 @@ class _OrderReturnAddressPageState
               NormalContentDialog(
                 title: "单号",
                 content: Text(
-                  "请再次确认单号:${_expressController.text}",
+                  "请再次确认单号:${_expressController!.text}",
                   style: TextStyle(
                     color: Colors.black,
                   ),
@@ -371,12 +371,12 @@ class _OrderReturnAddressPageState
   }
 
   _getExpressCompany() async {
-    if (_expressCompanies != null && _expressCompanies.length > 0) {
+    if (_expressCompanies != null && _expressCompanies!.length > 0) {
       _showExpressCompanyList(_expressCompanies);
       return;
     }
 
-    GSDialog.of(globalContext).showLoadingDialog(globalContext, "");
+    GSDialog.of(globalContext).showLoadingDialog(globalContext!, "");
     ResultData resultData =
         await HttpManager.post(OrderApi.express_company_list, {});
     GSDialog.of(context).dismiss(context);
@@ -394,15 +394,15 @@ class _OrderReturnAddressPageState
     _showExpressCompanyList(model.data);
   }
 
-  _showExpressCompanyList(List<String> companies) {
+  _showExpressCompanyList(List<String>? companies) {
     showCustomModalBottomSheet(
-        context: globalContext,
+        context: globalContext!,
         builder: (context) {
           return GestureDetector(
             onTap: () {},
             child: Container(
               constraints:
-                  BoxConstraints(maxHeight: DeviceInfo.screenHeight * 0.6),
+                  BoxConstraints(maxHeight: DeviceInfo.screenHeight! * 0.6),
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius:
@@ -434,7 +434,7 @@ class _OrderReturnAddressPageState
                       )),
                   Expanded(
                     child: ListView.builder(
-                        itemCount: companies.length,
+                        itemCount: companies!.length,
                         itemBuilder: (_, index) {
                           return CustomImageButton(
                             child: Container(
@@ -449,7 +449,7 @@ class _OrderReturnAddressPageState
                             onPressed: () {
                               Navigator.pop(context);
                               setState(() {
-                                _expressCompany = _expressCompanies[index];
+                                _expressCompany = _expressCompanies![index];
                               });
                             },
                           );

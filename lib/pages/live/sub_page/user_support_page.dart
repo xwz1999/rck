@@ -9,9 +9,9 @@ import 'package:recook/widgets/refresh_widget.dart';
 
 class UserSupportPage extends StatefulWidget {
   //获赞页面
-  final int id;
+  final int? id;
 
-  UserSupportPage({Key key, @required this.id}) : super(key: key);
+  UserSupportPage({Key? key, required this.id}) : super(key: key);
 
   @override
   _UserSupportPageState createState() => _UserSupportPageState();
@@ -19,9 +19,9 @@ class UserSupportPage extends StatefulWidget {
 
 class _UserSupportPageState extends State<UserSupportPage>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  TabController? _tabController;
 
-  bool get selfFlag => widget.id == UserManager.instance.user.info.id;
+  bool get selfFlag => widget.id == UserManager.instance!.user.info!.id;
   GSRefreshController _controller = GSRefreshController();
   List<FollowListModel> followModels = [];
   int _page = 1;
@@ -36,7 +36,7 @@ class _UserSupportPageState extends State<UserSupportPage>
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -83,10 +83,10 @@ class _UserSupportPageState extends State<UserSupportPage>
       'page': _page,
       'limit': 15,
     });
-    if (resultData?.data['data'] == null)
+    if (resultData.data['data'] == null)
       return [];
     else
-      return (resultData?.data['data']['list'] as List)
+      return (resultData.data['data']['list'] as List)
           .map((e) => FollowListModel.fromJson(e))
           .toList();
   }
@@ -103,7 +103,7 @@ Widget _buildUserCard(FollowListModel model) {
           borderRadius: BorderRadius.circular(rSize(42 / 2)),
           child: FadeInImage.assetNetwork(
             placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-            image: Api.getImgUrl(model.headImgUrl),
+            image: Api.getImgUrl(model.headImgUrl)!,
             height: rSize(42),
             width: rSize(42),
           ),
@@ -115,7 +115,7 @@ Widget _buildUserCard(FollowListModel model) {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                model.nickname,
+                model.nickname!,
                 style: TextStyle(
                   color: Color(0xFF333333),
                   fontSize: rSP(14),
@@ -147,7 +147,7 @@ Widget _buildUserCard(FollowListModel model) {
           ),
           child: FadeInImage.assetNetwork(
             placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-            image: Api.getImgUrl(model.headImgUrl),
+            image: Api.getImgUrl(model.headImgUrl)!,
             height: rSize(40),
             width: rSize(40),
           ),

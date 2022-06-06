@@ -1,6 +1,6 @@
 class MessageModel {
-  List<Message> list;
-  int total;
+  List<Message>? list;
+  int? total;
 
   MessageModel({this.list, this.total});
 
@@ -8,7 +8,7 @@ class MessageModel {
     if (json['list'] != null) {
       list =  [];
       json['list'].forEach((v) {
-        list.add(new Message.fromJson(v));
+        list!.add(new Message.fromJson(v));
       });
     }else{
       list =  [];
@@ -19,7 +19,7 @@ class MessageModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.list != null) {
-      data['list'] = this.list.map((v) => v.toJson()).toList();
+      data['list'] = this.list!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -27,13 +27,13 @@ class MessageModel {
 }
 
 class Message {
-  int id;
-  int userId;
-  String message;
-  int kind;
-  bool isRead;
-  int subId;
-  String createdAt;
+  int? id;
+  int? userId;
+  String? message;
+  int? kind;
+  bool? isRead;
+  int? subId;
+  String? createdAt;
 
   Message(
       {this.id,

@@ -1,7 +1,7 @@
 class WholesaleCustomerModel {
-  String mobile;
-  String wechat;
-  String photo;
+  String? mobile;
+  String? wechat;
+  String? photo;
 
   WholesaleCustomerModel({this.mobile, this.wechat, this.photo});
 

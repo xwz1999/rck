@@ -1,7 +1,7 @@
 class RechargeHistoryModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   RechargeHistoryModel({this.code, this.msg, this.data});
 
@@ -16,15 +16,15 @@ class RechargeHistoryModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<RechargeHistory> list;
-  int total;
+  List<RechargeHistory>? list;
+  int? total;
 
   Data({this.list, this.total});
 
@@ -32,7 +32,7 @@ class Data {
     if (json['list'] != null) {
       list = [];
       json['list'].forEach((v) {
-        list.add(new RechargeHistory.fromJson(v));
+        list!.add(new RechargeHistory.fromJson(v));
       });
     }
     total = json['total'];
@@ -41,7 +41,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.list != null) {
-      data['list'] = this.list.map((v) => v.toJson()).toList();
+      data['list'] = this.list!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -49,14 +49,14 @@ class Data {
 }
 
 class RechargeHistory {
-  int id;
-  num amount;
-  int kind;
+  int? id;
+  num? amount;
+  int? kind;
 
-  String createdAt;
+  String? createdAt;
 
-  String attach;
-  num orderId;
+  String? attach;
+  num? orderId;
 
 
   RechargeHistory(

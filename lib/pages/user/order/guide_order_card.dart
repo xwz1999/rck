@@ -9,7 +9,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 class GuideOrderCard extends StatelessWidget {
   final GuideOrderItemModel model;
-  const GuideOrderCard({Key key, @required this.model}) : super(key: key);
+  const GuideOrderCard({Key? key, required this.model}) : super(key: key);
   Widget _buildGoodsItem(Goods item) {
     return SizedBox(
       height: 100.rw,
@@ -21,7 +21,7 @@ class GuideOrderCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(5.rw),
             child: FadeInImage.assetNetwork(
               placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-              image: Api.getImgUrl(item.mainPhotoUrl),
+              image: Api.getImgUrl(item.mainPhotoUrl)!,
               height: 100.rw,
               width: 100.rw,
             ),
@@ -136,7 +136,7 @@ class GuideOrderCard extends StatelessWidget {
                           color: AppColor.priceColor),
                     ),
                     TextSpan(
-                      text: "${item.unitPrice.toStringAsFixed(2)}",
+                      text: "${item.unitPrice!.toStringAsFixed(2)}",
                       style: AppTextStyle.generate(14 * 2.sp,
                           color: AppColor.priceColor),
                     )
@@ -188,7 +188,7 @@ class GuideOrderCard extends StatelessWidget {
                 ),
                 8.wb,
                 DateUtil.formatDate(
-                  DateTime.fromMillisecondsSinceEpoch(model.createdAt * 1000),
+                  DateTime.fromMillisecondsSinceEpoch(model.createdAt! * 1000),
                   format: 'yyyy-MM-dd HH:mm:ss',
                 ).text.black.size(16.rsp).make(),
                 Spacer(),
@@ -199,7 +199,7 @@ class GuideOrderCard extends StatelessWidget {
               ],
             ),
             10.hb,
-            ...model.goods
+            ...model.goods!
                 .map((e) => _buildGoodsItem(e))
                 .toList()
                 .sepWidget(separate: 10.hb),
@@ -207,7 +207,7 @@ class GuideOrderCard extends StatelessWidget {
             Row(
               children: [
                 Spacer(),
-                '共${model.goods.length}件商品 总计¥${model.goodsTotalAmount.toStringAsFixed(2)}'
+                '共${model.goods!.length}件商品 总计¥${model.goodsTotalAmount!.toStringAsFixed(2)}'
                     .text
                     .black
                     .size(14.rsp)

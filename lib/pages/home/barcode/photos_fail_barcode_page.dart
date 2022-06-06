@@ -1,13 +1,12 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/pages/home/barcode/qr_scaner_result_page.dart';
@@ -16,11 +15,11 @@ import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class PhotosFailBarcodePage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  const PhotosFailBarcodePage({Key key, this.arguments}) : super(key: key);
+  const PhotosFailBarcodePage({Key? key, this.arguments}) : super(key: key);
 
-  static setArguments(String code, String message, File image) {
+  static setArguments(String? code, String? message, File image) {
     return {
       "code": code,
       "message": message,
@@ -36,18 +35,18 @@ class PhotosFailBarcodePage extends StatefulWidget {
 
 class _PhotosFailBarcodePageState
     extends BaseStoreState<PhotosFailBarcodePage> {
-  String _code;
-  String _message;
-  File _image;
+  String? _code;
+  String? _message;
+  File? _image;
 
   final picker  = ImagePicker();
   @override
   void initState() {
     super.initState();
     if (widget.arguments != null) {
-      _code = widget.arguments["code"];
-      _message = widget.arguments["message"];
-      _image = widget.arguments["image"];
+      _code = widget.arguments!["code"];
+      _message = widget.arguments!["message"];
+      _image = widget.arguments!["image"];
     }
   }
 
@@ -77,7 +76,7 @@ class _PhotosFailBarcodePageState
             height: 150 * 2.h,
             width: MediaQuery.of(context).size.width,
             child: Image.file(
-              _image,
+              _image!,
               fit: BoxFit.contain,
             ),
           ),
@@ -86,7 +85,7 @@ class _PhotosFailBarcodePageState
             width: width,
             padding: EdgeInsets.only(left: 30, top: 20),
             child: Text(
-              _message == null ? "商品未录入" : _message,
+              _message == null ? "商品未录入" : _message!,
               style: TextStyle(color: Colors.black, fontSize: 22 * 2.sp),
             ),
           ),
@@ -107,12 +106,12 @@ class _PhotosFailBarcodePageState
 
 
 
-                var image = await picker.getImage(source: ImageSource.gallery);
+                var image = await (picker.getImage(source: ImageSource.gallery) as FutureOr<PickedFile>);
 
 
                 // var image =
                 //     await ImagePicker.pickImage(source: ImageSource.gallery);
-                File cropFile = await ImageUtils.cropImage(File(image.path));
+                File? cropFile = await ImageUtils.cropImage(File(image.path));
                 if (cropFile == null) {
                   return;
                 }
@@ -197,7 +196,7 @@ class _PhotosFailBarcodePageState
                     height: 60,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      _code,
+                      _code!,
                       style: TextStyle(
                           color: Colors.black.withOpacity(0.5),
                           fontSize: 15 * 2.sp),
@@ -214,7 +213,7 @@ class _PhotosFailBarcodePageState
         ));
   }
 
-  Future onScan(String data, {File image}) async {
+  Future onScan(String data, {File? image}) async {
     if (!TextUtils.isEmpty(data)) {
       _getGoodsWithCode(data, (goodsId) {
         Get.to(() => QRScarerResultPage());
@@ -226,7 +225,7 @@ class _PhotosFailBarcodePageState
     }
   }
 
-  _getGoodsWithCode(String code, Function callBack, {File image}) async {
+  _getGoodsWithCode(String code, Function callBack, {File? image}) async {
     ResultData resultData = await HttpManager.post(GoodsApi.goods_code_search, {
       "code": code,
     });

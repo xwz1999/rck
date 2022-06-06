@@ -1,11 +1,8 @@
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lunar_calendar_converter_new/lunar_solar_converter.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/models/home_weather_model.dart';
 import 'package:recook/utils/date/recook_lunar.dart';
 
@@ -13,10 +10,10 @@ import 'home_date_detail_page.dart';
 import 'home_weather_detail_page.dart';
 
 class HomeWeatherWidget extends StatefulWidget {
-  final HomeWeatherModel homeWeatherModel;
-  final Color backgroundColor;
+  final HomeWeatherModel? homeWeatherModel;
+  final Color? backgroundColor;
 
-  HomeWeatherWidget({Key key, this.homeWeatherModel, this.backgroundColor})
+  HomeWeatherWidget({Key? key, this.homeWeatherModel, this.backgroundColor})
       : super(key: key);
 
   @override
@@ -25,7 +22,7 @@ class HomeWeatherWidget extends StatefulWidget {
 
 class HomeWeatherWidgetState extends State<HomeWeatherWidget>
     with SingleTickerProviderStateMixin {
-  Color _backgroundColor;
+  Color? _backgroundColor;
 
   @override
   void initState() {
@@ -71,7 +68,7 @@ class HomeWeatherWidgetState extends State<HomeWeatherWidget>
                         child: Row(
                           children: <Widget>[
                             Text(
-                              _normalText(widget.homeWeatherModel.tem),
+                              _normalText(widget.homeWeatherModel!.tem),
                               style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 25,
@@ -100,7 +97,7 @@ class HomeWeatherWidgetState extends State<HomeWeatherWidget>
                           child: GestureDetector(
                             onTap: (){
                               if (widget.homeWeatherModel != null) {
-                                if (widget.homeWeatherModel.aqi != null)
+                                if (widget.homeWeatherModel!.aqi != null)
                                   Get.to(HomeWeatherDetailPage(
                                       homeWeatherModel: widget.homeWeatherModel));
                               }
@@ -112,13 +109,13 @@ class HomeWeatherWidgetState extends State<HomeWeatherWidget>
                                 Row(
                                   children: [
                                     Text(
-                                      _normalText(widget.homeWeatherModel.wea),
+                                      _normalText(widget.homeWeatherModel!.wea),
                                       style: textStyle,
                                     ),
                                     Container(width: 2),
                                     Image.asset(
                                       _getWeatherImage(_normalText(
-                                          widget.homeWeatherModel.weaImg)),
+                                          widget.homeWeatherModel!.weaImg)),
                                       height: 10,
                                       width: 10,
                                     ),
@@ -130,7 +127,7 @@ class HomeWeatherWidgetState extends State<HomeWeatherWidget>
                                       children: [
                                         TextSpan(
                                             text:
-                                                "湿度:${_normalText(widget.homeWeatherModel.humidity)} 温度:${_normalText(widget.homeWeatherModel.tem2)}-${_normalText(widget.homeWeatherModel.tem1)}℃",
+                                                "湿度:${_normalText(widget.homeWeatherModel!.humidity)} 温度:${_normalText(widget.homeWeatherModel!.tem2)}-${_normalText(widget.homeWeatherModel!.tem1)}℃",
                                             style: textStyle),
                                         // TextSpan(text:"  温度:${_normalText(widget.homeWeatherModel.tem2)}-${_normalText(widget.homeWeatherModel.tem1)}℃", style: textStyle),
                                         WidgetSpan(
@@ -146,7 +143,7 @@ class HomeWeatherWidgetState extends State<HomeWeatherWidget>
                                         ),
                                         TextSpan(
                                             text:
-                                                "${_normalText(widget.homeWeatherModel.air)}${_normalText(widget.homeWeatherModel.airLevel)}",
+                                                "${_normalText(widget.homeWeatherModel!.air)}${_normalText(widget.homeWeatherModel!.airLevel)}",
                                             style: textStyle),
                                       ],
                                     ),
@@ -166,7 +163,7 @@ class HomeWeatherWidgetState extends State<HomeWeatherWidget>
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                      "${nowDateTime.year}.${nowDateTime.month}.${nowDateTime.day}${_normalText(widget.homeWeatherModel.week)}",
+                                      "${nowDateTime.year}.${nowDateTime.month}.${nowDateTime.day}${_normalText(widget.homeWeatherModel!.week)}",
                                       style: textStyle),
                                   Container(
                                     alignment: Alignment.centerRight,
@@ -275,7 +272,7 @@ class HomeWeatherWidgetState extends State<HomeWeatherWidget>
     return str;
   }
 
-  _getWeatherImage(wea_img) {
-    return "assets/weatherCake/$wea_img.png";
+  _getWeatherImage(weaImg) {
+    return "assets/weatherCake/$weaImg.png";
   }
 }

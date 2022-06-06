@@ -9,10 +9,10 @@ part of 'goods_list_model.dart';
 GoodsListModel _$GoodsListModelFromJson(Map<String, dynamic> json) {
   return GoodsListModel(
       json['code'],
-      (json['data'] as List)
+      (json['data'] as List?)
           ?.map((e) =>
-              e == null ? null : Goods.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+               Goods.fromJson(e as Map<String, dynamic>))
+          .toList(),
       json['msg']);
 }
 
@@ -25,21 +25,21 @@ Map<String, dynamic> _$GoodsListModelToJson(GoodsListModel instance) =>
 
 Goods _$GoodsFromJson(Map<String, dynamic> json) {
   return Goods(
-      json['id'] as int,
-      json['brandId'] as int,
-      json['goodsName'] as String,
-      json['description'] as String,
-      json['firstCategoryId'] as int,
-      json['secondCategoryId'] as int,
-      json['commissionRate'] as int,
-      (json['discount'] as num)?.toDouble(),
+      json['id'] as int?,
+      json['brandId'] as int?,
+      json['goodsName'] as String?,
+      json['description'] as String?,
+      json['firstCategoryId'] as int?,
+      json['secondCategoryId'] as int?,
+      json['commissionRate'] as int?,
+      (json['discount'] as num?)?.toDouble(),
       json['price'] == null
           ? null
           : Price.fromJson(json['price'] as Map<String, dynamic>),
-      json['inventory'] as int,
-      json['salesVolume'] as int,
-      json['url'] as String,
-      json['promotionName'] as String);
+      json['inventory'] as int?,
+      json['salesVolume'] as int?,
+      json['url'] as String?,
+      json['promotionName'] as String?);
 }
 
 Map<String, dynamic> _$GoodsToJson(Goods instance) => <String, dynamic>{

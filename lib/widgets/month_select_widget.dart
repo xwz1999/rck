@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class MonthSelectWidget extends StatefulWidget {
-  final Function(DateTime) timeChange;
-  final bool yearChoose;
-  MonthSelectWidget({Key key, this.timeChange, this.yearChoose = true}) : super(key: key);
+  final Function(DateTime)? timeChange;
+  final bool? yearChoose;
+  MonthSelectWidget({Key? key, this.timeChange, this.yearChoose = true}) : super(key: key);
 
   @override
   _MonthSelectWidgetState createState() => _MonthSelectWidgetState();
@@ -47,7 +46,7 @@ class _MonthSelectWidgetState extends State<MonthSelectWidget> {
   _changeTimeBlock(){
     if (widget.timeChange != null) {
       DateTime time = DateTime.parse("${_selectYear.toString()}-${_selectMonth.toString().padLeft(2,'0')}-01");
-      widget.timeChange(time);
+      widget.timeChange!(time);
     }
   }
 
@@ -57,7 +56,7 @@ class _MonthSelectWidgetState extends State<MonthSelectWidget> {
        child: Row(
          children: <Widget>[
           //  Container(width: 40,),
-           widget.yearChoose?
+           widget.yearChoose!?
            Expanded(
              child: CupertinoPicker(
                backgroundColor: Colors.white,

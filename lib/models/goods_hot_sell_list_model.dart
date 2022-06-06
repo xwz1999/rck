@@ -1,7 +1,7 @@
 class GoodsHotSellListModel {
-  String code;
-  String msg;
-  List<Data> data;
+  String? code;
+  String? msg;
+  List<Data>? data;
 
   GoodsHotSellListModel({this.code, this.msg, this.data});
 
@@ -11,7 +11,7 @@ class GoodsHotSellListModel {
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
   }
@@ -21,35 +21,35 @@ class GoodsHotSellListModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Data {
-  int id;
-  String goodsName;
-  String description;
-  num inventory;
-  num salesVolume;
-  String mainPhotoUrl;
-  String promotionName;
-  num discountPrice;
-  num originalPrice;
-  num commission;
-  num index;
-  num coupon;
-  String brandName;
-  String brandImg;
-  num brandId;
-  int isImport;
-  int isFerme;
-  int storehouse;
-  String countryIcon;
-  int gysId;
-  SecKill secKill;
-  num salePrice;
+  int? id;
+  String? goodsName;
+  String? description;
+  num? inventory;
+  num? salesVolume;
+  String? mainPhotoUrl;
+  String? promotionName;
+  num? discountPrice;
+  num? originalPrice;
+  num? commission;
+  num? index;
+  num? coupon;
+  String? brandName;
+  String? brandImg;
+  num? brandId;
+  int? isImport;
+  int? isFerme;
+  int? storehouse;
+  String? countryIcon;
+  int? gysId;
+  SecKill? secKill;
+  num? salePrice;
 
   Data({
     this.id,
@@ -122,19 +122,19 @@ class Data {
     data['gys_id'] = this.gysId;
     data['sale_price'] = this.salePrice;
     if (this.secKill != null) {
-      data['sec_kill'] = this.secKill.toJson();
+      data['sec_kill'] = this.secKill!.toJson();
     }
     return data;
   }
 }
 class SecKill {
-  int secKill;
-  String secKillEndTime;
-  num secKillMinPrice;
-  num secKillCommission;
-  num realStock;
-  num secStock;
-  num saleNum;
+  int? secKill;
+  String? secKillEndTime;
+  num? secKillMinPrice;
+  num? secKillCommission;
+  num? realStock;
+  num? secStock;
+  num? saleNum;
 
   SecKill(
       {this.secKill,

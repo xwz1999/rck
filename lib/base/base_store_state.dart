@@ -12,19 +12,13 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:recook/const/resource.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/redux/recook_state.dart';
-import 'package:recook/utils/app_router.dart';
-import 'package:recook/utils/print_util.dart';
-import 'package:recook/widgets/progress/sc_dialog.dart';
 import 'package:redux/redux.dart';
 
 abstract class BaseStoreState<T extends StatefulWidget> extends State<T>
     with AutomaticKeepAliveClientMixin {
-  BuildContext globalContext;
+  BuildContext? globalContext;
 
   @override
   @mustCallSuper
@@ -57,15 +51,15 @@ abstract class BaseStoreState<T extends StatefulWidget> extends State<T>
   bool needStore() => false;
 
   Store<RecookState> getStore() {
-    return StoreProvider.of<RecookState>(globalContext);
+    return StoreProvider.of<RecookState>(globalContext!);
   }
 
-  Color getCurrentThemeColor() {
-    return getStore().state.themeData.appBarTheme.color;
+  Color? getCurrentThemeColor() {
+    return getStore().state.themeData!.appBarTheme.color;
   }
 
-  Color getCurrentAppItemColor() {
-    return getStore().state.themeData.appBarTheme.iconTheme.color;
+  Color? getCurrentAppItemColor() {
+    return getStore().state.themeData!.appBarTheme.iconTheme!.color;
   }
 
   Widget loadingWidget() {
@@ -73,7 +67,7 @@ abstract class BaseStoreState<T extends StatefulWidget> extends State<T>
       decoration: BoxDecoration(color: Colors.white),
       child: Center(
         child: CircularProgressIndicator(
-          valueColor: new AlwaysStoppedAnimation<Color>(getCurrentThemeColor()),
+          valueColor: new AlwaysStoppedAnimation<Color?>(getCurrentThemeColor()),
           strokeWidth: 1.0,
         ),
       ),
@@ -117,7 +111,7 @@ abstract class BaseStoreState<T extends StatefulWidget> extends State<T>
           );
   }
 
-  noDataView(String text, {Widget icon}) {
+  noDataView(String text, {Widget? icon}) {
     return Container(
       height: double.infinity,
       width: double.infinity,
@@ -146,30 +140,30 @@ abstract class BaseStoreState<T extends StatefulWidget> extends State<T>
     );
   }
 
-  Future<R> push<R extends Object>(String routeName, {arguments}) async {
-    return AppRouter.push(globalContext, routeName, arguments: arguments);
+  Future push(String routeName, {arguments}) async {
+    return AppRouter.push(globalContext!, routeName, arguments: arguments);
   }
 
-  pop([T result]) {
-    return Navigator.pop(globalContext, result);
+  pop([T? result]) {
+    return Navigator.pop(globalContext!, result);
   }
 
   Future<Null> showError(String error,
       {Duration duration = const Duration(milliseconds: 1000)}) async {
     return GSDialog.of(globalContext)
-        .showError(globalContext, error, duration: duration);
+        .showError(globalContext!, error, duration: duration);
   }
 
   Future<Null> showSuccess(String success) async {
-    return GSDialog.of(globalContext).showSuccess(globalContext, success);
+    return GSDialog.of(globalContext).showSuccess(globalContext!, success);
   }
 
   showLoading(String loading) {
-    GSDialog.of(globalContext).showLoadingDialog(globalContext, loading);
+    GSDialog.of(globalContext).showLoadingDialog(globalContext!, loading);
   }
 
   dismissLoading() {
-    GSDialog.of(globalContext).dismiss(globalContext);
+    GSDialog.of(globalContext).dismiss(globalContext!);
   }
 
   @override

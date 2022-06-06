@@ -6,11 +6,11 @@ import 'package:recook/widgets/custom_painters/coupon_painter_new.dart';
 enum SmallCouponType { white, red }
 
 class SmallCouponWidget extends StatefulWidget {
-  final num number;
+  final num? number;
   final double height;
   final SmallCouponType couponType;
   SmallCouponWidget(
-      {Key key,
+      {Key? key,
       this.height = 16,
       this.couponType = SmallCouponType.red,
       this.number = 0})
@@ -21,8 +21,8 @@ class SmallCouponWidget extends StatefulWidget {
 }
 
 class _SmallCouponWidgetState extends State<SmallCouponWidget> {
-  double _height;
-  double _width;
+  late double _height;
+  late double _width;
   @override
   void initState() {
     super.initState();

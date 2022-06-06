@@ -1,6 +1,5 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
@@ -8,9 +7,9 @@ import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/pages/user/banlance/user_balance_page.dart';
 
 class CapitalView extends StatefulWidget {
-  final Function() listener;
+  final Function()? listener;
 
-  const CapitalView({Key key, this.listener,})
+  const CapitalView({Key? key, this.listener,})
       : super(key: key);
 
   @override
@@ -70,7 +69,7 @@ class _CapitalViewState extends BaseStoreState<CapitalView> {
                           ),
                       TextSpan(
                         // text: getStore().state.userBrief.asset.fund.toStringAsFixed(2),
-                        text: TextUtils.getCount1(( getStore().state.userBrief.balance ?? 0.0)),
+                        text: TextUtils.getCount1(( getStore().state.userBrief!.balance ?? 0.0)),
                         style: AppTextStyle.generate(16 * 2.sp,
                             color: Color(0xFFFFDEAA),fontWeight: FontWeight.bold),
                       )

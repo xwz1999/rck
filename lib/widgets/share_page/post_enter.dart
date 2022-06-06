@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -11,10 +10,10 @@ import 'package:recook/widgets/share_page/post_bg.dart';
 enum Status { loading, complete }
 
 class MainPainter extends CustomPainter {
-  final PostBackground background;
-  final PostUserImage userImage;
-  final PostBottomInfo postBottomInfo;
-  final PostTimeBannerInfo timeBannerInfo;
+  final PostBackground? background;
+  final PostUserImage? userImage;
+  final PostBottomInfo? postBottomInfo;
+  final PostTimeBannerInfo? timeBannerInfo;
   // final MainQR hero;
   // final PostAvatar postAvatar;
 
@@ -34,10 +33,10 @@ class MainPainter extends CustomPainter {
     canvas.drawRect(screenWrap, screenWrapPainter);
     canvas.restore();
 
-    background.paint(canvas,);
-    userImage.paint(canvas);
-    postBottomInfo.paint(canvas, size);
-    timeBannerInfo.paint(canvas, size);
+    background!.paint(canvas,);
+    userImage!.paint(canvas);
+    postBottomInfo!.paint(canvas, size);
+    timeBannerInfo!.paint(canvas, size);
     // postAvatar.paint(canvas, size);
     // hero.paint(canvas, size);
   }
@@ -50,27 +49,27 @@ class MainPainter extends CustomPainter {
 
 
 class EnterPostPage extends StatefulWidget {
-  final GoodsDetailModel goodsDetail;
-  final Size size;
-  EnterPostPage({Key key, this.goodsDetail, this.size,}) : super(key: key);
+  final GoodsDetailModel? goodsDetail;
+  final Size? size;
+  EnterPostPage({Key? key, this.goodsDetail, this.size,}) : super(key: key);
 
   @override
   _EnterPostPageState createState() => _EnterPostPageState();
 }
 
 class _EnterPostPageState extends State<EnterPostPage> {
-  GoodsDetailModel _goodsDetail;
+  GoodsDetailModel? _goodsDetail;
   Status gameStatus = Status.loading;
   // paint
-  PostUserImage userImage;
-  PostBackground background;
-  PostTimeBannerInfo timeBannerInfo;
-  PostBottomInfo postBottomInfo;
+  PostUserImage? userImage;
+  PostBackground? background;
+  PostTimeBannerInfo? timeBannerInfo;
+  PostBottomInfo? postBottomInfo;
   String _goodsUrl = "";
   @override
   void initState() {
     _goodsDetail = widget.goodsDetail;
-    _goodsUrl = "${AppConfig.debug?WebApi.testGoodsDetail:WebApi.goodsDetail}${_goodsDetail.data.id}/${UserManager.instance.user.info.invitationNo}";
+    _goodsUrl = "${AppConfig.debug!?WebApi.testGoodsDetail:WebApi.goodsDetail}${_goodsDetail!.data!.id}/${UserManager.instance!.user.info!.invitationNo}";
     initPost();
     super.initState();
   }
@@ -86,42 +85,42 @@ class _EnterPostPageState extends State<EnterPostPage> {
         postBottomInfo: postBottomInfo,
         timeBannerInfo: timeBannerInfo,
       ),
-      size: widget.size
+      size: widget.size!
     );
   }
   initPost() async{
-    MainPhotos photo = _goodsDetail.data.mainPhotos[0];
-    if (_goodsDetail.data.mainPhotos.length>=2) {
-      photo = _goodsDetail.data.mainPhotos[1];
+    MainPhotos photo = _goodsDetail!.data!.mainPhotos![0];
+    if (_goodsDetail!.data!.mainPhotos!.length>=2) {
+      photo = _goodsDetail!.data!.mainPhotos![1];
     }
-    double imageWidth = widget.size.width - 30;
-    double imageHeight = imageWidth/photo.width*photo.height;
+    double imageWidth = widget.size!.width - 30;
+    double imageHeight = imageWidth/photo.width!*photo.height!;
     background = PostBackground(url: Api.getImgUrl(photo.url), imageSize: Size(imageWidth, imageHeight));
-    await background.init();
-    userImage = PostUserImage(name: UserManager.instance.user.info.nickname+"的店铺");
-    await userImage.init();
+    await background!.init();
+    userImage = PostUserImage(name: UserManager.instance!.user.info!.nickname!+"的店铺");
+    await userImage!.init();
     postBottomInfo = PostBottomInfo(
       qrCode: _goodsUrl,
-      info: _goodsDetail.data.goodsName ,
-      crossedPrice: _goodsDetail.data.price.max.originalPrice.toStringAsFixed(2),
-      price: _goodsDetail.data.getPriceString(),);
-    await postBottomInfo.init();
+      info: _goodsDetail!.data!.goodsName ,
+      crossedPrice: _goodsDetail!.data!.price!.max!.originalPrice!.toStringAsFixed(2),
+      price: _goodsDetail!.data!.getPriceString(),);
+    await postBottomInfo!.init();
     timeBannerInfo = PostTimeBannerInfo(timeInfo: _getTimeInfo());
-    await timeBannerInfo.init();
+    await timeBannerInfo!.init();
     setState(() {
       gameStatus = Status.complete;
     });
   }
   String _getTimeInfo(){
     DateFormat dateFormat = DateFormat('M月d日 HH:mm');
-    if (_goodsDetail.data.promotion!=null && _goodsDetail.data.promotion.id > 0) {
-      if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(_goodsDetail) == PromotionStatus.start){  
+    if (_goodsDetail!.data!.promotion!=null && _goodsDetail!.data!.promotion!.id! > 0) {
+      if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(_goodsDetail!) == PromotionStatus.start){  
         //活动中
-        DateTime endTime = DateTime.parse(_goodsDetail.data.promotion.endTime);
+        DateTime endTime = DateTime.parse(_goodsDetail!.data!.promotion!.endTime!);
         return "结束时间\n${dateFormat.format(endTime)}";
       }
-      if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(_goodsDetail) == PromotionStatus.ready) {  
-        DateTime startTime = DateTime.parse(_goodsDetail.data.promotion.startTime);
+      if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(_goodsDetail!) == PromotionStatus.ready) {  
+        DateTime startTime = DateTime.parse(_goodsDetail!.data!.promotion!.startTime!);
         return "开始时间\n${dateFormat.format(startTime)}";
       }
     }

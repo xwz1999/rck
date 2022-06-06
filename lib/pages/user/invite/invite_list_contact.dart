@@ -17,9 +17,9 @@ abstract class InviteListPresenterI
 }
 
 abstract class InviteListModelI extends MvpModel {
-  getInviteList(int userId, int page, String searchCond);
+  getInviteList(int? userId, int page, String searchCond);
 }
 
 abstract class InviteListViewI extends MvpView {
-  failure(String msg);
+  failure(String? msg);
 }

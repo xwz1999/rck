@@ -1,11 +1,11 @@
 class VipCardModel {
-  int skuId;
-  int goodsId;
-  String skuName;
-  int discountPrice;
-  int coupon;
-  int effectTime;
-  int effectDayType;
+  int? skuId;
+  int? goodsId;
+  String? skuName;
+  int? discountPrice;
+  int? coupon;
+  int? effectTime;
+  int? effectDayType;
 
   VipCardModel(
       {this.skuId,

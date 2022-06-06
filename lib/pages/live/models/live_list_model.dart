@@ -1,16 +1,16 @@
 class LiveListModel {
-  String title;
-  int id;
-  String cover;
-  String nickname;
-  String headImgUrl;
-  int look;
-  String goodsName;
-  String mainPhotoUrl;
-  String originalPrice;
-  String discountPrice;
-  int praise;
-  int isLive;
+  String? title;
+  int? id;
+  String? cover;
+  String? nickname;
+  String? headImgUrl;
+  int? look;
+  String? goodsName;
+  String? mainPhotoUrl;
+  String? originalPrice;
+  String? discountPrice;
+  int? praise;
+  int? isLive;
 
   LiveListModel({
     this.title,

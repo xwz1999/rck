@@ -1,8 +1,8 @@
 class ContactInfoModel {
-  String address;
-  String email;
-  String mobile;
-  String name;
+  String? address;
+  String? email;
+  String? mobile;
+  String? name;
 
   ContactInfoModel({this.address, this.email, this.mobile, this.name});
 

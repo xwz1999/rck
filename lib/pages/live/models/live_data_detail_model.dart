@@ -1,13 +1,13 @@
 class LiveDataDetailModel {
-  int id;
-  int startAt;
-  int endAt;
-  String salesVolume;
-  String anticipatedRevenue;
-  int buy;
-  int look;
-  int praise;
-  int fans;
+  int? id;
+  int? startAt;
+  int? endAt;
+  String? salesVolume;
+  String? anticipatedRevenue;
+  int? buy;
+  int? look;
+  int? praise;
+  int? fans;
 
   LiveDataDetailModel(
       {this.id,

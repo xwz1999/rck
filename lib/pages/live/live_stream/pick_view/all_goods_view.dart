@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -10,7 +9,7 @@ import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class AllGoodsView extends StatefulWidget {
-  AllGoodsView({Key key}) : super(key: key);
+  AllGoodsView({Key? key}) : super(key: key);
 
   @override
   _AllGoodsViewState createState() => _AllGoodsViewState();
@@ -18,16 +17,16 @@ class AllGoodsView extends StatefulWidget {
 
 class _AllGoodsViewState extends State<AllGoodsView>
     with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
-  CategoryModel _displayModel;
-  int _selectId = 0;
-  TabController _tabController;
+  CategoryModel? _displayModel;
+  int? _selectId = 0;
+  TabController? _tabController;
   @override
   void initState() {
     super.initState();
      PickCart.type = 3;
     _getAllGoods().then((model) {
-      _selectId = model.data.first.id;
-      _tabController = TabController(length: model.data.length, vsync: this);
+      _selectId = model!.data!.first.id;
+      _tabController = TabController(length: model.data!.length, vsync: this);
       setState(() {
         _displayModel = model;
       });
@@ -57,7 +56,7 @@ class _AllGoodsViewState extends State<AllGoodsView>
                       width: rSize(105),
                       child: ListView.builder(
                         itemBuilder: (context, index) {
-                          final listModel = _displayModel.data[index];
+                          final listModel = _displayModel!.data![index];
                           return Stack(
                             children: [
                               listModel.id == _selectId
@@ -77,7 +76,7 @@ class _AllGoodsViewState extends State<AllGoodsView>
                                 height: rSize(50),
                                 minWidth: rSize(105),
                                 onPressed: () {
-                                  _tabController.animateTo(_displayModel.data
+                                  _tabController!.animateTo(_displayModel!.data!
                                       .indexWhere((element) =>
                                           element.id == listModel.id));
                                   setState(() {
@@ -85,7 +84,7 @@ class _AllGoodsViewState extends State<AllGoodsView>
                                   });
                                 },
                                 child: Text(
-                                  listModel.name,
+                                  listModel.name!,
                                   style: TextStyle(
                                     color: Color(0xFF333333),
                                   ),
@@ -94,7 +93,7 @@ class _AllGoodsViewState extends State<AllGoodsView>
                             ],
                           );
                         },
-                        itemCount: _displayModel.data.length,
+                        itemCount: _displayModel!.data!.length,
                       ),
                     ),
                   ],
@@ -107,7 +106,7 @@ class _AllGoodsViewState extends State<AllGoodsView>
                   child: TabBarView(
                       controller: _tabController,
                       physics: NeverScrollableScrollPhysics(),
-                      children: _displayModel.data.map((e) {
+                      children: _displayModel!.data!.map((e) {
                         return Column(
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -116,7 +115,7 @@ class _AllGoodsViewState extends State<AllGoodsView>
                               padding: EdgeInsets.all(rSize(10)),
                               child: FadeInImage.assetNetwork(
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-                                image: Api.getImgUrl(e.logoUrl),
+                                image: Api.getImgUrl(e.logoUrl)!,
                                 height: rSize(80),
                               ),
                             ),
@@ -133,9 +132,9 @@ class _AllGoodsViewState extends State<AllGoodsView>
                                         context,
                                         BrandGoodsListView(
                                           onPick: () {},
-                                          categoryId: e.sub[index].id,
-                                          name: e.sub[index].name,
-                                          logo: e.sub[index].logoUrl,
+                                          categoryId: e.sub![index].id,
+                                          name: e.sub![index].name,
+                                          logo: e.sub![index].logoUrl,
                                         ),
                                       );
                                     },
@@ -148,13 +147,13 @@ class _AllGoodsViewState extends State<AllGoodsView>
                                             placeholder: R
                                                 .ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                                             image: Api.getImgUrl(
-                                                e.sub[index].logoUrl),
+                                                e.sub![index].logoUrl)!,
                                             height: rSize(50),
                                             width: rSize(50),
                                           ),
                                         ),
                                         Text(
-                                          e.sub[index].name,
+                                          e.sub![index].name!,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                             color: Color(0xFF333333),
@@ -165,7 +164,7 @@ class _AllGoodsViewState extends State<AllGoodsView>
                                     ),
                                   );
                                 },
-                                itemCount: e.sub.length,
+                                itemCount: e.sub!.length,
                               ),
                             ),
                           ],
@@ -177,7 +176,7 @@ class _AllGoodsViewState extends State<AllGoodsView>
           );
   }
 
-  Future<CategoryModel> _getAllGoods() async {
+  Future<CategoryModel?> _getAllGoods() async {
     ResultData res = await HttpManager.post(GoodsApi.categories, {});
     if (!res.result)
       return null;

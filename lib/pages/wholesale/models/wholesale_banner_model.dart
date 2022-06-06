@@ -1,11 +1,11 @@
 class WholesaleBannerModel {
-  int id;
-  int goodsId;
-  String photo;
-  int orderSort;
-  String start;
-  String end;
-  bool valid;
+  int? id;
+  int? goodsId;
+  String? photo;
+  int? orderSort;
+  String? start;
+  String? end;
+  bool? valid;
 
   WholesaleBannerModel(
       {this.id,

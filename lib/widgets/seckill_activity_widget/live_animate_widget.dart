@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'live_animate.dart';
 
 class LiveAnimateWidget extends StatefulWidget {
-  final double size;
-  final double strokeWidth;
+  final double? size;
+  final double? strokeWidth;
 
-  const LiveAnimateWidget({Key key, this.size, this.strokeWidth})
+  const LiveAnimateWidget({Key? key, this.size, this.strokeWidth})
       : super(key: key);
 
   @override

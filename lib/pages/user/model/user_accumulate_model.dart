@@ -1,7 +1,7 @@
 class UserAccumulateModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   UserAccumulateModel({this.code, this.msg, this.data});
 
@@ -22,18 +22,18 @@ class UserAccumulateModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  double purchaseAmount;
-  double guideAmount;
-  double teamAmount;
-  double recommendAmount;
-  double rewardAmount;
+  double? purchaseAmount;
+  double? guideAmount;
+  double? teamAmount;
+  double? recommendAmount;
+  double? rewardAmount;
   double get allAmount =>
       (purchaseAmount ?? 0) +
       (guideAmount ?? 0) +

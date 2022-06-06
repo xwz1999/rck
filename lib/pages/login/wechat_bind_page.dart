@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/login/wechat_input_invitecode_page.dart';
@@ -15,7 +14,7 @@ import 'package:recook/widgets/toast.dart';
 class WeChatBindPage extends StatefulWidget {
   static const String KEY_wxUnionId = "wxUnionId";
   final Map argument;
-  WeChatBindPage({this.argument}) : assert(argument != null, "argument 不能为空");
+  WeChatBindPage({required this.argument});
   static setArgument(a) {
     return {KEY_wxUnionId: a};
   }
@@ -29,17 +28,17 @@ class WeChatBindPage extends StatefulWidget {
 class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
   double _fontSize = 15 * 2.sp;
 
-  FocusNode _phoneFocusNode;
-  FocusNode _smsCodeFocusNode;
+  FocusNode? _phoneFocusNode;
+  FocusNode? _smsCodeFocusNode;
   // FocusNode _inviteCodeFocusNode;
-  TextEditingController _phoneController;
-  TextEditingController _smsCodeController;
-  TextEditingController _inviteCodeController;
+  TextEditingController? _phoneController;
+  TextEditingController? _smsCodeController;
+  TextEditingController? _inviteCodeController;
 
   bool _loginEnable = false;
   bool _cantSelected = false;
   bool _getCodeEnable = false;
-  Timer _timer;
+  Timer? _timer;
   String _countDownStr = "获取验证码";
   int _countDownNum = 59;
 
@@ -181,13 +180,13 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
   }
 
   _verifyLoginEnable() {
-    if (!TextUtils.verifyPhone(_phoneController.text)) {
+    if (!TextUtils.verifyPhone(_phoneController!.text)) {
       setState(() {
         _errorMsg = "手机号格式不正确,请检查";
       });
       return false;
     }
-    return _smsCodeController.text.length == 4;
+    return _smsCodeController!.text.length == 4;
   }
 
   _smsCodeWidget() {
@@ -260,7 +259,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
     获取验证码
    */
   _getSmsCode() {
-    UserDao.sendSmsCode(_phoneController.text, success: (data, code, msg) {
+    UserDao.sendSmsCode(_phoneController!.text, success: (data, code, msg) {
       GSDialog.of(context).dismiss(context);
       Toast.showSuccess("验证码发送成功，请注意查收");
       _beginCountDown();
@@ -285,7 +284,7 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
           _countDownNum = 59;
           _countDownStr = "获取验证码";
           _getCodeEnable = true;
-          _timer.cancel();
+          _timer!.cancel();
           _timer = null;
           return;
         }
@@ -382,16 +381,16 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
   }
 
   _weChatRegister(BuildContext context) {
-    String bindData = getStore().state.openinstall.code;
+    String? bindData = getStore().state.openinstall!.code;
     // if (bindData.length <= 0) {
     //   bindData = _inviteCodeController.text.toUpperCase();
     // }
     UserDao.weChatRegister(
         widget.argument[WeChatBindPage.KEY_wxUnionId],
-        _phoneController.text,
-        _smsCodeController.text, success: (data, code, msg) {
+        _phoneController!.text,
+        _smsCodeController!.text, success: (data, code, msg) {
       GSDialog.of(context).dismiss(context);
-      if (data.status == 0) {
+      if (data!.status == 0) {
         _weChatRegisterWithInviteCode(context);
         // AppRouter.push(context,
         //   RouteName.WECHAT_INPUT_INVITATION,
@@ -408,13 +407,13 @@ class _WeChatBindPageState extends BaseStoreState<WeChatBindPage> {
 
   _weChatRegisterWithInviteCode(BuildContext context) {
     GSDialog.of(context).showLoadingDialog(context, "正在登录...");
-    String bindData = getStore().state.openinstall.code;
+    String? bindData = getStore().state.openinstall!.code;
     UserDao.weChatInvitation(
         widget.argument[WeChatInputInviteCodePage.KEY_wxUnionId], '',
         success: (data, code, msg) {
       GSDialog.of(context).dismiss(context);
       AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
-      UserManager.updateUser(data, getStore());
+      UserManager.updateUser(data!, getStore());
     }, failure: (code, msg) {
       GSDialog.of(context).dismiss(context);
       Toast.showError(msg);

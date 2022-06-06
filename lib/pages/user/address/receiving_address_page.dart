@@ -28,11 +28,11 @@ import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/toast.dart';
 
 class ReceivingAddressPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  const ReceivingAddressPage({Key key, this.arguments}) : super(key: key);
+  const ReceivingAddressPage({Key? key, this.arguments}) : super(key: key);
 
-  static setArguments({bool canBack = false, Addr addr}) {
+  static setArguments({bool canBack = false, Addr? addr}) {
     return {"canBack": canBack, "originAddr": addr};
   }
 
@@ -45,22 +45,22 @@ class ReceivingAddressPage extends StatefulWidget {
 class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
     with MvpListViewDelegate<Address>
     implements AddressViewI {
-  AddressPresenterImpl _presenterImpl;
+  AddressPresenterImpl? _presenterImpl;
   MvpListViewController<Address> _controller = MvpListViewController();
-  Address _defaultAddress;
-  BuildContext _context;
-  bool _canBack;
-  Addr _originAddr;
+  Address? _defaultAddress;
+  late BuildContext _context;
+  bool? _canBack;
+  Addr? _originAddr;
   bool _shouldUpdated = false;
 
   @override
   void initState() {
     super.initState();
     _presenterImpl = AddressPresenterImpl();
-    _presenterImpl.attach(this);
+    _presenterImpl!.attach(this);
     if (widget.arguments != null) {
-      _canBack = widget.arguments["canBack"];
-      _originAddr = widget.arguments["originAddr"];
+      _canBack = widget.arguments!["canBack"];
+      _originAddr = widget.arguments!["originAddr"];
     } else {
       _canBack = false;
     }
@@ -77,20 +77,20 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
           if (_shouldUpdated) {
             if (_originAddr == null) {
               // 这是预览订单没有地址时  跳转过来添加地址后，再返回时默认使用默认地址
-              Navigator.pop(globalContext, _defaultAddress);
+              Navigator.pop(globalContext!, _defaultAddress);
               return;
             }
             // 这是预览订单有地址时  跳转过来添加地址后，如果改变了地址信息，再返回是需要更新地址信息
             Navigator.pop(
-                globalContext,
+                globalContext!,
                 Address(
-                    _originAddr.addressId,
-                    _originAddr.receiverName,
-                    _originAddr.mobile,
-                    _originAddr.province,
-                    _originAddr.city,
-                    _originAddr.district,
-                    _originAddr.address,
+                    _originAddr!.addressId,
+                    _originAddr!.receiverName,
+                    _originAddr!.mobile,
+                    _originAddr!.province,
+                    _originAddr!.city,
+                    _originAddr!.district,
+                    _originAddr!.address,
                     1));
             return;
           }
@@ -112,8 +112,8 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
                     _shouldUpdated = true;
                   }
                   GSDialog.of(context).showSuccess(context, "添加地址成功");
-                  _presenterImpl
-                      .fetchAddressList(UserManager.instance.user.info.id);
+                  _presenterImpl!
+                      .fetchAddressList(UserManager.instance!.user.info!.id);
                 }
                 setState(() {});
               });
@@ -135,7 +135,7 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
         return _itemBuilder(_, index);
       },
       refreshCallback: () {
-        _presenterImpl.fetchAddressList(UserManager.instance.user.info.id);
+        _presenterImpl!.fetchAddressList(UserManager.instance!.user.info!.id);
       },
       noDataView: NoDataView(
         title: "您还没有添加地址",
@@ -151,7 +151,7 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
     }
     return GestureDetector(
       onTap: () {
-        if (!_canBack) return;
+        if (!_canBack!) return;
         print("返回了-------");
         Navigator.of(context).pop(address);
       },
@@ -171,8 +171,8 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
                 },
                 deleteListener: () {
                   Alert.dismiss(context);
-                  _presenterImpl.deleteAddress(
-                      UserManager.instance.user.info.id, address);
+                  _presenterImpl!.deleteAddress(
+                      UserManager.instance!.user.info!.id, address);
                 },
               ));
         },
@@ -185,28 +185,28 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
               _shouldUpdated = true;
               // }
               GSDialog.of(context).showSuccess(context, "更新地址成功");
-              _presenterImpl
-                  .fetchAddressList(UserManager.instance.user.info.id);
+              _presenterImpl!
+                  .fetchAddressList(UserManager.instance!.user.info!.id);
             }
           });
         },
         setDefaultListener: () {
           if (_defaultAddress == address) return;
-          _presenterImpl.setDefaultAddress(
-              UserManager.instance.user.info.id, address);
+          _presenterImpl!.setDefaultAddress(
+              UserManager.instance!.user.info!.id, address);
         },
       ),
     );
   }
 
   @override
-  MvpListViewPresenterI<Address, MvpView, MvpModel> getPresenter() {
+  MvpListViewPresenterI<Address, MvpView, MvpModel>? getPresenter() {
     return _presenterImpl;
   }
 
   @override
   deleteSuccess(Address address) {
-    GSDialog.of(context).showSuccess(globalContext, "删除成功");
+    GSDialog.of(context).showSuccess(globalContext!, "删除成功");
     setState(() {
       _controller.getData().remove(address);
     });
@@ -217,15 +217,15 @@ class _ReceivingAddressPageState extends BaseStoreState<ReceivingAddressPage>
     Toast.showInfo("设置成功");
     print("设置默认-------");
     address.isDefault = 1;
-    _defaultAddress.isDefault = 0;
+    _defaultAddress!.isDefault = 0;
     _defaultAddress = address;
     setState(() {});
   }
 
   @override
   requestFail(String msg) {
-    GSDialog.of(context).dismiss(globalContext);
-    GSDialog.of(context).showError(globalContext, msg);
+    GSDialog.of(context).dismiss(globalContext!);
+    GSDialog.of(context).showError(globalContext!, msg);
   }
 
   @override

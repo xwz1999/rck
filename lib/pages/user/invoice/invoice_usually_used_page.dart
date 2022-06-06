@@ -1,16 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/pages/user/invoice/invoice_presenter.dart';
 import 'package:recook/pages/user/invoice/invoice_scaffold_widget.dart';
 import 'package:recook/pages/user/invoice/models/invoice_title_list_model.dart';
-import 'package:recook/utils/app_router.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class InvoiceUsuallyUsedPage extends StatefulWidget {
-  InvoiceUsuallyUsedPage({Key key}) : super(key: key);
+  InvoiceUsuallyUsedPage({Key? key}) : super(key: key);
 
   @override
   _InvoiceUsuallyUsedPageState createState() => _InvoiceUsuallyUsedPageState();
@@ -111,7 +107,7 @@ class _InvoiceUsuallyUsedPageState extends State<InvoiceUsuallyUsedPage> {
             children: [
               SizedBox(width: rSize(15)),
               Text(
-                model.name,
+                model.name!,
                 style: TextStyle(
                   color: Color(0xFF333333),
                   fontSize: rSize(16),

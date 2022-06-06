@@ -29,41 +29,41 @@ enum GoodsItemType {
 class GoodsItemWidget extends StatelessWidget {
 
   final bool isSingleDayGoods;
-  final String goodsName;
-  final String description;
-  final String mainPhotoUrl;
-  final num inventory;
-  final num discountPrice;
-  final num originalPrice;
-  final num percent;
-  final num coupon;
-  final num commission;
-  final num salesVolume;
-  final num id;
-  final String brandName;
-  final String brandPictureUrl;
-  final int isImport;
+  final String? goodsName;
+  final String? description;
+  final String? mainPhotoUrl;
+  final num? inventory;
+  final num? discountPrice;
+  final num? originalPrice;
+  final num? percent;
+  final num? coupon;
+  final num? commission;
+  final num? salesVolume;
+  final num? id;
+  final String? brandName;
+  final String? brandPictureUrl;
+  final int? isImport;
 
   final GoodsItemType widgetType;
 
   final bool notShowAmount;
 
-  final List<String> specialSale;
+  final List<String>? specialSale;
 
-  final List<String> specialIcon;
+  final List<String>? specialIcon;
 
   // model.getPromotionStatus()
-  final PromotionStatus promotionStatus;
-  final Function onBrandClick;
-  final int type; //type = 4 找相似  type = 3  京东商品
+  final PromotionStatus? promotionStatus;
+  final Function? onBrandClick;
+  final int? type; //type = 4 找相似  type = 3  京东商品
 
-  final String countryIcon;
-  final Living living;
-  final GifController gifController;
-  final num gysId;
+  final String? countryIcon;
+  final Living? living;
+  final GifController? gifController;
+  final num? gysId;
 
   const GoodsItemWidget({
-    Key key,
+    Key? key,
     this.isSingleDayGoods = false,
     this.goodsName,
     this.description,
@@ -98,13 +98,13 @@ class GoodsItemWidget extends StatelessWidget {
 
   /// Normal Goods Item
   GoodsItemWidget.normalGoodsItem({
-    Key key,
+    Key? key,
     this.isSingleDayGoods = false,
     this.buildCtx,
     this.shareClick,
     this.buyClick,
     this.onBrandClick,
-    GoodsSimple model,
+    required GoodsSimple model,
     this.notShowAmount = false,
     this.specialSale,
     this.type,
@@ -123,7 +123,7 @@ class GoodsItemWidget extends StatelessWidget {
         id = model.id,
         promotionStatus = model.getPromotionStatus(),
         widgetType = GoodsItemType.NORMAL,
-        isImport = model.isImport,
+        isImport = model.isImport as int?,
         specialIcon = model.specialIcon,
         countryIcon = model.countryIcon,
         living = model.living,
@@ -135,13 +135,13 @@ class GoodsItemWidget extends StatelessWidget {
 
   ///Hot List
   GoodsItemWidget.hotList({
-    Key key,
+    Key? key,
     this.buildCtx,
     this.shareClick,
     this.buyClick,
     this.onBrandClick,
     this.isSingleDayGoods = false,
-    GoodsHotSellListModel.Data data,
+    required GoodsHotSellListModel.Data data,
     this.notShowAmount = false,
     this.specialSale,
     this.specialIcon,
@@ -170,13 +170,13 @@ class GoodsItemWidget extends StatelessWidget {
 
   /// 活动列表
   GoodsItemWidget.rowGoods({
-    Key key,
+    Key? key,
     this.buildCtx,
     this.shareClick,
     this.onBrandClick,
     this.isSingleDayGoods = false,
-    @required this.buyClick,
-    PromotionGoodsModel model,
+    required this.buyClick,
+    required PromotionGoodsModel model,
     this.notShowAmount = false,
     this.type,
     this.gifController,
@@ -184,9 +184,9 @@ class GoodsItemWidget extends StatelessWidget {
         brandName = model.brandName,
         brandPictureUrl = model.brandImg,
         description = model.description,
-        mainPhotoUrl = model.picture.url,
-        inventory = model.secKill.secKill == 1
-            ? model.secKill.realStock
+        mainPhotoUrl = model.picture!.url,
+        inventory = model.secKill!.secKill == 1
+            ? model.secKill!.realStock
             : model.inventory,
         originalPrice = model.primePrice,
         percent = model.percentage,
@@ -194,7 +194,7 @@ class GoodsItemWidget extends StatelessWidget {
         id = model.goodsId,
         promotionStatus = model.getPromotionStatus(),
         widgetType = GoodsItemType.ROW_GOODS,
-        isImport = model.isImport,
+        isImport = model.isImport as int?,
         specialSale = model.specialSale,
         specialIcon = model.specialIcon,
         countryIcon = model.countryIcon,
@@ -206,9 +206,9 @@ class GoodsItemWidget extends StatelessWidget {
         super(key: key);
 
 
-  final BuildContext buildCtx;
-  final VoidCallback shareClick;
-  final VoidCallback buyClick;
+  final BuildContext? buildCtx;
+  final VoidCallback? shareClick;
+  final VoidCallback? buyClick;
 
   static Color _shareTextColor = Color(0xffc70404);
   static double _height = 0;
@@ -270,7 +270,7 @@ class GoodsItemWidget extends StatelessWidget {
   _brandWidget() {
     return GestureDetector(
         onTap: () {
-          if (onBrandClick != null) onBrandClick();
+          if (onBrandClick != null) onBrandClick!();
         },
         child: Container(
           width: double.infinity,
@@ -280,7 +280,7 @@ class GoodsItemWidget extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: Text(
-                  TextUtils.isEmpty(brandName) ? "" : brandName,
+                  TextUtils.isEmpty(brandName) ? "" : brandName!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -405,7 +405,7 @@ class GoodsItemWidget extends StatelessWidget {
                         margin: EdgeInsets.only(top: 2),
                         child:
                             Text(
-                          this.description,
+                          this.description!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyle.generate(14 * 2.sp,
@@ -420,7 +420,7 @@ class GoodsItemWidget extends StatelessWidget {
             //   // offstage: !(model.getPromotionStatus() == PromotionStatus.start || model.getPromotionStatus() == PromotionStatus.ready),
             //   child: _priceView(),
             // ),
-            AppConfig.getShowCommission() ? _brandWidget() : SizedBox(),
+            AppConfig.getShowCommission()! ? _brandWidget() : SizedBox(),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
@@ -439,7 +439,7 @@ class GoodsItemWidget extends StatelessWidget {
   _image() {
     bool sellout = false;
 
-      if (this.inventory > 0) {
+      if (this.inventory! > 0) {
         sellout = false;
       } else {
         sellout = true;
@@ -498,7 +498,7 @@ class GoodsItemWidget extends StatelessWidget {
                       width: 16.rw,
                       height: 16.rw,
                       child: GifImage(
-                        controller: gifController,
+                        controller: gifController!,
                         image: AssetImage(R.ASSETS_LIVE_PLAY_GIF),
                         height: 16.rw,
                         width: 16.rw,
@@ -524,7 +524,7 @@ class GoodsItemWidget extends StatelessWidget {
                     width: (_height - 8.rw) / 3.rw * 2.rw,
                     height: specialSale == null
                         ? 0
-                        : specialSale.length ~/ 2 * 24.rw + 24.rw,
+                        : specialSale!.length ~/ 2 * 24.rw + 24.rw,
                     child: GridView.builder(
                       shrinkWrap: true,
                       //reverse: true,
@@ -535,7 +535,7 @@ class GoodsItemWidget extends StatelessWidget {
                               childAspectRatio: 2.4,
                               mainAxisSpacing: 5,
                               crossAxisSpacing: 5),
-                      itemCount: specialSale.length,
+                      itemCount: specialSale!.length,
                       itemBuilder: (BuildContext context, int index) {
                         return
                             // Container(
@@ -543,7 +543,7 @@ class GoodsItemWidget extends StatelessWidget {
                             // );
                             CustomCacheImage(
                           borderRadius: BorderRadius.all(Radius.circular(2.rw)),
-                          imageUrl: Api.getImgUrl(specialSale[index]),
+                          imageUrl: Api.getImgUrl(specialSale![index]),
                           fit: BoxFit.fill,
                         );
                       },
@@ -558,7 +558,7 @@ class GoodsItemWidget extends StatelessWidget {
                     width: (_height - 8.rw) / 3.rw * 2.rw,
                     height: specialSale == null
                         ? 0
-                        : specialSale.length ~/ 2 * 26.rw,
+                        : specialSale!.length ~/ 2 * 26.rw,
                     child: GridView.builder(
                       shrinkWrap: true,
                       reverse: true,
@@ -569,7 +569,7 @@ class GoodsItemWidget extends StatelessWidget {
                               childAspectRatio: 2.4,
                               mainAxisSpacing: 5,
                               crossAxisSpacing: 5),
-                      itemCount: specialIcon.length,
+                      itemCount: specialIcon!.length,
                       itemBuilder: (BuildContext context, int index) {
                         return
                             // Container(
@@ -577,7 +577,7 @@ class GoodsItemWidget extends StatelessWidget {
                             // );
                             CustomCacheImage(
                           borderRadius: BorderRadius.all(Radius.circular(2.rw)),
-                          imageUrl: Api.getImgUrl(specialIcon[index]),
+                          imageUrl: Api.getImgUrl(specialIcon![index]),
                           fit: BoxFit.fill,
                         );
                       },
@@ -590,7 +590,7 @@ class GoodsItemWidget extends StatelessWidget {
   }
 
   _inventoryView() {
-    bool sellout = this.inventory <= 0;
+    bool sellout = this.inventory! <= 0;
 
     Color priceColor = Color(0xffc70404);
     return Container(
@@ -625,7 +625,7 @@ class GoodsItemWidget extends StatelessWidget {
                           ),
                           TextSpan(
                             text:
-                                "${(this.discountPrice-this.commission).toStringAsFixed(2)}",
+                                "${(this.discountPrice!-this.commission!).toStringAsFixed(2)}",
                             // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
                             style: TextStyle(
                                 letterSpacing: -1,
@@ -639,7 +639,7 @@ class GoodsItemWidget extends StatelessWidget {
                             width: 5,
                           )),
                           TextSpan(
-                            text: "¥${this.originalPrice.toStringAsFixed(1)}",
+                            text: "¥${this.originalPrice!.toStringAsFixed(1)}",
                             style: TextStyle(
                                 decoration: TextDecoration.lineThrough,
                                 decorationColor: Color(0xff898989),
@@ -659,13 +659,13 @@ class GoodsItemWidget extends StatelessWidget {
               Spacer(),
               GestureDetector(
                       onTap: () {
-                        if (UserManager.instance.user.info.id == 0) {
-                          AppRouter.pushAndRemoveUntil(buildCtx, RouteName.LOGIN);
+                        if (UserManager.instance!.user.info!.id == 0) {
+                          AppRouter.pushAndRemoveUntil(buildCtx!, RouteName.LOGIN);
                           Toast.showError('请先登录...');
                           return;
                         }
                         if (shareClick != null) {
-                          shareClick();
+                          shareClick!();
                         } else {
                           _shareEvent();
                         }
@@ -737,7 +737,7 @@ class GoodsItemWidget extends StatelessWidget {
                         pureDisplay: true,
                       ),
                       onTap: () {
-                        if (onBrandClick != null) onBrandClick();
+                        if (onBrandClick != null) onBrandClick!();
                       },
                     ),
             ],
@@ -786,7 +786,7 @@ class GoodsItemWidget extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              AppConfig.getShowCommission()
+                              AppConfig.getShowCommission()!
                                   ? Container(
                                       alignment: Alignment.center,
                                       child: Text(
@@ -827,18 +827,18 @@ class GoodsItemWidget extends StatelessWidget {
   }
 
   Future _shareEvent() async {
-    String imgUrl;
+    String? imgUrl;
     GoodsDetailModel imagesModel = await GoodsDetailModelImpl.getDetailInfo(
-        this.id, UserManager.instance.user.info.id);
-    if (imagesModel.data.mainPhotos.length >= 1) {
-      imgUrl = imagesModel.data.mainPhotos[0].url;
+        this.id as int?, UserManager.instance!.user.info!.id);
+    if (imagesModel.data!.mainPhotos!.length >= 1) {
+      imgUrl = imagesModel.data!.mainPhotos![0].url;
     } else {
-      imgUrl = imagesModel.data?.mainPhotos?.first?.url ?? '';
+      imgUrl = imagesModel.data?.mainPhotos?.first.url ?? '';
     }
     String goodsTitle =
         "￥${this.discountPrice} | ${this.goodsName} | ${this.description}";
     ShareTool().goodsShare(buildCtx,
-        goodsPrice: this.discountPrice.toStringAsFixed(2),
+        goodsPrice: this.discountPrice!.toStringAsFixed(2),
         goodsName: this.goodsName,
         goodsDescription: this.description,
         miniTitle: goodsTitle,
@@ -850,11 +850,11 @@ class GoodsItemWidget extends StatelessWidget {
   _buyEvent() {
 
     if (buyClick != null) {
-      buyClick();
+      buyClick!();
     } else {
-      AppRouter.push(buildCtx, RouteName.COMMODITY_PAGE,
+      AppRouter.push(buildCtx!, RouteName.COMMODITY_PAGE,
           arguments:
-              CommodityDetailPage.setArguments(this.id,
+              CommodityDetailPage.setArguments(this.id as int?,
                   ));
     }
   }

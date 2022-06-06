@@ -5,9 +5,9 @@ part 'order_return_status_model.g.dart';
 @JsonSerializable()
 class OrderReturnStatusModel {
 
-  String code;
-  String msg;
-  StatusData data;
+  String? code;
+  String? msg;
+  StatusData? data;
 
   OrderReturnStatusModel(this.code, this.data, this.msg);
 
@@ -19,49 +19,49 @@ class OrderReturnStatusModel {
 class StatusData {
 
 
-  int asId;
-  int userId;
-  int orderId;
-  int orderGoodsId;
-  int vendorId;
-  String vendorName;
-  String brandName;
-  int goodsId;
-  String goodsName;
-  String skuName;
-  String skuCode;
-  String mainPhotoUrl;
-  int quantity;
-  double orderTotalAmount;
-  double refundAmount;
+  int? asId;
+  int? userId;
+  int? orderId;
+  int? orderGoodsId;
+  int? vendorId;
+  String? vendorName;
+  String? brandName;
+  int? goodsId;
+  String? goodsName;
+  String? skuName;
+  String? skuCode;
+  String? mainPhotoUrl;
+  int? quantity;
+  double? orderTotalAmount;
+  double? refundAmount;
   
-  String tradeNo;
-  double payMethod;
-  int assType;
-  int returnStatus;
-  String applyTime;
-  String checkTime;
-  String reason;
-  String rejectReason;
-  String expressCompName;
-  String expressCompCode;
-  String expressNo;
-  String expressTime;
-  String refundNo;
-  int refundStatus;
-  String finishTime;
-  String createdAt;
-  String title;
-  String subtitle;
-  int reasonType;
-  num refundCoin;
-  String rightTile;
-  int statusTile;
-  num residueHour;
-  String address;
-  int status;
-  String reasonContent;
-  String reasonImg;
+  String? tradeNo;
+  double? payMethod;
+  int? assType;
+  int? returnStatus;
+  String? applyTime;
+  String? checkTime;
+  String? reason;
+  String? rejectReason;
+  String? expressCompName;
+  String? expressCompCode;
+  String? expressNo;
+  String? expressTime;
+  String? refundNo;
+  int? refundStatus;
+  String? finishTime;
+  String? createdAt;
+  String? title;
+  String? subtitle;
+  int? reasonType;
+  num? refundCoin;
+  String? rightTile;
+  int? statusTile;
+  num? residueHour;
+  String? address;
+  int? status;
+  String? reasonContent;
+  String? reasonImg;
   // double totalActualAmount;
   // List<OrderStatusDetail> list;
 
@@ -117,17 +117,17 @@ class StatusData {
 @JsonSerializable()
 class OrderStatusDetail {
 
-  String goodsName;
-  String skuName;
-  String mainPhotoUrl;
-  num quantity;
-  num actualAmount;
-  int assType;
-  int refundStatus;
-  int returnStatus;
-  String returnTime;
-  String returnReason;
-  String returnRejectReason;
+  String? goodsName;
+  String? skuName;
+  String? mainPhotoUrl;
+  num? quantity;
+  num? actualAmount;
+  int? assType;
+  int? refundStatus;
+  int? returnStatus;
+  String? returnTime;
+  String? returnReason;
+  String? returnRejectReason;
 
   OrderStatusDetail(this.goodsName, this.skuName, this.mainPhotoUrl, this.quantity, 
     this.actualAmount, this.assType, this.refundStatus, this.returnStatus, this.returnTime,

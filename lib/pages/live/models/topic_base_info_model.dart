@@ -1,14 +1,14 @@
 class TopicBaseInfoModel {
-  int id;
-  String title;
-  int substance;
-  int partake;
-  String createdAt;
-  String updatedAt;
-  int isDel;
-  int isHot;
-  String topicImg;
-  int isFollow;
+  int? id;
+  String? title;
+  int? substance;
+  int? partake;
+  String? createdAt;
+  String? updatedAt;
+  int? isDel;
+  int? isHot;
+  String? topicImg;
+  int? isFollow;
 
   TopicBaseInfoModel(
       {this.id,

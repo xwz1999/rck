@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/pages/user/recmmend_list_page.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -11,7 +8,7 @@ import 'package:recook/widgets/tabbarWidget/sc_tab_bar.dart';
 
 class RecommendRecordsPage extends StatefulWidget {
   RecommendRecordsPage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -20,7 +17,7 @@ class RecommendRecordsPage extends StatefulWidget {
 
 class _RecommendRecordsPageState extends State<RecommendRecordsPage> with TickerProviderStateMixin{
   List<String> _items = ["全部", "待审核", "已通过", "已驳回"];
-  TabController _tabController;
+  TabController? _tabController;
 
   @override
   void initState() {
@@ -30,7 +27,7 @@ class _RecommendRecordsPageState extends State<RecommendRecordsPage> with Ticker
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _tabController!.dispose();
     super.dispose();
   }
 
@@ -92,7 +89,7 @@ class _RecommendRecordsPageState extends State<RecommendRecordsPage> with Ticker
 
   _item(int index) {
     String title = _items[index];
-    bool selected = index == _tabController.index;
+    bool selected = index == _tabController!.index;
     return Container(
         height: rSize(30),
         alignment: Alignment.center,

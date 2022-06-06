@@ -3,7 +3,7 @@ import 'package:recook/constants/constants.dart';
 
 class RecookCheckBox extends StatelessWidget {
   final bool state;
-  const RecookCheckBox({Key key, this.state = false}) : super(key: key);
+  const RecookCheckBox({Key? key, this.state = false}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

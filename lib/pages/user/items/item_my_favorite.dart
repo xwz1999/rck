@@ -9,22 +9,19 @@
 
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/models/my_favorites_list_model.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 
 class MyFavoriteItem extends StatelessWidget {
   final FavoriteModel model;
-  final Function shareFunc;
-  final Function deleteFunc;
+  final Function? shareFunc;
+  final Function? deleteFunc;
 
   const MyFavoriteItem(
-      {Key key, @required this.model, this.shareFunc, this.deleteFunc})
-      : assert(model != null),
-        super(key: key);
+      {Key? key, required this.model, this.shareFunc, this.deleteFunc})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +36,11 @@ class MyFavoriteItem extends StatelessWidget {
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border(
-              bottom: BorderSide(width: 0.5 * 2.w, color: Colors.grey[300]))),
+              bottom: BorderSide(width: 0.5 * 2.w, color: Colors.grey[300]!))),
       child: Row(
         children: <Widget>[
           CustomCacheImage(
-            imageUrl: Api.getResizeImgUrl(model.goods.mainPhotoUrl, 150),
+            imageUrl: Api.getResizeImgUrl(model.goods!.mainPhotoUrl!, 150),
             width: 90,
             height: 90,
             borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -56,7 +53,7 @@ class MyFavoriteItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  model.goods.goodsName,
+                  model.goods!.goodsName!,
                   style: AppTextStyle.generate(15 * 2.sp,
                       fontWeight: FontWeight.w300, color: Colors.black87),
                   maxLines: 2,
@@ -65,7 +62,7 @@ class MyFavoriteItem extends StatelessWidget {
 
                 Container(
                   alignment: Alignment.centerLeft,
-                  child: Text(model.goods.description,
+                  child: Text(model.goods!.description!,
                       style: AppTextStyle.generate(12 * 2.sp,
                           fontWeight: FontWeight.w300, color: Colors.black54)),
                 ),
@@ -80,7 +77,7 @@ class MyFavoriteItem extends StatelessWidget {
                             children: [
                           TextSpan(
                               text:
-                                  model.goods.discountPrice.toStringAsFixed(2),
+                                  model.goods!.discountPrice!.toStringAsFixed(2),
                               style: AppTextStyle.generate(17 * 2.sp,
                                   color: Color(0xffEE5252),
                                   fontWeight: FontWeight.w400))

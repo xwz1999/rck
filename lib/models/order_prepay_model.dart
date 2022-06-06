@@ -7,7 +7,7 @@ part 'order_prepay_model.g.dart';
 @JsonSerializable()
 class OrderPrepayModel extends BaseModel {
 
-  Data data;
+  Data? data;
 
   OrderPrepayModel(code,this.data,msg,):super(code,msg);
 
@@ -21,15 +21,15 @@ class OrderPrepayModel extends BaseModel {
 @JsonSerializable()
 class Data extends Object {
 
-  int id;
+  int? id;
 
-  int userId;
+  int? userId;
 
-  double actualTotalAmount;
+  double? actualTotalAmount;
 
-  int status;
+  int? status;
 
-  String createdAt;
+  String? createdAt;
 
   Data(this.id,this.userId,this.actualTotalAmount,this.status,this.createdAt,);
 

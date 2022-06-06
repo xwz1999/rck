@@ -7,10 +7,10 @@ import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class FailBarcodePage extends StatefulWidget {
-  final Map arguments;
-  const FailBarcodePage({Key key, this.arguments}) : super(key: key);
+  final Map? arguments;
+  const FailBarcodePage({Key? key, this.arguments}) : super(key: key);
 
-  static setArguments(String code, String message) {
+  static setArguments(String? code, String? message) {
     return {"message": message, "code": code};
   }
 
@@ -21,14 +21,14 @@ class FailBarcodePage extends StatefulWidget {
 }
 
 class _FailBarcodePageState extends BaseStoreState<FailBarcodePage> {
-  String code;
-  String message;
+  String? code;
+  String? message;
   @override
   void initState() {
     super.initState();
     if (widget.arguments != null) {
-      code = widget.arguments["code"];
-      message = widget.arguments["message"];
+      code = widget.arguments!["code"];
+      message = widget.arguments!["message"];
     }
   }
 
@@ -57,7 +57,7 @@ class _FailBarcodePageState extends BaseStoreState<FailBarcodePage> {
             width: width,
             padding: EdgeInsets.only(left: 30, top: 20),
             child: Text(
-              message == null ? "商品未录入" : message,
+              message == null ? "商品未录入" : message!,
               style: TextStyle(color: Colors.black, fontSize: 22 * 2.sp),
             ),
           ),
@@ -129,7 +129,7 @@ class _FailBarcodePageState extends BaseStoreState<FailBarcodePage> {
                     height: 60,
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      code,
+                      code!,
                       style: TextStyle(
                           color: Colors.black.withOpacity(0.5),
                           fontSize: 15 * 2.sp),

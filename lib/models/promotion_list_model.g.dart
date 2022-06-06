@@ -9,10 +9,10 @@ part of 'promotion_list_model.dart';
 PromotionListModel _$PromotionListModelFromJson(Map<String, dynamic> json) {
   return PromotionListModel(
       json['code'],
-      (json['data'] as List)
+      (json['data'] as List?)
           ?.map((e) =>
-              e == null ? null : Promotion.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+               Promotion.fromJson(e as Map<String, dynamic>))
+          .toList(),
       json['msg']);
 }
 
@@ -25,12 +25,12 @@ Map<String, dynamic> _$PromotionListModelToJson(PromotionListModel instance) =>
 
 Promotion _$PromotionFromJson(Map<String, dynamic> json) {
   return Promotion(
-    json['id'] as int, 
-    json['promotionName'] as String,
-    json['startTime'] as String,
-    json['endTime'] as String,
-    json['showName'] as String, 
-    json['isProcessing'] as int);
+    json['id'] as int?, 
+    json['promotionName'] as String?,
+    json['startTime'] as String?,
+    json['endTime'] as String?,
+    json['showName'] as String?, 
+    json['isProcessing'] as int?);
 }
 
 Map<String, dynamic> _$PromotionToJson(Promotion instance) => <String, dynamic>{

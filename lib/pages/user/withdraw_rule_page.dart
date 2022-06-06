@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 
 class WithdrawRulePage extends StatefulWidget {
@@ -9,7 +8,7 @@ class WithdrawRulePage extends StatefulWidget {
 
   ///1为个人纳税规则 2 一般纳税人 3小规模纳税人
 
-  const WithdrawRulePage({Key key, @required this.type}) : super(key: key);
+  const WithdrawRulePage({Key? key, required this.type}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {

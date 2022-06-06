@@ -11,8 +11,8 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) {
       json['data'] == null
           ? null
           : User.fromJson(json['data'] as Map<String, dynamic>),
-      json['code'] as String,
-      json['msg'] as String);
+      json['code'] as String?,
+      json['msg'] as String?);
 }
 
 Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
@@ -29,7 +29,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
       json['info'] == null
           ? null
           : Info.fromJson(json['info'] as Map<String, dynamic>),
-      json['status'] as int);
+      json['status'] as int?);
 }
 
 Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
@@ -40,40 +40,40 @@ Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
 
 Info _$InfoFromJson(Map<String, dynamic> json) {
   return Info(
-      json['id'] as int,
-      json['nickname'] as String,
-      json['headImgUrl'] as String,
-      json['wxOpenId'] as String,
-      json['wxUnionId'] as String,
-      json['mobile'] as String,
-      json['identityCardName'] as String,
-      json['identityCardNo'] as String,
-      json['gender'] as int,
-      json['birthday'] as String,
-      json['invitationNo'] as String,
-      json['offlineStoreId'] as int,
-      json['level'] as int,
-      json['balance'] as int,
-      json['coin'] as int,
-      json['createdAt'] as String,
-      json['updatedAt'] as String,
-      json['deletedAt'] as String,
-      json['isVerified'] as bool,
-      json['role'] as int,
-      json['addr'] as String,
-      json['phone'] as String,
-      json['wechatNo'] as String,
-      json['remarkName'] as String,
-      json['introCode'] as String,
-      json['upgradeCode'] as String,
-      json['roleId'] as int,
-      json['roleLevel'] as int,
-      json['userLevel'] as int,
-      json['isSetPayPwd'] as bool,
-      json['realInfoStatus'] as bool,
-      json['realName'] as String,
-      json['idCard'] as String,
-      json['teacherWechatNo']as String,
+      json['id'] as int?,
+      json['nickname'] as String?,
+      json['headImgUrl'] as String?,
+      json['wxOpenId'] as String?,
+      json['wxUnionId'] as String?,
+      json['mobile'] as String?,
+      json['identityCardName'] as String?,
+      json['identityCardNo'] as String?,
+      json['gender'] as int?,
+      json['birthday'] as String?,
+      json['invitationNo'] as String?,
+      json['offlineStoreId'] as int?,
+      json['level'] as int?,
+      json['balance'] as int?,
+      json['coin'] as int?,
+      json['createdAt'] as String?,
+      json['updatedAt'] as String?,
+      json['deletedAt'] as String?,
+      json['isVerified'] as bool?,
+      json['role'] as int?,
+      json['addr'] as String?,
+      json['phone'] as String?,
+      json['wechatNo'] as String?,
+      json['remarkName'] as String?,
+      json['introCode'] as String?,
+      json['upgradeCode'] as String?,
+      json['roleId'] as int?,
+      json['roleLevel'] as int?,
+      json['userLevel'] as int?,
+      json['isSetPayPwd'] as bool?,
+      json['realInfoStatus'] as bool?,
+      json['realName'] as String?,
+      json['idCard'] as String?,
+      json['teacherWechatNo']as String?,
       );
 }
 
@@ -113,7 +113,7 @@ Map<String, dynamic> _$InfoToJson(Info instance) => <String, dynamic>{
     };
 
 Tkn _$TknFromJson(Map<String, dynamic> json) {
-  return Tkn(json['id'] as int, json['token'] as String);
+  return Tkn(json['id'] as int?, json['token'] as String?);
 }
 
 Map<String, dynamic> _$TknToJson(Tkn instance) =>

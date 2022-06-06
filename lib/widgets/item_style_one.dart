@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/app_image_resources.dart';
 
 class ItemStyleOne extends StatefulWidget {
-  final String title;
+  final String? title;
 
-  const ItemStyleOne({Key key, this.title}) : super(key: key);
+  const ItemStyleOne({Key? key, this.title}) : super(key: key);
   // Color _titleColor;
    //String _subTitle;
   // Color _backColor;
@@ -41,7 +41,7 @@ class _ItemStyleOneState extends State<ItemStyleOne> {
           children: <Widget>[
             Expanded(
               child: Text(
-                widget.title,
+                widget.title!,
                 style: TextStyle(color: Colors.grey, fontSize: 16),
               ),
             ),

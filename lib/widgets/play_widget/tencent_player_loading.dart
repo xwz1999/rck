@@ -4,28 +4,28 @@ import 'package:recook/gen/assets.gen.dart';
 
 
 class TencentPlayerLoading extends StatelessWidget {
-  TencentPlayerController controller;
-  double iconW;
+  TencentPlayerController? controller;
+  double? iconW;
 
   TencentPlayerLoading({this.controller, this.iconW});
 
   @override
   Widget build(BuildContext context) {
-    String tip = '';
-    if (!controller.value.initialized && controller.value.errorDescription == null) {
+    String? tip = '';
+    if (!controller!.value.initialized && controller!.value.errorDescription == null) {
       tip = '加载中...';
-    } else if (controller.value.errorDescription != null) {
-      tip = controller.value.errorDescription;
-    } else if(controller.value.isLoading) {
-      tip = '${controller.value.netSpeed}kb/s';
+    } else if (controller!.value.errorDescription != null) {
+      tip = controller!.value.errorDescription;
+    } else if(controller!.value.isLoading) {
+      tip = '${controller!.value.netSpeed}kb/s';
     }
-    if (!controller.value.initialized || controller.value.errorDescription != null || controller.value.isLoading) {
+    if (!controller!.value.initialized || controller!.value.errorDescription != null || controller!.value.isLoading) {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           Image.asset(Assets.static.videoLoading.path, width: this.iconW ?? _Style.loadingW, height: this.iconW ??_Style.loadingW,),
           SizedBox(height: 8,),
-          Text(tip, style: TextStyle(
+          Text(tip!, style: TextStyle(
             color: Colors.white,
             fontSize: 10,
           ),),

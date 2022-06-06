@@ -9,7 +9,7 @@ import 'invoice_scaffold_widget.dart';
 class InvoiceDetailInfomationPage extends StatefulWidget {
   final dynamic arguments;
   InvoiceDetailInfomationPage({
-    Key key,
+    Key? key,
     this.arguments,
   }) : super(key: key);
 
@@ -20,7 +20,7 @@ class InvoiceDetailInfomationPage extends StatefulWidget {
 
 class _InvoiceDetailInfomationPageState
     extends State<InvoiceDetailInfomationPage> {
-  InvoiceDetailModel model;
+  InvoiceDetailModel? model;
   InvoicePresenter _invoicePresenter = InvoicePresenter();
   bool _showMore = false;
   @override
@@ -61,11 +61,11 @@ class _InvoiceDetailInfomationPageState
                       ),
                       Spacer(),
                       Text(
-                        model.invoiceStatus== 5
+                        model!.invoiceStatus== 5
                             ? '已开票'
-                            : model.invoiceStatus == 3? '开票中' : '开票失败',
+                            : model!.invoiceStatus == 3? '开票中' : '开票失败',
                         style: TextStyle(
-                          color: model.invoiceStatus == 5
+                          color: model!.invoiceStatus == 5
                               ? Color(0xFFFF8F44)
                               : Color(0xFF333333),
                           fontSize: rSize(16),
@@ -75,13 +75,13 @@ class _InvoiceDetailInfomationPageState
                   ),
                 ),
                 SizedBox(height: rSize(8)),
-                _buildBox('公司名称', model.buyerName),
-                _buildBox('公司税号', model.taxNum),
-                _buildBox('公司地址', model.address, show: _showMore),
-                _buildBox('公司电话', model.telephone, show: _showMore),
-                _buildBox('开户银行账号', model.account, show: _showMore),
+                _buildBox('公司名称', model!.buyerName),
+                _buildBox('公司税号', model!.taxNum),
+                _buildBox('公司地址', model!.address, show: _showMore),
+                _buildBox('公司电话', model!.telephone, show: _showMore),
+                _buildBox('开户银行账号', model!.account, show: _showMore),
                 _buildBox('发票内容', '平台消费', show: _showMore),//发票内容暂时写死
-                _buildBox('备注', model.message, show: _showMore),
+                _buildBox('备注', model!.message, show: _showMore),
                 Container(
                   color: Colors.white,
                   padding: EdgeInsets.symmetric(
@@ -99,7 +99,7 @@ class _InvoiceDetailInfomationPageState
                       ),
                       Spacer(),
                       Text(
-                        model.totalAmount.toStringAsFixed(2),
+                        model!.totalAmount!.toStringAsFixed(2),
                         style: TextStyle(
                           color: Color(0xFFFF4D4F),
                           fontSize: rSize(14),
@@ -115,7 +115,7 @@ class _InvoiceDetailInfomationPageState
                     ],
                   ),
                 ),
-                _buildBox('申请时间', model.ctime),
+                _buildBox('申请时间', model!.ctime),
                 CustomImageButton(
                   child: Container(
                     color: Colors.white,
@@ -140,7 +140,7 @@ class _InvoiceDetailInfomationPageState
     );
   }
 
-  _buildBox(String title, String subtitle, {bool show = true}) {
+  _buildBox(String title, String? subtitle, {bool show = true}) {
     if (!show) return SizedBox();
     return Container(
       color: Colors.white,
@@ -159,7 +159,7 @@ class _InvoiceDetailInfomationPageState
           ),
           Spacer(),
           Text(
-            subtitle,
+            subtitle!,
             style: TextStyle(
               color: Color(0xFF333333),
               fontSize: rSize(14),

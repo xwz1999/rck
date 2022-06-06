@@ -67,7 +67,7 @@ part 'shopping_cart_list_model.g.dart';
  */
 @JsonSerializable()
 class ShoppingCartListModel extends BaseModel {
-  List<ShoppingCartBrandModel> data;
+  List<ShoppingCartBrandModel>? data;
 
   ShoppingCartListModel(
     code,
@@ -83,18 +83,18 @@ class ShoppingCartListModel extends BaseModel {
 
 @JsonSerializable()
 class ShoppingCartBrandModel extends Object {
-  int id;
+  int? id;
 
-  int brandID;
+  int? brandID;
 
-  String brandLogo;
+  String? brandLogo;
 
-  String brandName;
+  String? brandName;
 
-  List<ShoppingCartGoodsModel> children;
+  List<ShoppingCartGoodsModel>? children;
 
-  bool selected;
-  bool isShowMore;
+  bool? selected;
+  bool? isShowMore;
   ShoppingCartBrandModel(this.id, this.brandID, this.brandLogo, this.brandName,
       this.children, this.selected) {
     this.selected = false;
@@ -107,10 +107,10 @@ class ShoppingCartBrandModel extends Object {
   Map<String, dynamic> toJson() => _$ShoppingCartBrandModelToJson(this);
   bool isAllWaitPromotionStart() {
     // 判断当前所以商品是否都在等待活动开始
-    if (this.children == null || this.children.length == 0) {
+    if (this.children == null || this.children!.length == 0) {
       return false;
     }
-    for (ShoppingCartGoodsModel _model in this.children) {
+    for (ShoppingCartGoodsModel _model in this.children!) {
       if (!_model.isWaitPromotionStart()) {
         // 只要有一个商品没有在等待活动开始  就是否
         return false;
@@ -122,35 +122,35 @@ class ShoppingCartBrandModel extends Object {
 
 @JsonSerializable()
 class ShoppingCartGoodsModel extends Object {
-  int shoppingTrolleyId;
-  int goodsId;
+  int? shoppingTrolleyId;
+  int? goodsId;
 
-  String goodsName;
+  String? goodsName;
 
-  String mainPhotoUrl;
+  String? mainPhotoUrl;
 
-  String skuName;
+  String? skuName;
 
-  int skuId;
+  int? skuId;
 
-  int quantity;
+  int? quantity;
 
-  bool valid;
+  bool? valid;
 
-  num price;
+  num? price;
 
-  bool selected;
-  String promotionName;
-  Promotion promotion;
-  num commission;
-  num originalPrice;
-  int isImport;
-  int isFerme;
-  int storehouse;
-  num ferme;
-  int publishStatus;
-  String countryIcon;
-  SecKill secKill;
+  bool? selected;
+  String? promotionName;
+  Promotion? promotion;
+  num? commission;
+  num? originalPrice;
+  int? isImport;
+  int? isFerme;
+  int? storehouse;
+  num? ferme;
+  int? publishStatus;
+  String? countryIcon;
+  SecKill? secKill;
   ShoppingCartGoodsModel(
     this.shoppingTrolleyId,
     this.goodsId,
@@ -185,7 +185,7 @@ class ShoppingCartGoodsModel extends Object {
   ShoppingCartGoodsModel.empty();
 
   bool isWaitPromotionStart() {
-    if (this.promotion != null && this.promotion.isWaitPromotionStart()) {
+    if (this.promotion != null && this.promotion!.isWaitPromotionStart()) {
       return true;
     }
     return false;

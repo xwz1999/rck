@@ -26,11 +26,11 @@ import 'package:recook/widgets/keyboard/bottom_keyboard_widget.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 
 class OrderPrepayPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  const OrderPrepayPage({Key key, this.arguments}) : super(key: key);
+  const OrderPrepayPage({Key? key, this.arguments}) : super(key: key);
 
-  static setArguments(OrderPrepayModel model,
+  static setArguments(OrderPrepayModel? model,
       {bool goToOrder = false,
       bool canUseBalance = true,
       String fromTo = '',
@@ -55,14 +55,14 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     with WidgetsBindingObserver {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  OrderPresenterImpl _presenter;
-  OrderPrepayModel _model;
+  late OrderPresenterImpl _presenter;
+  OrderPrepayModel? _model;
   int _defaultPayIndex = 1;
-  RecookFundModel _recookFundModel;
+  RecookFundModel? _recookFundModel;
 
   /// 取消支付后是否跳转到订单界面，从预览订单进来的会调到订单，订单列表继续支付进来的只会pop
-  bool _goToOrder;
-  String _fromTo;
+  bool? _goToOrder;
+  String? _fromTo;
 
   bool _canUseBalance = true;
 
@@ -100,25 +100,25 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     //       break;
     //   }
     // });
-    UserManager.instance.setPassword.addListener(_setPassword);
-    WidgetsBinding.instance.addObserver(this);
+    UserManager.instance!.setPassword.addListener(_setPassword);
+    WidgetsBinding.instance!.addObserver(this);
     _presenter = OrderPresenterImpl();
-    _model = widget.arguments["model"];
-    _goToOrder = widget.arguments["goToOrder"];
-    _fromTo = widget.arguments["fromTo"];
+    _model = widget.arguments!["model"];
+    _goToOrder = widget.arguments!["goToOrder"];
+    _fromTo = widget.arguments!["fromTo"];
 
-    _canUseBalance = widget.arguments['canUseBalance'] ?? true;
-    _isPifa = UserManager.instance.isWholesale;
+    _canUseBalance = widget.arguments!['canUseBalance'] ?? true;
+    _isPifa = UserManager.instance!.isWholesale;
 
     _presenter
-        .queryRecookPayFund(UserManager.instance.user.info.id)
-        .then((HttpResultModel<RecookFundModel> model) {
+        .queryRecookPayFund(UserManager.instance!.user.info!.id)
+        .then((HttpResultModel<RecookFundModel?> model) {
       if (!model.result) {
-        showError(model.msg);
+        showError(model.msg??'');
         return;
       }
       setState(() {
-        if (model.data.data.balance > _model.data.actualTotalAmount) {
+        if (model.data!.data!.balance! > _model!.data!.actualTotalAmount!) {
           _defaultPayIndex = 0;
         }
         //在保税仓或海外仓商品时，无法使用余额支付
@@ -132,14 +132,14 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
 
   _setPassword() {
     if (_recookFundModel != null) {
-      _recookFundModel.data.havePassword = true;
+      _recookFundModel!.data!.havePassword = true;
     }
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    UserManager.instance.setPassword.removeListener(_setPassword);
+    WidgetsBinding.instance!.removeObserver(this);
+    UserManager.instance!.setPassword.removeListener(_setPassword);
     super.dispose();
   }
 
@@ -182,11 +182,11 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
                   deleteListener: () {
                     _updateUserBrief();
                     Alert.dismiss(context);
-                    if (_goToOrder) {
+                    if (_goToOrder!) {
                       AppRouter.pushAndReplaced(
-                          globalContext, RouteName.ORDER_DETAIL,
+                          globalContext!, RouteName.ORDER_DETAIL,
                           arguments:
-                              OrderDetailPage.setArguments(_model.data.id,_isPifa));
+                              OrderDetailPage.setArguments(_model!.data!.id,_isPifa));
                       return;
                     }
                     Navigator.pop(context);
@@ -205,7 +205,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
       children: <Widget>[
         _priceView(),
         Text(
-          "创建时间: ${_model.data.createdAt}",
+          "创建时间: ${_model!.data!.createdAt}",
           textAlign: TextAlign.center,
           style: AppTextStyle.generate(15 * 2.sp, color: Colors.grey),
         ),
@@ -214,7 +214,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
           height: rSize(50),
         ),
 
-        UserManager.instance.isWholesale? _payTile(
+        UserManager.instance!.isWholesale? _payTile(
                 "",
                 Image.asset(
                   AppSvg.svg_balance_pay,
@@ -230,14 +230,14 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
                         TextSpan(
                             style: AppTextStyle.generate(14 * 2.sp,
                                 color: Colors.grey),
-                            text:"(可用预存款: ￥${_recookFundModel == null ? "--" : _recookFundModel.data.balance})"
+                            text:"(可用预存款: ￥${_recookFundModel == null ? "--" : _recookFundModel!.data!.balance})"
 
                         )
                       ]),
                 ),
                 enable: _recookFundModel != null &&
-                    (_recookFundModel.data.balance >=
-                        _model.data.actualTotalAmount) &&
+                    (_recookFundModel!.data!.balance! >=
+                        _model!.data!.actualTotalAmount!) &&
                     _canUseBalance ):SizedBox()
           ,
         _payTile(
@@ -296,13 +296,13 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
                 TextSpan(
                     style: AppTextStyle.generate(33 * 2.sp,
                         fontWeight: FontWeight.w500),
-                    text: _model.data.actualTotalAmount.toString())
+                    text: _model!.data!.actualTotalAmount.toString())
               ])),
     );
   }
 
   _payTile(String title, Widget icon, int index,
-      {Widget widgetTitle, bool enable = true}) {
+      {Widget? widgetTitle, bool enable = true}) {
     return CustomImageButton(
       padding: EdgeInsets.zero,
       child: Padding(
@@ -317,7 +317,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
                 decoration: BoxDecoration(
                     border: Border(
                         bottom:
-                            BorderSide(color: Colors.grey[400], width: 0.5))),
+                            BorderSide(color: Colors.grey[400]!, width: 0.5))),
                 margin: EdgeInsets.only(left: rSize(15)),
                 child: Row(
                   children: <Widget>[
@@ -361,7 +361,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
 
   _submit() {
     showLoading("");
-    if (_model.data.actualTotalAmount == 0) {
+    if (_model!.data!.actualTotalAmount == 0) {
       // _zeroPay();
       // _recookPay();
       _submitPassword();
@@ -387,80 +387,80 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
   }
 
   _zeroPay() async {
-    HttpResultModel<BaseModel> resultModel = await _presenter
-        .createZeroPayOrder(UserManager.instance.user.info.id, _model.data.id);
+    HttpResultModel<BaseModel?> resultModel = await _presenter
+        .createZeroPayOrder(UserManager.instance!.user.info!.id, _model!.data!.id);
     if (!resultModel.result) {
-      showError(resultModel.msg);
+      showError(resultModel.msg??'');
       return;
     }
     _updateUserBrief();
     showSuccess("订单支付成功").then((value) {
-      AppRouter.pushAndReplaced(globalContext, RouteName.ORDER_LIST_PAGE,
+      AppRouter.pushAndReplaced(globalContext!, RouteName.ORDER_LIST_PAGE,
           arguments: OrderCenterPage.setArguments(2));
     });
   }
 
   _aliPay(BuildContext context) async {
-    HttpResultModel<AlipayOrderModel> resultModel = await _presenter
-        .createAliPayOrder(UserManager.instance.user.info.id, _model.data.id);
+    HttpResultModel<AlipayOrderModel?> resultModel = await _presenter
+        .createAliPayOrder(UserManager.instance!.user.info!.id, _model!.data!.id);
     dismissLoading();
     if (!resultModel.result) {
       GSDialog.of(context).showError(context, resultModel.msg);
       return;
     }
-    AliPayUtils.callAliPay(resultModel.data.data.orderString);
+    AliPayUtils.callAliPay(resultModel.data!.data!.orderString);
   }
 
   _aliPayLifang(BuildContext context) async {
-    HttpResultModel<AlipayOrderModel> resultModel =
+    HttpResultModel<AlipayOrderModel?> resultModel =
         await _presenter.createAliPayOrderLifang(
-            UserManager.instance.user.info.id, _model.data.id);
+            UserManager.instance!.user.info!.id, _model!.data!.id);
     dismissLoading();
     if (!resultModel.result) {
       GSDialog.of(context).showError(context, resultModel.msg);
       return;
     }
-    AliPayUtils.callAliPay(resultModel.data.data.orderString);
+    AliPayUtils.callAliPay(resultModel.data!.data!.orderString);
   }
 
   _weChatPay(BuildContext context) async {
-    HttpResultModel<PayInfoModel> resultModel = await _presenter
-        .createWeChatOrder(UserManager.instance.user.info.id, _model.data.id);
+    HttpResultModel<PayInfoModel?> resultModel = await _presenter
+        .createWeChatOrder(UserManager.instance!.user.info!.id, _model!.data!.id);
     GSDialog.of(context).dismiss(context);
     if (!resultModel.result) {
       GSDialog.of(context).showError(context, resultModel.msg);
       return;
     }
-    PayInfoModel wxPayModel = resultModel.data;
+    PayInfoModel wxPayModel = resultModel.data!;
     WeChatUtils.pay(
-        appId: wxPayModel.payInfo.appid,
-        partnerId: wxPayModel.payInfo.partnerid,
-        prepayId: wxPayModel.payInfo.prepayid,
-        packageValue: wxPayModel.payInfo.package,
-        nonceStr: wxPayModel.payInfo.noncestr,
-        timeStamp: int.parse(wxPayModel.payInfo.timestamp),
-        sign: wxPayModel.payInfo.sign,
+        appId: wxPayModel.payInfo!.appid,
+        partnerId: wxPayModel.payInfo!.partnerid,
+        prepayId: wxPayModel.payInfo!.prepayid,
+        packageValue: wxPayModel.payInfo!.package,
+        nonceStr: wxPayModel.payInfo!.noncestr,
+        timeStamp: int.parse(wxPayModel.payInfo!.timestamp!),
+        sign: wxPayModel.payInfo!.sign,
         listener: (WXPayResult result) {});
   }
 
   _weChatPayLifang(BuildContext context) async {
-    HttpResultModel<PayInfoModel> resultModel =
+    HttpResultModel<PayInfoModel?> resultModel =
         await _presenter.createWeChatOrderLifang(
-            UserManager.instance.user.info.id, _model.data.id);
+            UserManager.instance!.user.info!.id, _model!.data!.id);
     GSDialog.of(context).dismiss(context);
     if (!resultModel.result) {
       GSDialog.of(context).showError(context, resultModel.msg);
       return;
     }
-    PayInfoModel wxPayModel = resultModel.data;
+    PayInfoModel wxPayModel = resultModel.data!;
     WeChatUtils.pay(
-        appId: wxPayModel.payInfo.appid,
-        partnerId: wxPayModel.payInfo.partnerid,
-        prepayId: wxPayModel.payInfo.prepayid,
-        packageValue: wxPayModel.payInfo.package,
-        nonceStr: wxPayModel.payInfo.noncestr,
-        timeStamp: int.parse(wxPayModel.payInfo.timestamp),
-        sign: wxPayModel.payInfo.sign,
+        appId: wxPayModel.payInfo!.appid,
+        partnerId: wxPayModel.payInfo!.partnerid,
+        prepayId: wxPayModel.payInfo!.prepayid,
+        packageValue: wxPayModel.payInfo!.package,
+        nonceStr: wxPayModel.payInfo!.noncestr,
+        timeStamp: int.parse(wxPayModel.payInfo!.timestamp!),
+        sign: wxPayModel.payInfo!.sign,
         listener: (WXPayResult result) {});
     // String msg = await PassagerFunc.airOrderPayLifang(
     //     _payNeedModel.lfOrderId,
@@ -490,11 +490,11 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
   _unionPay(BuildContext context) async {
     ResultData resultData =
         await HttpManager.post("/v1/pay/unionpay/order/create", {
-      "orderId": _model.data.id,
-      "userId": UserManager.instance.user.info.id,
+      "orderId": _model!.data!.id,
+      "userId": UserManager.instance!.user.info!.id,
     });
     dismissLoading();
-    if (!TextUtil.isEmpty(resultData?.data['data']['tn'] ?? null)) {
+    if (!TextUtil.isEmpty(resultData.data['data']['tn'] ?? null)) {
       // FlutterUnionPay.pay(
       //   tn: resultData?.data['data']['tn'],
       //   mode: AppConfig.debug ? PaymentEnv.DEVELOPMENT : PaymentEnv.PRODUCT,
@@ -506,11 +506,11 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
   _unionPayLifang(BuildContext context) async {
     ResultData resultData = await HttpManager.post(
         "/v2/app/liFang_ticketing/order_pay/pay/unionpay_order", {
-      "orderId": _model.data.id,
-      "userId": UserManager.instance.user.info.id,
+      "orderId": _model!.data!.id,
+      "userId": UserManager.instance!.user.info!.id,
     });
     dismissLoading();
-    if (!TextUtil.isEmpty(resultData?.data['data']['tn'] ?? null)) {
+    if (!TextUtil.isEmpty(resultData.data['data']['tn'] ?? null)) {
       // FlutterUnionPay.pay(
       //   tn: resultData?.data['data']['tn'],
       //   mode: AppConfig.debug ? PaymentEnv.DEVELOPMENT : PaymentEnv.PRODUCT,
@@ -523,7 +523,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
   _submitPassword() {
     _lifecycleLock = true;
     dismissLoading();
-    if (!_recookFundModel.data.havePassword) {
+    if (!_recookFundModel!.data!.havePassword!) {
       // if (true) {
       //未设置密码 先设置密码
       // 创建密码
@@ -602,16 +602,16 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
 
   _recookPay(password) async {
     showLoading("");
-    HttpResultModel<BaseModel> resultModel =
+    HttpResultModel<BaseModel?> resultModel =
         await _presenter.createRecookPayOrder(
-            UserManager.instance.user.info.id, _model.data.id, password);
+            UserManager.instance!.user.info!.id, _model!.data!.id, password);
     dismissLoading();
     if (!resultModel.result) {
       _bottomKeyBoardController.clearPassWord();
-      showError(resultModel.msg, duration: Duration(milliseconds: 2000));
+      showError(resultModel.msg??'', duration: Duration(milliseconds: 2000));
       return;
     }
-    UserManager.instance.refreshShoppingCart.value = true;
+    UserManager.instance!.refreshShoppingCart.value = true;
     Navigator.pop(context);
     _updateUserBrief();
     showSuccess("订单支付成功").then((value) {
@@ -619,8 +619,8 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         Get.off(()=>WholesaleOrderHomePage(initialIndex: 2,));
         //Get.to(()=>WholesaleOrderHomePage(arguments: ,))
       }else{
-        if(_goToOrder)
-        AppRouter.pushAndReplaced(globalContext, RouteName.ORDER_LIST_PAGE,
+        if(_goToOrder!)
+        AppRouter.pushAndReplaced(globalContext!, RouteName.ORDER_LIST_PAGE,
             arguments: OrderCenterPage.setArguments(2));
         else{
           Navigator.pop(context);
@@ -632,16 +632,16 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
 
   _recookPayDeposit(password) async {
     showLoading("");
-    HttpResultModel<BaseModel> resultModel =
+    HttpResultModel<BaseModel?> resultModel =
     await _presenter.createRecookPayOrderDeposit(
-        UserManager.instance.user.info.id, _model.data.id, password);
+        UserManager.instance!.user.info!.id, _model!.data!.id, password);
     dismissLoading();
     if (!resultModel.result) {
       _bottomKeyBoardController.clearPassWord();
-      showError(resultModel.msg, duration: Duration(milliseconds: 2000));
+      showError(resultModel.msg??'', duration: Duration(milliseconds: 2000));
       return;
     }
-    UserManager.instance.refreshShoppingCart.value = true;
+    UserManager.instance!.refreshShoppingCart.value = true;
     Navigator.pop(context);
     _updateUserBrief();
     showSuccess("订单支付成功").then((value) {
@@ -649,8 +649,8 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
         Get.off(()=>WholesaleOrderHomePage(initialIndex: 3,));
         //Get.to(()=>WholesaleOrderHomePage(arguments: ,))
       }else{
-        if(_goToOrder)
-          AppRouter.pushAndReplaced(globalContext, RouteName.ORDER_LIST_PAGE,
+        if(_goToOrder!)
+          AppRouter.pushAndReplaced(globalContext!, RouteName.ORDER_LIST_PAGE,
               arguments: OrderCenterPage.setArguments(2));
         else{
           Navigator.pop(context);
@@ -665,45 +665,45 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
 
   _verifyPayStatus() async {
     GSDialog.of(_scaffoldKey.currentContext)
-        .showLoadingDialog(_scaffoldKey.currentContext, "正在验证订单...");
+        .showLoadingDialog(_scaffoldKey.currentContext!, "正在验证订单...");
 
     await Future.delayed(Duration(seconds: 1));
 
-    HttpResultModel<PayResult> resultModel =
-        await _presenter.verifyOrderPayStatus(_model.data.id);
+    HttpResultModel<PayResult?> resultModel =
+        await _presenter.verifyOrderPayStatus(_model!.data!.id);
 
     GSDialog.of(_scaffoldKey.currentContext)
-        .dismiss(_scaffoldKey.currentContext);
+        .dismiss(_scaffoldKey.currentContext!);
 
     if (!resultModel.result) {
       GSDialog.of(_scaffoldKey.currentContext)
-          .showError(_scaffoldKey.currentContext, resultModel.msg);
+          .showError(_scaffoldKey.currentContext!, resultModel.msg);
       return;
     }
 
-    if (resultModel.data.status == 0) {
+    if (resultModel.data!.status == 0) {
 //      Navigator.popUntil(context, ModalRoute.withName(RouteName.ORDER_LIST_PAGE));
-      if (_goToOrder) {
-        AppRouter.pushAndReplaced(globalContext, RouteName.ORDER_DETAIL,
-            arguments: OrderDetailPage.setArguments(_model.data.id,_isPifa));
+      if (_goToOrder!) {
+        AppRouter.pushAndReplaced(globalContext!, RouteName.ORDER_DETAIL,
+            arguments: OrderDetailPage.setArguments(_model!.data!.id,_isPifa));
       } else {
         Navigator.pop(context);
       }
       return;
     }
-    UserManager.instance.refreshShoppingCart.value = true;
+    UserManager.instance!.refreshShoppingCart.value = true;
     _updateUserBrief();
     if(_isPifa){
       Get.off(()=>WholesaleOrderHomePage(initialIndex: 2,));
       //Get.to(()=>WholesaleOrderHomePage(arguments: ,))
     }else{
-      AppRouter.pushAndReplaced(globalContext, RouteName.ORDER_LIST_PAGE,
+      AppRouter.pushAndReplaced(globalContext!, RouteName.ORDER_LIST_PAGE,
           arguments: OrderCenterPage.setArguments(2));
     }
   }
 
 
   _updateUserBrief() {
-    UserManager.instance.updateUserBriefInfo(getStore());
+    UserManager.instance!.updateUserBriefInfo(getStore());
   }
 }

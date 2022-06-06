@@ -18,20 +18,19 @@ typedef PlusMinusViewCallback = Function(int num);
 
 class PlusMinusView extends StatefulWidget {
   final int minValue;
-  final int maxValue;
-  final int initialValue;
-  final TextInputChangeCallBack onBeginInput;
+  final int? maxValue;
+  final int? initialValue;
+  final TextInputChangeCallBack? onBeginInput;
   final PlusMinusViewCallback onValueChanged;
-  final TextInputChangeCallBack onInputComplete;
+  final TextInputChangeCallBack? onInputComplete;
 
   const PlusMinusView(
-      {Key key, this.minValue = 1,
+      {Key? key, this.minValue = 1,
       this.maxValue = 9999,
-      @required this.onValueChanged,
+      required this.onValueChanged,
       this.onInputComplete,
       this.initialValue,
-      this.onBeginInput})
-      : assert(onValueChanged != null);
+      this.onBeginInput});
 
   @override
   State<StatefulWidget> createState() {
@@ -40,7 +39,7 @@ class PlusMinusView extends StatefulWidget {
 }
 
 class _PlusMinusViewState extends State<PlusMinusView> {
-  TextEditingController _controller;
+  TextEditingController? _controller;
 
   int lastValue = 1;
 
@@ -63,7 +62,7 @@ class _PlusMinusViewState extends State<PlusMinusView> {
   void dispose() {
     // TODO: implement dispose
     super.dispose();
-    _controller.dispose();
+    _controller!.dispose();
   }
 
 
@@ -92,30 +91,30 @@ class _PlusMinusViewState extends State<PlusMinusView> {
                 size: 10,
               ),
               disabledColor: Colors.red,
-              onPressed: _controller.text == null || _controller.text == ''
+              onPressed: _controller!.text == ''
                   ? (){
 
               }
-                  : int.parse(_controller.text) <= widget.minValue
+                  : int.parse(_controller!.text) <= widget.minValue
                       ? () {
                 BotToast.showText(text: '已是最低数量');
 
               }
                       : () {
-                          int num = int.parse(_controller.text);
+                          int num = int.parse(_controller!.text);
                           num--;
                           if (num <= widget.minValue) {
                             num = widget.minValue;
                           }
-                          _controller.text = "$num";
-                          DPrint.printf("${_controller.text}, ${lastValue}");
+                          _controller!.text = "$num";
+                          DPrint.printf("${_controller!.text}, $lastValue");
                           if ((num == widget.minValue &&
                                   lastValue != widget.minValue) ||
                               (lastValue == widget.maxValue)) {
                             setState(() {});
                           }
                           lastValue = num;
-                          widget.onInputComplete(num.toString());
+                          widget.onInputComplete!(num.toString());
                         },
             ),
             Container(
@@ -132,12 +131,12 @@ class _PlusMinusViewState extends State<PlusMinusView> {
                 onBeginInput: widget.onBeginInput,
                 onInputComplete: (value) {
                   if (TextUtils.isEmpty(value, whiteSpace: true)) {
-                    _controller.text = lastValue.toString();
+                    _controller!.text = lastValue.toString();
                     // value = lastValue.toString();
                   } else {
                     if (int.parse(value) <= widget.minValue) {
-                      _controller.text = "${widget.minValue}";
-                    } else if (int.parse(value) >= widget.maxValue) {
+                      _controller!.text = "${widget.minValue}";
+                    } else if (int.parse(value) >= widget.maxValue!) {
                       showToast("已经达到最大购买数量!",
                           textStyle: TextStyle(fontSize: 14 * 2.sp),
                           textPadding: EdgeInsets.only(
@@ -149,20 +148,20 @@ class _PlusMinusViewState extends State<PlusMinusView> {
                               offset: MediaQuery.of(context).size.height / 2),
                           dismissOtherToast: true);
                       // Toast.showError("已经达到最大购买数量!", offset: -50.0);
-                      _controller.text = "${widget.maxValue}";
+                      _controller!.text = "${widget.maxValue}";
                     }
-                    lastValue = int.parse(_controller.text);
+                    lastValue = int.parse(_controller!.text);
                     setState(() {});
                   }
-                  widget.onInputComplete(lastValue.toString());
+                  widget.onInputComplete!(lastValue.toString());
                 },
                 controller: _controller,
                 onValueChanged: (string) {
                   if(string==null){
                     widget.onValueChanged(0);
-                    _controller.text = '0';
+                    _controller!.text = '0';
                   } else {
-                    widget.onValueChanged(int.parse(_controller.text));
+                    widget.onValueChanged(int.parse(_controller!.text));
                   }
                 },
               ),
@@ -176,9 +175,9 @@ class _PlusMinusViewState extends State<PlusMinusView> {
                 color: Colors.grey[500],
                 size: 10,
               ),
-              onPressed: _controller.text == null || _controller.text == ''
+              onPressed: _controller!.text == ''
                   ? null
-                  : int.parse(_controller.text) >= widget.maxValue
+                  : int.parse(_controller!.text) >= widget.maxValue!
                       ? () {
                           showToast("已经达到最大购买数量!",
                               textStyle: TextStyle(fontSize: 14 * 2.sp),
@@ -193,16 +192,16 @@ class _PlusMinusViewState extends State<PlusMinusView> {
                               dismissOtherToast: true);
                         }
                       : () {
-                          int num = int.parse(_controller.text);
+                          int num = int.parse(_controller!.text);
                           num++;
-                          _controller.text = "$num";
+                          _controller!.text = "$num";
                           if (lastValue == widget.minValue ||
                               (num == widget.maxValue &&
                                   lastValue != widget.maxValue)) {
                             setState(() {});
                           }
                           lastValue = num;
-                          widget.onInputComplete(num.toString());
+                          widget.onInputComplete!(num.toString());
                         },
             ),
             20.wb,

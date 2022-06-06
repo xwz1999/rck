@@ -1,7 +1,7 @@
 class ShopSelfIncomeModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   ShopSelfIncomeModel({this.code, this.msg, this.data});
 
@@ -16,17 +16,17 @@ class ShopSelfIncomeModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<Incomes> incomes;
-  num totalAmount;
-  num totalIncome;
-  num totalOrderCount;
+  List<Incomes>? incomes;
+  num? totalAmount;
+  num? totalIncome;
+  num? totalOrderCount;
 
   Data(
       {this.incomes, this.totalAmount, this.totalIncome, this.totalOrderCount});
@@ -35,7 +35,7 @@ class Data {
     if (json['incomes'] != null) {
       incomes = [];
       json['incomes'].forEach((v) {
-        incomes.add(new Incomes.fromJson(v));
+        incomes!.add(new Incomes.fromJson(v));
       });
     }
     totalAmount = json['totalAmount'];
@@ -46,7 +46,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.incomes != null) {
-      data['incomes'] = this.incomes.map((v) => v.toJson()).toList();
+      data['incomes'] = this.incomes!.map((v) => v.toJson()).toList();
     }
     data['totalAmount'] = this.totalAmount;
     data['totalIncome'] = this.totalIncome;
@@ -56,10 +56,10 @@ class Data {
 }
 
 class Incomes {
-  String date;
-  num orderCount;
-  num amount;
-  num income;
+  String? date;
+  num? orderCount;
+  num? amount;
+  num? income;
 
   Incomes({this.date, this.orderCount, this.amount, this.income});
 

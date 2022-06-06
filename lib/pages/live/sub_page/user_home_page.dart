@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/models/live_base_info_model.dart';
@@ -22,9 +20,9 @@ import 'package:recook/widgets/recook_indicator.dart';
 import 'package:oktoast/oktoast.dart';
 
 class UserHomePage extends StatefulWidget {
-  final int userId;
+  final int? userId;
   final bool initAttention;
-  UserHomePage({Key key, @required this.userId, this.initAttention = false})
+  UserHomePage({Key? key, required this.userId, this.initAttention = false})
       : super(key: key);
 
   @override
@@ -33,9 +31,9 @@ class UserHomePage extends StatefulWidget {
 
 class _UserHomePageState extends State<UserHomePage>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  TabController? _tabController;
   LiveBaseInfoModel model = LiveBaseInfoModel.zero();
-  bool get selfFlag => widget.userId == UserManager.instance.user.info.id;
+  bool get selfFlag => widget.userId == UserManager.instance!.user.info!.id;
 
   @override
   void initState() {
@@ -47,7 +45,7 @@ class _UserHomePageState extends State<UserHomePage>
     HttpManager.post(LiveAPI.baseInfo, {
       'findUserId': widget.userId,
     }).then((resultData) {
-      if (resultData?.data['data'] != null) {
+      if (resultData.data['data'] != null) {
         setState(() {
           model = LiveBaseInfoModel.fromJson(resultData.data['data']);
         });
@@ -98,7 +96,7 @@ class _UserHomePageState extends State<UserHomePage>
                                 BorderRadius.circular(rSize(54 / 2.0)),
                             child: FadeInImage.assetNetwork(
                               placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                              image: Api.getImgUrl(model.headImgUrl),
+                              image: Api.getImgUrl(model.headImgUrl)!,
                               height: rSize(54),
                               width: rSize(54),
                             ),
@@ -106,7 +104,7 @@ class _UserHomePageState extends State<UserHomePage>
                           SizedBox(width: rSize(10)),
                           Expanded(
                             child: Text(
-                              model.nickname,
+                              model.nickname!,
                               style: TextStyle(
                                 color: Color(0xFF333333),
                                 fontSize: rSP(18),
@@ -120,7 +118,7 @@ class _UserHomePageState extends State<UserHomePage>
                                   width: rSize(68),
                                   height: rSize(30),
                                   onAttention: (bool oldState) {
-                                    if (UserManager.instance.haveLogin)
+                                    if (UserManager.instance!.haveLogin)
                                       HttpManager.post(
                                         oldState
                                             ? LiveAPI.cancelFollow
@@ -145,7 +143,7 @@ class _UserHomePageState extends State<UserHomePage>
                           children: [
                             _buildVerticalView(
                               '关注',
-                              model.follows,
+                              model.follows!,
                               onTap: () => CRoute.push(
                                 context,
                                 UserAttentionPage(id: widget.userId),
@@ -153,14 +151,14 @@ class _UserHomePageState extends State<UserHomePage>
                             ),
                             _buildVerticalView(
                               '粉丝',
-                              model.fans,
+                              model.fans!,
                               onTap: () {
                                 Get.to(UserFansPage(id: widget.userId));
                               },
                             ),
                             _buildVerticalView(
                               '获赞',
-                              model.praise,
+                              model.praise!,
                               onTap: () {
                                 Get.to(UserSupportPage(id: widget.userId));
 
@@ -213,7 +211,7 @@ class _UserHomePageState extends State<UserHomePage>
                   HttpManager.post(LiveAPI.baseInfo, {
                     'findUserId': widget.userId,
                   }).then((resultData) {
-                    if (resultData?.data['data'] != null) {
+                    if (resultData.data['data'] != null) {
                       setState(() {
                         model =
                             LiveBaseInfoModel.fromJson(resultData.data['data']);
@@ -229,7 +227,7 @@ class _UserHomePageState extends State<UserHomePage>
     );
   }
 
-  Widget _buildVerticalView(String title, int number, {VoidCallback onTap}) {
+  Widget _buildVerticalView(String title, int number, {VoidCallback? onTap}) {
     return CustomImageButton(
       onPressed: onTap,
       child: Column(

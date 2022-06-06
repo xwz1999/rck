@@ -7,7 +7,7 @@ part 'banner_list_model.g.dart';
 @JsonSerializable()
 class BannerListModel extends BaseModel {
 
-  List<BannerModel> data;
+  List<BannerModel>? data;
 
   BannerListModel(code,this.data,msg) : super(code, msg);
 
@@ -21,17 +21,17 @@ class BannerListModel extends BaseModel {
 @JsonSerializable()
 class BannerModel extends Object {
 
-  int id;
+  int? id;
 
-  int goodsId;
+  int? goodsId;
 
-  String url;
+  String? url;
 
-  String createdAt;
+  String? createdAt;
 
-  String activityUrl;
+  String? activityUrl;
 
-  String color;
+  String? color;
 
 
   BannerModel(this.id,this.goodsId,this.url,this.createdAt, this.activityUrl, this.color);

@@ -1,11 +1,8 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart' hide Image;
-import 'package:flutter/rendering.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
@@ -13,7 +10,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import 'alert.dart';
 
-double initScale({Size imageSize, Size size, double initialScale}) {
+double? initScale({required Size imageSize, required Size size, double? initialScale}) {
   var n1 = imageSize.height / imageSize.width;
   var n2 = size.height / size.width;
   if (n1 > n2) {
@@ -37,9 +34,9 @@ double initScale({Size imageSize, Size size, double initialScale}) {
 class PicSwiper extends StatefulWidget {
   // final int index;
   // final List<PicSwiperItem> pics;
-  final Map arguments;
-  const PicSwiper({Key key, this.arguments,});
-  static setArguments({int index, List<PicSwiperItem> pics}) {
+  final Map? arguments;
+  const PicSwiper({Key? key, this.arguments,});
+  static setArguments({int? index, List<PicSwiperItem>? pics}) {
     return {"index": index, "pics": pics};
   }
 
@@ -51,9 +48,9 @@ class _PicSwiperState extends State<PicSwiper>
     with SingleTickerProviderStateMixin {
   var rebuildIndex = StreamController<int>.broadcast();
   var rebuildSwiper = StreamController<bool>.broadcast();
-  AnimationController _animationController;
-  Animation<double> _animation;
-  Function animationListener;
+  AnimationController? _animationController;
+  Animation<double>? _animation;
+  late Function animationListener;
 //  CancellationToken _cancelToken;
 //  CancellationToken get cancelToken {
 //    if (_cancelToken == null || _cancelToken.isCanceled)
@@ -64,12 +61,12 @@ class _PicSwiperState extends State<PicSwiper>
   List<double> doubleTapScales = <double>[1.0, 2.0];
   GlobalKey<ExtendedImageSlidePageState> slidePagekey =
       GlobalKey<ExtendedImageSlidePageState>();
-  int currentIndex;
+  int? currentIndex;
   bool _showSwiper = true;
 
   @override
   void initState() {
-    currentIndex = widget.arguments["index"];
+    currentIndex = widget.arguments!["index"];
 
     _animationController = AnimationController(
         duration: const Duration(milliseconds: 150), vsync: this);
@@ -100,27 +97,26 @@ class _PicSwiperState extends State<PicSwiper>
           children: <Widget>[
             ExtendedImageGesturePageView.builder(
               itemBuilder: (BuildContext context, int index) {
-                var item = widget.arguments["pics"][index].picUrl;
+                var item = widget.arguments!["pics"][index].picUrl;
                 Widget image = ExtendedImage.network(
                   item,
                   fit: BoxFit.contain,
                   enableSlideOutPage: true,
                   mode: ExtendedImageMode.gesture,
                   initGestureConfigHandler: (state) {
-                    double initialScale = 1.0;
+                    double? initialScale = 1.0;
 
-                    if (state.extendedImageInfo != null &&
-                        state.extendedImageInfo.image != null) {
+                    if (state.extendedImageInfo != null) {
                       initialScale = initScale(
                           size: size,
                           initialScale: initialScale,
                           imageSize: Size(
-                              state.extendedImageInfo.image.width.toDouble(),
-                              state.extendedImageInfo.image.height.toDouble()));
+                              state.extendedImageInfo!.image.width.toDouble(),
+                              state.extendedImageInfo!.image.height.toDouble()));
                     }
                     return GestureConfig(
                         inPageView: true,
-                        initialScale: initialScale,
+                        initialScale: initialScale!,
                         maxScale: max(initialScale, 5.0),
                         animationMaxScale: max(initialScale, 5.0),
                         //you can cache gesture state even though page view page change.
@@ -131,17 +127,17 @@ class _PicSwiperState extends State<PicSwiper>
                     ///you can use define pointerDownPosition as you can,
                     ///default value is double tap pointer down postion.
                     var pointerDownPosition = state.pointerDownPosition;
-                    double begin = state.gestureDetails.totalScale;
+                    double? begin = state.gestureDetails!.totalScale;
                     double end;
 
                     //remove old
-                    _animation?.removeListener(animationListener);
+                    _animation?.removeListener(animationListener as void Function());
 
                     //stop pre
-                    _animationController.stop();
+                    _animationController!.stop();
 
                     //reset to use
-                    _animationController.reset();
+                    _animationController!.reset();
 
                     if (begin == doubleTapScales[0]) {
                       end = doubleTapScales[1];
@@ -152,15 +148,15 @@ class _PicSwiperState extends State<PicSwiper>
                     animationListener = () {
                       //print(_animation.value);
                       state.handleDoubleTap(
-                          scale: _animation.value,
+                          scale: _animation!.value,
                           doubleTapPosition: pointerDownPosition);
                     };
-                    _animation = _animationController
+                    _animation = _animationController!
                         .drive(Tween<double>(begin: begin, end: end));
 
-                    _animation.addListener(animationListener);
+                    _animation!.addListener(animationListener as void Function());
 
-                    _animationController.forward();
+                    _animationController!.forward();
                   },
                 );
                 image = GestureDetector(
@@ -182,8 +178,8 @@ class _PicSwiperState extends State<PicSwiper>
                         BuildContext toHeroContext) {
                       final Hero hero =
                           flightDirection == HeroFlightDirection.pop
-                              ? fromHeroContext.widget
-                              : toHeroContext.widget;
+                              ? fromHeroContext.widget as Hero
+                              : toHeroContext.widget as Hero;
                       return hero.child;
                     },
                   );
@@ -191,14 +187,14 @@ class _PicSwiperState extends State<PicSwiper>
                   return image;
                 }
               },
-              itemCount: widget.arguments["pics"].length,
+              itemCount: widget.arguments!["pics"].length,
               onPageChanged: (int index) {
                 currentIndex = index;
 
                 rebuildIndex.add(index);
               },
               controller: PageController(
-                initialPage: currentIndex,
+                initialPage: currentIndex!,
               ),
               scrollDirection: Axis.horizontal,
               physics: BouncingScrollPhysics(),
@@ -209,14 +205,14 @@ class _PicSwiperState extends State<PicSwiper>
             ),
             StreamBuilder<bool>(
               builder: (c, d) {
-                if (d.data == null || !d.data) return Container();
+                if (d.data == null || !d.data!) return Container();
 
                 return Positioned(
                   bottom: 0.0,
                   left: 0.0,
                   right: 0.0,
                   child: MySwiperPlugin(
-                    widget.arguments["pics"],
+                    widget.arguments!["pics"],
                     currentIndex,
                     rebuildIndex,
                   ),
@@ -260,8 +256,8 @@ class _PicSwiperState extends State<PicSwiper>
 }
 
 class MySwiperPlugin extends StatelessWidget {
-  final List<PicSwiperItem> pics;
-  final int index;
+  final List<PicSwiperItem>? pics;
+  final int? index;
   final StreamController<int> reBuild;
   MySwiperPlugin(
     this.pics,
@@ -301,10 +297,10 @@ class MySwiperPlugin extends StatelessWidget {
         "${data.data + 1}",
       ),
       Text(
-        " / ${pics.length}",
+        " / ${pics!.length}",
       ),
       Expanded(
-          child: Text(pics[data.data].des ?? "",
+          child: Text(pics![data.data].des ,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(fontSize: 16.0, color: Colors.blue))),
@@ -323,7 +319,7 @@ class MySwiperPlugin extends StatelessWidget {
         onTap: () {
           //GSDialog.of(context).showLoadingDialog(context, "保存图片中...");
          var cancel =  ReToast.loading(text:"保存图片中...");
-          List<String> urls = [pics[data.data].picUrl];
+          List<String?> urls = [pics![data.data].picUrl];
           ImageUtils.saveNetworkImagesToPhoto(urls, (index) {
             DPrint.printf("保存好了---${urls[index]}");
             DPrint.printf("保存好了---$index");
@@ -347,7 +343,7 @@ class MySwiperPlugin extends StatelessWidget {
                 },
                 type: NormalTextDialogType.delete,
               ),
-            );;
+            );
                 // ? GSDialog.of(context).showSuccess(context, "保存完成!")
                 // : GSDialog.of(context).showError(context, "保存失败...");
 
@@ -359,7 +355,7 @@ class MySwiperPlugin extends StatelessWidget {
 }
 
 class PicSwiperItem {
-  String picUrl;
+  String? picUrl;
   String des;
   PicSwiperItem(this.picUrl, {this.des = ""});
 }

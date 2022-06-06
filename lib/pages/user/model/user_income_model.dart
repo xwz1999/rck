@@ -1,10 +1,10 @@
 class UserIncomeModel {
-  num amount;
-  num all;
-  num team;
-  num recommend;
-  num reward;
-  List<Detail> detail;
+  num? amount;
+  num? all;
+  num? team;
+  num? recommend;
+  num? reward;
+  List<Detail>? detail;
 
   UserIncomeModel(
       {this.amount,
@@ -33,7 +33,7 @@ class UserIncomeModel {
     if (json['detail'] != null) {
       detail = [];
       json['detail'].forEach((v) {
-        detail.add(new Detail.fromJson(v));
+        detail!.add(new Detail.fromJson(v));
       });
     } else {
       detail = [];
@@ -49,19 +49,19 @@ class UserIncomeModel {
     data['reward'] = this.reward;
 
     if (this.detail != null) {
-      data['detail'] = this.detail.map((v) => v.toJson()).toList();
+      data['detail'] = this.detail!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Detail {
-  num date;
-  num sale;
-  num count;
-  num coin;
+  num? date;
+  num? sale;
+  num? count;
+  num? coin;
 
-  List<Detail1> detail;
+  List<Detail1>? detail;
 
   Detail({this.date, this.sale, this.count, this.coin, this.detail});
 
@@ -76,7 +76,7 @@ class Detail {
     if (json['detail'] != null) {
       detail = [];
       json['detail'].forEach((v) {
-        detail.add(new Detail1.fromJson(v));
+        detail!.add(new Detail1.fromJson(v));
       });
     } else {
       detail = [];
@@ -90,18 +90,18 @@ class Detail {
     data['count'] = this.count;
     data['coin'] = this.coin;
     if (this.detail != null) {
-      data['detail'] = this.detail.map((v) => v.toJson()).toList();
+      data['detail'] = this.detail!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Detail1 {
-  num id;
-  num date;
-  num sale;
-  num count;
-  num coin;
+  num? id;
+  num? date;
+  num? sale;
+  num? count;
+  num? coin;
 
   Detail1({this.id, this.date, this.sale, this.count, this.coin});
 

@@ -1,15 +1,15 @@
 class CategoryListModel {
-  First first;
-  List<First> child;
+  First? first;
+  List<First>? child;
 
   CategoryListModel({this.first, this.child});
 
   CategoryListModel.fromJson(Map<String, dynamic> json) {
     first = json['first'] != null ? new First.fromJson(json['first']) : null;
     if (json['child'] != null) {
-      child = new List<First>();
+      child = [];
       json['child'].forEach((v) {
-        child.add(new First.fromJson(v));
+        child!.add(new First.fromJson(v));
       });
     }
   }
@@ -17,25 +17,25 @@ class CategoryListModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.first != null) {
-      data['first'] = this.first.toJson();
+      data['first'] = this.first!.toJson();
     }
     if (this.child != null) {
-      data['child'] = this.child.map((v) => v.toJson()).toList();
+      data['child'] = this.child!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class First {
-  int id;
-  String name;
-  int parentId;
-  int depth;
-  String logoUrl;
-  int location;
-  int show;
-  int gysShow;
-  bool isAllow;
+  int? id;
+  String? name;
+  int? parentId;
+  int? depth;
+  String? logoUrl;
+  int? location;
+  int? show;
+  int? gysShow;
+  bool? isAllow;
 
   First(
       {this.id,

@@ -14,9 +14,9 @@ import 'package:recook/models/promotion_goods_list_model.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 
 class RowActivityItem extends StatelessWidget {
-  final PromotionActivityModel model;
-  final VoidCallback click;
-  const RowActivityItem({Key key, this.model, this.click,}) : super(key: key);
+  final PromotionActivityModel? model;
+  final VoidCallback? click;
+  const RowActivityItem({Key? key, this.model, this.click,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class RowActivityItem extends StatelessWidget {
           GestureDetector(
             child: Container(color: Colors.white.withAlpha(0),),
             onTap: (){
-              click();
+              click!();
             },
           ),
           Positioned(
@@ -44,11 +44,11 @@ class RowActivityItem extends StatelessWidget {
             child: GestureDetector(
               child: CustomCacheImage(
                 borderRadius: BorderRadius.circular(10),
-                imageUrl: Api.getImgUrl(model.logoUrl),
+                imageUrl: Api.getImgUrl(model!.logoUrl),
                 fit: BoxFit.fill,
               ),
               onTap: (){
-                click();
+                click!();
               },
             ),
             ),

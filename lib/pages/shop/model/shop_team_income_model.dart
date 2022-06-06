@@ -1,7 +1,7 @@
 class ShopTeamIncomeModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   ShopTeamIncomeModel({this.code, this.msg, this.data});
 
@@ -16,18 +16,18 @@ class ShopTeamIncomeModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  num amount;
-  num income;
-  num memberCount;
-  List<Members> members;
-  num percent;
+  num? amount;
+  num? income;
+  num? memberCount;
+  List<Members>? members;
+  num? percent;
 
   Data(
       {this.amount, this.income, this.memberCount, this.members, this.percent});
@@ -39,7 +39,7 @@ class Data {
     if (json['members'] != null) {
       members = [];
       json['members'].forEach((v) {
-        members.add(new Members.fromJson(v));
+        members!.add(new Members.fromJson(v));
       });
     }
     percent = json['percent'];
@@ -51,7 +51,7 @@ class Data {
     data['income'] = this.income;
     data['memberCount'] = this.memberCount;
     if (this.members != null) {
-      data['members'] = this.members.map((v) => v.toJson()).toList();
+      data['members'] = this.members!.map((v) => v.toJson()).toList();
     }
     data['percent'] = this.percent;
     return data;
@@ -59,13 +59,13 @@ class Data {
 }
 
 class Members {
-  num userId;
-  String nickname;
-  String headImgUrl;
-  String mobile;
-  num roleLevel;
-  String roleLevelName;
-  num amount;
+  num? userId;
+  String? nickname;
+  String? headImgUrl;
+  String? mobile;
+  num? roleLevel;
+  String? roleLevelName;
+  num? amount;
 
   Members(
       {this.userId,

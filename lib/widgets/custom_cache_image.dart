@@ -12,17 +12,17 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 
 class CustomCacheImage extends StatefulWidget {
-  final String imageUrl;
-  final double width;
-  final double height;
-  final String placeholder;
-  final BoxFit fit;
+  final String? imageUrl;
+  final double? width;
+  final double? height;
+  final String? placeholder;
+  final BoxFit? fit;
   final BorderRadius borderRadius;
-  final VoidCallback imageClick;
+  final VoidCallback? imageClick;
   final bool calculateHeight;
 
   const CustomCacheImage({
-    Key key,
+    Key? key,
     this.imageUrl,
     this.width,
     this.height,
@@ -41,8 +41,8 @@ class CustomCacheImage extends StatefulWidget {
 
 class _CustomCacheImageState extends State<CustomCacheImage>
     with TickerProviderStateMixin {
-  AnimationController _controller;
-  String _placeHolder;
+  late AnimationController _controller;
+  String? _placeHolder;
 
   @override
   void initState() {
@@ -56,7 +56,7 @@ class _CustomCacheImageState extends State<CustomCacheImage>
       _placeHolder = widget.placeholder;
     } else {
       if (widget.width != null && widget.height != null) {
-        if (widget.width > widget.height) {
+        if (widget.width! > widget.height!) {
           _placeHolder = AppImageName.placeholder_2x1;
         } else if (widget.width == widget.height) {
           _placeHolder = AppImageName.placeholder_1x1;
@@ -81,7 +81,7 @@ class _CustomCacheImageState extends State<CustomCacheImage>
       borderRadius: widget.borderRadius,
       child:
       ExtendedImage.network(
-        widget.imageUrl,
+        widget.imageUrl!,
         width: widget.width,
         height: widget.width,
         fit: BoxFit.fill,
@@ -93,16 +93,16 @@ class _CustomCacheImageState extends State<CustomCacheImage>
               return _placeHolder == null
                   ? null
                   : Image.asset(
-                      _placeHolder,
+                      _placeHolder!,
                       fit: BoxFit.fill,
                     );
-              break;
+
             case LoadState.completed:
               _controller.forward();
               if (widget.imageClick != null) {
                 return GestureDetector(
                     onTap: () {
-                      widget.imageClick();
+                      widget.imageClick!();
                     },
                     child: FadeTransition(
                       opacity: _controller,
@@ -124,8 +124,7 @@ class _CustomCacheImageState extends State<CustomCacheImage>
                   ),
                 );
               }
-              //
-              break;
+
             case LoadState.failed:
               _controller.reset();
               return GestureDetector(
@@ -147,9 +146,9 @@ class _CustomCacheImageState extends State<CustomCacheImage>
                   state.reLoadImage();
                 },
               );
-              break;
+
           }
-          return null;
+
         },
         //cancelToken: cancellationToken,
       ),

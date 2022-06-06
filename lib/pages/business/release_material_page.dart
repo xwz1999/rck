@@ -4,7 +4,6 @@ import 'package:async/async.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart' as flutterImagePicker;
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -14,11 +13,9 @@ import 'package:recook/models/media_model.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/pages/live/models/video_goods_model.dart';
 import 'package:recook/pages/live/video/video_goods_page.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/image_picker.dart';
 import 'package:recook/widgets/image_selected_view.dart';
 import 'package:recook/widgets/recook/recook_list_tile.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
@@ -26,12 +23,12 @@ import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 // import 'package:photo/photo.dart';
 
 class ReleaseMaterialPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
   static final routeName = '/ReleaseMaterialPage';
 
-  ReleaseMaterialPage({Key key, this.arguments}) : super(key: key);
+  ReleaseMaterialPage({Key? key, this.arguments}) : super(key: key);
 
-  static setArguments({int goodsId}) {
+  static setArguments({int? goodsId}) {
     return {"goodsId": goodsId};
   }
 
@@ -44,7 +41,7 @@ class ReleaseMaterialPage extends StatefulWidget {
 class _ReleaseMaterialPage extends BaseStoreState<ReleaseMaterialPage> {
   String _contentText = "";
   List<MediaModel> _imageFiles = [];
-  VideoGoodsModel _goodsModel;
+  VideoGoodsModel? _goodsModel;
 
 //  GoodsDetailModelImpl _presenter;
 
@@ -116,18 +113,18 @@ class _ReleaseMaterialPage extends BaseStoreState<ReleaseMaterialPage> {
     showLoading("发布中...");
     await _uploadImages();
     Map<String, dynamic> params = {
-      "userId": UserManager.instance.user.info.id,
-      "goodsId": _goodsModel.id,
+      "userId": UserManager.instance!.user.info!.id,
+      "goodsId": _goodsModel!.id,
       "text": _contentText == null ? "" : _contentText,
     };
     List<Map<String, dynamic>> images = [];
     for (MediaModel media in _imageFiles) {
-      if (TextUtils.isEmpty(media.result.url)) {
-        showError("第${_imageFiles.indexOf(media) + 1}图片${media.result.msg}");
+      if (TextUtils.isEmpty(media.result!.url)) {
+        showError("第${_imageFiles.indexOf(media) + 1}图片${media.result!.msg}");
         return;
       }
       images.add({
-        "path": media.result.url,
+        "path": media.result!.url,
         "width": media.width,
         "height": media.height
       });
@@ -143,9 +140,9 @@ class _ReleaseMaterialPage extends BaseStoreState<ReleaseMaterialPage> {
     //   Navigator.pop(context);
     // });
     GoodsDetailModelImpl.getDetailMomentsCreate(params)
-        .then((HttpResultModel<BaseModel> resultModel) {
+        .then((HttpResultModel<BaseModel?> resultModel) {
       if (!resultModel.result) {
-        showError(resultModel.msg);
+        showError(resultModel.msg??'');
         return;
       }
       showSuccess("图文发布成功，等待平台审核").then((value) {
@@ -192,7 +189,7 @@ class _ReleaseMaterialPage extends BaseStoreState<ReleaseMaterialPage> {
   }
 
   _imageSelect() {
-    return ImageSelectedView<Uint8List>(
+    return ImageSelectedView<Uint8List?>(
       padding: EdgeInsets.all(rSize(10)),
       images: _imageFiles.map((MediaModel model) {
         return model.thumbData;
@@ -208,7 +205,7 @@ class _ReleaseMaterialPage extends BaseStoreState<ReleaseMaterialPage> {
             listener: (index) async {
           ActionSheet.dismiss(context);
           if (index == 0) {
-            List<AssetEntity> entitys = [];
+            List<AssetEntity?> entitys = [];
             var values = await CameraPicker.pickFromCamera(context);
             entitys.add(values);
 
@@ -217,8 +214,8 @@ class _ReleaseMaterialPage extends BaseStoreState<ReleaseMaterialPage> {
               }
 
             for (var element in entitys) {
-              File file = await element.file;
-              Uint8List thumbData = await element.thumbData;
+              File? file = await element!.file;
+              Uint8List? thumbData = await element.thumbData;
               if (_imageFiles.length < 9) {
                 _imageFiles.add(MediaModel(
                   width: element.width,
@@ -247,8 +244,8 @@ class _ReleaseMaterialPage extends BaseStoreState<ReleaseMaterialPage> {
             if (values == null) return;
             entitys.addAll(values);
             for (var element in entitys) {
-              File file = await element.file;
-              Uint8List thumbData = await element.thumbData;
+              File? file = await element.file;
+              Uint8List? thumbData = await element.thumbData;
               _imageFiles.add(MediaModel(
                 width: element.width,
                 height: element.height,
@@ -279,7 +276,7 @@ class _ReleaseMaterialPage extends BaseStoreState<ReleaseMaterialPage> {
   _relationGoods() {
     return RecookListTile(
       underline: false,
-      title: _goodsModel == null ? '添加关联产品' : _goodsModel.goodsName,
+      title: _goodsModel == null ? '添加关联产品' : _goodsModel!.goodsName,
       prefix: Image.asset(
         R.ASSETS_LIVE_UPLOAD_CART_PNG,
         width: rSize(16),
@@ -292,7 +289,7 @@ class _ReleaseMaterialPage extends BaseStoreState<ReleaseMaterialPage> {
               _goodsModel = model;
             },
           ),
-        ).then((value) {
+        )!.then((value) {
           setState(() {});
         });
       },

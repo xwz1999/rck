@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/order_list_model.dart';
@@ -15,7 +16,7 @@ import 'package:recook/pages/user/order/order_logistics_list_page.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
-typedef ItemClickListener = Function(OrderModel order, {VoidCallback callback});
+typedef ItemClickListener = Function(OrderModel? order, {VoidCallback? callback});
 
 class ShopOrderListItem extends StatefulWidget {
   /*
@@ -31,16 +32,16 @@ class ShopOrderListItem extends StatefulWidget {
     1:全部发货
     2:部分发货
     */
-  final OrderModel orderModel;
-  final ItemClickListener goToPay;
-  final ItemClickListener cancelOrder;
-  final ItemClickListener applyRefund;
-  final ItemClickListener applySalesReturn;
-  final ItemClickListener evaluation;
-  final ItemClickListener delete;
+  final OrderModel? orderModel;
+  final ItemClickListener? goToPay;
+  final ItemClickListener? cancelOrder;
+  final ItemClickListener? applyRefund;
+  final ItemClickListener? applySalesReturn;
+  final ItemClickListener? evaluation;
+  final ItemClickListener? delete;
 
   const ShopOrderListItem(
-      {Key key,
+      {Key? key,
       this.orderModel,
       this.goToPay,
       this.cancelOrder,
@@ -55,8 +56,8 @@ class ShopOrderListItem extends StatefulWidget {
 }
 
 class _ShopOrderListItemState extends State<ShopOrderListItem> {
-  String _status;
-  Color _color;
+  late String _status;
+  Color? _color;
 
   @override
   Widget build(BuildContext context) {
@@ -111,10 +112,10 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
       margin: EdgeInsets.only(top: rSize(5), left: rSize(10)),
       padding: EdgeInsets.only(top: rSize(5)),
       decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: Colors.grey[300], width: 0.3))),
+          border: Border(top: BorderSide(color: Colors.grey[300]!, width: 0.3))),
       child: Row(
         children: <Widget>[
-          widget.orderModel.expressStatus != 0
+          widget.orderModel!.expressStatus != 0
               ? CustomImageButton(
                   title: "查看物流",
                   color: Colors.grey[600],
@@ -124,21 +125,21 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
                   borderRadius: BorderRadius.all(Radius.circular(40)),
                   border: Border.all(color: Colors.grey, width: 0.8 * 2.w),
                   onPressed: () {
-                    AppRouter.push(context, RouteName.ORDER_LOGISTIC,
-                        arguments: OrderLogisticsListPage.setArguments(
-                            orderId: widget.orderModel.id));
+
+                    Get.to(()=>OrderLogisticsListPage(arguments: OrderLogisticsListPage.setArguments(
+                        orderId: widget.orderModel!.id)));
                   },
                 )
               : Container(),
           Spacer(),
           RichText(
               text: TextSpan(
-                  text: "共${widget.orderModel.totalGoodsCount}件商品  实付￥",
+                  text: "共${widget.orderModel!.totalGoodsCount}件商品  实付￥",
                   style: AppTextStyle.generate(13 * 2.sp),
                   children: [
                 TextSpan(
                     text:
-                        "${widget.orderModel.actualTotalAmount.toStringAsFixed(2)}",
+                        "${widget.orderModel!.actualTotalAmount!.toStringAsFixed(2)}",
                     style: AppTextStyle.generate(16 * 2.sp))
               ])),
         ],
@@ -169,7 +170,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
       borderRadius: BorderRadius.all(Radius.circular(40)),
       onPressed: () {
         if (widget.delete != null) {
-          widget.delete(widget.orderModel);
+          widget.delete!(widget.orderModel);
         }
         // if (widget.goToPay == null) return;
         // widget.goToPay(widget.orderModel, callback: () {
@@ -214,7 +215,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
           style: AppTextStyle.generate(
             14 * 2.sp,
           ),
-          title: widget.orderModel.createdAt,
+          title: widget.orderModel!.createdAt,
         ),
         Icon(
           AppIcons.icon_next,
@@ -232,7 +233,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
   }
 
   _orderStatus() {
-    switch (widget.orderModel.status) {
+    switch (widget.orderModel!.status) {
       case 0:
         _status = "未付款";
         _color = Color.fromARGB(255, 249, 61, 6);
@@ -263,11 +264,11 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
 
   _goodsList() {
     return ListView.builder(
-        itemCount: widget.orderModel.goodsList.length,
+        itemCount: widget.orderModel!.goodsList!.length,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: ((context, index) {
-          return _goodsItem(widget.orderModel.goodsList[index]);
+          return _goodsItem(widget.orderModel!.goodsList![index]);
         }));
   }
 
@@ -283,7 +284,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
             text: TextSpan(
                 // text: "运费: ￥${widget.orderModel.expressTotalFee.toStringAsFixed(2)}\n共${widget.orderModel.totalGoodsCount}件商品  小计￥",
                 text:
-                    "运费: ￥${widget.orderModel.expressTotalFee.toStringAsFixed(2)}",
+                    "运费: ￥${widget.orderModel!.expressTotalFee!.toStringAsFixed(2)}",
                 style: AppTextStyle.generate(12 * 2.sp, color: Colors.grey),
                 children: [
                   TextSpan(
@@ -325,7 +326,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
                   Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      goods.goodsName,
+                      goods.goodsName!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyle.generate(
@@ -345,7 +346,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 3, horizontal: 6),
                           child: Text(
-                            goods.skuName,
+                            goods.skuName!,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyle.generate(11 * 2.sp,
@@ -376,7 +377,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
                               color: AppColor.priceColor),
                         ),
                         TextSpan(
-                          text: "${(goods.goodsAmount-goods.coinAmount).toStringAsFixed(2)}",
+                          text: "${(goods.goodsAmount!-goods.coinAmount!).toStringAsFixed(2)}",
                           style: AppTextStyle.generate(14 * 2.sp,
                               color: AppColor.priceColor),
                         ),
@@ -388,7 +389,7 @@ class _ShopOrderListItemState extends State<ShopOrderListItem> {
                       ])),
                       Spacer(),
                       Text(
-                        goods.rStatus,
+                        goods.rStatus!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyle.generate(14 * 2.sp,

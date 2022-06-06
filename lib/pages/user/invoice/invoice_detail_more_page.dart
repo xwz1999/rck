@@ -8,11 +8,11 @@ class InvoiceDetailMorePage extends StatefulWidget {
   final TextEditingController bankNum;
   final TextEditingController message;
   InvoiceDetailMorePage({
-    Key key,
-    @required this.addr,
-    @required this.telephone,
-    @required this.bankNum,
-    @required this.message,
+    Key? key,
+    required this.addr,
+    required this.telephone,
+    required this.bankNum,
+    required this.message,
   }) : super(key: key);
 
   @override

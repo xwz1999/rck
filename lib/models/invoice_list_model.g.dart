@@ -9,10 +9,10 @@ part of 'invoice_list_model.dart';
 InvoiceListModel _$InvoiceListModelFromJson(Map<String, dynamic> json) {
   return InvoiceListModel(
       json['code'],
-      (json['data'] as List)
+      (json['data'] as List?)
           ?.map((e) =>
-              e == null ? null : Invoice.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+             Invoice.fromJson(e as Map<String, dynamic>))
+          .toList(),
       json['msg']);
 }
 

@@ -1,7 +1,7 @@
 class CommissionIncomeModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   CommissionIncomeModel({this.code, this.msg, this.data});
 
@@ -16,15 +16,15 @@ class CommissionIncomeModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<IncomeList> list;
-  Statistics statistics;
+  List<IncomeList>? list;
+  Statistics? statistics;
 
   Data({this.list, this.statistics});
 
@@ -32,7 +32,7 @@ class Data {
     if (json['list'] != null) {
       list = [];
       json['list'].forEach((v) {
-        list.add(new IncomeList.fromJson(v));
+        list!.add(new IncomeList.fromJson(v));
       });
     }
     statistics = json['statistics'] != null
@@ -43,21 +43,21 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.list != null) {
-      data['list'] = this.list.map((v) => v.toJson()).toList();
+      data['list'] = this.list!.map((v) => v.toJson()).toList();
     }
     if (this.statistics != null) {
-      data['statistics'] = this.statistics.toJson();
+      data['statistics'] = this.statistics!.toJson();
     }
     return data;
   }
 }
 
 class IncomeList {
-  int id;
-  num amount;
-  String title;
-  String comment;
-  String orderTime;
+  int? id;
+  num? amount;
+  String? title;
+  String? comment;
+  String? orderTime;
 
   IncomeList({this.id, this.amount, this.title, this.comment, this.orderTime});
 
@@ -81,9 +81,9 @@ class IncomeList {
 }
 
 class Statistics {
-  num orderCount;
-  num income;
-  num salesAmount;
+  num? orderCount;
+  num? income;
+  num? salesAmount;
 
   Statistics({this.orderCount, this.income, this.salesAmount});
 

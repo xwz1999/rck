@@ -9,11 +9,11 @@ typedef WidgetBuilder = Function();
 
 class SelectedList<T extends SelectedListItemChildModel>
     extends StatefulWidget {
-  final List<SelectedListItemModel<T>> data;
-  final SelectedItemClickListener listener;
-  final WidgetBuilder bottom;
+  final List<SelectedListItemModel<T>>? data;
+  final SelectedItemClickListener? listener;
+  final WidgetBuilder? bottom;
 
-  const SelectedList({Key key, this.data, this.listener, this.bottom})
+  const SelectedList({Key? key, this.data, this.listener, this.bottom})
       : super(key: key);
 
   @override
@@ -32,20 +32,20 @@ class _SelectedListState extends State<SelectedList> {
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 3),
         child: ListView.builder(
             itemCount: widget.bottom != null
-                ? widget.data.length + 1
-                : widget.data.length,
+                ? widget.data!.length + 1
+                : widget.data!.length,
             itemBuilder: (context, index) {
-              if (index == widget.data.length) {
-                return widget.bottom();
+              if (index == widget.data!.length) {
+                return widget.bottom!();
               }
 
               return SelectedListItem(
                 selectedBorderColor: Color(0xffc92219),
                 selectedTextColor: Color(0xffc92219),
-                itemModel: widget.data[index],
+                itemModel: widget.data![index],
                 itemClick: (int itemIndex) {
                   if (widget.listener != null) {
-                    widget.listener(index, itemIndex);
+                    widget.listener!(index, itemIndex);
                   }
                   setState(() {});
                 },
@@ -55,23 +55,23 @@ class _SelectedListState extends State<SelectedList> {
 }
 
 class SelectedListItem extends StatefulWidget {
-  final Color selectedBorderColor;
-  final Border radius;
+  final Color? selectedBorderColor;
+  final Border? radius;
   final Color selectedTextColor;
   final Color bgColor;
   final Color selectedBgColor;
-  final SelectedListItemModel itemModel;
+  final SelectedListItemModel? itemModel;
   final ItemClick itemClick;
 
   const SelectedListItem({
-    Key key,
+    Key? key,
     this.selectedBorderColor,
     this.radius,
     this.bgColor = AppColor.frenchColor,
     this.selectedBgColor = const Color.fromARGB(255, 255, 249, 249),
     this.itemModel,
     this.selectedTextColor = const Color.fromARGB(255, 248, 57, 12),
-    this.itemClick,
+    required this.itemClick,
   }) : super(key: key);
 
   @override
@@ -79,15 +79,15 @@ class SelectedListItem extends StatefulWidget {
 }
 
 class _SelectedListItemState extends State<SelectedListItem> {
-  int _index;
+  int? _index;
   bool _isFirstLoad = true;
 
   @override
   void initState() {
     super.initState();
-    _index = widget.itemModel.selectedIndex;
-    WidgetsBinding.instance.addPostFrameCallback((callback) {
-      widget.itemClick(widget.itemModel.selectedIndex);
+    _index = widget.itemModel!.selectedIndex;
+    WidgetsBinding.instance!.addPostFrameCallback((callback) {
+      widget.itemClick(widget.itemModel!.selectedIndex!);
     });
   }
 
@@ -103,7 +103,7 @@ class _SelectedListItemState extends State<SelectedListItem> {
               bottom: 8,
             ),
             child: Text(
-              widget.itemModel.sectionTitle,
+              widget.itemModel!.sectionTitle!,
               style: TextStyle(color: Colors.black, fontSize: 14 * 2.sp),
             ),
           ),
@@ -125,20 +125,17 @@ class _SelectedListItemState extends State<SelectedListItem> {
   _buildItems() {
     List<Widget> _items = [];
 
-    for (int index = 0; index < widget.itemModel.items.length; index++) {
-      SelectedListItemChildModel item = widget.itemModel.items[index];
-      if (widget.itemModel.items.length == 1 && _isFirstLoad) {
+    for (int index = 0; index < widget.itemModel!.items.length; index++) {
+      SelectedListItemChildModel item = widget.itemModel!.items[index];
+      if (widget.itemModel!.items.length == 1 && _isFirstLoad) {
         _isFirstLoad = false;
         setState(() {
           _index = index;
-          widget.itemModel.selectedIndex = index;
+          widget.itemModel!.selectedIndex = index;
         });
-        if (widget.itemClick != null) {
-          // widget.itemClick(index);
-        }
       }
-      print(widget.itemModel.selectedIndex);
-      bool selected = index == widget.itemModel.selectedIndex;
+      print(widget.itemModel!.selectedIndex);
+      bool selected = index == widget.itemModel!.selectedIndex;
       _items.add(GestureDetector(
         onTap: !item.canSelected
             ? null
@@ -146,15 +143,13 @@ class _SelectedListItemState extends State<SelectedListItem> {
                 setState(() {
                   if (selected) {
                     _index = null;
-                    widget.itemModel.selectedIndex = null;
+                    widget.itemModel!.selectedIndex = null;
                   } else {
                     _index = index;
-                    widget.itemModel.selectedIndex = index;
+                    widget.itemModel!.selectedIndex = index;
                   }
                 });
-                if (widget.itemClick != null) {
-                  widget.itemClick(index);
-                }
+                widget.itemClick(index);
               },
         child: Container(
           padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
@@ -172,7 +167,7 @@ class _SelectedListItemState extends State<SelectedListItem> {
           child: Opacity(
             opacity: !item.canSelected ? 0.3 : 1,
             child: Text(
-              item.itemTitle,
+              item.itemTitle!,
               textAlign: TextAlign.center,
               style: TextStyle(
                   color: selected ? widget.selectedTextColor : Colors.black,
@@ -189,9 +184,9 @@ class _SelectedListItemState extends State<SelectedListItem> {
 }
 
 class SelectedListItemModel<T extends SelectedListItemChildModel> {
-  String sectionTitle;
+  String? sectionTitle;
   List<T> items;
-  int selectedIndex;
+  int? selectedIndex;
 
   SelectedListItemModel(this.sectionTitle, this.items);
 }
@@ -200,9 +195,9 @@ class SelectedListItemModel<T extends SelectedListItemChildModel> {
   实现淘宝sku 可选不可选
  */
 class SelectedListItemChildModel {
-  String itemTitle;
+  String? itemTitle;
   bool canSelected;
-  int id;
+  int? id;
 
   SelectedListItemChildModel(
       {this.id, this.itemTitle, this.canSelected = true});
@@ -210,9 +205,9 @@ class SelectedListItemChildModel {
 
 
 class GoodsItem{
-  int id;
-  String name;
-  String value;
+  int? id;
+  String? name;
+  String? value;
 
 
   GoodsItem(

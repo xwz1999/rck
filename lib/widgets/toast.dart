@@ -29,10 +29,10 @@ class Toast {
   }
 
   static showCustomSuccess(msg,
-      {TextStyle textStyle,
-      ToastPosition position,
+      {TextStyle? textStyle,
+      ToastPosition? position,
       Color color = Colors.black,
-      Duration delayedDuration}) {
+      Duration? delayedDuration}) {
     Future.delayed(
         delayedDuration != null ? delayedDuration : Duration(seconds: 1), () {
       showToast(msg,
@@ -49,7 +49,7 @@ class Toast {
   }
 
   static showInfo(msg,
-      {Color color, Gravity gravity = Gravity.CENTER, int duration}) {
+      {Color? color, Gravity gravity = Gravity.CENTER, int? duration}) {
     if (color == null) {
       color = Colors.black87;
     }

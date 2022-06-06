@@ -16,7 +16,7 @@ abstract class FocusPresenterI extends MvpListViewPresenterI<MaterialModel, Focu
 }
 
 abstract class FocusModelI extends MvpModel{
-  fetchList(int userId, int page,);
+  fetchList(int? userId, int page,);
 }
 
 abstract class FocusViewI extends MvpView {

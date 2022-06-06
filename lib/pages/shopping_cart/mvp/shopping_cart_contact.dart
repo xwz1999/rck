@@ -22,17 +22,17 @@ abstract class ShoppingCartPresenterI
 }
 
 abstract class ShoppingCartModelI extends MvpModel {
-  getShoppingCartList(int userID);
+  getShoppingCartList(int? userID);
   addToShoppingCart(int userID, int skuID, String skuName, int quantity);
-  deleteFromShoppingCart(int userID, List<int> cartIDs);
-  updateQuantity(int userID, ShoppingCartGoodsModel goods, int quantity);
-  submitOrder(int userId, List<int> cardIds);
+  deleteFromShoppingCart(int? userID, List<int?> cartIDs);
+  updateQuantity(int? userID, ShoppingCartGoodsModel goods, int quantity);
+  submitOrder(int? userId, List<int?> cardIds);
 }
 
 abstract class ShoppingCartViewI extends MvpView {
   void updateNumSuccess(ShoppingCartGoodsModel goods, int num);
-  void updateNumFail(String msg);
+  void updateNumFail(String? msg);
   void deleteGoodsSuccess();
   void submitOrderSuccess(OrderPreviewModel model);
-  void failure(String msg);
+  void failure(String? msg);
 }

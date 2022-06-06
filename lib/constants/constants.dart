@@ -19,7 +19,7 @@ class Constants {
 }
 
 extension SeparateExt on List<Widget> {
-  List<Widget> sepWidget({Widget separate}) {
+  List<Widget> sepWidget({Widget? separate}) {
     if (this.length <= 1) return this;
     return List.generate(this.length * 2 - 1, (index) {
       if (index.isEven)
@@ -79,11 +79,11 @@ class AppPaths {
 }
 
 class DeviceInfo {
-  static double screenHeight;
-  static double screenWidth;
-  static double statusBarHeight;
-  static double bottomBarHeight;
-  static double devicePixelRatio;
+  static double? screenHeight;
+  static double? screenWidth;
+  static double? statusBarHeight;
+  static double? bottomBarHeight;
+  static double? devicePixelRatio;
   static double appBarHeight = 56;
 
   DeviceInfo.initial() {

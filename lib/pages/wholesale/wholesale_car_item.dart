@@ -17,19 +17,18 @@ typedef PlusMinusUpdateCallback = Function(
 class WholesaleCarItem extends StatefulWidget {
   final WholesaleCarModel model;
   final GoodsSelectedCallback selectedListener;
-  final GoodsClickCallback clickListener;
-  final PlusMinusUpdateCallback numUpdateCompleteCallback;
-  final TextInputChangeCallBack onBeginInput;
+  final GoodsClickCallback? clickListener;
+  final PlusMinusUpdateCallback? numUpdateCompleteCallback;
+  final TextInputChangeCallBack? onBeginInput;
   final bool isEdit;
   const WholesaleCarItem(
-      {Key key,
-        @required this.model,
-        @required this.selectedListener,
+      {Key? key,
+        required this.model,
+        required this.selectedListener,
         this.clickListener,
         this.numUpdateCompleteCallback,
         this.onBeginInput,
-        this.isEdit = false})
-      : assert(model != null);
+        this.isEdit = false});
 
   @override
   _WholesaleCarItemState createState() => _WholesaleCarItemState();
@@ -57,7 +56,7 @@ class _WholesaleCarItemState extends State<WholesaleCarItem> {
         width: 72.rw,
         height: 72.rw,
         // imageUrl: Api.getResizeImgUrl(goods.mainPhotoUrl, rSize(80).toInt()),
-        imageUrl: Api.getResizeImgUrl(goods.picUrl, rSize(200).toInt(),print: true),
+        imageUrl: Api.getResizeImgUrl(goods.picUrl!, rSize(200).toInt(),print: true),
         borderRadius: BorderRadius.all(Radius.circular(8.rw)),
       ),
     );
@@ -102,7 +101,7 @@ class _WholesaleCarItemState extends State<WholesaleCarItem> {
           ? () {}
           : () {
         if (widget.clickListener != null) {
-          widget.clickListener(goods);
+          widget.clickListener!(goods);
         }
       },
       child: Container(
@@ -195,7 +194,7 @@ class _WholesaleCarItemState extends State<WholesaleCarItem> {
                   if (widget
                       .numUpdateCompleteCallback !=
                       null) {
-                    widget.numUpdateCompleteCallback(
+                    widget.numUpdateCompleteCallback!(
                         widget.model, goodsNum);
                   }
                 },

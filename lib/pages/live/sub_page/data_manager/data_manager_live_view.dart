@@ -10,7 +10,7 @@ import 'package:recook/utils/date/recook_date_util.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class DatamanagerLiveView extends StatefulWidget {
-  DatamanagerLiveView({Key key}) : super(key: key);
+  DatamanagerLiveView({Key? key}) : super(key: key);
 
   @override
   _DatamanagerLiveViewState createState() => _DatamanagerLiveViewState();
@@ -31,7 +31,7 @@ class _DatamanagerLiveViewState extends State<DatamanagerLiveView>
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -73,9 +73,9 @@ class _DatamanagerLiveViewState extends State<DatamanagerLiveView>
 
   _buildListColumn(List<LiveDataListModel> models, int index) {
     final date =
-        DateTime.fromMillisecondsSinceEpoch(models[index].startAt * 1000);
+        DateTime.fromMillisecondsSinceEpoch(models[index].startAt! * 1000);
     final endDate =
-        DateTime.fromMillisecondsSinceEpoch(models[index].endAt * 1000);
+        DateTime.fromMillisecondsSinceEpoch(models[index].endAt! * 1000);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -92,7 +92,7 @@ class _DatamanagerLiveViewState extends State<DatamanagerLiveView>
                 ),
               );
             final beforeDate = DateTime.fromMillisecondsSinceEpoch(
-                models[index - 1].startAt * 1000);
+                models[index - 1].startAt! * 1000);
             if (beforeDate.year == date.year &&
                 beforeDate.month == date.month &&
                 beforeDate.day == date.day) {
@@ -131,8 +131,7 @@ class _DatamanagerLiveViewState extends State<DatamanagerLiveView>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Stack(
-                      overflow: Overflow.visible,
-                      children: [
+                      clipBehavior: Clip.none, children: [
                         Text(
                           '${DateUtil.formatDate(
                             date,
@@ -188,10 +187,10 @@ class _DatamanagerLiveViewState extends State<DatamanagerLiveView>
       'page': _page,
       'limit': 15,
     });
-    if (resultData?.data['data'] == null)
+    if (resultData.data['data'] == null)
       return [];
     else
-      return (resultData?.data['data'] as List)
+      return (resultData.data['data'] as List)
           .map((e) => LiveDataListModel.fromJson(e))
           .toList();
   }

@@ -22,8 +22,8 @@ class UserPresenterImpl extends UserMvpPresenterI {
   }
 
   @override
-  Future<HttpResultModel<UserBrief>> getUserBriefInfo(int userId) async {
-    ResultData resultData = await getModel().getUserBriefInfo(userId);
+  Future<HttpResultModel<UserBrief?>> getUserBriefInfo(int? userId) async {
+    ResultData resultData = await getModel()!.getUserBriefInfo(userId);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -35,8 +35,8 @@ class UserPresenterImpl extends UserMvpPresenterI {
   }
 
   @override
-  Future<HttpResultModel<BaseModel>> updateHeaderPic(int userId, String headUrl) async{
-    ResultData resultData = await getModel().updateHeaderPic(userId, headUrl);
+  Future<HttpResultModel<BaseModel?>> updateHeaderPic(int? userId, String? headUrl) async{
+    ResultData resultData = await getModel()!.updateHeaderPic(userId, headUrl);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -48,8 +48,8 @@ class UserPresenterImpl extends UserMvpPresenterI {
   }
 
   @override
-  Future<HttpResultModel<BaseModel>> updateUserNickname(int userId, String nickname) async{
-    ResultData resultData = await getModel().updateUserNickname(userId, nickname);
+  Future<HttpResultModel<BaseModel?>> updateUserNickname(int? userId, String nickname) async{
+    ResultData resultData = await getModel()!.updateUserNickname(userId, nickname);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -61,8 +61,8 @@ class UserPresenterImpl extends UserMvpPresenterI {
   }
 
   @override
-  updateBirthday(int userId, String birthday) async{
-    ResultData resultData = await getModel().updateBirthday(userId, birthday);
+  updateBirthday(int? userId, String birthday) async{
+    ResultData resultData = await getModel()!.updateBirthday(userId, birthday);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -74,8 +74,8 @@ class UserPresenterImpl extends UserMvpPresenterI {
   }
 
   @override
-  updateGender(int userId, int gender) async{
-    ResultData resultData = await getModel().updateGender(userId, gender);
+  updateGender(int? userId, int gender) async{
+    ResultData resultData = await getModel()!.updateGender(userId, gender);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -88,7 +88,7 @@ class UserPresenterImpl extends UserMvpPresenterI {
 
   @override
   realBinding(int userId, String idCardName, String idCardNo, String bankName, String bankNo) async{
-    ResultData resultData = await getModel().realBinding(userId, idCardName, idCardNo, bankName, bankNo)  ;
+    ResultData resultData = await getModel()!.realBinding(userId, idCardName, idCardNo, bankName, bankNo)  ;
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -100,8 +100,8 @@ class UserPresenterImpl extends UserMvpPresenterI {
   }
 
   @override
-  updateAddress(int userId, String address) async {
-    ResultData resultData = await getModel().updateAddress(userId, address);
+  updateAddress(int? userId, String address) async {
+    ResultData resultData = await getModel()!.updateAddress(userId, address);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -113,8 +113,8 @@ class UserPresenterImpl extends UserMvpPresenterI {
   }
 
   @override
-  updatePhone(int userId, String phone) async {
-    ResultData resultData = await getModel().updatePhone(userId, phone);
+  updatePhone(int? userId, String phone) async {
+    ResultData resultData = await getModel()!.updatePhone(userId, phone);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -126,8 +126,8 @@ class UserPresenterImpl extends UserMvpPresenterI {
   }
 
   @override
-  updateWechatNo(int userId, String wechatNo) async {
-    ResultData resultData = await getModel().updateWechatNo(userId, wechatNo);
+  updateWechatNo(int? userId, String wechatNo) async {
+    ResultData resultData = await getModel()!.updateWechatNo(userId, wechatNo);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -139,8 +139,8 @@ class UserPresenterImpl extends UserMvpPresenterI {
   }
   
   @override
-  realInfo(int userId, String realName, String idNum) async {
-    ResultData resultData = await getModel().realInfo(userId, realName, idNum);
+  realInfo(int? userId, String realName, String idNum) async {
+    ResultData resultData = await getModel()!.realInfo(userId, realName, idNum);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }

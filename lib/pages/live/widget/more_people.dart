@@ -3,16 +3,16 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 
 class MorePeople extends StatefulWidget {
-  final List<String> images;
+  final List<String>? images;
   final VoidCallback onTap;
-  MorePeople({Key key, this.images, @required this.onTap}) : super(key: key);
+  MorePeople({Key? key, this.images, required this.onTap}) : super(key: key);
 
   @override
   _MorePeopleState createState() => _MorePeopleState();
 }
 
 class _MorePeopleState extends State<MorePeople> {
-  int get size => widget.images.length;
+  int get size => widget.images!.length;
   @override
   void initState() {
     super.initState();
@@ -23,8 +23,7 @@ class _MorePeopleState extends State<MorePeople> {
     return GestureDetector(
       onTap: widget.onTap,
       child: Stack(
-        overflow: Overflow.visible,
-        children: [
+        clipBehavior: Clip.none, children: [
           rWBox(28 * 4 - 15.0),
           size >= 4 ? _buildMore() : SizedBox(height: rSize(28)),
           size >= 1 ? _buildAvatar(1) : SizedBox(height: rSize(28)),
@@ -40,7 +39,7 @@ class _MorePeopleState extends State<MorePeople> {
       height: rSize(28),
       width: rSize(28),
       alignment: Alignment.center,
-      child: Text(widget.images.length.toString()),
+      child: Text(widget.images!.length.toString()),
       decoration: BoxDecoration(
         color: Colors.black.withOpacity(0.1),
         borderRadius: BorderRadius.circular(rSize(14)),
@@ -55,7 +54,7 @@ class _MorePeopleState extends State<MorePeople> {
         borderRadius: BorderRadius.circular(rSize(14)),
         child: FadeInImage.assetNetwork(
           placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-          image: Api.getImgUrl(widget.images[index - 1]),
+          image: Api.getImgUrl(widget.images![index - 1])!,
           height: rSize(28),
           width: rSize(28),
         ),

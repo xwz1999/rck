@@ -21,17 +21,17 @@ import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class EvaluationGoodsModel {
-  int id;
-  String goodsName;
-  String mainPhotoUrl;
+  int? id;
+  String? goodsName;
+  String? mainPhotoUrl;
 
   EvaluationGoodsModel({this.id, this.goodsName, this.mainPhotoUrl});
 }
 
 class EvaluationModel {
-  EvaluationGoodsModel goods;
+  EvaluationGoodsModel? goods;
   String content;
-  List<MediaModel> imageFiles;
+  List<MediaModel>? imageFiles;
 
   EvaluationModel({this.goods, this.content = "", this.imageFiles}) {
     imageFiles = [];
@@ -39,11 +39,11 @@ class EvaluationModel {
 }
 
 class CreateMaterialPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  const CreateMaterialPage({Key key, this.arguments}) : super(key: key);
+  const CreateMaterialPage({Key? key, this.arguments}) : super(key: key);
 
-  static setArguments({int orderId, List<EvaluationGoodsModel> goodsList}) {
+  static setArguments({int? orderId, List<EvaluationGoodsModel>? goodsList}) {
     return {"orderId": orderId, "goodsList": goodsList};
   }
 
@@ -54,20 +54,20 @@ class CreateMaterialPage extends StatefulWidget {
 }
 
 class _CreateMaterialPageState extends BaseStoreState<CreateMaterialPage> {
-  OrderListPresenterImpl _presenter;
-  List<EvaluationModel> _evaluations;
-  List<EvaluationGoodsModel> _goodsList;
-  int _orderId;
+  late OrderListPresenterImpl _presenter;
+  late List<EvaluationModel> _evaluations;
+  List<EvaluationGoodsModel>? _goodsList;
+  int? _orderId;
 
   @override
   void initState() {
     super.initState();
     _presenter = OrderListPresenterImpl();
     _evaluations = [];
-    _goodsList = widget.arguments["goodsList"];
-    _orderId = widget.arguments["orderId"];
+    _goodsList = widget.arguments!["goodsList"];
+    _orderId = widget.arguments!["orderId"];
 
-    _goodsList.forEach((goods) {
+    _goodsList!.forEach((goods) {
       EvaluationModel evaluationModel = EvaluationModel(goods: goods);
       _evaluations.add(evaluationModel);
     });
@@ -109,26 +109,26 @@ class _CreateMaterialPageState extends BaseStoreState<CreateMaterialPage> {
     showLoading("");
     await _uploadImages();
     Map<String, dynamic> totalParams = {
-      "userId": UserManager.instance.user.info.id,
+      "userId": UserManager.instance!.user.info!.id,
       "orderId": _orderId
     };
     List<Map<String, dynamic>> evaluations = [];
     for (EvaluationModel evaluation in _evaluations) {
       if (TextUtils.isEmpty(evaluation.content) &&
-          evaluation.imageFiles.length == 0) continue;
+          evaluation.imageFiles!.length == 0) continue;
       Map<String, dynamic> params = {
-        "goodsID": evaluation.goods.id,
+        "goodsID": evaluation.goods!.id,
         "content": evaluation.content
       };
       List<Map<String, dynamic>> images = [];
-      for (MediaModel media in evaluation.imageFiles) {
-        if (TextUtils.isEmpty(media.result.url)) {
+      for (MediaModel media in evaluation.imageFiles!) {
+        if (TextUtils.isEmpty(media.result!.url)) {
           showError(
-              "第${_evaluations.indexOf(evaluation)}条评论的第${evaluation.imageFiles.indexOf(media) + 1}图片${media.result.msg}");
+              "第${_evaluations.indexOf(evaluation)}条评论的第${evaluation.imageFiles!.indexOf(media) + 1}图片${media.result!.msg}");
           return;
         }
         images.add({
-          "path": media.result.url,
+          "path": media.result!.url,
           "width": media.width,
           "height": media.height
         });
@@ -138,10 +138,10 @@ class _CreateMaterialPageState extends BaseStoreState<CreateMaterialPage> {
     }
     totalParams.addAll({"evaluations": evaluations});
 
-    HttpResultModel<BaseModel> resultModel =
+    HttpResultModel<BaseModel?> resultModel =
         await _presenter.publishEvaluation(totalParams);
     if (!resultModel.result) {
-      showError(resultModel.msg);
+      showError(resultModel.msg??'');
       return;
     }
 
@@ -153,7 +153,7 @@ class _CreateMaterialPageState extends BaseStoreState<CreateMaterialPage> {
   _uploadImages() async {
     FutureGroup group = FutureGroup();
     for (EvaluationModel model in _evaluations) {
-      group.add(HttpManager.uploadFiles(medias: model.imageFiles));
+      group.add(HttpManager.uploadFiles(medias: model.imageFiles!));
     }
     group.close();
     return group.future;

@@ -12,7 +12,6 @@ import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/progress/sc_dialog.dart';
 import 'package:recook/widgets/text_button.dart' as TButton;
 import 'package:recook/widgets/toast.dart';
 import 'package:recook/widgets/webView.dart';
@@ -25,20 +24,20 @@ class PhoneLoginPage extends StatefulWidget {
 }
 
 class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
-  TextEditingController _phoneController;
-  TextEditingController _smsCodeController;
-  TextEditingController _passController;
-  TextEditingController _accountController;
-  FocusNode _phoneNode;
-  FocusNode _smsCodeNode;
-  FocusNode _inviteNode;
-  FocusNode _passNode;
-  FocusNode _accountNode;
+  TextEditingController? _phoneController;
+  TextEditingController? _smsCodeController;
+  TextEditingController? _passController;
+  TextEditingController? _accountController;
+  FocusNode? _phoneNode;
+  FocusNode? _smsCodeNode;
+  FocusNode? _inviteNode;
+  FocusNode? _passNode;
+  FocusNode? _accountNode;
 
   String _title = "手机号登录";
 
   bool _chooseAgreement = false;
-  Timer _timer;
+  Timer? _timer;
   String _countDownStr = "获取验证码";
   int _countDownNum = 59;
   bool _getCodeEnable = false;
@@ -51,7 +50,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   void initState() {
     super.initState();
 
-    if (AppConfig.debug) {
+    if (AppConfig.debug!) {
       _smsCodeController = TextEditingController(text: "0716");
       _phoneController = TextEditingController(text: "18906611076");
       // _inviteController = TextEditingController();
@@ -85,7 +84,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
     _accountNode?.dispose();
 
     if (_timer != null) {
-      _timer.cancel();
+      _timer!.cancel();
       _timer = null;
     }
     super.dispose();
@@ -197,7 +196,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
       margin:
           EdgeInsets.only(top: 10.rw, right: 20.rw, left: 20.rw),
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[500], width: 0.5),
+          border: Border.all(color: Colors.grey[500]!, width: 0.5),
           borderRadius: BorderRadius.all(Radius.circular(3.rw))),
       child: TextField(
         controller: _phoneController,
@@ -224,11 +223,11 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
             contentPadding: EdgeInsets.only(
                 left: 10.rw,
                 top: 13.rw,
-                bottom: _phoneNode.hasFocus ? 0 : 14.rw),
+                bottom: _phoneNode!.hasFocus ? 0 : 14.rw),
             border: InputBorder.none,
             hintText: "请输入手机号",
             hintStyle: TextStyle(color: Colors.grey[400], fontSize: 15 * 2.sp),
-            suffixIcon: _clearButton(_phoneController, _phoneNode)),
+            suffixIcon: _clearButton(_phoneController, _phoneNode!)),
       ),
     );
   }
@@ -239,7 +238,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
       margin:
       EdgeInsets.only(top: 10.rw, right: 20.rw, left: 20.rw),
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[500], width: 0.5),
+          border: Border.all(color: Colors.grey[500]!, width: 0.5),
           borderRadius: BorderRadius.all(Radius.circular(3.rw))),
       child: TextField(
         controller: _accountController,
@@ -264,11 +263,11 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
             contentPadding: EdgeInsets.only(
                 left: 10.rw,
                 top: 13.rw,
-                bottom: _accountNode.hasFocus ? 0 : 14.rw),
+                bottom: _accountNode!.hasFocus ? 0 : 14.rw),
             border: InputBorder.none,
             hintText: "请输入账号",
             hintStyle: TextStyle(color: Colors.grey[400], fontSize: 15 * 2.sp),
-            suffixIcon: _clearButton(_accountController, _accountNode)),
+            suffixIcon: _clearButton(_accountController, _accountNode!)),
       ),
     );
   }
@@ -278,7 +277,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
       margin:
       EdgeInsets.only(top: 10.rw, right: 20.rw, left: 20.rw),
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[500], width: 0.5),
+          border: Border.all(color: Colors.grey[500]!, width: 0.5),
           borderRadius: BorderRadius.all(Radius.circular(3.rw))),
       child: TextField(
         controller: _passController,
@@ -299,11 +298,11 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
             contentPadding: EdgeInsets.only(
                 left: 10.rw,
                 top: 13.rw,
-                bottom: _passNode.hasFocus ? 0 : 14.rw),
+                bottom: _passNode!.hasFocus ? 0 : 14.rw),
             border: InputBorder.none,
             hintText: "请输入密码",
             hintStyle: TextStyle(color: Colors.grey[400], fontSize: 15 * 2.sp),
-            suffixIcon: _clearButton(_passController, _passNode)),
+            suffixIcon: _clearButton(_passController, _passNode!)),
       ),
     );
   }
@@ -340,7 +339,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   //   );
   // }
 
-  IconButton _clearButton(TextEditingController controller, FocusNode node) {
+  IconButton? _clearButton(TextEditingController? controller, FocusNode node) {
     return node.hasFocus
         ? IconButton(
             padding: EdgeInsets.zero,
@@ -350,7 +349,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
               color: Colors.grey[300],
             ),
             onPressed: () {
-              controller.clear();
+              controller!.clear();
             })
         : null;
   }
@@ -361,7 +360,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
       margin:
           EdgeInsets.only(top: 10.rw, right:20.rw, left: 20.rw),
       decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey[500], width: 0.5),
+          border: Border.all(color: Colors.grey[500]!, width: 0.5),
           borderRadius: BorderRadius.all(Radius.circular(3))),
       child: Row(
         children: <Widget>[
@@ -384,12 +383,12 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
                   contentPadding: EdgeInsets.only(
                       left: 10.rw,
                       top: 13.rw,
-                      bottom: _smsCodeNode.hasFocus ? 0 : 14.rw),
+                      bottom: _smsCodeNode!.hasFocus ? 0 : 14.rw),
                   border: InputBorder.none,
                   hintText: "请输入验证码",
                   hintStyle:
                       TextStyle(color: Colors.grey[400], fontSize: 14 * 2.sp),
-                  suffixIcon: _clearButton(_smsCodeController, _smsCodeNode)),
+                  suffixIcon: _clearButton(_smsCodeController, _smsCodeNode!)),
             ),
           ),
           TButton.TextButton(
@@ -400,10 +399,10 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
             font: 15 * 2.sp,
             unableTextColor: Colors.grey[400],
             highlightTextColor: Colors.grey[400],
-            border: Border(left: BorderSide(color: Colors.grey[500])),
+            border: Border(left: BorderSide(color: Colors.grey[500]!)),
             onTap: () {
               if (_chooseAgreement) {
-                if (!TextUtils.verifyPhone(_phoneController.text)) {
+                if (!TextUtils.verifyPhone(_phoneController!.text)) {
                   Toast.showError("手机号码格式不正确!");
                   return;
                 }
@@ -613,10 +612,10 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
 
 
   _accountLogin(BuildContext context) {
-    UserDao.accountLogin(_accountController.text, _passController.text,
+    UserDao.accountLogin(_accountController!.text, _passController!.text,
         success: (data, code, msg) {
           GSDialog.of(context).dismiss(context);
-          if (data.status == 0) {
+          if (data!.status == 0) {
             _phoneRegister(context);
             return;
             // AppRouter.push(context, RouteName.INPUT_INVITATION, arguments: InvitationCodePage.setArgs(mobile: _phoneController.text));
@@ -646,7 +645,7 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
           _countDownNum = 59;
           _countDownStr = "获取验证码";
           _getCodeEnable = true;
-          _timer.cancel();
+          _timer!.cancel();
           _timer = null;
           return;
         }
@@ -656,20 +655,20 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
   }
 
   _verifyLoginEnable() {
-    if (!TextUtils.verifyPhone(_phoneController.text)) {
+    if (!TextUtils.verifyPhone(_phoneController!.text)) {
       setState(() {
         _errorMsg = "手机号格式不正确,请检查";
       });
       return false;
     }
-    return _smsCodeController.text.length == 4;
+    return _smsCodeController!.text.length == 4;
   }
 
   /*
     获取验证码
    */
   _getSmsCode(_content) {
-    UserDao.sendSmsCode(_phoneController.text, success: (data, code, msg) {
+    UserDao.sendSmsCode(_phoneController!.text, success: (data, code, msg) {
       GSDialog.of(_content).dismiss(_content);
       Toast.showSuccess("验证码发送成功，请注意查收");
       _beginCountDown();
@@ -684,10 +683,10 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
     手机登录
    */
   _phoneLogin(BuildContext context) {
-    UserDao.phoneLogin(_phoneController.text, _smsCodeController.text,
+    UserDao.phoneLogin(_phoneController!.text, _smsCodeController!.text,
         success: (data, code, msg) {
       GSDialog.of(context).dismiss(context);
-      if (data.status == 0) {
+      if (data!.status == 0) {
         _phoneRegister(context);
         return;
         // AppRouter.push(context, RouteName.INPUT_INVITATION, arguments: InvitationCodePage.setArgs(mobile: _phoneController.text));
@@ -705,11 +704,11 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
 
   _phoneRegister(BuildContext context) {
     GSDialog.of(context).showLoadingDialog(context, "正在登录...");
-    UserDao.phoneRegister(_phoneController.text, '',
+    UserDao.phoneRegister(_phoneController!.text, '',
         success: (data, code, msg) {
       GSDialog.of(context).dismiss(context);
       AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
-      UserManager.updateUser(data, getStore());
+      UserManager.updateUser(data!, getStore());
 
     }, failure: (code, msg) {
       GSDialog.of(context).dismiss(context);

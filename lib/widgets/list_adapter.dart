@@ -11,7 +11,7 @@ abstract class BaseAdapter<T> {
 
   Widget createItem(BuildContext context, int index);
 
-  T getItem(int index) {
+  T? getItem(int index) {
     return _listData[index];
   }
 
@@ -23,9 +23,7 @@ abstract class BaseAdapter<T> {
 
   void replaceData(List<T> datas) {
     _listData.clear();
-    if (datas != null) {
-      _listData.addAll(datas);
-    }
+    _listData.addAll(datas);
   }
 
   int itemCount() {

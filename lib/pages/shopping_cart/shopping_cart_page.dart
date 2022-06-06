@@ -1,8 +1,7 @@
 
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -31,7 +30,7 @@ import 'function/shopping_cart_fuc.dart';
 class ShoppingCartPage extends StatefulWidget {
   final bool needSafeArea;
 
-  const ShoppingCartPage({Key key, this.needSafeArea = false})
+  const ShoppingCartPage({Key? key, this.needSafeArea = false})
       : super(key: key);
 
   @override
@@ -43,17 +42,17 @@ class ShoppingCartPage extends StatefulWidget {
 class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
     with MvpListViewDelegate<ShoppingCartBrandModel>
     implements ShoppingCartViewI {
-  ShoppingCartPresenterImpl _presenter;
-  MvpListViewController<ShoppingCartBrandModel> _controller;
+  ShoppingCartPresenterImpl? _presenter;
+  MvpListViewController<ShoppingCartBrandModel>? _controller;
   bool _checkAll = false;
   List<ShoppingCartGoodsModel> _selectedGoods = [];
-  GoodsSimpleListModel goodsSimpleListModel;
-  List<GoodsSimple> _likeGoodsList = [];
-  StateSetter _bottomStateSetter;
+  GoodsSimpleListModel? goodsSimpleListModel;
+  List<GoodsSimple>? _likeGoodsList = [];
+  late StateSetter _bottomStateSetter;
   int _totalNum = 0;
-  bool _manageStatus;
-  bool _editting;
-  BuildContext _context;
+  bool? _manageStatus;
+  late bool _editting;
+  BuildContext? _context;
   bool _onLoad = true;
 
   // @override
@@ -67,20 +66,20 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
     _manageStatus = false;
     _editting = false;
     _presenter = ShoppingCartPresenterImpl();
-    _presenter.attach(this);
+    _presenter!.attach(this);
     _controller = MvpListViewController();
     _selectedGoods = [];
 
 
-    _presenter.getShoppingCartList(UserManager.instance.user.info.id);
+    _presenter!.getShoppingCartList(UserManager.instance!.user.info!.id);
 
-    UserManager.instance.refreshShoppingCart.addListener(_refreshShoppingCart);
+    UserManager.instance!.refreshShoppingCart.addListener(_refreshShoppingCart);
     Future.delayed(Duration.zero, () async {
-      int userid;
-      if (UserManager.instance.user.info.id == null) {
+      int? userid;
+      if (UserManager.instance!.user.info!.id == null) {
         userid = 0;
       } else {
-        userid = UserManager.instance.user.info.id;
+        userid = UserManager.instance!.user.info!.id;
       }
       _likeGoodsList = await ShoppingCartFuc.getLikeGoodsList(userid);
       // if (goodsSimpleListModel != null) {
@@ -92,17 +91,17 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
   }
 
   _refreshShoppingCart() {
-    if (UserManager.instance.refreshShoppingCart.value) {
-      UserManager.instance.refreshShoppingCart.value = false;
+    if (UserManager.instance!.refreshShoppingCart.value) {
+      UserManager.instance!.refreshShoppingCart.value = false;
 
-      _controller.requestRefresh();
+      _controller!.requestRefresh();
 
     }
   }
 
   @override
   void dispose() {
-    UserManager.instance.refreshShoppingCart
+    UserManager.instance!.refreshShoppingCart
         .removeListener(_refreshShoppingCart);
     super.dispose();
   }
@@ -162,7 +161,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         actions: [
           CustomImageButton(
             padding: EdgeInsets.only(right: rSize(10), top: rSize(5)),
-            title: !_manageStatus ? "管理" : "完成",
+            title: !_manageStatus! ? "管理" : "完成",
             color: Color(0xFF666666),
             fontSize: 14 * 2.sp,
             onPressed: () {
@@ -171,16 +170,16 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
                 return;
               }
               for (ShoppingCartBrandModel _brandModel
-              in _controller.getData()) {
+              in _controller!.getData()) {
                 _brandModel.selected = false;
                 for (ShoppingCartGoodsModel _goodsModel
-                in _brandModel.children) {
+                in _brandModel.children!) {
                   _goodsModel.selected = false;
                 }
               }
               _checkAll = false;
               _selectedGoods.clear();
-              _manageStatus = !_manageStatus;
+              _manageStatus = !_manageStatus!;
               setState(() {});
             },
           )
@@ -199,8 +198,8 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         double totalPrice = 0;
         double totalCommission = 0;
         _selectedGoods.forEach((goods) {
-          totalPrice += (goods.price - goods.commission) * goods.quantity;
-          totalCommission += goods.commission * goods.quantity;
+          totalPrice += (goods.price! - goods.commission!) * goods.quantity!;
+          totalCommission += goods.commission! * goods.quantity!;
         });
         _bottomStateSetter = bottomSetState;
         return Container(
@@ -220,7 +219,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
     List<Widget> children = [];
     children..add(_checkAllButton())..add(Spacer());
 
-    if (_manageStatus) {
+    if (_manageStatus!) {
       children.add(_deleteButton());
       return children;
     }
@@ -276,9 +275,9 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
           }
 
           //ReToast.loading();
-          _presenter.submitOrder(
-              UserManager.instance.user.info.id,
-              _selectedGoods.map<int>((goods) {
+          _presenter!.submitOrder(
+              UserManager.instance!.user.info!.id,
+              _selectedGoods.map<int?>((goods) {
                 return goods.shoppingTrolleyId;
               }).toList());
         },
@@ -307,9 +306,9 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         _selectedGoods.clear();
         // 如果是编辑状态 可以选中所以
         // 如果不是编辑状态 只能选中未下架的商品
-        _controller.getData().forEach((brand) {
+        _controller!.getData().forEach((brand) {
           brand.selected = _checkAll;
-          brand.children.forEach((goods) {
+          brand.children!.forEach((goods) {
             if (_checkAll) {
               if(goods.publishStatus!=0){//判断是否下架
                 _selectedGoods.add(goods);
@@ -352,9 +351,9 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
               },
               type: NormalTextDialogType.delete,
               deleteListener: () {
-                _presenter.deleteFromShoppingCart(
-                    UserManager.instance.user.info.id,
-                    _selectedGoods.map<int>((goods) {
+                _presenter!.deleteFromShoppingCart(
+                    UserManager.instance!.user.info!.id,
+                    _selectedGoods.map<int?>((goods) {
                       return goods.shoppingTrolleyId;
                     }).toList());
               },
@@ -417,23 +416,23 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
           WaterfallFlow.builder(
               primary: false,
               shrinkWrap: true,
-              padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight),
+              padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight!),
               physics: NeverScrollableScrollPhysics(),
-              itemCount: _likeGoodsList?.length,
+              itemCount: _likeGoodsList!.length,
               gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
               itemBuilder: (context, index) {
-                GoodsSimple goods = _likeGoodsList[index];
+                GoodsSimple goods = _likeGoodsList![index];
 
                 return MaterialButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
                       AppRouter.push(context, RouteName.COMMODITY_PAGE,
                           arguments:
-                              CommodityDetailPage.setArguments(goods.id));
+                              CommodityDetailPage.setArguments(goods.id as int?));
                     },
                     child: BrandLikeGridItem(goods: goods));
               }),
@@ -461,21 +460,21 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         delegate: this,
         controller: _controller,
         itemBuilder: (context, index) {
-          return  (index == _controller.getData().length - 1
+          return  (index == _controller!.getData().length - 1
               ? _buildExtraItem(context, index)
               : _buildItem(context, index));
         },
         refreshCallback: ()async {
           // if (UserManager.instance.haveLogin){
           //_controller.getData().clear();
-          FocusManager.instance.primaryFocus.unfocus();
-          _presenter.getShoppingCartList(UserManager.instance.user.info.id);
+          FocusManager.instance.primaryFocus!.unfocus();
+          _presenter!.getShoppingCartList(UserManager.instance!.user.info!.id);
 
-            int userid;
-            if (UserManager.instance.user.info.id == null) {
+            int? userid;
+            if (UserManager.instance!.user.info!.id == null) {
               userid = 0;
             } else {
-              userid = UserManager.instance.user.info.id;
+              userid = UserManager.instance!.user.info!.id;
             }
             _likeGoodsList = await ShoppingCartFuc.getLikeGoodsList(userid);
             // if (goodsSimpleListModel != null) {
@@ -492,7 +491,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
     );
   }
 
-  noDataView(String text, {Widget icon}) {
+  noDataView(String text, {Widget? icon}) {
     return ListView(
       //height: double.infinity,
       children: <Widget>[
@@ -530,15 +529,15 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
     return ShoppingCartItem(
       isEdit: _manageStatus,
       //isEdit: true,
-      model: _controller.getData()[index],
+      model: _controller!.getData()[index],
       selectedListener: (ShoppingCartGoodsModel goods) {
-        bool goodsSelected = goods.selected;
+        bool? goodsSelected = goods.selected;
         if (_selectedGoods.contains(goods)) {
-          if (!goodsSelected) {
+          if (!goodsSelected!) {
             _selectedGoods.remove(goods);
           }
         } else {
-          if (goodsSelected) {
+          if (goodsSelected!) {
             _selectedGoods.add(goods);
           }
         }
@@ -557,7 +556,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         AppRouter.push(context, RouteName.COMMODITY_PAGE,
                 arguments: CommodityDetailPage.setArguments(goods.goodsId))
             .then((onValue) {
-          _controller.requestRefresh();
+          _controller!.requestRefresh();
         });
       },
       onBeginInput: (value) {
@@ -565,8 +564,8 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
       },
       numUpdateCompleteCallback: (goods, num) {
         _editting = false;
-        _presenter.updateQuantity(
-            UserManager.instance.user.info.id, goods, num);
+        _presenter!.updateQuantity(
+            UserManager.instance!.user.info!.id, goods, num);
       },
     );
   }
@@ -577,15 +576,15 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         ShoppingCartItem(
           isEdit: _manageStatus,
           //isEdit: true,
-          model: _controller.getData()[index],
+          model: _controller!.getData()[index],
           selectedListener: (ShoppingCartGoodsModel goods) {
-            bool goodsSelected = goods.selected;
+            bool? goodsSelected = goods.selected;
             if (_selectedGoods.contains(goods)) {
-              if (!goodsSelected) {
+              if (!goodsSelected!) {
                 _selectedGoods.remove(goods);
               }
             } else {
-              if (goodsSelected) {
+              if (goodsSelected!) {
                 _selectedGoods.add(goods);
               }
             }
@@ -604,7 +603,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
             AppRouter.push(context, RouteName.COMMODITY_PAGE,
                     arguments: CommodityDetailPage.setArguments(goods.goodsId))
                 .then((onValue) {
-              _controller.requestRefresh();
+              _controller!.requestRefresh();
             });
           },
           onBeginInput: (value) {
@@ -612,8 +611,8 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
           },
           numUpdateCompleteCallback: (goods, num) {
             _editting = false;
-            _presenter.updateQuantity(
-                UserManager.instance.user.info.id, goods, num);
+            _presenter!.updateQuantity(
+                UserManager.instance!.user.info!.id, goods, num);
           },
         ),
         _likeGoodsList!=null ? _buildLikeWidget() : SizedBox(),
@@ -630,13 +629,13 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
     _selectedGoods.clear();
     _totalNum = 0;
     data.forEach((brand) {
-      _totalNum += brand.children.length;
+      _totalNum += brand.children!.length;
     });
     setState(() {});
   }
 
   @override
-  MvpListViewPresenterI<ShoppingCartBrandModel, MvpView, MvpModel>
+  MvpListViewPresenterI<ShoppingCartBrandModel, MvpView, MvpModel>?
       getPresenter() {
     return _presenter;
   }
@@ -645,11 +644,11 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
   void updateNumSuccess(ShoppingCartGoodsModel goods, int num) {
     goods.quantity = num;
     setState(() {});
-    UserManager.instance.refreshShoppingCartNumber.value = true;
+    UserManager.instance!.refreshShoppingCartNumber.value = true;
   }
 
   @override
-  void updateNumFail(String msg) {
+  void updateNumFail(String? msg) {
     Toast.showError(msg);
     setState(() {});
   }
@@ -658,23 +657,27 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
   void deleteGoodsSuccess() {
     Toast.showInfo("删除成功");
     if (_context != null) {
-      Alert.dismiss(_context);
+      Alert.dismiss(_context!);
     }
     setState(() {
       _manageStatus = false;
     });
-    _presenter.getShoppingCartList(UserManager.instance.user.info.id);
+    _presenter!.getShoppingCartList(UserManager.instance!.user.info!.id);
 
-    UserManager.instance.refreshShoppingCartNumber.value = true;
+    UserManager.instance!.refreshShoppingCartNumber.value = true;
   }
 
   @override
   void submitOrderSuccess(OrderPreviewModel model) {
-    AppRouter.push(context, RouteName.GOODS_ORDER_PAGE,
-            arguments: GoodsOrderPage.setArguments(model))
-        .then((value) {
-      _controller.requestRefresh();
+    Get.to(()=>GoodsOrderPage(arguments: GoodsOrderPage.setArguments(model)))!.then((value) {
+      _controller!.requestRefresh();
     });
+
+    // AppRouter.push(context, RouteName.GOODS_ORDER_PAGE,
+    //         arguments: GoodsOrderPage.setArguments(model))
+    //     .then((value) {
+    //   _controller!.requestRefresh();
+    // });
   }
 
   @override
@@ -684,7 +687,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
   void onDetach() {}
 
   @override
-  void failure(String msg) {
+  void failure(String? msg) {
     ReToast.err(text: msg);
   }
 }

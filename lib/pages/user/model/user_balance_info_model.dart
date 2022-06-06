@@ -1,7 +1,7 @@
 class UserBalanceInfoModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   UserBalanceInfoModel({this.code, this.msg, this.data});
 
@@ -21,15 +21,15 @@ class UserBalanceInfoModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  num balance;
-  num totalWithdraw;
+  num? balance;
+  num? totalWithdraw;
 
   Data({this.balance, this.totalWithdraw});
 

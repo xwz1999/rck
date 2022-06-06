@@ -10,12 +10,12 @@ class LiveAnimate extends StatefulWidget {
   final Duration duration;
 
   const LiveAnimate(
-      {Key key,
-      @required this.size,
-      @required this.strokeWidth,
-      @required this.place,
-      @required this.delay,
-      @required this.duration})
+      {Key? key,
+      required this.size,
+      required this.strokeWidth,
+      required this.place,
+      required this.delay,
+      required this.duration})
       : super(key: key);
 
   @override
@@ -24,8 +24,8 @@ class LiveAnimate extends StatefulWidget {
 
 class _LiveAnimateState extends State<LiveAnimate>
     with TickerProviderStateMixin {
-  AnimationController _controller;
-  Animation _animation;
+  late AnimationController _controller;
+  late Animation _animation;
 
   @override
   void initState() {

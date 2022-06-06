@@ -1,50 +1,50 @@
 class UserIncomeDataModel {
-  num eCount1;
-  num eAmount1;
-  num count1;
-  num amount1;
-  num eCount2;
-  num eAmount2;
-  num eCount3;
-  num eAmount3;
-  num eCount4;
-  num eAmount4;
+  num? eCount1;
+  num? eAmount1;
+  num? count1;
+  num? amount1;
+  num? eCount2;
+  num? eAmount2;
+  num? eCount3;
+  num? eAmount3;
+  num? eCount4;
+  num? eAmount4;
 
-  num count2;
-  num amount2;
-  num count3;
-  num amount3;
-  num count4;
-  num amount4;
+  num? count2;
+  num? amount2;
+  num? count3;
+  num? amount3;
+  num? count4;
+  num? amount4;
 
-  num eCount5;
-  num eAmount5;
-  num count5;
-  num amount5;
+  num? eCount5;
+  num? eAmount5;
+  num? count5;
+  num? amount5;
 
-  num eCount6;
-  num eAmount6;
-  num count6;
-  num amount6;
+  num? eCount6;
+  num? eAmount6;
+  num? count6;
+  num? amount6;
 
-  num eCount7;
-  num eAmount7;
-  num count7;
-  num amount7;
+  num? eCount7;
+  num? eAmount7;
+  num? count7;
+  num? amount7;
 
-  num count10;
-  num amount10;
-
-
-  num total;
-  num eTotal;
+  num? count10;
+  num? amount10;
 
 
-  num yearSale;
-  num monthSale;
-  num yearCount;
-  num monthCount;
-  num totalSale;
+  num? total;
+  num? eTotal;
+
+
+  num? yearSale;
+  num? monthSale;
+  num? yearCount;
+  num? monthCount;
+  num? totalSale;
 
 
 

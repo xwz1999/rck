@@ -6,9 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
-import 'dart:typed_data';
 import 'dart:ui' as ui show instantiateImageCodec, Codec, Image;
 import 'dart:ui';
 
@@ -46,7 +44,7 @@ abstract class ProgressIndicator extends StatefulWidget {
   /// for determinate progress indicators to indicate how much progress has been made.
   /// {@endtemplate}
   const ProgressIndicator({
-    Key  key,
+    Key?  key,
     this.value,
     this.backgroundColor,
     this.valueColor,
@@ -64,7 +62,7 @@ abstract class ProgressIndicator extends StatefulWidget {
   ///
   /// This property is ignored if used in an adaptive constructor inside an iOS
   /// environment.
-  final double  value;
+  final double?  value;
 
   /// The progress indicator's background color.
   ///
@@ -72,7 +70,7 @@ abstract class ProgressIndicator extends StatefulWidget {
   ///
   /// This property is ignored if used in an adaptive constructor inside an iOS
   /// environment.
-  final Color  backgroundColor;
+  final Color?  backgroundColor;
 
   /// The progress indicator's color as an animated value.
   ///
@@ -83,7 +81,7 @@ abstract class ProgressIndicator extends StatefulWidget {
   ///
   /// This property is ignored if used in an adaptive constructor inside an iOS
   /// environment.
-  final Animation<Color >  valueColor;
+  final Animation<Color >?  valueColor;
 
   /// {@template flutter.progress_indicator.ProgressIndicator.semanticsLabel}
   /// The [SemanticsProperties.label] for this progress indicator.
@@ -95,7 +93,7 @@ abstract class ProgressIndicator extends StatefulWidget {
   /// This property is ignored if used in an adaptive constructor inside an iOS
   /// environment.
   /// {@endtemplate}
-  final String  semanticsLabel;
+  final String?  semanticsLabel;
 
   /// {@template flutter.progress_indicator.ProgressIndicator.semanticsValue}
   /// The [SemanticsProperties.value] for this progress indicator.
@@ -112,7 +110,7 @@ abstract class ProgressIndicator extends StatefulWidget {
   /// This property is ignored if used in an adaptive constructor inside an iOS
   /// environment.
   /// {@endtemplate}
-  final String  semanticsValue;
+  final String?  semanticsValue;
 
   Color _getBackgroundColor(BuildContext context) => backgroundColor ?? Theme.of(context).backgroundColor;
   Color _getValueColor(BuildContext context) => valueColor?.value ?? Theme.of(context).accentColor;
@@ -124,12 +122,12 @@ abstract class ProgressIndicator extends StatefulWidget {
   }
 
   Widget _buildSemanticsWrapper({
-     @required BuildContext context,
-     @required Widget child,
+     required BuildContext context,
+     required Widget child,
   }) {
-    String  expandedSemanticsValue = semanticsValue;
+    String?  expandedSemanticsValue = semanticsValue;
     if (value != null) {
-      expandedSemanticsValue ??= '${(value * 100).round()}%';
+      expandedSemanticsValue ??= '${(value! * 100).round()}%';
     }
     return Semantics(
       label: semanticsLabel,
@@ -142,17 +140,17 @@ abstract class ProgressIndicator extends StatefulWidget {
 class _TencentLinearProgressIndicatorPainter extends CustomPainter {
   const _TencentLinearProgressIndicatorPainter({
     this.image,
-     @required this.backgroundColor,
-     @required this.valueColor,
+     required this.backgroundColor,
+     required this.valueColor,
     this.value,
-     @required this.animationValue,
-     @required this.textDirection,
-  }) : assert(textDirection != null);
+     required this.animationValue,
+     required this.textDirection,
+  });
 
   final Color backgroundColor;
-  final ui.Image  image;
+  final ui.Image?  image;
   final Color valueColor;
-  final double  value;
+  final double?  value;
   final double animationValue;
   final TextDirection textDirection;
 
@@ -192,7 +190,7 @@ class _TencentLinearProgressIndicatorPainter extends CustomPainter {
       if (width <= 0.0)
         return;
 
-      double left;
+      late double left;
       switch (textDirection) {
         case TextDirection.rtl:
           left = size.width - width - x;
@@ -205,9 +203,9 @@ class _TencentLinearProgressIndicatorPainter extends CustomPainter {
     }
 
     if (value != null) {
-      drawBar(0, value.clamp(0.0, 1.0) * size.width+2);
+      drawBar(0, value!.clamp(0.0, 1.0) * size.width+2);
       if (image != null) {
-        canvas.drawImageRect(image, Offset(0.0, 0.0) & Size(image.width.toDouble(), image.height.toDouble()), Offset(value.clamp(0.0, 1.0) * size.width, -8.0) & Size(20, 20), paint);
+        canvas.drawImageRect(image!, Offset(0.0, 0.0) & Size(image!.width.toDouble(), image!.height.toDouble()), Offset(value!.clamp(0.0, 1.0) * size.width, -8.0) & Size(20, 20), paint);
       }
     } else {
       final double x1 = size.width * line1Tail.transform(animationValue);
@@ -312,13 +310,13 @@ class TencentLinearProgressIndicator extends ProgressIndicator {
   ///
   /// {@macro flutter.material.ProgressIndicator.ProgressIndicator}
   const TencentLinearProgressIndicator({
-    Key  key,
-    double  value,
-    Color  backgroundColor,
-    Animation<Color >  valueColor,
+    Key?  key,
+    double?  value,
+    Color?  backgroundColor,
+    Animation<Color >?  valueColor,
     this.minHeight,
-    String  semanticsLabel,
-    String  semanticsValue,
+    String?  semanticsLabel,
+    String?  semanticsValue,
   }) : assert(minHeight == null || minHeight > 0),
         super(
         key: key,
@@ -332,14 +330,14 @@ class TencentLinearProgressIndicator extends ProgressIndicator {
   /// The minimum height of the line used to draw the indicator.
   ///
   /// This defaults to 4dp.
-  final double  minHeight;
+  final double?  minHeight;
 
   @override
   _TencentLinearProgressIndicatorState createState() => _TencentLinearProgressIndicatorState();
 }
 
 class _TencentLinearProgressIndicatorState extends State<TencentLinearProgressIndicator> with SingleTickerProviderStateMixin {
-   AnimationController _controller;
+   late AnimationController _controller;
 
   @override
   void initState() {
@@ -394,17 +392,15 @@ class _TencentLinearProgressIndicatorState extends State<TencentLinearProgressIn
     );
   }
 
-  ui.Image  image;
+  ui.Image?  image;
 
-  Future<VoidCallback > initImage() async {
+  Future<VoidCallback? > initImage() async {
     image = await _loadImage(Assets.static.playerProgressImg.path);
     return null;
   }
 
 
-  /**
-   * 通过assets路径，获取资源图片
-   */
+  /// 通过assets路径，获取资源图片
   Future<ui.Image> _loadImage(String assets) async {
     final ByteData data = await rootBundle.load(assets);
     if (data == null) throw 'Unable to read data';
@@ -422,7 +418,7 @@ class _TencentLinearProgressIndicatorState extends State<TencentLinearProgressIn
 
     return AnimatedBuilder(
       animation: _controller.view,
-      builder: (BuildContext context, Widget  child) {
+      builder: (BuildContext context, Widget?  child) {
         return _buildIndicator(context, _controller.value, textDirection);
       },
     );
@@ -432,13 +428,13 @@ class _TencentLinearProgressIndicatorState extends State<TencentLinearProgressIn
 class _CircularProgressIndicatorPainter extends CustomPainter {
   _CircularProgressIndicatorPainter({
     this.backgroundColor,
-     @required this.valueColor,
-     @required this.value,
-     @required this.headValue,
-     @required this.tailValue,
-     @required this.offsetValue,
-     @required this.rotationValue,
-     @required this.strokeWidth,
+     required this.valueColor,
+     required this.value,
+     required this.headValue,
+     required this.tailValue,
+     required this.offsetValue,
+     required this.rotationValue,
+     required this.strokeWidth,
   }) : arcStart = value != null
       ? _startAngle
       : _startAngle + tailValue * 3 / 2 * math.pi + rotationValue * math.pi * 2.0 + offsetValue * 0.5 * math.pi,
@@ -446,9 +442,9 @@ class _CircularProgressIndicatorPainter extends CustomPainter {
             ? value.clamp(0.0, 1.0) * _sweep
             : math.max(headValue * 3 / 2 * math.pi - tailValue * 3 / 2 * math.pi, _epsilon);
 
-  final Color  backgroundColor;
+  final Color?  backgroundColor;
   final Color valueColor;
-  final double  value;
+  final double?  value;
   final double headValue;
   final double tailValue;
   final double offsetValue;
@@ -471,7 +467,7 @@ class _CircularProgressIndicatorPainter extends CustomPainter {
       ..style = PaintingStyle.stroke;
     if (backgroundColor != null) {
       final Paint backgroundPaint = Paint()
-        ..color = backgroundColor
+        ..color = backgroundColor!
         ..strokeWidth = strokeWidth
         ..style = PaintingStyle.stroke;
       canvas.drawArc(Offset.zero & size, 0, _sweep, false, backgroundPaint);
@@ -575,13 +571,13 @@ class CircularProgressIndicator extends ProgressIndicator {
   ///
   /// {@macro flutter.material.ProgressIndicator.ProgressIndicator}
   const CircularProgressIndicator({
-    Key  key,
-    double  value,
-    Color  backgroundColor,
-    Animation<Color >  valueColor,
+    Key?  key,
+    double?  value,
+    Color?  backgroundColor,
+    Animation<Color >?  valueColor,
     this.strokeWidth = 4.0,
-    String  semanticsLabel,
-    String  semanticsValue,
+    String?  semanticsLabel,
+    String?  semanticsValue,
   }) : _indicatorType = _ActivityIndicatorType.material,
         super(
         key: key,
@@ -601,13 +597,13 @@ class CircularProgressIndicator extends ProgressIndicator {
   ///
   /// {@macro flutter.material.ProgressIndicator.ProgressIndicator}
   const CircularProgressIndicator.adaptive({
-    Key  key,
-    double  value,
-    Color  backgroundColor,
-    Animation<Color >  valueColor,
+    Key?  key,
+    double?  value,
+    Color?  backgroundColor,
+    Animation<Color >?  valueColor,
     this.strokeWidth = 4.0,
-    String  semanticsLabel,
-    String  semanticsValue,
+    String?  semanticsLabel,
+    String?  semanticsValue,
   }) : _indicatorType = _ActivityIndicatorType.adaptive,
         super(
         key: key,
@@ -647,7 +643,7 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator> w
   static final Animatable<double> _offsetTween = CurveTween(curve: const SawTooth(_pathCount));
   static final Animatable<double> _rotationTween = CurveTween(curve: const SawTooth(_rotationCount));
 
-   AnimationController _controller;
+   late AnimationController _controller;
 
   @override
   void initState() {
@@ -706,7 +702,7 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator> w
   Widget _buildAnimation() {
     return AnimatedBuilder(
       animation: _controller,
-      builder: (BuildContext context, Widget  child) {
+      builder: (BuildContext context, Widget?  child) {
         return _buildMaterialIndicator(
           context,
           _strokeHeadTween.evaluate(_controller),
@@ -727,7 +723,6 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator> w
         return _buildAnimation();
       case _ActivityIndicatorType.adaptive:
         final ThemeData theme = Theme.of(context);
-        assert(theme.platform != null);
         switch (theme.platform) {
           case TargetPlatform.iOS:
           case TargetPlatform.macOS:
@@ -746,14 +741,14 @@ class _CircularProgressIndicatorState extends State<CircularProgressIndicator> w
 
 class _RefreshProgressIndicatorPainter extends _CircularProgressIndicatorPainter {
   _RefreshProgressIndicatorPainter({
-     @required Color valueColor,
-     @required double  value,
-     @required double headValue,
-     @required double tailValue,
-     @required double offsetValue,
-     @required double rotationValue,
-     @required double strokeWidth,
-     @required this.arrowheadScale,
+     required Color valueColor,
+     required double?  value,
+     required double headValue,
+     required double tailValue,
+     required double offsetValue,
+     required double rotationValue,
+     required double strokeWidth,
+     required this.arrowheadScale,
   }) : super(
     valueColor: valueColor,
     value: value,
@@ -822,13 +817,13 @@ class RefreshProgressIndicator extends CircularProgressIndicator {
   ///
   /// {@macro flutter.material.ProgressIndicator.ProgressIndicator}
   const RefreshProgressIndicator({
-    Key  key,
-    double  value,
-    Color  backgroundColor,
-    Animation<Color >  valueColor,
+    Key?  key,
+    double?  value,
+    Color?  backgroundColor,
+    Animation<Color >?  valueColor,
     double strokeWidth = 2.0, // Different default than CircularProgressIndicator.
-    String  semanticsLabel,
-    String  semanticsValue,
+    String?  semanticsLabel,
+    String?  semanticsValue,
   }) : super(
     key: key,
     value: value,
@@ -853,7 +848,7 @@ class _RefreshProgressIndicatorState extends _CircularProgressIndicatorState {
   @override
   Widget build(BuildContext context) {
     if (widget.value != null)
-      _controller.value = widget.value * (1333 / 2 / _kIndeterminateCircularDuration);
+      _controller.value = widget.value! * (1333 / 2 / _kIndeterminateCircularDuration);
     else if (!_controller.isAnimating)
       _controller.repeat();
     return _buildAnimation();
@@ -861,7 +856,7 @@ class _RefreshProgressIndicatorState extends _CircularProgressIndicatorState {
 
   @override
   Widget _buildMaterialIndicator(BuildContext context, double headValue, double tailValue, double offsetValue, double rotationValue) {
-    final double arrowheadScale = widget.value == null ? 0.0 : (widget.value * 2.0).clamp(0.0, 1.0);
+    final double arrowheadScale = widget.value == null ? 0.0 : (widget.value! * 2.0).clamp(0.0, 1.0);
     return widget._buildSemanticsWrapper(
       context: context,
       child: Container(

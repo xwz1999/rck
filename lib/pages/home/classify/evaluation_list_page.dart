@@ -20,11 +20,11 @@ import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 
 class EvaluationListPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  const EvaluationListPage({Key key, @required this.arguments}) : super(key: key);
+  const EvaluationListPage({Key? key, required this.arguments}) : super(key: key);
 
-  static setArguments({@required int goodsId}) {
+  static setArguments({required int? goodsId}) {
     return {
       "goodsId": goodsId
     };
@@ -37,16 +37,16 @@ class EvaluationListPage extends StatefulWidget {
 }
 
 class _EvaluationListPageState extends BaseStoreState<EvaluationListPage> with MvpListViewDelegate<Data> {
-  EvaluationPresenterImpl _presenter;
-  MvpListViewController<Data> _controller;
+  EvaluationPresenterImpl? _presenter;
+  MvpListViewController<Data>? _controller;
 
-  int _goodsId;
+  int? _goodsId;
 
   @override
   void initState() {
     super.initState();
     _controller = MvpListViewController();
-    _goodsId = widget.arguments["goodsId"];
+    _goodsId = widget.arguments!["goodsId"];
     _presenter = EvaluationPresenterImpl();
   }
 
@@ -68,10 +68,10 @@ class _EvaluationListPageState extends BaseStoreState<EvaluationListPage> with M
       delegate: this,
       controller: _controller,
       itemBuilder: (BuildContext context, int index) {
-        return EvaluationItem(evaluation: _controller.getData()[index],);
+        return EvaluationItem(evaluation: _controller!.getData()[index],);
       },
       refreshCallback: () {
-        _presenter.getEvaluationList(UserManager.instance.user.info.id, _goodsId, 0);
+        _presenter!.getEvaluationList(UserManager.instance!.user.info!.id, _goodsId, 0);
       },
       loadMoreCallback: (int page) {
 
@@ -81,7 +81,7 @@ class _EvaluationListPageState extends BaseStoreState<EvaluationListPage> with M
   }
 
   @override
-  MvpListViewPresenterI<Data, MvpView, MvpModel> getPresenter() {
+  MvpListViewPresenterI<Data, MvpView, MvpModel>? getPresenter() {
     return _presenter;
   }
 }

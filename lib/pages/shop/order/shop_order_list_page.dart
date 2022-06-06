@@ -26,10 +26,10 @@ import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 enum ShopOrderListType { all, undelivered, delivered, receipt , afterSale ,}
 
 class ShopOrderListPage extends StatefulWidget {
-  final ShopOrderListType type;
+  final ShopOrderListType? type;
   final OrderPositionType positionType;
-  final OrderListController controller;
-  const ShopOrderListPage({Key key, this.type, this.positionType = OrderPositionType.onlineOrder, this.controller}) : super(key: key);
+  final OrderListController? controller;
+  const ShopOrderListPage({Key? key, this.type, this.positionType = OrderPositionType.onlineOrder, this.controller}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -40,8 +40,8 @@ class ShopOrderListPage extends StatefulWidget {
 class _ShopOrderListPageState extends BaseStoreState<ShopOrderListPage>
     with MvpListViewDelegate<OrderModel>
     implements OrderListViewI {
-  OrderListPresenterImpl _presenter;
-  MvpListViewController<OrderModel> _controller;
+  OrderListPresenterImpl? _presenter;
+  MvpListViewController<OrderModel>? _controller;
 
   @override
   bool get wantKeepAlive {
@@ -49,20 +49,20 @@ class _ShopOrderListPageState extends BaseStoreState<ShopOrderListPage>
   }
 
   @override
-  MvpListViewPresenterI<OrderModel, MvpView, MvpModel> getPresenter() {
+  MvpListViewPresenterI<OrderModel, MvpView, MvpModel>? getPresenter() {
     return _presenter;
   }
 
   @override
   void initState() {
     super.initState();
-    widget.controller.refresh = (){
+    widget.controller!.refresh = (){
       if (mounted && _controller!=null) {
-        _controller.requestRefresh();
+        _controller!.requestRefresh();
       }
     };
     _presenter = OrderListPresenterImpl();
-    _presenter.attach(this);
+    _presenter!.attach(this);
     _controller = MvpListViewController();
   }
 
@@ -73,28 +73,28 @@ class _ShopOrderListPageState extends BaseStoreState<ShopOrderListPage>
       controller: _controller,
       pageSize: 10,
       itemClickListener: (index) {
-        OrderModel orderModel = _controller.getData()[index];
-        AppRouter.push(globalContext, RouteName.SHOP_ORDER_DETAIL,
+        OrderModel orderModel = _controller!.getData()[index];
+        AppRouter.push(globalContext!, RouteName.SHOP_ORDER_DETAIL,
                 arguments: ShopOrderDetailPage.setArguments(orderModel.id,false))
             .then(((result) {
           if (result == null) return;
           DPrint.printf(result);
           setState(() {
-            orderModel.status = result;
+            orderModel.status = result as int?;
           });
         }));
       },
       itemBuilder: (context, index) {
-        OrderModel orderModel = _controller.getData()[index];
+        OrderModel orderModel = _controller!.getData()[index];
         return ShopOrderListItem(
           orderModel: orderModel,
         );
       },
       refreshCallback: () {
-        _presenter.getShopOrderList(UserManager.instance.user.info.id, 0, widget.type, widget.positionType);
+        _presenter!.getShopOrderList(UserManager.instance!.user.info!.id, 0, widget.type, widget.positionType);
       },
       loadMoreCallback: (page) {
-        _presenter.getShopOrderList(UserManager.instance.user.info.id, page, widget.type, widget.positionType);
+        _presenter!.getShopOrderList(UserManager.instance!.user.info!.id, page, widget.type, widget.positionType);
       },
       noDataView: noDataView("没有订单数据哦~"),
     );
@@ -103,15 +103,15 @@ class _ShopOrderListPageState extends BaseStoreState<ShopOrderListPage>
 
   @override
   getOrderDetailSuccess(OrderDetailModel detailModel) {
-    GSDialog.of(context).dismiss(globalContext);
+    GSDialog.of(context).dismiss(globalContext!);
   }
 
   @override
   refundSuccess(msg) {}
 
   @override
-  failure(String msg) {
-    GSDialog.of(context).showError(globalContext, msg);
+  failure(String? msg) {
+    GSDialog.of(context).showError(globalContext!, msg);
   }
 
   @override
@@ -124,11 +124,11 @@ class _ShopOrderListPageState extends BaseStoreState<ShopOrderListPage>
   applyInvoiceSuccess() {}
 
   @override
-  cancelOrderSuccess(OrderModel order) {
+  cancelOrderSuccess(OrderModel? order) {
   }
 
   @override
-  deleteOrderSuccess(int orderId) {
+  deleteOrderSuccess(int? orderId) {
   }
 
   @override

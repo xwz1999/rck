@@ -1,7 +1,7 @@
 class WithdrawDetailModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   WithdrawDetailModel({this.code, this.msg, this.data});
 
@@ -16,27 +16,27 @@ class WithdrawDetailModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  num id;
-  num userId;
-  String userName;
-  num type;
-  num amount;
-  String alipay;
-  String bankAccount;
-  String bankName;
-  num status;
-  String auditTime;
-  String createdAt;
-  String doneTime;
-  num taxFee;
-  num actualAmount;
+  num? id;
+  num? userId;
+  String? userName;
+  num? type;
+  num? amount;
+  String? alipay;
+  String? bankAccount;
+  String? bankName;
+  num? status;
+  String? auditTime;
+  String? createdAt;
+  String? doneTime;
+  num? taxFee;
+  num? actualAmount;
 
   Data(
       {this.id,

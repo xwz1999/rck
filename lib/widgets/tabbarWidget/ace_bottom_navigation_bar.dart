@@ -13,29 +13,29 @@ enum ACEBottomNavigationBarType {
 }
 
 class ACEBottomNavigationBar extends StatefulWidget {
-  final Key key;
-  final HomeBottomBarController barController;
+  final Key? key;
+  final HomeBottomBarController? barController;
   final List<NavigationItemBean> items;
   final int initSelectedIndex;
   final Color bgColor;
-  final ImageProvider bgImage;
+  final ImageProvider? bgImage;
   final Function(int position) onTabChangedListener;
   final Function(int position) onProtrudingItemClickListener;
-  final String textStr;
-  final Color textUnSelectedColor;
-  final Color textSelectedColor;
-  final IconData icon;
-  final Color iconUnSelectedColor;
-  final Color iconSelectedColor;
-  final ImageProvider image;
+  final String? textStr;
+  final Color? textUnSelectedColor;
+  final Color? textSelectedColor;
+  final IconData? icon;
+  final Color? iconUnSelectedColor;
+  final Color? iconSelectedColor;
+  final ImageProvider? image;
   final dynamic imageSelected;
-  final Color protrudingColor;
-  final ACEBottomNavigationBarType type;
+  final Color? protrudingColor;
+  final ACEBottomNavigationBarType? type;
 
   ACEBottomNavigationBar(
-      {@required this.items,
-      @required this.onTabChangedListener,
-      ACEBottomNavigationBarType type,
+      {required this.items,
+      required this.onTabChangedListener,
+      ACEBottomNavigationBarType? type,
       this.key,
       this.barController,
       this.initSelectedIndex = 0,
@@ -50,11 +50,8 @@ class ACEBottomNavigationBar extends StatefulWidget {
       this.bgColor = Colors.white,
       this.bgImage,
       this.protrudingColor,
-      this.onProtrudingItemClickListener})
-      : assert(onTabChangedListener != null),
-        assert(onProtrudingItemClickListener != null),
-        assert(items != null),
-        assert(items.length >= 1 && items.length <= 5),
+      required this.onProtrudingItemClickListener})
+      : assert(items.length >= 1 && items.length <= 5),
         type = type;
 
   @override
@@ -73,7 +70,7 @@ class _ACEBottomNavigationBar extends State<ACEBottomNavigationBar>
   @override
   void dispose() {
     super.dispose();
-    UserManager.instance.selectTabbar.removeListener(_selectTabbar);
+    UserManager.instance!.selectTabbar.removeListener(_selectTabbar);
   }
 
   @override
@@ -81,7 +78,7 @@ class _ACEBottomNavigationBar extends State<ACEBottomNavigationBar>
     super.initState();
     _setSelected(widget.items[widget.initSelectedIndex].key);
     // widget.barController.selectIndex.addListener(_selectIndex);
-    UserManager.instance.selectTabbar.addListener(_selectTabbar);
+    UserManager.instance!.selectTabbar.addListener(_selectTabbar);
   }
   // _selectIndex(){
   //   if (!widget.barController.selectIndexChange) {return;}
@@ -90,7 +87,7 @@ class _ACEBottomNavigationBar extends State<ACEBottomNavigationBar>
   //   widget.barController.selectIndex.value = 0;
   // }
   _selectTabbar(){
-    int index = UserManager.instance.selectTabbarIndex;
+    int index = UserManager.instance!.selectTabbarIndex!;
     _setSelected(widget.items[index].key);
   }
 
@@ -211,7 +208,7 @@ class _ACEBottomNavigationBar extends State<ACEBottomNavigationBar>
   BoxDecoration navigationBarBg() {
     return widget.bgImage != null
         ? BoxDecoration(
-            image: DecorationImage(fit: BoxFit.cover, image: widget.bgImage))
+            image: DecorationImage(fit: BoxFit.cover, image: widget.bgImage!))
         : BoxDecoration(
             boxShadow: <BoxShadow>[
               new BoxShadow(
@@ -264,7 +261,7 @@ class _ACEBottomNavigationBar extends State<ACEBottomNavigationBar>
 
     if (item.image != null) {
       itemWidget = GestureDetector(
-          child: Image(image: item.image),
+          child: Image(image: item.image!),
           onTap: () {
 //            widget.onTabChangedListener(protrudingIndex);
             widget.onProtrudingItemClickListener(protrudingIndex);
@@ -291,18 +288,18 @@ class _ACEBottomNavigationBar extends State<ACEBottomNavigationBar>
 }
 
 class NavigationItemBean {
-  String textStr;
-  Color textUnSelectedColor;
-  Color textSelectedColor;
-  IconData icon;
-  IconData protrudingIcon;
-  Color iconUnSelectedColor;
-  Color iconSelectedColor;
-  ImageProvider image;
+  String? textStr;
+  Color? textUnSelectedColor;
+  Color? textSelectedColor;
+  IconData? icon;
+  IconData? protrudingIcon;
+  Color? iconUnSelectedColor;
+  Color? iconSelectedColor;
+  ImageProvider? image;
   dynamic imageSelected;
-  bool selected;
-  bool isProtruding;
-  ACEBottomNavigationBarType type;
+  bool? selected;
+  bool? isProtruding;
+  ACEBottomNavigationBarType? type;
 
   NavigationItemBean(
       {this.selected,

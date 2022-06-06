@@ -1,8 +1,8 @@
 class ProfitCardModel {
-  String name;
-  String mobile;
-  String int;
-  num amount;
+  String? name;
+  String? mobile;
+  String? int;
+  num? amount;
 
 
 

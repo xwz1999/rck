@@ -8,6 +8,7 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/evaluation_list_model.dart';
@@ -16,9 +17,9 @@ import 'package:recook/widgets/nine_grid_view.dart';
 import 'package:recook/widgets/pic_swiper.dart';
 
 class EvaluationItem extends StatefulWidget {
-  final Data evaluation;
+  final Data? evaluation;
 
-  const EvaluationItem({Key key, this.evaluation}) : super(key: key);
+  const EvaluationItem({Key? key, this.evaluation}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -30,10 +31,10 @@ class _EvaluationItemState extends State<EvaluationItem> {
   @override
   Widget build(BuildContext context) {
     List<String> list = [];
-    if (widget.evaluation.photos != null &&
-        widget.evaluation.photos.length > 0) {
-      list = widget.evaluation.photos.map((photo) {
-        return Api.getResizeImgUrl(photo.url, 200);
+    if (widget.evaluation!.photos != null &&
+        widget.evaluation!.photos!.length > 0) {
+      list = widget.evaluation!.photos!.map((photo) {
+        return Api.getResizeImgUrl(photo.url!, 200);
       }).toList();
     }
 
@@ -52,31 +53,37 @@ class _EvaluationItemState extends State<EvaluationItem> {
                 Container(
                   margin: EdgeInsets.symmetric(vertical: rSize(10)),
                   child: Text(
-                    widget.evaluation.content,
+                    widget.evaluation!.content!,
                     style: AppTextStyle.generate(15 * 2.sp,
                         fontWeight: FontWeight.w300),
                     maxLines: 100,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                list != null && list.length > 0
+                list.length > 0
                     ? NineGridView(
                         builder: (context, index) {
                           return GestureDetector(
                             onTap: () {
                               List<PicSwiperItem> picSwiperItem = [];
-                              widget.evaluation.photos.forEach((photo) {
+                              widget.evaluation!.photos!.forEach((photo) {
                                 picSwiperItem.add(
                                     PicSwiperItem(Api.getImgUrl(photo.url)));
                               });
-                              AppRouter.fade(
-                                context,
-                                RouteName.PIC_SWIPER,
-                                arguments: PicSwiper.setArguments(
-                                  index: index,
-                                  pics: picSwiperItem,
-                                ),
-                              );
+                              // AppRouter.fade(
+                              //   context,
+                              //   RouteName.PIC_SWIPER,
+                              //   arguments: PicSwiper.setArguments(
+                              //     index: index,
+                              //     pics: picSwiperItem,
+                              //   ),
+                              // );
+
+                              Get.to(()=>PicSwiper(arguments: PicSwiper.setArguments(
+                                index: index,
+                                pics: picSwiperItem,
+                              )));
+
                             },
                             child: CustomCacheImage(
                                 imageUrl: list[index], fit: BoxFit.cover),
@@ -84,7 +91,7 @@ class _EvaluationItemState extends State<EvaluationItem> {
                         },
                         type: GridType.weChat,
                         itemCount:
-                            list != null && list.length >= 0 ? list.length : 0,
+                            list.length >= 0 ? list.length : 0,
                       )
                     : Container(),
               ],
@@ -102,7 +109,7 @@ class _EvaluationItemState extends State<EvaluationItem> {
           borderRadius: BorderRadius.all(Radius.circular(40)),
           child: CustomCacheImage(
             fit: BoxFit.cover,
-            imageUrl: Api.getImgUrl(widget.evaluation.headImgUrl),
+            imageUrl: Api.getImgUrl(widget.evaluation!.headImgUrl),
             height: rSize(40),
             width: rSize(40),
           ),
@@ -115,11 +122,11 @@ class _EvaluationItemState extends State<EvaluationItem> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                widget.evaluation.nickname,
+                widget.evaluation!.nickname!,
                 style: AppTextStyle.generate(15),
               ),
               Text(
-                widget.evaluation.createdAt,
+                widget.evaluation!.createdAt!,
                 style: AppTextStyle.generate(12, color: Colors.grey),
               ),
             ],

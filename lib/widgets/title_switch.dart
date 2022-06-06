@@ -3,7 +3,7 @@ import 'package:recook/constants/styles.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class TitleSwitchController {
-  Function(int index) changeIndex;
+  late Function(int index) changeIndex;
 }
 
 class TitleSwitch extends StatefulWidget {
@@ -13,15 +13,15 @@ class TitleSwitch extends StatefulWidget {
   final int index;
   final double height;
   final double width;
-  final List<String> titles;
-  final TextStyle normalStyle;
-  final TextStyle selectedStyle;
-  final Widget backgroundWidget;
-  final Function(int) selectIndexBlock;
-  final TitleSwitchController controller;
+  final List<String>? titles;
+  final TextStyle? normalStyle;
+  final TextStyle? selectedStyle;
+  final Widget? backgroundWidget;
+  final Function(int)? selectIndexBlock;
+  final TitleSwitchController? controller;
   const TitleSwitch({
-    Key key,
-    @required this.index, 
+    Key? key,
+    required this.index, 
     this.height=30, 
     this.width=170, 
     this.titles, 
@@ -72,11 +72,11 @@ class _TitleSwitchState extends State<TitleSwitch> {
 
   _titlesWidget(){
     List<Widget> list = <Widget>[];
-    for (String title in widget.titles) {
-      bool selected = widget.titles.indexOf(title) == _index;
+    for (String title in widget.titles!) {
+      bool selected = widget.titles!.indexOf(title) == _index;
       list.add(
         CustomImageButton(
-          width: widget.width/widget.titles.length,
+          width: widget.width/widget.titles!.length,
           height: widget.height,
           backgroundColor: selected?AppColor.themeColor:Colors.white.withAlpha(0),
           color: selected?Colors.white:Colors.black,
@@ -86,10 +86,10 @@ class _TitleSwitchState extends State<TitleSwitch> {
             widget.selectedStyle??TextStyle(fontSize: 14, color: Colors.white,fontWeight: FontWeight.w400 )
             :widget.normalStyle??TextStyle(color: Colors.black, fontSize: 14,fontWeight: FontWeight.w400 ),
           onPressed: (){
-            _index = widget.titles.indexOf(title);
+            _index = widget.titles!.indexOf(title);
             print("index = ${_index.toString()}");
             if (widget.selectIndexBlock!=null) {
-              widget.selectIndexBlock(_index);
+              widget.selectIndexBlock!(_index);
             }
             setState(() {});
           },

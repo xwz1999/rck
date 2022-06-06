@@ -13,7 +13,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart' as flutterImagePicker;
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -27,7 +26,6 @@ import 'package:recook/utils/image_utils.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/image_picker.dart';
 import 'package:recook/widgets/sc_tile.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
@@ -41,7 +39,7 @@ class UserInfoPage extends StatefulWidget {
 }
 
 class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
-  UserPresenterImpl _presenter;
+  late UserPresenterImpl _presenter;
   List<MediaModel> _imageFiles = [];
 
   @override
@@ -66,11 +64,11 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
   _listView() {
     String gender;
     final String verified =
-        UserManager.instance.user.info.realInfoStatus ? "已经认证" : "未认证";
-    if (UserManager.instance.user.info.gender == 0) {
+        UserManager.instance!.user.info!.realInfoStatus! ? "已经认证" : "未认证";
+    if (UserManager.instance!.user.info!.gender == 0) {
       gender = "未填写";
     } else {
-      gender = UserManager.instance.user.info.gender == 1 ? "男" : "女";
+      gender = UserManager.instance!.user.info!.gender == 1 ? "男" : "女";
     }
     return ListView(
       children: <Widget>[
@@ -84,26 +82,26 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
                 width: 60.rw,
                 placeholder: Assets.icon.icLauncherPlaystore.path,
                 image: TextUtils.isEmpty(
-                    UserManager.instance.user.info.headImgUrl)
+                    UserManager.instance!.user.info!.headImgUrl)
                     ? ""
                     : Api.getImgUrl(
-                    UserManager.instance.user.info.headImgUrl),
+                    UserManager.instance!.user.info!.headImgUrl)!,
               ),
             ),
            listener: () {
           _chooseHeader();
         }),
         SCTile.normalTile("昵称",
-            value: UserManager.instance.user.info.nickname,
+            value: UserManager.instance!.user.info!.nickname,
             needDivide: true, listener: () {
 
             push(RouteName.MODIFY_DETAIL_PAGE,
                 arguments: ModifyInfoPage.setArguments(
-                    "修改昵称", UserManager.instance.user.info.nickname,
+                    "修改昵称", UserManager.instance!.user.info!.nickname,
                     maxLength: 10))
                 .then((value) {
               if (value != null) {
-                _updateUserNickname(value);
+                _updateUserNickname(value as String);
               }
             });
 
@@ -111,33 +109,33 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
         }),
         SCTile.normalTile(
           "用户ID",
-          value: UserManager.instance.indentifier,
+          value: UserManager.instance!.indentifier,
           needDivide: true,
           listener: null,
           needArrow: false,
         ),
         SCTile.normalTile("性别", value: gender, needDivide: true, listener: () {
-          ActionSheet.show(globalContext, items: ["男", "女"],
+          ActionSheet.show(globalContext!, items: ["男", "女"],
               listener: (int index) {
             pop();
             _updateGender(index + 1);
           });
         }),
         SCTile.normalTile("生日",
-            value: TextUtils.isEmpty(UserManager.instance.user.info.birthday)
+            value: TextUtils.isEmpty(UserManager.instance!.user.info!.birthday)
                 ? "未选择"
-                : UserManager.instance.user.info.birthday.substring(0, 10),
+                : UserManager.instance!.user.info!.birthday!.substring(0, 10),
             needDivide: true, listener: () {
           DateTime currentTime = DateTime.now();
-          if (!TextUtils.isEmpty(UserManager.instance.user.info.birthday)) {
-            String birthday = UserManager.instance.user.info.birthday;
+          if (!TextUtils.isEmpty(UserManager.instance!.user.info!.birthday)) {
+            String birthday = UserManager.instance!.user.info!.birthday!;
             currentTime = DateTime(
                 int.parse(birthday.substring(0, 4)),
                 int.parse(birthday.substring(5, 7)),
                 int.parse(birthday.substring(8, 10)));
           }
 
-          DatePicker.showDatePicker(globalContext,
+          DatePicker.showDatePicker(globalContext!,
               showTitleActions: true,
               theme: DatePickerTheme(
                   cancelStyle:
@@ -155,7 +153,7 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
         }),
         SCTile.normalTile("实名认证", value: verified, needDivide: true,
             listener: () {
-          if (UserManager.instance.user.info.realInfoStatus) {
+          if (UserManager.instance!.user.info!.realInfoStatus!) {
             return;
           }
           AppRouter.push(
@@ -179,15 +177,15 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
         //       });
         // }),
         SCTile.normalTile("手机号",
-            value: UserManager.instance.user.info.phone,
+            value: UserManager.instance!.user.info!.phone,
             needDivide: true, listener: () {
           push(RouteName.MODIFY_DETAIL_PAGE,
                   arguments: ModifyInfoPage.setArguments(
-                      "修改手机号", UserManager.instance.user.info.phone,
+                      "修改手机号", UserManager.instance!.user.info!.phone,
                       maxLength: 11))
               .then((value) {
             if (value != null) {
-              _updatePhone(value);
+              _updatePhone(value as String);
             }
           });
         }),
@@ -273,15 +271,15 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
     ActionSheet.show(context, items: ['拍照', '从手机相册选择'], listener: (index) async{
       Get.back();
       if (index == 0) {
-        List<AssetEntity> entitys = [];
+        List<AssetEntity?> entitys = [];
         var values = await CameraPicker.pickFromCamera(context);
         entitys.add(values);
         if (entitys == null) {
           return;
         }
         for (var element in entitys) {
-          File file = await element.file;
-          Uint8List thumbData = await element.thumbData;
+          File? file = await element!.file;
+          Uint8List? thumbData = await element.thumbData;
           _imageFiles.clear();
 
           _imageFiles.add(MediaModel(
@@ -293,7 +291,7 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
             ));
 
         }
-        _upload(_imageFiles[0].file);
+        _upload(_imageFiles[0].file!);
 
 
 
@@ -304,8 +302,8 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
         if (values == null) return;
         entitys.addAll(values);
         for (var element in entitys) {
-          File file = await element.file;
-          Uint8List thumbData = await element.thumbData;
+          File? file = await element.file;
+          Uint8List? thumbData = await element.thumbData;
           _imageFiles.clear();
           _imageFiles.add(MediaModel(
             width: element.width,
@@ -315,7 +313,7 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
             thumbData: thumbData,
           ));
         }
-        _upload(_imageFiles[0].file);
+        _upload(_imageFiles[0].file!);
 
 
       }
@@ -325,7 +323,7 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
 
   _upload(File file) async {
     showLoading("");
-    File cropFile = await ImageUtils.cropImage(file);
+    File? cropFile = await ImageUtils.cropImage(file);
     if (cropFile == null) {
       showError("已取消...");
       return;
@@ -333,97 +331,97 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
     UploadResult result = await HttpManager.uploadFile(
         url: CommonApi.upload, file: cropFile, key: "photo");
     if (!result.result) {
-      showError(result.msg);
+      showError(result.msg??'');
       return;
     }
     HttpResultModel resultModel = await _presenter.updateHeaderPic(
-        UserManager.instance.user.info.id, result.url);
+        UserManager.instance!.user.info!.id, result.url);
     if (!resultModel.result) {
-      showError(resultModel.msg);
+      showError(resultModel.msg??'');
       return;
     }
     dismissLoading();
     setState(() {
-      UserManager.instance.user.info.headImgUrl = result.url;
+      UserManager.instance!.user.info!.headImgUrl = result.url;
     });
-    print(UserManager.instance.user.info.headImgUrl);
+    print(UserManager.instance!.user.info!.headImgUrl);
     UserManager.updateUserInfo(getStore());
   }
 
   _updateUserNickname(String nickname) async {
     HttpResultModel resultModel = await _presenter.updateUserNickname(
-        UserManager.instance.user.info.id, nickname);
+        UserManager.instance!.user.info!.id, nickname);
     if (!resultModel.result) {
-      showError(resultModel.msg);
+      showError(resultModel.msg??'');
       return;
     }
     setState(() {
-      UserManager.instance.user.info.nickname = nickname;
+      UserManager.instance!.user.info!.nickname = nickname;
     });
     UserManager.updateUserInfo(getStore());
   }
 
   _updateBirthday(String birthday, String originBirth) async {
     HttpResultModel resultModel = await _presenter.updateBirthday(
-        UserManager.instance.user.info.id, birthday);
+        UserManager.instance!.user.info!.id, birthday);
     if (!resultModel.result) {
-      showError(resultModel.msg);
+      showError(resultModel.msg??'');
       return;
     }
     setState(() {
-      UserManager.instance.user.info.birthday = originBirth.substring(0, 10);
+      UserManager.instance!.user.info!.birthday = originBirth.substring(0, 10);
     });
     UserManager.updateUserInfo(getStore());
   }
 
   _updateGender(int gender) async {
     HttpResultModel resultModel = await _presenter.updateGender(
-        UserManager.instance.user.info.id, gender);
+        UserManager.instance!.user.info!.id, gender);
     if (!resultModel.result) {
-      showError(resultModel.msg);
+      showError(resultModel.msg??'');
       return;
     }
     setState(() {
-      UserManager.instance.user.info.gender = gender;
+      UserManager.instance!.user.info!.gender = gender;
     });
     UserManager.updateUserInfo(getStore());
   }
 
   _updateAddress(String address) async {
     HttpResultModel resultModel = await _presenter.updateAddress(
-        UserManager.instance.user.info.id, address);
+        UserManager.instance!.user.info!.id, address);
     if (!resultModel.result) {
-      showError(resultModel.msg);
+      showError(resultModel.msg??'');
       return;
     }
     setState(() {
-      UserManager.instance.user.info.addr = address;
+      UserManager.instance!.user.info!.addr = address;
     });
     UserManager.updateUserInfo(getStore());
   }
 
   _updateWechatNo(String wechatNo) async {
     HttpResultModel resultModel = await _presenter.updateWechatNo(
-        UserManager.instance.user.info.id, wechatNo);
+        UserManager.instance!.user.info!.id, wechatNo);
     if (!resultModel.result) {
-      showError(resultModel.msg);
+      showError(resultModel.msg??'');
       return;
     }
     setState(() {
-      UserManager.instance.user.info.wechatNo = wechatNo;
+      UserManager.instance!.user.info!.wechatNo = wechatNo;
     });
     UserManager.updateUserInfo(getStore());
   }
 
   _updatePhone(String phone) async {
     HttpResultModel resultModel =
-        await _presenter.updatePhone(UserManager.instance.user.info.id, phone);
+        await _presenter.updatePhone(UserManager.instance!.user.info!.id, phone);
     if (!resultModel.result) {
-      showError(resultModel.msg);
+      showError(resultModel.msg??'');
       return;
     }
     setState(() {
-      UserManager.instance.user.info.phone = phone;
+      UserManager.instance!.user.info!.phone = phone;
     });
     UserManager.updateUserInfo(getStore());
   }

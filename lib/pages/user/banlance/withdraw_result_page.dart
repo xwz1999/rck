@@ -1,10 +1,7 @@
 import 'dart:ui';
 
 import 'package:flustars/flustars.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
@@ -19,10 +16,10 @@ import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
 class WithDrawResultPage extends StatefulWidget {
-  final History history;
+  final History? history;
 
    WithDrawResultPage({
-    Key key,
+    Key? key,
     this.history,
   }) : super(key: key);
 
@@ -32,9 +29,9 @@ class WithDrawResultPage extends StatefulWidget {
 
 class _WithDrawResultPageState extends State<WithDrawResultPage>
     with TickerProviderStateMixin {
-  CompanyInfoModel model =
+  CompanyInfoModel? model =
       CompanyInfoModel(companyName: '', taxBank: '', taxNumber: '');
-  ContactInfoModel _info =
+  ContactInfoModel? _info =
       ContactInfoModel(address: '', email: '', name: '', mobile: '');
 
   @override
@@ -173,7 +170,7 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
                   children: [
                     20.hb,
                     Image.asset(
-                      (widget.history.state == 3 || widget.history.state == 99)
+                      (widget.history!.state == 3 || widget.history!.state == 99)
                           ? Assets.icWithdrawalGotoRed.path
                           : Assets.icWithdrawalGoto.path,
                       width: 15.rw,
@@ -185,9 +182,9 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
                     child: Column(
                   children: [
                     Image.asset(
-                      widget.history.state == 3
+                      widget.history!.state == 3
                           ? Assets.icWithdrawalStep5Success.path
-                          : widget.history.state == 99
+                          : widget.history!.state == 99
                               ? Assets.icWithdrawalStep4Fail.path
                               : Assets.icWithdrawalStep4.path,
                       width: 36.rw,
@@ -195,10 +192,10 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
                     ),
                     10.hb,
                     Text(
-                      widget.history.state == 99 ? '审核驳回' : "打款到账",
+                      widget.history!.state == 99 ? '审核驳回' : "打款到账",
                       style: TextStyle(
-                        color: (widget.history.state == 3 ||
-                                widget.history.state == 99)
+                        color: (widget.history!.state == 3 ||
+                                widget.history!.state == 99)
                             ? Color(0xFF333333)
                             : Color(0xFFCDCDCD),
                         fontSize: 12.rsp,
@@ -240,7 +237,7 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
                     Spacer(),
                     GestureDetector(
                       onTap: () async {
-                        WholesaleCustomerModel model =
+                        WholesaleCustomerModel? model =
                             await WholesaleFunc.getCustomerInfo();
 
                         Get.to(() => WholesaleCustomerPage(
@@ -282,13 +279,13 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
                 Padding(
                   padding: EdgeInsets.only(left: 16.rw,right: 16.rw),
                   child: _textItem('结算金额','¥'+ TextUtils.getCount1(
-                      (widget.history.balance ?? 0.0)),isRed:true,height: 1),
+                      (widget.history!.balance ?? 0.0))!,isRed:true,height: 1),
                 ),
                 35.hb,
                 Padding(
                   padding: EdgeInsets.only(left: 16.rw,right: 16.rw),
                   child: _textItem('到账金额','¥'+ TextUtils.getCount1(
-                      (widget.history.actualAmount ?? 0.0)),isRed:true,height: 1),
+                      (widget.history!.actualAmount ?? 0.0))!,isRed:true,height: 1),
                 ),
                 35.hb,
 
@@ -296,14 +293,14 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
                   padding: EdgeInsets.only(left: 16.rw, right: 16.rw),
                   child: _textItem(
                     '申请时间',
-                    widget.history.createdAt==null?'': "${DateUtil.formatDate(DateTime.parse("${widget.history.createdAt.substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}", height: 1
+                    widget.history!.createdAt==null?'': "${DateUtil.formatDate(DateTime.parse("${widget.history!.createdAt!.substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}", height: 1
                   ),
                 ),
                 35.hb,
                 Padding(
                   padding: EdgeInsets.only(left: 16.rw, right: 16.rw),
                   child: _textItem(
-                      '开票方式', widget.history.tax == 1 ? '电子发票' : '纸质发票'),
+                      '开票方式', widget.history!.tax == 1 ? '电子发票' : '纸质发票'),
                 ),
                 35.hb,
                 Padding(
@@ -312,36 +309,36 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
                     right: 16.rw,
                     bottom: 35.w,
                   ),
-                  child: widget.history.tax == 1
-                      ? _textItem('邮箱地址', _info.email,height: 1)
-                      : _textItem('快递公司', widget.history.logisticsName),
+                  child: widget.history!.tax == 1
+                      ? _textItem('邮箱地址', _info!.email,height: 1)
+                      : _textItem('快递公司', widget.history!.logisticsName),
                 ),
-                widget.history.tax == 1
+                widget.history!.tax == 1
                     ? SizedBox()
                     : Padding(
                         padding: EdgeInsets.only(
                             left: 16.rw, right: 16.rw, bottom: 35.w),
-                        child: _textItem('快递单号', widget.history.waybillCode,height: 1),
+                        child: _textItem('快递单号', widget.history!.waybillCode,height: 1),
                       ),
-                (widget.history.state == 3 || widget.history.state == 99)
+                (widget.history!.state == 3 || widget.history!.state == 99)
                     ? Padding(
                         padding: EdgeInsets.only(
                             left: 16.rw, right: 16.rw, bottom: 35.w),
-                        child: _textItem('申请时间',widget.history.createdAt==null?'': "${DateUtil.formatDate(DateTime.parse("${widget.history.createdAt.substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}",height: 1 ),
+                        child: _textItem('申请时间',widget.history!.createdAt==null?'': "${DateUtil.formatDate(DateTime.parse("${widget.history!.createdAt!.substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}",height: 1 ),
                       )
                     : SizedBox(),
-                (widget.history.state == 3 || widget.history.state == 99)
+                (widget.history!.state == 3 || widget.history!.state == 99)
                     ? Padding(
                   padding: EdgeInsets.only(
                       left: 16.rw, right: 16.rw, bottom: 35.w),
-                  child: _textItem('审核时间',widget.history.processTime==null?'': "${DateUtil.formatDate(DateTime.parse("${(widget.history.processTime).substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}",height: 1),
+                  child: _textItem('审核时间',widget.history!.processTime==null?'': "${DateUtil.formatDate(DateTime.parse("${widget.history!.processTime!.substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}",height: 1),
                 )
                     : SizedBox(),
-                ( widget.history.state == 99)
+                ( widget.history!.state == 99)
                     ? Padding(
                   padding: EdgeInsets.only(
                       left: 16.rw, right: 16.rw, bottom: 35.w),
-                  child: _textItem('驳回原因', widget.history.proof),
+                  child: _textItem('驳回原因', widget.history!.proof),
                 )
                     : SizedBox(),
               ],
@@ -366,11 +363,11 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
                             fontWeight: FontWeight.bold),
                       ),
                       40.hb,
-                      _textItem1('账户名', model.companyName,),
+                      _textItem1('账户名', model!.companyName,),
                       30.hb,
-                      _textItem1('开户银行',model.taxBank),
+                      _textItem1('开户银行',model!.taxBank),
                       30.hb,
-                      _textItem1('银行账户',model.taxNumber,height: 1),
+                      _textItem1('银行账户',model!.taxNumber,height: 1),
                       30.hb,
                     ],
                   ),
@@ -380,7 +377,7 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
     );
   }
 
-  _textItem(String title, String content, {bool isRed = false,int height = -1}) {
+  _textItem(String title, String? content, {bool isRed = false,int height = -1}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -400,7 +397,7 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
         height!=-1?
             Padding(padding: EdgeInsets.only(top: 1.rw),child:
             Text(
-              content,
+              content!,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -411,7 +408,7 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
             ),):
 
           Text(
-            content,
+            content!,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -427,7 +424,7 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
 
   _textItem1(
     String title,
-    String content,{int height = -1}
+    String? content,{int height = -1}
 
   ) {
     return Row(
@@ -449,7 +446,7 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
           height!=-1?
           Padding(padding: EdgeInsets.only(top: 2.rw),child:
           Text(
-            content,
+            content!,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
@@ -458,7 +455,7 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
             ),
           ),):
           Text(
-            content,
+            content!,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(

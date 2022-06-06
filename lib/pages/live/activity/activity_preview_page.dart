@@ -21,12 +21,12 @@ import 'package:oktoast/oktoast.dart';
 class ActivityPreviewPage extends StatefulWidget {
   final ActivityListModel model;
   final LiveBaseInfoModel userModel;
-  final PageController controller;
-  final int page;
+  final PageController? controller;
+  final int? page;
   ActivityPreviewPage({
-    Key key,
-    @required this.model,
-    @required this.userModel,
+    Key? key,
+    required this.model,
+    required this.userModel,
     this.controller, this.page,
   }) : super(key: key);
 
@@ -80,7 +80,7 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                     onTap: () {
                       AppRouter.push(context, RouteName.COMMODITY_PAGE,
                           arguments: CommodityDetailPage.setArguments(
-                              widget.model.goods.id));
+                              widget.model.goods!.id));
                     },
                     child: Container(
                       width: rSize(110),
@@ -99,8 +99,8 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                                         placeholder:
                                             R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                                         image: Api.getImgUrl(
-                                          widget.model.goods.mainPhotoURL,
-                                        ),
+                                          widget.model.goods!.mainPhotoURL,
+                                        )!,
                                         width: rSize(110),
                                         height: rSize(110),
                                       ),
@@ -115,7 +115,7 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                                         padding: EdgeInsets.symmetric(
                                             horizontal: rSize(8)),
                                         child: Text(
-                                          widget.model.goods.name,
+                                          widget.model.goods!.name!,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -139,7 +139,7 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                                 ),
                               ),
                               Text(
-                                widget.model.goods.price,
+                                widget.model.goods!.price!,
                                 style: TextStyle(
                                   fontSize: rSP(14),
                                   color: Color(0xFFC92219),
@@ -211,7 +211,7 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                     children: [
                       CustomImageButton(
                         onPressed: () {
-                          if (UserManager.instance.haveLogin)
+                          if (UserManager.instance!.haveLogin)
                             showGeneralDialog(
                               context: context,
                               barrierDismissible: true,
@@ -251,7 +251,7 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                         likePath: R.ASSETS_LIVE_VIDEO_LIKE_PNG,
                         size: rSize(20),
                         onChange: (oldState) {
-                          if (UserManager.instance.haveLogin)
+                          if (UserManager.instance!.haveLogin)
                             HttpManager.post(
                               oldState
                                   ? LiveAPI.dislikeActivity
@@ -278,7 +278,7 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
               children: [
                 LiveUserBar(
                   initAttention: widget.userModel.userId ==
-                          UserManager.instance.user.info.id
+                          UserManager.instance!.user.info!.id
                       ? true
                       : widget.model.isFollow == 1,
                   onAttention: () {
@@ -313,7 +313,7 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
 
   _buildVideo() {
     return NetworkFileVideo(
-      path: widget.model.short.mediaUrl,
+      path: widget.model.short!.mediaUrl,
       pageController: widget.controller,
       page: widget.page,
     );
@@ -324,10 +324,10 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
       itemBuilder: (context, index) {
         return FadeInImage.assetNetwork(
           placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-          image: Api.getImgUrl(widget.model.imgList[index].url),
+          image: Api.getImgUrl(widget.model.imgList![index].url)!,
         );
       },
-      itemCount: widget.model.imgList.length,
+      itemCount: widget.model.imgList!.length,
     );
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api_v2.dart';
@@ -18,9 +17,9 @@ class RechargeHistoryPage extends StatefulWidget {
 }
 
 class _RechargeHistoryPageState extends BaseStoreState<RechargeHistoryPage> {
-  GSRefreshController _refreshController;
-  RechargeRecordModel _withdrawHistoryModel;
-  List<RechargeRecord> list;
+  GSRefreshController? _refreshController;
+  late RechargeRecordModel _withdrawHistoryModel;
+  List<RechargeRecord>? list;
 
   int _page = 0;
   bool _onLoad = true;
@@ -58,34 +57,34 @@ class _RechargeHistoryPageState extends BaseStoreState<RechargeHistoryPage> {
                         list = models;
                         _onLoad = false;
                       });
-                      _refreshController.refreshCompleted();
+                      _refreshController!.refreshCompleted();
                     });
                   },
                   onLoadMore: () {
                     _page++;
-                    if (list.length >=
-                        _withdrawHistoryModel.data.total) {
-                      _refreshController.loadComplete();
-                      _refreshController.loadNoData();
+                    if (list!.length >=
+                        _withdrawHistoryModel.data!.total!) {
+                      _refreshController!.loadComplete();
+                      _refreshController!.loadNoData();
                     }else{
                       getWithdrawHistoryList().then((models) {
                         setState(() {
-                          list.addAll(models);
+                          list!.addAll(models!);
                         });
-                        _refreshController.loadComplete();
+                        _refreshController!.loadComplete();
                       });
                     }
 
                   },
                   body:
                   _onLoad?SizedBox():
-                  list == null || list.length == 0
+                  list == null || list!.length == 0
                       ? noDataView("没有记录...")
                       : ListView.builder(
                           padding: EdgeInsets.zero,
-                          itemCount: list.length,
+                          itemCount: list!.length,
                           itemBuilder: (BuildContext context, int index) {
-                            RechargeRecord data = list[index];
+                            RechargeRecord data = list![index];
                             return GestureDetector(
                               onTap: () {
                                 Get.to(() => RechargeResultPage(history: data,));
@@ -151,7 +150,7 @@ class _RechargeHistoryPageState extends BaseStoreState<RechargeHistoryPage> {
                             height: 3,
                           ),
                           Text(
-                            "${ DateUtil.formatDate(DateTime.parse("${model.createdAt.substring(0,19)}"), format: 'yyyy-MM-dd HH:mm') }",
+                            "${ DateUtil.formatDate(DateTime.parse("${model.createdAt!.substring(0,19)}"), format: 'yyyy-MM-dd HH:mm') }",
                             style: TextStyle(
                                 color: Color(0xFF7F7F7F),
                                 fontSize: 12,
@@ -194,7 +193,7 @@ class _RechargeHistoryPageState extends BaseStoreState<RechargeHistoryPage> {
     );
   }
 
-  Future<List<RechargeRecord>> getWithdrawHistoryList() async {
+  Future<List<RechargeRecord>?> getWithdrawHistoryList() async {
     ResultData resultData =
         await HttpManager.post(APIV2.userAPI.depositList, {
       'page': _page,
@@ -211,6 +210,6 @@ class _RechargeHistoryPageState extends BaseStoreState<RechargeHistoryPage> {
       return [];
     }
     _withdrawHistoryModel = model;
-    return model.data.list;
+    return model.data!.list;
   }
 }

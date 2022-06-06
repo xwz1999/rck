@@ -1,8 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -19,8 +17,8 @@ import '../custom_cache_image.dart';
 
 // 天气信息
 class PostWeatherWidget extends StatelessWidget {
-  final HomeWeatherModel homeWeatherModel;
-  const PostWeatherWidget({Key key, this.homeWeatherModel}) : super(key: key);
+  final HomeWeatherModel? homeWeatherModel;
+  const PostWeatherWidget({Key? key, this.homeWeatherModel}) : super(key: key);
 
   static final TextStyle textStyle =
       TextStyle(color: Colors.black, fontSize: 10 * 2.sp);
@@ -51,9 +49,9 @@ class PostWeatherWidget extends StatelessWidget {
           Row(
             children: <Widget>[
               Text(
-                "[${_normalText(homeWeatherModel.city)}]" +
+                "[${_normalText(homeWeatherModel!.city)}]" +
                     "天气:" +
-                    _normalText(homeWeatherModel.wea),
+                    _normalText(homeWeatherModel!.wea),
                 style: textStyle,
               ),
               Container(width: 2),
@@ -80,7 +78,7 @@ class PostWeatherWidget extends StatelessWidget {
                     children: [
                       TextSpan(
                           text:
-                              "湿度:${_normalText(homeWeatherModel.humidity)} 温度:${_normalText(homeWeatherModel.tem2)}-${_normalText(homeWeatherModel.tem1)}℃",
+                              "湿度:${_normalText(homeWeatherModel!.humidity)} 温度:${_normalText(homeWeatherModel!.tem2)}-${_normalText(homeWeatherModel!.tem1)}℃",
                           style: textStyle),
                       // TextSpan(text:"  温度:${_normalText(widget.homeWeatherModel.tem2)}-${_normalText(widget.homeWeatherModel.tem1)}℃", style: textStyle),
                       // WidgetSpan(
@@ -92,7 +90,7 @@ class PostWeatherWidget extends StatelessWidget {
                       // TextSpan(text:"${_normalText(homeWeatherModel.air)}${_normalText(homeWeatherModel.airLevel)}", style: textStyle),
                       TextSpan(
                           text:
-                              " 空气质量:${_normalText(homeWeatherModel.airLevel)}",
+                              " 空气质量:${_normalText(homeWeatherModel!.airLevel)}",
                           style: textStyle),
                     ],
                   ),
@@ -103,7 +101,7 @@ class PostWeatherWidget extends StatelessWidget {
               Container(
                 alignment: Alignment.centerRight,
                 child: Text(
-                    "${nowDateTime.year}.${nowDateTime.month}.${nowDateTime.day}${_normalText(homeWeatherModel.week)}",
+                    "${nowDateTime.year}.${nowDateTime.month}.${nowDateTime.day}${_normalText(homeWeatherModel!.week)}",
                     style: textStyle),
               )
               // Expanded(
@@ -140,8 +138,8 @@ class PostWeatherWidget extends StatelessWidget {
 // 用户信息
 class PostUserInfo extends StatelessWidget {
   final String name;
-  final int gysId;
-  const PostUserInfo({Key key, this.name = "瑞库客", this.gysId}) : super(key: key);
+  final int? gysId;
+  const PostUserInfo({Key? key, this.name = "瑞库客", this.gysId}) : super(key: key);
 
 
   @override
@@ -223,9 +221,9 @@ class PostUserInfo extends StatelessWidget {
 
 class PostBigImage extends StatefulWidget {
   final Size imageSize;
-  final String url;
+  final String? url;
   PostBigImage({
-    Key key,
+    Key? key,
     this.imageSize = const Size(0, 0),
     this.url = "",
   }) : super(key: key);
@@ -243,7 +241,7 @@ class _PostBigImageState extends State<PostBigImage> {
         width: widget.imageSize.width,
         height: widget.imageSize.height,
         child: ExtendedImage.network(
-          widget.url,
+          widget.url!,
           filterQuality: FilterQuality.medium,
         ),
       ),
@@ -253,7 +251,7 @@ class _PostBigImageState extends State<PostBigImage> {
 
 class PostBannerInfo extends StatelessWidget {
   final String timeInfo;
-  const PostBannerInfo({Key key, this.timeInfo = ""}) : super(key: key);
+  const PostBannerInfo({Key? key, this.timeInfo = ""}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -359,19 +357,19 @@ class PostBannerInfo extends StatelessWidget {
 }
 
 class PostBottomWidget extends StatelessWidget {
-  final GoodsDetailModel goodsDetailModel;
-  const PostBottomWidget({Key key, this.goodsDetailModel}) : super(key: key);
+  final GoodsDetailModel? goodsDetailModel;
+  const PostBottomWidget({Key? key, this.goodsDetailModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     print(AppConfig.debug);
     String qrCode =
-        "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}${goodsDetailModel.data.id}/${UserManager.instance.user.info.invitationNo}";
+        "${AppConfig.debug! ? WebApi.testGoodsDetail : WebApi.goodsDetail}${goodsDetailModel!.data!.id}/${UserManager.instance!.user.info!.invitationNo}";
     print(qrCode);
-    String info = goodsDetailModel.data.goodsName;
+    String info = goodsDetailModel!.data!.goodsName!;
     String crossedPrice =
-        goodsDetailModel.data.price.max.originalPrice.toStringAsFixed(2);
-    String price = goodsDetailModel.data.getPriceString();
+        goodsDetailModel!.data!.price!.max!.originalPrice!.toStringAsFixed(2);
+    String price = goodsDetailModel!.data!.getPriceString();
 
     return Container(
       height: 95.rw,
@@ -452,15 +450,15 @@ class PostBottomWidget extends StatelessWidget {
 }
 
 class PostBottomImagesController {
-  Function(List<MainPhotos>) changeImage;
+  late Function(List<MainPhotos>) changeImage;
 }
 
 class PostBottomImages extends StatefulWidget {
-  final List<MainPhotos> selectPhotos;
+  final List<MainPhotos>? selectPhotos;
   final double width;
-  final PostBottomImagesController controller;
+  final PostBottomImagesController? controller;
   PostBottomImages({
-    Key key,
+    Key? key,
     this.selectPhotos,
     this.width = 0,
     this.controller,
@@ -470,7 +468,7 @@ class PostBottomImages extends StatefulWidget {
 }
 
 class _PostBottomImagesState extends State<PostBottomImages> {
-  List<String> photos = [];
+  List<String?> photos = [];
   @override
   void initState() {
     super.initState();
@@ -478,7 +476,7 @@ class _PostBottomImagesState extends State<PostBottomImages> {
     //   if (i>0) photos.add(Api.getImgUrl(widget.selectPhotos[i].url));
     // }
     if (widget.controller != null) {
-      widget.controller.changeImage = (list) {
+      widget.controller!.changeImage = (list) {
         photos = [];
         for (int i = 0; i < list.length; i++) {
           if (i > 0) photos.add(Api.getImgUrl(list[i].url));
@@ -504,7 +502,7 @@ class _PostBottomImagesState extends State<PostBottomImages> {
       return Container(
         color: AppColor.frenchColor,
         height: widget.width,
-        child: ExtendedImage.network(photos[0]),
+        child: ExtendedImage.network(photos[0]!),
       );
     }
     if (photos.length == 4) {
@@ -539,10 +537,10 @@ class _PostBottomImagesState extends State<PostBottomImages> {
 
   _imagesRow() {
     List<Widget> list = [];
-    for (String url in photos) {
+    for (String? url in photos) {
       list.add(Container(
         color: AppColor.frenchColor,
-        child: ExtendedImage.network(url),
+        child: ExtendedImage.network(url!),
       ));
     }
     return list;
@@ -550,17 +548,17 @@ class _PostBottomImagesState extends State<PostBottomImages> {
 }
 
 class PostAllWidgetController {
-  Function(List<MainPhotos>) refreshWidget;
+  late Function(List<MainPhotos>) refreshWidget;
 }
 
 class PostAllWidget extends StatefulWidget {
-  final PostAllWidgetController controller;
-  final GoodsDetailModel goodsDetailModel;
-  final String bigImageUrl;
-  final List<MainPhotos> selectImagePhotos;
-  final MissingChildrenModel missingChildrenModel;
+  final PostAllWidgetController? controller;
+  final GoodsDetailModel? goodsDetailModel;
+  final String? bigImageUrl;
+  final List<MainPhotos>? selectImagePhotos;
+  final MissingChildrenModel? missingChildrenModel;
   PostAllWidget(
-      {Key key,
+      {Key? key,
       this.goodsDetailModel,
       this.bigImageUrl = "",
       this.selectImagePhotos,
@@ -581,7 +579,7 @@ class _PostAllWidgetState extends State<PostAllWidget> {
   void initState() {
     super.initState();
     if (widget.controller != null) {
-      widget.controller.refreshWidget = (list) {
+      widget.controller!.refreshWidget = (list) {
         _postBottomImagesController.changeImage(list);
       };
     }
@@ -599,7 +597,7 @@ class _PostAllWidgetState extends State<PostAllWidget> {
       width: double.infinity,
       child: Column(
         children: <Widget>[
-          UserManager.instance.homeWeatherModel != null
+          UserManager.instance!.homeWeatherModel != null
               ? Container(
                   color: Colors.white,
                   padding: EdgeInsets.only(
@@ -607,7 +605,7 @@ class _PostAllWidgetState extends State<PostAllWidget> {
                   ),
                   height: 45.rw,
                   child: PostWeatherWidget(
-                    homeWeatherModel: UserManager.instance.homeWeatherModel,
+                    homeWeatherModel: UserManager.instance!.homeWeatherModel,
                   ),
                 )
               : Container(),
@@ -616,8 +614,8 @@ class _PostAllWidgetState extends State<PostAllWidget> {
               vertical: 8,
             ),
             child: PostUserInfo(
-              name: UserManager.instance.user.info.nickname + "的店铺",
-              gysId: widget.goodsDetailModel.data.vendorId,
+              name: UserManager.instance!.user.info!.nickname! + "的店铺",
+              gysId: widget.goodsDetailModel!.data!.vendorId,
             ),
           ),
           PostBigImage(
@@ -652,7 +650,7 @@ class _PostAllWidgetState extends State<PostAllWidget> {
                       height: 229.rw,
                       fit: BoxFit.fitHeight,
                       width: 160.rw,
-                      imageUrl: Api.getImgUrl(widget.missingChildrenModel.pic)),
+                      imageUrl: Api.getImgUrl(widget.missingChildrenModel!.pic)),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -671,7 +669,7 @@ class _PostAllWidgetState extends State<PostAllWidget> {
                       width: 160.rw,
                       padding: EdgeInsets.only(left: 5.rw,right: 2.rw),
                       child: Text(
-                        widget.missingChildrenModel.text
+                        widget.missingChildrenModel!.text!
                             .replaceAll('#儿童失踪紧急发布#', ''),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 10,
@@ -692,22 +690,22 @@ class _PostAllWidgetState extends State<PostAllWidget> {
   }
 
   String _getTimeInfo() {
-    GoodsDetailModel _goodsDetail = widget.goodsDetailModel;
+    GoodsDetailModel _goodsDetail = widget.goodsDetailModel!;
     DateFormat dateFormat = DateFormat('M月d日 HH:mm');
-    if (_goodsDetail.data.promotion != null &&
-        _goodsDetail.data.promotion.id > 0) {
+    if (_goodsDetail.data!.promotion != null &&
+        _goodsDetail.data!.promotion!.id! > 0) {
       if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
               _goodsDetail) ==
           PromotionStatus.start) {
         //活动中
-        DateTime endTime = DateTime.parse(_goodsDetail.data.promotion.endTime);
+        DateTime endTime = DateTime.parse(_goodsDetail.data!.promotion!.endTime!);
         return "结束时间\n${dateFormat.format(endTime)}";
       }
       if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
               _goodsDetail) ==
           PromotionStatus.ready) {
         DateTime startTime =
-            DateTime.parse(_goodsDetail.data.promotion.startTime);
+            DateTime.parse(_goodsDetail.data!.promotion!.startTime!);
         return "开始时间\n${dateFormat.format(startTime)}";
       }
     }

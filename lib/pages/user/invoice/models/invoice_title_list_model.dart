@@ -1,13 +1,13 @@
 class InvoiceTitleListModel {
-  int id;
-  int uid;
-  int type;
-  String name;
-  String taxnum;
-  String address;
-  String phone;
-  String bank;
-  int defaultValue;
+  int? id;
+  int? uid;
+  int? type;
+  String? name;
+  String? taxnum;
+  String? address;
+  String? phone;
+  String? bank;
+  int? defaultValue;
 
   InvoiceTitleListModel({
     this.id,

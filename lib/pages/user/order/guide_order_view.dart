@@ -22,7 +22,7 @@ enum GuideOrderType {
 
 class GuideOrderView extends StatefulWidget {
   final GuideOrderType type;
-  GuideOrderView({Key key, @required this.type}) : super(key: key);
+  GuideOrderView({Key? key, required this.type}) : super(key: key);
 
   @override
   _GuideOrderViewState createState() => _GuideOrderViewState();
@@ -86,7 +86,7 @@ class _GuideOrderViewState extends State<GuideOrderView> {
       APIV2.orderAPI.guideOrderList,
       params,
     );
-    if (result?.data == null) return [];
+    if (result.data == null) return [];
     if (result.data['data'] == null) return [];
     if (result.data['data']['list'] == null) return [];
     return (result.data['data']['list'] as List)

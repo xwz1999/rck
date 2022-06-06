@@ -28,9 +28,9 @@ class ShopCheckPainter extends CustomPainter {
   ///进度
   ///final double percentage;
   ShopCheckPainter({
-    @required this.beginColor,
-    @required this.endColor,
-    @required this.themeColor,
+    required this.beginColor,
+    required this.endColor,
+    required this.themeColor,
     this.percentage = 0,
   });
 

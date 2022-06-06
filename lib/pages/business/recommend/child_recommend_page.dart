@@ -8,8 +8,8 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -43,23 +43,23 @@ class _RecommendPageState extends BaseStoreState<RecommendPage>
     with MvpListViewDelegate<MaterialModel>
     implements RecommendViewI{
 
-  RecommendPresenterImpl _presenter;
-  MvpListViewController<MaterialModel> _listViewController;
+  RecommendPresenterImpl? _presenter;
+  MvpListViewController<MaterialModel>? _listViewController;
 
   @override
   void initState() {
     super.initState();
     _presenter = RecommendPresenterImpl();
-    _presenter.attach(this);
+    _presenter!.attach(this);
     _listViewController = MvpListViewController();
-    int userId = UserManager.instance.user.info.id;
-    _presenter.fetchList(userId, 0);
+    int? userId = UserManager.instance!.user.info!.id;
+    _presenter!.fetchList(userId, 0);
   }
 
   @override
   Widget buildContext(BuildContext context, {store}) {
-    int userId = 0;
-    if (UserManager.instance.haveLogin) userId = UserManager.instance.user.info.id;
+    int? userId = 0;
+    if (UserManager.instance!.haveLogin) userId = UserManager.instance!.user.info!.id;
     return Container(
       color: AppColor.frenchColor,
       child: MvpListView<MaterialModel>(
@@ -67,22 +67,22 @@ class _RecommendPageState extends BaseStoreState<RecommendPage>
         delegate: this,
         controller: _listViewController,
         refreshCallback: () {
-          _presenter.fetchList(userId, 0);
+          _presenter!.fetchList(userId, 0);
         },
         loadMoreCallback: (int page) {
-          _presenter.fetchList(userId, page);
+          _presenter!.fetchList(userId, page);
         },
         itemBuilder: (_, index) {
-          MaterialModel indexModel = _listViewController.getData()[index];
+          MaterialModel indexModel = _listViewController!.getData()[index];
           return BusinessFocusItem(
             model: indexModel,
             publishMaterialListener: (){
-              AppRouter.push(context, RouteName.COMMODITY_PAGE,arguments: CommodityDetailPage.setArguments(indexModel.goods.id));
+              Get.to(()=>CommodityDetailPage(arguments: CommodityDetailPage.setArguments(indexModel.goods!.id)));
             },
             downloadListener: (ByteData byteData){
               showLoading("保存图片中...");
-              List<String> urls = indexModel.photos.map((f){
-                return Api.getResizeImgUrl(f.url, 800);
+              List<String> urls = indexModel.photos!.map((f){
+                return Api.getResizeImgUrl(f.url!, 800);
               }).toList();
               ImageUtils.saveNetworkImagesToPhoto(urls, (index){
                 DPrint.printf("保存好了---$index");
@@ -126,30 +126,17 @@ class _RecommendPageState extends BaseStoreState<RecommendPage>
             },
             picListener: (index){
               List<PicSwiperItem> picSwiperItem = [];
-              for (Photos photo in indexModel.photos) {
+              for (Photos photo in indexModel.photos!) {
                 picSwiperItem.add(PicSwiperItem(Api.getImgUrl(photo.url)));
               }
-              AppRouter.fade(
-                    context, 
-                    RouteName.PIC_SWIPER, 
-                    arguments: PicSwiper.setArguments(
-                      index: index, 
-                      pics: picSwiperItem,
-                    ),
-                  );
-              // MaterialModel _picModel = _listViewController.getData()[index];
-              // AppRouter.push(
-              //   context, 
-              //   RouteName.PIC_SWIPER, 
-              //   arguments: PicSwiper.setArguments(
-              //     index: index, 
-              //     pics: _picModel.photos.map<PicSwiperItem>(
-              //       (f) => PicSwiperItem(Api.getResizeImgUrl(f.url, 300))).toList()
-              //       )
-              // );
+              Get.to(()=>PicSwiper(arguments: PicSwiper.setArguments(
+                index: index,
+                pics: picSwiperItem,
+              )));
+
             },
             focusListener: (){
-              _attention(_listViewController.getData()[index]);
+              _attention(_listViewController!.getData()[index]);
             },);
         },
         noDataView: NoDataView(title: "暂时没有推荐...", height: 500,),
@@ -159,19 +146,19 @@ class _RecommendPageState extends BaseStoreState<RecommendPage>
   
   //关注
   _attention(MaterialModel model) async {
-    if (model.isAttention) {//取消关注
-    HttpResultModel<BaseModel> resultModel = await GoodsDetailModelImpl.goodsAttentionCancel(
-        UserManager.instance.user.info.id, model.userId);
+    if (model.isAttention!) {//取消关注
+    HttpResultModel<BaseModel?> resultModel = await GoodsDetailModelImpl.goodsAttentionCancel(
+        UserManager.instance!.user.info!.id, model.userId);
       if (!resultModel.result) {
-        Toast.showInfo(resultModel.msg);
+        Toast.showInfo(resultModel.msg??'');
         return;
       }
       setState(() {model.isAttention = false;});
     }else{//关注
-      HttpResultModel<BaseModel> resultModel = await GoodsDetailModelImpl.goodsAttentionCreate(
-        UserManager.instance.user.info.id, model.userId);
+      HttpResultModel<BaseModel?> resultModel = await GoodsDetailModelImpl.goodsAttentionCreate(
+        UserManager.instance!.user.info!.id, model.userId);
       if (!resultModel.result) {
-        Toast.showInfo(resultModel.msg);
+        Toast.showInfo(resultModel.msg??'');
         return;
       }
       setState(() {model.isAttention = true;});
@@ -182,7 +169,7 @@ class _RecommendPageState extends BaseStoreState<RecommendPage>
   bool get wantKeepAlive => true;
 
   @override
-  MvpListViewPresenterI<MaterialModel,MvpView, MvpModel> getPresenter() {
+  MvpListViewPresenterI<MaterialModel,MvpView, MvpModel>? getPresenter() {
     return _presenter;
   }
 

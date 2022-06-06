@@ -9,14 +9,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/widgets/bottom_sheet/custom_bottom_sheet.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class _ActionSheetWidget extends StatefulWidget {
-  final String title;
-  final List<String> items;
-  final List<String> subTitles;
-  final ActionSheetItemClickListener listener;
+  final String? title;
+  final List<String>? items;
+  final List<String>? subTitles;
+  final ActionSheetItemClickListener? listener;
 
   _ActionSheetWidget({this.title, this.items, this.subTitles, this.listener})
       : assert(items != null && items.length > 0);
@@ -43,7 +42,7 @@ class __ActionSheetWidgetState extends State<_ActionSheetWidget> {
                     color: Colors.white,
                     alignment: Alignment.center,
                     child: Text(
-                      widget.title,
+                      widget.title!,
                       style: TextStyle(color: Colors.grey, fontSize: 14 * 2.sp),
                     ),
                   )
@@ -56,7 +55,7 @@ class __ActionSheetWidgetState extends State<_ActionSheetWidget> {
                 child: ListView.builder(
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: widget.items.length,
+                    itemCount: widget.items!.length,
                     itemBuilder: (_, index) {
                       return _buildItem(index);
                     }),
@@ -97,10 +96,10 @@ class __ActionSheetWidgetState extends State<_ActionSheetWidget> {
   }
 
   _buildItem(int index) {
-    String item = widget.items[index];
-    String subTitle;
-    if (widget.subTitles != null && index < widget.subTitles.length) {
-      subTitle = widget.subTitles[index];
+    String item = widget.items![index];
+    String? subTitle;
+    if (widget.subTitles != null && index < widget.subTitles!.length) {
+      subTitle = widget.subTitles![index];
     }
     return Container(
       margin: EdgeInsets.only(bottom: 1),
@@ -109,7 +108,7 @@ class __ActionSheetWidgetState extends State<_ActionSheetWidget> {
         padding: EdgeInsets.zero,
         onPressed: () {
           if (widget.listener != null) {
-            widget.listener(index);
+            widget.listener!(index);
           }
         },
         child: Container(
@@ -147,10 +146,10 @@ typedef ActionSheetItemClickListener = Function(int index);
 
 class ActionSheet {
   static show(BuildContext context,
-      {String title,
-      List<String> items,
-      List<String> subTitles,
-      ActionSheetItemClickListener listener}) {
+      {String? title,
+      List<String>? items,
+      List<String>? subTitles,
+      ActionSheetItemClickListener? listener}) {
     showCustomModalBottomSheet(
         context: context,
         builder: (context) {

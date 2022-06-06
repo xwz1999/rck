@@ -12,11 +12,11 @@ import '../wholeasale_detail_page.dart';
 
 class WholesaleGoodsGrid extends StatelessWidget {
 
-  final WholesaleGood goods;
+  final WholesaleGood? goods;
 
 
   const WholesaleGoodsGrid(
-      {Key key, this.goods})
+      {Key? key, this.goods})
       : super(key: key);
   static final Color colorGrey = Color(0xff999999);
 
@@ -53,7 +53,7 @@ class WholesaleGoodsGrid extends StatelessWidget {
                               fit: BoxFit.cover,
                               placeholder: AppImageName.placeholder_1x1,
                               imageUrl:
-                              Api.getResizeImgUrl(goods.mainPhotoUrl, 300)),
+                              Api.getResizeImgUrl(goods!.mainPhotoUrl!, 300)),
                         )),
                   ),
                   Positioned(
@@ -68,7 +68,7 @@ class WholesaleGoodsGrid extends StatelessWidget {
                 TextSpan(
                   children: [
                     TextSpan(
-                      text: this.goods.goodsName,
+                      text: this.goods!.goodsName,
                       style: AppTextStyle.generate(16 * 2.sp,
                           fontWeight: FontWeight.w600),
                     ),
@@ -79,17 +79,17 @@ class WholesaleGoodsGrid extends StatelessWidget {
               ),
             ),
 
-            TextUtil.isEmpty(this.goods.description)
+            TextUtil.isEmpty(this.goods!.description)
                 ? SizedBox()
                 : Container(
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(
                   left: 0, right: 0, top: 5, bottom: 5),
               child:
-              this.goods.description == null
+              this.goods!.description == null
                   ? Container()
                   : Text(
-                this.goods.description,
+                this.goods!.description!,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyle.generate(12.rsp,
@@ -103,7 +103,7 @@ class WholesaleGoodsGrid extends StatelessWidget {
             Row(
               children: [
                 Text(
-                  '零售价¥${this.goods.discountPrice.toStringAsFixed(2)}',
+                  '零售价¥${this.goods!.discountPrice!.toStringAsFixed(2)}',
                   style: TextStyle(
                       // decoration: TextDecoration.lineThrough,
                       decorationColor: Color(0xff898989),
@@ -113,7 +113,7 @@ class WholesaleGoodsGrid extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  "已订${this.goods.salesVolume}单",
+                  "已订${this.goods!.salesVolume}单",
                   style: TextStyle(
                     color: Color(0xFF999999),
                     fontSize: 12 * 2.sp,
@@ -145,7 +145,7 @@ class WholesaleGoodsGrid extends StatelessWidget {
                               fontWeight: FontWeight.w500),
                         ),
                         TextSpan(
-                          text: this.goods.salePrice.toStringAsFixed(2),
+                          text: this.goods!.salePrice!.toStringAsFixed(2),
                           // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
                           style: TextStyle(
                               letterSpacing: -1,
@@ -208,7 +208,7 @@ class WholesaleGoodsGrid extends StatelessWidget {
   }
 
   _buyEvent(BuildContext context) {
-    Get.to(()=>WholesaleDetailPage(goodsId: this.goods.id,));
+    Get.to(()=>WholesaleDetailPage(goodsId: this.goods!.id as int?,));
       //
       // AppRouter.push(context, RouteName.COMMODITY_PAGE,
       //     arguments: CommodityDetailPage.setArguments(this.goods.id));

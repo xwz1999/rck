@@ -50,24 +50,24 @@ class CustomImageButton extends StatefulWidget {
 
   final EdgeInsetsGeometry padding;
   final double contentSpacing;
-  final double buttonSize;
-  final double width;
-  final double height;
-  final Color color;
-  final Color disabledColor;
-  final Color backgroundColor;
-  final BoxDecoration boxDecoration;
-  final VoidCallback onPressed;
-  final String title;
-  final Widget icon;
+  final double? buttonSize;
+  final double? width;
+  final double? height;
+  final Color? color;
+  final Color? disabledColor;
+  final Color? backgroundColor;
+  final BoxDecoration? boxDecoration;
+  final VoidCallback? onPressed;
+  final String? title;
+  final Widget? icon;
   final double fontSize;
-  final TextStyle style;
-  final TextStyle disableStyle;
+  final TextStyle? style;
+  final TextStyle? disableStyle;
   final BorderRadius borderRadius;
   final Direction direction;
-  final BoxBorder border;
+  final BoxBorder? border;
   final pureDisplay;
-  final Widget child;
+  final Widget? child;
   final String dotNum;
   final Color dotColor;
   final DotPosition dotPosition;
@@ -75,7 +75,7 @@ class CustomImageButton extends StatefulWidget {
   final double dotFontSize;
   final bool greyWhenTapped;
   final Color dotTextColor;
-  final Gradient gradient;
+  final Gradient? gradient;
 
   @override
   State<StatefulWidget> createState() {
@@ -93,7 +93,7 @@ class _CustomImageButtonState extends State<CustomImageButton> {
 
   @override
   Widget build(BuildContext context) {
-    Color currentColor;
+    Color? currentColor;
     if (widget.onPressed != null || widget.pureDisplay)
       currentColor = widget.color;
     else
@@ -102,7 +102,7 @@ class _CustomImageButtonState extends State<CustomImageButton> {
     return _buildGestureDetector(currentColor);
   }
 
-  GestureDetector _buildGestureDetector(Color currentColor) {
+  GestureDetector _buildGestureDetector(Color? currentColor) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: widget.pureDisplay ? null : widget.onPressed,
@@ -207,12 +207,12 @@ class _CustomImageButtonState extends State<CustomImageButton> {
     );
   }
 
-  List<Widget> _content(context, Color currentColor) {
+  List<Widget> _content(context, Color? currentColor) {
     return <Widget>[
       widget.icon != null
           ? IconTheme.merge(
               data: IconThemeData(color: currentColor, opacity: 1),
-              child: widget.icon)
+              child: widget.icon!)
           // ? widget.icon
           : Container(),
       widget.title != null && widget.icon != null
@@ -227,7 +227,7 @@ class _CustomImageButtonState extends State<CustomImageButton> {
           : Container(),
       widget.title != null
           ? Text(
-              widget.title,
+              widget.title!,
               textAlign: TextAlign.center,
               maxLines: 1,
               overflow: TextOverflow.clip,
@@ -237,7 +237,7 @@ class _CustomImageButtonState extends State<CustomImageButton> {
     ];
   }
 
-  getTitleStyle(Color currentColor) {
+  getTitleStyle(Color? currentColor) {
     TextStyle style;
     if (widget.onPressed == null && !widget.pureDisplay) {
       style = widget.disableStyle ??
@@ -251,10 +251,10 @@ class _CustomImageButtonState extends State<CustomImageButton> {
 }
 
 class DotPosition {
-  final double left;
-  final double right;
-  final double top;
-  final double bottom;
+  final double? left;
+  final double? right;
+  final double? top;
+  final double? bottom;
 
   const DotPosition({
     this.left,

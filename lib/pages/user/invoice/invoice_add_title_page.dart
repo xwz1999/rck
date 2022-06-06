@@ -10,7 +10,7 @@ import 'package:recook/widgets/sc_tile.dart';
 
 class InvoiceAddTitlePage extends StatefulWidget {
   final dynamic arguments;
-  InvoiceAddTitlePage({Key key, this.arguments}) : super(key: key);
+  InvoiceAddTitlePage({Key? key, this.arguments}) : super(key: key);
 
   @override
   _InvoiceAddTitlePageState createState() => _InvoiceAddTitlePageState();
@@ -26,22 +26,22 @@ class _InvoiceAddTitlePageState extends State<InvoiceAddTitlePage> {
   TextEditingController _addr = TextEditingController();
   TextEditingController _phone = TextEditingController();
   TextEditingController _bankNum = TextEditingController();
-  InvoiceTitleListModel model;
+  InvoiceTitleListModel? model;
   InvoicePresenter _invoicePresenter = InvoicePresenter();
   @override
   void initState() {
     super.initState();
     if (widget.arguments != null) {
-      model = widget.arguments['model'] as InvoiceTitleListModel;
+      model = widget.arguments['model'] as InvoiceTitleListModel?;
 
-      _isCompany = (model.type == 1);
-      _cName.text = _isCompany ? model.name : "";
-      _pName.text = _isCompany ? "" : model.name;
-      _taxNum.text = model.taxnum;
-      _addr.text = model.address;
-      _phone.text = model.phone;
-      _bankNum.text = model.bank;
-      defaultValue = model.defaultValue == 1;
+      _isCompany = (model!.type == 1);
+      _cName.text = _isCompany ? model!.name! : "";
+      _pName.text = _isCompany ? "" : model!.name!;
+      _taxNum.text = model!.taxnum!;
+      _addr.text = model!.address!;
+      _phone.text = model!.phone!;
+      _bankNum.text = model!.bank!;
+      defaultValue = model!.defaultValue == 1;
     }
   }
 
@@ -155,7 +155,7 @@ class _InvoiceAddTitlePageState extends State<InvoiceAddTitlePage> {
                             .updateLetterHead(
                           _isCompany ? 1 : 2,
                           _isCompany ? _cName.text : _pName.text,
-                          model.id,
+                          model!.id,
                           taxNum: _taxNum.text,
                           addr: _addr.text,
                           phone: _phone.text,

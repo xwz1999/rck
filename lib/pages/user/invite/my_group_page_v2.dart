@@ -11,7 +11,7 @@ import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class MyGroupPageV2 extends StatefulWidget {
-  MyGroupPageV2({Key key}) : super(key: key);
+  MyGroupPageV2({Key? key}) : super(key: key);
 
   @override
   _MyGroupPageV2State createState() => _MyGroupPageV2State();
@@ -242,7 +242,7 @@ class _MyGroupPageV2State extends State<MyGroupPageV2> {
   void initState() {
     super.initState();
     HttpManager.post(APIV2.userAPI.userSaleAmount, {}).then((resultData) {
-      if (resultData?.data != null &&
+      if (resultData.data != null &&
           resultData.data['data'] != null &&
           resultData.data['data'] != null) {
         setState(() {});

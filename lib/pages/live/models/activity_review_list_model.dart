@@ -1,14 +1,14 @@
 class ActivityReviewListModel {
-  int userId;
-  String nickname;
-  String headImgUrl;
-  int id;
-  String createdAt;
-  String content;
-  int commentCount;
-  int praise;
-  int isPraise;
-  List<Sub> sub;
+  int? userId;
+  String? nickname;
+  String? headImgUrl;
+  int? id;
+  String? createdAt;
+  String? content;
+  int? commentCount;
+  int? praise;
+  int? isPraise;
+  List<Sub>? sub;
 
   ActivityReviewListModel(
       {this.userId,
@@ -35,7 +35,7 @@ class ActivityReviewListModel {
     if (json['sub'] != null) {
       sub = [];
       json['sub'].forEach((v) {
-        sub.add(new Sub.fromJson(v));
+        sub!.add(new Sub.fromJson(v));
       });
     }
   }
@@ -52,22 +52,22 @@ class ActivityReviewListModel {
     data['praise'] = this.praise;
     data['isPraise'] = this.isPraise;
     if (this.sub != null) {
-      data['sub'] = this.sub.map((v) => v.toJson()).toList();
+      data['sub'] = this.sub!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Sub {
-  int userId;
-  String nickname;
-  String headImgUrl;
-  int id;
-  String createdAt;
-  String content;
-  int commentCount;
-  int praise;
-  int isPraise;
+  int? userId;
+  String? nickname;
+  String? headImgUrl;
+  int? id;
+  String? createdAt;
+  String? content;
+  int? commentCount;
+  int? praise;
+  int? isPraise;
 
   Sub(
       {this.userId,

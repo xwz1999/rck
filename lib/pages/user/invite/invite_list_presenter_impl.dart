@@ -19,8 +19,8 @@ class InviteListPresenterImpl extends InviteListPresenterI {
   }
 
   @override
-  getInviteList(int userId, int page, String searchCond) async {
-    ResultData resultData = await getModel().getInviteList(userId, page, searchCond);
+  getInviteList(int? userId, int page, String searchCond) async {
+    ResultData resultData = await getModel()!.getInviteList(userId, page, searchCond);
     if (!resultData.result) {
       getView()?.failure(resultData.msg);
       return;
@@ -33,7 +33,7 @@ class InviteListPresenterImpl extends InviteListPresenterI {
     if (page == 0) {
       getRefreshView()?.refreshSuccess(orderListModel.data);
     } else {
-      getRefreshView().loadMoreSuccess(orderListModel.data);
+      getRefreshView()!.loadMoreSuccess(orderListModel.data);
     }
   }
   

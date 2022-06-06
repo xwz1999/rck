@@ -13,9 +13,9 @@ part 'price_model.g.dart';
 
 @JsonSerializable()
 class Price extends Object {
-  Min min;
+  Min? min;
 
-  Max max;
+  Max? max;
 
   Price(
     this.min,
@@ -30,13 +30,13 @@ class Price extends Object {
 
 @JsonSerializable()
 class Min extends Object {
-  double originalPrice;
+  double? originalPrice;
 
-  double discountPrice;
+  double? discountPrice;
 
-  double commission;
+  double? commission;
 
-  double ferme;
+  double? ferme;
 
   Min(
     this.originalPrice,
@@ -52,11 +52,11 @@ class Min extends Object {
 
 @JsonSerializable()
 class Max extends Object {
-  double originalPrice;
+  double? originalPrice;
 
-  double discountPrice;
+  double? discountPrice;
 
-  double commission;
+  double? commission;
 
   Max(
     this.originalPrice,

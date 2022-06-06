@@ -21,14 +21,14 @@ class MyFavoriteModelImpl extends MyFavoriteModelI {
   }
 
   @override
-  favoriteCancel(int userID, int goodsID) async {
+  favoriteCancel(int? userID, int? goodsID) async {
     ResultData res = await HttpManager.post(
         GoodsApi.goods_favorite_cancel, {"userId": userID, "goodsId": goodsID});
     return res;
   }
 
   @override
-  getFavoritesList(int userId) async {
+  getFavoritesList(int? userId) async {
     ResultData res = await HttpManager.post(GoodsApi.goods_favorite_list, {
       "userId": userId,
     });

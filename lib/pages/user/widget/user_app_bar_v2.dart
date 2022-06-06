@@ -10,7 +10,7 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class UserAppBarV2 extends StatefulWidget {
-  UserAppBarV2({Key key}) : super(key: key);
+  UserAppBarV2({Key? key}) : super(key: key);
 
   @override
   _UserAppBarV2State createState() => _UserAppBarV2State();
@@ -47,16 +47,16 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                       width: 60.rw,
                       placeholder: Assets.icon.icLauncherPlaystore.path,
                       image: TextUtils.isEmpty(
-                              UserManager.instance.user.info.headImgUrl)
+                              UserManager.instance!.user.info!.headImgUrl)
                           ? ""
                           : Api.getImgUrl(
-                              UserManager.instance.user.info.headImgUrl),
+                              UserManager.instance!.user.info!.headImgUrl)!,
                     ),
                   ),
                 ),
               ),
               10.hb,
-              '${UserManager.instance.user.info.nickname}'
+              '${UserManager.instance!.user.info!.nickname}'
                   .text
                   .color(Color(0xFF333333))
                   .size(20.rsp)
@@ -83,7 +83,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
       Row(
         children: [
           10.wb,
-          'NO.${UserManager.instance.indentifier}'
+          'NO.${UserManager.instance!.indentifier}'
               .text
               .color(Color(0xFF333333))
               .size(10.rsp)
@@ -92,11 +92,11 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
           Spacer(),
           Builder(
             builder: (context) {
-              DateTime createTime;
+              DateTime? createTime;
               if (!TextUtils.isEmpty(
-                  UserManager.instance.user.info.createdAt)) {
+                  UserManager.instance!.user.info!.createdAt)) {
                 createTime =
-                    DateTime.parse(UserManager.instance.user.info.createdAt);
+                    DateTime.parse(UserManager.instance!.user.info!.createdAt!);
               }
               return (createTime != null
                       ? '注册时间 ${createTime.year}-${createTime.month}-${createTime.day}'
@@ -154,10 +154,10 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                         width: 48.rw,
                         placeholder: Assets.icon.icLauncherPlaystore.path,
                         image: TextUtils.isEmpty(
-                            UserManager.instance.user.info.headImgUrl)
+                            UserManager.instance!.user.info!.headImgUrl)
                             ? ""
                             : Api.getImgUrl(
-                            UserManager.instance.user.info.headImgUrl),
+                            UserManager.instance!.user.info!.headImgUrl)!,
                       ),
                     ),
                   ),
@@ -168,13 +168,13 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      '${UserManager.instance.user.info.nickname}'
+                      '${UserManager.instance!.user.info!.nickname}'
                           .text
                           .color(Colors.white)
                           .size(16.rsp)
                           .make(),
                       5.hb,
-                      Padding(padding: EdgeInsets.only(left: 0.rw),child:           getStore().state.userBrief.end == '0001-01-01T00:00:00Z'
+                      Padding(padding: EdgeInsets.only(left: 0.rw),child:           getStore().state.userBrief!.end == '0001-01-01T00:00:00Z'
                           ? Container(
                         padding: EdgeInsets.symmetric(horizontal:6.rw ),
                         decoration: BoxDecoration(
@@ -194,7 +194,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                             borderRadius: BorderRadius.circular(2.rw)),
                         child: Text(
                           'VIP店铺有效期至 '+DateUtil.formatDate(
-                              DateTime.parse(getStore().state.userBrief.end),
+                              DateTime.parse(getStore().state.userBrief!.end!),
                               format: 'yyyy-MM-dd'),
                           style: TextStyle(
                               fontSize: 10.rsp, color: Color(0xFF512309)),
@@ -225,8 +225,8 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                           .make(),
                       16.hb,
                       (!TextUtils.isEmpty(
-                          UserManager.instance.user.info.createdAt)
-                          ? '${DateTime.parse(UserManager.instance.user.info.createdAt).year}-${DateTime.parse(UserManager.instance.user.info.createdAt).month}-${DateTime.parse(UserManager.instance.user.info.createdAt).day}'
+                          UserManager.instance!.user.info!.createdAt)
+                          ? '${DateTime.parse(UserManager.instance!.user.info!.createdAt!).year}-${DateTime.parse(UserManager.instance!.user.info!.createdAt!).month}-${DateTime.parse(UserManager.instance!.user.info!.createdAt!).day}'
                           : "")
                           .text
                           .color(Colors.white.withOpacity(0.8))
@@ -262,7 +262,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                           .size(10.rsp)
                           .make(),
                       16.hb,
-                      'NO.${UserManager.instance.indentifier}'
+                      'NO.${UserManager.instance!.indentifier}'
                           .text
                           .color(Colors.white.withOpacity(0.8))
                           .bold
@@ -299,7 +299,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                     children: [
                       Row(
                         children: [
-                          '${UserManager.instance.user.info.nickname}'
+                          '${UserManager.instance!.user.info!.nickname}'
                               .text
                               .color(Colors.white)
                               .size(20.rsp)
@@ -319,7 +319,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
 
                         ),
                         child: Text(
-                            UserManager.instance.userBrief.isEnterPrise?'合伙人（公司）':'合伙人（个人）',
+                            UserManager.instance!.userBrief!.isEnterPrise!?'合伙人（公司）':'合伙人（个人）',
                           style: TextStyle(
                             color: Color(0xFF333333),
                             fontSize: 10.rsp
@@ -347,10 +347,10 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                         width: 48.rw,
                         placeholder: Assets.icon.icLauncherPlaystore.path,
                         image: TextUtils.isEmpty(
-                            UserManager.instance.user.info.headImgUrl)
+                            UserManager.instance!.user.info!.headImgUrl)
                             ? ""
                             : Api.getImgUrl(
-                            UserManager.instance.user.info.headImgUrl),
+                            UserManager.instance!.user.info!.headImgUrl)!,
                       ),
                     ),
                   ),
@@ -379,8 +379,8 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                           .make(),
                       16.hb,
                       (!TextUtils.isEmpty(
-                          UserManager.instance.user.info.createdAt)
-                          ? '${DateTime.parse(UserManager.instance.user.info.createdAt).year}-${DateTime.parse(UserManager.instance.user.info.createdAt).month}-${DateTime.parse(UserManager.instance.user.info.createdAt).day}'
+                          UserManager.instance!.user.info!.createdAt)
+                          ? '${DateTime.parse(UserManager.instance!.user.info!.createdAt!).year}-${DateTime.parse(UserManager.instance!.user.info!.createdAt!).month}-${DateTime.parse(UserManager.instance!.user.info!.createdAt!).day}'
                           : "")
                           .text
                           .color(Colors.white.withOpacity(0.8))
@@ -415,7 +415,7 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                           .size(10.rsp)
                           .make(),
                       16.hb,
-                      'NO.${UserManager.instance.indentifier}'
+                      'NO.${UserManager.instance!.indentifier}'
                           .text
                           .color(Colors.white.withOpacity(0.8))
                           .size(10.rsp)

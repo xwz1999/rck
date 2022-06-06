@@ -12,9 +12,9 @@ import 'package:recook/widgets/refresh_widget.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 
 class TopicPage extends StatefulWidget {
-  final int topicId;
+  final int? topicId;
   final bool initAttention;
-  TopicPage({Key key, @required this.topicId, this.initAttention = false})
+  TopicPage({Key? key, required this.topicId, this.initAttention = false})
       : super(key: key);
 
   @override
@@ -44,7 +44,7 @@ class _TopicPageState extends State<TopicPage> {
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -74,7 +74,7 @@ class _TopicPageState extends State<TopicPage> {
                           top: 0,
                           child: FadeInImage.assetNetwork(
                             placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                            image: Api.getImgUrl(_topicBaseInfoModel.topicImg),
+                            image: Api.getImgUrl(_topicBaseInfoModel.topicImg)!,
                             fit: BoxFit.cover,
                           ),
                         ),
@@ -93,7 +93,7 @@ class _TopicPageState extends State<TopicPage> {
                               FadeInImage.assetNetwork(
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                                 image:
-                                    Api.getImgUrl(_topicBaseInfoModel.topicImg),
+                                    Api.getImgUrl(_topicBaseInfoModel.topicImg)!,
                                 fit: BoxFit.cover,
                                 height: rSize(64),
                                 width: rSize(64),
@@ -221,7 +221,7 @@ class _TopicPageState extends State<TopicPage> {
           children: [
             FadeInImage.assetNetwork(
               placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-              image: model.coverUrl,
+              image: model.coverUrl!,
             ),
             Container(
               padding: EdgeInsets.all(rSize(10)),
@@ -230,7 +230,7 @@ class _TopicPageState extends State<TopicPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    model.content,
+                    model.content!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
@@ -246,7 +246,7 @@ class _TopicPageState extends State<TopicPage> {
                         borderRadius: BorderRadius.circular(9),
                         child: FadeInImage.assetNetwork(
                           placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                          image: Api.getImgUrl(model.headImgUrl),
+                          image: Api.getImgUrl(model.headImgUrl)!,
                           height: rSize(18),
                           width: rSize(18),
                         ),
@@ -254,7 +254,7 @@ class _TopicPageState extends State<TopicPage> {
                       rWBox(4),
                       Expanded(
                         child: Text(
-                          model.nickname,
+                          model.nickname!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -292,7 +292,7 @@ class _TopicPageState extends State<TopicPage> {
       'page': _page,
       'limit': 12,
     });
-    if (resultData?.data['data']['list'] == null)
+    if (resultData.data['data']['list'] == null)
       return [];
     else
       return (resultData.data['data']['list'] as List)

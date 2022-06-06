@@ -1,7 +1,7 @@
 class AfterSalesLogListModel {
-  String code;
-  String msg;
-  List<AfterSalesLogModel> data;
+  String? code;
+  String? msg;
+  List<AfterSalesLogModel>? data;
 
   AfterSalesLogListModel({this.code, this.msg, this.data});
 
@@ -11,7 +11,7 @@ class AfterSalesLogListModel {
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
-        data.add(new AfterSalesLogModel.fromJson(v));
+        data!.add(new AfterSalesLogModel.fromJson(v));
       });
     }
   }
@@ -21,18 +21,18 @@ class AfterSalesLogListModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class AfterSalesLogModel {
-  int id;
-  int asId;
-  String title;
-  String content;
-  String ctime;
+  int? id;
+  int? asId;
+  String? title;
+  String? content;
+  String? ctime;
 
   AfterSalesLogModel(
       {this.id, this.asId, this.title, this.content, this.ctime});

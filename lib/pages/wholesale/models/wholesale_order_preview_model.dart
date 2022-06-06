@@ -1,10 +1,10 @@
 import 'package:recook/models/address_list_model.dart';
 
 class WholesaleOrderPreviewModel {
-  int previewId;
-  Address addr;
-  List<SkuList> skuList;
-  num total;
+  int? previewId;
+  Address? addr;
+  List<SkuList>? skuList;
+  num? total;
 
   WholesaleOrderPreviewModel(
       {this.previewId, this.addr, this.skuList, this.total});
@@ -15,7 +15,7 @@ class WholesaleOrderPreviewModel {
     if (json['sku_list'] != null) {
       skuList = [];
       json['sku_list'].forEach((v) {
-        skuList.add(new SkuList.fromJson(v));
+        skuList!.add(new SkuList.fromJson(v));
       });
     }else{
       skuList = [];
@@ -27,10 +27,10 @@ class WholesaleOrderPreviewModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['preview_id'] = this.previewId;
     if (this.addr != null) {
-      data['Addr'] = this.addr.toJson();
+      data['Addr'] = this.addr!.toJson();
     }
     if (this.skuList != null) {
-      data['sku_list'] = this.skuList.map((v) => v.toJson()).toList();
+      data['sku_list'] = this.skuList!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -83,17 +83,17 @@ class WholesaleOrderPreviewModel {
 // }
 
 class SkuList {
-  int id;
-  int skuId;
-  num discountPrice;
-  num salePrice;
-  int quantity;
-  int limit;
-  int min;
-  String skuName;
-  String goodsName;
-  int salePublish;
-  String picUrl;
+  int? id;
+  int? skuId;
+  num? discountPrice;
+  num? salePrice;
+  int? quantity;
+  int? limit;
+  int? min;
+  String? skuName;
+  String? goodsName;
+  int? salePublish;
+  String? picUrl;
 
   SkuList(
       {this.id,

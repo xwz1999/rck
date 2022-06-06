@@ -3,7 +3,7 @@ import 'package:recook/const/resource.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
 
 class GetPlatformAwardPage extends StatelessWidget {
-  const GetPlatformAwardPage({Key key}) : super(key: key);
+  const GetPlatformAwardPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

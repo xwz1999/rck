@@ -1,7 +1,7 @@
 class WithdrawHistoryModel {
-  String code;
-  String msg;
-  List<Data> data;
+  String? code;
+  String? msg;
+  List<Data>? data;
 
   WithdrawHistoryModel({this.code, this.msg, this.data});
 
@@ -11,7 +11,7 @@ class WithdrawHistoryModel {
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
   }
@@ -21,26 +21,26 @@ class WithdrawHistoryModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Data {
-  num id;
-  num userId;
-  String userName;
-  num type;
-  num amount;
-  String alipay;
-  String bankAccount;
-  String bankName;
-  num status;
-  String auditTime;
-  String createdAt;
-  num taxFee;
-  num actualAmount;
+  num? id;
+  num? userId;
+  String? userName;
+  num? type;
+  num? amount;
+  String? alipay;
+  String? bankAccount;
+  String? bankName;
+  num? status;
+  String? auditTime;
+  String? createdAt;
+  num? taxFee;
+  num? actualAmount;
 
   Data(
       {this.id,

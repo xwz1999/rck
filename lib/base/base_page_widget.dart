@@ -10,7 +10,7 @@
 import 'package:flutter/material.dart';
 
 abstract class BasePageWidget extends StatefulWidget{
-  final Object argument;
+  final Object? argument;
 
   BasePageWidget({this.argument});
 }

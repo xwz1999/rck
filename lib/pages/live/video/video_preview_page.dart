@@ -5,10 +5,10 @@ import 'package:recook/pages/live/widget/local_file_video.dart';
 import 'package:recook/pages/live/widget/network_file_video.dart';
 
 class VideoPreviewPage extends StatefulWidget {
-  final File file;
-  final String path;
-  VideoPreviewPage({Key key, @required this.file, this.path}) : super(key: key);
-  VideoPreviewPage.network({Key key, this.file, @required this.path})
+  final File? file;
+  final String? path;
+  VideoPreviewPage({Key? key, required this.file, this.path}) : super(key: key);
+  VideoPreviewPage.network({Key? key, this.file, required this.path})
       : super(key: key);
   @override
   _VideoPreviewPageState createState() => _VideoPreviewPageState();

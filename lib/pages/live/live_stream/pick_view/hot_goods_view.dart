@@ -9,8 +9,8 @@ import 'package:recook/pages/user/widget/recook_check_box.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class HotGoodsView extends StatefulWidget {
-  final VoidCallback onPick;
-  HotGoodsView({Key key, this.onPick}) : super(key: key);
+  final VoidCallback? onPick;
+  HotGoodsView({Key? key, this.onPick}) : super(key: key);
 
   @override
   _HotGoodsViewState createState() => _HotGoodsViewState();
@@ -61,7 +61,7 @@ class _HotGoodsViewState extends State<HotGoodsView>
                         PickCart.picked.add(element);
                       }
                     });
-                  widget.onPick();
+                  widget.onPick!();
                 },
                 child: Row(
                   children: [
@@ -107,7 +107,7 @@ class _HotGoodsViewState extends State<HotGoodsView>
                 return LiveGoodsCard(
                   onPick: () {
                     setState(() {
-                      widget.onPick();
+                      widget.onPick!();
                     });
                   },
                   model: model,
@@ -126,7 +126,7 @@ class _HotGoodsViewState extends State<HotGoodsView>
       'page': _page,
       'limit': 15,
     });
-    if (resultData?.data['data']['list'] == null)
+    if (resultData.data['data']['list'] == null)
       return [];
     else
       return (resultData.data['data']['list'] as List)

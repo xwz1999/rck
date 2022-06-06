@@ -42,10 +42,10 @@ class AppTextStyle {
       TextStyle(color: Colors.white, fontSize: 13);
 
   static TextStyle generate(double fontSize,
-      {FontWeight fontWeight,
-      Color color = Colors.black,
-      TextDecoration decoration,
-      Paint background}) {
+      {FontWeight? fontWeight,
+      Color? color = Colors.black,
+      TextDecoration? decoration,
+      Paint? background}) {
     return TextStyle(
         color: color,
         fontSize: fontSize,

@@ -9,10 +9,10 @@ part of 'material_list_model.dart';
 MaterialListModel _$MaterialListModelFromJson(Map<String, dynamic> json) {
   return MaterialListModel(
       json['code'],
-      (json['data'] as List)
+      (json['data'] as List?)
           ?.map((e) =>
-              e == null ? null : MaterialModel.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+               MaterialModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
           json['msg'],);
 }
 
@@ -26,17 +26,17 @@ Map<String, dynamic> _$MaterialListModelToJson(
 
 MaterialModel _$MaterialModelFromJson(Map<String, dynamic> json) {
   return MaterialModel(
-      json['id'] as int,
-      json['goodsId'] as int,
-      json['text'] as String,
-      json['userId'] as int,
-      json['nickname'] as String,
-      json['headImgUrl'] as String,
-      json['createdAt'] as String,
-      json['isAttention'] as bool,
-      (json['photos'] as List)
-          ?.map((e) => e == null ? null : Photos.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+      json['id'] as int?,
+      json['goodsId'] as int?,
+      json['text'] as String?,
+      json['userId'] as int?,
+      json['nickname'] as String?,
+      json['headImgUrl'] as String?,
+      json['createdAt'] as String?,
+      json['isAttention'] as bool?,
+      (json['photos'] as List?)
+          ?.map((e) =>  Photos.fromJson(e as Map<String, dynamic>))
+          .toList(),
       // json['goods'] as Goods,
       json['goods'] == null
           ? null
@@ -44,7 +44,7 @@ MaterialModel _$MaterialModelFromJson(Map<String, dynamic> json) {
       // (json['goods'] as List)
       //     ?.map((e) => e == null ? null : Goods.fromJson(e as Map<String, dynamic>))
       //     ?.toList(),
-      json['isOfficial']  as bool,
+      json['isOfficial']  as bool?,
       );
 }
 
@@ -64,11 +64,11 @@ Map<String, dynamic> _$MaterialModelToJson(MaterialModel instance) => <String, d
 
 Photos _$PhotosFromJson(Map<String, dynamic> json) {
   return Photos(
-    json['id'] as int, 
-    json['momentsCopyId'] as int,
-    json['url'] as String, 
-    json['width'] as int,
-    json['height'] as int);
+    json['id'] as int?, 
+    json['momentsCopyId'] as int?,
+    json['url'] as String?, 
+    json['width'] as int?,
+    json['height'] as int?);
 }
 
 Map<String, dynamic> _$PhotosToJson(Photos instance) => <String, dynamic>{
@@ -81,10 +81,10 @@ Map<String, dynamic> _$PhotosToJson(Photos instance) => <String, dynamic>{
 
 Goods _$GoodsFromJson(Map<String, dynamic> json) {
   return Goods(
-    json['mainPhotoURL'] as String, 
-    json['name'] as String,
-    json['price'] as num,
-    json['id'] as int);
+    json['mainPhotoURL'] as String?, 
+    json['name'] as String?,
+    json['price'] as num?,
+    json['id'] as int?);
 }
 
 Map<String, dynamic> _$GoodsToJson(Goods instance) => <String, dynamic>{

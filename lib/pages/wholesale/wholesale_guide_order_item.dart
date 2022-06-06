@@ -8,7 +8,7 @@ import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-typedef ItemClickListener = Function(OrderModel order, {VoidCallback callback});
+typedef ItemClickListener = Function(OrderModel order, {VoidCallback? callback});
 
 class WholesaleGuideOrderItem extends StatefulWidget {
   /*
@@ -24,18 +24,18 @@ class WholesaleGuideOrderItem extends StatefulWidget {
     1:全部发货
     2:部分发货
     */
-  final GuideOrderItemModel orderModel;
-  final VoidCallback itemClick;
-  final ItemClickListener goToPay;
-  final ItemClickListener cancelOrder;
-  final ItemClickListener applyRefund;
-  final ItemClickListener applySalesReturn;
-  final ItemClickListener evaluation;
-  final ItemClickListener delete;
-  final ItemClickListener confirm;
+  final GuideOrderItemModel? orderModel;
+  final VoidCallback? itemClick;
+  final ItemClickListener? goToPay;
+  final ItemClickListener? cancelOrder;
+  final ItemClickListener? applyRefund;
+  final ItemClickListener? applySalesReturn;
+  final ItemClickListener? evaluation;
+  final ItemClickListener? delete;
+  final ItemClickListener? confirm;
 
   const WholesaleGuideOrderItem(
-      {Key key,
+      {Key? key,
       this.orderModel,
       this.goToPay,
       this.cancelOrder,
@@ -51,8 +51,8 @@ class WholesaleGuideOrderItem extends StatefulWidget {
 }
 
 class _WholesaleGuideOrderItemState extends State<WholesaleGuideOrderItem> {
-  String _status;
-  Color _color;
+  late String _status;
+  Color? _color;
 
   @override
   Widget build(BuildContext context) {
@@ -124,18 +124,18 @@ class _WholesaleGuideOrderItemState extends State<WholesaleGuideOrderItem> {
       margin: EdgeInsets.only(top: rSize(5), left: rSize(10)),
       padding: EdgeInsets.only(top: rSize(5)),
       decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: Colors.grey[300], width: 0.3))),
+          border: Border(top: BorderSide(color: Colors.grey[300]!, width: 0.3))),
       child: Row(
         children: <Widget>[
           Spacer(),
           RichText(
               text: TextSpan(
-                  text: "共${widget.orderModel.totalGoodsCount}件商品  总计￥",
+                  text: "共${widget.orderModel!.totalGoodsCount}件商品  总计￥",
                   style: AppTextStyle.generate(13 * 2.sp),
                   children: [
                 TextSpan(
                     text:
-                        "${widget.orderModel.goodsTotalAmount.toStringAsFixed(2)}",
+                        "${widget.orderModel!.goodsTotalAmount!.toStringAsFixed(2)}",
                     style: AppTextStyle.generate(16 * 2.sp))
               ])),
         ],
@@ -172,7 +172,7 @@ class _WholesaleGuideOrderItemState extends State<WholesaleGuideOrderItem> {
           style: AppTextStyle.generate(
             14 * 2.sp,
           ),
-          title: DateTime.fromMillisecondsSinceEpoch(widget.orderModel.createdAt ).toString(),
+          title: DateTime.fromMillisecondsSinceEpoch(widget.orderModel!.createdAt! ).toString(),
         ),
 
         Spacer(),
@@ -187,7 +187,7 @@ class _WholesaleGuideOrderItemState extends State<WholesaleGuideOrderItem> {
   }
 
   _orderStatus() {
-    switch (widget.orderModel.status) {
+    switch (widget.orderModel!.status) {
       case 0:
         _status = "未付款";
         _color = Color.fromARGB(255, 249, 61, 6);
@@ -218,11 +218,11 @@ class _WholesaleGuideOrderItemState extends State<WholesaleGuideOrderItem> {
 
   _goodsList() {
     return ListView.builder(
-        itemCount: widget.orderModel.goods.length,
+        itemCount: widget.orderModel!.goods!.length,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: ((context, index) {
-          return _goodsItem(widget.orderModel.goods[index]);
+          return _goodsItem(widget.orderModel!.goods![index]);
         }));
   }
 
@@ -263,7 +263,7 @@ class _WholesaleGuideOrderItemState extends State<WholesaleGuideOrderItem> {
                           TextSpan(
                             children: [
                               ExtendedWidgetSpan(
-                                child: widget.orderModel.shippingMethod == 1
+                                child: widget.orderModel!.shippingMethod == 1
                                     ? Container(
                                         margin: EdgeInsets.only(right: 2.rw),
                                         height: 14.rw,
@@ -329,7 +329,7 @@ class _WholesaleGuideOrderItemState extends State<WholesaleGuideOrderItem> {
                       Spacer(),
                       Column(
                         children: [
-                          "¥${goods.unitPrice.toStringAsFixed(2)}".text.size(12.rsp).color(Color(0xFF333333)).make(),
+                          "¥${goods.unitPrice!.toStringAsFixed(2)}".text.size(12.rsp).color(Color(0xFF333333)).make(),
 
                         ],
                       )

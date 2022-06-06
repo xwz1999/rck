@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/styles.dart';
 class MemberInviteView extends StatefulWidget {
-  final Function listener;
-  const MemberInviteView({Key key, this.listener}) : super(key: key);
+  final Function? listener;
+  const MemberInviteView({Key? key, this.listener}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -19,7 +19,7 @@ class _MemberInviteViewState extends State<MemberInviteView> {
       child: _contentWidget(),
       onTap: () {
         if (widget.listener != null) {
-          widget.listener();
+          widget.listener!();
         }
       },
     );

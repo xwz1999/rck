@@ -1,10 +1,10 @@
 class FollowListModel {
-  int userId;
-  String nickname;
-  String headImgUrl;
-  int follows;
-  int fans;
-  int isFollow;
+  int? userId;
+  String? nickname;
+  String? headImgUrl;
+  int? follows;
+  int? fans;
+  int? isFollow;
 
   FollowListModel(
       {this.userId,

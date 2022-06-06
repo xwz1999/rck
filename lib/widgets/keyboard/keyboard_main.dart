@@ -20,7 +20,7 @@ class KeyboardState extends State<MainKeyBoard> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  VoidCallback _showBottomSheetCallback;
+  VoidCallback? _showBottomSheetCallback;
 
   @override
   void initState() {
@@ -108,7 +108,7 @@ class KeyboardState extends State<MainKeyBoard> {
       // disable the button
       _showBottomSheetCallback = null;
     });
-    _scaffoldKey.currentState
+    _scaffoldKey.currentState!
         .showBottomSheet<void>((BuildContext context) {
       // return new MyKeyboard(_onKeyDown, isShowTips: false,);
       return BottomKeyBoardWidget();
@@ -137,7 +137,7 @@ class KeyboardState extends State<MainKeyBoard> {
         child: new CustomJPasswordField(pwd),
       ),
       onTap: () {
-        _showBottomSheetCallback();
+        _showBottomSheetCallback!();
       },
     );
   }

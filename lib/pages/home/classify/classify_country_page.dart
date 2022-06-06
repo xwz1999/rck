@@ -7,16 +7,13 @@
  * ====================================================
  */
 
-import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/daos/home_dao.dart';
 import 'package:recook/models/category_list_model.dart';
 import 'package:recook/models/country_list_model.dart';
@@ -29,8 +26,8 @@ import 'package:recook/widgets/sc_tab_bar.dart';
 import 'classify_category_page.dart';
 
 class ClassifyCountryPage extends StatefulWidget {
-  final List<CountryListModel> data;
-  ClassifyCountryPage({Key key, this.data}) : super(key: key);
+  final List<CountryListModel>? data;
+  ClassifyCountryPage({Key? key, this.data}) : super(key: key);
   @override
   State<StatefulWidget> createState() {
     return _ClassifyCountryPageState();
@@ -41,14 +38,14 @@ class _ClassifyCountryPageState extends BaseStoreState<ClassifyCountryPage>
     with TickerProviderStateMixin {
   PageController _controller = PageController();
   TabBarController _tabController = TabBarController();
-  List<CountryListModel> countryListModelList = [];
+  List<CountryListModel>? countryListModelList = [];
   int currentIndex = 0;
   String _searchText = '';
   int countryIndex = 0;
   bool countryBool = true;
 
   bool animating = false;
-  TextEditingController _textEditController;
+  TextEditingController? _textEditController;
   // FocusNode _contentFocusNode = FocusNode();
 
   @override
@@ -151,7 +148,7 @@ class _ClassifyCountryPageState extends BaseStoreState<ClassifyCountryPage>
   }
 
   _buildLeft() {
-    return SCTabBar<String>(
+    return SCTabBar<String?>(
       controller: _tabController,
       initialIndex: 0,
       height: rSize(28),
@@ -159,7 +156,7 @@ class _ClassifyCountryPageState extends BaseStoreState<ClassifyCountryPage>
       indicatorHeight: rSize(4),
       direction: Axis.vertical,
       spacing: rSize(20),
-      items: countryListModelList.map((item) {
+      items: countryListModelList!.map((item) {
         return item.name;
       }).toList(),
       itemBuilder: (context, index, item) {
@@ -172,7 +169,7 @@ class _ClassifyCountryPageState extends BaseStoreState<ClassifyCountryPage>
         return Container(
             child: Center(
                 child: Text(
-          item,
+          item!,
           style: AppTextStyle.generate(14 * 2.sp),
           textAlign: TextAlign.center,
         )));
@@ -187,8 +184,8 @@ class _ClassifyCountryPageState extends BaseStoreState<ClassifyCountryPage>
 
   _getcountryindex() {
     if (countryListModelList != null) {
-      for (var i = 0; i < countryListModelList.length; i++) {
-        if (countryListModelList[i].children.length > 0) {
+      for (var i = 0; i < countryListModelList!.length; i++) {
+        if (countryListModelList![i].children!.length > 0) {
           countryIndex = i;
           break;
         }
@@ -199,8 +196,8 @@ class _ClassifyCountryPageState extends BaseStoreState<ClassifyCountryPage>
 
   _getcountrybool() {
     if (countryListModelList != null) {
-      for (var i = 0; i < countryListModelList.length; i++) {
-        if (countryListModelList[i].children.length > 0) {
+      for (var i = 0; i < countryListModelList!.length; i++) {
+        if (countryListModelList![i].children!.length > 0) {
           return countryBool = true;
         }
       }
@@ -211,20 +208,20 @@ class _ClassifyCountryPageState extends BaseStoreState<ClassifyCountryPage>
   double padding = 0;
 
   _buildRight() {
-    double statusBarHeight = DeviceInfo.statusBarHeight;
+    double? statusBarHeight = DeviceInfo.statusBarHeight;
     double appbarHeight = 56.0;
 
     return PageView.builder(
-        itemCount: countryListModelList.length,
+        itemCount: countryListModelList!.length,
         controller: _controller,
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
           return NotificationListener(
-              child: buildGridView(appbarHeight, statusBarHeight, index),
+              child: buildGridView(appbarHeight, statusBarHeight!, index),
               onNotification: (ScrollUpdateNotification notification) {
                 if (animating) return true;
 
-                if (currentIndex < countryListModelList.length - 1 &&
+                if (currentIndex < countryListModelList!.length - 1 &&
                     notification.metrics.pixels.toInt() >
                         (notification.metrics.maxScrollExtent + 120).toInt()) {
                   if (!animating) {
@@ -268,16 +265,16 @@ class _ClassifyCountryPageState extends BaseStoreState<ClassifyCountryPage>
 
   SCGridView buildGridView(
       double appbarHeight, double statusBarHeight, int index) {
-    List<Country> secondCategories = countryListModelList[index].children;
-    String firstTitle = countryListModelList[index].name;
+    List<Country>? secondCategories = countryListModelList![index].children;
+    String? firstTitle = countryListModelList![index].name;
     return SCGridView(
         viewportHeight:
-            DeviceInfo.screenHeight - appbarHeight - statusBarHeight + 5,
+            DeviceInfo.screenHeight! - appbarHeight - statusBarHeight + 5,
         crossAxisCount: 3,
         sectionCount: 1,
         childAspectRatio: 0.9,
         itemCount: (section) {
-          return countryListModelList[index].children.length;
+          return countryListModelList![index].children!.length;
         },
         // headerBuilder: (context, section) {
         //   return Container(
@@ -292,7 +289,7 @@ class _ClassifyCountryPageState extends BaseStoreState<ClassifyCountryPage>
         //   );
         // },
         itemBuilder: (context, indexIn) {
-          Country secondCategory = secondCategories[indexIn];
+          Country secondCategory = secondCategories![indexIn];
           return CustomImageButton(
             icon: CustomCacheImage(
                 height: rSize(50),
@@ -302,11 +299,6 @@ class _ClassifyCountryPageState extends BaseStoreState<ClassifyCountryPage>
             contentSpacing: rSize(5),
             fontSize: 14 * 2.sp,
             onPressed: () async {
-              // AppRouter.push(context, RouteName.GOODS_LIST_PAGE,
-              //     arguments: GoodsImportListPage.setArguments(
-              //         title: firstTitle,
-              //         index: indexIn,
-              //         secondCategoryList: secondCategories));
               print(secondCategory.id);
               List<CategoryListModel> categoryListModelList;
               categoryListModelList =

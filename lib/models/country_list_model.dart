@@ -1,9 +1,9 @@
 class CountryListModel {
-  int id;
-  String name;
-  String icon;
-  int parentId;
-  List<Country> children;
+  int? id;
+  String? name;
+  String? icon;
+  int? parentId;
+  List<Country>? children;
 
   CountryListModel(
       {this.id, this.name, this.icon, this.parentId, this.children});
@@ -14,9 +14,9 @@ class CountryListModel {
     icon = json['icon'];
     parentId = json['parent_id'];
     if (json['children'] != null) {
-      children = new List<Country>();
+      children = [];
       json['children'].forEach((v) {
-        children.add(new Country.fromJson(v));
+        children!.add(new Country.fromJson(v));
       });
     }
   }
@@ -28,17 +28,17 @@ class CountryListModel {
     data['icon'] = this.icon;
     data['parent_id'] = this.parentId;
     if (this.children != null) {
-      data['children'] = this.children.map((v) => v.toJson()).toList();
+      data['children'] = this.children!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Country {
-  int id;
-  String name;
-  String icon;
-  int parentId;
+  int? id;
+  String? name;
+  String? icon;
+  int? parentId;
 
   Country({this.id, this.name, this.icon, this.parentId});
 

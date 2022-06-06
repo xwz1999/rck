@@ -1,14 +1,13 @@
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/utils/app_router.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 
 class ResultPage extends StatefulWidget {
-  final Map arguments;
-  ResultPage({Key key, this.arguments}) : super(key: key);
+  final Map? arguments;
+  ResultPage({Key? key, this.arguments}) : super(key: key);
   static setArgument({bool isSuccess=false, title="", info=""}){
     return {
       'isSuccess': isSuccess,
@@ -21,15 +20,15 @@ class ResultPage extends StatefulWidget {
 }
 
 class _ResultPageState extends BaseStoreState<ResultPage> {
-  bool _isSuccess = false;
+  bool? _isSuccess = false;
   dynamic _title;
   dynamic _info;
   @override
   void initState() { 
     super.initState();
-    _isSuccess = widget.arguments["isSuccess"];
-    _title = widget.arguments["title"];
-    _info = widget.arguments["info"];
+    _isSuccess = widget.arguments!["isSuccess"];
+    _title = widget.arguments!["title"];
+    _info = widget.arguments!["info"];
   }
 
   @override
@@ -44,7 +43,7 @@ class _ResultPageState extends BaseStoreState<ResultPage> {
       ),
       body: Container(
         color: AppColor.frenchColor,
-        child: _isSuccess? _successBodyWidget() : _faildBodyWidget(),
+        child: _isSuccess!? _successBodyWidget() : _faildBodyWidget(),
       )
     );
   }

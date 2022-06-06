@@ -1,7 +1,6 @@
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -25,9 +24,9 @@ import 'package:recook/widgets/webView.dart';
 import 'model/withdraw_amount_model.dart';
 
 class UserCashWithdrawPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  const UserCashWithdrawPage({Key key, this.arguments}) : super(key: key);
+  const UserCashWithdrawPage({Key? key, this.arguments}) : super(key: key);
 
   static setArguments({num amount = 0}) {
     return {
@@ -41,27 +40,27 @@ class UserCashWithdrawPage extends StatefulWidget {
 
 class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
   //
-  TextEditingController _amountTextEditController;
+  TextEditingController? _amountTextEditController;
   FocusNode _amountContentFocusNode = FocusNode();
 
   ///支付宝账号
-  TextEditingController _accountTextEditController;
-  TextEditingController _bankAccountTextEditController;
+  TextEditingController? _accountTextEditController;
+  TextEditingController? _bankAccountTextEditController;
   FocusNode _accountFocusNodeController = FocusNode();
   BottomKeyBoardController _bottomKeyBoardController =
       BottomKeyBoardController();
   bool _isCashToAlipay = true;
   bool _isAgreeTheProtocol = false;
   bool _isNeedUserVerify = true;
-  WithdrawAmountModel _model;
+  WithdrawAmountModel? _model;
   // 是否需要实名认证
   @override
   void initState() {
     super.initState();
-    _isNeedUserVerify = !UserManager.instance.user.info.realInfoStatus;
+    _isNeedUserVerify = !UserManager.instance!.user.info!.realInfoStatus!;
     _amountTextEditController = TextEditingController();
-    String lastAlipayAccount = HiveStore.appBox.get('last_alipay') ?? '';
-    String lastBankAccount = HiveStore.appBox.get('last_bank_ccount') ?? '';
+    String lastAlipayAccount = HiveStore.appBox!.get('last_alipay') ?? '';
+    String lastBankAccount = HiveStore.appBox!.get('last_bank_ccount') ?? '';
     _accountTextEditController = TextEditingController(text: lastAlipayAccount);
     _bankAccountTextEditController =
         TextEditingController(text: lastBankAccount);
@@ -71,13 +70,13 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
   }
 
   /// 获取税费
-  Future<WithdrawAmountModel> getAllAmount(
+  Future<WithdrawAmountModel?> getAllAmount(
       ) async {
     ///channel 1 购物车购买 0直接购买
     ResultData res = await HttpManager.post(APIV2.userAPI.allAmount, {
     });
 
-    WithdrawAmountModel model;
+    WithdrawAmountModel? model;
 
 
     if(res.data!=null){
@@ -233,7 +232,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
   }
 
    _amountWidget() {
-    double amount = widget.arguments['amount'];
+    double? amount = widget.arguments!['amount'];
     Container con = Container(
       padding: EdgeInsets.symmetric(horizontal: 17),
       width: MediaQuery.of(context).size.width,
@@ -249,7 +248,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
               ),
               Spacer(),
               Text(
-                  _model==null?'¥0':   '¥'+ _model.balance.toStringAsFixed(2),
+                  _model==null?'¥0':   '¥'+ _model!.balance!.toStringAsFixed(2),
                 style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp,fontWeight: FontWeight.bold),
               ),
             ],
@@ -281,7 +280,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
 
               Spacer(),
               Text(
-                _model==null?'¥0':'¥'+_model.taxAmount.toStringAsFixed(2),
+                _model==null?'¥0':'¥'+_model!.taxAmount!.toStringAsFixed(2),
                 style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp,fontWeight: FontWeight.bold),
               ),
             ],
@@ -295,7 +294,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
               ),
               Spacer(),
               Text(
-                _model==null?'¥0': '¥'+_model.actualAmount.toStringAsFixed(2),
+                _model==null?'¥0': '¥'+_model!.actualAmount!.toStringAsFixed(2),
                 style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp,fontWeight: FontWeight.bold),
               ),
             ],
@@ -402,7 +401,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
     }
   }
 
-  _buttonWidget(String title, {isSelect = false, Function click}) {
+  _buttonWidget(String title, {isSelect = false, Function? click}) {
     return CustomImageButton(
       title: title,
       style:
@@ -416,7 +415,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
         width: 14,
         height: 14,
       ),
-      onPressed: click,
+      onPressed: click as void Function()?,
     );
   }
 
@@ -461,14 +460,14 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
             height: 1.rw,
             color:Color(0xFFE9E9E9),
           ),
-          UserManager.instance.user.info.realInfoStatus &&
-                  !TextUtils.isEmpty(UserManager.instance.user.info.realName)
+          UserManager.instance!.user.info!.realInfoStatus! &&
+                  !TextUtils.isEmpty(UserManager.instance!.user.info!.realName)
               ? Container(
                   padding: EdgeInsets.symmetric(horizontal: 15),
                   height: 40,
                   child: Row(
                     children: <Widget>[
-                      Text("姓名：${UserManager.instance.user.info.realName}",
+                      Text("姓名：${UserManager.instance!.user.info!.realName}",
                           style: TextStyle(color: Colors.black, fontSize: 14)),
                       Container(
                         margin: EdgeInsets.only(left: 10),
@@ -585,8 +584,8 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
           CustomImageButton(
             onPressed: !_isAgreeTheProtocol ||
                     TextUtils.isEmpty(_isCashToAlipay
-                        ? _accountTextEditController.text
-                        : _bankAccountTextEditController.text)||_model==null||_model.actualAmount==-1||UserManager.instance.userBrief.balance<=0
+                        ? _accountTextEditController!.text
+                        : _bankAccountTextEditController!.text)||_model==null||_model!.actualAmount==-1||UserManager.instance!.userBrief!.balance!<=0
                 ? null
                 : () {
                     if (_isNeedUserVerify) {
@@ -675,7 +674,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
 
   // 密码支付
   _submitPassword() {
-    if (!UserManager.instance.user.info.isSetPayPwd) {
+    if (!UserManager.instance!.user.info!.isSetPayPwd!) {
       //未设置密码 先设置密码
       // 创建密码
       Alert.show(
@@ -716,10 +715,10 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
             },
             passwordReturn: (password) {
               Navigator.pop(context);
-              String account = _accountTextEditController.text;
-              String bankAccount = _bankAccountTextEditController.text;
+              String account = _accountTextEditController!.text;
+              String bankAccount = _bankAccountTextEditController!.text;
               withdraw(
-               _model.actualAmount,
+               _model!.actualAmount,
                 password,
                 alipay: _isCashToAlipay ? account : "",
                 bankAccount: _isCashToAlipay ? "" : bankAccount,
@@ -752,7 +751,7 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
 
   withdraw(amount, password, {alipay = "", bankAccount = ""}) async {
     Map requestMap = {
-      "userId": UserManager.instance.user.info.id,
+      "userId": UserManager.instance!.user.info!.id,
       "amount": amount,
       "password": password
     };
@@ -766,20 +765,20 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
     if (!resultData.result) {
       _bottomKeyBoardController.clearPassWord();
       // Toast.showError(resultData.msg,);
-      showError(resultData.msg, duration: Duration(milliseconds: 2000));
+      showError(resultData.msg??'', duration: Duration(milliseconds: 2000));
       return;
     }
-    getStore().state.userBrief.balance =
-        getStore().state.userBrief.balance.toDouble() - num.parse(amount);
-    if (getStore().state.userBrief.balance.toDouble() < 0) {
-      getStore().state.userBrief.balance = 0;
+    getStore().state.userBrief!.balance =
+        getStore().state.userBrief!.balance!.toDouble() - num.parse(amount);
+    if (getStore().state.userBrief!.balance!.toDouble() < 0) {
+      getStore().state.userBrief!.balance = 0;
     }
 
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
       _bottomKeyBoardController.clearPassWord();
       // Toast.showError(model.msg,);
-      showError(model.msg, duration: Duration(milliseconds: 2000));
+      showError(model.msg??'', duration: Duration(milliseconds: 2000));
       return;
     }else{
       Get.back();
@@ -792,9 +791,9 @@ class _UserCashWithdrawPageState extends BaseStoreState<UserCashWithdrawPage> {
 }
 
 class WithdrawAlertWidget extends StatelessWidget {
-  final Function dismissClick;
+  final Function? dismissClick;
 
-  const WithdrawAlertWidget({Key key, this.dismissClick}) : super(key: key);
+  const WithdrawAlertWidget({Key? key, this.dismissClick}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -842,7 +841,7 @@ class WithdrawAlertWidget extends StatelessWidget {
                       ),
                       TextSpan(
                           text:
-                              "(你的真实姓名：${!TextUtils.isEmpty(UserManager.instance.user.info.realName) ? UserManager.instance.user.info.realName : ""}）",
+                              "(你的真实姓名：${!TextUtils.isEmpty(UserManager.instance!.user.info!.realName) ? UserManager.instance!.user.info!.realName : ""}）",
                           style: redTextStyle),
                     ]))),
                     _cellWidget(Text.rich(TextSpan(style: textStyle, children: [
@@ -851,7 +850,7 @@ class WithdrawAlertWidget extends StatelessWidget {
                       ),
                       TextSpan(
                           text:
-                              "(你的真实姓名：${!TextUtils.isEmpty(UserManager.instance.user.info.realName) ? UserManager.instance.user.info.realName : ""}）",
+                              "(你的真实姓名：${!TextUtils.isEmpty(UserManager.instance!.user.info!.realName) ? UserManager.instance!.user.info!.realName : ""}）",
                           style: redTextStyle),
                     ]))),
                     // _cellWidget(Text.rich(TextSpan(style: textStyle, children: [
@@ -873,7 +872,7 @@ class WithdrawAlertWidget extends StatelessWidget {
       )),
       onTap: () {
         if (dismissClick != null) {
-          dismissClick();
+          dismissClick!();
         }
       },
     );
@@ -933,7 +932,7 @@ class WithdrawAlertWidget extends StatelessWidget {
         height: 45,
         onPressed: () {
           if (dismissClick != null) {
-            dismissClick();
+            dismissClick!();
           }
         },
         backgroundColor: AppColor.themeColor,

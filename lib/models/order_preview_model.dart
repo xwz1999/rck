@@ -153,7 +153,7 @@ part 'order_preview_model.g.dart';
 
 @JsonSerializable()
 class OrderPreviewModel extends BaseModel {
-  OrderDetail data;
+  OrderDetail? data;
 
   OrderPreviewModel(code, this.data, msg) : super(code, msg);
 
@@ -165,34 +165,34 @@ class OrderPreviewModel extends BaseModel {
 
 @JsonSerializable()
 class OrderDetail extends Object {
-  int id; //'订单id',
-  int parentId; //'分享者id，链接购买则是分享者id。其他方式则是自己上级的id',
-  int userId; //'下单者',
-  int isSubordinate; //'是否为上下级：0不是 1是',
-  double brandCouponTotalAmount; //'品牌优惠券抵扣总金额，即使发生售后也不变，交易快照',
-  double universeCouponTotalAmount; //'购物券抵扣总金额，即使发生售后也不变，交易快照',
-  double coinTotalAmount; //'瑞币抵扣总金额，即使发生售后也不变，交易快照',
-  double expressTotalFee; //'总快递费，即使发生售后也不变，交易快照',
-  double goodsTotalAmount; //商品总金额，单价x数量，不含其他费用减除，即使发生售后也不变，交易快照
-  double goodsTotalCommission; //'商品总返还金额，即使发生售后也不变，交易快照',
-  double actualTotalAmount; //'实际支付的金额，商品总金额+快递费-瑞比-优惠券，即使发生售后也不变，交易快照',
-  int shippingMethod; //'0快递 1自提',
-  String buyerMessage; //'买家留言。不超过50个字',
-  int totalGoodsCount; //该订单下商品数总和
-  num userRole;
+  int? id; //'订单id',
+  int? parentId; //'分享者id，链接购买则是分享者id。其他方式则是自己上级的id',
+  int? userId; //'下单者',
+  int? isSubordinate; //'是否为上下级：0不是 1是',
+  double? brandCouponTotalAmount; //'品牌优惠券抵扣总金额，即使发生售后也不变，交易快照',
+  double? universeCouponTotalAmount; //'购物券抵扣总金额，即使发生售后也不变，交易快照',
+  double? coinTotalAmount; //'瑞币抵扣总金额，即使发生售后也不变，交易快照',
+  double? expressTotalFee; //'总快递费，即使发生售后也不变，交易快照',
+  double? goodsTotalAmount; //商品总金额，单价x数量，不含其他费用减除，即使发生售后也不变，交易快照
+  double? goodsTotalCommission; //'商品总返还金额，即使发生售后也不变，交易快照',
+  double? actualTotalAmount; //'实际支付的金额，商品总金额+快递费-瑞比-优惠券，即使发生售后也不变，交易快照',
+  int? shippingMethod; //'0快递 1自提',
+  String? buyerMessage; //'买家留言。不超过50个字',
+  int? totalGoodsCount; //该订单下商品数总和
+  num? userRole;
 
   // double coinAmount;
   // double actualAmount;
   // int shippingMethod;
   // String buyerMessage;
 
-  Coupon coupon;
-  Addr addr;
-  List<Brands> brands;
-  CoinStatus coinStatus;
+  Coupon? coupon;
+  Addr? addr;
+  List<Brands>? brands;
+  CoinStatus? coinStatus;
 
   ///海外订单
-  bool hasAuth;
+  bool? hasAuth;
   // Balance balance;
 
   OrderDetail(
@@ -230,9 +230,9 @@ class CoinStatus extends Object {
   isUseCoin	boolean	非必须
   isEnable	boolean	非必须
   */
-  num coin;
-  bool isUseCoin;
-  bool isEnable;
+  num? coin;
+  bool? isUseCoin;
+  bool? isEnable;
   CoinStatus(this.coin, this.isUseCoin, this.isEnable);
   factory CoinStatus.fromJson(Map<String, dynamic> srcJson) =>
       _$CoinStatusFromJson(srcJson);
@@ -241,15 +241,15 @@ class CoinStatus extends Object {
 
 @JsonSerializable()
 class Coupon extends Object {
-  int id;
+  int? id;
 
-  int brandId;
+  int? brandId;
 
-  int scope;
+  int? scope;
 
-  String couponName; //'使用的优惠券名称'
+  String? couponName; //'使用的优惠券名称'
 
-  double deductedAmount; //'抵扣的金额',
+  double? deductedAmount; //'抵扣的金额',
 
   Coupon(
     this.id,
@@ -267,23 +267,23 @@ class Coupon extends Object {
 
 @JsonSerializable()
 class Addr extends Object {
-  int id;
+  int? id;
 
-  int addressId;
+  int? addressId;
 
-  String province;
+  String? province;
 
-  String city;
+  String? city;
 
-  String district;
+  String? district;
 
-  String address;
+  String? address;
 
-  String receiverName;
+  String? receiverName;
 
-  String mobile;
+  String? mobile;
 
-  int isDeliveryArea;
+  int? isDeliveryArea;
 
   Addr(
     this.id,
@@ -307,24 +307,24 @@ class Addr extends Object {
 class Brands extends Object {
   // int id;
 
-  int brandId;
+  int? brandId;
 
-  String brandName;
+  String? brandName;
 
-  String brandLogoUrl;
+  String? brandLogoUrl;
 
   //
-  double brandExpressTotalAmount; //该品牌下商品总运费
-  double brandGoodsTotalAmount; //该品牌下商品瑞比抵扣掉的金额
-  int brandGoodsTotalCount; //该品牌下商品总数量
+  double? brandExpressTotalAmount; //该品牌下商品总运费
+  double? brandGoodsTotalAmount; //该品牌下商品瑞比抵扣掉的金额
+  int? brandGoodsTotalCount; //该品牌下商品总数量
   //
   // double actualAmount;
 
   // double expressFee;
 
-  List<OrderGoods> goods;
+  List<OrderGoods>? goods;
 
-  Coupon coupon;
+  Coupon? coupon;
 
   Brands(
       this.brandId,
@@ -344,26 +344,26 @@ class Brands extends Object {
 
 @JsonSerializable()
 class OrderGoods extends Object {
-  int goodsId; //// 商品ID
-  String goodsName; // 商品名快照
-  int skuId; // 商品sku_id
-  String skuName; // SKU名字组合起来
-  String skuCode; // 条形码或者编码
-  String mainPhotoUrl; // 主图快照 先读sku 没有则读取主图
-  int quantity; // 商品数量
-  String promotionName; // 活动名称
+  int? goodsId; //// 商品ID
+  String? goodsName; // 商品名快照
+  int? skuId; // 商品sku_id
+  String? skuName; // SKU名字组合起来
+  String? skuCode; // 条形码或者编码
+  String? mainPhotoUrl; // 主图快照 先读sku 没有则读取主图
+  int? quantity; // 商品数量
+  String? promotionName; // 活动名称
 
-  double unitPrice; //单价
-  double totalCommission; //提成总额
-  double brandCouponAmount; //品牌优惠券抵扣金额
-  double universeBrandCouponAmount; //购物券抵扣金额
-  double coinAmount; //瑞币抵扣金额
-  double goodsAmount; //商品总金额 单价x数量，不含其他费用减除
-  double expressFee; //快递费
-  double actualAmount; //实际支付的金额
-  num isImport;
-  num isFerme;
-  num storehouse;
+  double? unitPrice; //单价
+  double? totalCommission; //提成总额
+  double? brandCouponAmount; //品牌优惠券抵扣金额
+  double? universeBrandCouponAmount; //购物券抵扣金额
+  double? coinAmount; //瑞币抵扣金额
+  double? goodsAmount; //商品总金额 单价x数量，不含其他费用减除
+  double? expressFee; //快递费
+  double? actualAmount; //实际支付的金额
+  num? isImport;
+  num? isFerme;
+  num? storehouse;
 
   OrderGoods(
     this.goodsId,
@@ -395,9 +395,9 @@ class OrderGoods extends Object {
 
 @JsonSerializable()
 class Balance extends Object {
-  int id;
+  int? id;
 
-  double deductedAmount;
+  double? deductedAmount;
 
   Balance(
     this.id,

@@ -13,10 +13,10 @@ class BalancePage extends StatefulWidget {
 }
 
 class _BalancePageState extends BaseStoreState<BalancePage> {
-  BalancePageModel _coinModel;
-  List<DataList> _data;
+  BalancePageModel? _coinModel;
+  List<DataList>? _data;
   int _page = 0;
-  GSRefreshController _controller;
+  GSRefreshController? _controller;
 
   @override
   void initState() {
@@ -107,7 +107,7 @@ class _BalancePageState extends BaseStoreState<BalancePage> {
               text: TextSpan(
                   text: _coinModel == null
                       ? "- -"
-                      : _coinModel.data.balance.toDouble().toString(),
+                      : _coinModel!.data!.balance!.toDouble().toString(),
                   style: AppTextStyle.generate(25 * 2.sp, color: Colors.white),
                   children: [
                     TextSpan(
@@ -131,22 +131,22 @@ class _BalancePageState extends BaseStoreState<BalancePage> {
       },
       onLoadMore: () {
         _page++;
-        _getData(_page, lastId: _data.last.id);
+        _getData(_page, lastId: _data!.last.id as int?);
       },
       body: _data == null
           ? noDataView("您当前没有余额")
           : ListView.builder(
-              itemCount: _data.length,
+              itemCount: _data!.length,
               itemBuilder: (_, index) {
-                DataList detail = _data[index];
-                bool isAdd = detail.amount > 0;
+                DataList detail = _data![index];
+                bool isAdd = detail.amount! > 0;
                 return Container(
                   padding: EdgeInsets.all(rSize(10)),
                   decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border(
                           bottom: BorderSide(
-                              color: Colors.grey[300], width: 0.6 * 2.w))),
+                              color: Colors.grey[300]!, width: 0.6 * 2.w))),
                   child: Row(
                     children: <Widget>[
                       Expanded(
@@ -154,14 +154,14 @@ class _BalancePageState extends BaseStoreState<BalancePage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              detail.title,
+                              detail.title!,
                               style: AppTextStyle.generate(15 * 2.sp),
                             ),
                             SizedBox(
                               height: rSize(2),
                             ),
                             Text(
-                              detail.comment,
+                              detail.comment!,
                               style: AppTextStyle.generate(13 * 2.sp,
                                   color: Colors.grey[600]),
                             ),
@@ -169,7 +169,7 @@ class _BalancePageState extends BaseStoreState<BalancePage> {
                               height: rSize(2),
                             ),
                             Text(
-                              detail.createdAt,
+                              detail.createdAt!,
                               style: AppTextStyle.generate(12 * 2.sp,
                                   color: Colors.grey),
                             ),
@@ -188,30 +188,30 @@ class _BalancePageState extends BaseStoreState<BalancePage> {
     );
   }
 
-  _getData(int page, {int lastId}) async {
+  _getData(int page, {int? lastId}) async {
     ResultData resultData = await HttpManager.post(UserApi.balance_list,
-        {"userId": UserManager.instance.user.info.id, "page": _page});
+        {"userId": UserManager.instance!.user.info!.id, "page": _page});
 
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       _endRefresh(false, null);
       return;
     }
     BalancePageModel model = BalancePageModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       _endRefresh(false, null);
       return;
     }
     _endRefresh(true, model);
   }
 
-  _endRefresh(bool success, BalancePageModel model) {
+  _endRefresh(bool success, BalancePageModel? model) {
     if (!success) {
       if (_page == 0) {
-        _controller.refreshCompleted();
+        _controller!.refreshCompleted();
       } else {
-        _controller.loadComplete();
+        _controller!.loadComplete();
         _page--;
       }
       return;
@@ -219,16 +219,16 @@ class _BalancePageState extends BaseStoreState<BalancePage> {
 
     _coinModel = model;
     if (_page == 0) {
-      _controller.refreshCompleted();
-      _data = _coinModel.data.list;
+      _controller!.refreshCompleted();
+      _data = _coinModel!.data!.list;
       setState(() {});
     } else {
-      if (_coinModel.data.list.length == 0) {
-        _controller.loadNoData();
+      if (_coinModel!.data!.list!.length == 0) {
+        _controller!.loadNoData();
         return;
       }
-      _controller.loadComplete();
-      _data.addAll(_coinModel.data.list);
+      _controller!.loadComplete();
+      _data!.addAll(_coinModel!.data!.list!);
       _page++;
       setState(() {});
     }

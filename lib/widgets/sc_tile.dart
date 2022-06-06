@@ -22,17 +22,17 @@ class SCTile {
       color: Colors.grey[600], fontWeight: FontWeight.w400);
 
   static normalTile(String title,
-      {VoidCallback listener,
-      String value,
+      {VoidCallback? listener,
+      String? value,
       //String extraText,
       Color backgroundColor = Colors.white,
       EdgeInsets padding =
           const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       EdgeInsets margin = const EdgeInsets.all(0),
       EdgeInsets divideMargin = const EdgeInsets.only(left: 10),
-      TextStyle titleStyle,
-      TextStyle subtitleStyle,
-      Widget trailing,
+      TextStyle? titleStyle,
+      TextStyle? subtitleStyle,
+      Widget? trailing,
       bool needDivide = false,
       bool needArrow = true}) {
     return Container(
@@ -93,12 +93,11 @@ class SCTile {
 
   static editTile(TextEditingController controller, String title, String value,
       {String hint = "",
-      TextStyle titleStyle,
-      TextStyle subtitleStyle,
-      TextStyle hintStyle,
+      TextStyle? titleStyle,
+      TextStyle? subtitleStyle,
+      TextStyle? hintStyle,
       TextAlign textAlign = TextAlign.end,
-      Widget trailing}) {
-    assert(controller != null, "editTile controller 不能为空");
+      Widget? trailing}) {
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: rSize(8)),
@@ -131,9 +130,9 @@ class SCTile {
   static listTile(
     String title,
     Widget mid, {
-    Widget suffix,
-    Color backgroundColor,
-    VoidCallback onPressed,
+    Widget? suffix,
+    Color? backgroundColor,
+    VoidCallback? onPressed,
     bool inNeed = false,
   }) {
     Widget child = Row(

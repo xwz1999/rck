@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 class HomeSliverAppBar extends StatefulWidget {
-  final List<Widget> actions;
-  final Widget title;
+  final List<Widget>? actions;
+  final Widget? title;
   final backgroundColor;
-  final Widget flexibleSpace;
-  final PreferredSizeWidget bottom;
-  final double expandedHeight;
+  final Widget? flexibleSpace;
+  final PreferredSizeWidget? bottom;
+  final double? expandedHeight;
   HomeSliverAppBar(
-      {Key key,
+      {Key? key,
       this.actions,
       this.title,
       this.backgroundColor,
@@ -22,7 +22,7 @@ class HomeSliverAppBar extends StatefulWidget {
 }
 
 class HomeSliverAppBarState extends State<HomeSliverAppBar> {
-  Color _displayColor = Colors.transparent;
+  Color? _displayColor = Colors.transparent;
 
   updateColor(Color color) {
     setState(() {

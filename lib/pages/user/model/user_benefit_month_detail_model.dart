@@ -1,13 +1,13 @@
 class UserBenefitMonthDetailModel {
-  int id;
-  int userId;
-  DateTime day;
-  num purchaseAmount;
-  num purchaseCount;
-  num purchaseSalesVolume;
-  num guideAmount;
-  int guideCount;
-  num guideSalesVolume;
+  int? id;
+  int? userId;
+  DateTime? day;
+  num? purchaseAmount;
+  num? purchaseCount;
+  num? purchaseSalesVolume;
+  num? guideAmount;
+  int? guideCount;
+  num? guideSalesVolume;
 
   UserBenefitMonthDetailModel(
       {this.id,

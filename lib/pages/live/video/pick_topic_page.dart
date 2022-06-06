@@ -10,7 +10,7 @@ import 'package:recook/widgets/progress/re_toast.dart';
 
 class PickTopicPage extends StatefulWidget {
   final Function(TopicListModel model) onPick;
-  PickTopicPage({Key key, @required this.onPick}) : super(key: key);
+  PickTopicPage({Key? key, required this.onPick}) : super(key: key);
 
   @override
   _PickTopicPageState createState() => _PickTopicPageState();
@@ -18,19 +18,19 @@ class PickTopicPage extends StatefulWidget {
 
 class _PickTopicPageState extends State<PickTopicPage> {
   bool onSearch = false;
-  Timer _inputTimer;
+  Timer? _inputTimer;
   bool _showSearchResult = false;
   TextEditingController _editingController = TextEditingController();
 
   List<TopicListModel> hotTopics = [];
-  List<TopicListModel> searchResultModels = [];
+  List<TopicListModel>? searchResultModels = [];
 
   @override
   void initState() {
     super.initState();
     HttpManager.post(LiveAPI.hotTopics, {}).then((resultData) {
       setState(() {
-        hotTopics = (resultData?.data['data'] as List)
+        hotTopics = (resultData.data['data'] as List)
             .map((e) => TopicListModel.fromJson(e))
             .toList();
       });
@@ -39,7 +39,7 @@ class _PickTopicPageState extends State<PickTopicPage> {
 
   @override
   void dispose() {
-    _editingController?.dispose();
+    _editingController.dispose();
     super.dispose();
   }
 
@@ -249,7 +249,7 @@ class _PickTopicPageState extends State<PickTopicPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  model.title,
+                  model.title!,
                   style: TextStyle(
                     color: Color(0xFFEB8A49),
                     fontSize: rSP(14),
@@ -281,7 +281,7 @@ class _PickTopicPageState extends State<PickTopicPage> {
       width: rSize(293),
       child: searchResultModels == null
           ? Center(child: CircularProgressIndicator())
-          : searchResultModels.isEmpty
+          : searchResultModels!.isEmpty
               ? Padding(
                   padding: EdgeInsets.all(rSize(15)),
                   child: Text(
@@ -300,7 +300,7 @@ class _PickTopicPageState extends State<PickTopicPage> {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          searchResultModels[index].title,
+                          searchResultModels![index].title!,
                           style: TextStyle(
                             color: Color(0xFF333333),
                             fontSize: rSP(14),
@@ -308,12 +308,12 @@ class _PickTopicPageState extends State<PickTopicPage> {
                         ),
                       ),
                       onPressed: () {
-                        widget.onPick(searchResultModels[index]);
+                        widget.onPick(searchResultModels![index]);
                         Navigator.pop(context);
                       },
                     );
                   },
-                  itemCount: searchResultModels.length,
+                  itemCount: searchResultModels!.length,
                 ),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -337,10 +337,10 @@ class _PickTopicPageState extends State<PickTopicPage> {
       'limit': 15,
     });
 
-    if (resultData?.data['data']['list'] == null)
+    if (resultData.data['data']['list'] == null)
       return [];
     else
-      return (resultData?.data['data']['list'] as List)
+      return (resultData.data['data']['list'] as List)
           .map((e) => TopicListModel.fromJson(e))
           .toList();
   }

@@ -14,9 +14,9 @@ import 'package:recook/widgets/play_widget/tencent_player_loading.dart';
 import 'full_video_page.dart';
 
 class VideoPlayer extends StatefulWidget {
-  final String url;
+  final String? url;
   final bool isNetWork;
-  const VideoPlayer({Key key,@required this.url, @required this.isNetWork }) : super(key: key);
+  const VideoPlayer({Key? key,required this.url, required this.isNetWork }) : super(key: key);
 
   @override
   _VideoPlayerState createState() => _VideoPlayerState();
@@ -25,10 +25,10 @@ class VideoPlayer extends StatefulWidget {
 class _VideoPlayerState extends State<VideoPlayer> {
 
 
-  TencentPlayerController _controller;
-  VoidCallback listener;
+  TencentPlayerController? _controller;
+  late VoidCallback listener;
   bool showCover = false;
-  Timer timer;
+  Timer? timer;
   bool isLock = false;
   _VideoPlayerState() {
     listener = () {
@@ -45,20 +45,20 @@ class _VideoPlayerState extends State<VideoPlayer> {
     if(widget.isNetWork){
       _controller = TencentPlayerController.network(Api.getImgUrl(widget.url));
     }else{
-      _controller = TencentPlayerController.file(widget.url);
+      _controller = TencentPlayerController.file(widget.url!);
     }
 
 
-      _controller.initialize();
-      _controller.addListener(listener);
+      _controller!.initialize();
+      _controller!.addListener(listener);
       hideCover();
 
   }
 
   @override
   void dispose() {
-    _controller.removeListener(listener);
-    _controller.dispose();
+    _controller!.removeListener(listener);
+    _controller!.dispose();
     super.dispose();
   }
   hideCover() {
@@ -95,10 +95,10 @@ class _VideoPlayerState extends State<VideoPlayer> {
             hideCover();
           },
           onDoubleTap: () {
-            if (_controller.value.isPlaying) {
-              _controller.pause();
+            if (_controller!.value.isPlaying) {
+              _controller!.pause();
             } else {
-              _controller.play();
+              _controller!.play();
             }
           },
           child:Container(
@@ -109,10 +109,10 @@ class _VideoPlayerState extends State<VideoPlayer> {
               alignment: Alignment.center,
               children: <Widget>[
                 /// 视频
-                _controller.value.initialized
+                _controller!.value.initialized
                     ? AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: TencentPlayer(_controller),
+                  aspectRatio: _controller!.value.aspectRatio,
+                  child: TencentPlayer(_controller!),
                 ) : Image.asset(Assets.static.placeNodata.path),
                 /// 支撑全屏
                 Container(),
@@ -153,7 +153,7 @@ class _VideoPlayerState extends State<VideoPlayer> {
                   child: GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: () async {
-                      TencentPlayerController newController = await Navigator.of(context).push(CupertinoPageRoute(builder: (_) => FullVideoPage(controller: _controller, playType: PlayType.network), fullscreenDialog: true));
+                      TencentPlayerController? newController = await Navigator.of(context).push(CupertinoPageRoute(builder: (_) => FullVideoPage(controller: _controller, playType: PlayType.network), fullscreenDialog: true));
 
                       setState(() {
                         _controller = newController;

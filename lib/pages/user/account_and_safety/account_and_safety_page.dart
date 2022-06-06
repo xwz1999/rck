@@ -21,7 +21,7 @@ import 'package:recook/widgets/toast.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class AccountAndSafetyPage extends StatefulWidget {
-  AccountAndSafetyPage({Key key}) : super(key: key);
+  AccountAndSafetyPage({Key? key}) : super(key: key);
 
   @override
   _AccountAndSafetyPageState createState() => _AccountAndSafetyPageState();
@@ -30,23 +30,23 @@ class AccountAndSafetyPage extends StatefulWidget {
 class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
   bool secureValue = false;
   bool _weChatLoginLoading = false;
-  String _backgroundUrl;
+  String? _backgroundUrl;
   int _goodsId = 0;
   @override
   void initState() {
     super.initState();
-    secureValue = UserManager.instance.userBrief.secretValue;
+    secureValue = UserManager.instance!.userBrief!.secretValue;
   }
 
   Future updateProfile() async {
-    await UserManager.instance.updateUserBriefInfo(getStore()).then((success) {
+    await UserManager.instance!.updateUserBriefInfo(getStore()).then((success) {
       if (success) {
-        if (UserManager.instance.user.info.roleLevel !=
-            getStore().state.userBrief.roleLevel) {
-          UserManager.instance.user.info.roleLevel =
-              getStore().state.userBrief.roleLevel;
-          UserManager.instance.refreshUserRole.value =
-              !UserManager.instance.refreshUserRole.value;
+        if (UserManager.instance!.user.info!.roleLevel !=
+            getStore().state.userBrief!.roleLevel) {
+          UserManager.instance!.user.info!.roleLevel =
+              getStore().state.userBrief!.roleLevel as int?;
+          UserManager.instance!.refreshUserRole.value =
+              !UserManager.instance!.refreshUserRole.value;
           UserManager.updateUserInfo(getStore());
         }
       }
@@ -79,13 +79,13 @@ class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
             AppRouter.push(context, RouteName.USER_DELETE_ACCOUNT_PAGE);
           }),
           SCTile.normalTile(
-              TextUtils.isEmpty(UserManager.instance.user.info.wxUnionId)
+              TextUtils.isEmpty(UserManager.instance!.user.info!.wxUnionId)
                   ? "关联微信"
                   : "解绑微信",
-              value: TextUtils.isEmpty(UserManager.instance.user.info.wxUnionId)
+              value: TextUtils.isEmpty(UserManager.instance!.user.info!.wxUnionId)
                   ? ''
-                  : UserManager.instance.user.info.nickname, listener: () {
-            TextUtils.isEmpty(UserManager.instance.user.info.wxUnionId)
+                  : UserManager.instance!.user.info!.nickname, listener: () {
+            TextUtils.isEmpty(UserManager.instance!.user.info!.wxUnionId)
                 ? _wechatBindinghandle()
                 : _wechatUnboundhandle();
           }),
@@ -173,14 +173,14 @@ class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
           deleteItem: "确定",
           deleteListener: () async {
             Alert.dismiss(context);
-            String code = await UserFunc.wechatUnboundhandle();
+            String? code = await UserFunc.wechatUnboundhandle();
             if (code == 'SUCCESS') {
               ReToast.success(text: '解绑成功');
               //更新本地信息
-              UserManager.instance.user.info.wxUnionId = '';
-              UserManager.instance.user.info.wxOpenId = '';
-              String jsonStr = json.encode(UserManager.instance.user.toJson());
-              HiveStore.appBox.put('key_user', jsonStr);
+              UserManager.instance!.user.info!.wxUnionId = '';
+              UserManager.instance!.user.info!.wxOpenId = '';
+              String jsonStr = json.encode(UserManager.instance!.user.toJson());
+              HiveStore.appBox!.put('key_user', jsonStr);
               //_getLaunchInfo();
               setState(() {});
             } else {
@@ -190,23 +190,23 @@ class _AccountAndSafetyPageState extends BaseStoreState<AccountAndSafetyPage> {
         ));
   }
 
-  _weChatLogin(String code) async {
+  _weChatLogin(String? code) async {
     GSDialog.of(context).showLoadingDialog(context, "登录中...");
     ResultData resultData = await HttpManager.post(UserApi.wx_binding,
-        {'userId': UserManager.instance.user.info.id, 'code': code});
+        {'userId': UserManager.instance!.user.info!.id, 'code': code});
     GSDialog.of(context).dismiss(context);
 
     _weChatLoginLoading = false;
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     UserModel model = UserModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
-    UserManager.updateUser(model.data, getStore());
+    UserManager.updateUser(model.data!, getStore());
     setState(() {});
     showSuccess('绑定成功!');
   }

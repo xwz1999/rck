@@ -12,9 +12,9 @@ import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class UserGroupCardDetailPage extends StatefulWidget {
-  final int id;
+  final int? id;
 
-  UserGroupCardDetailPage({Key key, @required this.id}) : super(key: key);
+  UserGroupCardDetailPage({Key? key, required this.id}) : super(key: key);
 
   @override
   _UserGroupCardDetailPageState createState() =>
@@ -22,11 +22,11 @@ class UserGroupCardDetailPage extends StatefulWidget {
 }
 
 class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
-  TextEditingController _editingController;
-  MemberInfoModel _memberInfoModel;
+  TextEditingController? _editingController;
+  MemberInfoModel? _memberInfoModel;
   GSRefreshController _refreshController =
       GSRefreshController(initialRefresh: true);
-  Widget _buildTile({String title, Widget suffix, Widget trailing}) {
+  Widget _buildTile({required String title, Widget? suffix, Widget? trailing}) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 5.rw,horizontal: 8.rw),
       color: Colors.white,
@@ -68,7 +68,7 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
           ResultData resultData = await HttpManager.post(
               APIV2.userAPI.memberInfo, {'memberId': widget.id});
           _memberInfoModel = MemberInfoModel.fromJson(resultData.data['data']);
-          _editingController.text = _memberInfoModel.remarkName;
+          _editingController!.text = _memberInfoModel!.remarkName!;
           _refreshController.refreshCompleted();
           if (mounted) setState(() {});
         },
@@ -83,7 +83,7 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
                         borderRadius: BorderRadius.circular(22.rw),
                         child: FadeInImage.assetNetwork(
                           placeholder: Assets.icon.icLauncherPlaystore.path,
-                          image: Api.getImgUrl(_memberInfoModel.headImgUrl),
+                          image: Api.getImgUrl(_memberInfoModel!.headImgUrl)!,
                           height: 44.rw,
                           width: 44.rw,
                         ),
@@ -101,13 +101,13 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
                         child: [
                           Image.asset(
                             UserLevelTool.getRoleLevelIcon(
-                                _memberInfoModel.roleLevelEnum),
+                                _memberInfoModel!.roleLevelEnum),
                             width: 12.rw,
                             height: 12.rw,
                             color: Color(0xFFC47F53),
                           ),
                           UserLevelTool.roleLevelWithEnum(
-                                  _memberInfoModel.roleLevelEnum)
+                                  _memberInfoModel!.roleLevelEnum)
                               .text
                               .size(10.rsp)
                               .color(Color(0xFFC47F53))
@@ -117,7 +117,7 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
                     ),
                     _buildTile(
                       title: '昵称',
-                      suffix: (_memberInfoModel.nickname ?? '').text.make(),
+                      suffix: (_memberInfoModel!.nickname ?? '').text.make(),
                     ),
                     _buildTile(
                       title: '备注',
@@ -128,7 +128,7 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
                               .showLoadingDialog(context, '修改中');
                           await HttpManager.post(UserApi.invite_remark_name, {
                             "userId": widget.id,
-                            "remarkName": _editingController.text
+                            "remarkName": _editingController!.text
                           });
                           setState(() {});
                           GSDialog.of(context).dismiss(context);
@@ -156,7 +156,7 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
                   ...[
                     _buildTile(
                       title: '手机号',
-                      suffix: (_memberInfoModel.phone ?? '').text.make(),
+                      suffix: (_memberInfoModel!.phone ?? '').text.make(),
                       trailing: Image.asset(
                         R.ASSETS_USER_ICON_PHONE_PNG,
                         height: 18.rw,
@@ -165,11 +165,11 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
                     ),
                     _buildTile(
                       title: '微信号',
-                      suffix: (_memberInfoModel.wechatNo ?? '').text.make(),
+                      suffix: (_memberInfoModel!.wechatNo ?? '').text.make(),
                       trailing: GestureDetector(
                         onTap: () {
                           Clipboard.setData(ClipboardData(
-                              text: _memberInfoModel.wechatNo ?? ''));
+                              text: _memberInfoModel!.wechatNo ?? ''));
                           GSDialog.of(context).showSuccess(context, '复制成功');
                         },
                         child: Image.asset(

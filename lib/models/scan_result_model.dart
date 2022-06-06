@@ -2,17 +2,17 @@ import 'dart:convert';
 
 /// modela ==modelb
 class ScanResultModel {
-  final int skuID;
-  final String skuCode;
-  final String skuName;
-  final String brandName;
-  final String brandImg;
-  final String goodsName;
-  final num discount;
-  final num commission;
-  final String goodsImg;
-  final num inventory;
-  final int goodsID;
+  final int? skuID;
+  final String? skuCode;
+  final String? skuName;
+  final String? brandName;
+  final String? brandImg;
+  final String? goodsName;
+  final num? discount;
+  final num? commission;
+  final String? goodsImg;
+  final num? inventory;
+  final int? goodsID;
 
   ScanResultModel(
     this.skuID,

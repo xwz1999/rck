@@ -44,7 +44,7 @@ class WholesaleFunc {
   }
 
   ///是否领取过7天体验卡
-  static Future<bool> get7() async {
+  static Future<bool?> get7() async {
 
     ResultData result = await HttpManager.post(APIV2.userAPI.get7, {});
 
@@ -75,9 +75,9 @@ class WholesaleFunc {
   }
 
 
-  static Future<List<WholesaleGood>> getLikeGoodsList(int user_id,{isSale}) async {
+  static Future<List<WholesaleGood>> getLikeGoodsList(int? userId,{isSale}) async {
     Map<String, dynamic> params = {
-      "user_id": user_id,
+      "user_id": userId,
     };
 
     if (isSale!=null) {
@@ -98,7 +98,7 @@ class WholesaleFunc {
   }
 
   ///获取客服信息
-  static Future<WholesaleCustomerModel> getCustomerInfo() async {
+  static Future<WholesaleCustomerModel?> getCustomerInfo() async {
     ///channel 1 购物车购买 0直接购买
     ResultData res = await HttpManager.post(APIV2.wholesaleAPI.getCustomerInfo, {
     });
@@ -107,7 +107,7 @@ class WholesaleFunc {
     //   Toast.showInfo(res.msg, color: Colors.black87);
     //   return null;
     // }
-    WholesaleCustomerModel model;
+    WholesaleCustomerModel? model;
     if(res.data!=null){
       if(res.data['code']=='FAIL'){
         ReToast.err(text: res.data['msg']);
@@ -123,7 +123,7 @@ class WholesaleFunc {
   }
 
   ///更新预览订单
-  static Future<dynamic> updateOrder(int addressId,int previewId,String message) async {
+  static Future<dynamic> updateOrder(int? addressId,int? previewId,String message) async {
     final cancel = ReToast.loading();
     ResultData result = await HttpManager.post(APIV2.wholesaleAPI.updatePreviewOrder, {
       "preview_id": previewId,
@@ -142,16 +142,16 @@ class WholesaleFunc {
 
 
   ///预览订单
-  static Future<WholesaleOrderPreviewModel> createOrderPreview(
+  static Future<WholesaleOrderPreviewModel?> createOrderPreview(
       List<GoodsDTO> list, int channel) async {
     ///channel 1 购物车购买 0直接购买
     ResultData res = await HttpManager.post(APIV2.wholesaleAPI.previewOrder, {
-      "user_id": UserManager.instance.user.info.id,
+      "user_id": UserManager.instance!.user.info!.id,
       "sku_list": list.map((e) => e.toJson()).toList(),
       'channel': channel
     });
 
-    WholesaleOrderPreviewModel model;
+    WholesaleOrderPreviewModel? model;
 
 
   if(res.data!=null){
@@ -173,7 +173,7 @@ class WholesaleFunc {
     final cancel = ReToast.loading();
     ResultData result =
         await HttpManager.post(APIV2.wholesaleAPI.updateShopCar, {
-      "user_id": UserManager.instance.user.info.id,
+      "user_id": UserManager.instance!.user.info!.id,
       "sku_list": list.map((e) => e.toJson()).toList(),
     });
     cancel();
@@ -187,7 +187,7 @@ class WholesaleFunc {
   static Future<dynamic> addToShoppingCart(List<GoodsDTO> list) async {
     final cancel = ReToast.loading();
     ResultData result = await HttpManager.post(APIV2.wholesaleAPI.addShopCar, {
-      "user_id": UserManager.instance.user.info.id,
+      "user_id": UserManager.instance!.user.info!.id,
       "sku_list": list.map((e) => e.toJson()).toList(),
     });
     cancel();
@@ -205,7 +205,7 @@ class WholesaleFunc {
     final cancel = ReToast.loading();
     ResultData result =
         await HttpManager.post(APIV2.wholesaleAPI.deleteShopCar, {
-      "user_id": UserManager.instance.user.info.id,
+      "user_id": UserManager.instance!.user.info!.id,
       "sku_list": list.map((e) => e.toJson()).toList(),
     });
     cancel();
@@ -223,7 +223,7 @@ class WholesaleFunc {
   static Future<List<WholesaleCarModel>> getCarList() async {
     ResultData result =
         await HttpManager.post(APIV2.wholesaleAPI.getShopCarList, {
-      'user_id': UserManager.instance.user.info.id,
+      'user_id': UserManager.instance!.user.info!.id,
     });
     if (result.data != null) {
       if (result.data['data'] != null) {
@@ -238,7 +238,7 @@ class WholesaleFunc {
 
   ///获取商品详情
   static Future<WholesaleDetailModel> getDetailInfo(
-      int goodsID, int userID) async {
+      int? goodsID, int? userID) async {
     ResultData result = await HttpManager.post(GoodsApi.goods_detail_info_new, {
       "goodsID": goodsID,
       "userId": userID,
@@ -270,7 +270,7 @@ class WholesaleFunc {
 
   ///获取批发活动商品列表
   static Future<List<WholesaleGood>> getGoodsList(
-      int page, SortType type,{String keyword,int activity_id, int categoryID}) async {
+      int page, SortType type,{String? keyword,int? activity_id, int? categoryID}) async {
     String url = '';
     switch (type) {
       case SortType.comprehensive:
@@ -287,7 +287,7 @@ class WholesaleFunc {
     }
     Map<String, dynamic> params = {
       "is_sale": true,
-      'user_id': UserManager.instance.user.info.id,
+      'user_id': UserManager.instance!.user.info!.id,
       'page': page,
     };
 
@@ -324,8 +324,8 @@ class WholesaleFunc {
 
 
 
-  static Future<List<OrderModel>> getOrderList(WholesaleOrderListType type,int page,OrderPositionType positionType) async {
-    String url;
+  static Future<List<OrderModel>> getOrderList(WholesaleOrderListType? type,int page,OrderPositionType? positionType) async {
+    late String url;
     switch (type) {
       case WholesaleOrderListType.all:
         url = OrderApi.order_list_all;
@@ -342,10 +342,13 @@ class WholesaleFunc {
       case WholesaleOrderListType.unDeal:
         url = OrderApi.order_list_undeal;
         break;
+      case null:
+        url = OrderApi.order_list_all;
+        break;
     }
 
     ResultData result =
-    await HttpManager.post(url, {"userId": UserManager.instance.user.info.id,
+    await HttpManager.post(url, {"userId": UserManager.instance!.user.info!.id,
       "page": page, "orderType": '','is_sale':true});
     if (result.data != null) {
       if (result.data['data'] != null) {
@@ -361,7 +364,7 @@ class WholesaleFunc {
       return [];
   }
 
-  static Future<List<GuideOrderItemModel>> getSonOrder(WholesaleOrderListType type,int page) async {
+  static Future<List<GuideOrderItemModel>> getSonOrder(WholesaleOrderListType? type,int page) async {
     int status = 0;
     switch (type) {
       case WholesaleOrderListType.all:
@@ -379,6 +382,10 @@ class WholesaleFunc {
       case WholesaleOrderListType.unDeal:
         status = 4;
         break;
+
+      case null:
+        status = 0;
+        break;
     }
     Map<String, dynamic> params = {
       "page": page,
@@ -390,7 +397,7 @@ class WholesaleFunc {
       APIV2.orderAPI.guideOrderList,
       params,
     );
-    if (result?.data == null) return [];
+    if (result.data == null) return [];
     if (result.data['data'] == null) return [];
     if (result.data['data']['list'] == null) return [];
     return (result.data['data']['list'] as List)
@@ -452,7 +459,7 @@ class WholesaleFunc {
 
   //推荐申请列表
   static Future<List<RecommendUserModel>> getRecommendUserList(
-      int lastId, int size, int state) async {
+      int? lastId, int size, int? state) async {
     ResultData result =
         await HttpManager.post(APIV2.userAPI.recommendUserList, {
       'last_id': lastId,

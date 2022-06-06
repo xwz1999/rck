@@ -1,42 +1,42 @@
 import 'package:recook/models/goods_detail_model.dart';
 
 class WholesaleDetailModel {
-  num id;
-  num brandId;
-  num vendorId;
-  String goodsName;
-  String description;
-  String material;
-  num firstCategoryId;
-  num secondCategoryId;
-  num publishStatus;
-  num weight;
-  num isJoinTeamPerformance;
-  num bomaoStatus;
-  num bomaoId;
-  num thirdPartyId;
-  num thirdPartyType;
-  num hasAuth;
-  num isImport;
-  num storehouse;
-  num isFerme;
-  num country;
-  num salePublish;
-  bool isSale;
-  num inventory;
-  num salesVolume;
-  num saleInventory;
-  Price price;
-  List<Recommends> recommends;
-  List<MainPhotos> mainPhotos;
-  List<Attributes> attributes;
-  List<WholesaleSku> sku;
-  bool isFavorite;
-  num shoppingTrolleyCount;
-  bool isAllow;
-  Video video;
-  Brand brand;
-  Notice notice;
+  num? id;
+  num? brandId;
+  num? vendorId;
+  String? goodsName;
+  String? description;
+  String? material;
+  num? firstCategoryId;
+  num? secondCategoryId;
+  num? publishStatus;
+  num? weight;
+  num? isJoinTeamPerformance;
+  num? bomaoStatus;
+  num? bomaoId;
+  num? thirdPartyId;
+  num? thirdPartyType;
+  num? hasAuth;
+  num? isImport;
+  num? storehouse;
+  num? isFerme;
+  num? country;
+  num? salePublish;
+  bool? isSale;
+  num? inventory;
+  num? salesVolume;
+  num? saleInventory;
+  Price? price;
+  List<Recommends>? recommends;
+  List<MainPhotos>? mainPhotos;
+  List<Attributes>? attributes;
+  List<WholesaleSku?>? sku;
+  bool? isFavorite;
+  num? shoppingTrolleyCount;
+  bool? isAllow;
+  Video? video;
+  Brand? brand;
+  Notice? notice;
 
   WholesaleDetailModel(
       {this.id,
@@ -82,14 +82,14 @@ class WholesaleDetailModel {
     if (price == null) {
       return "";
     }
-    double minPrice = price.min.discountPrice;
-    double maxPrice = price.max.discountPrice;
+    double? minPrice = price!.min!.discountPrice as double?;
+    double? maxPrice = price!.max!.discountPrice as double?;
     String returnPrice;
     if (minPrice == maxPrice) {
-      returnPrice = maxPrice.toStringAsFixed(2);
+      returnPrice = maxPrice!.toStringAsFixed(2);
     } else {
       returnPrice =
-      "${minPrice.toStringAsFixed(2)}-${maxPrice.toStringAsFixed(2)}";
+      "${minPrice!.toStringAsFixed(2)}-${maxPrice!.toStringAsFixed(2)}";
     }
     return returnPrice;
   }
@@ -124,7 +124,7 @@ class WholesaleDetailModel {
     if (json['recommends'] != null) {
       recommends = [];
       json['recommends'].forEach((v) {
-        recommends.add(new Recommends.fromJson(v));
+        recommends!.add(new Recommends.fromJson(v));
       });
     } else
       recommends = [];
@@ -132,7 +132,7 @@ class WholesaleDetailModel {
     if (json['mainPhotos'] != null) {
       mainPhotos = [];
       json['mainPhotos'].forEach((v) {
-        mainPhotos.add(new MainPhotos.fromJson(v));
+        mainPhotos!.add(new MainPhotos.fromJson(v));
       });
     }else
       mainPhotos = [];
@@ -140,7 +140,7 @@ class WholesaleDetailModel {
     if (json['attributes'] != null) {
       attributes = [];
       json['attributes'].forEach((v) {
-        attributes.add(new Attributes.fromJson(v));
+        attributes!.add(new Attributes.fromJson(v));
       });
     }else
       attributes = [];
@@ -148,7 +148,7 @@ class WholesaleDetailModel {
     if (json['sku'] != null) {
       sku = [];
       json['sku'].forEach((v) {
-        sku.add(new WholesaleSku.fromJson(v));
+        sku!.add(new WholesaleSku.fromJson(v));
       });
     }else
       sku = [];
@@ -189,39 +189,39 @@ class WholesaleDetailModel {
     data['salesVolume'] = this.salesVolume;
     data['sale_inventory'] = this.saleInventory;
     if (this.price != null) {
-      data['price'] = this.price.toJson();
+      data['price'] = this.price!.toJson();
     }
     if (this.recommends != null) {
-      data['recommends'] = this.recommends.map((v) => v.toJson()).toList();
+      data['recommends'] = this.recommends!.map((v) => v.toJson()).toList();
     }
     if (this.mainPhotos != null) {
-      data['mainPhotos'] = this.mainPhotos.map((v) => v.toJson()).toList();
+      data['mainPhotos'] = this.mainPhotos!.map((v) => v.toJson()).toList();
     }
     if (this.attributes != null) {
-      data['attributes'] = this.attributes.map((v) => v.toJson()).toList();
+      data['attributes'] = this.attributes!.map((v) => v.toJson()).toList();
     }
     if (this.sku != null) {
-      data['sku'] = this.sku.map((v) => v.toJson()).toList();
+      data['sku'] = this.sku!.map((v) => v!.toJson()).toList();
     }
     data['isFavorite'] = this.isFavorite;
     data['shoppingTrolleyCount'] = this.shoppingTrolleyCount;
     data['isAllow'] = this.isAllow;
     if (this.brand != null) {
-      data['brand'] = this.brand.toJson();
+      data['brand'] = this.brand!.toJson();
     }
     if (this.video != null) {
-      data['video'] = this.video.toJson();
+      data['video'] = this.video!.toJson();
     }
     if (this.notice != null) {
-      data['notice'] = this.notice.toJson();
+      data['notice'] = this.notice!.toJson();
     }
     return data;
   }
 }
 
 class Price {
-  Min min;
-  Min max;
+  Min? min;
+  Min? max;
 
   Price({this.min, this.max});
 
@@ -233,23 +233,23 @@ class Price {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.min != null) {
-      data['min'] = this.min.toJson();
+      data['min'] = this.min!.toJson();
     }
     if (this.max != null) {
-      data['max'] = this.max.toJson();
+      data['max'] = this.max!.toJson();
     }
     return data;
   }
 }
 
 class Min {
-  num originalPrice;
-  num discountPrice;
-  num commission;
-  int ferme;
-  num salePrice;
-  int min;
-  int limit;
+  num? originalPrice;
+  num? discountPrice;
+  num? commission;
+  int? ferme;
+  num? salePrice;
+  int? min;
+  int? limit;
 
   Min(
       {this.originalPrice,
@@ -284,21 +284,21 @@ class Min {
 }
 
 class Brand {
-  int id;
-  String name;
-  String desc;
-  String web;
-  int goodsCount;
-  String logoUrl;
-  String authUrl;
-  String showUrl;
-  String lastImg;
-  String firstImg;
-  int firstWidth;
-  int firstHeight;
-  int lastWidth;
-  int lastHeight;
-  int infoId;
+  int? id;
+  String? name;
+  String? desc;
+  String? web;
+  int? goodsCount;
+  String? logoUrl;
+  String? authUrl;
+  String? showUrl;
+  String? lastImg;
+  String? firstImg;
+  int? firstWidth;
+  int? firstHeight;
+  int? lastWidth;
+  int? lastHeight;
+  int? infoId;
   Null infoUrl;
 
   Brand(
@@ -364,31 +364,31 @@ class Brand {
 
 
 class WholesaleSku {
-  num id;
-  num goodsId;
-  String name;
-  String combineId;
-  String picUrl;
-  String code;
-  num purchasePrice;
-  num originalPrice;
-  num discountPrice;
-  num commissionRate;
-  num commission;
-  num salePrice;
-  num controlPrice;
-  num salesVolume;
-  num inventory;
-  num salesVolumeInc;
-  num coupon;
-  String goodsNum;
-  String bmSkuId;
-  String bmShopId;
-  String thirdPartySkuId;
-  num thirdPartySkuType;
-  num saleInventory;
-  num limit;
-  num min;
+  num? id;
+  num? goodsId;
+  String? name;
+  String? combineId;
+  String? picUrl;
+  String? code;
+  num? purchasePrice;
+  num? originalPrice;
+  num? discountPrice;
+  num? commissionRate;
+  num? commission;
+  num? salePrice;
+  num? controlPrice;
+  num? salesVolume;
+  num? inventory;
+  num? salesVolumeInc;
+  num? coupon;
+  String? goodsNum;
+  String? bmSkuId;
+  String? bmShopId;
+  String? thirdPartySkuId;
+  num? thirdPartySkuType;
+  num? saleInventory;
+  num? limit;
+  num? min;
 
   WholesaleSku(
       {this.id,
@@ -478,15 +478,15 @@ class WholesaleSku {
 
 
 class Video {
-  int id;
+  int? id;
 
-  String url;
+  String? url;
 
-  int duration;
+  int? duration;
 
-  double size;
+  double? size;
 
-  String thumbnail;
+  String? thumbnail;
 
   Video(this.id, this.url, this.duration, this.size, this.thumbnail);
 
@@ -511,9 +511,9 @@ class Video {
 }
 
 class Notice {
-  String title;
-  String img;
-  int type;
+  String? title;
+  String? img;
+  int? type;
 
   Notice({this.title, this.img, this.type});
 

@@ -3,12 +3,12 @@ import 'package:flutter_tencentplayer/flutter_tencentplayer.dart';
 import 'package:recook/utils/date/date_utils.dart';
 import 'package:screen/screen.dart';
 class TencentPlayerGestureCover extends StatefulWidget {
-  final TencentPlayerController controller;
+  final TencentPlayerController? controller;
   final bool showBottomWidget;
-  final VoidCallback behavingCallBack; //正在交互
+  final VoidCallback? behavingCallBack; //正在交互
 
   TencentPlayerGestureCover({
-    @required this.controller,
+    required this.controller,
     this.showBottomWidget = true,
     this.behavingCallBack,
   });
@@ -19,13 +19,13 @@ class TencentPlayerGestureCover extends StatefulWidget {
 
 class _TencentPlayerGestureCoverState extends State<TencentPlayerGestureCover> {
   GlobalKey currentKey = GlobalKey();
-  TencentPlayerController get controller => widget.controller;
+  TencentPlayerController? get controller => widget.controller;
 
   bool _controllerWasPlaying = false;
   bool showSeekText = false;
-  bool leftVerticalDrag;
+  bool? leftVerticalDrag;
 
-  Duration seekPos;
+  Duration? seekPos;
 
   //UI
   IconData iconData = Icons.volume_up;
@@ -33,7 +33,7 @@ class _TencentPlayerGestureCoverState extends State<TencentPlayerGestureCover> {
 
   @override
   Widget build(BuildContext context) {
-    Duration showDuration = seekPos != null ? seekPos : controller.value.position;
+    Duration? showDuration = seekPos != null ? seekPos : controller!.value.position;
 
     return GestureDetector(
       key: currentKey,
@@ -56,11 +56,11 @@ class _TencentPlayerGestureCoverState extends State<TencentPlayerGestureCover> {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    Text(DateUtilss.formatDuration(showDuration), style: TextStyle(
+                    Text(DateUtilss.formatDuration(showDuration!), style: TextStyle(
                       color: Color(0xfffe373c),
                       fontSize: 18,
                     ),),
-                    Text('/' + DateUtilss.formatDuration(controller.value.duration), style: TextStyle(
+                    Text('/' + DateUtilss.formatDuration(controller!.value.duration), style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                     ),),
@@ -95,20 +95,20 @@ class _TencentPlayerGestureCoverState extends State<TencentPlayerGestureCover> {
         ),
       ),
       onHorizontalDragStart: (DragStartDetails details) {
-        if (!controller.value.initialized || !widget.showBottomWidget) {
+        if (!controller!.value.initialized || !widget.showBottomWidget) {
           return;
         }
-        _controllerWasPlaying = controller.value.isPlaying;
+        _controllerWasPlaying = controller!.value.isPlaying;
         if (_controllerWasPlaying) {
-          controller.pause();
+          controller!.pause();
         }
         setState(() {
-          seekPos = controller.value.position;
+          seekPos = controller!.value.position;
           showSeekText = true;
         });
       },
       onHorizontalDragUpdate: (DragUpdateDetails details) {
-        if (!controller.value.initialized || !widget.showBottomWidget) {
+        if (!controller!.value.initialized || !widget.showBottomWidget) {
           return;
         }
         seekToAbsolutePosition(details.delta);
@@ -117,10 +117,10 @@ class _TencentPlayerGestureCoverState extends State<TencentPlayerGestureCover> {
         if (!widget.showBottomWidget) {
           return;
         }
-        await controller.seekTo(seekPos);
+        await controller!.seekTo(seekPos!);
         seekPos = null;
         if (_controllerWasPlaying) {
-          controller.play();
+          controller!.play();
         }
         setState(() {
           showSeekText = false;
@@ -134,11 +134,11 @@ class _TencentPlayerGestureCoverState extends State<TencentPlayerGestureCover> {
 
   void seekToAbsolutePosition(Offset delta) {
     if (seekPos == null) return;
-    seekPos = seekPos + Duration(milliseconds: 800) * delta.dx;
-    if (seekPos < Duration()) {
+    seekPos = seekPos! + Duration(milliseconds: 800) * delta.dx;
+    if (seekPos! < Duration()) {
       seekPos = Duration();
-    } else if (seekPos > controller.value.duration) {
-      seekPos = controller.value.duration;
+    } else if (seekPos! > controller!.value.duration) {
+      seekPos = controller!.value.duration;
     }
     if (mounted) setState(() {});
     /// 回调正在交互，用来做延迟隐藏cover
@@ -148,10 +148,10 @@ class _TencentPlayerGestureCoverState extends State<TencentPlayerGestureCover> {
   }
 
 
-  double currentVolume = 0.0;
+  double? currentVolume = 0.0;
   _onVerticalDragStart(DragStartDetails details) async {
-    double width = DateUtilss.findGlobalRect(currentKey).width;
-    double xOffSet = DateUtilss.globalOffsetToLocal(currentKey, details.globalPosition).dx;
+    double width = DateUtilss.findGlobalRect(currentKey)!.width;
+    double xOffSet = DateUtilss.globalOffsetToLocal(currentKey, details.globalPosition)!.dx;
     leftVerticalDrag = xOffSet / width <= 0.5;
     if (leftVerticalDrag == false) {
       currentVolume = await DateUtilss.volume;
@@ -160,7 +160,7 @@ class _TencentPlayerGestureCoverState extends State<TencentPlayerGestureCover> {
 
   _onVerticalDragUpdate(DragUpdateDetails details) async {
     if (leftVerticalDrag == true) {
-      double targetBright = ((await Screen.brightness) - details.delta.dy * 0.01).clamp(0.0, 1.0);
+      double targetBright = ((await Screen.brightness)! - details.delta.dy * 0.01).clamp(0.0, 1.0);
       Screen.setBrightness(targetBright);
 
       if (targetBright >= 0.66) {
@@ -178,7 +178,7 @@ class _TencentPlayerGestureCoverState extends State<TencentPlayerGestureCover> {
         widget.behavingCallBack?.call();
       });
     } else if (leftVerticalDrag == false) {
-      double targetVolume = (currentVolume - details.delta.dy * 0.01).clamp(0.0, 1.0);
+      double targetVolume = (currentVolume! - details.delta.dy * 0.01).clamp(0.0, 1.0);
       DateUtilss.setVolume(targetVolume);
 
       if (targetVolume >= 0.66) {

@@ -16,20 +16,20 @@ typedef TextInputChangeCallBack = Function(String text);
 
 // ignore: must_be_immutable
 class InputView extends StatefulWidget {
-  final TextEditingController controller;
+  final TextEditingController? controller;
 
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry margin;
-  final String hint;
+  final String? hint;
   final TextStyle textStyle;
   final TextStyle hintStyle;
   final Color cursorColor;
   final TextInputType keyboardType;
-  final int maxLength;
-  final FocusNode focusNode;
-  final TextInputChangeCallBack onValueChanged;
-  final TextInputChangeCallBack onBeginInput;
-  final TextInputChangeCallBack onInputComplete;
+  final int? maxLength;
+  final FocusNode? focusNode;
+  final TextInputChangeCallBack? onValueChanged;
+  final TextInputChangeCallBack? onBeginInput;
+  final TextInputChangeCallBack? onInputComplete;
   final bool showClear;
   final int maxLines;
   final TextAlign textAlign;
@@ -59,25 +59,25 @@ class InputView extends StatefulWidget {
 }
 
 class _InputViewState extends State<InputView> {
-  TextEditingController _controller;
-  FocusNode _focusNode;
+  TextEditingController? _controller;
+  FocusNode? _focusNode;
 
   @override
   void initState() {
     _focusNode = widget.focusNode ?? FocusNode();
     _controller = widget.controller ?? TextEditingController();
 
-    _focusNode.addListener(() {
+    _focusNode!.addListener(() {
       setState(() {
 
       });
-      if (!_focusNode.hasFocus) {
+      if (!_focusNode!.hasFocus) {
         if (widget.onInputComplete != null) {
-          widget.onInputComplete(_controller.text);
+          widget.onInputComplete!(_controller!.text);
         }
       } else {
         if (widget.onBeginInput != null) {
-          widget.onBeginInput(_controller.text);
+          widget.onBeginInput!(_controller!.text);
         }
       }
     });
@@ -162,7 +162,7 @@ class _InputViewState extends State<InputView> {
   }
 
   _clearButton() {
-    return _focusNode.hasFocus
+    return _focusNode!.hasFocus
         ? GestureDetector(
             child: Icon(
               AppIcons.icon_clear,
@@ -170,7 +170,7 @@ class _InputViewState extends State<InputView> {
               color: Colors.grey[300],
             ),
             onTap: () {
-              _controller.clear();
+              _controller!.clear();
             })
         : Container();
   }

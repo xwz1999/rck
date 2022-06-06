@@ -1,9 +1,9 @@
 class LiveAttentionListModel {
-  int id;
-  String nickname;
-  String headImgUrl;
-  int isLive;
-  int userId;
+  int? id;
+  String? nickname;
+  String? headImgUrl;
+  int? isLive;
+  int? userId;
 
   LiveAttentionListModel(
       {this.id, this.nickname, this.headImgUrl, this.isLive, this.userId});

@@ -1,6 +1,6 @@
 class LiveReportModel {
-  int id;
-  String name;
+  int? id;
+  String? name;
 
   LiveReportModel({this.id, this.name});
 

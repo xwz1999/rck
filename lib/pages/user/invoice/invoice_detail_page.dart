@@ -11,8 +11,8 @@ import 'package:recook/widgets/sc_tile.dart';
 import 'invoice_detail_more_page.dart';
 
 class InvoiceDetailPage extends StatefulWidget {
-  final Map<String, dynamic> arguments;
-  InvoiceDetailPage({Key key, this.arguments}) : super(key: key);
+  final Map<String, dynamic>? arguments;
+  InvoiceDetailPage({Key? key, this.arguments}) : super(key: key);
 
   @override
   _InvoiceDetailPageState createState() => _InvoiceDetailPageState();
@@ -126,7 +126,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                   ),
                   Spacer(),
                   Text(
-                    widget.arguments['price'].toString(),
+                    widget.arguments!['price'].toString(),
                     style: TextStyle(
                       color: Color(0xFFDB2D2D),
                       fontSize: rSize(14),
@@ -229,7 +229,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
               disabledTextColor: Colors.white,
               onPressed: _parseCheck()
                   ? () {
-                      if (_formState.currentState.validate()) {
+                      if (_formState.currentState!.validate()) {
                         showGeneralDialog(
                           barrierDismissible: true,
                           barrierLabel: '',
@@ -353,7 +353,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                                 ),
                                                 Spacer(),
                                                 Text(
-                                                  widget.arguments['price']
+                                                  widget.arguments!['price']
                                                       .toString(),
                                                   style: TextStyle(
                                                     fontSize: rSize(14),
@@ -392,7 +392,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                                     await _invoicePresenter
                                                         .createBill(
                                                       ids: widget
-                                                          .arguments['ids'],
+                                                          .arguments!['ids'],
                                                       buyername: _isCompany
                                                           ? _cName.text
                                                           : _pName.text,
@@ -404,7 +404,7 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
                                                       email: _email.text,
                                                       account: _bankNum.text,
                                                       totalAmount: widget
-                                                          .arguments['price'],
+                                                          .arguments!['price'],
                                                       invoiceStatus: 1,
                                                       message: _message.text,
                                                     )
@@ -504,13 +504,13 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
             onTap: () {
               pickInvoiceTitle(context, (model) {
                 if (model.type == 1) {
-                  _addr.text = model.address;
-                  _cName.text = model.name;
-                  _taxNum.text = model.taxnum;
-                  _telePhone.text = model.phone;
-                  _bankNum.text = model.bank;
+                  _addr.text = model.address!;
+                  _cName.text = model.name!;
+                  _taxNum.text = model.taxnum!;
+                  _telePhone.text = model.phone!;
+                  _bankNum.text = model.bank!;
                 } else {
-                  _pName.text = model.name;
+                  _pName.text = model.name!;
                 }
               });
             },
@@ -602,13 +602,13 @@ class _InvoiceDetailPageState extends State<InvoiceDetailPage> {
             onTap: () {
               pickInvoiceTitle(context, (model) {
                 if (model.type == 1) {
-                  _addr.text = model.address;
-                  _cName.text = model.name;
-                  _taxNum.text = model.taxnum;
-                  _telePhone.text = model.phone;
-                  _bankNum.text = model.bank;
+                  _addr.text = model.address!;
+                  _cName.text = model.name!;
+                  _taxNum.text = model.taxnum!;
+                  _telePhone.text = model.phone!;
+                  _bankNum.text = model.bank!;
                 } else {
-                  _pName.text = model.name;
+                  _pName.text = model.name!;
                 }
               });
             },

@@ -1,3 +1,3 @@
 class OrderListController {
-  Function refresh;
+  Function? refresh;
 }

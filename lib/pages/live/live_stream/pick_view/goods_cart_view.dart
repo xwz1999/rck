@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/live_stream/pick_view/live_goods_card.dart';
@@ -11,8 +10,8 @@ import 'package:recook/widgets/refresh_widget.dart';
 import 'package:oktoast/oktoast.dart';
 
 class GoodsCartView extends StatefulWidget {
-  final VoidCallback onPick;
-  GoodsCartView({Key key, this.onPick}) : super(key: key);
+  final VoidCallback? onPick;
+  GoodsCartView({Key? key, this.onPick}) : super(key: key);
 
   @override
   _GoodsCartViewState createState() => _GoodsCartViewState();
@@ -77,7 +76,7 @@ class _GoodsCartViewState extends State<GoodsCartView>
                                 PickCart.picked.add(element);
                               }
                             });
-                          widget.onPick();
+                          widget.onPick!();
                         }
                       : () {
                           if (_selectAll) {
@@ -93,7 +92,7 @@ class _GoodsCartViewState extends State<GoodsCartView>
                             _goodsModels.forEach((element) {
                               PickCart.carPicked.add(element);
                             });
-                          widget.onPick();
+                          widget.onPick!();
                         },
                   child: Row(
                     children: [
@@ -127,7 +126,7 @@ class _GoodsCartViewState extends State<GoodsCartView>
                             }
 
                             PickCart.carManager = !PickCart.carManager;
-                            widget.onPick();
+                            widget.onPick!();
                           });
                         },
                         padding: EdgeInsets.symmetric(horizontal: rSP(15)),
@@ -210,7 +209,7 @@ class _GoodsCartViewState extends State<GoodsCartView>
                         return LiveGoodsCard(
                           onPick: () {
                             setState(() {
-                              widget.onPick();
+                              widget.onPick!();
                             });
                           },
                           model: model,
@@ -283,7 +282,7 @@ class _GoodsCartViewState extends State<GoodsCartView>
       'page': _page,
       'limit': 15,
     });
-    if (resultData?.data['data']['list'] == null)
+    if (resultData.data['data']['list'] == null)
       return [];
     else
       return (resultData.data['data']['list'] as List)

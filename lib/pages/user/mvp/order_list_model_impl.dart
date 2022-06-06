@@ -16,13 +16,13 @@ import 'package:recook/pages/user/order/order_list_page.dart';
 class OrderAfterSalesListModelImpl extends OrderAfterSalesListModelI{
   // type  int    1：代表售后中     2：代表已完成
   @override
-  getAfterSalesList(int userId, int page, int type) async {
+  getAfterSalesList(int? userId, int page, int type) async {
     ResultData resultData = await HttpManager.post(OrderApi.order_after_sales_goods_list, {"userId": userId, "page": page, "type": type});
     return resultData;
   }
 
   @override
-  getShopAfterSalesList(int userId, int page, OrderPositionType positionType, int type) async {
+  getShopAfterSalesList(int? userId, int page, OrderPositionType? positionType, int type) async {
     String position = '0'; // OrderPositionType.onlineOrder = 0
     if (positionType == OrderPositionType.storeOrder) {
       position = '1';
@@ -34,8 +34,8 @@ class OrderAfterSalesListModelImpl extends OrderAfterSalesListModelI{
 
 class OrderListModelImpl extends OrderListModelI {
   @override
-  Future<ResultData> getOrderList(int userId, int page, OrderListType type, OrderPositionType positionType) async {
-    String url;
+  Future<ResultData> getOrderList(int? userId, int page, OrderListType? type, OrderPositionType positionType) async {
+    late String url;
     switch (type) {
       case OrderListType.all:
         url = OrderApi.order_list_all;
@@ -52,6 +52,9 @@ class OrderListModelImpl extends OrderListModelI {
       case OrderListType.afterSale:
         url = OrderApi.order_list_aftersale;
         break;
+      case null:
+        url = OrderApi.order_list_all;
+        break;
     }
     // String position = '0'; // OrderPositionType.onlineOrder = 0
     // if (positionType == OrderPositionType.storeOrder) {
@@ -63,8 +66,8 @@ class OrderListModelImpl extends OrderListModelI {
   }
 
   @override
-  getShopOrderList(int userId, int page, ShopOrderListType type, OrderPositionType positionType) async {
-    String url;
+  getShopOrderList(int? userId, int page, ShopOrderListType? type, OrderPositionType positionType) async {
+    late String url;
     switch (type) {
       case ShopOrderListType.all:
         url = ShopApi.order_list_all;
@@ -81,6 +84,9 @@ class OrderListModelImpl extends OrderListModelI {
       case ShopOrderListType.afterSale:
         url = ShopApi.order_list_aftersale;
         break;
+      case null:
+        url = ShopApi.order_list_all;
+        break;
     }
     String position = "0"; // OrderPositionType.onlineOrder = 0
     if (positionType == OrderPositionType.storeOrder) {
@@ -93,7 +99,7 @@ class OrderListModelImpl extends OrderListModelI {
   
 
   @override
-  applyRefund(int userId, List<int> goodsIds, {num coin, String reasonContent, String reasonImg}) async {
+  applyRefund(int? userId, List<int?> goodsIds, {num? coin, String? reasonContent, String? reasonImg}) async {
     ResultData resultData = await HttpManager.post(
       OrderApi.order_refund, 
       {
@@ -111,48 +117,48 @@ class OrderListModelImpl extends OrderListModelI {
   applySalesReturn() {}
 
   @override
-  cancelOrder(int userId, int orderId) async {
+  cancelOrder(int? userId, int? orderId) async {
     ResultData resultData =
         await HttpManager.post(OrderApi.order_cancel, {"userId": userId, "orderId": orderId});
     return resultData;
   }
   @override
-  deleteOrder(int userId, int orderId) async {
+  deleteOrder(int? userId, int? orderId) async {
     ResultData resultData =
         await HttpManager.post(OrderApi.order_delete, {"userId": userId, "orderId": orderId});
     return resultData;
   }
 
   @override
-  getOrderDetail(int userId, int orderId) async {
+  getOrderDetail(int? userId, int? orderId) async {
     ResultData resultData =
         await HttpManager.post(OrderApi.order_detail, {"userId": userId, "orderId": orderId});
     return resultData;
   }
 
   @override
-  getShopOrderDetail(int userId, int orderId) async {
+  getShopOrderDetail(int? userId, int? orderId) async {
     ResultData resultData =
         await HttpManager.post(ShopApi.order_detail, {"userId": userId, "orderId": orderId});
     return resultData;
   }
 
   @override
-  queryLogistic(int userId, int orderBrandId) async {
+  queryLogistic(int? userId, int? orderBrandId) async {
     ResultData resultData = await HttpManager.post(
         OrderApi.express_logistic, {"userId": userId, "orderId": orderBrandId});
     return resultData;
   }
 
   @override
-  Future<ResultData> addInvoice(int userId, int type, String title, String taxNo) async {
+  Future<ResultData> addInvoice(int? userId, int type, String title, String taxNo) async {
     ResultData resultData = await HttpManager.post(
         OrderApi.invoice_add, {"userId": userId, "type": type, "title": title, "taxNo": taxNo});
     return resultData;
   }
 
   @override
-  Future<ResultData> getInvoiceList(int userId) async {
+  Future<ResultData> getInvoiceList(int? userId) async {
     ResultData resultData = await HttpManager.post(OrderApi.invoice_list, {"userId": userId});
     return resultData;
   }
@@ -174,7 +180,7 @@ class OrderListModelImpl extends OrderListModelI {
   }
 
   @override
-  confirmReceipt(int userId, int orderId) async {
+  confirmReceipt(int? userId, int? orderId) async {
     ResultData resultData =
         await HttpManager.post(OrderApi.order_confirm_receipt, {"userId": userId, "orderId": orderId});
     return resultData;

@@ -22,51 +22,51 @@ class ShoppingCartPresenterImpl extends ShoppingCartPresenterI {
   }
 
   @override
-  deleteFromShoppingCart(int userID, List<int> cartIDs) async {
+  deleteFromShoppingCart(int? userID, List<int?> cartIDs) async {
     ResultData resultData =
-        await getModel().deleteFromShoppingCart(userID, cartIDs);
+        await getModel()!.deleteFromShoppingCart(userID, cartIDs);
     if (!resultData.result) {
-      getView().failure(resultData.msg);
+      getView()!.failure(resultData.msg);
       return;
     }
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      getView().failure(model.msg);
+      getView()!.failure(model.msg);
       return;
     }
-    getView().deleteGoodsSuccess();
+    getView()!.deleteGoodsSuccess();
   }
 
   @override
-  getShoppingCartList(int userID) async {
-    ResultData resultData = await getModel().getShoppingCartList(userID);
+  getShoppingCartList(int? userID) async {
+    ResultData resultData = await getModel()!.getShoppingCartList(userID);
     if (!resultData.result) {
-      getView().failure(resultData.msg);
+      getView()!.failure(resultData.msg);
       return;
     }
     ShoppingCartListModel model =
         ShoppingCartListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      getView().failure(resultData.msg);
+      getView()!.failure(resultData.msg);
       return;
     }
-    getRefreshView().refreshSuccess(model.data);
+    getRefreshView()!.refreshSuccess(model.data);
   }
 
   @override
-  updateQuantity(int userID, ShoppingCartGoodsModel goods, int quantity) async {
+  updateQuantity(int? userID, ShoppingCartGoodsModel goods, int quantity) async {
     ResultData resultData =
-        await getModel().updateQuantity(userID, goods, quantity);
+        await getModel()!.updateQuantity(userID, goods, quantity);
     if (!resultData.result) {
-      getView().failure(resultData.msg);
+      getView()!.failure(resultData.msg);
       return;
     }
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      getView().updateNumFail(model.msg);
+      getView()!.updateNumFail(model.msg);
       return;
     }
-    getView().updateNumSuccess(goods, quantity);
+    getView()!.updateNumSuccess(goods, quantity);
   }
 
   @override
@@ -75,19 +75,19 @@ class ShoppingCartPresenterImpl extends ShoppingCartPresenterI {
   }
 
   @override
-  submitOrder(int userId, List<int> cardIds) async {
+  submitOrder(int? userId, List<int?> cardIds) async {
 
     ResultData resultData =
-        await getModel().submitOrder(userId, cardIds);
+        await getModel()!.submitOrder(userId, cardIds);
     if (!resultData.result) {
-      getView().failure(resultData.msg);
+      getView()!.failure(resultData.msg);
       return;
     }
     OrderPreviewModel model = OrderPreviewModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      getView().failure(model.msg);
+      getView()!.failure(model.msg);
       return;
     }
-    getView().submitOrderSuccess(model);
+    getView()!.submitOrderSuccess(model);
   }
 }

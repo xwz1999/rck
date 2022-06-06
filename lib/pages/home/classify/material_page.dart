@@ -12,6 +12,7 @@ import 'dart:typed_data';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -30,8 +31,8 @@ import 'package:recook/widgets/toast.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class MaterialPage extends StatefulWidget {
-  final int goodsID;
-  const MaterialPage({Key key, this.goodsID}) : super(key: key);
+  final int? goodsID;
+  const MaterialPage({Key? key, this.goodsID}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -41,15 +42,15 @@ class MaterialPage extends StatefulWidget {
 
 class _MaterialPageState extends State<MaterialPage>
     with AutomaticKeepAliveClientMixin {
-  MaterialListModel _model;
+  MaterialListModel? _model;
 
   @override
   void initState() {
     print("initState ---------- Good");
     super.initState();
-    int userID = 0;
-    if (UserManager.instance.haveLogin) {
-      userID = UserManager.instance.user.info.id;
+    int? userID = 0;
+    if (UserManager.instance!.haveLogin) {
+      userID = UserManager.instance!.user.info!.id;
     }
     GoodsDetailModelImpl.getDetailMoments(userID, widget.goodsID)
         .then((MaterialListModel model) {
@@ -67,7 +68,7 @@ class _MaterialPageState extends State<MaterialPage>
     print("build ---------- Good");
     print('$_model');
     super.build(context);
-    double topPadding = (DeviceInfo.statusBarHeight + DeviceInfo.appBarHeight);
+    double topPadding = (DeviceInfo.statusBarHeight! + DeviceInfo.appBarHeight);
     return MediaQuery.removePadding(
       context: context,
       removeTop: true,
@@ -78,12 +79,12 @@ class _MaterialPageState extends State<MaterialPage>
             // children: _materialDetail(),
             children: [
               ListView.builder(
-                  itemCount: _model == null || _model.data == null
+                  itemCount: _model == null || _model!.data == null
                       ? 0
-                      : _model.data.length + 1,
+                      : _model!.data!.length + 1,
                   physics: BouncingScrollPhysics(),
                   itemBuilder: (context, index) {
-                    if (index == _model.data.length) {
+                    if (index == _model!.data!.length) {
                       return Container(
                         width: MediaQuery.of(context).size.width,
                         height: 60,
@@ -91,10 +92,10 @@ class _MaterialPageState extends State<MaterialPage>
                       );
                     }
                     return _itemWidget(
-                      _model.data[index],
+                      _model!.data![index],
                     );
                   }),
-              !UserManager.instance.haveLogin
+              !UserManager.instance!.haveLogin
                   ? Container()
                   : Positioned(
                       bottom: 10,
@@ -132,9 +133,9 @@ class _MaterialPageState extends State<MaterialPage>
         downloadListener: (ByteData byteData) {
           _capturePng(byteData);
 
-          List<String> urls = model.photos.map((f) {
+          List<String> urls = model.photos!.map((f) {
             // return Api.getResizeImgUrl(f.url, 300);
-            return Api.getResizeImgUrl(f.url, 800);
+            return Api.getResizeImgUrl(f.url!, 800);
           }).toList();
           ImageUtils.saveNetworkImagesToPhoto(urls, (index) {
             DPrint.printf("保存好了---$index");
@@ -182,17 +183,21 @@ class _MaterialPageState extends State<MaterialPage>
         },
         picListener: (index) {
           List<PicSwiperItem> picSwiperItem = [];
-          for (Photos photo in model.photos) {
+          for (Photos photo in model.photos!) {
             picSwiperItem.add(PicSwiperItem(Api.getImgUrl(photo.url)));
           }
-          AppRouter.fade(
-            context,
-            RouteName.PIC_SWIPER,
-            arguments: PicSwiper.setArguments(
-              index: index,
-              pics: picSwiperItem,
-            ),
-          );
+          Get.to(()=>PicSwiper(arguments: PicSwiper.setArguments(
+            index: index,
+            pics: picSwiperItem,
+          )));
+          // AppRouter.fade(
+          //   context,
+          //   RouteName.PIC_SWIPER,
+          //   arguments: PicSwiper.setArguments(
+          //     index: index,
+          //     pics: picSwiperItem,
+          //   ),
+          // );
         },
         model: model,
       ),
@@ -218,7 +223,7 @@ class _MaterialPageState extends State<MaterialPage>
 
     Uint8List pngBytes = byteData.buffer.asUint8List();
 
-    if (pngBytes == null || pngBytes.length == 0) {
+    if (pngBytes.length == 0) {
       BotToast.showText(text: '保存失败');
       return;
     }
@@ -342,13 +347,13 @@ class _MaterialPageState extends State<MaterialPage>
 
   ///关注
   _attention(MaterialModel model) async {
-    if (model.isAttention) {
+    if (model.isAttention!) {
       //取消关注
-      HttpResultModel<BaseModel> resultModel =
+      HttpResultModel<BaseModel?> resultModel =
           await GoodsDetailModelImpl.goodsAttentionCancel(
-              UserManager.instance.user.info.id, model.userId);
+              UserManager.instance!.user.info!.id, model.userId);
       if (!resultModel.result) {
-        Toast.showInfo(resultModel.msg);
+        Toast.showInfo(resultModel.msg??'');
         return;
       }
       setState(() {
@@ -356,11 +361,11 @@ class _MaterialPageState extends State<MaterialPage>
       });
     } else {
       //关注
-      HttpResultModel<BaseModel> resultModel =
+      HttpResultModel<BaseModel?> resultModel =
           await GoodsDetailModelImpl.goodsAttentionCreate(
-              UserManager.instance.user.info.id, model.userId);
+              UserManager.instance!.user.info!.id, model.userId);
       if (!resultModel.result) {
-        Toast.showInfo(resultModel.msg);
+        Toast.showInfo(resultModel.msg??'');
         return;
       }
       setState(() {

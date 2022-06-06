@@ -60,7 +60,7 @@ class _BusinessSellingPointItemState extends State<BusinessSellingPointItem> {
               children: <Widget>[
                 Text("￥150.00", style: AppTextStyle.generate(16, fontWeight: FontWeight.w300),),
                 Container(width: 5,),
-                Text(AppConfig.getShowCommission() ? "赚50.00" : "", style: AppTextStyle.generate(16, color: Colors.red, fontWeight: FontWeight.w300),),
+                Text(AppConfig.getShowCommission()! ? "赚50.00" : "", style: AppTextStyle.generate(16, color: Colors.red, fontWeight: FontWeight.w300),),
                 Expanded(child: Container()),
                 Container(width: 10,),
                 CustomImageButton(

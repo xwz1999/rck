@@ -1,8 +1,6 @@
 
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -13,9 +11,9 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/toast.dart';
 
 class CashWithdrawResultPage extends StatefulWidget {
-  final Map arguments;
-  const CashWithdrawResultPage({Key key, this.arguments}) : super(key: key);
-  static setArguments({num id}){
+  final Map? arguments;
+  const CashWithdrawResultPage({Key? key, this.arguments}) : super(key: key);
+  static setArguments({num? id}){
     return {"id": id};
   }
   @override
@@ -29,7 +27,7 @@ class _CashWithdrawResultPageState extends BaseStoreState<CashWithdrawResultPage
   String iconNormal = 'assets/cash_result_normal.png';
   String iconSelect = "assets/cash_result_select.png";
   String iconSuccess = "assets/cash_result_success.png";
-  WithdrawDetailModel _withdrawDetailModel;
+  WithdrawDetailModel? _withdrawDetailModel;
   @override
   void initState() { 
     super.initState();
@@ -72,11 +70,11 @@ class _CashWithdrawResultPageState extends BaseStoreState<CashWithdrawResultPage
             children: <Widget>[
               Expanded(
                 flex: 1,
-                child: _cashProgressColumnCellWidget(_withdrawDetailModel.data.status == 1? iconSuccess:iconSelect, "提交申请", _withdrawDetailModel.data.createdAt),
+                child: _cashProgressColumnCellWidget(_withdrawDetailModel!.data!.status == 1? iconSuccess:iconSelect, "提交申请", _withdrawDetailModel!.data!.createdAt),
               ),
               Expanded(
                 flex: 1,
-                child: _cashProgressColumnCellWidget(_withdrawDetailModel.data.status == 1? iconNormal:iconSuccess, "提交成功", TextUtils.isEmpty(_withdrawDetailModel.data.doneTime)?"":_withdrawDetailModel.data.doneTime),
+                child: _cashProgressColumnCellWidget(_withdrawDetailModel!.data!.status == 1? iconNormal:iconSuccess, "提交成功", TextUtils.isEmpty(_withdrawDetailModel!.data!.doneTime)?"":_withdrawDetailModel!.data!.doneTime),
               ),
             ],
           ),
@@ -106,7 +104,7 @@ class _CashWithdrawResultPageState extends BaseStoreState<CashWithdrawResultPage
   }
 
   _cashStateWidget(){
-    DateTime dateTime = DateTime.parse(_withdrawDetailModel.data.auditTime);
+    DateTime dateTime = DateTime.parse(_withdrawDetailModel!.data!.auditTime!);
     return Container(
       margin: EdgeInsets.only(top: 1), padding: EdgeInsets.only(left: 17, right: 17 ,top: 20, bottom: 15),
       color: Colors.white,
@@ -122,11 +120,11 @@ class _CashWithdrawResultPageState extends BaseStoreState<CashWithdrawResultPage
                   borderRadius: BorderRadius.circular(1.3)
                 ),
               ),
-              Text(_withdrawDetailModel.data.status==1?"提现申请已提交，请等待审核":"提现成功", style: TextStyle(fontSize: 12, color: Colors.black),),
+              Text(_withdrawDetailModel!.data!.status==1?"提现申请已提交，请等待审核":"提现成功", style: TextStyle(fontSize: 12, color: Colors.black),),
             ],
           ),
           Container(height: 4,),
-          Text(_withdrawDetailModel.data.status==1?"    审核日是${dateTime.month}月${dateTime.day}日":"    预计3个工作日到账", style: TextStyle(color: titleColor, fontSize: 11),)
+          Text(_withdrawDetailModel!.data!.status==1?"    审核日是${dateTime.month}月${dateTime.day}日":"    预计3个工作日到账", style: TextStyle(color: titleColor, fontSize: 11),)
         ],
       ),
     );
@@ -145,12 +143,12 @@ class _CashWithdrawResultPageState extends BaseStoreState<CashWithdrawResultPage
         mainAxisAlignment: MainAxisAlignment.start, crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text("提现小贴士", style: TextStyle(color: titleColor, fontSize: 13),),
-          _castInfoRowWidget(title: "本次申请提现金额:", info: "￥${_withdrawDetailModel.data.amount.toStringAsFixed(2)}"),
-          _castInfoRowWidget(title: "平台代扣代付税费:", info: "￥${_withdrawDetailModel.data.taxFee??0.toStringAsFixed(2)}"),
-          _castInfoRowWidget(title: "实际到账金额:", info: "￥${_withdrawDetailModel.data.actualAmount??0.toStringAsFixed(2)}"),
-          _castInfoRowWidget(title: "申请提现人:", info: _withdrawDetailModel.data.userName),
-          _castInfoRowWidget(title: "提现方式:", info: TextUtils.isEmpty(_withdrawDetailModel.data.bankAccount)? "支付宝 | ${_withdrawDetailModel.data.alipay}":"银行 | ${_withdrawDetailModel.data.bankAccount}"),
-          _castInfoRowWidget(title: "申请提现时间:", info: _withdrawDetailModel.data.createdAt),
+          _castInfoRowWidget(title: "本次申请提现金额:", info: "￥${_withdrawDetailModel!.data!.amount!.toStringAsFixed(2)}"),
+          _castInfoRowWidget(title: "平台代扣代付税费:", info: "￥${_withdrawDetailModel!.data!.taxFee??0.toStringAsFixed(2)}"),
+          _castInfoRowWidget(title: "实际到账金额:", info: "￥${_withdrawDetailModel!.data!.actualAmount??0.toStringAsFixed(2)}"),
+          _castInfoRowWidget(title: "申请提现人:", info: _withdrawDetailModel!.data!.userName),
+          _castInfoRowWidget(title: "提现方式:", info: TextUtils.isEmpty(_withdrawDetailModel!.data!.bankAccount)? "支付宝 | ${_withdrawDetailModel!.data!.alipay}":"银行 | ${_withdrawDetailModel!.data!.bankAccount}"),
+          _castInfoRowWidget(title: "申请提现时间:", info: _withdrawDetailModel!.data!.createdAt),
         ],
       ),
     );
@@ -215,7 +213,7 @@ class _CashWithdrawResultPageState extends BaseStoreState<CashWithdrawResultPage
 
   getWithdrawDetail() async {
     ResultData resultData = await HttpManager.post(UserApi.withdraw_detail, {
-      "id": widget.arguments["id"],
+      "id": widget.arguments!["id"],
     });
     if (!resultData.result) {
        Toast.showError(resultData.msg);

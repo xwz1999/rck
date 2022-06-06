@@ -6,7 +6,7 @@ part 'PayInfoModel.g.dart';
 @JsonSerializable()
 class PayInfoModel extends BaseModel{
   @JsonKey(name: "data")
-  PayInfo payInfo;
+  PayInfo? payInfo;
   PayInfoModel(this.payInfo, code, msg) : super(code, msg);
 
   factory PayInfoModel.fromJson(Map<String, dynamic> json) =>
@@ -18,13 +18,13 @@ class PayInfoModel extends BaseModel{
 
 @JsonSerializable()
 class PayInfo{
-  String noncestr;
-  String sign;
-  String prepayid;
-  String appid;
-  String partnerid;
-  String package;
-  String timestamp;
+  String? noncestr;
+  String? sign;
+  String? prepayid;
+  String? appid;
+  String? partnerid;
+  String? package;
+  String? timestamp;
 
 
   PayInfo(this.noncestr, this.sign, this.prepayid, this.appid, this.partnerid,

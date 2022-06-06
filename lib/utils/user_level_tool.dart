@@ -50,7 +50,7 @@ enum UserRoleLevel {
 
 class UserLevelTool {
 
-  static UserRoleLevel roleLevelEnum(int level) {
+  static UserRoleLevel roleLevelEnum(int? level) {
     UserRoleLevel userRoleLevel;
     if (level == null) {
       return UserRoleLevel.Vip;
@@ -63,7 +63,7 @@ class UserLevelTool {
         userRoleLevel = UserRoleLevel.Master;
         break;
       case 2:
-        if(UserManager.instance.userBrief.isOffline){
+        if(UserManager.instance!.userBrief!.isOffline!){
           userRoleLevel = UserRoleLevel.physical;
         }else{
           userRoleLevel = UserRoleLevel.Shop;
@@ -81,11 +81,11 @@ class UserLevelTool {
 
 
   static UserRoleLevel currentRoleLevelEnum() {
-    return roleLevelEnum(UserManager.instance.userBrief.level);
+    return roleLevelEnum(UserManager.instance!.userBrief!.level);
   }
 
 
-  static roleLevelWidget({String level}) {
+  static roleLevelWidget({String? level}) {
     return CustomImageButton(
       onPressed: () {},
       padding: EdgeInsets.symmetric(vertical: 2, horizontal: 8),
@@ -118,13 +118,13 @@ class UserLevelTool {
     switch (roleLevel) {
       case UserRoleLevel.Silver:
         return R.ASSETS_UPGRADE_ICON_SILVER_PNG;
-        break;
+
       case UserRoleLevel.Gold:
         return R.ASSETS_UPGRADE_ICON_GOLD_PNG;
-        break;
+
       case UserRoleLevel.Master:
         return R.ASSETS_UPGRADE_ICON_MASTER_PNG;
-        break;
+
       default:
         return R.ASSETS_UPGRADE_ICON_VIP_PNG;
     }
@@ -138,13 +138,13 @@ class UserLevelTool {
     switch (roleLevel) {
       case UserRoleLevel.Vip:
         return R.ASSETS_USER_LEVEL_ICON_MASTER_PNG;
-        break;
+
       case UserRoleLevel.Shop:
         return R.ASSETS_USER_LEVEL_ICON_DIAMOND_PNG;
-        break;
+
       case UserRoleLevel.Master:
         return R.ASSETS_USER_LEVEL_ICON_SILVER_PNG;
-        break;
+
       default:
         return R.ASSETS_USER_LEVEL_ICON_MASTER_PNG;
     }
@@ -162,13 +162,13 @@ class UserLevelTool {
     switch (roleLevel) {
       case UserRoleLevel.Master:
         return R.ASSETS_SHOP_SILVER_BADGE_PNG;
-        break;
+
       case UserRoleLevel.Shop:
         return R.ASSETS_SHOP_DIAMOND_BADGE_PNG;
-        break;
+
       case UserRoleLevel.Vip:
         return R.ASSETS_SHOP_MASTER_BADGE_PNG;
-        break;
+
       default:
         return "";
     }
@@ -178,13 +178,13 @@ class UserLevelTool {
     switch (roleLevel) {
       case UserRoleLevel.Master:
         return R.ASSETS_SHOP_SILVER_BG_WEBP;
-        break;
+
       case UserRoleLevel.Shop:
         return R.ASSETS_SHOP_DIAMOND_BG_WEBP;
-        break;
+
       case UserRoleLevel.Vip:
         return R.ASSETS_SHOP_MASTER_BG_WEBP;
-        break;
+
       default:
         return R.ASSETS_SHOP_MASTER_BG_WEBP;
     }
@@ -194,16 +194,16 @@ class UserLevelTool {
     switch (UserLevelTool.currentRoleLevelEnum()) {
       case UserRoleLevel.Vip:
         return R.ASSETS_USER_NORMAL_WEBP;
-        break;
+
       case UserRoleLevel.Shop:
         return R.ASSETS_USER_DIAMOND_WEBP;
-        break;
+
       case UserRoleLevel.Master:
         return R.ASSETS_USER_SLIVER_WEBP;
-        break;
+
       default:
         return R.ASSETS_USER_NORMAL_WEBP;
-        break;
+
     }
   }
 
@@ -217,26 +217,25 @@ class UserLevelTool {
     switch (roleLevel) {
       case UserRoleLevel.Vip:
         return R.ASSETS_HEADER_MASTER_HEADER_PNG;
-        break;
       case UserRoleLevel.Shop:
         return R.ASSETS_HEADER_DIAMOND_HEADER_PNG;
-        break;
+
       case UserRoleLevel.Master:
         return R.ASSETS_HEADER_SILVER_HEADER_PNG;
-        break;
+
       default:
         return R.ASSETS_HEADER_MASTER_HEADER_PNG;
-        break;
+
     }
   }
 
 
 
   static String currentRoleLevel() {
-    return roleLevel(UserManager.instance.userBrief.level);
+    return roleLevel(UserManager.instance!.userBrief!.level);
   }
 
-  static String roleLevel(int level) {
+  static String roleLevel(int? level) {
     if (level == null) {
       return "";
     }
@@ -250,7 +249,7 @@ class UserLevelTool {
         break;
       case 2:
 
-        if(UserManager.instance.userBrief.isOffline){
+        if(UserManager.instance!.userBrief!.isOffline!){
           roleLevel = "VIP店铺";
         }else{
           roleLevel = "店铺";

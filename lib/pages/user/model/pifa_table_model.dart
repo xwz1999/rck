@@ -1,6 +1,6 @@
 class PiFaTableModel {
-  num total;
-  List<PiFaData> data;
+  num? total;
+  List<PiFaData>? data;
 
   PiFaTableModel({this.total, this.data});
 
@@ -9,7 +9,7 @@ class PiFaTableModel {
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
-        data.add(new PiFaData.fromJson(v));
+        data!.add(new PiFaData.fromJson(v));
       });
     }else{
       data = [];
@@ -20,16 +20,16 @@ class PiFaTableModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['total'] = this.total;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class PiFaData {
-  String name;
-  int count;
-  double amount;
+  String? name;
+  int? count;
+  double? amount;
 
   PiFaData({this.name, this.count, this.amount});
 

@@ -8,10 +8,10 @@ class LiveSKUWidget extends StatefulWidget {
   final List<Sku> skus;
   final Function(List<Children> children) onPick;
   LiveSKUWidget(
-      {Key key,
-      @required this.attributes,
-      @required this.skus,
-      @required this.onPick})
+      {Key? key,
+      required this.attributes,
+      required this.skus,
+      required this.onPick})
       : super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class _LiveSKUWidgetState extends State<LiveSKUWidget> {
   @override
   void initState() {
     super.initState();
-    attrs = widget.attributes.map((e) => e.children.first).toList();
+    attrs = widget.attributes.map((e) => e.children!.first).toList();
   }
 
   @override
@@ -38,7 +38,7 @@ class _LiveSKUWidgetState extends State<LiveSKUWidget> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    attr.name,
+                    attr.name!,
                     style: TextStyle(
                       color: Color(0xFF141414),
                       fontSize: rSP(14),
@@ -64,7 +64,7 @@ class _LiveSKUWidgetState extends State<LiveSKUWidget> {
 class _AttrPicker extends StatefulWidget {
   final Attributes attr;
   final Function(Children oldAttr, Children pickedAttr) onPick;
-  _AttrPicker({Key key, @required this.attr, @required this.onPick})
+  _AttrPicker({Key? key, required this.attr, required this.onPick})
       : super(key: key);
 
   @override
@@ -72,22 +72,22 @@ class _AttrPicker extends StatefulWidget {
 }
 
 class __AttrPickerState extends State<_AttrPicker> {
-  Children pickedChild;
+  Children? pickedChild;
   @override
   void initState() {
-    pickedChild = widget.attr.children.first;
+    pickedChild = widget.attr.children!.first;
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
-      children: widget.attr.children
+      children: widget.attr.children!
           .map((e) => MaterialButton(
                 padding: EdgeInsets.symmetric(horizontal: rSize(5)),
                 shape: RoundedRectangleBorder(
                   side: BorderSide(
-                    color: pickedChild.id == e.id
+                    color: pickedChild!.id == e.id
                         ? Color(0xFFC92219)
                         : Color(0xFF999999),
                   ),
@@ -96,15 +96,15 @@ class __AttrPickerState extends State<_AttrPicker> {
                 minWidth: 0,
                 height: rSize(22),
                 child: Text(
-                  e.value,
+                  e.value!,
                   style: TextStyle(
-                    color: pickedChild.id == e.id
+                    color: pickedChild!.id == e.id
                         ? Color(0xFFC92219)
                         : Color(0xFF999999),
                   ),
                 ),
                 onPressed: () {
-                  widget.onPick(pickedChild, e);
+                  widget.onPick(pickedChild!, e);
                   pickedChild = e;
                   setState(() {});
                 },

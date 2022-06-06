@@ -4,7 +4,7 @@ class TextUtils {
   ///判断空字符串
   ///
   ///white 全空格是否算空字符串
-  static bool isEmpty(String str, {bool whiteSpace = false}) {
+  static bool isEmpty(String? str, {bool whiteSpace = false}) {
     if (whiteSpace) {
       return str == null || str.trim().length == 0;
     }
@@ -19,7 +19,7 @@ class TextUtils {
     return new RegExp("^^1\\d{10}\$").hasMatch(phone);
   }
 
-  static String getCount(num number){
+  static String? getCount(num number){
     var fotmat;
     if(number>99999999){
       number = 99999999;
@@ -42,7 +42,7 @@ class TextUtils {
   }
 
 
-  static String getCount1(num number){
+  static String? getCount1(num number){
     var fotmat;
 
 

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/pages/user/invoice/invoice_presenter.dart';
 import 'package:recook/pages/user/invoice/invoice_scaffold_widget.dart';
 import 'package:recook/pages/user/invoice/models/invoice_get_bill_model.dart';
@@ -9,7 +8,7 @@ import 'package:recook/pages/user/widget/recook_check_box.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class InvoiceWithGoodsPage extends StatefulWidget {
-  InvoiceWithGoodsPage({Key key}) : super(key: key);
+  InvoiceWithGoodsPage({Key? key}) : super(key: key);
 
   @override
   _InvoiceWithGoodsPageState createState() => _InvoiceWithGoodsPageState();
@@ -20,7 +19,7 @@ class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
       GSRefreshController(initialRefresh: true);
   InvoicePresenter _invoicePresenter = InvoicePresenter();
   List<InvoiceGetBillModel> _models = [];
-  List<int> _selectedIds = [];
+  List<int?> _selectedIds = [];
   double _price = 0.0;
   int _page = 0;
 
@@ -176,7 +175,7 @@ class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
                           _selectedIds = [];
                           _price = 0;
                           _models.forEach((element) {
-                            _price += element.goodsTotalAmount;
+                            _price += element.goodsTotalAmount!;
                             _selectedIds.add(element.orderId);
                           });
                         }
@@ -207,10 +206,10 @@ class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
       onTap: () {
         if (_selectedIds.contains(model.orderId)) {
           _selectedIds.remove(model.orderId);
-          _price -= model.goodsTotalAmount;
+          _price -= model.goodsTotalAmount!;
         } else {
           _selectedIds.add(model.orderId);
-          _price += model.goodsTotalAmount;
+          _price += model.goodsTotalAmount!;
         }
         setState(() {});
       },
@@ -235,14 +234,14 @@ class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    model.endTime,
+                    model.endTime!,
                     style: TextStyle(
                       color: Color(0xFF666666),
                       fontSize: 14 * 2.sp,
                     ),
                   ),
                   Text(
-                    model.goodsName,
+                    model.goodsName!,
                     style: TextStyle(
                       color: Color(0xFF333333),
                       fontSize: 14 * 2.sp,

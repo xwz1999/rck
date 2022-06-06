@@ -21,8 +21,8 @@ enum PlayType {
 
 class FullVideoPage extends StatefulWidget {
   PlayType playType;
-  String dataSource;
-  TencentPlayerController controller;
+  String? dataSource;
+  TencentPlayerController? controller;
 
   //UI
   bool showBottomWidget;
@@ -40,12 +40,12 @@ class FullVideoPage extends StatefulWidget {
 }
 
 class _FullVideoPageState extends State<FullVideoPage> {
-  TencentPlayerController controller;
-  VoidCallback listener;
+  TencentPlayerController? controller;
+  late VoidCallback listener;
 
   bool isLock = false;
   bool showCover = false;
-  Timer timer;
+  Timer? timer;
 
   _FullVideoPageState() {
     listener = () {
@@ -65,7 +65,7 @@ class _FullVideoPageState extends State<FullVideoPage> {
       DeviceOrientation.landscapeRight,
     ]);
     _initController();
-    controller.addListener(listener);
+    controller!.addListener(listener);
     hideCover();
     DateUtilss.initForbid(context);
     Screen.keepOn(true);
@@ -77,9 +77,9 @@ class _FullVideoPageState extends State<FullVideoPage> {
     SystemChrome.setEnabledSystemUIOverlays(
         [SystemUiOverlay.top, SystemUiOverlay.bottom]);
 
-    controller.removeListener(listener);
+    controller!.removeListener(listener);
     if (widget.controller == null) {
-      controller.dispose();
+      controller!.dispose();
     }
     DateUtilss.disposeForbid();
     Screen.keepOn(false);
@@ -98,7 +98,7 @@ class _FullVideoPageState extends State<FullVideoPage> {
         controller = TencentPlayerController.asset(widget.dataSource);
         break;
       case PlayType.file:
-        controller = TencentPlayerController.file(widget.dataSource);
+        controller = TencentPlayerController.file(widget.dataSource!);
         break;
       case PlayType.fileId:
         controller = TencentPlayerController.network(null,
@@ -106,7 +106,7 @@ class _FullVideoPageState extends State<FullVideoPage> {
                 auth: {"appId": 1252463788, "fileId": widget.dataSource}));
         break;
     }
-    controller.initialize();
+    controller!.initialize();
   }
 
   @override
@@ -121,23 +121,22 @@ class _FullVideoPageState extends State<FullVideoPage> {
           },
           onDoubleTap: () {
             if (!widget.showBottomWidget || isLock) return;
-            if (controller.value.isPlaying) {
-              controller.pause();
+            if (controller!.value.isPlaying) {
+              controller!.pause();
             } else {
-              controller.play();
+              controller!.play();
             }
           },
           child: Container(
             color: Colors.black,
             child: Stack(
-              overflow: Overflow.visible,
-              alignment: Alignment.center,
+              clipBehavior: Clip.none, alignment: Alignment.center,
               children: <Widget>[
                 /// 视频
-                controller.value.initialized
+                controller!.value.initialized
                     ? AspectRatio(
-                        aspectRatio: controller.value.aspectRatio,
-                        child: TencentPlayer(controller),
+                        aspectRatio: controller!.value.aspectRatio,
+                        child: TencentPlayer(controller!),
                       )
                     : Image.asset(Assets.static.placeNodata.path),
 
@@ -205,7 +204,7 @@ class _FullVideoPageState extends State<FullVideoPage> {
                             delayHideCover();
                             if (Platform.isAndroid) {
                               DeviceOrientation deviceOrientation =
-                                  controller.value.orientation < 180
+                                  controller!.value.orientation < 180
                                       ? DeviceOrientation.landscapeRight
                                       : DeviceOrientation.landscapeLeft;
                               if (isLock) {
@@ -273,12 +272,12 @@ class _FullVideoPageState extends State<FullVideoPage> {
     'http://1252463788.vod2.myqcloud.com/95576ef5vodtransgzp1252463788/e1ab85305285890781763144364/v.f30.mp4',
   ];
 
-  changeClear(int urlIndex, {int startTime}) {
+  changeClear(int urlIndex, {int? startTime}) {
     controller?.removeListener(listener);
     controller?.pause();
     controller = TencentPlayerController.network(clearUrlList[urlIndex],
         playerConfig: PlayerConfig(
-            startTime: startTime ?? controller.value.position.inSeconds));
+            startTime: startTime ?? controller!.value.position.inSeconds));
     controller?.initialize().then((_) {
       if (mounted) setState(() {});
     });

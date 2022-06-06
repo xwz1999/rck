@@ -22,7 +22,7 @@ class UserBenefitCurrencyPage extends StatefulWidget {
   final UserBenefitPageType type;
   final String receivedType;
   UserBenefitCurrencyPage(
-      {Key key, @required this.type, @required this.receivedType})
+      {Key? key, required this.type, required this.receivedType})
       : super(key: key);
 
   @override
@@ -38,18 +38,18 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
     UserBenefitPageType.GUIDE: '导购收益',
     UserBenefitPageType.TEAM: '品牌补贴',
   };
-  String get _title => _typeTitleMap[widget.type];
+  String? get _title => _typeTitleMap[widget.type];
 
   ///不是自购和导购
   bool get _notSelfNotGUide =>
       widget.type != UserBenefitPageType.SELF &&
       widget.type != UserBenefitPageType.GUIDE;
 
-  String _amount = '0.00';
-  String _all = '0.00';
-  String _selfALL = '0.00';
-  String _distributionALL = '0.00';
-  String _agentALL = '0.00';
+  String? _amount = '0.00';
+  String? _all = '0.00';
+  String? _selfALL = '0.00';
+  String? _distributionALL = '0.00';
+  String? _agentALL = '0.00';
 
   bool _itemReverse = false;
 
@@ -71,7 +71,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
   String _TformatType = 'yyyy-MM'; //团队时间样式
   String _TTableformatType = 'M月d日'; //团队表格时间样式
 
-  UserIncomeModel _models; //自购导购未到已到收益
+  UserIncomeModel? _models; //自购导购未到已到收益
   bool _onload = true;
   List _gone = [];
 
@@ -180,7 +180,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
                         fontSize: 14.rsp,
                         color: getColor(_selfChoose),
                         fontWeight: getWeight(_selfChoose))),
-                Text(_selfALL,
+                Text(_selfALL!,
                     style: TextStyle(
                         fontSize: 14.rsp,
                         color: getColor(_selfChoose),
@@ -214,7 +214,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
                         fontSize: 14.rsp,
                         color: getColor(_distributionChoose),
                         fontWeight: getWeight(_distributionChoose))),
-                Text(_distributionALL,
+                Text(_distributionALL!,
                     style: TextStyle(
                         fontSize: 14.rsp,
                         color: getColor(_distributionChoose),
@@ -248,7 +248,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
                         fontSize: 14.rsp,
                         color: getColor(_agentChoose),
                         fontWeight: getWeight(_agentChoose))),
-                Text(_agentALL,
+                Text(_agentALL!,
                     style: TextStyle(
                         fontSize: 14.rsp,
                         color: getColor(_agentChoose),
@@ -273,8 +273,8 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
 
   ///时间选择器
   showTimePickerBottomSheet(
-      {List<BottomTimePickerType> timePickerTypes,
-      Function(DateTime, BottomTimePickerType) submit}) {
+      {List<BottomTimePickerType>? timePickerTypes,
+      Function(DateTime, BottomTimePickerType)? submit}) {
     showModalBottomSheet(
       isScrollControlled: false,
       context: context,
@@ -329,7 +329,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
     return Row(
       children: [
         Text(
-          text ?? '',
+          text,
           style: TextStyle(color: Color(0xFF999999), fontSize: 16.rsp),
           textAlign: TextAlign.center,
         ),
@@ -467,7 +467,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
         leading: RecookBackButton(white: true),
         elevation: 0,
         title: Text(
-          _title,
+          _title!,
           style: TextStyle(
             fontSize: 18.rsp,
             color: Colors.white,
@@ -524,7 +524,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
           _amount = _models?.amount?.toStringAsFixed(2);
           _all = _models?.all?.toStringAsFixed(2);
           //对隐藏列表全部置为隐藏
-          for (int i = 0; i < _models?.detail?.length; i++) {
+          for (int i = 0; i < (_models?.detail?.length??0); i++) {
             _gone.add(true);
           }
           for (int i = 0; i < _gone.length; i++) {
@@ -667,10 +667,10 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
 
   _buildTableList() {
     return new ListView.builder(
-      itemCount: _models.detail.length,
+      itemCount: _models!.detail!.length,
       itemBuilder: (context, i) {
-        UserIncomeModel userIncomeModel = _models;
-        return _buildTableBody(userIncomeModel.detail[i], i);
+        UserIncomeModel userIncomeModel = _models!;
+        return _buildTableBody(userIncomeModel.detail![i], i);
       },
     );
   }
@@ -876,10 +876,10 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
                 offstage: _gone[num],
                 child: Column(
                   children: [
-                    ..._models.detail[num].detail.map(
+                    ..._models!.detail![num].detail!.map(
                       (e) {
                         return _buildHideBody(
-                            e.id, e.date, e.sale, e.count, e.coin);
+                            e.id, e.date, e.sale!, e.count, e.coin!);
                       },
                     ),
                   ],
@@ -893,10 +893,10 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
   }
 
   _buildHideBody(
-    num id,
-    num date,
+    num? id,
+    num? date,
     num sale,
-    num count,
+    num? count,
     num coin,
   ) {
     String _time = date.toString() + '000'; //dart语言时间戳要求13位
@@ -907,7 +907,7 @@ class _UserBenefitCurrencyPageState extends State<UserBenefitCurrencyPage> {
             if(id!=null&&id!=0){
 
               AppRouter.push(context, RouteName.SHOP_ORDER_DETAIL,
-                  arguments: OrderDetailPage.setArguments(id,true));
+                  arguments: OrderDetailPage.setArguments(id as int?,true));
             }
           },
           child: Row(

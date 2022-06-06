@@ -7,7 +7,7 @@ part 'alipay_order_model.g.dart';
 @JsonSerializable()
 class AlipayOrderModel extends BaseModel{
 
-  Data data;
+  Data? data;
 
   AlipayOrderModel(code,this.data,msg,):super(code,msg);
 
@@ -21,7 +21,7 @@ class AlipayOrderModel extends BaseModel{
 @JsonSerializable()
 class Data extends Object {
 
-  String orderString;
+  String? orderString;
 
   Data(this.orderString,);
 

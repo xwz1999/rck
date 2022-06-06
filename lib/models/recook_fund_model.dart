@@ -28,7 +28,7 @@ part 'recook_fund_model.g.dart';
 @JsonSerializable()
 class RecookFundModel extends BaseModel {
 
-  Data data;
+  Data? data;
 
   RecookFundModel(code,msg,this.data,) : super(code,msg);
 
@@ -42,15 +42,15 @@ class RecookFundModel extends BaseModel {
 @JsonSerializable()
 class Data extends Object {
 
-  int id;
+  int? id;
 
-  double amount;
+  double? amount;
 
-  double unrecordedAmount;
+  double? unrecordedAmount;
 
-  bool havePassword;
+  bool? havePassword;
 
-  num balance;
+  num? balance;
 
   Data(this.id,this.amount,this.unrecordedAmount, this.havePassword,this.balance);
 

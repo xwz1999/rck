@@ -16,7 +16,7 @@ part 'category_model.g.dart';
 @JsonSerializable()
 class CategoryModel extends BaseModel {
 
-  List<FirstCategory> data;
+  List<FirstCategory>? data;
 
   CategoryModel(code,this.data,msg,): super(code, msg);
 
@@ -30,15 +30,15 @@ class CategoryModel extends BaseModel {
 @JsonSerializable()
 class FirstCategory extends Object {
 
-  int id;
+  int? id;
 
-  String name;
+  String? name;
 
-  int parentId;
+  int? parentId;
 
-  String logoUrl;
+  String? logoUrl;
 
-  List<SecondCategory> sub;
+  List<SecondCategory>? sub;
 
   FirstCategory(this.id,this.name,this.parentId,this.logoUrl,this.sub,);
 
@@ -52,13 +52,13 @@ class FirstCategory extends Object {
 @JsonSerializable()
 class SecondCategory extends Object {
 
-  int id;
+  int? id;
 
-  String name;
+  String? name;
 
-  int parentId;
+  int? parentId;
 
-  String logoUrl;
+  String? logoUrl;
 
   SecondCategory(this.id,this.name,this.parentId,this.logoUrl,);
 

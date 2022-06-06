@@ -13,7 +13,7 @@ import 'package:recook/pages/user/address/mvp/address_mvp_contact.dart';
 
 class AddressModelImpl extends AddressModelI{
   @override
-  Future<ResultData> fetchAddressList(int userId) async {
+  Future<ResultData> fetchAddressList(int? userId) async {
     ResultData res = await HttpManager.post(UserApi.address_list, {
       "userId":userId
     });
@@ -21,7 +21,7 @@ class AddressModelImpl extends AddressModelI{
   }
 
   @override
-  Future<ResultData> deleteAddress(int userId, int addrId) async {
+  Future<ResultData> deleteAddress(int? userId, int? addrId) async {
     ResultData res = await HttpManager.post(UserApi.address_delete, {
       "userId":userId,
       "addrId":addrId
@@ -29,7 +29,7 @@ class AddressModelImpl extends AddressModelI{
     return res;  }
 
   @override
-  Future<ResultData> setDefaultAddress(int userId, int addrId) async {
+  Future<ResultData> setDefaultAddress(int? userId, int? addrId) async {
 
     ResultData res = await HttpManager.post(UserApi.address_set_default, {
       "userId":userId,
@@ -45,7 +45,7 @@ class AddressModelImpl extends AddressModelI{
   }
 
   @override
-  Future<ResultData> addNewAddress(int userId, String name, String province, String city, String district, String address, String mobile, int isDefault) async {
+  Future<ResultData> addNewAddress(int? userId, String? name, String? province, String? city, String? district, String? address, String? mobile, int? isDefault) async {
     Map params = {
       "userId" : userId,
       "name":name,
@@ -61,7 +61,7 @@ class AddressModelImpl extends AddressModelI{
   }
 
   @override
-  updateAddress(int addrId, int userId, String name, String province, String city, String district, String address, String mobile, int isDefault) async {
+  updateAddress(int? addrId, int? userId, String? name, String? province, String? city, String? district, String? address, String? mobile, int? isDefault) async {
     Map params = {
       "addrId":addrId,
       "userId" : userId,

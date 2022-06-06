@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 
 class PieProgressPainter extends CustomPainter {
-  final List<PieDataStructure> values;
+  final List<PieDataStructure>? values;
 
   ///起始位置
   static const double startAngle = -pi / 2;
@@ -12,15 +12,15 @@ class PieProgressPainter extends CustomPainter {
   PieProgressPainter({this.values});
   @override
   void paint(Canvas canvas, Size size) {
-    values.forEach((element) {
+    values!.forEach((element) {
       double _startAngle = startAngle;
       double angleWidth = 0;
-      angleWidth = element.value * circleAngle;
-      for (int i = 0; i < values.indexOf(element); i++) {
-        _startAngle += values[i].value * circleAngle;
+      angleWidth = element.value! * circleAngle;
+      for (int i = 0; i < values!.indexOf(element); i++) {
+        _startAngle += values![i].value! * circleAngle;
       }
       Paint paint = Paint()
-        ..color = element.color
+        ..color = element.color!
         ..strokeWidth = rSize(15)
         ..style = PaintingStyle.stroke;
       canvas.drawArc(
@@ -50,9 +50,9 @@ class PieDataStructure {
   ///数值
   ///
   ///example 0.5 same as 50%
-  final double value;
+  final double? value;
 
   ///颜色
-  final Color color;
+  final Color? color;
   PieDataStructure({this.value, this.color});
 }

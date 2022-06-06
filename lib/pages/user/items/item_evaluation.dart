@@ -11,16 +11,13 @@ import 'dart:typed_data';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart' as flutterImagePicker;
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/media_model.dart';
 import 'package:recook/pages/user/order/publish_evaluation_page.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
-import 'package:recook/widgets/image_picker.dart';
 import 'package:recook/widgets/image_selected_view.dart';
 import 'package:recook/widgets/input_view.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
@@ -28,9 +25,9 @@ import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 // import 'package:photo/photo.dart';
 
 class EvaluationItem extends StatefulWidget {
-  final EvaluationModel evaluationModel;
+  final EvaluationModel? evaluationModel;
   final int maxSelectImage;
-  const EvaluationItem({Key key, this.evaluationModel, this.maxSelectImage = 9})
+  const EvaluationItem({Key? key, this.evaluationModel, this.maxSelectImage = 9})
       : super(key: key);
 
   @override
@@ -54,15 +51,15 @@ class _EvaluationItemState extends BaseStoreState<EvaluationItem> {
         children: <Widget>[
           _topTitle(),
           _input(),
-          ImageSelectedView<Uint8List>(
+          ImageSelectedView<Uint8List?>(
             maxImages: widget.maxSelectImage,
             padding: EdgeInsets.all(rSize(10)),
-            images: widget.evaluationModel.imageFiles.map((MediaModel media) {
+            images: widget.evaluationModel!.imageFiles!.map((MediaModel media) {
               return media.thumbData;
             }).toList(),
             deleteListener: (index) {
-              if (widget.evaluationModel.imageFiles.length > index) {
-                widget.evaluationModel.imageFiles.removeAt(index);
+              if (widget.evaluationModel!.imageFiles!.length > index) {
+                widget.evaluationModel!.imageFiles!.removeAt(index);
                 setState(() {});
               }
             },
@@ -72,14 +69,14 @@ class _EvaluationItemState extends BaseStoreState<EvaluationItem> {
                 ActionSheet.dismiss(context);
                 if (index == 0) {
 
-                  List<AssetEntity> entitys = [];
+                  List<AssetEntity?> entitys = [];
                   var values = await CameraPicker.pickFromCamera(context);
                   entitys.add(values);
                   for (var element in entitys) {
-                    File file = await element.file;
-                    Uint8List thumbData = await element.thumbData;
-                    if (widget.evaluationModel.imageFiles.length < 9) {
-                      widget.evaluationModel.imageFiles.add(MediaModel(
+                    File? file = await element!.file;
+                    Uint8List? thumbData = await element.thumbData;
+                    if (widget.evaluationModel!.imageFiles!.length < 9) {
+                      widget.evaluationModel!.imageFiles!.add(MediaModel(
                         width: element.width,
                         height: element.height,
                         type: element.typeInt == 1 ? MediaType.image : MediaType.video,
@@ -87,7 +84,7 @@ class _EvaluationItemState extends BaseStoreState<EvaluationItem> {
                         thumbData: thumbData,
                       ));
                     } else {
-                      widget.evaluationModel.imageFiles.add(MediaModel(
+                      widget.evaluationModel!.imageFiles!.add(MediaModel(
                         width: element.width,
                         height: element.height,
                         type: element.typeInt == 1 ? MediaType.image : MediaType.video,
@@ -96,21 +93,21 @@ class _EvaluationItemState extends BaseStoreState<EvaluationItem> {
                       ));
                     }
                   }
-                  while (widget.evaluationModel.imageFiles.length > 9) {
-                    widget.evaluationModel.imageFiles.removeAt(0);
+                  while (widget.evaluationModel!.imageFiles!.length > 9) {
+                    widget.evaluationModel!.imageFiles!.removeAt(0);
                   }
                   setState(() {});
                 }
                 if (index == 1) {
                   var values = await AssetPicker.pickAssets(context, maxAssets: widget.maxSelectImage -
-                      widget.evaluationModel.imageFiles.length);
+                      widget.evaluationModel!.imageFiles!.length);
                   List<AssetEntity> entitys = [];
                   if (values == null) return;
                   entitys.addAll(values);
                   for (var element in entitys) {
-                    File file = await element.file;
-                    Uint8List thumbData = await element.thumbData;
-                    widget.evaluationModel.imageFiles.add(MediaModel(
+                    File? file = await element.file;
+                    Uint8List? thumbData = await element.thumbData;
+                    widget.evaluationModel!.imageFiles!.add(MediaModel(
                       width: element.width,
                       height: element.height,
                       type: element.typeInt == 1 ? MediaType.image : MediaType.video,
@@ -118,8 +115,8 @@ class _EvaluationItemState extends BaseStoreState<EvaluationItem> {
                       thumbData: thumbData,
                     ));
                   }
-                  while (widget.evaluationModel.imageFiles.length >  widget.maxSelectImage) {
-                    widget.evaluationModel.imageFiles.removeAt(0);
+                  while (widget.evaluationModel!.imageFiles!.length >  widget.maxSelectImage) {
+                    widget.evaluationModel!.imageFiles!.removeAt(0);
                   }
                   setState(() {});
                 }
@@ -149,7 +146,7 @@ class _EvaluationItemState extends BaseStoreState<EvaluationItem> {
       height: rSize(56),
       decoration: BoxDecoration(
           border: Border(
-        bottom: BorderSide(color: Colors.grey[400], width: 0.4 * 2.w),
+        bottom: BorderSide(color: Colors.grey[400]!, width: 0.4 * 2.w),
       )),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -157,14 +154,14 @@ class _EvaluationItemState extends BaseStoreState<EvaluationItem> {
           CustomCacheImage(
             width: rSize(35),
             height: rSize(35),
-            imageUrl: Api.getImgUrl(widget.evaluationModel.goods.mainPhotoUrl),
+            imageUrl: Api.getImgUrl(widget.evaluationModel!.goods!.mainPhotoUrl),
           ),
           SizedBox(
             width: rSize(8),
           ),
           Expanded(
             child: Text(
-              widget.evaluationModel.goods.goodsName,
+              widget.evaluationModel!.goods!.goodsName!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: AppTextStyle.generate(14 * 2.sp),
@@ -191,7 +188,7 @@ class _EvaluationItemState extends BaseStoreState<EvaluationItem> {
                   AppTextStyle.generate(14 * 2.sp, color: Colors.grey[300]),
               hint: "请输入评价",
               onValueChanged: (text) {
-                widget.evaluationModel.content = text;
+                widget.evaluationModel!.content = text;
               },
             ),
           ),

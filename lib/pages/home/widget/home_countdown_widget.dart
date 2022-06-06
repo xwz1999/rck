@@ -1,22 +1,21 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/promotion_list_model.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
 
 class HomeCountdownController{
-  Function(int) indexChange;
+  late Function(int) indexChange;
 }
 
 class HomeCountdownWidget extends StatefulWidget {
-  final HomeCountdownController controller;
+  final HomeCountdownController? controller;
   final double height;
   final int index;
-  final List<Promotion> promotionList;
-  HomeCountdownWidget({Key key, this.height=40, this.index=0, this.promotionList, this.controller}) : super(key: key);
+  final List<Promotion>? promotionList;
+  HomeCountdownWidget({Key? key, this.height=40, this.index=0, this.promotionList, this.controller}) : super(key: key);
 
   @override
   _HomeCountdownWidgetState createState() => _HomeCountdownWidgetState();
@@ -26,13 +25,13 @@ class _HomeCountdownWidgetState extends State<HomeCountdownWidget> {
   Color _redColor = Color(0xffc70404);
   int _index = 0;
   //活动时间定时器
-  Timer _promotionTimer;
+  Timer? _promotionTimer;
   int _promotionCountdownTime = 0;
   @override
   void initState() { 
     super.initState();
     _index = widget.index;
-    widget.controller.indexChange = (int index){
+    widget.controller!.indexChange = (int index){
       // if (mounted) {
       //   _index = index;
       //   setState(() {});
@@ -43,7 +42,7 @@ class _HomeCountdownWidgetState extends State<HomeCountdownWidget> {
   @override
   void dispose() {
     if (_promotionTimer != null) {
-      _promotionTimer.cancel();
+      _promotionTimer!.cancel();
       _promotionTimer = null;
     }
     super.dispose();
@@ -57,7 +56,7 @@ class _HomeCountdownWidgetState extends State<HomeCountdownWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.asset(UserManager.instance.isWholesale?"assets/home_list_times_2.png": "assets/home_list_times_1.png", width: 77*1.5, height: 20*1.5),
+          Image.asset(UserManager.instance!.isWholesale?"assets/home_list_times_2.png": "assets/home_list_times_1.png", width: 77*1.5, height: 20*1.5),
           // Spacer(),
           // widget.promotionList!=null&&widget.promotionList.length>0?_rightWidget():Container(),
         ],
@@ -67,7 +66,7 @@ class _HomeCountdownWidgetState extends State<HomeCountdownWidget> {
 
   _rightWidget(){
     int index = _index;
-    Promotion item = widget.promotionList[index];
+    Promotion item = widget.promotionList![index];
     
     PromotionStatus processStatus = PromotionTimeTool.getPromotionStatusWithTabbar(item.startTime, item.getTrueEndTime());
     String statusString = "";
@@ -75,20 +74,20 @@ class _HomeCountdownWidgetState extends State<HomeCountdownWidget> {
       case PromotionStatus.end:
       case PromotionStatus.start:
         return Text('正在抢购中', style: TextStyle(color: _redColor, fontWeight: FontWeight.w600, fontSize: 13),);
-        break;
+
       case PromotionStatus.ready:
       case PromotionStatus.tomorrow:
         DateTime nowTime = DateTime.now();
-        DateTime startTime = DateTime.parse(item.startTime);
+        DateTime startTime = DateTime.parse(item.startTime!);
         Duration difference = startTime.difference(nowTime);
         _promotionCountdownTime = difference.inSeconds + 1;
         // statusString = "预热中";
         return _countdownTimeWidget();
         // return Text(statusString, style: TextStyle(color: _redColor, fontWeight: FontWeight.w600, fontSize: 13),);
-        break;
+
       default:
         return Container();
-        break;
+
     }
   }
 
@@ -138,7 +137,7 @@ class _HomeCountdownWidgetState extends State<HomeCountdownWidget> {
   }
 
   _startPromotionTimer(){
-    if (_promotionTimer != null && _promotionTimer.isActive) {
+    if (_promotionTimer != null && _promotionTimer!.isActive) {
       return;
     }
     _promotionTimer = Timer.periodic(Duration(seconds: 1), (timer) {

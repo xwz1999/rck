@@ -1,7 +1,6 @@
 
 import 'dart:async';
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -9,15 +8,15 @@ import 'package:recook/utils/date/date_models.dart';
 
 class DateUtilss {
 
-  static bool isCapture;
-  static StreamSubscription<void> subscription;
+  static bool? isCapture;
+  static StreamSubscription<void>? subscription;
 
   static initForbid(BuildContext context) async {
     isCapture = await DateUtilss.iosIsCaptured;
     _deal(context);
     if (Platform.isIOS) {
-      subscription = DateUtilss.iosShotChange.listen((event) {
-        isCapture = !isCapture;
+      subscription = DateUtilss.iosShotChange!.listen((event) {
+        isCapture = !isCapture!;
         _deal(context);
       });
     }
@@ -44,19 +43,22 @@ class DateUtilss {
 
 
   // 录屏相关
-  static Future<bool> get iosIsCaptured async {
+  static Future<bool?> get iosIsCaptured async {
     if (Platform.isIOS) {
-      final bool isCaptured = await _methodChannel.invokeMethod('isCaptured') as bool;
+      final bool? isCaptured = await _methodChannel.invokeMethod('isCaptured') as bool?;
       return isCaptured;
     }
+    return null;
   }
 
-  static Stream<String> get iosShotChange {
+  static Stream<String>? get iosShotChange {
     if (Platform.isIOS) {
       return _eventChannel.receiveBroadcastStream().map((dynamic event) {
         return event;
       },
       );
+    }else{
+      return null;
     }
   }
 
@@ -73,12 +75,12 @@ class DateUtilss {
   }
 
   //声音相关
-  static Future<double> get volume async => (await _methodChannel.invokeMethod('volume')) as double;
+  static Future<double?> get volume async => (await _methodChannel.invokeMethod('volume')) as double?;
   static Future setVolume(double volume) => _methodChannel.invokeMethod('setVolume', {"volume" : volume});
 
 
-  static Rect findGlobalRect(GlobalKey key) {
-    RenderBox renderObject = key.currentContext?.findRenderObject() as RenderBox;
+  static Rect? findGlobalRect(GlobalKey key) {
+    RenderBox? renderObject = key.currentContext?.findRenderObject() as RenderBox?;
     if (renderObject == null) {
       return null;
     }
@@ -94,8 +96,8 @@ class DateUtilss {
     return bounds;
   }
 
-  static Offset globalOffsetToLocal(GlobalKey key, Offset offsetGlobal) {
-    RenderBox renderObject = key.currentContext?.findRenderObject() as RenderBox;
+  static Offset? globalOffsetToLocal(GlobalKey key, Offset offsetGlobal) {
+    RenderBox? renderObject = key.currentContext?.findRenderObject() as RenderBox?;
     if (renderObject == null) {
       return null;
     }
@@ -103,10 +105,10 @@ class DateUtilss {
   }
   // 防抖函数: eg:输入框连续输入，用户停止操作300ms才执行访问接口
   static const deFaultDurationTime = 300;
-  static Timer timer;
+  static Timer? timer;
 
   static antiShake(Function doSomething, {durationTime = deFaultDurationTime}) {
-    timer.cancel();
+    timer!.cancel();
     timer = new Timer(Duration(milliseconds: durationTime), () {
       doSomething.call();
       timer = null;
@@ -201,8 +203,8 @@ class DateUtilss {
         Month(<Week>[Week(firstDayOfWeek, lastDayOfWeek)])
       ];
     } else {
-      List<Month> months = List<Month>();
-      List<Week> weeks = List<Week>();
+      List<Month> months =[];
+      List<Week> weeks = [];
 
       while (lastDayOfWeek.isBefore(weekMaxDate)) {
         Week week = Week(firstDayOfWeek, lastDayOfWeek);
@@ -213,7 +215,7 @@ class DateUtilss {
             months.add(Month(weeks));
           }
 
-          weeks = List<Week>();
+          weeks = [];
 
           firstDayOfWeek = firstDayOfWeek.toFirstDayOfNextMonth();
           lastDayOfWeek = _lastDayOfWeek(firstDayOfWeek);

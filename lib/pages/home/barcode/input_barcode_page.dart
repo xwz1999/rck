@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/models/scan_result_model.dart';
@@ -185,12 +184,12 @@ class _InputBarcodePageState extends BaseStoreState<InputBarcodePage> {
       "skuCode": code,
     });
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
     // String goodsId = resultData.data['data']['goodsId'].toString();
@@ -201,7 +200,7 @@ class _InputBarcodePageState extends BaseStoreState<InputBarcodePage> {
     ScanResultModel scanResultModel =
         ScanResultModel.fromMap(resultData.data['data']);
     if (scanResultModel == null) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
     Get.off(

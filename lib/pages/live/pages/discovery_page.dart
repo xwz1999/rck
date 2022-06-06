@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/pages/business/focus/child_focus_page.dart';
 
 class DiscoveryPage extends StatefulWidget {
-  DiscoveryPage({Key key}) : super(key: key);
+  DiscoveryPage({Key? key}) : super(key: key);
 
   @override
   _DiscoveryPageState createState() => _DiscoveryPageState();
@@ -12,7 +11,7 @@ class DiscoveryPage extends StatefulWidget {
 
 class _DiscoveryPageState extends State<DiscoveryPage>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  TabController? _tabController;
   @override
   void initState() {
     super.initState();

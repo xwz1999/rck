@@ -40,7 +40,6 @@
 
  */
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -54,7 +53,7 @@ class RefreshWidget extends StatefulWidget {
       this.onRefresh,
       this.onLoadMore,
       this.isInNest = false,
-      GSRefreshController controller,
+      GSRefreshController? controller,
       this.enableOverScroll = true,
       this.color = const Color(0xff555555),
       this.refreshingText: "正在努力获取数据...",
@@ -68,19 +67,19 @@ class RefreshWidget extends StatefulWidget {
       this.noPartner: "这是我最后的底线",
       this.headerTriggerDistance,
       this.header,
-      GridView child,
+      GridView? child,
       this.noData})
       : this.controller = controller ?? GSRefreshController();
 
-  final Widget body;
+  final Widget? body;
   final Color color;
-  final OnRefresh onRefresh;
-  final OnLoadMore onLoadMore;
+  final OnRefresh? onRefresh;
+  final OnLoadMore? onLoadMore;
   final bool isInNest;
   final bool enableOverScroll;
   final GSRefreshController controller;
 
-  final double headerTriggerDistance;
+  final double? headerTriggerDistance;
   final String refreshingText;
   final String completeText;
   final String failedText;
@@ -91,9 +90,9 @@ class RefreshWidget extends StatefulWidget {
   final String loadingText;
   final String noDataText;
   final String noPartner;
-  final Widget header;
+  final Widget? header;
   //不为空的时候 nodataText无效
-  final String noData;
+  final String? noData;
 
   @override
   State<StatefulWidget> createState() {
@@ -185,10 +184,10 @@ class _RefreshWidgetState extends State<RefreshWidget> {
                 noDataText: widget.noDataText,
                 canLoadingText: '',
               ),
-        controller: widget.controller._controller,
+        controller: widget.controller._controller!,
         onRefresh: () {
           widget.controller.resetNoData();
-          widget.onRefresh();
+          widget.onRefresh!();
         },
         onLoading: widget.onLoadMore,
         child: widget.body,
@@ -199,7 +198,7 @@ class _RefreshWidgetState extends State<RefreshWidget> {
 }
 
 class GSRefreshController {
-  RefreshController _controller;
+  RefreshController? _controller;
 
   GSRefreshController({
     bool initialRefresh = false,
@@ -212,59 +211,59 @@ class GSRefreshController {
   }
 
   void requestRefresh() {
-    _controller.requestRefresh();
+    _controller!.requestRefresh();
   }
 
   void requestLoadMore() {
-    _controller.requestLoading();
+    _controller!.requestLoading();
   }
 
   void refreshCompleted({bool resetFooterState = false}) {
-    _controller.refreshCompleted(resetFooterState: resetFooterState);
+    _controller!.refreshCompleted(resetFooterState: resetFooterState);
   }
 
   /// request failed,the header display failed state
   void refreshFailed() {
-    _controller.refreshFailed();
+    _controller!.refreshFailed();
   }
 
   /// not show success or failed, it will set header state to idle and spring back at once
   void refreshToIdle() {
-    _controller.refreshToIdle();
+    _controller!.refreshToIdle();
   }
 
   /// after data returned,set the footer state to idle
   void loadComplete() {
-    _controller.loadComplete();
+    _controller!.loadComplete();
   }
 
   /// If catchError happen,you may call loadFailed indicate fetch data from network failed
   void loadFailed() {
-    _controller.loadFailed();
+    _controller!.loadFailed();
   }
 
   /// load more success without error,but no data returned
   void loadNoData() {
-    _controller.loadNoData();
+    _controller!.loadNoData();
   }
 
   /// reset footer noData state  to idle
   void resetNoData() {
-    _controller.resetNoData();
+    _controller!.resetNoData();
   }
 
   bool isRefresh() {
-    return _controller.isRefresh;
+    return _controller!.isRefresh;
   }
 
   bool isLoading() {
-    return _controller.isLoading;
+    return _controller!.isLoading;
   }
 
   bool get isNoData =>
       (_controller?.footerStatus ?? LoadStatus.canLoading) == LoadStatus.noMore;
 
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
   }
 }

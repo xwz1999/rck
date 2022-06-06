@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
@@ -14,7 +12,7 @@ import 'package:recook/widgets/refresh_widget.dart';
 
 class WholesaleTablePage extends StatefulWidget {
   WholesaleTablePage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -25,7 +23,7 @@ class _WholesaleTablePageState extends State<WholesaleTablePage> {
   GSRefreshController _refreshController =
   GSRefreshController(initialRefresh: true);
 
-  PiFaTableModel models;
+  PiFaTableModel? models;
 
   bool _onLoad = true;
 
@@ -159,7 +157,7 @@ class _WholesaleTablePageState extends State<WholesaleTablePage> {
                     ),
                   ),
                   Text(
-                      _onLoad ?'0':TextUtils.getCount1(models.total),
+                      _onLoad ?'0':TextUtils.getCount1(models!.total!)!,
                     style:
                         TextStyle(fontSize: 32.rsp, color: Color(0xFF8D1D22)),
                   ),
@@ -187,10 +185,10 @@ class _WholesaleTablePageState extends State<WholesaleTablePage> {
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 itemBuilder: (context, i) {
-                  if(models.data.isEmpty){
+                  if(models!.data!.isEmpty){
                     return SizedBox();
                   }else{
-                    PiFaData model = models.data[i];
+                    PiFaData model = models!.data![i];
                     return _buildTableBody(model);
                   }
 
@@ -203,7 +201,7 @@ class _WholesaleTablePageState extends State<WholesaleTablePage> {
                   indent: 20.rw,
                   endIndent: 20.rw,
                 ),
-                itemCount: models.data.length,
+                itemCount: models!.data!.length,
               ),
 
             ],
@@ -266,7 +264,7 @@ class _WholesaleTablePageState extends State<WholesaleTablePage> {
   _buildTableBody(PiFaData model) {
     return GestureDetector(
       onTap: (){
-        Get.to(WholesaleTableMonthPage(year:int.parse(model.name)));
+        Get.to(WholesaleTableMonthPage(year:int.parse(model.name!)));
       },
       child: Container(
         height: 40.rw,
@@ -279,7 +277,7 @@ class _WholesaleTablePageState extends State<WholesaleTablePage> {
                   alignment: Alignment.center,
 
                   child: Text(
-                    model.name,
+                    model.name!,
                     style: TextStyle(
                       fontSize: 14.rsp,
                       color: Color(0xFF333333),
@@ -308,7 +306,7 @@ class _WholesaleTablePageState extends State<WholesaleTablePage> {
                   Container(
                       alignment: Alignment.center,
                       child: Text(
-                        model.amount.toStringAsFixed(2),
+                        model.amount!.toStringAsFixed(2),
                         style: TextStyle(
                           fontSize: 14.rsp,
                           color: Color(0xFF333333),

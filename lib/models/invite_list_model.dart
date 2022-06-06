@@ -1,7 +1,7 @@
 class InviteListModel {
-  String code;
-  String msg;
-  List<InviteModel> data;
+  String? code;
+  String? msg;
+  List<InviteModel>? data;
 
   InviteListModel({this.code, this.msg, this.data});
 
@@ -11,7 +11,7 @@ class InviteListModel {
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
-        data.add(new InviteModel.fromJson(v));
+        data!.add(new InviteModel.fromJson(v));
       });
     }
   }
@@ -21,25 +21,25 @@ class InviteListModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class InviteModel {
-  num userId;
-  String nickname;
-  String headImgUrl;
-  num role;
-  num count;
-  String createdAt;
-  String remarkName;
-  String phoneNum;
-  String wechatNo;
-  num roleId;
-  num userLevel;
-  num roleLevel;
+  num? userId;
+  String? nickname;
+  String? headImgUrl;
+  num? role;
+  num? count;
+  String? createdAt;
+  String? remarkName;
+  String? phoneNum;
+  String? wechatNo;
+  num? roleId;
+  num? userLevel;
+  num? roleLevel;
 
   InviteModel(
       {this.userId,

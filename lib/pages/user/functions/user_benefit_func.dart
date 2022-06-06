@@ -27,15 +27,16 @@ enum BenefitDateType {
 
 class UserBenefitFunc {
   ///合伙人批发收益
-  static Future<PifaBenefitModel> getPifaBenefit() async {
+  static Future<PifaBenefitModel?> getPifaBenefit() async {
     ResultData result = await HttpManager.post(
-        APIV2.userAPI.getPifaBenefit, {'user_id': UserManager.instance.user.info.id,});
+        APIV2.userAPI.getPifaBenefit, {'user_id': UserManager.instance!.user.info!.id,});
 
     if (result.data != null) {
       if (result.data['data'] != null) {
         return PifaBenefitModel.fromJson(result.data['data']);
       }
     }
+    return null;
   }
 
   static Future<List<ProfitCardModel>> getProfitCard(String date,) async {
@@ -59,9 +60,9 @@ class UserBenefitFunc {
 
 
   ///合伙人批发收益
-  static Future<PiFaTableModel> getPiFaTable(int kind,{DateTime start,DateTime end}) async {
+  static Future<PiFaTableModel?> getPiFaTable(int kind,{DateTime? start,DateTime? end}) async {
 
-    Map<String, dynamic> params = {'user_id': UserManager.instance.user.info.id,'kind':kind,};
+    Map<String, dynamic> params = {'user_id': UserManager.instance!.user.info!.id,'kind':kind,};
     if(start!=null){
       params.putIfAbsent(
         'start',
@@ -88,20 +89,21 @@ class UserBenefitFunc {
 
 
   ///合伙人批发收益详情
-  static Future<PifaBenefitModel> getPifaBenefitDetail(int shopId,String date) async {
+  static Future<PifaBenefitModel?> getPifaBenefitDetail(int? shopId,String date) async {
     ResultData result = await HttpManager.post(
-        APIV2.userAPI.getPifaBenefitDetail, {'user_id': UserManager.instance.user.info.id,'shop_id':shopId,'date':date});
+        APIV2.userAPI.getPifaBenefitDetail, {'user_id': UserManager.instance!.user.info!.id,'shop_id':shopId,'date':date});
 
     if (result.data != null) {
       if (result.data['data'] != null) {
         return PifaBenefitModel.fromJson(result.data['data']);
       }
     }
+    return null;
   }
 
   ///合伙人获取其他收益
-  static Future<PifaBenefitModel> getBenefit(int kind,{String date}) async {///5=店铺 6=自购  8=分享
-    Map<String, dynamic> params = {'user_id': UserManager.instance.user.info.id,'kind':kind,};
+  static Future<PifaBenefitModel?> getBenefit(int kind,{String? date}) async {///5=店铺 6=自购  8=分享
+    Map<String, dynamic> params = {'user_id': UserManager.instance!.user.info!.id,'kind':kind,};
     if(date!=null){
       params.putIfAbsent(
         'date',
@@ -116,6 +118,7 @@ class UserBenefitFunc {
         return PifaBenefitModel.fromJson(result.data['data']);
       }
     }
+    return null;
   }
 
 
@@ -126,33 +129,35 @@ class UserBenefitFunc {
 
 
   //已到账收益
-  static Future<UserIncomeModel> receicedIncome(
-      String date_str, int type) async {
+  static Future<UserIncomeModel?> receicedIncome(
+      String dateStr, int type) async {
     ResultData result = await HttpManager.post(
-        APIV2.userAPI.receivedDetail, {'date_str': date_str, 'type': type});
+        APIV2.userAPI.receivedDetail, {'date_str': dateStr, 'type': type});
 
     if (result.data != null) {
       if (result.data['data'] != null) {
         return UserIncomeModel.fromJson(result.data['data']);
       }
     }
+    return null;
   }
 
   //未到账收益
-  static Future<UserIncomeModel> notReceicedIncome(
-      String date_str, int type) async {
+  static Future<UserIncomeModel?> notReceicedIncome(
+      String dateStr, int type) async {
     ResultData result = await HttpManager.post(
-        APIV2.userAPI.notReceivedDetail, {'date_str': date_str, 'type': type});
+        APIV2.userAPI.notReceivedDetail, {'date_str': dateStr, 'type': type});
 
     if (result.data != null) {
       if (result.data['data'] != null) {
         return UserIncomeModel.fromJson(result.data['data']);
       }
     }
+    return null;
   }
 
   //团队未到账补贴
-  static Future<UserIncomeModel> teamNotReceicedIncome(int level) async {
+  static Future<UserIncomeModel?> teamNotReceicedIncome(int level) async {
     ResultData result = await HttpManager.post(
         APIV2.userAPI.groupNotReceivedDetail, {'level': level});
 
@@ -161,10 +166,11 @@ class UserBenefitFunc {
         return UserIncomeModel.fromJson(result.data['data']);
       }
     }
+    return null;
   }
 
   //团队到账补贴
-  static Future<UserIncomeModel> teamReceicedIncome(int year, int level) async {
+  static Future<UserIncomeModel?> teamReceicedIncome(int year, int level) async {
     ResultData result = await HttpManager.post(
         APIV2.userAPI.groupReceivedDetail, {'year': year, 'level': level});
 
@@ -173,10 +179,11 @@ class UserBenefitFunc {
         return UserIncomeModel.fromJson(result.data['data']);
       }
     }
+    return null;
   }
 
   //店铺未到账收益日
-  static Future<UserBenefitDayTeamModel> teamNotReceicedDay(String day) async {
+  static Future<UserBenefitDayTeamModel?> teamNotReceicedDay(String day) async {
     ResultData result =
         await HttpManager.post(APIV2.userAPI.groupNotReceivedDay, {'day': day});
 
@@ -185,10 +192,11 @@ class UserBenefitFunc {
         return UserBenefitDayTeamModel.fromJson(result.data['data']);
       }
     }
+    return null;
   }
 
   //店铺自营到账收益月
-  static Future<UserBenefitMonthTeamModel> selfReceicedMonth(
+  static Future<UserBenefitMonthTeamModel?> selfReceicedMonth(
       String month) async {
     ResultData result = await HttpManager.post(
         APIV2.userAPI.groupSelfReceivedMonth, {'month': month});
@@ -198,10 +206,11 @@ class UserBenefitFunc {
         return UserBenefitMonthTeamModel.fromJson(result.data['data']);
       }
     }
+    return null;
   }
 
   //店铺分销到账收益月
-  static Future<UserBenefitMonthTeamModel> distributionReceicedMonth(
+  static Future<UserBenefitMonthTeamModel?> distributionReceicedMonth(
       String month) async {
     ResultData result = await HttpManager.post(
         APIV2.userAPI.groupDistributionReceivedMonth, {'month': month});
@@ -211,10 +220,11 @@ class UserBenefitFunc {
         return UserBenefitMonthTeamModel.fromJson(result.data['data']);
       }
     }
+    return null;
   }
 
   //店铺代理到账收益月
-  static Future<UserBenefitMonthTeamModel> agentReceicedMonth(
+  static Future<UserBenefitMonthTeamModel?> agentReceicedMonth(
       String month) async {
     ResultData result = await HttpManager.post(
         APIV2.userAPI.groupAgentReceivedMonth, {'month': month});
@@ -224,6 +234,7 @@ class UserBenefitFunc {
         return UserBenefitMonthTeamModel.fromJson(result.data['data']);
       }
     }
+    return null;
   }
 
   static Future<UserBenefitModel> update() async {
@@ -236,7 +247,7 @@ class UserBenefitFunc {
     return UserAccumulateModel.fromJson(result.data);
   }
 
-  static Future<List<UserMonthIncomeModel>> monthIncome({int year}) async {
+  static Future<List<UserMonthIncomeModel>> monthIncome({int? year}) async {
     ResultData result = await HttpManager.post(
       APIV2.userAPI.monthIncome,
       {'year': year},
@@ -284,8 +295,8 @@ class UserBenefitFunc {
   }
 
   static Future<UserBenefitExtraDetailModel> extraDetail({
-    UserBenefitPageType type,
-    DateTime date,
+    UserBenefitPageType? type,
+    DateTime? date,
   }) async {
     String path = '';
     switch (type) {

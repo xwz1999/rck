@@ -23,7 +23,7 @@ Map<String, dynamic> _$AlipayOrderModelToJson(AlipayOrderModel instance) =>
     };
 
 Data _$DataFromJson(Map<String, dynamic> json) {
-  return Data(json['orderString'] as String);
+  return Data(json['orderString'] as String?);
 }
 
 Map<String, dynamic> _$DataToJson(Data instance) =>

@@ -1,21 +1,21 @@
 class VideoListModel {
-  int userId;
-  String nickname;
-  String headImgUrl;
-  String content;
-  String coverUrl;
-  int trendId;
-  int originId;
-  int trendType;
-  int praise;
-  int isPraise;
-  Goods goods;
-  String mediaUrl;
-  int topicId;
-  String topicName;
-  int isFollow;
-  int compliance;
-  int passStatus;
+  int? userId;
+  String? nickname;
+  String? headImgUrl;
+  String? content;
+  String? coverUrl;
+  int? trendId;
+  int? originId;
+  int? trendType;
+  int? praise;
+  int? isPraise;
+  Goods? goods;
+  String? mediaUrl;
+  int? topicId;
+  String? topicName;
+  int? isFollow;
+  int? compliance;
+  int? passStatus;
   VideoListModel({
     this.userId,
     this.nickname,
@@ -69,7 +69,7 @@ class VideoListModel {
     data['praise'] = this.praise;
     data['isPraise'] = this.isPraise;
     if (this.goods != null) {
-      data['goods'] = this.goods.toJson();
+      data['goods'] = this.goods!.toJson();
     }
     data['mediaUrl'] = this.mediaUrl;
     data['topicId'] = this.topicId;
@@ -82,10 +82,10 @@ class VideoListModel {
 }
 
 class Goods {
-  int id;
-  String mainPhotoURL;
-  String name;
-  String price;
+  int? id;
+  String? mainPhotoURL;
+  String? name;
+  String? price;
 
   Goods({this.id, this.mainPhotoURL, this.name, this.price});
 

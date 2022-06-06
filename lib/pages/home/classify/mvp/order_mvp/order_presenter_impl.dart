@@ -29,7 +29,7 @@ class OrderPresenterImpl extends OrderPresenterI {
 
   @override
   changeCoinOnOff(int userId, int orderId) async {
-    ResultData resultData = await getModel().changeCoinOnOff(userId, orderId );
+    ResultData resultData = await getModel()!.changeCoinOnOff(userId, orderId );
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -41,9 +41,9 @@ class OrderPresenterImpl extends OrderPresenterI {
   }
 
   @override
-  Future<HttpResultModel<OrderPreviewModel>> changeAddress(
-      int userId, int orderId, int addressId) async {
-    ResultData resultData = await getModel().changeAddress(userId, orderId, addressId);
+  Future<HttpResultModel<OrderPreviewModel?>> changeAddress(
+      int? userId, int? orderId, int? addressId) async {
+    ResultData resultData = await getModel()!.changeAddress(userId, orderId, addressId);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -55,9 +55,9 @@ class OrderPresenterImpl extends OrderPresenterI {
   }
 
   @override
-  Future<HttpResultModel<BaseModel>> changeBuyerMessage(
-      int userId, int orderId, String message) async {
-    ResultData resultData = await getModel().changeBuyerMessage(userId, orderId, message);
+  Future<HttpResultModel<BaseModel?>> changeBuyerMessage(
+      int? userId, int? orderId, String message) async {
+    ResultData resultData = await getModel()!.changeBuyerMessage(userId, orderId, message);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -69,10 +69,10 @@ class OrderPresenterImpl extends OrderPresenterI {
   }
 
   @override
-  Future<HttpResultModel<OrderPreviewModel>> changeShippingMethod(
-      int userId, int orderId, int shippingMethod, int storeId) async {
+  Future<HttpResultModel<OrderPreviewModel?>> changeShippingMethod(
+      int? userId, int? orderId, int shippingMethod, int? storeId) async {
     ResultData resultData =
-        await getModel().changeShippingMethod(userId, orderId, shippingMethod, storeId);
+        await getModel()!.changeShippingMethod(userId, orderId, shippingMethod, storeId);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -84,8 +84,8 @@ class OrderPresenterImpl extends OrderPresenterI {
   }
 
   @override
-  Future<HttpResultModel<SelfPickupStoreListModel>> getStoreList() async {
-    ResultData resultData = await getModel().getStoreList();
+  Future<HttpResultModel<SelfPickupStoreListModel?>> getStoreList() async {
+    ResultData resultData = await getModel()!.getStoreList();
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -97,8 +97,8 @@ class OrderPresenterImpl extends OrderPresenterI {
   }
 
   @override
-  Future<HttpResultModel<AlipayOrderModel>> createAliPayOrder(int userId, int orderId) async {
-    ResultData resultData = await getModel().createAliPayOrder(userId, orderId);
+  Future<HttpResultModel<AlipayOrderModel?>> createAliPayOrder(int? userId, int? orderId) async {
+    ResultData resultData = await getModel()!.createAliPayOrder(userId, orderId);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -110,8 +110,8 @@ class OrderPresenterImpl extends OrderPresenterI {
   }
 
     @override
-  Future<HttpResultModel<AlipayOrderModel>> createAliPayOrderLifang(int userId, int orderId) async {
-    ResultData resultData = await getModel().createAliPayOrderLifang(userId, orderId);
+  Future<HttpResultModel<AlipayOrderModel?>> createAliPayOrderLifang(int? userId, int? orderId) async {
+    ResultData resultData = await getModel()!.createAliPayOrderLifang(userId, orderId);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -123,8 +123,8 @@ class OrderPresenterImpl extends OrderPresenterI {
   }
 
   @override
-  Future<HttpResultModel<PayInfoModel>> createWeChatOrder(int userId, int orderId) async {
-    ResultData resultData = await getModel().createWeChatOrder(userId, orderId);
+  Future<HttpResultModel<PayInfoModel?>> createWeChatOrder(int? userId, int? orderId) async {
+    ResultData resultData = await getModel()!.createWeChatOrder(userId, orderId);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -137,8 +137,8 @@ class OrderPresenterImpl extends OrderPresenterI {
 
 
     @override
-  Future<HttpResultModel<PayInfoModel>> createWeChatOrderLifang(int userId, int orderId) async {
-    ResultData resultData = await getModel().createWeChatOrderLifang(userId, orderId);
+  Future<HttpResultModel<PayInfoModel?>> createWeChatOrderLifang(int? userId, int? orderId) async {
+    ResultData resultData = await getModel()!.createWeChatOrderLifang(userId, orderId);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -150,8 +150,8 @@ class OrderPresenterImpl extends OrderPresenterI {
   }
 
   @override
-  Future<HttpResultModel<OrderPrepayModel>> submitOrder(int orderPreviewId, int userId) async {
-    ResultData resultData = await getModel().submitOrder(orderPreviewId, userId);
+  Future<HttpResultModel<OrderPrepayModel?>> submitOrder(int? orderPreviewId, int? userId) async {
+    ResultData resultData = await getModel()!.submitOrder(orderPreviewId, userId);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -163,8 +163,8 @@ class OrderPresenterImpl extends OrderPresenterI {
   }
 
   @override
-  Future<HttpResultModel<PayResult>> verifyOrderPayStatus(int orderId) async {
-    ResultData resultData = await getModel().verifyOrderPayStatus(orderId);
+  Future<HttpResultModel<PayResult?>> verifyOrderPayStatus(int? orderId) async {
+    ResultData resultData = await getModel()!.verifyOrderPayStatus(orderId);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -176,8 +176,8 @@ class OrderPresenterImpl extends OrderPresenterI {
   }
 
     @override
-  Future<HttpResultModel<PayResult>> verifyOrderPayStatusLifang(int orderId) async {
-    ResultData resultData = await getModel().verifyOrderPayStatusLifang(orderId);
+  Future<HttpResultModel<PayResult?>> verifyOrderPayStatusLifang(int orderId) async {
+    ResultData resultData = await getModel()!.verifyOrderPayStatusLifang(orderId);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -189,8 +189,8 @@ class OrderPresenterImpl extends OrderPresenterI {
   }
 
   @override
-  Future<HttpResultModel<RecookFundModel>> queryRecookPayFund(int userId) async {
-    ResultData resultData = await getModel().queryRecookPayFund(userId);
+  Future<HttpResultModel<RecookFundModel?>> queryRecookPayFund(int? userId) async {
+    ResultData resultData = await getModel()!.queryRecookPayFund(userId);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -202,8 +202,8 @@ class OrderPresenterImpl extends OrderPresenterI {
   }
 
   @override
-  Future<HttpResultModel<BaseModel>> createRecookPayOrder(int userId, int orderId, String password) async {
-    ResultData resultData = await getModel().createRecookPayOrder(userId, orderId, password);
+  Future<HttpResultModel<BaseModel?>> createRecookPayOrder(int? userId, int? orderId, String password) async {
+    ResultData resultData = await getModel()!.createRecookPayOrder(userId, orderId, password);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -215,8 +215,8 @@ class OrderPresenterImpl extends OrderPresenterI {
   }
 
   @override
-  Future<HttpResultModel<BaseModel>> createRecookPayOrderDeposit(int userId, int orderId, String password) async {
-    ResultData resultData = await getModel().createRecookPayOrderDeposit(userId, orderId, password);
+  Future<HttpResultModel<BaseModel?>> createRecookPayOrderDeposit(int? userId, int? orderId, String password) async {
+    ResultData resultData = await getModel()!.createRecookPayOrderDeposit(userId, orderId, password);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -229,8 +229,8 @@ class OrderPresenterImpl extends OrderPresenterI {
 
 
   @override
-  Future<HttpResultModel<BaseModel>> createZeroPayOrder(int userId, int orderId) async {
-    ResultData resultData = await getModel().createZeroPayOrder(userId, orderId);
+  Future<HttpResultModel<BaseModel?>> createZeroPayOrder(int? userId, int? orderId) async {
+    ResultData resultData = await getModel()!.createZeroPayOrder(userId, orderId);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }

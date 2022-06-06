@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
@@ -18,9 +19,9 @@ import 'package:recook/widgets/recook_back_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class HomeDateDetailPage extends StatefulWidget {
-  final HomeWeatherModel homeWeatherModel;
+  final HomeWeatherModel? homeWeatherModel;
   HomeDateDetailPage({
-    Key key,
+    Key? key,
     this.homeWeatherModel,
   }) : super(key: key);
 
@@ -29,15 +30,15 @@ class HomeDateDetailPage extends StatefulWidget {
 }
 
 class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
-  CalendarController _calendarController;
-  PerpetualCalendarModel _perpetualCalendarModel;
-  HolidayCalendarModel _holidayCalendarModel;
+  late CalendarController _calendarController;
+  PerpetualCalendarModel? _perpetualCalendarModel;
+  HolidayCalendarModel? _holidayCalendarModel;
   Set<DateTime> _dates = Set<DateTime>();
-  DateModel _dateModel;
+  DateModel? _dateModel;
 
   final DateTime dateNow = DateTime.now();
-  int _year = DateTime.now().year;
-  int _month = DateTime.now().month;
+  int? _year = DateTime.now().year;
+  int? _month = DateTime.now().month;
   String _holiday = '';
   String _workday = '';
   @override
@@ -69,7 +70,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
       ..addOnCalendarSelectListener((dateModel) {
         _dateModel = dateModel;
         _getPerpetual(
-            DateUtil.formatDate(dateModel.getDateTime(), format: 'yyyy-MM-dd'));
+            DateUtil.formatDate(dateModel!.getDateTime(), format: 'yyyy-MM-dd'));
         setState(() {});
 
         print(dateModel.lunar);
@@ -245,7 +246,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
                       horizontal: 5.rw,
                     ),
                     child: Opacity(
-                      opacity: dateModel.isCurrentMonth ? 1 : 0.3,
+                      opacity: dateModel.isCurrentMonth! ? 1 : 0.3,
                       child: Container(
                         alignment: Alignment.center,
                         height: 50.rw,
@@ -259,7 +260,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
                             border: dateModel.isCurrentDay
                                 ? Border.all(
                                     color: Color(0xFFDB2D2D), width: 1.rw)
-                                : dateModel.isSelected
+                                : dateModel.isSelected!
                                     ? Border.all(
                                         color: Color(0xFF007BFF), width: 1.rw)
                                     : null),
@@ -368,17 +369,17 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
               40.wb,
               Text(
                 '农历' +
-                    _perpetualCalendarModel.newslist.first.lubarmonth +
-                    _perpetualCalendarModel.newslist.first.lunarday,
+                    _perpetualCalendarModel!.newslist!.first.lubarmonth! +
+                    _perpetualCalendarModel!.newslist!.first.lunarday!,
                 style: TextStyle(color: Color(0xFF181818), fontSize: 16.rsp),
               ),
               Spacer(),
               Text(
-                _perpetualCalendarModel.newslist.first.tiangandizhiyear +
+                _perpetualCalendarModel!.newslist!.first.tiangandizhiyear! +
                     '年 ' +
-                    _perpetualCalendarModel.newslist.first.tiangandizhimonth +
+                    _perpetualCalendarModel!.newslist!.first.tiangandizhimonth! +
                     '月 ' +
-                    _perpetualCalendarModel.newslist.first.tiangandizhiday +
+                    _perpetualCalendarModel!.newslist!.first.tiangandizhiday! +
                     '日',
                 style: TextStyle(color: Color(0xFF181818), fontSize: 16.rsp),
               ),
@@ -390,14 +391,14 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
             children: [
               40.wb,
               Text(
-                _perpetualCalendarModel.newslist.first.festival.isNotEmpty ||
-                        _perpetualCalendarModel
-                            .newslist.first.lunarFestival.isNotEmpty
-                    ? _perpetualCalendarModel.newslist.first.festival.isNotEmpty
-                        ? '"${_perpetualCalendarModel.newslist.first.festival}"'
-                        : _perpetualCalendarModel
-                                .newslist.first.lunarFestival.isNotEmpty
-                            ? '"${_perpetualCalendarModel.newslist.first.lunarFestival}"'
+                _perpetualCalendarModel!.newslist!.first.festival!.isNotEmpty ||
+                        _perpetualCalendarModel!
+                            .newslist!.first.lunarFestival!.isNotEmpty
+                    ? _perpetualCalendarModel!.newslist!.first.festival!.isNotEmpty
+                        ? '"${_perpetualCalendarModel!.newslist!.first.festival}"'
+                        : _perpetualCalendarModel!
+                                .newslist!.first.lunarFestival!.isNotEmpty
+                            ? '"${_perpetualCalendarModel!.newslist!.first.lunarFestival}"'
                             : ''
                     : '',
                 style: TextStyle(color: Color(0xFF181818), fontSize: 16.rsp),
@@ -433,7 +434,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
               ),
               40.wb,
               Container(
-                child: Text(_perpetualCalendarModel.newslist.first.fitness,
+                child: Text(_perpetualCalendarModel!.newslist!.first.fitness!,
                     maxLines: 5,
                     overflow: TextOverflow.ellipsis,
                     style:
@@ -470,7 +471,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
               ),
               40.wb,
               Container(
-                child: Text(_perpetualCalendarModel.newslist.first.taboo,
+                child: Text(_perpetualCalendarModel!.newslist!.first.taboo!,
                     maxLines: 5,
                     overflow: TextOverflow.ellipsis,
                     style:
@@ -487,10 +488,10 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
   _getPerpetual(String time) async {
     String url =
         "http://api.tianapi.com/txapi/lunar/index?key=f2599751017c50b91d6f31261ce6dbc0&date=$time";
-    Response res = await HttpManager.netFetchNormal(url, null, null, null);
+    Response res = (await (HttpManager.netFetchNormal(url, null, null, null) ))!;
     Map map = json.decode(res.data.toString());
 
-    _perpetualCalendarModel = PerpetualCalendarModel.fromJson(map);
+    _perpetualCalendarModel = PerpetualCalendarModel.fromJson(map as Map<String, dynamic>);
     print(_perpetualCalendarModel);
     setState(() {});
     //_homeWeatherModel = HomeWeatherModel.fromJson(map);
@@ -499,20 +500,20 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
   _getholiday(String time) async {
     String url =
         "http://api.tianapi.com/txapi/jiejiari/index?key=f2599751017c50b91d6f31261ce6dbc0&date=$time&type=1";
-    Response res = await HttpManager.netFetchNormal(url, null, null, null);
+    Response res = (await (HttpManager.netFetchNormal(url, null, null, null)))!;
     Map map = json.decode(res.data.toString());
 
-    _holidayCalendarModel = HolidayCalendarModel.fromJson(map);
+    _holidayCalendarModel = HolidayCalendarModel.fromJson(map as Map<String, dynamic>);
     print(_holidayCalendarModel);
-    for (int i = 0; i < _holidayCalendarModel.newslist.length; i++) {
+    for (int i = 0; i < _holidayCalendarModel!.newslist!.length; i++) {
       if (_holiday.isNotEmpty)
-        _holiday += _holidayCalendarModel.newslist[i].vacation + '|';
+        _holiday += _holidayCalendarModel!.newslist![i].vacation! + '|';
       else
-        _holiday += _holidayCalendarModel.newslist[i].vacation;
+        _holiday += _holidayCalendarModel!.newslist![i].vacation!;
       if (_workday.isNotEmpty)
-        _workday += _holidayCalendarModel.newslist[i].remark + '|';
+        _workday += _holidayCalendarModel!.newslist![i].remark! + '|';
       else
-        _workday += _holidayCalendarModel.newslist[i].vacation;
+        _workday += _holidayCalendarModel!.newslist![i].vacation!;
     }
     // _workday =
     //     '2021-01-01|2021-01-02|2021-01-03|2021-02-07|2021-02-20||2021-04-25|2021-05-08||2021-09-18|2021-09-26|2021-10-09|';

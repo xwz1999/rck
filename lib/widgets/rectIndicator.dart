@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 ///轮播图指示器
@@ -13,17 +12,16 @@ class RectIndicator extends StatelessWidget {
   final double radius;
 
   RectIndicator({
-    Key key,
+    Key? key,
     this.width: 50.0,
     this.activeWidth: 50.0,
     this.height: 4,
-    @required this.position,
-    @required  this.count,
+    required this.position,
+    required  this.count,
     this.color: Colors.white,
-    @required  this.radius,
+    required  this.radius,
     this.activeColor: const Color(0xFF3E4750),
-  })  : assert(count != null && position != null),
-        super(key: key);
+  })  : super(key: key);
 
   _indicator(bool isActive) {
     return AnimatedContainer(

@@ -11,13 +11,13 @@ import 'package:flutter/material.dart';
 import 'package:recook/widgets/progress/loading_dialog.dart';
 @Deprecated('use Retoast or Toast instead')
 class GSDialog {
-  static Map<BuildContext, GSDialog> dialogs = Map();
+  static Map<BuildContext?, GSDialog?> dialogs = Map();
 
   bool hasLoading = false;
   bool hasLongTimeLoading = false;
 
-  static GSDialog of(BuildContext context) {
-    GSDialog dialog = dialogs[context];
+  static GSDialog of(BuildContext? context) {
+    GSDialog? dialog = dialogs[context];
     if (dialog != null) {
       return dialog;
     }
@@ -78,7 +78,7 @@ class GSDialog {
         });
   }
 
-  Future<Null> showError(BuildContext context, String text,
+  Future<Null> showError(BuildContext context, String? text,
       {Duration duration = const Duration(milliseconds: 1000),
       bool dismissLoading = false}) {
     print("hasLoading ====== $hasLoading");
@@ -122,8 +122,8 @@ class GSDialog {
   }
 
   static Future<Null> showCustomDialog(
-      {BuildContext context,
-      WidgetBuilder builder,
+      {required BuildContext context,
+      WidgetBuilder? builder,
       Duration duration = const Duration(milliseconds: 1000),
       bool barrierDismissible = true}) async {
     final ThemeData theme = Theme.of(context);
@@ -131,7 +131,7 @@ class GSDialog {
       context: context,
       pageBuilder: (BuildContext buildContext, Animation<double> animation,
           Animation<double> secondaryAnimation) {
-        final Widget pageChild = Builder(builder: builder);
+        final Widget pageChild = Builder(builder: builder!);
         return SafeArea(
           child: Builder(builder: (BuildContext context) {
             return theme != null

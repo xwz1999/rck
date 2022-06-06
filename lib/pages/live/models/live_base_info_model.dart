@@ -1,12 +1,12 @@
 import 'package:recook/pages/live/models/video_list_model.dart';
 
 class LiveBaseInfoModel {
-  int follows;
-  int fans;
-  int praise;
-  int userId;
-  String nickname;
-  String headImgUrl;
+  int? follows;
+  int? fans;
+  int? praise;
+  int? userId;
+  String? nickname;
+  String? headImgUrl;
 
   LiveBaseInfoModel(
       {this.follows,

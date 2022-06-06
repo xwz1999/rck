@@ -1,9 +1,9 @@
 class WholesaleActivityModel {
-  int id;
-  String name;
-  String icon;
-  int orderSort;
-  int status;
+  int? id;
+  String? name;
+  String? icon;
+  int? orderSort;
+  int? status;
 
   WholesaleActivityModel(
       {this.id, this.name, this.icon, this.orderSort, this.status});

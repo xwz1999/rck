@@ -5,8 +5,8 @@ import 'package:recook/pages/home/model/aku_video_list_model.dart';
 
 class HomeFuc {
   //视频列表
-  static Future<AkuVideoListModel> getAkuVideoList(
-      String title, int page) async {
+  static Future<AkuVideoListModel?> getAkuVideoList(
+      String? title, int page) async {
     ResultData result = await HttpManager.post(APIV2.userAPI.getAkuVideoList, {
       'title': title,
       'page': {
@@ -20,10 +20,11 @@ class HomeFuc {
         return AkuVideoListModel.fromJson(result.data['data']);
       }
     }
+    return null;
   }
 
   //视频列表
-  static Future<String> addHits(int id) async {
+  static Future<String?> addHits(int? id) async {
     ResultData result = await HttpManager.post(APIV2.userAPI.addHits, {
       'id': id,
     });
@@ -31,10 +32,11 @@ class HomeFuc {
     if (result.data != null) {
       return result.data['code'];
     }
+    return null;
   }
 
   //推荐分词列表
-  static Future<List<KeyWordModel>> recommendWords(String keywords) async {
+  static Future<List<KeyWordModel>> recommendWords(String? keywords) async {
     ResultData result = await HttpManager.post(GoodsApi.keyWords, {
       'keyword': keywords,
     });
@@ -53,7 +55,7 @@ class HomeFuc {
   }
 }
 class KeyWordModel {
-  String token;
+  String? token;
 
   KeyWordModel({this.token});
 

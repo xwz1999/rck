@@ -1,13 +1,12 @@
+import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -19,9 +18,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'models/wholesale_customer_model.dart';
 
 class WholesaleCustomerPage extends StatefulWidget {
-  final WholesaleCustomerModel model;
+  final WholesaleCustomerModel? model;
   WholesaleCustomerPage({
-    Key key, this.model,
+    Key? key, this.model,
   }) : super(key: key);
 
   @override
@@ -95,11 +94,11 @@ class _WholesaleCustomerPageState extends State<WholesaleCustomerPage>
                     Row(
                       children: [
                         Text('热线电话：',style: TextStyle(color: Color(0xFF333333),fontSize: 16.rw),),
-                        Text(widget.model.mobile,style: TextStyle(color: Color(0xFF111111),fontSize: 16.rw),),
+                        Text(widget.model!.mobile!,style: TextStyle(color: Color(0xFF111111),fontSize: 16.rw),),
                         10.wb,
                         GestureDetector(
                           onTap: (){
-                            launch("tel:${widget.model.mobile}");
+                            launch("tel:${widget.model!.mobile}");
                           },
                           child: Image.asset(R.ASSETS_WHOLESALE_WHOLESALE_CALL_PNG,width: 30.rw,height: 30.rw,)
                         )
@@ -136,11 +135,11 @@ class _WholesaleCustomerPageState extends State<WholesaleCustomerPage>
                   Row(
                     children: [
                       Text('微信号：',style: TextStyle(color: Color(0xFF333333),fontSize: 16.rw),),
-                      Text(widget.model.wechat,style: TextStyle(color: Color(0xFF111111),fontSize: 16.rw,fontWeight: FontWeight.bold),),
+                      Text(widget.model!.wechat!,style: TextStyle(color: Color(0xFF111111),fontSize: 16.rw,fontWeight: FontWeight.bold),),
                       5.wb,
                       GestureDetector(
                         onTap: (){
-                          ClipboardData data = new ClipboardData(text: widget.model.wechat);
+                          ClipboardData data = new ClipboardData(text: widget.model!.wechat);
                           Clipboard.setData(data);
                           ReToast.success(text: '复制成功');
                         },
@@ -158,7 +157,7 @@ class _WholesaleCustomerPageState extends State<WholesaleCustomerPage>
                         width: 100.rw,
                         height: 100.rw,
                         child: FadeInImage.assetNetwork(
-                          image: Api.getImgUrl(widget.model.photo),
+                          image: Api.getImgUrl(widget.model!.photo)!,
                           placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                           fit: BoxFit.cover,
                         ),
@@ -166,8 +165,8 @@ class _WholesaleCustomerPageState extends State<WholesaleCustomerPage>
                       10.wb,
                       GestureDetector(
                           onTap: (){
-                            List<String> urls = [];
-                            urls.add(Api.getImgUrl(widget.model.photo));
+                            List<String?> urls = [];
+                            urls.add(Api.getImgUrl(widget.model!.photo));
                             final cancel = ReToast.loading();
                             ImageUtils.saveNetworkImagesToPhoto(
                                 urls,
@@ -193,7 +192,7 @@ class _WholesaleCustomerPageState extends State<WholesaleCustomerPage>
                                       },
                                       type: NormalTextDialogType.delete,
                                     ),
-                                  );;
+                                  );
                                 }
                             );
                           },
@@ -258,12 +257,12 @@ class _WholesaleCustomerPageState extends State<WholesaleCustomerPage>
     // '保存中...'
     Function cancel = ReToast.loading();
     RenderRepaintBoundary boundary =
-    _globalKey.currentContext.findRenderObject();
+    _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     ui.Image image =
     await boundary.toImage(pixelRatio: ui.window.devicePixelRatio * 1.2);
-    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    ByteData byteData = await (image.toByteData(format: ui.ImageByteFormat.png) as FutureOr<ByteData>);
     Uint8List pngBytes = byteData.buffer.asUint8List();
-    if (pngBytes == null || pngBytes.length == 0) {
+    if (pngBytes.length == 0) {
       cancel();
       ReToast.err(text: '保存失败');
       return;

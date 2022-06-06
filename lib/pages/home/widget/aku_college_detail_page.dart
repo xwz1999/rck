@@ -1,13 +1,10 @@
 import 'dart:async';
 
 import 'package:flustars/flustars.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/pages/home/function/home_fuc.dart';
 import 'package:recook/pages/home/model/aku_video_list_model.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -16,7 +13,7 @@ import 'package:velocity_x/velocity_x.dart';
 class AkuCollegeDetailPage extends StatefulWidget {
   final AkuVideo akuVideo;
 
-  const AkuCollegeDetailPage({Key key, @required this.akuVideo})
+  const AkuCollegeDetailPage({Key? key, required this.akuVideo})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -31,7 +28,7 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
-      String code = await HomeFuc.addHits(widget.akuVideo.id);
+      String? code = await HomeFuc.addHits(widget.akuVideo.id);
       print(code);
     });
 
@@ -66,7 +63,7 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
           children: [
             30.wb,
             Text(
-              widget.akuVideo.title,
+              widget.akuVideo.title!,
               maxLines: 2,
               softWrap: true,
               overflow: TextOverflow.ellipsis,
@@ -83,7 +80,7 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
           children: [
             30.wb,
             Text(
-              widget.akuVideo.subTitle,
+              widget.akuVideo.subTitle!,
               softWrap: true,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -95,7 +92,7 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
             Container(
               padding: EdgeInsets.only(top: 3.rw),
               child: Text(
-                _getDateTime(widget.akuVideo.createDTime),
+                _getDateTime(widget.akuVideo.createDTime!),
                 softWrap: true,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -126,7 +123,7 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
     if (date.isEmpty) {
       return date;
     } else {
-      DateTime dateTime = DateUtil.getDateTime(date);
+      DateTime? dateTime = DateUtil.getDateTime(date);
       return DateUtil.formatDate(dateTime, format: 'yyyy-MM-dd');
     }
   }
@@ -134,7 +131,7 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
 
   _playImagText() {
     return HtmlWidget(
-      widget.akuVideo.textBody,
+      widget.akuVideo.textBody!,
       textStyle: TextStyle(color: Color(0xFF333333)),
     );
   }

@@ -12,7 +12,7 @@ enum UsersMode {
 
 class UserFunc {
   static Future<List<UserCommonModel>> usersList(UsersMode mode,
-      {String keyword}) async {
+      {String? keyword}) async {
     String path = '';
     switch (mode) {
       case UsersMode.MY_GROUP:
@@ -28,19 +28,19 @@ class UserFunc {
     Map<String, dynamic> params = {};
     if (keyword != null) params.putIfAbsent('keyword', () => keyword);
     ResultData result = await HttpManager.post(path, params);
-    if (result?.data['data'] == null) return [];
+    if (result.data['data'] == null) return [];
     return (result.data['data'] as List)
         .map((e) => UserCommonModel.fromJson(e))
         .toList();
   }
 
   //获取金刚区图标
-  static Future<List<KingCoinListModel>> getKingCoinList() async {//new
+  static Future<List<KingCoinListModel>?> getKingCoinList() async {//new
     ResultData result = await HttpManager.post(APIV2.userAPI.getKingCionNew, {
-      'user_id': UserManager.instance.user.info.id != null
-          ? UserManager.instance.user.info.id
+      'user_id': UserManager.instance!.user.info!.id != null
+          ? UserManager.instance!.user.info!.id
           : 0,
-      "is_sale": UserManager.instance.isWholesale,
+      "is_sale": UserManager.instance!.isWholesale,
     });
     if (result.data != null) {
       if (result.data['data'] != null) {
@@ -49,17 +49,19 @@ class UserFunc {
             .toList();
       }
     }
+    return null;
   }
 
   //解绑微信
-  static Future<String> wechatUnboundhandle() async {
+  static Future<String?> wechatUnboundhandle() async {
     ResultData result =
         await HttpManager.post(APIV2.userAPI.wechatUnboundhandle, {
-      'userId': UserManager.instance.user.info.id,
+      'userId': UserManager.instance!.user.info!.id,
     });
     if (result.data != null) {
       return result.data['code'];
     }
+    return null;
   }
 
 
@@ -81,7 +83,7 @@ class UserFunc {
 
 
 
-  static Future<List<KingCoinListModel>> getMessageList() async {//new
+  static Future<List<KingCoinListModel>?> getMessageList() async {//new
     ResultData result = await HttpManager.post(APIV2.userAPI.getMessageList, {
       'page':0,
       'limit':10,
@@ -93,6 +95,7 @@ class UserFunc {
             .toList();
       }
     }
+    return null;
   }
 
 }

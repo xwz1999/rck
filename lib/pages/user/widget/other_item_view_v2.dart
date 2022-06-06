@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
-import 'package:recook/pages/user/invite/my_group_page_v2.dart';
+import 'package:recook/pages/user/address/receiving_address_page.dart';
+import 'package:recook/pages/user/setting_page.dart';
 import 'package:recook/pages/wholesale/func/wholesale_func.dart';
 import 'package:recook/pages/wholesale/models/wholesale_customer_model.dart';
 import 'package:recook/pages/wholesale/wholesale_customer_page.dart';
@@ -11,8 +12,10 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../my_favorites_page.dart';
+
 class OtherItemViewV2 extends StatelessWidget {
-  OtherItemViewV2({Key key}) : super(key: key);
+  OtherItemViewV2({Key? key}) : super(key: key);
 
   Widget _buildItem(Widget icon, String title, VoidCallback onTap) {
     return CustomImageButton(
@@ -50,7 +53,9 @@ class OtherItemViewV2 extends StatelessWidget {
                   height: 30.rw,
                 ),
                 '我的地址',
-                () => AppRouter.push(context, RouteName.RECEIVING_ADDRESS_PAGE),
+                () =>   Get.to(() => ReceivingAddressPage(
+
+                ))  //AppRouter.push(context, RouteName.RECEIVING_ADDRESS_PAGE),
               ),
               // _buildItem(
               //   Image.asset(
@@ -62,14 +67,16 @@ class OtherItemViewV2 extends StatelessWidget {
               //   // () => AppRouter.push(context, RouteName.BUSSINESS_COOPERATION_PAGE),
               //   '我的客户', () => Get.to(() => MyGroupPageV2()),
               // ),
-               !UserManager.instance.isWholesale?   _buildItem(
+               !UserManager.instance!.isWholesale?   _buildItem(
                 Image.asset(
                   R.ASSETS_USER_FUNC_FAVOR_PNG,
                   width: 30.rw,
                   height: 30.rw,
                 ),
                 '我的收藏',
-                () => AppRouter.push(context, RouteName.MY_FAVORITE_PAGE),
+                () =>   Get.to(() => MyFavoritesPage(
+
+                ))    //AppRouter.push(context, RouteName.MY_FAVORITE_PAGE),
               ):SizedBox(),
 
               _buildItem(
@@ -80,9 +87,9 @@ class OtherItemViewV2 extends StatelessWidget {
                 ),
                 '联系客服',
                 () async {
-                  if (UserManager.instance.haveLogin) {
+                  if (UserManager.instance!.haveLogin) {
                     //跳转到客服页面
-                    WholesaleCustomerModel model =
+                    WholesaleCustomerModel? model =
                         await WholesaleFunc.getCustomerInfo();
 
                     Get.to(() => WholesaleCustomerPage(
@@ -121,7 +128,9 @@ class OtherItemViewV2 extends StatelessWidget {
                   height: 30.rw,
                 ),
                 '我的设置',
-                () => AppRouter.push(context, RouteName.SETTING_PAGE),
+                () =>   Get.to(() => SettingPage(
+
+                ))  // AppRouter.push(context, RouteName.SETTING_PAGE),
               ),
             ],
           ).pSymmetric(v: 18.w),

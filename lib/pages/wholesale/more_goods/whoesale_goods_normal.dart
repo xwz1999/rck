@@ -15,22 +15,22 @@ import '../wholeasale_detail_page.dart';
 class WholesaleGoodsItem extends StatelessWidget {
   final bool isShowSales;
 
-  final String goodsName;
-  final String description;
-  final String mainPhotoUrl;
-  final num inventory;
-  final num discountPrice;
-  final num originalPrice;
+  final String? goodsName;
+  final String? description;
+  final String? mainPhotoUrl;
+  final num? inventory;
+  final num? discountPrice;
+  final num? originalPrice;
   // final num percent;
-  final num coupon;
-  final num commission;
-  final num salesVolume;
-  final num id;
-  final BuildContext buildCtx;
+  final num? coupon;
+  final num? commission;
+  final num? salesVolume;
+  final num? id;
+  final BuildContext? buildCtx;
 
 
   const WholesaleGoodsItem({
-    Key key,
+    Key? key,
     this.goodsName,
     this.description,
     this.mainPhotoUrl,
@@ -53,8 +53,8 @@ class WholesaleGoodsItem extends StatelessWidget {
 
 
   WholesaleGoodsItem.normalGoodsItem({
-    Key key,
-    WholesaleGood model, this.buildCtx,
+    Key? key,
+    required WholesaleGood model, this.buildCtx,
     this.isShowSales = true
 
     //this.special_sale,
@@ -75,11 +75,11 @@ class WholesaleGoodsItem extends StatelessWidget {
 
 
   WholesaleGoodsItem.hotList({
-    Key key,
+    Key? key,
     this.buildCtx,
 
     this.isShowSales = false,
-    GoodsHotSellListModel.Data data,
+    required GoodsHotSellListModel.Data data,
 
 
   })  : goodsName = data.goodsName,
@@ -198,7 +198,7 @@ class WholesaleGoodsItem extends StatelessWidget {
   _image() {
     bool sellout = false;
 
-    if (this.inventory > 0) {
+    if (this.inventory! > 0) {
       sellout = false;
     } else {
       sellout = true;
@@ -256,7 +256,7 @@ class WholesaleGoodsItem extends StatelessWidget {
   }
 
   _inventoryView() {
-    bool sellout = this.inventory <= 0;
+    bool sellout = this.inventory! <= 0;
 
     Color priceColor = Color(0xffc70404);
     return Container(
@@ -291,7 +291,7 @@ class WholesaleGoodsItem extends StatelessWidget {
                           ),
                           TextSpan(
                             text:
-                            "${this.discountPrice.toStringAsFixed(2)}",
+                            "${this.discountPrice!.toStringAsFixed(2)}",
                             // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
                             style: TextStyle(
                                 letterSpacing: -1,
@@ -346,7 +346,7 @@ class WholesaleGoodsItem extends StatelessWidget {
       children: [
         Container(
           child: Text(
-            '零售价¥${this.originalPrice.toStringAsFixed(2)}',
+            '零售价¥${this.originalPrice!.toStringAsFixed(2)}',
             style: TextStyle(
                 fontSize: 12 * 2.sp,
                 color: Color(0xFF999999),
@@ -370,7 +370,7 @@ class WholesaleGoodsItem extends StatelessWidget {
   }
 
   _buyEvent() {
-    Get.to(()=>WholesaleDetailPage(goodsId: this.id,));
+    Get.to(()=>WholesaleDetailPage(goodsId: this.id as int?,));
   }
 
 

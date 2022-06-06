@@ -26,10 +26,10 @@ import 'package:recook/widgets/edit_tile.dart';
 import 'package:recook/widgets/toast.dart';
 
 class NewAddressPage extends StatefulWidget {
-  final bool isFirstAdd;
-  final Map arguments;
+  final bool? isFirstAdd;
+  final Map? arguments;
 
-  const NewAddressPage({Key key, this.arguments, this.isFirstAdd})
+  const NewAddressPage({Key? key, this.arguments, this.isFirstAdd})
       : super(key: key);
 
   static setArguments(Address address) {
@@ -43,17 +43,17 @@ class NewAddressPage extends StatefulWidget {
 }
 
 class _NewAddressPageState extends BaseStoreState<NewAddressPage> {
-  AddressModelImpl _modelImpl;
-  ProvinceCityModel _addressModel;
-  StateSetter _addressStateSetter;
-  Address _address;
+  late AddressModelImpl _modelImpl;
+  ProvinceCityModel? _addressModel;
+  late StateSetter _addressStateSetter;
+  Address? _address;
 
   @override
   void initState() {
     super.initState();
     _modelImpl = AddressModelImpl();
     if (widget.arguments != null) {
-      _address = widget.arguments["address"];
+      _address = widget.arguments!["address"];
     }
 
     if (_address == null) {
@@ -92,10 +92,10 @@ class _NewAddressPageState extends BaseStoreState<NewAddressPage> {
               EditTile(
                 constraints: BoxConstraints.tight(Size(double.infinity, 45)),
                 title: "收货人",
-                value: _address.name,
+                value: _address!.name,
                 hint: "请填写收货人姓名",
                 textChanged: (value) {
-                  _address.name = value;
+                  _address!.name = value;
                 },
               ),
               Container(
@@ -104,11 +104,11 @@ class _NewAddressPageState extends BaseStoreState<NewAddressPage> {
               EditTile(
                 constraints: BoxConstraints.tight(Size(double.infinity, 45)),
                 title: "手机号码",
-                value: _address.mobile,
+                value: _address!.mobile,
                 hint: "请填写收货人手机号码",
                 maxLength: 11,
                 textChanged: (value) {
-                  _address.mobile = value;
+                  _address!.mobile = value;
                 },
               ),
               Container(
@@ -121,13 +121,13 @@ class _NewAddressPageState extends BaseStoreState<NewAddressPage> {
               EditTile(
                 title: "详细地址",
                 hint: "街道门牌号等",
-                value: _address.address,
+                value: _address!.address,
                 maxLength: 100,
                 maxLines: 3,
                 direction: Axis.vertical,
                 constraints: BoxConstraints(maxHeight: 100),
                 textChanged: (value) {
-                  _address.address = value;
+                  _address!.address = value;
                 },
               ),
               Container(
@@ -186,7 +186,7 @@ class _NewAddressPageState extends BaseStoreState<NewAddressPage> {
             decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border(
-                    bottom: BorderSide(color: Colors.grey[200], width: 0.5))),
+                    bottom: BorderSide(color: Colors.grey[200]!, width: 0.5))),
             child: Row(
               children: <Widget>[
                 Container(
@@ -199,9 +199,9 @@ class _NewAddressPageState extends BaseStoreState<NewAddressPage> {
                 ),
                 Expanded(
                     child: Text(
-                  TextUtils.isEmpty(_address.province)
+                  TextUtils.isEmpty(_address!.province)
                       ? "选择地址"
-                      : "${_address.province}-${_address.city}${!TextUtils.isEmpty(_address.district) ? "-${_address.district}" : ""}",
+                      : "${_address!.province}-${_address!.city}${!TextUtils.isEmpty(_address!.district) ? "-${_address!.district}" : ""}",
                   textAlign: TextAlign.end,
                   style: AppTextStyle.generate(14, fontWeight: FontWeight.w500),
                 )),
@@ -220,16 +220,16 @@ class _NewAddressPageState extends BaseStoreState<NewAddressPage> {
 
   _defaultAddressTile() {
     if (widget.isFirstAdd != null)
-      widget.isFirstAdd ? _address.isDefault = 1 : _address.isDefault = 0;
+      widget.isFirstAdd! ? _address!.isDefault = 1 : _address!.isDefault = 0;
     return StatefulBuilder(
       builder: (context, setSta) {
         return GestureDetector(
           onTap: () {
             setSta(() {
-              if (_address.isDefault == 0) {
-                _address.isDefault = 1;
+              if (_address!.isDefault == 0) {
+                _address!.isDefault = 1;
               } else {
-                _address.isDefault = 0;
+                _address!.isDefault = 0;
               }
             });
           },
@@ -238,7 +238,7 @@ class _NewAddressPageState extends BaseStoreState<NewAddressPage> {
             decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border(
-                    bottom: BorderSide(color: Colors.grey[200], width: 0.5))),
+                    bottom: BorderSide(color: Colors.grey[200]!, width: 0.5))),
             child: Row(
               children: <Widget>[
                 Container(
@@ -250,7 +250,7 @@ class _NewAddressPageState extends BaseStoreState<NewAddressPage> {
                   ),
                 ),
                 Spacer(),
-                _address.isDefault == 0
+                _address!.isDefault == 0
                     ? Icon(
                         AppIcons.icon_check,
                         color: Colors.grey,
@@ -273,13 +273,13 @@ class _NewAddressPageState extends BaseStoreState<NewAddressPage> {
   _selectAddress(BuildContext context) {
     AddressSelectorHelper.show(context,
         model: _addressModel,
-        province: _address.province,
-        city: _address.city,
-        district: _address.district,
-        callback: (String province, String city, String district) {
-      _address.province = province;
-      _address.city = city;
-      _address.district = district;
+        province: _address!.province,
+        city: _address!.city,
+        district: _address!.district,
+        callback: (String? province, String? city, String? district) {
+      _address!.province = province;
+      _address!.city = city;
+      _address!.district = district;
       _addressStateSetter(() {});
       DPrint.printf("$province - $city -$district");
     });
@@ -287,49 +287,49 @@ class _NewAddressPageState extends BaseStoreState<NewAddressPage> {
 
   /// 保存地址
   _saveAddress(BuildContext context) async {
-    if (TextUtils.isEmpty(_address.name)) {
+    if (TextUtils.isEmpty(_address!.name)) {
       Toast.showError("收货人不能为空");
       return;
     }
 
-    if (TextUtils.isEmpty(_address.mobile) ||
-        !TextUtils.verifyPhone(_address.mobile)) {
+    if (TextUtils.isEmpty(_address!.mobile) ||
+        !TextUtils.verifyPhone(_address!.mobile)) {
       Toast.showError("手机号格式不正确");
       return;
     }
 
-    if (TextUtils.isEmpty(_address.province)) {
+    if (TextUtils.isEmpty(_address!.province)) {
       Toast.showError("所在地区不能为空");
       return;
     }
 
-    if (TextUtils.isEmpty(_address.address)) {
+    if (TextUtils.isEmpty(_address!.address)) {
       Toast.showError("详细地址不能为空");
       return;
     }
 
     ResultData resultData;
-    if (_address.id != null) {
+    if (_address!.id != null) {
       resultData = await _modelImpl.updateAddress(
-          _address.id,
-          UserManager.instance.user.info.id,
-          _address.name,
-          _address.province,
-          _address.city,
-          _address.district,
-          _address.address,
-          _address.mobile,
-          _address.isDefault);
+          _address!.id,
+          UserManager.instance!.user.info!.id,
+          _address!.name,
+          _address!.province,
+          _address!.city,
+          _address!.district,
+          _address!.address,
+          _address!.mobile,
+          _address!.isDefault);
     } else {
       resultData = await _modelImpl.addNewAddress(
-          UserManager.instance.user.info.id,
-          _address.name,
-          _address.province,
-          _address.city,
-          _address.district,
-          _address.address,
-          _address.mobile,
-          _address.isDefault);
+          UserManager.instance!.user.info!.id,
+          _address!.name,
+          _address!.province,
+          _address!.city,
+          _address!.district,
+          _address!.address,
+          _address!.mobile,
+          _address!.isDefault);
     }
 
     if (!resultData.result) {
@@ -351,7 +351,7 @@ class _NewAddressPageState extends BaseStoreState<NewAddressPage> {
     if (result.success &&
         result.data != null &&
         result.data.toString().length > 0) {
-      _addressModel = ProvinceCityModel.fromJson(json.decode(result.data));
+      _addressModel = ProvinceCityModel.fromJson(json.decode(result.data as String));
       return true;
     }
     ResultData res = await _modelImpl.fetchWholeProvince();

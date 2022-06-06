@@ -24,9 +24,9 @@ abstract class AddressViewI extends MvpView{
 }
 
 abstract class AddressModelI extends MvpModel{
-  fetchAddressList(int userId);
-  setDefaultAddress(int userId, int addrId);
-  deleteAddress(int userId, int addrId);
+  fetchAddressList(int? userId);
+  setDefaultAddress(int? userId, int? addrId);
+  deleteAddress(int? userId, int? addrId);
 
   fetchWholeProvince();
   addNewAddress(int userId,String name,String province, String city, String district, String address, String mobile, int isDefault);

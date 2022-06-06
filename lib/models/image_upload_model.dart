@@ -29,7 +29,7 @@ part 'image_upload_model.g.dart';
 @JsonSerializable()
 class ImageUploadModel extends BaseModel {
 
-  Data data;
+  Data? data;
 
   ImageUploadModel(code,msg,this.data,):super(code,msg);
 
@@ -43,7 +43,7 @@ class ImageUploadModel extends BaseModel {
 @JsonSerializable()
 class Data extends Object {
 
-  String url;
+  String? url;
 
   Data(this.url,);
 

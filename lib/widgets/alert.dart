@@ -18,7 +18,7 @@ typedef AlertItemClickListener = Function(int index);
 typedef DeleteItemClickListener = Function();
 
 class _Styles {
-  static final Color lineColor = Colors.grey[200];
+  static final Color? lineColor = Colors.grey[200];
   static final TextStyle contentStyle = TextStyle(
     color: Colors.black,
     fontSize: 14 * 2.sp,
@@ -52,25 +52,24 @@ enum NormalTextDialogType { normal, delete, remind }
 
 ///普通文本弹框
 class NormalTextDialog extends Dialog {
-  final Color titleColor;
-  final String title;
+  final Color? titleColor;
+  final String? title;
   final String content;
   final String deleteItem;
-  final List<String> items;
-  final AlertItemClickListener listener;
-  final DeleteItemClickListener deleteListener;
+  final List<String>? items;
+  final AlertItemClickListener? listener;
+  final DeleteItemClickListener? deleteListener;
   final NormalTextDialogType type;
 
   const NormalTextDialog(
       {this.title,
       this.titleColor,
-      this.content,
+      required this.content,
       this.deleteItem = "删除",
       this.items,
       this.listener,
       this.deleteListener,
-      this.type = NormalTextDialogType.normal})
-      : assert(content != null, "content 不能为空");
+      this.type = NormalTextDialogType.normal});
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +95,7 @@ class NormalTextDialog extends Dialog {
       children.add(Container(
         padding: EdgeInsets.only(top: rSize(10)),
         child: Text(
-          this.title,
+          this.title!,
           style: TextStyle(
               color: titleColor == null ? Colors.black : titleColor,
               fontSize: 16 * 2.sp,
@@ -130,24 +129,24 @@ class NormalTextDialog extends Dialog {
   }
 
   _buildItems() {
-    List<Widget> _items = this.items.map((String title) {
-      int index = items.indexOf(title);
+    List<Widget> _items = this.items!.map((String title) {
+      int index = items!.indexOf(title);
       return Expanded(
           child: Container(
         decoration: BoxDecoration(
-            border: index == this.items.length - 1 &&
+            border: index == this.items!.length - 1 &&
                     this.type == NormalTextDialogType.normal
                 ? null
                 : Border(
                     right: BorderSide(
-                        color: _Styles.lineColor, width: 0.5 * 2.w))),
+                        color: _Styles.lineColor!, width: 0.5 * 2.w))),
         child: CustomImageButton(
             padding: EdgeInsets.symmetric(vertical: 8.0 * 2.w),
             title: title,
             onPressed: this.listener == null
                 ? null
                 : () {
-                    this.listener(index);
+                    this.listener!(index);
                   },
             style: this.type == NormalTextDialogType.remind
                 ? _Styles.remindTextStyle
@@ -165,7 +164,7 @@ class NormalTextDialog extends Dialog {
             onPressed: this.deleteListener == null
                 ? null
                 : () {
-                    this.deleteListener();
+                    this.deleteListener!();
                   },
             style: _Styles.deleteTextStyle,
             disableStyle: _Styles.disableTextStyle),
@@ -177,19 +176,19 @@ class NormalTextDialog extends Dialog {
 }
 
 class NormalContentDialog extends Dialog {
-  final String title;
-  final Widget content;
-  final String deleteItem;
+  final String? title;
+  final Widget? content;
+  final String? deleteItem;
   final List<String> items;
-  final AlertItemClickListener listener;
-  final DeleteItemClickListener deleteListener;
+  final AlertItemClickListener? listener;
+  final DeleteItemClickListener? deleteListener;
   final NormalTextDialogType type;
 
   NormalContentDialog({
-    @required this.title,
+    required this.title,
     this.content,
     this.deleteItem,
-    @required this.items,
+    required this.items,
     this.listener,
     this.deleteListener,
     this.type = NormalTextDialogType.normal,
@@ -222,7 +221,7 @@ class NormalContentDialog extends Dialog {
       children.add(Container(
         padding: EdgeInsets.only(top: rSize(10)),
         child: Text(
-          this.title,
+          this.title!,
           style: TextStyle(
               color: Colors.black,
               fontSize: 16 * 2.sp,
@@ -263,14 +262,14 @@ class NormalContentDialog extends Dialog {
                 ? null
                 : Border(
                     right: BorderSide(
-                        color: _Styles.lineColor, width: 0.5 * 2.w))),
+                        color: _Styles.lineColor!, width: 0.5 * 2.w))),
         child: CustomImageButton(
             padding: EdgeInsets.symmetric(vertical: 8.0 * 2.w),
             title: title,
             onPressed: this.listener == null
                 ? null
                 : () {
-                    this.listener(index);
+                    this.listener!(index);
                   },
             style: this.type != NormalTextDialogType.remind
                 ? _Styles.normalTextStyle
@@ -288,7 +287,7 @@ class NormalContentDialog extends Dialog {
             onPressed: this.deleteListener == null
                 ? null
                 : () {
-                    this.deleteListener();
+                    this.deleteListener!();
                   },
             style: _Styles.deleteTextStyle,
             disableStyle: _Styles.disableTextStyle),

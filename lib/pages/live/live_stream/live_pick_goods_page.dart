@@ -16,8 +16,8 @@ import 'package:recook/widgets/recook_indicator.dart';
 import 'package:oktoast/oktoast.dart';
 
 class LivePickGoodsPage extends StatefulWidget {
-  final Function(List<num> ids) onPickGoods;
-  LivePickGoodsPage({Key key, @required this.onPickGoods}) : super(key: key);
+  final Function(List<num?> ids) onPickGoods;
+  LivePickGoodsPage({Key? key, required this.onPickGoods}) : super(key: key);
 
   @override
   _LivePickGoodsPageState createState() => _LivePickGoodsPageState();
@@ -26,7 +26,7 @@ class LivePickGoodsPage extends StatefulWidget {
 class _LivePickGoodsPageState extends State<LivePickGoodsPage>
     with TickerProviderStateMixin {
   int _goodsPage = 1;
-  TabController _tabController;
+  TabController? _tabController;
   @override
   void initState() {
     super.initState();
@@ -244,12 +244,12 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
     );
   }
 
-  Future<GoodsWindowModel> getGoodsWindowModels() async {
+  Future<GoodsWindowModel?> getGoodsWindowModels() async {
     ResultData resultData = await HttpManager.post(LiveAPI.shopWindow, {
       'page': _goodsPage,
       'limit': 15,
     });
-    if (resultData?.data['data'] == null)
+    if (resultData.data['data'] == null)
       return null;
     else
       return GoodsWindowModel.fromJson(resultData.data['data']);
@@ -257,7 +257,7 @@ class _LivePickGoodsPageState extends State<LivePickGoodsPage>
 }
 
 class ReorderLiveGoodsListView extends StatefulWidget {
-  ReorderLiveGoodsListView({Key key}) : super(key: key);
+  ReorderLiveGoodsListView({Key? key}) : super(key: key);
 
   @override
   _ReorderLiveGoodsListViewState createState() =>
@@ -294,7 +294,7 @@ class _ReorderLiveGoodsListViewState extends State<ReorderLiveGoodsListView> {
                     color: AppColor.frenchColor,
                     child: FadeInImage.assetNetwork(
                       placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                      image: Api.getImgUrl(e.mainPhotoUrl),
+                      image: Api.getImgUrl(e.mainPhotoUrl)!,
                       height: rSize(86),
                       width: rSize(86),
                     ),
@@ -305,7 +305,7 @@ class _ReorderLiveGoodsListViewState extends State<ReorderLiveGoodsListView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          e.goodsName,
+                          e.goodsName!,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(

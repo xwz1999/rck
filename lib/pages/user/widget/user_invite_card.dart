@@ -4,13 +4,13 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/utils/user_level_tool.dart';
 
 class UserInviteCard extends StatelessWidget {
-  final String headerImg;
-  final String nickName;
-  final String phone;
-  final int groupCount;
-  final UserRoleLevel roleLevel;
+  final String? headerImg;
+  final String? nickName;
+  final String? phone;
+  final int? groupCount;
+  final UserRoleLevel? roleLevel;
   const UserInviteCard(
-      {Key key,
+      {Key? key,
       this.headerImg,
       this.nickName,
       this.phone,
@@ -43,7 +43,7 @@ class UserInviteCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(rSize(23)),
               image: DecorationImage(
                 image: NetworkImage(
-                  Api.getImgUrl(headerImg),
+                  Api.getImgUrl(headerImg)!,
                 ),
               ),
             ),
@@ -54,7 +54,7 @@ class UserInviteCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  nickName,
+                  nickName!,
                   style: TextStyle(
                     color: Color(0xFF333333),
                     fontSize: rSP(14),
@@ -70,7 +70,7 @@ class UserInviteCard extends StatelessWidget {
                     ),
                     SizedBox(width: rSize(5)),
                     Text(
-                      phone,
+                      phone!,
                       style: TextStyle(
                         color: Color(0xFF999999),
                         fontSize: rSP(12),
@@ -88,7 +88,7 @@ class UserInviteCard extends StatelessWidget {
                     ),
                     SizedBox(width: rSize(5)),
                     Text(
-                      phone,
+                      phone!,
                       style: TextStyle(
                         color: Color(0xFF999999),
                         fontSize: rSP(12),

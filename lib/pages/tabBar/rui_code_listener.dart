@@ -17,9 +17,9 @@ import 'package:recook/widgets/toast.dart';
 class RUICodeListener {
   final BuildContext context;
   RUICodeListener(this.context);
-  Future<GoodsDetailModel> _getDetail(int goodsId) async {
+  Future<GoodsDetailModel?> _getDetail(int? goodsId) async {
     GoodsDetailModel _goodsDetail = await GoodsDetailModelImpl.getDetailInfo(
-        goodsId, UserManager.instance.user.info.id);
+        goodsId, UserManager.instance!.user.info!.id);
     if (_goodsDetail.code != HttpStatus.SUCCESS) {
       Toast.showError(_goodsDetail.msg);
       return null;
@@ -27,7 +27,7 @@ class RUICodeListener {
     return _goodsDetail;
   }
 
-  Future<ResultData> _getUserInfo(int id) async {
+  Future<ResultData> _getUserInfo(int? id) async {
     return await HttpManager.post(UserApi.userInfo, {'userId': id});
   }
 
@@ -35,7 +35,7 @@ class RUICodeListener {
     String rawData =
         (await Clipboard.getData(Clipboard.kTextPlain))?.text ?? '';
     bool isRUICode = RUICodeUtil.isCode(rawData);
-    GoodsDetailModel goodsDetailModel;
+    GoodsDetailModel? goodsDetailModel;
 
     //云口令
     if (isRUICode && ClipboardListenerValue.canListen) {
@@ -45,8 +45,8 @@ class RUICodeListener {
 
       goodsDetailModel = await _getDetail(model.goodsId);
       //user info
-      String userImg = '';
-      String userName = '';
+      String? userImg = '';
+      String? userName = '';
       ResultData resultData = await _getUserInfo(model.userId);
       if (resultData.data != null && resultData.data['data'] != null) {
         userImg = resultData.data['data']['headImgUrl'];
@@ -70,11 +70,11 @@ class RUICodeListener {
 }
 
 class _RUICodeDialog extends StatefulWidget {
-  final String userImg;
-  final String userName;
-  final GoodsDetailModel model;
-  final String invite;
-  _RUICodeDialog({Key key, this.userImg, this.userName, this.model, this.invite})
+  final String? userImg;
+  final String? userName;
+  final GoodsDetailModel? model;
+  final String? invite;
+  _RUICodeDialog({Key? key, this.userImg, this.userName, this.model, this.invite})
       : super(key: key);
 
   @override
@@ -108,7 +108,7 @@ class __RUICodeDialogState extends State<_RUICodeDialog> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(rSize(17)),
                         child: ExtendedImage.network(
-                          Api.getImgUrl(widget.userImg),
+                          Api.getImgUrl(widget.userImg)!,
                           height: rSize(34),
                           width: rSize(34),
                           fit: BoxFit.cover,
@@ -140,8 +140,8 @@ class __RUICodeDialogState extends State<_RUICodeDialog> {
                     borderRadius: BorderRadius.circular(rSize(8)),
                     child: ExtendedImage.network(
                       Api.getImgUrl(
-                        widget.model.data.mainPhotos.first.url,
-                      ),
+                        widget.model!.data!.mainPhotos!.first.url,
+                      )!,
                       height: rSize(256),
                       fit: BoxFit.cover,
                     ),
@@ -159,7 +159,7 @@ class __RUICodeDialogState extends State<_RUICodeDialog> {
                         ),
                       ),
                       Text(
-                        '${widget.model.data.price.max.discountPrice.toStringAsFixed(2)}',
+                        '${widget.model!.data!.price!.max!.discountPrice!.toStringAsFixed(2)}',
                         style: TextStyle(
                           color: Color(0xFFE13327),
                           fontSize: rSP(18),
@@ -167,7 +167,7 @@ class __RUICodeDialogState extends State<_RUICodeDialog> {
                       ),
                       (AppConfig.commissionByRoleLevel)
                           ? Text(
-                              '/赚${widget.model.data.price.max.commission.toStringAsFixed(1)}',
+                              '/赚${widget.model!.data!.price!.max!.commission!.toStringAsFixed(1)}',
                               style: TextStyle(
                                 color: Color(0xFFE13327),
                                 fontSize: rSP(10),
@@ -178,7 +178,7 @@ class __RUICodeDialogState extends State<_RUICodeDialog> {
                   ),
                   rHBox(4),
                   Text(
-                    widget.model.data.goodsName,
+                    widget.model!.data!.goodsName!,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(),
@@ -192,7 +192,7 @@ class __RUICodeDialogState extends State<_RUICodeDialog> {
                             context,
                             CommodityDetailPage(
                               arguments: CommodityDetailPage.setArguments(
-                                widget.model.data.id,
+                                widget.model!.data!.id,
                                 invite: widget.invite,
                               ),
                             ));

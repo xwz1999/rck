@@ -12,8 +12,8 @@ import 'package:recook/widgets/refresh_widget.dart';
 import 'package:oktoast/oktoast.dart';
 
 class UserAttentionView extends StatefulWidget {
-  final int id;
-  UserAttentionView({Key key, @required this.id}) : super(key: key);
+  final int? id;
+  UserAttentionView({Key? key, required this.id}) : super(key: key);
 
   @override
   _UserAttentionViewState createState() => _UserAttentionViewState();
@@ -34,7 +34,7 @@ class _UserAttentionViewState extends State<UserAttentionView>
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -78,10 +78,10 @@ class _UserAttentionViewState extends State<UserAttentionView>
       'page': _page,
       'limit': 15,
     });
-    if (resultData?.data['data'] == null)
+    if (resultData.data['data'] == null)
       return [];
     else
-      return (resultData?.data['data']['list'] as List)
+      return (resultData.data['data']['list'] as List)
           .map((e) => FollowListModel.fromJson(e))
           .toList();
   }
@@ -92,12 +92,12 @@ class _UserAttentionViewState extends State<UserAttentionView>
         borderRadius: BorderRadius.circular(rSize(42 / 2)),
         child: FadeInImage.assetNetwork(
           placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-          image: Api.getImgUrl(model.headImgUrl),
+          image: Api.getImgUrl(model.headImgUrl)!,
           height: rSize(42),
           width: rSize(42),
         ),
       ),
-      title: model.nickname,
+      title: model.nickname!,
       subTitlePrefix: '关注 ${model.follows}',
       subTitleSuffix: '粉丝 ${model.fans}',
       initAttention: model.isFollow == 1,
@@ -111,7 +111,7 @@ class _UserAttentionViewState extends State<UserAttentionView>
         );
       },
       onAttention: (bool oldState) {
-        if (UserManager.instance.haveLogin)
+        if (UserManager.instance!.haveLogin)
           HttpManager.post(
             oldState ? LiveAPI.cancelFollow : LiveAPI.addFollow,
             {'followUserId': model.userId},

@@ -1,5 +1,4 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
@@ -16,8 +15,8 @@ import 'package:recook/widgets/title_switch.dart';
 
 class WholesaleOrderHomePage extends StatefulWidget {
   // final Map arguments;
-  final int initialIndex;
-  const WholesaleOrderHomePage({Key key, this.initialIndex}) : super(key: key);
+  final int? initialIndex;
+  const WholesaleOrderHomePage({Key? key, this.initialIndex}) : super(key: key);
 
   // static setArguments(int initialIndex) {
   //   return {"initialIndex": initialIndex};
@@ -33,9 +32,9 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
     with TickerProviderStateMixin {
   TitleSwitchController _titleSwitchController = TitleSwitchController();
   List<String> _items = ["全部","待处理","未付款", "待发货", "待收货"];
-  TabController _allTabController;
-  TabController _tabController;
-  TabController _storeTabController;
+  TabController? _allTabController;
+  TabController? _tabController;
+  TabController? _storeTabController;
   OrderPositionType _positionType = OrderPositionType.onlineOrder;
   List<OrderListController> _orderListControllers = [
     OrderListController(),
@@ -58,7 +57,7 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
   @override
   void initState() {
     super.initState();
-    int index = 0;
+    int? index = 0;
     if (widget.initialIndex != null) {
       index = widget.initialIndex;
     }
@@ -71,10 +70,10 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
 
     _allTabController = TabController(length: 2, vsync: this, initialIndex: 0);
 
-    _allTabController.addListener(() {
-      _titleSwitchController.changeIndex(_allTabController.index);
+    _allTabController!.addListener(() {
+      _titleSwitchController.changeIndex(_allTabController!.index);
     });
-    _tabController = TabController(initialIndex: index, length: 5, vsync: this);
+    _tabController = TabController(initialIndex: index!, length: 5, vsync: this);
     _storeTabController =
         TabController(initialIndex: 0, length: 5, vsync: this);
 
@@ -179,13 +178,13 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
 
             if (index == 0) {
               _positionType = OrderPositionType.onlineOrder;
-              _allTabController.index = 0;
+              _allTabController!.index = 0;
 
               setState(() {});
 
             } else {
               _positionType = OrderPositionType.storeOrder;
-              _allTabController.index = 1;
+              _allTabController!.index = 1;
               setState(() {});
 
             }
@@ -387,7 +386,7 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
 
   _item(int index) {
     String title = _items[index];
-    bool selected = index == _tabController.index;
+    bool selected = index == _tabController!.index;
     return Container(
         height: rSize(30),
         alignment: Alignment.center,
@@ -404,7 +403,7 @@ class _WholesaleOrderHomePageState extends BaseStoreState<WholesaleOrderHomePage
 
   _storeitem(int index) {
     String title = _items[index];
-    bool selected = index == _storeTabController.index;
+    bool selected = index == _storeTabController!.index;
     return Container(
         height: rSize(30),
         alignment: Alignment.center,

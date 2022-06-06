@@ -18,11 +18,11 @@ import 'more_goods/whoesale_goods_grid.dart';
 import 'more_goods/whoesale_goods_normal.dart';
 
 class WholesaleGoodsList extends StatefulWidget {
-  final String title;
-  final int index;
-  final List<SecondCategory> secondCategoryList;
+  final String? title;
+  final int? index;
+  final List<SecondCategory>? secondCategoryList;
    WholesaleGoodsList(
-      {Key key,
+      {Key? key,
       this.title, this.index, this.secondCategoryList,})
       : super(key: key);
 
@@ -36,16 +36,16 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
     with TickerProviderStateMixin {
   /// 切换展示形式  true 为 List， false 为grid
   bool _displayList = false;//默认排列方式改为瀑布流
-  SecondCategory _category;
-  FilterToolBarController _filterController;
-  List<SecondCategory> _secondCategoryList;
-  TextEditingController _textEditController;
+  late SecondCategory _category;
+  late FilterToolBarController _filterController;
+  List<SecondCategory>? _secondCategoryList;
+  TextEditingController? _textEditController;
   SortType _sortType = SortType.comprehensive;
-  GSRefreshController _refreshController;
+  GSRefreshController? _refreshController;
   int _filterIndex = 0;
   List<bool> _barBool = [false,false,false];
-  GifController _gifController;
-  TabController _tabController;
+  late GifController _gifController;
+  TabController? _tabController;
   ///商品列表
   List<WholesaleGood> _goodsList = [];
 
@@ -67,16 +67,16 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
     _refreshController = GSRefreshController(initialRefresh: true);
 
     _secondCategoryList = widget.secondCategoryList;
-    _category = _secondCategoryList[widget.index];
+    _category = _secondCategoryList![widget.index!];
     _tabController = TabController(
-        initialIndex: widget.index, length: _secondCategoryList.length, vsync: this);
+        initialIndex: widget.index!, length: _secondCategoryList!.length, vsync: this);
 
   }
 
   @override
   void dispose() {
     _gifController.dispose();
-    _textEditController.dispose();
+    _textEditController!.dispose();
     super.dispose();
   }
 
@@ -98,8 +98,8 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
               width: MediaQuery.of(context).size.width,
               child: TabBar(
                   onTap: (index) {
-                    _category = _secondCategoryList[index];
-                    _refreshController.requestRefresh();
+                    _category = _secondCategoryList![index];
+                    _refreshController!.requestRefresh();
                     // _presenter.fetchList(_category.id, 0, _sortType);
                     setState(() {});
                   },
@@ -146,8 +146,8 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
 
 
   List<Widget> _tabItems() {
-    return _secondCategoryList.map<Widget>((item) {
-      int index = _secondCategoryList.indexOf(item);
+    return _secondCategoryList!.map<Widget>((item) {
+      int index = _secondCategoryList!.indexOf(item);
       return _tabItem(item, index);
     }).toList();
   }
@@ -182,7 +182,7 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
                 onSubmitted: (_submitted) {
                   //_contentFocusNode.unfocus();
 
-                  _refreshController.requestRefresh();
+                  _refreshController!.requestRefresh();
 
                   setState(() {});
                 },
@@ -207,7 +207,7 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
   }
 
   _tabItem(SecondCategory secondCategory, int index) {
-    Color textColor = index == _tabController.index
+    Color? textColor = index == _tabController!.index
         ? getCurrentThemeColor()
         : Colors.black.withOpacity(0.9);
     return Tab(
@@ -220,7 +220,7 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              secondCategory.name,
+              secondCategory.name!,
               style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 13 * 2.sp,
@@ -250,20 +250,20 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
         if ((index != 1 && index != 2) && _filterIndex == index) {
           return;
         }
-        _filterIndex = index;
+        _filterIndex = index!;
         switch (index) {
           case 0:
             _sortType = SortType.comprehensive;
             break;
           case 1:
-            if (item.topSelected) {
+            if (item!.topSelected) {
               _sortType = SortType.priceAsc;
             } else {
               _sortType = SortType.priceDesc;
             }
             break;
           case 2:
-            if (item.topSelected) {
+            if (item!.topSelected) {
               _sortType = SortType.salesAsc;
             } else {
               _sortType = SortType.salesDesc;
@@ -272,7 +272,7 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
             break;
 
         }
-        _refreshController.requestRefresh();
+        _refreshController!.requestRefresh();
 
       },
     );
@@ -338,7 +338,7 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
                // if (value.isEmpty)
                //   _refreshController.isNoData;
                // else
-                 _refreshController.refreshCompleted();
+                 _refreshController!.refreshCompleted();
                // _refreshController.resetNoData();
              });
            },
@@ -349,9 +349,9 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
                setState(() {
                });
                if (value.isEmpty)
-                 _refreshController.loadNoData();
+                 _refreshController!.loadNoData();
                else{
-                 _refreshController.loadComplete();
+                 _refreshController!.loadComplete();
                }
              });
            },
@@ -364,7 +364,7 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
 
   _buildGridView() {
     return WaterfallFlow.builder(
-        padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight),
+        padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight!),
         physics: AlwaysScrollableScrollPhysics(),
         itemCount: _goodsList.length,
         gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
@@ -377,7 +377,7 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
           return _goodsList.isNotEmpty?MaterialButton(
               padding: EdgeInsets.zero,
               onPressed: () {
-                Get.to(()=>WholesaleDetailPage(goodsId: _goodsList[index].id,));
+                Get.to(()=>WholesaleDetailPage(goodsId: _goodsList[index].id as int?,));
               },
               child: _displayList
                   // ? BrandDetailListItem(goods: goods)

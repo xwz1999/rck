@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 
 class InvoiceBillListModel {
-  int id;
-  int userId;
-  int orderId;
-  String buyerName;
-  String taxNum;
-  String address;
-  String telephone;
-  String phone;
-  String email;
-  String account;
-  String message;
-  num totalAmount;
-  int invoiceStatus;
-  String fpqqlsh;
-  String ctime;
-  String failReasons;
-  String ctimeInvoice;
-  String invoiceUrl;
+  int? id;
+  int? userId;
+  int? orderId;
+  String? buyerName;
+  String? taxNum;
+  String? address;
+  String? telephone;
+  String? phone;
+  String? email;
+  String? account;
+  String? message;
+  num? totalAmount;
+  int? invoiceStatus;
+  String? fpqqlsh;
+  String? ctime;
+  String? failReasons;
+  String? ctimeInvoice;
+  String? invoiceUrl;
 
   InvoiceBillListModel(
       {this.id,

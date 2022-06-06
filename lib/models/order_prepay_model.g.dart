@@ -24,11 +24,11 @@ Map<String, dynamic> _$OrderPrepayModelToJson(OrderPrepayModel instance) =>
 
 Data _$DataFromJson(Map<String, dynamic> json) {
   return Data(
-      json['id'] as int,
-      json['userId'] as int,
-      (json['actualTotalAmount'] as num)?.toDouble(),
-      json['status'] as int,
-      json['createdAt'] as String);
+      json['id'] as int?,
+      json['userId'] as int?,
+      (json['actualTotalAmount'] as num?)?.toDouble(),
+      json['status'] as int?,
+      json['createdAt'] as String?);
 }
 
 Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{

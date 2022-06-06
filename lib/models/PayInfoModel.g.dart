@@ -24,13 +24,13 @@ Map<String, dynamic> _$PayInfoModelToJson(PayInfoModel instance) =>
 
 PayInfo _$PayInfoFromJson(Map<String, dynamic> json) {
   return PayInfo(
-      json['noncestr'] as String,
-      json['sign'] as String,
-      json['prepayid'] as String,
-      json['appid'] as String,
-      json['partnerid'] as String,
-      json['package'] as String,
-      json['timestamp'] as String);
+      json['noncestr'] as String?,
+      json['sign'] as String?,
+      json['prepayid'] as String?,
+      json['appid'] as String?,
+      json['partnerid'] as String?,
+      json['package'] as String?,
+      json['timestamp'] as String?);
 }
 
 Map<String, dynamic> _$PayInfoToJson(PayInfo instance) => <String, dynamic>{

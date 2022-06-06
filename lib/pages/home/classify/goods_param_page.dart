@@ -16,8 +16,8 @@ import 'package:recook/widgets/text_button.dart' as TButton;
 
 class GoodsParamPage extends StatefulWidget {
   // final List<Sku> skus;
-  final GoodsDetailModel model;
-  const GoodsParamPage({Key key, this.model}) : super(key: key);
+  final GoodsDetailModel? model;
+  const GoodsParamPage({Key? key, this.model}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -27,7 +27,7 @@ class GoodsParamPage extends StatefulWidget {
 
 class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
   // List<Sku> _skus;
-  GoodsDetailModel model;
+  GoodsDetailModel? model;
   @override
   void initState() {
     super.initState();
@@ -41,7 +41,7 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
       onTap: () {},
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-        height: DeviceInfo.screenHeight * 0.6,
+        height: DeviceInfo.screenHeight! * 0.6,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.vertical(top: Radius.circular(8))),
@@ -73,7 +73,7 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
                   Expanded(
                       child: Container(
                     child: Text(
-                      model.data.brand.name,
+                      model!.data!.brand!.name!,
                       style: TextStyle(color: Colors.grey, fontSize: 13 * 2.sp),
                     ),
                   )),
@@ -101,16 +101,16 @@ class _GoodsParamPageState extends BaseStoreState<GoodsParamPage> {
                     children: [
                       Container(
                         child: Text(
-                          '${model.data.sku[0].name}  ${model.data.sku[0].code}',
+                          '${model!.data!.sku![0]!.name}  ${model!.data!.sku![0]!.code}',
                           style: TextStyle(color: Colors.grey, fontSize: 13 * 2.sp),
                         ),
                       ),
                       ...
-                      model.data.sku
+                      model!.data!.sku!
                           .sublist(1)
                           .map(
                             (e) {
-                              String a = (e.name+' '+e.code);
+                              String a = (e!.name!+' '+e.code!);
                               return Container(
                                 width: 280.rw,
                                 child: Text(

@@ -60,7 +60,7 @@ class PermissionTool {
   }
 
   static showOpenPermissionDialog(BuildContext context, String message,
-      {Function open ,String title}) {
+      {Function? open ,String? title}) {
     Alert.show(
         context,
         NormalTextDialog(

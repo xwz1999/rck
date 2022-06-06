@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/user/model/company_info_model.dart';
@@ -13,8 +12,8 @@ class UserBalanceFunc {
   }
 
   static Future<UserBalanceHistoryModel> history({
-    @required String month,
-    @required int status,
+    required String month,
+    required int status,
   }) async {
     ResultData result =
         await HttpManager.post(APIV2.userAPI.balanceMonthHistory, {
@@ -26,7 +25,7 @@ class UserBalanceFunc {
 
 
 
-  static Future<CompanyInfoModel> getDepositRecordList() async {
+  static Future<CompanyInfoModel?> getDepositRecordList() async {
     ResultData result =
     await HttpManager.post(APIV2.userAPI.depositRecordList, {
     });
@@ -47,7 +46,7 @@ class UserBalanceFunc {
   }
 
 // //获取公司
-static Future<CompanyInfoModel> getCompanyInfo() async {
+static Future<CompanyInfoModel?> getCompanyInfo() async {
   ResultData result =
   await HttpManager.post(APIV2.userAPI.getCompanyInfo, {
   });
@@ -68,7 +67,7 @@ static Future<CompanyInfoModel> getCompanyInfo() async {
 }
 
 
-  static Future<ContactInfoModel> getContractInfo() async {
+  static Future<ContactInfoModel?> getContractInfo() async {
     ResultData result =
     await HttpManager.post(APIV2.userAPI.getContractInfo, {
     });
@@ -89,7 +88,7 @@ static Future<CompanyInfoModel> getCompanyInfo() async {
   }
 
 
-  static Future<bool> applyWithdrawal(num amount,num tax, {String logistics_name,String waybill_code}  ) async {
+  static Future<bool> applyWithdrawal(num? amount,num tax, {String? logistics_name,String? waybill_code}  ) async {
     Map<String, dynamic> params = {
       "amount": amount,
       'tax':tax,

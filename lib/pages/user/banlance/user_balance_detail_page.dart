@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/api_v2.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -19,10 +18,10 @@ import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-typedef MyCallBack = Function(String string);
+typedef MyCallBack = Function(String? string);
 
 class UserBalanceDetailPage extends StatefulWidget {
-  UserBalanceDetailPage({Key key}) : super(key: key);
+  UserBalanceDetailPage({Key? key}) : super(key: key);
 
   @override
   _UserBalanceDetailPageState createState() => _UserBalanceDetailPageState();
@@ -46,8 +45,8 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
 
   GSRefreshController _refreshController = GSRefreshController();
 
-  num _allBenefitAmount = 0;
-  UserIncomeDataModel _userIncomeDataModel;
+  num? _allBenefitAmount = 0;
+  late UserIncomeDataModel _userIncomeDataModel;
 
 
   bool _onLoad = true;///首次加载数据
@@ -96,7 +95,7 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
                           height: 3,
                         ),
                         Text(
-                          item.createdAt,
+                          item.createdAt!,
                           style: TextStyle(
                               color: Color(0xFF999999), fontSize: 12.rsp),
                         ),
@@ -106,9 +105,9 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
                 ),
                 Spacer(),
                 Text(
-                    (item.amount>0?'+':'')+   item.amount.toStringAsFixed(2),
+                    (item.amount!>0?'+':'')+   item.amount!.toStringAsFixed(2),
                   style: TextStyle(
-                      color: item.amount < 0
+                      color: item.amount! < 0
                           ? Color(0xFF333333)
                           : Color(0xFFD5101A),
                       fontSize: 16.rsp,
@@ -126,7 +125,7 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
     );
   }
 
-  _getTitle(int type) {
+  _getTitle(int? type) {
     switch (type) {
       case 1:
         return '订单支付';
@@ -150,7 +149,7 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
     }
   }
 
-  _getImage(int type) {
+  _getImage(int? type) {
     switch (type) {
       case 1:
         return Assets.orderPay.path;
@@ -175,7 +174,7 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
   }
 
   void _showCupertinoPicker(BuildContext cxt, MyCallBack callback) {
-    String item;
+    String? item;
 
     final picker = CupertinoPicker(
         itemExtent: 30.rw,
@@ -372,7 +371,7 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
                               .color(Color(0xFF070707))
                               .make(),
                           12.hb,
-                          TextUtils.getCount1((_model?.data?.balance ?? 0.0))
+                          TextUtils.getCount1((_model.data?.balance ?? 0.0))!
                               .text
                               .size(20.rsp)
                               .color(Color(0xFF333333))
@@ -392,7 +391,7 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
                               .make(),
                           12.hb,
                           TextUtils.getCount1(
-                                  (_allBenefitAmount ?? 0.0))
+                                  (_allBenefitAmount ?? 0.0))!
                               .text
                               .size(20.rsp)
                               .color(Color(0xFF333333))
@@ -414,7 +413,7 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
                     onPressed: () {
                       // _entry = OverlayEntry(builder: (context) => _buildOverlay());
                       // Overlay.of(context).insert(_entry);
-                      _showCupertinoPicker(context, (String item) {
+                      _showCupertinoPicker(context, (String? item) {
                         Get.back();
                         if (item != null) {
                           _choose = item;
@@ -525,17 +524,17 @@ class _UserBalanceDetailPageState extends State<UserBalanceDetailPage> {
                 },
                 body:
                 _onLoad?SizedBox():
-                _historyModel.data.list == null || _historyModel.data.list.length == 0
+                _historyModel.data!.list == null || _historyModel.data!.list!.length == 0
                     ? NoDataView(title:'没有数据哦～' ,):
                 ListView.separated(
                   itemBuilder: (context, index) =>
-                      _buildListItem(_historyModel.data.list[index]),
+                      _buildListItem(_historyModel.data!.list![index]),
                   separatorBuilder: (context, index) => Divider(
                     color: Color(0xFFE9E9E9),
                     height: 1.rw,
                     thickness: 1.rw,
                   ),
-                  itemCount: _historyModel?.data?.list?.length ?? 0,
+                  itemCount: _historyModel.data?.list?.length ?? 0,
                 ),
               ),
             ),

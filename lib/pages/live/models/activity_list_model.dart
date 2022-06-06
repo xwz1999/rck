@@ -1,23 +1,23 @@
 import 'package:recook/pages/live/models/video_list_model.dart';
 
 class ActivityListModel {
-  String content;
-  Goods goods;
-  int id;
-  List<ImgList> imgList;
-  int originId;
+  String? content;
+  Goods? goods;
+  int? id;
+  List<ImgList>? imgList;
+  int? originId;
 
   ///动态类型 动态类型 1=图文 2=短视频
-  int trendType;
-  String updatedAt;
-  Short short;
-  int praise;
-  int isPraise;
-  int topicId;
-  String topicName;
-  int isFollow;
-  int compliance;
-  int passStatus;
+  int? trendType;
+  String? updatedAt;
+  Short? short;
+  int? praise;
+  int? isPraise;
+  int? topicId;
+  String? topicName;
+  int? isFollow;
+  int? compliance;
+  int? passStatus;
 
   ActivityListModel({
     this.content,
@@ -39,7 +39,7 @@ class ActivityListModel {
 
   ActivityListModel.fromVideoList(VideoListModel model) {
     this.content = model.content;
-    this.goods = Goods.fromJson(model.goods.toJson());
+    this.goods = Goods.fromJson(model.goods!.toJson());
     this.id = model.trendId;
     this.imgList = [];
     this.originId = 0;
@@ -66,7 +66,7 @@ class ActivityListModel {
     if (json['imgList'] != null) {
       imgList = [];
       json['imgList'].forEach((v) {
-        imgList.add(new ImgList.fromJson(v));
+        imgList!.add(new ImgList.fromJson(v));
       });
     }
     originId = json['originId'];
@@ -85,17 +85,17 @@ class ActivityListModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['content'] = this.content;
     if (this.goods != null) {
-      data['goods'] = this.goods.toJson();
+      data['goods'] = this.goods!.toJson();
     }
     data['id'] = this.id;
     if (this.imgList != null) {
-      data['imgList'] = this.imgList.map((v) => v.toJson()).toList();
+      data['imgList'] = this.imgList!.map((v) => v.toJson()).toList();
     }
     data['originId'] = this.originId;
     data['trendType'] = this.trendType;
     data['updatedAt'] = this.updatedAt;
     if (this.short != null) {
-      data['short'] = this.short.toJson();
+      data['short'] = this.short!.toJson();
     }
     data['praise'] = this.praise;
     data['isPraise'] = this.isPraise;
@@ -109,10 +109,10 @@ class ActivityListModel {
 }
 
 class Goods {
-  int id;
-  String mainPhotoURL;
-  String name;
-  String price;
+  int? id;
+  String? mainPhotoURL;
+  String? name;
+  String? price;
 
   Goods({this.id, this.mainPhotoURL, this.name, this.price});
 
@@ -134,11 +134,11 @@ class Goods {
 }
 
 class ImgList {
-  num height;
-  int id;
-  int momentsCopyId;
-  String url;
-  num width;
+  num? height;
+  int? id;
+  int? momentsCopyId;
+  String? url;
+  num? width;
 
   ImgList({this.height, this.id, this.momentsCopyId, this.url, this.width});
 
@@ -162,8 +162,8 @@ class ImgList {
 }
 
 class Short {
-  String mediaUrl;
-  String coverUrl;
+  String? mediaUrl;
+  String? coverUrl;
 
   Short({this.mediaUrl, this.coverUrl});
 

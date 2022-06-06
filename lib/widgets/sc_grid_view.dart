@@ -15,7 +15,7 @@ typedef ItemCountBuilder = int Function(int section);
 
 class SCGridView<T> extends StatefulWidget {
   /// 区头创建
-  final HeaderBuilder headerBuilder;
+  final HeaderBuilder? headerBuilder;
 
   /// item创建
   final ItemBuilder itemBuilder;
@@ -24,7 +24,7 @@ class SCGridView<T> extends StatefulWidget {
   final ItemCountBuilder itemCount;
 
   /// 每行item 个数
-  final int crossAxisCount;
+  final int? crossAxisCount;
 
   /// 区数
   final int sectionCount;
@@ -45,11 +45,11 @@ class SCGridView<T> extends StatefulWidget {
 
   final double childAspectRatio;
 
-  final List<T> data;
+  final List<T>? data;
 
   SCGridView(
-      {@required this.itemCount,
-      @required this.itemBuilder,
+      {required this.itemCount,
+      required this.itemBuilder,
       this.data,
       this.crossAxisCount,
       this.headerBuilder,
@@ -69,7 +69,7 @@ class SCGridView<T> extends StatefulWidget {
 
 class _SCGridViewState extends State<SCGridView>
     with AutomaticKeepAliveClientMixin {
-  ScrollController _controller;
+  ScrollController? _controller;
 
   @override
   void initState() {
@@ -113,8 +113,8 @@ class _SCGridViewState extends State<SCGridView>
   }
 
   Widget _buildSection(BuildContext context, int section) {
-    Widget header = widget.headerBuilder != null
-        ? widget.headerBuilder(context, section)
+    Widget? header = widget.headerBuilder != null
+        ? widget.headerBuilder!(context, section)
         : null;
 
     return ListView(
@@ -134,7 +134,7 @@ class _SCGridViewState extends State<SCGridView>
                 childAspectRatio: widget.childAspectRatio,
                 mainAxisSpacing: widget.mainAxisSpacing,
                 crossAxisSpacing: widget.crossAxisSpacing,
-                crossAxisCount: widget.crossAxisCount),
+                crossAxisCount: widget.crossAxisCount!),
             itemBuilder: (context, index) {
               return widget.itemBuilder(context, index);
             })

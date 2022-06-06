@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/app_image_resources.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_hot_sell_list_model.dart';
 import 'package:recook/pages/home/classify/brandgoods_list_page.dart';
-import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/wholesale/more_goods/whoesale_goods_normal.dart';
-import 'package:recook/utils/app_router.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/goods_item.dart';
 
 class GoodsHotListPage extends StatefulWidget {
   final bool isHot;
 
-  const GoodsHotListPage({Key key, this.isHot = true}) : super(key: key);
+  const GoodsHotListPage({Key? key, this.isHot = true}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -31,8 +26,8 @@ class GoodsHotListPage extends StatefulWidget {
 
 class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
     with TickerProviderStateMixin {
-  GoodsHotSellListModel _listModel;
-  GifController _gifController;
+  GoodsHotSellListModel? _listModel;
+  GifController? _gifController;
 
 
   @override
@@ -52,7 +47,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
 
   @override
   void dispose() {
-    _gifController.dispose();
+    _gifController!.dispose();
     super.dispose();
   }
 
@@ -125,7 +120,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
   }
 
   _backButton(context) {
-    Widget lead;
+    Widget? lead;
     if (Navigator.canPop(context)) {
       lead = IconButton(
           icon: Icon(
@@ -152,10 +147,10 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
               //     arguments: CommodityDetailPage.setArguments(
               //         _listModel.data[index].id));
             },
-            child: _itemWidget(_listModel.data[index]),
+            child: _itemWidget(_listModel!.data![index]),
           );
         },
-        itemCount: _listModel.data.length,
+        itemCount: _listModel!.data!.length,
       ),
     );
   }
@@ -177,7 +172,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
       child: Stack(
         children: <Widget>[
 
-          UserManager.instance.isWholesale?
+          UserManager.instance!.isWholesale?
           WholesaleGoodsItem.hotList(
             buildCtx: context,
             data: data,
@@ -189,7 +184,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
             onBrandClick: () {
               AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                   arguments: BrandGoodsListPage.setArguments(
-                      data.brandId, data.brandName));
+                      data.brandId as int?, data.brandName));
             },
             buildCtx: context,
             data: data,
@@ -213,7 +208,7 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
               child: Container(
                 alignment: Alignment.center,
                 child: Text(
-                  (data.index + 1).toString(),
+                  (data.index! + 1).toString(),
                   style: TextStyle(
                       fontWeight: FontWeight.w500,
                       color: Colors.white,
@@ -376,24 +371,24 @@ class _GoodsHotListPageState extends BaseStoreState<GoodsHotListPage>
     if (!widget.isHot) {
       data.putIfAbsent('status', () => 2);
     }
-    data.putIfAbsent('user_id', () => UserManager.instance.user.info.id);
-    if (UserManager.instance.isWholesale) {
+    data.putIfAbsent('user_id', () => UserManager.instance!.user.info!.id);
+    if (UserManager.instance!.isWholesale) {
       data.putIfAbsent('is_sale', () => true);
     }
     ResultData resultData = await HttpManager.post(
         widget.isHot ? HomeApi.hot_sell_list : HomeApi.preferentialList, data);
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     GoodsHotSellListModel model =
         GoodsHotSellListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
-    for (Data data in model.data) {
-      data.index = model.data.indexOf(data);
+    for (Data data in model.data!) {
+      data.index = model.data!.indexOf(data);
     }
     _listModel = model;
     setState(() {});

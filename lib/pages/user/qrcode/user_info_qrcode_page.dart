@@ -1,9 +1,9 @@
+import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -18,7 +18,7 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class UserInfoQrCodePage extends StatefulWidget {
-  UserInfoQrCodePage({Key key}) : super(key: key);
+  UserInfoQrCodePage({Key? key}) : super(key: key);
 
   @override
   _UserInfoQrCodePageState createState() => _UserInfoQrCodePageState();
@@ -26,14 +26,14 @@ class UserInfoQrCodePage extends StatefulWidget {
 
 class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
   double scale = 610.0 / 466.0;
-  double width;
-  double height;
+  double? width;
+  double? height;
   GlobalKey _globalKey = GlobalKey();
 
   @override
   Widget buildContext(BuildContext context, {store}) {
     width = MediaQuery.of(context).size.width * (466 / 562);
-    height = scale * width;
+    height = scale * width!;
     return Scaffold(
         appBar: CustomAppBar(
           background: AppColor.frenchColor,
@@ -48,7 +48,7 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
           children: <Widget>[
             Container(
               margin: EdgeInsets.only(
-                  top: (MediaQuery.of(context).size.height - height) / 2 -
+                  top: (MediaQuery.of(context).size.height - height!) / 2 -
                       (MediaQuery.of(context).padding.top + kToolbarHeight)),
               alignment: Alignment.center,
               child: RepaintBoundary(
@@ -84,7 +84,7 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
                     borderRadius: BorderRadius.circular(30.rw),
                     child: FadeInImage.assetNetwork(
                       placeholder: Assets.icon.icLauncherPlaystore.path,
-                      image: Api.getImgUrl(UserManager.instance.user.info.headImgUrl),
+                      image: Api.getImgUrl(UserManager.instance!.user.info!.headImgUrl)!,
                       height: 60.rw,
                       width: 60.rw,
                       fit:  BoxFit.cover,
@@ -99,14 +99,14 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            UserManager.instance.user.info.nickname,
+                            UserManager.instance!.user.info!.nickname!,
                             style: TextStyle(color: Colors.black, fontSize: 20),
                           ),
                           Container(
                             width: 5,
                           ),
                           Image.asset(
-                            UserManager.instance.user.info.gender == 2
+                            UserManager.instance!.user.info!.gender == 2
                                 ? "assets/user_info_qrcode_woman.png"
                                 : "assets/user_info_qrcode_man.png",
                             width: 12,
@@ -132,9 +132,9 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
           ),
           Expanded(
               child: Center(
-            child: _qrcodeWidget(346 / 466 * width > (height * 0.9 - 100)
-                ? (height * 0.9 - 100)
-                : 346 / 466 * width),
+            child: _qrcodeWidget(346 / 466 * width! > (height! * 0.9 - 100)
+                ? (height! * 0.9 - 100)
+                : 346 / 466 * width!),
           )),
           Container(
             margin: EdgeInsets.only(bottom: 15),
@@ -142,7 +142,7 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
             // child: Text("我的邀请码: ${UserManager.instance.user.info.invitationNo}", style: TextStyle(color: Colors.black),),
           ),
           Container(
-            height: height * 0.1,
+            height: height! * 0.1,
             child: Stack(
               children: <Widget>[
                 Positioned(
@@ -175,7 +175,7 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
       height: size,
       child: QrImage(
         data:
-            "${AppConfig.debug ? WebApi.testInviteRegist : WebApi.inviteRegist}${UserManager.instance.user.info.invitationNo}",
+            "${AppConfig.debug! ? WebApi.testInviteRegist : WebApi.inviteRegist}${UserManager.instance!.user.info!.invitationNo}",
         version: QrVersions.auto,
         size: size,
         gapless: false,
@@ -198,13 +198,13 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
     // '保存中...'
     showLoading("");
     RenderRepaintBoundary boundary =
-    _globalKey.currentContext.findRenderObject();
+    _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     ui.Image image =
     await boundary.toImage(pixelRatio: ui.window.devicePixelRatio * 1.2);
-    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    ByteData byteData = await (image.toByteData(format: ui.ImageByteFormat.png) as FutureOr<ByteData>);
     Uint8List pngBytes = byteData.buffer.asUint8List();
 
-    if (pngBytes == null || pngBytes.length == 0) {
+    if (pngBytes.length == 0) {
       dismissLoading();
       showError("图片获取失败...");
       return;

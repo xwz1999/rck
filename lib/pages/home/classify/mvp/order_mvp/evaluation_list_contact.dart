@@ -9,7 +9,7 @@ abstract class EvaluationListPresenterI
 }
 
 abstract class EvaluationListModelI extends MvpModel {
-  getEvaluationList(int userId, int goodId, int page);
+  getEvaluationList(int? userId, int? goodId, int page);
   loadMore(int userId, int goodsId, int page);
 }
 

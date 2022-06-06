@@ -16,11 +16,11 @@ import 'package:recook/redux/user_brief_redux.dart';
 import 'package:recook/redux/user_redux.dart';
 
 class RecookState {
-  User user;
-  ThemeData themeData;
-  UserBrief userBrief;
-  Openinstall openinstall;
-  int goodsId;
+  User? user;
+  ThemeData? themeData;
+  UserBrief? userBrief;
+  Openinstall? openinstall;
+  int? goodsId;
   RecookState({this.user, this.themeData, this.userBrief, this.openinstall, this.goodsId});
 }
 

@@ -1,11 +1,11 @@
 class ActivityVideoListModel {
-  int id;
-  int goodsCount;
-  String cover;
-  int look;
-  String title;
-  int isLive;
-  int startAt;
+  int? id;
+  int? goodsCount;
+  String? cover;
+  int? look;
+  String? title;
+  int? isLive;
+  int? startAt;
 
   ActivityVideoListModel(
       {this.id,

@@ -1,9 +1,7 @@
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/models/order_after_sales_list_model.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 
@@ -21,7 +19,7 @@ class AfterSalesItem extends StatefulWidget {
 }
 
 class _AfterSalesItemState extends State<AfterSalesItem> {
-  OrderAfterSalesModel _saleModel;
+  late OrderAfterSalesModel _saleModel;
 
   @override
   void initState() {
@@ -33,7 +31,7 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (widget.itemClick != null) widget.itemClick();
+ widget.itemClick();
       },
       child: Container(
         color: AppColor.frenchColor,
@@ -76,7 +74,7 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
               ),
               Spacer(),
               Text(
-                _saleModel.asDesc,
+                _saleModel.asDesc!,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -101,7 +99,7 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
                   width: 80 * 2.h,
                   height: 80 * 2.h,
                   imageUrl: Api.getResizeImgUrl(
-                      _saleModel.mainPhotoUrl, 160 * 2.h.toInt()),
+                      _saleModel.mainPhotoUrl!, 160 * 2.h.toInt()),
                   fit: BoxFit.cover,
                   borderRadius: BorderRadius.all(Radius.circular(6)),
                 ),
@@ -122,7 +120,7 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
                       Container(
                         alignment: Alignment.topLeft,
                         child: Text(
-                          _saleModel.goodsName,
+                          _saleModel.goodsName!,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -144,7 +142,7 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
                                   ),
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 3, horizontal: 6),
-                                  child: Text(_saleModel.skuName,
+                                  child: Text(_saleModel.skuName!,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -180,7 +178,7 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
                         style: TextStyle(
                             color: AppColor.redColor, fontSize: 14 * 2.sp),
                       ),
-                      _saleModel.quantity != null && _saleModel.quantity > 0
+                      _saleModel.quantity != null && _saleModel.quantity! > 0
                           ? Container(
                               margin: EdgeInsets.only(left: rSize(10)),
                               child: ExtendedText.rich(TextSpan(
@@ -190,7 +188,7 @@ class _AfterSalesItemState extends State<AfterSalesItem> {
                                       fontSize: 14 * 2.sp),
                                   children: [
                                     TextSpan(
-                                      text: _saleModel.quantity
+                                      text: _saleModel.quantity!
                                           .toInt()
                                           .toString(),
                                       style: TextStyle(

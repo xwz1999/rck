@@ -21,21 +21,24 @@ import 'package:recook/models/order_preview_model.dart';
 
 class GoodsDetailModelImpl {
   ///获取失踪儿童信息
-  static Future<MissingChildrenModel> getMissingChildrenInfo() async {
+  static Future<MissingChildrenModel?> getMissingChildrenInfo() async {
     ResultData result =
         await HttpManager.post(APIV2.goodsAPI.getMissingChildrenInfo, {
-      'user_id': UserManager.instance.user.info.id,
+      'user_id': UserManager.instance!.user.info!.id,
     });
 
     if (result.data != null) {
       if (result.data['data'] != null) {
         return MissingChildrenModel.fromJson(result.data['data']);
       }
+    }else{
+      return null;
     }
+    return null;
   }
 
   /// 商品详情  1.13.3版本 商详情可上传多个 更改接口以避免影响老版本的使用 //GoodsApi.goods_detail_info_new
-  static Future<GoodsDetailModel> getDetailInfo(int goodsID, int userID) async {
+  static Future<GoodsDetailModel> getDetailInfo(int? goodsID, int? userID) async {
     ResultData res = await HttpManager.post(
         GoodsApi.goods_detail_info_new, {"goodsID": goodsID, "userId": userID});
 
@@ -49,8 +52,8 @@ class GoodsDetailModelImpl {
 
   // 立即购买
   static Future<OrderPreviewModel> createOrderPreview(
-      int userID, int skuID, String skuName, int quantity,
-      {int liveId,String invite}) async {
+      int? userID, int? skuID, String? skuName, int? quantity,
+      {int? liveId,String? invite}) async {
     Map param = {
       "userID": userID,
       "skuID": skuID,
@@ -74,7 +77,7 @@ class GoodsDetailModelImpl {
   }
 
   /// 详情图片
-  static Future<GoodsDetailImagesModel> getDetailImages(int goodsID) async {
+  static Future<GoodsDetailImagesModel> getDetailImages(int? goodsID) async {
     ResultData res = await HttpManager.post(
         GoodsApi.goods_detail_images, {"goodsID": goodsID});
 
@@ -88,7 +91,7 @@ class GoodsDetailModelImpl {
 
   /// 发圈动态
   static Future<MaterialListModel> getDetailMoments(
-      int userID, int goodsID) async {
+      int? userID, int? goodsID) async {
     ResultData res = await HttpManager.post(
         GoodsApi.goods_detail_moments, {"userID": userID, "goodsID": goodsID});
     if (!res.result) {
@@ -100,7 +103,7 @@ class GoodsDetailModelImpl {
   }
 
   /// 发布发圈动态
-  static Future<HttpResultModel<BaseModel>> getDetailMomentsCreate(
+  static Future<HttpResultModel<BaseModel?>> getDetailMomentsCreate(
       Map<String, dynamic> params) async {
     ResultData res =
         await HttpManager.post(GoodsApi.goods_detail_moments_create, params);
@@ -115,8 +118,8 @@ class GoodsDetailModelImpl {
   }
 
   /// 关注
-  static Future<HttpResultModel<BaseModel>> goodsAttentionCreate(
-      int userId, int followId) async {
+  static Future<HttpResultModel<BaseModel?>> goodsAttentionCreate(
+      int? userId, int? followId) async {
     ResultData res = await HttpManager.post(AttentionApi.attention_create,
         {"userId": userId, "followId": followId});
     if (!res.result) {
@@ -130,8 +133,8 @@ class GoodsDetailModelImpl {
   }
 
   /// 取消关注
-  static Future<HttpResultModel<BaseModel>> goodsAttentionCancel(
-      int userId, int followId) async {
+  static Future<HttpResultModel<BaseModel?>> goodsAttentionCancel(
+      int? userId, int? followId) async {
     ResultData res = await HttpManager.post(AttentionApi.attention_cancel,
         {"userId": userId, "followId": followId});
     if (!res.result) {
@@ -145,8 +148,8 @@ class GoodsDetailModelImpl {
   }
 
   /// 添加收藏
-  static Future<HttpResultModel<BaseModel>> favoriteAdd(
-      int userID, int goodsID) async {
+  static Future<HttpResultModel<BaseModel?>> favoriteAdd(
+      int? userID, int? goodsID) async {
     ResultData res = await HttpManager.post(
         GoodsApi.goods_favorite_add, {"userID": userID, "goodsID": goodsID});
     if (!res.result) {
@@ -160,8 +163,8 @@ class GoodsDetailModelImpl {
   }
 
   /// 取消收藏
-  static Future<HttpResultModel<BaseModel>> favoriteCancel(
-      int userID, int goodsID) async {
+  static Future<HttpResultModel<BaseModel?>> favoriteCancel(
+      int? userID, int? goodsID) async {
     ResultData res = await HttpManager.post(
         GoodsApi.goods_favorite_cancel, {"userId": userID, "goodsId": goodsID});
     if (!res.result) {

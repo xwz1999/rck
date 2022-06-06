@@ -18,7 +18,6 @@ class GoodsStatusTool {
         return "已发货";
       default:
         return "";
-        break;
     }
   }
   _expressStatus(OrderModel goods) {

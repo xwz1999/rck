@@ -9,8 +9,8 @@ import 'package:recook/widgets/recook/recook_scaffold.dart';
 import 'package:recook/widgets/recook_indicator.dart';
 
 class UserAttentionPage extends StatefulWidget {
-  final int id;
-  UserAttentionPage({Key key, @required this.id}) : super(key: key);
+  final int? id;
+  UserAttentionPage({Key? key, required this.id}) : super(key: key);
 
   @override
   _UserAttentionPageState createState() => _UserAttentionPageState();
@@ -18,9 +18,9 @@ class UserAttentionPage extends StatefulWidget {
 
 class _UserAttentionPageState extends State<UserAttentionPage>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  TabController? _tabController;
 
-  bool get selfFlag => widget.id == UserManager.instance.user.info.id;
+  bool get selfFlag => widget.id == UserManager.instance!.user.info!.id;
 
   @override
   void initState() {
@@ -77,13 +77,13 @@ class _UserAttentionPageState extends State<UserAttentionPage>
 }
 
 Widget buildUserBaseCard({
-  Widget prefix,
-  @required String title,
-  String subTitlePrefix,
-  String subTitleSuffix,
-  @required VoidCallback onTap,
+  required Widget prefix,
+  required String title,
+  required String subTitlePrefix,
+  required String subTitleSuffix,
+  required VoidCallback onTap,
   bool initAttention = false,
-  @required Function(bool oldState) onAttention,
+  required Function(bool oldState) onAttention,
 }) {
   return CustomImageButton(
     onPressed: onTap,

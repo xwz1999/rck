@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
@@ -18,7 +16,7 @@ class WholesaleTableMonthPage extends StatefulWidget {
 
 
   WholesaleTableMonthPage({
-    Key key, @required this.year,
+    Key? key, required this.year,
   }) : super(key: key);
 
   @override
@@ -29,11 +27,11 @@ class _WholesaleTableMonthPageState extends State<WholesaleTableMonthPage> {
   GSRefreshController _refreshController =
   GSRefreshController(initialRefresh: true);
 
-  PiFaTableModel models;
+  PiFaTableModel? models;
 
   bool _onLoad = true;
 
-  DateTime _date;
+  late DateTime _date;
 
   @override
   void initState() {
@@ -186,7 +184,7 @@ class _WholesaleTableMonthPageState extends State<WholesaleTableMonthPage> {
                     ),
                   ),
                   Text(
-                      _onLoad ?'0':TextUtils.getCount1(models.total),
+                      _onLoad ?'0':TextUtils.getCount1(models!.total!)!,
                     style:
                         TextStyle(fontSize: 32.rsp, color: Color(0xFF8D1D22)),
                   ),
@@ -214,10 +212,10 @@ class _WholesaleTableMonthPageState extends State<WholesaleTableMonthPage> {
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 itemBuilder: (context, i) {
-                  if(models.data.isEmpty){
+                  if(models!.data!.isEmpty){
                     return SizedBox();
                   }else{
-                    PiFaData model = models.data[i];
+                    PiFaData model = models!.data![i];
                     return _buildTableBody(model);
                   }
                 },
@@ -228,7 +226,7 @@ class _WholesaleTableMonthPageState extends State<WholesaleTableMonthPage> {
                   indent: 20.rw,
                   endIndent: 20.rw,
                 ),
-                itemCount: models.data.length,
+                itemCount: models!.data!.length,
               ),
 
             ],
@@ -291,7 +289,7 @@ class _WholesaleTableMonthPageState extends State<WholesaleTableMonthPage> {
   _buildTableBody(PiFaData model) {
     return GestureDetector(
       onTap: (){
-        Get.to(WholesaleTableDayPage(year: widget.year,month:int.parse(model.name.split('-')[1]) ));
+        Get.to(WholesaleTableDayPage(year: widget.year,month:int.parse(model.name!.split('-')[1]) ));
       },
       child: Container(
         height: 40.rw,
@@ -304,7 +302,7 @@ class _WholesaleTableMonthPageState extends State<WholesaleTableMonthPage> {
                   alignment: Alignment.center,
 
                   child: Text(
-                    model.name,
+                    model.name!,
                     style: TextStyle(
                       fontSize: 14.rsp,
                       color: Color(0xFF333333),
@@ -333,7 +331,7 @@ class _WholesaleTableMonthPageState extends State<WholesaleTableMonthPage> {
                   Container(
                       alignment: Alignment.center,
                       child: Text(
-                        model.amount.toStringAsFixed(2),
+                        model.amount!.toStringAsFixed(2),
                         style: TextStyle(
                           fontSize: 14.rsp,
                           color: Color(0xFF333333),
@@ -356,8 +354,8 @@ class _WholesaleTableMonthPageState extends State<WholesaleTableMonthPage> {
 
   ///时间选择器
   showTimePickerBottomSheet(
-      {List<BottomTimePickerType> timePickerTypes,
-        Function(DateTime, BottomTimePickerType) submit}) {
+      {List<BottomTimePickerType>? timePickerTypes,
+        Function(DateTime, BottomTimePickerType)? submit}) {
     showModalBottomSheet(
       isScrollControlled: false,
       context: context,

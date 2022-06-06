@@ -8,7 +8,7 @@ import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class UserOldHistoryBenefitPage extends StatefulWidget {
-  UserOldHistoryBenefitPage({Key key}) : super(key: key);
+  UserOldHistoryBenefitPage({Key? key}) : super(key: key);
 
   @override
   _UserOldHistoryBenefitPageState createState() =>
@@ -19,10 +19,10 @@ class _UserOldHistoryBenefitPageState extends State<UserOldHistoryBenefitPage> {
   GSRefreshController _refreshController =
       GSRefreshController(initialRefresh: true);
 
-  double _total = 0.0;
-  double _purchase = 0.0;
-  double _guide = 0.0;
-  double _team = 0.0;
+  double? _total = 0.0;
+  double? _purchase = 0.0;
+  double? _guide = 0.0;
+  double? _team = 0.0;
 
   _renderColumn(String title, String subTitle) {
     return Column(
@@ -73,7 +73,7 @@ class _UserOldHistoryBenefitPageState extends State<UserOldHistoryBenefitPage> {
                   children: [
                     '历史累计总收益(瑞币)'.text.black.make(),
                     8.hb,
-                    (_total.toStringAsFixed(2) ?? '')
+                    (_total!.toStringAsFixed(2))
                         .text
                         .black
                         .size(34.rsp)
@@ -92,11 +92,11 @@ class _UserOldHistoryBenefitPageState extends State<UserOldHistoryBenefitPage> {
             padding: EdgeInsets.symmetric(vertical: 8.rw),
             child: Row(
               children: [
-                _renderColumn('自购收益', _purchase.toStringAsFixed(2) ?? ''),
+                _renderColumn('自购收益', _purchase!.toStringAsFixed(2)),
                 _renderDivider(),
-                _renderColumn('导购收益', _guide.toStringAsFixed(2) ?? ''),
+                _renderColumn('导购收益', _guide!.toStringAsFixed(2) ),
                 _renderDivider(),
-                _renderColumn('品牌补贴', _team.toStringAsFixed(2) ?? ''),
+                _renderColumn('品牌补贴', _team!.toStringAsFixed(2)),
               ],
             ),
           ),
@@ -126,8 +126,7 @@ class _UserOldHistoryBenefitPageState extends State<UserOldHistoryBenefitPage> {
         onRefresh: () async {
           ResultData result =
               await HttpManager.post(APIV2.userAPI.oldIncome, {});
-          if (result != null &&
-              result.data != null &&
+          if (result.data != null &&
               result.data['data'] != null) {
             _total = result.data['data']['total'] + .0;
             _purchase = result.data['data']['purchase'] + .0;

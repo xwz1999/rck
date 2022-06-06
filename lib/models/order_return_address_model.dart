@@ -7,9 +7,9 @@ part 'order_return_address_model.g.dart';
 class OrderReturnAddressModel {
 
 
-  String code;
-  String msg;
-  AddressModel data;
+  String? code;
+  String? msg;
+  AddressModel? data;
 
   OrderReturnAddressModel(this.code, this.msg, this.data);
 
@@ -20,10 +20,10 @@ class OrderReturnAddressModel {
 @JsonSerializable()
 class AddressModel {
 
-  int id;
-  String address;
-  String name;
-  String mobile;
+  int? id;
+  String? address;
+  String? name;
+  String? mobile;
 
   AddressModel(this.id, this.address, this.name, this.mobile);
 

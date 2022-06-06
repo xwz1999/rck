@@ -28,10 +28,10 @@ class GoodsListModelImpl extends GoodListModelI {
 
   @override
   Future<ResultData> fetchList(
-      int categoryID, int page, SortType type, int countryId,
-      {String keyword,int JDType}) async {
+      int? categoryID, int page, SortType type, int? countryId,
+      {String? keyword,int? JDType}) async {
             print(countryId.toString()+'|423546756678678');
-    String url;
+    late String url;
     switch (type) {
       case SortType.comprehensive:
         url = GoodsApi.goods_sort_comprehensive;
@@ -66,7 +66,7 @@ class GoodsListModelImpl extends GoodListModelI {
 
     }
 
-      params.putIfAbsent("user_id", () => UserManager.instance.user.info.id);
+      params.putIfAbsent("user_id", () => UserManager.instance!.user.info!.id);
 
 
     if (type == SortType.priceAsc || type == SortType.salesAsc) {
@@ -89,8 +89,8 @@ class GoodsListModelImpl extends GoodListModelI {
 
   @override
   Future<ResultData> fetchBrandList(
-      int brandId, int page, SortType type) async {
-    String url;
+      int? brandId, int page, SortType type) async {
+    late String url;
     switch (type) {
       case SortType.comprehensive:
         url = GoodsApi.goods_sort_comprehensive;
@@ -105,7 +105,7 @@ class GoodsListModelImpl extends GoodListModelI {
         break;
     }
 
-    Map<String, dynamic> params = {"brandId": brandId, "page": page,'user_id':UserManager.instance.user.info.id};
+    Map<String, dynamic> params = {"brandId": brandId, "page": page,'user_id':UserManager.instance!.user.info!.id};
 
     if (type == SortType.priceAsc || type == SortType.salesAsc) {
       params.putIfAbsent("order", () => "asc");

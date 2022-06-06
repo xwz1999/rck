@@ -9,7 +9,6 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +17,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/config.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/daos/user_dao.dart';
@@ -41,12 +39,12 @@ class WelcomeWidget extends StatefulWidget {
 }
 
 class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
-  String debugLable = 'Unknown';
-  String _backgroundUrl;
+  String? debugLable = 'Unknown';
+  String? _backgroundUrl;
   bool _close = false;
   int _countDownNum = 3;
-  int _goodsId = 0;
-  Timer _timer;
+  int? _goodsId = 0;
+  Timer? _timer;
   final JPush jpush = new JPush();
   @override
   Widget buildContext(BuildContext context, {store}) {
@@ -73,7 +71,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                   alignment: Alignment.bottomCenter,
                   child: Container(
                     child: _backgroundUrl != null
-                        ? ExtendedImage.network(Api.getImgUrl(_backgroundUrl),
+                        ? ExtendedImage.network(Api.getImgUrl(_backgroundUrl)!,
                             width: width,
                             alignment: Alignment.center,
                             height: picHeight,
@@ -124,7 +122,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
   void dispose() {
     super.dispose();
     if (_timer != null) {
-      _timer.cancel();
+      _timer!.cancel();
       _timer = null;
     }
   }
@@ -136,19 +134,19 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     _autoLogin();
     _showController();
     initPlatformState();
-    WidgetsBinding.instance.addPostFrameCallback((callback) {
+    WidgetsBinding.instance!.addPostFrameCallback((callback) {
       _beginCountDown();
-      UserManager.instance.updateUserBriefInfo(getStore());
-      print(UserManager.instance.userBrief);
-      if (UserManager.instance.haveLogin) {
-        UserManager.instance.activePeople();
+      UserManager.instance!.updateUserBriefInfo(getStore());
+      print(UserManager.instance!.userBrief);
+      if (UserManager.instance!.haveLogin) {
+        UserManager.instance!.activePeople();
       }
     });
 
   }
 
   Future<void> initPlatformState() async {
-    String platformVersion;
+    String? platformVersion;
 
     try {
       jpush.addEventHandler(
@@ -208,7 +206,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     });
     jpush.getRegistrationID().then((rid)  {
       print("flutter get registration id : $rid");
-      UserManager.instance.jpushRid = rid;
+      UserManager.instance!.jpushRid = rid;
 
     });
 
@@ -222,7 +220,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
 
   Future _showController() async {
     ResultData response = await HttpManager.post(HomeApi.showController, null);
-    int result = response.data['data']['show'];
+    int? result = response.data['data']['show'];
     AppConfig.showExtraCommission = result == 1;
   }
 
@@ -366,17 +364,17 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     手机登录
    */
   _autoLogin() {
-    var value = HiveStore.appBox.get('key_user');
+    var value = HiveStore.appBox!.get('key_user');
     _launch(value);
   }
 
-  _launch(String value) {
+  _launch(String? value) {
     Map<String, dynamic> params = Map();
-    User user;
+    User? user;
     if (value != null && value is String) {
       user = User.fromJson(json.decode(value));
-      if (user.info.id != 0) {
-        params.putIfAbsent("userId", () => user.info.id);
+      if (user.info!.id != 0) {
+        params.putIfAbsent("userId", () => user!.info!.id);
       }
     }
     UserDao.launch(params, success: (data, code, msg) {
@@ -390,7 +388,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
       if (res.containsKey('goodsId') && res['goodsId'] > 0) {
         _goodsId = res['goodsId'];
       }
-      if (user != null && user.info.id != 0) {
+      if (user != null && user.info!.id != 0) {
         _userLogin(user);
       } else {
         _touristLogin();
@@ -413,7 +411,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
   }
 
   _pushToTabbar() {
-    _timer.cancel();
+    _timer!.cancel();
     _timer = null;
     Get.offAll(() => TabBarWidget());
   }

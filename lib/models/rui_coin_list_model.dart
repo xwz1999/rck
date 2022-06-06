@@ -1,7 +1,7 @@
 class RuiCoinListModel {
-  String code;
-  String msg;
-  CoinData data;
+  String? code;
+  String? msg;
+  CoinData? data;
 
   RuiCoinListModel({this.code, this.msg, this.data});
 
@@ -16,16 +16,16 @@ class RuiCoinListModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class CoinData {
-  num total;
-  num history;
-  List<CoinList> list;
+  num? total;
+  num? history;
+  List<CoinList>? list;
 
   CoinData({this.total, this.history, this.list});
 
@@ -35,7 +35,7 @@ class CoinData {
     if (json['list'] != null) {
       list = [];
       json['list'].forEach((v) {
-        list.add(new CoinList.fromJson(v));
+        list!.add(new CoinList.fromJson(v));
       });
     }
   }
@@ -45,15 +45,15 @@ class CoinData {
     data['total'] = this.total;
     data['history'] = this.history;
     if (this.list != null) {
-      data['list'] = this.list.map((v) => v.toJson()).toList();
+      data['list'] = this.list!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class CoinList {
-  UserCoin userCoin;
-  String typeName;
+  UserCoin? userCoin;
+  String? typeName;
 
   CoinList({this.userCoin, this.typeName});
 
@@ -67,7 +67,7 @@ class CoinList {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.userCoin != null) {
-      data['UserCoin'] = this.userCoin.toJson();
+      data['UserCoin'] = this.userCoin!.toJson();
     }
     data['typeName'] = this.typeName;
     return data;
@@ -75,11 +75,11 @@ class CoinList {
 }
 
 class UserCoin {
-  num id;
-  num userId;
-  num coinType;
-  num coinNum;
-  String createdAt;
+  num? id;
+  num? userId;
+  num? coinType;
+  num? coinNum;
+  String? createdAt;
 
   UserCoin({this.id, this.userId, this.coinType, this.coinNum, this.createdAt});
 

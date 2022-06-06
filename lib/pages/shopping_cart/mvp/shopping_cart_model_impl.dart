@@ -15,7 +15,7 @@ import 'shopping_cart_contact.dart';
 class ShoppingCartModelImpl extends ShoppingCartModelI {
   //购物车接口
   @override
-  Future<ResultData> getShoppingCartList(int userID) async {
+  Future<ResultData> getShoppingCartList(int? userID) async {
     ResultData resultData =
         await HttpManager.post(GoodsApi.shopping_cart_list, {"userID": userID});
     print(resultData);
@@ -24,7 +24,7 @@ class ShoppingCartModelImpl extends ShoppingCartModelI {
 
   @override
   Future<ResultData> addToShoppingCart(
-      int userID, int skuID, String skuName, int quantity) async {
+      int? userID, int? skuID, String? skuName, int? quantity) async {
     ResultData resultData = await HttpManager.post(
         GoodsApi.goods_add_shopping_cart, {
       "userID": userID,
@@ -37,7 +37,7 @@ class ShoppingCartModelImpl extends ShoppingCartModelI {
 
   @override
   Future<ResultData> deleteFromShoppingCart(
-      int userID, List<int> cartIDs) async {
+      int? userID, List<int?> cartIDs) async {
     ResultData resultData = await HttpManager.post(
         GoodsApi.shopping_cart_delete,
         {"trolleyGoodsIDs": cartIDs, "userID": userID});
@@ -45,7 +45,7 @@ class ShoppingCartModelImpl extends ShoppingCartModelI {
   }
 
   @override
-  Future<ResultData> updateQuantity(int userID, goods, int quantity) async {
+  Future<ResultData> updateQuantity(int? userID, goods, int quantity) async {
     ResultData resultData =
         await HttpManager.post(GoodsApi.shopping_cart_update_quantity, {
       "userId": userID,
@@ -56,7 +56,7 @@ class ShoppingCartModelImpl extends ShoppingCartModelI {
   }
 
   @override
-  Future<ResultData> submitOrder(int userId, List<int> cardIds) async {
+  Future<ResultData> submitOrder(int? userId, List<int?> cardIds) async {
     ResultData resultData = await HttpManager.post(
         GoodsApi.shopping_cart_submit_order,
         {"userId": userId, "ids": cardIds});

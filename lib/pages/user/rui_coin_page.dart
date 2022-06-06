@@ -29,12 +29,12 @@ class ClassifyType {
 }
 
 class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
-  RuiCoinListModel _listModel;
-  List<CoinList> _cellModelList;
-  GSRefreshController _refreshController;
+  RuiCoinListModel? _listModel;
+  List<CoinList>? _cellModelList;
+  GSRefreshController? _refreshController;
   bool _openFilter = false;
-  DateTime _selectDateTime;
-  String _selectDateString;
+  late DateTime _selectDateTime;
+  late String _selectDateString;
   List<ClassifyType> _typeList = [
     ClassifyType(name: '全部', sortType: "", isSelect: true),
     ClassifyType(name: '消费', sortType: "purchase"),
@@ -46,7 +46,7 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
     ClassifyType(name: '代理补贴', sortType: "reward"),
     ClassifyType(name: '瑞币退回', sortType: "coin_refund"),
   ];
-  ClassifyType _selectType;
+  ClassifyType? _selectType;
   @override
   void initState() {
     super.initState();
@@ -62,7 +62,7 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
       appBar: CustomAppBar(
-        actions: AppConfig.getShowCommission()
+        actions: AppConfig.getShowCommission()!
             ? <Widget>[_listModel == null ? Container() : _goToBalance()]
             : [],
         appBackground: Colors.white,
@@ -91,11 +91,11 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
                           _getCoinList();
                         },
                         body: _cellModelList != null &&
-                                _cellModelList.length > 0
+                                _cellModelList!.length > 0
                             ? ListView.builder(
-                                itemCount: _cellModelList.length,
+                                itemCount: _cellModelList!.length,
                                 itemBuilder: (BuildContext context, int index) {
-                                  return _itemWidget(_cellModelList[index]);
+                                  return _itemWidget(_cellModelList![index]);
                                 },
                               )
                             : noDataView("没有数据..."),
@@ -135,7 +135,7 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      coinList.typeName,
+                      coinList.typeName!,
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w300,
@@ -145,7 +145,7 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
                       height: 3,
                     ),
                     Text(
-                      coinList.userCoin.createdAt,
+                      coinList.userCoin!.createdAt!,
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w300,
@@ -155,9 +155,9 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
                 ),
                 Spacer(),
                 Text(
-                  coinList.userCoin.coinNum > 0
-                      ? "+${coinList.userCoin.coinNum}"
-                      : coinList.userCoin.coinNum.toString(),
+                  coinList.userCoin!.coinNum! > 0
+                      ? "+${coinList.userCoin!.coinNum}"
+                      : coinList.userCoin!.coinNum.toString(),
                   style: TextStyle(color: Colors.black, fontSize: 14),
                 ),
               ],
@@ -187,7 +187,7 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
         onPressed: () {
           AppRouter.push(context, RouteName.RUI_TRANSFER_BALANCE_PAGE,
               arguments: RuiCoinTransferToBalancePage.setArguments(
-                  _listModel.data.total));
+                  _listModel!.data!.total));
         },
       ),
     );
@@ -222,7 +222,7 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
                         height: 5,
                       ),
                       Text(
-                        '¥${_listModel.data.total.toStringAsFixed(2)}',
+                        '¥${_listModel!.data!.total!.toStringAsFixed(2)}',
                         style: TextStyle(
                             color: Color(0xffd40000),
                             fontSize: 29,
@@ -247,7 +247,7 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
                         height: 5,
                       ),
                       Text(
-                        '¥${_listModel.data.history.toStringAsFixed(2)}',
+                        '¥${_listModel!.data!.history!.toStringAsFixed(2)}',
                         style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w500,
@@ -272,7 +272,7 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
                     setState(() {});
                   },
                   child: _selectWidget(
-                    _selectType.name,
+                    _selectType!.name,
                   ),
                 ),
                 Spacer(),
@@ -346,7 +346,7 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
           _selectType = type;
           _openFilter = false;
           setState(() {});
-          _refreshController.requestRefresh();
+          _refreshController!.requestRefresh();
         },
       ));
     }
@@ -395,7 +395,7 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
                 _selectDateTime = time;
                 _selectDateString = _getDateString(_selectDateTime);
                 setState(() {});
-                _refreshController.requestRefresh();
+                _refreshController!.requestRefresh();
               },
             ));
       },
@@ -410,26 +410,26 @@ class _RuiCoinPageState extends BaseStoreState<RuiCoinPage> {
 
   _getCoinList() async {
     ResultData resultData = await HttpManager.post(UserApi.rui_coin_list, {
-      "userId": UserManager.instance.user.info.id,
+      "userId": UserManager.instance!.user.info!.id,
       "date": _getDateString(_selectDateTime),
-      "coinType": _selectType != null ? _selectType.sortType : ""
+      "coinType": _selectType != null ? _selectType!.sortType : ""
     });
 
     if (!resultData.result) {
-      showError(resultData.msg);
-      _refreshController.refreshCompleted();
+      showError(resultData.msg??"");
+      _refreshController!.refreshCompleted();
       return;
     }
     RuiCoinListModel model = RuiCoinListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
-      _refreshController.refreshCompleted();
+      showError(model.msg??'');
+      _refreshController!.refreshCompleted();
       return;
     }
     _listModel = model;
-    _cellModelList = model.data.list;
+    _cellModelList = model.data!.list;
     setState(() {});
-    _refreshController.refreshCompleted();
+    _refreshController!.refreshCompleted();
   }
 
   // // 无用

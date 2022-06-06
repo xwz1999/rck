@@ -1,7 +1,7 @@
 class UserBenefitModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   UserBenefitModel({this.code, this.msg, this.data});
   UserBenefitModel.zero() {
@@ -21,17 +21,17 @@ class UserBenefitModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  double monthExpect;
-  double dayExpect;
-  double lastMonthExpect;
-  double lastMonthIncome;
+  double? monthExpect;
+  double? dayExpect;
+  double? lastMonthExpect;
+  double? lastMonthIncome;
 
   Data(
       {this.monthExpect,

@@ -1,7 +1,7 @@
 class UserSelfIncomeModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   UserSelfIncomeModel({this.code, this.msg, this.data});
 
@@ -16,17 +16,17 @@ class UserSelfIncomeModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  MyShopping myShopping;
-  String date;
-  num coinNum;
-  List<IncomeList> list;
+  MyShopping? myShopping;
+  String? date;
+  num? coinNum;
+  List<IncomeList>? list;
 
   Data({this.myShopping, this.date, this.coinNum, this.list});
 
@@ -39,7 +39,7 @@ class Data {
     if (json['list'] != null) {
       list = [];
       json['list'].forEach((v) {
-        list.add(new IncomeList.fromJson(v));
+        list!.add(new IncomeList.fromJson(v));
       });
     }
   }
@@ -47,21 +47,21 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.myShopping != null) {
-      data['myShopping'] = this.myShopping.toJson();
+      data['myShopping'] = this.myShopping!.toJson();
     }
     data['date'] = this.date;
     data['coinNum'] = this.coinNum;
     if (this.list != null) {
-      data['list'] = this.list.map((v) => v.toJson()).toList();
+      data['list'] = this.list!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class MyShopping {
-  num orderNum;
-  num amount;
-  num historyIncome;
+  num? orderNum;
+  num? amount;
+  num? historyIncome;
 
   MyShopping({this.orderNum, this.amount, this.historyIncome});
 
@@ -81,10 +81,10 @@ class MyShopping {
 }
 
 class IncomeList {
-  String time;
-  num orderNum;
-  num amount;
-  num historyIncome;
+  String? time;
+  num? orderNum;
+  num? amount;
+  num? historyIncome;
 
   IncomeList({this.time, this.orderNum, this.amount, this.historyIncome});
 

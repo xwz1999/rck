@@ -7,7 +7,7 @@ part 'coupon_list_model.g.dart';
 @JsonSerializable()
 class CouponListModel extends BaseModel {
 
-  List<Coupon> data;
+  List<Coupon>? data;
 
   CouponListModel(code,this.data,msg,) : super(code, msg);
 
@@ -21,35 +21,35 @@ class CouponListModel extends BaseModel {
 @JsonSerializable()
 class Coupon extends Object {
 
-  int id;
+  int? id;
 
-  String name;
+  String? name;
 
-  int quantity;
+  int? quantity;
 
-  int cash;
+  int? cash;
 
-  int threshold;
+  int? threshold;
 
-  double discount;
+  double? discount;
 
-  int limit;
+  int? limit;
 
   // 0、通用   1、品牌
-  int scope;
+  int? scope;
 
   // 0 满减   //1 折扣
-  int type;
+  int? type;
 
-  int brandId;
+  int? brandId;
 
-  String startTime;
+  String? startTime;
 
-  String endTime;
+  String? endTime;
 
-  String explanation;
+  String? explanation;
 
-  int isReceived;
+  int? isReceived;
 
   Coupon(this.id,this.name,this.quantity,this.cash,this.threshold,this.discount,this.limit,this.scope,this.type,this.brandId,this.startTime,this.endTime,this.explanation,this.isReceived,);
 

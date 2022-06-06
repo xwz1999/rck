@@ -12,10 +12,10 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/utils/user_level_tool.dart';
 
 class AppConfig {
-  static String versionNumber;
-  static bool debug;
-  static bool needEncrypt;
-  static bool showCommission;
+  static String? versionNumber;
+  static bool? debug;
+  static bool? needEncrypt;
+  static bool? showCommission;
 
   ///后台控制显示
   static bool showExtraCommission = false;
@@ -31,7 +31,7 @@ class AppConfig {
     debug = dev;
     needEncrypt = useEncrypt;
     showCommission = canShowCommission;
-    Api.toggleEnvironment(debug);
+    Api.toggleEnvironment(debug!);
   }
 
   static setDebug(bool isDebug) {
@@ -39,7 +39,7 @@ class AppConfig {
       return;
     }
     debug = isDebug;
-    Api.toggleEnvironment(debug);
+    Api.toggleEnvironment(debug!);
   }
 
   static setEncrypt(bool isEncrypt) {
@@ -61,12 +61,12 @@ class AppConfig {
   ///首先判断showExtraCommission，该值由后台控制显示
   ///
   ///其次未登陆和一般会员用户无法显示该值
-  static bool getShowCommission() {
+  static bool? getShowCommission() {
     // return true;
     if (showExtraCommission) {
       return true;
     } else {
-      if ((!UserManager.instance.haveLogin ||
+      if ((!UserManager.instance!.haveLogin ||
           UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
           UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.None)) {
         return false;
@@ -77,7 +77,7 @@ class AppConfig {
   }
 
   static bool get commissionByRoleLevel {
-    if ((!UserManager.instance.haveLogin ||
+    if ((!UserManager.instance!.haveLogin ||
         UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.Vip ||
         UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.None)) {
       return false;

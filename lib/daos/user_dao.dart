@@ -10,7 +10,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/config.dart';
@@ -25,19 +24,19 @@ class UserDao {
   /*
     获取access_token 和 openid
    */
-  static Future<Map> getOpenId(code) async {
+  static Future<Map?> getOpenId(code) async {
     String url =
         "$openIdUrl?appid=${AppConfig.WX_APP_ID}&secret=${AppConfig.WX_APP_SECRET}&code=$code&grant_type=authorization_code";
-    Response res = await HttpManager.netFetchNormal(url, null, null, null);
-    Map map = json.decode(res.toString());
+    Response? res = await HttpManager.netFetchNormal(url, null, null, null);
+    Map? map = json.decode(res.toString());
     return map;
   }
 
   /*
     微信登录
    */
-  static weChatLogin(String code,
-      {@required OnSuccess<User> success, @required OnFailure failure}) async {
+  static weChatLogin(String? code,
+      {required OnSuccess<User> success, required OnFailure failure}) async {
     ResultData res = await HttpManager.post(UserApi.wx_login, {"code": code});
     if (!res.result) {
       failure(res.code, res.msg);
@@ -54,8 +53,8 @@ class UserDao {
   /*
     微信注册
    */
-  static weChatRegister(String wxUnionId, String mobile, String sms,
-      {@required OnSuccess<User> success, @required OnFailure failure}) async {
+  static weChatRegister(String? wxUnionId, String mobile, String sms,
+      {required OnSuccess<User> success, required OnFailure failure}) async {
     // ResultData res = await HttpManager.post(
     //     UserApi.wx_register, {"wxUnionId":wxUnionId,"mobile":mobile,"sms":sms,"invitationNo":invitationNo.toUpperCase()});
     ResultData res = await HttpManager.post(UserApi.wx_register,
@@ -75,8 +74,8 @@ class UserDao {
   /*
     微信注册
    */
-  static weChatInvitation(String wxUnionId, String invitationNo,
-      {@required OnSuccess<User> success, @required OnFailure failure}) async {
+  static weChatInvitation(String? wxUnionId, String invitationNo,
+      {required OnSuccess<User> success, required OnFailure failure}) async {
     // ResultData res = await HttpManager.post(
     //     UserApi.wx_register, {"wxUnionId":wxUnionId,"mobile":mobile,"sms":sms,"invitationNo":invitationNo.toUpperCase()});
     ResultData res = await HttpManager.post(UserApi.wx_invitation,
@@ -97,8 +96,8 @@ class UserDao {
     获取验证码
    */
   static sendSmsCode(String phone,
-      {@required OnSuccess<BaseModel> success,
-      @required OnFailure failure}) async {
+      {required OnSuccess<BaseModel> success,
+      required OnFailure failure}) async {
     ResultData res =
         await HttpManager.post(UserApi.phone_login_send_sms, {"mobile": phone});
 
@@ -118,8 +117,8 @@ class UserDao {
     获取验证码 升级
    */
   static sendCode(String phone,
-      {@required OnSuccess<BaseModel> success,
-        @required OnFailure failure}) async {
+      {required OnSuccess<BaseModel> success,
+        required OnFailure failure}) async {
     ResultData res =
     await HttpManager.post(APIV2.userAPI.sendRecommendCode, {"mobile": phone});
 
@@ -139,7 +138,7 @@ class UserDao {
    * 手机登录
    */
   static phoneLogin(String phone, String smsCode,
-      {@required OnSuccess<User> success, @required OnFailure failure}) async {
+      {required OnSuccess<User> success, required OnFailure failure}) async {
     ResultData res = await HttpManager.post(
         UserApi.phone_login, {"mobile": phone, "sms": smsCode});
 
@@ -160,7 +159,7 @@ class UserDao {
    * 账号
    */
   static accountLogin(String name, String password,
-      {@required OnSuccess<User> success, @required OnFailure failure}) async {
+      {required OnSuccess<User> success, required OnFailure failure}) async {
     ResultData res = await HttpManager.post(
         UserApi.account_login, {"name": name, "password": password});
 
@@ -210,7 +209,7 @@ class UserDao {
   //   ResultData res =
   //       await HttpManager.post(UserApi.auto_login, {}, header: header);
   static launch(Map<String, dynamic> params,
-      {@required OnSuccess success, @required OnFailure failure}) async {
+      {required OnSuccess success, required OnFailure failure}) async {
     ResultData res = await HttpManager.post(
       UserApi.launch,
       params,
@@ -230,8 +229,8 @@ class UserDao {
   /*
     手机注册
    */
-  static phoneRegister(String phone, String invitationNo,
-      {@required OnSuccess<User> success, @required OnFailure failure}) async {
+  static phoneRegister(String? phone, String invitationNo,
+      {required OnSuccess<User> success, required OnFailure failure}) async {
     ResultData res = await HttpManager.post(UserApi.phone_register,
         {"mobile": phone, });
 

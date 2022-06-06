@@ -1,7 +1,7 @@
 class UpgradeCardModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   UpgradeCardModel({this.code, this.msg, this.data});
 
@@ -16,16 +16,16 @@ class UpgradeCardModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  String nextAssessTime;
-  UpCode upCode;
-  UpCode keepCode;
+  String? nextAssessTime;
+  UpCode? upCode;
+  UpCode? keepCode;
 
   Data({this.nextAssessTime, this.upCode, this.keepCode});
 
@@ -41,18 +41,18 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['nextAssessTime'] = this.nextAssessTime;
     if (this.upCode != null) {
-      data['upCode'] = this.upCode.toJson();
+      data['upCode'] = this.upCode!.toJson();
     }
     if (this.keepCode != null) {
-      data['keepCode'] = this.keepCode.toJson();
+      data['keepCode'] = this.keepCode!.toJson();
     }
     return data;
   }
 }
 
 class UpCode {
-  List<UnusedCode> usedCode;
-  List<UnusedCode> unusedCode;
+  List<UnusedCode>? usedCode;
+  List<UnusedCode>? unusedCode;
 
   UpCode({this.usedCode, this.unusedCode});
 
@@ -60,13 +60,13 @@ class UpCode {
     if (json['usedCode'] != null) {
       usedCode = [];
       json['usedCode'].forEach((v) {
-        usedCode.add(new UnusedCode.fromJson(v));
+        usedCode!.add(new UnusedCode.fromJson(v));
       });
     }
     if (json['unusedCode'] != null) {
       unusedCode = [];
       json['unusedCode'].forEach((v) {
-        unusedCode.add(new UnusedCode.fromJson(v));
+        unusedCode!.add(new UnusedCode.fromJson(v));
       });
     }
   }
@@ -75,15 +75,15 @@ class UpCode {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['usedCode'] = this.usedCode;
     if (this.unusedCode != null) {
-      data['unusedCode'] = this.unusedCode.map((v) => v.toJson()).toList();
+      data['unusedCode'] = this.unusedCode!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class UnusedCode {
-  num id;
-  String code;
+  num? id;
+  String? code;
 
   UnusedCode({this.id, this.code});
 

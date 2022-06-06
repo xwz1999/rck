@@ -1,14 +1,14 @@
 class AkuVideoListModel {
-  List<AkuVideo> list;
-  int total;
+  List<AkuVideo>? list;
+  int? total;
 
   AkuVideoListModel({this.list, this.total});
 
   AkuVideoListModel.fromJson(Map<String, dynamic> json) {
     if (json['list'] != null) {
-      list = new List<AkuVideo>();
+      list = [];
       json['list'].forEach((v) {
-        list.add(new AkuVideo.fromJson(v));
+        list!.add(new AkuVideo.fromJson(v));
       });
     }
     total = json['total'];
@@ -17,7 +17,7 @@ class AkuVideoListModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.list != null) {
-      data['list'] = this.list.map((v) => v.toJson()).toList();
+      data['list'] = this.list!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -25,16 +25,16 @@ class AkuVideoListModel {
 }
 
 class AkuVideo {
-  int id;
-  String title;
-  String subTitle;
-  int type;//1为视频 2为图文
-  int isDraft;
-  String createDTime;
-  String textBody;
-  String coverUrl;
-  String videoUrl;
-  num numberOfHits;
+  int? id;
+  String? title;
+  String? subTitle;
+  int? type;//1为视频 2为图文
+  int? isDraft;
+  String? createDTime;
+  String? textBody;
+  String? coverUrl;
+  String? videoUrl;
+  num? numberOfHits;
 
   AkuVideo(
       {this.id,

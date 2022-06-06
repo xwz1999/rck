@@ -16,14 +16,14 @@ import 'package:recook/widgets/custom_cache_image.dart';
 
 class BrandDetailListItem extends StatelessWidget {
   // final Goods goods;
-  final GoodsSimple goods;
-  const BrandDetailListItem({Key key, this.goods}) : super(key: key);
+  final GoodsSimple? goods;
+  const BrandDetailListItem({Key? key, this.goods}) : super(key: key);
 
   static final Color colorGrey = Color(0xff999999);
   
   @override
   Widget build(BuildContext context) {
-    bool isSoldOut = goods.inventory<=0?true:false;
+    bool isSoldOut = goods!.inventory!<=0?true:false;
     return Container(
       height: 120,
       // margin: EdgeInsets.only(top: 3, bottom: 3),
@@ -42,7 +42,7 @@ class BrandDetailListItem extends StatelessWidget {
                     left: 0, top: 0, bottom: 0, width: 120,
                     child: CustomCacheImage(
                       fit: BoxFit.cover,
-                      imageUrl: Api.getResizeImgUrl(goods.mainPhotoUrl, 300),
+                      imageUrl: Api.getResizeImgUrl(goods!.mainPhotoUrl!, 300),
                       placeholder: AppImageName.placeholder_1x1,
                     )
                     // child: AspectRatio(
@@ -71,7 +71,7 @@ class BrandDetailListItem extends StatelessWidget {
                   Container(height: 2,),
                   Container(
                     child: Text(
-                      goods.goodsName,
+                      goods!.goodsName!,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                       style: AppTextStyle.generate(16,
@@ -96,9 +96,9 @@ class BrandDetailListItem extends StatelessWidget {
                     height: 15,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemCount: goods.tags!=null&&goods.tags.length>0?goods.tags.length:0,
+                      itemCount: goods!.tags!=null&&goods!.tags!.length>0?goods!.tags!.length:0,
                       itemBuilder: (BuildContext context, int index) {
-                      return ItemTagWidget.getWidgetWithTag(goods.tags[index], color: goods.inventory <= 0? colorGrey: AppColor.themeColor);
+                      return ItemTagWidget.getWidgetWithTag(goods!.tags![index], color: goods!.inventory! <= 0? colorGrey: AppColor.themeColor);
                      },
                     ),
                   ),
@@ -117,16 +117,16 @@ class BrandDetailListItem extends StatelessWidget {
                             fontWeight: FontWeight.w400, color: isSoldOut?colorGrey: AppColor.priceColor),
                       ),
                       Text(
-                        "${goods.discountPrice.toStringAsFixed(2)}",
+                        "${goods!.discountPrice!.toStringAsFixed(2)}",
                         style: AppTextStyle.generate(16, color: isSoldOut?colorGrey: AppColor.priceColor),
                       ),
                       Container(
                         width: 10,
                       ),
                       Offstage(
-                        offstage: !AppConfig.showCommission,
+                        offstage: !AppConfig.showCommission!,
                         child: Text(
-                          AppConfig.getShowCommission()? "赚${goods.commission.toStringAsFixed(2)}":"",
+                          AppConfig.getShowCommission()!? "赚${goods!.commission!.toStringAsFixed(2)}":"",
                           style: AppTextStyle.generate(13,
                               color: isSoldOut?colorGrey: Colors.red, fontWeight: FontWeight.w400),
                         ),
@@ -136,7 +136,7 @@ class BrandDetailListItem extends StatelessWidget {
                         margin: EdgeInsets.only(right: 10),
                         padding: const EdgeInsets.only(bottom: 3.0),
                         child: Text(
-                          "${goods.salesVolume}人付款",
+                          "${goods!.salesVolume}人付款",
                           style: AppTextStyle.generate(11, color: isSoldOut?colorGrey: Colors.grey),
                         ),
                       ),
@@ -174,10 +174,10 @@ class BrandDetailListItem extends StatelessWidget {
   }
   _tagsWidget(){
     List<Widget> list = <Widget>[];
-    if (goods.tags!=null && goods.tags.length>0) {
-      for (dynamic tag in goods.tags) {
+    if (goods!.tags!=null && goods!.tags!.length>0) {
+      for (dynamic tag in goods!.tags!) {
         list.add(
-          ItemTagWidget.getWidgetWithTag(tag, color: goods.inventory <= 0? colorGrey: AppColor.themeColor)
+          ItemTagWidget.getWidgetWithTag(tag, color: goods!.inventory! <= 0? colorGrey: AppColor.themeColor)
         );
       }
     }

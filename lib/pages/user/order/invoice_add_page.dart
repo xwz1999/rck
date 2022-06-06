@@ -26,10 +26,10 @@ class InvoiceAddPage extends StatefulWidget {
 
 class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
   int _type = 0;
-  TextEditingController _titleController;
-  TextEditingController _TFNController;
+  TextEditingController? _titleController;
+  TextEditingController? _TFNController;
 
-  OrderListPresenterImpl _presenter;
+  late OrderListPresenterImpl _presenter;
 
   @override
   void initState() {
@@ -42,8 +42,8 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
   @override
   void dispose() {
     super.dispose();
-    _TFNController.dispose();
-    _titleController.dispose();
+    _TFNController!.dispose();
+    _titleController!.dispose();
   }
 
   @override
@@ -218,18 +218,18 @@ class _InvoiceAddPageState extends BaseStoreState<InvoiceAddPage> {
   }
 
   _saveInvoice() async {
-    GSDialog.of(globalContext).showLoadingDialog(globalContext, "");
+    GSDialog.of(globalContext).showLoadingDialog(globalContext!, "");
     HttpResultModel result = await _presenter.addInvoice(
-        UserManager.instance.user.info.id,
+        UserManager.instance!.user.info!.id,
         _type,
-        _titleController.text,
-        _TFNController.text);
+        _titleController!.text,
+        _TFNController!.text);
 
     if (!result.result) {
-      GSDialog.of(globalContext).showError(globalContext, result.msg);
+      GSDialog.of(globalContext).showError(globalContext!, result.msg);
       return;
     }
     Toast.showInfo("添加成功");
-    Navigator.pop(globalContext, true);
+    Navigator.pop(globalContext!, true);
   }
 }

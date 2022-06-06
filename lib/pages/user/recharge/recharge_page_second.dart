@@ -6,11 +6,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
-import 'package:image_picker/image_picker.dart' as flutterImagePicker;
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -23,7 +19,6 @@ import 'package:recook/pages/wholesale/wholesale_customer_page.dart';
 import 'package:recook/utils/amount_format.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/image_picker.dart';
 import 'package:recook/widgets/image_selected_view.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook_back_button.dart';
@@ -35,7 +30,7 @@ import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 
 class RechargePageSecond extends StatefulWidget {
   RechargePageSecond({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -44,7 +39,7 @@ class RechargePageSecond extends StatefulWidget {
 
 class _RechargePageSecondState extends State<RechargePageSecond>
     with TickerProviderStateMixin {
-  TextEditingController _amountTextEditController;
+  TextEditingController? _amountTextEditController;
   FocusNode _amountContentFocusNode = FocusNode();
   List<MediaModel> _licenseFiles = [];
   String _licenseImages = '';
@@ -65,7 +60,7 @@ class _RechargePageSecondState extends State<RechargePageSecond>
   @override
   void dispose() {
     _amountTextEditController?.dispose();
-    _amountContentFocusNode?.dispose();
+    _amountContentFocusNode.dispose();
 
     super.dispose();
   }
@@ -249,7 +244,7 @@ class _RechargePageSecondState extends State<RechargePageSecond>
                     Spacer(),
                     GestureDetector(
                       onTap: () async{
-                        WholesaleCustomerModel model =
+                        WholesaleCustomerModel? model =
                         await WholesaleFunc.getCustomerInfo();
 
                         Get.to(() => WholesaleCustomerPage(
@@ -419,15 +414,15 @@ class _RechargePageSecondState extends State<RechargePageSecond>
                 final cancel =  ReToast.loading(text:'提交中...');
                 await _uploadLicenseImages();
                 for (MediaModel media in _licenseFiles) {
-                  if (TextUtils.isEmpty(media.result.url)) {
-                    ReToast.err(text:"第${_licenseFiles.indexOf(media) + 1}图片${media.result.msg}");
+                  if (TextUtils.isEmpty(media.result!.url)) {
+                    ReToast.err(text:"第${_licenseFiles.indexOf(media) + 1}图片${media.result!.msg}");
                     return;
                   }
                   if(media !=_licenseFiles[_licenseFiles.length
                       -1]){
-                    _licenseImages+=(media.result.url+';');
+                    _licenseImages+=(media.result!.url!+';');
                   }else{
-                    _licenseImages+=(media.result.url);
+                    _licenseImages+=media.result!.url!;
                   }
 
                 }
@@ -439,8 +434,7 @@ class _RechargePageSecondState extends State<RechargePageSecond>
                   ReToast.success(text:'提交成功');
                   Get.back();
                   Get.back();
-                  Get.to(()=>RechargePageThird(amount: '¥'+TextUtils.getCount1((double.parse(_amount)  ??
-                      0.0)), time: DateUtil.formatDate(DateTime.now(), format: 'yyyy-MM-dd HH:mm:ss'),
+                  Get.to(()=>RechargePageThird(amount: '¥'+TextUtils.getCount1((double.parse(_amount)))!, time: DateUtil.formatDate(DateTime.now(), format: 'yyyy-MM-dd HH:mm:ss'),
                     licenseFiles: _licenseImages,
 
                   ));
@@ -474,7 +468,7 @@ class _RechargePageSecondState extends State<RechargePageSecond>
   }
 
   _imageSelect(List<MediaModel> list) {
-    return ImageSelectedView<Uint8List>(
+    return ImageSelectedView<Uint8List?>(
       padding: EdgeInsets.only(right: 60.rw),
       maxImages: 3,
       crossAxisCount: 3,
@@ -492,15 +486,15 @@ class _RechargePageSecondState extends State<RechargePageSecond>
         ActionSheet.show(context, items: ['拍照', '从手机相册选择'], listener: (index) async{
           ActionSheet.dismiss(context);
           if (index == 0) {
-            List<AssetEntity> entitys = [];
+            List<AssetEntity?> entitys = [];
             var values = await CameraPicker.pickFromCamera(context);
             entitys.add(values);
             if (entitys == null) {
               return;
             }
             for (var element in entitys) {
-              File file = await element.file;
-              Uint8List thumbData = await element.thumbData;
+              File? file = await element!.file;
+              Uint8List? thumbData = await element.thumbData;
               if (list.length < 3) {
                 list.add(MediaModel(
                   width: element.width,
@@ -528,8 +522,8 @@ class _RechargePageSecondState extends State<RechargePageSecond>
             if (values == null) return;
             entitys.addAll(values);
             for (var element in entitys) {
-              File file = await element.file;
-              Uint8List thumbData = await element.thumbData;
+              File? file = await element.file;
+              Uint8List? thumbData = await element.thumbData;
               list.add(MediaModel(
                 width: element.width,
                 height: element.height,

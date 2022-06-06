@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:recook/const/resource.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -10,15 +9,15 @@ import 'package:recook/pages/live/widget/user_activity_card.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class UserActivityView extends StatefulWidget {
-  final int id;
+  final int? id;
   final LiveBaseInfoModel userModel;
   final bool initAttention;
-  final VoidCallback onRefresh;
+  final VoidCallback? onRefresh;
   UserActivityView(
-      {Key key,
-      @required this.id,
-      @required this.userModel,
-      @required this.initAttention,
+      {Key? key,
+      required this.id,
+      required this.userModel,
+      required this.initAttention,
       this.onRefresh})
       : super(key: key);
 
@@ -31,7 +30,7 @@ class _UserActivityViewState extends State<UserActivityView>
   List<ActivityListModel> activityListModels = [];
   int _page = 1;
   GSRefreshController _controller = GSRefreshController();
-  bool get selfFlag => widget.id == UserManager.instance.user.info.id;
+  bool get selfFlag => widget.id == UserManager.instance!.user.info!.id;
   @override
   void initState() {
     super.initState();
@@ -42,7 +41,7 @@ class _UserActivityViewState extends State<UserActivityView>
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -53,7 +52,7 @@ class _UserActivityViewState extends State<UserActivityView>
       controller: _controller,
       onRefresh: () {
         _page = 1;
-        widget.onRefresh();
+        widget.onRefresh!();
         getActivityModels().then((models) {
           setState(() {
             activityListModels = models;
@@ -110,10 +109,10 @@ class _UserActivityViewState extends State<UserActivityView>
       'page': _page,
       'limit': 10,
     });
-    if (resultData?.data['data']['list'] == null)
+    if (resultData.data['data']['list'] == null)
       return [];
     else
-      return (resultData?.data['data']['list'] as List)
+      return (resultData.data['data']['list'] as List)
           .map((e) => ActivityListModel.fromJson(e))
           .toList();
   }

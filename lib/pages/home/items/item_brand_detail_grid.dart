@@ -1,6 +1,7 @@
 import 'package:common_utils/common_utils.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -19,13 +20,13 @@ import 'package:recook/widgets/toast.dart';
 
 class BrandDetailGridItem extends StatelessWidget {
   // final Goods goods;
-  final GoodsSimple goods;
-  final VoidCallback buyClick;
-  final Function onBrandClick;
-  final VoidCallback shareClick;
+  final GoodsSimple? goods;
+  final VoidCallback? buyClick;
+  final Function? onBrandClick;
+  final VoidCallback? shareClick;
 
   const BrandDetailGridItem(
-      {Key key, this.goods, this.buyClick, this.onBrandClick, this.shareClick})
+      {Key? key, this.goods, this.buyClick, this.onBrandClick, this.shareClick})
       : super(key: key);
   static final Color colorGrey = Color(0xff999999);
 
@@ -36,15 +37,15 @@ class BrandDetailGridItem extends StatelessWidget {
     bool sellout = false;
     bool isSeckill = false;
 
-      if(this.goods.inventory>0){
+      if(this.goods!.inventory!>0){
         sellout = false;
       }else{
         sellout = true;
       }
-      if(this.goods.secKill!=null){
-        if(this.goods.secKill.secKill==1){
+      if(this.goods!.secKill!=null){
+        if(this.goods!.secKill!.secKill==1){
           isSeckill = true;
-          if(this.goods.secKill.realStock>0){
+          if(this.goods!.secKill!.realStock!>0){
             sellout = false;
           }else{
             sellout = true;
@@ -76,7 +77,7 @@ class BrandDetailGridItem extends StatelessWidget {
                             fit: BoxFit.cover,
                             placeholder: AppImageName.placeholder_1x1,
                             imageUrl:
-                                Api.getResizeImgUrl(goods.mainPhotoUrl, 300)),
+                                Api.getResizeImgUrl(goods!.mainPhotoUrl!, 300)),
                       )),
                   Positioned(
                     child: sellout
@@ -92,7 +93,7 @@ class BrandDetailGridItem extends StatelessWidget {
               child: ExtendedText.rich(
                 TextSpan(
                   children: [
-                    this.goods.isImport == 1
+                    this.goods!.isImport == 1
                         ? WidgetSpan(
                             alignment: PlaceholderAlignment.middle,
                             child: Container(
@@ -100,13 +101,13 @@ class BrandDetailGridItem extends StatelessWidget {
                               width: 24,
                               height: 15,
                               decoration: BoxDecoration(
-                                  color: this.goods.countryIcon == null
+                                  color: this.goods!.countryIcon == null
                                       ? Color(0xFFCC1B4F)
                                       : Colors.transparent,
                                 borderRadius: BorderRadius.circular(3 * 2.w),
                               ),
                               child: 
-                              this.goods.countryIcon==null?
+                              this.goods!.countryIcon==null?
                               Text(
                                 '进口',
                                 style: TextStyle(
@@ -117,19 +118,19 @@ class BrandDetailGridItem extends StatelessWidget {
                               ): CustomCacheImage(
                                   width: rSize(100),
                                   height: rSize(100),
-                                  imageUrl: Api.getImgUrl( this.goods.countryIcon),
+                                  imageUrl: Api.getImgUrl( this.goods!.countryIcon),
                                   fit: BoxFit.cover,
                                 ),
                             ),
                           )
                         : WidgetSpan(child: SizedBox()),
-                    this.goods.isImport == 1
+                    this.goods!.isImport == 1
                         ? WidgetSpan(
                             child: Container(
                             width: 5 * 2.w,
                           ))
                         : WidgetSpan(child: SizedBox()),
-                    this.goods.gysId==1800||this.goods.gysId==2000?//jd的商品供应商 自营为1800 pop 为2000?
+                    this.goods!.gysId==1800||this.goods!.gysId==2000?//jd的商品供应商 自营为1800 pop 为2000?
                     WidgetSpan(
                         child:  Container(
                             padding: EdgeInsets.only(right: 5.rw),
@@ -151,9 +152,9 @@ class BrandDetailGridItem extends StatelessWidget {
                                     children: [
                                       2.hb,
                                       Text(
-                                        this.goods.gysId == 1800
+                                        this.goods!.gysId == 1800
                                             ? '京东自营'
-                                            :  this.goods.gysId == 2000
+                                            :  this.goods!.gysId == 2000
                                             ? '京东优选'
                                             : '',
                                         maxLines: 1,
@@ -166,7 +167,7 @@ class BrandDetailGridItem extends StatelessWidget {
                         )
                     ): WidgetSpan(child: SizedBox()),
                     TextSpan(
-                      text: this.goods.goodsName,
+                      text: this.goods!.goodsName,
                       style: AppTextStyle.generate(15 * 2.sp,
                           fontWeight: FontWeight.w600),
                     ),
@@ -177,17 +178,17 @@ class BrandDetailGridItem extends StatelessWidget {
               ),
             ),
 
-            TextUtil.isEmpty(this.goods.description)
+            TextUtil.isEmpty(this.goods!.description)
                 ? SizedBox()
                 : Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.only(
                         left: 0, right: 0, top: 5, bottom: 5),
                     child:
-                    this.goods.description == null
+                    this.goods!.description == null
                         ? Container()
                         : Text(
-                            this.goods.description,
+                            this.goods!.description!,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyle.generate(12.rsp,
@@ -196,7 +197,7 @@ class BrandDetailGridItem extends StatelessWidget {
                           ),
                   ),
             // Spacer(),
-            AppConfig.getShowCommission() ? _brandWidget() : SizedBox(),
+            AppConfig.getShowCommission()! ? _brandWidget() : SizedBox(),
             // Spacer(),
             _saleNumberWidget(this.goods),
             SizedBox(
@@ -207,7 +208,7 @@ class BrandDetailGridItem extends StatelessWidget {
                 isSeckill?Container(
                   alignment: Alignment.center,
                   child: Text(
-                    "赚" +  (this.goods.secKill.secKillCommission??0).toStringAsFixed(2),
+                    "赚" +  (this.goods!.secKill!.secKillCommission??0).toStringAsFixed(2),
                     style: TextStyle(
                       color: Color(0xFFC92219),
                       fontSize: 12 * 2.sp,
@@ -215,7 +216,7 @@ class BrandDetailGridItem extends StatelessWidget {
                   ),
                 ):
                 Text(
-                  '¥${this.goods.originalPrice.toStringAsFixed(2)}',
+                  '¥${this.goods!.originalPrice!.toStringAsFixed(2)}',
                   style: TextStyle(
                       decoration: TextDecoration.lineThrough,
                       decorationColor: Color(0xff898989),
@@ -225,7 +226,7 @@ class BrandDetailGridItem extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                  isSeckill?"已售${this.goods.secKill.saleNum}件":"已售${this.goods.salesVolume}件",
+                  isSeckill?"已售${this.goods!.secKill!.saleNum}件":"已售${this.goods!.salesVolume}件",
                   style: TextStyle(
                     color: Color(0xff595757),
                     fontSize: 12 * 2.sp,
@@ -257,7 +258,7 @@ class BrandDetailGridItem extends StatelessWidget {
                               fontWeight: FontWeight.w500),
                         ),
                         TextSpan(
-                          text:"${(this.goods.discountPrice-this.goods.commission).toStringAsFixed(2)}",
+                          text:"${(this.goods!.discountPrice!-this.goods!.commission!).toStringAsFixed(2)}",
                           // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
                           style: TextStyle(
                               letterSpacing: -1,
@@ -279,13 +280,13 @@ class BrandDetailGridItem extends StatelessWidget {
                   //     :
                   GestureDetector(
                     onTap: () {
-                      if (UserManager.instance.user.info.id == 0) {
+                      if (UserManager.instance!.user.info!.id == 0) {
                         AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
                         Toast.showError('请先登录...');
                         return;
                       }
                       if (shareClick != null) {
-                        shareClick();
+                        shareClick!();
                       } else {
                         _shareEvent(context);
                       }
@@ -344,7 +345,7 @@ class BrandDetailGridItem extends StatelessWidget {
                           horizontal: ScreenAdapterUtils.setWidth(
                               UserLevelTool.currentRoleLevelEnum() ==
                                           UserRoleLevel.Vip &&
-                                      this.goods.getPromotionStatus() ==
+                                      this.goods!.getPromotionStatus() ==
                                           PromotionStatus.start
                                   ? 16
                                   : 8),
@@ -381,17 +382,17 @@ class BrandDetailGridItem extends StatelessWidget {
     );
   }
 
-  _saleNumberWidget(GoodsSimple goods) {
+  _saleNumberWidget(GoodsSimple? goods) {
     bool sellout = false;
     bool isSeckill = false;
 
-    if(this.goods.inventory>0){
+    if(this.goods!.inventory!>0){
       sellout = false;
     }else{
       sellout = true;
     }
-    if(this.goods.secKill!=null){
-      if(this.goods.secKill.secKill==1){
+    if(this.goods!.secKill!=null){
+      if(this.goods!.secKill!.secKill==1){
         isSeckill = true;
         sellout = true;
         //秒杀中 通过seckill中的库存和销量来判断是否是否售完
@@ -403,7 +404,7 @@ class BrandDetailGridItem extends StatelessWidget {
           Row(
             children: <Widget>[
               isSeckill?SizedBox():
-              (goods.coupon != null && goods.coupon != 0)
+              (goods!.coupon != null && goods.coupon != 0)
                   ? Container(
                       margin: EdgeInsets.only(right: 5),
                       child: SmallCouponWidget(
@@ -433,7 +434,7 @@ class BrandDetailGridItem extends StatelessWidget {
                                 )),
                             padding: EdgeInsets.symmetric(horizontal: 3),
                             child: Text(
-                              "赚" + goods.commission.toStringAsFixed(2),
+                              "赚" + goods!.commission!.toStringAsFixed(2),
                               style: TextStyle(
                                 color: Colors.white.withAlpha(0),
                                 fontSize: 12 * 2.sp,
@@ -441,11 +442,11 @@ class BrandDetailGridItem extends StatelessWidget {
                             ),
                           ),
 
-                          AppConfig.getShowCommission()
+                          AppConfig.getShowCommission()!
                               ? Container(
                                   alignment: Alignment.center,
                                   child: Text(
-                                    "赚" + goods.commission.toStringAsFixed(2),
+                                    "赚" + goods.commission!.toStringAsFixed(2),
                                     style: TextStyle(
                                       color: Color(0xffeb0045),
                                       fontSize: 12 * 2.sp,
@@ -467,17 +468,18 @@ class BrandDetailGridItem extends StatelessWidget {
 
   _buyEvent(BuildContext context) {
     if (buyClick != null) {
-      buyClick();
+      buyClick!();
     } else {
-      AppRouter.push(context, RouteName.COMMODITY_PAGE,
-          arguments: CommodityDetailPage.setArguments(this.goods.id));
+      Get.to(()=>CommodityDetailPage( arguments: CommodityDetailPage.setArguments(this.goods!.id as int?)));
+      // AppRouter.push(context, RouteName.COMMODITY_PAGE,
+      //     arguments: CommodityDetailPage.setArguments(this.goods!.id as int?));
     }
   }
 
   _brandWidget() {
     return GestureDetector(
         onTap: () {
-          if (onBrandClick != null) onBrandClick();
+          if (onBrandClick != null) onBrandClick!();
         },
         child: Container(
           width: double.infinity,
@@ -499,9 +501,9 @@ class BrandDetailGridItem extends StatelessWidget {
               // ),
               Expanded(
                 child: Text(
-                  TextUtils.isEmpty(this.goods.brandName)
+                  TextUtils.isEmpty(this.goods!.brandName)
                       ? ""
-                      : this.goods.brandName,
+                      : this.goods!.brandName!,
                   maxLines: 2,
                   style: TextStyle(
                     color: Color(0xffc70404),
@@ -518,31 +520,31 @@ class BrandDetailGridItem extends StatelessWidget {
 
     bool isSeckill = false;
 
-    if(this.goods.secKill!=null){
-      if(this.goods.secKill.secKill==1){
+    if(this.goods!.secKill!=null){
+      if(this.goods!.secKill!.secKill==1){
         isSeckill = true;
 
         //秒杀中 通过seckill中的库存和销量来判断是否是否售完
       }
     }
-    String imgUrl;
+    String? imgUrl;
     GoodsDetailModel imagesModel = await GoodsDetailModelImpl.getDetailInfo(
-        this.goods.id, UserManager.instance.user.info.id);
-    if (imagesModel.data.mainPhotos.length >= 1) {
-      imgUrl = imagesModel.data.mainPhotos[0].url;
+        this.goods!.id as int?, UserManager.instance!.user.info!.id);
+    if (imagesModel.data!.mainPhotos!.length >= 1) {
+      imgUrl = imagesModel.data!.mainPhotos![0].url;
     } else {
-      imgUrl = imagesModel.data?.mainPhotos?.first?.url ?? '';
+      imgUrl = imagesModel.data?.mainPhotos?.first.url ?? '';
     }
     String goodsTitle =
-        isSeckill?"￥${this.goods.secKill.secKillMinPrice} | ${this.goods.goodsName} | ${this.goods.description}":
-        "￥${this.goods.discountPrice} | ${this.goods.goodsName} | ${this.goods.description}";
+        isSeckill?"￥${this.goods!.secKill!.secKillMinPrice} | ${this.goods!.goodsName} | ${this.goods!.description}":
+        "￥${this.goods!.discountPrice} | ${this.goods!.goodsName} | ${this.goods!.description}";
     ShareTool().goodsShare(context,
-        goodsPrice: isSeckill?this.goods.secKill.secKillMinPrice.toStringAsFixed(2):this.goods.discountPrice.toStringAsFixed(2),
-        goodsName: this.goods.goodsName,
-        goodsDescription: this.goods.description,
+        goodsPrice: isSeckill?this.goods!.secKill!.secKillMinPrice!.toStringAsFixed(2):this.goods!.discountPrice!.toStringAsFixed(2),
+        goodsName: this.goods!.goodsName,
+        goodsDescription: this.goods!.description,
         miniTitle: goodsTitle,
         miniPicurl: imgUrl,
-        amount: isSeckill?this.goods.secKill.secKillCommission.toString():this.goods.commission.toString(),
-        goodsId: this.goods.id.toString());
+        amount: isSeckill?this.goods!.secKill!.secKillCommission.toString():this.goods!.commission.toString(),
+        goodsId: this.goods!.id.toString());
   }
 }

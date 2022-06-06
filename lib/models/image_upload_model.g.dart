@@ -23,7 +23,7 @@ Map<String, dynamic> _$ImageUploadModelToJson(ImageUploadModel instance) =>
     };
 
 Data _$DataFromJson(Map<String, dynamic> json) {
-  return Data(json['url'] as String);
+  return Data(json['url'] as String?);
 }
 
 Map<String, dynamic> _$DataToJson(Data instance) =>

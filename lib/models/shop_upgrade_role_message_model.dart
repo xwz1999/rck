@@ -1,9 +1,9 @@
 //TODO CLEAN BOTTOM CODES.
 @Deprecated("shop_upgrade_role_message_model need to be cleaned.")
 class ShopUpgradeRoleMessageModel {
-  String code;
-  String msg;
-  String data;
+  String? code;
+  String? msg;
+  String? data;
 
   ShopUpgradeRoleMessageModel({this.code, this.msg, this.data});
 

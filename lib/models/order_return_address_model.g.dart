@@ -2,8 +2,8 @@ part of 'order_return_address_model.dart';
 
 OrderReturnAddressModel _$OrderReturnAddressModelFromJson(Map<String, dynamic> json) {
   return OrderReturnAddressModel(
-      json['code'] as String,
-      json['msg'] as String,
+      json['code'] as String?,
+      json['msg'] as String?,
       json['data'] == null
           ? null
           : AddressModel.fromJson(json['data'] as Map<String, dynamic>),
@@ -21,10 +21,10 @@ Map<String, dynamic> _$OrderReturnAddressModelToJson(OrderReturnAddressModel ins
 
 AddressModel _$AddressModelFromJson(Map<String, dynamic> json) {
   return AddressModel(
-    json['id'] as int,
-    json['address'] as String,
-    json['name'] as String,
-    json['mobile'] as String,
+    json['id'] as int?,
+    json['address'] as String?,
+    json['name'] as String?,
+    json['mobile'] as String?,
   );
 }
 

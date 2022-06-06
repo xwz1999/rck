@@ -16,8 +16,8 @@ typedef TabBarItemClickListener = Function(int index);
 
 class SCTabBar<T> extends StatefulWidget {
   SCTabBar({
-    @required this.items,
-    @required this.itemBuilder,
+    required this.items,
+    required this.itemBuilder,
     this.direction = Axis.horizontal,
     this.height = 30,
     this.spacing = 0,
@@ -27,9 +27,8 @@ class SCTabBar<T> extends StatefulWidget {
     this.indicatorLocation = IndicatorLocation.bottom,
     this.initialIndex = 0,
     this.itemClick,
-    this.controller,
-  })  : assert(items.length != 0, "item个数不能为空"),
-        assert(controller != null, "controller 不能为空");
+    required this.controller,
+  })  : assert(items.length != 0, "item个数不能为空");
 
   final TabBarController controller;
   final Axis direction;
@@ -42,7 +41,7 @@ class SCTabBar<T> extends StatefulWidget {
   final List<T> items;
   final TabBarItemBuilder<T> itemBuilder;
   final initialIndex;
-  final TabBarItemClickListener itemClick;
+  final TabBarItemClickListener? itemClick;
 
   @override
   State<StatefulWidget> createState() {
@@ -55,7 +54,7 @@ class _SCTabBarState<T> extends State<SCTabBar> {
 
   _SCTabBarState(this.itemBuilder);
 
-  int _selectedIndex;
+  int? _selectedIndex;
 
   @override
   void initState() {
@@ -78,7 +77,7 @@ class _SCTabBarState<T> extends State<SCTabBar> {
 
           border:
 
-              Border(right: BorderSide(color: Colors.green[300], width: 0.1))),
+              Border(right: BorderSide(color: Colors.green[300]!, width: 0.1))),
       child: ListView.builder(
         itemCount: widget.items.length,
         scrollDirection: widget.direction,
@@ -104,7 +103,7 @@ class _SCTabBarState<T> extends State<SCTabBar> {
             ),
             onTap: () {
               if (widget.itemClick != null) {
-                widget.itemClick(index);
+                widget.itemClick!(index);
               }
               setState(() {
                 _selectedIndex = index;
@@ -183,5 +182,5 @@ class _SCTabBarState<T> extends State<SCTabBar> {
 enum IndicatorLocation { top, bottom, left, right }
 
 class TabBarController {
-  Function(int index) jumpToIndex;
+  late Function(int index) jumpToIndex;
 }

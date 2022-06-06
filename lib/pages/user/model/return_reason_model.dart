@@ -1,7 +1,7 @@
 class ReturnReasonModel {
-  String code;
-  String msg;
-  List<ReasonModel> data;
+  String? code;
+  String? msg;
+  List<ReasonModel>? data;
 
   ReturnReasonModel({this.code, this.msg, this.data});
 
@@ -11,7 +11,7 @@ class ReturnReasonModel {
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
-        data.add(new ReasonModel.fromJson(v));
+        data!.add(new ReasonModel.fromJson(v));
       });
     }
   }
@@ -21,17 +21,17 @@ class ReturnReasonModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class ReasonModel {
-  num id;
-  num type;
-  String content;
-  num orderBy;
+  num? id;
+  num? type;
+  String? content;
+  num? orderBy;
 
   ReasonModel({this.id, this.type, this.content, this.orderBy});
 

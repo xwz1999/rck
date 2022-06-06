@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 
 
 class CityModel extends ISuspensionBean {
-  String name;
-  String tagIndex;
-  String namePinyin;
+  String? name;
+  String? tagIndex;
+  String? namePinyin;
 
   CityModel({
-    @required this.name,
+    required this.name,
     this.tagIndex,
     this.namePinyin,
   });
@@ -25,26 +25,26 @@ class CityModel extends ISuspensionBean {
       };
 
   @override
-  String getSuspensionTag() => tagIndex;
+  String getSuspensionTag() => tagIndex!;
 
   @override
   String toString() => json.encode(this);
 }
 
 class ContactInfo extends ISuspensionBean {
-  String name;
-  String tagIndex;
-  String namePinyin;
+  String? name;
+  String? tagIndex;
+  String? namePinyin;
 
-  Color bgColor;
-  IconData iconData;
+  Color? bgColor;
+  IconData? iconData;
 
-  String img;
-  String id;
-  String firstletter;
+  String? img;
+  String? id;
+  String? firstletter;
 
   ContactInfo({
-    @required this.name,
+    required this.name,
     this.tagIndex,
     this.namePinyin,
     this.bgColor,
@@ -71,7 +71,7 @@ class ContactInfo extends ISuspensionBean {
       };
 
   @override
-  String getSuspensionTag() => tagIndex;
+  String getSuspensionTag() => tagIndex!;
 
   @override
   String toString() => json.encode(this);

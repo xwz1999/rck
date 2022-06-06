@@ -3,7 +3,7 @@ import 'package:recook/constants/constants.dart';
 import 'package:recook/widgets/recook/recook_scaffold.dart';
 
 class ConsumerNotificationPage extends StatelessWidget {
-  const ConsumerNotificationPage({Key key}) : super(key: key);
+  const ConsumerNotificationPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -35,7 +35,7 @@ expressStatus 快递状态
 
 @JsonSerializable()
 class OrderListModel extends BaseModel {
-  List<OrderModel> data;
+  List<OrderModel>? data;
 
   OrderListModel(
     code,
@@ -51,43 +51,43 @@ class OrderListModel extends BaseModel {
 
 @JsonSerializable()
 class OrderModel extends Object {
-  int id;
-  int parentId;
-  int userId;
-  int isSubordinate;
-  String title;
-  double brandCouponTotalAmount;
-  double universeCouponTotalAmount;
-  double coinTotalAmount;
-  double expressTotalFee;
-  double goodsTotalAmount;
-  double goodsTotalCommission;
-  double actualTotalAmount;
-  int shippingMethod;
+  int? id;
+  int? parentId;
+  int? userId;
+  int? isSubordinate;
+  String? title;
+  double? brandCouponTotalAmount;
+  double? universeCouponTotalAmount;
+  double? coinTotalAmount;
+  double? expressTotalFee;
+  double? goodsTotalAmount;
+  double? goodsTotalCommission;
+  double? actualTotalAmount;
+  int? shippingMethod;
 
-  String buyerMessage;
+  String? buyerMessage;
 
-  int status;
-  int expressStatus;
-  int isApplyInvoice;
-  int isFinishInvoice;
-  int isAss;
+  int? status;
+  int? expressStatus;
+  int? isApplyInvoice;
+  int? isFinishInvoice;
+  int? isAss;
 
-  String evaluatedAt;
-  String createdAt;
+  String? evaluatedAt;
+  String? createdAt;
 
-  String expireTime;
-  String payIp;
-  String tradeNo;
-  String payTime;
-  int payMethod;
-  String completedAt;
-  int totalGoodsCount;
+  String? expireTime;
+  String? payIp;
+  String? tradeNo;
+  String? payTime;
+  int? payMethod;
+  String? completedAt;
+  int? totalGoodsCount;
 
-  List<OrderGoodsModel> goodsList;
+  List<OrderGoodsModel>? goodsList;
 
-  bool canConfirm;
-  bool canPay;
+  bool? canConfirm;
+  bool? canPay;
   // List<OrderBrandsModel> brands;
 
   OrderModel(
@@ -178,41 +178,41 @@ class OrderModel extends Object {
 
 @JsonSerializable()
 class OrderGoodsModel extends Object {
-  int goodsDetailId;
-  int orderId;
-  int vendorId; // 供应商ID: 0表示自营
-  int brandId; //品牌
-  String brandName; //品牌名称
-  int goodsId; //商品id
-  String goodsName; //商品名称
-  int skuId;
-  String skuName;
-  String skuCode;
-  String mainPhotoUrl; //主图
-  int quantity; //商品数量
-  String promotionName; //活动名称
-  double unitPrice; //单价
-  double totalCommission; //提成总额
-  double brandCouponAmount; // 品牌优惠券抵扣金额
-  double universeBrandCouponAmount; // 购物券抵扣金额
-  double coinAmount; // 瑞币抵扣金额
-  double goodsAmount; // 商品总金额 单价x数量，不含其他费用减除
-  double expressFee; // 快递费
-  double actualAmount; // 实际支付的金额
+  int? goodsDetailId;
+  int? orderId;
+  int? vendorId; // 供应商ID: 0表示自营
+  int? brandId; //品牌
+  String? brandName; //品牌名称
+  int? goodsId; //商品id
+  String? goodsName; //商品名称
+  int? skuId;
+  String? skuName;
+  String? skuCode;
+  String? mainPhotoUrl; //主图
+  int? quantity; //商品数量
+  String? promotionName; //活动名称
+  double? unitPrice; //单价
+  double? totalCommission; //提成总额
+  double? brandCouponAmount; // 品牌优惠券抵扣金额
+  double? universeBrandCouponAmount; // 购物券抵扣金额
+  double? coinAmount; // 瑞币抵扣金额
+  double? goodsAmount; // 商品总金额 单价x数量，不含其他费用减除
+  double? expressFee; // 快递费
+  double? actualAmount; // 实际支付的金额
 
-  int expressStatus;
-  String expressCompName;
-  String expressCompCode;
-  String expressNo;
-  int assType;
+  int? expressStatus;
+  String? expressCompName;
+  String? expressCompCode;
+  String? expressNo;
+  int? assType;
 
-  int refundStatus;
-  int returnStatus; // 0正常，1等待商家审核 2审核被拒绝 3审核成功 4买家已填写退货物流信息 5收到退货，确认退款完成 6退货被拒绝
-  String returnReason; // 买家退货理由
-  String returnRejectReason;
-  String rStatus;
-  int isImport;
-  String countryIcon;
+  int? refundStatus;
+  int? returnStatus; // 0正常，1等待商家审核 2审核被拒绝 3审核成功 4买家已填写退货物流信息 5收到退货，确认退款完成 6退货被拒绝
+  String? returnReason; // 买家退货理由
+  String? returnRejectReason;
+  String? rStatus;
+  int? isImport;
+  String? countryIcon;
 
   bool get importValue => isImport == 1;
   OrderGoodsModel(

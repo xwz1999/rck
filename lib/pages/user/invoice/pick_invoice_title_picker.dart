@@ -27,8 +27,8 @@ pickInvoiceTitle(
 }
 
 class InvoicePicker extends StatefulWidget {
-  final Function(InvoiceTitleListModel model) onModel;
-  InvoicePicker({Key key, this.onModel}) : super(key: key);
+  final Function(InvoiceTitleListModel model)? onModel;
+  InvoicePicker({Key? key, this.onModel}) : super(key: key);
 
   @override
   _InvoicePickerState createState() => _InvoicePickerState();
@@ -100,7 +100,7 @@ class _InvoicePickerState extends State<InvoicePicker> {
                       child: InkWell(
                         onTap: () {
                           Navigator.pop(context);
-                          widget.onModel(_models[index]);
+                          widget.onModel!(_models[index]);
                         },
                         child: Row(
                           children: [
@@ -109,7 +109,7 @@ class _InvoicePickerState extends State<InvoicePicker> {
                               height: rSize(48),
                             ),
                             Text(
-                              _models[index].name,
+                              _models[index].name!,
                               style: TextStyle(
                                 color: Color(0xFF333333),
                                 fontSize: rSP(14),

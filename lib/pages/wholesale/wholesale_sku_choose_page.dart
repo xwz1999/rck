@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -14,16 +15,16 @@ import 'models/wholesale_detail_model.dart';
 typedef ChooseClickListener = Function(WholesaleSkuChooseModel skuModel);
 
 class WholesaleSkuChoosePage extends StatefulWidget {
-  final WholesaleDetailModel model;
-  final List<SelectedItemModel> itemModels;
+  final WholesaleDetailModel? model;
+  final List<SelectedItemModel>? itemModels;
   final List<String> results;
-  final ChooseClickListener listener;
+  final ChooseClickListener? listener;
 
   const WholesaleSkuChoosePage(
-      {Key key,
+      {Key? key,
         this.model,
-        @required this.itemModels,
-        @required this.results,
+        required this.itemModels,
+        required this.results,
         this.listener})
       : super(key: key);
 
@@ -34,11 +35,11 @@ class WholesaleSkuChoosePage extends StatefulWidget {
 }
 
 class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage> {
-  WholesaleSku _sku;
-  String _commission, _price;
-  List<String> _skuDes;
-  StringBuffer _stringBuffer;
-  int _num;
+  WholesaleSku? _sku;
+  String? _commission, _price;
+  late List<String> _skuDes;
+  StringBuffer? _stringBuffer;
+  int? _num;
   List _photoList = [];
   List<PicSwiperItem> picSwiperItem = [];
 
@@ -51,7 +52,7 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
   void initState() {
     super.initState();
     ///为了图片和规格选择顺序对应 先进行排序
-    widget.model.sku.sort((a,b)=>a.combineId.compareTo(b.combineId));
+    widget.model!.sku!.sort((a,b)=>a!.combineId!.compareTo(b!.combineId!));
     _num = 1;
     _stringBuffer = StringBuffer();
     _skuDes = [];
@@ -66,8 +67,8 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
 
 
     ///将所有的规格图片存入
-    widget.model.sku.forEach((element) {
-      _photoList.add(element.picUrl);
+    widget.model!.sku!.forEach((element) {
+      _photoList.add(element!.picUrl);
       picSwiperItem.add(PicSwiperItem(Api.getImgUrl(element.picUrl)));
 
     });
@@ -75,30 +76,30 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
 
     // bool hasPromotion = widget.model.data.promotion != null;
     // bool hasPromotion = true;
-    num minPrice, maxPrice, maxCommission, minCommission;
+    num? minPrice, maxPrice, maxCommission, minCommission;
 
-    maxCommission = widget.model.price.max.commission;
-    minCommission = widget.model.price.min.commission;
+    maxCommission = widget.model!.price!.max!.commission;
+    minCommission = widget.model!.price!.min!.commission;
 
     // if (hasPromotion) {
-    minPrice = widget.model.price.min.salePrice;
-    maxPrice = widget.model.price.max.salePrice;
+    minPrice = widget.model!.price!.min!.salePrice;
+    maxPrice = widget.model!.price!.max!.salePrice;
     // } else {
     // minPrice = widget.model.data.price.min.originalPrice;
     // maxPrice = widget.model.data.price.max.originalPrice;
     // }
 
     if (maxPrice == minPrice) {
-      _price = maxPrice.toStringAsFixed(2);
+      _price = maxPrice!.toStringAsFixed(2);
     } else {
-      _price = "${minPrice.toStringAsFixed(2)}-${maxPrice.toStringAsFixed(2)}";
+      _price = "${minPrice!.toStringAsFixed(2)}-${maxPrice!.toStringAsFixed(2)}";
     }
 
     if (maxCommission == minCommission) {
-      _commission = maxCommission.toStringAsFixed(2);
+      _commission = maxCommission!.toStringAsFixed(2);
     } else {
       _commission =
-      "${minCommission.toStringAsFixed(2)}-${maxCommission.toStringAsFixed(2)}";
+      "${minCommission!.toStringAsFixed(2)}-${maxCommission!.toStringAsFixed(2)}";
     }
   }
 
@@ -129,11 +130,11 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
           top: 10,
           bottom: DeviceInfo.bottomBarHeight == 0
               ? 20
-              : DeviceInfo.bottomBarHeight),
+              : DeviceInfo.bottomBarHeight!),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
           color: Colors.white),
-      height: DeviceInfo.screenHeight * 0.8,
+      height: DeviceInfo.screenHeight! * 0.8,
       child: Scaffold(
         body: Column(
           children: <Widget>[
@@ -178,7 +179,7 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
                   style: AppTextStyle.generate(16 * 2.sp,fontWeight: FontWeight.bold,
                       color: Color(0xFFD5101A))),
               TextSpan(
-                text: "${(_num*_sku.salePrice).toStringAsFixed(2)}",
+                text: "${(_num!*_sku!.salePrice!).toStringAsFixed(2)}",
                 style: AppTextStyle.generate(16 * 2.sp,fontWeight: FontWeight.bold,
                     color: Color(0xFFD5101A)),
               )
@@ -199,14 +200,19 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
         children: <Widget>[
           CustomCacheImage(
             imageClick: () async{
-              var data = await  AppRouter.fade(
-                context,
-                RouteName.PIC_SWIPER,
-                arguments: PicSwiper.setArguments(
-                  index: _sku==null?0: widget.model.sku.indexOf(_sku),
-                  pics: picSwiperItem,
-                ),
-              );
+              var data = await
+              // AppRouter.fade(
+              //   context,
+              //   RouteName.PIC_SWIPER,
+              //   arguments: PicSwiper.setArguments(
+              //     index: _sku==null?0: widget.model!.sku!.indexOf(_sku),
+              //     pics: picSwiperItem,
+              //   ),
+              // );
+              Get.to(()=>PicSwiper(arguments: PicSwiper.setArguments(
+                index: _sku==null?0: widget.model!.sku!.indexOf(_sku),
+                pics: picSwiperItem,
+              )));
               print(data);
 
             },
@@ -215,8 +221,8 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
             fit: BoxFit.cover,
             borderRadius: BorderRadius.all(Radius.circular(8)),
             imageUrl: _sku == null
-                ? Api.getImgUrl(widget.model.mainPhotos[0].url)
-                : Api.getImgUrl(_sku.picUrl),
+                ? Api.getImgUrl(widget.model!.mainPhotos![0].url)
+                : Api.getImgUrl(_sku!.picUrl),
           ),
 
           Expanded(
@@ -229,7 +235,7 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    widget.model.goodsName,
+                    widget.model!.goodsName!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyle.generate(15.rsp,
@@ -258,7 +264,7 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
                             text: TextSpan(children: [
                               TextSpan(
                                 text:
-                                "${_sku!=null?_sku.min:widget.model.price.min.min}",
+                                "${_sku!=null?_sku!.min:widget.model!.price!.min!.min}",
                                 // "￥ ${_sku.discountPrice}",
                                 style: AppTextStyle.generate(12 * 2.sp,
                                     color: Color(0xFF666666)),
@@ -279,7 +285,7 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
                               ),
                               TextSpan(
                                 text:
-                                "一箱=${_sku!=null?_sku.limit:widget.model.price.min.limit}件",
+                                "一箱=${_sku!=null?_sku!.limit:widget.model!.price!.min!.limit}件",
                                 // "￥ ${_sku.discountPrice}",
                                 style: AppTextStyle.generate(12 * 2.sp,
                                     color: Color(0xFF666666)),
@@ -288,7 +294,7 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
                           ),
                   ),
                   Text(
-                    "批发价 ¥${_sku!=null?_sku.salePrice:_price}",
+                    "批发价 ¥${_sku!=null?_sku!.salePrice:_price}",
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyle.generate(14 * 2.sp,
@@ -351,7 +357,7 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
                   return;
                 }
                 if (widget.listener != null) {
-                  widget.listener(
+                  widget.listener!(
                       WholesaleSkuChooseModel(0, _num, _sku, _skuDes.join("-")));
                 }
               },
@@ -379,7 +385,7 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
                 }
 
                 if (widget.listener != null) {
-                  widget.listener(
+                  widget.listener!(
                       WholesaleSkuChooseModel(1, _num, _sku, _skuDes.join("+")));
 
                 }
@@ -392,13 +398,13 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
   }
 
   void _skuClicked(int index,int goodsNum) {
-     _sku = widget.itemModels[index].sku;
+     _sku = widget.itemModels![index].sku;
      _num = goodsNum;
      haveSelected = false;
-     for(int i=0;i<widget.itemModels.length;i++){
-       if(widget.itemModels[i].selected){
+     for(int i=0;i<widget.itemModels!.length;i++){
+       if(widget.itemModels![i].selected){
          haveSelected = true;
-         widget.itemModels[i].selectedNum = _num;
+         widget.itemModels![i].selectedNum = _num;
        }
      }
      if(mounted)
@@ -410,8 +416,8 @@ class _WholesaleSkuChoosePageState extends BaseStoreState<WholesaleSkuChoosePage
 }
 class WholesaleSkuChooseModel {
   int selectedIndex;
-  int num;
-  WholesaleSku sku;
+  int? num;
+  WholesaleSku? sku;
   String des;
 
   WholesaleSkuChooseModel(this.selectedIndex, this.num, this.sku, this.des);

@@ -12,12 +12,12 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/models/logistic_list_model.dart';
 
 class LogisticDetailItem extends StatelessWidget {
-  final LogisticStatus expressStatus;
+  final LogisticStatus? expressStatus;
   final bool firstItem;
   final bool lastItem;
 
   const LogisticDetailItem(
-      {Key key,
+      {Key? key,
       this.expressStatus,
       this.firstItem = false,
       this.lastItem = false})
@@ -51,11 +51,11 @@ class LogisticDetailItem extends StatelessWidget {
       child: RichText(
           textAlign: TextAlign.end,
           text: TextSpan(
-              text: expressStatus.ftime.substring(0, 10),
+              text: expressStatus!.ftime!.substring(0, 10),
               style: AppTextStyle.generate(13 * 2.sp, color: Colors.grey),
               children: [
                 TextSpan(
-                    text: "\n${expressStatus.ftime.substring(10)}",
+                    text: "\n${expressStatus!.ftime!.substring(10)}",
                     style: AppTextStyle.generate(12 * 2.sp,
                         color: Colors.grey, fontWeight: FontWeight.w300))
               ])),
@@ -64,7 +64,7 @@ class LogisticDetailItem extends StatelessWidget {
 
   _line(context) {
     double dotSize = firstItem ? rSize(12) : rSize(7);
-    Color dotColor = firstItem ? AppColor.themeColor : Colors.grey[400];
+    Color? dotColor = firstItem ? AppColor.themeColor : Colors.grey[400];
 
     return Container(
       constraints: BoxConstraints(
@@ -105,7 +105,7 @@ class LogisticDetailItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10),
         child: Text(
-          expressStatus.context,
+          expressStatus!.context!,
           style: AppTextStyle.generate(
               ScreenAdapterUtils.setWidth(firstItem ? 14 : 13),
               color: firstItem ? Colors.black : Colors.grey[500]),

@@ -297,28 +297,28 @@ class RouteName {
 }
 
 typedef RouteBuilder = Widget Function(BuildContext context,
-    {Object arguments});
+    {Object? arguments});
 
 /// 定义跳转的路由
 final Map<String, RouteBuilder> _routes = {
   RouteName.WHOLESALE_GOODS_ORDER_PAGE: (context, {arguments}) => WholesaleGoodsOrderPage(
-    arguments: arguments,
+    arguments: arguments as Map<dynamic, dynamic>?,
   ),
 
 
   /// 售后进度
   RouteName.AFTER_SALES_LOG_PAGE: (context, {arguments}) => AfterSalesLogPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
 
   /// 选择售后类型
   RouteName.CHOOSE_AFTER_SALE_TYPE_PAGE: (context, {arguments}) =>
       ChooseAfterSaleTypePage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   // 工具页面
   RouteName.TEXTPAGE: (context, {arguments}) => TextPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   //
   // 登录
@@ -327,19 +327,19 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.PHONE_LOGIN: (context, {arguments}) => PhoneLoginPage(),
   // 输入邀请码
   RouteName.INPUT_INVITATION: (context, {arguments}) => InvitationCodePage(
-        argument: arguments,
+        argument: arguments as Map<dynamic, dynamic>,
       ),
   RouteName.WECHAT_BIND: (context, {arguments}) => WeChatBindPage(
-        argument: arguments,
+        argument: arguments as Map<dynamic, dynamic>,
       ),
   RouteName.WECHAT_INPUT_INVITATION: (context, {arguments}) =>
-      WeChatInputInviteCodePage(argument: arguments),
+      WeChatInputInviteCodePage(argument: arguments as Map<dynamic, dynamic>),
   // tabbar
   RouteName.TAB_BAR: (context, {arguments}) => TabBarWidget(),
 
   RouteName.WELCOME_PAGE: (context, {arguments}) => WelcomeWidget(),
   RouteName.WEATHER_CITY_PAGE: (context, {arguments}) => WeatherCityPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   // 首页
   RouteName.HOME: (context, {arguments}) => HomePage(),
@@ -348,33 +348,33 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.GOODS_HOT_LIST: (context, {arguments}) => GoodsHotListPage(),
   //商品列表(只供显示)
   RouteName.GOODS_LIST_TEMP: (context, {arguments}) =>
-      GoodsListTempPage(arguments: arguments),
+      GoodsListTempPage(arguments: arguments as Map<dynamic, dynamic>?),
   // 商品列表
   RouteName.GOODS_LIST_PAGE: (context, {arguments}) => GoodsListPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   RouteName.BRANDGOODS_LIST_PAGE: (context, {arguments}) =>
-      BrandGoodsListPage(argument: arguments),
+      BrandGoodsListPage(argument: arguments as Map<dynamic, dynamic>?),
   // 首页搜索
   RouteName.SEARCH: (context, {arguments}) => SearchPage(),
   // 商品详情
   RouteName.COMMODITY_PAGE: (context, {arguments}) => CommodityDetailPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   // 购买预览订单
   RouteName.GOODS_ORDER_PAGE: (context, {arguments}) => GoodsOrderPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   // 订单预支付
   RouteName.ORDER_PREPAY_PAGE: (context, {arguments}) => OrderPrepayPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   // 购物车
   RouteName.GOODS_SHOPPING_CART: (context, {arguments}) => ShoppingCartPage(
         needSafeArea: true,
       ),
   RouteName.EVALUATION_LIST_PAGE: (context, {arguments}) => EvaluationListPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
 
   // 会员权益
@@ -388,13 +388,13 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.STORE_DETAIL_PAGE: (context, {arguments}) => StoreDetailPage(),
   // 修改店铺信息
   RouteName.MODIFY_DETAIL_PAGE: (context, {arguments}) => ModifyInfoPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>,
       ),
 
   // 发布商圈动态
   RouteName.BUSINESS_DISTRICT_PUBLISH_PAGE: (context, {arguments}) =>
       PublishBusinessDistrictPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
 
   /******* 设置   ********/
@@ -404,13 +404,13 @@ final Map<String, RouteBuilder> _routes = {
       UserInfoQrCodePage(),
   // 实名认证
   RouteName.USER_VERIFY: (context, {arguments}) => VerifyPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   RouteName.USER_VERIFY_RESULT: (context, {arguments}) => VerifyResultPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   RouteName.USER_INVITE_DETAIL: (context, {arguments}) => UserInviteDetail(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   RouteName.USER_INVITE_SEARCH: (context, {arguments}) => InviteSearchPage(),
   //设置支付密码
@@ -424,27 +424,27 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.USER_SET_PASSWORD: (context, {arguments}) => UserSetPassword(),
   RouteName.USER_SET_PASSWORD_AGAIN: (context, {arguments}) =>
       UserSetPasswordAgain(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   RouteName.USER_INFO_ADDRESS_PAGE: (context, {arguments}) =>
       UserInfoAddressPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>,
       ),
   // 瑞币
   RouteName.RUI_COIN_PAGE: (context, {arguments}) => RuiCoinPage(),
   RouteName.RUI_TRANSFER_BALANCE_PAGE: (context, {arguments}) =>
       RuiCoinTransferToBalancePage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   RouteName.USER_CASH_WITHDRAW_PAGE: (context, {arguments}) =>
       UserCashWithdrawPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   RouteName.CASH_WITHDRAW_HISTORY_PAGE: (context, {arguments}) =>
       CashWithdrawHistoryPage(),
   RouteName.CASH_WITHDRAW_RESULT_PAGE: (context, {arguments}) =>
       CashWithdrawResultPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   //余额
   RouteName.BALANCE_PAGE: (context, {arguments}) => BalancePage(),
@@ -454,46 +454,46 @@ final Map<String, RouteBuilder> _routes = {
   // 收货地址
   RouteName.RECEIVING_ADDRESS_PAGE: (context, {arguments}) =>
       ReceivingAddressPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   // 新增收货地址
   RouteName.NEW_ADDRESS_PAGE: (context, {arguments}) => NewAddressPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   // 订单列表
   RouteName.ORDER_LIST_PAGE: (context, {arguments}) => OrderCenterPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   // 订单详情
   RouteName.ORDER_DETAIL: (context, {arguments}) => OrderDetailPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   // 退货
   RouteName.ORDER_RETURN: (context, {arguments}) => GoodsReturnPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   // 退款
   RouteName.ORDER_REFUND: (context, {arguments}) => RefundGoodsPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   // 退货订单详情
   RouteName.ORDER_RETURN_DETAIL: (context, {arguments}) =>
       OrderReturnStatusPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   // 提交退货物流
   RouteName.ORDER_RETURN_ADDRESS: (context, {arguments}) =>
       OrderReturnAddressPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
 
   // 物流列表
   RouteName.ORDER_LOGISTIC: (context, {arguments}) => OrderLogisticsListPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   // 物流详情
   RouteName.ORDER_LOGISTIC_DETAIL: (context, {arguments}) => LogisticDetailPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   // 申请开票
   RouteName.ORDER_INVOICE_LIST: (context, {arguments}) => InvoiceListPage(),
@@ -501,51 +501,51 @@ final Map<String, RouteBuilder> _routes = {
   RouteName.ORDER_INVOICE_ADD: (context, {arguments}) => InvoiceAddPage(),
 
   RouteName.ORDER_EVALUATION: (context, {arguments}) => PublishEvaluationPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   //售后退货
   RouteName.ORDER_AFTER_SALE_GOODS_LIST: (context, {arguments}) =>
       OrderAfterSalePage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   //图片预览
   RouteName.PIC_SWIPER: (context, {arguments, index, pics}) =>
-      PicSwiper(arguments: arguments),
+      PicSwiper(arguments: arguments as Map<dynamic, dynamic>?),
   //webview
   RouteName.WEB_VIEW_PAGE: (context, {arguments}) => WebViewPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   //扫描二维码
   RouteName.BARCODE_SCAN: (context, {arguments}) => BarcodeScanPage(),
   RouteName.BARCODE_INPUT: (context, {arguments}) => InputBarcodePage(),
   RouteName.BARCODE_PHOTOSFAIL: (context, {arguments}) =>
-      PhotosFailBarcodePage(arguments: arguments),
+      PhotosFailBarcodePage(arguments: arguments as Map<dynamic, dynamic>?),
   RouteName.BARCODE_FAIL: (context, {arguments}) =>
-      FailBarcodePage(arguments: arguments),
+      FailBarcodePage(arguments: arguments as Map<dynamic, dynamic>?),
 
   //店铺订单中心
   RouteName.SHOP_ORDER_LIST_PAGE: (context, {arguments}) => ShopOrderCenterPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   //店铺订单详情
   RouteName.SHOP_ORDER_DETAIL: (context, {arguments}) => ShopOrderDetailPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   // 结果展示界面
   RouteName.RESULT_PAGE: (context, {arguments}) =>
-      ResultPage(arguments: arguments),
+      ResultPage(arguments: arguments as Map<dynamic, dynamic>?),
   RouteName.SHARE_GOODS_POSTER_PAGE: (context, {arguments}) =>
       ShareGoodsPosterPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   RouteName.SHARE_URL_POSTER_PAGE: (context, {arguments}) => ShareUrlPosterPage(
-        arguments: arguments,
+        arguments: arguments as Map<dynamic, dynamic>?,
       ),
   RouteName.USER_INVOICE: (context, {arguments}) => InvoicePage(),
   RouteName.USER_INVOICE_GOODS: (context, {arguments}) =>
       InvoiceWithGoodsPage(),
   RouteName.USER_INVOICE_DETAIL: (context, {arguments}) =>
-      InvoiceDetailPage(arguments: arguments),
+      InvoiceDetailPage(arguments: arguments as Map<String, dynamic>?),
   RouteName.USER_INVOICE_UPLOAD_DONE: (context, {arguments}) =>
       InvoiceUploadDonePage(),
   RouteName.USER_INVOICE_HISTORY: (context, {arguments}) =>
@@ -578,18 +578,18 @@ class AppRouter {
   /// [Future] 用于接收pop时返回数据
   /// [routeName] 路由名
   ///
-  static Future<T> push<T extends Object>(
+  static Future push(
       BuildContext context, String routeName,
       {arguments}) {
-    return NavigatorUtils.modelRoute<T>(context, routeName,
+    return NavigatorUtils.modelRoute(context, routeName,
         arguments:
             RouteArguments(type: AnimationType.push, arguments: arguments));
   }
 
-  static Future<T> fade<T extends Object>(
+  static Future fade<T extends Object>(
       BuildContext context, String routeName,
       {arguments}) {
-    return NavigatorUtils.modelRoute<T>(context, routeName,
+    return NavigatorUtils.modelRoute(context, routeName,
         arguments:
             RouteArguments(type: AnimationType.fade, arguments: arguments));
   }
@@ -658,23 +658,23 @@ class AppRouter {
 
 /// 处理跳转时的参数传递
 Route onGenerateRoute(RouteSettings settings) {
-  String name = settings.name;
-  RouteBuilder pageBuilder = _routes[name];
-  RouteArguments arguments = settings.arguments;
+  String? name = settings.name;
+  RouteBuilder? pageBuilder = _routes[name!];
+  RouteArguments arguments = settings.arguments as RouteArguments;
 
   switch (arguments.type) {
     case AnimationType.model:
       {
         return CustomRoute(
             builder: (context) {
-              return pageBuilder(context, arguments: arguments.arguments);
+              return pageBuilder!(context, arguments: arguments.arguments);
             },
             type: AnimationType.model);
       }
     case AnimationType.push:
       {
         return MaterialPageRoute(builder: (context) {
-          return pageBuilder(context, arguments: arguments.arguments);
+          return pageBuilder!(context, arguments: arguments.arguments);
         });
       }
 
@@ -685,7 +685,7 @@ Route onGenerateRoute(RouteSettings settings) {
         // });
         return CustomRoute(
             builder: (context) {
-              return pageBuilder(context, arguments: arguments.arguments);
+              return pageBuilder!(context, arguments: arguments.arguments);
             },
             type: AnimationType.fade);
       }

@@ -23,16 +23,16 @@ class DetailBottomBar extends StatefulWidget {
     this.isWholesale,
   });
 
-  final VoidListener addToShopCartListener;
-  final FavoriteListener collectListener;
-  final VoidListener buyListener;
-  final VoidListener shareListener;
-  final bool collected;
+  final VoidListener? addToShopCartListener;
+  final FavoriteListener? collectListener;
+  final VoidListener? buyListener;
+  final VoidListener? shareListener;
+  final bool? collected;
   final String shopCartNum;
-  final BottomBarController controller;
+  final BottomBarController? controller;
   // final String commission;
-  final GoodsDetailModel goodsDetail;
-  final bool isWholesale;
+  final GoodsDetailModel? goodsDetail;
+  final bool? isWholesale;
   @override
   State<StatefulWidget> createState() {
     return _DetailBottomBarState();
@@ -40,9 +40,9 @@ class DetailBottomBar extends StatefulWidget {
 }
 
 class _DetailBottomBarState extends State<DetailBottomBar> {
-  bool _collected;
+  bool? _collected;
   bool _hidden = false;
-  bool isWholesale =false;
+  bool? isWholesale =false;
 
   @override
   void initState() {
@@ -52,16 +52,16 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
     }
     _collected = widget.collected;
 
-    widget.controller.hidden?.addListener(() {
-      if (widget.controller.bottomBarHidden == _hidden) {
+    widget.controller!.hidden.addListener(() {
+      if (widget.controller!.bottomBarHidden == _hidden) {
         return;
       }
-      _hidden = widget.controller.bottomBarHidden;
+      _hidden = widget.controller!.bottomBarHidden;
       setState(() {});
     });
 
-    widget.controller.favorite.addListener(() {
-      _collected = widget.controller.favorite.value;
+    widget.controller!.favorite.addListener(() {
+      _collected = widget.controller!.favorite.value;
       setState(() {});
     });
   }
@@ -70,10 +70,10 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
   Widget build(BuildContext context) {
     print("改变了");
     return AnimatedOpacity(
-      opacity: !widget.controller.bottomBarHidden ? 1.0 : 0.0,
+      opacity: !widget.controller!.bottomBarHidden ? 1.0 : 0.0,
       duration: Duration(milliseconds: 500),
       child: Offstage(
-        offstage: widget.controller.bottomBarHidden,
+        offstage: widget.controller!.bottomBarHidden,
         child: _bottomBar(),
       ),
     );
@@ -89,7 +89,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
         decoration: BoxDecoration(
             color: Colors.white,
             border: Border(
-              top: BorderSide(color: Colors.grey[300], width: 0.3),
+              top: BorderSide(color: Colors.grey[300]!, width: 0.3),
               // bottom: BorderSide(color: Colors.grey[300], width: 0.3)
             )),
         child: Row(
@@ -97,7 +97,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
             Container(
               width: 20.rw,
             ),
-            !isWholesale?CustomImageButton(
+            !isWholesale!?CustomImageButton(
               dotSize: 13,
               dotFontSize: 10,
               dotPosition: DotPosition(right: rSize(0), top: 0),
@@ -128,20 +128,20 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
             Container(
               width: 10.rw,
             ),
-            !isWholesale?CustomImageButton(
+            !isWholesale!?CustomImageButton(
               title: "收藏",
               padding: EdgeInsets.only(left: 6.rw, top: 5.rw, right: 5.rw),
               contentSpacing: 3,
               icon: Icon(
-                _collected
+                _collected!
                     ? AppIcons.icon_favorite_selected
                     : AppIcons.icon_favorite,
-                color: _collected ? Colors.red : Colors.grey[900],
+                color: _collected! ? Colors.red : Colors.grey[900],
                 size: rSize(22),
               ),
               fontSize: 10.rsp,
               onPressed: () {
-                widget.collectListener(!_collected);
+                widget.collectListener!(!_collected!);
               },
             ):
             CustomImageButton(
@@ -160,8 +160,8 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
             Container(
               width: 15.rw,
             ),
-            widget.goodsDetail == null || widget.goodsDetail.data.inventory > 0
-                ? AppConfig.getShowCommission()
+            widget.goodsDetail == null || widget.goodsDetail!.data!.inventory! > 0
+                ? AppConfig.getShowCommission()!
                     ? _twoButtonRow()
                     : _vipTwoButtonRow()
                 : _oneButtonRow(),
@@ -215,9 +215,9 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
   }
 
   _vipTwoButtonRow() {
-    String commission = widget.goodsDetail == null
+    String? commission = widget.goodsDetail == null
         ? null
-        : widget.goodsDetail.data.price.min.commission.toStringAsFixed(2);
+        : widget.goodsDetail!.data!.price!.min!.commission!.toStringAsFixed(2);
     return Expanded(
       child: Row(
         children: <Widget>[
@@ -296,11 +296,11 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
   }
 
   _twoButtonRow() {
-    String commission = '';
+    String? commission = '';
     if(widget.goodsDetail != null){
       commission = widget.goodsDetail == null
           ? null
-          : widget.goodsDetail.data.price.min.commission.toStringAsFixed(2);
+          : widget.goodsDetail!.data!.price!.min!.commission!.toStringAsFixed(2);
       // if(widget.goodsDetail.data.secKill!=null){
       //   if( widget.goodsDetail.data.secKill.secKill==1){
       //     commission = widget.goodsDetail.data.secKill.secKillCommission.toStringAsFixed(2);
@@ -312,7 +312,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
 
 
 
-    return !isWholesale? Expanded(
+    return !isWholesale!? Expanded(
       child: Row(
         children: <Widget>[
           Platform.isAndroid ||
@@ -377,7 +377,7 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
                                       height: 0,
                                     )
                                   : Text(
-                                      "赚￥" + commission,
+                                      "赚￥" + commission!,
                                       style: TextStyle(
                                           letterSpacing: -0.5,
                                           fontWeight: FontWeight.w300,
@@ -616,16 +616,16 @@ class _DetailBottomBarState extends State<DetailBottomBar> {
 
 class BottomBarController {
   ValueNotifier<bool> hidden = ValueNotifier(false);
-  ValueNotifier<bool> favorite = ValueNotifier(false);
+  ValueNotifier<bool?> favorite = ValueNotifier(false);
 
-  get bottomBarHidden => hidden?.value;
+  get bottomBarHidden => hidden.value;
 
-  setFavorite(bool isFavorite) {
+  setFavorite(bool? isFavorite) {
     favorite.value = isFavorite;
   }
 
   void dispose() {
-    hidden?.dispose();
-    favorite?.dispose();
+    hidden.dispose();
+    favorite.dispose();
   }
 }

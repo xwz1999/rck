@@ -1,9 +1,9 @@
 import 'package:recook/utils/user_level_tool.dart';
 
 class UserBenefitExtraDetailModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   UserBenefitExtraDetailModel({this.code, this.msg, this.data});
 
@@ -18,19 +18,19 @@ class UserBenefitExtraDetailModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<UserIncome> userIncome;
-  num amount = 0;
-  num salesVolume;
-  num ratio;
-  int count;
-  int isSettlement;
+  List<UserIncome>? userIncome;
+  num? amount = 0;
+  num? salesVolume;
+  num? ratio;
+  int? count;
+  int? isSettlement;
 
   Data(
       {this.userIncome,
@@ -44,7 +44,7 @@ class Data {
     if (json['userIncome'] != null) {
       userIncome = [];
       json['userIncome'].forEach((v) {
-        userIncome.add(new UserIncome.fromJson(v));
+        userIncome!.add(new UserIncome.fromJson(v));
       });
     } else {
       userIncome = [];
@@ -59,7 +59,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.userIncome != null) {
-      data['userIncome'] = this.userIncome.map((v) => v.toJson()).toList();
+      data['userIncome'] = this.userIncome!.map((v) => v.toJson()).toList();
     }
     data['amount'] = this.amount;
     data['salesVolume'] = this.salesVolume;
@@ -71,15 +71,15 @@ class Data {
 }
 
 class UserIncome {
-  int userId;
-  String headImgUrl;
-  String nickname;
-  String phone;
-  String wechatNo;
-  String remarkName;
-  int count;
-  num amount;
-  int roleLevel;
+  int? userId;
+  String? headImgUrl;
+  String? nickname;
+  String? phone;
+  String? wechatNo;
+  String? remarkName;
+  int? count;
+  num? amount;
+  int? roleLevel;
 
   UserRoleLevel get roleLevelEnum => UserLevelTool.roleLevelEnum(roleLevel);
 

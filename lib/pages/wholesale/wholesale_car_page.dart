@@ -1,10 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/wholesale/func/wholesale_func.dart';
 import 'package:recook/pages/wholesale/wholeasale_detail_page.dart';
@@ -24,9 +21,9 @@ import 'models/wholesale_order_preview_model.dart';
 import 'more_goods/whoesale_goods_grid.dart';
 
 class WholesaleCarPage extends StatefulWidget {
-  final bool canBack;
+  final bool? canBack;
   WholesaleCarPage({
-    Key key, this.canBack ,
+    Key? key, this.canBack ,
   }) : super(key: key);
 
   @override
@@ -37,14 +34,14 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
   bool _manageStatus = false;//是否进入删除商品的状态
   bool _checkAll = false;//全选
   bool _editting = false;
-  GSRefreshController _refreshController;
+  GSRefreshController? _refreshController;
   List<WholesaleCarModel> _selectedGoods = [];
   List<WholesaleGood> _likeGoodsList = [];
 
   List<WholesaleCarModel> _carList = [];
-  StateSetter _bottomStateSetter;
+  StateSetter? _bottomStateSetter;
   int _totalNum = 0;
-  bool _canback = false;
+  bool? _canback = false;
   bool _onLoad = true;
 
   @override
@@ -71,7 +68,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
       backgroundColor: AppColor.frenchColor,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        leading: _canback? RecookBackButton():null,
+        leading: _canback!? RecookBackButton():null,
         brightness: Brightness.light,
         backgroundColor: Colors.white,
         titleSpacing: 0,
@@ -156,7 +153,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
       controller: _refreshController,
       onRefresh: () async {
          _carList =  await WholesaleFunc.getCarList();
-         _likeGoodsList = await WholesaleFunc.getLikeGoodsList(UserManager.instance.user.info.id,isSale: true);
+         _likeGoodsList = await WholesaleFunc.getLikeGoodsList(UserManager.instance!.user.info!.id,isSale: true);
          _checkAll = false;
          _selectedGoods.clear();
          _totalNum = 0;
@@ -168,7 +165,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
            });
          }
 
-        _refreshController.refreshCompleted();
+        _refreshController!.refreshCompleted();
       },
 
       body:
@@ -217,7 +214,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                           FocusScope.of(context).requestFocus(FocusNode());
                           return;
                         }
-                        Get.to(()=>WholesaleDetailPage(goodsId: goods.goodsId,))
+                        Get.to(()=>WholesaleDetailPage(goodsId: goods.goodsId,))!
 
 
                             .then((onValue) async {
@@ -285,7 +282,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                         FocusScope.of(context).requestFocus(FocusNode());
                         return;
                       }
-                      Get.to(()=>WholesaleDetailPage(goodsId: goods.goodsId,))
+                      Get.to(()=>WholesaleDetailPage(goodsId: goods.goodsId,))!
                           .then((onValue) async {
                         _carList =  await WholesaleFunc.getCarList();
                         setState(() {
@@ -348,7 +345,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                     FocusScope.of(context).requestFocus(FocusNode());
                     return;
                   }
-                  Get.to(()=>WholesaleDetailPage(goodsId: goods.goodsId,))
+                  Get.to(()=>WholesaleDetailPage(goodsId: goods.goodsId,))!
                       .then((onValue) async {
                     _carList =  await WholesaleFunc.getCarList();
                     setState(() {
@@ -380,7 +377,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
     );
   }
 
-  noDataView(String text, {Widget icon}) {
+  noDataView(String text, {Widget? icon}) {
     return ListView(
       //height: double.infinity,
       children: <Widget>[
@@ -466,9 +463,9 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
           WaterfallFlow.builder(
               primary: false,
               shrinkWrap: true,
-              padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight),
+              padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight!),
               physics: NeverScrollableScrollPhysics(),
-              itemCount: _likeGoodsList?.length,
+              itemCount: _likeGoodsList.length,
               gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
@@ -480,7 +477,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                 return MaterialButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
-                      Get.to(()=>WholesaleDetailPage(goodsId: goods.id,));
+                      Get.to(()=>WholesaleDetailPage(goodsId: goods.id as int?,));
 
                     },
                     child: WholesaleGoodsGrid(goods: goods,));
@@ -504,7 +501,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
         double totalPrice = 0;
 
         _selectedGoods.forEach((goods) {
-          totalPrice += goods.salePrice * goods.quantity;
+          totalPrice += goods.salePrice! * goods.quantity!;
         });
         _bottomStateSetter = bottomSetState;
         return Container(
@@ -638,7 +635,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                     list.add(GoodsDTO(skuId:element.skuId,quantity:element.quantity));
                   });
                   WholesaleFunc.deleteShopCart(list);
-                  _refreshController.requestRefresh();
+                  _refreshController!.requestRefresh();
                   Alert.dismiss(context);
                 },
               ));
@@ -673,10 +670,10 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
     );
   }
 
-  Future<dynamic> _createOrder(int skuId,int num) async {
+  Future<dynamic> _createOrder(int? skuId,int? num) async {
     List<GoodsDTO> list = [];
     list.add(GoodsDTO(skuId:skuId,quantity:num));
-    WholesaleOrderPreviewModel order = await WholesaleFunc.createOrderPreview(
+    WholesaleOrderPreviewModel? order = await WholesaleFunc.createOrderPreview(
       list,
       0,
     );
@@ -685,11 +682,11 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
       return;
     }else
     {
+      //
+      // AppRouter.push(context, RouteName.WHOLESALE_GOODS_ORDER_PAGE,
+      //     arguments: WholesaleGoodsOrderPage.setArguments(order));
 
-      AppRouter.push(context, RouteName.WHOLESALE_GOODS_ORDER_PAGE,
-          arguments: WholesaleGoodsOrderPage.setArguments(order));
-
-      // Get.to(()=>WholesaleGoodsOrderPage(model: order,));
+      Get.to(()=>WholesaleGoodsOrderPage( arguments: WholesaleGoodsOrderPage.setArguments(order)));
     }
 
   }

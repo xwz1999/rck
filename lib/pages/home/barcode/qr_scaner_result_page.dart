@@ -21,8 +21,8 @@ import 'package:recook/widgets/toast.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class QRScarerResultPage extends StatefulWidget {
-  final ScanResultModel model;
-  QRScarerResultPage({Key key, this.model}) : super(key: key);
+  final ScanResultModel? model;
+  QRScarerResultPage({Key? key, this.model}) : super(key: key);
 
   @override
   _QRScarerResultPageState createState() => _QRScarerResultPageState();
@@ -46,7 +46,7 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
       title: '扫码购物',
       body: ListView(
         padding: EdgeInsets.symmetric(vertical: 22.w, horizontal: 20.w),
-        children: [_goodsCard(widget.model)],
+        children: [_goodsCard(widget.model!)],
       ),
       bottomNavi: Row(
         children: [
@@ -74,13 +74,13 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
               borderRadius: BorderRadius.circular(4.w),
               child: FadeInImage.assetNetwork(
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                image: Api.getImgUrl(model.brandImg),
+                image: Api.getImgUrl(model.brandImg)!,
                 width: 44.w,
                 height: 44.w,
               ),
             ),
             20.w.widthBox,
-            model.brandName.text
+            model.brandName!.text
                 .size(28.sp)
                 .color(Color(0xFF0A0001))
                 .bold
@@ -94,7 +94,7 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
               borderRadius: BorderRadius.circular(10.w),
               child: FadeInImage.assetNetwork(
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                image: Api.getImgUrl(model.goodsImg),
+                image: Api.getImgUrl(model.goodsImg)!,
                 width: 200.w,
                 height: 200.w,
                 fit: BoxFit.contain,
@@ -105,7 +105,7 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                model.goodsName.text
+                model.goodsName!.text
                     .size(28.sp)
                     .bold
                     .lineHeight(1)
@@ -131,13 +131,13 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
                     '¥ '
                         .richText
                         .withTextSpanChildren([
-                          '${model.discount.toStringAsFixed(0)}.'
+                          '${model.discount!.toStringAsFixed(0)}.'
                               .textSpan
                               .size(36.sp)
                               .color(Color(0xFFC92219))
                               .bold
                               .make(),
-                          model.discount
+                          model.discount!
                               .toStringAsFixed(2)
                               .split('.')[1]
                               .textSpan
@@ -151,7 +151,7 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
                         .bold
                         .make(),
                     8.w.widthBox,
-                    '赚${model.commission.toStringAsFixed(2)}'
+                    '赚${model.commission!.toStringAsFixed(2)}'
                         .text
                         .color(Color(0xFFC92219))
                         .bold
@@ -183,10 +183,8 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
         .make()
         .onInkTap(() {
       Get.to(() => CommodityDetailPage(
-            arguments: {"goodsID": widget.model.goodsID},
+            arguments: {"goodsID": widget.model!.goodsID},
           ));
-      //  AppRouter.push(context, RouteName.COMMODITY_PAGE,
-      //     arguments: CommodityDetailPage.setArguments(widget.model.goodsId));
     });
   }
 
@@ -194,16 +192,16 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
     return Container();
   }
 
-  int get getMaxGoodsCount {
+  int? get getMaxGoodsCount {
     if (widget.model?.inventory == null) {
       ReToast.warning(text: '库存数量错误');
       return 0;
     }
-    if (widget.model.inventory == 0) {
+    if (widget.model!.inventory == 0) {
       ReToast.warning(text: '库存数量为0');
       return 0;
     }
-    return widget.model.inventory < 50 ? widget.model.inventory : 50;
+    return widget.model!.inventory! < 50 ? widget.model!.inventory as int? : 50;
   }
 
   Widget _buyButton() {
@@ -220,7 +218,7 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
       onPressed: getMaxGoodsCount == 0
           ? null
           : () {
-              _createOrder(widget.model.skuID, widget.model.skuName,
+              _createOrder(widget.model!.skuID, widget.model!.skuName,
                   _goodsCount, context);
             },
     );
@@ -240,17 +238,17 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
       onPressed: getMaxGoodsCount == 0
           ? null
           : () {
-              _addToShoppingCart(widget.model.skuID, widget.model.skuName,
+              _addToShoppingCart(widget.model!.skuID, widget.model!.skuName,
                   _goodsCount, context);
             },
     );
   }
 
   Future<dynamic> _createOrder(
-      int skuId, String skuName, int quantity, BuildContext context,
+      int? skuId, String? skuName, int quantity, BuildContext context,
       {bool isLive = false, int liveId = 0}) async {
     OrderPreviewModel order = await GoodsDetailModelImpl.createOrderPreview(
-      UserManager.instance.user.info.id,
+      UserManager.instance!.user.info!.id,
       skuId,
       skuName,
       quantity,
@@ -261,18 +259,17 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
       Get.back();
       return;
     }
-    AppRouter.push(context, RouteName.GOODS_ORDER_PAGE,
-        arguments: GoodsOrderPage.setArguments(order));
+    Get.to(()=>GoodsOrderPage(arguments: GoodsOrderPage.setArguments(order)));
   }
 
   Future<dynamic> _addToShoppingCart(
-    int skuId,
-    String skuName,
+    int? skuId,
+    String? skuName,
     int quantity,
     BuildContext context,
   ) async {
     ResultData resultData = await ShoppingCartModelImpl().addToShoppingCart(
-      UserManager.instance.user.info.id,
+      UserManager.instance!.user.info!.id,
       skuId,
       skuName,
       quantity,
@@ -288,9 +285,9 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
       Get.back();
       return;
     }
-    UserManager.instance.refreshShoppingCart.value = true;
-    UserManager.instance.refreshShoppingCartNumber.value = true;
-    UserManager.instance.refreshShoppingCartNumberWithPage.value = true;
+    UserManager.instance!.refreshShoppingCart.value = true;
+    UserManager.instance!.refreshShoppingCartNumber.value = true;
+    UserManager.instance!.refreshShoppingCartNumberWithPage.value = true;
     ReToast.success(text: '加入成功');
     Get.back();
   }

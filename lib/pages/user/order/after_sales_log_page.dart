@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/after_sales_log_list_model.dart';
 import 'package:recook/utils/text_parse_util.dart';
@@ -13,23 +12,23 @@ import 'package:timeline_tile/timeline_tile.dart';
 enum AfterSalesRichTextType { black, gray, address, none }
 
 class AfterSalesRichTextModel {
-  final String richText;
-  String normalText;
-  final AfterSalesRichTextType type;
-  final int start;
-  final int end;
+  final String? richText;
+  String? normalText;
+  final AfterSalesRichTextType? type;
+  final int? start;
+  final int? end;
   AfterSalesRichTextModel({this.richText, this.type, this.start, this.end});
   getNormalText() {
     if (type == AfterSalesRichTextType.none) return this.richText;
-    return this.richText.replaceAll(RegExp("<[^>]+>"), "");
+    return this.richText!.replaceAll(RegExp("<[^>]+>"), "");
   }
 }
 
 class AfterSalesLogPage extends StatefulWidget {
-  final Map arguments;
-  AfterSalesLogPage({Key key, this.arguments}) : super(key: key);
+  final Map? arguments;
+  AfterSalesLogPage({Key? key, this.arguments}) : super(key: key);
 
-  static setArguments(int id) {
+  static setArguments(int? id) {
     return {'id': id};
   }
 
@@ -38,7 +37,7 @@ class AfterSalesLogPage extends StatefulWidget {
 }
 
 class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
-  AfterSalesLogListModel _afterSalesLogListModel;
+  AfterSalesLogListModel? _afterSalesLogListModel;
   @override
   void initState() {
     super.initState();
@@ -63,14 +62,14 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
       child: ListView.builder(
         padding:
             EdgeInsets.symmetric(horizontal: rSize(20), vertical: 20 * 2.h),
-        itemCount: _afterSalesLogListModel.data.length,
+        itemCount: _afterSalesLogListModel!.data!.length,
         itemBuilder: (BuildContext context, int index) {
           AfterSalesLogModel afterSalesLogModel =
-              _afterSalesLogListModel.data[index];
+              _afterSalesLogListModel!.data![index];
           return _buildTimelineTile(
             isFirst: index == 0,
-            isLast: index == _afterSalesLogListModel.data.length - 1,
-            title: afterSalesLogModel.title,
+            isLast: index == _afterSalesLogListModel!.data!.length - 1,
+            title: afterSalesLogModel.title!,
             // subInfo: ExtendedText.rich(TextSpan(
             //   children: _getRichTextWidget(afterSalesLogModel.content),
             // )),
@@ -79,11 +78,11 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
                 fontSize: 14 * 2.sp,
                 color: Color(0xFF666666),
               ),
-              child: TextParseUtil.parseRefundText(afterSalesLogModel.content),
+              child: TextParseUtil.parseRefundText(afterSalesLogModel.content!),
             ),
             // subInfo: _getRichTextWidget(afterSalesLogModel.content),
-            time: afterSalesLogModel.ctime,
-            line: afterSalesLogModel.content.split('|').length,
+            time: afterSalesLogModel.ctime!,
+            line: afterSalesLogModel.content!.split('|').length,
           );
         },
       ),
@@ -92,7 +91,7 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
 
   TimelineTile _buildTimelineTile({
     String time = "",
-    String title,
+    required String title,
     dynamic subInfo,
     bool isLast = false,
     bool isFirst = false,
@@ -163,7 +162,7 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
   _getOrderDetail() async {
     ResultData resultData =
         await HttpManager.post(OrderApi.order_after_sales_log, {
-      'asGoodsId': widget.arguments['id'],
+      'asGoodsId': widget.arguments!['id'],
     });
     if (!resultData.result) {
       Toast.showError(resultData.msg);
@@ -204,7 +203,7 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
     richTextList.addAll(_regTextList("(<address>)(.*?)(</address>)", text,
         type: AfterSalesRichTextType.address));
     List normalTextList = text.split(RegExp("<[^>]+>(.*?)<[^>]+>"));
-    for (String normalText in normalTextList) {
+    for (String normalText in normalTextList as Iterable<String>) {
       int index = text.indexOf(normalText);
       richTextList.add(AfterSalesRichTextModel(
         type: AfterSalesRichTextType.none,
@@ -213,7 +212,7 @@ class _AfterSalesLogPageState extends BaseStoreState<AfterSalesLogPage> {
         end: index + normalText.length - 1,
       ));
     }
-    richTextList.sort((left, right) => left.start.compareTo(right.start));
+    richTextList.sort((left, right) => left.start!.compareTo(right.start!));
     // richtext list
     List<InlineSpan> textSpanList = [];
     TextStyle normalStyle =

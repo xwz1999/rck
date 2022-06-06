@@ -20,14 +20,14 @@ class ImagePickerGridView extends StatefulWidget {
   final List items;
 
   const ImagePickerGridView({
-    Key key,
+    Key? key,
     this.crossItemCount = 4,
     this.margin = const EdgeInsets.all(0),
     this.padding = const EdgeInsets.all(5.0),
     this.mainAxisSpacing = 5,
     this.crossAxisSpacing = 5,
-    this.items,
-  }) : assert(items != null);
+    required this.items,
+  });
 
   @override
   State<StatefulWidget> createState() {

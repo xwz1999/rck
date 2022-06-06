@@ -10,14 +10,14 @@
 import 'package:recook/utils/mvp.dart';
 
 abstract class MvpListViewPresenterI<T, V extends MvpView, M extends MvpModel> extends MvpPresenter<V,M>{
-  MvpRefreshViewI<T> _mRefreshView;
+  MvpRefreshViewI<T?>? _mRefreshView;
 
   void attachRefreshView(MvpRefreshViewI view) {
-    _mRefreshView = view;
+    _mRefreshView = view as MvpRefreshViewI<T?>?;
     _mRefreshView?.onAttach();
   }
 
-  MvpRefreshViewI<T> getRefreshView() {
+  MvpRefreshViewI<T?>? getRefreshView() {
     return _mRefreshView;
   }
 
@@ -31,10 +31,10 @@ abstract class MvpListViewPresenterI<T, V extends MvpView, M extends MvpModel> e
 }
 
 abstract class MvpRefreshViewI<T> extends MvpView{
-  failure(String msg);
+  failure(String? msg);
   refreshSuccess(data);
-  refreshFailure(String error);
-  loadMoreSuccess(List<T> data);
+  refreshFailure(String? error);
+  loadMoreSuccess(List<T>? data);
   loadMoreWithNoMoreData();
-  loadMoreFailure({String error});
+  loadMoreFailure({String? error});
 }

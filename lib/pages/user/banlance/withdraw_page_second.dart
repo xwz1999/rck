@@ -3,9 +3,7 @@ import 'dart:ui';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
@@ -22,9 +20,9 @@ import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
 class WithDrawPageSecond extends StatefulWidget {
-  final WithdrawAmountModel amount;
+  final WithdrawAmountModel? amount;
   WithDrawPageSecond({
-    Key key, @required this.amount,
+    Key? key, required this.amount,
   }) : super(key: key);
 
   @override
@@ -34,10 +32,10 @@ class WithDrawPageSecond extends StatefulWidget {
 class _WithDrawPageSecondState extends State<WithDrawPageSecond>
     with TickerProviderStateMixin {
 
-  TextEditingController _companyTextEditController;
+  TextEditingController? _companyTextEditController;
   FocusNode _companyContentFocusNode = FocusNode();
 
-  TextEditingController _numberTextEditController;
+  TextEditingController? _numberTextEditController;
   FocusNode _numberContentFocusNode = FocusNode();
   bool isElectronics = true;
   bool isPaper = false;
@@ -59,8 +57,8 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
 
     _companyTextEditController?.dispose();
     _numberTextEditController?.dispose();
-    _companyContentFocusNode?.dispose();
-    _numberContentFocusNode?.dispose();
+    _companyContentFocusNode.dispose();
+    _numberContentFocusNode.dispose();
     super.dispose();
   }
 
@@ -243,7 +241,7 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
                     Spacer(),
                     GestureDetector(
                       onTap: () async{
-                        WholesaleCustomerModel model =
+                        WholesaleCustomerModel? model =
                         await WholesaleFunc.getCustomerInfo();
 
                         Get.to(() => WholesaleCustomerPage(
@@ -311,7 +309,7 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
                             ),
                             Text(
                               TextUtils.getCount1(
-                                  (widget.amount.balance ?? 0.0)),
+                                  (widget.amount!.balance ?? 0.0))!,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 color: Color(0xFF333333),
@@ -368,7 +366,7 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
                             ),
                             Text(
                               TextUtils.getCount1(
-                                  (widget.amount.actualAmount?? 0.0)),
+                                  (widget.amount!.actualAmount?? 0.0))!,
                               overflow: TextOverflow.ellipsis,
                               maxLines: 1,
                               style: TextStyle(
@@ -590,12 +588,12 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
           child: GestureDetector(
             onTap: () async {
 
-              if(widget.amount.balance<=0){
+              if(widget.amount!.balance!<=0){
                 ReToast.err(text: '余额不足，无法提现');
               }
               else{
                 bool apply = await UserBalanceFunc.applyWithdrawal(
-                    UserManager.instance.userBrief.balance, isElectronics ? 1 : 2,
+                    UserManager.instance!.userBrief!.balance, isElectronics ? 1 : 2,
                     logistics_name: logistics, waybill_code: logisticsNumber);
 
                 if (apply) {
@@ -603,8 +601,8 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
                   Get.back();
                   Get.back();
                   Get.to(()=>WithDrawPageThird(amount: '¥'+ TextUtils.getCount1(
-                      (widget.amount.balance ?? 0.0)),actualAmount: '¥'+ TextUtils.getCount1(
-                      (widget.amount.actualAmount ?? 0.0)), type: isElectronics?'电子发票':'纸质发票', time: DateUtil.formatDate(DateTime.now(), format: 'yyyy-MM-dd HH:mm:ss'),
+                      (widget.amount!.balance ?? 0.0))!,actualAmount: '¥'+ TextUtils.getCount1(
+                      (widget.amount!.actualAmount ?? 0.0))!, type: isElectronics?'电子发票':'纸质发票', time: DateUtil.formatDate(DateTime.now(), format: 'yyyy-MM-dd HH:mm:ss'),
                     logistics: logistics,
                     logisticsNumber: logisticsNumber,
 

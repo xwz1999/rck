@@ -18,18 +18,18 @@ import 'home_mvp_contact.dart';
 class HomePresenterImpl extends HomeMvpPresenterI{
   @override
   getBannerList() async {
-    ResultData resultData = await getModel().getBannerList();
+    ResultData resultData = await getModel()!.getBannerList();
     if (!resultData.result) {
-      getView().requestFail(resultData.msg);
+      getView()!.requestFail(resultData.msg);
       return;
     }
 
     BannerListModel model = BannerListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      getView().requestFail(model.msg);
+      getView()!.requestFail(model.msg);
       return;
     }
-    getView().getBannerSuccess(model.data);
+    getView()!.getBannerSuccess(model.data);
   }
 
   @override
@@ -39,32 +39,32 @@ class HomePresenterImpl extends HomeMvpPresenterI{
 
   @override
   getPromotionList() async {
-    ResultData resultData = await getModel().getPromotionList();
+    ResultData resultData = await getModel()!.getPromotionList();
     if (!resultData.result) {
-      getView().requestFail(resultData.msg);
+      getView()!.requestFail(resultData.msg);
       return;
     }
 
     PromotionListModel model = PromotionListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      getView().requestFail(model.msg);
+      getView()!.requestFail(model.msg);
       return;
     }
-    getView().getPromotionListSuccess(model.data);
+    getView()!.getPromotionListSuccess(model.data);
   }
 
   @override
   getPromotionGoodsList(int promotionId) async {
-    ResultData resultData = await getModel().getPromotionGoodsList(promotionId);
+    ResultData resultData = await getModel()!.getPromotionGoodsList(promotionId);
     if (!resultData.result) {
-      getView().requestFail(resultData.msg);
+      getView()!.requestFail(resultData.msg);
       return;
     }
     PromotionGoodsListModel model = PromotionGoodsListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      getView().requestFail(model.msg);
+      getView()!.requestFail(model.msg);
       return;
     }
-    getRefreshView().refreshSuccess(model.data);
+    getRefreshView()!.refreshSuccess(model.data);
   }
 }

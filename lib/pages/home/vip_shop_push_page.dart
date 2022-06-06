@@ -1,7 +1,5 @@
 import 'package:flustars/flustars.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/api_v2.dart';
@@ -20,7 +18,7 @@ import 'model/profit_card_model.dart';
 
 class VipShopPushPage extends StatefulWidget {
   VipShopPushPage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -32,11 +30,11 @@ class _VipShopPushPageState extends State<VipShopPushPage> {
   GSRefreshController(initialRefresh: true);
   List<ProfitCardModel> models= []
    ;
-  DateTime _date;
+  DateTime? _date;
   bool _onLoad = true;
-  UserIncomeDataModel _userIncomeDataModel;
-  num count = 0;
-  num amount = 0;
+  UserIncomeDataModel? _userIncomeDataModel;
+  num? count = 0;
+  num? amount = 0;
 
   @override
   void initState() {
@@ -211,7 +209,7 @@ class _VipShopPushPageState extends State<VipShopPushPage> {
                                 ),
                                 32.wb,
                                 Text(
-                                   '¥'+TextUtils.getCount1(amount),
+                                   '¥'+TextUtils.getCount1(amount!)!,
                                   style: TextStyle(fontSize: 18.rsp,
                                       color: Color(0xFFD5101A),
                                       fontWeight: FontWeight.bold),
@@ -267,8 +265,8 @@ class _VipShopPushPageState extends State<VipShopPushPage> {
     if (result.data != null && result.data['data'] != null) {
       _userIncomeDataModel = UserIncomeDataModel.fromJson(result.data['data']);
       if(_userIncomeDataModel!=null){
-        count =  _userIncomeDataModel.count10;
-        amount = _userIncomeDataModel.amount10;
+        count =  _userIncomeDataModel!.count10;
+        amount = _userIncomeDataModel!.amount10;
       }
 
     }
@@ -423,7 +421,7 @@ class _VipShopPushPageState extends State<VipShopPushPage> {
   _buildTableBody(ProfitCardModel model) {
     return GestureDetector(
       onTap: () {
-        Get.to(WholesaleTableMonthPage(year: int.parse(model.name)));
+        Get.to(WholesaleTableMonthPage(year: int.parse(model.name!)));
       },
       child: Container(
         height: 40.rw,
@@ -435,7 +433,7 @@ class _VipShopPushPageState extends State<VipShopPushPage> {
               child: Container(
                   alignment: Alignment.center,
                   child: Text(
-                    model.name,
+                    model.name!,
                     style: TextStyle(
                       fontSize: 14.rsp,
                       color: Color(0xFF666666),
@@ -459,7 +457,7 @@ class _VipShopPushPageState extends State<VipShopPushPage> {
               child: Container(
                   alignment: Alignment.center,
                   child: Text(
-                    model.int,
+                    model.int!,
                     style: TextStyle(
                       fontSize: 14.rsp,
                       color: Color(0xFF666666),
@@ -471,7 +469,7 @@ class _VipShopPushPageState extends State<VipShopPushPage> {
               child: Container(
                   alignment: Alignment.center,
                   child: Text(
-                    '¥'+model.amount.toStringAsFixed(2),
+                    '¥'+model.amount!.toStringAsFixed(2),
                     style: TextStyle(
                       fontSize: 14.rsp,
                       color: Color(0xFF666666),
@@ -487,8 +485,8 @@ class _VipShopPushPageState extends State<VipShopPushPage> {
 
 
   ///时间选择器
-  showTimePickerBottomSheet({List<BottomTimePickerType> timePickerTypes,
-    Function(DateTime, BottomTimePickerType) submit}) {
+  showTimePickerBottomSheet({List<BottomTimePickerType>? timePickerTypes,
+    Function(DateTime, BottomTimePickerType)? submit}) {
     showModalBottomSheet(
       isScrollControlled: false,
       context: context,

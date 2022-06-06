@@ -24,13 +24,13 @@ class BubbleWidget extends StatelessWidget {
   final height;
 
   // 边距
-  double length;
+  double? length;
 
   // 颜色
   Color color;
 
   // 边框颜色
-  Color borderColor;
+  Color? borderColor;
 
   // 边框宽度
   final strokeWidth;
@@ -49,7 +49,7 @@ class BubbleWidget extends StatelessWidget {
     this.height,
     this.color,
     this.position, {
-    Key key,
+    Key? key,
     this.length = -1.0,
     this.arrHeight = 12.0,
     this.arrAngle = 60.0,
@@ -77,13 +77,13 @@ class BubbleWidget extends StatelessWidget {
     }
     if (position == BubbleArrowDirection.top ||
         position == BubbleArrowDirection.bottom) {
-      if (length < 0.0 || length >= width - 2 * radius) {
-        length = width * 0.5 - arrHeight * tan(_angle(arrAngle * 0.5)) - radius;
+      if (length! < 0.0 || length! >= width - 2 * radius) {
+        length = width * 0.5 - arrHeight * tan(_angle(arrAngle * 0.5)!) - radius;
       }
     } else {
-      if (length < 0.0 || length >= height - 2 * radius) {
+      if (length! < 0.0 || length! >= height - 2 * radius) {
         length =
-            height * 0.5 - arrHeight * tan(_angle(arrAngle * 0.5)) - radius;
+            height * 0.5 - arrHeight * tan(_angle(arrAngle * 0.5)!) - radius;
       }
     }
     if (innerPadding < 0.0 ||
@@ -203,8 +203,8 @@ class BubbleCanvas extends CustomPainter {
     if (position == BubbleArrowDirection.top) {
       path.lineTo(length + radius, arrHeight);
       path.lineTo(
-          length + radius + arrHeight * tan(_angle(arrAngle * 0.5)), 0.0);
-      path.lineTo(length + radius + arrHeight * tan(_angle(arrAngle * 0.5)) * 2,
+          length + radius + arrHeight * tan(_angle(arrAngle * 0.5)!), 0.0);
+      path.lineTo(length + radius + arrHeight * tan(_angle(arrAngle * 0.5)!) * 2,
           arrHeight);
     }
     path.lineTo(
@@ -228,9 +228,9 @@ class BubbleCanvas extends CustomPainter {
     if (position == BubbleArrowDirection.right) {
       path.lineTo(width - arrHeight, length + radius);
       path.lineTo(
-          width, length + radius + arrHeight * tan(_angle(arrAngle * 0.5)));
+          width, length + radius + arrHeight * tan(_angle(arrAngle * 0.5)!));
       path.lineTo(width - arrHeight,
-          length + radius + arrHeight * tan(_angle(arrAngle * 0.5)) * 2);
+          length + radius + arrHeight * tan(_angle(arrAngle * 0.5)!) * 2);
     }
     path.lineTo(
         (position == BubbleArrowDirection.right) ? width - arrHeight : width,
@@ -253,10 +253,10 @@ class BubbleCanvas extends CustomPainter {
     if (position == BubbleArrowDirection.bottom) {
       path.lineTo(width - radius - length, height - arrHeight);
       path.lineTo(
-          width - radius - length - arrHeight * tan(_angle(arrAngle * 0.5)),
+          width - radius - length - arrHeight * tan(_angle(arrAngle * 0.5)!),
           height);
       path.lineTo(
-          width - radius - length - arrHeight * tan(_angle(arrAngle * 0.5)) * 2,
+          width - radius - length - arrHeight * tan(_angle(arrAngle * 0.5)!) * 2,
           height - arrHeight);
     }
     path.lineTo(
@@ -280,13 +280,13 @@ class BubbleCanvas extends CustomPainter {
     if (position == BubbleArrowDirection.left) {
       path.lineTo(arrHeight, height - radius - length);
       path.lineTo(0.0,
-          height - radius - length - arrHeight * tan(_angle(arrAngle * 0.5)));
+          height - radius - length - arrHeight * tan(_angle(arrAngle * 0.5)!));
       path.lineTo(
           arrHeight,
           height -
               radius -
               length -
-              arrHeight * tan(_angle(arrAngle * 0.5)) * 2);
+              arrHeight * tan(_angle(arrAngle * 0.5)!) * 2);
     }
     path.lineTo((position == BubbleArrowDirection.left) ? arrHeight : 0.0,
         (position == BubbleArrowDirection.top) ? radius + arrHeight : radius);
@@ -306,6 +306,6 @@ class BubbleCanvas extends CustomPainter {
   }
 }
 
-double _angle(angle) {
+double? _angle(angle) {
   return angle * pi / 180;
 }

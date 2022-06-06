@@ -1,8 +1,8 @@
 class InvoiceGetBillModel {
-  String endTime;
-  String goodsName;
-  num goodsTotalAmount;
-  int orderId;
+  String? endTime;
+  String? goodsName;
+  num? goodsTotalAmount;
+  int? orderId;
 
   InvoiceGetBillModel(
       {this.endTime, this.goodsName, this.goodsTotalAmount, this.orderId});

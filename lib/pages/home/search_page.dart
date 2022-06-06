@@ -9,14 +9,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/app_image_resources.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -32,9 +28,7 @@ import 'package:recook/pages/home/function/home_fuc.dart';
 import 'package:recook/pages/home/items/item_brand_detail_grid.dart';
 import 'package:recook/pages/home/items/item_tag_widget.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
-import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/mvp.dart';
-import 'package:recook/utils/text_utils.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_floating_action_button_location.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -51,11 +45,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 
 class SearchPage extends StatefulWidget {
-  final int countryId;
-  final int jdType;
-  final String keyWords;//1为京东商品 空为非jd
+  final int? countryId;
+  final int? jdType;
+  final String? keyWords;//1为京东商品 空为非jd
 
-  const SearchPage({Key key, this.countryId, this.jdType, this.keyWords}) : super(key: key);
+  const SearchPage({Key? key, this.countryId, this.jdType, this.keyWords}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -72,12 +66,12 @@ class _SearchPageState extends BaseStoreState<SearchPage>
   /// 切换展示形式  true 为 List， false 为grid
   bool _displayList = false;//默认排列方式改为瀑布流
 
-  FilterToolBarController _filterController;
+  late FilterToolBarController _filterController;
 
-  GoodsListPresenterImpl _presenter;
+  GoodsListPresenterImpl? _presenter;
 
-  MvpListViewController<GoodsSimple> _listViewController;
-  TextEditingController _textEditController;
+  MvpListViewController<GoodsSimple>? _listViewController;
+  TextEditingController? _textEditController;
 
   List<String> _searchHistory = [];
 
@@ -89,23 +83,23 @@ class _SearchPageState extends BaseStoreState<SearchPage>
   int _filterIndex = 0;
 
   GSRefreshController _refreshController = GSRefreshController();
-  GoodsHotSellListModel _listModel;
-  GifController _gifController;
+  GoodsHotSellListModel? _listModel;
+  GifController? _gifController;
 
   _getGoodsHotSellList() async {
     ResultData resultData = await HttpManager.post(HomeApi.hot_sell_list, {});
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     GoodsHotSellListModel model =
         GoodsHotSellListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
-    for (Data data in model.data) {
-      data.index = model.data.indexOf(data);
+    for (Data data in model.data!) {
+      data.index = model.data!.indexOf(data);
     }
     _listModel = model;
     if (mounted) setState(() {});
@@ -142,7 +136,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
 
   @override
   void dispose() {
-    _gifController.dispose();
+    _gifController!.dispose();
     _scrollController.dispose();
     super.dispose();
   }
@@ -174,7 +168,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
       backgroundColor: AppColor.frenchColor,
-      floatingActionButton:  !TextUtils.isEmpty(_textEditController.text) &&
+      floatingActionButton:  !TextUtils.isEmpty(_textEditController!.text) &&
           _startSearch? _customer():SizedBox(),
       floatingActionButtonLocation:CustomFloatingActionButtonLocation(FloatingActionButtonLocation.endDocked, 0, -70.rw),
 
@@ -188,7 +182,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
         elevation: 0,
         title: _buildTitle(),
         themeData: AppThemes.themeDataGrey.appBarTheme,
-        actions: TextUtils.isEmpty(_textEditController.text)
+        actions: TextUtils.isEmpty(_textEditController!.text)
             ? <Widget>[
                 Container(
                   width: 10,
@@ -211,7 +205,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
 
                     _filterToolBar(context),
                     Offstage(
-                        offstage: !(_listViewController.getData().length==0),
+                        offstage: !(_listViewController!.getData().length==0),
                         child: Container(
                           color: Colors.white,
                           child: Container(
@@ -229,7 +223,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
             ),
             Positioned(
                 child: Offstage(
-                    offstage: !TextUtils.isEmpty(_textEditController.text) &&
+                    offstage: !TextUtils.isEmpty(_textEditController!.text) &&
                         _startSearch,
                     child: Container(
                       color: Colors.white,
@@ -294,11 +288,11 @@ class _SearchPageState extends BaseStoreState<SearchPage>
         // if (index != 1 && _filterIndex == index) {
         //   return;
         // }
-        _filterIndex = index;
+        _filterIndex = index!;
         if (widget.jdType == 1) {
           switch (index) {
             case 0:
-              print(item.topSelected);
+              print(item!.topSelected);
               if (item.topSelected) {
                 _sortType = SortType.priceAsc;
               } else {
@@ -306,7 +300,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
               }
               break;
             case 1:
-              print(item.topSelected);
+              print(item!.topSelected);
               if (item.topSelected) {
                 _sortType = SortType.salesAsc;
               } else {
@@ -324,14 +318,14 @@ class _SearchPageState extends BaseStoreState<SearchPage>
               _sortType = SortType.comprehensive;
               break;
             case 1:
-              if (item.topSelected) {
+              if (item!.topSelected) {
                 _sortType = SortType.priceAsc;
               } else {
                 _sortType = SortType.priceDesc;
               }
               break;
             case 2:
-              if (item.topSelected) {
+              if (item!.topSelected) {
                 _sortType = SortType.salesAsc;
               } else {
                 _sortType = SortType.salesDesc;
@@ -345,8 +339,8 @@ class _SearchPageState extends BaseStoreState<SearchPage>
         }
         // _presenter.fetchList(widget.category.id, 0, _sortType);
         // _presenter.fetchList(_category.id, 0, _sortType);
-        _listViewController.stopRefresh();
-        _listViewController.requestRefresh();
+        _listViewController!.stopRefresh();
+        _listViewController!.requestRefresh();
       },
     );
   }
@@ -420,8 +414,8 @@ class _SearchPageState extends BaseStoreState<SearchPage>
             }
             print(value);
             setState(() {});
-            _listViewController.stopRefresh();
-            _listViewController.requestRefresh();
+            _listViewController!.stopRefresh();
+            _listViewController!.requestRefresh();
           });
         },
         itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
@@ -504,7 +498,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                     onBrandClick: () {
                       AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                           arguments: BrandGoodsListPage.setArguments(
-                              model.brandId, model.brandName));
+                              model.brandId as int?, model.brandName));
                     },
                     model: model,
                     buyClick: () {
@@ -535,7 +529,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
         //   _searchText,
         //   0,
         // );
-        _presenter.fetchList(-99, 0, _sortType, widget.countryId,
+        _presenter!.fetchList(-99, 0, _sortType, widget.countryId,
             keyword: _searchText, JDType: _jDType);
       },
       loadMoreCallback: (int page) {
@@ -543,7 +537,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
         //   _searchText,
         //   page,
         // );
-        _presenter.fetchList(
+        _presenter!.fetchList(
           -99,
           page,
           _sortType,
@@ -563,66 +557,66 @@ class _SearchPageState extends BaseStoreState<SearchPage>
 
 //copy from home_page.dart()
 
-  List<Promotion> _promotionList = [];
+  List<Promotion>? _promotionList = [];
   List<dynamic> _promotionGoodsList = [];
 
   _getPromotionList() async {
     ResultData resultData = await HttpManager.post(HomeApi.promotion_list, {});
 
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     PromotionListModel model = PromotionListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
     _promotionList = model.data;
-    if (_promotionList == null || _promotionList.length == 0) {
+    if (_promotionList == null || _promotionList!.length == 0) {
       _promotionGoodsList = [];
       setState(() {});
       return;
     }
     int _index = 0;
-    for (Promotion item in _promotionList) {
+    for (Promotion item in _promotionList!) {
       PromotionStatus processStatus = PromotionTimeTool.getPromotionStatus(
           item.startTime, item.getTrueEndTime());
       // DateTime time = DateTime.parse("2020-03-18 23:00:00");
       DateTime time = DateTime.now();
       if (time.hour >= 22 &&
-          DateTime.parse(item.startTime).hour == 20 &&
-          time.day == DateTime.parse(item.startTime).day) {
+          DateTime.parse(item.startTime!).hour == 20 &&
+          time.day == DateTime.parse(item.startTime!).day) {
         //10点以后定位到8点
-        _index = _promotionList.indexOf(item);
+        _index = _promotionList!.indexOf(item);
       } else if (processStatus == PromotionStatus.start) {
-        _index = _promotionList.indexOf(item);
+        _index = _promotionList!.indexOf(item);
       }
     }
-    _getPromotionGoodsList(_promotionList[_index].id);
+    _getPromotionGoodsList(_promotionList![_index].id);
   }
 
-  _getPromotionGoodsList(int promotionId) async {
+  _getPromotionGoodsList(int? promotionId) async {
     ResultData resultData =
         await HttpManager.post(HomeApi.promotion_goods_list, {
       "timeItemID": promotionId,
     });
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     PromotionGoodsListModel model =
         PromotionGoodsListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
     List<dynamic> array = [];
     //List array = [];
-    if (model.data.goodsList == null) {
-      model.data.goodsList = [];
+    if (model.data!.goodsList == null) {
+      model.data!.goodsList = [];
     } else {
-      array.addAll(model.data.goodsList);
+      array.addAll(model.data!.goodsList!);
     }
     // if (model.data.activityList != null && model.data.activityList.length > 0) {
     //   if (array.length > 3) {
@@ -643,12 +637,12 @@ class _SearchPageState extends BaseStoreState<SearchPage>
         SliverWaterfallFlow(
           delegate: SliverChildBuilderDelegate(
             (context, index) {
-              GoodsSimple goods = _listViewController.getData()[index];
+              GoodsSimple goods = _listViewController!.getData()[index];
               return MaterialButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {
                     AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                        arguments: CommodityDetailPage.setArguments(goods.id));
+                        arguments: CommodityDetailPage.setArguments(goods.id as int?));
                   },
                   child: _displayList
                       // ? BrandDetailListItem(goods: goods)
@@ -659,7 +653,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                             AppRouter.push(
                                 context, RouteName.BRANDGOODS_LIST_PAGE,
                                 arguments: BrandGoodsListPage.setArguments(
-                                    goods.brandId, goods.brandName));
+                                    goods.brandId as int?, goods.brandName));
                           },
                           buildCtx: context,
                           model: goods,
@@ -667,7 +661,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                         )
                       : BrandDetailGridItem(goods: goods));
             },
-            childCount: _listViewController.getData().length,
+            childCount: _listViewController!.getData().length,
           ),
           gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
             crossAxisCount: _displayList ? 1 : 2,
@@ -725,7 +719,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                             AppRouter.push(
                                 context, RouteName.BRANDGOODS_LIST_PAGE,
                                 arguments: BrandGoodsListPage.setArguments(
-                                    model.brandId, model.brandName));
+                                    model.brandId as int?, model.brandName));
                           },
                           model: model,
                           buyClick: () {
@@ -745,18 +739,18 @@ class _SearchPageState extends BaseStoreState<SearchPage>
 
   _buildGridView() {
     return GridView.builder(
-        padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight),
+        padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight!),
         physics: AlwaysScrollableScrollPhysics(),
-        itemCount: _listViewController.getData().length,
+        itemCount: _listViewController!.getData().length,
         gridDelegate:
             ItemTagWidget.getSliverGridDelegate(_displayList, context),
         itemBuilder: (context, index) {
-          GoodsSimple goods = _listViewController.getData()[index];
+          GoodsSimple goods = _listViewController!.getData()[index];
           return MaterialButton(
               padding: EdgeInsets.zero,
               onPressed: () {
                 AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                    arguments: CommodityDetailPage.setArguments(goods.id));
+                    arguments: CommodityDetailPage.setArguments(goods.id as int?));
               },
               child: _displayList
                   // ? BrandDetailListItem(goods: goods)
@@ -771,7 +765,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                       onBrandClick: () {
                         AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                             arguments: BrandGoodsListPage.setArguments(
-                                goods.brandId, goods.brandName));
+                                goods.brandId as int?, goods.brandName));
                       },
                       buildCtx: context,
                       model: goods,
@@ -790,9 +784,9 @@ class _SearchPageState extends BaseStoreState<SearchPage>
         text: '马上就好，请稍等～',
       ),
     ));
-    _listViewController.replaceData([]);
+    _listViewController!.replaceData([]);
 
-    await _presenter.fetchList(
+    await _presenter!.fetchList(
       -99,
       0,
       _sortType,
@@ -805,7 +799,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
 
     cancel();
     _startSearch = true;
-    if(_scrollController!=null&&_listViewController.getData().isNotEmpty){
+    if(_listViewController!.getData().isNotEmpty){
       _scrollController.jumpTo(0.0);
     }
 
@@ -866,8 +860,8 @@ class _SearchPageState extends BaseStoreState<SearchPage>
                   _startSearch = false;
                   _searchText = text;
                   if(text=='1281228557'){
-                    UserManager.instance.getLoggerData = !UserManager.instance.getLoggerData;
-                    PowerLogger.start(context, debug:UserManager.instance.getLoggerData);
+                    UserManager.instance!.getLoggerData = !UserManager.instance!.getLoggerData;
+                    PowerLogger.start(context, debug:UserManager.instance!.getLoggerData);
                   }
 
 
@@ -916,14 +910,14 @@ class _SearchPageState extends BaseStoreState<SearchPage>
   }
 
   @override
-  MvpListViewPresenterI<GoodsSimple, MvpView, MvpModel> getPresenter() {
+  MvpListViewPresenterI<GoodsSimple, MvpView, MvpModel>? getPresenter() {
     return _presenter;
   }
 
   @override
   refreshSuccess(List<GoodsSimple> data) {
     super.refreshSuccess(data);
-    if (data != null && data.length > 0) {
+    if (data.length > 0) {
       if (_searchHistory.contains(_searchText)) {
         _searchHistory.remove(_searchText);
         List<String> list = [_searchText];
@@ -956,8 +950,8 @@ class _SearchPageState extends BaseStoreState<SearchPage>
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onSelected: (bool value) async {
               _searchText = text;
-              _textEditController.text = text;
-              FocusManager.instance.primaryFocus.unfocus();
+              _textEditController!.text = text;
+              FocusManager.instance.primaryFocus!.unfocus();
               _callRefresh();
               setState(() {});
             },
@@ -1021,7 +1015,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
   _recommendWidget() {
     List<Widget> keyWordList = [];
     int leg = 0;
-    if (_recommendWords != null && _recommendWords.length > 0) {
+    if (_recommendWords.length > 0) {
       for (int i=0;i<_recommendWords.length;i++) {
         keyWordList.add(Padding(
           padding: EdgeInsets.only(right: 10, bottom: 5),
@@ -1032,13 +1026,13 @@ class _SearchPageState extends BaseStoreState<SearchPage>
             labelPadding: EdgeInsets.only(left: 20, right: 20),
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onSelected: (bool value) async {
-              _searchText = _recommendWords[i].token;
-              _textEditController.text = _recommendWords[i].token;
-              FocusManager.instance.primaryFocus.unfocus();
+              _searchText = _recommendWords[i].token??'';
+              _textEditController!.text = _recommendWords[i].token!;
+              FocusManager.instance.primaryFocus!.unfocus();
               _callRefresh();
               setState(() {});
             },
-            label: Text(_recommendWords[i].token),
+            label: Text(_recommendWords[i].token!),
             selected: false,
           ),
         ));
@@ -1070,9 +1064,9 @@ class _SearchPageState extends BaseStoreState<SearchPage>
   getSearchListFromSharedPreferences() async {
     // 获取实例
     var prefs = await SharedPreferences.getInstance();
-    if (UserManager.instance.haveLogin) {
+    if (UserManager.instance!.haveLogin) {
       _searchHistory = prefs.getStringList(
-          UserManager.instance.user.info.id.toString() + "userSearhHistory");
+          UserManager.instance!.user.info!.id.toString() + "userSearhHistory")??[];
       if (_searchHistory == null) {
         _searchHistory = [];
       }
@@ -1084,7 +1078,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
     // 获取实例
     var prefs = await SharedPreferences.getInstance();
     prefs.setStringList(
-        UserManager.instance.user.info.id.toString() + "userSearhHistory",
+        UserManager.instance!.user.info!.id.toString() + "userSearhHistory",
         value);
   }
 }

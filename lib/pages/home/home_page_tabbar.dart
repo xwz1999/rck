@@ -3,20 +3,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/models/promotion_list_model.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
 
 class HomePageTabbar extends StatefulWidget {
-  final List<Promotion> promotionList;
-  final TabController tabController;
-  final Function clickItem;
-  final Function(int index) timerJump;
+  final List<Promotion>? promotionList;
+  final TabController? tabController;
+  final Function? clickItem;
+  final Function(int index)? timerJump;
 
   const HomePageTabbar(
-      {Key key,
-      @required this.promotionList,
-      @required this.tabController,
+      {Key? key,
+      required this.promotionList,
+      required this.tabController,
       this.clickItem,
       this.timerJump})
       : super(key: key);
@@ -32,17 +31,17 @@ class _HomePageTabbarPage extends State<HomePageTabbar>
   // List<Promotion> _promotionList = [];
   int hour = 0;
   //活动时间定时器
-  Timer _promotionTimer;
+  Timer? _promotionTimer;
   int _timeNumber = 0;
 
-  GifController _gifController;
+  late GifController _gifController;
 
   @override
   void initState() {
     super.initState();
     hour = DateTime.now().hour;
     _gifController = GifController(vsync: this, value: 0);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       _gifController.repeat(
           min: 0, max: 44, period: Duration(milliseconds: 1500));
     });
@@ -53,7 +52,7 @@ class _HomePageTabbarPage extends State<HomePageTabbar>
   void dispose() {
     _gifController.dispose();
     if (_promotionTimer != null) {
-      _promotionTimer.cancel();
+      _promotionTimer!.cancel();
       _promotionTimer = null;
     }
     super.dispose();
@@ -64,7 +63,7 @@ class _HomePageTabbarPage extends State<HomePageTabbar>
     return TabBar(
         onTap: (index) {
           if (widget.clickItem != null) {
-            widget.clickItem(index);
+            widget.clickItem!(index);
           }
           // _getPromotionGoodsList(_promotionList[index].id);
           setState(() {});
@@ -77,8 +76,8 @@ class _HomePageTabbarPage extends State<HomePageTabbar>
   }
 
   List<Widget> _tabItems() {
-    return widget.promotionList.map<Widget>((item) {
-      int index = widget.promotionList.indexOf(item);
+    return widget.promotionList!.map<Widget>((item) {
+      int index = widget.promotionList!.indexOf(item);
       return _tabItem(item, index);
     }).toList();
   }
@@ -106,7 +105,7 @@ class _HomePageTabbarPage extends State<HomePageTabbar>
         break;
       default:
     }
-    bool isSelect = index == widget.tabController.index;
+    bool isSelect = index == widget.tabController!.index;
 
     Color textColor = isSelect
         ? AppColor.themeColor
@@ -132,7 +131,7 @@ class _HomePageTabbarPage extends State<HomePageTabbar>
       ),
       child: Text(
         // item.isProcessing == 1 ? "正在抢购" : item.isProcessing == 0 ? "即将开始" : "已结束",
-        item.showName,
+        item.showName!,
         // statusString,
         style: TextStyle(
           fontWeight: FontWeight.w400,
@@ -152,7 +151,7 @@ class _HomePageTabbarPage extends State<HomePageTabbar>
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              item.startTime.substring(11, 16),
+              item.startTime!.substring(11, 16),
               style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 17 * 2.sp,
@@ -170,9 +169,9 @@ class _HomePageTabbarPage extends State<HomePageTabbar>
   _isProcessingWidget(isSelect, Promotion item) {
     double progressWidth = 68;
     double startTime =
-        DateTime.parse(item.startTime).millisecondsSinceEpoch / 1000;
+        DateTime.parse(item.startTime!).millisecondsSinceEpoch / 1000;
     double endTime =
-        DateTime.parse(item.getTrueEndTime()).millisecondsSinceEpoch / 1000;
+        DateTime.parse(item.getTrueEndTime()!).millisecondsSinceEpoch / 1000;
     double nowTime = DateTime.now().millisecondsSinceEpoch / 1000;
     double proportion = (nowTime - startTime) / (endTime - startTime);
     double width =
@@ -209,7 +208,7 @@ class _HomePageTabbarPage extends State<HomePageTabbar>
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                item.showName,
+                item.showName!,
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 9 * 2.sp,
@@ -243,12 +242,12 @@ class _HomePageTabbarPage extends State<HomePageTabbar>
   }
 
   _startPromotionTimer() {
-    if (_promotionTimer != null && _promotionTimer.isActive) {
+    if (_promotionTimer != null && _promotionTimer!.isActive) {
       return;
     }
     _promotionTimer = Timer.periodic(Duration(seconds: 1), (timer) {
       if (widget.promotionList == null ||
-          widget.promotionList.length <= 0 ||
+          widget.promotionList!.length <= 0 ||
           !mounted) {
         return;
       }
@@ -258,16 +257,16 @@ class _HomePageTabbarPage extends State<HomePageTabbar>
       if (nowHour / 2 > hour / 2) {
         // 每过两小时判断一次tabbar跳转
         // 当前tabbar index
-        int tabbarIndex = widget.tabController.index;
-        for (Promotion subPro in widget.promotionList) {
+        int tabbarIndex = widget.tabController!.index;
+        for (Promotion subPro in widget.promotionList!) {
           // 活动开始时间 和 现在的小时一样 跳转到这个时间
-          int subProStartHour = DateTime.parse(subPro.startTime).hour;
-          int day = DateTime.parse(subPro.startTime).day;
+          int subProStartHour = DateTime.parse(subPro.startTime!).hour;
+          int day = DateTime.parse(subPro.startTime!).day;
           if (subProStartHour == nowHour && day == DateTime.now().day) {
-            int nowIndex = widget.promotionList.indexOf(subPro);
+            int nowIndex = widget.promotionList!.indexOf(subPro);
             if (nowIndex != tabbarIndex) {
               if (widget.timerJump != null) {
-                widget.timerJump(nowIndex);
+                widget.timerJump!(nowIndex);
               }
             }
           }

@@ -22,8 +22,8 @@ class MyFavoritePresenterImpl extends MyFavoritePresenterI {
   }
 
   @override
-  getFavoritesList(int userId) async{
-    ResultData resultData = await getModel().getFavoritesList(userId);
+  getFavoritesList(int? userId) async{
+    ResultData resultData = await getModel()!.getFavoritesList(userId);
     if (!resultData.result) {
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
@@ -36,8 +36,8 @@ class MyFavoritePresenterImpl extends MyFavoritePresenterI {
   }
 
   @override
-  Future<HttpResultModel<BaseModel>> favoriteAdd(int userID, int goodsID) async {
-    ResultData resultData = await getModel().favoriteAdd(userID, goodsID);
+  Future<HttpResultModel<BaseModel?>> favoriteAdd(int userID, int goodsID) async {
+    ResultData resultData = await getModel()!.favoriteAdd(userID, goodsID);
 
     if (!resultData.result) {
       getRefreshView()?.failure(resultData.msg);
@@ -52,15 +52,15 @@ class MyFavoritePresenterImpl extends MyFavoritePresenterI {
   }
 
   @override
-  Future<HttpResultModel<BaseModel>> favoriteCancel(int userID, FavoriteModel favoriteModel) async {
-    ResultData resultData = await getModel().favoriteCancel(userID, favoriteModel.goods.id);
+  Future<HttpResultModel<BaseModel?>> favoriteCancel(int? userID, FavoriteModel favoriteModel) async {
+    ResultData resultData = await getModel()!.favoriteCancel(userID, favoriteModel.goods!.id);
     if (!resultData.result) {
-      getRefreshView().failure(resultData.msg);
+      getRefreshView()!.failure(resultData.msg);
       return HttpResultModel(resultData.code, null, resultData.msg, false);
     }
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      getRefreshView().failure(model.msg);
+      getRefreshView()!.failure(model.msg);
       return HttpResultModel(model.code, null, model.msg, false);
     }
     getView()?.cancelFavoriteSuccess(favoriteModel);

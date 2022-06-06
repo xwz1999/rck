@@ -13,17 +13,17 @@ class TimeTransitionUtil {
     return dateTime.millisecondsSinceEpoch;
   }
 
-  static String timeToFormatString(String separator, {int interval, String timeString,bool showHour = false,bool isUtc = false}) {
+  static String timeToFormatString(String separator, {int? interval, String? timeString,bool showHour = false,bool isUtc = false}) {
     assert(interval != null || timeString != null, "必须传时间 interval 或者 timeString");
-    DateTime dateTime;
+    DateTime? dateTime;
     StringBuffer stringBuffer = StringBuffer();
     if (interval == null) {
-      dateTime = DateTime.tryParse(timeString);
+      dateTime = DateTime.tryParse(timeString!);
     }else {
       dateTime = DateTime.fromMicrosecondsSinceEpoch(interval, isUtc: isUtc);
     }
 
-    stringBuffer.write(dateTime.year);
+    stringBuffer.write(dateTime!.year);
     stringBuffer.write(separator);
     stringBuffer.write(dateTime.month);
     stringBuffer.write(separator);

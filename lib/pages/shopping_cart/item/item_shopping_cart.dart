@@ -28,19 +28,18 @@ typedef PlusMinusUpdateCallback = Function(
 class ShoppingCartItem extends StatefulWidget {
   final ShoppingCartBrandModel model;
   final GoodsSelectedCallback selectedListener;
-  final GoodsClickCallback clickListener;
-  final PlusMinusUpdateCallback numUpdateCompleteCallback;
-  final TextInputChangeCallBack onBeginInput;
-  final bool isEdit;
+  final GoodsClickCallback? clickListener;
+  final PlusMinusUpdateCallback? numUpdateCompleteCallback;
+  final TextInputChangeCallBack? onBeginInput;
+  final bool? isEdit;
   const ShoppingCartItem(
-      {Key key,
-      @required this.model,
-      @required this.selectedListener,
+      {Key? key,
+      required this.model,
+      required this.selectedListener,
       this.clickListener,
       this.numUpdateCompleteCallback,
       this.onBeginInput,
-      this.isEdit = false})
-      : assert(model != null);
+      this.isEdit = false});
 
   @override
   _ShoppingCartItemState createState() => _ShoppingCartItemState();
@@ -73,21 +72,21 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
           // !widget.model.isAllWaitPromotionStart() || widget.isEdit?
           CustomImageButton(
                   icon: Icon(
-                    widget.model.selected
+                    widget.model.selected!
                         ? AppIcons.icon_check_circle
                         : AppIcons.icon_circle,
-                    color: widget.model.selected
+                    color: widget.model.selected!
                         ? AppColor.themeColor
                         : Colors.grey,
                     size: rSize(20),
                   ),
                   onPressed: () {
-                    widget.model.selected = !widget.model.selected;
-                    widget.model.children.forEach((goods) {
+                    widget.model.selected = !widget.model.selected!;
+                    widget.model.children!.forEach((goods) {
                       // 只有 不是 活动未开始 的商品才能选择
                       // isEdit 编辑状态下都可以选择
                       // if (!goods.isWaitPromotionStart() || widget.isEdit) {
-                      if (goods.publishStatus == 1 || widget.isEdit) {
+                      if (goods.publishStatus == 1 || widget.isEdit!) {
                         goods.selected = widget.model.selected;
                         widget.selectedListener(goods);
                       } else {}
@@ -122,11 +121,11 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
   _buildGoodsList() {
     return ListView.builder(
         // itemCount: !widget.model.isShowMore &&  widget.model.children.length> 5 ? 5+1 : widget.model.children.length,
-        itemCount: widget.model.children.length,
+        itemCount: widget.model.children!.length,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: ((context, index) {
-          return _goodsItem(widget.model.children[index]);
+          return _goodsItem(widget.model.children![index]);
         }));
     // itemBuilder: ((context, index) {
     //   if (!widget.model.isShowMore &&  widget.model.children.length > 5 && index == 5) {
@@ -161,14 +160,14 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
         width: rSize(90),
         height: rSize(90),
         // imageUrl: Api.getResizeImgUrl(goods.mainPhotoUrl, rSize(80).toInt()),
-        imageUrl: Api.getResizeImgUrl(goods.mainPhotoUrl, rSize(200).toInt()),
+        imageUrl: Api.getResizeImgUrl(goods.mainPhotoUrl!, rSize(200).toInt()),
         borderRadius: BorderRadius.all(Radius.circular(6)),
       ),
     );
   }
 
   _goodsItemSelectIcon(ShoppingCartGoodsModel goods) {
-    bool selected = goods.selected;
+    bool? selected = goods.selected;
     return Container(
       height: rSize(90),
       alignment: Alignment.center,
@@ -176,9 +175,9 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
         width: rSize(26),
         // padding: EdgeInsets.only(left: rSize(0)),
         height: double.infinity,
-        icon: goods.publishStatus == 1 || widget.isEdit
+        icon: goods.publishStatus == 1 || widget.isEdit!
             ? Icon(
-                selected ? AppIcons.icon_check_circle : AppIcons.icon_circle,
+                selected! ? AppIcons.icon_check_circle : AppIcons.icon_circle,
                 color: selected ? AppColor.themeColor : Colors.grey,
                 size: rSize(20),
               )
@@ -187,12 +186,12 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                 width: 20.rw,
                 height: 20.rw,
               ),
-        onPressed: goods.publishStatus == 1 || widget.isEdit
+        onPressed: goods.publishStatus == 1 || widget.isEdit!
             ? () {
-                goods.selected = !goods.selected;
+                goods.selected = !goods.selected!;
                 bool checkAll = true;
-                widget.model.children.forEach((goodsItem) {
-                  if (!goodsItem.selected) {
+                widget.model.children!.forEach((goodsItem) {
+                  if (!goodsItem.selected!) {
                     checkAll = false;
                     return;
                   }
@@ -215,10 +214,10 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
     bool isSeckill = false;
 
     if(goods.secKill!=null){
-      if(goods.secKill.secKill==1){
+      if(goods.secKill!.secKill==1){
         isSeckill = true;
-        goods.price = goods.secKill.secKillMinPrice;
-        goods.commission = goods.secKill.secKillCommission;
+        goods.price = goods.secKill!.secKillMinPrice;
+        goods.commission = goods.secKill!.secKillCommission;
         //秒杀中 通过seckill中的库存和销量来判断是否是否售完
       }
     }
@@ -228,7 +227,7 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
           ? () {}
           : () {
               if (widget.clickListener != null) {
-                widget.clickListener(goods);
+                widget.clickListener!(goods);
               }
             },
       child: Container(
@@ -323,7 +322,7 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 2, horizontal: 6),
                       child: Text(
-                        goods.skuName,
+                        goods.skuName!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyle.generate(10 * 2.sp,
@@ -358,7 +357,7 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                                 width: 2 * 2.w,
                               ),
                               Text(
-                                '进口税¥${goods.ferme.toStringAsFixed(2)},由瑞库客承担',
+                                '进口税¥${goods.ferme!.toStringAsFixed(2)},由瑞库客承担',
                                 style: TextStyle(
                                     color: Color(0xFF666666),
                                     fontSize: 10 * 2.sp),
@@ -434,7 +433,7 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                                       ),
                                       TextSpan(
                                         text:
-                                       "${(goods.price-goods.commission).toStringAsFixed(2)}",
+                                       "${(goods.price!-goods.commission!).toStringAsFixed(2)}",
                                         style: AppTextStyle.generate(14 * 2.sp,
                                             color: AppColor.themeColor),
                                       ),
@@ -473,7 +472,7 @@ class _ShoppingCartItemState extends State<ShoppingCartItem> {
                                           if (widget
                                                   .numUpdateCompleteCallback !=
                                               null) {
-                                            widget.numUpdateCompleteCallback(
+                                            widget.numUpdateCompleteCallback!(
                                                 goods, int.parse(value));
                                           }
                                         },

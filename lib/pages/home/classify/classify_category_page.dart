@@ -7,17 +7,14 @@
  * ====================================================
  */
 
-import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/models/category_list_model.dart';
+import 'package:recook/pages/home/search_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -28,9 +25,9 @@ import 'goods_import_list_page.dart';
 
 class ClassifyCategoryPage extends StatefulWidget {
   final List<CategoryListModel> data;
-  final int countryId;
-  final String initValue;
-  ClassifyCategoryPage({Key key, @required this.data, this.initValue,this.countryId})
+  final int? countryId;
+  final String? initValue;
+  ClassifyCategoryPage({Key? key, required this.data, this.initValue,this.countryId})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -95,10 +92,8 @@ class _ClassifyCategoryPageState extends BaseStoreState<ClassifyCategoryPage>
           color: Colors.white, borderRadius: BorderRadius.circular(20)),
       child: CustomImageButton(
         onPressed: () {
-          AppRouter.push(
-            context,
-            RouteName.SEARCH,
-          );
+
+          Get.to(()=>SearchPage());
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -172,7 +167,7 @@ class _ClassifyCategoryPageState extends BaseStoreState<ClassifyCategoryPage>
   }
 
   _buildLeft() {
-    return SCTabBar<String>(
+    return SCTabBar<String?>(
       controller: _tabController,
       initialIndex: 0,
       height: rSize(28),
@@ -181,7 +176,7 @@ class _ClassifyCategoryPageState extends BaseStoreState<ClassifyCategoryPage>
       direction: Axis.vertical,
       spacing: rSize(20),
       items: widget.data.map((item) {
-        return item.first.name;
+        return item.first!.name;
       }).toList(),
       itemBuilder: (context, index, item) {
         // Color color;
@@ -193,7 +188,7 @@ class _ClassifyCategoryPageState extends BaseStoreState<ClassifyCategoryPage>
         return Container(
             child: Center(
                 child: Text(
-          item,
+          item!,
           style: AppTextStyle.generate(14 * 2.sp),
           textAlign: TextAlign.center,
         )));
@@ -209,7 +204,7 @@ class _ClassifyCategoryPageState extends BaseStoreState<ClassifyCategoryPage>
   double padding = 0;
 
   _buildRight() {
-    double statusBarHeight = DeviceInfo.statusBarHeight;
+    double? statusBarHeight = DeviceInfo.statusBarHeight;
     double appbarHeight = 56.0;
 
     return PageView.builder(
@@ -218,7 +213,7 @@ class _ClassifyCategoryPageState extends BaseStoreState<ClassifyCategoryPage>
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
           return NotificationListener(
-              child: buildGridView(appbarHeight, statusBarHeight, index),
+              child: buildGridView(appbarHeight, statusBarHeight!, index),
               onNotification: (ScrollUpdateNotification notification) {
                 if (animating) return true;
 
@@ -266,31 +261,31 @@ class _ClassifyCategoryPageState extends BaseStoreState<ClassifyCategoryPage>
 
   SCGridView buildGridView(
       double appbarHeight, double statusBarHeight, int index) {
-    List<First> secondCategories = widget.data[index].child;
-    String firstTitle = widget.data[index].first.name;
+    List<First>? secondCategories = widget.data[index].child;
+    String? firstTitle = widget.data[index].first!.name;
     return SCGridView(
         viewportHeight:
-            DeviceInfo.screenHeight - appbarHeight - statusBarHeight + 5,
+            DeviceInfo.screenHeight! - appbarHeight - statusBarHeight + 5,
         crossAxisCount: 3,
         sectionCount: 1,
         childAspectRatio: 0.9,
         itemCount: (section) {
-          return widget.data[index].child.length;
+          return widget.data[index].child!.length;
         },
         headerBuilder: (context, section) {
           return Container(
             // color: Colors.blueGrey,
             // height: rSize(48),
-            height: ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth / 4),
+            height: ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth! / 4),
             child: CustomCacheImage(
-                width: ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth / 4),
+                width: ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth! / 4),
                 height:
-                    ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth / 4 * 3),
-                imageUrl: Api.getImgUrl(widget.data[index].first.logoUrl)),
+                    ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth! / 4 * 3),
+                imageUrl: Api.getImgUrl(widget.data[index].first!.logoUrl)),
           );
         },
         itemBuilder: (context, indexIn) {
-          First secondCategory = secondCategories[indexIn];
+          First secondCategory = secondCategories![indexIn];
           return CustomImageButton(
             icon: CustomCacheImage(
                 height: rSize(50),
@@ -300,11 +295,7 @@ class _ClassifyCategoryPageState extends BaseStoreState<ClassifyCategoryPage>
             contentSpacing: rSize(5),
             fontSize: 14 * 2.sp,
             onPressed: () {
-              // AppRouter.push(context, RouteName.GOODS_LIST_PAGE,
-              //     arguments: GoodsImportListPage.setArguments(
-              //         title: firstTitle,
-              //         index: indexIn,
-              //         secondCategoryList: secondCategories));
+
               Get.to(GoodsImportListPage(
                   title: firstTitle,
                   index: indexIn,

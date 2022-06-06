@@ -11,12 +11,12 @@ enum ChatType {
 }
 
 class LiveChatBox extends StatefulWidget {
-  final String sender;
-  final String note;
+  final String? sender;
+  final String? note;
   final bool userEnter;
   final ChatType type;
   const LiveChatBox({
-    Key key,
+    Key? key,
     this.sender,
     this.note,
     this.userEnter = false,
@@ -66,7 +66,7 @@ class _LiveChatBoxState extends State<LiveChatBox> {
             constraints: BoxConstraints(
               maxWidth: rSize(200),
             ),
-            color: widget.userEnter ?? false
+            color: widget.userEnter
                 ? Colors.pink.withOpacity(0.3)
                 : Colors.black.withOpacity(0.1),
           ),

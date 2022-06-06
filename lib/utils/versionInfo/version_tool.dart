@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/utils/versionInfo/version_info_model.dart';
@@ -25,7 +24,7 @@ class VersionTool {
   }
 
   static _showUpDateAlert(context, VersionInfoModel model) async {
-    VersionInfo versionInfo = model.data.versionInfo;
+    VersionInfo? versionInfo = model.data!.versionInfo;
     // VersionInfo versionInfo = getStore().state.userBrief.versionInfo;
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     String _appStoreURL = '';
@@ -36,7 +35,7 @@ class VersionTool {
     if (Platform.isAndroid) _appStoreURL = WebApi.androidUrl;
     if (Platform.isIOS) _appStoreURL = WebApi.iOSUrl;
     //当前版本小于服务器版本
-    if (int.parse(packageInfo.buildNumber) < versionInfo.build) {
+    if (int.parse(packageInfo.buildNumber) < versionInfo.build!) {
       Alert.show(
           context,
           NormalTextDialog(

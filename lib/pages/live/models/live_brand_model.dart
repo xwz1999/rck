@@ -1,7 +1,7 @@
 class LiveBrandModel {
-  int id;
-  String name;
-  String logoUrl;
+  int? id;
+  String? name;
+  String? logoUrl;
 
   LiveBrandModel({this.id, this.name, this.logoUrl});
 

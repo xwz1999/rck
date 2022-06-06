@@ -1,7 +1,7 @@
 class PerformanceInfoModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   PerformanceInfoModel({this.code, this.msg, this.data});
 
@@ -16,15 +16,15 @@ class PerformanceInfoModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<PerformanceList> list;
-  Statistics statistics;
+  List<PerformanceList>? list;
+  Statistics? statistics;
 
   Data({this.list, this.statistics});
 
@@ -32,7 +32,7 @@ class Data {
     if (json['list'] != null) {
       list = [];
       json['list'].forEach((v) {
-        list.add(new PerformanceList.fromJson(v));
+        list!.add(new PerformanceList.fromJson(v));
       });
     }
     statistics = json['statistics'] != null
@@ -43,21 +43,21 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.list != null) {
-      data['list'] = this.list.map((v) => v.toJson()).toList();
+      data['list'] = this.list!.map((v) => v.toJson()).toList();
     }
     if (this.statistics != null) {
-      data['statistics'] = this.statistics.toJson();
+      data['statistics'] = this.statistics!.toJson();
     }
     return data;
   }
 }
 
 class PerformanceList {
-  String nickname;
-  String avatarPath;
-  int userId;
-  num salesAmount;
-  num role;
+  String? nickname;
+  String? avatarPath;
+  int? userId;
+  num? salesAmount;
+  num? role;
 
   PerformanceList(
       {this.nickname,
@@ -87,11 +87,11 @@ class PerformanceList {
 }
 
 class Statistics {
-  num salesAmount;
-  num income;
-  num subIncome;
-  num ratio;
-  num actualIncome;
+  num? salesAmount;
+  num? income;
+  num? subIncome;
+  num? ratio;
+  num? actualIncome;
 
   Statistics(
       {this.salesAmount,

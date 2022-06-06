@@ -1,14 +1,12 @@
-import 'dart:io';
+import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_detail_model.dart';
@@ -18,7 +16,6 @@ import 'package:recook/utils/image_utils.dart';
 import 'package:recook/utils/permission_tool.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/share_page/post_all.dart';
 import 'package:recook/widgets/share_page/post_select_image.dart';
 import 'package:recook/widgets/toast.dart';
@@ -27,9 +24,9 @@ import 'package:permission_handler/permission_handler.dart';
 import '../alert.dart';
 
 class ShareGoodsPosterPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  ShareGoodsPosterPage({Key key, this.arguments}) : super(key: key);
+  ShareGoodsPosterPage({Key? key, this.arguments}) : super(key: key);
   static setArguments({String goodsId = "0"}) {
     return {
       "goodsId": goodsId,
@@ -45,25 +42,25 @@ class ShareGoodsPosterPage extends StatefulWidget {
 
 class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
   int _goodsId = 0;
-  GoodsDetailModel _goodsDetail;
+  GoodsDetailModel? _goodsDetail;
   GlobalKey _globalKey = GlobalKey();
   // GoodsDetailImagesModel _goodsDetailImagesModel;
   double postHorizontalMargin = 50;
-  MissingChildrenModel _missingChildrenModel;
+  MissingChildrenModel? _missingChildrenModel;
   // double postWidth = 0;
   // // 50 天气 70 头像 45 banner 75 价格二维码
   // double postImageVerticalMargin = 200;
   // double postHeight = 200;
   // double postImageHorizontalMargin = 30;
   //
-  String _bigImageUrl = "";
+  String? _bigImageUrl = "";
   List<MainPhotos> _selectPhotos = [];
   PostAllWidgetController _postAllWidgetController = PostAllWidgetController();
   @override
   void initState() {
     super.initState();
     try {
-      _goodsId = int.parse(widget.arguments["goodsId"]);
+      _goodsId = int.parse(widget.arguments!["goodsId"]);
     } catch (e) {}
     _getDetail();
     _getMissingChildren();
@@ -125,14 +122,14 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
     // '保存中...'
     showLoading("");
     RenderRepaintBoundary boundary =
-        _globalKey.currentContext.findRenderObject();
+        _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     ui.Image image =
         await boundary.toImage(pixelRatio: ui.window.devicePixelRatio * 1.2);
-    ByteData byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    ByteData byteData = await (image.toByteData(format: ui.ImageByteFormat.png) as FutureOr<ByteData>);
 
     Uint8List pngBytes = byteData.buffer.asUint8List();
 
-    if (pngBytes == null || pngBytes.length == 0) {
+    if (pngBytes.length == 0) {
       dismissLoading();
       showError("图片获取失败...");
       return;
@@ -248,15 +245,15 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
 
   _getDetail() async {
     _goodsDetail = await GoodsDetailModelImpl.getDetailInfo(
-        _goodsId, UserManager.instance.user.info.id);
-    if (_goodsDetail.code != HttpStatus.SUCCESS) {
-      Toast.showError(_goodsDetail.msg);
+        _goodsId, UserManager.instance!.user.info!.id);
+    if (_goodsDetail!.code != HttpStatus.SUCCESS) {
+      Toast.showError(_goodsDetail!.msg);
       return;
     }
     // _bottomBarController.setFavorite(_goodsDetail.data.isFavorite);
-    MainPhotos photo = _goodsDetail.data.mainPhotos[0];
-    if (_goodsDetail.data.mainPhotos.length >= 1) {
-      photo = _goodsDetail.data.mainPhotos[0];
+    MainPhotos photo = _goodsDetail!.data!.mainPhotos![0];
+    if (_goodsDetail!.data!.mainPhotos!.length >= 1) {
+      photo = _goodsDetail!.data!.mainPhotos![0];
     }
     photo.isSelect = true;
     photo.isSelectNumber = 1;
@@ -267,7 +264,7 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
 
   _getMissingChildren() async {
     _missingChildrenModel = await GoodsDetailModelImpl.getMissingChildrenInfo();
-    print(Api.getImgUrl(_missingChildrenModel.pic));
+    print(Api.getImgUrl(_missingChildrenModel!.pic));
   }
 
   _bottomWidget() {

@@ -13,18 +13,18 @@ import 'package:recook/widgets/toast.dart';
 
 class LiveBlurPage extends StatefulWidget {
   final bool isLive;
-  final LiveExitModel exitModel;
+  final LiveExitModel? exitModel;
   final BuildContext context;
-  final int look;
-  final int praise;
+  final int? look;
+  final int? praise;
   final bool isFansWhenLive;
-  final LiveStreamInfoModel streamModel;
+  final LiveStreamInfoModel? streamModel;
 
   LiveBlurPage(
-      {Key key,
+      {Key? key,
       this.isLive = false,
       this.exitModel,
-      @required this.context,
+      required this.context,
       this.look,
       this.praise,
       this.streamModel,
@@ -51,12 +51,12 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
   }
 
   String get liveDuration => RecookDateUtil(
-          DateTime.fromMillisecondsSinceEpoch(widget.exitModel.duration * 1000)
+          DateTime.fromMillisecondsSinceEpoch(widget.exitModel!.duration! * 1000)
               .toUtc())
       .detailDateWithSecond;
 
   String get allDuration => RecookDateUtil(DateTime.fromMillisecondsSinceEpoch(
-              widget.exitModel.monthDuration * 1000)
+              widget.exitModel!.monthDuration! * 1000)
           .toUtc())
       .detailDateWithSecond;
 
@@ -97,7 +97,7 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                       child: FadeInImage.assetNetwork(
                         placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                         image: Api.getImgUrl(
-                            UserManager.instance.user.info.headImgUrl),
+                            UserManager.instance!.user.info!.headImgUrl)!,
                         height: rSize(80),
                         width: rSize(80),
                       ),
@@ -150,13 +150,13 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 3),
                       children: [
-                        _buildColumn('${widget.exitModel.salesVolume}', '销售金额'),
+                        _buildColumn('${widget.exitModel!.salesVolume}', '销售金额'),
                         _buildColumn(
-                            '${widget.exitModel.anticipatedRevenue}', '预计收入'),
-                        _buildColumn('${widget.exitModel.buy}', '购买人数'),
-                        _buildColumn('${widget.exitModel.look}', '观看'),
-                        _buildColumn('${widget.exitModel.praise}', '获赞'),
-                        _buildColumn('${widget.exitModel.fans}', '新增粉丝'),
+                            '${widget.exitModel!.anticipatedRevenue}', '预计收入'),
+                        _buildColumn('${widget.exitModel!.buy}', '购买人数'),
+                        _buildColumn('${widget.exitModel!.look}', '观看'),
+                        _buildColumn('${widget.exitModel!.praise}', '获赞'),
+                        _buildColumn('${widget.exitModel!.fans}', '新增粉丝'),
                       ],
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -181,7 +181,7 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                         rWBox(20),
                         CupertinoSwitch(
                           value: _saveVideo,
-                          onChanged: widget.exitModel.duration<60?
+                          onChanged: widget.exitModel!.duration!<60?
                           (state){
                             Toast.showError('直播时长过短，禁止录制',align: Alignment.center);
                           }
@@ -210,7 +210,7 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                       onPressed: () {
                         if (_saveVideo)
                           HttpManager.post(LiveAPI.recordLive, {
-                            'liveItemId': widget.streamModel.id,
+                            'liveItemId': widget.streamModel!.id,
                           }).then((result) {
                             print(result);
                           });
@@ -240,7 +240,7 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                       borderRadius: BorderRadius.circular(rSize(80 / 2)),
                       child: FadeInImage.assetNetwork(
                         placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                        image: Api.getImgUrl(widget.streamModel.headImgUrl),
+                        image: Api.getImgUrl(widget.streamModel!.headImgUrl)!,
                         height: rSize(80),
                         width: rSize(80),
                       ),
@@ -272,7 +272,7 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                               });
                               HttpManager.post(
                                 LiveAPI.addFollow,
-                                {'followUserId': widget.streamModel.userId},
+                                {'followUserId': widget.streamModel!.userId},
                               );
                             },
                       color: _isAttention

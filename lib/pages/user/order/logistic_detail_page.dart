@@ -8,7 +8,6 @@
  */
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -18,11 +17,11 @@ import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 
 class LogisticDetailPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  const LogisticDetailPage({Key key, this.arguments}) : super(key: key);
+  const LogisticDetailPage({Key? key, this.arguments}) : super(key: key);
 
-  static setArguments({@required LogisticDetailModel detailModel}) {
+  static setArguments({required LogisticDetailModel detailModel}) {
     return {"detailModel": detailModel};
   }
 
@@ -33,12 +32,12 @@ class LogisticDetailPage extends StatefulWidget {
 }
 
 class _LogisticDetailPageState extends BaseStoreState<LogisticDetailPage> {
-  LogisticDetailModel _model;
+  LogisticDetailModel? _model;
 
   @override
   void initState() {
     super.initState();
-    _model = widget.arguments["detailModel"];
+    _model = widget.arguments!["detailModel"];
   }
 
   @override
@@ -72,7 +71,7 @@ class _LogisticDetailPageState extends BaseStoreState<LogisticDetailPage> {
                   width: rSize(84),
                   height: rSize(84),
                   fit: BoxFit.cover,
-                  imageUrl: Api.getImgUrl(_model.picUrls[0]),
+                  imageUrl: Api.getImgUrl(_model!.picUrls![0]),
                 ),
                 SizedBox(
                   width: 8,
@@ -82,13 +81,13 @@ class _LogisticDetailPageState extends BaseStoreState<LogisticDetailPage> {
                   children: <Widget>[
                     Spacer(),
                     Text(
-                      "承运公司: ${_model.name}",
+                      "承运公司: ${_model!.name}",
                       style: AppTextStyle.generate(14 * 2.sp,
                           color: Colors.grey[600]),
                     ),
                     Spacer(),
                     Text(
-                      "快递单号: ${_model.no}",
+                      "快递单号: ${_model!.no}",
                       style: AppTextStyle.generate(14 * 2.sp,
                           color: Colors.grey[600]),
                     ),
@@ -111,12 +110,12 @@ class _LogisticDetailPageState extends BaseStoreState<LogisticDetailPage> {
             child: ListView.builder(
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: _model.data.length,
+                itemCount: _model!.data!.length,
                 itemBuilder: (_, index) {
                   return LogisticDetailItem(
-                    expressStatus: _model.data[index],
+                    expressStatus: _model!.data![index],
                     firstItem: index == 0,
-                    lastItem: index == _model.data.length - 1,
+                    lastItem: index == _model!.data!.length - 1,
                   );
                 }),
           ),

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:recook/pages/goods/small_coupon_widget.dart';
 
 class CouponPainter extends CustomPainter {
-  final SmallCouponType type;
+  final SmallCouponType? type;
   CouponPainter({this.type});
   @override
   void paint(Canvas canvas, Size size) {
@@ -22,7 +22,7 @@ class CouponPainter extends CustomPainter {
     Path couponPath = Path();
     num pathMidWay = size.width - 24;
     couponPath.lineTo(pathMidWay - 2, 0);
-    couponPath.arcTo(Rect.fromCircle(center: Offset(pathMidWay, 0), radius: 2),
+    couponPath.arcTo(Rect.fromCircle(center: Offset(pathMidWay as double, 0), radius: 2),
         pi, -pi, false);
     couponPath.lineTo(size.width, 0);
     couponPath.lineTo(size.width, 16);

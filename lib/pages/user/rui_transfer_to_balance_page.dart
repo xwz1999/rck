@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
@@ -14,10 +12,10 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/result_page.dart';
 
 class RuiCoinTransferToBalancePage extends StatefulWidget {
-  final Map arguments;
-  RuiCoinTransferToBalancePage({Key key, this.arguments}) : super(key: key);
+  final Map? arguments;
+  RuiCoinTransferToBalancePage({Key? key, this.arguments}) : super(key: key);
 
-  static setArguments(num total){
+  static setArguments(num? total){
     return {
       "total": total,
     };
@@ -30,7 +28,7 @@ class RuiCoinTransferToBalancePage extends StatefulWidget {
 class _RuiCoinTransferToBalancePageState extends BaseStoreState<RuiCoinTransferToBalancePage> {
 
   //
-  TextEditingController _textEditController ;
+  TextEditingController? _textEditController ;
   FocusNode _contentFocusNode = FocusNode();
 
   @override
@@ -64,7 +62,7 @@ class _RuiCoinTransferToBalancePageState extends BaseStoreState<RuiCoinTransferT
                 child: CustomImageButton(
                   onPressed: !_canSubmit()? null
                     : (){
-                    _coinToBalance(double.parse(_textEditController.text));
+                    _coinToBalance(double.parse(_textEditController!.text));
                     },
                   borderRadius: BorderRadius.circular(3),
                   height: 45, width: double.infinity,
@@ -84,7 +82,7 @@ class _RuiCoinTransferToBalancePageState extends BaseStoreState<RuiCoinTransferT
   _canSubmit(){
     bool can = false;
     try {
-      double amount = double.parse(_textEditController.text);
+      double amount = double.parse(_textEditController!.text);
       if (amount > 0) {
         can = true;
       }
@@ -124,7 +122,7 @@ class _RuiCoinTransferToBalancePageState extends BaseStoreState<RuiCoinTransferT
                     onChanged: (text){
                       setState(() {});
                     },
-                    placeholder: "本次最多可转出${widget.arguments["total"]}个",
+                    placeholder: "本次最多可转出${widget.arguments!["total"]}个",
                     placeholderStyle: TextStyle(color: Color(0xffcccccc), fontSize: 16, fontWeight: FontWeight.w300),
                     decoration: BoxDecoration(
                       color: Colors.white.withAlpha(0)
@@ -134,7 +132,7 @@ class _RuiCoinTransferToBalancePageState extends BaseStoreState<RuiCoinTransferT
                 ),
                 CustomImageButton(
                   onPressed: (){
-                    _textEditController.text = widget.arguments["total"].toString();
+                    _textEditController!.text = widget.arguments!["total"].toString();
                     setState(() {});
                   },
                   title: "全部",
@@ -150,7 +148,7 @@ class _RuiCoinTransferToBalancePageState extends BaseStoreState<RuiCoinTransferT
 
   _coinToBalance(double coinNum) async {
     ResultData resultData = await HttpManager.post(UserApi.coin_to_balance, {
-      "userId": UserManager.instance.user.info.id,
+      "userId": UserManager.instance!.user.info!.id,
       "coinNum": coinNum<0?0:coinNum
     });
 

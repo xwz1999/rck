@@ -29,7 +29,7 @@ abstract class HomeMvpModelI extends MvpModel {
 }
 
 abstract class HomeMvpViewI extends MvpView {
-  getBannerSuccess(List<BannerModel> list);
-  getPromotionListSuccess(List<Promotion> promotions);
-  requestFail(String msg);
+  getBannerSuccess(List<BannerModel>? list);
+  getPromotionListSuccess(List<Promotion>? promotions);
+  requestFail(String? msg);
 }

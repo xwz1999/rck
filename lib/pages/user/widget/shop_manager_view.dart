@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/invite/my_group_page_v2.dart';
 import 'package:recook/utils/share_tool.dart';
@@ -8,13 +7,13 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class ShopManagerView extends StatelessWidget {
-  const ShopManagerView({Key key}) : super(key: key);
+  const ShopManagerView({Key? key}) : super(key: key);
 
   _buildGridItem({
-    @required String title,
-    @required String subTitle,
-    @required String path,
-    VoidCallback onTap,
+    required String title,
+    required String subTitle,
+    required String path,
+    VoidCallback? onTap,
   }) {
     return CustomImageButton(
       padding: EdgeInsets.zero,

@@ -1,12 +1,12 @@
 class AddressDefaultModel {
-  int id;
-  String name;
-  String mobile;
-  String province;
-  String city;
-  String district;
-  String address;
-  int isDefault;
+  int? id;
+  String? name;
+  String? mobile;
+  String? province;
+  String? city;
+  String? district;
+  String? address;
+  int? isDefault;
 
   AddressDefaultModel(
       {this.id,

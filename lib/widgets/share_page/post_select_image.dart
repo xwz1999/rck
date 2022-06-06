@@ -1,17 +1,16 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class PostSelectImage extends StatefulWidget {
-  final GoodsDetailModel goodsDetailModel;
-  final Function(List<MainPhotos>) selectImages;
+  final GoodsDetailModel? goodsDetailModel;
+  final Function(List<MainPhotos>)? selectImages;
   final EdgeInsets padding;
   
-  PostSelectImage({Key key, this.goodsDetailModel, this.selectImages, this.padding = const EdgeInsets.symmetric(horizontal: 15)}) : super(key: key);
+  PostSelectImage({Key? key, this.goodsDetailModel, this.selectImages, this.padding = const EdgeInsets.symmetric(horizontal: 15)}) : super(key: key);
 
   @override
   _PostSelectImageState createState() => _PostSelectImageState();
@@ -23,7 +22,7 @@ class _PostSelectImageState extends State<PostSelectImage> {
   @override
   void initState() {
     super.initState();
-    for (MainPhotos photo in widget.goodsDetailModel.data.mainPhotos) {
+    for (MainPhotos photo in widget.goodsDetailModel!.data!.mainPhotos!) {
       if (photo.isSelect) selectImages.add(photo);
     }
     selectImages.sort((a, b){
@@ -38,11 +37,11 @@ class _PostSelectImageState extends State<PostSelectImage> {
         scrollDirection: Axis.horizontal,
         padding: widget.padding,
         physics: AlwaysScrollableScrollPhysics(),
-        itemCount: widget.goodsDetailModel.data.mainPhotos.length,
+        itemCount: widget.goodsDetailModel!.data!.mainPhotos!.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
             margin: EdgeInsets.only(right: 5),
-            child: _itemWidget(widget.goodsDetailModel.data.mainPhotos[index]),
+            child: _itemWidget(widget.goodsDetailModel!.data!.mainPhotos![index]),
           );
        },
       ),
@@ -68,11 +67,11 @@ class _PostSelectImageState extends State<PostSelectImage> {
         }
         setState(() {});
         if (widget.selectImages!=null) {
-          widget.selectImages(selectImages);
+          widget.selectImages!(selectImages);
         }
       },
-      dotNum: photo.isSelect!=null&&photo.isSelect&&photo.isSelectNumber!=null&&photo.isSelectNumber>0?photo.isSelectNumber.toString():"",
-      child: ExtendedImage.network(Api.getImgUrl(photo.url), fit: BoxFit.fill,),
+      dotNum: photo.isSelect&&photo.isSelectNumber>0?photo.isSelectNumber.toString():"",
+      child: ExtendedImage.network(Api.getImgUrl(photo.url)!, fit: BoxFit.fill,),
       boxDecoration: BoxDecoration(
         color: AppColor.frenchColor,
         border: Border.all(color: photo.isSelect ? AppColor.themeColor : Colors.grey, width: 0.5),

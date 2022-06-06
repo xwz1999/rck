@@ -15,7 +15,7 @@ const double _kTextAndIconTabHeight = 72.0;
 
 class SCTabBar extends StatefulWidget implements PreferredSizeWidget {
   const SCTabBar({
-    Key key,
+    Key? key,
     this.tabs,
     this.controller,
     this.isScrollable = false,
@@ -33,35 +33,33 @@ class SCTabBar extends StatefulWidget implements PreferredSizeWidget {
     this.onTap,
     this.needRefresh = false,
     this.itemBuilder,
-  })  :assert(isScrollable != null),
-        assert(dragStartBehavior != null),
-        assert(indicator != null ||
-            (indicatorWeight != null && indicatorWeight > 0.0)),
+  })  :assert(indicator != null ||
+            (indicatorWeight > 0.0)),
         assert(indicator != null || (indicatorPadding != null)),
         super(key: key);
 
   // 是否需要每次切换时刷新item
   final bool needRefresh;
-  final List<Widget> tabs;
-  final TabController controller;
+  final List<Widget>? tabs;
+  final TabController? controller;
   final bool isScrollable;
-  final Color indicatorColor;
+  final Color? indicatorColor;
   final double indicatorWeight;
   final EdgeInsetsGeometry indicatorPadding;
-  final Decoration indicator;
-  final TabBarIndicatorSize indicatorSize;
-  final Color labelColor;
-  final Color unselectedLabelColor;
-  final TextStyle labelStyle;
-  final EdgeInsetsGeometry labelPadding;
-  final TextStyle unselectedLabelStyle;
+  final Decoration? indicator;
+  final TabBarIndicatorSize? indicatorSize;
+  final Color? labelColor;
+  final Color? unselectedLabelColor;
+  final TextStyle? labelStyle;
+  final EdgeInsetsGeometry? labelPadding;
+  final TextStyle? unselectedLabelStyle;
   final DragStartBehavior dragStartBehavior;
-  final ValueChanged<int> onTap;
-  final Function(int index) itemBuilder;
+  final ValueChanged<int>? onTap;
+  final Function(int index)? itemBuilder;
 
   @override
   Size get preferredSize {
-    for (Widget item in tabs) {
+    for (Widget item in tabs!) {
       if (item is Tab) {
         final Tab tab = item;
         if (tab.text != null && tab.icon != null)
@@ -80,7 +78,7 @@ class _SCTabBarState extends State<SCTabBar> {
   void initState() {
     super.initState();
     if (widget.needRefresh) {
-      widget.controller.addListener(() {
+      widget.controller!.addListener(() {
         if (mounted) setState(() {});
       });
     }
@@ -110,8 +108,8 @@ class _SCTabBarState extends State<SCTabBar> {
   _tabItems() {
     assert(widget.itemBuilder != null);
     List<Widget> items = [];
-    for (int i = 0;  i < widget.controller.length; i++) {
-      items.add(widget.itemBuilder(i));
+    for (int i = 0;  i < widget.controller!.length; i++) {
+      items.add(widget.itemBuilder!(i));
     }
     return items;
   }

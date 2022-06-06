@@ -13,7 +13,7 @@ import 'package:recook/pages/home/classify/mvp/order_mvp/order_contact.dart';
 
 class OrderModelImpl extends OrderModelI {
   @override
-  Future<ResultData> submitOrder(int orderPreviewId, int userId) async {
+  Future<ResultData> submitOrder(int? orderPreviewId, int? userId) async {
     ResultData resultData = await HttpManager.post(OrderApi.order_normal_submit,
         {"userId": userId, "previewOrderId": orderPreviewId});
     return resultData;
@@ -28,7 +28,7 @@ class OrderModelImpl extends OrderModelI {
 
   @override
   Future<ResultData> changeAddress(
-      int userId, int orderId, int addressId) async {
+      int? userId, int? orderId, int? addressId) async {
     ResultData resultData = await HttpManager.post(
         OrderApi.order_change_address,
         {"userId": userId, "orderId": orderId, "addressId": addressId});
@@ -37,7 +37,7 @@ class OrderModelImpl extends OrderModelI {
 
   @override
   Future<ResultData> changeShippingMethod(
-      int userId, int orderId, int shippingMethod, int storeId) async {
+      int? userId, int? orderId, int shippingMethod, int? storeId) async {
     ResultData resultData =
         await HttpManager.post(OrderApi.order_change_shipping_method, {
       "userId": userId,
@@ -57,7 +57,7 @@ class OrderModelImpl extends OrderModelI {
 
   @override
   Future<ResultData> changeBuyerMessage(
-      int userId, int orderId, String message) async {
+      int? userId, int? orderId, String message) async {
     ResultData resultData = await HttpManager.post(
         OrderApi.order_change_buyer_message,
         {"userId": userId, "orderId": orderId, "message": message});
@@ -65,7 +65,7 @@ class OrderModelImpl extends OrderModelI {
   }
 
   @override
-  Future<ResultData> createAliPayOrder(int userId, int orderId) async {
+  Future<ResultData> createAliPayOrder(int? userId, int? orderId) async {
     ResultData resultData = await HttpManager.post(
         OrderApi.order_alipay_order_create,
         {"userId": userId, "orderId": orderId});
@@ -73,7 +73,7 @@ class OrderModelImpl extends OrderModelI {
   }
 
   @override
-  Future<ResultData> createWeChatOrder(int userId, int orderId) async {
+  Future<ResultData> createWeChatOrder(int? userId, int? orderId) async {
     ResultData resultData = await HttpManager.post(
         OrderApi.order_wechat_order_create,
         {"userId": userId, "orderId": orderId});
@@ -81,7 +81,7 @@ class OrderModelImpl extends OrderModelI {
   }
 
   @override
-  Future<ResultData> createAliPayOrderLifang(int userId, int orderId) async {
+  Future<ResultData> createAliPayOrderLifang(int? userId, int? orderId) async {
     ResultData resultData = await HttpManager.post(
         OrderApi.order_alipay_order_create_lifang,
         {"userId": userId, "orderId": orderId});
@@ -89,7 +89,7 @@ class OrderModelImpl extends OrderModelI {
   }
 
   @override
-  Future<ResultData> createWeChatOrderLifang(int userId, int orderId) async {
+  Future<ResultData> createWeChatOrderLifang(int? userId, int? orderId) async {
     ResultData resultData = await HttpManager.post(
         OrderApi.order_wechat_order_create_lifang,
         {"userId": userId, "orderId": orderId});
@@ -97,7 +97,7 @@ class OrderModelImpl extends OrderModelI {
   }
 
   @override
-  Future<ResultData> verifyOrderPayStatus(int orderId) async {
+  Future<ResultData> verifyOrderPayStatus(int? orderId) async {
     ResultData resultData = await HttpManager.post(
         OrderApi.order_verify_pay_status, {"orderId": orderId});
     return resultData;
@@ -111,14 +111,14 @@ class OrderModelImpl extends OrderModelI {
   }
 
   @override
-  queryRecookPayFund(int userId) async {
+  queryRecookPayFund(int? userId) async {
     ResultData resultData = await HttpManager.post(
         OrderApi.order_query_recook_pay_fund, {"userId": userId});
     return resultData;
   }
 
   @override
-  createRecookPayOrder(int userId, int orderId, String password) async {
+  createRecookPayOrder(int? userId, int? orderId, String password) async {
     ResultData resultData = await HttpManager.post(
         OrderApi.order_recook_pay_order_create,
         {"userId": userId, "orderId": orderId, 'password': password});
@@ -128,14 +128,14 @@ class OrderModelImpl extends OrderModelI {
 
 
   @override
-  createZeroPayOrder(int userId, int orderId) async {
+  createZeroPayOrder(int? userId, int? orderId) async {
     ResultData resultData = await HttpManager.post(
         OrderApi.order_pay_zero, {"userId": userId, "orderId": orderId});
     return resultData;
   }
 
   @override
-  createRecookPayOrderDeposit(int userId, int orderId, String password) async {
+  createRecookPayOrderDeposit(int? userId, int? orderId, String password) async {
     ResultData resultData = await HttpManager.post(
         OrderApi.order_recook_pay_order_create_deposit,
         {"userId": userId, "orderId": orderId, 'password': password});

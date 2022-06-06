@@ -6,12 +6,12 @@ class RecookLikeButton extends StatefulWidget {
   final bool initValue;
   final Function(bool oldState) onChange;
   final double size;
-  final String likePath;
-  final String likeOnPath;
+  final String? likePath;
+  final String? likeOnPath;
   RecookLikeButton({
-    Key key,
-    @required this.initValue,
-    @required this.onChange,
+    Key? key,
+    required this.initValue,
+    required this.onChange,
     this.size = 14,
     this.likePath,
     this.likeOnPath,

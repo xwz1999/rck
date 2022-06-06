@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/styles.dart';
 
 class AnimatedHomeBackground extends StatefulWidget {
-  final double height;
-  final Color backgroundColor;
-  AnimatedHomeBackground({Key key, this.height, this.backgroundColor})
+  final double? height;
+  final Color? backgroundColor;
+  AnimatedHomeBackground({Key? key, this.height, this.backgroundColor})
       : super(key: key);
 
   @override
@@ -12,7 +12,7 @@ class AnimatedHomeBackground extends StatefulWidget {
 }
 
 class AnimatedHomeBackgroundState extends State<AnimatedHomeBackground> {
-  Color displayColor;
+  Color? displayColor;
   @override
   void initState() {
     super.initState();
@@ -36,8 +36,8 @@ class AnimatedHomeBackgroundState extends State<AnimatedHomeBackground> {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            displayColor,
-            displayColor,
+            displayColor!,
+            displayColor!,
             AppColor.frenchColor,
           ],
         ),

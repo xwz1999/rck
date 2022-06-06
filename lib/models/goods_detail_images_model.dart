@@ -1,7 +1,7 @@
 class GoodsDetailImagesModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   GoodsDetailImagesModel({this.code, this.msg, this.data});
 
@@ -16,15 +16,15 @@ class GoodsDetailImagesModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  Brand brand;
-  List<Images> list;
+  Brand? brand;
+  List<Images>? list;
 
   Data({this.brand, this.list});
 
@@ -33,7 +33,7 @@ class Data {
     if (json['list'] != null) {
       list = [];
       json['list'].forEach((v) {
-        list.add(new Images.fromJson(v));
+        list!.add(new Images.fromJson(v));
       });
     }
   }
@@ -41,28 +41,28 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.brand != null) {
-      data['brand'] = this.brand.toJson();
+      data['brand'] = this.brand!.toJson();
     }
     if (this.list != null) {
-      data['list'] = this.list.map((v) => v.toJson()).toList();
+      data['list'] = this.list!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Brand {
-  num id;
-  String name;
-  String desc;
-  String web;
-  num goodsCount;
-  String logoUrl;
-  String authUrl;
-  String showUrl;
-  String lastImg;
-  String firstImg;
-  num infoId;
-  String infoUrl;
+  num? id;
+  String? name;
+  String? desc;
+  String? web;
+  num? goodsCount;
+  String? logoUrl;
+  String? authUrl;
+  String? showUrl;
+  String? lastImg;
+  String? firstImg;
+  num? infoId;
+  String? infoUrl;
 
   Brand(
       {this.id,
@@ -112,13 +112,13 @@ class Brand {
 }
 
 class Images {
-  num id;
-  num goodsId;
-  String url;
-  String name;
-  num orderNo;
-  num width;
-  num height;
+  num? id;
+  num? goodsId;
+  String? url;
+  String? name;
+  num? orderNo;
+  num? width;
+  num? height;
 
   Images(
       {this.id,

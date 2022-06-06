@@ -1,14 +1,14 @@
 class LiveExitModel {
-  String nickname;
-  String headImgUrl;
-  int duration;
-  String salesVolume;
-  int monthDuration;
-  String anticipatedRevenue;
-  int buy;
-  int look;
-  int praise;
-  int fans;
+  String? nickname;
+  String? headImgUrl;
+  int? duration;
+  String? salesVolume;
+  int? monthDuration;
+  String? anticipatedRevenue;
+  int? buy;
+  int? look;
+  int? praise;
+  int? fans;
 
   LiveExitModel(
       {this.nickname,

@@ -21,8 +21,7 @@ class CommonLocalizationsDelegate
 }
 
 class _DefaultCupertinoLocalizations extends CupertinoLocalizations {
-  _DefaultCupertinoLocalizations(this._languageCode)
-      : assert(_languageCode != null);
+  _DefaultCupertinoLocalizations(this._languageCode);
   final String _languageCode;
 
   static const List<String> _shortWeekdays = <String>[
@@ -149,7 +148,7 @@ class _DefaultCupertinoLocalizations extends CupertinoLocalizations {
   String get modalBarrierDismissLabel => "";
 
   @override
-  String tabSemanticsLabel({int tabIndex, int tabCount}) {
+  String tabSemanticsLabel({int? tabIndex, int? tabCount}) {
     return "";
   }
 

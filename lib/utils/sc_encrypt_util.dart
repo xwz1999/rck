@@ -102,7 +102,7 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
   }
 
   static Future<String> aesEncrypt(
-      {String key, String encryptString, bool log = false}) async {
+      {required String key, required String encryptString, bool log = false}) async {
     final iv = IV.fromLength(32);
     final aesKey = Key.fromUtf8(key);
     // 使用aes-ecb-256，PKCS7Padding 加密参数
@@ -115,7 +115,7 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
   }
 
   static Future<String> aesDecrypt(
-      {String key, String decryptString, bool log = false}) async {
+      {required String key, required String decryptString, bool log = false}) async {
     final iv = IV.fromLength(32);
     final aesKey = Key.fromUtf8(key);
     // 使用aes-ecb-256，PKCS7Padding 加密参数
@@ -129,10 +129,10 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
   }
 
   static Future<String> rsaEncrypt(
-      {String encryptString, bool log = false}) async {
+      {required String encryptString, bool log = false}) async {
     final parser = RSAKeyParser();
     String publicKeyString = _serverRSAPublicKey;
-    RSAPublicKey publicKey = parser.parse(publicKeyString);
+    RSAPublicKey publicKey = parser.parse(publicKeyString) as RSAPublicKey;
     final rsaEncrypter = Encrypter(RSA(publicKey: publicKey));
     final rsaEncrypted = rsaEncrypter.encrypt(encryptString);
     if (log) {
@@ -143,10 +143,10 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
   }
 
   static Future<String> rsaDecrypt(
-      {String decryptString, bool log = false}) async {
+      {required String decryptString, bool log = false}) async {
     final parser = RSAKeyParser();
     String privateKeyString = _appRSAPrivateKey;
-    RSAPrivateKey private = parser.parse(privateKeyString);
+    RSAPrivateKey private = parser.parse(privateKeyString) as RSAPrivateKey;
     final rsaDecrypter = Encrypter(RSA(privateKey: private));
     final rsaEncrypted =
         rsaDecrypter.decrypt(Encrypted.fromBase64(decryptString));

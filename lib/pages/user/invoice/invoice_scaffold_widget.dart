@@ -4,16 +4,16 @@ import 'package:recook/constants/styles.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 
 class InvoiceScaffoldWidget extends StatefulWidget {
-  final Widget body;
-  final String title;
-  final Color backgroundColor;
-  final Widget bottomNavigationBar;
-  final String extraMessage;
-  final String address;
-  final String tel;
-  final String bankNum;
+  final Widget? body;
+  final String? title;
+  final Color? backgroundColor;
+  final Widget? bottomNavigationBar;
+  final String? extraMessage;
+  final String? address;
+  final String? tel;
+  final String? bankNum;
   InvoiceScaffoldWidget(
-      {Key key,
+      {Key? key,
       this.body,
       this.title,
       this.backgroundColor,

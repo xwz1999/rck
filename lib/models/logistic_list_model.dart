@@ -7,7 +7,7 @@ part 'logistic_list_model.g.dart';
 @JsonSerializable()
 class LogisticListModel extends BaseModel {
 
-  List<LogisticDetailModel> data;
+  List<LogisticDetailModel>? data;
 
   LogisticListModel(code,this.data,msg,) : super(code,msg);
 
@@ -21,13 +21,13 @@ class LogisticListModel extends BaseModel {
 @JsonSerializable()
 class LogisticDetailModel extends Object {
 
-  List<String> picUrls;
+  List<String>? picUrls;
 
-  String name;
+  String? name;
 
-  String no;
+  String? no;
 
-  List<LogisticStatus> data;
+  List<LogisticStatus>? data;
 
   LogisticDetailModel(this.picUrls,this.name,this.no,this.data,);
 
@@ -41,9 +41,9 @@ class LogisticDetailModel extends Object {
 @JsonSerializable()
 class LogisticStatus extends Object {
 
-  String context;
+  String? context;
 
-  String ftime;
+  String? ftime;
 
   LogisticStatus(this.context,this.ftime,);
 

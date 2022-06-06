@@ -2,21 +2,16 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/app_image_resources.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_hot_sell_list_model.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
 import 'package:recook/pages/home/classify/mvp/goods_list_contact.dart';
 import 'package:recook/pages/home/function/home_fuc.dart';
 import 'package:recook/pages/wholesale/wholeasale_detail_page.dart';
-import 'package:recook/utils/text_utils.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/filter_tool_bar.dart';
@@ -35,10 +30,10 @@ import 'more_goods/whoesale_goods_normal.dart';
 
 class WholesaleSearchPage extends StatefulWidget {
 
-  final int jdType;
-  final String keyWords;//1为京东商品 空为非jd
+  final int? jdType;
+  final String? keyWords;//1为京东商品 空为非jd
 
-  const WholesaleSearchPage({Key key,  this.jdType, this.keyWords}) : super(key: key);
+  const WholesaleSearchPage({Key? key,  this.jdType, this.keyWords}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -48,18 +43,18 @@ class WholesaleSearchPage extends StatefulWidget {
 
 class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
     with  TickerProviderStateMixin {
-  String _searchText = "";
+  String? _searchText = "";
   FocusNode _contentFocusNode = FocusNode();
 
   /// 切换展示形式  true 为 List， false 为grid
   bool _displayList = false;//默认排列方式改为瀑布流
 
-  FilterToolBarController _filterController;
+  late FilterToolBarController _filterController;
 
-  MvpListViewController<GoodsSimple> _listViewController;
-  TextEditingController _textEditController;
+  late MvpListViewController<GoodsSimple> _listViewController;
+  TextEditingController? _textEditController;
 
-  List<String> _searchHistory = [];
+  List<String?>? _searchHistory = [];
 
   List<KeyWordModel> _recommendWords = [];//推荐分词
   List<bool> _barBool = [false, false, false];
@@ -69,8 +64,8 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
   int _filterIndex = 0;
 
   GSRefreshController _refreshController = GSRefreshController();
-  GoodsHotSellListModel _listModel;
-  GifController _gifController;
+  GoodsHotSellListModel? _listModel;
+  late GifController _gifController;
   int _page = 0;
 
   int _jDType = 0; // 0 默认数据 1传回全部JD数据 2为JD自营数据 3为JD pop数据
@@ -121,7 +116,7 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
         elevation: 0,
         title: _buildTitle(),
         themeData: AppThemes.themeDataGrey.appBarTheme,
-        actions: TextUtils.isEmpty(_textEditController.text)
+        actions: TextUtils.isEmpty(_textEditController!.text)
             ? <Widget>[
                 Container(
                   width: 10,
@@ -162,7 +157,7 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
             ),
             Positioned(
                 child: Offstage(
-                    offstage: !TextUtils.isEmpty(_textEditController.text) &&
+                    offstage: !TextUtils.isEmpty(_textEditController!.text) &&
                         _startSearch,
                     child: Container(
                       color: Colors.white,
@@ -181,7 +176,7 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
 
   _buildGridView() {
     return WaterfallFlow.builder(
-        padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight),
+        padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight!),
         physics: AlwaysScrollableScrollPhysics(),
         controller: _scrollController,
         itemCount: _goodsList.length,
@@ -195,7 +190,7 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
           return MaterialButton(
               padding: EdgeInsets.zero,
               onPressed: () {
-                Get.to(()=>WholesaleDetailPage(goodsId: goods.id,));
+                Get.to(()=>WholesaleDetailPage(goodsId: goods.id as int?,));
               },
               child: _displayList
               // ? BrandDetailListItem(goods: goods)
@@ -254,11 +249,11 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
         // if (index != 1 && _filterIndex == index) {
         //   return;
         // }
-        _filterIndex = index;
+        _filterIndex = index!;
         if (widget.jdType == 1) {
           switch (index) {
             case 0:
-              print(item.topSelected);
+              print(item!.topSelected);
               if (item.topSelected) {
                 _sortType = SortType.priceAsc;
               } else {
@@ -266,7 +261,7 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
               }
               break;
             case 1:
-              print(item.topSelected);
+              print(item!.topSelected);
               if (item.topSelected) {
                 _sortType = SortType.salesAsc;
               } else {
@@ -284,14 +279,14 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
               _sortType = SortType.comprehensive;
               break;
             case 1:
-              if (item.topSelected) {
+              if (item!.topSelected) {
                 _sortType = SortType.priceAsc;
               } else {
                 _sortType = SortType.priceDesc;
               }
               break;
             case 2:
-              if (item.topSelected) {
+              if (item!.topSelected) {
                 _sortType = SortType.salesAsc;
               } else {
                 _sortType = SortType.salesDesc;
@@ -370,7 +365,7 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
           // if (value.isEmpty)
           //   _refreshController.isNoData;
           // else
-          if(_scrollController!=null&&_goodsList.isNotEmpty){
+          if(_goodsList.isNotEmpty){
             _scrollController.jumpTo(0.0);
           }
 
@@ -405,21 +400,21 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
 
   saveKerWord(List<WholesaleGood> data) {
 
-    if (data != null && data.length > 0) {
-      if (_searchHistory.contains(_searchText)) {
-        _searchHistory.remove(_searchText);
-        List<String> list = [_searchText];
-        list.addAll(_searchHistory);
+    if (data.length > 0) {
+      if (_searchHistory!.contains(_searchText)) {
+        _searchHistory!.remove(_searchText);
+        List<String?> list = [_searchText];
+        list.addAll(_searchHistory!);
         _searchHistory = list;
       } else {
-        List<String> list = [_searchText];
-        list.addAll(_searchHistory);
+        List<String?> list = [_searchText];
+        list.addAll(_searchHistory!);
         _searchHistory = list;
-        while (_searchHistory.length > 15) {
-          _searchHistory.removeLast();
+        while (_searchHistory!.length > 15) {
+          _searchHistory!.removeLast();
         }
       }
-      saveSearchListToSharedPreferences(_searchHistory);
+      saveSearchListToSharedPreferences(_searchHistory!);
       setState(() {});
     }
   }
@@ -584,8 +579,8 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
 
   _searchHistoryWidget() {
     List<Widget> choiceChipList = [];
-    if (_searchHistory != null && _searchHistory.length > 0) {
-      for (var text in _searchHistory) {
+    if (_searchHistory != null && _searchHistory!.length > 0) {
+      for (var text in _searchHistory!) {
         choiceChipList.add(Padding(
           padding: EdgeInsets.only(right: 10, bottom: 5),
           child: ChoiceChip(
@@ -596,12 +591,12 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onSelected: (bool value) async {
               _searchText = text;
-              _textEditController.text = text;
-              FocusManager.instance.primaryFocus.unfocus();
+              _textEditController!.text = text!;
+              FocusManager.instance.primaryFocus!.unfocus();
               _callRefresh();
               setState(() {});
             },
-            label: Text(text),
+            label: Text(text!),
             selected: false,
           ),
         ));
@@ -661,7 +656,7 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
   _recommendWidget() {
     List<Widget> keyWordList = [];
     int leg = 0;
-    if (_recommendWords != null && _recommendWords.length > 0) {
+    if (_recommendWords.length > 0) {
       for (int i=0;i<_recommendWords.length;i++) {
         keyWordList.add(Padding(
           padding: EdgeInsets.only(right: 10, bottom: 5),
@@ -673,12 +668,12 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onSelected: (bool value) async {
               _searchText = _recommendWords[i].token;
-              _textEditController.text = _recommendWords[i].token;
-              FocusManager.instance.primaryFocus.unfocus();
+              _textEditController!.text = _recommendWords[i].token!;
+              FocusManager.instance.primaryFocus!.unfocus();
               _callRefresh();
               setState(() {});
             },
-            label: Text(_recommendWords[i].token),
+            label: Text(_recommendWords[i].token!),
             selected: false,
           ),
         ));
@@ -710,9 +705,9 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
   getSearchListFromSharedPreferences() async {
     // 获取实例
     var prefs = await SharedPreferences.getInstance();
-    if (UserManager.instance.haveLogin) {
+    if (UserManager.instance!.haveLogin) {
       _searchHistory = prefs.getStringList(
-          UserManager.instance.user.info.id.toString() + "userSearhWholesaleHistory");
+          UserManager.instance!.user.info!.id.toString() + "userSearhWholesaleHistory");
       if (_searchHistory == null) {
         _searchHistory = [];
       }
@@ -720,11 +715,11 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
     }
   }
 
-  saveSearchListToSharedPreferences(List<String> value) async {
+  saveSearchListToSharedPreferences(List<String?> value) async {
     // 获取实例
     var prefs = await SharedPreferences.getInstance();
     prefs.setStringList(
-        UserManager.instance.user.info.id.toString() + "userSearhWholesaleHistory",
-        value);
+        UserManager.instance!.user.info!.id.toString() + "userSearhWholesaleHistory",
+        value as List<String>);
   }
 }

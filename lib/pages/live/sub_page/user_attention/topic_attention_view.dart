@@ -9,8 +9,8 @@ import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class TopicAttentionView extends StatefulWidget {
-  final int id;
-  TopicAttentionView({Key key, @required this.id}) : super(key: key);
+  final int? id;
+  TopicAttentionView({Key? key, required this.id}) : super(key: key);
 
   @override
   _TopicAttentionViewState createState() => _TopicAttentionViewState();
@@ -31,7 +31,7 @@ class _TopicAttentionViewState extends State<TopicAttentionView>
 
   @override
   void dispose() {
-    _topicController?.dispose();
+    _topicController.dispose();
     super.dispose();
   }
 
@@ -72,10 +72,10 @@ class _TopicAttentionViewState extends State<TopicAttentionView>
       'page': _page,
       'limit': 15,
     });
-    if (resultData?.data['data'] == null)
+    if (resultData.data['data'] == null)
       return [];
     else
-      return (resultData?.data['data']['list'] as List)
+      return (resultData.data['data']['list'] as List)
           .map((e) => TopicListModel.fromJson(e))
           .toList();
   }

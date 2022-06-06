@@ -29,13 +29,13 @@ enum PifaBenefit {
 
 class PifaBenefitPage extends StatefulWidget {
   final String type;
-  final String shopName;
-  final int shopId;
-  final bool isDetail;
+  final String? shopName;
+  final int? shopId;
+  final bool? isDetail;
 
   PifaBenefitPage({
-    Key key,
-    @required this.type,
+    Key? key,
+    required this.type,
     this.shopName,
     this.shopId,
     this.isDetail,
@@ -73,8 +73,8 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
   String formatType = 'yyyy-MM'; //时间选择器按钮样式
   String TableformatType = 'M月d日'; //时间样式
 
-  PifaBenefitModel _models; //自购导购未到已到收益
-  PifaBenefit _type;
+  PifaBenefitModel? _models; //自购导购未到已到收益
+  PifaBenefit? _type;
   bool isSelfAndGuide = false;
 
   ///是否是自购分享收益
@@ -97,8 +97,8 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
 
   ///时间选择器
   showTimePickerBottomSheet(
-      {List<BottomTimePickerType> timePickerTypes,
-      Function(DateTime, BottomTimePickerType) submit}) {
+      {List<BottomTimePickerType>? timePickerTypes,
+      Function(DateTime, BottomTimePickerType)? submit}) {
     showModalBottomSheet(
       isScrollControlled: false,
       context: context,
@@ -128,7 +128,7 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
     return Row(
       children: [
         Text(
-          text ?? '',
+          text ,
           style: TextStyle(color: Color(0xFF999999), fontSize: 14.rsp),
           textAlign: TextAlign.center,
         ),
@@ -136,7 +136,7 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
           children: [
             5.hb,
             Text(
-              amount ?? '0.00',
+              amount ,
               style: TextStyle(color: Color(0xFFD5101A), fontSize: 14.rsp),
               textAlign: TextAlign.center,
             )
@@ -285,9 +285,9 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
             _models = await UserBenefitFunc.getBenefit(6);
           }
           if (_models != null) {
-            _all = _models.all.toStringAsFixed(2);
-            _notAmount = _models.weiDaoZ.toStringAsFixed(2);
-            _amount = _models.yiDaoZ.toStringAsFixed(2);
+            _all = _models!.all!.toStringAsFixed(2);
+            _notAmount = _models!.weiDaoZ!.toStringAsFixed(2);
+            _amount = _models!.yiDaoZ!.toStringAsFixed(2);
           }
 
           setState(() {});
@@ -342,16 +342,16 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
   }
 
   _buildTableList() {
-    return _models.entry == null
+    return _models!.entry == null
         ? SizedBox()
         : ListView.builder(
             physics: NeverScrollableScrollPhysics(),
-            itemCount: _models.entry.length,
+            itemCount: _models!.entry!.length,
             itemBuilder: (context, i) {
-              PifaBenefitModel userIncomeModel = _models;
+              PifaBenefitModel? userIncomeModel = _models;
               return _type == PifaBenefit.piFa
-                  ? _buildTableBody(userIncomeModel.entry[i], i)
-                  : _buildTable(userIncomeModel.entry[i], i);
+                  ? _buildTableBody(userIncomeModel!.entry![i], i)
+                  : _buildTable(userIncomeModel!.entry![i], i);
             },
           );
   }
@@ -493,7 +493,7 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
                 width: 200.w,
                 color: Colors.white,
                 child: Text(
-                  detail.name,
+                  detail.name!,
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF333333),
@@ -506,7 +506,7 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
                 width: 180.w,
                 color: Colors.white,
                 child: Text(
-                  detail.amount.toStringAsFixed(2),
+                  detail.amount!.toStringAsFixed(2),
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF333333),
@@ -538,7 +538,7 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
                   children: [
                     Expanded(
                       child: Text(
-                        (detail.income + detail.notIncome).toStringAsFixed(2),
+                        (detail.income! + detail.notIncome!).toStringAsFixed(2),
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           color: Color(0xffD5101A),
@@ -577,7 +577,7 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
                 width: 200.w,
                 color: Colors.white,
                 child: Text(
-                  detail.name,
+                  detail.name!,
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF333333),
@@ -603,7 +603,7 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
                 width: 220.w,
                 color: Colors.white,
                 child: Text(
-                  detail.notIncome.toStringAsFixed(2),
+                  detail.notIncome!.toStringAsFixed(2),
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF333333),
@@ -622,7 +622,7 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
                   children: [
                     Expanded(
                       child: Text(
-                        detail.income.toStringAsFixed(2),
+                        detail.income!.toStringAsFixed(2),
                         style: TextStyle(
                           fontWeight: FontWeight.w400,
                           color: Color(0xffD5101A),

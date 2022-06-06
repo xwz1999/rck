@@ -3,10 +3,10 @@ import 'package:recook/constants/header.dart';
 
 class RecookListTile extends StatelessWidget {
   ///prefix widget
-  final Widget prefix;
+  final Widget? prefix;
 
   ///suffix widget
-  final Widget suffix;
+  final Widget? suffix;
 
   ///title
   final dynamic title;
@@ -21,12 +21,12 @@ class RecookListTile extends StatelessWidget {
   final bool arrow;
 
   /// on tap
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   const RecookListTile({
-    Key key,
+    Key? key,
     this.prefix,
     this.suffix,
-    @required this.title,
+    required this.title,
     this.underline = true,
     this.arrow = true,
     this.titleColor = const Color(0xFF333333),

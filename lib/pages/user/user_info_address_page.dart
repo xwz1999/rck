@@ -15,10 +15,9 @@ import 'package:recook/widgets/toast.dart';
 
 class UserInfoAddressPage extends StatefulWidget {
   final Map arguments;
-  final Function(String result) callback;
+  final Function(String result)? callback;
 
-  const UserInfoAddressPage({Key key, this.arguments, this.callback})
-      : assert(arguments != null, "参数不能为空");
+  const UserInfoAddressPage({Key? key, required this.arguments, this.callback});
 
   static Map setArguments(String title, String origin, {int maxLength: 0}) {
     return {"title": title, "origin": origin, "maxLength": maxLength};
@@ -29,11 +28,11 @@ class UserInfoAddressPage extends StatefulWidget {
 }
 
 class _UserInfoAddressPageState extends BaseStoreState<UserInfoAddressPage> {
-  TextEditingController _controller;
-  ProvinceCityModel _addressModel;
-  AddressModelImpl _modelImpl;
-  StateSetter _addressStateSetter;
-  Address _address;
+  TextEditingController? _controller;
+  ProvinceCityModel? _addressModel;
+  late AddressModelImpl _modelImpl;
+  late StateSetter _addressStateSetter;
+  Address? _address;
 
   @override
   void initState() {
@@ -59,13 +58,13 @@ class _UserInfoAddressPageState extends BaseStoreState<UserInfoAddressPage> {
             title: "确定",
             onPressed: () {
               String areaString =
-                  "${_address.province}${_address.city}${!TextUtils.isEmpty(_address.district) ? "${_address.district}" : ""}";
-              if (TextUtils.isEmpty(_controller.text) &&
+                  "${_address!.province}${_address!.city}${!TextUtils.isEmpty(_address!.district) ? "${_address!.district}" : ""}";
+              if (TextUtils.isEmpty(_controller!.text) &&
                   TextUtils.isEmpty(areaString)) {
                 showError("请填写详细地址信息");
                 return;
               }
-              Navigator.pop(context, areaString + _controller.text);
+              Navigator.pop(context, areaString + _controller!.text);
             },
           )
         ],
@@ -95,7 +94,7 @@ class _UserInfoAddressPageState extends BaseStoreState<UserInfoAddressPage> {
                         size: 18 * 2.sp,
                       ),
                       onPressed: () {
-                        _controller.text = "";
+                        _controller!.text = "";
                       },
                     )),
               )
@@ -128,7 +127,7 @@ class _UserInfoAddressPageState extends BaseStoreState<UserInfoAddressPage> {
             decoration: BoxDecoration(
                 color: Colors.white,
                 border: Border(
-                    bottom: BorderSide(color: Colors.grey[200], width: 0.5))),
+                    bottom: BorderSide(color: Colors.grey[200]!, width: 0.5))),
             child: Row(
               children: <Widget>[
                 Container(
@@ -141,9 +140,9 @@ class _UserInfoAddressPageState extends BaseStoreState<UserInfoAddressPage> {
                 ),
                 Expanded(
                     child: Text(
-                  TextUtils.isEmpty(_address.province)
+                  TextUtils.isEmpty(_address!.province)
                       ? "选择地址"
-                      : "${_address.province}-${_address.city}${!TextUtils.isEmpty(_address.district) ? "-${_address.district}" : ""}",
+                      : "${_address!.province}-${_address!.city}${!TextUtils.isEmpty(_address!.district) ? "-${_address!.district}" : ""}",
                   textAlign: TextAlign.end,
                   style: AppTextStyle.generate(14, fontWeight: FontWeight.w500),
                 )),
@@ -164,13 +163,13 @@ class _UserInfoAddressPageState extends BaseStoreState<UserInfoAddressPage> {
   _selectAddress(BuildContext context) {
     AddressSelectorHelper.show(context,
         model: _addressModel,
-        province: _address.province,
-        city: _address.city,
-        district: _address.district,
-        callback: (String province, String city, String district) {
-      _address.province = province;
-      _address.city = city;
-      _address.district = district;
+        province: _address!.province,
+        city: _address!.city,
+        district: _address!.district,
+        callback: (String? province, String? city, String? district) {
+      _address!.province = province;
+      _address!.city = city;
+      _address!.district = district;
       _addressStateSetter(() {});
       DPrint.printf("$province - $city -$district");
     });
@@ -182,7 +181,7 @@ class _UserInfoAddressPageState extends BaseStoreState<UserInfoAddressPage> {
     if (result.success &&
         result.data != null &&
         result.data.toString().length > 0) {
-      _addressModel = ProvinceCityModel.fromJson(json.decode(result.data));
+      _addressModel = ProvinceCityModel.fromJson(json.decode(result.data as String));
       return true;
     }
     ResultData res = await _modelImpl.fetchWholeProvince();

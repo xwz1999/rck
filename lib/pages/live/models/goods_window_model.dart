@@ -1,6 +1,6 @@
 class GoodsWindowModel {
-  List<GoodsList> list;
-  num total;
+  List<GoodsList>? list;
+  num? total;
 
   GoodsWindowModel({this.list, this.total});
 
@@ -8,7 +8,7 @@ class GoodsWindowModel {
     if (json['list'] != null) {
       list = [];
       json['list'].forEach((v) {
-        list.add(new GoodsList.fromJson(v));
+        list!.add(new GoodsList.fromJson(v));
       });
     }
     total = json['total'];
@@ -17,7 +17,7 @@ class GoodsWindowModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.list != null) {
-      data['list'] = this.list.map((v) => v.toJson()).toList();
+      data['list'] = this.list!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -25,24 +25,24 @@ class GoodsWindowModel {
 }
 
 class GoodsList {
-  num id;
-  String goodsName;
-  String brandImg;
-  String brandName;
-  num brandId;
-  String description;
-  num inventory;
-  num salesVolume;
-  String mainPhotoUrl;
-  String promotionName;
-  String originalPrice;
-  String discountPrice;
-  String commission;
-  List<String> tags;
-  num percent;
-  String startTime;
-  String endTime;
-  String coupon;
+  num? id;
+  String? goodsName;
+  String? brandImg;
+  String? brandName;
+  num? brandId;
+  String? description;
+  num? inventory;
+  num? salesVolume;
+  String? mainPhotoUrl;
+  String? promotionName;
+  String? originalPrice;
+  String? discountPrice;
+  String? commission;
+  List<String>? tags;
+  num? percent;
+  String? startTime;
+  String? endTime;
+  String? coupon;
 
   GoodsList(
       {this.id,

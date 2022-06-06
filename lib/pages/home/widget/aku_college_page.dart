@@ -1,12 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/pages/home/function/home_fuc.dart';
 import 'package:recook/pages/home/model/aku_video_list_model.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -27,10 +24,10 @@ class AkuCollegePage extends StatefulWidget {
 class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
   GSRefreshController _refreshController =
       GSRefreshController(initialRefresh: true);
-  TextEditingController _textEditController;
-  AkuVideoListModel _akuVideoListModel;
-  List<AkuVideo> _akuVideoList;
-  String _searchText;
+  TextEditingController? _textEditController;
+  AkuVideoListModel? _akuVideoListModel;
+  List<AkuVideo>? _akuVideoList;
+  String? _searchText;
   int page = 1;
   @override
   void initState() {
@@ -39,7 +36,7 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
 
   @override
   void dispose() {
-    _refreshController?.dispose();
+    _refreshController.dispose();
     super.dispose();
   }
 
@@ -59,7 +56,7 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
       body: Stack(
         children: [
           Positioned(child: Container(
-            height: 130.rw+DeviceInfo.statusBarHeight + DeviceInfo.appBarHeight,
+            height: 130.rw+DeviceInfo.statusBarHeight! + DeviceInfo.appBarHeight,
             width: double.infinity,
             decoration: BoxDecoration(
                 image: DecorationImage(
@@ -113,7 +110,7 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
         // ),
         // 50.hb,
         Container(
-          height:  160.rw+DeviceInfo.statusBarHeight + DeviceInfo.appBarHeight
+          height:  160.rw+DeviceInfo.statusBarHeight! + DeviceInfo.appBarHeight
         ),
 
         Container(
@@ -197,8 +194,8 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
                   //cancel();
                 },
                 onLoadMore: () async {
-                  if (_akuVideoListModel.list.length >=
-                      _akuVideoListModel.total) {
+                  if (_akuVideoListModel!.list!.length >=
+                      _akuVideoListModel!.total!) {
                     _refreshController.loadComplete();
                     _refreshController.loadNoData();
                   } else {
@@ -217,13 +214,13 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
                                 childAspectRatio: 170 / 162,
                                 mainAxisSpacing: 10,
                                 crossAxisSpacing: 17),
-                        itemCount: _akuVideoListModel.list.length,
+                        itemCount: _akuVideoListModel!.list!.length,
                         itemBuilder: (BuildContext context, int index) {
                           return
                               // Container(
                               //   color: Colors.red,
                               // );
-                              _akuVideoItem(_akuVideoListModel.list[index]);
+                              _akuVideoItem(_akuVideoListModel!.list![index]);
                         },
                       )
                     : noDataView('没有找到您想要的内容')))
@@ -287,7 +284,7 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
             children: [
               16.wb,
               Text(
-                akuVideo.title,
+                akuVideo.title!,
                 maxLines: 2,
                 softWrap: true,
                 overflow: TextOverflow.ellipsis,
@@ -303,7 +300,7 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
           Row(
             children: [
               16.wb,
-              Text(akuVideo.subTitle,
+              Text(akuVideo.subTitle!,
                   style: TextStyle(fontSize: 10.rsp, color: Color(0xFF333333))),
               Spacer(),
               Text(akuVideo.numberOfHits.toString() + '人看过',

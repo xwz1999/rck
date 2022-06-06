@@ -1,14 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:recook/const/resource.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 
 class NoDataView extends StatelessWidget {
-  final String text;
-  final Widget icon;
-  NoDataView({Key key, this.text, this.icon}) : super(key: key);
+  final String? text;
+  final Widget? icon;
+  NoDataView({Key? key, this.text, this.icon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +25,7 @@ class NoDataView extends StatelessWidget {
               height: 8,
             ),
             Text(
-              text,
+              text!,
               style: AppTextStyle.generate(14 * 2.sp, color: Colors.grey),
             ),
             SizedBox(

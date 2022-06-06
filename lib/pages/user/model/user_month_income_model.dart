@@ -1,14 +1,14 @@
 class UserMonthIncomeModel {
-  int id;
-  int userId;
-  DateTime date;
-  double amount;
-  double purchaseAmount;
-  double guideAmount;
-  bool isSettlement;
-  double teamAmount;
-  double recommendAmount;
-  double rewardAmount;
+  int? id;
+  int? userId;
+  DateTime? date;
+  double? amount;
+  double? purchaseAmount;
+  double? guideAmount;
+  bool? isSettlement;
+  double? teamAmount;
+  double? recommendAmount;
+  double? rewardAmount;
 
   double get allAmount =>
       (purchaseAmount ?? 0) +

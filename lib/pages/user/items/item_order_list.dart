@@ -21,7 +21,7 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 
-typedef ItemClickListener = Function(OrderModel order, {VoidCallback callback});
+typedef ItemClickListener = Function(OrderModel order, {VoidCallback? callback});
 
 class OrderListItem extends StatefulWidget {
   /*
@@ -42,21 +42,21 @@ class OrderListItem extends StatefulWidget {
   final ItemClickListener goToPay;
   final ItemClickListener cancelOrder;
   final ItemClickListener applyRefund;
-  final ItemClickListener applySalesReturn;
+  final ItemClickListener? applySalesReturn;
   final ItemClickListener evaluation;
   final ItemClickListener delete;
   final ItemClickListener confirm;
 
   const OrderListItem(
-      {Key key,
-      this.orderModel,
-      this.goToPay,
-      this.cancelOrder,
-      this.applyRefund,
-      this.applySalesReturn,
-      this.evaluation,
-      this.delete,
-      this.confirm, this.itemClick})
+      {Key? key,
+      required this.orderModel,
+      required this.goToPay,
+      required this.cancelOrder,
+      required this.applyRefund,
+        this.applySalesReturn,
+      required this.evaluation,
+      required this.delete,
+      required this.confirm, required this.itemClick})
       : super(key: key);
 
   @override
@@ -64,8 +64,8 @@ class OrderListItem extends StatefulWidget {
 }
 
 class _OrderListItemState extends State<OrderListItem> {
-  String _status;
-  Color _color;
+  late String _status;
+  Color? _color;
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +137,7 @@ class _OrderListItemState extends State<OrderListItem> {
       margin: EdgeInsets.only(top: rSize(5), left: rSize(10)),
       padding: EdgeInsets.only(top: rSize(5)),
       decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: Colors.grey[300], width: 0.3))),
+          border: Border(top: BorderSide(color: Colors.grey[300]!, width: 0.3))),
       child: Row(
         children: <Widget>[
           widget.orderModel.expressStatus != 0
@@ -164,7 +164,7 @@ class _OrderListItemState extends State<OrderListItem> {
                   children: [
                 TextSpan(
                     text:
-                        "${widget.orderModel.actualTotalAmount.toStringAsFixed(2)}",
+                        "${widget.orderModel.actualTotalAmount!.toStringAsFixed(2)}",
                     style: AppTextStyle.generate(16 * 2.sp))
               ])),
         ],
@@ -217,7 +217,7 @@ class _OrderListItemState extends State<OrderListItem> {
                 onSelected:  (String value) {
                         print('加入购物车');
                         if(widget.orderModel.goodsList!=null){
-                          widget.orderModel.goodsList.forEach((element) async {
+                          widget.orderModel.goodsList!.forEach((element) async {
                             await _addToShoppingCart(element.skuId,element.skuName,element.quantity);
                           });
                         }
@@ -256,7 +256,7 @@ class _OrderListItemState extends State<OrderListItem> {
             borderRadius: BorderRadius.all(Radius.circular(40)),
             color: Colors.grey[700],
             fontSize: 14 * 2.sp,
-            border: Border.all(color: Colors.grey[700], width: 0.3),
+            border: Border.all(color: Colors.grey[700]!, width: 0.3),
             onPressed: () {
               if (widget.cancelOrder == null) return;
               widget.cancelOrder(widget.orderModel, callback: () {
@@ -319,8 +319,8 @@ class _OrderListItemState extends State<OrderListItem> {
         }
         break;
     }
-    if (widget.orderModel.canConfirm &&
-        widget.orderModel.goodsList
+    if (widget.orderModel.canConfirm! &&
+        widget.orderModel.goodsList!
                 .indexWhere((element) => element.rStatus == '退款审核中') ==
             -1) {
       children
@@ -334,7 +334,7 @@ class _OrderListItemState extends State<OrderListItem> {
           borderRadius: BorderRadius.all(Radius.circular(40)),
           color: Colors.grey[700],
           fontSize: 14 * 2.sp,
-          border: Border.all(color: Colors.grey[700], width: 0.3),
+          border: Border.all(color: Colors.grey[700]!, width: 0.3),
           onPressed: () {
             if (widget.confirm == null) {
               return;
@@ -353,9 +353,9 @@ class _OrderListItemState extends State<OrderListItem> {
     );
   }
 
-  Future<dynamic> _addToShoppingCart(int skuID, String skuName, int quantity) async {
+  Future<dynamic> _addToShoppingCart(int? skuID, String? skuName, int? quantity) async {
     ResultData resultData = await addToShoppingCart(
-        UserManager.instance.user.info.id,
+        UserManager.instance!.user.info!.id,
         skuID,
         skuName,
         quantity);
@@ -370,15 +370,15 @@ class _OrderListItemState extends State<OrderListItem> {
 
       return;
     }
-    UserManager.instance.refreshShoppingCart.value = true;
-    UserManager.instance.refreshShoppingCartNumber.value = true;
-    UserManager.instance.refreshShoppingCartNumberWithPage.value = true;
+    UserManager.instance!.refreshShoppingCart.value = true;
+    UserManager.instance!.refreshShoppingCartNumber.value = true;
+    UserManager.instance!.refreshShoppingCartNumberWithPage.value = true;
     ReToast.success(text: '加入成功');
 
   }
 
   Future<ResultData> addToShoppingCart(
-      int userID, int skuID, String skuName, int quantity) async {
+      int? userID, int? skuID, String? skuName, int? quantity) async {
     ResultData resultData = await HttpManager.post(
         GoodsApi.goods_add_shopping_cart, {
       "userID": userID,
@@ -399,9 +399,7 @@ class _OrderListItemState extends State<OrderListItem> {
       border: Border.all(color: AppColor.themeColor, width: 0.3),
       borderRadius: BorderRadius.all(Radius.circular(40)),
       onPressed: () {
-        if (widget.delete != null) {
-          widget.delete(widget.orderModel);
-        }
+        widget.delete(widget.orderModel);
         // if (widget.goToPay == null) return;
         // widget.goToPay(widget.orderModel, callback: () {
         //   setState(() {});
@@ -492,11 +490,11 @@ class _OrderListItemState extends State<OrderListItem> {
 
   _goodsList() {
     return ListView.builder(
-        itemCount: widget.orderModel.goodsList.length,
+        itemCount: widget.orderModel.goodsList!.length,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: ((context, index) {
-          return _goodsItem(widget.orderModel.goodsList[index]);
+          return _goodsItem(widget.orderModel.goodsList![index]);
         }));
   }
 
@@ -512,7 +510,7 @@ class _OrderListItemState extends State<OrderListItem> {
             text: TextSpan(
                 // text: "运费: ￥${widget.orderModel.expressTotalFee.toStringAsFixed(2)}\n共${widget.orderModel.totalGoodsCount}件商品  小计￥",
                 text:
-                    "运费: ￥${widget.orderModel.expressTotalFee.toStringAsFixed(2)}",
+                    "运费: ￥${widget.orderModel.expressTotalFee!.toStringAsFixed(2)}",
                 style: AppTextStyle.generate(12 * 2.sp, color: Colors.grey),
                 children: [
                   TextSpan(
@@ -665,7 +663,7 @@ class _OrderListItemState extends State<OrderListItem> {
                               color: AppColor.priceColor),
                         ),
                         TextSpan(
-                          text: "${(goods.goodsAmount-goods.coinAmount).toStringAsFixed(2)}",
+                          text: "${(goods.goodsAmount!-goods.coinAmount!).toStringAsFixed(2)}",
                           style: AppTextStyle.generate(14 * 2.sp,
                               color: AppColor.priceColor),
                         ),
@@ -677,7 +675,7 @@ class _OrderListItemState extends State<OrderListItem> {
                       ])),
                       Spacer(),
                       Text(
-                        goods.rStatus,
+                        goods.rStatus!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyle.generate(14 * 2.sp,

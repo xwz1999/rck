@@ -7,7 +7,6 @@
  * ====================================================
  */
 
-import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -18,8 +17,8 @@ import 'package:recook/models/view_goods_model.dart';
 
 class HomeDao {
   static Future getCategories(
-      {@required OnSuccess<List<FirstCategory>> success,
-      @required OnFailure failure}) async {
+      {required OnSuccess<List<FirstCategory>> success,
+      required OnFailure failure}) async {
     ResultData res = await HttpManager.post(GoodsApi.categories, {});
 
     if (!res.result) {
@@ -78,7 +77,7 @@ class HomeDao {
       //进口专区 国家下的分类
       
   static Future<List<CategoryListModel>> getCategoryList(
-    int countryId
+    int? countryId
   ) async {
     ResultData result =
         await HttpManager.post(APIV2.userAPI.getCategoryList, {
@@ -147,7 +146,7 @@ class HomeDao {
   }
 
   //获取京东商品类目
-  static Future<num> getJDStock(num skuId,String address) async {
+  static Future<int?> getJDStock(num? skuId,String? address) async {
     ResultData result =
     await HttpManager.post(APIV2.goodsAPI.getJDStock, {
       'sku_id':skuId,

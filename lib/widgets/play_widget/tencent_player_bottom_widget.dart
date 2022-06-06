@@ -9,14 +9,14 @@ const List<double> rateList = [1.0, 1.2, 1.5, 2.0];
 
 class TencentPlayerBottomWidget extends StatefulWidget {
   final isShow;
-  final TencentPlayerController controller;
-  final VoidCallback behavingCallBack;
-  final ValueChanged<int> changeClear;
+  final TencentPlayerController? controller;
+  final VoidCallback? behavingCallBack;
+  final ValueChanged<int>? changeClear;
 
   // UI
-  final bool showClearBtn;
+  final bool? showClearBtn;
 
-  final bool showSpeedBtn;
+  final bool? showSpeedBtn;
 
   TencentPlayerBottomWidget({this.isShow, this.controller, this.behavingCallBack, this.changeClear, this.showClearBtn, this.showSpeedBtn});
 
@@ -25,7 +25,7 @@ class TencentPlayerBottomWidget extends StatefulWidget {
 }
 
 class _TencentPlayerBottomWidgetState extends State<TencentPlayerBottomWidget> {
-  TencentPlayerController get controller => widget.controller;
+  TencentPlayerController? get controller => widget.controller;
 
   int currentClearIndex = 0;
   bool isShowClearList = false;
@@ -50,8 +50,7 @@ class _TencentPlayerBottomWidgetState extends State<TencentPlayerBottomWidget> {
     return Offstage(
       offstage: !widget.isShow,
       child: Stack(
-        overflow: Overflow.visible,
-        children: <Widget>[
+        clipBehavior: Clip.none, children: <Widget>[
           Align(
             alignment: Alignment.bottomLeft,
             child: Container(
@@ -63,17 +62,17 @@ class _TencentPlayerBottomWidgetState extends State<TencentPlayerBottomWidget> {
                   GestureDetector(
                     behavior: HitTestBehavior.opaque,
                     onTap: () {
-                      if (controller.value.isPlaying) {
-                        controller.pause();
+                      if (controller!.value.isPlaying) {
+                        controller!.pause();
                       } else {
-                        controller.play();
+                        controller!.play();
                       }
                       widget.behavingCallBack?.call();
                     },
                     child: Container(
                       height: _Style.bottomContainerH,
                       padding: EdgeInsets.all(15.0),
-                      child: Image.asset(controller.value.isPlaying ? Assets.static.playerPause.path : Assets.static.playerPlay.path, width: _Style.iconPlayW, height: _Style.iconPlayW,),
+                      child: Image.asset(controller!.value.isPlaying ? Assets.static.playerPause.path : Assets.static.playerPlay.path, width: _Style.iconPlayW, height: _Style.iconPlayW,),
                     ),
                   ),
                   /// 进度条
@@ -117,7 +116,7 @@ class _TencentPlayerBottomWidgetState extends State<TencentPlayerBottomWidget> {
                         left: 15,
                         right: 20
                       ),
-                      child: Text('倍速${controller.value.rate}x', style: TextStyle(color: Colors.white, fontSize: 12,),),
+                      child: Text('倍速${controller!.value.rate}x', style: TextStyle(color: Colors.white, fontSize: 12,),),
                     ),
                   ):SizedBox(),
                 ],
@@ -193,7 +192,7 @@ class _TencentPlayerBottomWidgetState extends State<TencentPlayerBottomWidget> {
                         behavior: HitTestBehavior.opaque,
                         onTap: () {
                           isShowRateList = false;
-                          controller.setRate(rate);
+                          controller!.setRate(rate);
                           widget.behavingCallBack?.call();
                           setState(() {
                           });
@@ -204,7 +203,7 @@ class _TencentPlayerBottomWidgetState extends State<TencentPlayerBottomWidget> {
                           decoration: BoxDecoration(
                               border: rate == rateList[rateList.length - 1] ? null : Border(bottom: BorderSide(width: 0.3, color: Color(0xffeeeeee)))
                           ),
-                          child: Text('$rate倍', style: controller.value.rate == rate ? TextStyle(color: Color(0xfff24724), fontSize: 12,) : TextStyle(color: Colors.white, fontSize: 12,),),
+                          child: Text('$rate倍', style: controller!.value.rate == rate ? TextStyle(color: Color(0xfff24724), fontSize: 12,) : TextStyle(color: Colors.white, fontSize: 12,),),
                         ),
                       );
                     }).toList(),
@@ -229,11 +228,11 @@ class _TencentPlayerBottomWidgetState extends State<TencentPlayerBottomWidget> {
 }
 
 class BottomScrubber extends StatefulWidget {
-  final TencentPlayerController controller;
-  final VoidCallback behavingCallBack; //正在交互
+  final TencentPlayerController? controller;
+  final VoidCallback? behavingCallBack; //正在交互
 
   BottomScrubber({
-    @required this.controller,
+    required this.controller,
     this.behavingCallBack,
   });
 
@@ -245,15 +244,15 @@ class _BottomScrubberState extends State<BottomScrubber> {
   GlobalKey currentKey = GlobalKey();
   bool _controllerWasPlaying = false;
 
-  TencentPlayerController get controller => widget.controller;
+  TencentPlayerController? get controller => widget.controller;
 
-  Duration seekPos;
+  Duration? seekPos;
 
   void seekToRelativePosition(Offset globalPosition) {
-    double width = DateUtilss.findGlobalRect(currentKey).width;
-    double xOffSet = DateUtilss.globalOffsetToLocal(currentKey, globalPosition).dx;
+    double width = DateUtilss.findGlobalRect(currentKey)!.width;
+    double xOffSet = DateUtilss.globalOffsetToLocal(currentKey, globalPosition)!.dx;
     final double relative = xOffSet / width;
-    seekPos = controller.value.duration * relative;
+    seekPos = controller!.value.duration * relative;
     setState(() {
     });
     /// 回调正在交互，用来做延迟隐藏cover
@@ -263,7 +262,7 @@ class _BottomScrubberState extends State<BottomScrubber> {
   }
   @override
   Widget build(BuildContext context) {
-    Duration showDuration = seekPos != null ? seekPos : controller.value.position;
+    Duration showDuration = seekPos != null ? seekPos! : controller!.value.position;
 
     return Row(
       children: <Widget>[
@@ -280,12 +279,12 @@ class _BottomScrubberState extends State<BottomScrubber> {
                   fit: StackFit.passthrough,
                   children: <Widget>[
                     LinearProgressIndicator(
-                      value: controller.value.duration.inMilliseconds <= 0 ? 0 : controller.value.playable.inMilliseconds / controller.value.duration.inMilliseconds,
+                      value: controller!.value.duration.inMilliseconds <= 0 ? 0 : controller!.value.playable.inMilliseconds / controller!.value.duration.inMilliseconds,
                       valueColor: AlwaysStoppedAnimation<Color>(Color(0xccffffff)),
                       backgroundColor: Color(0x33ffffff),
                     ),
                     TencentLinearProgressIndicator(
-                      value: controller.value.duration.inMilliseconds <= 0 ? 0 : showDuration.inMilliseconds / controller.value.duration.inMilliseconds,
+                      value: controller!.value.duration.inMilliseconds <= 0 ? 0 : showDuration.inMilliseconds / controller!.value.duration.inMilliseconds,
                       valueColor: AlwaysStoppedAnimation<Color>(Color(0xfffe373c)),
                       backgroundColor: Colors.transparent,
                     ),
@@ -294,35 +293,35 @@ class _BottomScrubberState extends State<BottomScrubber> {
               ),
             ),
             onHorizontalDragStart: (DragStartDetails details) {
-              if (!controller.value.initialized) {
+              if (!controller!.value.initialized) {
                 return;
               }
-              _controllerWasPlaying = controller.value.isPlaying;
+              _controllerWasPlaying = controller!.value.isPlaying;
               if (_controllerWasPlaying) {
-                controller.pause();
+                controller!.pause();
               }
             },
             onHorizontalDragUpdate: (DragUpdateDetails details) {
-              if (!controller.value.initialized) {
+              if (!controller!.value.initialized) {
                 return;
               }
               seekToRelativePosition(details.globalPosition);
             },
             onHorizontalDragEnd: (DragEndDetails details) async {
-              await controller.seekTo(seekPos);
+              await controller!.seekTo(seekPos!);
               seekPos = null;
               setState(() {
               });
               if (_controllerWasPlaying) {
-                controller.play();
+                controller!.play();
               }
             },
             onTapDown: (TapDownDetails details) async {
-              if (!controller.value.initialized) {
+              if (!controller!.value.initialized) {
                 return;
               }
               seekToRelativePosition(details.globalPosition);
-              await controller.seekTo(seekPos);
+              await controller!.seekTo(seekPos!);
               seekPos = null;
               setState(() {
               });
@@ -336,7 +335,7 @@ class _BottomScrubberState extends State<BottomScrubber> {
           ),
           height: _Style.bottomContainerH,
           alignment: Alignment.centerRight,
-          child: Text(DateUtilss.formatDuration(showDuration) + '/' + DateUtilss.formatDuration(controller.value.duration), style: TextStyle(color: Colors.white, fontSize: 12,),),
+          child: Text(DateUtilss.formatDuration(showDuration) + '/' + DateUtilss.formatDuration(controller!.value.duration), style: TextStyle(color: Colors.white, fontSize: 12,),),
         ),
       ],
     );

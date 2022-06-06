@@ -83,8 +83,8 @@ class CustomBubbleArrowPopPainter extends CustomPainter {
 
 class CustomBubbleWidget extends StatefulWidget {
   final double arrowLeftPadding;
-  final Widget child;
-  CustomBubbleWidget({Key key, this.arrowLeftPadding = 10, this.child})
+  final Widget? child;
+  CustomBubbleWidget({Key? key, this.arrowLeftPadding = 10, this.child})
       : super(key: key);
 
   @override

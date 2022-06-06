@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:recook/base/base_store_state.dart';
@@ -17,9 +16,9 @@ import 'package:waterfall_flow/waterfall_flow.dart';
 import 'function/shopping_cart_fuc.dart';
 
 class SimilarGoodsPage extends StatefulWidget {
-  final int goodsId;
+  final int? goodsId;
   //final List<GoodsSimple> similarGoodsList;
-  const SimilarGoodsPage({Key key, this.goodsId}) : super(key: key);
+  const SimilarGoodsPage({Key? key, this.goodsId}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -28,9 +27,9 @@ class SimilarGoodsPage extends StatefulWidget {
 }
 
 class _SimilarGoodsPageState extends BaseStoreState<SimilarGoodsPage> with TickerProviderStateMixin {
-  GoodsSimpleListModel goodsSimpleListModel;
-  List<GoodsSimple> _likeGoodsList = [];
-  List<GoodsSimple> _similarGoodsList = [];
+  GoodsSimpleListModel? goodsSimpleListModel;
+  List<GoodsSimple>? _likeGoodsList = [];
+  List<GoodsSimple>? _similarGoodsList = [];
   GSRefreshController _refreshController =
       GSRefreshController(initialRefresh: true);
   @override
@@ -38,11 +37,11 @@ class _SimilarGoodsPageState extends BaseStoreState<SimilarGoodsPage> with Ticke
     super.initState();
     //_similarGoodsList = widget.similarGoodsList;
     Future.delayed(Duration.zero, () async {
-      int userid;
-      if (UserManager.instance.user.info.id == null) {
+      int? userid;
+      if (UserManager.instance!.user.info!.id == null) {
         userid = 0;
       } else {
-        userid = UserManager.instance.user.info.id;
+        userid = UserManager.instance!.user.info!.id;
       }
       _likeGoodsList = await ShoppingCartFuc.getLikeGoodsList(userid);
       setState(() {});
@@ -116,7 +115,7 @@ class _SimilarGoodsPageState extends BaseStoreState<SimilarGoodsPage> with Ticke
   _buildLikeWidget() {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.rw),
-      height: _likeGoodsList?.length * 378.rw / 2,
+      height: _likeGoodsList!.length * 378.rw / 2,
       width: double.infinity,
       child: Column(
         children: [
@@ -126,30 +125,30 @@ class _SimilarGoodsPageState extends BaseStoreState<SimilarGoodsPage> with Ticke
           WaterfallFlow.builder(
               primary: false,
               shrinkWrap: true,
-              padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight),
+              padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight!),
               physics: NeverScrollableScrollPhysics(),
-              itemCount: _likeGoodsList?.length,
+              itemCount: _likeGoodsList!.length,
               gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
               ),
               itemBuilder: (context, index) {
-                GoodsSimple goods = _likeGoodsList[index];
+                GoodsSimple goods = _likeGoodsList![index];
 
                 return MaterialButton(
                     padding: EdgeInsets.zero,
                     onPressed: () {
                       AppRouter.push(context, RouteName.COMMODITY_PAGE,
                           arguments:
-                              CommodityDetailPage.setArguments(goods.id));
+                              CommodityDetailPage.setArguments(goods.id as int?));
                     },
                     child: BrandLikeGridItem(
                       goods: goods,
                       onBrandClick: () {
                         AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                             arguments: BrandGoodsListPage.setArguments(
-                                goods.brandId, goods.brandName));
+                                goods.brandId as int?, goods.brandName));
                       },
                     ));
               }),
@@ -173,7 +172,7 @@ class _SimilarGoodsPageState extends BaseStoreState<SimilarGoodsPage> with Ticke
             padding: EdgeInsets.zero,
             onPressed: () {
               AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                  arguments: CommodityDetailPage.setArguments(goods.id));
+                  arguments: CommodityDetailPage.setArguments(goods.id as int?));
             },
             child: GoodsItemWidget.normalGoodsItem(
               gifController: GifController(vsync: this)
@@ -185,7 +184,7 @@ class _SimilarGoodsPageState extends BaseStoreState<SimilarGoodsPage> with Ticke
               onBrandClick: () {
                 AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                     arguments: BrandGoodsListPage.setArguments(
-                        goods.brandId, goods.brandName));
+                        goods.brandId as int?, goods.brandName));
               },
               buildCtx: context,
               model: goods,
@@ -203,7 +202,7 @@ class _SimilarGoodsPageState extends BaseStoreState<SimilarGoodsPage> with Ticke
       noDataText: '抱歉，没有到找相似商品',
       onRefresh: () async {
         //Function cancel = ReToast.loading();
-        if (_similarGoodsList.isNotEmpty) {
+        if (_similarGoodsList!.isNotEmpty) {
           _similarGoodsList = [];
         }
 
@@ -214,14 +213,14 @@ class _SimilarGoodsPageState extends BaseStoreState<SimilarGoodsPage> with Ticke
         _refreshController.refreshCompleted();
         //cancel();
       },
-      body: _similarGoodsList.isNotEmpty
+      body: _similarGoodsList!.isNotEmpty
           ? _buildSimilarList()
           : noDataView('抱歉，没有到找相似商品'),
       //
     );
   }
 
-  noDataView(String text, {Widget icon}) {
+  noDataView(String text, {Widget? icon}) {
     return ListView(
       //height: double.infinity,
       children: <Widget>[
@@ -258,15 +257,15 @@ class _SimilarGoodsPageState extends BaseStoreState<SimilarGoodsPage> with Ticke
         //padding: EdgeInsets.only(bottom: 80.rw),
         padding: EdgeInsets.only(top: 10.rw),
         physics: AlwaysScrollableScrollPhysics(),
-        itemCount: _similarGoodsList?.length,
+        itemCount: _similarGoodsList!.length,
         itemBuilder: (context, index) {
-          GoodsSimple goods = _similarGoodsList[index];
-          return index != _similarGoodsList.length - 1
+          GoodsSimple goods = _similarGoodsList![index];
+          return index != _similarGoodsList!.length - 1
               ? MaterialButton(
                   padding: EdgeInsets.zero,
                   onPressed: () {
                     AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                        arguments: CommodityDetailPage.setArguments(goods.id));
+                        arguments: CommodityDetailPage.setArguments(goods.id as int?));
                   },
                   child: GoodsItemWidget.normalGoodsItem(
                     gifController: GifController(vsync: this)
@@ -278,13 +277,13 @@ class _SimilarGoodsPageState extends BaseStoreState<SimilarGoodsPage> with Ticke
                     onBrandClick: () {
                       AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                           arguments: BrandGoodsListPage.setArguments(
-                              goods.brandId, goods.brandName));
+                              goods.brandId as int?, goods.brandName));
                     },
                     buildCtx: context,
                     model: goods,
                     type: 4,
                   ))
-              : _buildExtraItem(_similarGoodsList[index], index);
+              : _buildExtraItem(_similarGoodsList![index], index);
         });
   }
 }

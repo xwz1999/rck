@@ -1,7 +1,7 @@
 class TeamIncomeModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   TeamIncomeModel({this.code, this.msg, this.data});
 
@@ -16,18 +16,18 @@ class TeamIncomeModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  num roleLevel;
-  bool roleVisable;
-  num yearIncome;
-  AccumulateIncome accumulateIncome;
-  List<Incomes> incomes;
+  num? roleLevel;
+  bool? roleVisable;
+  num? yearIncome;
+  AccumulateIncome? accumulateIncome;
+  List<Incomes>? incomes;
 
   Data(
       {this.roleLevel,
@@ -46,7 +46,7 @@ class Data {
     if (json['incomes'] != null) {
       incomes = [];
       json['incomes'].forEach((v) {
-        incomes.add(new Incomes.fromJson(v));
+        incomes!.add(new Incomes.fromJson(v));
       });
     }
   }
@@ -57,20 +57,20 @@ class Data {
     data['roleVisable'] = this.roleVisable;
     data['yearIncome'] = this.yearIncome;
     if (this.accumulateIncome != null) {
-      data['accumulateIncome'] = this.accumulateIncome.toJson();
+      data['accumulateIncome'] = this.accumulateIncome!.toJson();
     }
     if (this.incomes != null) {
-      data['incomes'] = this.incomes.map((v) => v.toJson()).toList();
+      data['incomes'] = this.incomes!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class AccumulateIncome {
-  num all;
-  num selfShopping;
-  num share;
-  num team;
+  num? all;
+  num? selfShopping;
+  num? share;
+  num? team;
 
   AccumulateIncome({this.all, this.selfShopping, this.share, this.team});
 
@@ -92,11 +92,11 @@ class AccumulateIncome {
 }
 
 class Incomes {
-  String month;
-  num myIncome;
-  num shareIncome;
-  num teamIncome;
-  num totalIncome;
+  String? month;
+  num? myIncome;
+  num? shareIncome;
+  num? teamIncome;
+  num? totalIncome;
 
   Incomes(
       {this.month,

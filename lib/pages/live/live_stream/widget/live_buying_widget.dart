@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
 
 class LiveBuyingWidget extends StatefulWidget {
-  LiveBuyingWidget({Key key}) : super(key: key);
+  LiveBuyingWidget({Key? key}) : super(key: key);
 
   @override
   LiveBuyingWidgetState createState() => LiveBuyingWidgetState();
@@ -13,7 +13,7 @@ class LiveBuyingWidget extends StatefulWidget {
 class LiveBuyingWidgetState extends State<LiveBuyingWidget> {
   bool showEmpty = true;
   String key = '';
-  Timer _timer;
+  Timer? _timer;
   updateChild(String value) {
     showEmpty = false;
     key = value;

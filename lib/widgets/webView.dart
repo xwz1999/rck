@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
@@ -14,11 +13,11 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewPage extends StatefulWidget {
-  final Map arguments;
-  const WebViewPage({Key key, this.arguments});
+  final Map? arguments;
+  const WebViewPage({Key? key, this.arguments});
   static setArguments({
-    String url,
-    String title,
+    String? url,
+    String? title,
     bool hideBar: false,
     AppBarTheme appBarTheme = const AppBarTheme(
         iconTheme: IconThemeData(color: Colors.white),
@@ -51,12 +50,12 @@ class WebViewPage extends StatefulWidget {
 
 class _WebViewState extends BaseStoreState<WebViewPage> {
   bool _isLoading = true;
-  AppBarController _appBarController;
+  AppBarController? _appBarController;
   @override
   void initState() {
     super.initState();
     _appBarController = AppBarController();
-    _appBarController.scale.value = 1;
+    _appBarController!.scale.value = 1;
   }
 
   @override
@@ -78,7 +77,7 @@ class _WebViewState extends BaseStoreState<WebViewPage> {
                 if (subMap.containsKey("goods_id") &&
                     subMap["goods_id"] != null) {
                   //跳转详情页面
-                  if (UserManager.instance.isWholesale) {
+                  if (UserManager.instance!.isWholesale) {
                     Get.to(() => WholesaleDetailPage(
                       goodsId:subMap["goods_id"],
                     ));
@@ -102,11 +101,11 @@ class _WebViewState extends BaseStoreState<WebViewPage> {
   // Widget build(BuildContext context) {
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
-      appBar: widget.arguments['hideBar']
+      appBar: widget.arguments!['hideBar']
           ? null
           : CustomAppBar(
-              title: Text(widget.arguments['title']),
-              themeData: widget.arguments['appBarTheme']),
+              title: Text(widget.arguments!['title']),
+              themeData: widget.arguments!['appBarTheme']),
       // :AppBar(
       //   title: Text(widget.arguments['title']),
       // ),
@@ -120,7 +119,7 @@ class _WebViewState extends BaseStoreState<WebViewPage> {
               javascriptChannels: <JavascriptChannel>[
                 _alertJavascriptChannel(context),
               ].toSet(),
-              initialUrl: widget.arguments["url"],
+              initialUrl: widget.arguments!["url"],
               onWebViewCreated: (WebViewController web) {
                 web.canGoBack().then((res) {
                   print(res); // 是否能返回上一级
@@ -139,7 +138,7 @@ class _WebViewState extends BaseStoreState<WebViewPage> {
               },
             ),
             _loading(),
-            !widget.arguments['hideBar']
+            !widget.arguments!['hideBar']
                 ? Container()
                 : Positioned(
                     top: ScreenUtil().statusBarHeight,
@@ -208,7 +207,7 @@ class _WebViewState extends BaseStoreState<WebViewPage> {
             child: Center(
               child: CircularProgressIndicator(
                 valueColor:
-                    new AlwaysStoppedAnimation<Color>(getCurrentThemeColor()),
+                    new AlwaysStoppedAnimation<Color?>(getCurrentThemeColor()),
                 strokeWidth: 1.0,
               ),
             ),

@@ -23,12 +23,12 @@ import 'package:recook/widgets/custom_image_button.dart';
 
 class BrandLikeGridItem extends StatelessWidget {
   // final Goods goods;
-  final GoodsSimple goods;
-  final VoidCallback buyClick;
-  final Function onBrandClick;
+  final GoodsSimple? goods;
+  final VoidCallback? buyClick;
+  final Function? onBrandClick;
 
   const BrandLikeGridItem(
-      {Key key, this.goods, this.buyClick, this.onBrandClick})
+      {Key? key, this.goods, this.buyClick, this.onBrandClick})
       : super(key: key);
   static final Color colorGrey = Color(0xff999999);
   @override
@@ -37,7 +37,7 @@ class BrandLikeGridItem extends StatelessWidget {
     bool sellout = false;
    
 
-    if(this.goods.inventory>0){
+    if(this.goods!.inventory!>0){
       sellout = false;
     }else{
       sellout = true;
@@ -66,7 +66,7 @@ class BrandLikeGridItem extends StatelessWidget {
                             fit: BoxFit.cover,
                             placeholder: AppImageName.placeholder_1x1,
                             imageUrl:
-                                Api.getResizeImgUrl(goods.mainPhotoUrl, 300)),
+                                Api.getResizeImgUrl(goods!.mainPhotoUrl!, 300)),
                       )),
                   Positioned(
                     child: sellout
@@ -82,7 +82,7 @@ class BrandLikeGridItem extends StatelessWidget {
               child: ExtendedText.rich(
                 TextSpan(
                   children: [
-                    this.goods.isImport == 1
+                    this.goods!.isImport == 1
                         ? WidgetSpan(
                             alignment: PlaceholderAlignment.middle,
                             child: Container(
@@ -90,12 +90,12 @@ class BrandLikeGridItem extends StatelessWidget {
                               width: 24,
                               height: 15,
                               decoration: BoxDecoration(
-                                  color: this.goods.countryIcon == null
+                                  color: this.goods!.countryIcon == null
                                       ? Color(0xFFCC1B4F)
                                       : Colors.transparent,
                                 borderRadius: BorderRadius.circular(3 * 2.w),
                               ),
-                              child:this.goods.countryIcon==null?
+                              child:this.goods!.countryIcon==null?
                               Text(
                                 '进口',
                                 style: TextStyle(
@@ -106,19 +106,19 @@ class BrandLikeGridItem extends StatelessWidget {
                               ): CustomCacheImage(
                                   width: rSize(100),
                                   height: rSize(100),
-                                  imageUrl: Api.getImgUrl( this.goods.countryIcon),
+                                  imageUrl: Api.getImgUrl( this.goods!.countryIcon),
                                   fit: BoxFit.cover,
                                 ),
                             ),
                           )
                         : WidgetSpan(child: SizedBox()),
-                    this.goods.isImport == 1
+                    this.goods!.isImport == 1
                         ? WidgetSpan(
                             child: Container(
                             width: 5 * 2.w,
                           ))
                         : WidgetSpan(child: SizedBox()),
-                    this.goods.gysId==1800||this.goods.gysId==2000?//jd的商品供应商 自营为1800 pop 为2000?
+                    this.goods!.gysId==1800||this.goods!.gysId==2000?//jd的商品供应商 自营为1800 pop 为2000?
                     WidgetSpan(
                         child: Container(
                             padding:
@@ -143,9 +143,9 @@ class BrandLikeGridItem extends StatelessWidget {
                                 children: [
                                   2.hb,
                                   Text(
-                                    this.goods.gysId == 1800
+                                    this.goods!.gysId == 1800
                                         ? '京东自营'
-                                        : this.goods.gysId == 2000
+                                        : this.goods!.gysId == 2000
                                         ? '京东优选'
                                         : '',
                                     maxLines: 1,
@@ -163,7 +163,7 @@ class BrandLikeGridItem extends StatelessWidget {
                             ))
                     ): WidgetSpan(child: SizedBox()),
                     TextSpan(
-                      text: this.goods.goodsName,
+                      text: this.goods!.goodsName,
                       style: AppTextStyle.generate(15 * 2.sp,
                           fontWeight: FontWeight.w600),
                     ),
@@ -173,16 +173,16 @@ class BrandLikeGridItem extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
               ),
             ),
-            TextUtil.isEmpty(this.goods.description)
+            TextUtil.isEmpty(this.goods!.description)
                 ? SizedBox()
                 : Container(
                     alignment: Alignment.centerLeft,
                     margin: const EdgeInsets.only(
                         left: 0, right: 0, top: 5, bottom: 5),
-                    child: this.goods.description == null
+                    child: this.goods!.description == null
                         ? Container()
                         : Text(
-                            this.goods.description,
+                            this.goods!.description!,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyle.generate(10 * 2.sp,
@@ -191,7 +191,7 @@ class BrandLikeGridItem extends StatelessWidget {
                           ),
                   ),
             // Spacer(),
-            AppConfig.getShowCommission() ? _brandWidget() : SizedBox(),
+            AppConfig.getShowCommission()! ? _brandWidget() : SizedBox(),
             // Spacer(),
             _saleNumberWidget(this.goods),
             SizedBox(
@@ -201,7 +201,7 @@ class BrandLikeGridItem extends StatelessWidget {
               children: [
 
                 Text(
-                  '¥${this.goods.originalPrice.toStringAsFixed(2)}',
+                  '¥${this.goods!.originalPrice!.toStringAsFixed(2)}',
                   style: TextStyle(
                       decoration: TextDecoration.lineThrough,
                       decorationColor: Color(0xff898989),
@@ -211,7 +211,7 @@ class BrandLikeGridItem extends StatelessWidget {
                 ),
                 Spacer(),
                 Text(
-                 "已售${this.goods.salesVolume}件",
+                 "已售${this.goods!.salesVolume}件",
                   style: TextStyle(
                     color: Color(0xff595757),
                     fontSize: 12 * 2.sp,
@@ -243,7 +243,7 @@ class BrandLikeGridItem extends StatelessWidget {
                               fontWeight: FontWeight.w500),
                         ),
                         TextSpan(
-                          text: "${(this.goods.discountPrice-this.goods.commission).toStringAsFixed(2)}",
+                          text: "${(this.goods!.discountPrice!-this.goods!.commission!).toStringAsFixed(2)}",
                           // text: "${model.discountPrice>=100?model.discountPrice.toStringAsFixed(0):model.discountPrice.toStringAsFixed(1)}",
                           style: TextStyle(
                               letterSpacing: -1,
@@ -300,7 +300,7 @@ class BrandLikeGridItem extends StatelessWidget {
                           horizontal: ScreenAdapterUtils.setWidth(
                               UserLevelTool.currentRoleLevelEnum() ==
                                           UserRoleLevel.Vip &&
-                                      this.goods.getPromotionStatus() ==
+                                      this.goods!.getPromotionStatus() ==
                                           PromotionStatus.start
                                   ? 16
                                   : 8),
@@ -337,17 +337,17 @@ class BrandLikeGridItem extends StatelessWidget {
     );
   }
 
-  _saleNumberWidget(GoodsSimple goods) {
+  _saleNumberWidget(GoodsSimple? goods) {
     bool sellout = false;
     bool isSeckill = false;
 
-    if(this.goods.inventory>0){
+    if(this.goods!.inventory!>0){
       sellout = false;
     }else{
       sellout = true;
     }
-    if(this.goods.secKill!=null){
-      if(this.goods.secKill.secKill==1){
+    if(this.goods!.secKill!=null){
+      if(this.goods!.secKill!.secKill==1){
         isSeckill = true;
         sellout = true;
         //秒杀中 通过seckill中的库存和销量来判断是否是否售完
@@ -359,7 +359,7 @@ class BrandLikeGridItem extends StatelessWidget {
           Row(
             children: <Widget>[
               isSeckill?SizedBox():
-              (goods.coupon != null && goods.coupon != 0)
+              (goods!.coupon != null && goods.coupon != 0)
                   ? Container(
                 margin: EdgeInsets.only(right: 5),
                 child: SmallCouponWidget(
@@ -389,7 +389,7 @@ class BrandLikeGridItem extends StatelessWidget {
                           )),
                       padding: EdgeInsets.symmetric(horizontal: 3),
                       child: Text(
-                        "赚" + goods.commission.toStringAsFixed(2),
+                        "赚" + goods!.commission!.toStringAsFixed(2),
                         style: TextStyle(
                           color: Colors.white.withAlpha(0),
                           fontSize: 12 * 2.sp,
@@ -397,11 +397,11 @@ class BrandLikeGridItem extends StatelessWidget {
                       ),
                     ),
 
-                    AppConfig.getShowCommission()
+                    AppConfig.getShowCommission()!
                         ? Container(
                       alignment: Alignment.center,
                       child: Text(
-                        "赚" + goods.commission.toStringAsFixed(2),
+                        "赚" + goods.commission!.toStringAsFixed(2),
                         style: TextStyle(
                           color: Color(0xffeb0045),
                           fontSize: 12 * 2.sp,
@@ -423,17 +423,17 @@ class BrandLikeGridItem extends StatelessWidget {
 
   _buyEvent(BuildContext context) {
     if (buyClick != null) {
-      buyClick();
+      buyClick!();
     } else {
       AppRouter.push(context, RouteName.COMMODITY_PAGE,
-          arguments: CommodityDetailPage.setArguments(this.goods.id));
+          arguments: CommodityDetailPage.setArguments(this.goods!.id as int?));
     }
   }
 
   _brandWidget() {
     return GestureDetector(
         onTap: () {
-          if (onBrandClick != null) onBrandClick();
+          if (onBrandClick != null) onBrandClick!();
         },
         child: Container(
           width: double.infinity,
@@ -455,9 +455,9 @@ class BrandLikeGridItem extends StatelessWidget {
               // ),
               Expanded(
                 child: Text(
-                  TextUtils.isEmpty(this.goods.brandName)
+                  TextUtils.isEmpty(this.goods!.brandName)
                       ? ""
-                      : this.goods.brandName,
+                      : this.goods!.brandName!,
                   maxLines: 2,
                   style: TextStyle(
                     color: Color(0xffc70404),

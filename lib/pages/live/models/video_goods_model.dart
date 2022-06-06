@@ -1,22 +1,22 @@
 class VideoGoodsModel {
-  int id;
-  String goodsName;
-  String brandImg;
-  String brandName;
-  int brandId;
-  String description;
-  int inventory;
-  int salesVolume;
-  String mainPhotoUrl;
-  String promotionName;
-  num originalPrice;
-  num discountPrice;
-  num commission;
-  List<String> tags;
-  int percent;
-  String startTime;
-  String endTime;
-  num coupon;
+  int? id;
+  String? goodsName;
+  String? brandImg;
+  String? brandName;
+  int? brandId;
+  String? description;
+  int? inventory;
+  int? salesVolume;
+  String? mainPhotoUrl;
+  String? promotionName;
+  num? originalPrice;
+  num? discountPrice;
+  num? commission;
+  List<String>? tags;
+  int? percent;
+  String? startTime;
+  String? endTime;
+  num? coupon;
 
   VideoGoodsModel(
       {this.id,

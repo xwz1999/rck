@@ -1,13 +1,11 @@
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -45,10 +43,10 @@ class FocusPage extends StatefulWidget {
 class _FocusPageState extends BaseStoreState<FocusPage>
     with MvpListViewDelegate<MaterialModel>
     implements FocusViewI {
-  FocusPresenterImpl _presenter;
-  MvpListViewController<MaterialModel> _listViewController;
+  FocusPresenterImpl? _presenter;
+  MvpListViewController<MaterialModel>? _listViewController;
   List<MainPhotos> _selectPhotos = [];
-  GoodsDetailModel _goodsDetail;
+  GoodsDetailModel? _goodsDetail;
   int _goodsId = 0;
   String _bigImageUrl = "";
 
@@ -78,17 +76,17 @@ class _FocusPageState extends BaseStoreState<FocusPage>
   void initState() {
     super.initState();
     _presenter = FocusPresenterImpl();
-    _presenter.attach(this);
+    _presenter!.attach(this);
     _listViewController = MvpListViewController();
-    int userId = UserManager.instance.user.info.id;
-    _presenter.fetchList(userId, 0);
+    int? userId = UserManager.instance!.user.info!.id;
+    _presenter!.fetchList(userId, 0);
   }
 
   @override
   Widget buildContext(BuildContext context, {store}) {
-    int userId = 0;
-    if (UserManager.instance.haveLogin)
-      userId = UserManager.instance.user.info.id;
+    int? userId = 0;
+    if (UserManager.instance!.haveLogin)
+      userId = UserManager.instance!.user.info!.id;
     return Container(
       color: AppColor.frenchColor,
       child: MvpListView<MaterialModel>(
@@ -96,27 +94,26 @@ class _FocusPageState extends BaseStoreState<FocusPage>
         delegate: this,
         controller: _listViewController,
         refreshCallback: () {
-          _presenter.fetchList(userId, 0);
+          _presenter!.fetchList(userId, 0);
         },
         loadMoreCallback: (int page) {
-          _presenter.fetchList(userId, page);
+          _presenter!.fetchList(userId, page);
         },
         itemBuilder: (_, index) {
-          MaterialModel indexModel = _listViewController.getData()[index];
+          MaterialModel indexModel = _listViewController!.getData()[index];
           return Column(
             children: [
               BusinessFocusItem(
                 model: indexModel,
                 publishMaterialListener: () {
-                  AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                      arguments:
-                          CommodityDetailPage.setArguments(indexModel.goods.id));
+                  Get.to(()=>CommodityDetailPage(arguments:
+                  CommodityDetailPage.setArguments(indexModel.goods!.id)));
                 },
                 downloadListener: (ByteData byteData) async{
                   await _capturePng(byteData);
 
-                  List<String> urls = indexModel.photos.map((f) {
-                    return Api.getResizeImgUrl(f.url, 800);
+                  List<String> urls = indexModel.photos!.map((f) {
+                    return Api.getResizeImgUrl(f.url!, 800);
                   }).toList();
                   print(urls);
 
@@ -175,20 +172,24 @@ class _FocusPageState extends BaseStoreState<FocusPage>
                 },
                 picListener: (index) {
                   List<PicSwiperItem> picSwiperItem = [];
-                  for (Photos photo in indexModel.photos) {
+                  for (Photos photo in indexModel.photos!) {
                     picSwiperItem.add(PicSwiperItem(Api.getImgUrl(photo.url)));
                   }
-                  AppRouter.fade(
-                    context,
-                    RouteName.PIC_SWIPER,
-                    arguments: PicSwiper.setArguments(
-                      index: index,
-                      pics: picSwiperItem,
-                    ),
-                  );
+                  Get.to(()=>PicSwiper(arguments: PicSwiper.setArguments(
+                    index: index,
+                    pics: picSwiperItem,
+                  )));
+                  // AppRouter.fade(
+                  //   context,
+                  //   RouteName.PIC_SWIPER,
+                  //   arguments: PicSwiper.setArguments(
+                  //     index: index,
+                  //     pics: picSwiperItem,
+                  //   ),
+                  // );
                 },
                 focusListener: () {
-                  _attention(_listViewController.getData()[index]);
+                  _attention(_listViewController!.getData()[index]);
                 },
               ),
               // _getPoster()
@@ -206,13 +207,13 @@ class _FocusPageState extends BaseStoreState<FocusPage>
   //
   ///关注
   _attention(MaterialModel model) async {
-    if (model.isAttention) {
+    if (model.isAttention!) {
       //取消关注
-      HttpResultModel<BaseModel> resultModel =
+      HttpResultModel<BaseModel?> resultModel =
           await GoodsDetailModelImpl.goodsAttentionCancel(
-              UserManager.instance.user.info.id, model.userId);
+              UserManager.instance!.user.info!.id, model.userId);
       if (!resultModel.result) {
-        Toast.showInfo(resultModel.msg);
+        Toast.showInfo(resultModel.msg??'');
         return;
       }
       setState(() {
@@ -220,11 +221,11 @@ class _FocusPageState extends BaseStoreState<FocusPage>
       });
     } else {
       //关注
-      HttpResultModel<BaseModel> resultModel =
+      HttpResultModel<BaseModel?> resultModel =
           await GoodsDetailModelImpl.goodsAttentionCreate(
-              UserManager.instance.user.info.id, model.userId);
+              UserManager.instance!.user.info!.id, model.userId);
       if (!resultModel.result) {
-        Toast.showInfo(resultModel.msg);
+        Toast.showInfo(resultModel.msg??'');
         return;
       }
       setState(() {
@@ -237,7 +238,7 @@ class _FocusPageState extends BaseStoreState<FocusPage>
   bool get wantKeepAlive => true;
 
   @override
-  MvpListViewPresenterI<MaterialModel, MvpView, MvpModel> getPresenter() {
+  MvpListViewPresenterI<MaterialModel, MvpView, MvpModel>? getPresenter() {
     return _presenter;
   }
 
@@ -266,7 +267,7 @@ class _FocusPageState extends BaseStoreState<FocusPage>
 
       Uint8List pngBytes = byteData.buffer.asUint8List();
 
-      if (pngBytes == null || pngBytes.length == 0) {
+      if (pngBytes.length == 0) {
         showError("图片获取失败...");
         return;
       }
@@ -317,7 +318,7 @@ class _FocusPageState extends BaseStoreState<FocusPage>
       height: 480.rw,
       child: Column(
         children: <Widget>[
-          UserManager.instance.homeWeatherModel != null
+          UserManager.instance!.homeWeatherModel != null
               ? Container(
             color: Colors.white,
             padding: EdgeInsets.only(
@@ -325,7 +326,7 @@ class _FocusPageState extends BaseStoreState<FocusPage>
             ),
             height: 43.rw,
             child: PostWeatherWidget(
-              homeWeatherModel: UserManager.instance.homeWeatherModel,
+              homeWeatherModel: UserManager.instance!.homeWeatherModel,
             ),
           )
               : Container(),
@@ -334,8 +335,8 @@ class _FocusPageState extends BaseStoreState<FocusPage>
               vertical: 8,
             ),
             child: PostUserInfo(
-              name: UserManager.instance.user.info.nickname + "的店铺",
-              gysId: _goodsDetail.data.vendorId,
+              name: UserManager.instance!.user.info!.nickname! + "的店铺",
+              gysId: _goodsDetail!.data!.vendorId,
             ),
           ),
           Container(
@@ -361,20 +362,20 @@ class _FocusPageState extends BaseStoreState<FocusPage>
   }
 
   String _getTimeInfo() {
-    if (_goodsDetail.data.promotion != null &&
-        _goodsDetail.data.promotion.id > 0) {
+    if (_goodsDetail!.data!.promotion != null &&
+        _goodsDetail!.data!.promotion!.id! > 0) {
       if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
-          _goodsDetail) ==
+          _goodsDetail!) ==
           PromotionStatus.start) {
         //活动中
-        DateTime endTime = DateTime.parse(_goodsDetail.data.promotion.endTime);
+        DateTime endTime = DateTime.parse(_goodsDetail!.data!.promotion!.endTime!);
         return "结束时间\n${DateUtil.formatDate(endTime, format: 'M月d日 HH:mm')}";
       }
       if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
-          _goodsDetail) ==
+          _goodsDetail!) ==
           PromotionStatus.ready) {
         DateTime startTime =
-        DateTime.parse(_goodsDetail.data.promotion.startTime);
+        DateTime.parse(_goodsDetail!.data!.promotion!.startTime!);
         return "开始时间\n${DateUtil.formatDate(startTime, format: 'M月d日 HH:mm')}";
       }
     }

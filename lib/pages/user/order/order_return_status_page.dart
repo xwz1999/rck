@@ -12,7 +12,7 @@ import 'dart:async';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -29,11 +29,11 @@ import 'package:recook/widgets/pic_swiper.dart';
 import 'package:recook/widgets/toast.dart';
 
 class OrderReturnStatusPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  const OrderReturnStatusPage({Key key, this.arguments}) : super(key: key);
+  const OrderReturnStatusPage({Key? key, this.arguments}) : super(key: key);
 
-  static setArguments(int orderGoodsId, int afterSalesGoodsId) {
+  static setArguments(int? orderGoodsId, int? afterSalesGoodsId) {
     return {
       "orderGoodsId": orderGoodsId,
       "afterSalesGoodsId": afterSalesGoodsId
@@ -48,25 +48,25 @@ class OrderReturnStatusPage extends StatefulWidget {
 
 class _OrderReturnStatusPageState
     extends BaseStoreState<OrderReturnStatusPage> {
-  int _orderGoodsId;
-  int _afterSalesGoodsId;
-  int _returnStatus;
-  OrderReturnStatusModel _statusModel;
+  int? _orderGoodsId;
+  int? _afterSalesGoodsId;
+  int? _returnStatus;
+  OrderReturnStatusModel? _statusModel;
   DateTime _residueDateTime = DateTime(0, 0, 0, 24, 0, 0);
   TextStyle textStyle = TextStyle(color: Colors.grey[500], fontSize: 12 * 2.sp);
 
   bool _isLoading = true;
-  Timer timer;
+  Timer? timer;
 
   @override
   void initState() {
     super.initState();
-    _returnStatus = widget.arguments['returnStatus'];
-    _orderGoodsId = widget.arguments['orderGoodsId'];
-    _afterSalesGoodsId = widget.arguments['afterSalesGoodsId'];
+    _returnStatus = widget.arguments!['returnStatus'];
+    _orderGoodsId = widget.arguments!['orderGoodsId'];
+    _afterSalesGoodsId = widget.arguments!['afterSalesGoodsId'];
     _getOrderDetail().then((value) {
       //TODO：后台借口只有小时，这里模拟倒计时
-      _residueDateTime = DateTime(0, 0, 0, _statusModel.data.residueHour, 0, 0);
+      _residueDateTime = DateTime(0, 0, 0, _statusModel!.data!.residueHour as int, 0, 0);
       timer = Timer.periodic(Duration(seconds: 1), (timer) {
         _residueDateTime = _residueDateTime.subtract(Duration(seconds: 1));
         if (_residueDateTime.millisecondsSinceEpoch <
@@ -123,7 +123,7 @@ class _OrderReturnStatusPageState
                 : () {
                     AppRouter.push(context, RouteName.AFTER_SALES_LOG_PAGE,
                         arguments: AfterSalesLogPage.setArguments(
-                            _statusModel.data.asId));
+                            _statusModel!.data!.asId));
                   },
           ),
           SizedBox(
@@ -150,7 +150,7 @@ class _OrderReturnStatusPageState
         _statusModel == null ? Container() : _returnAmountWidget(),
         _statusModel == null ? Container() : _infoWidget(),
         // _returnInfoWidget(),
-        _statusModel != null && _statusModel.data.returnStatus == 3
+        _statusModel != null && _statusModel!.data!.returnStatus == 3
             ? _buttonWidget()
             : Container(),
         SafeArea(
@@ -198,28 +198,28 @@ class _OrderReturnStatusPageState
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          _tile('申请时间', _statusModel.data.createdAt, needCopy: false),
-          _tile('订单编号', _statusModel.data.orderId.toString(), needCopy: true),
-          _tile('售后编号', _statusModel.data.asId.toString(), needCopy: true),
+          _tile('申请时间', _statusModel!.data!.createdAt, needCopy: false),
+          _tile('订单编号', _statusModel!.data!.orderId.toString(), needCopy: true),
+          _tile('售后编号', _statusModel!.data!.asId.toString(), needCopy: true),
           _tile(
             '商品状态',
-            _statusModel.data.assType==2?'退货退款':'仅退款',
+            _statusModel!.data!.assType==2?'退货退款':'仅退款',
           ),
           _tile(
             '售后类型',
-            _statusModel.data.assType==1?'未发货':'已发货',
+            _statusModel!.data!.assType==1?'未发货':'已发货',
           ),
           _tileImage(
             '买家凭证',
-            _statusModel.data.reasonImg,
+            _statusModel!.data!.reasonImg,
           ),
-          _statusModel.data.assType!=1?_tile(
+          _statusModel!.data!.assType!=1?_tile(
             '退款原因',
-            _statusModel.data.reasonContent,
+            _statusModel!.data!.reasonContent,
           ):SizedBox(),
-          _statusModel.data.assType!=1?_tileImage(
+          _statusModel!.data!.assType!=1?_tileImage(
             '买家凭证',
-            _statusModel.data.reasonImg,
+            _statusModel!.data!.reasonImg,
           ):SizedBox(),
         ],
       ),
@@ -228,16 +228,16 @@ class _OrderReturnStatusPageState
 
   _tileImage(
     String title,
-    String images,
+    String? images,
   ) {
     List imageList = [];
     if (!TextUtils.isEmpty(images)) {
-      List resList = images.split(",");
-      for (String url in resList) {
+      List resList = images!.split(",");
+      for (String url in resList as Iterable<String>) {
         if (!TextUtils.isEmpty(url)) imageList.add(url);
       }
     }
-    if (imageList == null || imageList.length == 0) return Container();
+    if (imageList.length == 0) return Container();
 
     return Container(
       padding: EdgeInsets.symmetric(vertical: 3 * 2.h),
@@ -258,17 +258,21 @@ class _OrderReturnStatusPageState
                 return CustomCacheImage(
                     imageClick: () {
                       List<PicSwiperItem> picSwiperItem = [];
-                      for (String photo in imageList) {
+                      for (String photo in imageList as Iterable<String>) {
                         picSwiperItem.add(PicSwiperItem(Api.getImgUrl(photo)));
                       }
-                      AppRouter.fade(
-                        context,
-                        RouteName.PIC_SWIPER,
-                        arguments: PicSwiper.setArguments(
-                          index: index,
-                          pics: picSwiperItem,
-                        ),
-                      );
+                      // AppRouter.fade(
+                      //   context,
+                      //   RouteName.PIC_SWIPER,
+                      //   arguments: PicSwiper.setArguments(
+                      //     index: index,
+                      //     pics: picSwiperItem,
+                      //   ),
+                      // );
+                      Get.to(()=>PicSwiper(arguments: PicSwiper.setArguments(
+                        index: index,
+                        pics: picSwiperItem,
+                      )));
                     },
                     imageUrl: Api.getResizeImgUrl(imageList[index], 300),
                     placeholder: AppImageName.placeholder_1x1,
@@ -285,7 +289,7 @@ class _OrderReturnStatusPageState
     );
   }
 
-  _tile(String title, String value, {bool needCopy = false}) {
+  _tile(String title, String? value, {bool needCopy = false}) {
     return Container(
       padding: EdgeInsets.symmetric(vertical: 3 * 2.h),
       margin: EdgeInsets.only(left: rSize(8), top: rSize(2)),
@@ -307,7 +311,7 @@ class _OrderReturnStatusPageState
               }
               ClipboardData data = new ClipboardData(text: value);
               Clipboard.setData(data);
-              Toast.showSuccess('$title:' + value + ' -- 已经保存到剪贴板');
+              Toast.showSuccess('$title:' + value! + ' -- 已经保存到剪贴板');
             },
             child: Container(
               padding: EdgeInsets.only(top: 2.rw),
@@ -330,7 +334,7 @@ class _OrderReturnStatusPageState
                       }
                       ClipboardData data = new ClipboardData(text: value);
                       Clipboard.setData(data);
-                      Toast.showSuccess('$title:' + value + ' -- 已经保存到剪贴板');
+                      Toast.showSuccess('$title:' + value! + ' -- 已经保存到剪贴板');
                     },
                     child: Container(
                       margin: EdgeInsets.only(left: 5),
@@ -367,7 +371,7 @@ class _OrderReturnStatusPageState
       margin: EdgeInsets.only(left: rSize(10), right: rSize(10), top: 10 * 2.h),
       child: Column(
         children: <Widget>[
-          _statusModel.data.refundAmount > 0
+          _statusModel!.data!.refundAmount! > 0
               ? Container(
                   height: 25 * 2.h,
                   child: Row(
@@ -379,7 +383,7 @@ class _OrderReturnStatusPageState
                       ),
                       Spacer(),
                       Text(
-                        '￥ ${_statusModel.data.refundAmount}',
+                        '￥ ${_statusModel!.data!.refundAmount}',
                         style: TextStyle(
                             color: AppColor.themeColor, fontSize: 16 * 2.sp),
                       )
@@ -433,7 +437,7 @@ class _OrderReturnStatusPageState
       color: AppColor.themeColor,
       child: CustomBubbleWidget(
         child: _popInfoWidget(),
-        arrowLeftPadding: _statusModel.data.statusTile == 0
+        arrowLeftPadding: _statusModel!.data!.statusTile == 0
             ? rSize(130) / 2
             : ScreenUtil().screenWidth - rSize(45) - (rSize(80)) / 2,
       ),
@@ -455,7 +459,7 @@ class _OrderReturnStatusPageState
                 Container(
                   width: rSize(22),
                   height: rSize(22),
-                  child: Image.asset(_statusModel.data.statusTile == 0
+                  child: Image.asset(_statusModel!.data!.statusTile == 0
                       ? R.ASSETS_AFTER_SALES_STATUS_PASS_PNG
                       : R.ASSETS_AFTER_SALES_STATUS_NORMAL_PNG),
                 ),
@@ -468,9 +472,9 @@ class _OrderReturnStatusPageState
                 Container(
                   width: rSize(22),
                   height: rSize(22),
-                  child: Image.asset(_statusModel.data.statusTile == 1
+                  child: Image.asset(_statusModel!.data!.statusTile == 1
                       ? R.ASSETS_AFTER_SALES_STATUS_PASS_PNG
-                      : _statusModel.data.statusTile == 2
+                      : _statusModel!.data!.statusTile == 2
                           ? R.ASSETS_AFTER_SALES_STATUS_NO_PASS_PNG
                           : R.ASSETS_AFTER_SALES_STATUS_NORMAL_PNG),
                 ),
@@ -482,7 +486,7 @@ class _OrderReturnStatusPageState
               Container(
                 alignment: Alignment.center,
                 child: Text(
-                  _statusModel.data.title,
+                  _statusModel!.data!.title!,
                   style: TextStyle(color: Colors.white, fontSize: 14 * 2.sp),
                 ),
                 width: rSize(80),
@@ -491,7 +495,7 @@ class _OrderReturnStatusPageState
               Container(
                 alignment: Alignment.center,
                 child: Text(
-                  _statusModel.data.rightTile,
+                  _statusModel!.data!.rightTile!,
                   style: TextStyle(color: Colors.white, fontSize: 14 * 2.sp),
                 ),
                 width: rSize(80),
@@ -505,7 +509,7 @@ class _OrderReturnStatusPageState
 
   _getReturnStatus() {
     // 1审核中 2审核被拒绝 3审核成功 4买家已填写退货物流信息 5收到退货，确认退款完成 6退货被拒绝
-    switch (_statusModel.data.returnStatus) {
+    switch (_statusModel!.data!.returnStatus) {
       case 1:
         return '审核中';
       case 2:
@@ -582,7 +586,7 @@ class _OrderReturnStatusPageState
                 width: rSize(80),
                 height: rSize(80),
                 imageUrl:
-                    Api.getResizeImgUrl(_statusModel.data.mainPhotoUrl, 100),
+                    Api.getResizeImgUrl(_statusModel!.data!.mainPhotoUrl!, 100),
                 borderRadius: BorderRadius.all(Radius.circular(6)),
               ),
             ),
@@ -595,7 +599,7 @@ class _OrderReturnStatusPageState
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      _statusModel.data.goodsName,
+                      _statusModel!.data!.goodsName!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyle.generate(
@@ -612,7 +616,7 @@ class _OrderReturnStatusPageState
                       ),
                       padding: const EdgeInsets.symmetric(
                           vertical: 3, horizontal: 6),
-                      child: Text(_statusModel.data.skuName,
+                      child: Text(_statusModel!.data!.skuName!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
@@ -629,7 +633,7 @@ class _OrderReturnStatusPageState
                               color: Colors.grey[600]),
                         ),
                         Text(
-                          "￥${(_statusModel.data.refundAmount).toStringAsFixed(2)}",
+                          "￥${_statusModel!.data!.refundAmount!.toStringAsFixed(2)}",
                           style: AppTextStyle.generate(14 * 2.sp,
                               color: Colors.black),
                         ),
@@ -642,7 +646,7 @@ class _OrderReturnStatusPageState
                               color: Colors.grey[600]),
                         ),
                         Text(
-                          "${_statusModel.data.quantity.toString()}",
+                          "${_statusModel!.data!.quantity.toString()}",
                           style: AppTextStyle.generate(14 * 2.sp,
                               color: Colors.black),
                         )
@@ -665,7 +669,7 @@ class _OrderReturnStatusPageState
             child: Center(
               child: CircularProgressIndicator(
                 valueColor:
-                    new AlwaysStoppedAnimation<Color>(getCurrentThemeColor()),
+                    new AlwaysStoppedAnimation<Color?>(getCurrentThemeColor()),
                 strokeWidth: 1.0,
               ),
             ),
@@ -680,14 +684,14 @@ class _OrderReturnStatusPageState
     TextStyle redStyle = TextStyle(color: Colors.red, fontSize: 14 * 2.sp);
     TextStyle greyStyle =
         TextStyle(color: Color(0xff666666), fontSize: 14 * 2.sp);
-    if (_statusModel.data.status == 1) {
+    if (_statusModel!.data!.status == 1) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
               Text(
-                _statusModel.data.subtitle,
+                _statusModel!.data!.subtitle!,
                 style: titleStyle,
               ),
               Text("    剩余", style: blackStyle),
@@ -707,14 +711,14 @@ class _OrderReturnStatusPageState
         ],
       );
     }
-    if (_statusModel.data.status == 2) {
+    if (_statusModel!.data!.status == 2) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
               Text(
-                _statusModel.data.subtitle,
+                _statusModel!.data!.subtitle!,
                 style: titleStyle,
               ),
             ],
@@ -730,9 +734,9 @@ class _OrderReturnStatusPageState
           Container(
             padding: EdgeInsets.only(top: 5),
             child: Text(
-              TextUtils.isEmpty(_statusModel.data.address)
+              TextUtils.isEmpty(_statusModel!.data!.address)
                   ? ""
-                  : _statusModel.data.address,
+                  : _statusModel!.data!.address!,
               style: blackStyle,
               maxLines: 3,
             ),
@@ -740,14 +744,14 @@ class _OrderReturnStatusPageState
         ],
       );
     }
-    if (_statusModel.data.status == 3) {
+    if (_statusModel!.data!.status == 3) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
               Text(
-                _statusModel.data.subtitle,
+                _statusModel!.data!.subtitle!,
                 style: titleStyle,
               ),
             ],
@@ -763,14 +767,14 @@ class _OrderReturnStatusPageState
         ],
       );
     }
-    if (_statusModel.data.status == 4) {
+    if (_statusModel!.data!.status == 4) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
               Text(
-                _statusModel.data.subtitle,
+                _statusModel!.data!.subtitle!,
                 style: titleStyle,
               ),
             ],
@@ -794,9 +798,9 @@ class _OrderReturnStatusPageState
           Container(
             padding: EdgeInsets.only(top: 5),
             child: Text(
-              TextUtils.isEmpty(_statusModel.data.address)
+              TextUtils.isEmpty(_statusModel!.data!.address)
                   ? ""
-                  : _statusModel.data.address,
+                  : _statusModel!.data!.address!,
               style: blackStyle,
               maxLines: 2,
             ),
@@ -804,30 +808,30 @@ class _OrderReturnStatusPageState
         ],
       );
     }
-    if (_statusModel.data.status == 5) {
+    if (_statusModel!.data!.status == 5) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
               Text(
-                _statusModel.data.subtitle,
+                _statusModel!.data!.subtitle!,
                 style: titleStyle,
               ),
               Text(
-                "    " + _statusModel.data.createdAt,
+                "    " + _statusModel!.data!.createdAt!,
                 style: TextStyle(color: Color(0xff999999), fontSize: 14 * 2.sp),
               ),
             ],
           ),
-          _statusModel.data.refundAmount == 0
+          _statusModel!.data!.refundAmount == 0
               ? SizedBox()
               : Container(
                   padding: EdgeInsets.only(top: 5),
                   child: ExtendedText.rich(TextSpan(children: [
                     TextSpan(text: "退款金额 ", style: greyStyle),
                     TextSpan(
-                        text: '¥' + _statusModel.data.refundAmount.toString(),
+                        text: '¥' + _statusModel!.data!.refundAmount.toString(),
                         style: blackStyle),
                     TextSpan(text: " 将原路退回至您的", style: greyStyle),
                     TextSpan(text: "付款账户", style: blackStyle),
@@ -850,14 +854,14 @@ class _OrderReturnStatusPageState
         ],
       );
     }
-    if (_statusModel.data.status == 6) {
+    if (_statusModel!.data!.status == 6) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
               Text(
-                _statusModel.data.subtitle,
+                _statusModel!.data!.subtitle!,
                 style: titleStyle,
               ),
             ],
@@ -873,14 +877,14 @@ class _OrderReturnStatusPageState
         ],
       );
     }
-    if (_statusModel.data.status == 7) {
+    if (_statusModel!.data!.status == 7) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Row(
             children: <Widget>[
               Text(
-                _statusModel.data.subtitle,
+                _statusModel!.data!.subtitle!,
                 style: titleStyle,
               ),
             ],
@@ -888,7 +892,7 @@ class _OrderReturnStatusPageState
           Container(
             padding: EdgeInsets.only(top: 5),
             child: Text(
-              "平台拒绝了您的退货申请。原因：${_statusModel.data.rejectReason}",
+              "平台拒绝了您的退货申请。原因：${_statusModel!.data!.rejectReason}",
               style: greyStyle,
               maxLines: 2,
             ),

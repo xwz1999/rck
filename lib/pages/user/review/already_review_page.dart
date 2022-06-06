@@ -6,7 +6,7 @@ import 'package:recook/pages/user/review/widgets/review_card.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class AlreadyReviewPage extends StatefulWidget {
-  AlreadyReviewPage({Key key}) : super(key: key);
+  AlreadyReviewPage({Key? key}) : super(key: key);
 
   @override
   _AlreadyReviewPageState createState() => _AlreadyReviewPageState();
@@ -26,7 +26,7 @@ class _AlreadyReviewPageState extends State<AlreadyReviewPage>
 
   @override
   void dispose() {
-    _gsRefreshController?.dispose();
+    _gsRefreshController.dispose();
     super.dispose();
   }
 

@@ -25,9 +25,9 @@ class InvoiceListPage extends StatefulWidget {
 }
 
 class _InvoiceListPageState extends BaseStoreState<InvoiceListPage> {
-  OrderListPresenterImpl _presenter;
-  List<Invoice> _invoiceList;
-  GSRefreshController _refreshController;
+  late OrderListPresenterImpl _presenter;
+  List<Invoice>? _invoiceList;
+  GSRefreshController? _refreshController;
 
   @override
   void initState() {
@@ -39,7 +39,7 @@ class _InvoiceListPageState extends BaseStoreState<InvoiceListPage> {
   @override
   void dispose() {
     super.dispose();
-    _refreshController.dispose();
+    _refreshController!.dispose();
   }
 
   @override
@@ -56,10 +56,10 @@ class _InvoiceListPageState extends BaseStoreState<InvoiceListPage> {
                 color: Colors.black,
               ),
               onPressed: () {
-                AppRouter.push(globalContext, RouteName.ORDER_INVOICE_ADD)
+                AppRouter.push(globalContext!, RouteName.ORDER_INVOICE_ADD)
                     .then((success) {
                   if (success == null) return;
-                  if (success) {
+                  if (success as bool) {
                     _getList();
                   }
                 });
@@ -72,12 +72,12 @@ class _InvoiceListPageState extends BaseStoreState<InvoiceListPage> {
         onRefresh: () {
           _getList();
         },
-        body: _invoiceList == null || _invoiceList.length == 0
+        body: _invoiceList == null || _invoiceList!.length == 0
             ? noDataView("您还没有添加发票")
             : ListView.builder(
-                itemCount: _invoiceList.length,
+                itemCount: _invoiceList!.length,
                 itemBuilder: (_, index) {
-                  return _item(_invoiceList[index]);
+                  return _item(_invoiceList![index]);
                 }),
       ),
     );
@@ -86,7 +86,7 @@ class _InvoiceListPageState extends BaseStoreState<InvoiceListPage> {
   _item(Invoice invoice) {
     return CustomImageButton(
       onPressed: () {
-        Navigator.pop(globalContext, invoice.id);
+        Navigator.pop(globalContext!, invoice.id);
       },
       child: Container(
         color: Colors.white,
@@ -121,11 +121,11 @@ class _InvoiceListPageState extends BaseStoreState<InvoiceListPage> {
   }
 
   _getList() async {
-    HttpResultModel<List<Invoice>> model =
-        await _presenter.getInvoiceList(UserManager.instance.user.info.id);
-    _refreshController.refreshCompleted();
+    HttpResultModel<List<Invoice>?> model =
+        await _presenter.getInvoiceList(UserManager.instance!.user.info!.id);
+    _refreshController!.refreshCompleted();
     if (!model.result) {
-      GSDialog.of(globalContext).showError(globalContext, model.msg);
+      GSDialog.of(globalContext).showError(globalContext!, model.msg);
       return;
     }
     setState(() {

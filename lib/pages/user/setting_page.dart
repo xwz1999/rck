@@ -33,7 +33,7 @@ class SettingItemListView extends StatefulWidget {
 }
 
 class _SettingItemListViewState extends State<SettingItemListView> with WidgetsBindingObserver {
-  PackageInfo _packageInfo;
+  PackageInfo? _packageInfo;
   String perText = '';
   @override
   void initState() {

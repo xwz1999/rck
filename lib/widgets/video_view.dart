@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:recook/widgets/play_widget/video_player.dart';
 
 class VideoView extends StatefulWidget {
-  final String videoUrl;
-  VideoView({Key key, this.videoUrl}) : assert(videoUrl != null && videoUrl.length > 0, "video url 不能为空");
+  final String? videoUrl;
+  VideoView({Key? key, this.videoUrl}) : assert(videoUrl != null && videoUrl.length > 0, "video url 不能为空");
   @override
   _VideoViewState createState() => _VideoViewState();
 }

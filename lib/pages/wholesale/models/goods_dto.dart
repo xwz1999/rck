@@ -1,6 +1,6 @@
 class GoodsDTO {
-  int skuId;
-  int quantity;
+  int? skuId;
+  int? quantity;
 
   GoodsDTO({
     this.skuId,

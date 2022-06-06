@@ -1,10 +1,10 @@
 class UserBenefitDayTeamModel {
-  Team team;
-  Recommend recommend;
-  Reward reward;
-  List<UserIncomeDay> teamList;
-  List<UserIncomeDay> recommendList;
-  List<UserIncomeDay> rewardList;
+  Team? team;
+  Recommend? recommend;
+  Reward? reward;
+  List<UserIncomeDay>? teamList;
+  List<UserIncomeDay>? recommendList;
+  List<UserIncomeDay>? rewardList;
 
   UserBenefitDayTeamModel(
       {this.team,
@@ -22,21 +22,21 @@ class UserBenefitDayTeamModel {
     reward =
         json['reward'] != null ? new Reward.fromJson(json['reward']) : null;
     if (json['teamList'] != null) {
-      teamList = new List<UserIncomeDay>();
+      teamList = [];
       json['teamList'].forEach((v) {
-        teamList.add(new UserIncomeDay.fromJson(v));
+        teamList!.add(new UserIncomeDay.fromJson(v));
       });
     }
     if (json['recommendList'] != null) {
-      recommendList = new List<UserIncomeDay>();
+      recommendList = [];
       json['recommendList'].forEach((v) {
-        recommendList.add(new UserIncomeDay.fromJson(v));
+        recommendList!.add(new UserIncomeDay.fromJson(v));
       });
     }
     if (json['rewardList'] != null) {
-      rewardList = new List<UserIncomeDay>();
+      rewardList = [];
       json['rewardList'].forEach((v) {
-        rewardList.add(new UserIncomeDay.fromJson(v));
+        rewardList!.add(new UserIncomeDay.fromJson(v));
       });
     }
   }
@@ -44,33 +44,33 @@ class UserBenefitDayTeamModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.team != null) {
-      data['team'] = this.team.toJson();
+      data['team'] = this.team!.toJson();
     }
     if (this.recommend != null) {
-      data['recommend'] = this.recommend.toJson();
+      data['recommend'] = this.recommend!.toJson();
     }
     if (this.reward != null) {
-      data['reward'] = this.reward.toJson();
+      data['reward'] = this.reward!.toJson();
     }
     if (this.teamList != null) {
-      data['teamList'] = this.teamList.map((v) => v.toJson()).toList();
+      data['teamList'] = this.teamList!.map((v) => v.toJson()).toList();
     }
     if (this.recommendList != null) {
       data['recommendList'] =
-          this.recommendList.map((v) => v.toJson()).toList();
+          this.recommendList!.map((v) => v.toJson()).toList();
     }
     if (this.rewardList != null) {
-      data['rewardList'] = this.rewardList.map((v) => v.toJson()).toList();
+      data['rewardList'] = this.rewardList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Team {
-  num salesVolume;
-  num amount;
-  num ratio;
-  num order_count;
+  num? salesVolume;
+  num? amount;
+  num? ratio;
+  num? order_count;
 
   Team({this.salesVolume, this.amount, this.ratio, this.order_count});
 
@@ -92,10 +92,10 @@ class Team {
 }
 
 class Recommend {
-  num salesVolume;
-  num amount;
-  num ratio;
-  num order_count;
+  num? salesVolume;
+  num? amount;
+  num? ratio;
+  num? order_count;
 
   Recommend({this.salesVolume, this.amount, this.ratio, this.order_count});
 
@@ -117,10 +117,10 @@ class Recommend {
 }
 
 class Reward {
-  num salesVolume;
-  num amount;
-  num ratio;
-  num order_count;
+  num? salesVolume;
+  num? amount;
+  num? ratio;
+  num? order_count;
 
   Reward({this.salesVolume, this.amount, this.ratio, this.order_count});
 
@@ -142,16 +142,16 @@ class Reward {
 }
 
 class UserIncomeDay {
-  int userId;
-  String headImgUrl;
-  String nickname;
-  String phone;
-  String wechatNo;
-  String remarkName;
-  int count;
-  num amount;
-  int roleLevel;
-  int order_count;
+  int? userId;
+  String? headImgUrl;
+  String? nickname;
+  String? phone;
+  String? wechatNo;
+  String? remarkName;
+  int? count;
+  num? amount;
+  int? roleLevel;
+  int? order_count;
 
   UserIncomeDay(
       {this.userId,

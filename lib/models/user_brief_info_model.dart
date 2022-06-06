@@ -1,7 +1,7 @@
 class UserBriefInfoModel {
-  String code;
-  String msg;
-  UserBrief data;
+  String? code;
+  String? msg;
+  UserBrief? data;
 
   UserBriefInfoModel({this.code, this.msg, this.data});
 
@@ -16,34 +16,34 @@ class UserBriefInfoModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class UserBrief {
-  num balance;
-  num roleLevel;
-  MyAssets myAssets;
-  MyShopping myShopping;
-  MyShopping shareIncome;
-  MyShopping teamIncome;
-  OrderCenter orderCenter;
-  String identifier;
-  int secret;
-  int level;
-  bool isOffline;
-  String start;
-  String end;
-  num deposit;///预存款 可使用
-  bool isEnterPrise;///是否是公司性质的账号 是的话提现走公司提现
-  num allDeposit;///累计充值
+  num? balance;
+  num? roleLevel;
+  MyAssets? myAssets;
+  MyShopping? myShopping;
+  MyShopping? shareIncome;
+  MyShopping? teamIncome;
+  OrderCenter? orderCenter;
+  String? identifier;
+  int? secret;
+  int? level;
+  bool? isOffline;
+  String? start;
+  String? end;
+  num? deposit;///预存款 可使用
+  bool? isEnterPrise;///是否是公司性质的账号 是的话提现走公司提现
+  num? allDeposit;///累计充值
 
 
   bool get secretValue => secret == 1;
 
-  String tax;
+  String? tax;
 
   UserBrief({
     this.balance,
@@ -130,28 +130,28 @@ class UserBrief {
     data['is_enterprise'] = this.isEnterPrise;
     data['tax'] = this.tax;
     if (this.myAssets != null) {
-      data['myAssets'] = this.myAssets.toJson();
+      data['myAssets'] = this.myAssets!.toJson();
     }
     if (this.myShopping != null) {
-      data['myShopping'] = this.myShopping.toJson();
+      data['myShopping'] = this.myShopping!.toJson();
     }
     if (this.shareIncome != null) {
-      data['shareIncome'] = this.shareIncome.toJson();
+      data['shareIncome'] = this.shareIncome!.toJson();
     }
     if (this.teamIncome != null) {
-      data['teamIncome'] = this.teamIncome.toJson();
+      data['teamIncome'] = this.teamIncome!.toJson();
     }
     if (this.orderCenter != null) {
-      data['orderCenter'] = this.orderCenter.toJson();
+      data['orderCenter'] = this.orderCenter!.toJson();
     }
     return data;
   }
 }
 
 class MyAssets {
-  num cards;
-  num coinNum;
-  num couponNum;
+  num? cards;
+  num? coinNum;
+  num? couponNum;
   MyAssets({this.cards});
 
   MyAssets.fromJson(Map<String, dynamic> json) {
@@ -170,9 +170,9 @@ class MyAssets {
 }
 
 class MyShopping {
-  num orderNum;
-  num amount;
-  num historyIncome;
+  num? orderNum;
+  num? amount;
+  num? historyIncome;
 
   MyShopping({this.orderNum, this.amount, this.historyIncome});
 
@@ -192,17 +192,17 @@ class MyShopping {
 }
 
 class OrderCenter {
-  int waitPay;
-  int waitSend;
-  int waitRecv;
-  int afterSales;
-  int evaNum;
-  int afterNum;
-  int collectionNum;
-  int saleWaitDeal;
-  int saleWaitPay;
-  int saleWaitSend;
-  int saleWaitRecv;
+  int? waitPay;
+  int? waitSend;
+  int? waitRecv;
+  int? afterSales;
+  int? evaNum;
+  int? afterNum;
+  int? collectionNum;
+  int? saleWaitDeal;
+  int? saleWaitPay;
+  int? saleWaitSend;
+  int? saleWaitRecv;
 
 
 

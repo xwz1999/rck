@@ -1,17 +1,17 @@
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/models/order_detail_model.dart';
 import 'package:recook/pages/user/order/return_goods_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 
 class ChooseAfterSaleTypePage extends StatefulWidget {
-  final Map arguments;
-  ChooseAfterSaleTypePage({Key key, this.arguments}) : super(key: key);
+  final Map? arguments;
+  ChooseAfterSaleTypePage({Key? key, this.arguments}) : super(key: key);
   static setArguments(Goods goods) {
     return {"goods": goods};
   }
@@ -23,10 +23,10 @@ class ChooseAfterSaleTypePage extends StatefulWidget {
 
 class _ChooseAfterSaleTypePageState
     extends BaseStoreState<ChooseAfterSaleTypePage> {
-  Goods _goods;
+  Goods? _goods;
   @override
   void initState() {
-    _goods = widget.arguments['goods'];
+    _goods = widget.arguments!['goods'];
     super.initState();
   }
 
@@ -63,9 +63,10 @@ class _ChooseAfterSaleTypePageState
                 _goodsItemWidget(),
                 _itemWidget(
                     onPressed: () {
-                      AppRouter.push(context, RouteName.ORDER_REFUND,
-                              arguments: GoodsReturnPage.setArguments(
-                                  [_goods.goodsDetailId], [_goods]))
+
+                      Get.to(()=>GoodsReturnPage( arguments: GoodsReturnPage.setArguments(
+                          [_goods!.goodsDetailId], [_goods])))!
+
                           .then((returnSuccess) {
                         if (returnSuccess == null &&
                             returnSuccess is bool &&
@@ -85,9 +86,9 @@ class _ChooseAfterSaleTypePageState
                 ),
                 _itemWidget(
                     onPressed: () {
-                      AppRouter.push(context, RouteName.ORDER_RETURN,
-                              arguments: GoodsReturnPage.setArguments(
-                                  [_goods.goodsDetailId], [_goods]))
+
+                      Get.to(()=>GoodsReturnPage( arguments: GoodsReturnPage.setArguments(
+                          [_goods!.goodsDetailId], [_goods])))!
                           .then((returnSuccess) {
                         if (returnSuccess == null &&
                             returnSuccess is bool &&
@@ -139,7 +140,7 @@ class _ChooseAfterSaleTypePageState
             child: CustomCacheImage(
               width: rSize(90),
               height: rSize(90),
-              imageUrl: Api.getImgUrl(_goods.mainPhotoUrl),
+              imageUrl: Api.getImgUrl(_goods!.mainPhotoUrl),
               borderRadius: BorderRadius.all(Radius.circular(6)),
               fit: BoxFit.cover,
             ),
@@ -150,7 +151,7 @@ class _ChooseAfterSaleTypePageState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                _goods.goodsName,
+                _goods!.goodsName!,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -160,14 +161,14 @@ class _ChooseAfterSaleTypePageState
                 ),
               ),
               Text(
-                "型号规格 ${_goods.skuName}",
+                "型号规格 ${_goods!.skuName}",
                 style: TextStyle(color: Color(0xff666666), fontSize: 13 * 2.sp),
               ),
               ExtendedText.rich(TextSpan(children: [
                 TextSpan(text: "订单金额 ", style: subGreyStyle),
-                TextSpan(text: "￥${_goods.goodsAmount}", style: subBlackStyle),
+                TextSpan(text: "￥${_goods!.goodsAmount}", style: subBlackStyle),
                 TextSpan(text: "  购买数量 ", style: subGreyStyle),
-                TextSpan(text: "${_goods.quantity}", style: subBlackStyle),
+                TextSpan(text: "${_goods!.quantity}", style: subBlackStyle),
               ])),
             ],
           ))
@@ -177,7 +178,7 @@ class _ChooseAfterSaleTypePageState
   }
 
   _itemWidget(
-      {String image, String title = "", String info = "", Function onPressed}) {
+      {String? image, String title = "", String info = "", Function? onPressed}) {
     return GestureDetector(
       onTap: () {
         if (onPressed != null) onPressed();
@@ -194,7 +195,7 @@ class _ChooseAfterSaleTypePageState
               width: rSize(20),
               height: rSize(20),
               child:
-                  TextUtils.isEmpty(image) ? Container() : Image.asset(image),
+                  TextUtils.isEmpty(image) ? Container() : Image.asset(image!),
             ),
             Expanded(
                 child: Column(

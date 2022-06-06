@@ -7,18 +7,16 @@
  * ====================================================
  */
 
+import 'dart:async';
 import 'dart:core';
 import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:fluwx/fluwx.dart';
-import 'package:recook/constants/config.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/utils/user_Authority_util.dart';
 import 'package:recook/widgets/toast.dart';
@@ -26,17 +24,17 @@ import 'package:recook/widgets/toast.dart';
 typedef WXLoginListener = Function(WXLoginResult result);
 
 class WXLoginResult {
-  final int type;
-  final int errCode;
-  final String errStr;
-  final String androidOpenId;
-  final String iOSDescription;
-  final String country;
-  final String lang;
-  final String code;
-  final String androidUrl;
-  final String state;
-  final String androidTransaction;
+  final int? type;
+  final int? errCode;
+  final String? errStr;
+  final String? androidOpenId;
+  final String? iOSDescription;
+  final String? country;
+  final String? lang;
+  final String? code;
+  final String? androidUrl;
+  final String? state;
+  final String? androidTransaction;
 
   WXLoginResult(
       {this.errStr,
@@ -53,14 +51,14 @@ class WXLoginResult {
 }
 
 class WXPayResult {
-  final String errStr;
-  final int type;
-  final int errCode;
-  final String androidOpenId;
-  final String iOSDescription;
-  final String androidPrepayId;
-  final String extData;
-  final String androidTransaction;
+  final String? errStr;
+  final int? type;
+  final int? errCode;
+  final String? androidOpenId;
+  final String? iOSDescription;
+  final String? androidPrepayId;
+  final String? extData;
+  final String? androidTransaction;
 
   WXPayResult(
       {this.errStr,
@@ -92,20 +90,20 @@ class WeChatUtils {
   }
 
   static shareUrl({
-    String url,
-    String title,
-    String assetsThumbnail,
-    String netWorkThumbnail,
-    String description,
+    required String url,
+    required String title,
+    String? assetsThumbnail,
+    String? netWorkThumbnail,
+    String? description,
     fluwx.WeChatScene scene = fluwx.WeChatScene.SESSION,
   }) {
     //2.0
     var model = fluwx.WeChatShareWebPageModel(
       url,
       thumbnail: !TextUtils.isEmpty(netWorkThumbnail)
-          ? fluwx.WeChatImage.network(netWorkThumbnail)
+          ? fluwx.WeChatImage.network(netWorkThumbnail!)
           : !TextUtils.isEmpty(assetsThumbnail)
-              ? fluwx.WeChatImage.asset(assetsThumbnail)
+              ? fluwx.WeChatImage.asset(assetsThumbnail!)
               : null,
       title: title,
       scene: scene,
@@ -116,7 +114,7 @@ class WeChatUtils {
 
 
 
-  static Future<Uint8List> compressFile(File file) async {
+  static Future<Uint8List?> compressFile(File file) async {
     ///小程序分享的图片限制在128kb
     int quality = 100;
     if(file.readAsBytesSync().lengthInBytes/1024 <128){
@@ -133,12 +131,12 @@ class WeChatUtils {
 
       print(quality);
 
-      var result = await FlutterImageCompress.compressWithFile(
+      var result = await (FlutterImageCompress.compressWithFile(
         file.absolute.path,
         minHeight: 400,
         minWidth: 500,
         quality: quality,
-      );
+      ) as FutureOr<Uint8List>);
       print(file.readAsBytesSync().lengthInBytes);
       print(result.length);
       return result  ;
@@ -169,10 +167,10 @@ class WeChatUtils {
 
 
   static miniProgramShare({
-    String userName,
-    String id,
-    String netWorkThumbnail,
-    String des,
+    String? userName,
+    String? id,
+    required String netWorkThumbnail,
+    String? des,
   }) async {
 
 
@@ -188,37 +186,37 @@ class WeChatUtils {
     var model = fluwx.WeChatShareMiniProgramModel(
       userName: 'gh_530bd0866836',
       webPageUrl: 'https://mallh5.reecook.cn/',
-        miniProgramType: AppConfig.debug ? WXMiniProgramType.PREVIEW:fluwx.WXMiniProgramType.RELEASE,
+        miniProgramType: AppConfig.debug! ? WXMiniProgramType.PREVIEW:fluwx.WXMiniProgramType.RELEASE,
       path:
-          'pages/goodsDetail/goodsDetail?type=share&id=$id&invite=${UserManager.instance.user.info.invitationNo}',
+          'pages/goodsDetail/goodsDetail?type=share&id=$id&invite=${UserManager.instance!.user.info!.invitationNo}',
       thumbnail: fluwx.WeChatImage.binary(list),
       compressThumbnail:false,
       title: des,
     );
-    print('${UserManager.instance.user.info.invitationNo}'+'-----$id');
+    print('${UserManager.instance!.user.info!.invitationNo}'+'-----$id');
     fluwx.shareToWeChat(model);
   }
 
 
 
   static miniProgramBugCard({
-    String userName,
-    String id,
-    String netWorkThumbnail,
-    String des,
+    String? userName,
+    String? id,
+    required String netWorkThumbnail,
+    String? des,
   }) async {
 
     var model = fluwx.WeChatShareMiniProgramModel(
       userName: AppConfig.WX_APP_MINIPRO_USERNAME,
       webPageUrl: 'https://mallh5.reecook.cn/',
       path:
-      'pages/vip/vipBuy?type=share&invite=${UserManager.instance.user.info.invitationNo}',
+      'pages/vip/vipBuy?type=share&invite=${UserManager.instance!.user.info!.invitationNo}',
       thumbnail: fluwx.WeChatImage.asset(netWorkThumbnail),
       title: des,
       compressThumbnail: false,
-      miniProgramType: AppConfig.debug ? WXMiniProgramType.PREVIEW:fluwx.WXMiniProgramType.RELEASE,
+      miniProgramType: AppConfig.debug! ? WXMiniProgramType.PREVIEW:fluwx.WXMiniProgramType.RELEASE,
     );
-    print('${UserManager.instance.user.info.invitationNo}');
+    print('${UserManager.instance!.user.info!.invitationNo}');
     fluwx.shareToWeChat(model);
   }
 
@@ -227,11 +225,11 @@ class WeChatUtils {
 
 
   static miniProgramShareLive({
-    String userName,
-    int id,
-    String netWorkThumbnail,
-    String des,
-    int isLive,
+    String? userName,
+    int? id,
+    required String netWorkThumbnail,
+    String? des,
+    int? isLive,
   }) {
     // String qrCode =
     //     "${AppConfig.debug ? WebApi.testGoodsDetail : WebApi.goodsDetail}$id/${UserManager.instance.user.info.invitationNo}";
@@ -248,20 +246,20 @@ class WeChatUtils {
   }
 
   static shareGoodsForMiniProgram({
-    int goodsId,
-    String title,
-    String thumbnail,
+    int? goodsId,
+    String? title,
+    String? thumbnail,
   }) {
     if (UserAuthorityUtil().showNeedLoginToast()) {
       return;
     }
 
-    var invitationNo = UserManager.instance.user.info.invitationNo ?? '';
+    var invitationNo = UserManager.instance!.user.info!.invitationNo ?? '';
     fluwx.WXMiniProgramType _wxType = fluwx.WXMiniProgramType.PREVIEW;
-    if (!AppConfig.debug) {
+    if (!AppConfig.debug!) {
       _wxType = fluwx.WXMiniProgramType.RELEASE;
     }
-    var userId = UserManager.instance.user.info.id;
+    var userId = UserManager.instance!.user.info!.id;
     var model = fluwx.WeChatShareMiniProgramModel(
       path:
           "pages/goods/detail?goods_id=$goodsId&code=$invitationNo&userId=$userId",
@@ -271,7 +269,7 @@ class WeChatUtils {
       // scene: fluWX.WeChatScene.SESSION,
       title: title,
       description: "",
-      thumbnail: fluwx.WeChatImage.network(thumbnail),
+      thumbnail: fluwx.WeChatImage.network(thumbnail!),
       // thumbnail: thumbnail,
     );
     fluwx.shareToWeChat(model);
@@ -279,14 +277,14 @@ class WeChatUtils {
   }
 
   static shareMiniProgram({
-    String path,
-    String webPageUrl,
-    String title,
-    String description,
-    String thumbnail,
+    required String path,
+    required String webPageUrl,
+    String? title,
+    String? description,
+    required String thumbnail,
   }) {
     fluwx.WXMiniProgramType _wxType = fluwx.WXMiniProgramType.PREVIEW;
-    if (!AppConfig.debug) {
+    if (!AppConfig.debug!) {
       _wxType = fluwx.WXMiniProgramType.RELEASE;
     }
     var model = fluwx.WeChatShareMiniProgramModel(
@@ -334,16 +332,16 @@ class WeChatUtils {
   }
 
   static pay(
-      {@required String appId,
-      @required String partnerId,
-      @required String prepayId,
-      @required String packageValue,
-      @required String nonceStr,
-      @required int timeStamp,
-      @required String sign,
-      String signType,
-      String extData,
-      Function(WXPayResult result) listener}) {
+      {required String? appId,
+      required String? partnerId,
+      required String? prepayId,
+      required String? packageValue,
+      required String? nonceStr,
+      required int timeStamp,
+      required String? sign,
+      String? signType,
+      String? extData,
+      Function(WXPayResult result)? listener}) {
     print("appId-------- $appId");
     print("-partnerId------- $partnerId");
     print("prepayId-------- $prepayId");
@@ -370,14 +368,14 @@ class WeChatUtils {
         return;
       }
       fluwx.payWithWeChat(
-          appId: appId,
-          partnerId: partnerId,
-          prepayId: prepayId,
-          packageValue: packageValue,
-          nonceStr: nonceStr,
+          appId: appId!,
+          partnerId: partnerId!,
+          prepayId: prepayId!,
+          packageValue: packageValue!,
+          nonceStr: nonceStr!,
           timeStamp: timeStamp,
           signType: "MD5",
-          sign: sign);
+          sign: sign!);
     });
   }
 }

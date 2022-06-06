@@ -8,7 +8,7 @@ import 'package:recook/widgets/recook_dotted_line.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class InvoiceHistoryPage extends StatefulWidget {
-  InvoiceHistoryPage({Key key}) : super(key: key);
+  InvoiceHistoryPage({Key? key}) : super(key: key);
 
   @override
   _InvoiceHistoryPageState createState() => _InvoiceHistoryPageState();
@@ -86,7 +86,7 @@ Widget invoiceHistoryCard(BuildContext context, InvoiceBillListModel model) {
                 ),
               ),
               Text(
-                model.ctime,
+                model.ctime!,
                 style: TextStyle(
                   color: Color(0xFF666666),
                   fontSize: rSP(14),
@@ -140,7 +140,7 @@ Widget invoiceHistoryCard(BuildContext context, InvoiceBillListModel model) {
                 crossAxisAlignment: CrossAxisAlignment.baseline,
                 children: [
                   Text(
-                    model.totalAmount.toStringAsFixed(2),
+                    model.totalAmount!.toStringAsFixed(2),
                     style: TextStyle(
                       fontSize: rSP(24),
                       color: Color(0xFF333333),

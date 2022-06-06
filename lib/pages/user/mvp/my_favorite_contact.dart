@@ -11,9 +11,9 @@ abstract class MyFavoritePresenterI
 }
 
 abstract class MyFavoriteModelI extends MvpModel {
-  getFavoritesList(int userId);
+  getFavoritesList(int? userId);
   favoriteAdd(int userID, int goodsID);
-  favoriteCancel(int userID, int goodsID);
+  favoriteCancel(int? userID, int? goodsID);
 }
 
 abstract class MyFavoriteViewI extends MvpView {

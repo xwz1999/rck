@@ -4,7 +4,7 @@ import 'package:recook/pages/user/invoice/invoice_scaffold_widget.dart';
 import 'package:recook/widgets/sc_tile.dart';
 
 class InvoicePage extends StatefulWidget {
-  InvoicePage({Key key}) : super(key: key);
+  InvoicePage({Key? key}) : super(key: key);
 
   @override
   _InvoicePageState createState() => _InvoicePageState();

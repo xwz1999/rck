@@ -2,11 +2,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
@@ -20,8 +17,8 @@ import 'package:permission_handler/permission_handler.dart';
 import '../alert.dart';
 
 class ShareUrlPosterPage extends StatefulWidget {
-  final Map arguments;
-  ShareUrlPosterPage({Key key, this.arguments}) : super(key: key);
+  final Map? arguments;
+  ShareUrlPosterPage({Key? key, this.arguments}) : super(key: key);
   static setArguments({String url = ""}) {
     return {"url": url};
   }
@@ -32,12 +29,12 @@ class ShareUrlPosterPage extends StatefulWidget {
 
 class _ShareUrlPosterPageState extends BaseStoreState<ShareUrlPosterPage>
     with TickerProviderStateMixin {
-  ShareInvitaModal _shareInvitaModal;
-  TabController _tabController;
+  ShareInvitaModal? _shareInvitaModal;
+  TabController? _tabController;
   int _tabIndex = 0;
   @override
   void dispose() {
-    _tabController.removeListener(_handleTabControllerTick);
+    _tabController!.removeListener(_handleTabControllerTick);
     super.dispose();
   }
 
@@ -45,12 +42,12 @@ class _ShareUrlPosterPageState extends BaseStoreState<ShareUrlPosterPage>
   void initState() {
     _getPostImageList();
     _tabController = TabController(length: 3, vsync: this);
-    _tabController.addListener(_handleTabControllerTick);
+    _tabController!.addListener(_handleTabControllerTick);
     super.initState();
   }
 
   void _handleTabControllerTick() {
-    _tabIndex = _tabController.index;
+    _tabIndex = _tabController!.index;
     setState(() {});
   }
 
@@ -80,11 +77,11 @@ class _ShareUrlPosterPageState extends BaseStoreState<ShareUrlPosterPage>
                           controller: _tabController,
                           children: <Widget>[
                             _imageWidget(
-                                _shareInvitaModal.data.data[0], context),
+                                _shareInvitaModal!.data!.data![0], context),
                             _imageWidget(
-                                _shareInvitaModal.data.data[1], context),
+                                _shareInvitaModal!.data!.data![1], context),
                             _imageWidget(
-                                _shareInvitaModal.data.data[2], context),
+                                _shareInvitaModal!.data!.data![2], context),
                             // FocusPage(),
                           ],
                         ),
@@ -152,7 +149,7 @@ class _ShareUrlPosterPageState extends BaseStoreState<ShareUrlPosterPage>
         onPressed: () {
           var cancel = ReToast.loading();
           ImageUtils.saveNetworkImagesToPhoto(
-              [_shareInvitaModal.data.data[_tabIndex]], (index) {}, (success) {
+              [_shareInvitaModal!.data!.data![_tabIndex]], (index) {}, (success) {
             cancel();
             Navigator.pop(context);
             if (success) {
@@ -189,14 +186,14 @@ class _ShareUrlPosterPageState extends BaseStoreState<ShareUrlPosterPage>
   }
 
   _getPostImageList() async {
-    Response res = await HttpManager.netFetchNormal(
-        widget.arguments['url'], null, null, null);
+    Response? res = await HttpManager.netFetchNormal(
+        widget.arguments!['url'], null, null, null);
     try {
       Map map = json.decode(res.toString());
-      _shareInvitaModal = ShareInvitaModal.fromJson(map);
+      _shareInvitaModal = ShareInvitaModal.fromJson(map as Map<String, dynamic>);
       if (mounted) setState(() {});
     } catch (e) {
-      if (mounted) showError(e);
+      if (mounted) showError(e.toString());
     }
   }
 }

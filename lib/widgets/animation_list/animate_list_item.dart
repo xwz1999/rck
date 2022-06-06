@@ -11,16 +11,15 @@ import 'package:flutter/material.dart';
 
 class AnimateListItem extends StatelessWidget {
   const AnimateListItem(
-      {Key key,
-        @required this.animation,
+      {Key? key,
+        required this.animation,
         this.onTap,
-        @required this.index,
-        @required this.item})
-      : assert(animation != null),
-        super(key: key);
+        required this.index,
+        required this.item})
+      : super(key: key);
 
   final Animation<double> animation;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final int index;
   final Widget item;
 

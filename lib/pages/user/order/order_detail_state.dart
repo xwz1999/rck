@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/meiqia_manager.dart';
@@ -23,9 +22,9 @@ import 'package:recook/widgets/toast.dart';
 
 abstract class OrderDetailState<T extends StatefulWidget>
     extends BaseStoreState<T> {
-  OrderDetail orderDetail;
+  OrderDetail? orderDetail;
   String status = '';
-  String subTitle;
+  String? subTitle;
   bool _openPriceInfo = false;
   bool isUserOrder = true;
 
@@ -70,7 +69,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
         width: double.infinity,
         decoration: BoxDecoration(
             border: Border(
-          top: BorderSide(color: Colors.grey[300], width: 0.3),
+          top: BorderSide(color: Colors.grey[300]!, width: 0.3),
         )),
         child: Row(
           children: <Widget>[
@@ -82,7 +81,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
               child: Container(
                 alignment: Alignment.centerRight,
                 child: Text(
-                    "￥${orderDetail.actualTotalAmount.toStringAsFixed(2)}",
+                    "￥${orderDetail!.actualTotalAmount!.toStringAsFixed(2)}",
                     style: TextStyle(color: AppColor.redColor, fontSize: 14)),
               ),
             )
@@ -94,11 +93,11 @@ abstract class OrderDetailState<T extends StatefulWidget>
     List<Widget> widgetList = [];
     Widget priceItem = _priceItemWidget(
         title: "商品金额",
-        info: "￥" + (orderDetail.goodsTotalAmount-orderDetail.coinTotalAmount).toStringAsFixed(2));
+        info: "￥" + (orderDetail!.goodsTotalAmount!-orderDetail!.coinTotalAmount!).toStringAsFixed(2));
 
     Widget expressFee = _priceItemWidget(
         title: "合计运费",
-        info: "+￥" + orderDetail.expressTotalFee.toStringAsFixed(2));
+        info: "+￥" + orderDetail!.expressTotalFee!.toStringAsFixed(2));
     // Widget coupon = _priceItemWidget(
     //     title: "优惠券",
     //     info: "-￥" +
@@ -109,7 +108,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
         title: UserLevelTool.currentRoleLevel() != '合伙人'
             ? "${UserLevelTool.currentRoleLevel()}折扣"
             : '折扣',
-        info: "-￥" + orderDetail.coinTotalAmount.toStringAsFixed(2));
+        info: "-￥" + orderDetail!.coinTotalAmount!.toStringAsFixed(2));
     // 余额抵扣 暂时不需要
     widgetList.add(priceItem);
     if (_openPriceInfo) {
@@ -162,8 +161,8 @@ abstract class OrderDetailState<T extends StatefulWidget>
       decoration: BoxDecoration(
           color: Colors.white,
           border: Border(
-              top: BorderSide(color: Colors.grey[300], width: 0.3),
-              bottom: BorderSide(color: Colors.grey[300], width: 0.3))),
+              top: BorderSide(color: Colors.grey[300]!, width: 0.3),
+              bottom: BorderSide(color: Colors.grey[300]!, width: 0.3))),
       height: 50,
       child: CustomImageButton(
         contentSpacing: 10,
@@ -177,12 +176,12 @@ abstract class OrderDetailState<T extends StatefulWidget>
         title: "联系客服",
         onPressed: () {
           MQManager.goToChat(
-              userId: UserManager.instance.user.info.id.toString(),
+              userId: UserManager.instance!.user.info!.id.toString(),
               userInfo: <String, String>{
-                "name": UserManager.instance.user.info.nickname ?? "",
+                "name": UserManager.instance!.user.info!.nickname ?? "",
                 "gender":
-                    UserManager.instance.user.info.gender == 1 ? "男" : "女",
-                "mobile": UserManager.instance.user.info.mobile ?? ""
+                    UserManager.instance!.user.info!.gender == 1 ? "男" : "女",
+                "mobile": UserManager.instance!.user.info!.mobile ?? ""
               });
         },
       ),
@@ -197,7 +196,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
       ),
       decoration: BoxDecoration(
           border: Border(
-        top: BorderSide(color: Colors.grey[300], width: 0.3),
+        top: BorderSide(color: Colors.grey[300]!, width: 0.3),
       )),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -242,10 +241,10 @@ abstract class OrderDetailState<T extends StatefulWidget>
             child: Container(
               child: Text(
                 "￥" +
-                    (orderDetail.actualTotalAmount +
-                            orderDetail.coinTotalAmount +
-                            orderDetail.brandCouponTotalAmount +
-                            orderDetail.universeCouponTotalAmount)
+                    (orderDetail!.actualTotalAmount! +
+                            orderDetail!.coinTotalAmount! +
+                            orderDetail!.brandCouponTotalAmount! +
+                            orderDetail!.universeCouponTotalAmount!)
                         .toStringAsFixed(2),
                 style: AppTextStyle.generate(14, color: Color(0xff333333)),
               ),
@@ -268,10 +267,10 @@ abstract class OrderDetailState<T extends StatefulWidget>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _tile("订单编号", orderDetail.id.toString(), needCopy: true),
-          _tile("下单时间", orderDetail.createdAt),
-          !TextUtils.isEmpty(orderDetail.payTime)
-              ? _tile("付款时间", orderDetail.payTime)
+          _tile("订单编号", orderDetail!.id.toString(), needCopy: true),
+          _tile("下单时间", orderDetail!.createdAt),
+          !TextUtils.isEmpty(orderDetail!.payTime)
+              ? _tile("付款时间", orderDetail!.payTime)
               : Container(),
           //_saleAmountInfo(),
         ],
@@ -281,9 +280,9 @@ abstract class OrderDetailState<T extends StatefulWidget>
 
   wholesaleOrderInfo() {
     int totalQuantity = 0;
-    orderDetail.brands.forEach((brand) {
-      brand.goods.forEach((goods) {
-        totalQuantity += goods.quantity;
+    orderDetail!.brands!.forEach((brand) {
+      brand.goods!.forEach((goods) {
+        totalQuantity += goods.quantity!;
       });
     });
     if (orderDetail == null) return Container();
@@ -297,19 +296,19 @@ abstract class OrderDetailState<T extends StatefulWidget>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _wholesaleTitle("订单编号", orderDetail.id.toString(), needCopy: true),
-          _wholesaleTitle("下单时间", orderDetail.createdAt),
-          orderDetail.status != 0
+          _wholesaleTitle("订单编号", orderDetail!.id.toString(), needCopy: true),
+          _wholesaleTitle("下单时间", orderDetail!.createdAt),
+          orderDetail!.status != 0
               ? _wholesaleTitle(
                   "支付方式",
-                  orderDetail.payMethod == 1
+                  orderDetail!.payMethod == 1
                       ? '微信支付'
-                      : orderDetail.payMethod == 1
+                      : orderDetail!.payMethod == 1
                           ? '支付宝支付'
                           : '')
               : SizedBox(),
-          !TextUtils.isEmpty(orderDetail.payTime)
-              ? _wholesaleTitle("付款时间", orderDetail.payTime)
+          !TextUtils.isEmpty(orderDetail!.payTime)
+              ? _wholesaleTitle("付款时间", orderDetail!.payTime)
               : Container(),
 
           Container(
@@ -349,16 +348,16 @@ abstract class OrderDetailState<T extends StatefulWidget>
                     Text(
                       "￥",
                       style: AppTextStyle.generate(12 * 2.sp,
-                          color: orderDetail.status == 0&&!orderDetail.canPay
+                          color: orderDetail!.status == 0&&!orderDetail!.canPay!
                               ? Color(0xFFC92219)
                               : Color(0xFF333333),
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      "${orderDetail.goodsTotalAmount.toStringAsFixed(2)}",
+                      "${orderDetail!.goodsTotalAmount!.toStringAsFixed(2)}",
                       style: AppTextStyle.generate(
-                          orderDetail.status == 0&&!orderDetail.canPay ? 16 * 2.sp : 12.rsp,
-                          color: orderDetail.status == 0&&!orderDetail.canPay
+                          orderDetail!.status == 0&&!orderDetail!.canPay! ? 16 * 2.sp : 12.rsp,
+                          color: orderDetail!.status == 0&&!orderDetail!.canPay!
                               ? Color(0xFFC92219)
                               : Color(0xFF333333),
                           fontWeight: FontWeight.bold),
@@ -391,8 +390,8 @@ abstract class OrderDetailState<T extends StatefulWidget>
                 Spacer(),
                 Container(
                   child: Text(
-                      !orderDetail.canPay&&orderDetail.status==0?'待反馈':
-                      "￥${orderDetail.expressTotalFee.toStringAsFixed(2)}",
+                      !orderDetail!.canPay!&&orderDetail!.status==0?'待反馈':
+                      "￥${orderDetail!.expressTotalFee!.toStringAsFixed(2)}",
                       style: TextStyle(
                           color: Color(0xFF333333), fontSize: 12.rsp,fontWeight: FontWeight.bold)),
                 ),
@@ -400,7 +399,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
               ],
             ),
           ),
-          (orderDetail.status==0&&!orderDetail.canPay)?SizedBox():
+          (orderDetail!.status==0&&!orderDetail!.canPay!)?SizedBox():
           Container(
             margin: EdgeInsets.only(
               top: 10, bottom: 10,
@@ -431,7 +430,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                               fontWeight: FontWeight.bold),
                         ),
                         Text(
-                          "${orderDetail.actualTotalAmount.toStringAsFixed(2)}",
+                          "${orderDetail!.actualTotalAmount!.toStringAsFixed(2)}",
                           style: AppTextStyle.generate(
                               16 * 2.sp ,
                               color: Color(0xFFC92219),
@@ -482,7 +481,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                 Spacer(),
                 Container(
                   child: Text(
-                      "￥${orderDetail.makeUpAmount == null ? 0 : orderDetail.makeUpAmount.toStringAsFixed(2)}",
+                      "￥${orderDetail!.makeUpAmount == null ? 0 : orderDetail!.makeUpAmount!.toStringAsFixed(2)}",
                       style: TextStyle(
                           color: Color(0xFFC92219), fontSize: 16.rsp)),
                 ),
@@ -510,7 +509,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                     )),
                 Spacer(),
                 Container(
-                  child: Text(orderDetail.makeUpText,
+                  child: Text(orderDetail!.makeUpText!,
                       style: TextStyle(
                           color: Color(0xFFC92219), fontSize: 16.rsp)),
                 ),
@@ -526,7 +525,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
 
   _wholesaleTitle(
     String title,
-    String value, {
+    String? value, {
     bool needCopy = false,
     CrossAxisAlignment crossAxisAlignment: CrossAxisAlignment.center,
   }) {
@@ -555,7 +554,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                     }
                     ClipboardData data = new ClipboardData(text: value);
                     Clipboard.setData(data);
-                    Toast.showSuccess('$title:' + value + ' -- 已经保存到剪贴板');
+                    Toast.showSuccess('$title:' + value! + ' -- 已经保存到剪贴板');
                   },
                   child: Container(
                     child: Text(
@@ -574,7 +573,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                       }
                       ClipboardData data = new ClipboardData(text: value);
                       Clipboard.setData(data);
-                      Toast.showSuccess('$title:' + value + ' -- 已经保存到剪贴板');
+                      Toast.showSuccess('$title:' + value! + ' -- 已经保存到剪贴板');
                     },
                     child: Container(
                       child: Text(
@@ -594,7 +593,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                     }
                     ClipboardData data = new ClipboardData(text: value);
                     Clipboard.setData(data);
-                    Toast.showSuccess('$title:' + value + ' -- 已经保存到剪贴板');
+                    Toast.showSuccess('$title:' + value! + ' -- 已经保存到剪贴板');
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 3),
@@ -618,7 +617,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
 
   _tile(
     String title,
-    String value, {
+    String? value, {
     bool needCopy = false,
     CrossAxisAlignment crossAxisAlignment: CrossAxisAlignment.center,
   }) {
@@ -647,7 +646,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                     }
                     ClipboardData data = new ClipboardData(text: value);
                     Clipboard.setData(data);
-                    Toast.showSuccess('$title:' + value + ' -- 已经保存到剪贴板');
+                    Toast.showSuccess('$title:' + value! + ' -- 已经保存到剪贴板');
                   },
                   child: Text(
                     "$value",
@@ -663,7 +662,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                       }
                       ClipboardData data = new ClipboardData(text: value);
                       Clipboard.setData(data);
-                      Toast.showSuccess('$title:' + value + ' -- 已经保存到剪贴板');
+                      Toast.showSuccess('$title:' + value! + ' -- 已经保存到剪贴板');
                     },
                     child: Text(
                       "$value",
@@ -680,7 +679,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                     }
                     ClipboardData data = new ClipboardData(text: value);
                     Clipboard.setData(data);
-                    Toast.showSuccess('$title:' + value + ' -- 已经保存到剪贴板');
+                    Toast.showSuccess('$title:' + value! + ' -- 已经保存到剪贴板');
                   },
                   child: Container(
                     padding: EdgeInsets.symmetric(horizontal: 3),
@@ -704,9 +703,9 @@ abstract class OrderDetailState<T extends StatefulWidget>
 
   totalPrice() {
     int totalQuantity = 0;
-    orderDetail.brands.forEach((brand) {
-      brand.goods.forEach((goods) {
-        totalQuantity += goods.quantity;
+    orderDetail!.brands!.forEach((brand) {
+      brand.goods!.forEach((goods) {
+        totalQuantity += goods.quantity!;
       });
     });
 
@@ -718,14 +717,16 @@ abstract class OrderDetailState<T extends StatefulWidget>
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.rw),
           color: Colors.white,
-          border: Border(top: BorderSide(color: Colors.grey[300], width: 0.3))),
+          border: Border.all(color:  Colors.grey[300]!, width: 0.3)//Border(top: BorderSide(color: Colors.grey[300]!, width: 0.3))
+
+      ),
       child: RichText(
           text: TextSpan(
               text: "共$totalQuantity件商品  总计￥",
               style: AppTextStyle.generate(13 * 2.sp),
               children: [
             TextSpan(
-                text: "${(orderDetail.goodsTotalAmount-orderDetail.coinTotalAmount).toStringAsFixed(2)}",
+                text: "${(orderDetail!.goodsTotalAmount!-orderDetail!.coinTotalAmount!).toStringAsFixed(2)}",
                 style: AppTextStyle.generate(16 * 2.sp))
           ])),
     );
@@ -768,7 +769,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
       ),
       child: ListView.builder(
           shrinkWrap: true,
-          itemCount: orderDetail.brands.length,
+          itemCount: orderDetail!.brands!.length,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (_, index) {
             return Container(
@@ -776,7 +777,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
               child: Column(
                 children: <Widget>[
                   _wholesaleGoodsList(
-                      orderDetail.brands[index], orderDetail.statusList),
+                      orderDetail!.brands![index], orderDetail!.statusList),
                 ],
               ),
             );
@@ -794,16 +795,16 @@ abstract class OrderDetailState<T extends StatefulWidget>
       padding: EdgeInsets.all(rSize(5)),
       child: ListView.builder(
           shrinkWrap: true,
-          itemCount: orderDetail.brands.length,
+          itemCount: orderDetail!.brands!.length,
           physics: NeverScrollableScrollPhysics(),
           itemBuilder: (_, index) {
             return _buildBrandsItem(
-                orderDetail.brands[index], orderDetail.statusList);
+                orderDetail!.brands![index], orderDetail!.statusList);
           }),
     );
   }
 
-  _buildBrandsItem(Brands brand, List<StatusList> status) {
+  _buildBrandsItem(Brands brand, List<StatusList>? status) {
     return Container(
       padding: EdgeInsets.only(bottom: rSize(8)),
       child: Column(
@@ -820,7 +821,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
   _brandOperationView(Brands brand) {
     List<Widget> items = [];
 
-    if (orderDetail.status == 4) {
+    if (orderDetail!.status == 4) {
       // items
       //   ..add(CustomImageButton(
       //     title: "申请发票",
@@ -854,17 +855,17 @@ abstract class OrderDetailState<T extends StatefulWidget>
     );
   }
 
-  _goodsList(Brands brand, List<StatusList> status) {
+  _goodsList(Brands brand, List<StatusList>? status) {
     return ListView.builder(
-        itemCount: brand.goods.length,
+        itemCount: brand.goods!.length,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: ((context, index) {
           return FlatButton(
             onPressed: () {
               bool canPush = true;
-              Goods goods = brand.goods[index];
-              status.forEach((element) {
+              Goods goods = brand.goods![index];
+              status!.forEach((element) {
                 if (element.goodsId == goods.goodsId && element.status == 0) {
                   canPush = false;
                 }
@@ -873,34 +874,34 @@ abstract class OrderDetailState<T extends StatefulWidget>
                 //Get.to(()=>WholesaleDetailPage(goodsId:  brand.goods[index].goodsId,isWholesale: true));
                 AppRouter.push(context, RouteName.COMMODITY_PAGE,
                     arguments: CommodityDetailPage.setArguments(
-                        brand.goods[index].goodsId));
+                        brand.goods![index].goodsId));
               } else {
                 ReToast.err(text: '商品已下架');
               }
             },
-            child: _goodsItem(brand.goods[index]),
+            child: _goodsItem(brand.goods![index]),
           );
         }));
   }
 
-  _wholesaleGoodsList(Brands brand, List<StatusList> status) {
+  _wholesaleGoodsList(Brands brand, List<StatusList>? status) {
     return ListView.builder(
-        itemCount: brand.goods.length,
+        itemCount: brand.goods!.length,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: ((context, index) {
           return FlatButton(
             onPressed: () {
               bool canPush = true;
-              Goods goods = brand.goods[index];
-              status.forEach((element) {
+              Goods goods = brand.goods![index];
+              status!.forEach((element) {
                 if (element.goodsId == goods.goodsId && element.status == 0) {
                   canPush = false;
                 }
               });
               if (canPush) {
                 Get.to(() => WholesaleDetailPage(
-                      goodsId: brand.goods[index].goodsId,
+                      goodsId: brand.goods![index].goodsId,
                     ));
                 // AppRouter.push(context, RouteName.COMMODITY_PAGE,
                 //     arguments: CommodityDetailPage.setArguments(
@@ -909,7 +910,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                 ReToast.err(text: '商品已下架');
               }
             },
-            child: _wholesaleGoodsItem(brand.goods[index]),
+            child: _wholesaleGoodsItem(brand.goods![index]),
           );
         }));
   }
@@ -957,7 +958,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                             alignment: Alignment.centerLeft,
                             padding: EdgeInsets.only(bottom: 10.rw),
                             child: Text(
-                              goods.goodsName,
+                              goods.goodsName!,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: AppTextStyle.generate(14 * 2.sp,
@@ -971,7 +972,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                               Container(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  "￥${goods.unitPrice.toStringAsFixed(2)}",
+                                  "￥${goods.unitPrice!.toStringAsFixed(2)}",
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: AppTextStyle.generate(12 * 2.sp,
@@ -1007,7 +1008,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                               padding: const EdgeInsets.symmetric(
                                   vertical: 3, horizontal: 6),
                               child: Text(
-                                goods.skuName,
+                                goods.skuName!,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTextStyle.generate(11 * 2.sp,
@@ -1051,13 +1052,13 @@ abstract class OrderDetailState<T extends StatefulWidget>
     if (goods.assType == 0 && isUserOrder) {
       if (goods.expressStatus == 0) {
         canRefund = true;
-        if (orderDetail.status == 0) canRefund = false;
+        if (orderDetail!.status == 0) canRefund = false;
       } else if (goods.expressStatus == 1) {
         canReturn = true;
       }
     }
     if (goods.refundStatus != 0) canRefund = false;
-    if (orderDetail.status != 1) canRefund = false;
+    if (orderDetail!.status != 1) canRefund = false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
@@ -1093,7 +1094,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          goods.goodsName,
+                          goods.goodsName!,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyle.generate(14 * 2.sp,
@@ -1115,7 +1116,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                               padding: const EdgeInsets.symmetric(
                                   vertical: 3, horizontal: 6),
                               child: Text(
-                                goods.skuName,
+                                goods.skuName!,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: AppTextStyle.generate(11 * 2.sp,
@@ -1140,7 +1141,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                       Row(
                         children: <Widget>[
                           Text(
-                            "￥${(goods.goodsAmount-goods.coinAmount).toStringAsFixed(2)}",
+                            "￥${(goods.goodsAmount!-goods.coinAmount!).toStringAsFixed(2)}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyle.generate(14 * 2.sp,
@@ -1169,7 +1170,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(40)),
                                   border: Border.all(
-                                      color: Colors.grey[600],
+                                      color: Colors.grey[600]!,
                                       width: 0.8 * 2.w),
                                   onPressed: () {
                                     returnClick(goods);
@@ -1189,7 +1190,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(40)),
                                   border: Border.all(
-                                      color: Colors.grey[600],
+                                      color: Colors.grey[600]!,
                                       width: 0.8 * 2.w),
                                   onPressed: () {
                                     refundClick(goods);
@@ -1206,7 +1207,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                                       goods.rStatus == "自提待确认")
                               ? Text(
                                   // _goodsStatus(goods),
-                                  goods.rStatus,
+                                  goods.rStatus!,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: AppTextStyle.generate(12 * 2.sp,
@@ -1233,7 +1234,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                                         // width: rSize(40),
                                         // height: 22,
                                         child: Text(
-                                          goods.rStatus,
+                                          goods.rStatus!,
                                           style: TextStyle(
                                               fontSize: 12 * 2.sp,
                                               fontWeight: FontWeight.w300,
@@ -1276,7 +1277,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
 
   _goodsStatus(Goods goods) {
     // 只有已付款的才有发货以及退换货状态
-    if (orderDetail.status != 1) return "";
+    if (orderDetail!.status != 1) return "";
     // 0 代表不是退款或退货的商品，则查询快递状态
     if (goods.assType == 0) {
       return GoodsStatusTool.goodsExpressStatusOrderDetailModel(goods);
@@ -1304,8 +1305,8 @@ abstract class OrderDetailState<T extends StatefulWidget>
 
   _brandBottomPrice(Brands brand) {
     int quantity = 0;
-    brand.goods.forEach((goods) {
-      quantity += goods.quantity;
+    brand.goods!.forEach((goods) {
+      quantity += goods.quantity!;
     });
     return Column(
       children: <Widget>[
@@ -1319,12 +1320,12 @@ abstract class OrderDetailState<T extends StatefulWidget>
                     children: [
                       TextSpan(
                           text:
-                              "${brand.brandGoodsTotalAmount.toStringAsFixed(2)}",
+                              "${brand.brandGoodsTotalAmount!.toStringAsFixed(2)}",
                           style: AppTextStyle.generate(14 * 2.sp,
                               color: Colors.grey)),
                       TextSpan(
                         text:
-                            "(含运费￥${brand.brandExpressTotalAmount.toStringAsFixed(2)})",
+                            "(含运费￥${brand.brandExpressTotalAmount!.toStringAsFixed(2)})",
                       ),
                     ]))),
       ],
@@ -1421,7 +1422,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                     )),
                 Container(
                     child: Text(
-                  orderDetail.buyerMsg,
+                  orderDetail!.buyerMsg!,
                   style: AppTextStyle.generate(12 * 2.sp,
                       color: Color(0xff333333)),
                 )),
@@ -1458,7 +1459,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                     fontWeight: FontWeight.bold),
               ),
               Text(
-                ' ${orderDetail.expireTime}',
+                ' ${orderDetail!.expireTime}',
                 style: TextStyle(
                     fontSize: 16.rsp,
                     color: Color(0xFFD5101A),
@@ -1476,22 +1477,22 @@ abstract class OrderDetailState<T extends StatefulWidget>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         TextUtils.isEmpty(
-                "${orderDetail.addr.receiverName}${orderDetail.addr.mobile}")
+                "${orderDetail!.addr!.receiverName}${orderDetail!.addr!.mobile}")
             ? Container()
             : RichText(
                 text: TextSpan(
-                    text: "${orderDetail.addr.receiverName}",
+                    text: "${orderDetail!.addr!.receiverName}",
                     style: AppTextStyle.generate(15 * 2.sp),
                     children: [
                     TextSpan(
-                        text: "   ${orderDetail.addr.mobile}",
+                        text: "   ${orderDetail!.addr!.mobile}",
                         style: AppTextStyle.generate(14 * 2.sp,
                             color: Colors.grey))
                   ])),
         Container(
           margin: EdgeInsets.only(top: 8 * 2.sp),
           child: Text(
-            "${orderDetail.addr.province + orderDetail.addr.city + orderDetail.addr.district + orderDetail.addr.address}",
+            "${orderDetail!.addr!.province! + orderDetail!.addr!.city! + orderDetail!.addr!.district! + orderDetail!.addr!.address!}",
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style:
@@ -1537,7 +1538,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
       decoration: BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.centerLeft,
-              colors: [AppColor.themeColor, Colors.red[400]])),
+              colors: [AppColor.themeColor, Colors.red[400]!])),
       child: RichText(
           text: TextSpan(
               text: "$status",
@@ -1552,10 +1553,10 @@ abstract class OrderDetailState<T extends StatefulWidget>
   }
 
   orderStatusMsg() {
-    switch (orderDetail.status) {
+    switch (orderDetail!.status) {
       case 0:
         status = "等待付款";
-        subTitle = "支付过期时间: ${orderDetail.expireTime}";
+        subTitle = "支付过期时间: ${orderDetail!.expireTime}";
         break;
       case 1:
         expressStatus();
@@ -1580,17 +1581,17 @@ abstract class OrderDetailState<T extends StatefulWidget>
   }
 
   expressStatus() {
-    if (orderDetail.expressStatus == 0) {
+    if (orderDetail!.expressStatus == 0) {
       status = "买家已付款";
       subTitle = "等待卖家发货";
       return;
     }
-    if (orderDetail.expressStatus == 1) {
+    if (orderDetail!.expressStatus == 1) {
       status = "部分商品已发货";
       subTitle = "商品正在赶往您的路上哦";
       return;
     }
-    if (orderDetail.expressStatus == 2) {
+    if (orderDetail!.expressStatus == 2) {
       status = "全部商品已发货";
       subTitle = "商品正在赶往您的路上哦";
       return;
@@ -1598,5 +1599,5 @@ abstract class OrderDetailState<T extends StatefulWidget>
   }
 
   @override
-  BuildContext get globalContext => super.globalContext;
+  BuildContext? get globalContext => super.globalContext;
 }

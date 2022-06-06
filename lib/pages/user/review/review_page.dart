@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/pages/user/review/already_review_page.dart';
 import 'package:recook/pages/user/review/need_review_page.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
 
 class ReviewPage extends StatefulWidget {
-  ReviewPage({Key key}) : super(key: key);
+  ReviewPage({Key? key}) : super(key: key);
 
   @override
   _ReviewPageState createState() => _ReviewPageState();
@@ -15,7 +14,7 @@ class ReviewPage extends StatefulWidget {
 
 class _ReviewPageState extends State<ReviewPage>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  TabController? _tabController;
   int waitReviewAmount = 0;
   @override
   void initState() {

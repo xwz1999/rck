@@ -6,9 +6,9 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class OrderCentralView extends StatefulWidget {
-  final Function(int index) clickListener;
+  final Function(int index)? clickListener;
 
-  const OrderCentralView({Key key, this.clickListener}) : super(key: key);
+  const OrderCentralView({Key? key, this.clickListener}) : super(key: key);
 
   @override
   _OrderCentralViewState createState() => _OrderCentralViewState();
@@ -60,7 +60,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                   fontSize: 12 * 2.sp,
                   color: Colors.black45,
                   onPressed: () {
-                    widget.clickListener(0);
+                    widget.clickListener!(0);
                   },
                 ),
                 Icon(
@@ -82,12 +82,12 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                 child: CustomImageButton(
                   padding: EdgeInsets.symmetric(vertical: rSize(10)),
                   dotPosition: DotPosition(right: rSize(8), top: 0),
-                  dotNum: getStore().state.userBrief.orderCenter.waitPay == 0
+                  dotNum: getStore().state.userBrief!.orderCenter!.waitPay == 0
                       ? ''
                       : getStore()
                           .state
-                          .userBrief
-                          .orderCenter
+                          .userBrief!
+                          .orderCenter!
                           .waitPay
                           .toString(),
                   dotColor: AppColor.themeColor,
@@ -101,7 +101,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                   color: Colors.grey[700],
                   contentSpacing: 8,
                   onPressed: () {
-                    widget.clickListener(1);
+                    widget.clickListener!(1);
                   },
                 ),
               ),
@@ -109,12 +109,12 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                 child: CustomImageButton(
                   padding: EdgeInsets.symmetric(vertical: rSize(10)),
                   dotPosition: DotPosition(right: rSize(8), top: 0),
-                  dotNum: getStore().state.userBrief.orderCenter.waitSend == 0
+                  dotNum: getStore().state.userBrief!.orderCenter!.waitSend == 0
                       ? ''
                       : getStore()
                           .state
-                          .userBrief
-                          .orderCenter
+                          .userBrief!
+                          .orderCenter!
                           .waitSend
                           .toString(),
                   dotColor: AppColor.themeColor,
@@ -128,7 +128,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                   color: Colors.grey[700],
                   contentSpacing: 8,
                   onPressed: () {
-                    widget.clickListener(2);
+                    widget.clickListener!(2);
                   },
                 ),
               ),
@@ -136,12 +136,12 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                 child: CustomImageButton(
                   padding: EdgeInsets.symmetric(vertical: rSize(10)),
                   dotPosition: DotPosition(right: rSize(8), top: 0),
-                  dotNum: getStore().state.userBrief.orderCenter.waitRecv == 0
+                  dotNum: getStore().state.userBrief!.orderCenter!.waitRecv == 0
                       ? ''
                       : getStore()
                           .state
-                          .userBrief
-                          .orderCenter
+                          .userBrief!
+                          .orderCenter!
                           .waitRecv
                           .toString(),
                   dotColor: AppColor.themeColor,
@@ -155,7 +155,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                   color: Colors.grey[700],
                   contentSpacing: 8,
                   onPressed: () {
-                    widget.clickListener(3);
+                    widget.clickListener!(3);
                   },
                 ),
               ),
@@ -193,12 +193,12 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                   // dotColor: AppColor.themeColor,
                   padding: EdgeInsets.symmetric(vertical: rSize(10)),
                   dotPosition: DotPosition(right: rSize(8), top: 0),
-                  dotNum: getStore().state.userBrief.orderCenter.afterNum == 0
+                  dotNum: getStore().state.userBrief!.orderCenter!.afterNum == 0
                       ? ''
                       : getStore()
                       .state
-                      .userBrief
-                      .orderCenter
+                      .userBrief!
+                      .orderCenter!
                       .afterNum
                       .toString(),
                   dotColor: AppColor.themeColor,
@@ -212,7 +212,7 @@ class _OrderCentralViewState extends BaseStoreState<OrderCentralView> {
                   fontSize: _fontSize,
                   contentSpacing: 8,
                   onPressed: () {
-                    widget.clickListener(5);
+                    widget.clickListener!(5);
                   },
                 ),
               ),

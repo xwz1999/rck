@@ -1,14 +1,14 @@
 class LiveResumeModel {
-  int liveItemId;
-  String pushUrl;
-  String groupId;
-  String nickname;
-  String headImgUrl;
-  int userId;
+  int? liveItemId;
+  String? pushUrl;
+  String? groupId;
+  String? nickname;
+  String? headImgUrl;
+  int? userId;
 
-  int praise;
-  List<GoodsLists> goodsLists;
-  int isFirst;
+  int? praise;
+  List<GoodsLists>? goodsLists;
+  int? isFirst;
 
   LiveResumeModel(
       {this.liveItemId,
@@ -33,7 +33,7 @@ class LiveResumeModel {
     if (json['goodsLists'] != null) {
       goodsLists = [];
       json['goodsLists'].forEach((v) {
-        goodsLists.add(new GoodsLists.fromJson(v));
+        goodsLists!.add(new GoodsLists.fromJson(v));
       });
     }
   }
@@ -49,32 +49,32 @@ class LiveResumeModel {
     data['praise'] = this.praise;
     data['isFirst'] = this.isFirst;
     if (this.goodsLists != null) {
-      data['goodsLists'] = this.goodsLists.map((v) => v.toJson()).toList();
+      data['goodsLists'] = this.goodsLists!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class GoodsLists {
-  int id;
-  String goodsName;
-  String brandImg;
-  String brandName;
-  int brandId;
-  String description;
-  int inventory;
-  int salesVolume;
-  String mainPhotoUrl;
-  String promotionName;
-  String originalPrice;
-  String discountPrice;
-  String commission;
-  List<String> tags;
-  int percent;
-  String startTime;
-  String endTime;
-  String coupon;
-  int isExplain;
+  int? id;
+  String? goodsName;
+  String? brandImg;
+  String? brandName;
+  int? brandId;
+  String? description;
+  int? inventory;
+  int? salesVolume;
+  String? mainPhotoUrl;
+  String? promotionName;
+  String? originalPrice;
+  String? discountPrice;
+  String? commission;
+  List<String>? tags;
+  int? percent;
+  String? startTime;
+  String? endTime;
+  String? coupon;
+  int? isExplain;
 
   GoodsLists(
       {this.id,

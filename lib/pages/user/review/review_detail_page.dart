@@ -11,19 +11,19 @@ import 'package:recook/widgets/recook_back_button.dart';
 
 class ReviewDetailPage extends StatefulWidget {
   final OrderReviewListModel reviewModel;
-  ReviewDetailPage({Key key, @required this.reviewModel}) : super(key: key);
+  ReviewDetailPage({Key? key, required this.reviewModel}) : super(key: key);
 
   @override
   _ReviewDetailPageState createState() => _ReviewDetailPageState();
 }
 
 class _ReviewDetailPageState extends State<ReviewDetailPage> {
-  ReviewResultModel _model;
+  ReviewResultModel? _model;
   @override
   void initState() {
     super.initState();
     HttpManager.post(OrderApi.checkReview, {
-      "id": widget.reviewModel.myOrderGoodsDea.evaluatedId,
+      "id": widget.reviewModel.myOrderGoodsDea!.evaluatedId,
     }).then((data) {
       setState(() {
         _model = ReviewResultModel.fromJson(data.data['data']);
@@ -70,7 +70,7 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
                         FadeInImage.assetNetwork(
                           placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                           image: Api.getImgUrl(
-                              widget.reviewModel.myOrderGoodsDea.mainPhotoUrl),
+                              widget.reviewModel.myOrderGoodsDea!.mainPhotoUrl)!,
                           height: rSize(56),
                           width: rSize(56),
                         ),
@@ -81,7 +81,7 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                widget.reviewModel.myOrderGoodsDea.goodsName,
+                                widget.reviewModel.myOrderGoodsDea!.goodsName!,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 softWrap: false,
@@ -93,7 +93,7 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
                               ),
                               SizedBox(height: rSize(6)),
                               Text(
-                                '型号规格 ${widget.reviewModel.myOrderGoodsDea.skuName}',
+                                '型号规格 ${widget.reviewModel.myOrderGoodsDea!.skuName}',
                                 style: TextStyle(
                                   color: Color(0xFF666666),
                                   fontSize: rSP(13),
@@ -106,7 +106,7 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
                     ),
                     SizedBox(height: rSize(20)),
                     Text(
-                      _model.goodsEva.content,
+                      _model!.goodsEva!.content!,
                       style: TextStyle(
                         color: Color(0xFF333333),
                         fontSize: rSP(14),
@@ -115,7 +115,7 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
                     Row(
                       children: [
                         Spacer(),
-                        _model.goodsEva.pass == 0
+                        _model!.goodsEva!.pass == 0
                             ? Text(
                                 '评论审核中',
                                 style: TextStyle(
@@ -123,7 +123,7 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
                                   fontSize: rSP(14),
                                 ),
                               )
-                            : _model.goodsEva.pass == 1
+                            : _model!.goodsEva!.pass == 1
                                 ? Text(
                                     '审核通过',
                                     style: TextStyle(
@@ -131,7 +131,7 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
                                       fontSize: rSP(14),
                                     ),
                                   )
-                                : _model.goodsEva.pass == 2
+                                : _model!.goodsEva!.pass == 2
                                     ? GestureDetector(
                                         onTap: () {
                                           Alert.show(
@@ -180,7 +180,7 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
                       ],
                     ),
                     //SizedBox(height: rSize(20)),
-                    _model.goodsEvaGoods.isEmpty
+                    _model!.goodsEvaGoods!.isEmpty
                         ? SizedBox()
                         : Row(
                             crossAxisAlignment: CrossAxisAlignment.end,
@@ -205,18 +205,18 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
                                         placeholder:
                                             R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                                         image: Api.getImgUrl(
-                                            _model.goodsEvaGoods[index].url),
+                                            _model!.goodsEvaGoods![index].url)!,
                                         fit: BoxFit.cover,
                                       ),
                                     );
                                   },
                                   shrinkWrap: true,
                                   physics: NeverScrollableScrollPhysics(),
-                                  itemCount: _model.goodsEvaGoods.length,
+                                  itemCount: _model!.goodsEvaGoods!.length,
                                 ),
                               ),
                               Text(
-                                '共${_model.goodsEvaGoods.length}张',
+                                '共${_model!.goodsEvaGoods!.length}张',
                                 style: TextStyle(
                                   fontSize: rSP(12),
                                   color: Color(0xFF666666),

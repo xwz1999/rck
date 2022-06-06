@@ -1,19 +1,19 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class GoodPriceView extends StatefulWidget {
-  final GoodsDetailModel detailModel;
-  final VoidCallback shareCallback;
+  final GoodsDetailModel? detailModel;
+  final VoidCallback? shareCallback;
 
   const GoodPriceView({
-    Key key,
+    Key? key,
     this.detailModel,
     this.shareCallback,
   }) : super(key: key);
@@ -25,10 +25,10 @@ class GoodPriceView extends StatefulWidget {
 }
 
 class _GoodPriceViewState extends State<GoodPriceView> {
-  GoodsDetailModel detailModel;
-  VoidCallback shareCallback;
+  GoodsDetailModel? detailModel;
+  VoidCallback? shareCallback;
 
-  num _coupon = 0;
+  num? _coupon = 0;
 
   @override
   void initState() {
@@ -51,8 +51,8 @@ class _GoodPriceViewState extends State<GoodPriceView> {
         _name(),
         _detail(),
         //京东商品隐藏
-        widget.detailModel.data.vendorId == 1800 ||
-                widget.detailModel.data.vendorId == 2000
+        widget.detailModel!.data!.vendorId == 1800 ||
+                widget.detailModel!.data!.vendorId == 2000
             ? SizedBox()
             : Padding(
                 padding: EdgeInsets.only(top: 5.rw),
@@ -64,25 +64,25 @@ class _GoodPriceViewState extends State<GoodPriceView> {
 
   Container _price() {
     // bool hasPromotion = detailModel.data.promotion != null;
-    double minPrice = 0.0,
+    double? minPrice = 0.0,
         //maxPrice,
         // maxCommission,
         minCommission = 0.0,
         minOriginPrice = 0.0;
         //maxOriginPrice;
-    num coupon = 0;
-    int saleNum = 0;
+    num? coupon = 0;
+    int? saleNum = 0;
     //
     // maxCommission = detailModel.data.price.max.commission;
     // minCommission = detailModel.data.price.min.commission;
 
-    detailModel.data.sku.forEach((element) {
+    detailModel!.data!.sku!.forEach((element) {
       if(minPrice==0.0){
-        minPrice = element.discountPrice;
+        minPrice = element!.discountPrice;
         minCommission = element.commission;
         minOriginPrice = element.originalPrice;
       }else
-        if(element.discountPrice<minPrice){
+        if(element!.discountPrice!<minPrice!){
           minPrice = element.discountPrice;
           minCommission = element.commission;
           minOriginPrice = element.originalPrice;
@@ -91,15 +91,15 @@ class _GoodPriceViewState extends State<GoodPriceView> {
     });
 
 
-    saleNum = detailModel.data.salesVolume;
+    saleNum = detailModel!.data!.salesVolume;
 
     // minOriginPrice = detailModel.data.price.min.originalPrice;
 
 
-    if (detailModel.data.sku != null && detailModel.data.sku.length > 0) {
-      coupon = detailModel.data.sku[0].coupon;
-      detailModel.data.sku.forEach((element) {
-        if (coupon > element.coupon) coupon = element.coupon;
+    if (detailModel!.data!.sku != null && detailModel!.data!.sku!.length > 0) {
+      coupon = detailModel!.data!.sku![0]!.coupon;
+      detailModel!.data!.sku!.forEach((element) {
+        if (coupon! > element!.coupon!) coupon = element.coupon;
       });
     } else {
       coupon = 0;
@@ -116,12 +116,12 @@ class _GoodPriceViewState extends State<GoodPriceView> {
     String commission, price, originPrice;
 
 
-    commission = minCommission.toStringAsFixed(2);
+    commission = minCommission!.toStringAsFixed(2);
 
-    price = (minPrice - minCommission).toStringAsFixed(2);
+    price = (minPrice! - minCommission!).toStringAsFixed(2);
 
 
-    originPrice = minOriginPrice.toStringAsFixed(2);
+    originPrice = minOriginPrice!.toStringAsFixed(2);
 
 
     //
@@ -313,7 +313,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              detailModel.data.isImport == 1
+              detailModel!.data!.isImport == 1
                   ? Container(
                       child: Container(
                         margin: EdgeInsets.only(right: 8.rw, top: 5.rw),
@@ -321,12 +321,12 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                         width: 24.rw,
                         height: 15.rw,
                         decoration: BoxDecoration(
-                          color: detailModel.data.countryIcon == null
+                          color: detailModel!.data!.countryIcon == null
                               ? Color(0xFFCC1B4F)
                               : Colors.transparent,
                           borderRadius: BorderRadius.circular(3 * 2.w),
                         ),
-                        child: detailModel.data.countryIcon == null
+                        child: detailModel!.data!.countryIcon == null
                             ? Text(
                                 '进口',
                                 style: TextStyle(
@@ -339,19 +339,19 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                                 width: rSize(100),
                                 height: rSize(100),
                                 imageUrl:
-                                    Api.getImgUrl(detailModel.data.countryIcon),
+                                    Api.getImgUrl(detailModel!.data!.countryIcon),
                                 fit: BoxFit.cover,
                               ),
                       ),
                     )
                   : Container(child: SizedBox()),
-              detailModel.data.isImport == 1
+              detailModel!.data!.isImport == 1
                   ? Container(
                       child: Container(
                       width: 5 * 2.w,
                     ))
                   : Container(child: SizedBox()),
-              detailModel.data.vendorId == 1800 || detailModel.data.vendorId == 2000
+              detailModel!.data!.vendorId == 1800 || detailModel!.data!.vendorId == 2000
                   ? //jd的商品供应商 自营为1800 pop 为2000?
                   Container(
                       child: Container(
@@ -370,9 +370,9 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                         children: [
                           2.hb,
                           Text(
-                            detailModel.data.vendorId == 1800
+                            detailModel!.data!.vendorId == 1800
                                 ? '京东自营'
-                                : detailModel.data.vendorId == 2000
+                                : detailModel!.data!.vendorId == 2000
                                     ? '京东优选'
                                     : '',
                             maxLines: 1,
@@ -384,29 +384,39 @@ class _GoodPriceViewState extends State<GoodPriceView> {
                   : Container(child: SizedBox()),
 
               Expanded(
-                child: SelectableText(
-                  detailModel.data.goodsName,
-                  maxLines: 4,
-                  // overflow: TextOverflow.ellipsis,
-                  style: AppTextStyle.generate(
-                    16.rsp,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xff333333),
+                child: GestureDetector(
+                  onLongPress: (){
+                    ClipboardData data = new ClipboardData(text:detailModel!.data!.goodsName!);
+                    Clipboard.setData(data);
+                    BotToast.showText(text: '复制成功');
+                  },
+                  child: Text(
+                    detailModel!.data!.goodsName!,
+                    maxLines: 4,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppTextStyle.generate(
+                      16.rsp,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xff333333),
+                    ),
                   ),
                 ),
               ),
-              Text(
-                '已售${detailModel.data.salesVolume}件',
-                style: TextStyle(
-                  // shadows: [
-                  //   Shadow(
-                  //     color: Colors.black26,
-                  //     blurRadius: rSize(1),
-                  //     offset: Offset(0, rSize(1)),
-                  //   ),
-                  // ],
-                  fontSize: 12.rsp,
-                  color: Color(0xFF666666),
+              Padding(
+                padding:  EdgeInsets.only(top: 5.w),
+                child: Text(
+                  '已售${detailModel!.data!.salesVolume}件',
+                  style: TextStyle(
+                    // shadows: [
+                    //   Shadow(
+                    //     color: Colors.black26,
+                    //     blurRadius: rSize(1),
+                    //     offset: Offset(0, rSize(1)),
+                    //   ),
+                    // ],
+                    fontSize: 12.rsp,
+                    color: Color(0xFF666666),
+                  ),
                 ),
               ),
 
@@ -492,11 +502,11 @@ class _GoodPriceViewState extends State<GoodPriceView> {
 
   /// 详情
   Widget _detail() {
-    return detailModel.data.description != ''
+    return detailModel!.data!.description != ''
         ? Padding(
             padding: const EdgeInsets.only(left: 10.0),
             child: Text(
-              detailModel.data.description,
+              detailModel!.data!.description!,
               style: AppTextStyle.generate(14 * 2.sp,
                   fontWeight: FontWeight.w400, color: Color(0xffb5b5b5)),
             ),

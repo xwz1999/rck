@@ -15,11 +15,11 @@ part 'express_company_model.g.dart';
 @JsonSerializable()
 class ExpressCompanyModel extends Object {
 
-  String code;
+  String? code;
 
-  List<String> data;
+  List<String>? data;
 
-  String msg;
+  String? msg;
 
   ExpressCompanyModel(this.code,this.data,this.msg,);
 

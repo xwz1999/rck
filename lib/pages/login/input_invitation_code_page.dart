@@ -14,7 +14,6 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/progress/sc_dialog.dart';
 import 'package:recook/widgets/text_button.dart' as TButton;
 import 'package:recook/widgets/toast.dart';
 
@@ -28,13 +27,12 @@ class InvitationCodePage extends StatefulWidget {
 
   final Map argument;
 
-  InvitationCodePage({this.argument})
-      : assert(argument != null, "argument 不能为空");
+  InvitationCodePage({required this.argument});
 
   // mode == 0 : 手机登录需要注册
   // mode == 1 : 微信登录需要注册
   static setArgs(
-      {int mode = 0, String mobile, String nickName = "用户", int userID}) {
+      {int mode = 0, String? mobile, String nickName = "用户", int? userID}) {
     if (mode == 0) {
       return {KEY_MODE: 0, KEY_MOBILE: mobile};
     }
@@ -53,7 +51,7 @@ class InvitationCodePage extends StatefulWidget {
 }
 
 class _InvitationCodePageState extends BaseStoreState<InvitationCodePage> {
-  TextEditingController _controller;
+  TextEditingController? _controller;
 
   bool _loginEnable = false;
 
@@ -90,7 +88,7 @@ class _InvitationCodePageState extends BaseStoreState<InvitationCodePage> {
                 )),
             Container(
                 margin: EdgeInsets.only(top: 8, left: 20, right: 20),
-                child: getStore().state.openinstall.code.length > 0
+                child: getStore().state.openinstall!.code!.length > 0
                     ? Container()
                     : Text(
                         "检测到您是第一次登录，请输入邀请码",
@@ -123,7 +121,7 @@ class _InvitationCodePageState extends BaseStoreState<InvitationCodePage> {
   }
 
   Container _invitationInput(BuildContext context) {
-    String bindData = getStore().state.openinstall.code;
+    String bindData = getStore().state.openinstall!.code!;
     if (bindData.length > 0) {
       setState(() {
         _loginEnable = true;
@@ -181,15 +179,15 @@ class _InvitationCodePageState extends BaseStoreState<InvitationCodePage> {
   }
 
   _phoneRegister(BuildContext context) {
-    String bindData = getStore().state.openinstall.code;
+    String bindData = getStore().state.openinstall!.code!;
     if (bindData.length <= 0) {
-      bindData = _controller.text.toUpperCase();
+      bindData = _controller!.text.toUpperCase();
     }
     UserDao.phoneRegister(widget.argument["mobile"], bindData,
         success: (data, code, msg) {
       GSDialog.of(context).dismiss(context);
       AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
-      UserManager.updateUser(data, getStore());
+      UserManager.updateUser(data!, getStore());
     }, failure: (code, msg) {
       GSDialog.of(context).dismiss(context);
       Toast.showError(msg);

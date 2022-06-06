@@ -1,11 +1,10 @@
 
 import 'package:recook/constants/header.dart';
-import 'package:recook/utils/print_util.dart';
 
 class Api {
-  static String host;
-  static String domain;
-  static String cdnDomin;
+  static String? host;
+  static String? domain;
+  static String? cdnDomin;
 
   static const String domainPro = "https://mallapi.reecook.cn";
   static const String domainDev = "https://mallapi.reecook.cn";
@@ -27,8 +26,8 @@ class Api {
     host = "$domain/api";
   }
 
-  static String getImgUrl(String url, {bool print = false}) {
-    if (!TextUtils.isEmpty(url) && url.startsWith("http")) {
+  static String? getImgUrl(String? url, {bool print = false}) {
+    if (!TextUtils.isEmpty(url) && url!.startsWith("http")) {
       return url;
     }
     if (print) {
@@ -393,14 +392,14 @@ class InvoiceApi {
 class SystemApi {
   // String system;
   // 工厂模式
-  factory SystemApi() => _getInstance();
-  static SystemApi get instance => _getInstance();
-  static SystemApi _instance;
+  factory SystemApi() => _getInstance()!;
+  static SystemApi? get instance => _getInstance();
+  static SystemApi? _instance;
   SystemApi._internal() {
     // 初始化
     // system = "";
   }
-  static SystemApi _getInstance() {
+  static SystemApi? _getInstance() {
     if (_instance == null) {
       _instance = new SystemApi._internal();
     }

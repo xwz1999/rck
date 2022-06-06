@@ -1,7 +1,7 @@
 
-import 'package:flutter/cupertino.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
@@ -27,12 +27,12 @@ import 'models/wholesale_order_preview_model.dart';
 
 class WholesaleGoodsOrderPage extends StatefulWidget {
   //final WholesaleOrderPreviewModel model;
-  final Map arguments;
+  final Map? arguments;
   static setArguments(WholesaleOrderPreviewModel model) {
     return {"order": model};
   }
 
-  const WholesaleGoodsOrderPage({Key key, this.arguments}) : super(key: key);
+  const WholesaleGoodsOrderPage({Key? key, this.arguments}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -41,14 +41,14 @@ class WholesaleGoodsOrderPage extends StatefulWidget {
 }
 
 class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPage> {
-  WholesaleOrderPreviewModel _orderModel;
-  OrderPresenterImpl _presenterImpl;
-  ScrollController _controller;
+  WholesaleOrderPreviewModel? _orderModel;
+  late OrderPresenterImpl _presenterImpl;
+  ScrollController? _controller;
 
-  TextEditingController _editController;
+  TextEditingController? _editController;
   FocusNode _focusNode = FocusNode();
 
-  String _selectedStoreName;
+  String? _selectedStoreName;
   int totalNum = 0;
 
   bool _accept = false;
@@ -59,23 +59,23 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
   void initState() {
     super.initState();
 
-    _orderModel = widget.arguments["order"];
-    _orderModel.skuList.forEach((element) {
-      totalNum+=element.quantity;
+    _orderModel = widget.arguments!["order"];
+    _orderModel!.skuList!.forEach((element) {
+      totalNum+=element.quantity!;
     });
 
     _presenterImpl = OrderPresenterImpl();
     _controller = ScrollController();
-    _controller.addListener(() {});
+    _controller!.addListener(() {});
     _editController =
         TextEditingController(text: '');
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
-        String text = _editController.text;
+        String text = _editController!.text;
         if (text == _buyerMessage) {
           return;
         }
-        _changeOrder(_orderModel.addr.id,_orderModel.previewId,text);
+        _changeOrder(_orderModel!.addr!.id,_orderModel!.previewId,text);
       }
     });
   }
@@ -84,7 +84,7 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
   void dispose() {
     _controller?.dispose();
     _editController?.dispose();
-    _focusNode?.dispose();
+    _focusNode.dispose();
     super.dispose();
   }
 
@@ -116,7 +116,7 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
             child: GestureDetector(
               onVerticalDragDown: (detail) {
                 if (globalContext != null) {
-                  FocusScope.of(globalContext).requestFocus(FocusNode());
+                  FocusScope.of(globalContext!).requestFocus(FocusNode());
                 }
               },
               child: CustomScrollView(
@@ -133,11 +133,11 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
                   SliverList(
                       delegate: SliverChildBuilderDelegate((context, index) {
                     return WholesaleGoodsOrderItem(
-                      brand: _orderModel.skuList[index],
-                      length: _orderModel.skuList.length,
+                      brand: _orderModel!.skuList![index],
+                      length: _orderModel!.skuList!.length,
                       index: index,
                     );
-                  }, childCount: _orderModel.skuList.length)),
+                  }, childCount: _orderModel!.skuList!.length)),
                   SliverToBoxAdapter(
                     child: Container(
                       height: 10.rw,
@@ -173,13 +173,13 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
       onPressed: () {
         AppRouter.push(context, RouteName.RECEIVING_ADDRESS_PAGE,
                 arguments: ReceivingAddressPage.setArguments(
-                    canBack: true, addr: Addr(0, _orderModel.addr.id,_orderModel.addr.province, _orderModel.addr.city, _orderModel.addr.district, _orderModel.addr.address, _orderModel.addr.name, _orderModel.addr.mobile, 1)))
+                    canBack: true, addr: Addr(0, _orderModel!.addr!.id,_orderModel!.addr!.province, _orderModel!.addr!.city, _orderModel!.addr!.district, _orderModel!.addr!.address, _orderModel!.addr!.name, _orderModel!.addr!.mobile, 1)))
             .then((address) {
           DPrint.printf(address.runtimeType);
           if (address != null && address is Address) {
 //            if (_orderModel.data.addr != null && address.id == _orderModel.data.addr.addressId) return;
-              _changeOrder(address.id,_orderModel.previewId,_editController.text).then((value) {
-              _orderModel.addr = address;
+              _changeOrder(address.id,_orderModel!.previewId,_editController!.text).then((value) {
+              _orderModel!.addr = address;
               setState(() {
 
               });
@@ -220,7 +220,7 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
   }
 
   _addressView() {
-    return _orderModel.addr == null
+    return _orderModel!.addr == null
         ? Text(
             "请先选择地址",
             style: AppTextStyle.generate(15),
@@ -231,23 +231,23 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
             children: <Widget>[
               RichText(
                   text: TextSpan(
-                      text: _orderModel.addr.name,
+                      text: _orderModel!.addr!.name,
                       style: AppTextStyle.generate(15 * 2.sp),
                       children: [
                     TextSpan(
-                        text: "   ${_orderModel.addr.mobile}",
+                        text: "   ${_orderModel!.addr!.mobile}",
                         style: AppTextStyle.generate(14 * 2.sp,
                             color: Colors.grey))
                   ])),
               Container(
                 margin: EdgeInsets.only(top: 8 * 2.sp),
                 child: Text(
-                  TextUtils.isEmpty(_orderModel.addr.address)
+                  TextUtils.isEmpty(_orderModel!.addr!.address)
                       ? "空地址"
-                      : _orderModel.addr.province +
-                          _orderModel.addr.city +
-                          _orderModel.addr.district +
-                          _orderModel.addr.address,
+                      : _orderModel!.addr!.province! +
+                          _orderModel!.addr!.city! +
+                          _orderModel!.addr!.district! +
+                          _orderModel!.addr!.address!,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.generate(14 * 2.sp,
@@ -344,7 +344,7 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
         children: <Widget>[
 
           _titleRow("商品金额", "",
-              "合计:￥${_orderModel.total.toStringAsFixed(2)}",'共$totalNum件',subTitleColor: Color(0xFF999999),
+              "合计:￥${_orderModel!.total!.toStringAsFixed(2)}",'共$totalNum件',subTitleColor: Color(0xFF999999),
               rightTitleColor: Colors.black),
           Container(
             height: 10,
@@ -358,7 +358,7 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
       {titleColor,
       subTitleColor,
       rightTitleColor,
-      Function(bool) switchChange,
+      Function(bool)? switchChange,
       bool switchValue = false,
       bool switchEnable = false}) {
     return Container(
@@ -528,9 +528,9 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
   }
 
 
-  Future _changeOrder(int addressId,int previewId,String message) async{
+  Future _changeOrder(int? addressId,int? previewId,String message) async{
     final cancel = ReToast.loading();
-    ResultData result = await WholesaleFunc.updateOrder(addressId, previewId, message);
+    ResultData result = await (WholesaleFunc.updateOrder(addressId, previewId, message) as FutureOr<ResultData>);
     cancel();
     if(!result.result){
       ReToast.err(text: result.msg);
@@ -545,21 +545,21 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
 
   _submit(BuildContext context) async {
     final cancel = ReToast.loading();
-    HttpResultModel<OrderPrepayModel> resultModel = await _presenterImpl
-        .submitOrder(_orderModel.previewId, UserManager.instance.user.info.id);
+    HttpResultModel<OrderPrepayModel?> resultModel = await _presenterImpl
+        .submitOrder(_orderModel!.previewId, UserManager.instance!.user.info!.id);
     cancel();
     if (!resultModel.result) {
       ReToast.err(text: resultModel.msg);
       return;
     }
-    UserManager.instance.refreshShoppingCart.value = true;
-    UserManager.instance.refreshShoppingCartNumber.value = true;
+    UserManager.instance!.refreshShoppingCart.value = true;
+    UserManager.instance!.refreshShoppingCartNumber.value = true;
 
 
     AppRouter.pushAndReplaced(
-        globalContext, RouteName.ORDER_DETAIL,
+        globalContext!, RouteName.ORDER_DETAIL,
         arguments:
-        OrderDetailPage.setArguments(resultModel.data.data.id,true));
+        OrderDetailPage.setArguments(resultModel.data!.data!.id,true));
 
     // AppRouter.pushAndReplaced(context, RouteName.ORDER_PREPAY_PAGE,
     //     arguments: OrderPrepayPage.setArguments(
@@ -573,7 +573,7 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
   _customer(){
     return GestureDetector(
       onTap: () async{
-        WholesaleCustomerModel model = await
+        WholesaleCustomerModel? model = await
         WholesaleFunc.getCustomerInfo();
 
         Get.to(()=>WholesaleCustomerPage(model: model,));

@@ -18,9 +18,9 @@ class CommissionIncomeWidget extends StatefulWidget {
 
 class _CommissionIncomeWidgetState extends State<CommissionIncomeWidget> {
   int _page = 0;
-  CommissionIncomeModel _model;
-  List<IncomeList> _listData = [];
-  GSRefreshController _gsRefreshController;
+  CommissionIncomeModel? _model;
+  List<IncomeList>? _listData = [];
+  GSRefreshController? _gsRefreshController;
   List<String> _dateList = [];
   var _selectValue;
 
@@ -109,7 +109,7 @@ class _CommissionIncomeWidgetState extends State<CommissionIncomeWidget> {
       },
       onSelected: (String value) {
         _selectValue = value;
-        _gsRefreshController.requestRefresh();
+        _gsRefreshController!.requestRefresh();
         _page = 0;
         setState(() {});
       },
@@ -124,19 +124,19 @@ class _CommissionIncomeWidgetState extends State<CommissionIncomeWidget> {
         _page = 0;
         _getListModel();
       },
-      onLoadMore: _listData == null || _listData.length < (_page + 1) * 20
+      onLoadMore: _listData == null || _listData!.length < (_page + 1) * 20
           ? null
           : () {
               _page++;
               _getListModel();
             },
-      body: _listData == null || _listData.length == 0
+      body: _listData == null || _listData!.length == 0
           ? NoDataView(title: '没有数据...')
           : ListView.builder(
               itemBuilder: (_, index) {
-                return _itemWidget(_listData[index]);
+                return _itemWidget(_listData![index]);
               },
-              itemCount: _listData.length,
+              itemCount: _listData!.length,
             ),
     );
   }
@@ -144,15 +144,15 @@ class _CommissionIncomeWidgetState extends State<CommissionIncomeWidget> {
   _getListModel() async {
     ResultData resultData =
         await HttpManager.post(ShopApi.income_sales_sum_list, {
-      "userId": UserManager.instance.user.info.id,
+      "userId": UserManager.instance!.user.info!.id,
       "page": _page,
       "date": _selectValue,
     });
-    _gsRefreshController.isRefresh()
-        ? _gsRefreshController.refreshCompleted()
+    _gsRefreshController!.isRefresh()
+        ? _gsRefreshController!.refreshCompleted()
         : null;
-    _gsRefreshController.isLoading()
-        ? _gsRefreshController.loadComplete()
+    _gsRefreshController!.isLoading()
+        ? _gsRefreshController!.loadComplete()
         : null;
 
     if (!resultData.result) {
@@ -167,9 +167,9 @@ class _CommissionIncomeWidgetState extends State<CommissionIncomeWidget> {
     }
     _model = model;
     if (_page == 0) {
-      _listData = model.data.list;
+      _listData = model.data!.list;
     } else {
-      _listData.addAll(model.data.list);
+      _listData!.addAll(model.data!.list!);
     }
     setState(() {});
   }
@@ -188,7 +188,7 @@ class _CommissionIncomeWidgetState extends State<CommissionIncomeWidget> {
                   height: 10,
                 ),
                 Image.asset(
-                  data.amount > 0
+                  data.amount! > 0
                       ? 'assets/icon_income_in.png'
                       : 'assets/icon_income_out.png',
                   width: 40,
@@ -209,7 +209,7 @@ class _CommissionIncomeWidgetState extends State<CommissionIncomeWidget> {
                           alignment: Alignment.centerLeft,
                           padding: EdgeInsets.only(right: 20),
                           child: Text(
-                            data.title,
+                            data.title!,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -219,11 +219,11 @@ class _CommissionIncomeWidgetState extends State<CommissionIncomeWidget> {
                     Expanded(
                       flex: 1,
                       child: Text(
-                        data.amount > 0
+                        data.amount! > 0
                             ? '+' + data.amount.toString()
                             : data.amount.toString(),
                         style: TextStyle(
-                            color: data.amount > 0 ? Colors.red : Colors.green,
+                            color: data.amount! > 0 ? Colors.red : Colors.green,
                             fontSize: 18 * 2.sp),
                       ),
                     ),
@@ -232,7 +232,7 @@ class _CommissionIncomeWidgetState extends State<CommissionIncomeWidget> {
                 Container(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      data.comment,
+                      data.comment!,
                       style: TextStyle(
                           color: Colors.black.withOpacity(0.5),
                           fontSize: 12 * 2.sp),
@@ -241,7 +241,7 @@ class _CommissionIncomeWidgetState extends State<CommissionIncomeWidget> {
                     margin: EdgeInsets.only(top: 10),
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      data.orderTime != null ? data.orderTime : "",
+                      data.orderTime != null ? data.orderTime! : "",
                       style: TextStyle(
                           color: Colors.black.withOpacity(0.5),
                           fontSize: 12 * 2.sp),

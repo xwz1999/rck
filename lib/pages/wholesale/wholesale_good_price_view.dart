@@ -1,18 +1,18 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
-import 'package:recook/constants/app_image_resources.dart';
+import 'package:flutter/services.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/pages/wholesale/models/wholesale_detail_model.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class WholesaleGoodPriceView extends StatefulWidget {
-  final WholesaleDetailModel detailModel;
-  final VoidCallback shareCallback;
+  final WholesaleDetailModel? detailModel;
+  final VoidCallback? shareCallback;
 
 
   const WholesaleGoodPriceView(
-      {Key key, this.detailModel, this.shareCallback})
+      {Key? key, this.detailModel, this.shareCallback})
       : super(key: key);
 
   @override
@@ -22,8 +22,8 @@ class WholesaleGoodPriceView extends StatefulWidget {
 }
 
 class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
-  WholesaleDetailModel detailModel;
-  VoidCallback shareCallback;
+  WholesaleDetailModel? detailModel;
+  VoidCallback? shareCallback;
 
 
   @override
@@ -57,35 +57,35 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
 
   Container _price() {
     // bool hasPromotion = detailModel.data.promotion != null;
-    num minPrice,
+    num? minPrice,
         maxPrice,
         maxCommission,
         minCommission,
         minOriginPrice,
         maxOriginPrice;
 
-    int saleNum = 0;
+    int? saleNum = 0;
 
-    int min = 0;///起批量
-
-
-
-    minPrice = detailModel.price.min.salePrice;
-    maxPrice = detailModel.price.max.salePrice;
+    int? min = 0;///起批量
 
 
-    saleNum = detailModel.salesVolume;
 
-    minOriginPrice = detailModel.price.min.discountPrice;///批发的零售价为到手价
-    maxOriginPrice = detailModel.price.max.discountPrice;
+    minPrice = detailModel!.price!.min!.salePrice;
+    maxPrice = detailModel!.price!.max!.salePrice;
 
-    maxCommission = maxOriginPrice - maxPrice;
-    minCommission = minOriginPrice - minPrice;
 
-    if (detailModel.sku != null && detailModel.sku.length > 0) {
-      min = detailModel.sku[0].min;
-      detailModel.sku.forEach((element) {
-        if (min < element.min) min = element.min;
+    saleNum = detailModel!.salesVolume as int?;
+
+    minOriginPrice = detailModel!.price!.min!.discountPrice;///批发的零售价为到手价
+    maxOriginPrice = detailModel!.price!.max!.discountPrice;
+
+    maxCommission = maxOriginPrice! - maxPrice!;
+    minCommission = minOriginPrice! - minPrice!;
+
+    if (detailModel!.sku != null && detailModel!.sku!.length > 0) {
+      min = detailModel!.sku![0]!.min as int?;
+      detailModel!.sku!.forEach((element) {
+        if (min! < element!.min!) min = element.min as int?;
       });
     } else {
       min = 0;
@@ -277,13 +277,13 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          detailModel.isImport == 1
+          detailModel!.isImport == 1
               ? Container(
                   child: Container(
                   width: 5 * 2.w,
                 ))
               : Container(child: SizedBox()),
-          detailModel.vendorId == 1800 || detailModel.vendorId == 2000
+          detailModel!.vendorId == 1800 || detailModel!.vendorId == 2000
               ? //jd的商品供应商 自营为1800 pop 为2000?
               Container(
                   child: Container(
@@ -302,9 +302,9 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
                     children: [
                       2.hb,
                       Text(
-                        detailModel.vendorId == 1800
+                        detailModel!.vendorId == 1800
                             ? '京东自营'
-                            : detailModel.vendorId == 2000
+                            : detailModel!.vendorId == 2000
                                 ? '京东优选'
                                 : '',
                         maxLines: 1,
@@ -316,20 +316,27 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
               : Container(child: SizedBox()),
 
           Expanded(
-            child: Text(
-              detailModel.goodsName,
-              maxLines: 4,
-              overflow: TextOverflow.ellipsis,
-              style: AppTextStyle.generate(
-                16.rsp,
-                fontWeight: FontWeight.w600,
-                color: Color(0xff333333),
+            child: GestureDetector(
+              onLongPress: (){
+                ClipboardData data = new ClipboardData(text:detailModel!.goodsName!);
+                Clipboard.setData(data);
+                BotToast.showText(text: '复制成功');
+              },
+              child: Text(
+                detailModel!.goodsName!,
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis,
+                style: AppTextStyle.generate(
+                  16.rsp,
+                  fontWeight: FontWeight.w600,
+                  color: Color(0xff333333),
+                ),
               ),
             ),
           ),
 
           Text(
-            '已订${detailModel.salesVolume}单',
+            '已订${detailModel!.salesVolume}单',
             style: TextStyle(
               // shadows: [
               //   Shadow(
@@ -379,11 +386,11 @@ class _WholesaleGoodPriceViewState extends State<WholesaleGoodPriceView> {
 
   /// 详情
   Widget _detail() {
-    return detailModel.description != ''
+    return detailModel!.description != ''
         ? Padding(
             padding: const EdgeInsets.only(left: 10.0),
             child: Text(
-              detailModel.description,
+              detailModel!.description!,
               style: AppTextStyle.generate(14 * 2.sp,
                   fontWeight: FontWeight.w400, color: Color(0xffb5b5b5)),
             ),

@@ -1,20 +1,18 @@
 import 'package:azlistview/azlistview.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:lpinyin/lpinyin.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/weather_page/models.dart';
 import 'package:recook/widgets/weather_page/weather_city_model.dart';
 import 'package:recook/widgets/weather_page/weather_city_tool.dart';
 
 class WeatherCityPage extends StatefulWidget {
-  final Map arguments;
-  WeatherCityPage({Key key, this.arguments}) : super(key: key);
+  final Map? arguments;
+  WeatherCityPage({Key? key, this.arguments}) : super(key: key);
   static setArguments(
     String cityName,
   ) {
@@ -32,9 +30,9 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
   int _itemHeight = 50;
   String _suspensionTag = "A";
   List<WeatherCityModel> _cityList = [];
-  String _selectCity = "";
+  String? _selectCity = "";
   List<WeatherCityModel> _searchResultCityList = [];
-  TextEditingController _textEditingController;
+  TextEditingController? _textEditingController;
   FocusNode _focusNode = FocusNode();
   List<CityModel> _list = [];
 
@@ -45,9 +43,9 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
     _focusNode.addListener(() {
       setState(() {});
     });
-    String cityName = widget.arguments['cityName'];
+    String? cityName = widget.arguments!['cityName'];
     if (!TextUtils.isEmpty(cityName)) _selectCity = cityName;
-    WeatherCityTool.getInstance().getCityList().then((onValue) {
+    WeatherCityTool.getInstance()!.getCityList().then((onValue) {
       _cityList = onValue;
 
       _cityList.forEach((element) {
@@ -66,7 +64,7 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
   void _handleList(List<CityModel> list) {
     if (list.isEmpty) return;
     for (int i = 0, length = list.length; i < length; i++) {
-      String pinyin = PinyinHelper.getPinyinE(list[i].name);
+      String pinyin = PinyinHelper.getPinyinE(list[i].name!);
       String tag = pinyin.substring(0, 1).toUpperCase();
       list[i].namePinyin = pinyin;
       if (RegExp('[A-Z]').hasMatch(tag)) {
@@ -103,7 +101,7 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
           children: <Widget>[
             _searchBar(),
             _focusNode.hasFocus ||
-                    !TextUtils.isEmpty(_textEditingController.text)
+                    !TextUtils.isEmpty(_textEditingController!.text)
                 ? Expanded(child: _resultWidget())
                 : Expanded(
                     child: Column(
@@ -114,7 +112,8 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
 
                             WeatherCityModel model = WeatherCityModel();
                             model.cityZh = _selectCity;
-                            Navigator.pop(context, model);
+                            Get.back(result: model);
+                            //Navigator.pop(context, model);
                           },
                           child: Container(
                             alignment: Alignment.centerLeft,
@@ -207,7 +206,7 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
                   padding: EdgeInsets.only(left: 15),
                   height: _itemHeight.toDouble() - 1,
                   child: Text(
-                    model.cityZh,
+                    model.cityZh!,
                     style: TextStyle(color: Colors.black, fontSize: 15 * 2.sp),
                   ),
                 ),
@@ -281,7 +280,7 @@ class _WeatherCityPageState extends BaseStoreState<WeatherCityPage> {
                   // });
                 },
                 onChanged: (text) {
-                  WeatherCityTool.getInstance().searchWithQuery(text, (list) {
+                  WeatherCityTool.getInstance()!.searchWithQuery(text, (list) {
                     _searchResultCityList = list;
                     setState(() {});
                   });

@@ -1,12 +1,9 @@
 import 'package:flustars/flustars.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/user/banlance/user_balance_page.dart';
@@ -19,9 +16,9 @@ import 'package:recook/widgets/toast.dart';
 import 'message_model.dart';
 
 class MessageCenterPage extends StatefulWidget {
-   final bool canback;
+   final bool? canback;
   MessageCenterPage({
-    Key key, this.canback,
+    Key? key, this.canback,
   }) : super(key: key);
 
   @override
@@ -32,7 +29,7 @@ class MessageCenterPage extends StatefulWidget {
 
 class _MessageCenterPageState extends State<MessageCenterPage> {
   List<Message> messageList = [];
-  MessageModel messageModel;
+  late MessageModel messageModel;
 
   GSRefreshController _refreshController = GSRefreshController(initialRefresh: true);
 
@@ -40,7 +37,7 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
   int _page = 0;
   bool _onLoad = true;
 
-  num _num = 0;
+  num? _num = 0;
 
 
 
@@ -78,7 +75,7 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
             children: [
               24.wb,
 
-             widget.canback? RecookBackButton(white: false,):SizedBox(),
+             widget.canback!? RecookBackButton(white: false,):SizedBox(),
               Text('消息',
                   style: TextStyle(
                     color: Color(0xFF111111),
@@ -165,7 +162,7 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
             onLoadMore: () {
               _page++;
               if (messageList.length >=
-                  messageModel.total) {
+                  messageModel.total!) {
                 _refreshController.loadComplete();
                 _refreshController.loadNoData();
               }else{
@@ -182,7 +179,7 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
             },
             body:
             _onLoad?SizedBox():
-            messageList == null ||messageList.length == 0
+            messageList.length == 0
                 ? NoDataView(title:'没有数据哦～' ,):
             ListView.separated(
               padding: EdgeInsets.symmetric(horizontal: 12.rw),
@@ -252,7 +249,7 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
 
                       Text(
                           item.createdAt==null?'':
-                          "${DateUtil.formatDate(DateTime.parse("${item.createdAt.substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}",
+                          "${DateUtil.formatDate(DateTime.parse("${item.createdAt!.substring(0, 19)}"), format: 'yyyy-MM-dd HH:mm')}",
                           style: TextStyle(
                             color: Color(0xFF999999),
                             fontSize: 14.rsp,
@@ -267,7 +264,7 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
                   child: Row(
                     children: [
                       Expanded(
-                        child: Text(item.message+'>>>',
+                        child: Text(item.message!+'>>>',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -275,7 +272,7 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
                               fontSize: 14.rsp,
                             )),
                       ),
-                      item.isRead?SizedBox(width: 8.rw,):Container(
+                      item.isRead!?SizedBox(width: 8.rw,):Container(
                         width: 8.rw,height: 8.rw,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(4.rw)),
@@ -336,7 +333,7 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
     }
   }
 
-  Future<String> messageReadAll() async {
+  Future<String?> messageReadAll() async {
     ResultData resultData =
     await HttpManager.post(APIV2.userAPI.messageReadAll, {
     });
@@ -354,10 +351,11 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
     }else{
       return '';
     }
+    return null;
   }
 
 
-  Future<String> messageRead(int id) async {
+  Future<String?> messageRead(int? id) async {
     ResultData resultData =
     await HttpManager.post(APIV2.userAPI.messageRead, {
       'id':id
@@ -376,6 +374,7 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
     }else{
       return '';
     }
+    return null;
   }
 
 

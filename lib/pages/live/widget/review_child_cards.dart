@@ -8,15 +8,15 @@ import 'package:recook/widgets/recook/recook_like_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class ReviewChildCards extends StatefulWidget {
-  final int trendId;
-  ReviewChildCards({Key key, @required this.trendId}) : super(key: key);
+  final int? trendId;
+  ReviewChildCards({Key? key, required this.trendId}) : super(key: key);
 
   @override
   _ReviewChildCardsState createState() => _ReviewChildCardsState();
 }
 
 class _ReviewChildCardsState extends State<ReviewChildCards> {
-  int count = 0;
+  int? count = 0;
   int _page = 1;
   List<ActivityReviewListModel> activityReviewListModels = [];
 
@@ -32,8 +32,8 @@ class _ReviewChildCardsState extends State<ReviewChildCards> {
 
   @override
   void dispose() {
-    _controller?.dispose();
-    _editingController?.dispose();
+    _controller.dispose();
+    _editingController.dispose();
     super.dispose();
   }
 
@@ -176,7 +176,7 @@ class _ReviewChildCardsState extends State<ReviewChildCards> {
           borderRadius: BorderRadius.circular(rSize(28 / 2)),
           child: FadeInImage.assetNetwork(
             placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-            image: Api.getImgUrl(model.headImgUrl),
+            image: Api.getImgUrl(model.headImgUrl)!,
             height: rSize(28),
             width: rSize(28),
           ),
@@ -189,7 +189,7 @@ class _ReviewChildCardsState extends State<ReviewChildCards> {
               Row(
                 children: [
                   Text(
-                    model.nickname,
+                    model.nickname!,
                     style: TextStyle(
                       color: Color(0xFF333333),
                       fontSize: rSP(14),
@@ -210,7 +210,7 @@ class _ReviewChildCardsState extends State<ReviewChildCards> {
               ),
               SizedBox(height: rSize(2)),
               Text(
-                model.content,
+                model.content!,
                 style: TextStyle(
                   color: Color(0xFF333333),
                   fontSize: rSP(14),
@@ -218,7 +218,7 @@ class _ReviewChildCardsState extends State<ReviewChildCards> {
               ),
               SizedBox(height: rSize(2)),
               Text(
-                RecookDateUtil.fromString(model.createdAt).humanDate,
+                RecookDateUtil.fromString(model.createdAt!).humanDate,
                 style: TextStyle(
                   color: Color(0xFF999999),
                   fontSize: rSP(12),
@@ -239,7 +239,7 @@ class _ReviewChildCardsState extends State<ReviewChildCards> {
       'page': _page,
       "limit": 10,
     });
-    if (resultData?.data['data']['list'] == null)
+    if (resultData.data['data']['list'] == null)
       return [];
     else {
       count = resultData.data['data']['count'];
@@ -249,7 +249,7 @@ class _ReviewChildCardsState extends State<ReviewChildCards> {
     }
   }
 
-  Future addReview(int id, String comment) async {
+  Future addReview(int? id, String comment) async {
     await HttpManager.post(LiveAPI.addActivityReview, {
       'trendId': widget.trendId,
       'parentId': 0,

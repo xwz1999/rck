@@ -13,7 +13,7 @@ import 'package:recook/pages/user/invite/invite_list_contact.dart';
 
 class InviteListModelImpl extends InviteListModelI {
   @override
-  Future<ResultData> getInviteList(int userId, int page, String searchCond) async {
+  Future<ResultData> getInviteList(int? userId, int page, String searchCond) async {
 
     ResultData resultData = await HttpManager.post(UserApi.invite, {"userId": userId, "SearchCond": searchCond,"page": page});
     return resultData;

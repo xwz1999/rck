@@ -188,7 +188,7 @@ class EmptyView {
     );
   }
 
-  static Container borderContainer({Widget child,double width, double height,Color color, EdgeInsetsGeometry margin}) {
+  static Container borderContainer({Widget? child,double? width, double? height,Color? color, EdgeInsetsGeometry? margin}) {
     return Container(
       width: width,
       height: height,

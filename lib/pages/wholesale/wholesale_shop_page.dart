@@ -1,7 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -24,7 +23,7 @@ import 'models/wholesale_good_model.dart';
 
 class WholesaleShopPage extends StatefulWidget {
   WholesaleShopPage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -32,15 +31,15 @@ class WholesaleShopPage extends StatefulWidget {
 }
 
 class _WholesaleShopPageState extends State<WholesaleShopPage> {
-  TextEditingController _textEditController;
+  late TextEditingController _textEditController;
   String phoneText = '';
   bool isYun = false;
   bool isEntity = false;
-  StateSetter _bannerState;
+  StateSetter? _bannerState;
   double bannerHeight = 160.rw;
   List<WholesaleBannerModel> _bannerList = [];
   List<WholesaleActivityModel> _activityList = [];
-  GSRefreshController _refreshController;
+  GSRefreshController? _refreshController;
   List<dynamic> _goodList = [];
   int _page = 0;
 
@@ -144,7 +143,7 @@ class _WholesaleShopPageState extends State<WholesaleShopPage> {
             _page = 0;
             _getBannerList();
             _getActivityList();
-            _refreshController.refreshCompleted();
+            _refreshController!.refreshCompleted();
           },
               // onLoadMore: (){
               //   _page++;
@@ -191,7 +190,7 @@ class _WholesaleShopPageState extends State<WholesaleShopPage> {
               Get.to(()=>WholesaleDetailPage(goodsId:  (wholesaleBannerModel as WholesaleBannerModel).goodsId,));
             },
             child: ExtendedImage.network(
-                Api.getImgUrl(wholesaleBannerModel.photo),
+                Api.getImgUrl(wholesaleBannerModel.photo)!,
                 fit: BoxFit.fill,
                 enableLoadState: true),
           );
@@ -229,7 +228,7 @@ class _WholesaleShopPageState extends State<WholesaleShopPage> {
                 placeholder: AppImageName.placeholder_1x1,
                 imageUrl:Api.getImgUrl(item.icon) ),
             16.wb,
-            item.name.text.size(12.rsp).color(Color(0xFF111111)).make(),
+            item.name!.text.size(12.rsp).color(Color(0xFF111111)).make(),
             Spacer(),
             GestureDetector(
               onTap: () {

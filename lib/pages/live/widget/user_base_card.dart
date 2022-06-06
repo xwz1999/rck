@@ -7,10 +7,10 @@ class UserBaseCard extends StatefulWidget {
   final String detailDate;
   final List<Widget> children;
   UserBaseCard({
-    Key key,
-    @required this.date,
-    @required this.detailDate,
-    @required this.children,
+    Key? key,
+    required this.date,
+    required this.detailDate,
+    required this.children,
   }) : super(key: key);
 
   @override

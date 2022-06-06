@@ -19,9 +19,9 @@ import 'package:recook/widgets/text_button.dart' as TButton;
 import 'package:recook/widgets/toast.dart';
 
 class CouponListPage extends StatefulWidget {
-  final int brandId;
+  final int? brandId;
 
-  const CouponListPage({Key key, this.brandId}) : super(key: key);
+  const CouponListPage({Key? key, this.brandId}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -30,14 +30,14 @@ class CouponListPage extends StatefulWidget {
 }
 
 class _CouponListPageState extends BaseStoreState<CouponListPage> {
-  List<Coupon> _coupons;
+  List<Coupon>? _coupons;
 
   @override
   void initState() {
     super.initState();
     _coupons = [];
     CouponListImpl.getCouponList(
-            UserManager.instance.user.info.id, widget.brandId)
+            UserManager.instance!.user.info!.id, widget.brandId)
         .then((CouponListModel model) {
       if (model.code != HttpStatus.SUCCESS) {
         Toast.showError(model.msg);
@@ -55,7 +55,7 @@ class _CouponListPageState extends BaseStoreState<CouponListPage> {
       onTap: () {},
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-        height: DeviceInfo.screenHeight * 0.6,
+        height: DeviceInfo.screenHeight! * 0.6,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.vertical(top: Radius.circular(8))),
@@ -72,10 +72,10 @@ class _CouponListPageState extends BaseStoreState<CouponListPage> {
                   )),
               Expanded(
                 child: ListView.builder(
-                    itemCount: _coupons.length,
+                    itemCount: _coupons!.length,
                     itemBuilder: (_, index) {
                       return CouponItem(
-                        coupon: _coupons[index],
+                        coupon: _coupons![index],
                       );
                     }),
               ),

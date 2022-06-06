@@ -1,14 +1,14 @@
 class TopicListModel {
-  int id;
-  String title;
-  String createdAt;
-  String updatedAt;
-  int isDel;
-  int isHot;
-  String topicImg;
-  int substance;
-  int partake;
-  int isFollow;
+  int? id;
+  String? title;
+  String? createdAt;
+  String? updatedAt;
+  int? isDel;
+  int? isHot;
+  String? topicImg;
+  int? substance;
+  int? partake;
+  int? isFollow;
 
   TopicListModel(
       {this.id,

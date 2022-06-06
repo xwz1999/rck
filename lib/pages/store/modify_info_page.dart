@@ -14,12 +14,11 @@ import 'package:recook/widgets/custom_image_button.dart';
 
 class ModifyInfoPage extends StatefulWidget {
   final Map arguments;
-  final Function(String result) callback;
+  final Function(String result)? callback;
 
-  const ModifyInfoPage({Key key, this.arguments, this.callback})
-      : assert(arguments != null, "参数不能为空");
+  const ModifyInfoPage({Key? key, required this.arguments, this.callback});
 
-  static Map setArguments(String title, String origin, {int maxLength: 0}) {
+  static Map setArguments(String title, String? origin, {int maxLength: 0}) {
     return {"title": title, "origin": origin, "maxLength": maxLength};
   }
 
@@ -28,7 +27,7 @@ class ModifyInfoPage extends StatefulWidget {
 }
 
 class _ModifyInfoPageState extends State<ModifyInfoPage> {
-  TextEditingController _controller;
+  TextEditingController? _controller;
 
   @override
   void initState() {
@@ -49,7 +48,7 @@ class _ModifyInfoPageState extends State<ModifyInfoPage> {
             fontSize: 15 * 2.sp,
             title: "确定",
             onPressed: () {
-              Navigator.pop(context, _controller.text);
+              Navigator.pop(context, _controller!.text);
             },
           )
         ],
@@ -74,7 +73,7 @@ class _ModifyInfoPageState extends State<ModifyInfoPage> {
                       size: 18 * 2.sp,
                     ),
                     onPressed: () {
-                      _controller.text = "";
+                      _controller!.text = "";
                     },
                   )),
             ),

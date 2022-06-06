@@ -7,7 +7,7 @@ part 'address_list_model.g.dart';
 @JsonSerializable()
 class AddressListModel extends BaseModel {
 
-  List<Address> data;
+  List<Address>? data;
 
   AddressListModel(code,this.data,msg,) : super(code,msg);
 
@@ -21,21 +21,21 @@ class AddressListModel extends BaseModel {
 @JsonSerializable()
 class Address extends Object {
 
-  int id;
+  int? id;
 
-  String name;
+  String? name;
 
-  String mobile;
+  String? mobile;
 
-  String province;
+  String? province;
 
-  String city;
+  String? city;
 
-  String district;
+  String? district;
 
-  String address;
+  String? address;
 
-  int isDefault;
+  int? isDefault;
 
   Address(this.id,this.name,this.mobile,this.province,this.city,this.district,this.address,this.isDefault);
 

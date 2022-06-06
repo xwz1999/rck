@@ -1,19 +1,19 @@
 import 'package:azlistview/azlistview.dart';
 
 class WeatherCityModel extends ISuspensionBean {
-  String id;
-  String cityEn;
-  String cityZh;
-  String provinceEn;
-  String provinceZh;
-  String leaderEn;
-  String leaderZh;
-  String lat;
-  String lon;
+  String? id;
+  String? cityEn;
+  String? cityZh;
+  String? provinceEn;
+  String? provinceZh;
+  String? leaderEn;
+  String? leaderZh;
+  String? lat;
+  String? lon;
 
-  String tagIndex;
-  String namePinyin;
-  String provinceZhPingyin;
+  String? tagIndex;
+  String? namePinyin;
+  String? provinceZhPingyin;
 
   WeatherCityModel(
       {this.id,
@@ -30,7 +30,7 @@ class WeatherCityModel extends ISuspensionBean {
       this.provinceZhPingyin});
   
   @override
-  String getSuspensionTag() => tagIndex;
+  String getSuspensionTag() => tagIndex!;
 
   WeatherCityModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];

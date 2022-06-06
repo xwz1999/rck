@@ -1,7 +1,7 @@
 class LiveDataListModel {
-  int id;
-  int startAt;
-  int endAt;
+  int? id;
+  int? startAt;
+  int? endAt;
 
   LiveDataListModel({this.id, this.startAt, this.endAt});
 

@@ -7,7 +7,7 @@ part 'province_city_model.g.dart';
 @JsonSerializable()
 class ProvinceCityModel extends BaseModel {
 
-  List<Province> data;
+  List<Province>? data;
 
   ProvinceCityModel(code,this.data,msg) : super(code, msg);
 
@@ -21,9 +21,9 @@ class ProvinceCityModel extends BaseModel {
 @JsonSerializable()
 class Province extends Object {
 
-  String name;
+  String? name;
 
-  List<City> cities;
+  List<City>? cities;
 
   Province(this.name,this.cities,);
 
@@ -37,9 +37,9 @@ class Province extends Object {
 @JsonSerializable()
 class City extends Object {
 
-  String name;
+  String? name;
 
-  List<District> districts;
+  List<District>? districts;
 
   City(this.name,this.districts,);
 
@@ -53,7 +53,7 @@ class City extends Object {
 @JsonSerializable()
 class District extends Object {
 
-  String name;
+  String? name;
 
   District(this.name,);
 

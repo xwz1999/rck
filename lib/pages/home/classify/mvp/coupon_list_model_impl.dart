@@ -15,7 +15,7 @@ import 'package:recook/models/coupon_list_model.dart';
 
 class CouponListImpl {
 
-  static Future<CouponListModel> getCouponList(int userID, int brandId) async {
+  static Future<CouponListModel> getCouponList(int? userID, int? brandId) async {
     ResultData res = await HttpManager.post(
         GoodsApi.coupon_list, {
           "userId": userID,
@@ -26,7 +26,7 @@ class CouponListImpl {
     return model;
   }
 
-  static Future<BaseModel> receiveCoupon(int userID, int couponID) async {
+  static Future<BaseModel> receiveCoupon(int? userID, int? couponID) async {
     ResultData res = await HttpManager.post(
         GoodsApi.coupon_receive, {"userID": userID, "couponID":couponID});
 
@@ -35,7 +35,7 @@ class CouponListImpl {
 //    return model;
   }
 
-  static Future<HttpResultModel<CouponListModel>> getReceiveCouponList(int userID) async {
+  static Future<HttpResultModel<CouponListModel?>> getReceiveCouponList(int? userID) async {
     ResultData res = await HttpManager.post(
         GoodsApi.coupon_user_list, {"userId": userID});
 

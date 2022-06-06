@@ -1,6 +1,5 @@
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api_v2.dart';
@@ -18,9 +17,9 @@ class WithdrawHistoryPage extends StatefulWidget {
 }
 
 class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
-  GSRefreshController _refreshController;
-  WithdrawHistoryCModel _withdrawHistoryModel;
-  List<History> list;
+  GSRefreshController? _refreshController;
+  late WithdrawHistoryCModel _withdrawHistoryModel;
+  List<History>? list;
   bool _onLoad = true;
   int _page = 0;
 
@@ -57,21 +56,21 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
                         list = models;
                       });
                       _onLoad = false;
-                      _refreshController.refreshCompleted();
+                      _refreshController!.refreshCompleted();
                     });
                   },
                   onLoadMore: () {
                     _page++;
-                    if (list.length >=
-                        _withdrawHistoryModel.data.total) {
-                      _refreshController.loadComplete();
-                      _refreshController.loadNoData();
+                    if (list!.length >=
+                        _withdrawHistoryModel.data!.total!) {
+                      _refreshController!.loadComplete();
+                      _refreshController!.loadNoData();
                     }else{
                       getWithdrawHistoryList().then((models) {
                         setState(() {
-                          list.addAll(models);
+                          list!.addAll(models!);
                         });
-                        _refreshController.loadComplete();
+                        _refreshController!.loadComplete();
                       });
                     }
 
@@ -79,13 +78,13 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
                   body:
 
                   _onLoad?SizedBox():
-                  list == null || list.length == 0
+                  list == null || list!.length == 0
                       ? noDataView("没有记录...")
                       : ListView.builder(
                           padding: EdgeInsets.zero,
-                          itemCount: list.length,
+                          itemCount: list!.length,
                           itemBuilder: (BuildContext context, int index) {
-                            History data = list[index];
+                            History data = list![index];
                             return GestureDetector(
                               onTap: () {
 
@@ -153,7 +152,7 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
                             height: 3,
                           ),
                           Text(
-                            "${ DateUtil.formatDate(DateTime.parse("${model.createdAt.substring(0,19)}"), format: 'yyyy-MM-dd HH:mm') }",
+                            "${ DateUtil.formatDate(DateTime.parse("${model.createdAt!.substring(0,19)}"), format: 'yyyy-MM-dd HH:mm') }",
                             style: TextStyle(
                                 color: Color(0xFF7F7F7F),
                                 fontSize: 12,
@@ -198,7 +197,7 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
     );
   }
 
-  Future<List<History>> getWithdrawHistoryList() async {
+  Future<List<History>?> getWithdrawHistoryList() async {
     ResultData resultData =
         await HttpManager.post(APIV2.userAPI.withdrawalCompanyList, {
       'page': _page,
@@ -215,6 +214,6 @@ class _WithdrawHistoryPageState extends BaseStoreState<WithdrawHistoryPage> {
       return [];
     }
     _withdrawHistoryModel = model;
-    return model.data.list;
+    return model.data!.list;
   }
 }

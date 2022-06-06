@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
+import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/goods_detail_model.dart';
@@ -11,14 +12,14 @@ import 'package:recook/widgets/video_view.dart';
 typedef OnScrolledListener = Function(int index);
 
 class ImagePageView extends StatefulWidget {
-  final OnScrolledListener onScrolled;
-  final List<dynamic> images;
+  final OnScrolledListener? onScrolled;
+  final List<dynamic>? images;
 
 
   // final Video video;
 
   ImagePageView({
-    Key key,
+    Key? key,
     this.onScrolled,
     this.images,
   });
@@ -31,11 +32,11 @@ class ImagePageView extends StatefulWidget {
 }
 
 class _ImagePageViewState extends State<ImagePageView> with TickerProviderStateMixin {
-  double _width = DeviceInfo.screenWidth;
+  double? _width = DeviceInfo.screenWidth;
   int _imageIndex = 1;
   List<dynamic> photoList = [];
   List<PicSwiperItem> picSwiperItem = [];
-  GifController _gifController;
+  late GifController _gifController;
   @override
   void initState() {
     _gifController= GifController(vsync: this)
@@ -44,7 +45,7 @@ class _ImagePageViewState extends State<ImagePageView> with TickerProviderStateM
         max: 20,
         period: Duration(milliseconds: 700),
       );
-    for (dynamic photo in widget.images) {
+    for (dynamic photo in widget.images!) {
       if (photo is MainPhotos) {
         photoList.add(photo);
         // picSwiperItem.add(PicSwiperItem(Api.getResizeImgUrl(photo.url, DeviceInfo.screenWidth.toInt()*2)));
@@ -81,18 +82,23 @@ class _ImagePageViewState extends State<ImagePageView> with TickerProviderStateM
                   _imageIndex = index + 1;
                 });
               },
-              children: widget.images.map<Widget>((image) {
+              children: widget.images!.map<Widget>((image) {
                 if (image is MainPhotos) {
                   return CustomCacheImage(
                       imageClick: () {
-                        AppRouter.fade(
-                          context,
-                          RouteName.PIC_SWIPER,
-                          arguments: PicSwiper.setArguments(
-                            index: photoList.indexOf(image),
-                            pics: picSwiperItem,
-                          ),
-                        );
+                        // AppRouter.fade(
+                        //   context,
+                        //   RouteName.PIC_SWIPER,
+                        //   arguments: PicSwiper.setArguments(
+                        //     index: photoList.indexOf(image),
+                        //     pics: picSwiperItem,
+                        //   ),
+                        // );
+
+                        Get.to(()=>PicSwiper(arguments: PicSwiper.setArguments(
+                          index: photoList.indexOf(image),
+                          pics: picSwiperItem,
+                        )));
                       },
                       height: double.infinity,
                       width: double.infinity,
@@ -138,7 +144,7 @@ class _ImagePageViewState extends State<ImagePageView> with TickerProviderStateM
             color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w700),
         children: <TextSpan>[
           TextSpan(
-              text: ' / ${widget.images.length}',
+              text: ' / ${widget.images!.length}',
               style: TextStyle(
                   color: Colors.white,
                   fontSize: 10,

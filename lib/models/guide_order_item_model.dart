@@ -1,14 +1,14 @@
 class GuideOrderItemModel {
-  int orderId;
-  int shippingMethod;
-  int createdAt;
-  int payTime;
-  int expireTime;
-  int status;
-  num goodsTotalAmount;
-  num actualTotalAmount;
-  List<Goods> goods;
-  num totalGoodsCount;
+  int? orderId;
+  int? shippingMethod;
+  int? createdAt;
+  int? payTime;
+  int? expireTime;
+  int? status;
+  num? goodsTotalAmount;
+  num? actualTotalAmount;
+  List<Goods>? goods;
+  num? totalGoodsCount;
 
   String get statusValue {
     switch (status) {
@@ -54,7 +54,7 @@ class GuideOrderItemModel {
     if (json['goods'] != null) {
       goods = [];
       json['goods'].forEach((v) {
-        goods.add(new Goods.fromJson(v));
+        goods!.add(new Goods.fromJson(v));
       });
     }
   }
@@ -71,24 +71,24 @@ class GuideOrderItemModel {
     data['actualTotalAmount'] = this.actualTotalAmount;
     data['totalGoodsCount'] = this.totalGoodsCount;
     if (this.goods != null) {
-      data['goods'] = this.goods.map((v) => v.toJson()).toList();
+      data['goods'] = this.goods!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Goods {
-  int orderGoodsId;
-  String mainPhotoUrl;
-  String goodsName;
-  String skuName;
-  int isImport;
-  int quantity;
-  num unitPrice;
-  int expressStatus;
-  int assType;
-  int refundStatus;
-  String countryIcon;
+  int? orderGoodsId;
+  String? mainPhotoUrl;
+  String? goodsName;
+  String? skuName;
+  int? isImport;
+  int? quantity;
+  num? unitPrice;
+  int? expressStatus;
+  int? assType;
+  int? refundStatus;
+  String? countryIcon;
 
   bool get importValue => isImport == 1;
   String get refundStatusValue {

@@ -8,7 +8,7 @@ part 'promotion_list_model.g.dart';
 @JsonSerializable()
 class PromotionListModel extends BaseModel {
 
-  List<Promotion> data;
+  List<Promotion>? data;
 
   PromotionListModel(code,this.data,msg,):super(code,msg);
 
@@ -22,23 +22,23 @@ class PromotionListModel extends BaseModel {
 @JsonSerializable()
 class Promotion extends Object {
 
-  int id;
-  String promotionName;
-  String startTime;
-  String endTime;
-  String showName;
-  int isProcessing;
+  int? id;
+  String? promotionName;
+  String? startTime;
+  String? endTime;
+  String? showName;
+  int? isProcessing;
 
-  String trueEndTime;
+  String? trueEndTime;
 
   Promotion(this.id,this.promotionName,this.startTime, this.endTime, this.showName, this.isProcessing,{this.trueEndTime});
 
-  String getTrueEndTime(){
+  String? getTrueEndTime(){
     if (TextUtils.isEmpty(trueEndTime)) {
       if (TextUtils.isEmpty(startTime)){
         return null;
       }else{
-        trueEndTime = DateTime.parse(startTime).add(Duration(hours: 2)).toString();
+        trueEndTime = DateTime.parse(startTime!).add(Duration(hours: 2)).toString();
       }
     }
     return trueEndTime;

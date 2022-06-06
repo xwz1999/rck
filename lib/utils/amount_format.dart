@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 class AmountFormat extends TextInputFormatter {
   
   AmountFormat({this.decimalRange = 2})
-      : assert(decimalRange == null || decimalRange > 0);
+      : assert(decimalRange > 0);
 
   final int decimalRange;
 
@@ -21,7 +21,7 @@ class AmountFormat extends TextInputFormatter {
     // 匹配包含数字和小数点的字符
     Pattern p = RegExp(r'(\d+\.?)|(\.?\d+)|(\.?)');
     nValue = p.allMatches(nValue)
-        .map<String>((Match match) => match.group(0))
+        .map<String?>((Match match) => match.group(0))
         .join();
 
     // 用匹配完的字符判断

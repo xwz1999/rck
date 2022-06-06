@@ -1,6 +1,6 @@
 class ShareInvitaModal {
-  String code;
-  Data data;
+  String? code;
+  Data? data;
 
   ShareInvitaModal({this.code, this.data});
 
@@ -13,16 +13,16 @@ class ShareInvitaModal {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['code'] = this.code;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  String code;
-  String msg;
-  List<String> data;
+  String? code;
+  String? msg;
+  List<String>? data;
 
   Data({this.code, this.msg, this.data});
 

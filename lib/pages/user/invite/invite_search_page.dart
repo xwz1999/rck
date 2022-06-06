@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -15,11 +14,10 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view_contact.dart';
 import 'package:recook/widgets/no_data_view.dart';
-import 'package:recook/widgets/progress/sc_dialog.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class InviteSearchPage extends StatefulWidget {
-  InviteSearchPage({Key key}) : super(key: key);
+  InviteSearchPage({Key? key}) : super(key: key);
 
   @override
   _InviteSearchPageState createState() => _InviteSearchPageState();
@@ -28,13 +26,13 @@ class InviteSearchPage extends StatefulWidget {
 class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
     with MvpListViewDelegate<InviteModel>
     implements InviteListViewI {
-  InviteListPresenterImpl _presenter;
-  MvpListViewController<InviteModel> _controller;
-  TextEditingController _textEditController;
+  InviteListPresenterImpl? _presenter;
+  MvpListViewController<InviteModel>? _controller;
+  TextEditingController? _textEditController;
   FocusNode _contentFocusNode = FocusNode();
   String _searchText = "";
   bool _displayList = true;
-  List<String> _searchHistory = [];
+  List<String>? _searchHistory = [];
   bool _startSearch = false;
   @override
   void initState() {
@@ -42,7 +40,7 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
     getSearchListFromSharedPreferences();
     _textEditController = TextEditingController();
     _presenter = InviteListPresenterImpl();
-    _presenter.attach(this);
+    _presenter!.attach(this);
     _controller = MvpListViewController();
   }
 
@@ -55,7 +53,7 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
         elevation: 0,
         title: _buildTitle(),
         themeData: AppThemes.themeDataGrey.appBarTheme,
-        actions: TextUtils.isEmpty(_textEditController.text)
+        actions: TextUtils.isEmpty(_textEditController!.text)
             ? <Widget>[
                 Container(
                   width: 10,
@@ -70,7 +68,7 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
           ),
           Positioned(
               child: Offstage(
-                  offstage: !TextUtils.isEmpty(_textEditController.text) &&
+                  offstage: !TextUtils.isEmpty(_textEditController!.text) &&
                       _startSearch,
                   child: Container(
                     color: AppColor.frenchColor,
@@ -101,15 +99,15 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
           refreshSuccess([]);
           return;
         }
-        _presenter.getInviteList(
-          UserManager.instance.user.info.id,
+        _presenter!.getInviteList(
+          UserManager.instance!.user.info!.id,
           0,
           _searchText,
         );
       },
       loadMoreCallback: (int page) {
-        _presenter.getInviteList(
-          UserManager.instance.user.info.id,
+        _presenter!.getInviteList(
+          UserManager.instance!.user.info!.id,
           page,
           _searchText,
         );
@@ -119,10 +117,10 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
           onTap: () {
             AppRouter.push(context, RouteName.USER_INVITE_DETAIL,
                 arguments: UserInviteDetail.setArguments(
-                    _controller.getData()[index]));
+                    _controller!.getData()[index]));
           },
           child: InviteDetailListItem(
-            model: _controller.getData()[index],
+            model: _controller!.getData()[index],
           ),
         );
       },
@@ -143,8 +141,8 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
             if (TextUtils.isEmpty(_searchText)) return;
             _startSearch = true;
             _contentFocusNode.unfocus();
-            _presenter.getInviteList(
-                UserManager.instance.user.info.id, 0, _searchText);
+            _presenter!.getInviteList(
+                UserManager.instance!.user.info!.id, 0, _searchText);
             setState(() {});
           },
         ),
@@ -180,15 +178,15 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
                 onSubmitted: (_submitted) {
                   _startSearch = true;
                   _contentFocusNode.unfocus();
-                  _presenter.getInviteList(
-                      UserManager.instance.user.info.id, 0, _submitted);
+                  _presenter!.getInviteList(
+                      UserManager.instance!.user.info!.id, 0, _submitted);
                   setState(() {});
                 },
                 focusNode: _contentFocusNode,
                 onChanged: (text) {
                   _startSearch = false;
                   _searchText = text;
-                  _controller.replaceData([]);
+                  _controller!.replaceData([]);
                   setState(() {});
                 },
                 placeholder: "请输入昵称/备注/手机号",
@@ -207,33 +205,33 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
   }
 
   @override
-  failure(String msg) {
-    GSDialog.of(context).showError(globalContext, msg);
+  failure(String? msg) {
+    GSDialog.of(context).showError(globalContext!, msg);
   }
 
   @override
-  MvpListViewPresenterI<InviteModel, MvpView, MvpModel> getPresenter() {
+  MvpListViewPresenterI<InviteModel, MvpView, MvpModel>? getPresenter() {
     return _presenter;
   }
 
   @override
   refreshSuccess(List<InviteModel> data) {
     super.refreshSuccess(data);
-    if (data != null && data.length > 0) {
-      if (_searchHistory.contains(_searchText)) {
-        _searchHistory.remove(_searchText);
+    if (data.length > 0) {
+      if (_searchHistory!.contains(_searchText)) {
+        _searchHistory!.remove(_searchText);
         List<String> list = [_searchText];
-        list.addAll(_searchHistory);
+        list.addAll(_searchHistory!);
         _searchHistory = list;
       } else {
         List<String> list = [_searchText];
-        list.addAll(_searchHistory);
+        list.addAll(_searchHistory!);
         _searchHistory = list;
-        while (_searchHistory.length > 15) {
-          _searchHistory.removeLast();
+        while (_searchHistory!.length > 15) {
+          _searchHistory!.removeLast();
         }
       }
-      saveSearchListToSharedPreferences(_searchHistory);
+      saveSearchListToSharedPreferences(_searchHistory!);
       setState(() {});
     }
   }
@@ -249,8 +247,8 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
 
   _searchHistoryWidget() {
     List<Widget> choiceChipList = [];
-    if (_searchHistory != null && _searchHistory.length > 0) {
-      for (var text in _searchHistory) {
+    if (_searchHistory != null && _searchHistory!.length > 0) {
+      for (var text in _searchHistory!) {
         choiceChipList.add(Padding(
           padding: EdgeInsets.only(right: 10, bottom: 5),
           child: ChoiceChip(
@@ -261,11 +259,11 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
             materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
             onSelected: (bool value) {
               _startSearch = true;
-              _textEditController.text = text;
+              _textEditController!.text = text;
               _searchText = text;
               setState(() {});
-              _presenter.getInviteList(
-                  UserManager.instance.user.info.id, 0, text);
+              _presenter!.getInviteList(
+                  UserManager.instance!.user.info!.id, 0, text);
             },
             label: Text(text),
             selected: false,
@@ -291,11 +289,11 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
                       ),
                     ),
                     Spacer(),
-                    (_searchHistory != null && _searchHistory.length > 0)
+                    (_searchHistory != null && _searchHistory!.length > 0)
                         ? FlatButton(
                             onPressed: () {
                               _searchHistory = [];
-                              saveSearchListToSharedPreferences(_searchHistory);
+                              saveSearchListToSharedPreferences(_searchHistory!);
                               setState(() {});
                             },
                             child: Text(
@@ -323,9 +321,9 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
   getSearchListFromSharedPreferences() async {
     // 获取实例
     var prefs = await SharedPreferences.getInstance();
-    if (UserManager.instance.haveLogin) {
+    if (UserManager.instance!.haveLogin) {
       _searchHistory = prefs.getStringList(
-          UserManager.instance.user.info.id.toString() +
+          UserManager.instance!.user.info!.id.toString() +
               "userInviteSearhHistory");
       if (_searchHistory == null) {
         _searchHistory = [];
@@ -338,7 +336,7 @@ class _InviteSearchPageState extends BaseStoreState<InviteSearchPage>
     // 获取实例
     var prefs = await SharedPreferences.getInstance();
     prefs.setStringList(
-        UserManager.instance.user.info.id.toString() + "userInviteSearhHistory",
+        UserManager.instance!.user.info!.id.toString() + "userInviteSearhHistory",
         value);
   }
 }

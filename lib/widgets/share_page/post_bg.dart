@@ -1,9 +1,6 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/widgets/share_page/share_image_tool.dart';
@@ -18,8 +15,8 @@ class PostTimeBannerInfo {
         await ShareImageTool.getImageWithAsset("assets/post_right_banner.png");
   }
 
-  ui.Image leftBannerImage;
-  ui.Image rightBannerImage;
+  late ui.Image leftBannerImage;
+  late ui.Image rightBannerImage;
   double bannerHeight = 45;
   double rightBannerWidth = 100;
   paint(Canvas canvas, Size size) {
@@ -124,7 +121,7 @@ class PostTimeBannerInfo {
 class PostBottomInfo {
   String price;
   String crossedPrice;
-  String info;
+  String? info;
   String qrCode;
   PostBottomInfo({
     this.price = "",
@@ -138,7 +135,7 @@ class PostBottomInfo {
   }
 
   Size qrSize = Size(300, 300);
-  ui.Image image;
+  late ui.Image image;
   paint(Canvas canvas, Size size) {
     canvas.save();
     // 价格
@@ -198,7 +195,7 @@ class PostBottomInfo {
         ui.TextStyle(
             color: Color(0xff333333), textBaseline: ui.TextBaseline.alphabetic),
       )
-      ..addText(info);
+      ..addText(info!);
     ui.Paragraph infoParagraph = infoParagraphBuilder.build()
       ..layout(ui.ParagraphConstraints(width: ScreenUtil().screenWidth - 150));
     canvas.drawParagraph(infoParagraph, Offset(textLeft, size.height - 50));
@@ -241,7 +238,7 @@ class PostUserImage {
   }
 
   String title = "数字化批发零售服务平台";
-  ui.Image image;
+  late ui.Image image;
   Offset offset = Offset(15, 10);
   Size size = Size(50, 50);
   // 绘图函数
@@ -310,18 +307,18 @@ class PostUserImage {
 }
 
 class PostBackground {
-  String url;
-  Size imageSize;
+  String? url;
+  Size? imageSize;
   PostBackground({this.url, this.imageSize});
   init() async {
-    image = await ShareImageTool.getImageWithNetwork(url);
+    image = await ShareImageTool.getImageWithNetwork(url!);
   }
 
-  ui.Image image;
+  late ui.Image image;
   // 绘图函数
   paint(Canvas canvas) async {
     canvas.save();
-    Rect screenWrap = Offset(15, 70) & Size(imageSize.width, imageSize.height);
+    Rect screenWrap = Offset(15, 70) & Size(imageSize!.width, imageSize!.height);
     Paint screenWrapPainter = new Paint();
     screenWrapPainter.color = Colors.white;
     screenWrapPainter.style = PaintingStyle.fill;
@@ -331,7 +328,7 @@ class PostBackground {
         image,
         Offset(0.0, 0.0) &
             Size(image.width.toDouble(), image.height.toDouble()),
-        Offset(15, 70) & Size(imageSize.width, imageSize.height),
+        Offset(15, 70) & Size(imageSize!.width, imageSize!.height),
         paint);
     canvas.restore();
   }

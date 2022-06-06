@@ -1,7 +1,7 @@
 class WithdrawHistoryCModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   WithdrawHistoryCModel({this.code, this.msg, this.data});
 
@@ -16,15 +16,15 @@ class WithdrawHistoryCModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<History> list;
-  int total;
+  List<History>? list;
+  int? total;
 
   Data({this.list, this.total});
 
@@ -32,7 +32,7 @@ class Data {
     if (json['list'] != null) {
       list = [];
       json['list'].forEach((v) {
-        list.add(new History.fromJson(v));
+        list!.add(new History.fromJson(v));
       });
     }
     total = json['total'];
@@ -41,7 +41,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.list != null) {
-      data['list'] = this.list.map((v) => v.toJson()).toList();
+      data['list'] = this.list!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -49,28 +49,28 @@ class Data {
 }
 
 class History {
-  int id;
-  num amount;
-  int state;
-  String createdAt;
-  String content;
-  String proof;
-  num tax;
-  String logisticsName;
-  String waybillCode;
-  String applyUserName;
-  String applyTime;
-  String processUserName;
-  String processTime;
-  String bank;
-  String code;
-  String comapnyName;
-  String mobile;
-  String nickname;
-  num balance;
-  num taxAmount;
-  num withdrawal;
-  num actualAmount;
+  int? id;
+  num? amount;
+  int? state;
+  String? createdAt;
+  String? content;
+  String? proof;
+  num? tax;
+  String? logisticsName;
+  String? waybillCode;
+  String? applyUserName;
+  String? applyTime;
+  String? processUserName;
+  String? processTime;
+  String? bank;
+  String? code;
+  String? comapnyName;
+  String? mobile;
+  String? nickname;
+  num? balance;
+  num? taxAmount;
+  num? withdrawal;
+  num? actualAmount;
 
   History.fromJson(Map<String, dynamic> json) {
     id = json['id'];

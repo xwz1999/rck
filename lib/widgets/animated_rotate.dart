@@ -8,11 +8,11 @@ class AnimatedRotate extends ImplicitlyAnimatedWidget {
   final double angle;
 
   AnimatedRotate({
-    Key key,
-    @required this.child,
+    Key? key,
+    required this.child,
     this.duration = const Duration(milliseconds: 400),
     this.curve = Curves.easeInOutCubic,
-    @required this.angle,
+    required this.angle,
   }) : super(
           key: key,
           duration: duration,
@@ -24,11 +24,11 @@ class AnimatedRotate extends ImplicitlyAnimatedWidget {
 }
 
 class _AnimatedRoateState extends AnimatedWidgetBaseState<AnimatedRotate> {
-  Tween<double> _rotateTween;
+  Tween<double?>? _rotateTween;
   @override
   Widget build(BuildContext context) {
     return Transform.rotate(
-      angle: _rotateTween.evaluate(animation),
+      angle: _rotateTween!.evaluate(animation)!,
       child: widget.child,
     );
   }
@@ -39,6 +39,6 @@ class _AnimatedRoateState extends AnimatedWidgetBaseState<AnimatedRotate> {
       _rotateTween,
       widget.angle,
       (dynamic value) => Tween<double>(begin: value),
-    );
+    ) as Tween<double?>?;
   }
 }

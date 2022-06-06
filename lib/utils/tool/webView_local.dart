@@ -2,16 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewLocalPage extends StatefulWidget {
 
-  String url;
-  final String title;
+  String? url;
+  final String? title;
   final bool isLocalUrl;
 
-  WebViewController _webViewController;
+  late WebViewController _webViewController;
 
   WebViewLocalPage({this.url, this.isLocalUrl = false, this.title});
 
@@ -41,7 +40,7 @@ class _WebViewLocalPage extends State<WebViewLocalPage> {
     return AppBar(
         elevation: 0,
         backgroundColor: Color(0xccd0d7),
-        title: Text(widget.title, style: TextStyle(color: Colors.black),),
+        title: Text(widget.title!, style: TextStyle(color: Colors.black),),
         centerTitle: true,
         leading: IconButton(icon: Icon(Icons.arrow_back, color: Color(0xFF23ADE5),), onPressed: () {
 
@@ -60,7 +59,7 @@ class _WebViewLocalPage extends State<WebViewLocalPage> {
         Expanded(
           flex: 1,
           child: WebView(
-            initialUrl: widget.isLocalUrl ? Uri.dataFromString(widget.url, mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
+            initialUrl: widget.isLocalUrl ? Uri.dataFromString(widget.url!, mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
                 .toString(): widget.url,
             javascriptMode: JavascriptMode.unrestricted,
             javascriptChannels: <JavascriptChannel>[
@@ -71,7 +70,7 @@ class _WebViewLocalPage extends State<WebViewLocalPage> {
               if(widget.isLocalUrl){
                   _loadHtmlAssets(controller);
               }else{
-                controller.loadUrl(widget.url);
+                controller.loadUrl(widget.url!);
               }
               controller.canGoBack().then((value) => debugPrint(value.toString()));
               controller.canGoForward().then((value) => debugPrint(value.toString()));
@@ -89,7 +88,7 @@ class _WebViewLocalPage extends State<WebViewLocalPage> {
 
 //加载本地文件
   _loadHtmlAssets(WebViewController controller) async {
-    String htmlPath = await rootBundle.loadString(widget.url);
+    String htmlPath = await rootBundle.loadString(widget.url!);
     controller.loadUrl(Uri.dataFromString(htmlPath,mimeType: 'text/html', encoding: Encoding.getByName('utf-8'))
         .toString());
   }

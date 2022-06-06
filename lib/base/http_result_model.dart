@@ -10,9 +10,9 @@
 // import 'package:flutter/material.dart';
 
 class HttpResultModel<T> {
-  String code;
+  String? code;
   T data;
-  String msg;
+  String? msg;
   bool result;
 
   HttpResultModel(this.code, this.data, this.msg,this.result);

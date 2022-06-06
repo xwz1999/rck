@@ -6,16 +6,16 @@ import 'keyboard_widget.dart';
 import 'pay_password.dart';
 
 class BottomKeyBoardController{
-  Function clearPassWord;
+  late Function clearPassWord;
 }
 
 class BottomKeyBoardWidget extends StatefulWidget{
-  final BottomKeyBoardController controller;
-  final Function(String) passwordReturn;
-  final Function close;
-  final Function forgetPassword;
+  final BottomKeyBoardController? controller;
+  final Function(String)? passwordReturn;
+  final Function? close;
+  final Function? forgetPassword;
 
-  const BottomKeyBoardWidget({Key key, this.controller, this.passwordReturn, this.close, this.forgetPassword,}) : super(key: key);
+  const BottomKeyBoardWidget({Key? key, this.controller, this.passwordReturn, this.close, this.forgetPassword,}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -32,7 +32,7 @@ class _BottomKeyBoardWidgetState extends State<BottomKeyBoardWidget>{
   void initState() {
     super.initState();
     if (widget.controller!=null) {
-      widget.controller.clearPassWord = (){
+      widget.controller!.clearPassWord = (){
         if (mounted) {
           _pwdData = "";
           setState(() {});
@@ -81,7 +81,7 @@ class _BottomKeyBoardWidgetState extends State<BottomKeyBoardWidget>{
       if (_pwdData.length < 6) {
         _pwdData += data.key;
         if (_pwdData.length == 6 && widget.passwordReturn!=null) {
-          widget.passwordReturn(_pwdData);
+          widget.passwordReturn!(_pwdData);
         }
       }
       setState(() {});
@@ -116,7 +116,7 @@ class _BottomKeyBoardWidgetState extends State<BottomKeyBoardWidget>{
                 GestureDetector(
                   onTap: (){
                     if (widget.close!=null) {
-                      widget.close();
+                      widget.close!();
                     }
                   },
                   child: Container(
@@ -147,7 +147,7 @@ class _BottomKeyBoardWidgetState extends State<BottomKeyBoardWidget>{
             child: GestureDetector(
               onTap: (){
                 if (widget.forgetPassword != null) {
-                  widget.forgetPassword();
+                  widget.forgetPassword!();
                 }
               },
               child: Text('忘记密码?', style: TextStyle(color: Colors.red),),

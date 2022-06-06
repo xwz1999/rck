@@ -7,20 +7,20 @@ const _MinWidth = 50.0;     //内容最小宽度
 
 class Bubble extends StatelessWidget {
   final BubbleDirection direction;
-  final Radius borderRadius;
-  final Widget child;
-  final BoxDecoration decoration;
-  final Color color;
+  final Radius? borderRadius;
+  final Widget? child;
+  final BoxDecoration? decoration;
+  final Color? color;
   final _left;
   final _right;
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry margin;
-  final BoxConstraints constraints;
-  final double width;
-  final double height;
-  final Alignment alignment;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
+  final BoxConstraints? constraints;
+  final double? width;
+  final double? height;
+  final Alignment? alignment;
   const Bubble(
-      {Key key,
+      {Key? key,
         this.direction = BubbleDirection.left,
         this.borderRadius,
         this.child, this.decoration, this.color, this.padding, this.margin, this.constraints, this.width, this.height, this.alignment})
@@ -60,11 +60,11 @@ class _BubbleClipper extends CustomClipper<Path> {
   Path getClip(Size size) {
     final path = Path();
     final path2 = Path();
-    final centerPoint = (size.height / 2).clamp(_MinHeight/2, _MinHeight/2);
+    final num centerPoint = (size.height / 2).clamp(_MinHeight/2, _MinHeight/2);
     print(centerPoint);
     if (this.direction == BubbleDirection.left) {
       //绘制左边三角形
-      path.moveTo(0, centerPoint);
+      path.moveTo(0, centerPoint as double);
       path.lineTo(_ArrowWidth, centerPoint - _ArrowHeight/2);
       path.lineTo(_ArrowWidth, centerPoint + _ArrowHeight/2);
       path.close();
@@ -75,7 +75,7 @@ class _BubbleClipper extends CustomClipper<Path> {
       path.addPath(path2, Offset(0, 0));
     } else {
       //绘制右边三角形
-      path.moveTo(size.width, centerPoint);
+      path.moveTo(size.width, centerPoint as double);
       path.lineTo(size.width - _ArrowWidth, centerPoint - _ArrowHeight/2);
       path.lineTo(size.width - _ArrowWidth, centerPoint + _ArrowHeight/2);
       path.close();

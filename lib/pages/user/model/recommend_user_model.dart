@@ -1,13 +1,13 @@
 class RecommendUserModel {
-  num id;
-  String mobile;
-  num kind;
-  String kindStr;
-  String createdAt;
-  num state;
-  String stateStr;
-  String processTime;
-  String reason;
+  num? id;
+  String? mobile;
+  num? kind;
+  String? kindStr;
+  String? createdAt;
+  num? state;
+  String? stateStr;
+  String? processTime;
+  String? reason;
 
   RecommendUserModel(
       {this.id,

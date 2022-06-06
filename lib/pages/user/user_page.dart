@@ -11,6 +11,7 @@ import 'package:recook/pages/user/model/user_income_data_model.dart';
 import 'package:recook/pages/user/order/order_after_sale_page.dart';
 import 'package:recook/pages/user/order/order_center_page.dart';
 import 'package:recook/pages/user/pifa_benefit_page.dart';
+import 'package:recook/pages/user/review/review_page.dart';
 import 'package:recook/pages/user/user_benefit_sub_page.dart';
 import 'package:recook/pages/user/widget/capital_view.dart';
 import 'package:recook/pages/user/widget/order_central_view.dart';
@@ -32,10 +33,10 @@ class UserPage extends StatefulWidget {
 }
 
 class _UserPageState extends BaseStoreState<UserPage> {
-  GSRefreshController _refreshController;
+  GSRefreshController? _refreshController;
   bool _isFirstLoad = true;
-  num _allBenefitAmount = 0;
-  UserIncomeDataModel _userIncomeDataModel;
+  num? _allBenefitAmount = 0;
+  UserIncomeDataModel? _userIncomeDataModel;
 
   @override
   bool get wantKeepAlive => true;
@@ -49,7 +50,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
   void initState() {
     super.initState();
     _refreshController = GSRefreshController(initialRefresh: true);
-    WidgetsBinding.instance.addPostFrameCallback((callback) {
+    WidgetsBinding.instance!.addPostFrameCallback((callback) {
       if (_isFirstLoad) {
         _isFirstLoad = false;
       } else {
@@ -73,7 +74,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
   }
 
   Widget _buildNestedScrollView(
-      BuildContext context, Store<RecookState> store) {
+      BuildContext context, Store<RecookState>? store) {
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
@@ -85,17 +86,17 @@ class _UserPageState extends BaseStoreState<UserPage> {
   }
 
   _updateUserBriefInfo() {
-    UserManager.instance.updateUserBriefInfo(getStore()).then((success) {
+    UserManager.instance!.updateUserBriefInfo(getStore()).then((success) {
       if (success) {
-        if (UserManager.instance.user.info.roleLevel !=
-            getStore().state.userBrief.roleLevel) {
-          UserManager.instance.user.info.roleLevel =
-              getStore().state.userBrief.roleLevel;
-          UserManager.instance.refreshUserRole.value =
-              !UserManager.instance.refreshUserRole.value;
+        if (UserManager.instance!.user.info!.roleLevel !=
+            getStore().state.userBrief!.roleLevel) {
+          UserManager.instance!.user.info!.roleLevel =
+              getStore().state.userBrief!.roleLevel as int?;
+          UserManager.instance!.refreshUserRole.value =
+              !UserManager.instance!.refreshUserRole.value;
           UserManager.updateUserInfo(getStore());
         }
-        _refreshController.refreshCompleted();
+        _refreshController!.refreshCompleted();
       }
     });
   }
@@ -106,12 +107,12 @@ class _UserPageState extends BaseStoreState<UserPage> {
       _userIncomeDataModel = UserIncomeDataModel.fromJson(result.data['data']);
 
       ///累计收益
-      _allBenefitAmount = _userIncomeDataModel.total;
+      _allBenefitAmount = _userIncomeDataModel!.total;
     }
   }
 
   Widget _buildRefreshScrollView(
-      BuildContext context, Store<RecookState> store) {
+      BuildContext context, Store<RecookState>? store) {
     return Stack(
       children: <Widget>[
         // Container(color: AppColor.themeColor,height: 60*2.h),
@@ -131,156 +132,165 @@ class _UserPageState extends BaseStoreState<UserPage> {
           body: ListView(
             physics: AlwaysScrollableScrollPhysics(),
             children: <Widget>[
-               CapitalView(),
-               Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 0,
-                      ),
-                      child: _buildDetailReward(),
-                    ),
-
-              ...    [
-
-                UserLevelTool.currentRoleLevelEnum() ==
-                    UserRoleLevel.subsidiary?        _renderBenefitCard(
-                  leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
-                  title: '品牌补贴',
-                  alertTitle: '品牌补贴',
-                  title1: '未到账收益',
-                  title3: '已到账收益',
-                  content1: _userIncomeDataModel?.eAmount5 ?? 0,
-                  content2: _userIncomeDataModel?.eCount5 ?? 0,
-                  content3: _userIncomeDataModel?.amount5 ?? 0,
-                  content4: _userIncomeDataModel?.count5 ?? 0,
-                ):
-                      _renderBenefitCard(
-                              leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
-                              title: '分享收益',
-                              alertTitle: '分享收益',
+              CapitalView(),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 0,
+                ),
+                child: _buildDetailReward(),
+              ),
+              ...[
+                UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary
+                    ? _renderBenefitCard(
+                        leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
+                        title: '品牌补贴',
+                        alertTitle: '品牌补贴',
                         title1: '未到账收益',
                         title3: '已到账收益',
-                              content1: _userIncomeDataModel?.eAmount2 ?? 0,
-                              content2: _userIncomeDataModel?.eCount2 ?? 0,
-                              content3: _userIncomeDataModel?.amount2 ?? 0,
-                              content4: _userIncomeDataModel?.count2 ?? 0,
-                            ),
-
-                UserLevelTool.currentRoleLevelEnum() ==
-                    UserRoleLevel.subsidiary?        _renderBenefitCard(
-                  leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
-                  title: '分享收益',
-                  alertTitle: '分享收益',
-                  title1: '未到账收益',
-                  title3: '已到账收益',
-                  content1: _userIncomeDataModel?.eAmount6 ?? 0,
-                  content2: _userIncomeDataModel?.eCount6 ?? 0,
-                  content3: _userIncomeDataModel?.amount6 ?? 0,
-                  content4: _userIncomeDataModel?.count6 ?? 0,
-                ):
-                    _renderBenefitCard(
-                              leadingPath: R.ASSETS_USER_PINK_GROUP_WEBP,
-                              title: '开店补贴',
-                              alertTitle: '开店补贴',
-                      title1: '未到账收益',
-                      title3: '已到账收益',
-                              content1: _userIncomeDataModel?.eAmount4 ?? 0,
-                              content2: _userIncomeDataModel?.eCount4 ?? 0,
-                              content3: _userIncomeDataModel?.amount4 ?? 0,
-                              content4: _userIncomeDataModel?.count4 ?? 0,
-                            )
-                          ,
-                    ].sepWidget(
-                      separate: 1.hb),
+                        content1: _userIncomeDataModel?.eAmount5 ?? 0,
+                        content2: _userIncomeDataModel?.eCount5 ?? 0,
+                        content3: _userIncomeDataModel?.amount5 ?? 0,
+                        content4: _userIncomeDataModel?.count5 ?? 0,
+                      )
+                    : _renderBenefitCard(
+                        leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
+                        title: '分享收益',
+                        alertTitle: '分享收益',
+                        title1: '未到账收益',
+                        title3: '已到账收益',
+                        content1: _userIncomeDataModel?.eAmount2 ?? 0,
+                        content2: _userIncomeDataModel?.eCount2 ?? 0,
+                        content3: _userIncomeDataModel?.amount2 ?? 0,
+                        content4: _userIncomeDataModel?.count2 ?? 0,
+                      ),
+                UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary
+                    ? _renderBenefitCard(
+                        leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
+                        title: '分享收益',
+                        alertTitle: '分享收益',
+                        title1: '未到账收益',
+                        title3: '已到账收益',
+                        content1: _userIncomeDataModel?.eAmount6 ?? 0,
+                        content2: _userIncomeDataModel?.eCount6 ?? 0,
+                        content3: _userIncomeDataModel?.amount6 ?? 0,
+                        content4: _userIncomeDataModel?.count6 ?? 0,
+                      )
+                    : _renderBenefitCard(
+                        leadingPath: R.ASSETS_USER_PINK_GROUP_WEBP,
+                        title: '开店补贴',
+                        alertTitle: '开店补贴',
+                        title1: '未到账收益',
+                        title3: '已到账收益',
+                        content1: _userIncomeDataModel?.eAmount4 ?? 0,
+                        content2: _userIncomeDataModel?.eCount4 ?? 0,
+                        content3: _userIncomeDataModel?.amount4 ?? 0,
+                        content4: _userIncomeDataModel?.count4 ?? 0,
+                      ),
+              ].sepWidget(separate: 1.hb),
               20.w.heightBox,
               OrderCentralView(
                 clickListener: (int index) {
                   if (index == 4) {
-                    AppRouter.push(context, RouteName.USER_REVIEW_PAGE);
+                    // AppRouter.push(context, RouteName.USER_REVIEW_PAGE);
+
+                    Get.to(() => ReviewPage());
+
                     return;
                   }
                   if (index == 5) {
-                    AppRouter.push(
-                        context, RouteName.ORDER_AFTER_SALE_GOODS_LIST,
-                        arguments: OrderAfterSalePage.setArguments(
-                            OrderAfterSaleType.userPage, null, null));
+                    // AppRouter.push(
+                    //     context, RouteName.ORDER_AFTER_SALE_GOODS_LIST,
+                    //     arguments: OrderAfterSalePage.setArguments(
+                    //         OrderAfterSaleType.userPage, null, null));
+
+                    Get.to(() => OrderAfterSalePage(
+                          arguments: OrderAfterSalePage.setArguments(
+                              OrderAfterSaleType.userPage, null, null),
+                        ));
                     return;
                   }
-                  push(RouteName.ORDER_LIST_PAGE,
-                      arguments: OrderCenterPage.setArguments(index));
+                  Get.to(() => OrderCenterPage(
+                        arguments: OrderCenterPage.setArguments(index),
+                      ));
                 },
               ),
               20.w.heightBox,
-              UserLevelTool.currentRoleLevelEnum() ==
-                  UserRoleLevel.subsidiary?
-              GestureDetector(
-                onTap: (){
-                  Get.to(()=>VipShopPushPage());
-                },
-                child: Container(
-                  color: Colors.white,
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: 10.rw,horizontal: 12.rw),
-
-                  child: Stack(
-                    children: [
-                      Image.asset(Assets.userExtensionBg.path,fit: BoxFit.fitWidth,),
-                      Align(
-                        alignment:Alignment.centerLeft,
-                        child: Row(
+              UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary
+                  ? GestureDetector(
+                      onTap: () {
+                        Get.to(() => VipShopPushPage());
+                      },
+                      child: Container(
+                        color: Colors.white,
+                        width: double.infinity,
+                        padding: EdgeInsets.symmetric(
+                            vertical: 10.rw, horizontal: 12.rw),
+                        child: Stack(
                           children: [
-                            40.wb,
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                30.hb,
-                                RichText(
-                                  text: TextSpan(
-                                      text: "VIP店推广",
-                                      style: AppTextStyle.generate(16 * 2.sp,color: Color(0xFFD5101A)),
-                                      children: [
-                                        TextSpan(
-                                            style: AppTextStyle.generate(12 * 2.sp,
-                                                color: Color(0xFFD5101A).withOpacity(0.5)),
-                                            text:"    0元创业·轻松赚"
-                                        )
-                                      ]),
-                                ),
-                                28.hb,
-                                Container(
-                                  padding: EdgeInsets.symmetric(vertical: 2.rw,horizontal: 4.rw),
-                                  decoration: BoxDecoration(
-                                      gradient: LinearGradient(
-                                        begin: Alignment.centerLeft,
-                                        end: Alignment.centerRight,
-                                        colors: [
-                                          Color(0xFFF14F49),
-                                          Color(0xFFE21830),
-                                        ],
-                                      ),
-                                    borderRadius: BorderRadius.circular(2.rw)
-                                  ),
-                                  child: Text(
-                                    '立即推广 >',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12.rsp,
-                                      fontWeight: FontWeight.bold
-                                    ),
-                                  ),
-                                )
-                              ],
+                            Image.asset(
+                              Assets.userExtensionBg.path,
+                              fit: BoxFit.fitWidth,
                             ),
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Row(
+                                children: [
+                                  40.wb,
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      30.hb,
+                                      RichText(
+                                        text: TextSpan(
+                                            text: "VIP店推广",
+                                            style: AppTextStyle.generate(
+                                                16 * 2.sp,
+                                                color: Color(0xFFD5101A)),
+                                            children: [
+                                              TextSpan(
+                                                  style: AppTextStyle.generate(
+                                                      12 * 2.sp,
+                                                      color: Color(0xFFD5101A)
+                                                          .withOpacity(0.5)),
+                                                  text: "    0元创业·轻松赚")
+                                            ]),
+                                      ),
+                                      28.hb,
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: 2.rw, horizontal: 4.rw),
+                                        decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              begin: Alignment.centerLeft,
+                                              end: Alignment.centerRight,
+                                              colors: [
+                                                Color(0xFFF14F49),
+                                                Color(0xFFE21830),
+                                              ],
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(2.rw)),
+                                        child: Text(
+                                          '立即推广 >',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12.rsp,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
                           ],
                         ),
-                      )
-                    ],
-                  ),
-                ),
-              ):SizedBox(),
+                      ),
+                    )
+                  : SizedBox(),
               20.w.heightBox,
-
-
               OtherItemViewV2(),
             ],
           ),
@@ -290,16 +300,16 @@ class _UserPageState extends BaseStoreState<UserPage> {
   }
 
   Widget _renderBenefitCard({
-    @required String leadingPath,
-    @required String title,
-    @required String alertTitle,
-    Widget alertContent,
-    @required String title1,
-    @required String title3,
-    @required num content1,
-    @required num content2,
-    @required num content3,
-    @required num content4,
+    required String leadingPath,
+    required String title,
+    required String alertTitle,
+    Widget? alertContent,
+    required String title1,
+    required String title3,
+    required num content1,
+    required num content2,
+    required num content3,
+    required num content4,
     UserBenefitPageType type = UserBenefitPageType.SELF,
   }) {
     // if (title == "自购收益") {
@@ -311,7 +321,6 @@ class _UserPageState extends BaseStoreState<UserPage> {
     // } else if (title == "开店补贴") {
     //   type = UserBenefitPageType.PLATFORM;
     // }
-
 
     return Container(
       color: Colors.white,
@@ -328,37 +337,39 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 height: 32.rw,
               ),
               title.text.size(16.rsp).black.make(),
-
               Spacer(),
-              UserLevelTool.currentRoleLevelEnum() ==
-                  UserRoleLevel.subsidiary? GestureDetector(
-                onTap: () {
-                  Get.to(() => PifaBenefitPage(
-                      type: title, isDetail: false,));
-                },
-                child: Container(
-                    color: Colors.transparent,
-                    width: 100.rw,
-                    height: 40.rw,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        '图表分析'
-                            .text
-                            .size(12.rsp)
-                            .color(Color(0xFF999999))
-                            .make(),
-                        Container(
-                          padding: EdgeInsets.only(top: 2.rw),
-                          child: Icon(
-                            Icons.chevron_right_outlined,
-                            size: 16.rw,
-                            color: Color(0xFFA5A5A5),
-                          ),
-                        ),
-                      ],
-                    )),
-              ):SizedBox(),
+              UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary
+                  ? GestureDetector(
+                      onTap: () {
+                        Get.to(() => PifaBenefitPage(
+                              type: title,
+                              isDetail: false,
+                            ));
+                      },
+                      child: Container(
+                          color: Colors.transparent,
+                          width: 100.rw,
+                          height: 40.rw,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              '图表分析'
+                                  .text
+                                  .size(12.rsp)
+                                  .color(Color(0xFF999999))
+                                  .make(),
+                              Container(
+                                padding: EdgeInsets.only(top: 2.rw),
+                                child: Icon(
+                                  Icons.chevron_right_outlined,
+                                  size: 16.rw,
+                                  color: Color(0xFFA5A5A5),
+                                ),
+                              ),
+                            ],
+                          )),
+                    )
+                  : SizedBox(),
               29.w.widthBox,
             ],
           ),
@@ -380,9 +391,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomImageButton(
-                        onPressed: () {
-
-                        },
+                        onPressed: () {},
                         child: Column(
                           children: [
                             title1.text
@@ -401,9 +410,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomImageButton(
-                        onPressed: () {
-
-                        },
+                        onPressed: () {},
                         child: Column(
                           children: [
                             '订单数'
@@ -430,9 +437,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 children: [
                   32.w.widthBox,
                   CustomImageButton(
-                    onPressed: () {
-
-                    },
+                    onPressed: () {},
                     child: Column(
                       children: [
                         title3.text
@@ -446,9 +451,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                   ),
                   Spacer(),
                   CustomImageButton(
-                    onPressed: () {
-
-                    },
+                    onPressed: () {},
                     child: Column(
                       children: [
                         '订单数'.text.color(Color(0xFF999999)).size(12.rsp).make(),
@@ -484,7 +487,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     'assets/shop_page_appbar_detail_bg.png',
                     fit: BoxFit.cover,
                   )),
-              AppConfig.getShowCommission()
+              AppConfig.getShowCommission()!
                   ? CustomImageButton(
                       onPressed: () {
                         //Get.to(() => UserHistoryBenefitPage());
@@ -524,7 +527,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                               },
                             ),
                             Spacer(),
-                            Text(_allBenefitAmount.toStringAsFixed(2),
+                            Text(_allBenefitAmount!.toStringAsFixed(2),
                                 style: TextStyle(
                                     color: Colors.black, fontSize: 18)),
                             40.wb,
@@ -540,8 +543,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
     );
   }
 
-  Widget _bodyWidget(BuildContext context, Store<RecookState> store) {
-    if (UserManager.instance.haveLogin) {
+  Widget _bodyWidget(BuildContext context, Store<RecookState>? store) {
+    if (UserManager.instance!.haveLogin) {
       // 登录了就渲染用户界面
       return _buildNestedScrollView(context, store);
     } else {

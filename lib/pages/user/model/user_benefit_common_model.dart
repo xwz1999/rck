@@ -1,9 +1,9 @@
 class UserBenefitCommonModel {
-  Purchase purchase;
-  Purchase guide;
-  Team team;
-  Team recommend;
-  Team reward;
+  Purchase? purchase;
+  Purchase? guide;
+  Team? team;
+  Team? recommend;
+  Team? reward;
 
   double get allAmount =>
       (this.guide?.amount ?? 0) +
@@ -38,28 +38,28 @@ class UserBenefitCommonModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.purchase != null) {
-      data['purchase'] = this.purchase.toJson();
+      data['purchase'] = this.purchase!.toJson();
     }
     if (this.guide != null) {
-      data['guide'] = this.guide.toJson();
+      data['guide'] = this.guide!.toJson();
     }
     if (this.team != null) {
-      data['team'] = this.team.toJson();
+      data['team'] = this.team!.toJson();
     }
     if (this.recommend != null) {
-      data['recommend'] = this.recommend.toJson();
+      data['recommend'] = this.recommend!.toJson();
     }
     if (this.reward != null) {
-      data['reward'] = this.reward.toJson();
+      data['reward'] = this.reward!.toJson();
     }
     return data;
   }
 }
 
 class Purchase {
-  num count;
-  num salesVolume;
-  num amount;
+  num? count;
+  num? salesVolume;
+  num? amount;
 
   Purchase({this.count, this.salesVolume, this.amount});
 
@@ -85,9 +85,9 @@ class Purchase {
 }
 
 class Team {
-  num salesVolume;
-  num amount;
-  num ratio;
+  num? salesVolume;
+  num? amount;
+  num? ratio;
 
   Team({this.salesVolume, this.amount, this.ratio});
 

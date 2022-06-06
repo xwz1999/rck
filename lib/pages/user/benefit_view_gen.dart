@@ -17,9 +17,9 @@ import 'package:recook/widgets/recook_back_button.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class DisplayCard {
-  num benefit = 0;
-  num sales = 0;
-  num count = 0;
+  num? benefit = 0;
+  num? sales = 0;
+  num? count = 0;
   bool isPercent = false;
   DisplayCard({
     this.benefit,
@@ -31,7 +31,7 @@ class DisplayCard {
 
 class BenefitViewGen extends StatefulWidget {
   final UserBenefitPageType type;
-  BenefitViewGen({Key key, @required this.type}) : super(key: key);
+  BenefitViewGen({Key? key, required this.type}) : super(key: key);
 
   @override
   _BenefitViewGenState createState() => _BenefitViewGenState();
@@ -39,7 +39,7 @@ class BenefitViewGen extends StatefulWidget {
 
 class _BenefitViewGenState extends State<BenefitViewGen>
     with TickerProviderStateMixin {
-  TabController _tabController;
+  TabController? _tabController;
   List<String> _tabs = ['今日', '昨日', '本月', '上月'];
   List<DisplayCard> _cardItems = List.generate(4, (index) => DisplayCard());
   dynamic _todayModel;
@@ -149,7 +149,7 @@ class _BenefitViewGenState extends State<BenefitViewGen>
     );
   }
 
-  Widget noMoreDataView({String text, Widget icon}) {
+  Widget noMoreDataView({String? text, Widget? icon}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       width: double.infinity,
@@ -167,7 +167,7 @@ class _BenefitViewGenState extends State<BenefitViewGen>
             height: 10,
           ),
           Text(
-            TextUtils.isEmpty(text) ? "这是我最后的底线" : text,
+            TextUtils.isEmpty(text) ? "这是我最后的底线" : text!,
             style: TextStyle(color: Color(0xff666666), fontSize: 12),
           )
         ],
@@ -221,26 +221,26 @@ class _BenefitViewGenState extends State<BenefitViewGen>
   DisplayCard _getCard(dynamic model) {
     if (model is UserBenefitDayExpectModel) {
       return widget.type == UserBenefitPageType.SELF
-          ? model.purchase.card
-          : model.guide.card;
+          ? model.purchase!.card
+          : model.guide!.card;
     }
     if (model is UserBenefitMonthExpectModel) {
       return widget.type == UserBenefitPageType.SELF
-          ? model.purchase.card
-          : model.guide.card;
+          ? model.purchase!.card
+          : model.guide!.card;
     }
 
     if (model is UserBenefitExpectExtraModel) {
       switch (widget.type) {
         case UserBenefitPageType.TEAM:
-          return model.team.card;
-          break;
+          return model.team!.card;
+
         case UserBenefitPageType.RECOMMEND:
-          return model.recommend.card;
-          break;
+          return model.recommend!.card;
+
         case UserBenefitPageType.PLATFORM:
-          return model.reward.card;
-          break;
+          return model.reward!.card;
+
         default:
           return DisplayCard();
       }
@@ -252,26 +252,25 @@ class _BenefitViewGenState extends State<BenefitViewGen>
     switch (widget.type) {
       case UserBenefitPageType.SELF:
         return '自购收益';
-        break;
       case UserBenefitPageType.GUIDE:
         return '导购收益';
-        break;
+
       case UserBenefitPageType.TEAM:
         return '团队收益';
-        break;
+
       case UserBenefitPageType.RECOMMEND:
         return '推荐收益';
-        break;
+
       case UserBenefitPageType.PLATFORM:
         return '平台收益';
-        break;
+
     }
-    return '';
+
   }
 
   Widget _buildTeamRecommendPlatformCard() {
-    UserBenefitExpectExtraModel model;
-    switch (_tabController.index) {
+    UserBenefitExpectExtraModel? model;
+    switch (_tabController!.index) {
       case 0:
         model = _todayModel;
         break;
@@ -286,7 +285,7 @@ class _BenefitViewGenState extends State<BenefitViewGen>
         break;
     }
     if (model == null) return SizedBox();
-    List<TeamList> team = [];
+    List<TeamList>? team = [];
     switch (widget.type) {
       case UserBenefitPageType.TEAM:
         team = model.teamList;
@@ -356,7 +355,7 @@ class _BenefitViewGenState extends State<BenefitViewGen>
                     physics: NeverScrollableScrollPhysics(),
                     reverse: _itemReverse,
                     itemBuilder: (context, index) {
-                      final _ = team[index];
+                      final _ = team![index];
                       return UserGroupCard.flat(
                         name: _.nickname,
                         wechatId: _.wechatNo,
@@ -394,7 +393,7 @@ class _BenefitViewGenState extends State<BenefitViewGen>
     ].stack().expand();
   }
 
-  _buildTable(UserBenefitMonthExpectModel model) {
+  _buildTable(UserBenefitMonthExpectModel? model) {
     _buildTitle(String title, {bool red = false, bool bold = false}) {
       return title.text
           .size(14.rsp)
@@ -418,21 +417,21 @@ class _BenefitViewGenState extends State<BenefitViewGen>
           ],
         ),
         ...widget.type == UserBenefitPageType.SELF
-            ? model.purchaseList.map((e) {
+            ? model!.purchaseList!.map((e) {
                 return TableRow(
                   children: [
                     _buildTitle(DateUtil.formatDate(e.date, format: 'M月dd日')),
-                    _buildTitle(e.salesVolume.toStringAsFixed(2)),
+                    _buildTitle(e.salesVolume!.toStringAsFixed(2)),
                     _buildTitle(e.count.toString()),
                     _buildTitle(e.amount.toString()),
                   ],
                 );
               }).toList()
-            : model.guideList.map((e) {
+            : model!.guideList!.map((e) {
                 return TableRow(
                   children: [
                     _buildTitle(DateUtil.formatDate(e.date, format: 'M月dd日')),
-                    _buildTitle(e.salesVolume.toStringAsFixed(2)),
+                    _buildTitle(e.salesVolume!.toStringAsFixed(2)),
                     _buildTitle(e.count.toString()),
                     _buildTitle(e.amount.toString()),
                   ],
@@ -445,11 +444,11 @@ class _BenefitViewGenState extends State<BenefitViewGen>
   _parseBottomCard() {
     if (widget.type == UserBenefitPageType.SELF ||
         widget.type == UserBenefitPageType.GUIDE) {
-      if (_tabController.index == 0 || _tabController.index == 1)
+      if (_tabController!.index == 0 || _tabController!.index == 1)
         return SizedBox();
       else
         return _buildTable(
-          _tabController.index == 2 ? _thisMonthModel : _lastMonthModel,
+          _tabController!.index == 2 ? _thisMonthModel : _lastMonthModel,
         );
     } else
       return _buildTeamRecommendPlatformCard();
@@ -520,8 +519,8 @@ class _BenefitViewGenState extends State<BenefitViewGen>
 ///TabBar
 class _BenefitTabBar extends StatefulWidget {
   final List<String> items;
-  final TabController tabController;
-  _BenefitTabBar({Key key, @required this.items, @required this.tabController})
+  final TabController? tabController;
+  _BenefitTabBar({Key? key, required this.items, required this.tabController})
       : super(key: key);
 
   @override
@@ -541,7 +540,7 @@ class __BenefitTabBarState extends State<_BenefitTabBar> {
   Widget _buildTabBarButton(String title, int index) {
     return CustomImageButton(
       onPressed: () {
-        widget.tabController.animateTo(index);
+        widget.tabController!.animateTo(index);
       },
       child: AnimatedContainer(
         duration: Duration(milliseconds: 300),
@@ -551,14 +550,14 @@ class __BenefitTabBarState extends State<_BenefitTabBar> {
         decoration: BoxDecoration(
           border: Border.all(color: Colors.white, width: 1.rw),
           borderRadius: BorderRadius.circular(11.rw),
-          color: _getColor(index, widget.tabController.animation.value),
+          color: _getColor(index, widget.tabController!.animation!.value),
         ),
         child: DefaultTextStyle(
           child: title.text.size(14).make(),
           style: TextStyle(
             color: _getColor(
               index,
-              widget.tabController.animation.value,
+              widget.tabController!.animation!.value,
               reverse: true,
             ),
           ),

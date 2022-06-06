@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class Test extends StatefulWidget {
-  const Test({Key key}) : super(key: key);
+  const Test({Key? key}) : super(key: key);
 
   @override
   _TestState createState() => _TestState();

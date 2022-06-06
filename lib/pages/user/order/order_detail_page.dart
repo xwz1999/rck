@@ -31,11 +31,11 @@ import 'package:recook/widgets/refresh_widget.dart';
 import 'package:recook/widgets/toast.dart';
 
 class OrderDetailPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  const OrderDetailPage({Key key, this.arguments}) : super(key: key);
+  const OrderDetailPage({Key? key, this.arguments}) : super(key: key);
 
-  static setArguments(int orderId,bool isPifa) {
+  static setArguments(int? orderId,bool isPifa) {
     return {"orderId": orderId,'isPifa':isPifa};
   }
 
@@ -49,19 +49,19 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
     implements OrderListViewI {
   // OrderPreviewModel _detail;
   bool isPifa = false;
-  OrderListPresenterImpl _presenter;
+  late OrderListPresenterImpl _presenter;
   GSRefreshController _refreshController = GSRefreshController();
   @override
   void initState() {
     super.initState();
-    int orderId = widget.arguments["orderId"];
+    int? orderId = widget.arguments!["orderId"];
 
 
-    isPifa = UserManager.instance.isWholesale;
+    isPifa = UserManager.instance!.isWholesale;
     print(orderId);
     _presenter = OrderListPresenterImpl();
     _presenter.attach(this);
-    _presenter.getOrderDetail(UserManager.instance.user.info.id, orderId);
+    _presenter.getOrderDetail(UserManager.instance!.user.info!.id, orderId);
   }
 
 
@@ -69,7 +69,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
   _customer(){
     return GestureDetector(
       onTap: () async{
-        WholesaleCustomerModel model = await
+        WholesaleCustomerModel? model = await
         WholesaleFunc.getCustomerInfo();
 
         Get.to(()=>WholesaleCustomerPage(model: model,));
@@ -122,21 +122,21 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
       refreshingText: "正在更新数据...",
       onRefresh: () {
         _presenter.getOrderDetail(
-            UserManager.instance.user.info.id, widget.arguments["orderId"]);
+            UserManager.instance!.user.info!.id, widget.arguments!["orderId"]);
       },
       body: ListView(
         physics: AlwaysScrollableScrollPhysics(),
         // physics: BouncingScrollPhysics(),
         children: <Widget>[
-          !orderDetail.canPay&&isPifa && orderDetail.status==0? waitDeal():SizedBox(),
+          !orderDetail!.canPay!&&isPifa && orderDetail!.status==0? waitDeal():SizedBox(),
 
-          !isPifa&& orderDetail.status==0? payTimeView():SizedBox(),
+          !isPifa&& orderDetail!.status==0? payTimeView():SizedBox(),
           buildAddress(),
           isPifa?wholesaleBrandList(): brandList(),
           isPifa?SizedBox():totalPrice(),
           isPifa? SizedBox():priceInfo(),
           isPifa? wholesaleOrderInfo(): orderInfo(),
-          isPifa&&orderDetail.makeUpAmount!=null&&orderDetail.makeUpText!=''?wholesaleCompensate():SizedBox(),
+          isPifa&&orderDetail!.makeUpAmount!=null&&orderDetail!.makeUpText!=''?wholesaleCompensate():SizedBox(),
           //contactCustomerService(),
         ],
       ),
@@ -144,14 +144,13 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
   }
 
   getTitle() {
-    switch (orderDetail.status) {
+    switch (orderDetail!.status) {
       case 0:
-        if(!orderDetail.canPay&&isPifa)
+        if(!orderDetail!.canPay!&&isPifa)
         return "待处理";
         else{
           return "待付款";
         }
-        break;
       case 1:
         String status =
         getStatus();
@@ -160,32 +159,28 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
       case 2:
         return "已取消";
 
-        break;
       case 3:
         return "已过期";
 
-        break;
       case 4:
         return "已完成";
 
-        break;
       case 5:
         return "已关闭";
 
-        break;
     }
   }
 
   getStatus() {
-    if (orderDetail.expressStatus == 0) {
+    if (orderDetail!.expressStatus == 0) {
       return "已付款";
 
     }
-    if (orderDetail.expressStatus == 1) {
+    if (orderDetail!.expressStatus == 1) {
 
       return  "部分商品已发货";
     }
-    if (orderDetail.expressStatus == 2) {
+    if (orderDetail!.expressStatus == 2) {
 
       return "已发货";
     }
@@ -215,22 +210,21 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
               bottom: true,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: _bottomBarItems(),
+                children: _bottomBarItems()!,
               ),
             ),
           );
   }
 
-  List<Widget> _bottomBarItems() {
-    switch (orderDetail.status) {
+  List<Widget>? _bottomBarItems() {
+    switch (orderDetail!.status) {
       case 0:
         /// 未支付
-        if(!orderDetail.canPay&&isPifa){
+        if(!orderDetail!.canPay!&&isPifa){
           return null;
         }else{
           return _unpaidItems();
         }
-        break;
       case 1:
 
         /// 已支付 包括未发货和已发货
@@ -283,7 +277,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
     List<Widget> items = [];
     items
       ..add(
-        orderDetail.canPay&&isPifa?SizedBox():
+        orderDetail!.canPay!&&isPifa?SizedBox():
 
           CustomImageButton(
         title: "取消订单",
@@ -299,11 +293,11 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
                 content: "确定取消订单吗？取消后将不能撤销",
                 items: ["我再想想", "确认"],
                 listener: (int index) {
-                  Alert.dismiss(globalContext);
+                  Alert.dismiss(globalContext!);
                   if (index == 0) return;
-                  GSDialog.of(context).showLoadingDialog(globalContext, "");
+                  GSDialog.of(context).showLoadingDialog(globalContext!, "");
                   _presenter.cancelOrder(
-                      UserManager.instance.user.info.id, orderDetail.id);
+                      UserManager.instance!.user.info!.id, orderDetail!.id);
                 },
               ));
         },
@@ -315,7 +309,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
       ..add(
 
           CustomImageButton(
-        title:  orderDetail.canPay&&isPifa?'去支付': "继续支付",
+        title:  orderDetail!.canPay!&&isPifa?'去支付': "继续支付",
         color: AppColor.themeColor,
         fontSize: 13 * 2.sp,
         padding: EdgeInsets.symmetric(vertical: 8.rw, horizontal: 18.rw),
@@ -323,14 +317,14 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
         border: Border.all(color: AppColor.themeColor, width: 0.8 * 2.w),
         onPressed: () {
           Data data = Data(
-              orderDetail.id,
-              orderDetail.userId,
-              orderDetail.actualTotalAmount,
-              orderDetail.status,
-              orderDetail.createdAt);
+              orderDetail!.id,
+              orderDetail!.userId,
+              orderDetail!.actualTotalAmount,
+              orderDetail!.status,
+              orderDetail!.createdAt);
           OrderPrepayModel model = OrderPrepayModel("SUCCESS", data, "");
-          AppRouter.push(globalContext, RouteName.ORDER_PREPAY_PAGE,
-              arguments: OrderPrepayPage.setArguments(model,isPifa: true, goToOrder: true,fromTo: orderDetail.canPay&&isPifa?'1':''));
+          AppRouter.push(globalContext!, RouteName.ORDER_PREPAY_PAGE,
+              arguments: OrderPrepayPage.setArguments(model,isPifa: true, goToOrder: true,fromTo: orderDetail!.canPay!&&isPifa?'1':''));
         },
       ));
     return items;
@@ -340,8 +334,8 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
     List<Widget> items = [];
     bool canRefund = false, canReturn = false, canViewLogistics = false;
 
-    for (Brands brand in orderDetail.brands) {
-      for (Goods goods in brand.goods) {
+    for (Brands brand in orderDetail!.brands!) {
+      for (Goods goods in brand.goods!) {
         if (goods.assType != 0) continue;
         if (goods.expressStatus == 0) {
           canRefund = true;
@@ -405,7 +399,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
     //       child: Container(height: 1,),
     //     ));
 
-    if (orderDetail.expressStatus != 0 && orderDetail.shippingMethod != 1) {
+    if (orderDetail!.expressStatus != 0 && orderDetail!.shippingMethod != 1) {
       items
         // ..add(SizedBox(
         //   width: rSize(5),
@@ -420,11 +414,11 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
             padding:
             EdgeInsets.symmetric(vertical: rSize(8), horizontal: rSize(15)),
             borderRadius: BorderRadius.all(Radius.circular(40)),
-            border: Border.all(color: Colors.grey[600], width: 0.8 * 2.w),
+            border: Border.all(color: Colors.grey[600]!, width: 0.8 * 2.w),
             onPressed: () {
-              AppRouter.push(globalContext, RouteName.ORDER_LOGISTIC,
+              AppRouter.push(globalContext!, RouteName.ORDER_LOGISTIC,
                   arguments: OrderLogisticsListPage.setArguments(
-                      orderId: orderDetail.id));
+                      orderId: orderDetail!.id));
             }))
         ..add(Container(
           width: rSize(10),
@@ -433,9 +427,9 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
     }
     // 确认收货按钮显示控制
     // 当订单中包含‘退款审核中’的状态时，不显示确认收货
-    if (orderDetail.canConfirm &&
-        orderDetail.brands.indexWhere((element) =>
-                element.goods
+    if (orderDetail!.canConfirm! &&
+        orderDetail!.brands!.indexWhere((element) =>
+                element.goods!
                     .indexWhere((element) => element.rStatus == '退款审核中') !=
                 -1) ==
             -1) {
@@ -476,7 +470,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
             Alert.dismiss(context);
             GSDialog.of(globalContext).showLoadingDialog(context, "");
             _presenter.applyRefund(
-                UserManager.instance.user.info.id, [goods.goodsDetailId]);
+                UserManager.instance!.user.info!.id, [goods.goodsDetailId]);
           },
           deleteItem: "取消",
           deleteListener: () {
@@ -491,10 +485,10 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
             arguments: ChooseAfterSaleTypePage.setArguments(goods))
         .then((returnSuccess) {
       if (returnSuccess == null) return;
-      if (returnSuccess) {
+      if (returnSuccess as bool) {
         DPrint.printf("退货成功了");
         _presenter.getOrderDetail(
-            UserManager.instance.user.info.id, orderDetail.id);
+            UserManager.instance!.user.info!.id, orderDetail!.id);
       }
     });
   }
@@ -520,7 +514,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
               Alert.dismiss(context);
               GSDialog.of(globalContext).showLoadingDialog(context, "");
               _presenter.confirmReceipt(
-                  UserManager.instance.user.info.id, orderDetail.id);
+                  UserManager.instance!.user.info!.id, orderDetail!.id);
             }
           },
         ));
@@ -528,8 +522,8 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
 
   _refundGoods() {
     List<Goods> goodsList = [];
-    orderDetail.brands.forEach((brands) {
-      brands.goods.forEach((goods) {
+    orderDetail!.brands!.forEach((brands) {
+      brands.goods!.forEach((goods) {
         goods.selected = false;
         if (goods.expressStatus == 0 && goods.assType == 0) {
           goodsList.add(goods);
@@ -541,8 +535,8 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
 
   _returnGoods() {
     List<Goods> goodsList = [];
-    orderDetail.brands.forEach((brands) {
-      brands.goods.forEach((goods) {
+    orderDetail!.brands!.forEach((brands) {
+      brands.goods!.forEach((goods) {
         goods.selected = false;
         if (goods.expressStatus == 1 &&
             goods.assType == 0 &&
@@ -555,17 +549,17 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
   }
 
   @override
-  cancelOrderSuccess(OrderModel order) {
-    GSDialog.of(context).dismiss(globalContext);
+  cancelOrderSuccess(OrderModel? order) {
+    GSDialog.of(context).dismiss(globalContext!);
     Toast.showInfo("已取消订单");
     Future.delayed(Duration(milliseconds: 300), () {
-      Navigator.pop(globalContext, 2);
+      Navigator.pop(globalContext!, 2);
     });
   }
 
   @override
-  failure(String msg) {
-    GSDialog.of(globalContext).showError(globalContext, msg);
+  failure(String? msg) {
+    GSDialog.of(globalContext).showError(globalContext!, msg);
   }
 
   @override
@@ -578,10 +572,10 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
 
   @override
   refundSuccess(msg) {
-    GSDialog.of(context).dismiss(globalContext);
+    GSDialog.of(context).dismiss(globalContext!);
     Toast.showInfo(msg);
     _presenter.getOrderDetail(
-        UserManager.instance.user.info.id, orderDetail.id);
+        UserManager.instance!.user.info!.id, orderDetail!.id);
   }
 
   @override
@@ -592,24 +586,24 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
 
   @override
   applyInvoiceSuccess() {
-    GSDialog.of(globalContext).showSuccess(globalContext, "申请成功");
+    GSDialog.of(globalContext).showSuccess(globalContext!, "申请成功");
     _presenter.getOrderDetail(
-        UserManager.instance.user.info.id, orderDetail.id);
+        UserManager.instance!.user.info!.id, orderDetail!.id);
   }
 
   @override
-  deleteOrderSuccess(int orderId) {
+  deleteOrderSuccess(int? orderId) {
     return null;
   }
 
   @override
   confirmReceiptSuccess(model) {
-    GSDialog.of(context).dismiss(globalContext);
-    GSDialog.of(globalContext).showSuccess(globalContext, "确认成功").then((value) {
+    GSDialog.of(context).dismiss(globalContext!);
+    GSDialog.of(globalContext).showSuccess(globalContext!, "确认成功").then((value) {
       // UserLevelTool.showUpgradeWidget(UserRoleUpgradeModel(data:UpgradeModel(upGrade: 1, roleLevel: 400, userLevel: 30)), globalContext, getStore());
       // UserLevelTool.showUpgradeWidget(model, globalContext, getStore());
     });
     _presenter.getOrderDetail(
-        UserManager.instance.user.info.id, orderDetail.id);
+        UserManager.instance!.user.info!.id, orderDetail!.id);
   }
 }

@@ -16,8 +16,8 @@ import 'models/wholesale_detail_model.dart';
 
 class WholesaleGoodsParamPage extends StatefulWidget {
   // final List<Sku> skus;
-  final WholesaleDetailModel model;
-  const WholesaleGoodsParamPage({Key key, this.model}) : super(key: key);
+  final WholesaleDetailModel? model;
+  const WholesaleGoodsParamPage({Key? key, this.model}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -27,7 +27,7 @@ class WholesaleGoodsParamPage extends StatefulWidget {
 
 class _WholesaleGoodsParamPageState extends BaseStoreState<WholesaleGoodsParamPage> {
   // List<Sku> _skus;
-  WholesaleDetailModel model;
+  WholesaleDetailModel? model;
   @override
   void initState() {
     super.initState();
@@ -41,7 +41,7 @@ class _WholesaleGoodsParamPageState extends BaseStoreState<WholesaleGoodsParamPa
       onTap: () {},
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-        height: DeviceInfo.screenHeight * 0.6,
+        height: DeviceInfo.screenHeight! * 0.6,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.vertical(top: Radius.circular(8))),
@@ -73,7 +73,7 @@ class _WholesaleGoodsParamPageState extends BaseStoreState<WholesaleGoodsParamPa
                   Expanded(
                       child: Container(
                     child: Text(
-                      model.brand.name,
+                      model!.brand!.name!,
                       style: TextStyle(color: Colors.grey, fontSize: 13 * 2.sp),
                     ),
                   )),
@@ -96,7 +96,7 @@ class _WholesaleGoodsParamPageState extends BaseStoreState<WholesaleGoodsParamPa
                   rWBox(20),
                   Container(
                     child: Text(
-                      '${model.sku[0].min}件起批  ',
+                      '${model!.sku![0]!.min}件起批  ',
                       style: TextStyle(color: Colors.grey, fontSize: 13 * 2.sp),
                     ),
                   ),
@@ -119,7 +119,7 @@ class _WholesaleGoodsParamPageState extends BaseStoreState<WholesaleGoodsParamPa
                   // rWBox(10),
                   Container(
                     child: Text(
-                      '${model.sku[0].name}  ${model.sku[0].code}',
+                      '${model!.sku![0]!.name}  ${model!.sku![0]!.code}',
                       style: TextStyle(color: Colors.grey, fontSize: 13 * 2.sp),
                     ),
                   ),
@@ -129,12 +129,12 @@ class _WholesaleGoodsParamPageState extends BaseStoreState<WholesaleGoodsParamPa
                 children: [
                   rWBox(100),
                   Column(
-                    children: model.sku
+                    children: model!.sku!
                         .sublist(1)
                         .map(
                           (e) => Container(
                             child: Text(
-                              '${e.name}  ${e.code}',
+                              '${e!.name}  ${e.code}',
                               style: TextStyle(
                                   color: Colors.grey, fontSize: 13 * 2.sp),
                             ),

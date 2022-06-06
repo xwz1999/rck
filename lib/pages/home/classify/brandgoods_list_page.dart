@@ -9,6 +9,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
@@ -28,11 +29,11 @@ import 'mvp/goods_list_presenter_impl.dart';
 class BrandGoodsListPage extends StatefulWidget {
   // final int brandId;
   // final String brandName;
-  final Map argument;
+  final Map? argument;
 
-  const BrandGoodsListPage({Key key, this.argument}) : super(key: key);
+  const BrandGoodsListPage({Key? key, this.argument}) : super(key: key);
 
-  static setArguments(int brandId, String brandName) {
+  static setArguments(int? brandId, String? brandName) {
     return {"brandId": brandId, "brandName": brandName};
   }
 
@@ -47,16 +48,16 @@ class _BrandGoodsListPageState extends BaseStoreState<BrandGoodsListPage>
   /// 切换展示形式  true 为 List， false 为grid
   bool _displayList = false;//默认排列方式改为瀑布流
 
-  FilterToolBarController _filterController;
+  late FilterToolBarController _filterController;
 
-  GoodsListPresenterImpl _brandPresenter;
+  GoodsListPresenterImpl? _brandPresenter;
 
-  MvpListViewController<GoodsSimple> _brandListViewController;
+  MvpListViewController<GoodsSimple>? _brandListViewController;
 
   SortType _sortType = SortType.comprehensive;
 
   int _filterIndex = 0;
-  GifController _gifController;
+  GifController? _gifController;
   List<bool> _barBool = [false,false,false];
 
   @override
@@ -76,7 +77,7 @@ class _BrandGoodsListPageState extends BaseStoreState<BrandGoodsListPage>
 
   @override
   void dispose() {
-    _gifController.dispose();
+    _gifController!.dispose();
     super.dispose();
   }
 
@@ -87,7 +88,7 @@ class _BrandGoodsListPageState extends BaseStoreState<BrandGoodsListPage>
       appBar: CustomAppBar(
         themeData: AppThemes.themeDataGrey.appBarTheme,
         elevation: 0,
-        title: widget.argument["brandName"],
+        title: widget.argument!["brandName"],
       ),
       body: FilterToolBarResultContainer(
         controller: _filterController,
@@ -120,20 +121,20 @@ class _BrandGoodsListPageState extends BaseStoreState<BrandGoodsListPage>
         if ((index != 1 && index != 2) && _filterIndex == index) {
           return;
         }
-        _filterIndex = index;
+        _filterIndex = index!;
         switch (index) {
           case 0:
             _sortType = SortType.comprehensive;
             break;
           case 1:
-            if (item.topSelected) {
+            if (item!.topSelected) {
               _sortType = SortType.priceAsc;
             } else {
               _sortType = SortType.priceDesc;
             }
             break;
           case 2:
-            if (item.topSelected) {
+            if (item!.topSelected) {
               _sortType = SortType.salesAsc;
             } else {
               _sortType = SortType.salesDesc;
@@ -143,8 +144,8 @@ class _BrandGoodsListPageState extends BaseStoreState<BrandGoodsListPage>
 //            print("特卖优先");
 //            break;
         }
-        _brandListViewController.stopRefresh();
-        _brandListViewController.requestRefresh();
+        _brandListViewController!.stopRefresh();
+        _brandListViewController!.requestRefresh();
         // _brandPresenter.fetchBrandList(widget.argument["brandId"], 0, _sortType);
       },
     );
@@ -198,12 +199,12 @@ class _BrandGoodsListPageState extends BaseStoreState<BrandGoodsListPage>
       controller: _brandListViewController,
       type: ListViewType.grid,
       refreshCallback: () {
-        _brandPresenter.fetchBrandList(
-            widget.argument["brandId"], 0, _sortType);
+        _brandPresenter!.fetchBrandList(
+            widget.argument!["brandId"], 0, _sortType);
       },
       loadMoreCallback: (int page) {
-        _brandPresenter.fetchBrandList(
-            widget.argument["brandId"], page, _sortType);
+        _brandPresenter!.fetchBrandList(
+            widget.argument!["brandId"], page, _sortType);
       },
       gridViewBuilder: () => _buildGridView(),
       // gridViewBuilder:() => _buildGridView(),
@@ -212,21 +213,21 @@ class _BrandGoodsListPageState extends BaseStoreState<BrandGoodsListPage>
 
   _buildGridView() {
     return WaterfallFlow.builder(
-        padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight),
+        padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight!),
         physics: AlwaysScrollableScrollPhysics(),
-        itemCount: _brandListViewController.getData().length,
+        itemCount: _brandListViewController!.getData().length,
         gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
           crossAxisCount: _displayList ? 1 : 2,
           crossAxisSpacing: _displayList ? 5 : 10,
           mainAxisSpacing: _displayList ? 5 : 10,
         ),
         itemBuilder: (context, index) {
-          GoodsSimple goods = _brandListViewController.getData()[index];
+          GoodsSimple goods = _brandListViewController!.getData()[index];
           return MaterialButton(
               padding: EdgeInsets.zero,
               onPressed: () {
-                AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                    arguments: CommodityDetailPage.setArguments(goods.id));
+                Get.to(()=>CommodityDetailPage(arguments:
+                CommodityDetailPage.setArguments(goods.id as int?)));
               },
               child: _displayList
                   // ? BrandDetailListItem(goods: goods)
@@ -234,9 +235,8 @@ class _BrandGoodsListPageState extends BaseStoreState<BrandGoodsListPage>
                   ? GoodsItemWidget.normalGoodsItem(
                 gifController: _gifController,
                       onBrandClick: () {
-                        AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
-                            arguments: BrandGoodsListPage.setArguments(
-                                goods.brandId, goods.brandName));
+                        Get.to(()=>BrandGoodsListPage( argument: BrandGoodsListPage.setArguments(
+                            goods.brandId as int?, goods.brandName)));
                       },
                       buildCtx: context,
                       model: goods,
@@ -246,7 +246,7 @@ class _BrandGoodsListPageState extends BaseStoreState<BrandGoodsListPage>
   }
 
   @override
-  MvpListViewPresenterI<GoodsSimple, MvpView, MvpModel> getPresenter() {
+  MvpListViewPresenterI<GoodsSimple, MvpView, MvpModel>? getPresenter() {
     return _brandPresenter;
   }
 

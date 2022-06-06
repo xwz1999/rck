@@ -2,17 +2,13 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart' as flutterImagePicker;
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/media_model.dart';
 import 'package:recook/pages/user/review/models/order_review_list_model.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
-import 'package:recook/widgets/image_picker.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:oktoast/oktoast.dart';
@@ -21,12 +17,12 @@ import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 // import 'package:photo/photo.dart';
 
 class AddReviewPage extends StatefulWidget {
-  final int goodsDetailId;
+  final int? goodsDetailId;
   final OrderReviewListModel model;
   AddReviewPage({
-    Key key,
-    @required this.goodsDetailId,
-    @required this.model,
+    Key? key,
+    required this.goodsDetailId,
+    required this.model,
   }) : super(key: key);
 
   @override
@@ -71,7 +67,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
                   FadeInImage.assetNetwork(
                     placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                     image: Api.getImgUrl(
-                        widget.model.myOrderGoodsDea.mainPhotoUrl),
+                        widget.model.myOrderGoodsDea!.mainPhotoUrl)!,
                     height: rSize(56),
                     width: rSize(56),
                   ),
@@ -82,7 +78,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          widget.model.myOrderGoodsDea.goodsName,
+                          widget.model.myOrderGoodsDea!.goodsName!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           softWrap: false,
@@ -94,7 +90,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
                         ),
                         SizedBox(height: rSize(6)),
                         Text(
-                          '型号规格 ${widget.model.myOrderGoodsDea.skuName}',
+                          '型号规格 ${widget.model.myOrderGoodsDea!.skuName}',
                           style: TextStyle(
                             color: Color(0xFF666666),
                             fontSize: rSP(13),
@@ -158,7 +154,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
                                   //   },
                                   // );
 
-                                  List<AssetEntity> entitys = [];
+                                  List<AssetEntity?> entitys = [];
                                   var values = await CameraPicker.pickFromCamera(context);
                                   entitys.add(values);
 
@@ -167,8 +163,8 @@ class _AddReviewPageState extends State<AddReviewPage> {
                                   }
 
                                   for (var element in entitys) {
-                                    File file = await element.file;
-                                    Uint8List thumbData = await element.thumbData;
+                                    File? file = await element!.file;
+                                    Uint8List? thumbData = await element.thumbData;
                                     if (_mediaModels.length < 6) {
                                       _mediaModels.add(MediaModel(
                                         width: element.width,
@@ -207,8 +203,8 @@ class _AddReviewPageState extends State<AddReviewPage> {
                                   if (values == null) return;
                                   entitys.addAll(values);
                                   for (var element in entitys) {
-                                    File file = await element.file;
-                                    Uint8List thumbData = await element.thumbData;
+                                    File? file = await element.file;
+                                    Uint8List? thumbData = await element.thumbData;
                                     _mediaModels.add(MediaModel(
                                       width: element.width,
                                       height: element.height,
@@ -234,7 +230,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(rSize(4)),
                       child: Image.file(
-                        _mediaModels[index].file,
+                        _mediaModels[index].file!,
                         fit: BoxFit.cover,
                       ),
                     );
@@ -291,7 +287,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
         addComment(_controller.text,
                 images: _mediaModels
                     .map((e) => {
-                          'path': e.result.url,
+                          'path': e.result!.url,
                           'width': e.width,
                           'height': e.height,
                         })
@@ -311,10 +307,10 @@ class _AddReviewPageState extends State<AddReviewPage> {
     }
   }
 
-  Future addComment(String comment, {List<Map<String, dynamic>> images}) async {
+  Future addComment(String comment, {List<Map<String, dynamic>>? images}) async {
     Map params = {
-      'userId': UserManager.instance.user.info.id,
-      'goodsDetailId': widget.model.myOrderGoodsDea.goodsDetailId,
+      'userId': UserManager.instance!.user.info!.id,
+      'goodsDetailId': widget.model.myOrderGoodsDea!.goodsDetailId,
       'content': comment,
     };
     if (images != null) params.putIfAbsent('images', () => images);

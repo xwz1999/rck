@@ -10,10 +10,10 @@ EvaluationListModel _$EvaluationListModelFromJson(Map<String, dynamic> json) {
   return EvaluationListModel(
       json['code'],
       json['msg'],
-      (json['data'] as List)
-          ?.map((e) =>
-              e == null ? null : Data.fromJson(e as Map<String, dynamic>))
-          ?.toList());
+  (json['data'] as List<dynamic>?)
+      ?.map((e) =>
+      Data.fromJson(e as Map<String, dynamic>))
+      .toList());
 }
 
 Map<String, dynamic> _$EvaluationListModelToJson(
@@ -26,17 +26,18 @@ Map<String, dynamic> _$EvaluationListModelToJson(
 
 Data _$DataFromJson(Map<String, dynamic> json) {
   return Data(
-      json['id'] as int,
-      json['goodsId'] as int,
-      json['userId'] as int,
-      json['nickname'] as String,
-      json['headImgUrl'] as String,
-      json['content'] as String,
-      json['createdAt'] as String,
-      (json['photos'] as List)
+      json['id'] as int?,
+      json['goodsId'] as int?,
+      json['userId'] as int?,
+      json['nickname'] as String?,
+      json['headImgUrl'] as String?,
+      json['content'] as String?,
+      json['createdAt'] as String?,
+        (json['Photos'] as List<dynamic>?)
           ?.map((e) =>
-              e == null ? null : Photos.fromJson(e as Map<String, dynamic>))
-          ?.toList());
+          Photos.fromJson(e as Map<String, dynamic>))
+          .toList(),
+  );
 }
 
 Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
@@ -51,8 +52,8 @@ Map<String, dynamic> _$DataToJson(Data instance) => <String, dynamic>{
     };
 
 Photos _$PhotosFromJson(Map<String, dynamic> json) {
-  return Photos(json['id'] as int, json['url'] as String, json['width'] as int,
-      json['height'] as int);
+  return Photos(json['id'] as int?, json['url'] as String?, json['width'] as int?,
+      json['height'] as int?);
 }
 
 Map<String, dynamic> _$PhotosToJson(Photos instance) => <String, dynamic>{

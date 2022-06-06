@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 
 class CustomKbBtn extends StatefulWidget {
 
-  final String text;
-  final Widget child;
-   CustomKbBtn({Key key, this.text, this.child, this.callback}) : super(key: key);
+  final String? text;
+  final Widget? child;
+   CustomKbBtn({Key? key, this.text, this.child, this.callback}) : super(key: key);
   final callback;
 
   @override
@@ -44,9 +44,9 @@ class ButtonState extends State<CustomKbBtn> {
             side: new BorderSide(color: Color(0x10333333)),
           ),
           child: widget.child!=null?
-            widget.child
+            widget.child!
             :Text(
-              widget.text,
+              widget.text!,
               style: new TextStyle(color: Color(0xff333333), fontSize: 25.0),
             ),
           onPressed: back,

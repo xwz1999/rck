@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/app_image_resources.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/models/invite_list_model.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 
 class InviteDetailListItem extends StatelessWidget {
-  final InviteModel model;
+  final InviteModel? model;
   final bool isUpgrade;
-  const InviteDetailListItem({Key key, this.model, this.isUpgrade = false})
+  const InviteDetailListItem({Key? key, this.model, this.isUpgrade = false})
       : super(key: key);
 
   @override
@@ -60,7 +56,7 @@ class InviteDetailListItem extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(22.5)),
           child: CustomCacheImage(
             fit: BoxFit.cover,
-            imageUrl: Api.getResizeImgUrl(model.headImgUrl, 300),
+            imageUrl: Api.getResizeImgUrl(model!.headImgUrl!, 300),
             placeholder: AppImageName.placeholder_1x1,
           ),
         ),
@@ -69,16 +65,16 @@ class InviteDetailListItem extends StatelessWidget {
   }
 
   _nameView() {
-    String name = model.nickname;
-    if (!TextUtils.isEmpty(model.remarkName)) {
-      name = name + "(" + model.remarkName + ")";
+    String? name = model!.nickname;
+    if (!TextUtils.isEmpty(model!.remarkName)) {
+      name = name! + "(" + model!.remarkName! + ")";
     }
     return Container(
       alignment: Alignment.centerLeft,
       child: Row(
         children: <Widget>[
           Text(
-            name,
+            name!,
             overflow: TextOverflow.ellipsis,
             maxLines: 1,
             style: AppTextStyle.generate(14,
@@ -113,7 +109,7 @@ class InviteDetailListItem extends StatelessWidget {
             width: 4,
           ),
           Text(
-            TextUtils.isEmpty(model.phoneNum) ? "未设置" : model.phoneNum,
+            TextUtils.isEmpty(model!.phoneNum) ? "未设置" : model!.phoneNum!,
             style: TextStyle(fontSize: 11, color: Colors.grey),
           ),
           Container(
@@ -127,9 +123,9 @@ class InviteDetailListItem extends StatelessWidget {
           Container(
             width: 4,
           ),
-          !TextUtils.isEmpty(model.createdAt)
+          !TextUtils.isEmpty(model!.createdAt)
               ? Text(
-                  model.createdAt,
+                  model!.createdAt!,
                   style: TextStyle(fontSize: 11, color: Colors.grey),
                 )
               : Container(),
@@ -151,7 +147,7 @@ class InviteDetailListItem extends StatelessWidget {
             width: 4,
           ),
           Text(
-            TextUtils.isEmpty(model.phoneNum) ? "未设置" : model.phoneNum,
+            TextUtils.isEmpty(model!.phoneNum) ? "未设置" : model!.phoneNum!,
             style: TextStyle(fontSize: 11, color: Colors.grey),
           ),
           Container(
@@ -160,7 +156,7 @@ class InviteDetailListItem extends StatelessWidget {
           // Image.asset("assets/invite_detail_time.png", width: 13, height: 13,),
           Image.asset(
             UserLevelTool.upgradeRoleLevelIcon(
-                UserLevelTool.roleLevelEnum(model.roleLevel)),
+                UserLevelTool.roleLevelEnum(model!.roleLevel as int?)),
             width: 13,
             height: 13,
           ),
@@ -168,7 +164,7 @@ class InviteDetailListItem extends StatelessWidget {
             width: 4,
           ),
           Text(
-            UserLevelTool.roleLevel(model.roleLevel),
+            UserLevelTool.roleLevel(model!.roleLevel as int?),
             style: TextStyle(fontSize: 11, color: Colors.grey),
           )
           // !TextUtils.isEmpty(model.createdAt)?

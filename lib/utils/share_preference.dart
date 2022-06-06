@@ -15,7 +15,7 @@ class SharePreferenceUtils {
     return await preferences.setString(key, value);
   }
 
-  static Future<String> getString(key) async {
+  static Future<String?> getString(key) async {
     SharedPreferences preferences = await _getPreference();
     return preferences.getString(key);
   }
@@ -30,7 +30,7 @@ class SharePreferenceUtils {
     return preferences.setInt(key, value);
   }
 
-  static Future<int> getInt(key) async {
+  static Future<int?> getInt(key) async {
     SharedPreferences preferences = await _getPreference();
     return preferences.getInt(key);
   }
@@ -40,7 +40,7 @@ class SharePreferenceUtils {
     return preferences.setBool(key, value);
   }
 
-  static Future<bool> getBool(key) async {
+  static Future<bool?> getBool(key) async {
     SharedPreferences preferences = await _getPreference();
     return preferences.getBool(key);
   }

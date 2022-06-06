@@ -14,11 +14,11 @@ import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class DetailAppBar extends StatefulWidget {
-  final TabBar tabBar;
+  final TabBar? tabBar;
 
-  final AppBarController controller;
+  final AppBarController? controller;
 
-  final Function() onShareClick;
+  final Function()? onShareClick;
 
   DetailAppBar({this.tabBar, this.controller, this.onShareClick});
 
@@ -45,8 +45,8 @@ class _DetailAppBarState extends BaseStoreState<DetailAppBar> {
   @override
   void initState() {
     super.initState();
-    widget.controller.scale.addListener(() {
-      double scale = widget.controller.scale.value;
+    widget.controller!.scale.addListener(() {
+      double scale = widget.controller!.scale.value;
       _appBarBgColor = Color.fromARGB((255 * scale).toInt(), 251, 251, 251);
       if (scale < 0.5) {
         _itemColor =
@@ -60,12 +60,12 @@ class _DetailAppBarState extends BaseStoreState<DetailAppBar> {
       setState(() {});
     });
 
-    widget.tabBar.controller.addListener(() {
+    widget.tabBar!.controller!.addListener(() {
       bool refresh = false;
       if (_selectedIndex == 0) {
         refresh = true;
       } else {
-        refresh = widget.tabBar.controller.index == 0;
+        refresh = widget.tabBar!.controller!.index == 0;
       }
 
       if (refresh) {
@@ -80,7 +80,7 @@ class _DetailAppBarState extends BaseStoreState<DetailAppBar> {
   }
 
   _buildCustomAppBar(BuildContext context) {
-    bool selectedOne = widget.tabBar.controller.index == 0;
+    bool selectedOne = widget.tabBar!.controller!.index == 0;
     return CustomAppBar(
       appBackground: selectedOne ? _appBarBgColor : Colors.white,
       elevation: 0,
@@ -115,6 +115,6 @@ class AppBarController {
   ValueNotifier<double> scale = ValueNotifier(0);
 
   void dispose() {
-    scale?.dispose();
+    scale.dispose();
   }
 }

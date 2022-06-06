@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -21,8 +22,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:power_logger/power_logger.dart';
 
 class ImageUtils {
-  static Future<File> cropImage(file) async {
-    File croppedFile = await ImageCropper.cropImage(
+  static Future<File?> cropImage(file) async {
+    File? croppedFile = await ImageCropper.cropImage(
       sourcePath: file.path,
       androidUiSettings: AndroidUiSettings(
           toolbarTitle: "裁剪",
@@ -34,7 +35,7 @@ class ImageUtils {
   }
 
   /// 返回bytes数组
-  static Future<List<int>> compressImageWithBytes(String filePath,
+  static Future<List<int>?> compressImageWithBytes(String filePath,
       {int minWidth = 750,
       int minHeight = 1000,
       int quality = 50,
@@ -56,7 +57,7 @@ class ImageUtils {
   }
 
   /// From [path] to [targetPath]
-  static Future<File> compressAndGetFile(
+  static Future<File?> compressAndGetFile(
     String path,
     String targetPath, {
     int minWidth = 1920,
@@ -76,8 +77,8 @@ class ImageUtils {
   //   DPrint.printf(filePath);
   //   return filePath != null && filePath != "";
   // }
-  static Future<bool> saveNetworkImagesToPhoto(
-    List<String> urls,
+  static Future<bool?> saveNetworkImagesToPhoto(
+    List<String?> urls,
     void Function(int index) callBack,
     void Function(bool success) endBack, {
     bool useCache: true,
@@ -100,11 +101,11 @@ class ImageUtils {
       //
 
       for (var i = 0; i < urls.length; i++) {
-        String url = urls[i];
-        var data = await getNetworkImageData(url, useCache: useCache);
+        String url = urls[i]!;
+        var data = await (getNetworkImageData(url, useCache: useCache) );
         try {
-          final Map<dynamic, dynamic> result =
-          await ImageGallerySaver.saveImage(data,quality: 100);
+          final Map<dynamic, dynamic>? result =
+          await (ImageGallerySaver.saveImage(data!,quality: 100) );
           DPrint.printf(result);
         } catch (e) {
           if (e is ArgumentError) {
@@ -126,10 +127,11 @@ class ImageUtils {
       print(e);
       callBack(99);
     }
+    return null;
 
   }
 
-  static Future<bool> saveImage(
+  static Future<bool?> saveImage(
       List<Uint8List> fileDatas,
       void Function(int index) callBack,
       void Function(bool success) endBack,{int quality=80}) async {
@@ -151,7 +153,7 @@ class ImageUtils {
         Uint8List data = fileDatas[i];
         try {
           final Map<dynamic, dynamic> result =
-          await ImageGallerySaver.saveImage(data,quality: quality);
+          await (ImageGallerySaver.saveImage(data,quality: quality) );
 
           LoggerData.addData(result.containsValue(true));
           if (Platform.isAndroid) {
@@ -192,6 +194,7 @@ class ImageUtils {
       return true;
     }
     catch(e){
-  }}
+  }
+    return null;}
 
 }

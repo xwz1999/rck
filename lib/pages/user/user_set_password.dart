@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/pages/user/user_set_password_again.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/keyboard/CustomBoxPasswordFieldWidget.dart';
@@ -19,7 +18,7 @@ class UserSetPassword extends StatefulWidget {
 class _UserSetPasswordState extends BaseStoreState<UserSetPassword> {
   String pwdData = '';
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  VoidCallback _showBottomSheetCallback;
+  late VoidCallback _showBottomSheetCallback;
   @override
   void initState() {
     super.initState();
@@ -118,7 +117,7 @@ class _UserSetPasswordState extends BaseStoreState<UserSetPassword> {
 
   /// 底部弹出 自定义键盘  下滑消失
   void _showBottomSheet() {
-    _scaffoldKey.currentState
+    _scaffoldKey.currentState!
         .showBottomSheet<void>((BuildContext context) {
           return Container(
             height: MediaQuery.of(context).size.height,
@@ -130,7 +129,7 @@ class _UserSetPasswordState extends BaseStoreState<UserSetPassword> {
                       color: Colors.white.withAlpha(0),
                     ),
                     onTap: () {
-                      Navigator.pop(_scaffoldKey.currentContext);
+                      Navigator.pop(_scaffoldKey.currentContext!);
                     },
                   ),
                 ),

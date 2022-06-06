@@ -1,16 +1,16 @@
 import 'package:recook/pages/live/models/live_resume_model.dart';
 
 class LiveStreamInfoModel {
-  String nickname;
-  String headImgUrl;
-  String playUrl;
-  int userId;
-  int id;
-  int isFollow;
-  int isPraise;
-  int praise;
-  String groupId;
-  List<GoodsLists> goodsLists;
+  String? nickname;
+  String? headImgUrl;
+  String? playUrl;
+  int? userId;
+  int? id;
+  int? isFollow;
+  int? isPraise;
+  int? praise;
+  String? groupId;
+  List<GoodsLists>? goodsLists;
 
   LiveStreamInfoModel(
       {this.nickname,
@@ -29,7 +29,7 @@ class LiveStreamInfoModel {
     this.headImgUrl = model.headImgUrl;
     this.groupId = model.groupId;
     this.goodsLists =
-        model.goodsLists.map((e) => GoodsLists.fromJson(e.toJson())).toList();
+        model.goodsLists!.map((e) => GoodsLists.fromJson(e.toJson())).toList();
     this.id = model.liveItemId;
   }
 
@@ -46,7 +46,7 @@ class LiveStreamInfoModel {
     if (json['goodsLists'] != null) {
       goodsLists = [];
       json['goodsLists'].forEach((v) {
-        goodsLists.add(new GoodsLists.fromJson(v));
+        goodsLists!.add(new GoodsLists.fromJson(v));
       });
     }
   }
@@ -63,32 +63,32 @@ class LiveStreamInfoModel {
     data['praise'] = this.praise;
     data['groupId'] = this.groupId;
     if (this.goodsLists != null) {
-      data['goodsLists'] = this.goodsLists.map((v) => v.toJson()).toList();
+      data['goodsLists'] = this.goodsLists!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class GoodsLists {
-  int id;
-  String goodsName;
-  String brandImg;
-  String brandName;
-  int brandId;
-  String description;
-  int inventory;
-  int salesVolume;
-  String mainPhotoUrl;
-  String promotionName;
-  String originalPrice;
-  String discountPrice;
-  String commission;
-  List<String> tags;
-  int percent;
-  String startTime;
-  String endTime;
-  String coupon;
-  int isExplain;
+  int? id;
+  String? goodsName;
+  String? brandImg;
+  String? brandName;
+  int? brandId;
+  String? description;
+  int? inventory;
+  int? salesVolume;
+  String? mainPhotoUrl;
+  String? promotionName;
+  String? originalPrice;
+  String? discountPrice;
+  String? commission;
+  List<String>? tags;
+  int? percent;
+  String? startTime;
+  String? endTime;
+  String? coupon;
+  int? isExplain;
 
   GoodsLists(
       {this.id,

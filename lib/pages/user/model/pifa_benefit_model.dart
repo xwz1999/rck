@@ -1,8 +1,8 @@
 class PifaBenefitModel {
-  num all;
-  num weiDaoZ;
-  num yiDaoZ;
-  List<Entry> entry;
+  num? all;
+  num? weiDaoZ;
+  num? yiDaoZ;
+  List<Entry>? entry;
 
   PifaBenefitModel({this.all, this.weiDaoZ, this.yiDaoZ, this.entry});
 
@@ -11,9 +11,9 @@ class PifaBenefitModel {
     weiDaoZ = json['wei_dao_z'];
     yiDaoZ = json['yi_dao_z'];
     if (json['entry'] != null) {
-      entry = new List<Entry>();
+      entry = [];
       json['entry'].forEach((v) {
-        entry.add(new Entry.fromJson(v));
+        entry!.add(new Entry.fromJson(v));
       });
     }
   }
@@ -24,19 +24,19 @@ class PifaBenefitModel {
     data['wei_dao_z'] = this.weiDaoZ;
     data['yi_dao_z'] = this.yiDaoZ;
     if (this.entry != null) {
-      data['entry'] = this.entry.map((v) => v.toJson()).toList();
+      data['entry'] = this.entry!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Entry {
-  String name;
-  num amount;
-  num income;
-  num notIncome;
-  int count;
-  int shopId;
+  String? name;
+  num? amount;
+  num? income;
+  num? notIncome;
+  int? count;
+  int? shopId;
 
   Entry(
       {this.name,

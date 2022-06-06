@@ -12,7 +12,6 @@ import 'dart:typed_data';
 import 'package:async/async.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart' as flutterImagePicker;
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -23,7 +22,6 @@ import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/image_picker.dart';
 import 'package:recook/widgets/image_selected_view.dart';
 import 'package:recook/widgets/input_view.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
@@ -31,11 +29,11 @@ import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 // import 'package:photo/photo.dart';
 
 class PublishBusinessDistrictPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  PublishBusinessDistrictPage({Key key, this.arguments}) : super(key: key);
+  PublishBusinessDistrictPage({Key? key, this.arguments}) : super(key: key);
 
-  static setArguments({int goodsId}) {
+  static setArguments({int? goodsId}) {
     return {"goodsId": goodsId};
   }
 
@@ -99,18 +97,18 @@ class _PublishBusinessDistrictPageState
     await _uploadImages();
     print(_imageFiles);
     Map<String, dynamic> params = {
-      "userId": UserManager.instance.user.info.id,
-      "goodsId": widget.arguments["goodsId"],
+      "userId": UserManager.instance!.user.info!.id,
+      "goodsId": widget.arguments!["goodsId"],
       "text": _contentText == null ? "" : _contentText,
     };
     List<Map<String, dynamic>> images = [];
     for (MediaModel media in _imageFiles) {
-      if (TextUtils.isEmpty(media.result.url)) {
-        showError("第${_imageFiles.indexOf(media) + 1}图片${media.result.msg}");
+      if (TextUtils.isEmpty(media.result!.url)) {
+        showError("第${_imageFiles.indexOf(media) + 1}图片${media.result!.msg}");
         return;
       }
       images.add({
-        "path": media.result.url,
+        "path": media.result!.url,
         "width": media.width,
         "height": media.height
       });
@@ -126,9 +124,9 @@ class _PublishBusinessDistrictPageState
     //   Navigator.pop(context);
     // });
     GoodsDetailModelImpl.getDetailMomentsCreate(params)
-        .then((HttpResultModel<BaseModel> resultModel) {
+        .then((HttpResultModel<BaseModel?> resultModel) {
       if (!resultModel.result) {
-        showError(resultModel.msg);
+        showError(resultModel.msg??'');
         return;
       }
       showSuccess("图文发布成功，等待平台审核").then((value) {
@@ -171,7 +169,7 @@ class _PublishBusinessDistrictPageState
   }
 
   _imageSelect() {
-    return ImageSelectedView<Uint8List>(
+    return ImageSelectedView<Uint8List?>(
       padding: EdgeInsets.all(rSize(10)),
       images: _imageFiles.map((MediaModel model) {
         return model.thumbData;
@@ -187,12 +185,12 @@ class _PublishBusinessDistrictPageState
             listener: (index) async {
               ActionSheet.dismiss(context);
               if (index == 0) {
-                List<AssetEntity> entitys = [];
+                List<AssetEntity?> entitys = [];
                 var values = await CameraPicker.pickFromCamera(context);
                 entitys.add(values);
                 for (var element in entitys) {
-                  File file = await element.file;
-                  Uint8List thumbData = await element.thumbData;
+                  File? file = await element!.file;
+                  Uint8List? thumbData = await element.thumbData;
                   _imageFiles.add(MediaModel(
                     width: element.width,
                     height: element.height,
@@ -209,8 +207,8 @@ class _PublishBusinessDistrictPageState
                 if (values == null) return;
                 entitys.addAll(values);
                 for (var element in entitys) {
-                  File file = await element.file;
-                  Uint8List thumbData = await element.thumbData;
+                  File? file = await element.file;
+                  Uint8List? thumbData = await element.thumbData;
                   _imageFiles.add(MediaModel(
                     width: element.width,
                     height: element.height,

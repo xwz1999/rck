@@ -1,12 +1,12 @@
 import 'package:recook/pages/user/benefit_view_gen.dart';
 
 class UserBenefitExpectExtraModel {
-  Team team;
-  Team recommend;
-  Team reward;
-  List<TeamList> teamList;
-  List<TeamList> recommendList;
-  List<TeamList> rewardList;
+  Team? team;
+  Team? recommend;
+  Team? reward;
+  List<TeamList>? teamList;
+  List<TeamList>? recommendList;
+  List<TeamList>? rewardList;
 
   UserBenefitExpectExtraModel(
       {this.team,
@@ -24,19 +24,19 @@ class UserBenefitExpectExtraModel {
     if (json['teamList'] != null) {
       teamList = [];
       json['teamList'].forEach((v) {
-        teamList.add(new TeamList.fromJson(v));
+        teamList!.add(new TeamList.fromJson(v));
       });
     }
     if (json['recommendList'] != null) {
       recommendList = [];
       json['recommendList'].forEach((v) {
-        recommendList.add(new TeamList.fromJson(v));
+        recommendList!.add(new TeamList.fromJson(v));
       });
     }
     if (json['rewardList'] != null) {
       rewardList = [];
       json['rewardList'].forEach((v) {
-        rewardList.add(new TeamList.fromJson(v));
+        rewardList!.add(new TeamList.fromJson(v));
       });
     }
   }
@@ -44,32 +44,32 @@ class UserBenefitExpectExtraModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.team != null) {
-      data['team'] = this.team.toJson();
+      data['team'] = this.team!.toJson();
     }
     if (this.recommend != null) {
-      data['recommend'] = this.recommend.toJson();
+      data['recommend'] = this.recommend!.toJson();
     }
     if (this.reward != null) {
-      data['reward'] = this.reward.toJson();
+      data['reward'] = this.reward!.toJson();
     }
     if (this.teamList != null) {
-      data['teamList'] = this.teamList.map((v) => v.toJson()).toList();
+      data['teamList'] = this.teamList!.map((v) => v.toJson()).toList();
     }
     if (this.recommendList != null) {
       data['recommendList'] =
-          this.recommendList.map((v) => v.toJson()).toList();
+          this.recommendList!.map((v) => v.toJson()).toList();
     }
     if (this.rewardList != null) {
-      data['rewardList'] = this.rewardList.map((v) => v.toJson()).toList();
+      data['rewardList'] = this.rewardList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Team {
-  num salesVolume;
-  num amount;
-  num ratio;
+  num? salesVolume;
+  num? amount;
+  num? ratio;
   DisplayCard get card => DisplayCard(
         count: ratio,
         sales: salesVolume,
@@ -95,15 +95,15 @@ class Team {
 }
 
 class TeamList {
-  int userId;
-  String headImgUrl;
-  String nickname;
-  String phone;
-  String wechatNo;
-  String remarkName;
-  int count;
-  num amount;
-  int roleLevel;
+  int? userId;
+  String? headImgUrl;
+  String? nickname;
+  String? phone;
+  String? wechatNo;
+  String? remarkName;
+  int? count;
+  num? amount;
+  int? roleLevel;
 
   TeamList(
       {this.userId,

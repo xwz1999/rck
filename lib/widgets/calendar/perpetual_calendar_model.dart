@@ -1,7 +1,7 @@
 class PerpetualCalendarModel {
-  int code;
-  String msg;
-  List<Newslist> newslist;
+  int? code;
+  String? msg;
+  List<Newslist>? newslist;
 
   PerpetualCalendarModel({this.code, this.msg, this.newslist});
 
@@ -11,7 +11,7 @@ class PerpetualCalendarModel {
     if (json['newslist'] != null) {
       newslist = [];
       json['newslist'].forEach((v) {
-        newslist.add(new Newslist.fromJson(v));
+        newslist!.add(new Newslist.fromJson(v));
       });
     }
   }
@@ -21,37 +21,37 @@ class PerpetualCalendarModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.newslist != null) {
-      data['newslist'] = this.newslist.map((v) => v.toJson()).toList();
+      data['newslist'] = this.newslist!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Newslist {
-  String gregoriandate;
-  String lunardate;
-  String lunarFestival;
-  String festival;
-  String fitness;
-  String taboo;
-  String shenwei;
-  String taishen;
-  String chongsha;
-  String suisha;
-  String wuxingjiazi;
-  String wuxingnayear;
-  String wuxingnamonth;
-  String xingsu;
-  String pengzu;
-  String jianshen;
-  String tiangandizhiyear;
-  String tiangandizhimonth;
-  String tiangandizhiday;
-  String lmonthname;
-  String shengxiao;
-  String lubarmonth;
-  String lunarday;
-  String jieqi;
+  String? gregoriandate;
+  String? lunardate;
+  String? lunarFestival;
+  String? festival;
+  String? fitness;
+  String? taboo;
+  String? shenwei;
+  String? taishen;
+  String? chongsha;
+  String? suisha;
+  String? wuxingjiazi;
+  String? wuxingnayear;
+  String? wuxingnamonth;
+  String? xingsu;
+  String? pengzu;
+  String? jianshen;
+  String? tiangandizhiyear;
+  String? tiangandizhimonth;
+  String? tiangandizhiday;
+  String? lmonthname;
+  String? shengxiao;
+  String? lubarmonth;
+  String? lunarday;
+  String? jieqi;
 
   Newslist(
       {this.gregoriandate,

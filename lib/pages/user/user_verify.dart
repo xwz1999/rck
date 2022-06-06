@@ -11,8 +11,8 @@ import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class VerifyPage extends StatefulWidget {
-  final Map arguments;
-  VerifyPage({Key key, this.arguments}) : super(key: key);
+  final Map? arguments;
+  VerifyPage({Key? key, this.arguments}) : super(key: key);
   // final Map arguments;
   // const VerifyPage({Key key, this.arguments}) : super(key: key);
   // static setArguments(Function callback){
@@ -29,10 +29,10 @@ class VerifyPage extends StatefulWidget {
 
 class _VerifyPageState extends BaseStoreState<VerifyPage> {
   //http实例
-  UserPresenterImpl _presenter;
+  late UserPresenterImpl _presenter;
 
-  TextEditingController _nameEditController;
-  TextEditingController _idCardController;
+  TextEditingController? _nameEditController;
+  TextEditingController? _idCardController;
 
   bool _isCashWithdraw = false;
 
@@ -41,7 +41,7 @@ class _VerifyPageState extends BaseStoreState<VerifyPage> {
     super.initState();
     _isCashWithdraw = widget.arguments == null
         ? false
-        : widget.arguments['isCashWithdraw'] ?? false;
+        : widget.arguments!['isCashWithdraw'] ?? false;
     _presenter = UserPresenterImpl();
     _nameEditController = TextEditingController();
     _idCardController = TextEditingController();
@@ -247,9 +247,9 @@ class _VerifyPageState extends BaseStoreState<VerifyPage> {
   }
 
   bool _canSubmit() {
-    if (!TextUtils.isEmpty(_nameEditController.text) &&
-        (!TextUtils.isEmpty(_idCardController.text) &&
-            _idCardController.text.length == 18)) {
+    if (!TextUtils.isEmpty(_nameEditController!.text) &&
+        (!TextUtils.isEmpty(_idCardController!.text) &&
+            _idCardController!.text.length == 18)) {
       return true;
     } else {
       return false;
@@ -282,9 +282,9 @@ class _VerifyPageState extends BaseStoreState<VerifyPage> {
 
     //网络请求验证
     HttpResultModel resultModel = await _presenter.realInfo(
-        UserManager.instance.user.info.id,
-        _nameEditController.text,
-        _idCardController.text);
+        UserManager.instance!.user.info!.id,
+        _nameEditController!.text,
+        _idCardController!.text);
     //绑定失败
     if (resultModel.code != HttpStatus.SUCCESS) {
       Map arguments = VerifyResultPage.setArgument(false);
@@ -295,9 +295,9 @@ class _VerifyPageState extends BaseStoreState<VerifyPage> {
       return;
     } else {
       setState(() {
-        UserManager.instance.user.info.realName = _nameEditController.text;
-        UserManager.instance.user.info.idCard = _idCardController.text;
-        UserManager.instance.user.info.realInfoStatus = true;
+        UserManager.instance!.user.info!.realName = _nameEditController!.text;
+        UserManager.instance!.user.info!.idCard = _idCardController!.text;
+        UserManager.instance!.user.info!.realInfoStatus = true;
       });
       UserManager.updateUserInfo(getStore());
       AppRouter.pushAndReplaced(context, RouteName.USER_VERIFY_RESULT,

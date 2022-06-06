@@ -35,7 +35,7 @@ enum UserBenefitPageType {
 
 class UserBenefitSubPage extends StatefulWidget {
   final UserBenefitPageType type;
-  UserBenefitSubPage({Key key, @required this.type}) : super(key: key);
+  UserBenefitSubPage({Key? key, required this.type}) : super(key: key);
 
   @override
   _UserBenefitSubPageState createState() => _UserBenefitSubPageState();
@@ -49,7 +49,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
     UserBenefitPageType.RECOMMEND: '推荐收益',
     UserBenefitPageType.PLATFORM: '平台奖励',
   };
-  String get _title => _typeTitleMap[widget.type];
+  String? get _title => _typeTitleMap[widget.type];
 
   DateTime _date = DateTime.now();
 
@@ -67,7 +67,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
 
   ///仅在自购和导购收益中可用
   List<UserBenefitMonthDetailModel> _models = [];
-  UserBenefitExtraDetailModel _extraDetailModel;
+  UserBenefitExtraDetailModel? _extraDetailModel;
 
   ///头部卡片
   Widget _buildCard() {
@@ -148,8 +148,8 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
 
   ///时间选择器
   showTimePickerBottomSheet(
-      {List<BottomTimePickerType> timePickerTypes,
-      Function(DateTime, BottomTimePickerType) submit}) {
+      {List<BottomTimePickerType>? timePickerTypes,
+      Function(DateTime, BottomTimePickerType)? submit}) {
     showModalBottomSheet(
       isScrollControlled: false,
       context: context,
@@ -183,7 +183,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
     return VxBox(
       child: [
         '$_title\(元)'.text.color(Colors.black54).size(18).make(),
-        (_extraDetailModel.data.amount ?? 0.0)
+        (_extraDetailModel!.data!.amount ?? 0.0)
             .toStringAsFixed(2)
             .text
             .color(Color(0xFF333333))
@@ -193,7 +193,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
         [
           [
             '销售额(元)'.text.color(Colors.black54).size(14).make(),
-            (_extraDetailModel.data.salesVolume ?? 0.0)
+            (_extraDetailModel!.data!.salesVolume ?? 0.0)
                 .toStringAsFixed(2)
                 .text
                 .color(Color(0xFF333333))
@@ -203,7 +203,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
           Spacer(),
           [
             '提成比例(%)'.text.color(Colors.black54).size(14).make(),
-            (_extraDetailModel.data.ratio ?? 0.0)
+            (_extraDetailModel!.data!.ratio ?? 0.0)
                 .toStringAsFixed(2)
                 .text
                 .color(Color(0xFF333333))
@@ -238,10 +238,10 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
   _buildTableItem(String value, [bool red = false]) =>
       _buildTableTitle(value, red, false);
   TableRow _buildTableRow({
-    DateTime date,
-    num volume,
-    int count,
-    num benefit,
+    DateTime? date,
+    required num volume,
+    int? count,
+    required num benefit,
   }) {
     return TableRow(
       children: [
@@ -272,13 +272,13 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
           ],
         ),
         ..._models.map((e) {
-          num amount = 0;
-          num salesVolume = 0;
-          int count = 0;
+          num? amount = 0;
+          num? salesVolume = 0;
+          int? count = 0;
           if (widget.type == UserBenefitPageType.SELF) {
             amount = e.purchaseAmount;
             salesVolume = e.purchaseSalesVolume;
-            count = e.purchaseCount;
+            count = e.purchaseCount as int?;
           }
           if (widget.type == UserBenefitPageType.GUIDE) {
             amount = e.guideAmount;
@@ -288,9 +288,9 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
 
           return _buildTableRow(
             date: e.day,
-            volume: salesVolume,
+            volume: salesVolume!,
             count: count,
-            benefit: amount,
+            benefit: amount!,
           );
         }).toList(),
       ],
@@ -347,7 +347,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
                 15.wb,
                 '团队贡献榜'.text.size(14.rsp).color(Color(0xFF333333)).bold.make(),
                 Spacer(),
-                '团队人数:${_extraDetailModel.data.count}'
+                '团队人数:${_extraDetailModel!.data!.count}'
                     .text
                     .size(14.rsp)
                     .color(Color(0xFF333333))
@@ -379,7 +379,7 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               reverse: _itemReverse,
-              children: _extraDetailModel.data.userIncome.map((e) {
+              children: _extraDetailModel!.data!.userIncome!.map((e) {
                 bool hasExtraName = TextUtil.isEmpty(e.remarkName);
                 return UserGroupCard(
                   id: e.userId,
@@ -415,10 +415,10 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
     // if(_models.isEmpty)return SizedBox()
     double benefitValue = 0;
     if (widget.type == UserBenefitPageType.SELF) {
-      _models.forEach((element) => benefitValue += element.purchaseAmount);
+      _models.forEach((element) => benefitValue += element.purchaseAmount!);
     }
     if (widget.type == UserBenefitPageType.GUIDE)
-      _models.forEach((element) => benefitValue += element.guideAmount);
+      _models.forEach((element) => benefitValue += element.guideAmount!);
     return '当月收益(瑞币)：${benefitValue.toStringAsFixed(2)}'
         .text
         .color(Color(0xFF999999))
@@ -463,9 +463,9 @@ class _UserBenefitSubPageState extends State<UserBenefitSubPage> {
         onRefresh: () async {
           UserBenefitSubModel model =
               await UserBenefitFunc.subInfo(widget.type);
-          _amount = model.data.amount.toStringAsFixed(2);
-          _salesVolume = model.data.salesVolume.toStringAsFixed(2);
-          _count = model.data.count.toStringAsFixed(0);
+          _amount = model.data!.amount!.toStringAsFixed(2);
+          _salesVolume = model.data!.salesVolume!.toStringAsFixed(2);
+          _count = model.data!.count!.toStringAsFixed(0);
           if (!_notSelfNotGUide) {
             _models = await UserBenefitFunc.monthDetail(_date);
           } else {

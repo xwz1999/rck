@@ -6,17 +6,17 @@ import 'package:recook/manager/user_manager.dart';
 class LiveUserBar extends StatefulWidget {
   final bool initAttention;
   final VoidCallback onAttention;
-  final String title;
-  final String subTitle;
-  final String avatar;
-  final VoidCallback onTapAvatar;
+  final String? title;
+  final String? subTitle;
+  final String? avatar;
+  final VoidCallback? onTapAvatar;
   LiveUserBar({
-    Key key,
-    @required this.initAttention,
-    @required this.onAttention,
-    @required this.title,
+    Key? key,
+    required this.initAttention,
+    required this.onAttention,
+    required this.title,
     this.subTitle,
-    @required this.avatar,
+    required this.avatar,
     this.onTapAvatar,
   }) : super(key: key);
 
@@ -55,7 +55,7 @@ class LiveUserBarState extends State<LiveUserBar> {
               borderRadius: BorderRadius.circular(rSize(16)),
               child: FadeInImage.assetNetwork(
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                image: Api.getImgUrl(widget.avatar),
+                image: Api.getImgUrl(widget.avatar)!,
                 height: rSize(32),
                 width: rSize(32),
               ),
@@ -67,7 +67,7 @@ class LiveUserBarState extends State<LiveUserBar> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.title,
+                  widget.title!,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: rSP(12),
@@ -76,7 +76,7 @@ class LiveUserBarState extends State<LiveUserBar> {
                 widget.subTitle == null
                     ? SizedBox()
                     : Text(
-                        widget.subTitle,
+                        widget.subTitle!,
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: rSP(10),
@@ -85,7 +85,7 @@ class LiveUserBarState extends State<LiveUserBar> {
               ],
             ),
           ),
-          _internalAttention || !UserManager.instance.haveLogin
+          _internalAttention || !UserManager.instance!.haveLogin
               ? SizedBox()
               : SizedBox(
                   width: rSize(56),

@@ -6,7 +6,7 @@ part 'order_after_sales_list_model.g.dart';
 @JsonSerializable()
 class OrderAfterSalesListModel extends BaseModel {
   
-  List<OrderAfterSalesModel> data;
+  List<OrderAfterSalesModel>? data;
 
   OrderAfterSalesListModel(
     code,
@@ -21,23 +21,23 @@ class OrderAfterSalesListModel extends BaseModel {
 @JsonSerializable()
 class OrderAfterSalesModel {
 
-  int asId;
-  int goodsId;
-  String goodsName;
-  String skuName;
-  String mainPhotoUrl;
+  int? asId;
+  int? goodsId;
+  String? goodsName;
+  String? skuName;
+  String? mainPhotoUrl;
   num refundAmount;
   num refundCoin;
-  int assType;
-  int returnStatus;
-  int refundStatus;
-  String asDesc;
-  String refundDesc;
-  int orderGoodsId;
-  String createdAt;
-  num quantity;
-  int color;
-  int goodsDetailId;
+  int? assType;
+  int? returnStatus;
+  int? refundStatus;
+  String? asDesc;
+  String? refundDesc;
+  int? orderGoodsId;
+  String? createdAt;
+  num? quantity;
+  int? color;
+  int? goodsDetailId;
   OrderAfterSalesModel(
     this.asId,
     this.goodsId,

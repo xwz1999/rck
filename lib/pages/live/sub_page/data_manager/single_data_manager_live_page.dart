@@ -8,8 +8,8 @@ import 'package:recook/widgets/custom_painters/pie_progress_painter.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
 class SingleDataManagerPage extends StatefulWidget {
-  final int id;
-  SingleDataManagerPage({Key key, @required this.id}) : super(key: key);
+  final int? id;
+  SingleDataManagerPage({Key? key, required this.id}) : super(key: key);
 
   @override
   _SingleDataManagerPageState createState() => _SingleDataManagerPageState();
@@ -23,9 +23,9 @@ class _SingleDataManagerPageState extends State<SingleDataManagerPage> {
     HttpManager.post(LiveAPI.liveDataDetail, {
       'id': widget.id,
     }).then((resultData) {
-      if (resultData?.data['data'] != null) {
+      if (resultData.data['data'] != null) {
         setState(() {
-          model = LiveDataDetailModel.fromJson(resultData?.data['data']);
+          model = LiveDataDetailModel.fromJson(resultData.data['data']);
         });
       }
     });
@@ -33,8 +33,8 @@ class _SingleDataManagerPageState extends State<SingleDataManagerPage> {
 
   @override
   Widget build(BuildContext context) {
-    final startDate = DateTime.fromMillisecondsSinceEpoch(model.startAt * 1000);
-    final endDate = DateTime.fromMillisecondsSinceEpoch(model.endAt * 1000);
+    final startDate = DateTime.fromMillisecondsSinceEpoch(model.startAt! * 1000);
+    final endDate = DateTime.fromMillisecondsSinceEpoch(model.endAt! * 1000);
     return Scaffold(
       backgroundColor: Color(0xFFF9F9FB),
       appBar: AppBar(
@@ -237,9 +237,9 @@ class _SingleDataManagerPageState extends State<SingleDataManagerPage> {
   }
 
   _buildAudienceTile({
-    @required Color color,
-    @required double value,
-    @required String title,
+    required Color color,
+    required double value,
+    required String title,
   }) {
     return Row(
       children: [

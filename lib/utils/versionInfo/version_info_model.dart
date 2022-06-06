@@ -1,7 +1,7 @@
 class VersionInfoModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   VersionInfoModel({this.code, this.msg, this.data});
 
@@ -16,14 +16,14 @@ class VersionInfoModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  VersionInfo versionInfo;
+  VersionInfo? versionInfo;
 
   Data({this.versionInfo});
 
@@ -36,17 +36,17 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.versionInfo != null) {
-      data['versionInfo'] = this.versionInfo.toJson();
+      data['versionInfo'] = this.versionInfo!.toJson();
     }
     return data;
   }
 }
 
 class VersionInfo {
-  String version;
-  num build;
-  String desc;
-  String createdAt;
+  String? version;
+  num? build;
+  String? desc;
+  String? createdAt;
 
   VersionInfo({this.version, this.build, this.desc, this.createdAt});
 

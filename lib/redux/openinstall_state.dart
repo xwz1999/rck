@@ -1,13 +1,13 @@
 import 'package:redux/redux.dart';
 
 class Openinstall {
-  String channelCode;
-  String bindData;
-  String code;
-  String goodsid;
-  String date;
-  String type;
-  String itemId;
+  String? channelCode;
+  String? bindData;
+  String? code;
+  late String goodsid;
+  String? date;
+  String? type;
+  String? itemId;
   Openinstall(this.channelCode, this.bindData);
 
   Openinstall.empty() {
@@ -18,10 +18,10 @@ class Openinstall {
   }
 }
 
-final OpeninstallReducer = combineReducers<Openinstall>(
-    [TypedReducer<Openinstall, UpdateOpeninstallAction>(UpdateOpeninstall)]);
+final OpeninstallReducer = combineReducers<Openinstall?>(
+    [TypedReducer<Openinstall?, UpdateOpeninstallAction>(UpdateOpeninstall)]);
 
-Openinstall UpdateOpeninstall(Openinstall openinstall, action) {
+Openinstall? UpdateOpeninstall(Openinstall? openinstall, action) {
   openinstall = action.openinstall;
   return openinstall;
 }

@@ -10,7 +10,7 @@ import 'package:recook/widgets/refresh_widget.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 
 class VideoPage extends StatefulWidget {
-  VideoPage({Key key}) : super(key: key);
+  VideoPage({Key? key}) : super(key: key);
 
   @override
   _VideoPageState createState() => _VideoPageState();
@@ -31,7 +31,7 @@ class _VideoPageState extends State<VideoPage>
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller.dispose();
     super.dispose();
   }
 
@@ -93,7 +93,7 @@ class _VideoPageState extends State<VideoPage>
             children: [
               FadeInImage.assetNetwork(
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                image: Api.getImgUrl(model.coverUrl),
+                image: Api.getImgUrl(model.coverUrl)!,
               ),
               Container(
                 padding: EdgeInsets.all(rSize(10)),
@@ -102,7 +102,7 @@ class _VideoPageState extends State<VideoPage>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      model.content,
+                      model.content!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -118,7 +118,7 @@ class _VideoPageState extends State<VideoPage>
                           borderRadius: BorderRadius.circular(9),
                           child: FadeInImage.assetNetwork(
                             placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                            image: Api.getImgUrl(model.headImgUrl),
+                            image: Api.getImgUrl(model.headImgUrl)!,
                             height: rSize(18),
                             width: rSize(18),
                           ),
@@ -129,7 +129,7 @@ class _VideoPageState extends State<VideoPage>
                               horizontal: rSize(4),
                             ),
                             child: Text(
-                              model.nickname,
+                              model.nickname!,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -171,7 +171,7 @@ class _VideoPageState extends State<VideoPage>
       'page': _page,
       'limit': 16,
     });
-    if (resultData?.data['data']['list'] == null)
+    if (resultData.data['data']['list'] == null)
       return [];
     else
       return (resultData.data['data']['list'] as List)

@@ -17,11 +17,11 @@ enum AppTheme{
 }
 
 
-final ThemeDataReducer = combineReducers<ThemeData>(
-    [TypedReducer<ThemeData, UpdateThemeDataAction>(_reducer)]);
+final ThemeDataReducer = combineReducers<ThemeData?>(
+    [TypedReducer<ThemeData?, UpdateThemeDataAction>(_reducer)]);
 
 
-ThemeData _reducer(ThemeData state, action) {
+ThemeData _reducer(ThemeData? state, action) {
 
   switch (action.state) {
     case AppTheme.AppThemeDataLight:

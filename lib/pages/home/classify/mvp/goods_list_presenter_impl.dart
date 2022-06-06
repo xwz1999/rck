@@ -22,24 +22,24 @@ class GoodsListPresenterImpl extends GoodsListPresenterI {
 
   @override
   fetchSearchList(String keyword, int page) {
-    getModel().fetchSearchList(keyword, page).then((ResultData response) {
+    getModel()!.fetchSearchList(keyword, page).then((ResultData response) {
       if (!response.result) {
-        getRefreshView().refreshFailure(response.msg);
+        getRefreshView()!.refreshFailure(response.msg);
       } else {
 //        getRefreshView().refreshSuccess([]);
         GoodsSimpleListModel model =
             GoodsSimpleListModel.fromJson(response.data);
         if (model.code == HttpStatus.SUCCESS) {
           if (page == 0) {
-            getRefreshView().refreshSuccess(model.data);
+            getRefreshView()!.refreshSuccess(model.data);
           } else {
-            getRefreshView().loadMoreSuccess(model.data);
+            getRefreshView()!.loadMoreSuccess(model.data);
           }
         } else {
           if (page == 0) {
-            getRefreshView().refreshFailure(model.msg);
+            getRefreshView()!.refreshFailure(model.msg);
           } else {
-            getRefreshView().loadMoreFailure(error: model.msg);
+            getRefreshView()!.loadMoreFailure(error: model.msg);
           }
         }
       }
@@ -47,25 +47,25 @@ class GoodsListPresenterImpl extends GoodsListPresenterI {
   }
 
   @override
-  fetchBrandList(int brandId, int page, SortType type) {
-    getModel().fetchBrandList(brandId, page, type).then((ResultData response) {
+  fetchBrandList(int? brandId, int page, SortType type) {
+    getModel()!.fetchBrandList(brandId, page, type).then((ResultData response) {
       if (!response.result) {
-        getRefreshView().refreshFailure(response.msg);
+        getRefreshView()!.refreshFailure(response.msg);
       } else {
 //        getRefreshView().refreshSuccess([]);
         GoodsSimpleListModel model =
             GoodsSimpleListModel.fromJson(response.data);
         if (model.code == HttpStatus.SUCCESS) {
           if (page == 0) {
-            getRefreshView().refreshSuccess(model.data);
+            getRefreshView()!.refreshSuccess(model.data);
           } else {
-            getRefreshView().loadMoreSuccess(model.data);
+            getRefreshView()!.loadMoreSuccess(model.data);
           }
         } else {
           if (page == 0) {
-            getRefreshView().refreshFailure(model.msg);
+            getRefreshView()!.refreshFailure(model.msg);
           } else {
-            getRefreshView().loadMoreFailure(error: model.msg);
+            getRefreshView()!.loadMoreFailure(error: model.msg);
           }
         }
       }
@@ -73,28 +73,28 @@ class GoodsListPresenterImpl extends GoodsListPresenterI {
   }
 
   @override
-  fetchList(int categoryID, int page, SortType type,int countryId,
-      {String keyword, VoidCallback onLoadDone,int JDType}) async {
-    return await getModel()
+  fetchList(int? categoryID, int page, SortType type,int? countryId,
+      {String? keyword, VoidCallback? onLoadDone,int? JDType}) async {
+    return await getModel()!
         .fetchList(categoryID, page, type, countryId,keyword: keyword,JDType: JDType)
         .then((ResultData response) {
       if (!response.result) {
-        getRefreshView().refreshFailure(response.msg);
+        getRefreshView()!.refreshFailure(response.msg);
       } else {
 //        getRefreshView().refreshSuccess([]);
         GoodsSimpleListModel model =
             GoodsSimpleListModel.fromJson(response.data);
         if (model.code == HttpStatus.SUCCESS) {
           if (page == 0) {
-            getRefreshView().refreshSuccess(model.data);
+            getRefreshView()!.refreshSuccess(model.data);
           } else {
-            getRefreshView().loadMoreSuccess(model.data);
+            getRefreshView()!.loadMoreSuccess(model.data);
           }
         } else {
           if (page == 0) {
-            getRefreshView().refreshFailure(model.msg);
+            getRefreshView()!.refreshFailure(model.msg);
           } else {
-            getRefreshView().loadMoreFailure(error: model.msg);
+            getRefreshView()!.loadMoreFailure(error: model.msg);
           }
         }
       }

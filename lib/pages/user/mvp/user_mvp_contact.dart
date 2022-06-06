@@ -23,16 +23,16 @@ abstract class UserMvpPresenterI extends MvpPresenter<UserMvpViewI, UserMvpModel
 }
 
 abstract class UserMvpModelI extends MvpModel {
-  getUserBriefInfo(int userId);
-  updateUserNickname(int userId, String nickname);
-  updateHeaderPic(int userId, String headUrl);
-  updateGender(int userId, int gender);
-  updateBirthday(int userId, String birthday);
-  updateAddress(int userId, String address);
-  updatePhone(int userId, String phone);
-  updateWechatNo(int userId, String wechatNo);
+  getUserBriefInfo(int? userId);
+  updateUserNickname(int? userId, String nickname);
+  updateHeaderPic(int? userId, String? headUrl);
+  updateGender(int? userId, int gender);
+  updateBirthday(int? userId, String birthday);
+  updateAddress(int? userId, String address);
+  updatePhone(int? userId, String phone);
+  updateWechatNo(int? userId, String wechatNo);
   realBinding(int userId, String idCardName, String idCardNo, String bankName, String bankNo);
-  realInfo(int userId, String realName, String idNum,); // 实名认证
+  realInfo(int? userId, String realName, String idNum,); // 实名认证
 }
 
 abstract class UserMvpViewI extends MvpView {

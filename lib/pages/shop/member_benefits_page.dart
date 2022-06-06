@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
@@ -26,7 +24,7 @@ class MemberBenefitsPage extends StatefulWidget {
 
 class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
   bool _hasLoading = false;
-  int _inviteCount = 0;
+  int? _inviteCount = 0;
   GSRefreshController _gsRefreshController =
       GSRefreshController(initialRefresh: true);
   @override
@@ -41,25 +39,25 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
 
   _getShopSummary() async {
     ResultData resultData = await HttpManager.post(ShopApi.shop_index, {
-      "userId": UserManager.instance.user.info.id,
+      "userId": UserManager.instance!.user.info!.id,
     });
     if (_gsRefreshController.isRefresh()) {
       _gsRefreshController.refreshCompleted();
     }
     if (!resultData.result) {
-      if (mounted) showError(resultData.msg);
+      if (mounted) showError(resultData.msg??'');
       return;
     }
     ShopSummaryModel model = ShopSummaryModel.fromJson(resultData.data);
     // String jsonString = jsonEncode(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      if (mounted) showError(model.msg);
+      if (mounted) showError(model.msg??'');
       return;
     }
-    if (UserManager.instance.user.info.roleLevel != model.data.roleLevel) {
-      UserManager.instance.user.info.roleLevel = model.data.roleLevel;
-      UserManager.instance.refreshUserRole.value =
-          !UserManager.instance.refreshUserRole.value;
+    if (UserManager.instance!.user.info!.roleLevel != model.data!.roleLevel) {
+      UserManager.instance!.user.info!.roleLevel = model.data!.roleLevel as int?;
+      UserManager.instance!.refreshUserRole.value =
+          !UserManager.instance!.refreshUserRole.value;
       UserManager.updateUserInfo(getStore());
     }
     setState(() {});
@@ -90,7 +88,7 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
 
   List<Widget> _bodyListWidget(context) {
     List<Widget> listWidget = [];
-    if (_inviteCount > 0) {
+    if (_inviteCount! > 0) {
       listWidget.add(_hasInviteTitleWidget());
       listWidget.add(_hasInviteContentWidget());
       listWidget.add(GestureDetector(
@@ -225,9 +223,9 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
   }
 
   _hasInviteUserInfoWidget() {
-    String nickname = UserManager.instance.user.info.nickname;
+    String? nickname = UserManager.instance!.user.info!.nickname;
     if (TextUtils.isEmpty(nickname, whiteSpace: true)) {
-      String mobile = UserManager.instance.user.info.mobile;
+      String mobile = UserManager.instance!.user.info!.mobile!;
       nickname = "用户${mobile.substring(mobile.length - 4)}";
     }
     return Container(
@@ -247,10 +245,10 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
               width: 60,
               height: 60,
               imageUrl:
-                  TextUtils.isEmpty(UserManager.instance.user.info.headImgUrl)
+                  TextUtils.isEmpty(UserManager.instance!.user.info!.headImgUrl)
                       ? ""
                       : Api.getResizeImgUrl(
-                          UserManager.instance.user.info.headImgUrl, 80),
+                          UserManager.instance!.user.info!.headImgUrl!, 80),
             ),
           ),
           Container(
@@ -264,7 +262,7 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
                 Row(
                   children: <Widget>[
                     Text(
-                      nickname,
+                      nickname!,
                       style:
                           TextStyle(color: Colors.white, fontSize: 16 * 2.sp),
                     ),
@@ -299,7 +297,7 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
                 Row(
                   children: <Widget>[
                     Text(
-                      '邀请码: ${UserManager.instance.user.info.invitationNo}',
+                      '邀请码: ${UserManager.instance!.user.info!.invitationNo}',
                       style:
                           TextStyle(color: Colors.white, fontSize: 12 * 2.sp),
                     ),
@@ -317,7 +315,7 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
                           onTap: () {
                             ClipboardData data = new ClipboardData(
                                 text: UserManager
-                                    .instance.user.info.invitationNo
+                                    .instance!.user.info!.invitationNo
                                     .toString());
                             Clipboard.setData(data);
                             Toast.showSuccess('邀请码已经保存到剪贴板');
@@ -490,14 +488,14 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
 
   _getInviteCount() async {
     ResultData resultData = await HttpManager.post(
-        UserApi.invite_count, {'userId': UserManager.instance.user.info.id});
+        UserApi.invite_count, {'userId': UserManager.instance!.user.info!.id});
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
     _hasLoading = true;
@@ -508,13 +506,13 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
     if (resultData.data['data']['role'] != null &&
         resultData.data['data']['role'] is int) {
       // _inviteCount = resultData.data['data']['count'];
-      getStore().state.userBrief.roleLevel = resultData.data['data']['role'];
-      if (UserManager.instance.user.info.roleLevel !=
-          getStore().state.userBrief.roleLevel) {
-        UserManager.instance.user.info.roleLevel =
-            getStore().state.userBrief.roleLevel;
-        UserManager.instance.refreshUserRole.value =
-            !UserManager.instance.refreshUserRole.value;
+      getStore().state.userBrief!.roleLevel = resultData.data['data']['role'];
+      if (UserManager.instance!.user.info!.roleLevel !=
+          getStore().state.userBrief!.roleLevel) {
+        UserManager.instance!.user.info!.roleLevel =
+            getStore().state.userBrief!.roleLevel as int?;
+        UserManager.instance!.refreshUserRole.value =
+            !UserManager.instance!.refreshUserRole.value;
         UserManager.updateUserInfo(getStore());
       }
     }
@@ -525,37 +523,37 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
     switch (_inviteCount) {
       case 0:
         return 0;
-        break;
+
       case 1:
         return .1;
-        break;
+
       case 2:
         return .22;
-        break;
+
       case 3:
         return .35;
-        break;
+
       case 4:
         return .45;
-        break;
+
       case 5:
         return .6;
-        break;
+
       case 6:
         return 0.65;
-        break;
+
       case 7:
         return 0.7;
-        break;
+
       case 8:
         return 0.75;
-        break;
+
       case 9:
         return 0.85;
-        break;
+
       case 10:
         return 1;
-        break;
+
       default:
         return 0;
     }
@@ -568,7 +566,7 @@ class _MemberBenefitsPageState extends BaseStoreState<MemberBenefitsPage> {
             child: Center(
               child: CircularProgressIndicator(
                 valueColor:
-                    new AlwaysStoppedAnimation<Color>(getCurrentThemeColor()),
+                    new AlwaysStoppedAnimation<Color?>(getCurrentThemeColor()),
                 strokeWidth: 1.0,
               ),
             ),

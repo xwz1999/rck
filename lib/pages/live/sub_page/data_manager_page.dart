@@ -6,7 +6,7 @@ import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/recook_indicator.dart';
 
 class DataManagerPage extends StatefulWidget {
-  DataManagerPage({Key key}) : super(key: key);
+  DataManagerPage({Key? key}) : super(key: key);
 
   @override
   _DataManagerPageState createState() => _DataManagerPageState();
@@ -14,7 +14,7 @@ class DataManagerPage extends StatefulWidget {
 
 class _DataManagerPageState extends State<DataManagerPage>
     with SingleTickerProviderStateMixin {
-  TabController _tabController;
+  TabController? _tabController;
   @override
   void initState() {
     super.initState();

@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:recook/models/user_brief_info_model.dart';
 import 'package:recook/models/user_model.dart';
@@ -20,7 +18,6 @@ import 'package:oktoast/oktoast.dart';
 import 'package:redux/redux.dart';
 
 import 'constants/header.dart';
-import 'utils/app_router.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -112,7 +109,7 @@ class MyAppState extends State<MyApp> {
   }
 
 
-  final botToastBuilder = BotToastInit();
+  final Widget Function(BuildContext, Widget) botToastBuilder = BotToastInit();
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([

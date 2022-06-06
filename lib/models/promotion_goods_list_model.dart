@@ -4,9 +4,9 @@ import 'goods_hot_sell_list_model.dart';
 import 'goods_simple_list_model.dart';
 
 class PromotionGoodsListModel {
-  String code;
-  String msg;
-  PromotionModel data;
+  String? code;
+  String? msg;
+  PromotionModel? data;
 
   PromotionGoodsListModel({this.code, this.msg, this.data});
 
@@ -22,29 +22,29 @@ class PromotionGoodsListModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class PromotionModel {
-  List<PromotionGoodsModel> goodsList;
-  List<PromotionActivityModel> activityList;
+  List<PromotionGoodsModel>? goodsList;
+  List<PromotionActivityModel>? activityList;
 
   PromotionModel({this.goodsList, this.activityList});
 
   PromotionModel.fromJson(Map<String, dynamic> json) {
     if (json['goodsList'] != null) {
-      goodsList = new List<PromotionGoodsModel>();
+      goodsList = [];
       json['goodsList'].forEach((v) {
-        goodsList.add(new PromotionGoodsModel.fromJson(v));
+        goodsList!.add(new PromotionGoodsModel.fromJson(v));
       });
     }
     if (json['activityList'] != null) {
-      activityList = new List<PromotionActivityModel>();
+      activityList = [];
       json['activityList'].forEach((v) {
-        activityList.add(new PromotionActivityModel.fromJson(v));
+        activityList!.add(new PromotionActivityModel.fromJson(v));
       });
     }
   }
@@ -52,21 +52,21 @@ class PromotionModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.goodsList != null) {
-      data['goodsList'] = this.goodsList.map((v) => v.toJson()).toList();
+      data['goodsList'] = this.goodsList!.map((v) => v.toJson()).toList();
     }
     if (this.activityList != null) {
-      data['activityList'] = this.activityList.map((v) => v.toJson()).toList();
+      data['activityList'] = this.activityList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class PromotionActivityModel {
-  int id;
-  int activitySortId;
-  String activityUrl;
-  String logoUrl;
-  String topUrl;
+  int? id;
+  int? activitySortId;
+  String? activityUrl;
+  String? logoUrl;
+  String? topUrl;
 
   PromotionActivityModel(
       {this.id,
@@ -95,39 +95,39 @@ class PromotionActivityModel {
 }
 
 class PromotionGoodsModel {
-  int goodsId;
-  String goodsName;
-  String brandName;
-  String brandImg;
-  num brandId;
-  String description;
-  num price;
-  num primePrice;
-  String priceDesc;
-  num commission;
-  String commissionDesc;
-  Picture picture;
-  int inventory;
-  String inventoryDesc;
-  num totalInventory;
-  String totalInventoryDesc;
-  int totalSalesVolume;
-  String salesVolumeDesc;
-  String startTime;
-  String endTime;
-  num percentage;
-  String percentageDesc;
-  num coupon;
-  num isImport;
-  num storehouse;
-  num isFerme;
-  Living living;
-  List<String> specialSale;
-  num gysId;
-  List<String> specialIcon;
-  String countryIcon;
-  SecKill secKill;
-  num salePrice;
+  int? goodsId;
+  String? goodsName;
+  String? brandName;
+  String? brandImg;
+  num? brandId;
+  String? description;
+  num? price;
+  num? primePrice;
+  String? priceDesc;
+  num? commission;
+  String? commissionDesc;
+  Picture? picture;
+  int? inventory;
+  String? inventoryDesc;
+  num? totalInventory;
+  String? totalInventoryDesc;
+  int? totalSalesVolume;
+  String? salesVolumeDesc;
+  String? startTime;
+  String? endTime;
+  num? percentage;
+  String? percentageDesc;
+  num? coupon;
+  num? isImport;
+  num? storehouse;
+  num? isFerme;
+  Living? living;
+  List<String>? specialSale;
+  num? gysId;
+  List<String>? specialIcon;
+  String? countryIcon;
+  SecKill? secKill;
+  num? salePrice;
 
   PromotionGoodsModel(
       {this.goodsId,
@@ -220,7 +220,7 @@ class PromotionGoodsModel {
     data['commission'] = this.commission;
     data['commissionDesc'] = this.commissionDesc;
     if (this.picture != null) {
-      data['picture'] = this.picture.toJson();
+      data['picture'] = this.picture!.toJson();
     }
     data['inventory'] = this.inventory;
     data['inventoryDesc'] = this.inventoryDesc;
@@ -237,14 +237,14 @@ class PromotionGoodsModel {
     data['storehouse'] = this.storehouse;
     data['isFerme'] = this.isFerme;
     if (this.living != null) {
-      data['living'] = this.living.toJson();
+      data['living'] = this.living!.toJson();
     }
     data['special_sale'] = this.specialSale;
     data['gys_id'] = this.gysId;
     data['spec_icon'] = this.specialIcon;
     data['country_icon'] = this.countryIcon;
     if (this.secKill != null) {
-      data['sec_kill'] = this.secKill.toJson();
+      data['sec_kill'] = this.secKill!.toJson();
     }
      data['sale_price']= this.salePrice;
     return data;
@@ -256,9 +256,9 @@ class PromotionGoodsModel {
 }
 
 class Picture {
-  String url;
-  int width;
-  int height;
+  String? url;
+  int? width;
+  int? height;
 
   Picture({this.url, this.width, this.height});
 

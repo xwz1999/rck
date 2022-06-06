@@ -19,11 +19,11 @@ import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/toast.dart';
 
 class ShopOrderDetailPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  const ShopOrderDetailPage({Key key, this.arguments}) : super(key: key);
+  const ShopOrderDetailPage({Key? key, this.arguments}) : super(key: key);
 
-  static setArguments(int orderId,bool isPifa) {
+  static setArguments(int? orderId,bool isPifa) {
     return {"orderId": orderId,'isPifa':isPifa };
   }
 
@@ -36,17 +36,17 @@ class ShopOrderDetailPage extends StatefulWidget {
 class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage>
     implements OrderListViewI {
   // OrderPreviewModel _detail;
-  OrderListPresenterImpl _presenter;
+  late OrderListPresenterImpl _presenter;
 
   @override
   void initState() {
     super.initState();
     isUserOrder = false;
 
-    int orderId = widget.arguments["orderId"];
+    int? orderId = widget.arguments!["orderId"];
     _presenter = OrderListPresenterImpl();
     _presenter.attach(this);
-    _presenter.getShopOrderDetail(UserManager.instance.user.info.id, orderId);
+    _presenter.getShopOrderDetail(UserManager.instance!.user.info!.id, orderId);
   }
 
   @override
@@ -77,11 +77,11 @@ class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage>
 
   @override
   addressView() {
-    String name = orderDetail.addr.receiverName;
+    String name = orderDetail!.addr!.receiverName!;
     if (name.length > 1) {
       name = name.replaceRange(1, null, "***");
     }
-    String mobile = orderDetail.addr.mobile;
+    String? mobile = orderDetail!.addr!.mobile;
     if (mobile != null && mobile.length >= 11) {
       mobile = mobile.replaceRange(3, 7, "****");
     }
@@ -105,7 +105,7 @@ class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage>
           margin: EdgeInsets.only(top: 8 * 2.sp),
           child: Text(
             // "${_detail.addr.province + _detail.addr.city + _detail.addr.district + _detail.addr.address}",
-            "${orderDetail.addr.province + orderDetail.addr.city + orderDetail.addr.district}***",
+            "${orderDetail!.addr!.province! + orderDetail!.addr!.city! + orderDetail!.addr!.district!}***",
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style:
@@ -117,17 +117,17 @@ class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage>
   }
 
   @override
-  cancelOrderSuccess(OrderModel order) {
-    GSDialog.of(context).dismiss(globalContext);
+  cancelOrderSuccess(OrderModel? order) {
+    GSDialog.of(context).dismiss(globalContext!);
     Toast.showInfo("已取消订单");
     Future.delayed(Duration(milliseconds: 300), () {
-      Navigator.pop(globalContext, 2);
+      Navigator.pop(globalContext!, 2);
     });
   }
 
   @override
-  failure(String msg) {
-    GSDialog.of(globalContext).showError(globalContext, msg);
+  failure(String? msg) {
+    GSDialog.of(globalContext).showError(globalContext!, msg);
   }
 
   @override
@@ -139,10 +139,10 @@ class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage>
 
   @override
   refundSuccess(msg) {
-    GSDialog.of(context).dismiss(globalContext);
+    GSDialog.of(context).dismiss(globalContext!);
     Toast.showInfo(msg);
     _presenter.getShopOrderDetail(
-        UserManager.instance.user.info.id, orderDetail.id);
+        UserManager.instance!.user.info!.id, orderDetail!.id);
   }
 
   @override
@@ -153,13 +153,13 @@ class _ShopOrderDetailPageState extends OrderDetailState<ShopOrderDetailPage>
 
   @override
   applyInvoiceSuccess() {
-    GSDialog.of(globalContext).showSuccess(globalContext, "申请成功");
+    GSDialog.of(globalContext).showSuccess(globalContext!, "申请成功");
     _presenter.getShopOrderDetail(
-        UserManager.instance.user.info.id, orderDetail.id);
+        UserManager.instance!.user.info!.id, orderDetail!.id);
   }
 
   @override
-  deleteOrderSuccess(int orderId) {
+  deleteOrderSuccess(int? orderId) {
     return null;
   }
 

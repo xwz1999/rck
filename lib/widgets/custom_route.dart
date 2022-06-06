@@ -17,7 +17,7 @@ class CustomRoute extends PageRouteBuilder {
   final AnimationType type;
   final WidgetBuilder builder;
 
-  CustomRoute({ this.type, this.builder})
+  CustomRoute({ required this.type, required this.builder})
       : super(
             // 设置过度时间
             transitionDuration: Duration(milliseconds: 200),
@@ -67,7 +67,7 @@ class CustomRoute extends PageRouteBuilder {
                 }
 
                 case AnimationType.push: {
-
+                    return SizedBox();
                 }
               }
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ArcPainter extends CustomPainter {
-  Paint _mPaint;
-  double _height;
+  late Paint _mPaint;
+  double? _height;
 
   ArcPainter({Color color = Colors.blue, double height = -1}) {
     _mPaint = new Paint();
@@ -26,7 +26,7 @@ class ArcPainter extends CustomPainter {
 //    print("sx:$startX;ex:$endX;rx:$rx;ry:$ry");
     path.moveTo(startX, 0);
     path.arcToPoint(Offset(endX, 0),
-        radius: Radius.elliptical(rx, ry), clockwise: false);
+        radius: Radius.elliptical(rx, ry!), clockwise: false);
     canvas.drawPath(path, _mPaint);
   }
 

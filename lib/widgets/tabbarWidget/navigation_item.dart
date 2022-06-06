@@ -15,23 +15,23 @@ class NavigationItem extends StatelessWidget {
   final imageSelected;
   final selected;
   final isProtruding;
-  final ACEBottomNavigationBarType type;
+  final ACEBottomNavigationBarType? type;
   final Function(UniqueKey uniqueKey) callbackFunction;
 
   NavigationItem(
-      {@required this.uniqueKey,
-      @required this.selected,
-      @required this.textStr,
-      @required this.textSelectedColor,
-      @required this.textUnSelectedColor,
-      @required this.icon,
-      @required this.iconSelectedColor,
-      @required this.iconUnSelectedColor,
-      @required this.image,
-      @required this.imageSelected,
-      @required this.callbackFunction,
-      @required this.type,
-      @required this.isProtruding,
+      {required this.uniqueKey,
+      required this.selected,
+      required this.textStr,
+      required this.textSelectedColor,
+      required this.textUnSelectedColor,
+      required this.icon,
+      required this.iconSelectedColor,
+      required this.iconUnSelectedColor,
+      required this.image,
+      required this.imageSelected,
+      required this.callbackFunction,
+      required this.type,
+      required this.isProtruding,
       this.protrudingIcon});
 
   @override

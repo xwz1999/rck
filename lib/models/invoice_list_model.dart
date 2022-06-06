@@ -24,7 +24,7 @@ part 'invoice_list_model.g.dart';
 @JsonSerializable()
 class InvoiceListModel extends BaseModel{
 
-  List<Invoice> data;
+  List<Invoice>? data;
 
   InvoiceListModel(code,this.data,msg,) : super(code,msg);
 

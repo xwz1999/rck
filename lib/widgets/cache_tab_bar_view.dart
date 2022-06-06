@@ -21,22 +21,20 @@ class CacheTabBarView extends StatefulWidget {
   ///
   /// The length of [children] must be the same as the [controller]'s length.
   const CacheTabBarView({
-    Key key,
-    @required this.children,
+    Key? key,
+    required this.children,
     this.controller,
     this.physics,
     this.dragStartBehavior = DragStartBehavior.start,
     this.cacheCount = 0,
     this.needAnimation = true,
-  })  : assert(children != null),
-        assert(dragStartBehavior != null),
-        super(key: key);
+  })  : super(key: key);
 
   /// This widget's selection and animation state.
   ///
   /// If [TabController] is not provided, then the value of [DefaultTabController.of]
   /// will be used.
-  final TabController controller;
+  final TabController? controller;
 
   final bool needAnimation;
 
@@ -55,7 +53,7 @@ class CacheTabBarView extends StatefulWidget {
   /// [PageScrollPhysics] prior to being used.
   ///
   /// Defaults to matching platform conventions.
-  final ScrollPhysics physics;
+  final ScrollPhysics? physics;
 
   /// {@macro flutter.widgets.scrollable.dragStartBehavior}
   final DragStartBehavior dragStartBehavior;
@@ -68,14 +66,14 @@ final PageScrollPhysics _kTabBarViewPhysics =
     const PageScrollPhysics().applyTo(const ClampingScrollPhysics());
 
 class _CacheTabBarViewState extends State<CacheTabBarView> {
-  TabController _controller;
-  PageController _pageController;
-  List<Widget> _children;
-  int _currentIndex;
+  TabController? _controller;
+  PageController? _pageController;
+  late List<Widget> _children;
+  int? _currentIndex;
   int _warpUnderwayCount = 0;
 
   void _updateTabController() {
-    final TabController newController =
+    final TabController? newController =
         widget.controller ?? DefaultTabController.of(context);
     assert(() {
       if (newController == null) {
@@ -89,7 +87,7 @@ class _CacheTabBarViewState extends State<CacheTabBarView> {
     }());
 
     assert(() {
-      if (newController.length != widget.children.length) {
+      if (newController!.length != widget.children.length) {
         throw FlutterError(
             'Controller\'s length property (${newController.length}) does not match the \n'
             'number of elements (${widget.children.length}) present in TabBarView\'s children property.');
@@ -100,10 +98,10 @@ class _CacheTabBarViewState extends State<CacheTabBarView> {
     if (newController == _controller) return;
 
     if (_controller != null)
-      _controller.animation.removeListener(_handleTabControllerAnimationTick);
+      _controller!.animation!.removeListener(_handleTabControllerAnimationTick);
     _controller = newController;
     if (_controller != null)
-      _controller.animation.addListener(_handleTabControllerAnimationTick);
+      _controller!.animation!.addListener(_handleTabControllerAnimationTick);
   }
 
   @override
@@ -131,17 +129,17 @@ class _CacheTabBarViewState extends State<CacheTabBarView> {
   @override
   void dispose() {
     if (_controller != null)
-      _controller.animation.removeListener(_handleTabControllerAnimationTick);
+      _controller!.animation!.removeListener(_handleTabControllerAnimationTick);
     // We don't own the _controller Animation, so it's not disposed here.
     super.dispose();
   }
 
   void _handleTabControllerAnimationTick() {
-    if (_warpUnderwayCount > 0 || !_controller.indexIsChanging)
+    if (_warpUnderwayCount > 0 || !_controller!.indexIsChanging)
       return; // This widget is driving the controller's animation.
 
-    if (_controller.index != _currentIndex) {
-      _currentIndex = _controller.index;
+    if (_controller!.index != _currentIndex) {
+      _currentIndex = _controller!.index;
       _warpToCurrentIndex();
     }
   }
@@ -149,7 +147,7 @@ class _CacheTabBarViewState extends State<CacheTabBarView> {
   Future<void> _warpToCurrentIndex() async {
     if (!mounted) return Future<void>.value();
 
-    if (_pageController.page == _currentIndex.toDouble())
+    if (_pageController!.page == _currentIndex!.toDouble())
       return Future<void>.value();
 
     // final int previousIndex = _controller.previousIndex;
@@ -157,10 +155,10 @@ class _CacheTabBarViewState extends State<CacheTabBarView> {
     /// 不注释点击间距大于1的时候  会刷新 children 界面
 //    if ((_currentIndex - previousIndex).abs() == 1)
     if (widget.needAnimation) {
-      return _pageController.animateToPage(_currentIndex,
+      return _pageController!.animateToPage(_currentIndex!,
           duration: kTabScrollDuration, curve: Curves.ease);
     }
-    return _pageController.jumpToPage(_currentIndex);
+    return _pageController!.jumpToPage(_currentIndex!);
 
     // assert((_currentIndex - previousIndex).abs() > 1);
     // int initialPage;
@@ -196,16 +194,16 @@ class _CacheTabBarViewState extends State<CacheTabBarView> {
 
     _warpUnderwayCount += 1;
     if (notification is ScrollUpdateNotification &&
-        !_controller.indexIsChanging) {
-      if ((_pageController.page - _controller.index).abs() > 1.0) {
-        _controller.index = _pageController.page.floor();
-        _currentIndex = _controller.index;
+        !_controller!.indexIsChanging) {
+      if ((_pageController!.page! - _controller!.index).abs() > 1.0) {
+        _controller!.index = _pageController!.page!.floor();
+        _currentIndex = _controller!.index;
       }
-      _controller.offset =
-          (_pageController.page - _controller.index).clamp(-1.0, 1.0);
+      _controller!.offset =
+          (_pageController!.page! - _controller!.index).clamp(-1.0, 1.0);
     } else if (notification is ScrollEndNotification) {
-      _controller.index = _pageController.page.round();
-      _currentIndex = _controller.index;
+      _controller!.index = _pageController!.page!.round();
+      _currentIndex = _controller!.index;
     }
     _warpUnderwayCount -= 1;
 

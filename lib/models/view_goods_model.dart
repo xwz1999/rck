@@ -1,22 +1,22 @@
 class ViewGoodsModel {
-  int id;
-  String goodsName;
-  String subtitle;
-  String mainPhotoUrl;
-  String brandName;
-  String brandLogo;
-  int inventory;
-  int salesVolume;
-  String promotionName;
-  int originalPrice;
-  int discountPrice;
-  double commission;
-  int coupon;
+  int? id;
+  String? goodsName;
+  String? subtitle;
+  String? mainPhotoUrl;
+  String? brandName;
+  String? brandLogo;
+  int? inventory;
+  int? salesVolume;
+  String? promotionName;
+  int? originalPrice;
+  int? discountPrice;
+  double? commission;
+  int? coupon;
   Null tags;
-  int percent;
+  int? percent;
   Null startTime;
   Null endTime;
-  Live live;
+  Live? live;
 
   ViewGoodsModel(
       {this.id,
@@ -79,15 +79,15 @@ class ViewGoodsModel {
     data['startTime'] = this.startTime;
     data['endTime'] = this.endTime;
     if (this.live != null) {
-      data['live'] = this.live.toJson();
+      data['live'] = this.live!.toJson();
     }
     return data;
   }
 }
 
 class Live {
-  int status;
-  int itemId;
+  int? status;
+  int? itemId;
 
   Live({this.status, this.itemId});
 

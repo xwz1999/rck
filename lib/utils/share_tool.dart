@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluwx/fluwx.dart' as Fluwx;
 import 'package:fluwx/fluwx.dart';
+import 'package:get/get.dart';
 // import 'package:sharesdk_plugin/sharesdk_plugin.dart';
 
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/app_image_resources.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/home/home_page.dart';
@@ -82,12 +81,12 @@ class ShareTool {
 
   liveShare(
     BuildContext context, {
-    @required int liveId,
-    @required String title,
-    @required String des,
-    @required String headUrl,
+    required int liveId,
+    required String title,
+    required String des,
+    required String headUrl,
   }) {
-    String baseUrl = "${AppConfig.debug ? WebApi.testLiveUrl : WebApi.liveUrl}";
+    String baseUrl = "${AppConfig.debug! ? WebApi.testLiveUrl : WebApi.liveUrl}";
     WeChatUtils.shareUrl(
       url: '$baseUrl$liveId',
       title: title,
@@ -98,10 +97,10 @@ class ShareTool {
 
 
   clipBoard({
-    BuildContext context,
-    @required int liveId,
+    BuildContext? context,
+    required int liveId,
   }) {
-    String baseUrl = "${AppConfig.debug ? WebApi.testLiveUrl : WebApi.liveUrl}";
+    String baseUrl = "${AppConfig.debug! ? WebApi.testLiveUrl : WebApi.liveUrl}";
     ClipboardData data = new ClipboardData(text: '$baseUrl$liveId');
     Clipboard.setData(data);
     Toast.showCustomSuccess(
@@ -111,13 +110,13 @@ class ShareTool {
   }
 
   goodsShare(
-    BuildContext context, {
-    String goodsName = "",
-    String goodsDescription = "",
+    BuildContext? context, {
+    String? goodsName = "",
+    String? goodsDescription = "",
     String goodsPrice = "",
     String amount = "",
-    String miniTitle = "",
-    String miniPicurl = "",
+    String? miniTitle = "",
+    String? miniPicurl = "",
     String goodsId = "",
     String secondPic = "",
   }) {
@@ -129,11 +128,12 @@ class ShareTool {
           width: 36,
           height: 36,
         ), itemClick: () {
-      Navigator.maybePop(context);
+      Navigator.maybePop(context!);
+
 
       WeChatUtils.miniProgramShare(
         id: goodsId,
-        netWorkThumbnail: Api.getResizeImgUrl(miniPicurl,500.w),
+        netWorkThumbnail: Api.getResizeImgUrl(miniPicurl!, 500),
         des: miniTitle,
       );
     });
@@ -144,10 +144,11 @@ class ShareTool {
           width: 36,
           height: 36,
         ), itemClick: () {
-      Navigator.maybePop(context);
+      Navigator.maybePop(context!);
       Future.delayed(Duration(milliseconds: 500), () {
-        AppRouter.push(context, RouteName.SHARE_GOODS_POSTER_PAGE,
-            arguments: ShareGoodsPosterPage.setArguments(goodsId: goodsId));
+        Get.to(()=>ShareGoodsPosterPage(arguments: ShareGoodsPosterPage.setArguments(goodsId: goodsId),));
+        // AppRouter.push(context, RouteName.SHARE_GOODS_POSTER_PAGE,
+        //     arguments: ShareGoodsPosterPage.setArguments(goodsId: goodsId));
       });
     });
 
@@ -160,15 +161,15 @@ class ShareTool {
       ),
       itemClick: () async {
         ClipboardListenerValue.canListen = false;
-        Navigator.pop(context);
+        Navigator.pop(context!);
         print(goodsId);
         String code = '【$miniTitle】复制这段描述，打开瑞库客，购全球好物${RUICodeUtil.encrypt(
           int.parse(goodsId),
-          UserManager.instance.user.info.id,
-            UserManager.instance.user.info.invitationNo
+          UserManager.instance!.user.info!.id!,
+            UserManager.instance!.user.info!.invitationNo
         )}瑞库客。\n数字化批发零售服务平台';
         Clipboard.setData(ClipboardData(text: code));
-        bool needWechat = await showDialog(
+        bool? needWechat = await showDialog(
           context: context,
           builder: (context) => Center(
             child: Material(
@@ -257,8 +258,8 @@ class ShareTool {
 
 
 
-  inviteShare(BuildContext context, {Widget customTitle, String code = ""}) {
-    if (UserManager.instance.user.info.id == 0) {
+  inviteShare(BuildContext context, {Widget? customTitle, String code = ""}) {
+    if (UserManager.instance!.user.info!.id == 0) {
       AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
       Toast.showError('请先登录...');
       return;
@@ -266,11 +267,11 @@ class ShareTool {
 
     //!!!!
     WeChatScene scene = WeChatScene.SESSION;
-    String inviteCode = TextUtils.isEmpty(code)
-        ? UserManager.instance.user.info.invitationNo
+    String? inviteCode = TextUtils.isEmpty(code)
+        ? UserManager.instance!.user.info!.invitationNo
         : code;
     String inviteUrl =
-        "${AppConfig.debug ? WebApi.testInviteRegist : WebApi.inviteRegist}$inviteCode";
+        "${AppConfig.debug! ? WebApi.testInviteRegist : WebApi.inviteRegist}$inviteCode";
     String invitePosterUrl = "${Api.host}${WebApi.invitePoster}$inviteCode";
     PlatformItem wechatItem = PlatformItem(
         "微信",
@@ -389,8 +390,9 @@ class ShareTool {
         ), itemClick: () {
       Navigator.maybePop(context);
       Future.delayed(Duration(milliseconds: 500), () {
-        AppRouter.push(context, RouteName.SHARE_URL_POSTER_PAGE,
-            arguments: ShareUrlPosterPage.setArguments(url: invitePosterUrl));
+        // AppRouter.push(context, RouteName.SHARE_URL_POSTER_PAGE,
+        //     arguments: ShareUrlPosterPage.setArguments(url: invitePosterUrl));
+        Get.to(()=>ShareUrlPosterPage(arguments: ShareUrlPosterPage.setArguments(url: invitePosterUrl),));
       });
     });
     List<PlatformItem> itemList = [

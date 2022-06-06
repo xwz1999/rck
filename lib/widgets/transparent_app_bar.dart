@@ -12,19 +12,19 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class TransparentAppBar extends StatelessWidget {
-  final String title;
-  final PreferredSize bottom;
+  final String? title;
+  final PreferredSize? bottom;
   final double bottomHeight;
   final double topTotalHeight;
-  final Widget header;
-  final Widget body;
+  final Widget? header;
+  final Widget? body;
   final Color appBarBackgroundColor;
   final Color itemColor;
   final Color titleColor;
-  final SliverAppBarController controller;
+  final SliverAppBarController? controller;
 
   const TransparentAppBar({
-    Key key,
+    Key? key,
     this.title,
     this.bottom,
     this.bottomHeight = 0,
@@ -46,9 +46,9 @@ class TransparentAppBar extends StatelessWidget {
     return NotificationListener<ScrollUpdateNotification>(
       onNotification: (updateDetail) {
         double offset = updateDetail.metrics.pixels;
-        controller.offset.value = offset;
+        controller!.offset.value = offset;
         return;
-      },
+      } as bool Function(ScrollUpdateNotification)?,
       child: NestedScrollView(
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
@@ -72,20 +72,19 @@ class TransparentAppBar extends StatelessWidget {
               },
               child: NotificationListener<OverscrollNotification>(
                 onNotification: (OverscrollNotification notify) {
-                  if (notify.dragDetails != null &&
-                      notify.dragDetails.delta != null) {
-                    if (notify.dragDetails.delta.dy >= 0) {
-                      controller.overScrollOffset.value =
-                          notify.dragDetails.delta.dy;
+                  if (notify.dragDetails != null) {
+                    if (notify.dragDetails!.delta.dy >= 0) {
+                      controller!.overScrollOffset.value =
+                          notify.dragDetails!.delta.dy;
                     }
                   }
                   return true;
                 },
-                child: body,
+                child: body!,
               ),
             ),
             onNotification: (endDetail) {
-              controller.dragEnd.value = true;
+              controller!.dragEnd.value = true;
               return true;
             },
           )),
@@ -94,18 +93,18 @@ class TransparentAppBar extends StatelessWidget {
 }
 
 class _SliverAppBar extends StatefulWidget {
-  final String title;
-  final PreferredSize bottom;
+  final String? title;
+  final PreferredSize? bottom;
   final double bottomHeight;
-  final double topTotalHeight;
-  final Widget header;
-  final Color appBarBackgroundColor;
-  final Color itemColor;
+  final double? topTotalHeight;
+  final Widget? header;
+  final Color? appBarBackgroundColor;
+  final Color? itemColor;
   final Color titleColor;
-  final SliverAppBarController controller;
+  final SliverAppBarController? controller;
 
   const _SliverAppBar(
-      {Key key,
+      {Key? key,
       this.bottom,
       this.bottomHeight = 0,
       this.header,
@@ -137,14 +136,14 @@ class __SliverAppBarState extends State<_SliverAppBar>
   @override
   void initState() {
     super.initState();
-    widget.controller.offset.addListener(() {
+    widget.controller!.offset.addListener(() {
       double scale =
-          widget.controller.offsetValue / (widget.topTotalHeight - 80);
+          widget.controller!.offsetValue / (widget.topTotalHeight! - 80);
       scale = scale.clamp(0.0, 1.0);
 
       if (scale < 0.5) {
         _itemColor =
-            widget.itemColor.withAlpha((255 * (1 - scale * 2)).toInt());
+            widget.itemColor!.withAlpha((255 * (1 - scale * 2)).toInt());
       } else {
         _itemColor = Colors.black.withAlpha((255 * scale * 2).toInt());
       }
@@ -153,7 +152,7 @@ class __SliverAppBarState extends State<_SliverAppBar>
       setState(() {});
     });
 
-    widget.controller.overScrollOffset.addListener(() {
+    widget.controller!.overScrollOffset.addListener(() {
       double scale = 0.3;
       if (_topInset > 100) {
         scale = 0.1;
@@ -161,12 +160,12 @@ class __SliverAppBarState extends State<_SliverAppBar>
         scale = 0.5;
       }
       setState(() {
-        _topInset += widget.controller.overScrollOffsetValue * scale;
+        _topInset += widget.controller!.overScrollOffsetValue * scale;
       });
     });
 
-    widget.controller.dragEnd.addListener(() {
-      if (!widget.controller.dragEnd.value) return;
+    widget.controller!.dragEnd.addListener(() {
+      if (!widget.controller!.dragEnd.value) return;
       AnimationController controller = AnimationController(
           vsync: this, duration: Duration(milliseconds: 150));
       Animation<double> animation =
@@ -178,7 +177,7 @@ class __SliverAppBarState extends State<_SliverAppBar>
         });
       });
       controller.forward();
-      widget.controller.dragEnd.value = false;
+      widget.controller!.dragEnd.value = false;
     });
   }
 
@@ -193,26 +192,26 @@ class __SliverAppBarState extends State<_SliverAppBar>
         title: Opacity(
           opacity: _tabBarOpacity,
           child: Text(
-            widget.title,
+            widget.title!,
             style: TextStyle(color: widget.titleColor),
           ),
         ),
         leading: Navigator.canPop(context) ? _backButton(context) : null,
 
         /// 40 是底部filterBar高度
-        expandedHeight: widget.topTotalHeight + widget.bottomHeight + _topInset,
+        expandedHeight: widget.topTotalHeight! + widget.bottomHeight + _topInset,
         pinned: true,
         floating: false,
         flexibleSpace: Stack(
           children: <Widget>[
-            widget.header,
+            widget.header!,
 
             /// appBar 背景色
             Positioned(
                 top: 0,
                 left: 0,
                 right: 0,
-                height: DeviceInfo.statusBarHeight + DeviceInfo.appBarHeight,
+                height: DeviceInfo.statusBarHeight! + DeviceInfo.appBarHeight,
                 child: Opacity(
                   opacity: _tabBarOpacity,
                   child: Container(

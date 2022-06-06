@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
@@ -24,7 +23,7 @@ class UserSetPasswordVarCode extends StatefulWidget {
 
 class _UserSetPasswordVarCodeState
     extends BaseStoreState<UserSetPasswordVarCode> {
-  Timer _timer;
+  Timer? _timer;
   String _countDownStr = "点击发送验证码";
   bool _getCodeEnable = false;
   int _countDownNum = 60;
@@ -33,10 +32,10 @@ class _UserSetPasswordVarCodeState
   @override
   void dispose() {
     if (_timer != null) {
-      _timer.cancel();
+      _timer!.cancel();
       _timer = null;
     }
-    _textEditingController?.dispose();
+    _textEditingController.dispose();
     super.dispose();
   }
 
@@ -44,7 +43,7 @@ class _UserSetPasswordVarCodeState
   String pwdData = '';
   TextEditingController _textEditingController = TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  VoidCallback _showBottomSheetCallback;
+  VoidCallback? _showBottomSheetCallback;
   @override
   void initState() {
     super.initState();
@@ -108,7 +107,7 @@ class _UserSetPasswordVarCodeState
             margin: EdgeInsets.only(top: 5),
             alignment: Alignment.center,
             child: Text(
-              UserManager.instance.user.info.mobile.replaceRange(3, 7, "****"),
+              UserManager.instance!.user.info!.mobile!.replaceRange(3, 7, "****"),
               style: TextStyle(
                 color: Color(0xff333333),
                 fontSize: 22 * 2.sp,
@@ -200,7 +199,7 @@ class _UserSetPasswordVarCodeState
       // disable the button
       _showBottomSheetCallback = null;
     });
-    _scaffoldKey.currentState
+    _scaffoldKey.currentState!
         .showBottomSheet<void>((BuildContext context) {
           return Container(
             height: MediaQuery.of(context).size.height,
@@ -212,7 +211,7 @@ class _UserSetPasswordVarCodeState
                       color: Colors.white.withAlpha(0),
                     ),
                     onTap: () {
-                      Navigator.pop(_scaffoldKey.currentContext);
+                      Navigator.pop(_scaffoldKey.currentContext!);
                     },
                   ),
                 ),
@@ -254,7 +253,7 @@ class _UserSetPasswordVarCodeState
         return;
       }
       _verifySms = true;
-      Navigator.pop(_scaffoldKey.currentContext);
+      Navigator.pop(_scaffoldKey.currentContext!);
     } else {
       if (pwdData.length < 4) {
         pwdData += data.key;
@@ -265,14 +264,14 @@ class _UserSetPasswordVarCodeState
 
   _getVarCode() async {
     ResultData resultData = await HttpManager.post(
-        UserApi.verify_sms_send, {"userId": UserManager.instance.user.info.id});
+        UserApi.verify_sms_send, {"userId": UserManager.instance!.user.info!.id});
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
     _beginCountDown();
@@ -281,24 +280,24 @@ class _UserSetPasswordVarCodeState
 
   _verifySmsCode() async {
     ResultData resultData = await HttpManager.post(UserApi.verify_sms, {
-      "userId": UserManager.instance.user.info.id,
+      "userId": UserManager.instance!.user.info!.id,
       // "sms": pwdData,
       "sms": _textEditingController.text,
     });
 
     if (!resultData.result) {
       // pwdData = "";
-      _textEditingController?.clear();
+      _textEditingController.clear();
       setState(() {});
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
       // pwdData = "";
-      _textEditingController?.clear();
+      _textEditingController.clear();
       setState(() {});
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
     AppRouter.pushAndReplaced(context, RouteName.USER_SET_PASSWORD);
@@ -319,7 +318,7 @@ class _UserSetPasswordVarCodeState
           _countDownNum = 60;
           _countDownStr = "获取验证码";
           _getCodeEnable = true;
-          _timer.cancel();
+          _timer!.cancel();
           _timer = null;
           return;
         }

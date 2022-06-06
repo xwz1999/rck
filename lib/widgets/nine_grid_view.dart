@@ -18,15 +18,14 @@ class NineGridView extends StatefulWidget {
   final int crossAxisCount;
   final GridType type;
   final GridItemBuilder builder;
-  final int itemCount;
+  final int? itemCount;
 
   NineGridView(
-      {@required this.builder,
+      {required this.builder,
       this.crossAxisCount = 3,
       this.type = GridType.normal,
       this.itemCount})
-      : assert(builder != null, "builder 不能为空"),
-        assert(itemCount != null && itemCount > 0, "itemCount 必填");
+      : assert(itemCount != null && itemCount > 0, "itemCount 必填");
 
   @override
   State<StatefulWidget> createState() {

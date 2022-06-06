@@ -30,14 +30,14 @@ import 'mvp/goods_list_presenter_impl.dart';
 
 class GoodsListPage extends StatefulWidget {
   // final SecondCategory category;
-  final Map arguments;
+  final Map? arguments;
 
-  const GoodsListPage({Key key, this.arguments}) : super(key: key);
+  const GoodsListPage({Key? key, this.arguments}) : super(key: key);
 
   static setArguments(
-      {String title,
-      int index,
-      List<SecondCategory> secondCategoryList,
+      {String? title,
+      int? index,
+      List<SecondCategory>? secondCategoryList,
       bool isJD = false}) {
     return {
       "title": title,
@@ -58,37 +58,37 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
   /// 切换展示形式  true 为 List， false 为grid
   bool _displayList = false;//默认排列方式改为瀑布流
 
-  FilterToolBarController _filterController;
+  late FilterToolBarController _filterController;
 
-  SecondCategory _category;
-  List<SecondCategory> _secondCategoryList;
-  GoodsListPresenterImpl _presenter;
-  TabController _tabController;
+  late SecondCategory _category;
+  List<SecondCategory>? _secondCategoryList;
+  GoodsListPresenterImpl? _presenter;
+  TabController? _tabController;
 
-  MvpListViewController<GoodsSimple> _listViewController;
+  MvpListViewController<GoodsSimple>? _listViewController;
 
   SortType _sortType = SortType.comprehensive;
 
   int _jDType = 0; // 0 默认数据 1传回全部JD数据 2为JD自营数据 3为JD pop数据
-  bool _isJD = false;
+  bool? _isJD = false;
   String _jdTypeText = '全部';
   int _filterIndex = 0;
   List<bool> _barBool = [false,false,false];
-  GifController _gifController;
-  TextEditingController _textEditController;
+  GifController? _gifController;
+  TextEditingController? _textEditController;
   String _searchText = '';
 
   @override
   void initState() {
-    if (widget.arguments['isJD'] != null) {
-      _isJD = widget.arguments['isJD'];
+    if (widget.arguments!['isJD'] != null) {
+      _isJD = widget.arguments!['isJD'];
     }
-    if (_isJD) {
+    if (_isJD!) {
       _jDType = 1;
       _sortType = SortType.priceAsc;
       _barBool = [false,false];
     }
-    int index = widget.arguments["index"];
+    int index = widget.arguments!["index"];
     _gifController = GifController(vsync: this)
       ..repeat(
         min: 0,
@@ -96,10 +96,10 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
         period: Duration(milliseconds: 700),
       );
     DPrint.printf("index=$index");
-    _secondCategoryList = widget.arguments["secondCategoryList"];
-    _category = _secondCategoryList[index];
+    _secondCategoryList = widget.arguments!["secondCategoryList"];
+    _category = _secondCategoryList![index];
     _tabController = TabController(
-        initialIndex: index, length: _secondCategoryList.length, vsync: this);
+        initialIndex: index, length: _secondCategoryList!.length, vsync: this);
     _filterController = FilterToolBarController();
     super.initState();
     _presenter = GoodsListPresenterImpl();
@@ -108,7 +108,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
 
   @override
   void dispose() {
-    _gifController.dispose();
+    _gifController!.dispose();
     super.dispose();
   }
 
@@ -124,7 +124,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
         appBar: CustomAppBar(
           themeData: AppThemes.themeDataGrey.appBarTheme,
           elevation: 0,
-          title: widget.arguments["title"],
+          title: widget.arguments!["title"],
         ),
         body: Column(
           children: <Widget>[
@@ -135,9 +135,9 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
               width: MediaQuery.of(context).size.width,
               child: TabBar(
                   onTap: (index) {
-                    _category = _secondCategoryList[index];
-                    _listViewController.stopRefresh();
-                    _listViewController.requestRefresh();
+                    _category = _secondCategoryList![index];
+                    _listViewController!.stopRefresh();
+                    _listViewController!.requestRefresh();
                     // _presenter.fetchList(_category.id, 0, _sortType);
                     setState(() {});
                   },
@@ -205,7 +205,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
                 onSubmitted: (_submitted) {
                   //_contentFocusNode.unfocus();
 
-                  _presenter.fetchList(_category.id, 0, _sortType, null, JDType: _jDType,keyword: _searchText);
+                  _presenter!.fetchList(_category.id, 0, _sortType, null, JDType: _jDType,keyword: _searchText);
 
                   setState(() {});
                 },
@@ -230,14 +230,14 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
   }
 
   List<Widget> _tabItems() {
-    return _secondCategoryList.map<Widget>((item) {
-      int index = _secondCategoryList.indexOf(item);
+    return _secondCategoryList!.map<Widget>((item) {
+      int index = _secondCategoryList!.indexOf(item);
       return _tabItem(item, index);
     }).toList();
   }
 
   _tabItem(SecondCategory secondCategory, int index) {
-    Color textColor = index == _tabController.index
+    Color? textColor = index == _tabController!.index
         ? getCurrentThemeColor()
         : Colors.black.withOpacity(0.9);
     return Tab(
@@ -250,7 +250,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              secondCategory.name,
+              secondCategory.name!,
               style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 13 * 2.sp,
@@ -267,7 +267,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
       controller: _filterController,
       height: rSize(40),
       fontSize: 13 * 2.sp,
-      titles: _isJD
+      titles: _isJD!
           ? [
 
               FilterItemModel(type: FilterItemType.double, title: "价格",selectedList:_barBool),
@@ -285,7 +285,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
       selectedColor: Theme.of(context).primaryColor,
       listener: (index, item) {
         print(index);
-        if(!_isJD){
+        if(!_isJD!){
           if ((index != 1 && index != 2) && _filterIndex == index) {
           return;
           }
@@ -298,11 +298,11 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
         // if (index != 1 && _filterIndex == index) {
         //   return;
         // }
-        _filterIndex = index;
-        if (_isJD) {
+        _filterIndex = index!;
+        if (_isJD!) {
           switch (index) {
             case 0:
-            print(item.topSelected);
+            print(item!.topSelected);
               if (item.topSelected) {
                 _sortType = SortType.priceAsc;
               } else {
@@ -310,7 +310,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
               }
               break;
             case 1:
-              print(item.topSelected);
+              print(item!.topSelected);
               if (item.topSelected) {
                 _sortType = SortType.salesAsc;
               } else {
@@ -328,14 +328,14 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
               _sortType = SortType.comprehensive;
               break;
             case 1:
-              if (item.topSelected) {
+              if (item!.topSelected) {
                 _sortType = SortType.priceAsc;
               } else {
                 _sortType = SortType.priceDesc;
               }
               break;
             case 2:
-              if (item.topSelected) {
+              if (item!.topSelected) {
                 _sortType = SortType.salesAsc;
               } else {
                 _sortType = SortType.salesDesc;
@@ -350,8 +350,8 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
 
         // _presenter.fetchList(widget.category.id, 0, _sortType);
         // _presenter.fetchList(_category.id, 0, _sortType);
-        _listViewController.stopRefresh();
-        _listViewController.requestRefresh();
+        _listViewController!.stopRefresh();
+        _listViewController!.requestRefresh();
 
       },
     );
@@ -426,8 +426,8 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
             }
             print(value);
             setState(() {});
-            _listViewController.stopRefresh();
-            _listViewController.requestRefresh();
+            _listViewController!.stopRefresh();
+            _listViewController!.requestRefresh();
           });
         },
         itemBuilder: (BuildContext context) => <PopupMenuItem<String>>[
@@ -464,14 +464,14 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
       type: ListViewType.grid,
       refreshCallback: () {
         // _presenter.fetchList(widget.category.id, 0, _sortType);
-        _presenter.fetchList(_category.id, 0, _sortType, null, JDType: _jDType,keyword: _searchText);
+        _presenter!.fetchList(_category.id, 0, _sortType, null, JDType: _jDType,keyword: _searchText);
         setState(() {
 
         });
       },
       loadMoreCallback: (int page) {
         // _presenter.fetchList(widget.category.id, page, _sortType);
-        _presenter.fetchList(_category.id, page, _sortType, null,
+        _presenter!.fetchList(_category.id, page, _sortType, null,
             JDType: _jDType,keyword: _searchText);
         setState(() {
 
@@ -487,23 +487,23 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
     //       itemBuilder: ,
     // );
     return WaterfallFlow.builder(
-        padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight),
+        padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight!),
         physics: AlwaysScrollableScrollPhysics(),
-        itemCount: _listViewController.getData().length,
+        itemCount: _listViewController!.getData().length,
         gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
           crossAxisCount: _displayList ? 1 : 2,
           crossAxisSpacing: _displayList ? 5 : 10,
           mainAxisSpacing: _displayList ? 5 : 10,
         ),
         itemBuilder: (context, index) {
-          GoodsSimple goods = _listViewController.getData()[index];
+          GoodsSimple goods = _listViewController!.getData()[index];
           // goods.inventory = 0;
           // goods.tags = ["新人特惠", "限时特卖", "限时特卖", "限时特卖", "限时特卖"];
           return MaterialButton(
               padding: EdgeInsets.zero,
               onPressed: () {
                 AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                    arguments: CommodityDetailPage.setArguments(goods.id));
+                    arguments: CommodityDetailPage.setArguments(goods.id as int?));
               },
               child: _displayList
                   // ? BrandDetailListItem(goods: goods)
@@ -512,11 +512,11 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
                       onBrandClick: () {
                         AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
                             arguments: BrandGoodsListPage.setArguments(
-                                goods.brandId, goods.brandName));
+                                goods.brandId as int?, goods.brandName));
                       },
                       model: goods,
                       buildCtx: context,
-                      type: _isJD?3:0,
+                      type: _isJD!?3:0,
                     )
                   // ? NormalGoodsItem(model: goods, buildCtx: context,)
                   : BrandDetailGridItem(goods: goods));
@@ -524,7 +524,7 @@ class _GoodsListPageState extends BaseStoreState<GoodsListPage>
   }
 
   @override
-  MvpListViewPresenterI<GoodsSimple, MvpView, MvpModel> getPresenter() {
+  MvpListViewPresenterI<GoodsSimple, MvpView, MvpModel>? getPresenter() {
     return _presenter;
   }
 }

@@ -13,13 +13,13 @@ import 'package:oktoast/oktoast.dart';
 
 class BrandGoodsListView extends StatefulWidget {
   final VoidCallback onPick;
-  final int categoryId;
-  final String name;
-  final String logo;
+  final int? categoryId;
+  final String? name;
+  final String? logo;
   BrandGoodsListView(
-      {Key key,
-      @required this.onPick,
-      @required this.categoryId,
+      {Key? key,
+      required this.onPick,
+      required this.categoryId,
       this.name,
       this.logo})
       : super(key: key);
@@ -139,7 +139,7 @@ class _BrandGoodsListViewState extends State<BrandGoodsListView> {
                       ),
                       child: FadeInImage.assetNetwork(
                         placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                        image: Api.getImgUrl(widget.logo),
+                        image: Api.getImgUrl(widget.logo)!,
                         height: rSize(64),
                         width: rSize(64),
                       ),
@@ -149,7 +149,7 @@ class _BrandGoodsListViewState extends State<BrandGoodsListView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.name,
+                          widget.name!,
                           style: TextStyle(
                             color: Color(0xFF333333),
                             fontSize: rSP(16),
@@ -248,10 +248,10 @@ class _BrandGoodsListViewState extends State<BrandGoodsListView> {
       'page': _page,
       'secondCategoryID': widget.categoryId,
     });
-    if (resultData?.data['data'] == null)
+    if (resultData.data['data'] == null)
       return [];
     else {
-      return GoodsSimpleListModel.fromJson(resultData.data).data.map((e) {
+      return GoodsSimpleListModel.fromJson(resultData.data).data!.map((e) {
         return GoodsList(
           id: e.id,
           goodsName: e.goodsName,

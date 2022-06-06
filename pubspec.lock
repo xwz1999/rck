@@ -451,8 +451,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: HEAD
-      resolved-ref: cc420e3b1f8f8a97770afd299c2c62b7ecc2f007
+      ref: c1b3c0c
+      resolved-ref: c1b3c0c0a7576ed71f5e9ecc67c58d44bdf2de3a
       url: "https://gitee.com/zwx19990815/flutter_custom_calendar"
     source: git
     version: "1.0.4+0.5"

@@ -1,15 +1,12 @@
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/utils/app_router.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 
 class VerifyResultPage extends StatefulWidget {
-  final Map arguments;
-  VerifyResultPage({Key key, this.arguments}) : super(key: key);
+  final Map? arguments;
+  VerifyResultPage({Key? key, this.arguments}) : super(key: key);
   static setArgument(bool isSuccess) {
     return {
       'isSuccess': isSuccess,
@@ -21,19 +18,19 @@ class VerifyResultPage extends StatefulWidget {
 }
 
 class _VerifyResultPageState extends BaseStoreState<VerifyResultPage> {
-  bool _isSuccess = false;
+  bool? _isSuccess = false;
   bool _isCashWithdraw = false;
   @override
   void initState() {
     super.initState();
-    _isSuccess = widget.arguments["isSuccess"];
-    _isCashWithdraw = widget.arguments['isCashWithdraw'] ?? false;
-    if (_isCashWithdraw && _isSuccess) {
+    _isSuccess = widget.arguments!["isSuccess"];
+    _isCashWithdraw = widget.arguments!['isCashWithdraw'] ?? false;
+    if (_isCashWithdraw && _isSuccess!) {
       Future.delayed(Duration(milliseconds: 2000), () {
         AppRouter.pushAndReplaced(
           context,
           RouteName.USER_CASH_WITHDRAW_PAGE,
-          arguments: {'amount': getStore().state.userBrief.balance.toDouble()},
+          arguments: {'amount': getStore().state.userBrief!.balance!.toDouble()},
         );
       });
     }
@@ -48,7 +45,7 @@ class _VerifyResultPageState extends BaseStoreState<VerifyResultPage> {
         title: "认证结果",
         elevation: 0,
       ),
-      body: _isSuccess ? _successBodyWidget() : _faildBodyWidget(),
+      body: _isSuccess! ? _successBodyWidget() : _faildBodyWidget(),
     );
   }
 

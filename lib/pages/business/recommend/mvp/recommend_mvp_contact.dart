@@ -16,7 +16,7 @@ abstract class RecommendPresenterI extends MvpListViewPresenterI<MaterialModel, 
 }
 
 abstract class RecommendModelI extends MvpModel{
-  fetchList(int userId, int page,);
+  fetchList(int? userId, int page,);
 }
 
 abstract class RecommendViewI extends MvpView {

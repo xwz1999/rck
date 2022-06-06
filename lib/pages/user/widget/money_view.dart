@@ -13,9 +13,9 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
 
 class MoneyView extends StatefulWidget {
-  final Function(int index) listener;
-  final Function() wechatListener;
-  const MoneyView({Key key, this.listener, this.wechatListener})
+  final Function(int index)? listener;
+  final Function()? wechatListener;
+  const MoneyView({Key? key, this.listener, this.wechatListener})
       : super(key: key);
 
   @override
@@ -49,7 +49,7 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         // _balanceWidget(),
-        TextUtils.isEmpty(UserManager.instance.user.info.wxUnionId)
+        TextUtils.isEmpty(UserManager.instance!.user.info!.wxUnionId)
             ? _wechatBindingWidget()
             : Container(),
         // _incomeWidget(),
@@ -92,7 +92,7 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
     return GestureDetector(
       onTap: () {
         if (widget.wechatListener != null) {
-          widget.wechatListener();
+          widget.wechatListener!();
         }
       },
       child: con,
@@ -136,11 +136,11 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
                     GestureDetector(
                       onTap: () {
                         if (widget.listener != null) {
-                          widget.listener(0);
+                          widget.listener!(0);
                         }
                       },
                       child: Text(
-                        getStore().state.userBrief.balance.toString(),
+                        getStore().state.userBrief!.balance.toString(),
                         style: TextStyle(
                             fontWeight: FontWeight.w400,
                             color: AppColor.themeColor,
@@ -151,7 +151,7 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
                     GestureDetector(
                       onTap: () {
                         if (widget.listener != null) {
-                          widget.listener(1);
+                          widget.listener!(1);
                         }
                       },
                       child: Container(
@@ -232,7 +232,7 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
                     GestureDetector(
                       onTap: () {
                         if (widget.listener != null) {
-                          widget.listener(2);
+                          widget.listener!(2);
                         }
                       },
                       child: Text(
@@ -294,7 +294,7 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
                         child: GestureDetector(
                       onTap: () {
                         if (widget.listener != null) {
-                          widget.listener(3);
+                          widget.listener!(3);
                         }
                       },
                       child: Column(
@@ -322,7 +322,7 @@ class _MoneyViewState extends BaseStoreState<MoneyView> {
                         child: GestureDetector(
                       onTap: () {
                         if (widget.listener != null) {
-                          widget.listener(4);
+                          widget.listener!(4);
                         }
                       },
                       child: Column(

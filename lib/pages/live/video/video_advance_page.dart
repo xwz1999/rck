@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/live/video/upload_video_page.dart';
 import 'package:recook/pages/live/widget/local_file_video.dart';
@@ -13,14 +12,14 @@ import 'package:oktoast/oktoast.dart';
 
 class VideoAdvancePage extends StatefulWidget {
   final File file;
-  VideoAdvancePage({Key key, @required this.file}) : super(key: key);
+  VideoAdvancePage({Key? key, required this.file}) : super(key: key);
 
   @override
   _VideoAdvancePageState createState() => _VideoAdvancePageState();
 }
 
 class _VideoAdvancePageState extends State<VideoAdvancePage> {
-  File _coverFile;
+  File? _coverFile;
   final picker  = ImagePicker();
   @override
   Widget build(BuildContext context) {
@@ -108,8 +107,8 @@ class _VideoAdvancePageState extends State<VideoAdvancePage> {
   _buildButton(
     String title,
     VoidCallback onTap, {
-    String path,
-    Widget icon,
+    String? path,
+    Widget? icon,
   }) {
     return CustomImageButton(
       onPressed: onTap,
@@ -117,7 +116,7 @@ class _VideoAdvancePageState extends State<VideoAdvancePage> {
         children: [
           icon ??
               Image.asset(
-                path,
+                path!,
                 height: rSize(24),
                 width: rSize(24),
               ),

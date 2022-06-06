@@ -24,16 +24,16 @@ class WholesaleDetailBottomBar extends StatefulWidget {
     this.isWholesale,
   });
 
-  final VoidListener addToShopCartListener;
-  final FavoriteListener collectListener;
-  final VoidListener buyListener;
-  final VoidListener shareListener;
-  final bool collected;
+  final VoidListener? addToShopCartListener;
+  final FavoriteListener? collectListener;
+  final VoidListener? buyListener;
+  final VoidListener? shareListener;
+  final bool? collected;
   final String shopCartNum;
-  final BottomBarController controller;
+  final BottomBarController? controller;
   // final String commission;
-  final WholesaleDetailModel goodsDetail;
-  final bool isWholesale;
+  final WholesaleDetailModel? goodsDetail;
+  final bool? isWholesale;
   @override
   State<StatefulWidget> createState() {
     return _WholesaleDetailBottomBarrState();
@@ -41,9 +41,9 @@ class WholesaleDetailBottomBar extends StatefulWidget {
 }
 
 class _WholesaleDetailBottomBarrState extends State<WholesaleDetailBottomBar> {
-  bool _collected;
+  bool? _collected;
   bool _hidden = false;
-  bool isWholesale =false;
+  bool? isWholesale =false;
 
   @override
   void initState() {
@@ -53,16 +53,16 @@ class _WholesaleDetailBottomBarrState extends State<WholesaleDetailBottomBar> {
     }
     _collected = widget.collected;
 
-    widget.controller.hidden?.addListener(() {
-      if (widget.controller.bottomBarHidden == _hidden) {
+    widget.controller!.hidden.addListener(() {
+      if (widget.controller!.bottomBarHidden == _hidden) {
         return;
       }
-      _hidden = widget.controller.bottomBarHidden;
+      _hidden = widget.controller!.bottomBarHidden;
       setState(() {});
     });
 
-    widget.controller.favorite.addListener(() {
-      _collected = widget.controller.favorite.value;
+    widget.controller!.favorite.addListener(() {
+      _collected = widget.controller!.favorite.value;
       setState(() {});
     });
   }
@@ -71,10 +71,10 @@ class _WholesaleDetailBottomBarrState extends State<WholesaleDetailBottomBar> {
   Widget build(BuildContext context) {
     print("改变了");
     return AnimatedOpacity(
-      opacity: !widget.controller.bottomBarHidden ? 1.0 : 0.0,
+      opacity: !widget.controller!.bottomBarHidden ? 1.0 : 0.0,
       duration: Duration(milliseconds: 500),
       child: Offstage(
-        offstage: widget.controller.bottomBarHidden,
+        offstage: widget.controller!.bottomBarHidden,
         child: _bottomBar(),
       ),
     );
@@ -90,7 +90,7 @@ class _WholesaleDetailBottomBarrState extends State<WholesaleDetailBottomBar> {
         decoration: BoxDecoration(
             color: Colors.white,
             border: Border(
-              top: BorderSide(color: Colors.grey[300], width: 0.3),
+              top: BorderSide(color: Colors.grey[300]!, width: 0.3),
               // bottom: BorderSide(color: Colors.grey[300], width: 0.3)
             )),
         child: Row(
@@ -98,7 +98,7 @@ class _WholesaleDetailBottomBarrState extends State<WholesaleDetailBottomBar> {
             Container(
               width: 20.rw,
             ),
-            !isWholesale?CustomImageButton(
+            !isWholesale!?CustomImageButton(
               dotSize: 13,
               dotFontSize: 10,
               dotPosition: DotPosition(right: rSize(0), top: 0),
@@ -124,20 +124,20 @@ class _WholesaleDetailBottomBarrState extends State<WholesaleDetailBottomBar> {
             Container(
               width: 10.rw,
             ),
-            !isWholesale?CustomImageButton(
+            !isWholesale!?CustomImageButton(
               title: "收藏",
               padding: EdgeInsets.only(left: 6.rw, top: 5.rw, right: 5.rw),
               contentSpacing: 3,
               icon: Icon(
-                _collected
+                _collected!
                     ? AppIcons.icon_favorite_selected
                     : AppIcons.icon_favorite,
-                color: _collected ? Colors.red : Colors.grey[900],
+                color: _collected! ? Colors.red : Colors.grey[900],
                 size: rSize(22),
               ),
               fontSize: 10.rsp,
               onPressed: () {
-                widget.collectListener(!_collected);
+                widget.collectListener!(!_collected!);
               },
             ):
             CustomImageButton(
@@ -207,9 +207,9 @@ class _WholesaleDetailBottomBarrState extends State<WholesaleDetailBottomBar> {
   }
 
   _vipTwoButtonRow() {
-    String commission = widget.goodsDetail == null
+    String? commission = widget.goodsDetail == null
         ? null
-        : widget.goodsDetail.price.min.commission.toStringAsFixed(2);
+        : widget.goodsDetail!.price!.min!.commission!.toStringAsFixed(2);
     return Expanded(
       child: Row(
         children: <Widget>[
@@ -268,7 +268,7 @@ class _WholesaleDetailBottomBarrState extends State<WholesaleDetailBottomBar> {
                                 height: 0,
                               )
                             : Text(
-                                "省￥" + commission,
+                                "省￥" + commission!,
                                 style: TextStyle(
                                     letterSpacing: -0.5,
                                     fontWeight: FontWeight.w300,

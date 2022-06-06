@@ -14,9 +14,9 @@ import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 
 class UserCommentItem extends StatelessWidget {
-  final Evaluation evaluation;
+  final Evaluation? evaluation;
 
-  const UserCommentItem({Key key, this.evaluation}) : super(key: key);
+  const UserCommentItem({Key? key, this.evaluation}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,7 +37,7 @@ class UserCommentItem extends StatelessWidget {
                 borderRadius: BorderRadius.all(Radius.circular(20)),
                 child: CustomCacheImage(
                   fit: BoxFit.cover,
-                  imageUrl: Api.getImgUrl(evaluation.headImgUrl),
+                  imageUrl: Api.getImgUrl(evaluation!.headImgUrl),
                   width: 30,
                   height: 30,
                 ),
@@ -46,7 +46,7 @@ class UserCommentItem extends StatelessWidget {
                 width: 5,
               ),
               Text(
-                evaluation.nickname,
+                evaluation!.nickname!,
                 style: AppTextStyle.generate(14, fontWeight: FontWeight.w300),
               )
             ],
@@ -55,7 +55,7 @@ class UserCommentItem extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.all(rSize(4)),
               child: Text(
-                evaluation.content,
+                evaluation!.content!,
                 style: AppTextStyle.generate(14, fontWeight: FontWeight.w300),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,

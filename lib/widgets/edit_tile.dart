@@ -14,9 +14,9 @@ import 'package:recook/widgets/input_view.dart';
 typedef StringCallback = Function(String text);
 
 class EditTile extends StatefulWidget {
-  final String title;
-  final String value;
-  final String hint;
+  final String? title;
+  final String? value;
+  final String? hint;
   final int maxLength;
   final int maxLines;
   final TextStyle titleStyle;
@@ -24,12 +24,12 @@ class EditTile extends StatefulWidget {
   final TextStyle hintStyle;
   final StringCallback textChanged;
   final Axis direction;
-  final BoxConstraints constraints;
+  final BoxConstraints? constraints;
 
   const EditTile({
-    Key key,
+    Key? key,
     this.title,
-    this.textChanged,
+    required this.textChanged,
     this.value,
     this.hint,
     this.titleStyle = const TextStyle(
@@ -41,14 +41,14 @@ class EditTile extends StatefulWidget {
     this.constraints,
     this.maxLength = 100,
     this.maxLines = 1,
-  }) : assert(textChanged != null);
+  });
 
   @override
   _EditTileState createState() => _EditTileState();
 }
 
 class _EditTileState extends State<EditTile> {
-  TextEditingController _controller;
+  TextEditingController? _controller;
   FocusNode _focusNode = FocusNode();
   @override
   void initState() {
@@ -68,7 +68,7 @@ class _EditTileState extends State<EditTile> {
         decoration: BoxDecoration(
             color: Colors.white,
             border: Border(
-                bottom: BorderSide(color: Colors.grey[200], width: 0.5))),
+                bottom: BorderSide(color: Colors.grey[200]!, width: 0.5))),
         child:
             widget.direction == Axis.horizontal ? _horizontal() : _vertical(),
       ),
@@ -81,7 +81,7 @@ class _EditTileState extends State<EditTile> {
         Container(
           width: rSize(80),
           child: Text(
-            widget.title,
+            widget.title!,
             style: widget.titleStyle,
           ),
         ),
@@ -108,7 +108,7 @@ class _EditTileState extends State<EditTile> {
           alignment: Alignment.centerLeft,
           height: rSize(40),
           child: Text(
-            widget.title,
+            widget.title!,
             style: widget.titleStyle,
           ),
         ),

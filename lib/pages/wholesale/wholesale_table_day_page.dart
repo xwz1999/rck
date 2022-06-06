@@ -1,7 +1,5 @@
 import 'package:flustars/flustars.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
@@ -18,7 +16,7 @@ class WholesaleTableDayPage extends StatefulWidget {
 
 
   WholesaleTableDayPage({
-    Key key, @required this.month, @required  this.year,
+    Key? key, required this.month, required  this.year,
   }) : super(key: key);
 
   @override
@@ -29,11 +27,11 @@ class _WholesaleTableDayPageState extends State<WholesaleTableDayPage> {
   GSRefreshController _refreshController =
   GSRefreshController(initialRefresh: true);
 
-  PiFaTableModel models;
+  PiFaTableModel? models;
 
   bool _onLoad = true;
 
-  DateTime _date;
+  DateTime? _date;
 
   @override
   void initState() {
@@ -89,8 +87,8 @@ class _WholesaleTableDayPageState extends State<WholesaleTableDayPage> {
               color: Colors.white,
               onRefresh: () async {
                 models = await UserBenefitFunc.getPiFaTable(3,
-                    start: DateTime(_date.year,_date.month,1)
-                    ,end: DateTime(_date.year,_date.month+1,1));
+                    start: DateTime(_date!.year,_date!.month,1)
+                    ,end: DateTime(_date!.year,_date!.month+1,1));
 
                 _refreshController.refreshCompleted();
                 _onLoad = false;
@@ -183,7 +181,7 @@ class _WholesaleTableDayPageState extends State<WholesaleTableDayPage> {
                     ),
                   ),
                   Text(
-                      _onLoad ?'0':TextUtils.getCount1(models.total),
+                      _onLoad ?'0':TextUtils.getCount1(models!.total!)!,
                     style:
                         TextStyle(fontSize: 32.rsp, color: Color(0xFF8D1D22)),
                   ),
@@ -211,10 +209,10 @@ class _WholesaleTableDayPageState extends State<WholesaleTableDayPage> {
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
                 itemBuilder: (context, i) {
-                  if(models.data.isEmpty){
+                  if(models!.data!.isEmpty){
                     return SizedBox();
                   }else{
-                    PiFaData model = models.data[i];
+                    PiFaData model = models!.data![i];
                     return _buildTableBody(model);
                   }
                 },
@@ -225,7 +223,7 @@ class _WholesaleTableDayPageState extends State<WholesaleTableDayPage> {
                   indent: 20.rw,
                   endIndent: 20.rw,
                 ),
-                itemCount: models.data.length,
+                itemCount: models!.data!.length,
               ),
 
             ],
@@ -300,7 +298,7 @@ class _WholesaleTableDayPageState extends State<WholesaleTableDayPage> {
                   alignment: Alignment.center,
 
                   child: Text(
-                    model.name,
+                    model.name!,
                     style: TextStyle(
                       fontSize: 14.rsp,
                       color: Color(0xFF333333),
@@ -325,7 +323,7 @@ class _WholesaleTableDayPageState extends State<WholesaleTableDayPage> {
               child: Container(
                   alignment: Alignment.center,
                   child: Text(
-                    model.amount.toStringAsFixed(2),
+                    model.amount!.toStringAsFixed(2),
                     style: TextStyle(
                       fontSize: 14.rsp,
                       color: Color(0xFF333333),
@@ -341,8 +339,8 @@ class _WholesaleTableDayPageState extends State<WholesaleTableDayPage> {
 
   ///时间选择器
   showTimePickerBottomSheet(
-      {List<BottomTimePickerType> timePickerTypes,
-        Function(DateTime, BottomTimePickerType) submit}) {
+      {List<BottomTimePickerType>? timePickerTypes,
+        Function(DateTime, BottomTimePickerType)? submit}) {
     showModalBottomSheet(
       isScrollControlled: false,
       context: context,

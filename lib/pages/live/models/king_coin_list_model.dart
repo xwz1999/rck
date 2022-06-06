@@ -17,17 +17,17 @@
 //   }
 // }
 class KingCoinListModel {
-  int sortId;
-  List<KingCoin> data;
+  int? sortId;
+  List<KingCoin>? data;
 
   KingCoinListModel({this.sortId, this.data});
 
   KingCoinListModel.fromJson(Map<String, dynamic> json) {
     sortId = json['sort_id'];
     if (json['data'] != null) {
-      data = new List<KingCoin>();
+      data = [];
       json['data'].forEach((v) {
-        data.add(new KingCoin.fromJson(v));
+        data!.add(new KingCoin.fromJson(v));
       });
     }
   }
@@ -36,21 +36,21 @@ class KingCoinListModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['sort_id'] = this.sortId;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class KingCoin {
-  int id;
-  String url;
-  String createdAt;
-  int sortId;
-  int status;
-  String name;
-  int kingNameId;
-  KingName kingName;
+  int? id;
+  String? url;
+  String? createdAt;
+  int? sortId;
+  int? status;
+  String? name;
+  int? kingNameId;
+  KingName? kingName;
 
   KingCoin(
       {this.id,
@@ -85,15 +85,15 @@ class KingCoin {
     data['name'] = this.name;
     data['king_name_id'] = this.kingNameId;
     if (this.kingName != null) {
-      data['KingName'] = this.kingName.toJson();
+      data['KingName'] = this.kingName!.toJson();
     }
     return data;
   }
 }
 
 class KingName {
-  int id;
-  String name;
+  int? id;
+  String? name;
 
   KingName({this.id, this.name});
 

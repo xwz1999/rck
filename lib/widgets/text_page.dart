@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/styles.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 
 class TextPage extends StatefulWidget {
-  final Map arguments;
-  static setArguments({String title = "",AppBarTheme appBarTheme, String info = ""}){
+  final Map? arguments;
+  static setArguments({String title = "",AppBarTheme? appBarTheme, String info = ""}){
     if (appBarTheme == null) {
       appBarTheme = AppThemes.themeDataGrey.appBarTheme;
     }
@@ -16,7 +15,7 @@ class TextPage extends StatefulWidget {
       "info": info};
   }
   
-  TextPage({Key key, this.arguments}) : super(key: key);
+  TextPage({Key? key, this.arguments}) : super(key: key);
   
   @override
   _TextPageState createState() => _TextPageState();
@@ -27,10 +26,10 @@ class _TextPageState extends BaseStoreState<TextPage> {
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: widget.arguments["title"],
+        title: widget.arguments!["title"],
         elevation: 0,
         appBackground:  Colors.white,
-        themeData: widget.arguments["appBarTheme"],
+        themeData: widget.arguments!["appBarTheme"],
       ),
       body: Column(
         children: <Widget>[
@@ -42,7 +41,7 @@ class _TextPageState extends BaseStoreState<TextPage> {
                 physics: AlwaysScrollableScrollPhysics(),
                 child: Container(
                   padding: EdgeInsets.all(20),
-                  child: Text(widget.arguments["info"], style: TextStyle(color:Colors.black, fontSize: 16),),
+                  child: Text(widget.arguments!["info"], style: TextStyle(color:Colors.black, fontSize: 16),),
                 ),
               ),
             )

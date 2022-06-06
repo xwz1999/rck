@@ -17,20 +17,20 @@ enum MediaType{
 
 
 class MediaModel {
-  int width;
-  int height;
-  MediaType type;
-  File file;
-  UploadResult result;
-  Uint8List thumbData;
+  int? width;
+  int? height;
+  MediaType? type;
+  File? file;
+  UploadResult? result;
+  Uint8List? thumbData;
 
   MediaModel({this.width, this.height, this.type, this.file,this.result, this.thumbData});
 }
 
 class UploadResult {
   bool result;
-  String msg;
-  String url;
+  String? msg;
+  String? url;
 
   UploadResult(this.result, this.msg, this.url);
 }

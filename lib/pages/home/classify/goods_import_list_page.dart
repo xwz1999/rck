@@ -10,6 +10,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/category_list_model.dart';
@@ -29,12 +30,12 @@ import 'mvp/goods_list_contact.dart';
 import 'mvp/goods_list_presenter_impl.dart';
 
 class GoodsImportListPage extends StatefulWidget {
-  final String title;
-  final int index;
-  final int countryId;
-  final List<First> secondCategoryList;
+  final String? title;
+  final int? index;
+  final int? countryId;
+  final List<First>? secondCategoryList;
   const GoodsImportListPage(
-      {Key key,
+      {Key? key,
       this.title,
       this.index,
       this.secondCategoryList,
@@ -61,21 +62,21 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
   /// 切换展示形式  true 为 List， false 为grid
   bool _displayList = false;//默认排列方式改为瀑布流
 
-  FilterToolBarController _filterController;
+  late FilterToolBarController _filterController;
 
-  First _category;
-  List<First> _secondCategoryList;
-  GoodsListPresenterImpl _presenter;
-  TabController _tabController;
+  late First _category;
+  List<First>? _secondCategoryList;
+  GoodsListPresenterImpl? _presenter;
+  TabController? _tabController;
 
-  MvpListViewController<GoodsSimple> _listViewController;
+  MvpListViewController<GoodsSimple>? _listViewController;
 
   SortType _sortType = SortType.comprehensive;
 
   int _filterIndex = 0;
   List<bool> _barBool = [false,false,false];
-  GifController _gifController;
-  TextEditingController _textEditController;
+  GifController? _gifController;
+  TextEditingController? _textEditController;
   String _searchText = '';
 
   @override
@@ -87,13 +88,13 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
         max: 20,
         period: Duration(milliseconds: 700),
       );
-    int index = widget.index;
+    int index = widget.index!;
     //DPrint.printf("index=$index");
     _secondCategoryList = widget.secondCategoryList;
     print(_secondCategoryList);
-    _category = _secondCategoryList[index];
+    _category = _secondCategoryList![index];
     _tabController = TabController(
-        initialIndex: index, length: _secondCategoryList.length, vsync: this);
+        initialIndex: index, length: _secondCategoryList!.length, vsync: this);
     _filterController = FilterToolBarController();
 
     _presenter = GoodsListPresenterImpl();
@@ -102,7 +103,7 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
 
   @override
   void dispose() {
-    _gifController.dispose();
+    _gifController!.dispose();
     super.dispose();
   }
 
@@ -124,9 +125,9 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
               width: MediaQuery.of(context).size.width,
               child: TabBar(
                   onTap: (index) {
-                    _category = _secondCategoryList[index];
-                    _listViewController.stopRefresh();
-                    _listViewController.requestRefresh();
+                    _category = _secondCategoryList![index];
+                    _listViewController!.stopRefresh();
+                    _listViewController!.requestRefresh();
                     // _presenter.fetchList(_category.id, 0, _sortType);
                     setState(() {});
                   },
@@ -166,14 +167,14 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
   }
 
   List<Widget> _tabItems() {
-    return _secondCategoryList.map<Widget>((item) {
-      int index = _secondCategoryList.indexOf(item);
+    return _secondCategoryList!.map<Widget>((item) {
+      int index = _secondCategoryList!.indexOf(item);
       return _tabItem(item, index);
     }).toList();
   }
 
   _tabItem(First secondCategory, int index) {
-    Color textColor = index == _tabController.index
+    Color? textColor = index == _tabController!.index
         ? getCurrentThemeColor()
         : Colors.black.withOpacity(0.9);
     return Tab(
@@ -186,7 +187,7 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              secondCategory.name,
+              secondCategory.name!,
               style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 13 * 2.sp,
@@ -226,7 +227,7 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
                 textInputAction: TextInputAction.search,
                 onSubmitted: (_submitted) {
                   //_contentFocusNode.unfocus();
-                  _presenter.fetchList(_category.id, 0, _sortType, widget.countryId,keyword: _searchText);
+                  _presenter!.fetchList(_category.id, 0, _sortType, widget.countryId,keyword: _searchText);
 
                   setState(() {});
                 },
@@ -270,20 +271,20 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
         // if (index != 1 && _filterIndex == index) {
         //   return;
         // }
-        _filterIndex = index;
+        _filterIndex = index!;
         switch (index) {
           case 0:
             _sortType = SortType.comprehensive;
             break;
           case 1:
-            if (item.topSelected) {
+            if (item!.topSelected) {
               _sortType = SortType.priceAsc;
             } else {
               _sortType = SortType.priceDesc;
             }
             break;
           case 2:
-            if (item.topSelected) {
+            if (item!.topSelected) {
               _sortType = SortType.salesAsc;
             } else {
               _sortType = SortType.salesDesc;
@@ -296,8 +297,8 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
         }
         // _presenter.fetchList(widget.category.id, 0, _sortType);
         // _presenter.fetchList(_category.id, 0, _sortType);
-        _listViewController.stopRefresh();
-        _listViewController.requestRefresh();
+        _listViewController!.stopRefresh();
+        _listViewController!.requestRefresh();
       },
     );
   }
@@ -351,11 +352,11 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
       type: ListViewType.grid,
       refreshCallback: () {
         // _presenter.fetchList(widget.category.id, 0, _sortType);
-        _presenter.fetchList(_category.id, 0, _sortType, widget.countryId);
+        _presenter!.fetchList(_category.id, 0, _sortType, widget.countryId);
       },
       loadMoreCallback: (int page) {
         // _presenter.fetchList(widget.category.id, page, _sortType);
-        _presenter.fetchList(_category.id, page, _sortType, widget.countryId);
+        _presenter!.fetchList(_category.id, page, _sortType, widget.countryId);
       },
       gridViewBuilder: () => _buildGridView(),
     );
@@ -367,32 +368,30 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
     //       itemBuilder: ,
     // );
     return WaterfallFlow.builder(
-        padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight),
+        padding: EdgeInsets.only(bottom: DeviceInfo.bottomBarHeight!),
         physics: AlwaysScrollableScrollPhysics(),
-        itemCount: _listViewController.getData().length,
+        itemCount: _listViewController!.getData().length,
         gridDelegate: SliverWaterfallFlowDelegateWithFixedCrossAxisCount(
           crossAxisCount: _displayList ? 1 : 2,
           crossAxisSpacing: _displayList ? 5 : 10,
           mainAxisSpacing: _displayList ? 5 : 10,
         ),
         itemBuilder: (context, index) {
-          GoodsSimple goods = _listViewController.getData()[index];
+          GoodsSimple goods = _listViewController!.getData()[index];
           // goods.inventory = 0;
           // goods.tags = ["新人特惠", "限时特卖", "限时特卖", "限时特卖", "限时特卖"];
           return MaterialButton(
               padding: EdgeInsets.zero,
               onPressed: () {
-                AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                    arguments: CommodityDetailPage.setArguments(goods.id));
+                Get.to(()=>CommodityDetailPage( arguments: CommodityDetailPage.setArguments(goods.id as int?)));
               },
               child: _displayList
                   // ? BrandDetailListItem(goods: goods)
                   ? GoodsItemWidget.normalGoodsItem(
                 gifController: _gifController,
                       onBrandClick: () {
-                        AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
-                            arguments: BrandGoodsListPage.setArguments(
-                                goods.brandId, goods.brandName));
+                        Get.to(()=>BrandGoodsListPage(argument: BrandGoodsListPage.setArguments(
+                            goods.brandId as int?, goods.brandName)));
                       },
                       model: goods,
                       buildCtx: context,
@@ -403,7 +402,7 @@ class _GoodsImportListPageState extends BaseStoreState<GoodsImportListPage>
   }
 
   @override
-  MvpListViewPresenterI<GoodsSimple, MvpView, MvpModel> getPresenter() {
+  MvpListViewPresenterI<GoodsSimple, MvpView, MvpModel>? getPresenter() {
     return _presenter;
   }
 }

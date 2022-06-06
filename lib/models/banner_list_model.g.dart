@@ -9,11 +9,11 @@ part of 'banner_list_model.dart';
 BannerListModel _$BannerListModelFromJson(Map<String, dynamic> json) {
   return BannerListModel(
       json['code'],
-      (json['data'] as List)
-          ?.map((e) => e == null
-              ? null
-              : BannerModel.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+
+      (json['data'] as List<dynamic>?)
+          ?.map((e) =>
+          BannerModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       json['msg']);
 }
 
@@ -26,12 +26,12 @@ Map<String, dynamic> _$BannerListModelToJson(BannerListModel instance) =>
 
 BannerModel _$BannerModelFromJson(Map<String, dynamic> json) {
   return BannerModel(
-    json['id'] as int, 
-    json['goodsId'] as int,
-    json['url'] as String, 
-    json['createdAt'] as String,
-    json['activityUrl'] as String,
-    json['color'] as String);
+    json['id'] as int?, 
+    json['goodsId'] as int?,
+    json['url'] as String?, 
+    json['createdAt'] as String?,
+    json['activityUrl'] as String?,
+    json['color'] as String?);
 }
 
 Map<String, dynamic> _$BannerModelToJson(BannerModel instance) =>

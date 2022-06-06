@@ -33,10 +33,10 @@ class WholesaleUserPage extends StatefulWidget {
 }
 
 class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
-  GSRefreshController _refreshController;
+  GSRefreshController? _refreshController;
   bool _isFirstLoad = true;
-  num _allBenefitAmount = 0;
-  UserIncomeDataModel _userIncomeDataModel;
+  num? _allBenefitAmount = 0;
+  UserIncomeDataModel? _userIncomeDataModel;
 
   @override
   bool get wantKeepAlive => true;
@@ -50,7 +50,7 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
   void initState() {
     super.initState();
     _refreshController = GSRefreshController(initialRefresh: true);
-    WidgetsBinding.instance.addPostFrameCallback((callback) {
+    WidgetsBinding.instance!.addPostFrameCallback((callback) {
       if (_isFirstLoad) {
         _isFirstLoad = false;
       } else {
@@ -78,7 +78,7 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
   }
 
   Widget _buildNestedScrollView(
-      BuildContext context, Store<RecookState> store) {
+      BuildContext context, Store<RecookState>? store) {
     return NestedScrollView(
       headerSliverBuilder: (context, innerBoxIsScrolled) {
         return [
@@ -90,17 +90,17 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
   }
 
   _updateUserBriefInfo() {
-    UserManager.instance.updateUserBriefInfo(getStore()).then((success) {
+    UserManager.instance!.updateUserBriefInfo(getStore()).then((success) {
       if (success) {
-        if (UserManager.instance.user.info.roleLevel !=
-            getStore().state.userBrief.roleLevel) {
-          UserManager.instance.user.info.roleLevel =
-              getStore().state.userBrief.roleLevel;
-          UserManager.instance.refreshUserRole.value =
-              !UserManager.instance.refreshUserRole.value;
+        if (UserManager.instance!.user.info!.roleLevel !=
+            getStore().state.userBrief!.roleLevel) {
+          UserManager.instance!.user.info!.roleLevel =
+              getStore().state.userBrief!.roleLevel as int?;
+          UserManager.instance!.refreshUserRole.value =
+              !UserManager.instance!.refreshUserRole.value;
           UserManager.updateUserInfo(getStore());
         }
-        _refreshController.refreshCompleted();
+        _refreshController!.refreshCompleted();
       }
     });
   }
@@ -111,12 +111,12 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
       _userIncomeDataModel = UserIncomeDataModel.fromJson(result.data['data']);
 
       ///累计收益
-      _allBenefitAmount = _userIncomeDataModel.total;
+      _allBenefitAmount = _userIncomeDataModel!.total;
     }
   }
 
   Widget _buildRefreshScrollView(
-      BuildContext context, Store<RecookState> store) {
+      BuildContext context, Store<RecookState>? store) {
     return Stack(
       children: <Widget>[
         // Container(color: AppColor.themeColor,height: 60*2.h),
@@ -278,16 +278,16 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
   }
 
   Widget _renderBenefitCard({
-    @required String leadingPath,
-    @required String title,
-    @required String alertTitle,
-    @required Widget alertContent,
-    @required String title1,
-    @required String title3,
-    @required num content1,
-    @required num content2,
-    @required num content3,
-    @required num content4,
+    required String leadingPath,
+    required String title,
+    required String alertTitle,
+    required Widget alertContent,
+    required String title1,
+    required String title3,
+    required num content1,
+    required num content2,
+    required num content3,
+    required num content4,
     UserBenefitPageType type = UserBenefitPageType.SELF,
   }) {
     if (title == "自购收益") {
@@ -475,7 +475,7 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
                   'assets/shop_page_appbar_detail_bg.png',
                   fit: BoxFit.fill,
                 )),
-            AppConfig.getShowCommission()
+            AppConfig.getShowCommission()!
                 ? CustomImageButton(
                     onPressed: () {
                       //Get.to(() => UserHistoryBenefitPage());
@@ -515,7 +515,7 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
                             },
                           ),
                           Spacer(),
-                          Text(_allBenefitAmount.toStringAsFixed(2),
+                          Text(_allBenefitAmount!.toStringAsFixed(2),
                               style: TextStyle(
                                   color: Colors.black, fontSize: 18)),
                           40.wb,
@@ -545,7 +545,7 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
                   'assets/shop_page_appbar_detail_bg.png',
                   fit: BoxFit.fill,
                 )),
-            AppConfig.getShowCommission()
+            AppConfig.getShowCommission()!
                 ? CustomImageButton(
               onPressed: () {
                 //Get.to(() => UserHistoryBenefitPage());
@@ -562,7 +562,7 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
                     ),
 
                     Spacer(),
-                    Text(_allBenefitAmount.toStringAsFixed(2),
+                    Text(_allBenefitAmount!.toStringAsFixed(2),
                         style: TextStyle(
                             color: Colors.black, fontSize: 18)),
                     40.wb,
@@ -577,8 +577,8 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
         ));
   }
 
-  Widget _bodyWidget(BuildContext context, Store<RecookState> store) {
-    if (UserManager.instance.haveLogin) {
+  Widget _bodyWidget(BuildContext context, Store<RecookState>? store) {
+    if (UserManager.instance!.haveLogin) {
       // 登录了就渲染用户界面
       return _buildNestedScrollView(context, store);
     } else {

@@ -7,7 +7,7 @@ import 'package:recook/widgets/refresh_widget.dart';
 
 class NeedReviewPage extends StatefulWidget {
   final Function(int count) updateTabBar;
-  NeedReviewPage({Key key, @required this.updateTabBar}) : super(key: key);
+  NeedReviewPage({Key? key, required this.updateTabBar}) : super(key: key);
 
   @override
   _NeedReviewPageState createState() => _NeedReviewPageState();
@@ -27,7 +27,7 @@ class _NeedReviewPageState extends State<NeedReviewPage>
 
   @override
   void dispose() {
-    _gsRefreshController?.dispose();
+    _gsRefreshController.dispose();
     super.dispose();
   }
 

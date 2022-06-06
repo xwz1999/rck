@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:bot_toast/bot_toast.dart';
@@ -34,7 +35,6 @@ import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/bottom_sheet/address_selector.dart';
-import 'package:recook/widgets/bottom_sheet/custom_bottom_sheet.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/empty_view.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
@@ -50,25 +50,25 @@ import 'evaluation_list_page.dart';
 typedef ScrollListener = Function(ScrollUpdateNotification notification);
 
 class MyGlobals {
-  GlobalKey _scaffoldKey;
+  GlobalKey? _scaffoldKey;
 
   MyGlobals() {
     _scaffoldKey = GlobalKey();
   }
 
-  GlobalKey get scaffoldKey => _scaffoldKey;
+  GlobalKey? get scaffoldKey => _scaffoldKey;
 }
 
 class GoodsPage extends StatefulWidget {
-  final ScrollListener onScroll;
-  final GoodsDetailModel goodsDetail;
-  final int goodsId;
-  final ValueNotifier<bool> openSkuChoosePage;
-  final void Function() openbrandList; //打开商家页面
-  final String invite;
+  final ScrollListener? onScroll;
+  final GoodsDetailModel? goodsDetail;
+  final int? goodsId;
+  final ValueNotifier<bool>? openSkuChoosePage;
+  final void Function()? openbrandList; //打开商家页面
+  final String? invite;
 
   const GoodsPage({
-    Key key,
+    Key? key,
     this.onScroll,
     this.goodsId,
     this.openSkuChoosePage,
@@ -87,27 +87,27 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   MyGlobals myGlobals = MyGlobals();
 
 //  GoodsDetailModel widget.goodsDetail;
-  double width = DeviceInfo.screenWidth;
-  List<SelectedListItemModel> _itemModels;
-  StateSetter _stateSetter;
-  BuildContext _context;
-  ShoppingCartModelImpl _shoppingCartModelImpl;
-  GoodsDetailImagesModel _model;
+  double? width = DeviceInfo.screenWidth;
+  List<SelectedListItemModel>? _itemModels;
+  StateSetter? _stateSetter;
+  BuildContext? _context;
+  late ShoppingCartModelImpl _shoppingCartModelImpl;
+  GoodsDetailImagesModel? _model;
 
-  ProvinceCityModel _overseaCityModel;
+  ProvinceCityModel? _overseaCityModel;
 
-  ProvinceCityModel _cityModel;
+  ProvinceCityModel? _cityModel;
 
   Address _address = Address.empty();
 
   Address _cityAddress = Address.empty();
-  List<AddressDefaultModel> _addressList = [];
-  AddressDefaultModel _addressModel;
-  String _defaltAddress;
-  int _jDHaveGoods = -1;
+  List<AddressDefaultModel>? _addressList = [];
+  AddressDefaultModel? _addressModel;
+  String? _defaltAddress;
+  int? _jDHaveGoods = -1;
 
   // int _seckillStatus = 0;//秒杀状态 0为未开始 1为开始
-  String guige = '请选择规格';
+  String? guige = '请选择规格';
   
   ScrollController _scrollController = ScrollController();
 
@@ -119,22 +119,22 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     super.initState();
 
     //获取默认地址并且判断有无货源
-    if (widget.goodsDetail.data.vendorId == 1800 ||
-        widget.goodsDetail.data.vendorId == 2000 ||
-        widget.goodsDetail.data.vendorId == 3000) {
+    if (widget.goodsDetail!.data!.vendorId == 1800 ||
+        widget.goodsDetail!.data!.vendorId == 2000 ||
+        widget.goodsDetail!.data!.vendorId == 3000) {
       Future.delayed(Duration.zero, () async {
         _addressList = await _getDefaultAddress();
         if (_addressList != null) {
-          _addressList.forEach((element) {
+          _addressList!.forEach((element) {
             if (element.isDefault == 1) _addressModel = element;
             if (_addressModel != null) {
-              _defaltAddress = _addressModel.province +
-                  _addressModel.city +
-                  _addressModel.district;
+              _defaltAddress = _addressModel!.province! +
+                  _addressModel!.city! +
+                  _addressModel!.district!;
               if (_defaltAddress != null) {
                 Future.delayed(Duration.zero, () async {
-                  _jDHaveGoods = await HomeDao.getJDStock(
-                      widget.goodsDetail.data.sku.first.id, _defaltAddress);
+                  _jDHaveGoods = await (HomeDao.getJDStock(
+                      widget.goodsDetail!.data!.sku!.first!.id, _defaltAddress));
                   print(_jDHaveGoods);
                   setState(() {});
                 });
@@ -156,11 +156,11 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       setState(() {});
     });
     _shoppingCartModelImpl = ShoppingCartModelImpl();
-    widget.openSkuChoosePage.addListener(() {
-      print(widget.openSkuChoosePage.value);
+    widget.openSkuChoosePage!.addListener(() {
+      print(widget.openSkuChoosePage!.value);
       if (_context != null &&
           widget.goodsDetail != null &&
-          widget.openSkuChoosePage.value) {
+          widget.openSkuChoosePage!.value) {
         _showSkuChoosePage(context);
       }
     });
@@ -169,7 +169,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   @override
   void dispose() {
     super.dispose();
-    widget.openSkuChoosePage.dispose();
+    widget.openSkuChoosePage!.dispose();
   }
 
   @override
@@ -220,7 +220,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               child: NotificationListener<ScrollUpdateNotification>(
                 onNotification: (notification) {
                   if (widget.onScroll != null) {
-                    widget.onScroll(notification);
+                    widget.onScroll!(notification);
                   }
                   return true;
                 },
@@ -248,7 +248,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   List<Widget> _goodDetailImages() {
     if (_model == null) return [];
 
-    List<Widget> children = _model.data.list.map((Images image) {
+    List<Widget> children = _model!.data!.list!.map((Images image) {
       // Rect imageRect = await WidgetUtil.getImageWH(url: "Url");
 
       // ignore: unnecessary_cast
@@ -257,9 +257,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           _saveImageWithUrl(image.url);
         },
         child: Transform.translate(
-          offset: Offset(0, 0 - _model.data.list.indexOf(image).toDouble()),
+          offset: Offset(0, 0 - _model!.data!.list!.indexOf(image).toDouble()),
           child: FadeInImage.assetNetwork(
-            image: Api.getImgUrl(image.url),
+            image: Api.getImgUrl(image.url)!,
             placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
             fit: BoxFit.cover,
           ),
@@ -267,45 +267,45 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       )) as Widget;
     }).toList();
 
-    if (widget.goodsDetail.data.video != null) {
+    if (widget.goodsDetail!.data!.video != null) {
       children.insert(
           0,
           Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.width / 16 * 9,
             child: VideoView(
-              videoUrl: Api.getImgUrl(widget.goodsDetail.data.video.url),
+              videoUrl: Api.getImgUrl(widget.goodsDetail!.data!.video!.url),
             ),
           ));
     }
 
-    if (widget.goodsDetail.data.brand != null &&
-        !TextUtils.isEmpty(widget.goodsDetail.data.brand.firstImg)) {
+    if (widget.goodsDetail!.data!.brand != null &&
+        !TextUtils.isEmpty(widget.goodsDetail!.data!.brand!.firstImg)) {
       children.insert(
           0,
           Container(
             width: width,
             child: GestureDetector(
               onLongPress: () {
-                _saveImageWithUrl(widget.goodsDetail.data.brand.firstImg);
+                _saveImageWithUrl(widget.goodsDetail!.data!.brand!.firstImg);
               },
               child: FadeInImage.assetNetwork(
-                image: Api.getImgUrl(widget.goodsDetail.data.brand.firstImg),
+                image: Api.getImgUrl(widget.goodsDetail!.data!.brand!.firstImg)!,
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
               ),
             ),
           ));
     }
-    if (widget.goodsDetail.data.brand != null &&
-        !TextUtils.isEmpty(widget.goodsDetail.data.brand.lastImg)) {
+    if (widget.goodsDetail!.data!.brand != null &&
+        !TextUtils.isEmpty(widget.goodsDetail!.data!.brand!.lastImg)) {
       children.add(Container(
         width: width,
         child: GestureDetector(
           onLongPress: () {
-            _saveImageWithUrl(widget.goodsDetail.data.brand.lastImg);
+            _saveImageWithUrl(widget.goodsDetail!.data!.brand!.lastImg);
           },
           child: FadeInImage.assetNetwork(
-            image: Api.getImgUrl(widget.goodsDetail.data.brand.lastImg),
+            image: Api.getImgUrl(widget.goodsDetail!.data!.brand!.lastImg)!,
             placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
           ),
         ),
@@ -351,44 +351,44 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     //           ),
     //         ));
     insertFirst() {
-      if (widget.goodsDetail.data.notice.img != null)
-        for (int i = 0; i < widget.goodsDetail.data.notice.img.length; i++) {
+      if (widget.goodsDetail!.data!.notice!.img != null)
+        for (int i = 0; i < widget.goodsDetail!.data!.notice!.img!.length; i++) {
           children.insert(
             0,
             FadeInImage.assetNetwork(
               placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-              image: Api.getImgUrl(widget.goodsDetail.data.notice.img[i]),
+              image: Api.getImgUrl(widget.goodsDetail!.data!.notice!.img![i])!,
             ),
           );
         }
     }
 
     insertLast() {
-      if (widget.goodsDetail.data.notice.img != null)
-        for (int i = 0; i < widget.goodsDetail.data.notice.img.length; i++) {
+      if (widget.goodsDetail!.data!.notice!.img != null)
+        for (int i = 0; i < widget.goodsDetail!.data!.notice!.img!.length; i++) {
           children.add(
             FadeInImage.assetNetwork(
               placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-              image: Api.getImgUrl(widget.goodsDetail.data.notice.img[i]),
+              image: Api.getImgUrl(widget.goodsDetail!.data!.notice!.img![i])!,
             ),
           );
         }
     }
 
-    if (widget?.goodsDetail?.data?.notice?.type == 1) insertFirst();
-    if (widget?.goodsDetail?.data?.notice?.type == 2) insertLast();
-    if (widget?.goodsDetail?.data?.notice?.type == 3) {
+    if (widget.goodsDetail?.data?.notice?.type == 1) insertFirst();
+    if (widget.goodsDetail?.data?.notice?.type == 2) insertLast();
+    if (widget.goodsDetail?.data?.notice?.type == 3) {
       insertFirst();
       insertLast();
     }
     return children;
   }
 
-  _saveImageWithUrl(String imageUrl) {
+  _saveImageWithUrl(String? imageUrl) {
     ActionSheet.show(context, items: ['保存到相册'], listener: (index) {
       ActionSheet.dismiss(context);
       showLoading("保存图片中...");
-      List<String> urls = [Api.getImgUrl(imageUrl)];
+      List<String?> urls = [Api.getImgUrl(imageUrl)];
       ImageUtils.saveNetworkImagesToPhoto(
           urls, (index) => DPrint.printf("保存好了---$index"), (success) {
         dismissLoading();
@@ -431,23 +431,23 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             GoodPriceView(
               detailModel: widget.goodsDetail,
               shareCallback: () {
-                String img = '';
-                int length = widget.goodsDetail.data.mainPhotos.length;
+                String? img = '';
+                int length = widget.goodsDetail!.data!.mainPhotos!.length;
                 if (length >= 2)
-                  img = widget.goodsDetail.data.mainPhotos[0].url;
+                  img = widget.goodsDetail!.data!.mainPhotos![0].url;
                 if (length >= 1)
-                  img = widget.goodsDetail.data.mainPhotos[0].url;
+                  img = widget.goodsDetail!.data!.mainPhotos![0].url;
                 ShareTool().goodsShare(
                   context,
-                  goodsPrice: widget.goodsDetail.data.getPriceString(),
-                  goodsName: widget.goodsDetail.data.goodsName,
-                  goodsDescription: widget.goodsDetail.data.description,
+                  goodsPrice: widget.goodsDetail!.data!.getPriceString(),
+                  goodsName: widget.goodsDetail!.data!.goodsName,
+                  goodsDescription: widget.goodsDetail!.data!.description,
                   miniPicurl: img,
                   miniTitle:
-                      "￥${widget.goodsDetail.data.getPriceString()} | ${widget.goodsDetail.data.goodsName} | ${widget.goodsDetail.data.description}",
+                      "￥${widget.goodsDetail!.data!.getPriceString()} | ${widget.goodsDetail!.data!.goodsName} | ${widget.goodsDetail!.data!.description}",
                   amount:
-                      widget.goodsDetail.data.price.min.commission.toString(),
-                  goodsId: widget.goodsDetail.data.id.toString(),
+                      widget.goodsDetail!.data!.price!.min!.commission.toString(),
+                  goodsId: widget.goodsDetail!.data!.id.toString(),
                 );
               },
             ),
@@ -461,9 +461,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         color: Colors.white,
         child: _discountContent(context),
       ),
-      widget.goodsDetail.data.vendorId == 1800 ||
-              widget.goodsDetail.data.vendorId == 2000 ||
-              widget.goodsDetail.data.vendorId == 3000
+      widget.goodsDetail!.data!.vendorId == 1800 ||
+              widget.goodsDetail!.data!.vendorId == 2000 ||
+              widget.goodsDetail!.data!.vendorId == 3000
           ? Container(
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
               color: Colors.white,
@@ -475,8 +475,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         color: Colors.white,
         child: _goodsInfoWidget(context),
       ),
-      widget.goodsDetail.data.storehouse == 2 ||
-              widget.goodsDetail.data.storehouse == 3
+      widget.goodsDetail!.data!.storehouse == 2 ||
+              widget.goodsDetail!.data!.storehouse == 3
           ? Container(
               margin: EdgeInsets.only(bottom: 13),
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -484,7 +484,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               child: _buildOverseaTax(),
             )
           : SizedBox(),
-      widget.goodsDetail.data.isImport == 1
+      widget.goodsDetail!.data!.isImport == 1
           ? Container(
               margin: EdgeInsets.only(bottom: 13.rw),
               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -498,19 +498,19 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           padding: EdgeInsets.symmetric(vertical: 8, horizontal: 10),
           child: _userEvaluation()),
 
-      AppConfig.getShowCommission()
+      AppConfig.getShowCommission()!
           ? Container(
               color: Colors.white,
               margin: EdgeInsets.only(top: 8.rw, bottom: 8.rw),
               child: GestureDetector(
                 child: _storeName(),
                 onTap: () {
-                  if (widget.openbrandList != null) widget.openbrandList();
+                  if (widget.openbrandList != null) widget.openbrandList!();
                 },
               ),
             )
           : SizedBox(),
-      AppConfig.getShowCommission()
+      AppConfig.getShowCommission()!
           ? Container(
               //  padding: EdgeInsets.only(left: 10, top: 10, bottom: 5),
               color: Colors.white,
@@ -526,7 +526,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     // if (widget.goodsDetail.data.video != null) {
     //   images.add(widget.goodsDetail.data.video);
     // }
-    images.addAll(widget.goodsDetail.data.mainPhotos);
+    images.addAll(widget.goodsDetail!.data!.mainPhotos!);
     return ImagePageView(images: images, onScrolled: (index) {});
   }
 
@@ -538,7 +538,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         Container(
           child: GestureDetector(
             onTap: () async {
-              if (UserManager.instance.user.info.id == 0) {
+              if (UserManager.instance!.user.info!.id == 0) {
                 AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
                 Toast.showError('请先登录...');
                 return;
@@ -627,7 +627,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                         Container(
                           width: 10,
                         ),
-                        ...widget.goodsDetail.data.sku
+                        ...widget.goodsDetail!.data!.sku!
                             .mapIndexed((currentValue, index) {
                           return index < 6
                               ? Container(
@@ -641,7 +641,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                                   child: FadeInImage.assetNetwork(
                                     placeholder:
                                         R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-                                    image: currentValue.picUrl,
+                                    image: currentValue!.picUrl!,
                                   ),
                                 )
                               : SizedBox();
@@ -653,7 +653,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                           padding: EdgeInsets.symmetric(
                               vertical: 3.rw, horizontal: 6.rw),
                           child: Text(
-                            '共${widget.goodsDetail.data.sku.length}款',
+                            '共${widget.goodsDetail!.data!.sku!.length}款',
                             style: TextStyle(
                                 color: Color(0xFF666666), fontSize: 12.rsp),
                           ),
@@ -674,7 +674,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                         ),
                         Expanded(
                             child: Text(
-                          (guige != '请选择规格' ? '已选：' : '') + guige,
+                          (guige != '请选择规格' ? '已选：' : '') + guige!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: AppTextStyle.generate(13 * 2.sp,
@@ -700,7 +700,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   _addressContent(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        if (UserManager.instance.user.info.id == 0) {
+        if (UserManager.instance!.user.info!.id == 0) {
           AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
           Toast.showError('请先登录...');
           return;
@@ -710,28 +710,28 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           'canBack': true,
         };
 
-        Address address = await Get.to(() => ReceivingAddressPage(
+        Address? address = await Get.to(() => ReceivingAddressPage(
               arguments: results,
             ));
 
         if (address == null) {
-          if (widget.goodsDetail.data.vendorId == 1800 ||
-              widget.goodsDetail.data.vendorId == 2000 ||
-              widget.goodsDetail.data.vendorId == 3000) {
+          if (widget.goodsDetail!.data!.vendorId == 1800 ||
+              widget.goodsDetail!.data!.vendorId == 2000 ||
+              widget.goodsDetail!.data!.vendorId == 3000) {
             Future.delayed(Duration.zero, () async {
               _addressList = await _getDefaultAddress();
               if (_addressList != null) {
-                _addressList.forEach((element) {
+                _addressList!.forEach((element) {
                   if (element.isDefault == 1) _addressModel = element;
                   if (_addressModel != null) {
-                    _defaltAddress = _addressModel.province +
-                        _addressModel.city +
-                        _addressModel.district;
+                    _defaltAddress = _addressModel!.province! +
+                        _addressModel!.city! +
+                        _addressModel!.district!;
                     if (_defaltAddress != null) {
                       Future.delayed(Duration.zero, () async {
-                        _jDHaveGoods = await HomeDao.getJDStock(
-                            widget.goodsDetail.data.sku.first.id,
-                            _defaltAddress);
+                        _jDHaveGoods = await (HomeDao.getJDStock(
+                            widget.goodsDetail!.data!.sku!.first!.id,
+                            _defaltAddress) as FutureOr<int?>);
                         print(_jDHaveGoods);
                         setState(() {});
                       });
@@ -742,9 +742,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             });
           }
         } else {
-          if (widget.goodsDetail.data.vendorId == 1800 ||
-              widget.goodsDetail.data.vendorId == 2000 ||
-              widget.goodsDetail.data.vendorId == 3000) {
+          if (widget.goodsDetail!.data!.vendorId == 1800 ||
+              widget.goodsDetail!.data!.vendorId == 2000 ||
+              widget.goodsDetail!.data!.vendorId == 3000) {
             _addressModel = AddressDefaultModel(
                 id: address.id,
                 name: address.name,
@@ -755,11 +755,11 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 address: address.address,
                 isDefault:address.isDefault,
             );
-            _defaltAddress = address.province + address.city + address.district;
+            _defaltAddress = address.province! + address.city! + address.district!;
             if (_defaltAddress != null) {
               Future.delayed(Duration.zero, () async {
-                _jDHaveGoods = await HomeDao.getJDStock(
-                    widget.goodsDetail.data.sku.first.id, _defaltAddress);
+                _jDHaveGoods = await (HomeDao.getJDStock(
+                    widget.goodsDetail!.data!.sku!.first!.id, _defaltAddress) as FutureOr<int?>);
 
                 if(mounted)
                 setState(() {});
@@ -796,7 +796,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                         ? Container(
                             width: 250.rw,
                             child: Text(
-                              '${_addressModel.province}-${_addressModel.city}-${_addressModel.district}',
+                              '${_addressModel!.province}-${_addressModel!.city}-${_addressModel!.district}',
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
@@ -889,7 +889,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         ),
         Container(
           margin: EdgeInsets.only(top: 20.rw),
-          child: widget.goodsDetail.data.isImport == 1
+          child: widget.goodsDetail!.data!.isImport == 1
               ? Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -906,16 +906,16 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          (widget.goodsDetail.data.storehouse == 2 ||
-                                  widget.goodsDetail.data.storehouse == 3)
+                          (widget.goodsDetail!.data!.storehouse == 2 ||
+                                  widget.goodsDetail!.data!.storehouse == 3)
                               ? Text(
                                   "跨境商品不支持开发票",
                                   style: AppTextStyle.generate(13 * 2.sp,
                                       color: Color(0xff373737)),
                                 )
                               : SizedBox(),
-                          (widget.goodsDetail.data.storehouse == 2 ||
-                                  widget.goodsDetail.data.storehouse == 3)
+                          (widget.goodsDetail!.data!.storehouse == 2 ||
+                                  widget.goodsDetail!.data!.storehouse == 3)
                               ? rHBox(rSize(4))
                               : SizedBox(),
                           Row(
@@ -925,8 +925,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                                 style: AppTextStyle.generate(13 * 2.sp,
                                     color: Color(0xff373737)),
                               ),
-                              (widget.goodsDetail.data.storehouse == 2 ||
-                                      widget.goodsDetail.data.storehouse == 3)
+                              (widget.goodsDetail!.data!.storehouse == 2 ||
+                                      widget.goodsDetail!.data!.storehouse == 3)
                                   ? Text(
                                       "｜ 不支持开发票",
                                       style: AppTextStyle.generate(13 * 2.sp,
@@ -967,7 +967,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                         Expanded(
                             child: Row(
                           children: <Widget>[
-                            widget.goodsDetail.data.vendorId == 1800
+                            widget.goodsDetail!.data!.vendorId == 1800
                                 ? Text(
                                     "京东仓发货 | ",
                                     style: AppTextStyle.generate(13 * 2.sp,
@@ -985,7 +985,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                                   color: Color(0xff373737)),
                             ),
                             Text(
-                              widget.goodsDetail.data.isAllow
+                              widget.goodsDetail!.data!.isAllow!
                                   ? '支持七天无理由退换货'
                                   : "售后无忧",
                               style: AppTextStyle.generate(13 * 2.sp,
@@ -1059,7 +1059,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           ),
         ),
         rWBox(7),
-        widget.goodsDetail.data.isFerme == 1
+        widget.goodsDetail!.data!.isFerme == 1
             ? Container(
                 alignment: Alignment.center,
                 height: rSize(14),
@@ -1077,10 +1077,10 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 ),
               )
             : SizedBox(),
-        widget.goodsDetail.data.isFerme == 1 ? rWBox(10) : SizedBox(),
-        widget.goodsDetail.data.isFerme == 1
+        widget.goodsDetail!.data!.isFerme == 1 ? rWBox(10) : SizedBox(),
+        widget.goodsDetail!.data!.isFerme == 1
             ? Text(
-                '预计¥${widget.goodsDetail.data.price.min.ferme.toStringAsFixed(2)}由瑞库客承担',
+                '预计¥${widget.goodsDetail!.data!.price!.min!.ferme!.toStringAsFixed(2)}由瑞库客承担',
                 style: TextStyle(
                   fontSize: rSP(13),
                   color: Color(0xFF535353),
@@ -1097,7 +1097,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     if (result.success &&
         result.data != null &&
         result.data.toString().length > 0) {
-      _overseaCityModel = ProvinceCityModel.fromJson(json.decode(result.data));
+      _overseaCityModel = ProvinceCityModel.fromJson(json.decode(result.data as String));
       return true;
     }
     ResultData res = await AddressModelImpl().fetchWholeProvince();
@@ -1118,7 +1118,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         result.data != null &&
         result.data != [] &&
         result.data.toString().length > 0) {
-      _cityModel = ProvinceCityModel.fromJson(json.decode(result.data));
+      _cityModel = ProvinceCityModel.fromJson(json.decode(result.data as String));
       return true;
     }
     ResultData res = await AddressModelImpl().fetchWholeProvince();
@@ -1132,9 +1132,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     return true;
   }
 
-  Future<List<AddressDefaultModel>> _getDefaultAddress() async {
+  Future<List<AddressDefaultModel>?> _getDefaultAddress() async {
     ResultData res = await HttpManager.post(UserApi.address_list, {
-      "userId": UserManager.instance.user.info.id,
+      "userId": UserManager.instance!.user.info!.id,
     });
     if (res != null) {
       if (res.data != null) {
@@ -1160,9 +1160,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       province: _address.province,
       district: _address.district,
       callback: (
-        String province,
-        String city,
-        String district,
+        String? province,
+        String? city,
+        String? district,
       ) {
         _address.city = city;
         _address.province = province;
@@ -1276,7 +1276,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                       builder: (context) {
                         String text = '';
                         String text2 = '';
-                        switch (widget.goodsDetail.data.storehouse) {
+                        switch (widget.goodsDetail!.data!.storehouse) {
                           case 0:
                             text = '';
                             break;
@@ -1296,7 +1296,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                             break;
                         }
                         return Image.asset(
-                          _address?.city == '' ? text : text2,
+                          _address.city == '' ? text : text2,
                           height: rSize(26),
                           width: rSize(26),
                         );
@@ -1306,7 +1306,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                     Builder(
                       builder: (context) {
                         String text = '';
-                        switch (widget.goodsDetail.data.storehouse) {
+                        switch (widget.goodsDetail!.data!.storehouse) {
                           case 0:
                             text = '';
                             break;
@@ -1349,7 +1349,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 Column(
                   children: [
                     Image.asset(
-                      _address?.city == ''
+                      _address.city == ''
                           ? R.ASSETS_STATIC_OVERSEA_LOCATION_PNG
                           : R.ASSETS_STATIC_OVERSEA_LOCATION_ON_PNG,
                       height: rSize(26),
@@ -1357,7 +1357,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                     ),
                     rHBox(5),
                     Text(
-                      _address.city,
+                      _address.city!,
                       style: TextStyle(
                         color: Color(0xFFCCCCCC),
                         fontSize: rSP(12),
@@ -1386,9 +1386,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       ),
     ];
 
-    if (widget.goodsDetail.data.coupons.length == 0 ||
-        (widget.goodsDetail.data.secKill != null
-            ? widget.goodsDetail.data.secKill.secKill == 1
+    if (widget.goodsDetail!.data!.coupons!.length == 0 ||
+        (widget.goodsDetail!.data!.secKill != null
+            ? widget.goodsDetail!.data!.secKill!.secKill == 1
             : false)) {
       //秒杀中的商品都没有优惠券
       coupons.add(
@@ -1405,9 +1405,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       return coupons;
     }
 
-    for (int i = 0; i < widget.goodsDetail.data.coupons.length; i++) {
+    for (int i = 0; i < widget.goodsDetail!.data!.coupons!.length; i++) {
       if (i > 2) break;
-      Coupons coupon = widget.goodsDetail.data.coupons[i];
+      Coupons coupon = widget.goodsDetail!.data!.coupons![i];
 
       coupons.add(Container(
         height: 26,
@@ -1429,7 +1429,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             Container(
               margin: EdgeInsets.symmetric(horizontal: 6),
               child: Text(
-                coupon.name,
+                coupon.name!,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyle.generate(12 * 2.sp, color: Colors.white),
@@ -1463,7 +1463,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                   fontWeight: FontWeight.w500, color: Color(0xff333333)),
             ),
             Text(
-              " (${widget.goodsDetail.data.evaluations.total})",
+              " (${widget.goodsDetail!.data!.evaluations!.total})",
               style: AppTextStyle.generate(15 * 2.sp, color: Color(0xffb5b5b5)),
             ),
             Expanded(
@@ -1489,7 +1489,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             )
           ],
         ),
-        widget.goodsDetail.data.evaluations.children.length == 0
+        widget.goodsDetail!.data!.evaluations!.children!.length == 0
             ? Container()
             : Container(
           height: 90,
@@ -1497,7 +1497,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               padding: EdgeInsets.only(top: rSize(5)),
 //                shrinkWrap: true,
               itemCount:
-              widget.goodsDetail.data.evaluations.children.length,
+              widget.goodsDetail!.data!.evaluations!.children!.length,
               scrollDirection: Axis.horizontal,
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   childAspectRatio: 0.35,
@@ -1506,7 +1506,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               itemBuilder: (context, index) {
                 return UserCommentItem(
                   evaluation:
-                  widget.goodsDetail.data.evaluations.children[index],
+                  widget.goodsDetail!.data!.evaluations!.children![index],
                 );
               }),
         )
@@ -1537,12 +1537,12 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             child: ListView.builder(
               physics: AlwaysScrollableScrollPhysics(),
               scrollDirection: Axis.horizontal,
-              itemCount: widget.goodsDetail.data.recommends == null
+              itemCount: widget.goodsDetail!.data!.recommends == null
                   ? 0
-                  : widget.goodsDetail.data.recommends.length,
+                  : widget.goodsDetail!.data!.recommends!.length,
               itemBuilder: (_, index) {
                 Recommends recommends =
-                    widget.goodsDetail.data.recommends[index];
+                    widget.goodsDetail!.data!.recommends![index];
                 return GestureDetector(
                   onTap: () {
                     AppRouter.push(context, RouteName.COMMODITY_PAGE,
@@ -1582,7 +1582,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               child: Container(
             alignment: Alignment.topLeft,
             child: Text(
-              recommends.goodsName,
+              recommends.goodsName!,
               maxLines: 2,
               style: TextStyle(color: Color(0xff828282), fontSize: 10.rsp),
             ),
@@ -1629,7 +1629,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           child: CustomCacheImage(
             fit: BoxFit.cover,
             imageUrl: Api.getResizeImgUrl(
-                imageUrl, DeviceInfo.screenWidth.toInt() * 2),
+                imageUrl, DeviceInfo.screenWidth!.toInt() * 2),
           ),
         ),
       ),
@@ -1637,7 +1637,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   }
 
   _storeName() {
-    DPrint.printf(Api.getImgUrl(widget.goodsDetail.data.brand.logoUrl));
+    DPrint.printf(Api.getImgUrl(widget.goodsDetail!.data!.brand!.logoUrl));
     Row row = Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
@@ -1647,7 +1647,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                widget.goodsDetail.data.brand.name,
+                widget.goodsDetail!.data!.brand!.name!,
                 style: AppTextStyle.generate(14 * 2.sp,
                     fontWeight: FontWeight.bold),
               ),
@@ -1655,7 +1655,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 height: 10.rw,
               ),
               Text(
-                "商品数量： ${widget.goodsDetail.data.brand.goodsCount}",
+                "商品数量： ${widget.goodsDetail!.data!.brand!.goodsCount}",
                 style:
                     AppTextStyle.generate(12 * 2.sp, color: Color(0xFF666666)),
               )
@@ -1664,7 +1664,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         ),
         GestureDetector(
           onTap: () {
-            if (widget.openbrandList != null) widget.openbrandList();
+            if (widget.openbrandList != null) widget.openbrandList!();
           },
           child: Container(
             decoration: BoxDecoration(
@@ -1698,44 +1698,44 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             results: _validSkuResult,
             itemModels: _itemModels,
             listener: (SkuChooseModel skuModel) async {
-              if (UserManager.instance.user.info.id == 0) {
+              if (UserManager.instance!.user.info!.id == 0) {
                 AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
                 Toast.showError('请先登录...');
                 return;
               }
-              print("${skuModel.sku.id} -- ${skuModel.des} -- ${skuModel.num}");
-              if (widget.goodsDetail.data.vendorId == 1800 ||
-                  widget.goodsDetail.data.vendorId == 2000 ||
-                  widget.goodsDetail.data.vendorId == 3000) {
+              print("${skuModel.sku!.id} -- ${skuModel.des} -- ${skuModel.num}");
+              if (widget.goodsDetail!.data!.vendorId == 1800 ||
+                  widget.goodsDetail!.data!.vendorId == 2000 ||
+                  widget.goodsDetail!.data!.vendorId == 3000) {
                 if (_defaltAddress == null) {
-                  widget.openSkuChoosePage.value = false;
+                  widget.openSkuChoosePage!.value = false;
                   Toast.showInfo('请先添加地址');
                   final Map<String, dynamic> results = <String, dynamic>{
                     'canBack': true,
                   };
 
-                  Address address = await Get.to(() => ReceivingAddressPage(
+                  Address? address = await Get.to(() => ReceivingAddressPage(
                     arguments: results,
                   ));
 
                   if (address == null) {
-                    if (widget.goodsDetail.data.vendorId == 1800 ||
-                        widget.goodsDetail.data.vendorId == 2000 ||
-                        widget.goodsDetail.data.vendorId == 3000) {
+                    if (widget.goodsDetail!.data!.vendorId == 1800 ||
+                        widget.goodsDetail!.data!.vendorId == 2000 ||
+                        widget.goodsDetail!.data!.vendorId == 3000) {
                       Future.delayed(Duration.zero, () async {
                         _addressList = await _getDefaultAddress();
-                        if (_addressList.isNotEmpty) {
-                          _addressList.forEach((element) {
+                        if (_addressList!.isNotEmpty) {
+                          _addressList!.forEach((element) {
                             if (element.isDefault == 1) _addressModel = element;
                             if (_addressModel != null) {
-                              _defaltAddress = _addressModel.province +
-                                  _addressModel.city +
-                                  _addressModel.district;
+                              _defaltAddress = _addressModel!.province! +
+                                  _addressModel!.city! +
+                                  _addressModel!.district!;
                               if (_defaltAddress != null) {
                                 Future.delayed(Duration.zero, () async {
-                                  _jDHaveGoods = await HomeDao.getJDStock(
-                                      widget.goodsDetail.data.sku.first.id,
-                                      _defaltAddress);
+                                  _jDHaveGoods = await (HomeDao.getJDStock(
+                                      widget.goodsDetail!.data!.sku!.first!.id,
+                                      _defaltAddress) as FutureOr<int?>);
                                   print(_jDHaveGoods);
                                   setState(() {});
                                 });
@@ -1748,9 +1748,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                       });
                     }
                   } else {
-                    if (widget.goodsDetail.data.vendorId == 1800 ||
-                        widget.goodsDetail.data.vendorId == 2000 ||
-                        widget.goodsDetail.data.vendorId == 3000) {
+                    if (widget.goodsDetail!.data!.vendorId == 1800 ||
+                        widget.goodsDetail!.data!.vendorId == 2000 ||
+                        widget.goodsDetail!.data!.vendorId == 3000) {
                       _addressModel = AddressDefaultModel(
                         id: address.id,
                         name: address.name,
@@ -1761,11 +1761,11 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                         address: address.address,
                         isDefault:address.isDefault,
                       );
-                      _defaltAddress = address.province + address.city + address.district;
+                      _defaltAddress = address.province! + address.city! + address.district!;
                       if (_defaltAddress != null) {
                         Future.delayed(Duration.zero, () async {
-                          _jDHaveGoods = await HomeDao.getJDStock(
-                              widget.goodsDetail.data.sku.first.id, _defaltAddress);
+                          _jDHaveGoods = await (HomeDao.getJDStock(
+                              widget.goodsDetail!.data!.sku!.first!.id, _defaltAddress) as FutureOr<int?>);
 
                           if(mounted)
                             setState(() {});
@@ -1778,7 +1778,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                   return;
                 } else {
                   _jDHaveGoods =
-                      await HomeDao.getJDStock(skuModel.sku.id, _defaltAddress);
+                      await (HomeDao.getJDStock(skuModel.sku!.id, _defaltAddress) as FutureOr<int?>);
                   setState(() {});
 
                   if (_jDHaveGoods != 1) {
@@ -1790,16 +1790,16 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 }
               }
 
-              if (skuModel.num > 50) {
+              if (skuModel.num! > 50) {
                 skuModel.num = 50;
               }
 
               if (skuModel.selectedIndex == 1) {
                 ReToast.loading(text: '');
-                if (widget.goodsDetail.data.living.status != 0 ||
-                    widget.goodsDetail.data.living.roomId != 0)
+                if (widget.goodsDetail!.data!.living!.status != 0 ||
+                    widget.goodsDetail!.data!.living!.roomId != 0)
                   HttpManager.post(LiveAPI.buyGoodsInform, {
-                    "liveItemId": widget.goodsDetail.data.living.roomId,
+                    "liveItemId": widget.goodsDetail!.data!.living!.roomId,
                     "goodsId": widget.goodsId,
                   });
                 _createOrder(
@@ -1808,7 +1808,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 );
                 return;
               } else {
-                GoodsDetailModel detailModel = widget.goodsDetail;
+                GoodsDetailModel? detailModel = widget.goodsDetail;
                 // 现在未到开枪时间也能开抢
                 // if (detailModel.data.promotion!=null && detailModel.data.promotion.id > 0) {
                 //   if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(detailModel) == PromotionStatus.ready){
@@ -1821,11 +1821,11 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             },
           );
         }).then((value) {
-      widget.openSkuChoosePage.value = false;
+      widget.openSkuChoosePage!.value = false;
       if (_stateSetter != null) {
         guige = '请选择规格';
         _selectedSkuDes();
-        _stateSetter(() {});
+        _stateSetter!(() {});
       }
     });
   }
@@ -1833,8 +1833,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   Future<dynamic> _addToShoppingCart(
       BuildContext context, SkuChooseModel skuModel) async {
     ResultData resultData = await _shoppingCartModelImpl.addToShoppingCart(
-        UserManager.instance.user.info.id,
-        skuModel.sku.id,
+        UserManager.instance!.user.info!.id,
+        skuModel.sku!.id,
         skuModel.des,
         skuModel.num);
     if (!resultData.result) {
@@ -1848,9 +1848,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       Get.back();
       return;
     }
-    UserManager.instance.refreshShoppingCart.value = true;
-    UserManager.instance.refreshShoppingCartNumber.value = true;
-    UserManager.instance.refreshShoppingCartNumberWithPage.value = true;
+    UserManager.instance!.refreshShoppingCart.value = true;
+    UserManager.instance!.refreshShoppingCartNumber.value = true;
+    UserManager.instance!.refreshShoppingCartNumberWithPage.value = true;
     BotToast.showText(text: '加入成功');
     //ReToast.success(text: '加入成功');
     Get.back();
@@ -1860,8 +1860,8 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   Future<dynamic> _createOrder(
       SkuChooseModel skuModel, BuildContext context) async {
     OrderPreviewModel order = await GoodsDetailModelImpl.createOrderPreview(
-      UserManager.instance.user.info.id,
-      skuModel.sku.id,
+      UserManager.instance!.user.info!.id,
+      skuModel.sku!.id,
       skuModel.des,
       skuModel.num,
       invite: widget.invite,
@@ -1872,15 +1872,16 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       Get.back();
       return;
     }
-    AppRouter.push(context, RouteName.GOODS_ORDER_PAGE,
-        arguments: GoodsOrderPage.setArguments(order));
+    Get.to(()=>GoodsOrderPage(arguments: GoodsOrderPage.setArguments(order)));
+    // AppRouter.push(context, RouteName.GOODS_ORDER_PAGE,
+    //     arguments: GoodsOrderPage.setArguments(order));
   }
 
   _chooseValues() {
-    return widget.goodsDetail.data.attributes.map((Attributes attr) {
+    return widget.goodsDetail!.data!.attributes!.map((Attributes attr) {
       return SelectedListItemModel(
           attr.name,
-          attr.children
+          attr.children!
               .map((Children children) => SelectedListItemChildModel(
                   id: children.id,
                   canSelected: _validSkuResult.contains(children.id.toString()),
@@ -1896,9 +1897,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   var temp = [];
 
   _skuCombinations() {
-    widget.goodsDetail.data.sku.forEach((Sku sku) {
-      if (sku.inventory > 0) {
-        List ids = sku.combineId.split(",");
+    widget.goodsDetail!.data!.sku!.forEach((Sku? sku) {
+      if (sku!.inventory! > 0) {
+        List ids = sku.combineId!.split(",");
         ids.forEach((id) {
           if (!_validSkuResult.contains(id)) {
             _validSkuResult.add(id);
@@ -1937,27 +1938,29 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     StringBuffer stringBuffer = StringBuffer("已选:");
     bool hasSelected = false;
 
-    DPrint.printf(_itemModels.length);
-    _itemModels.forEach((SelectedListItemModel model) {
+    DPrint.printf(_itemModels!.length);
+    _itemModels!.forEach((SelectedListItemModel model) {
       if (model.selectedIndex != null) {
         hasSelected = true;
         stringBuffer.write(" ");
-        stringBuffer.write("\“${model.items[model.selectedIndex].itemTitle}\”");
+        stringBuffer.write("\“${model.items[model.selectedIndex!].itemTitle}\”");
         if (guige == '请选择规格') {
-          guige = model.items[model.selectedIndex].itemTitle;
+          guige = model.items[model.selectedIndex!].itemTitle;
         } else {
-          guige += ('+' + model.items[model.selectedIndex].itemTitle);
+          guige = guige! + ('+' + model.items[model.selectedIndex!].itemTitle!);
+
+          // guige +=
         }
       }
     });
 
-    widget.goodsDetail.data.sku.forEach((Sku sku) {
-      if (sku.name == guige) {
-        if (widget.goodsDetail.data.vendorId == 1800 ||
-            widget.goodsDetail.data.vendorId == 2000 ||
-            widget.goodsDetail.data.vendorId == 3000) {
+    widget.goodsDetail!.data!.sku!.forEach((Sku? sku) {
+      if (sku!.name == guige) {
+        if (widget.goodsDetail!.data!.vendorId == 1800 ||
+            widget.goodsDetail!.data!.vendorId == 2000 ||
+            widget.goodsDetail!.data!.vendorId == 3000) {
           Future.delayed(Duration.zero, () async {
-            _jDHaveGoods = await HomeDao.getJDStock(sku.id, _defaltAddress);
+            _jDHaveGoods = await (HomeDao.getJDStock(sku.id, _defaltAddress) as FutureOr<int?>);
             setState(() {});
           });
           setState(() {});

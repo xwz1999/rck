@@ -24,10 +24,10 @@ class CachePageView extends StatefulWidget {
   /// child that could possibly be displayed in the page view, instead of just
   /// those children that are actually visible.
   CachePageView({
-    Key key,
+    Key? key,
     this.scrollDirection = Axis.horizontal,
     this.reverse = false,
-    PageController controller,
+    PageController? controller,
     this.physics,
     this.pageSnapping = true,
     this.onPageChanged,
@@ -51,15 +51,15 @@ class CachePageView extends StatefulWidget {
   /// [itemBuilder] will be called only with indices greater than or equal to
   /// zero and less than [itemCount].
   CachePageView.builder({
-    Key key,
+    Key? key,
     this.scrollDirection = Axis.horizontal,
     this.reverse = false,
-    PageController controller,
+    PageController? controller,
     this.physics,
     this.pageSnapping = true,
     this.onPageChanged,
-    @required IndexedWidgetBuilder itemBuilder,
-    int itemCount,
+    required IndexedWidgetBuilder itemBuilder,
+    int? itemCount,
     this.dragStartBehavior = DragStartBehavior.start,
     this.cacheCount = 0,
   })  : controller = controller ?? _defaultPageController,
@@ -70,18 +70,17 @@ class CachePageView extends StatefulWidget {
   /// Creates a scrollable list that works page by page with a custom child
   /// model.
   CachePageView.custom({
-    Key key,
+    Key? key,
     this.scrollDirection = Axis.horizontal,
     this.reverse = false,
-    PageController controller,
+    PageController? controller,
     this.physics,
     this.pageSnapping = true,
     this.onPageChanged,
-    @required this.childrenDelegate,
+    required this.childrenDelegate,
     this.dragStartBehavior = DragStartBehavior.start,
     this.cacheCount = 0,
-  })  : assert(childrenDelegate != null),
-        controller = controller ?? _defaultPageController,
+  })  : controller = controller ?? _defaultPageController,
         super(key: key);
 
   /// cache count
@@ -119,13 +118,13 @@ class CachePageView extends StatefulWidget {
   /// [PageScrollPhysics] prior to being used.
   ///
   /// Defaults to matching platform conventions.
-  final ScrollPhysics physics;
+  final ScrollPhysics? physics;
 
   /// Set to false to disable page snapping, useful for custom scroll behavior.
   final bool pageSnapping;
 
   /// Called whenever the page in the center of the viewport changes.
-  final ValueChanged<int> onPageChanged;
+  final ValueChanged<int>? onPageChanged;
 
   /// A delegate that provides the children for the [PageView].
   ///
@@ -151,7 +150,7 @@ class _CachePageViewState extends State<CachePageView> {
     _lastReportedPage = widget.controller.initialPage;
   }
 
-  AxisDirection _getDirection(BuildContext context) {
+  AxisDirection? _getDirection(BuildContext context) {
     switch (widget.scrollDirection) {
       case Axis.horizontal:
         assert(debugCheckHasDirectionality(context));
@@ -164,13 +163,13 @@ class _CachePageViewState extends State<CachePageView> {
       case Axis.vertical:
         return widget.reverse ? AxisDirection.up : AxisDirection.down;
     }
-    return null;
+
   }
 
   @override
   Widget build(BuildContext context) {
-    final AxisDirection axisDirection = _getDirection(context);
-    final ScrollPhysics physics = widget.pageSnapping
+    final AxisDirection? axisDirection = _getDirection(context);
+    final ScrollPhysics? physics = widget.pageSnapping
         ? _kPagePhysics.applyTo(widget.physics)
         : widget.physics;
 
@@ -181,18 +180,18 @@ class _CachePageViewState extends State<CachePageView> {
             if (notification.depth == 0 &&
                 widget.onPageChanged != null &&
                 notification is ScrollUpdateNotification) {
-              final PageMetrics metrics = notification.metrics;
-              final int currentPage = metrics.page.round();
+              final PageMetrics metrics = notification.metrics as PageMetrics;
+              final int currentPage = metrics.page!.round();
               if (currentPage != _lastReportedPage) {
                 _lastReportedPage = currentPage;
-                widget.onPageChanged(currentPage);
+                widget.onPageChanged!(currentPage);
               }
             }
             return false;
           },
           child: Scrollable(
             dragStartBehavior: widget.dragStartBehavior,
-            axisDirection: axisDirection,
+            axisDirection: axisDirection!,
             controller: widget.controller,
             physics: physics,
             viewportBuilder: (BuildContext context, ViewportOffset position) {

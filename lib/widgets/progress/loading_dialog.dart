@@ -9,16 +9,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:recook/constants/app_image_resources.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
-import 'package:recook/utils/text_utils.dart';
 
 // ignore: must_be_immutable
 class LoadingDialog extends Dialog {
   String text;
 
-  LoadingDialog({Key key, @required this.text}) : super(key: key);
+  LoadingDialog({Key? key, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -77,10 +74,10 @@ enum Status { success, error, warning }
 
 // ignore: must_be_immutable
 class StatusDialog extends Dialog {
-  String text;
+  String? text;
   Status status;
 
-  StatusDialog({Key key, @required this.text, this.status = Status.success})
+  StatusDialog({Key? key, required this.text, this.status = Status.success})
       : super(key: key);
 
   @override
@@ -122,7 +119,7 @@ class StatusDialog extends Dialog {
                       child: Container(
                         child: new Container(
                             constraints: BoxConstraints(maxWidth: 200),
-                            child: new Text(text,
+                            child: new Text(text!,
                                 textAlign: TextAlign.center,
                                 maxLines: 3,
                                 overflow: TextOverflow.ellipsis,
@@ -140,7 +137,7 @@ class StatusDialog extends Dialog {
   }
 
   _getIcon() {
-    Widget icon;
+    Widget? icon;
     switch (status) {
       case Status.success:
         icon = Image.asset(
@@ -169,9 +166,9 @@ class StatusDialog extends Dialog {
 }
 
 class WarningDialog extends Dialog {
-  final String text;
+  final String? text;
   
-  WarningDialog({Key key, @required this.text}) : super(key: key);
+  WarningDialog({Key? key, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -207,7 +204,7 @@ class WarningDialog extends Dialog {
                       child: Container(
                         child: new Container(
                             constraints: BoxConstraints(maxWidth: 200),
-                            child: new Text(text,
+                            child: new Text(text!,
                                 textAlign: TextAlign.center,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,

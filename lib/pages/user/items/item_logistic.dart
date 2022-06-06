@@ -16,7 +16,7 @@ import 'package:recook/widgets/custom_cache_image.dart';
 class LogisticItem extends StatelessWidget {
   final LogisticDetailModel model;
 
-  const LogisticItem({Key key, @required this.model}) : super(key: key);
+  const LogisticItem({Key? key, required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -57,9 +57,9 @@ class LogisticItem extends StatelessWidget {
         SizedBox(
           height: rSize(5),
         ),
-        model.data != null && model.data.length > 0
+        model.data != null && model.data!.length > 0
             ? Text(
-                model.data.first.context,
+                model.data!.first.context!,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: AppTextStyle.generate(11 * 2.sp,
@@ -71,7 +71,7 @@ class LogisticItem extends StatelessWidget {
         ),
         GridView.builder(
             shrinkWrap: true,
-            itemCount: model.picUrls.length,
+            itemCount: model.picUrls!.length,
             physics: NeverScrollableScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisSpacing: rSize(5),
@@ -79,7 +79,7 @@ class LogisticItem extends StatelessWidget {
                 crossAxisCount: 4),
             itemBuilder: (_, index) {
               return CustomCacheImage(
-                imageUrl: Api.getImgUrl(model.picUrls[index]),
+                imageUrl: Api.getImgUrl(model.picUrls![index]),
                 fit: BoxFit.cover,
               );
             })

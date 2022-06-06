@@ -6,7 +6,6 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/user/widget/user_group_card_detail_page.dart';
-import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -14,46 +13,46 @@ import 'package:oktoast/oktoast.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class UserGroupCard extends StatefulWidget {
-  final String name;
-  final String wechatId;
-  final String phone;
+  final String? name;
+  final String? wechatId;
+  final String? phone;
   final UserRoleLevel shopRole;
-  final int groupCount;
-  final String headImg;
-  final int id;
+  final int? groupCount;
+  final String? headImg;
+  final int? id;
   final bool isRecommend;
-  final String remarkName;
+  final String? remarkName;
 
   //options
   final bool flat;
 
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   UserGroupCard({
-    Key key,
-    @required this.name,
-    @required this.wechatId,
-    @required this.phone,
-    @required this.shopRole,
-    @required this.groupCount,
-    @required this.headImg,
-    @required this.id,
-    @required this.isRecommend,
-    @required this.remarkName,
+    Key? key,
+    required this.name,
+    required this.wechatId,
+    required this.phone,
+    required this.shopRole,
+    required this.groupCount,
+    required this.headImg,
+    required this.id,
+    required this.isRecommend,
+    required this.remarkName,
     this.onTap,
   })  : flat = false,
         super(key: key);
 
   UserGroupCard.flat(
-      {Key key,
-      @required this.name,
-      @required this.wechatId,
-      @required this.phone,
-      @required this.shopRole,
-      @required this.groupCount,
-      @required this.headImg,
-      @required this.id,
-      @required this.isRecommend,
-      @required this.remarkName,
+      {Key? key,
+      required this.name,
+      required this.wechatId,
+      required this.phone,
+      required this.shopRole,
+      required this.groupCount,
+      required this.headImg,
+      required this.id,
+      required this.isRecommend,
+      required this.remarkName,
       this.onTap})
       : flat = true,
         super(key: key);
@@ -89,7 +88,7 @@ class _UserGroupCardState extends State<UserGroupCard> {
             borderRadius: BorderRadius.circular(20.rw),
             child: FadeInImage.assetNetwork(
               placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-              image: Api.getImgUrl(widget.headImg),
+              image: Api.getImgUrl(widget.headImg)!,
               height: 40.rw,
               width: 40.rw,
             ),
@@ -98,7 +97,7 @@ class _UserGroupCardState extends State<UserGroupCard> {
           <Widget>[
             GestureDetector(
               child: [
-                widget.name.text.black.make(),
+                widget.name!.text.black.make(),
                 6.wb,
                 Image.asset(
                   R.ASSETS_INVITE_DETAIL_EDIT_PNG,
@@ -106,10 +105,10 @@ class _UserGroupCardState extends State<UserGroupCard> {
                   width: 12.rw,
                 ),
                 Spacer(),
-                widget.isRecommend ?? false
+                widget.isRecommend
                     ? GestureDetector(
                         onTap: () async {
-                          bool result = await showDialog(
+                          bool? result = await showDialog(
                               context: context,
                               builder: (context) => NormalContentDialog(
                                     title: '推荐提示',
@@ -176,7 +175,7 @@ class _UserGroupCardState extends State<UserGroupCard> {
                                           right: 0,
                                           top: 62.rw,
                                           child:
-                                              '恭喜！ ${UserManager.instance.user.info.nickname}'
+                                              '恭喜！ ${UserManager.instance!.user.info!.nickname}'
                                                   .text
                                                   .white
                                                   .size(16.rsp)
@@ -214,9 +213,9 @@ class _UserGroupCardState extends State<UserGroupCard> {
             ),
             4.hb,
             [
-              _buildTile(R.ASSETS_USER_ICON_WECHAT_PNG, widget.wechatId)
+              _buildTile(R.ASSETS_USER_ICON_WECHAT_PNG, widget.wechatId!)
                   .expand(),
-              _buildTile(R.ASSETS_USER_ICON_PHONE_PNG, widget.phone).expand(),
+              _buildTile(R.ASSETS_USER_ICON_PHONE_PNG, widget.phone!).expand(),
             ].row(),
             4.hb,
             [

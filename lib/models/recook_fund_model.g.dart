@@ -24,11 +24,11 @@ Map<String, dynamic> _$RecookFundModelToJson(RecookFundModel instance) =>
 
 Data _$DataFromJson(Map<String, dynamic> json) {
   return Data(
-    json['id'] as int, 
-    (json['amount'] as num)?.toDouble(),
-    (json['unrecordedAmount'] as num)?.toDouble(),
-    json['havePassword'] as bool,
-    json['balance'] as num
+    json['id'] as int?, 
+    (json['amount'] as num?)?.toDouble(),
+    (json['unrecordedAmount'] as num?)?.toDouble(),
+    json['havePassword'] as bool?,
+    json['balance'] as num?
     );
 }
 

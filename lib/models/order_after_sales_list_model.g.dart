@@ -4,10 +4,10 @@ part of 'order_after_sales_list_model.dart';
 OrderAfterSalesListModel _$OrderAfterSalesListModelFromJson(Map<String, dynamic> json) {
   return OrderAfterSalesListModel(
       json['code'],
-      (json['data'] as List)
+      (json['data'] as List?)
           ?.map((e) =>
-              e == null ? null : OrderAfterSalesModel.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+              OrderAfterSalesModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       json['msg']);
 }
 
@@ -21,23 +21,23 @@ Map<String, dynamic> _$OrderAfterSalesListModelToJson(OrderAfterSalesListModel i
 
 OrderAfterSalesModel _$OrderAfterSalesModelFromJson(Map<String, dynamic> json) {
   return OrderAfterSalesModel(
-    (json['asId'] as int),
-    (json['goodsId'] as int),
-    (json['goodsName'] as String),
-    (json['skuName'] as String),
-    (json['mainPhotoUrl'] as String),
-    (json['refundAmount'] as num)??0.0,
-    (json['assType'] as int),
-    (json['returnStatus'] as int),
-    (json['refundStatus'] as int),
-    (json['asDesc'] as String),
-    (json['refundDesc'] as String),
-    (json['orderGoodsId'] as int),
-    (json['refundCoin'] as num)??0.0,
-    (json['createdAt'] as String),
-    (json['quantity'] as num),
-    (json['color'] as int),
-    (json['goodsDetailId'] as int)
+    (json['asId'] as int?),
+    (json['goodsId'] as int?),
+    (json['goodsName'] as String?),
+    (json['skuName'] as String?),
+    (json['mainPhotoUrl'] as String?),
+    (json['refundAmount'] as num?)??0.0,
+    (json['assType'] as int?),
+    (json['returnStatus'] as int?),
+    (json['refundStatus'] as int?),
+    (json['asDesc'] as String?),
+    (json['refundDesc'] as String?),
+    (json['orderGoodsId'] as int?),
+    (json['refundCoin'] as num?)??0.0,
+    (json['createdAt'] as String?),
+    (json['quantity'] as num?),
+    (json['color'] as int?),
+    (json['goodsDetailId'] as int?)
   );
 }
 

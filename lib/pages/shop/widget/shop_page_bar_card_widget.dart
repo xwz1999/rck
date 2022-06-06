@@ -9,9 +9,9 @@ class ShopPageIncomeCardModel{
 }
 
 class ShopPageIncomeCardWidget extends StatefulWidget {
-  final ShopPageIncomeCardModel headModel;
-  final List<ShopPageIncomeCardModel> subModels;
-  ShopPageIncomeCardWidget({Key key, this.headModel, this.subModels}) : super(key: key);
+  final ShopPageIncomeCardModel? headModel;
+  final List<ShopPageIncomeCardModel>? subModels;
+  ShopPageIncomeCardWidget({Key? key, this.headModel, this.subModels}) : super(key: key);
 
   @override
   _ShopPageIncomeCardWidgetState createState() => _ShopPageIncomeCardWidgetState();
@@ -41,8 +41,8 @@ class _ShopPageIncomeCardWidgetState extends State<ShopPageIncomeCardWidget> {
               Container(
                 alignment: Alignment.centerLeft,
                 child: _textColumn(
-                  titleText: widget.headModel==null?"": widget.headModel.title,
-                  infoText: widget.headModel==null?"": widget.headModel.info,
+                  titleText: widget.headModel==null?"": widget.headModel!.title,
+                  infoText: widget.headModel==null?"": widget.headModel!.info,
                   infoFontSize: 20
                 ),
               ),
@@ -62,7 +62,7 @@ class _ShopPageIncomeCardWidgetState extends State<ShopPageIncomeCardWidget> {
 
   List<Widget> _infoRowList(){
     List<Widget> widgetList = [];
-    widgetList = widget.subModels.map((model){
+    widgetList = widget.subModels!.map((model){
       return _textColumn(
         titleText: model==null?"": model.title,
         infoText: model==null?"": model.info,

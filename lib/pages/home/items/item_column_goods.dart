@@ -17,11 +17,11 @@ import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class ColumnGoodsItem extends StatelessWidget {
-  final PromotionGoodsModel model;
-  final VoidCallback shareClick;
-  final VoidCallback buyClick;
+  final PromotionGoodsModel? model;
+  final VoidCallback? shareClick;
+  final VoidCallback? buyClick;
 
-  const ColumnGoodsItem({Key key, this.model, this.shareClick, this.buyClick})
+  const ColumnGoodsItem({Key? key, this.model, this.shareClick, this.buyClick})
       : super(key: key);
   static Color _shareTextColor = Color.fromARGB(255, 224, 27, 27);
   @override
@@ -44,12 +44,12 @@ class ColumnGoodsItem extends StatelessWidget {
               color: Colors.white,
             ),
             onTap: () {
-              buyClick();
+              buyClick!();
             },
           ),
           GestureDetector(
             onTap: () {
-              buyClick();
+              buyClick!();
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,7 +86,7 @@ class ColumnGoodsItem extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Text(
-              model.goodsName,
+              model!.goodsName!,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -117,7 +117,7 @@ class ColumnGoodsItem extends StatelessWidget {
         children: <Widget>[
           Expanded(
               child: Text(
-            model.description,
+            model!.description!,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: AppTextStyle.generate(13,
@@ -137,7 +137,7 @@ class ColumnGoodsItem extends StatelessWidget {
   }
 
   _stockWidget() {
-    if (model.getPromotionStatus() == PromotionStatus.ready) {
+    if (model!.getPromotionStatus() == PromotionStatus.ready) {
       return Container(
         width: 150,
         height: 14,
@@ -148,7 +148,7 @@ class ColumnGoodsItem extends StatelessWidget {
         child: Container(
           alignment: Alignment.center,
           child: Text(
-            model.totalInventoryDesc,
+            model!.totalInventoryDesc!,
             style: TextStyle(
               color: Colors.white,
               fontSize: 10 * 2.sp,
@@ -157,7 +157,7 @@ class ColumnGoodsItem extends StatelessWidget {
         ),
       );
     }
-    double proportion = model.percentage;
+    double proportion = model!.percentage as double;
     double width =
         150 * proportion < 14 && 150 * proportion > 0 ? 14 : 150 * proportion;
     return Container(
@@ -189,7 +189,7 @@ class ColumnGoodsItem extends StatelessWidget {
       return Container(
         alignment: Alignment.center,
         child: Text(
-          model.salesVolumeDesc,
+          model!.salesVolumeDesc!,
           style: TextStyle(
             color: Colors.white,
             fontSize: 9 * 2.sp,
@@ -200,7 +200,7 @@ class ColumnGoodsItem extends StatelessWidget {
       return Container(
         alignment: Alignment.center,
         child: Text(
-          model.salesVolumeDesc,
+          model!.salesVolumeDesc!,
           style: TextStyle(
             color: Colors.white,
             fontSize: 9 * 2.sp,
@@ -211,7 +211,7 @@ class ColumnGoodsItem extends StatelessWidget {
       return Row(
         children: <Widget>[
           Text(
-            '   ' + model.salesVolumeDesc,
+            '   ' + model!.salesVolumeDesc!,
             style: TextStyle(
               color: Colors.white,
               fontSize: 9 * 2.sp,
@@ -219,7 +219,7 @@ class ColumnGoodsItem extends StatelessWidget {
           ),
           Spacer(),
           Text(
-            model.percentageDesc + '   ',
+            model!.percentageDesc! + '   ',
             style: TextStyle(
               color: proportion > 0.7 ? Colors.white : AppColor.themeColor,
               fontSize: 9 * 2.sp,
@@ -231,7 +231,7 @@ class ColumnGoodsItem extends StatelessWidget {
   }
 
   Container _price() {
-    bool sellout = model.inventory <= 0;
+    bool sellout = model!.inventory! <= 0;
     return Container(
       margin: EdgeInsets.symmetric(vertical: rSize(5), horizontal: rSize(5)),
       child: Row(
@@ -247,7 +247,7 @@ class ColumnGoodsItem extends StatelessWidget {
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color:
-                            model.getPromotionStatus() == PromotionStatus.ready
+                            model!.getPromotionStatus() == PromotionStatus.ready
                                 ? AppColor.greenColor
                                 : sellout
                                     ? Colors.grey
@@ -257,7 +257,7 @@ class ColumnGoodsItem extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     border: Border.all(
                         color:
-                            model.getPromotionStatus() == PromotionStatus.ready
+                            model!.getPromotionStatus() == PromotionStatus.ready
                                 ? AppColor.greenColor
                                 : sellout
                                     ? Colors.grey
@@ -265,7 +265,7 @@ class ColumnGoodsItem extends StatelessWidget {
                         width: 0.5),
                   ),
                   onTap: () {
-                    if (shareClick != null) shareClick();
+                    if (shareClick != null) shareClick!();
                   },
                 ),
           Container(
@@ -273,7 +273,7 @@ class ColumnGoodsItem extends StatelessWidget {
           ),
           GestureDetector(
             child: CustomImageButton(
-              title: model.getPromotionStatus() == PromotionStatus.ready
+              title: model!.getPromotionStatus() == PromotionStatus.ready
                   ? '未开始'
                   : sellout
                       ? "已抢完"
@@ -281,7 +281,7 @@ class ColumnGoodsItem extends StatelessWidget {
               color: Colors.white,
               pureDisplay: true,
               backgroundColor:
-                  model.getPromotionStatus() == PromotionStatus.ready
+                  model!.getPromotionStatus() == PromotionStatus.ready
                       ? AppColor.greenColor
                       : sellout
                           ? AppColor.pinkColor
@@ -290,7 +290,7 @@ class ColumnGoodsItem extends StatelessWidget {
               borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
             onTap: () {
-              if (buyClick != null) buyClick();
+              if (buyClick != null) buyClick!();
             },
           ),
           Container(
@@ -301,7 +301,7 @@ class ColumnGoodsItem extends StatelessWidget {
     );
   }
 
-  _addGestureDetectorForWidget(Widget widget, VoidCallback click) {
+  _addGestureDetectorForWidget(Widget widget, VoidCallback? click) {
     return GestureDetector(
       child: widget,
       onTap: () {
@@ -326,7 +326,7 @@ class ColumnGoodsItem extends StatelessWidget {
               child: CustomCacheImage(
                   fit: BoxFit.cover,
                   imageUrl: Api.getResizeImgUrl(
-                      model.picture.url, DeviceInfo.screenWidth.toInt() * 2)),
+                      model!.picture!.url!, DeviceInfo.screenWidth!.toInt() * 2)),
             ),
           ),
           Positioned(
@@ -336,7 +336,7 @@ class ColumnGoodsItem extends StatelessWidget {
             bottom: 0,
             child: Offstage(
               // offstage: model.inventory > 0,
-              offstage: model.inventory > 0,
+              offstage: model!.inventory! > 0,
               child: Container(
                 color: Colors.black38,
                 child: Center(
@@ -356,15 +356,15 @@ class ColumnGoodsItem extends StatelessWidget {
     return RichText(
         text: TextSpan(children: [
       TextSpan(
-        text: "${model.priceDesc}",
+        text: "${model!.priceDesc}",
         style: AppTextStyle.generate(15 * 2.sp, fontWeight: FontWeight.w400),
       ),
       TextSpan(
-        text: AppConfig.showCommission ? "  " : "",
+        text: AppConfig.showCommission! ? "  " : "",
         style: AppTextStyle.generate(14 * 2.sp),
       ),
       TextSpan(
-        text: AppConfig.showCommission ? model.commissionDesc : "",
+        text: AppConfig.showCommission! ? model!.commissionDesc : "",
         style: AppTextStyle.generate(13 * 2.sp,
             fontWeight: FontWeight.w400, color: AppColor.themeColor),
       ),

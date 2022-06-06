@@ -17,7 +17,7 @@ part 'pay_result_model.g.dart';
 @JsonSerializable()
 class PayResultModel extends BaseModel {
 
-  PayResult data;
+  PayResult? data;
 
   PayResultModel(code,this.data,msg,) : super(code,msg);
 
@@ -31,7 +31,7 @@ class PayResultModel extends BaseModel {
 @JsonSerializable()
 class PayResult extends Object {
   /// 0：未支付  1：已支付
-  int status;
+  int? status;
 
   PayResult(this.status,);
 

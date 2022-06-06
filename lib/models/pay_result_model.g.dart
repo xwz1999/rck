@@ -23,7 +23,7 @@ Map<String, dynamic> _$PayResultModelToJson(PayResultModel instance) =>
     };
 
 PayResult _$PayResultFromJson(Map<String, dynamic> json) {
-  return PayResult(json['status'] as int);
+  return PayResult(json['status'] as int?);
 }
 
 Map<String, dynamic> _$PayResultToJson(PayResult instance) =>

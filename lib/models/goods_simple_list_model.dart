@@ -3,9 +3,9 @@ import 'package:recook/pages/home/promotion_time_tool.dart';
 import 'goods_hot_sell_list_model.dart';
 
 class GoodsSimpleListModel {
-  String code;
-  String msg;
-  List<GoodsSimple> data;
+  String? code;
+  String? msg;
+  List<GoodsSimple>? data;
 
   GoodsSimpleListModel({this.code, this.msg, this.data});
   GoodsSimpleListModel.fromJson(Map<String, dynamic> json) {
@@ -14,7 +14,7 @@ class GoodsSimpleListModel {
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
-        data.add(new GoodsSimple.fromJson(v));
+        data!.add(new GoodsSimple.fromJson(v));
       });
     }
   }
@@ -24,41 +24,41 @@ class GoodsSimpleListModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class GoodsSimple {
-  num id;
-  String goodsName;
-  String brandImg;
-  String brandName;
-  num brandId;
-  String description;
-  num inventory;
-  num salesVolume;
-  String mainPhotoUrl;
-  String promotionName;
-  num originalPrice;
-  num discountPrice;
-  num commission;
-  List<String> tags;
-  num percent;
-  String startTime;
-  String endTime;
-  num coupon;
-  num isImport;
-  num storehouse;
-  num isFerme;
-  bool hasCoin;
-  bool hasBalance;
-  Living living;
-  num gysId;
-  List<String> specialIcon;
-  String countryIcon;
-  SecKill secKill;
+  num? id;
+  String? goodsName;
+  String? brandImg;
+  String? brandName;
+  num? brandId;
+  String? description;
+  num? inventory;
+  num? salesVolume;
+  String? mainPhotoUrl;
+  String? promotionName;
+  num? originalPrice;
+  num? discountPrice;
+  num? commission;
+  List<String>? tags;
+  num? percent;
+  String? startTime;
+  String? endTime;
+  num? coupon;
+  num? isImport;
+  num? storehouse;
+  num? isFerme;
+  bool? hasCoin;
+  bool? hasBalance;
+  Living? living;
+  num? gysId;
+  List<String>? specialIcon;
+  String? countryIcon;
+  SecKill? secKill;
   GoodsSimple(
       {this.id,
       this.goodsName,
@@ -152,13 +152,13 @@ class GoodsSimple {
     data['hasCoin'] = this.hasCoin;
     data['hasBalance'] = this.hasBalance;
     if (this.living != null) {
-      data['living'] = this.living.toJson();
+      data['living'] = this.living!.toJson();
     }
     data['gys_id'] = this.gysId;
     data['spec_icon'] = this.specialIcon;
     data['country_icon'] = this.countryIcon;
     if (this.secKill != null) {
-      data['sec_kill'] = this.secKill.toJson();
+      data['sec_kill'] = this.secKill!.toJson();
     }
     return data;
   }
@@ -169,8 +169,8 @@ class GoodsSimple {
 }
 
 class Living {
-  int status;
-  int roomId;
+  int? status;
+  int? roomId;
 
   Living({this.status, this.roomId});
 

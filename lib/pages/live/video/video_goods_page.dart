@@ -9,7 +9,7 @@ import 'package:recook/widgets/refresh_widget.dart';
 
 class VideoGoodsPage extends StatefulWidget {
   final Function(VideoGoodsModel model) onPick;
-  VideoGoodsPage({Key key, @required this.onPick}) : super(key: key);
+  VideoGoodsPage({Key? key, required this.onPick}) : super(key: key);
 
   @override
   _VideoGoodsPageState createState() => _VideoGoodsPageState();
@@ -37,8 +37,8 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
 
   @override
   void dispose() {
-    _controller?.dispose();
-    _recentController?.dispose();
+    _controller.dispose();
+    _recentController.dispose();
     super.dispose();
   }
 
@@ -251,7 +251,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
             color: AppColor.frenchColor,
             child: FadeInImage.assetNetwork(
               placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-              image: Api.getImgUrl(model.mainPhotoUrl),
+              image: Api.getImgUrl(model.mainPhotoUrl)!,
               height: _height,
               width: _height,
             ),
@@ -351,7 +351,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                     height: 2,
                   ),
                   Text(
-                    model.goodsName,
+                    model.goodsName!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyle.generate(16 * 2.sp,
@@ -363,7 +363,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                     child: model.description == null
                         ? Container()
                         : Text(
-                            model.description,
+                            model.description!,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyle.generate(14 * 2.sp,
@@ -434,7 +434,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
               // ),
               Expanded(
                 child: Text(
-                  TextUtils.isEmpty(model.brandName) ? "" : model.brandName,
+                  TextUtils.isEmpty(model.brandName) ? "" : model.brandName!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -486,7 +486,7 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
                               ),
                             ),
                           ),
-                          AppConfig.getShowCommission()
+                          AppConfig.getShowCommission()!
                               ? Container(
                                   alignment: Alignment.center,
                                   child: Text(
@@ -529,10 +529,10 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
       'limit': 15,
     });
 
-    if (resultData?.data['data']['list'] == null)
+    if (resultData.data['data']['list'] == null)
       return [];
     else
-      return (resultData?.data['data']['list'] as List)
+      return (resultData.data['data']['list'] as List)
           .map((e) => VideoGoodsModel.fromJson(e))
           .toList();
   }
@@ -543,10 +543,10 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
       'limit': 15,
     });
 
-    if (resultData?.data['data']['list'] == null)
+    if (resultData.data['data']['list'] == null)
       return [];
     else
-      return (resultData?.data['data']['list'] as List)
+      return (resultData.data['data']['list'] as List)
           .map((e) => VideoGoodsModel.fromJson(e))
           .toList();
   }

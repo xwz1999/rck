@@ -1,6 +1,6 @@
 class MvpCallBack<T> {
-  Function(T) onSuccessCallBack;
-  Function(String) onFailCallBack;
+  Function(T)? onSuccessCallBack;
+  Function(String)? onFailCallBack;
 
   MvpCallBack(onSuccess(T data), onFail(String msg)) {
     onSuccessCallBack = onSuccess;
@@ -21,20 +21,20 @@ abstract class MvpModel {
 }
 
 abstract class MvpPresenter<V extends MvpView, M extends MvpModel> {
-  V _mView;
-  M _mModel;
+  V? _mView;
+  M? _mModel;
 
   void attach(MvpView view) {
-    _mView = view;
+    _mView = view as V?;
     _mView?.onAttach();
     getModel()?.onDetach();
   }
 
-  V getView() {
+  V? getView() {
     return _mView;
   }
 
-  M getModel() {
+  M? getModel() {
     if (_mModel == null) {
       _mModel = initModel();
     }

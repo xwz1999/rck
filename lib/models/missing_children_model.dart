@@ -1,10 +1,10 @@
 class MissingChildrenModel {
-  int iD;
-  String text;
-  String pic;
-  bool verify;
-  String createdAt;
-  String bID;
+  int? iD;
+  String? text;
+  String? pic;
+  bool? verify;
+  String? createdAt;
+  String? bID;
 
   MissingChildrenModel(
       {this.iD, this.text, this.pic, this.verify, this.createdAt, this.bID});

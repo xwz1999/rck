@@ -24,11 +24,11 @@ enum AliPayResultCode {
 }
 
 class AliPayResult {
-  AliPayResultCode code;
-  String msg;
-  String platform;
+  AliPayResultCode? code;
+  String? msg;
+  String? platform;
 
-  AliPayResult({this.platform, int code, this.msg}) {
+  AliPayResult({this.platform, int? code, this.msg}) {
     switch (code) {
       case 9000:
         this.code = AliPayResultCode.success;
@@ -61,7 +61,7 @@ class AliPayResult {
 }
 
 class AliPayUtils {
-  static Future<AliPayResult> callAliPay(String payInfo,
+  static Future<AliPayResult?> callAliPay(String? payInfo,
       {tobias.AliPayEvn evn = tobias.AliPayEvn.ONLINE}) async {
     var install = await tobias.isAliPayInstalled();
     DPrint.printf("支付宝是否安装 ----- $install");
@@ -72,7 +72,7 @@ class AliPayUtils {
 
     AliPayResult payResult;
     try {
-      print("The pay info is : " + payInfo);
+      print("The pay info is : " + payInfo!);
       Map result = await tobias.aliPay(payInfo, evn: evn);
       print(result.toString());
       payResult = _result(result);

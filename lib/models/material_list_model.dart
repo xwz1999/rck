@@ -42,7 +42,7 @@ part 'material_list_model.g.dart';
 @JsonSerializable()
 class MaterialListModel extends BaseModel {
 
-  List<MaterialModel> data;
+  List<MaterialModel>? data;
 
   MaterialListModel(code,this.data,msg,) : super(code,msg);
 
@@ -56,26 +56,26 @@ class MaterialListModel extends BaseModel {
 @JsonSerializable()
 class MaterialModel extends Object {
 
-  int id;
+  int? id;
 
-  int goodsId;
+  int? goodsId;
 
-  String text;
+  String? text;
 
-  int userId;
+  int? userId;
 
-  String nickname;
+  String? nickname;
 
-  String headImgUrl;
+  String? headImgUrl;
 
-  String createdAt;
+  String? createdAt;
   
-  bool isAttention;
+  bool? isAttention;
 
-  List<Photos> photos;
+  List<Photos>? photos;
   // List<Goods> goods;
-  Goods goods;
-  bool isOfficial;
+  Goods? goods;
+  bool? isOfficial;
 
   MaterialModel(
     this.id,
@@ -101,15 +101,15 @@ class MaterialModel extends Object {
 @JsonSerializable()
 class Photos extends Object {
 
-  int id;
+  int? id;
 
-  int momentsCopyId;
+  int? momentsCopyId;
 
-  String url;
+  String? url;
 
-  int width;
+  int? width;
 
-  int height;
+  int? height;
 
   Photos(this.id, this.momentsCopyId,this.url,this.width,this.height,);
 
@@ -122,10 +122,10 @@ class Photos extends Object {
 @JsonSerializable()
 class Goods extends Object {
 
-  String mainPhotoURL;  
-  String name;
-  num price;
-  int id;
+  String? mainPhotoURL;  
+  String? name;
+  num? price;
+  int? id;
 
   Goods(this.mainPhotoURL,this.name,this.price,this.id);
 

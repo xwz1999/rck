@@ -1,7 +1,7 @@
 class IncomeListModel {
-  String code;
-  String msg;
-  List<Data> data;
+  String? code;
+  String? msg;
+  List<Data>? data;
 
   IncomeListModel({this.code, this.msg, this.data});
 
@@ -11,7 +11,7 @@ class IncomeListModel {
     if (json['data'] != null) {
       data = [];
       json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
   }
@@ -21,19 +21,19 @@ class IncomeListModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Data {
-  int id;
-  num amount;
-  String title;
-  String comment;
-  num orderId;
-  String orderTime;
+  int? id;
+  num? amount;
+  String? title;
+  String? comment;
+  num? orderId;
+  String? orderTime;
 
   Data(
       {this.id,

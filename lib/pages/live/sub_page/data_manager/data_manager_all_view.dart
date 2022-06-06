@@ -1,5 +1,3 @@
-import 'dart:math';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
@@ -9,7 +7,7 @@ import 'package:recook/pages/live/models/live_time_data_model.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class DataManagerAllView extends StatefulWidget {
-  DataManagerAllView({Key key}) : super(key: key);
+  DataManagerAllView({Key? key}) : super(key: key);
 
   @override
   _DataManagerAllViewState createState() => _DataManagerAllViewState();
@@ -17,7 +15,7 @@ class DataManagerAllView extends StatefulWidget {
 
 class _DataManagerAllViewState extends State<DataManagerAllView>
     with SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
-  TabController _tabController;
+  TabController? _tabController;
   GSRefreshController _refreshController =
       GSRefreshController(initialRefresh: true);
   List<String> titles = [
@@ -87,7 +85,7 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
                   ],
                 ),
                 initialValue: selectDay,
-                onSelected: (day) {
+                onSelected: (dynamic day) {
                   setState(() {
                     selectDay = day;
                   });
@@ -115,7 +113,7 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
           ),
           SizedBox(height: rSize(10)),
           Text(
-            '累计开播${_dataModel.count}场，已直播${Duration(seconds: _dataModel.duration).inHours < 1 ? '小于1' : Duration(seconds: _dataModel.duration).inHours}小时',
+            '累计开播${_dataModel.count}场，已直播${Duration(seconds: _dataModel.duration!).inHours < 1 ? '小于1' : Duration(seconds: _dataModel.duration!).inHours}小时',
             style: TextStyle(
               color: Color(0xFF666666),
               fontSize: rSP(14),
@@ -174,37 +172,37 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
                 children: [
                   _buildDataView(
                     '收获点赞',
-                    _dataModel.datePrise
+                    _dataModel.datePrise!
                         .map((e) => DisplayScrollableList(e.date, e.count))
                         .toList(),
                   ),
                   _buildDataView(
                     '观众人数',
-                    _dataModel.dateLook
+                    _dataModel.dateLook!
                         .map((e) => DisplayScrollableList(e.date, e.count))
                         .toList(),
                   ),
                   _buildDataView(
                     '新增粉丝',
-                    _dataModel.dateFans
+                    _dataModel.dateFans!
                         .map((e) => DisplayScrollableList(e.date, e.count))
                         .toList(),
                   ),
                   _buildDataView(
                     '购买人数',
-                    _dataModel.dateBuy
+                    _dataModel.dateBuy!
                         .map((e) => DisplayScrollableList(e.date, e.count))
                         .toList(),
                   ),
                   _buildDataView(
                     '销售金额',
-                    _dataModel.dateSalesVolume
+                    _dataModel.dateSalesVolume!
                         .map((e) => DisplayScrollableList(e.date, e.count))
                         .toList(),
                   ),
                   _buildDataView(
                     '预计收入',
-                    _dataModel.dateSalesVolume
+                    _dataModel.dateSalesVolume!
                         .map((e) => DisplayScrollableList(e.date, e.count))
                         .toList(),
                   ),
@@ -232,9 +230,9 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
         child: MaterialButton(
           elevation: 0,
           color:
-              _tabController.index == index ? Color(0xFFEB4F4F) : Colors.white,
+              _tabController!.index == index ? Color(0xFFEB4F4F) : Colors.white,
           onPressed: () {
-            _tabController.animateTo(index);
+            _tabController!.animateTo(index);
             setState(() {});
           },
           padding: EdgeInsets.zero,
@@ -244,7 +242,7 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
               Text(
                 title,
                 style: TextStyle(
-                  color: _tabController.index == index
+                  color: _tabController!.index == index
                       ? Colors.white.withOpacity(0.7)
                       : Color(0xFF333333).withOpacity(0.7),
                   fontSize: rSP(14),
@@ -254,7 +252,7 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
               Text(
                 '$subTitle',
                 style: TextStyle(
-                  color: _tabController.index == index
+                  color: _tabController!.index == index
                       ? Colors.white
                       : Color(0xFF333333),
                   fontSize: rSP(16),
@@ -268,8 +266,8 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
   }
 
   Widget _buildDataView(String title, List<DisplayScrollableList> displayList) {
-    int maxHeight() {
-      int maxNum = displayList.map((e) => e.calcCount).reduce(max);
+    int? maxHeight() {
+      int? maxNum = displayList.map((e) => e.calcCount).reduce((max,e)=>max!+e!);
       return maxNum == 0 ? 1 : maxNum;
     }
 
@@ -313,7 +311,7 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
                         ),
                       ),
                       Text(
-                        model.date,
+                        model.date!,
                         style: TextStyle(
                           color: Color(0xFF666666),
                           fontSize: rSP(12),
@@ -335,10 +333,10 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
     ResultData resultData = await HttpManager.post(LiveAPI.dataCount, {
       'day': selectDay,
     });
-    if (resultData?.data['data'] == null)
+    if (resultData.data['data'] == null)
       return LiveTimeDataModel.zero();
     else
-      return LiveTimeDataModel.fromJson(resultData?.data['data']);
+      return LiveTimeDataModel.fromJson(resultData.data['data']);
   }
 
   @override
@@ -346,21 +344,21 @@ class _DataManagerAllViewState extends State<DataManagerAllView>
 }
 
 class DisplayScrollableList {
-  String date;
+  String? date;
   dynamic count;
   DisplayScrollableList(this.date, this.count);
-  int get calcCount {
+  int? get calcCount {
     if (count is int)
       return count;
     else
-      return int.tryParse(count) ?? double.tryParse(count).toInt() ?? 0;
+      return int.tryParse(count) ?? double.tryParse(count)!.toInt() ;
   }
 }
 
 class _DataTapWidget extends StatefulWidget {
-  final int maxHeight;
-  final DisplayScrollableList model;
-  _DataTapWidget({Key key, this.maxHeight, this.model}) : super(key: key);
+  final int? maxHeight;
+  final DisplayScrollableList? model;
+  _DataTapWidget({Key? key, this.maxHeight, this.model}) : super(key: key);
 
   @override
   __DataTapWidgetState createState() => __DataTapWidgetState();
@@ -390,7 +388,7 @@ class __DataTapWidgetState extends State<_DataTapWidget> {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            '${widget.model.count}',
+            '${widget.model!.count}',
             style: TextStyle(
               fontSize: rSP(16),
               color: Color(0xFFDB2D2D),
@@ -402,7 +400,7 @@ class __DataTapWidgetState extends State<_DataTapWidget> {
             width: rSize(36),
             child: Container(
               height: rSize(6) +
-                  rSize(90) * widget.model.calcCount / widget.maxHeight,
+                  rSize(90) * widget.model!.calcCount! / widget.maxHeight!,
               width: rSize(8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(rSize(7)),

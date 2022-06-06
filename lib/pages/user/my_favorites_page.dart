@@ -33,10 +33,10 @@ class MyFavoritesPage extends StatefulWidget {
 class _MyFavoritesPageState extends BaseStoreState<MyFavoritesPage>
     with MvpListViewDelegate<FavoriteModel>
     implements MyFavoriteViewI {
-  MyFavoritePresenterImpl _presenter;
-  MvpListViewController<FavoriteModel> _controller;
+  MyFavoritePresenterImpl? _presenter;
+  MvpListViewController<FavoriteModel>? _controller;
   @override
-  MvpListViewPresenterI<FavoriteModel, MvpView, MvpModel> getPresenter() {
+  MvpListViewPresenterI<FavoriteModel, MvpView, MvpModel>? getPresenter() {
     return _presenter;
   }
 
@@ -49,7 +49,7 @@ class _MyFavoritesPageState extends BaseStoreState<MyFavoritesPage>
   void initState() {
     super.initState();
     _presenter = MyFavoritePresenterImpl();
-    _presenter.attach(this);
+    _presenter!.attach(this);
     _controller = MvpListViewController();
   }
 
@@ -72,30 +72,30 @@ class _MyFavoritesPageState extends BaseStoreState<MyFavoritesPage>
       itemClickListener: (index) {
         AppRouter.push(context, RouteName.COMMODITY_PAGE,
             arguments: CommodityDetailPage.setArguments(
-                _controller.getData()[index].goods.id));
+                _controller!.getData()[index].goods!.id));
       },
       delegate: this,
       controller: _controller,
       refreshCallback: () {
-        _presenter.getFavoritesList(UserManager.instance.user.info.id);
+        _presenter!.getFavoritesList(UserManager.instance!.user.info!.id);
       },
       itemBuilder: (context, index) {
         return MyFavoriteItem(
           deleteFunc: () {
-            _cancel(_controller.getData()[index]);
+            _cancel(_controller!.getData()[index]);
           },
           shareFunc: () {
-            FavoriteModel favoriteModel = _controller.getData()[index];
+            FavoriteModel favoriteModel = _controller!.getData()[index];
             ShareTool().goodsShare(context,
                 goodsPrice:
-                    favoriteModel.goods.discountPrice.toStringAsFixed(2),
-                goodsName: favoriteModel.goods.goodsName,
-                goodsDescription: favoriteModel.goods.description,
-                miniTitle: favoriteModel.goods.goodsName,
-                miniPicurl: favoriteModel.goods.mainPhotoUrl,
-                goodsId: favoriteModel.goods.id.toString());
+                    favoriteModel.goods!.discountPrice!.toStringAsFixed(2),
+                goodsName: favoriteModel.goods!.goodsName,
+                goodsDescription: favoriteModel.goods!.description,
+                miniTitle: favoriteModel.goods!.goodsName,
+                miniPicurl: favoriteModel.goods!.mainPhotoUrl,
+                goodsId: favoriteModel.goods!.id.toString());
           },
-          model: _controller.getData()[index],
+          model: _controller!.getData()[index],
         );
       },
       // swipeItemWidthRatio: 0.13,
@@ -137,12 +137,12 @@ class _MyFavoritesPageState extends BaseStoreState<MyFavoritesPage>
   }
 
   _cancel(FavoriteModel favoriteModel) {
-    _presenter.favoriteCancel(UserManager.instance.user.info.id, favoriteModel);
+    _presenter!.favoriteCancel(UserManager.instance!.user.info!.id, favoriteModel);
   }
 
   @override
   cancelFavoriteSuccess(FavoriteModel favoriteModel) {
-    _controller.deleteItem(favoriteModel);
+    _controller!.deleteItem(favoriteModel);
     Toast.showInfo("取消收藏成功");
   }
 

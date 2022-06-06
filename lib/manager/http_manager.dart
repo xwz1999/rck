@@ -26,8 +26,8 @@ import 'package:recook/utils/sc_encrypt_util.dart';
 import 'package:path/path.dart';
 import 'package:power_logger/power_logger.dart';
 
-typedef OnSuccess<T> = Function(T data, String code, String msg);
-typedef OnFailure = Function(String code, String msg);
+typedef OnSuccess<T> = Function(T? data, String? code, String? msg);
+typedef OnFailure = Function(String? code, String? msg);
 
 class HttpCode {
   static const SUCCESS = 1000;
@@ -80,10 +80,10 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
   };
 
   static Future<Null> uploadFiles(
-      {url = CommonApi.upload, List<MediaModel> medias, key = "photo"}) async {
+      {url = CommonApi.upload, required List<MediaModel> medias, key = "photo"}) async {
     FutureGroup group = FutureGroup();
     medias.forEach((media) {
-      group.add(uploadFile(url: url, file: media.file, key: key).then((result) {
+      group.add(uploadFile(url: url, file: media.file!, key: key).then((result) {
         media.result = result;
       }));
     });
@@ -92,22 +92,22 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
     return null;
   }
 
-  static Future<UploadResult> uploadFile({url, File file, key}) async {
+  static Future<UploadResult> uploadFile({required url, required File file, required key}) async {
     Map<String, dynamic> header = Map();
-    if (UserManager.instance.user.auth != null) {
+    if (UserManager.instance!.user.auth != null) {
       header.putIfAbsent(
-          "X-Recook-ID", () => UserManager.instance.user.auth.id.toString());
+          "X-Recook-ID", () => UserManager.instance!.user.auth!.id.toString());
       header.putIfAbsent(
-          "X-Recook-Token", () => UserManager.instance.user.auth.token);
+          "X-Recook-Token", () => UserManager.instance!.user.auth!.token);
     }
     Dio dio = new Dio();
-    dio.options.baseUrl = Api.host;
+    dio.options.baseUrl = Api.host!;
     dio.options.headers = header;
 
-    var result = await ImageUtils.compressImageWithBytes(
+    var result = await (ImageUtils.compressImageWithBytes(
       file.absolute.path,
       quality: 60,
-    );
+    ) as FutureOr<List<int>>);
     print("原大小: " +
         file.lengthSync().toString() +
         "------- 压缩后大小: " +
@@ -129,11 +129,11 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
     if (model.code != HttpStatus.SUCCESS) {
       return UploadResult(false, model.msg, "");
     }
-    return UploadResult(true, resultData.msg, model.data.url);
+    return UploadResult(true, resultData.msg, model.data!.url);
   }
 
   static Future<ResultData> post(url, params,
-      {Map<String, String> header, Options option, noTip = false}) async {
+      {Map<String, String?>? header, Options? option, noTip = false}) async {
     if (option != null) {
       option.method = "post";
     } else {
@@ -143,16 +143,16 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
     }
 
     if (header == null) {
-      header = Map<String, String>();
+      header = Map<String, String?>();
     }
     header.putIfAbsent(
         "X-Recook-System", () => Platform.isIOS ? "ios" : "android");
     header.putIfAbsent("X-Recook-version", () => "${AppConfig.versionNumber}");
-    if (UserManager.instance.user.auth != null) {
+    if (UserManager.instance!.user.auth != null) {
       header.putIfAbsent(
-          "X-Recook-ID", () => UserManager.instance.user.auth.id.toString());
+          "X-Recook-ID", () => UserManager.instance!.user.auth!.id.toString());
       header.putIfAbsent(
-          "X-Recook-Token", () => UserManager.instance.user.auth.token);
+          "X-Recook-Token", () => UserManager.instance!.user.auth!.token);
     }
     header.putIfAbsent('Device-Type', () => Platform.isIOS ? "ios" : "android");
     DPrint.printf(header);
@@ -165,12 +165,10 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
   ///[ header] 外加头
   ///[ option] 配置
   static Future<ResultData> netFetch(
-      url, params, Map<String, String> header, Options option,
+      url, params, Map<String, String?> header, Options option,
       {noTip = false}) async {
-    Map<String, String> headers = new HashMap();
-    if (header != null) {
-      headers.addAll(header);
-    }
+    Map<String, String?> headers = new HashMap();
+    headers.addAll(header);
 
     if (option != null) {
       option.headers = headers;
@@ -185,7 +183,7 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
 
     Dio dio = new Dio();
 
-    dio.options.baseUrl = Api.host;
+    dio.options.baseUrl = Api.host!;
     dio.options.connectTimeout = 10000;
     dio.options.receiveTimeout = 5000;
     dio.options.method = "POST";
@@ -210,7 +208,7 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
 
 
     Response response;
-    Map encryptParams = params;
+    Map? encryptParams = params;
 //    if (AppConfig.needEncrypt) {
     encryptParams = await paramsEncrypt(params: params);
 //    }
@@ -221,7 +219,7 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
           await dio.request<String>(url, data: encryptParams, options: option);
     } on DioError catch (e) {
       LoggerData.addData(e..requestOptions.data = params);
-      Response errorResponse;
+      Response? errorResponse;
       if (e.response != null) {
         errorResponse = e.response;
       } else {
@@ -229,34 +227,32 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
             statusCode: 666, requestOptions: RequestOptions(path: ''));
       }
       if (e.type == DioErrorType.connectTimeout) {
-        errorResponse.statusCode = HttpCode.ERROR;
+        errorResponse!.statusCode = HttpCode.ERROR;
       }
-      if (AppConfig.debug) {
+      if (AppConfig.debug!) {
         print('❌❌❌❌请求异常: ' + e.toString());
-        print('请求异常url: ' + Api.host + url);
+        print('请求异常url: ' + Api.host! + url);
       }
       return new ResultData(null, false, HttpStatus.ERROR, "您的网络出小差了，\n请稍后再试");
       // return new ResultData(null, false, HttpStatus.ERROR, "网络崩溃了");
 //      return new ResultData(null, false, HttpStatus.ERROR, "请求出错，请稍后再试");
     }
     LoggerData.addData((response)..requestOptions.data = params);
-    String responseStr = response.data;
-    if (AppConfig.needEncrypt) {
+    String? responseStr = response.data;
+    if (AppConfig.needEncrypt!) {
       responseStr = await responseDecrypt(response.data);
     }
 
-    if (AppConfig.debug) {
-      DPrint.printf('请求url: ---- ' + Api.host + url);
+    if (AppConfig.debug!) {
+      DPrint.printf('请求url: ---- ' + Api.host! + url);
       DPrint.printf('请求头: ---- ' + option.headers.toString());
       if (params != null) {
         DPrint.printf('请求参数: ' + json.encode(params));
         DPrint.printf('请求加密参数: ' + json.encode(encryptParams));
       }
-      if (response != null) {
-        DPrint.printf('返回reponse: ---- ' + response.data);
-        if (AppConfig.needEncrypt) {
-          DPrint.printLongJson('解密返回reponse: ---- ' + responseStr);
-        }
+      DPrint.printf('返回reponse: ---- ' + response.data);
+      if (AppConfig.needEncrypt!) {
+        DPrint.printLongJson('解密返回reponse: ---- ' + responseStr!);
       }
       if (optionParams["authorizationCode"] != null) {
         DPrint.printf(
@@ -264,11 +260,11 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
       }
     }
 
-    return _handleResponse(responseStr);
+    return _handleResponse(responseStr!);
   }
 
   static ResultData _handleResponse(String responseStr) {
-    Map<String, dynamic> map = json.decode(responseStr);
+    Map<String, dynamic>? map = json.decode(responseStr);
     if (map != null) {
       if (map["code"] == HttpStatus.SUCCESS) {
         DPrint.printf("🍎🍎🍎🍎 data ---  ${json.encode(map["data"])}");
@@ -284,7 +280,7 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
       }
     }
 
-    return new ResultData(responseStr, true, map["code"], map["msg"]);
+    return new ResultData(responseStr, true, map!["code"], map["msg"]);
   }
 
   ///发起网络请求
@@ -292,8 +288,8 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
   ///[ params] 请求参数
   ///[ header] 外加头
   ///[ option] 配置
-  static Future<Response> netFetchNormal(
-      url, params, Map<String, String> header, Options option,
+  static Future<Response?> netFetchNormal(
+      url, params, Map<String, String>? header, Options? option,
       {noTip = false}) async {
     Map<String, String> headers = new HashMap();
     if (header != null) {
@@ -309,11 +305,11 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
 
     Dio dio = new Dio();
 
-    Response response;
+    Response? response;
     try {
       response = await dio.request<String>(url, data: params, options: option);
     } on DioError catch (e) {
-      Response errorResponse;
+      Response? errorResponse;
       if (e.response != null) {
         errorResponse = e.response;
       } else {
@@ -321,24 +317,22 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
             statusCode: 666, requestOptions: RequestOptions(path: ''));
       }
       if (e.type == DioErrorType.connectTimeout) {
-        errorResponse.statusCode = HttpCode.ERROR;
+        errorResponse!.statusCode = HttpCode.ERROR;
       }
-      if (AppConfig.debug) {
+      if (AppConfig.debug!) {
         print('请求异常: ' + e.toString());
         print('请求异常url: ' + url);
       }
       return response;
     }
 
-    if (AppConfig.debug) {
-      print('请求url: ' + Api.host + url);
+    if (AppConfig.debug!) {
+      print('请求url: ' + Api.host! + url);
       print('请求头: ' + option.headers.toString());
       if (params != null) {
         print('请求参数: ' + params.toString());
       }
-      if (response != null) {
-        print('返回参数: ' + response.toString());
-      }
+      print('返回参数: ' + response.toString());
       if (optionParams["authorizationCode"] != null) {
         print('authorizationCode: ' + optionParams["authorizationCode"]);
       }
@@ -348,7 +342,7 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
   }
 
   /// 参数加密
-  static paramsEncrypt({Map params}) async {
+  static paramsEncrypt({Map? params}) async {
     int timestamp = DateTime.now().second;
     String md5Str = SCEncryptUtil.md5Encrypt(timestamp.toString());
     String aesEncryptStr = await SCEncryptUtil.aesEncrypt(
@@ -373,9 +367,9 @@ class ResultData {
 
   /// 网络请求错误或者服务器返回错误时 为false
   bool result;
-  String code;
+  String? code;
   var headers;
-  String msg;
+  String? msg;
 
   ResultData(this.data, this.result, this.code, this.msg, {this.headers});
 }

@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
@@ -16,7 +14,7 @@ import 'package:recook/widgets/refresh_widget.dart';
 
 class UserRechargePage extends StatefulWidget {
   UserRechargePage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -117,7 +115,7 @@ class _UserRechargePageState extends State<UserRechargePage> {
               ),
               50.hb,
               Text(
-                TextUtils.getCount1(( UserManager.instance.userBrief.deposit ?? 0.0)),
+                TextUtils.getCount1(( UserManager.instance!.userBrief!.deposit ?? 0.0))!,
                 style: TextStyle(fontSize: 32.rsp, color: Color(0xFF333333),fontWeight: FontWeight.bold),
               ),
               70.hb,

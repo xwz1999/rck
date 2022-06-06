@@ -17,9 +17,9 @@ typedef ShareAction = Function(int index);
 class BottomShareWidget extends StatefulWidget {
   BottomShareWidget({this.customTitle, this.action, this.items});
 
-  final Widget customTitle;
-  final List<PlatformItem> items;
-  final ShareAction action;
+  final Widget? customTitle;
+  final List<PlatformItem>? items;
+  final ShareAction? action;
 
   @override
   State<StatefulWidget> createState() {
@@ -60,13 +60,13 @@ class _BottomShareWidgetState extends State<BottomShareWidget> {
                     shrinkWrap: true,
                     physics: NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.symmetric(horizontal: 10),
-                    itemCount: widget.items.length,
+                    itemCount: widget.items!.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         crossAxisSpacing: 1,
-                        childAspectRatio: widget.items.length <= 3 ? 1 : 1.3),
+                        childAspectRatio: widget.items!.length <= 3 ? 1 : 1.3),
                     itemBuilder: (context, index) {
-                      PlatformItem item = widget.items[index];
+                      PlatformItem item = widget.items![index];
                       return CustomImageButton(
                         title: item.title,
                         contentSpacing: 5,
@@ -78,9 +78,9 @@ class _BottomShareWidgetState extends State<BottomShareWidget> {
                         ),
                         onPressed: () {
                           if (item.itemClick != null) {
-                            item.itemClick();
+                            item.itemClick!();
                           }
-                          widget.action(index);
+                          widget.action!(index);
                         },
                       );
                     }),
@@ -115,15 +115,15 @@ class _BottomShareWidgetState extends State<BottomShareWidget> {
 class PlatformItem {
   String title;
   Widget icon;
-  Function itemClick;
+  Function? itemClick;
   PlatformItem(this.title, this.icon, {this.itemClick});
 }
 
 class ShareDialog {
-  static show(BuildContext context,
-      {List<PlatformItem> items,
-      @required ShareAction action,
-      Widget customTitle}) {
+  static show(BuildContext? context,
+      {List<PlatformItem>? items,
+      required ShareAction action,
+      Widget? customTitle}) {
     // showCustomModalBottomSheet(
     //     context: context,
     //     builder: (context) {

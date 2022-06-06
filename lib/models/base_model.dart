@@ -4,8 +4,8 @@ part 'base_model.g.dart';
 
 @JsonSerializable()
 class BaseModel {
-  String code;
-  String msg;
+  String? code;
+  String? msg;
 
   BaseModel(this.code, this.msg);
 

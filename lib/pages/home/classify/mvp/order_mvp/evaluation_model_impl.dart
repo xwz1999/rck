@@ -13,7 +13,7 @@ import 'package:recook/pages/home/classify/mvp/order_mvp/evaluation_list_contact
 
 class EvaluationModelImpl extends EvaluationListModelI{
   @override
-  getEvaluationList(int userId, int goodsId, int page) async{
+  getEvaluationList(int? userId, int? goodsId, int page) async{
     ResultData resultData = await HttpManager.post(GoodsApi.goods_evaluation_list, {
       "userId": userId,
       "goodsId":goodsId,

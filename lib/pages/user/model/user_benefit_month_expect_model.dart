@@ -1,10 +1,10 @@
 import 'package:recook/pages/user/benefit_view_gen.dart';
 
 class UserBenefitMonthExpectModel {
-  Purchase purchase;
-  Purchase guide;
-  List<PurchaseList> purchaseList;
-  List<PurchaseList> guideList;
+  Purchase? purchase;
+  Purchase? guide;
+  List<PurchaseList>? purchaseList;
+  List<PurchaseList>? guideList;
 
   UserBenefitMonthExpectModel(
       {this.purchase, this.guide, this.purchaseList, this.guideList});
@@ -17,14 +17,14 @@ class UserBenefitMonthExpectModel {
     if (json['purchaseList'] != null) {
       purchaseList = [];
       json['purchaseList'].forEach((v) {
-        purchaseList.add(new PurchaseList.fromJson(v));
+        purchaseList!.add(new PurchaseList.fromJson(v));
       });
     } else
       purchaseList = [];
     if (json['guideList'] != null) {
       guideList = [];
       json['guideList'].forEach((v) {
-        guideList.add(new PurchaseList.fromJson(v));
+        guideList!.add(new PurchaseList.fromJson(v));
       });
     } else
       guideList = [];
@@ -33,25 +33,25 @@ class UserBenefitMonthExpectModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.purchase != null) {
-      data['purchase'] = this.purchase.toJson();
+      data['purchase'] = this.purchase!.toJson();
     }
     if (this.guide != null) {
-      data['guide'] = this.guide.toJson();
+      data['guide'] = this.guide!.toJson();
     }
     if (this.purchaseList != null) {
-      data['purchaseList'] = this.purchaseList.map((v) => v.toJson()).toList();
+      data['purchaseList'] = this.purchaseList!.map((v) => v.toJson()).toList();
     }
     if (this.guideList != null) {
-      data['guideList'] = this.guideList.map((v) => v.toJson()).toList();
+      data['guideList'] = this.guideList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Purchase {
-  int count;
-  num salesVolume;
-  num amount;
+  int? count;
+  num? salesVolume;
+  num? amount;
   DisplayCard get card => DisplayCard(
         count: count,
         sales: salesVolume,
@@ -76,12 +76,12 @@ class Purchase {
 }
 
 class PurchaseList {
-  int day;
-  int count;
-  num salesVolume;
-  num amount;
+  int? day;
+  int? count;
+  num? salesVolume;
+  num? amount;
 
-  DateTime get date => DateTime(day ~/ 10000, day % 10000 ~/ 100, day % 100);
+  DateTime get date => DateTime(day! ~/ 10000, day! % 10000 ~/ 100, day! % 100);
 
   PurchaseList({this.day, this.count, this.salesVolume, this.amount});
 

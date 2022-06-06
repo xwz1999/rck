@@ -12,24 +12,24 @@ import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:oktoast/oktoast.dart';
 
 class LiveReportView extends StatefulWidget {
-  LiveReportView({Key key}) : super(key: key);
+  LiveReportView({Key? key}) : super(key: key);
 
   @override
   _LiveReportViewState createState() => _LiveReportViewState();
 }
 
 class _LiveReportViewState extends State<LiveReportView> {
-  int type = 1;
-  List<LiveReportModel> models;
-  File _imageFile;
-  String path;
+  int? type = 1;
+  List<LiveReportModel>? models;
+  File? _imageFile;
+  String? path;
   TextEditingController _textController = TextEditingController();
   @override
   void initState() {
     HttpManager.post(LiveAPI.reportType, {}).then((resultData) {
-      if (resultData?.data['data'] != null) {
+      if (resultData.data['data'] != null) {
         setState(() {
-          models = (resultData?.data['data'] as List)
+          models = (resultData.data['data'] as List)
               .map((e) => LiveReportModel.fromJson(e))
               .toList();
         });
@@ -40,7 +40,7 @@ class _LiveReportViewState extends State<LiveReportView> {
 
   @override
   void dispose() {
-    _textController?.dispose();
+    _textController.dispose();
     super.dispose();
   }
 
@@ -70,11 +70,11 @@ class _LiveReportViewState extends State<LiveReportView> {
                   models == null
                       ? Center(child: CircularProgressIndicator())
                       : Wrap(
-                          children: models
+                          children: models!
                               .map((e) => Row(
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
-                                      Radio<int>(
+                                      Radio<int?>(
                                         value: e.id,
                                         groupValue: type,
                                         onChanged: (value) {
@@ -84,7 +84,7 @@ class _LiveReportViewState extends State<LiveReportView> {
                                         },
                                       ),
                                       Text(
-                                        e.name,
+                                        e.name!,
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: rSP(14),
@@ -121,7 +121,7 @@ class _LiveReportViewState extends State<LiveReportView> {
                             width: rSize(100),
                           )
                         : Image.file(
-                            _imageFile,
+                            _imageFile!,
                             height: rSize(100),
                           ),
                   ),
@@ -137,7 +137,7 @@ class _LiveReportViewState extends State<LiveReportView> {
                 final loadingCancel = ReToast.loading(text: '上传图片中');
                 UploadResult uploadResult = await HttpManager.uploadFile(
                   url: CommonApi.upload,
-                  file: _imageFile,
+                  file: _imageFile!,
                   key: "photo",
                 );
                 loadingCancel();

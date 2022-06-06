@@ -14,8 +14,8 @@ import 'package:recook/widgets/toast.dart';
 // import 'package:url_launcher/url_launcher.dart';
 
 class UserInviteDetail extends StatefulWidget {
-  final Map arguments;
-  UserInviteDetail({Key key, this.arguments}) : super(key: key);
+  final Map? arguments;
+  UserInviteDetail({Key? key, this.arguments}) : super(key: key);
 
   static setArguments(InviteModel inviteModel) {
     return {
@@ -29,11 +29,11 @@ class UserInviteDetail extends StatefulWidget {
 
 class _UserInviteDetailState extends BaseStoreState<UserInviteDetail> {
 
-  InviteModel _inviteModel;
+  InviteModel? _inviteModel;
   @override
   void initState() { 
     super.initState();
-    _inviteModel = widget.arguments["inviteModel"];
+    _inviteModel = widget.arguments!["inviteModel"];
   }
 
   @override
@@ -56,42 +56,42 @@ class _UserInviteDetailState extends BaseStoreState<UserInviteDetail> {
       children: <Widget>[
         _rowContainer("头像", headImage: true),
         _rowContainer("角色", vip: true),
-        _rowContainer("昵称", subTitle: _inviteModel.nickname),
+        _rowContainer("昵称", subTitle: _inviteModel!.nickname),
         GestureDetector(
           onTap: (){
             push(RouteName.MODIFY_DETAIL_PAGE,
                       arguments:
-                          ModifyInfoPage.setArguments("修改备注", _inviteModel.remarkName, maxLength: 7))
+                          ModifyInfoPage.setArguments("修改备注", _inviteModel!.remarkName, maxLength: 7))
                   .then((value) {
                 if (value != null) {
-                  _updateRemarkName(value);
+                  _updateRemarkName(value as String);
                 }
               });
           },
-          child: _rowContainer("备注", subTitle: TextUtils.isEmpty(_inviteModel.remarkName)?"未设置":_inviteModel.remarkName, edit: true),
+          child: _rowContainer("备注", subTitle: TextUtils.isEmpty(_inviteModel!.remarkName)?"未设置":_inviteModel!.remarkName, edit: true),
         ),
-        _rowContainer("注册时间", subTitle: _inviteModel.createdAt),
+        _rowContainer("注册时间", subTitle: _inviteModel!.createdAt),
         Container(height: 20,),
         GestureDetector(
           // onTap: (){
           //   if (!TextUtils.isEmpty(_inviteModel.phoneNum)) launch("tel:${_inviteModel.phoneNum}");
           // },
-          child: _rowContainer("手机号", subTitle: TextUtils.isEmpty(_inviteModel.phoneNum)?"未设置":_inviteModel.phoneNum, phone: true),
+          child: _rowContainer("手机号", subTitle: TextUtils.isEmpty(_inviteModel!.phoneNum)?"未设置":_inviteModel!.phoneNum, phone: true),
         ),
         GestureDetector(
           onTap: (){
-            if(TextUtils.isEmpty(_inviteModel.wechatNo)) return;
-            ClipboardData data = new ClipboardData(text:_inviteModel.wechatNo.toString());
+            if(TextUtils.isEmpty(_inviteModel!.wechatNo)) return;
+            ClipboardData data = new ClipboardData(text:_inviteModel!.wechatNo.toString());
             Clipboard.setData(data);
             Toast.showSuccess('微信号已经保存到剪贴板');
           },
-          child: _rowContainer("微信号", subTitle: TextUtils.isEmpty(_inviteModel.wechatNo)?"未设置":_inviteModel.wechatNo, copy: !TextUtils.isEmpty(_inviteModel.wechatNo)),
+          child: _rowContainer("微信号", subTitle: TextUtils.isEmpty(_inviteModel!.wechatNo)?"未设置":_inviteModel!.wechatNo, copy: !TextUtils.isEmpty(_inviteModel!.wechatNo)),
         ),
       ],
     );
   }
   
-  _rowContainer(title, {bool headImage=false, bool vip = false, String subTitle = "", bool edit=false,bool copy=false,bool phone=false})
+  _rowContainer(title, {bool headImage=false, bool vip = false, String? subTitle = "", bool edit=false,bool copy=false,bool phone=false})
     {
     return Container(
       height: 60, width: MediaQuery.of(context).size.width,
@@ -112,10 +112,10 @@ class _UserInviteDetailState extends BaseStoreState<UserInviteDetail> {
                   headImage?
                   _imageView()
                   :vip?
-                  UserLevelTool.roleLevelWidget(level: UserLevelTool.roleLevel(_inviteModel.roleLevel))
+                  UserLevelTool.roleLevelWidget(level: UserLevelTool.roleLevel(_inviteModel!.roleLevel as int?))
                   // UserIconWidget.levelWidget(_inviteModel.role)
                   :!TextUtils.isEmpty(subTitle)?
-                  Text(subTitle, style: TextStyle(color: Colors.grey, fontSize: 14),)
+                  Text(subTitle!, style: TextStyle(color: Colors.grey, fontSize: 14),)
                   :Container(),
 
                   edit?
@@ -157,7 +157,7 @@ class _UserInviteDetailState extends BaseStoreState<UserInviteDetail> {
           borderRadius: BorderRadius.all(Radius.circular(22.5)),
           child: CustomCacheImage(
             fit: BoxFit.cover,
-            imageUrl: Api.getResizeImgUrl(_inviteModel.headImgUrl, 120),
+            imageUrl: Api.getResizeImgUrl(_inviteModel!.headImgUrl!, 120),
             placeholder: AppImageName.placeholder_1x1,
           ),),
       ),
@@ -165,19 +165,19 @@ class _UserInviteDetailState extends BaseStoreState<UserInviteDetail> {
   }
   _updateRemarkName(String name) async {
     ResultData resultData = await HttpManager.post(UserApi.invite_remark_name, {
-      "userId": _inviteModel.userId,
+      "userId": _inviteModel!.userId,
       "remarkName":name
     });
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
-    _inviteModel.remarkName = name;
+    _inviteModel!.remarkName = name;
     setState(() {});
   }
 }

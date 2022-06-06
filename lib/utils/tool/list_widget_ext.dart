@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 extension WidgetListExt on List {
-  List<Widget> sepWidget({Widget separate}) {
+  List<Widget> sepWidget({Widget? separate}) {
     if (this.isEmpty) return [];
     return List.generate(this.length * 2 - 1, (index) {
       if (index.isEven)

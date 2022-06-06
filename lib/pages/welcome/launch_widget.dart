@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
-import 'package:recook/constants/config.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -19,7 +17,7 @@ import 'package:power_logger/power_logger.dart';
 
 import 'launch_privacy_dialog.dart';
 
-List<CameraDescription> cameras;
+List<CameraDescription>? cameras;
 
 class LaunchWidget extends StatefulWidget {
   @override
@@ -34,24 +32,24 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
 
     //初始化AMap  给android和ios
     //初始化日志工具
-    PowerLogger.start(context, debug:AppConfig.debug);//AppConfig.debug  在正式服数据下进行调试\
+    PowerLogger.start(context, debug:AppConfig.debug!);//AppConfig.debug  在正式服数据下进行调试\
 
-    WidgetsBinding.instance.addPostFrameCallback((callback) async {
+    WidgetsBinding.instance!.addPostFrameCallback((callback) async {
       await Future.delayed(Duration(milliseconds: 2450));
-      if (HiveStore.appBox.get('privacy_init') == null) {
+      if (HiveStore.appBox!.get('privacy_init') == null) {
         // if (true) {
         bool agreeResult = (await launchPrivacyDialog(context)) ?? false;
         if (!agreeResult) {
           //第1次不同意`
           bool secondAgree =
-              (await launchPrivacySecondDialog(context)) ?? false;
+              (await (launchPrivacySecondDialog(context) as FutureOr<bool?>)) ?? false;
           //第2次不同意
           if (!secondAgree)
             SystemNavigator.pop();
           else{
-            HiveStore.appBox.put('privacy_init', true);
+            HiveStore.appBox!.put('privacy_init', true);
             Future.delayed(Duration.zero, () async {
-              UserManager.instance.kingCoinListModelList =
+              UserManager.instance!.kingCoinListModelList =
               await UserFunc.getKingCoinList();
             });
             AMapFlutterLocation.setApiKey(
@@ -69,9 +67,9 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
           }
 
         } else{
-          HiveStore.appBox.put('privacy_init', true);
+          HiveStore.appBox!.put('privacy_init', true);
           Future.delayed(Duration.zero, () async {
-            UserManager.instance.kingCoinListModelList =
+            UserManager.instance!.kingCoinListModelList =
             await UserFunc.getKingCoinList();
           });
           AMapFlutterLocation.setApiKey(
@@ -88,7 +86,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
         }
       }else{
         Future.delayed(Duration.zero, () async {
-          UserManager.instance.kingCoinListModelList =
+          UserManager.instance!.kingCoinListModelList =
           await UserFunc.getKingCoinList();
         });
         AMapFlutterLocation.setApiKey(

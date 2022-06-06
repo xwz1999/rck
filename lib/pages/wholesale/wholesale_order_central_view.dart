@@ -7,9 +7,9 @@ import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 
 class WholesaleOrderCentralView extends StatefulWidget {
-  final Function(int index) clickListener;
+  final Function(int index)? clickListener;
 
-  const WholesaleOrderCentralView({Key key, this.clickListener}) : super(key: key);
+  const WholesaleOrderCentralView({Key? key, this.clickListener}) : super(key: key);
 
   @override
   _WholesaleOrderCentralViewState createState() => _WholesaleOrderCentralViewState();
@@ -61,7 +61,7 @@ class _WholesaleOrderCentralViewState extends BaseStoreState<WholesaleOrderCentr
                   fontSize: 12 * 2.sp,
                   color: Colors.black45,
                   onPressed: () {
-                    widget.clickListener(0);
+                    widget.clickListener!(0);
                   },
                 ),
                 Icon(
@@ -83,12 +83,12 @@ class _WholesaleOrderCentralViewState extends BaseStoreState<WholesaleOrderCentr
                 child: CustomImageButton(
                   padding: EdgeInsets.symmetric(vertical: rSize(10)),
                   dotPosition: DotPosition(right: rSize(8), top: 0),
-                  dotNum: getStore().state.userBrief.orderCenter.saleWaitDeal == 0
+                  dotNum: getStore().state.userBrief!.orderCenter!.saleWaitDeal == 0
                       ? ''
                       : getStore()
                           .state
-                          .userBrief
-                          .orderCenter
+                          .userBrief!
+                          .orderCenter!
                           .saleWaitDeal
                           .toString(),
                   dotColor: AppColor.themeColor,
@@ -102,7 +102,7 @@ class _WholesaleOrderCentralViewState extends BaseStoreState<WholesaleOrderCentr
                   color: Colors.grey[700],
                   contentSpacing: 8,
                   onPressed: () {
-                    widget.clickListener(1);
+                    widget.clickListener!(1);
                   },
                 ),
               ),
@@ -110,12 +110,12 @@ class _WholesaleOrderCentralViewState extends BaseStoreState<WholesaleOrderCentr
                 child: CustomImageButton(
                   padding: EdgeInsets.symmetric(vertical: rSize(10)),
                   dotPosition: DotPosition(right: rSize(8), top: 0),
-                  dotNum: getStore().state.userBrief.orderCenter.saleWaitPay == 0
+                  dotNum: getStore().state.userBrief!.orderCenter!.saleWaitPay == 0
                       ? ''
                       : getStore()
                           .state
-                          .userBrief
-                          .orderCenter
+                          .userBrief!
+                          .orderCenter!
                           .saleWaitPay
                           .toString(),
                   dotColor: AppColor.themeColor,
@@ -129,7 +129,7 @@ class _WholesaleOrderCentralViewState extends BaseStoreState<WholesaleOrderCentr
                   color: Colors.grey[700],
                   contentSpacing: 8,
                   onPressed: () {
-                    widget.clickListener(2);
+                    widget.clickListener!(2);
                   },
                 ),
               ),
@@ -137,12 +137,12 @@ class _WholesaleOrderCentralViewState extends BaseStoreState<WholesaleOrderCentr
                 child: CustomImageButton(
                   padding: EdgeInsets.symmetric(vertical: rSize(10)),
                   dotPosition: DotPosition(right: rSize(8), top: 0),
-                  dotNum: getStore().state.userBrief.orderCenter.saleWaitSend == 0
+                  dotNum: getStore().state.userBrief!.orderCenter!.saleWaitSend == 0
                       ? ''
                       : getStore()
                           .state
-                          .userBrief
-                          .orderCenter
+                          .userBrief!
+                          .orderCenter!
                           .saleWaitSend
                           .toString(),
                   dotColor: AppColor.themeColor,
@@ -156,7 +156,7 @@ class _WholesaleOrderCentralViewState extends BaseStoreState<WholesaleOrderCentr
                   color: Colors.grey[700],
                   contentSpacing: 8,
                   onPressed: () {
-                    widget.clickListener(3);
+                    widget.clickListener!(3);
                   },
                 ),
               ),
@@ -194,12 +194,12 @@ class _WholesaleOrderCentralViewState extends BaseStoreState<WholesaleOrderCentr
                   // dotColor: AppColor.themeColor,
                   padding: EdgeInsets.symmetric(vertical: rSize(10)),
                   dotPosition: DotPosition(right: rSize(8), top: 0),
-                  dotNum: getStore().state.userBrief.orderCenter.saleWaitRecv == 0
+                  dotNum: getStore().state.userBrief!.orderCenter!.saleWaitRecv == 0
                       ? ''
                       : getStore()
                       .state
-                      .userBrief
-                      .orderCenter
+                      .userBrief!
+                      .orderCenter!
                       .saleWaitRecv
                       .toString(),
                   dotColor: AppColor.themeColor,
@@ -213,7 +213,7 @@ class _WholesaleOrderCentralViewState extends BaseStoreState<WholesaleOrderCentr
                   fontSize: _fontSize,
                   contentSpacing: 8,
                   onPressed: () {
-                    widget.clickListener(4);
+                    widget.clickListener!(4);
                   },
                 ),
               ),

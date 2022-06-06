@@ -116,7 +116,7 @@ part 'goods_detail_model.g.dart';
 
 @JsonSerializable()
 class GoodsDetailModel extends BaseModel {
-  Data data;
+  Data? data;
 
   GoodsDetailModel(code, this.data, msg) : super(code, msg);
 
@@ -128,60 +128,60 @@ class GoodsDetailModel extends BaseModel {
 
 @JsonSerializable()
 class Data extends Object {
-  int id;
+  int? id;
 
-  int brandId;
-
-
-  String goodsName;
-
-  String description;
-
-  int firstCategoryId;
-
-  int secondCategoryId;
-
-  int inventory;
-
-  int salesVolume;
-
-  Price price;
-
-  Video video;
-
-  List<MainPhotos> mainPhotos;
-
-  List<Attributes> attributes;
-
-  List<Sku> sku;
-
-  Promotion promotion;
-
-  Brand brand;
-
-  Evaluations evaluations;
-
-  List<Coupons> coupons;
-
-  bool isFavorite;
-
-  int shoppingTrolleyCount; //购物车数量
-
-  Notice notice;
-
-  List<Recommends> recommends;
-
-  num isImport;
-  num isFerme;
-  num storehouse;
-  String countryIcon;
+  int? brandId;
 
 
-  Living living;
+  String? goodsName;
 
-  SecKill secKill;
-  int vendorId;
-  bool isAllow;
+  String? description;
+
+  int? firstCategoryId;
+
+  int? secondCategoryId;
+
+  int? inventory;
+
+  int? salesVolume;
+
+  Price? price;
+
+  Video? video;
+
+  List<MainPhotos>? mainPhotos;
+
+  List<Attributes>? attributes;
+
+  List<Sku?>? sku;
+
+  Promotion? promotion;
+
+  Brand? brand;
+
+  Evaluations? evaluations;
+
+  List<Coupons>? coupons;
+
+  bool? isFavorite;
+
+  int? shoppingTrolleyCount; //购物车数量
+
+  Notice? notice;
+
+  List<Recommends>? recommends;
+
+  num? isImport;
+  num? isFerme;
+  num? storehouse;
+  String? countryIcon;
+
+
+  Living? living;
+
+  SecKill? secKill;
+  int? vendorId;
+  bool? isAllow;
 
 
   Data(
@@ -225,14 +225,14 @@ class Data extends Object {
     if (price == null) {
       return "";
     }
-    double minPrice = price.min.discountPrice;
-    double maxPrice = price.max.discountPrice;
+    double? minPrice = price!.min!.discountPrice;
+    double? maxPrice = price!.max!.discountPrice;
     String returnPrice;
     if (minPrice == maxPrice) {
-      returnPrice = maxPrice.toStringAsFixed(2);
+      returnPrice = maxPrice!.toStringAsFixed(2);
     } else {
       returnPrice =
-          "${minPrice.toStringAsFixed(2)}-${maxPrice.toStringAsFixed(2)}";
+          "${minPrice!.toStringAsFixed(2)}-${maxPrice!.toStringAsFixed(2)}";
     }
     return returnPrice;
   }
@@ -265,19 +265,19 @@ class Data extends Object {
 
 @JsonSerializable()
 class MainPhotos extends Object {
-  int id;
+  int? id;
 
-  int goodsId;
+  int? goodsId;
 
-  String url;
+  String? url;
 
-  int isMaster;
+  int? isMaster;
 
-  int orderNo;
+  int? orderNo;
 
-  int width;
+  int? width;
 
-  int height;
+  int? height;
 
   bool isSelect;
   int isSelectNumber;
@@ -294,9 +294,9 @@ class MainPhotos extends Object {
 
 @JsonSerializable()
 class Attributes extends Object {
-  String name;
+  String? name;
 
-  List<Children> children;
+  List<Children>? children;
 
   Attributes(
     this.name,
@@ -311,9 +311,9 @@ class Attributes extends Object {
 
 @JsonSerializable()
 class Children extends Object {
-  int id;
+  int? id;
 
-  String value;
+  String? value;
 
   Children(
     this.id,
@@ -328,28 +328,28 @@ class Children extends Object {
 
 @JsonSerializable()
 class Sku extends Object {
-  int id;
+  int? id;
 
-  int goodsId;
+  int? goodsId;
 
-  String combineId;
+  String? combineId;
 
-  String picUrl;
+  String? picUrl;
 
-  String code;
+  String? code;
 
-  double originalPrice;
+  double? originalPrice;
 
-  double discountPrice;
+  double? discountPrice;
 
-  double commission;
+  double? commission;
 
-  int salesVolume;
+  int? salesVolume;
 
-  int inventory;
+  int? inventory;
 
-  String name;
-  num coupon;
+  String? name;
+  num? coupon;
 
   Sku(
       this.id,
@@ -372,14 +372,14 @@ class Sku extends Object {
 
 @JsonSerializable()
 class Promotion extends Object {
-  int id;
-  int promotionId;
-  String promotionName;
-  String date;
-  int goodsId;
-  String startTime;
-  String endTime;
-  int totalInventory; //库存
+  int? id;
+  int? promotionId;
+  String? promotionName;
+  String? date;
+  int? goodsId;
+  String? startTime;
+  String? endTime;
+  int? totalInventory; //库存
 
   // String name;
 
@@ -399,7 +399,7 @@ class Promotion extends Object {
     if (TextUtils.isEmpty(this.startTime)) {
       return false;
     }
-    DateTime promotionDate = DateTime.parse(startTime);
+    DateTime promotionDate = DateTime.parse(startTime!);
     if (DateTime.now().isBefore(promotionDate)) {
       return true;
     }
@@ -409,26 +409,26 @@ class Promotion extends Object {
 
 @JsonSerializable()
 class Brand extends Object {
-  int id;
+  int? id;
 
-  String name;
+  String? name;
 
-  String desc;
+  String? desc;
 
-  String tel;
+  String? tel;
 
-  String web;
+  String? web;
 
-  int goodsCount;
+  int? goodsCount;
 
-  String logoUrl;
+  String? logoUrl;
 
-  String firstImg;
-  String lastImg;
+  String? firstImg;
+  String? lastImg;
 
   // String authUrl;
 
-  String showUrl;
+  String? showUrl;
 
   Brand(this.id, this.name, this.desc, this.tel, this.web, this.goodsCount,
       this.logoUrl, this.showUrl, this.firstImg, this.lastImg);
@@ -441,9 +441,9 @@ class Brand extends Object {
 
 @JsonSerializable()
 class Evaluations extends Object {
-  int total;
+  int? total;
 
-  List<Evaluation> children;
+  List<Evaluation>? children;
 
   Evaluations(
     this.total,
@@ -458,19 +458,19 @@ class Evaluations extends Object {
 
 @JsonSerializable()
 class Evaluation extends Object {
-  int id;
+  int? id;
 
-  int userId;
+  int? userId;
 
-  BigInt orderId;
+  BigInt? orderId;
 
-  int goodsId;
+  int? goodsId;
 
-  String nickname;
+  String? nickname;
 
-  String headImgUrl;
+  String? headImgUrl;
 
-  String content;
+  String? content;
 
   Evaluation(
     this.id,
@@ -490,31 +490,31 @@ class Evaluation extends Object {
 
 @JsonSerializable()
 class Coupons extends Object {
-  int id;
+  int? id;
 
-  String name;
+  String? name;
 
-  int quantity;
+  int? quantity;
 
-  int cash;
+  int? cash;
 
-  int threshold;
+  int? threshold;
 
-  double discount;
+  double? discount;
 
-  int limit;
+  int? limit;
 
-  int scope;
+  int? scope;
 
-  int type;
+  int? type;
 
-  int brandId;
+  int? brandId;
 
-  String startTime;
+  String? startTime;
 
-  String endTime;
+  String? endTime;
 
-  String explanation;
+  String? explanation;
 
   Coupons(
     this.id,
@@ -540,15 +540,15 @@ class Coupons extends Object {
 
 @JsonSerializable()
 class Video extends Object {
-  int id;
+  int? id;
 
-  String url;
+  String? url;
 
-  int duration;
+  int? duration;
 
-  double size;
+  double? size;
 
-  String thumbnail;
+  String? thumbnail;
 
   Video(this.id, this.url, this.duration, this.size, this.thumbnail);
 
@@ -560,10 +560,10 @@ class Video extends Object {
 
 @JsonSerializable()
 class Recommends extends Object {
-  String goodsName;
-  int goodsId;
-  String price;
-  String mainPhotoUrl;
+  String? goodsName;
+  int? goodsId;
+  String? price;
+  String? mainPhotoUrl;
 
   Recommends(this.goodsName, this.goodsId, this.price, this.mainPhotoUrl);
 
@@ -609,9 +609,9 @@ class Recommends extends Object {
 // }
 
 class Notice {
-  String title;
-  int type;
-  List<String> img;
+  String? title;
+  int? type;
+  List<String>? img;
 
   Notice({this.title, this.type, this.img});
 

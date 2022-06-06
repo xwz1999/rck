@@ -18,15 +18,15 @@ class ImageSelectedView<T> extends StatefulWidget {
   final double axisSpacing;
   final double crossAxisSpacing;
   final List<T> images;
-  final VoidCallback addListener;
-  final Function(int index) clickListener;
-  final Function(int index) deleteListener;
+  final VoidCallback? addListener;
+  final Function(int index)? clickListener;
+  final Function(int index)? deleteListener;
   final Widget Function(int index, T item) itemBuilder;
 
   const ImageSelectedView({
-    Key key,
-    @required this.itemBuilder,
-    @required this.images,
+    Key? key,
+    required this.itemBuilder,
+    required this.images,
     this.maxImages = 9,
     this.crossAxisCount = 4,
     this.padding = const EdgeInsets.all(3),
@@ -35,8 +35,7 @@ class ImageSelectedView<T> extends StatefulWidget {
     this.addListener,
     this.clickListener,
     this.deleteListener,
-  })  : assert(images != null),
-        super(key: key);
+  })  : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -74,7 +73,7 @@ class _ImageSelectedViewState extends State<ImageSelectedView> {
                 contentSpacing: rSize(10),
                 onPressed: () {
                   if (widget.addListener != null) {
-                    widget.addListener();
+                    widget.addListener!();
                   }
                 },
               );
@@ -97,7 +96,7 @@ class _ImageSelectedViewState extends State<ImageSelectedView> {
                       backgroundColor: Colors.black38,
                       onPressed: () {
                         if (widget.deleteListener != null) {
-                          widget.deleteListener(index);
+                          widget.deleteListener!(index);
                         }
                         // setState(() {
                         // widget.images.removeAt(index);

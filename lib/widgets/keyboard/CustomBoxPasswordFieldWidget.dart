@@ -6,7 +6,7 @@ class CustomBoxPasswordFieldWidget extends StatelessWidget {
   final int boxCount;
   final bool showString;
   final double width;
-  final Function click;
+  final Function? click;
   final double margin;
 
   CustomBoxPasswordFieldWidget(

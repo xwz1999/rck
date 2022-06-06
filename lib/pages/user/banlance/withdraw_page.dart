@@ -1,10 +1,7 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
@@ -26,7 +23,7 @@ import 'package:recook/widgets/recook_back_button.dart';
 
 class WithDrawPage extends StatefulWidget {
   WithDrawPage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -36,10 +33,10 @@ class WithDrawPage extends StatefulWidget {
 class _WithDrawPageState extends State<WithDrawPage>
     with TickerProviderStateMixin {
 
-  ContactInfoModel _model = ContactInfoModel(address: '',email: '',name: '',mobile: '');
+  ContactInfoModel? _model = ContactInfoModel(address: '',email: '',name: '',mobile: '');
 
 
-  WithdrawAmountModel _amount = WithdrawAmountModel(balance: 0,taxAmount: 0,withdrawal: 0,actualAmount: 0);
+  WithdrawAmountModel? _amount = WithdrawAmountModel(balance: 0,taxAmount: 0,withdrawal: 0,actualAmount: 0);
 
   @override
   void initState() {
@@ -238,7 +235,7 @@ class _WithDrawPageState extends State<WithDrawPage>
                     Spacer(),
                     GestureDetector(
                       onTap: () async{
-                        WholesaleCustomerModel model =
+                        WholesaleCustomerModel? model =
                         await WholesaleFunc.getCustomerInfo();
 
                         Get.to(() => WholesaleCustomerPage(
@@ -307,8 +304,8 @@ class _WithDrawPageState extends State<WithDrawPage>
                                     Spacer(),
                                     Text(
                                       '¥' +
-                                          TextUtils.getCount1((_amount.balance??
-                                              0.0)),
+                                          TextUtils.getCount1((_amount!.balance??
+                                              0.0))!,
                                       style: TextStyle(
                                           height: 1,
                                           color: Color(0xFF333333),
@@ -325,7 +322,7 @@ class _WithDrawPageState extends State<WithDrawPage>
                                     32.wb,
                                     GestureDetector(
                                       onTap: (){
-                                        Get.to(()=>WithdrawRulePage(type: UserManager.instance.userBrief.tax=='一般纳税人'?2:UserManager.instance.userBrief.tax==''?1:3,));///通过userInfo里的字段来判读
+                                        Get.to(()=>WithdrawRulePage(type: UserManager.instance!.userBrief!.tax=='一般纳税人'?2:UserManager.instance!.userBrief!.tax==''?1:3,));///通过userInfo里的字段来判读
                                       },
                                       child: Row(
                                         children: [
@@ -347,8 +344,8 @@ class _WithDrawPageState extends State<WithDrawPage>
                                     Spacer(),
                                     Text(
                                       '¥' +
-                                          TextUtils.getCount1((_amount.taxAmount ??
-                                              0.0)),
+                                          TextUtils.getCount1((_amount!.taxAmount ??
+                                              0.0))!,
                                       style: TextStyle(
                                           height: 1,
                                           color: Color(0xFF333333),
@@ -373,8 +370,8 @@ class _WithDrawPageState extends State<WithDrawPage>
                                     Spacer(),
                                     Text(
                                       '¥' +
-                                          TextUtils.getCount1((_amount.actualAmount??
-                                              0.0)),
+                                          TextUtils.getCount1((_amount!.actualAmount??
+                                              0.0))!,
                                       style: TextStyle(
                                           height: 1,
                                           color: Color(0xFF333333),
@@ -500,7 +497,7 @@ class _WithDrawPageState extends State<WithDrawPage>
                                   ),
                                   child: _textItem(
                                       '收件地址',
-                                      _model.address+' '+_model.name+' '+_model.mobile,
+                                      _model!.address!+' '+_model!.name!+' '+_model!.mobile!,
                                       show: true), //
                                 ),
                                 48.hb,
@@ -508,7 +505,7 @@ class _WithDrawPageState extends State<WithDrawPage>
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 16.rw,
                                   ),
-                                  child: _textItem('收件邮箱', _model.email,
+                                  child: _textItem('收件邮箱', _model!.email,
                                       show: true,height: 1),
                                 ),
                                 60.hb,
@@ -595,7 +592,7 @@ class _WithDrawPageState extends State<WithDrawPage>
     );
   }
 
-  _textItem(String title, String content, {bool show = false,double height = -1}) {
+  _textItem(String title, String? content, {bool show = false,double height = -1}) {
     return Container(
       color: Colors.transparent,
 
@@ -622,7 +619,7 @@ class _WithDrawPageState extends State<WithDrawPage>
           Padding(
             padding:  EdgeInsets.only(top: 2.rw),
             child: Text(
-              content,
+              content!,
               maxLines: 3,
 
               overflow: TextOverflow.ellipsis,
@@ -634,7 +631,7 @@ class _WithDrawPageState extends State<WithDrawPage>
             ),
           ):
             Text(
-              content,
+              content!,
               maxLines: 3,
 
               overflow: TextOverflow.ellipsis,
@@ -702,13 +699,13 @@ class _WithDrawPageState extends State<WithDrawPage>
           );
   }
 
-  Future<WithdrawAmountModel> getAllAmount(
+  Future<WithdrawAmountModel?> getAllAmount(
       ) async {
     ///channel 1 购物车购买 0直接购买
     ResultData res = await HttpManager.post(APIV2.userAPI.allAmount, {
     });
 
-    WithdrawAmountModel model;
+    WithdrawAmountModel? model;
 
     if(res.data!=null){
       if(res.data['code']=='FAIL'){

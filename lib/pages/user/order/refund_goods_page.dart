@@ -3,8 +3,6 @@ import 'dart:typed_data';
 import 'package:async/async.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:image_picker/image_picker.dart' as flutterImagePicker;
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -18,7 +16,6 @@ import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/image_picker.dart';
 import 'package:recook/widgets/image_selected_view.dart';
 import 'package:recook/widgets/input_view.dart';
 import 'package:recook/widgets/toast.dart';
@@ -27,8 +24,8 @@ import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 // import 'package:photo/photo.dart';
 
 class RefundGoodsPage extends StatefulWidget {
-  final Map arguments;
-  RefundGoodsPage({Key key, this.arguments}) : super(key: key);
+  final Map? arguments;
+  RefundGoodsPage({Key? key, this.arguments}) : super(key: key);
   static setArguments(List<int> goodsIds, List<Goods> goodsList) {
     return {"goodsIds": goodsIds, "goodsList": goodsList};
   }
@@ -38,22 +35,22 @@ class RefundGoodsPage extends StatefulWidget {
 }
 
 class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
-  List<Goods> _goodsList;
-  List<int> _goodsIds;
-  TextEditingController _reasonController;
+  List<Goods>? _goodsList;
+  List<int>? _goodsIds;
+  TextEditingController? _reasonController;
   //TODO 可能需要不止一个TextField，此页面只有单个TextEditingController
-  TextEditingController _ruiCoinController;
+  TextEditingController? _ruiCoinController;
   List<MediaModel> _imageFiles = [];
-  ReasonModel _selectReasonModel;
+  ReasonModel? _selectReasonModel;
 
   @override
   void initState() {
     super.initState();
-    _goodsList = widget.arguments["goodsList"];
-    _goodsIds = widget.arguments["goodsIds"];
+    _goodsList = widget.arguments!["goodsList"];
+    _goodsIds = widget.arguments!["goodsIds"];
     _reasonController = TextEditingController();
     _ruiCoinController = TextEditingController(
-      text: _goodsList[0].actualAmount.toStringAsFixed(2),
+      text: _goodsList![0].actualAmount!.toStringAsFixed(2),
     );
   }
 
@@ -67,7 +64,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
         style: TextStyle(color: Colors.white, fontSize: 16 * 2.sp),
         backgroundColor: AppColor.themeColor,
         onPressed: () {
-          FocusScope.of(globalContext).requestFocus(FocusNode());
+          FocusScope.of(globalContext!).requestFocus(FocusNode());
           _return();
         },
       ),
@@ -79,7 +76,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
       backgroundColor: AppColor.frenchColor,
       body: GestureDetector(
         onTap: () {
-          FocusScope.of(globalContext).requestFocus(FocusNode());
+          FocusScope.of(globalContext!).requestFocus(FocusNode());
         },
         child: _buildBody(),
       ),
@@ -126,9 +123,9 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
             child: ListView.builder(
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
-              itemCount: _goodsList.length,
+              itemCount: _goodsList!.length,
               itemBuilder: (BuildContext context, int index) {
-                return _goodsItem(_goodsList[index]);
+                return _goodsItem(_goodsList![index]);
               },
             ),
           ),
@@ -141,7 +138,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
     return CustomImageButton(
       onPressed: () {
         setState(() {
-          goods.selected = !goods.selected;
+          goods.selected = !goods.selected!;
         });
       },
       child: Container(
@@ -155,7 +152,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
               child: CustomCacheImage(
                 width: rSize(90),
                 height: rSize(90),
-                imageUrl: Api.getResizeImgUrl(goods.mainPhotoUrl, 80),
+                imageUrl: Api.getResizeImgUrl(goods.mainPhotoUrl!, 80),
                 borderRadius: BorderRadius.all(Radius.circular(6)),
               ),
             ),
@@ -167,7 +164,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      goods.goodsName,
+                      goods.goodsName!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: AppTextStyle.generate(
@@ -282,7 +279,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
                 ),
                 Spacer(),
                 Text(
-                  "最多${_goodsList.first.actualAmount.toStringAsFixed(2)}",
+                  "最多${_goodsList!.first.actualAmount!.toStringAsFixed(2)}",
                   style:
                       TextStyle(color: Color(0xff999999), fontSize: 12 * 2.sp),
                 ),
@@ -319,32 +316,32 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
   }
 
   _return() async {
-    if (TextUtils.isEmpty(_reasonController.text)) {
+    if (TextUtils.isEmpty(_reasonController!.text)) {
       showError("请输入退款原因!");
       return;
     }
     try {
-      num rui = num.parse(_ruiCoinController.text);
+      num rui = num.parse(_ruiCoinController!.text);
     } catch (e) {
       showError("请输入正确的需要返还的瑞币");
       return;
     }
-    GSDialog.of(globalContext).showLoadingDialog(globalContext, "");
+    GSDialog.of(globalContext).showLoadingDialog(globalContext!, "");
     await _uploadImages();
     String images = "";
     for (MediaModel media in _imageFiles) {
-      if (TextUtils.isEmpty(media.result.url)) {
-        GSDialog.of(globalContext).dismiss(globalContext);
-        showError("第${_imageFiles.indexOf(media) + 1}图片${media.result.msg}");
+      if (TextUtils.isEmpty(media.result!.url)) {
+        GSDialog.of(globalContext).dismiss(globalContext!);
+        showError("第${_imageFiles.indexOf(media) + 1}图片${media.result!.msg}");
         return;
       }
-      images = images + media.result.url + ",";
+      images = images + media.result!.url! + ",";
     }
     ResultData resultData = await HttpManager.post(OrderApi.order_refund, {
-      "userId": UserManager.instance.user.info.id,
+      "userId": UserManager.instance!.user.info!.id,
       "orderGoodsIDs": _goodsIds,
-      "coin": _ruiCoinController.text,
-      "reasonContent": _reasonController.text,
+      "coin": _ruiCoinController!.text,
+      "reasonContent": _reasonController!.text,
       "reasonImg": images
     });
     // ResultData resultData = await HttpManager.post(OrderApi.order_return, {
@@ -354,21 +351,21 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
     //   "reasonId": _selectReasonModel.id,
     //   "reasonImg": images,
     // });
-    GSDialog.of(globalContext).dismiss(globalContext);
+    GSDialog.of(globalContext).dismiss(globalContext!);
     if (!resultData.result) {
-      GSDialog.of(globalContext).showError(globalContext, resultData.msg);
+      GSDialog.of(globalContext).showError(globalContext!, resultData.msg);
       return;
     }
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      GSDialog.of(globalContext).showError(globalContext, model.msg);
+      GSDialog.of(globalContext).showError(globalContext!, model.msg);
       return;
     }
     Toast.showInfo("申请退货成功，请等待商家审核...");
-    Navigator.pop(globalContext, true);
+    Navigator.pop(globalContext!, true);
     //pop double times
-    Navigator.pop(globalContext, true);
-    Navigator.pop(globalContext, true);
+    Navigator.pop(globalContext!, true);
+    Navigator.pop(globalContext!, true);
   }
 
   _selectImageWidget() {
@@ -395,7 +392,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
 
   _imageSelect() {
     int maxImages = 5;
-    return ImageSelectedView<Uint8List>(
+    return ImageSelectedView<Uint8List?>(
       maxImages: maxImages,
       padding: EdgeInsets.all(rSize(10)),
       images: _imageFiles.map((MediaModel model) {
@@ -411,7 +408,7 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
         ActionSheet.show(context, items: ['拍照', '从手机相册选择'], listener: (index) async{
           ActionSheet.dismiss(context);
           if (index == 0) {
-            List<AssetEntity> entitys = [];
+            List<AssetEntity?> entitys = [];
             var values = await CameraPicker.pickFromCamera(context);
             entitys.add(values);
 
@@ -420,8 +417,8 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
             }
 
             for (var element in entitys) {
-              File file = await element.file;
-              Uint8List thumbData = await element.thumbData;
+              File? file = await element!.file;
+              Uint8List? thumbData = await element.thumbData;
               if (_imageFiles.length < maxImages) {
                 _imageFiles.add(MediaModel(
                   width: element.width,
@@ -450,8 +447,8 @@ class _RefundGoodsPageState extends BaseStoreState<RefundGoodsPage> {
             if (values == null) return;
             entitys.addAll(values);
             for (var element in entitys) {
-              File file = await element.file;
-              Uint8List thumbData = await element.thumbData;
+              File? file = await element.file;
+              Uint8List? thumbData = await element.thumbData;
               _imageFiles.add(MediaModel(
                 width: element.width,
                 height: element.height,

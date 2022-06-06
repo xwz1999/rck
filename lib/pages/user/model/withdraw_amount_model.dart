@@ -1,8 +1,8 @@
 class WithdrawAmountModel {
-  num balance;
-  num taxAmount;
-  num withdrawal;
-  num actualAmount;
+  num? balance;
+  num? taxAmount;
+  num? withdrawal;
+  num? actualAmount;
 
   WithdrawAmountModel(
       {this.balance, this.taxAmount, this.withdrawal, this.actualAmount});

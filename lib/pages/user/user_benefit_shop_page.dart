@@ -21,10 +21,10 @@ class UserBenefitShopPage extends StatefulWidget {
   final DateTime date;
 
   UserBenefitShopPage(
-      {Key key,
-      @required this.receivedType,
-      @required this.teamType,
-      @required this.date})
+      {Key? key,
+      required this.receivedType,
+      required this.teamType,
+      required this.date})
       : super(key: key);
 
   @override
@@ -38,11 +38,11 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
   String _count = '0'; //订单数
   String _amount = '0.00'; //补贴
   String _title = '';
-  UserBenefitDayTeamModel _dayModel;
-  UserBenefitMonthTeamModel _monthModel;
+  UserBenefitDayTeamModel? _dayModel;
+  UserBenefitMonthTeamModel? _monthModel;
   String _formatType = 'MM-dd'; //时间选择器按钮样式
-  List<UserIncomeDay> _userIncomeDaylist; //到账收益团队列表
-  Timer _timer;
+  List<UserIncomeDay>? _userIncomeDaylist; //到账收益团队列表
+  Timer? _timer;
 
   bool _sortGroup = false;
   bool _sortOrder = false;
@@ -138,8 +138,8 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
 
   ///时间选择器
   showTimePickerBottomSheet(
-      {List<BottomTimePickerType> timePickerTypes,
-      Function(DateTime, BottomTimePickerType) submit}) {
+      {List<BottomTimePickerType>? timePickerTypes,
+      Function(DateTime, BottomTimePickerType)? submit}) {
     showModalBottomSheet(
       isScrollControlled: false,
       context: context,
@@ -259,35 +259,35 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
                           if (widget.receivedType == '已到账' &&
                               widget.teamType == 1) {
                             //第一个本人默认不变 对后续的进行排序
-                            List<UserIncomeMonth> userIncome = _monthModel
-                                .userIncome
-                                .sublist(1, _monthModel.userIncome.length);
+                            List<UserIncomeMonth> userIncome = _monthModel!
+                                .userIncome!
+                                .sublist(1, _monthModel!.userIncome!.length);
                             userIncome
-                                .sort((a, b) => b.count.compareTo(a.count));
-                            _monthModel.userIncome.replaceRange(
-                                1, _monthModel.userIncome.length, userIncome);
+                                .sort((a, b) => b.count!.compareTo(a.count!));
+                            _monthModel!.userIncome!.replaceRange(
+                                1, _monthModel!.userIncome!.length, userIncome);
                           } else if (widget.receivedType == '已到账' &&
                               widget.teamType != 1) {
-                            _monthModel.userIncome
-                                .sort((a, b) => b.count.compareTo(a.count));
+                            _monthModel!.userIncome!
+                                .sort((a, b) => b.count!.compareTo(a.count!));
                           } else if (widget.receivedType == '未到账' &&
                               widget.teamType == 1) {
                             //第一个本人默认不变 对后续的进行排序
-                            List<UserIncomeDay> userIncome = _userIncomeDaylist
-                                .sublist(1, _userIncomeDaylist.length);
+                            List<UserIncomeDay> userIncome = _userIncomeDaylist!
+                                .sublist(1, _userIncomeDaylist!.length);
 
                             userIncome
-                                .sort((a, b) => b.count.compareTo(a.count));
+                                .sort((a, b) => b.count!.compareTo(a.count!));
                             try {
-                              _userIncomeDaylist.replaceRange(
-                                  1, _userIncomeDaylist.length, userIncome);
+                              _userIncomeDaylist!.replaceRange(
+                                  1, _userIncomeDaylist!.length, userIncome);
                             } catch (e) {
                               print(e);
                             }
                           } else if (widget.receivedType == '未到账' &&
                               widget.teamType != 1) {
-                            _userIncomeDaylist
-                                .sort((a, b) => b.count.compareTo(a.count));
+                            _userIncomeDaylist!
+                                .sort((a, b) => b.count!.compareTo(a.count!));
                           }
                         });
                       },
@@ -316,30 +316,30 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
                           if (widget.receivedType == '已到账' &&
                               widget.teamType == 1) {
                             //第一个本人默认不变 对后续的进行排序
-                            List<UserIncomeMonth> userIncome = _monthModel
-                                .userIncome
-                                .sublist(1, _monthModel.userIncome.length);
+                            List<UserIncomeMonth> userIncome = _monthModel!
+                                .userIncome!
+                                .sublist(1, _monthModel!.userIncome!.length);
                             userIncome.sort((a, b) =>
-                                b.order_count.compareTo(a.order_count));
-                            _monthModel.userIncome.replaceRange(
-                                1, _monthModel.userIncome.length, userIncome);
+                                b.order_count!.compareTo(a.order_count!));
+                            _monthModel!.userIncome!.replaceRange(
+                                1, _monthModel!.userIncome!.length, userIncome);
                           } else if (widget.receivedType == '已到账' &&
                               widget.teamType != 1) {
-                            _monthModel.userIncome.sort((a, b) =>
-                                b.order_count.compareTo(a.order_count));
+                            _monthModel!.userIncome!.sort((a, b) =>
+                                b.order_count!.compareTo(a.order_count!));
                           } else if (widget.receivedType == '未到账' &&
                               widget.teamType == 1) {
                             //第一个本人默认不变 对后续的进行排序
-                            List<UserIncomeDay> userIncome = _userIncomeDaylist
-                                .sublist(1, _userIncomeDaylist.length);
+                            List<UserIncomeDay> userIncome = _userIncomeDaylist!
+                                .sublist(1, _userIncomeDaylist!.length);
                             userIncome.sort((a, b) =>
-                                b.order_count.compareTo(a.order_count));
-                            _userIncomeDaylist.replaceRange(
-                                1, _userIncomeDaylist.length, userIncome);
+                                b.order_count!.compareTo(a.order_count!));
+                            _userIncomeDaylist!.replaceRange(
+                                1, _userIncomeDaylist!.length, userIncome);
                           } else if (widget.receivedType == '未到账' &&
                               widget.teamType != 1) {
-                            _userIncomeDaylist.sort((a, b) =>
-                                b.order_count.compareTo(a.order_count));
+                            _userIncomeDaylist!.sort((a, b) =>
+                                b.order_count!.compareTo(a.order_count!));
                           }
                         });
                       },
@@ -369,30 +369,30 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
                           if (widget.receivedType == '已到账' &&
                               widget.teamType == 1) {
                             //第一个本人默认不变 对后续的进行排序
-                            List<UserIncomeMonth> userIncome = _monthModel
-                                .userIncome
-                                .sublist(1, _monthModel.userIncome.length);
+                            List<UserIncomeMonth> userIncome = _monthModel!
+                                .userIncome!
+                                .sublist(1, _monthModel!.userIncome!.length);
                             userIncome
-                                .sort((a, b) => b.amount.compareTo(a.amount));
-                            _monthModel.userIncome.replaceRange(
-                                1, _monthModel.userIncome.length, userIncome);
+                                .sort((a, b) => b.amount!.compareTo(a.amount!));
+                            _monthModel!.userIncome!.replaceRange(
+                                1, _monthModel!.userIncome!.length, userIncome);
                           } else if (widget.receivedType == '已到账' &&
                               widget.teamType != 1) {
-                            _monthModel.userIncome
-                                .sort((a, b) => b.amount.compareTo(a.amount));
+                            _monthModel!.userIncome!
+                                .sort((a, b) => b.amount!.compareTo(a.amount!));
                           } else if (widget.receivedType == '未到账' &&
                               widget.teamType == 1) {
                             //第一个本人默认不变 对后续的进行排序
-                            List<UserIncomeDay> userIncome = _userIncomeDaylist
-                                .sublist(1, _userIncomeDaylist.length);
+                            List<UserIncomeDay> userIncome = _userIncomeDaylist!
+                                .sublist(1, _userIncomeDaylist!.length);
                             userIncome
-                                .sort((a, b) => b.amount.compareTo(a.amount));
-                            _userIncomeDaylist.replaceRange(
-                                1, _userIncomeDaylist.length, userIncome);
+                                .sort((a, b) => b.amount!.compareTo(a.amount!));
+                            _userIncomeDaylist!.replaceRange(
+                                1, _userIncomeDaylist!.length, userIncome);
                           } else if (widget.receivedType == '未到账' &&
                               widget.teamType != 1) {
-                            _userIncomeDaylist
-                                .sort((a, b) => b.amount.compareTo(a.amount));
+                            _userIncomeDaylist!
+                                .sort((a, b) => b.amount!.compareTo(a.amount!));
                           }
                         });
                       },
@@ -419,7 +419,7 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
               physics: NeverScrollableScrollPhysics(),
               //reverse: _itemReverse,
               children: widget.receivedType == '已到账'
-                  ? _monthModel.userIncome
+                  ? _monthModel!.userIncome!
                       .map((e) {
                         return UserPartnerCard(
                             userId: e.userId,
@@ -428,10 +428,10 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
                             phone: e.phone ?? '',
                             wechatNo: e.wechatNo ?? '',
                             remarkName: e.remarkName ?? '',
-                            count: e.count ?? '',
-                            roleLevel: e.roleLevel ?? '',
-                            amount: e.amount ?? '',
-                            order_count: e.order_count ?? '');
+                            count: e.count ?? '' as int?,
+                            roleLevel: e.roleLevel ?? '' as int?,
+                            amount: e.amount ?? '' as num?,
+                            order_count: e.order_count ?? '' as int?);
                       })
                       .toList()
                       .sepWidget(
@@ -442,7 +442,7 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
                         height: rSize(1),
                         thickness: rSize(1),
                       ))
-                  : _userIncomeDaylist
+                  : _userIncomeDaylist!
                       .map((e) {
                         return UserPartnerCard(
                             userId: e.userId,
@@ -451,10 +451,10 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
                             phone: e.phone ?? '',
                             wechatNo: e.wechatNo ?? '',
                             remarkName: e.remarkName ?? '',
-                            count: e.count ?? '',
-                            roleLevel: e.roleLevel ?? '',
-                            amount: e.amount ?? '',
-                            order_count: e.order_count ?? '');
+                            count: e.count ?? '' as int?,
+                            roleLevel: e.roleLevel ?? '' as int?,
+                            amount: e.amount ?? '' as num?,
+                            order_count: e.order_count ?? '' as int?);
                       })
                       .toList()
                       .sepWidget(
@@ -524,7 +524,7 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
     );
   }
 
-  Widget noMoreDataView({String text, Widget icon}) {
+  Widget noMoreDataView({String? text, Widget? icon}) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 10),
       width: double.infinity,
@@ -542,7 +542,7 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
             height: 10,
           ),
           Text(
-            TextUtils.isEmpty(text) ? "这是我最后的底线" : text,
+            TextUtils.isEmpty(text) ? "这是我最后的底线" : text!,
             style: TextStyle(color: Color(0xff666666), fontSize: 12),
           )
         ],
@@ -631,11 +631,11 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
                       {}
                       break;
                   }
-                  _subsidy = _monthModel.ratio.toString(); //比例
+                  _subsidy = _monthModel!.ratio.toString(); //比例
                   _salesVolume =
-                      _monthModel.salesVolume.toStringAsFixed(2); //销售额
-                  _count = _monthModel.order_count.toString(); //订单数
-                  _amount = _monthModel.amount.toStringAsFixed(2); //补贴
+                      _monthModel!.salesVolume!.toStringAsFixed(2); //销售额
+                  _count = _monthModel!.order_count.toString(); //订单数
+                  _amount = _monthModel!.amount!.toStringAsFixed(2); //补贴
                   _isOver = true;
                 } else if (widget.receivedType == '未到账') {
                   //未到账 日收益
@@ -643,37 +643,37 @@ class _UserBenefitShopPageState extends State<UserBenefitShopPage> {
                   _dayModel = await UserBenefitFunc.teamNotReceicedDay(
                       DateUtil.formatDate(_date, format: 'yyyy-MM-dd'));
                   if (widget.teamType == 1) {
-                    _subsidy = _dayModel.team.ratio.toString();
+                    _subsidy = _dayModel!.team!.ratio.toString();
                     _salesVolume =
-                        _dayModel.team.salesVolume.toStringAsFixed(2);
-                    _count = _dayModel.team.order_count.toString();
-                    _amount = _dayModel.team.amount.toStringAsFixed(2); //补贴
+                        _dayModel!.team!.salesVolume!.toStringAsFixed(2);
+                    _count = _dayModel!.team!.order_count.toString();
+                    _amount = _dayModel!.team!.amount!.toStringAsFixed(2); //补贴
                   } else if (widget.teamType == 2) {
-                    _subsidy = _dayModel.recommend.ratio.toString();
+                    _subsidy = _dayModel!.recommend!.ratio.toString();
                     _salesVolume =
-                        _dayModel.recommend.salesVolume.toStringAsFixed(2);
-                    _count = _dayModel.recommend.order_count.toString();
+                        _dayModel!.recommend!.salesVolume!.toStringAsFixed(2);
+                    _count = _dayModel!.recommend!.order_count.toString();
                     _amount =
-                        _dayModel.recommend.amount.toStringAsFixed(2); //补贴
+                        _dayModel!.recommend!.amount!.toStringAsFixed(2); //补贴
                   } else if (widget.teamType == 3) {
-                    _subsidy = _dayModel.reward.ratio.toString();
+                    _subsidy = _dayModel!.reward!.ratio.toString();
                     _salesVolume =
-                        _dayModel.reward.salesVolume.toStringAsFixed(2);
-                    _count = _dayModel.reward.order_count.toString();
-                    _amount = _dayModel.reward.amount.toStringAsFixed(2); //补贴
+                        _dayModel!.reward!.salesVolume!.toStringAsFixed(2);
+                    _count = _dayModel!.reward!.order_count.toString();
+                    _amount = _dayModel!.reward!.amount!.toStringAsFixed(2); //补贴
                   }
                   _isOver = true;
                 }
 
                 if (_isOver) {
                   if (widget.teamType == 1 && widget.receivedType == '未到账') {
-                    _userIncomeDaylist = _dayModel.teamList;
+                    _userIncomeDaylist = _dayModel!.teamList;
                   } else if (widget.teamType == 2 &&
                       widget.receivedType == '未到账') {
-                    _userIncomeDaylist = _dayModel.recommendList;
+                    _userIncomeDaylist = _dayModel!.recommendList;
                   } else if (widget.teamType == 3 &&
                       widget.receivedType == '未到账') {
-                    _userIncomeDaylist = _dayModel.rewardList;
+                    _userIncomeDaylist = _dayModel!.rewardList;
                   }
                 }
 

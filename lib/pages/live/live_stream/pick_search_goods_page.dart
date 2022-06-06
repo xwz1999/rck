@@ -11,8 +11,8 @@ import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 class PickSearchGoodsPage extends StatefulWidget {
-  final Function(GoodsList model) onPick;
-  PickSearchGoodsPage({Key key, this.onPick}) : super(key: key);
+  final Function(GoodsList model)? onPick;
+  PickSearchGoodsPage({Key? key, this.onPick}) : super(key: key);
 
   @override
   _PickSearchGoodsPageState createState() => _PickSearchGoodsPageState();
@@ -38,8 +38,8 @@ class _PickSearchGoodsPageState extends State<PickSearchGoodsPage> {
 
   @override
   void dispose() {
-    _controller?.dispose();
-    _editingController?.dispose();
+    _controller.dispose();
+    _editingController.dispose();
     super.dispose();
   }
 
@@ -242,7 +242,7 @@ class _PickSearchGoodsPageState extends State<PickSearchGoodsPage> {
       'page': 1,
       'limit': 5,
     });
-    if (resultData?.data['data']['list'] == null)
+    if (resultData.data['data']['list'] == null)
       return [];
     else
       return (resultData.data['data']['list'] as List)
@@ -257,10 +257,10 @@ class _PickSearchGoodsPageState extends State<PickSearchGoodsPage> {
       'limit': 15,
     });
 
-    if (resultData?.data['data']['list'] == null)
+    if (resultData.data['data']['list'] == null)
       return [];
     else
-      return (resultData?.data['data']['list'] as List)
+      return (resultData.data['data']['list'] as List)
           .map((e) => GoodsList.fromJson(e))
           .toList();
   }

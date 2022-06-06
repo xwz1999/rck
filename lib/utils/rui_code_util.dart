@@ -1,9 +1,9 @@
 import 'dart:math';
 
 class RUICodeModel {
-  int goodsId;
-  int userId;
-  String invite;
+  int? goodsId;
+  int? userId;
+  String? invite;
   RUICodeModel({
     this.goodsId,
     this.userId,
@@ -16,7 +16,7 @@ class RUICodeUtil {
       'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKL1234567890';
 
   ///云口令加密
-  static String encrypt(int goodsId, int userId,String invite) {
+  static String encrypt(int goodsId, int userId,String? invite) {
     return '¥¥${_num2String(goodsId)}${split()}${_num2String(userId)}¥¥#$invite#';
   }
 
@@ -59,7 +59,7 @@ class RUICodeUtil {
     List<String> tempList = value.split('');
     int count = 0;
     while (tempList.isNotEmpty) {
-      result += secureStr.indexOf(tempList.last) * pow(secureStr.length, count);
+      result += secureStr.indexOf(tempList.last) * (pow(secureStr.length, count) as int);
       count++;
       tempList.removeLast();
     }

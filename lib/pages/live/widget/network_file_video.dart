@@ -4,13 +4,13 @@ import 'package:recook/widgets/play_widget/video_player.dart';
 
 
 class NetworkFileVideo extends StatefulWidget {
-  final String path;
-  final double aspectRatio;
-  final PageController pageController;
-  final int page;
+  final String? path;
+  final double? aspectRatio;
+  final PageController? pageController;
+  final int? page;
   NetworkFileVideo({
-    Key key,
-    @required this.path,
+    Key? key,
+    required this.path,
     this.aspectRatio,
     this.pageController,
     this.page,

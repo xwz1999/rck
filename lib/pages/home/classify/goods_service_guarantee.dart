@@ -17,10 +17,10 @@ import 'package:recook/widgets/text_button.dart' as TButton;
 
 class GoodsServiceGuarantee extends StatefulWidget {
   // final List<Sku> skus;
-  final GoodsDetailModel model;
+  final GoodsDetailModel? model;
 
 
-  const GoodsServiceGuarantee({Key key, this.model}) : super(key: key);
+  const GoodsServiceGuarantee({Key? key, this.model}) : super(key: key);
 
   // const GoodsServiceGuarantee({Key key, this.skus}) : super(key: key);
 
@@ -45,7 +45,7 @@ class _GoodsServiceGuaranteeState
       onTap: () {},
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
-        height: DeviceInfo.screenHeight * 0.6,
+        height: DeviceInfo.screenHeight! * 0.6,
         decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.vertical(top: Radius.circular(8))),
@@ -70,7 +70,7 @@ class _GoodsServiceGuaranteeState
                   _contentView('发货&售后',
                       '由平台认证供应商或者品牌商直接发货,也可直接在瑞库客门店提货;由认证供应商或者品牌商提供售后服务'),
                   _contentView('售后无忧', '瑞库客购无忧,售后更无忧,您的售后,由瑞库客平台客服全力护航'),
-                  UserManager.instance.isWholesale?SizedBox():widget.model.data.isAllow?  _contentView('支持七天无理由退换货', '该商品支持七天无理由退货(未使用)'):SizedBox(),
+                  UserManager.instance!.isWholesale?SizedBox():widget.model!.data!.isAllow!?  _contentView('支持七天无理由退换货', '该商品支持七天无理由退货(未使用)'):SizedBox(),
                 ],
               )),
               TButton.TextButton(

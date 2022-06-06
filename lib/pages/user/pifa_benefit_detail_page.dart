@@ -16,14 +16,14 @@ import 'package:velocity_x/velocity_x.dart';
 import 'model/pifa_benefit_model.dart';
 
 class PifaBenefitDetailPage extends StatefulWidget {
-  final PifaBenefit type;
-  final String shopName;
-  final int shopId;
-  final bool isDetail;
+  final PifaBenefit? type;
+  final String? shopName;
+  final int? shopId;
+  final bool? isDetail;
 
   PifaBenefitDetailPage({
-    Key key,
-    @required this.type,
+    Key? key,
+    required this.type,
     this.shopName,
     this.shopId,
     this.isDetail,
@@ -39,7 +39,7 @@ class _PifaBenefitDetailPageState extends State<PifaBenefitDetailPage> {
   String _title = '';
 
   String _all = '0.00';
-  PifaBenefit _type;
+  PifaBenefit? _type;
   bool _selfChoose = true; //选择自营补贴
   bool _guideChoose = false;
 
@@ -57,7 +57,7 @@ class _PifaBenefitDetailPageState extends State<PifaBenefitDetailPage> {
   DateTime _date = DateTime.now();
   String formatType = 'yyyy-MM'; //时间选择器按钮样式
 
-  PifaBenefitModel _models; //自购导购未到已到收益
+  PifaBenefitModel? _models; //自购导购未到已到收益
 
   bool isSelfAndGuide = false;
 
@@ -132,8 +132,8 @@ class _PifaBenefitDetailPageState extends State<PifaBenefitDetailPage> {
 
   ///时间选择器
   showTimePickerBottomSheet(
-      {List<BottomTimePickerType> timePickerTypes,
-      Function(DateTime, BottomTimePickerType) submit}) {
+      {List<BottomTimePickerType>? timePickerTypes,
+      Function(DateTime, BottomTimePickerType)? submit}) {
     showModalBottomSheet(
       isScrollControlled: false,
       context: context,
@@ -164,7 +164,7 @@ class _PifaBenefitDetailPageState extends State<PifaBenefitDetailPage> {
     return Row(
       children: [
         Text(
-          text ?? '',
+          text ,
           style: TextStyle(color: Color(0xFF999999), fontSize: 14.rsp),
           textAlign: TextAlign.center,
         ),
@@ -172,7 +172,7 @@ class _PifaBenefitDetailPageState extends State<PifaBenefitDetailPage> {
           children: [
             5.hb,
             Text(
-              amount ?? '0.00',
+              amount ,
               style: TextStyle(color: Color(0xFFD5101A), fontSize: 14.rsp),
               textAlign: TextAlign.center,
             )
@@ -318,9 +318,9 @@ class _PifaBenefitDetailPageState extends State<PifaBenefitDetailPage> {
             _models = await UserBenefitFunc.getBenefit(8,date: DateUtil.formatDate(_date, format: 'yyyyMM'));
           }
           if (_models != null) {
-            _all = _models.all.toStringAsFixed(2);
-            _notAmount = _models.weiDaoZ.toStringAsFixed(2);
-            _amount = _models.yiDaoZ.toStringAsFixed(2);
+            _all = _models!.all!.toStringAsFixed(2);
+            _notAmount = _models!.weiDaoZ!.toStringAsFixed(2);
+            _amount = _models!.yiDaoZ!.toStringAsFixed(2);
           }
 
           setState(() {});
@@ -529,7 +529,7 @@ class _PifaBenefitDetailPageState extends State<PifaBenefitDetailPage> {
                 width: 200.w,
                 color: Colors.white,
                 child: Text(
-                  detail.name,
+                  detail.name!,
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF333333),
@@ -555,7 +555,7 @@ class _PifaBenefitDetailPageState extends State<PifaBenefitDetailPage> {
                 width: 220.w,
                 color: Colors.white,
                 child: Text(
-                  detail.notIncome.toStringAsFixed(2),
+                  detail.notIncome!.toStringAsFixed(2),
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF333333),
@@ -568,7 +568,7 @@ class _PifaBenefitDetailPageState extends State<PifaBenefitDetailPage> {
                 width: 220.w,
                 color: Colors.white,
                 child: Text(
-                  (detail.income).toStringAsFixed(2),
+                  detail.income!.toStringAsFixed(2),
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     color: Color(0xffD5101A),
@@ -584,16 +584,16 @@ class _PifaBenefitDetailPageState extends State<PifaBenefitDetailPage> {
   }
 
   _buildTableList() {
-    return _models.entry == null
+    return _models!.entry == null
         ? SizedBox()
         : ListView.builder(
             physics: NeverScrollableScrollPhysics(),
-            itemCount: _models.entry.length,
+            itemCount: _models!.entry!.length,
             itemBuilder: (context, i) {
-              PifaBenefitModel userIncomeModel = _models;
+              PifaBenefitModel? userIncomeModel = _models;
               return _type == PifaBenefit.piFa
-                  ? _buildTableBody(userIncomeModel.entry[i], i)
-                  : _buildTable(userIncomeModel.entry[i], i);
+                  ? _buildTableBody(userIncomeModel!.entry![i], i)
+                  : _buildTable(userIncomeModel!.entry![i], i);
             },
           );
   }
@@ -669,7 +669,7 @@ class _PifaBenefitDetailPageState extends State<PifaBenefitDetailPage> {
           width: 190.w,
           color: Colors.white,
           child: Text(
-            detail.name,
+            detail.name!,
             style: TextStyle(
               fontWeight: FontWeight.w400,
               color: Color(0xFF333333),
@@ -682,7 +682,7 @@ class _PifaBenefitDetailPageState extends State<PifaBenefitDetailPage> {
           width: 205.w,
           color: Colors.white,
           child: Text(
-            detail.amount.toStringAsFixed(2),
+            detail.amount!.toStringAsFixed(2),
             style: TextStyle(
               fontWeight: FontWeight.w400,
               color: Color(0xFF333333),
@@ -709,7 +709,7 @@ class _PifaBenefitDetailPageState extends State<PifaBenefitDetailPage> {
           width: 240.w,
           color: Colors.white,
           child: Text(
-            (detail.income + detail.notIncome).toStringAsFixed(2),
+            (detail.income! + detail.notIncome!).toStringAsFixed(2),
             style: TextStyle(
               fontWeight: FontWeight.w400,
               color: Color(0xffD5101A),

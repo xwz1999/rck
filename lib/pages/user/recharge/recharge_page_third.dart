@@ -1,9 +1,6 @@
 import 'dart:ui';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -17,13 +14,13 @@ import 'package:recook/widgets/recook_back_button.dart';
 
 class RechargePageThird extends StatefulWidget {
 
-  final String amount;
-  final String time;
-  final String logisticsNumber;
-  final String licenseFiles;
+  final String? amount;
+  final String? time;
+  final String? logisticsNumber;
+  final String? licenseFiles;
 
   RechargePageThird({
-    Key key, this.amount, this.time, this.logisticsNumber, this.licenseFiles,
+    Key? key, this.amount, this.time, this.logisticsNumber, this.licenseFiles,
   }) : super(key: key);
 
   @override
@@ -38,7 +35,7 @@ class _RechargePageThirdState extends State<RechargePageThird>
   @override
   void initState() {
     super.initState();
-    images = widget.licenseFiles.split(';');
+    images = widget.licenseFiles!.split(';');
 
   }
 
@@ -227,7 +224,7 @@ class _RechargePageThirdState extends State<RechargePageThird>
                     Spacer(),
                     GestureDetector(
                       onTap: () async{
-                        WholesaleCustomerModel model =
+                        WholesaleCustomerModel? model =
                         await WholesaleFunc.getCustomerInfo();
 
                         Get.to(() => WholesaleCustomerPage(
@@ -269,7 +266,7 @@ class _RechargePageThirdState extends State<RechargePageThird>
                 20.hb,
                 Padding(
                   padding: EdgeInsets.only(left: 16.rw,right: 16.rw),
-                  child: _textItem('充值金额',widget.amount,isRed:true),
+                  child: _textItem('充值金额',widget.amount!,isRed:true),
                 ),
                 35.hb,
 
@@ -308,15 +305,19 @@ class _RechargePageThirdState extends State<RechargePageThird>
                               images.forEach((element) {
                                 picSwiperItem.add(PicSwiperItem(Api.getImgUrl(element)));
                               });
-
-                              AppRouter.fade(
-                                context,
-                                RouteName.PIC_SWIPER,
-                                arguments: PicSwiper.setArguments(
-                                  index: index,
-                                  pics: picSwiperItem,
-                                ),
-                              );
+                              //
+                              // AppRouter.fade(
+                              //   context,
+                              //   RouteName.PIC_SWIPER,
+                              //   arguments: PicSwiper.setArguments(
+                              //     index: index,
+                              //     pics: picSwiperItem,
+                              //   ),
+                              // );
+                              Get.to(()=>PicSwiper(arguments: PicSwiper.setArguments(
+                                index: index,
+                                pics: picSwiperItem,
+                              )));
                             },
                             child:         Container(
                                 margin: EdgeInsets.only(top: 5),
@@ -325,7 +326,7 @@ class _RechargePageThirdState extends State<RechargePageThird>
                                 child: FadeInImage.assetNetwork(
                                   placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                                   image: Api.getImgUrl(
-                                      images[index],),
+                                      images[index],)!,
                                 )),
                           );
 
@@ -337,7 +338,7 @@ class _RechargePageThirdState extends State<RechargePageThird>
                 35.hb,
                 Padding(
                   padding: EdgeInsets.only(left: 16.rw,right: 16.rw),
-                  child: _textItem('申请时间',widget.time),
+                  child: _textItem('申请时间',widget.time!),
                 ),
                 35.hb,
               ],

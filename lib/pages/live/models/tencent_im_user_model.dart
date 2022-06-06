@@ -1,6 +1,6 @@
 class TencentIMUserModel {
-  String identifier;
-  String sign;
+  String? identifier;
+  String? sign;
 
   TencentIMUserModel({this.identifier, this.sign});
 

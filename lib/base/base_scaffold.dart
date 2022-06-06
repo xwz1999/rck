@@ -26,13 +26,13 @@ class BaseScaffold extends Scaffold {
       this.elevation = 4})
       : super(
           appBar: customAppBar != null
-              ? customAppBar
+              ? customAppBar as PreferredSizeWidget?
               : CustomAppBar(
                   title: title is String ? Text(title) : title,
                   leading: leading,
                   actions: actions,
                   titleSpacing: titleSpacing,
-                  themeData: themeData.appBarTheme,
+                  themeData: themeData!.appBarTheme,
                   elevation: elevation,
                   appBackground: appBackground,
                 ),
@@ -47,14 +47,14 @@ class BaseScaffold extends Scaffold {
   final title;
   final double titleSpacing;
   final double elevation;
-  final ThemeData themeData;
-  final Color appBackground;
-  final Color background;
-  final Widget customAppBar;
-  final List<Widget> actions;
-  final Widget leading;
-  final Widget body;
-  final Widget bottomNavigationBar;
-  final Widget bottomSheet;
+  final ThemeData? themeData;
+  final Color? appBackground;
+  final Color? background;
+  final Widget? customAppBar;
+  final List<Widget>? actions;
+  final Widget? leading;
+  final Widget? body;
+  final Widget? bottomNavigationBar;
+  final Widget? bottomSheet;
 
 }

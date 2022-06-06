@@ -19,9 +19,9 @@ import 'package:recook/widgets/text_button.dart' as TButton;
 import 'package:recook/widgets/toast.dart';
 
 class CouponItem extends StatefulWidget {
-  final Coupon coupon;
+  final Coupon? coupon;
 
-  const CouponItem({Key key, this.coupon}) : super(key: key);
+  const CouponItem({Key? key, this.coupon}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -34,16 +34,20 @@ class _CouponItemState extends State<CouponItem> {
 
   @override
   Widget build(BuildContext context) {
-    bool discount = widget.coupon.type == 1;
-    bool common = widget.coupon.scope == 0;
+    bool discount = widget.coupon!.type == 1;
+    bool common = widget.coupon!.scope == 0;
 //    String discountString = widget.coupon.discount % 1 != 0
 //        ? widget.coupon.discount.toString()
 //        : widget.coupon.discount.round().toString();
 
     bool received = false;
-//    bool received = widget.coupon.isReceived == 1;
-    Color bgColor = received ? Colors.grey[200] : Color(0xFFFDE8E8);
-    Color textColor = received ? Colors.grey : _mainColor;
+  // bool received = widget.coupon.isReceived == 1;
+  //   Color? bgColor = received ? Colors.grey[200] : Color(0xFFFDE8E8);
+  //   Color textColor = received ? Colors.grey : _mainColor;
+
+
+    Color? bgColor =  Color(0xFFFDE8E8);
+    Color textColor =  _mainColor;
 
     return Stack(children: [
       Container(
@@ -68,7 +72,7 @@ class _CouponItemState extends State<CouponItem> {
                           style: TextStyle(color: textColor, fontSize: 14),
                           children: [
                             new TextSpan(
-                              text: widget.coupon.cash.toString(),
+                              text: widget.coupon!.cash.toString(),
                               style: new TextStyle(
                                   color: textColor,
                                   fontSize: 25 * 2.sp,
@@ -81,7 +85,7 @@ class _CouponItemState extends State<CouponItem> {
                                   color: textColor, fontSize: 14 * 2.sp),
                             ),
                             new TextSpan(
-                              text: " (${widget.coupon.explanation})",
+                              text: " (${widget.coupon!.explanation})",
                               style: TextStyle(
                                   color: textColor, fontSize: 13 * 2.sp),
                             ),
@@ -89,18 +93,18 @@ class _CouponItemState extends State<CouponItem> {
                       textAlign: TextAlign.justify,
                     ),
                     Text(
-                      widget.coupon.threshold == 0
+                      widget.coupon!.threshold == 0
                           ? "全场通用无限制"
-                          : "满${widget.coupon.threshold}可用",
+                          : "满${widget.coupon!.threshold}可用",
                       style: TextStyle(color: textColor, fontSize: 12 * 2.sp),
                     ),
                     Text(
                       "有效期 ${TimeTransitionUtil.timeToFormatString(
                         ".",
-                        timeString: widget.coupon.startTime,
+                        timeString: widget.coupon!.startTime,
                       )}-${TimeTransitionUtil.timeToFormatString(
                         ".",
-                        timeString: widget.coupon.endTime,
+                        timeString: widget.coupon!.endTime,
                       )}",
                       style: TextStyle(color: textColor, fontSize: 12 * 2.sp),
                     ),
@@ -147,7 +151,7 @@ class _CouponItemState extends State<CouponItem> {
               backgroundColor: bgColor,
               onTap: () {
                 CouponListImpl.receiveCoupon(
-                        UserManager.instance.user.info.id, widget.coupon.id)
+                        UserManager.instance!.user.info!.id, widget.coupon!.id)
                     .then((BaseModel model) {
                   if (model.code != HttpStatus.SUCCESS) {
                     Toast.showInfo(model.msg, color: Colors.red);

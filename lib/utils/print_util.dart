@@ -8,7 +8,7 @@
  */
 
 class DPrint {
-  static printf(Object obj) {
+  static printf(Object? obj) {
     // if (AppConfig.debug) {
       print(obj);
     // }

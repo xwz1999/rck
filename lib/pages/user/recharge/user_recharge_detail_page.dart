@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/api_v2.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -18,10 +17,10 @@ import 'package:recook/widgets/refresh_widget.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-typedef MyCallBack = Function(String string);
+typedef MyCallBack = Function(String? string);
 
 class UserRechargeDetailPage extends StatefulWidget {
-  UserRechargeDetailPage({Key key}) : super(key: key);
+  UserRechargeDetailPage({Key? key}) : super(key: key);
 
   @override
   _UserRechargeDetailPageState createState() => _UserRechargeDetailPageState();
@@ -29,7 +28,7 @@ class UserRechargeDetailPage extends StatefulWidget {
 
 class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
 
-  RechargeHistoryModel rechargeHistoryModel;
+  late RechargeHistoryModel rechargeHistoryModel;
   ///查询的月份
   DateTime _date = DateTime.now();
 
@@ -49,7 +48,7 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
   int _page = 0;
   bool _onLoad = true;
 
-  List<RechargeHistory> list = [];
+  List<RechargeHistory>? list = [];
 
   _buildListItem(RechargeHistory item) {
     return Container(
@@ -95,7 +94,7 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
                           height: 3,
                         ),
                         Text(
-                          item.createdAt,
+                          item.createdAt!,
                           style: TextStyle(
                               color: Color(0xFF999999), fontSize: 12.rsp),
                         ),
@@ -105,9 +104,9 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
                 ),
                 Spacer(),
                 Text(
-                    (item.amount>0?'+':'')+   item.amount.toStringAsFixed(2),
+                    (item.amount!>0?'+':'')+   item.amount!.toStringAsFixed(2),
                   style: TextStyle(
-                      color: item.amount < 0
+                      color: item.amount! < 0
                           ? Color(0xFF333333)
                           : Color(0xFFD5101A),
                       fontSize: 16.rsp,
@@ -125,7 +124,7 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
     );
   }
 
-  _getTitle(int type) {
+  _getTitle(int? type) {
     switch (type) {
       case 1:
         return '订单支付';
@@ -136,7 +135,7 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
     }
   }
 
-  _getImage(int type) {
+  _getImage(int? type) {
     switch (type) {
       case 1:
         return Assets.icRechargeOrderPay.path;
@@ -148,7 +147,7 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
   }
 
   void _showCupertinoPicker(BuildContext cxt, MyCallBack callback) {
-    String item;
+    String? item;
 
     final picker = CupertinoPicker(
         itemExtent: 30.rw,
@@ -334,7 +333,7 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
                               .color(Color(0xFF070707))
                               .make(),
                           12.hb,
-                        TextUtils.getCount1(( UserManager.instance.userBrief.deposit ?? 0.0))
+                        TextUtils.getCount1(( UserManager.instance!.userBrief!.deposit ?? 0.0))!
                               .text
                               .size(20.rsp)
                               .color(Color(0xFF333333))
@@ -353,7 +352,7 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
                               .color(Color(0xFF070707))
                               .make(),
                           12.hb,
-                        TextUtils.getCount1(( UserManager.instance.userBrief.allDeposit ?? 0.0))
+                        TextUtils.getCount1(( UserManager.instance!.userBrief!.allDeposit ?? 0.0))!
                               .text
                               .size(20.rsp)
                               .color(Color(0xFF333333))
@@ -375,7 +374,7 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
                     onPressed: () {
                       // _entry = OverlayEntry(builder: (context) => _buildOverlay());
                       // Overlay.of(context).insert(_entry);
-                      _showCupertinoPicker(context, (String item) {
+                      _showCupertinoPicker(context, (String? item) {
                         Get.back();
                         if (item != null) {
                           _choose = item;
@@ -476,14 +475,14 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
 
                 onLoadMore: () {
                   _page++;
-                  if (list.length >=
-                      rechargeHistoryModel.data.total) {
+                  if (list!.length >=
+                      rechargeHistoryModel.data!.total!) {
                     _refreshController.loadComplete();
                     _refreshController.loadNoData();
                   }else{
                     getRechargeHistoryList(_status,_start,_end).then((models) {
                       setState(() {
-                        list.addAll(models);
+                        list!.addAll(models!);
                       });
                       _refreshController.loadComplete();
                     });
@@ -492,17 +491,17 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
                 },
                 body:
                 _onLoad?SizedBox():
-                list == null ||list.length == 0
+                list == null ||list!.length == 0
                     ? NoDataView(title:'没有数据哦～' ,):
                 ListView.separated(
                   itemBuilder: (context, index) =>
-                      _buildListItem(list[index]),
+                      _buildListItem(list![index]),
                   separatorBuilder: (context, index) => Divider(
                     color: Color(0xFFE9E9E9),
                     height: 1.rw,
                     thickness: 1.rw,
                   ),
-                  itemCount: list.length ?? 0,
+                  itemCount: list!.length,
                 ),
               ),
             ),
@@ -513,7 +512,7 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
 
   }
 
-  Future<List<RechargeHistory>> getRechargeHistoryList(int kind,String start,String end) async {
+  Future<List<RechargeHistory>?> getRechargeHistoryList(int kind,String start,String end) async {
     ResultData resultData =
     await HttpManager.post(APIV2.userAPI.depositRecordList, {
       'page': _page,
@@ -533,6 +532,6 @@ class _UserRechargeDetailPageState extends State<UserRechargeDetailPage> {
       return [];
     }
     rechargeHistoryModel = model;
-    return model.data.list;
+    return model.data!.list;
   }
 }

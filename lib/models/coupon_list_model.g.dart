@@ -9,10 +9,10 @@ part of 'coupon_list_model.dart';
 CouponListModel _$CouponListModelFromJson(Map<String, dynamic> json) {
   return CouponListModel(
       json['code'],
-      (json['data'] as List)
+      (json['data'] as List<dynamic>?)
           ?.map((e) =>
-              e == null ? null : Coupon.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+          Coupon.fromJson(e as Map<String, dynamic>))
+          .toList(),
       json['msg']);
 }
 
@@ -25,20 +25,20 @@ Map<String, dynamic> _$CouponListModelToJson(CouponListModel instance) =>
 
 Coupon _$CouponFromJson(Map<String, dynamic> json) {
   return Coupon(
-      json['id'] as int,
-      json['name'] as String,
-      json['quantity'] as int,
-      json['cash'] as int,
-      json['threshold'] as int,
-      (json['discount'] as num)?.toDouble(),
-      json['limit'] as int,
-      json['scope'] as int,
-      json['type'] as int,
-      json['brandId'] as int,
-      json['startTime'] as String,
-      json['endTime'] as String,
-      json['explanation'] as String,
-      json['isReceived'] as int);
+      json['id'] as int?,
+      json['name'] as String?,
+      json['quantity'] as int?,
+      json['cash'] as int?,
+      json['threshold'] as int?,
+      (json['discount'] as num?)?.toDouble(),
+      json['limit'] as int?,
+      json['scope'] as int?,
+      json['type'] as int?,
+      json['brandId'] as int?,
+      json['startTime'] as String?,
+      json['endTime'] as String?,
+      json['explanation'] as String?,
+      json['isReceived'] as int?);
 }
 
 Map<String, dynamic> _$CouponToJson(Coupon instance) => <String, dynamic>{

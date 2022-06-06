@@ -12,7 +12,7 @@ import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-typedef ItemClickListener = Function(OrderModel order, {VoidCallback callback});
+typedef ItemClickListener = Function(OrderModel order, {VoidCallback? callback});
 
 class WholesaleOrderItem extends StatefulWidget {
   /*
@@ -29,25 +29,25 @@ class WholesaleOrderItem extends StatefulWidget {
     2:部分发货
     */
   final OrderModel orderModel;
-  final VoidCallback itemClick;
+  final VoidCallback? itemClick;
   final ItemClickListener goToPay;
   final ItemClickListener cancelOrder;
   final ItemClickListener applyRefund;
-  final ItemClickListener applySalesReturn;
+  final ItemClickListener? applySalesReturn;
   final ItemClickListener evaluation;
   final ItemClickListener delete;
   final ItemClickListener confirm;
 
   const WholesaleOrderItem(
-      {Key key,
-      this.orderModel,
-      this.goToPay,
-      this.cancelOrder,
-      this.applyRefund,
+      {Key? key,
+      required this.orderModel,
+      required this.goToPay,
+      required this.cancelOrder,
+      required this.applyRefund,
       this.applySalesReturn,
-      this.evaluation,
-      this.delete,
-      this.confirm,
+      required this.evaluation,
+      required this.delete,
+      required this.confirm,
       this.itemClick})
       : super(key: key);
 
@@ -56,8 +56,8 @@ class WholesaleOrderItem extends StatefulWidget {
 }
 
 class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
-  String _status;
-  Color _color;
+  late String _status;
+  Color? _color;
 
   @override
   Widget build(BuildContext context) {
@@ -128,7 +128,7 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
       margin: EdgeInsets.only(top: rSize(5), left: rSize(10)),
       padding: EdgeInsets.only(top: rSize(5)),
       decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: Colors.grey[300], width: 0.3))),
+          border: Border(top: BorderSide(color: Colors.grey[300]!, width: 0.3))),
       child: Row(
         children: <Widget>[
           Container(),
@@ -140,7 +140,7 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
                   children: [
                 TextSpan(
                     text:
-                        "${widget.orderModel.actualTotalAmount.toStringAsFixed(2)}",
+                        "${widget.orderModel.actualTotalAmount!.toStringAsFixed(2)}",
                     style: AppTextStyle.generate(16 * 2.sp))
               ])),
         ],
@@ -231,7 +231,7 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
           //   width: rSize(8),
           // ))
 
-          ..add(widget.orderModel.canPay
+          ..add(widget.orderModel.canPay!
               ? CustomImageButton(
                   title: "去支付",
                   padding: EdgeInsets.symmetric(
@@ -284,8 +284,8 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
         }
         break;
     }
-    if (widget.orderModel.canConfirm &&
-        widget.orderModel.goodsList
+    if (widget.orderModel.canConfirm! &&
+        widget.orderModel.goodsList!
                 .indexWhere((element) => element.rStatus == '退款审核中') ==
             -1) {
       children
@@ -299,7 +299,7 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
           borderRadius: BorderRadius.all(Radius.circular(40)),
           color: Colors.grey[700],
           fontSize: 14 * 2.sp,
-          border: Border.all(color: Colors.grey[700], width: 0.3),
+          border: Border.all(color: Colors.grey[700]!, width: 0.3),
           onPressed: () {
             if (widget.confirm == null) {
               return;
@@ -321,7 +321,7 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
   Future<dynamic> _addToShoppingCart(
       int skuID, String skuName, int quantity) async {
     ResultData resultData = await addToShoppingCart(
-        UserManager.instance.user.info.id, skuID, skuName, quantity);
+        UserManager.instance!.user.info!.id, skuID, skuName, quantity);
     if (!resultData.result) {
       ReToast.err(text: resultData.msg);
 
@@ -333,14 +333,14 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
 
       return;
     }
-    UserManager.instance.refreshShoppingCart.value = true;
-    UserManager.instance.refreshShoppingCartNumber.value = true;
-    UserManager.instance.refreshShoppingCartNumberWithPage.value = true;
+    UserManager.instance!.refreshShoppingCart.value = true;
+    UserManager.instance!.refreshShoppingCartNumber.value = true;
+    UserManager.instance!.refreshShoppingCartNumberWithPage.value = true;
     ReToast.success(text: '加入成功');
   }
 
   Future<ResultData> addToShoppingCart(
-      int userID, int skuID, String skuName, int quantity) async {
+      int? userID, int skuID, String skuName, int quantity) async {
     ResultData resultData = await HttpManager.post(
         GoodsApi.goods_add_shopping_cart, {
       "userID": userID,
@@ -361,9 +361,7 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
       border: Border.all(color: AppColor.themeColor, width: 0.3),
       borderRadius: BorderRadius.all(Radius.circular(40)),
       onPressed: () {
-        if (widget.delete != null) {
-          widget.delete(widget.orderModel);
-        }
+        widget.delete(widget.orderModel);
         // if (widget.goToPay == null) return;
         // widget.goToPay(widget.orderModel, callback: () {
         //   setState(() {});
@@ -421,7 +419,7 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
   _orderStatus() {
     switch (widget.orderModel.status) {
       case 0:
-        if (widget.orderModel.canPay)
+        if (widget.orderModel.canPay!)
           _status = "待付款";
         else {
           _status = "待处理";
@@ -468,11 +466,11 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
 
   _goodsList() {
     return ListView.builder(
-        itemCount: widget.orderModel.goodsList.length,
+        itemCount: widget.orderModel.goodsList!.length,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: ((context, index) {
-          return _goodsItem(widget.orderModel.goodsList[index]);
+          return _goodsItem(widget.orderModel.goodsList![index]);
         }));
   }
 
@@ -488,7 +486,7 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
             text: TextSpan(
                 // text: "运费: ￥${widget.orderModel.expressTotalFee.toStringAsFixed(2)}\n共${widget.orderModel.totalGoodsCount}件商品  小计￥",
                 text:
-                    "运费: ￥${widget.orderModel.expressTotalFee.toStringAsFixed(2)}",
+                    "运费: ￥${widget.orderModel.expressTotalFee!.toStringAsFixed(2)}",
                 style: AppTextStyle.generate(12 * 2.sp, color: Colors.grey),
                 children: [
                   TextSpan(
@@ -606,7 +604,7 @@ class _WholesaleOrderItemState extends State<WholesaleOrderItem> {
                       Spacer(),
                       Column(
                         children: [
-                          "¥${goods.unitPrice.toStringAsFixed(2)}"
+                          "¥${goods.unitPrice!.toStringAsFixed(2)}"
                               .text
                               .size(12.rsp)
                               .color(Color(0xFF333333))

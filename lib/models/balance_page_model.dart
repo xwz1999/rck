@@ -1,7 +1,7 @@
 class BalancePageModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   BalancePageModel({this.code, this.msg, this.data});
 
@@ -16,15 +16,15 @@ class BalancePageModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  num balance;
-  List<DataList> list;
+  num? balance;
+  List<DataList>? list;
 
   Data({this.balance, this.list});
 
@@ -33,7 +33,7 @@ class Data {
     if (json['list'] != null) {
       list = [];
       json['list'].forEach((v) {
-        list.add(new DataList.fromJson(v));
+        list!.add(new DataList.fromJson(v));
       });
     }
   }
@@ -42,18 +42,18 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['balance'] = this.balance;
     if (this.list != null) {
-      data['list'] = this.list.map((v) => v.toJson()).toList();
+      data['list'] = this.list!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class DataList {
-  num id;
-  num amount;
-  String title;
-  String comment;
-  String createdAt;
+  num? id;
+  num? amount;
+  String? title;
+  String? comment;
+  String? createdAt;
 
   DataList({this.id, this.amount, this.title, this.comment, this.createdAt});
 

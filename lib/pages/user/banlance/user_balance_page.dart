@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
@@ -18,7 +16,7 @@ import '../user_cash_withdraw_page.dart';
 
 class UserBalancePage extends StatefulWidget {
   UserBalancePage({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -123,22 +121,23 @@ class _UserBalancePageState extends State<UserBalancePage> {
               ),
               50.hb,
               Text(
-                TextUtils.getCount1(( UserManager.instance.userBrief.balance ?? 0.0)),
+                TextUtils.getCount1(( UserManager.instance!.userBrief!.balance ?? 0.0))!,
                 style: TextStyle(fontSize: 32.rsp, color: Color(0xFF333333),fontWeight: FontWeight.bold),
               ),
               70.hb,
 
-              UserManager.instance.userBrief.isEnterPrise?SizedBox():  Padding(
+              UserManager.instance!.userBrief!.isEnterPrise!?SizedBox():  Padding(
                 padding:  EdgeInsets.symmetric(horizontal:38.rw ),
                 child: GestureDetector(
                   onTap: () async{
                     //Get.to(()=>WithDrawPage());
 
 
-                      if(!UserManager.instance.userBrief.isEnterPrise){
-                        AppRouter.push(context, RouteName.USER_CASH_WITHDRAW_PAGE,
-                            arguments: UserCashWithdrawPage.setArguments(
-                                amount: UserManager.instance.userBrief.balance.toDouble()));
+                      if(!UserManager.instance!.userBrief!.isEnterPrise!){
+
+                        Get.to(()=>UserCashWithdrawPage(arguments: UserCashWithdrawPage.setArguments(
+                            amount: UserManager.instance!.userBrief!.balance!.toDouble())));
+
                       }else{
                         Get.to(()=>WithDrawPage());
                       }
@@ -221,7 +220,7 @@ class _UserBalancePageState extends State<UserBalancePage> {
               onTap: (){
 
 
-                if(!UserManager.instance.userBrief.isEnterPrise){
+                if(!UserManager.instance!.userBrief!.isEnterPrise!){
                   AppRouter.push(context, RouteName.CASH_WITHDRAW_HISTORY_PAGE);
                 }else{
                   Get.to(()=>WithdrawHistoryPage());

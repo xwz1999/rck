@@ -1,33 +1,33 @@
 
 class WholesaleGood {
-  num id;
-  String goodsName;
-  String brandImg;
-  String brandName;
-  num brandId;
-  String description;
-  num inventory;
-  num salesVolume;
-  String mainPhotoUrl;
-  String promotionName;
-  num originalPrice;
-  num discountPrice;
-  num commission;
-  List<String> tags;
-  num percent;
-  String startTime;
-  String endTime;
-  num coupon;
-  num isImport;
-  num storehouse;
-  num isFerme;
-  bool hasCoin;
-  bool hasBalance;
+  num? id;
+  String? goodsName;
+  String? brandImg;
+  String? brandName;
+  num? brandId;
+  String? description;
+  num? inventory;
+  num? salesVolume;
+  String? mainPhotoUrl;
+  String? promotionName;
+  num? originalPrice;
+  num? discountPrice;
+  num? commission;
+  List<String>? tags;
+  num? percent;
+  String? startTime;
+  String? endTime;
+  num? coupon;
+  num? isImport;
+  num? storehouse;
+  num? isFerme;
+  bool? hasCoin;
+  bool? hasBalance;
 
-  num gysId;
-  List<String> specialIcon;
-  String countryIcon;
-  num salePrice;
+  num? gysId;
+  List<String>? specialIcon;
+  String? countryIcon;
+  num? salePrice;
 
   WholesaleGood(
       {this.id,

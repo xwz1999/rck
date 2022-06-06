@@ -4,7 +4,7 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/widgets/webView.dart';
 
-Future<bool> launchPrivacyDialog(BuildContext context) async {
+Future<bool?> launchPrivacyDialog(BuildContext context) async {
   return await showDialog(
     context: context,
     builder: (context) => _PrivacyDialog(),
@@ -21,7 +21,7 @@ Future launchPrivacySecondDialog(BuildContext context) async {
 }
 
 class _PrivacyDialog extends StatefulWidget {
-  _PrivacyDialog({Key key}) : super(key: key);
+  _PrivacyDialog({Key? key}) : super(key: key);
 
   @override
   __PrivacyDialogState createState() => __PrivacyDialogState();
@@ -179,7 +179,7 @@ _recognizer(context, int type) {
 }
 
 class _PrivacySecondDialog extends StatelessWidget {
-  const _PrivacySecondDialog({Key key}) : super(key: key);
+  const _PrivacySecondDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -13,8 +12,7 @@ import 'package:recook/widgets/toast.dart';
 class WeChatInputInviteCodePage extends StatefulWidget {
   static const String KEY_wxUnionId = "wxUnionId";
   final Map argument;
-  WeChatInputInviteCodePage({this.argument})
-      : assert(argument != null, "argument 不能为空");
+  WeChatInputInviteCodePage({required this.argument});
   static setArgument(a) {
     return {KEY_wxUnionId: a};
   }
@@ -29,8 +27,8 @@ class _WeChatInputInviteCodePageState
     extends BaseStoreState<WeChatInputInviteCodePage> {
   double _fontSize = 15 * 2.sp;
 
-  FocusNode _inviteCodeFocusNode;
-  TextEditingController _inviteCodeController;
+  FocusNode? _inviteCodeFocusNode;
+  TextEditingController? _inviteCodeController;
 
   bool _loginEnable = true;
   @override
@@ -123,15 +121,15 @@ class _WeChatInputInviteCodePageState
   }
 
   _verifyLoginEnable() {
-    return _inviteCodeController.text.length == 6;
+    return _inviteCodeController!.text.length == 6;
   }
 
   _inviteInputWidget() {
-    String bindString = getStore().state.openinstall.code;
+    String? bindString = getStore().state.openinstall!.code;
     // String bindString = 'aaaaaa';
     if (bindString != null &&
         (bindString.length == 6 || bindString.length == 8)) {
-      _inviteCodeController.text = bindString;
+      _inviteCodeController!.text = bindString;
       return Text(
         bindString,
         style: TextStyle(
@@ -190,16 +188,16 @@ class _WeChatInputInviteCodePageState
   }
 
   _weChatRegister(BuildContext context) {
-    String bindData = getStore().state.openinstall.code;
+    String bindData = getStore().state.openinstall!.code!;
     if (bindData.length <= 0) {
-      bindData = _inviteCodeController.text.toUpperCase();
+      bindData = _inviteCodeController!.text.toUpperCase();
     }
     UserDao.weChatInvitation(
         widget.argument[WeChatInputInviteCodePage.KEY_wxUnionId], bindData,
         success: (data, code, msg) {
       GSDialog.of(context).dismiss(context);
       AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
-      UserManager.updateUser(data, getStore());
+      UserManager.updateUser(data!, getStore());
     }, failure: (code, msg) {
       GSDialog.of(context).dismiss(context);
       Toast.showError(msg);

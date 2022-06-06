@@ -7,15 +7,12 @@
  * ====================================================
  */
 
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/category_model.dart';
 import 'package:recook/pages/home/classify/goods_list_page.dart';
@@ -30,10 +27,10 @@ import 'package:recook/widgets/sc_tab_bar.dart';
 import '../search_page.dart';
 
 class ClassifyPage extends StatefulWidget {
-  final List<FirstCategory> data;
-  final String initValue;
-  final int jdType;//1为京东商品 空为非jd
-  ClassifyPage({Key key, @required this.data, this.initValue, this.jdType})
+  final List<FirstCategory>? data;
+  final String? initValue;
+  final int? jdType;//1为京东商品 空为非jd
+  ClassifyPage({Key? key, required this.data, this.initValue, this.jdType})
       : super(key: key);
   @override
   State<StatefulWidget> createState() {
@@ -57,7 +54,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
     super.initState();
     Future.delayed(Duration(milliseconds: 300), () {
       int current =
-          widget.data.indexWhere((element) => element.name == widget.initValue);
+          widget.data!.indexWhere((element) => element.name == widget.initValue);
       currentIndex = current == -1 ? 0 : current;
       _tabController.jumpToIndex(currentIndex);
       _controller.animateToPage(currentIndex,
@@ -98,8 +95,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
       ),
       child: CustomImageButton(
         onPressed: () {
-          //AppRouter.push(context, RouteName.SEARCH);
-          if(UserManager.instance.isWholesale){
+          if(UserManager.instance!.isWholesale){
 
             Get.to(()=>WholesaleSearchPage());
           }
@@ -141,7 +137,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
   }
 
   _buildLeft() {
-    return SCTabBar<String>(
+    return SCTabBar<String?>(
       controller: _tabController,
       initialIndex: 0,
       height: rSize(28),
@@ -149,7 +145,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
       indicatorHeight: rSize(4),
       direction: Axis.vertical,
       spacing: rSize(30),
-      items: widget.data.map((item) {
+      items: widget.data!.map((item) {
         return item.name;
       }).toList(),
       itemBuilder: (context, index, item) {
@@ -163,7 +159,7 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
             child: Center(
                 child: Text(
 
-          item,
+          item!,
           style: AppTextStyle.generate(14 * 2.sp,color: color),
           textAlign: TextAlign.center,
         )));
@@ -179,20 +175,20 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
   double padding = 0;
 
   _buildRight() {
-    double statusBarHeight = DeviceInfo.statusBarHeight;
+    double? statusBarHeight = DeviceInfo.statusBarHeight;
     double appbarHeight = 56.0;
 
     return PageView.builder(
-        itemCount: widget.data.length,
+        itemCount: widget.data!.length,
         controller: _controller,
         scrollDirection: Axis.vertical,
         itemBuilder: (context, index) {
           return NotificationListener(
-              child: buildGridView(appbarHeight, statusBarHeight, index),
+              child: buildGridView(appbarHeight, statusBarHeight!, index),
               onNotification: (ScrollUpdateNotification notification) {
                 if (animating) return true;
 
-                if (currentIndex < widget.data.length - 1 &&
+                if (currentIndex < widget.data!.length - 1 &&
                     notification.metrics.pixels.toInt() >
                       ( notification.metrics.maxScrollExtent + 120).toInt()) {
                   if (!animating) {
@@ -236,31 +232,31 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
 
   SCGridView buildGridView(
       double appbarHeight, double statusBarHeight, int index) {
-    List<SecondCategory> secondCategories = widget.data[index].sub;
-    String firstTitle = widget.data[index].name;
+    List<SecondCategory>? secondCategories = widget.data![index].sub;
+    String? firstTitle = widget.data![index].name;
     return SCGridView(
         viewportHeight:
-            DeviceInfo.screenHeight - appbarHeight - statusBarHeight + 5,
+            DeviceInfo.screenHeight! - appbarHeight - statusBarHeight + 5,
         crossAxisCount: 3,
         sectionCount: 1,
         childAspectRatio: 0.9,
         itemCount: (section) {
-          return widget.data[index].sub.length;
+          return widget.data![index].sub!.length;
         },
         headerBuilder: (context, section) {
           return Container(
             // color: Colors.blueGrey,
             // height: rSize(48),
-            height: ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth / 4),
+            height: ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth! / 4),
             child: CustomCacheImage(
-                width: ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth / 4),
+                width: ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth! / 4),
                 height:
-                    ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth / 4 * 3),
-                imageUrl: Api.getImgUrl(widget.data[index].logoUrl)),
+                    ScreenAdapterUtils.setWidth(DeviceInfo.screenWidth! / 4 * 3),
+                imageUrl: Api.getImgUrl(widget.data![index].logoUrl)),
           );
         },
         itemBuilder: (context, indexIn) {
-          SecondCategory secondCategory = secondCategories[indexIn];
+          SecondCategory secondCategory = secondCategories![indexIn];
           return CustomImageButton(
             icon: CustomCacheImage(
                 height: rSize(50),
@@ -271,19 +267,22 @@ class _ClassifyPageState extends BaseStoreState<ClassifyPage>
             fontSize: 13 * 2.sp,
             onPressed: () {
 
-              if(UserManager.instance.isWholesale){
+              if(UserManager.instance!.isWholesale){
                 Get.to(() => WholesaleGoodsList(
                   title: firstTitle,
                   index: indexIn,
                   secondCategoryList: secondCategories,
                 ));
-              }else{
-                AppRouter.push(context, RouteName.GOODS_LIST_PAGE,
-                    arguments: GoodsListPage.setArguments(
-                        title: firstTitle,
-                        index: indexIn,
-                        secondCategoryList: secondCategories,
-                        isJD: widget.jdType==1?true:false));
+              }else {
+
+                Get.to(() =>
+                    GoodsListPage(
+                      arguments: GoodsListPage.setArguments(
+                          title: firstTitle,
+                          index: indexIn,
+                          secondCategoryList: secondCategories,
+                          isJD: widget.jdType == 1 ? true : false),
+                    ));
               }
 
 

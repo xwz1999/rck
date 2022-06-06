@@ -8,10 +8,10 @@ import 'package:velocity_x/velocity_x.dart';
 class GroupInviteCard extends StatelessWidget {
   final UserCommonModel model;
   final bool canTap;
-  const GroupInviteCard({Key key, @required this.model, this.canTap = false})
+  const GroupInviteCard({Key? key, required this.model, this.canTap = false})
       : super(key: key);
-  _renderItem(String asset, String value) {
-    String displayValue = value;
+  _renderItem(String asset, String? value) {
+    String? displayValue = value;
     if (displayValue?.isEmpty ?? true) {
       displayValue = ' —';
     }
@@ -19,16 +19,17 @@ class GroupInviteCard extends StatelessWidget {
       children: [
         Image.asset(asset, width: 10.rw, height: 10.rw),
         2.wb,
-        displayValue.text.size(11.rsp).color(Color(0xFF999999)).make().expand(),
+        displayValue!.text.size(11.rsp).color(Color(0xFF999999)).make().expand(),
       ],
     ).expand();
   }
 
 
-  String get itemName {
-    String item = model.nickname;
-    if (model?.remarkName?.isNotEmpty ?? false) {
-      item += '(${model.remarkName})';
+  String? get itemName {
+    String? item = model.nickname;
+    if (model.remarkName?.isNotEmpty ?? false) {
+     // item += '(${model.remarkName})';
+      item = item??'' + '(${model.remarkName})';
     }
     return item;
   }
@@ -45,7 +46,7 @@ class GroupInviteCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(20.rw),
               child: FadeInImage.assetNetwork(
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                image: Api.getImgUrl(model.headImgUrl),
+                image: Api.getImgUrl(model.headImgUrl)!,
                 height: 40.rw,
                 width: 40.rw,
               ),
@@ -66,9 +67,9 @@ class GroupInviteCard extends StatelessWidget {
             16.hb,
             Row(
               children: [
-                model.phone.startsWith('2')
+                model.phone!.startsWith('2')
                     ? '【该账户已注销】'.text.black.size(14.rsp).make()
-                    : itemName.text.black.size(14.rsp).make(),
+                    : itemName!.text.black.size(14.rsp).make(),
                 Spacer(),
                 '店主'
                     .text
@@ -82,9 +83,9 @@ class GroupInviteCard extends StatelessWidget {
             Row(
               children: [
                 _renderItem(R.ASSETS_USER_ICON_PHONE_PNG,
-                    model.phone.startsWith('2') ? ' —' : model.phone),
+                    model.phone!.startsWith('2') ? ' —' : model.phone),
                 _renderItem(R.ASSETS_USER_ICON_WECHAT_PNG,
-                    model.phone.startsWith('2') ? ' —' : model.wechatNo),
+                    model.phone!.startsWith('2') ? ' —' : model.wechatNo),
               ],
             ),
             10.hb,

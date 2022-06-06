@@ -1,11 +1,11 @@
 class UserBenefitMonthTeamModel {
-  List<UserIncomeMonth> userIncome;
-  num amount;
-  num salesVolume;
-  int ratio;
-  int count;
-  int isSettlement;
-  int order_count;
+  List<UserIncomeMonth>? userIncome;
+  num? amount;
+  num? salesVolume;
+  int? ratio;
+  int? count;
+  int? isSettlement;
+  int? order_count;
 
   UserBenefitMonthTeamModel(
       {this.userIncome,
@@ -18,9 +18,9 @@ class UserBenefitMonthTeamModel {
 
   UserBenefitMonthTeamModel.fromJson(Map<String, dynamic> json) {
     if (json['userIncome'] != null) {
-      userIncome = new List<UserIncomeMonth>();
+      userIncome = [];
       json['userIncome'].forEach((v) {
-        userIncome.add(new UserIncomeMonth.fromJson(v));
+        userIncome!.add(new UserIncomeMonth.fromJson(v));
       });
     }
     amount = json['amount'];
@@ -34,7 +34,7 @@ class UserBenefitMonthTeamModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.userIncome != null) {
-      data['userIncome'] = this.userIncome.map((v) => v.toJson()).toList();
+      data['userIncome'] = this.userIncome!.map((v) => v.toJson()).toList();
     }
     data['amount'] = this.amount;
     data['salesVolume'] = this.salesVolume;
@@ -47,16 +47,16 @@ class UserBenefitMonthTeamModel {
 }
 
 class UserIncomeMonth {
-  int userId;
-  String headImgUrl;
-  String nickname;
-  String phone;
-  String wechatNo;
-  String remarkName;
-  int count;
-  num amount;
-  int roleLevel;
-  int order_count;
+  int? userId;
+  String? headImgUrl;
+  String? nickname;
+  String? phone;
+  String? wechatNo;
+  String? remarkName;
+  int? count;
+  num? amount;
+  int? roleLevel;
+  int? order_count;
 
   UserIncomeMonth(
       {this.userId,

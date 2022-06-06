@@ -9,7 +9,7 @@ import 'config.dart';
 
 main(args) => grind(args);
 
-int pid;
+int? pid;
 
 @Task()
 test() => new TestRunner().testAsync();
@@ -34,7 +34,7 @@ Future releaseApk() async {
   stdout.write("copy build to download 🛠\n");
 
   String date = DateUtil.formatDate(DateTime.now(), format: 'yy_MM_dd_HH_mm');
-  String version = await getVersion();
+  String? version = await getVersion();
   await runAsync('mv', arguments: [
     Config.buildPath,
     '${Config.buildDir}/${Config.packageName}_${version}_beta_$date.apk'
@@ -135,7 +135,7 @@ buildApk() async {
     'ISDEBUG=false'
   ]);
   String date = DateUtil.formatDate(DateTime.now(), format: 'yy_MM_dd_HH_mm');
-  String version = await getVersion();
+  String? version = await getVersion();
   await runAsync('mv', arguments: [
     Config.buildPath,
     '${Config.buildDir}/${Config.packageName}_${version}_release_$date.apk'
@@ -153,7 +153,7 @@ buildApk32() async {
     'ISDEBUG=false'
   ]);
   String date = DateUtil.formatDate(DateTime.now(), format: 'yy_MM_dd_HH_mm');
-  String version = await getVersion();
+  String? version = await getVersion();
   await runAsync('mv', arguments: [
     Config.buildPath,
     '${Config.buildDir}/${Config.packageName}_${version}_release_$date.apk'
@@ -172,7 +172,7 @@ buildApkDev() async {
   ]);
 
   String date = DateUtil.formatDate(DateTime.now(), format: 'yy_MM_dd_HH_mm');
-  String version = await getVersion();
+  String? version = await getVersion();
   await runAsync('mv', arguments: [
     Config.buildPath,
     '${Config.buildDir}/${Config.packageName}_${version}_beta_$date.apk'
@@ -192,11 +192,11 @@ buildIosDev() async {
 }
 
 @Task()
-Future<String> getVersion() async {
+Future<String?> getVersion() async {
   String projectPath = Directory('.').absolute.path;
   String yamlPath = join(projectPath, 'pubspec.yaml');
   String yamlContent = await File(yamlPath).readAsString();
   dynamic content = loadYaml(yamlContent);
-  String version = content['version'];
+  String? version = content['version'];
   return version;
 }

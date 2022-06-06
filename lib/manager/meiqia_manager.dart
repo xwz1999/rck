@@ -26,7 +26,7 @@ class MQManager {
     // });
   }
 
-  static goToChat({String userId, Map userInfo,String goodsName,String goodsUrl}) {
+  static goToChat({String? userId, Map? userInfo,String? goodsName,String? goodsUrl}) {
     // MeiqiaFlutter.chat(customId: userId,clientInfo: userInfo,preTxt:goodsName,prePicPath: goodsUrl);
     //MeiqiaPlugin.chat(userInfo: userInfo,userID: userId);
   }

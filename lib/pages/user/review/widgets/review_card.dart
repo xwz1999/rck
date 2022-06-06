@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/pages/user/review/add_review_page.dart';
 import 'package:recook/pages/user/review/models/order_review_list_model.dart';
@@ -13,9 +12,9 @@ class  ReviewCard extends StatelessWidget {
   final VoidCallback onBack;
   final bool reviewStatusAdd;
   const ReviewCard(
-      {Key key,
-      @required this.model,
-      @required this.onBack,
+      {Key? key,
+      required this.model,
+      required this.onBack,
       this.reviewStatusAdd = true})
       : super(key: key);
 
@@ -34,7 +33,7 @@ class  ReviewCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               FadeInImage.assetNetwork(
-                image: Api.getImgUrl(model.myOrderGoodsDea.mainPhotoUrl),
+                image: Api.getImgUrl(model.myOrderGoodsDea!.mainPhotoUrl)!,
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                 height: rSize(80),
                 width: rSize(80),
@@ -47,7 +46,7 @@ class  ReviewCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Text(
-                      model.myOrderGoodsDea.goodsName,
+                      model.myOrderGoodsDea!.goodsName!,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       softWrap: false,
@@ -59,7 +58,7 @@ class  ReviewCard extends StatelessWidget {
                     ),
                     SizedBox(height: rSize(6)),
                     Text(
-                      '型号规格 ${model.myOrderGoodsDea.skuName}',
+                      '型号规格 ${model.myOrderGoodsDea!.skuName}',
                       style: TextStyle(
                         color: Color(0xFF666666),
                         fontSize: rSP(13),
@@ -77,7 +76,7 @@ class  ReviewCard extends StatelessWidget {
                                 ),
                                 TextSpan(
                                   text:
-                                      '¥ ${model.myOrderGoodsDea.goodsAmount.toStringAsFixed(0)}',
+                                      '¥ ${model.myOrderGoodsDea!.goodsAmount!.toStringAsFixed(0)}',
                                   style: TextStyle(
                                     color: Color(0xFF333333),
                                   ),
@@ -98,7 +97,7 @@ class  ReviewCard extends StatelessWidget {
                                   text: '购买数量 ',
                                 ),
                                 TextSpan(
-                                  text: '${model.myOrderGoodsDea.quantity}',
+                                  text: '${model.myOrderGoodsDea!.quantity}',
                                   style: TextStyle(
                                     color: Color(0xFF333333),
                                   ),
@@ -131,7 +130,7 @@ class  ReviewCard extends StatelessWidget {
                     CRoute.push(
                       context,
                       AddReviewPage(
-                        goodsDetailId: model.myOrderGoodsDea.goodsDetailId,
+                        goodsDetailId: model.myOrderGoodsDea!.goodsDetailId,
                         model: model,
                       ),
                     ).then((value) {

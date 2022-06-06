@@ -1,16 +1,16 @@
 class WholesaleCarModel {
-  int id;
-  int skuId;
-  num discountPrice;
-  num salePrice;
-  int quantity;
-  int limit;
-  int min;
-  String skuName;
-  String goodsName;
-  int salePublish;
-  String picUrl;
-  int goodsId;
+  int? id;
+  int? skuId;
+  num? discountPrice;
+  num? salePrice;
+  int? quantity;
+  int? limit;
+  int? min;
+  String? skuName;
+  String? goodsName;
+  int? salePublish;
+  String? picUrl;
+  int? goodsId;
   bool selected = false;
 
 

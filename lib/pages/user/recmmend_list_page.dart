@@ -1,8 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/constants/styles.dart';
 import 'package:recook/pages/wholesale/func/wholesale_func.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -10,10 +7,10 @@ import 'package:velocity_x/velocity_x.dart';
 import 'model/recommend_user_model.dart';
 
 class RecommendListPage extends StatefulWidget {
-  final int state;
+  final int? state;
 
   RecommendListPage({
-    Key key,
+    Key? key,
     this.state,
   }) : super(key: key);
 
@@ -22,10 +19,10 @@ class RecommendListPage extends StatefulWidget {
 }
 
 class _RecommendListPageState extends State<RecommendListPage> {
-  GSRefreshController _refreshController;
-  int lastId;
+  GSRefreshController? _refreshController;
+  int? lastId;
   int size = 9;
-  int state = 0; //0全部 1审核 2驳回
+  int? state = 0; //0全部 1审核 2驳回
   List<RecommendUserModel> _recommendUserList = [];
 
   @override
@@ -38,7 +35,7 @@ class _RecommendListPageState extends State<RecommendListPage> {
 
   @override
   void dispose() {
-    _refreshController.dispose();
+    _refreshController!.dispose();
     super.dispose();
   }
 
@@ -61,14 +58,14 @@ class _RecommendListPageState extends State<RecommendListPage> {
             await WholesaleFunc.getRecommendUserList(0, size, state);
 
         if (_recommendUserList.isNotEmpty) {
-          lastId = _recommendUserList[_recommendUserList.length - 1].id;
+          lastId = _recommendUserList[_recommendUserList.length - 1].id as int?;
         } else {
           lastId = 0;
         }
         setState(() {
 
         });
-        _refreshController.refreshCompleted();
+        _refreshController!.refreshCompleted();
       },
       onLoadMore: () async {
         _recommendUserList =
@@ -76,7 +73,7 @@ class _RecommendListPageState extends State<RecommendListPage> {
         setState(() {
 
         });
-        _refreshController.loadComplete();
+        _refreshController!.loadComplete();
       },
       body: _recommendUserList.isNotEmpty?
       ListView.builder(
@@ -175,7 +172,7 @@ class _RecommendListPageState extends State<RecommendListPage> {
       ),
     );
   }
-  noDataView(String text, {Widget icon}) {
+  noDataView(String text, {Widget? icon}) {
     return Container(
       height: double.infinity,
       width: double.infinity,

@@ -11,7 +11,7 @@ class PickCart {
   static bool carManager = false;
   static bool goodsManager = false;
 
-  static LiveBrandModel brandModel;
+  static LiveBrandModel? brandModel;
 
   static List<String> history = [];
 

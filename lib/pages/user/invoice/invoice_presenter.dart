@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -13,7 +12,7 @@ class InvoicePresenter {
       {int page = 0, int pageSize = 10}) async {
     ResultData resultData =
         await HttpManager.post(APIV2.invoiceApi.canInvoiceBill, {
-      'user_id': UserManager.instance.user.info.id,
+      'user_id': UserManager.instance!.user.info!.id,
       'page_num': page,
       'page_size': pageSize
     });
@@ -27,7 +26,7 @@ class InvoicePresenter {
   Future<List<InvoiceTitleListModel>> getInvoiceTitleList() async {
     ResultData resultData =
         await HttpManager.post(APIV2.invoiceApi.invoiceList, {
-      'uid': UserManager.instance.user.info.id,
+      'uid': UserManager.instance!.user.info!.id,
     });
     return resultData.data['data'] == null
         ? []
@@ -39,15 +38,15 @@ class InvoicePresenter {
   Future addLetterHead(
     int type,
     String name, {
-    String taxNum,
-    String addr,
-    String phone,
-    String bank,
-    String bankNum,
+    String? taxNum,
+    String? addr,
+    String? phone,
+    String? bank,
+    String? bankNum,
     int defaultValue = 0,
   }) async {
     Map<String, dynamic> param = {
-      'uid': UserManager.instance.user.info.id, //用户id
+      'uid': UserManager.instance!.user.info!.id, //用户id
       'type': type,
       "name": name,
       "defaultValue": defaultValue,
@@ -64,16 +63,16 @@ class InvoicePresenter {
   Future updateLetterHead(
     int type,
     String name,
-    int id, {
-    String taxNum,
-    String addr,
-    String phone,
-    String bank,
-    String bankNum,
+    int? id, {
+    String? taxNum,
+    String? addr,
+    String? phone,
+    String? bank,
+    String? bankNum,
     int defaultValue = 0,
   }) async {
     Map<String, dynamic> param = {
-      'uid': UserManager.instance.user.info.id,
+      'uid': UserManager.instance!.user.info!.id,
       'id': id,
       'type': type,
       "name": name,
@@ -90,20 +89,20 @@ class InvoicePresenter {
 
   ///invoice_status:开票状态，1：待开票 2：开票异常 3：开票中 4：开票失败 5：开票成功 用户申请开票，必传参数：1
   Future<bool> createBill({
-    @required List<int> ids,
-    @required String buyername,
-    String message,
-    String taxnum,
-    String addr,
-    String telephone,
-    String phone,
-    String email,
-    String account,
-    @required int invoiceStatus,
-    @required double totalAmount,
+    required List<int>? ids,
+    required String buyername,
+    String? message,
+    String? taxnum,
+    String? addr,
+    String? telephone,
+    String? phone,
+    String? email,
+    String? account,
+    required int invoiceStatus,
+    required double? totalAmount,
   }) async {
     ResultData resultData = await HttpManager.post(APIV2.invoiceApi.applyInvoice, {
-      'user_id': UserManager.instance.user.info.id,
+      'user_id': UserManager.instance!.user.info!.id,
       'order_id': ids,
       'buyer_name': buyername,
       'tax_num': taxnum,
@@ -125,7 +124,7 @@ class InvoicePresenter {
 
   Future<List<InvoiceBillListModel>> getBillList() async {
     ResultData resultData = await HttpManager.post(APIV2.invoiceApi.invoiceRecord, {
-      'uid': UserManager.instance.user.info.id,
+      'uid': UserManager.instance!.user.info!.id,
       // 'page': page,
     });
     return resultData.data['data'] == null
@@ -135,7 +134,7 @@ class InvoicePresenter {
             .toList();
   }
 
-  Future<InvoiceDetailModel> getDetailModel(int id) async {
+  Future<InvoiceDetailModel?> getDetailModel(int? id) async {
     ResultData resultData =
         await HttpManager.post(APIV2.invoiceApi.invoiceDetail, {'order_id': id});
     return resultData.data['data'] == null

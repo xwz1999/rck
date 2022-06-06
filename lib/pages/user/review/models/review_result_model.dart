@@ -1,6 +1,6 @@
 class ReviewResultModel {
-  GoodsEva goodsEva;
-  List<GoodsEvaGoods> goodsEvaGoods;
+  GoodsEva? goodsEva;
+  List<GoodsEvaGoods>? goodsEvaGoods;
 
   ReviewResultModel({this.goodsEva, this.goodsEvaGoods});
 
@@ -11,7 +11,7 @@ class ReviewResultModel {
     if (json['goodsEvaGoods'] != null) {
       goodsEvaGoods = [];
       json['goodsEvaGoods'].forEach((v) {
-        goodsEvaGoods.add(new GoodsEvaGoods.fromJson(v));
+        goodsEvaGoods!.add(new GoodsEvaGoods.fromJson(v));
       });
     }
   }
@@ -19,26 +19,26 @@ class ReviewResultModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.goodsEva != null) {
-      data['goodsEva'] = this.goodsEva.toJson();
+      data['goodsEva'] = this.goodsEva!.toJson();
     }
     if (this.goodsEvaGoods != null) {
       data['goodsEvaGoods'] =
-          this.goodsEvaGoods.map((v) => v.toJson()).toList();
+          this.goodsEvaGoods!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class GoodsEva {
-  int id;
-  int goodsId;
-  int userId;
-  String nickname;
-  String headImgUrl;
-  String content;
-  String createdAt;
-  int pass;
-  int compliance;
+  int? id;
+  int? goodsId;
+  int? userId;
+  String? nickname;
+  String? headImgUrl;
+  String? content;
+  String? createdAt;
+  int? pass;
+  int? compliance;
 
   GoodsEva({
     this.id,
@@ -80,10 +80,10 @@ class GoodsEva {
 }
 
 class GoodsEvaGoods {
-  int id;
-  String url;
-  int width;
-  int height;
+  int? id;
+  String? url;
+  int? width;
+  int? height;
 
   GoodsEvaGoods({this.id, this.url, this.width, this.height});
 

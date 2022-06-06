@@ -4,7 +4,7 @@ import 'package:recook/widgets/toast.dart';
 class UserAuthorityUtil{
 
   hasLogin(){
-    if (UserManager.instance.haveLogin) {// 登录了就渲染用户界面
+    if (UserManager.instance!.haveLogin) {// 登录了就渲染用户界面
       return true;
     }else{
       return false;

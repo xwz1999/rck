@@ -8,9 +8,8 @@ import 'package:amap_flutter_location/amap_location_option.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -38,10 +37,12 @@ import 'package:recook/pages/home/search_page.dart';
 import 'package:recook/pages/home/widget/animated_home_background.dart';
 import 'package:recook/pages/home/widget/good_high_commission_page.dart';
 import 'package:recook/pages/home/widget/good_preferential_list_page.dart';
+import 'package:recook/pages/home/widget/goods_hot_list_page.dart';
 import 'package:recook/pages/home/widget/goods_list_temp_page.dart';
 import 'package:recook/pages/home/widget/home_countdown_widget.dart';
 import 'package:recook/pages/home/widget/home_sliver_app_bar.dart';
 import 'package:recook/pages/home/widget/home_weather_view.dart';
+import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/tabBar/rui_code_listener.dart';
 import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:recook/pages/wholesale/func/wholesale_func.dart';
@@ -53,19 +54,18 @@ import 'package:recook/pages/wholesale/wholeasale_detail_page.dart';
 import 'package:recook/pages/wholesale/wholesale_search_page.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/utils/android_back_desktop.dart';
-import 'package:recook/utils/app_router.dart';
 import 'package:recook/utils/color_util.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/utils/permission_tool.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/utils/storage/hive_store.dart';
-import 'package:recook/widgets/QRViewExample.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/banner.dart';
 import 'package:recook/widgets/goods_item.dart';
 import 'package:recook/widgets/home_gif_header.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/refresh_widget.dart';
+import 'package:recook/widgets/scan/barcodeScan.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:recook/widgets/weather_page/weather_city_model.dart';
 import 'package:recook/widgets/weather_page/weather_city_page.dart';
@@ -75,7 +75,6 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:power_logger/power_logger.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 
-import '../../utils/text_utils.dart';
 import 'classify/classify_country_page.dart';
 
 class HomeItem {
@@ -86,16 +85,16 @@ class HomeItem {
 }
 
 class HomeAcitvityItem {
-  String logoUrl;
-  String website;
+  String? logoUrl;
+  String? website;
 
   HomeAcitvityItem(this.logoUrl, this.website);
 }
 
 class HomePage extends StatefulWidget {
-  final TabController tabController;
+  final TabController? tabController;
 
-  const HomePage({Key key, this.tabController}) : super(key: key);
+  const HomePage({Key? key, this.tabController}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -109,29 +108,29 @@ class ClipboardListenerValue {
 
 class _HomePageState extends BaseStoreState<HomePage>
     with TickerProviderStateMixin, WidgetsBindingObserver {
-  Map<String, Object> _weatherLocation;
-  TabController _tabController;
+  Map<String, Object>? _weatherLocation;
+  TabController? _tabController;
   int _tabIndex = 0;
 
-  List<KingCoinListModel> kingCoinListModelList;
+  List<KingCoinListModel>? kingCoinListModelList;
 
 //控制额外功能显示（后端控制）
 //false iOS隐藏
 //true 全部显示
 
-  List<BannerModel> _bannerList = [];
-  List<Promotion> _promotionList = [];
+  List<BannerModel>? _bannerList = [];
+  List<Promotion>? _promotionList = [];
   List _promotionGoodsList = [];
-  Map _activityMap;
-  GSRefreshController _gsRefreshController;
-  ScrollController _sliverListController;
+  Map? _activityMap;
+  GSRefreshController? _gsRefreshController;
+  ScrollController? _sliverListController;
 
   // 天气数据
-  HomeWeatherModel _homeWeatherModel;
-  WeatherCityModel _weatherCityModel;
+  HomeWeatherModel? _homeWeatherModel;
+  WeatherCityModel? _weatherCityModel;
 
 //定位
-  AMapFlutterLocation _amapFlutterLocation;
+  AMapFlutterLocation? _amapFlutterLocation;
 
   //高度
   double screenWidth = 0;
@@ -143,16 +142,16 @@ class _HomePageState extends BaseStoreState<HomePage>
   double t4Height = 0;
   double timeHeight = 60.rw;
   double tabbarHeight = 40.rw;
-  HomeCountdownController _homeCountdownController;
-  Color _backgroundColor;
-  StateSetter _bannerState;
+  HomeCountdownController? _homeCountdownController;
+  Color? _backgroundColor;
+  late StateSetter _bannerState;
   GlobalKey<AnimatedHomeBackgroundState> _animatedBackgroundState = GlobalKey();
   GlobalKey<HomeSliverAppBarState> _sliverAppBarGlobalKey = GlobalKey();
 
-  String keyWords = '';
+  String? keyWords = '';
 
-  GifController _gifController;
-  StateSetter _wholesaleState;
+  GifController? _gifController;
+  late StateSetter _wholesaleState;
 
   String debugLable = 'Unknown';
 
@@ -164,12 +163,12 @@ class _HomePageState extends BaseStoreState<HomePage>
     return true;
   }
 
-  Color getCurrentThemeColor() {
-    return getStore().state.themeData.appBarTheme.color;
+  Color? getCurrentThemeColor() {
+    return getStore().state.themeData!.appBarTheme.color;
   }
 
-  Color getCurrentAppItemColor() {
-    return getStore().state.themeData.appBarTheme.iconTheme.color;
+  Color? getCurrentAppItemColor() {
+    return getStore().state.themeData!.appBarTheme.iconTheme!.color;
   }
 
   ///监听剪切板
@@ -177,10 +176,10 @@ class _HomePageState extends BaseStoreState<HomePage>
   @override
   void initState() {
     super.initState();
-    if (UserManager.instance.haveLogin) {
+    if (UserManager.instance!.haveLogin) {
       Future.delayed(Duration.zero, () async {
-        UserManager.instance.getSeven = await WholesaleFunc.get7();
-        if (!UserManager.instance.getSeven) {
+        UserManager.instance!.getSeven = await WholesaleFunc.get7();
+        if (!UserManager.instance!.getSeven!) {
           showDialog(
             context: context,
             builder: (context) => SevenCardDialog(),
@@ -230,7 +229,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         period: Duration(milliseconds: 700),
       );
 
-    kingCoinListModelList = UserManager.instance.kingCoinListModelList;
+    kingCoinListModelList = UserManager.instance!.kingCoinListModelList;
 
     _amapFlutterLocation = AMapFlutterLocation();
 
@@ -245,35 +244,38 @@ class _HomePageState extends BaseStoreState<HomePage>
     // UserManager.instance.openInstallGoodsId
     //     .addListener(_openInstallGoodsIdListener);
 
-    UserManager.instance.openInstallLive.addListener(() {
-      if (!TextUtils.isEmpty(getStore().state.openinstall.type)) {
+    UserManager.instance!.openInstallLive.addListener(() {
+      if (!TextUtils.isEmpty(getStore().state.openinstall!.type)) {
         int goodsid = 0;
         try {
-          goodsid = int.parse(getStore().state.openinstall.goodsid);
+          goodsid = int.parse(getStore().state.openinstall!.goodsid);
         } catch (e) {
-          getStore().state.openinstall.goodsid = "";
+          getStore().state.openinstall!.goodsid = "";
           return;
         }
-        AppRouter.push(context, RouteName.COMMODITY_PAGE,
-            arguments: CommodityDetailPage.setArguments(goodsid));
-        getStore().state.openinstall.goodsid = "";
+
+        Get.to(()=>CommodityDetailPage(arguments: CommodityDetailPage.setArguments(goodsid)));
+
+
+        getStore().state.openinstall!.goodsid = "";
       }
     });
     // _updateSource();
     _sliverListController = ScrollController();
     _gsRefreshController = GSRefreshController(initialRefresh: true);
-    _tabController = TabController(length: _promotionList.length, vsync: this);
-    WidgetsBinding.instance.addPostFrameCallback((callback) {
-      if (getStore().state.goodsId != null && getStore().state.goodsId > 0) {
+    _tabController = TabController(length: _promotionList!.length, vsync: this);
+    WidgetsBinding.instance!.addPostFrameCallback((callback) {
+      if (getStore().state.goodsId != null && getStore().state.goodsId! > 0) {
         //跳到商品详情页面
-        AppRouter.push(context, RouteName.COMMODITY_PAGE,
-            arguments:
-                CommodityDetailPage.setArguments(getStore().state.goodsId));
+
+        Get.to(()=>CommodityDetailPage(arguments:
+        CommodityDetailPage.setArguments(getStore().state.goodsId)));
+
         getStore().state.goodsId = 0;
       }
       // _handleOpenInstallEvents();
     });
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   _change() {
@@ -293,10 +295,16 @@ class _HomePageState extends BaseStoreState<HomePage>
 
 
         _activityMap = null;
-        UserManager.instance.isWholesale = !UserManager.instance.isWholesale;
-        _gsRefreshController.requestRefresh();
-        UserManager.instance.refreshHomeBottomTabbar.value =
-            !UserManager.instance.refreshHomeBottomTabbar.value;
+        UserManager.instance!.isWholesale = !UserManager.instance!.isWholesale;
+        _gsRefreshController!.requestRefresh();
+        UserManager.instance!.refreshHomeBottomTabbar.value =
+            !UserManager.instance!.refreshHomeBottomTabbar.value;
+
+        ///解决切换到批发以后还会出现分享弹窗的问题
+        ClipboardData data = new ClipboardData(text:'');
+        Clipboard.setData(data);
+
+
         setState(() {});
       },
       child: Column(
@@ -309,7 +317,7 @@ class _HomePageState extends BaseStoreState<HomePage>
             child: Stack(
               children: [
                 AnimatedPositioned(
-                    left: UserManager.instance.isWholesale ? 0.rw : 40.rw,
+                    left: UserManager.instance!.isWholesale ? 0.rw : 40.rw,
                     //right: !isWholesale? 0.rw:null,
                     curve: Curves.easeIn,
                     child: Container(
@@ -343,7 +351,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                             Text(
                               '批发',
                               style: TextStyle(
-                                  color: !UserManager.instance.isWholesale
+                                  color: !UserManager.instance!.isWholesale
                                       ? Colors.white
                                       : _backgroundColor,
                                   fontSize: 14.rsp,
@@ -353,7 +361,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                             Text(
                               '零售',
                               style: TextStyle(
-                                  color: UserManager.instance.isWholesale
+                                  color: UserManager.instance!.isWholesale
                                       ? Colors.white
                                       : _backgroundColor,
                                   fontSize: 14.rsp,
@@ -394,25 +402,25 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   initLocation() {
-    _amapFlutterLocation.onLocationChanged().listen(
+    _amapFlutterLocation!.onLocationChanged().listen(
       (event) {
         _weatherLocation = event;
-        LoggerData.addData(_weatherLocation['city']);
+        LoggerData.addData(_weatherLocation!['city']);
         _getWeather();
       },
     );
-    _amapFlutterLocation
+    _amapFlutterLocation!
         .setLocationOption(AMapLocationOption(onceLocation: true));
-    _amapFlutterLocation.startLocation();
+    _amapFlutterLocation!.startLocation();
   }
 
   @override
   void dispose() {
-    _gifController.dispose();
-    _tabController.dispose();
+    _gifController!.dispose();
+    _tabController!.dispose();
     _amapFlutterLocation?.stopLocation();
     _amapFlutterLocation?.destroy();
-    WidgetsBinding.instance.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     super.dispose();
   }
 
@@ -491,7 +499,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                 color: Colors.black,
                 controller: _gsRefreshController,
                 onRefresh: () async {
-                  _tabController.animateTo(_tabIndex);
+                  _tabController!.animateTo(_tabIndex);
                   _updateSource();
                 },
                 body: _buildBody(context),
@@ -554,8 +562,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     GestureDetector scanCon = GestureDetector(
       onTap: () async {
         if (Platform.isIOS) {
-          AppRouter.push(context, RouteName.BARCODE_SCAN);
-
+          Get.to(()=>BarcodeScanPage());
           return;
         }
         bool permission = await Permission.camera.isGranted;
@@ -589,17 +596,14 @@ class _HomePageState extends BaseStoreState<HomePage>
                       context, "没有相机使用权限,授予相机使用权限后才能进行扫码");
                   return;
                 } else {
-
-                  AppRouter.push(context, RouteName.BARCODE_SCAN);
-                  //Get.to(QRViewExample());
+                  Get.to(()=>BarcodeScanPage());
                 }
               },
               type: NormalTextDialogType.delete,
             ),
           );
         } else {
-          AppRouter.push(context, RouteName.BARCODE_SCAN);
-
+          Get.to(()=>BarcodeScanPage());
         }
       },
       child: Container(
@@ -638,7 +642,7 @@ class _HomePageState extends BaseStoreState<HomePage>
               width: 6,
             ),
             Text(
-              keyWords,
+              keyWords!,
               style: TextStyle(
                   color: Colors.white.withOpacity(0.9),
                   fontSize: 13 * 2.sp,
@@ -651,27 +655,26 @@ class _HomePageState extends BaseStoreState<HomePage>
         ),
       ),
       onTap: () {
-        UserManager.instance.isWholesale
+        UserManager.instance!.isWholesale
             ? Get.to(() => WholesaleSearchPage())
             : Get.to(SearchPage(
                 keyWords: keyWords,
               ));
-        //AppRouter.push(context, RouteName.SEARCH);
       },
     );
     String locationCityName =
-        _weatherLocation != null && !TextUtils.isEmpty(_weatherLocation['city'])
-            ? _weatherLocation['city']
+        _weatherLocation != null && !TextUtils.isEmpty(_weatherLocation!['city'] as String?)
+            ? _weatherLocation!['city'] as String
             : "";
     try {
       locationCityName = locationCityName.replaceAll("区", "");
       locationCityName = locationCityName.replaceAll("市", "");
     } catch (e) {}
     String cityName =
-        _homeWeatherModel != null && !TextUtils.isEmpty(_homeWeatherModel.city)
-            ? _homeWeatherModel.city.length > 6
-                ? _homeWeatherModel.city.substring(0, 6)
-                : _homeWeatherModel.city
+        _homeWeatherModel != null && !TextUtils.isEmpty(_homeWeatherModel!.city)
+            ? _homeWeatherModel!.city!.length > 6
+                ? _homeWeatherModel!.city!.substring(0, 6)
+                : _homeWeatherModel!.city!
             : "";
     Widget leftContainer = GestureDetector(
       onTap: () async {
@@ -717,13 +720,13 @@ class _HomePageState extends BaseStoreState<HomePage>
                 items: ["残忍拒绝"],
                 listener: (index) {
                   Alert.dismiss(context);
-                  HiveStore.appBox.put('locationPermission', false);
+                  HiveStore.appBox!.put('locationPermission', false);
                 },
                 deleteItem: "立即授权",
                 deleteListener: () async {
                   Alert.dismiss(context);
 
-                  HiveStore.appBox.put('locationPermission', true);
+                  HiveStore.appBox!.put('locationPermission', true);
                   var value = await requestPermission(true);
                   if (value) {
                     initLocation();
@@ -736,30 +739,29 @@ class _HomePageState extends BaseStoreState<HomePage>
             var value = await requestPermission(true);
             if (value) {
               //监听要在设置参数之前 否则无法获取定位
-              _amapFlutterLocation
+              _amapFlutterLocation!
                   .setLocationOption(AMapLocationOption(onceLocation: true));
-              _amapFlutterLocation.startLocation();
+              _amapFlutterLocation!.startLocation();
             }
           }
         }
 
         String locationCityName = _weatherLocation != null &&
-                !TextUtils.isEmpty(_weatherLocation['city'])
-            ? _weatherLocation['city']
+                !TextUtils.isEmpty(_weatherLocation!['city'] as String?)
+            ? _weatherLocation!['city'] as String
             : "";
         try {
           locationCityName = locationCityName.replaceAll("区", "");
           locationCityName = locationCityName.replaceAll("市", "");
         } catch (e) {}
         if (locationCityName != '') {
-          AppRouter.push(context, RouteName.WEATHER_CITY_PAGE,
-                  arguments: WeatherCityPage.setArguments(locationCityName))
-              .then((model) {
+          Get.to(()=>WeatherCityPage( arguments: WeatherCityPage.setArguments(locationCityName)))!.then((model) {
             if (model is WeatherCityModel) {
               _weatherCityModel = model;
               _getWeather();
             }
           });
+
         }
       },
       child: Container(
@@ -820,13 +822,13 @@ class _HomePageState extends BaseStoreState<HomePage>
             actions: _actionsWidget(),
             title: _buildTitle(),
             backgroundColor: AppColor.themeColor,
-            expandedHeight: _promotionList == null || _promotionList.length == 0
+            expandedHeight: _promotionList == null || _promotionList!.length == 0
                 ? weatherHeight +
                     bannerHeight +
                     buttonsHeight +
                     t1Height +
                     t23Height +
-                    (UserManager.instance.isWholesale ? 50.rw : t4Height) +
+                    (UserManager.instance!.isWholesale ? 50.rw : t4Height) +
                     rSize(62) +
                     timeHeight +
                     tabbarHeight -
@@ -837,14 +839,14 @@ class _HomePageState extends BaseStoreState<HomePage>
                     buttonsHeight +
                     t1Height +
                     t23Height +
-                    (UserManager.instance.isWholesale ? 50.rw : t4Height) +
+                    (UserManager.instance!.isWholesale ? 50.rw : t4Height) +
                     rSize(62) +
                     timeHeight +
                     tabbarHeight -
                     ScreenUtil().statusBarHeight +
                     4,
             flexibleSpace: _flexibleSpaceBar(context),
-            bottom: _promotionList == null || _promotionList.length == 0
+            bottom: _promotionList == null || _promotionList!.length == 0
                 ? PreferredSize(
                     child: Container(), preferredSize: Size.fromHeight(1))
                 // : PreferredSize(preferredSize: Size.fromHeight(40),
@@ -857,14 +859,14 @@ class _HomePageState extends BaseStoreState<HomePage>
                         promotionList: _promotionList,
                         timerJump: (index) {
                           _tabIndex = index;
-                          _homeCountdownController.indexChange(index);
+                          _homeCountdownController!.indexChange(index);
                           // 定时任务回调
-                          _tabController.animateTo(index);
-                          _getPromotionGoodsList(_promotionList[index].id);
+                          _tabController!.animateTo(index);
+                          _getPromotionGoodsList(_promotionList![index].id);
                         },
                         clickItem: (index) {
-                          _homeCountdownController.indexChange(index);
-                          _getPromotionGoodsList(_promotionList[index].id);
+                          _homeCountdownController!.indexChange(index);
+                          _getPromotionGoodsList(_promotionList![index].id);
                         },
                         tabController: _tabController,
                       ),
@@ -875,7 +877,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         //       ? _brandWidget()
         //       : SizedBox(),
         // ),
-        UserManager.instance.isWholesale
+        UserManager.instance!.isWholesale
             ? SliverToBoxAdapter(
                 child: Container(
                   height: 0.rw,
@@ -884,7 +886,7 @@ class _HomePageState extends BaseStoreState<HomePage>
             : SliverList(
                 delegate: SliverChildListDelegate(
                   List.generate(
-                      _promotionList == null || _promotionList.length == 0
+                      _promotionList == null || _promotionList!.length == 0
                           ? 0
                           : _promotionGoodsList.length + 1, (index) {
                     if (index == _promotionGoodsList.length) {
@@ -910,16 +912,17 @@ class _HomePageState extends BaseStoreState<HomePage>
                           buildCtx: context,
                           isSingleDayGoods: false,
                           onBrandClick: () {
-                            AppRouter.push(
-                                context, RouteName.BRANDGOODS_LIST_PAGE,
-                                arguments: BrandGoodsListPage.setArguments(
-                                    model.brandId, model.brandName));
+
+
+                            Get.to(()=>BrandGoodsListPage(argument: BrandGoodsListPage.setArguments(
+                                model.brandId as int?, model.brandName),));
+
                           },
                           model: model,
                           buyClick: () {
-                            AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                                arguments: CommodityDetailPage.setArguments(
-                                    model.goodsId));
+
+                            Get.to(()=>CommodityDetailPage(arguments: CommodityDetailPage.setArguments(
+                                model.goodsId),));
                           },
                         ),
                       );
@@ -930,14 +933,9 @@ class _HomePageState extends BaseStoreState<HomePage>
                       return RowActivityItem(
                         model: activityModel,
                         click: () {
-                          AppRouter.push(
-                            context,
-                            RouteName.WEB_VIEW_PAGE,
-                            arguments: WebViewPage.setArguments(
-                                url: activityModel.activityUrl,
-                                title: "活动",
-                                hideBar: true),
-                          );
+
+                          Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
+                              url: activityModel.activityUrl, title: "活动", hideBar: true),));
                         },
                       );
                     } else {
@@ -949,7 +947,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         SliverList(
           delegate: SliverChildListDelegate(
             List.generate(
-                _promotionList == null || _promotionList.length == 0
+                _promotionList == null || _promotionList!.length == 0
                     ? 0
                     : _promotionGoodsList.length, (index) {
               if (_promotionGoodsList[index] is PromotionActivityModel) {
@@ -958,14 +956,8 @@ class _HomePageState extends BaseStoreState<HomePage>
                 return RowActivityItem(
                   model: activityModel,
                   click: () {
-                    AppRouter.push(
-                      context,
-                      RouteName.WEB_VIEW_PAGE,
-                      arguments: WebViewPage.setArguments(
-                          url: activityModel.activityUrl,
-                          title: "活动",
-                          hideBar: true),
-                    );
+                    Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
+                        url: activityModel.activityUrl, title: "活动", hideBar: true),));
                   },
                 );
               } else {
@@ -974,7 +966,7 @@ class _HomePageState extends BaseStoreState<HomePage>
             }),
           ),
         ),
-        _promotionList.isEmpty || !UserManager.instance.isWholesale
+        _promotionList!.isEmpty || !UserManager.instance!.isWholesale
             ? SliverToBoxAdapter(
                 child: Container(
                   height: 0.rw,
@@ -996,7 +988,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                               goods: WholesaleGood(
                             id: model.goodsId,
                             goodsName: model.goodsName,
-                            mainPhotoUrl: model.picture.url,
+                            mainPhotoUrl: model.picture!.url,
                             description: model.description,
                             discountPrice: model.price,
                             salePrice: model.salePrice,
@@ -1028,7 +1020,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                 ),
                 // ItemTagWidget.getSliverGridDelegate(_displayList, context),
               ),
-        UserManager.instance.isWholesale
+        UserManager.instance!.isWholesale
             ? SliverToBoxAdapter(
                 child: Container(
                 color: AppColor.frenchColor,
@@ -1335,13 +1327,13 @@ class _HomePageState extends BaseStoreState<HomePage>
                       ? _buttonTitle(context)
                       : SizedBox(),
                   _activityImageTitle(),
-                  UserManager.instance.isWholesale
+                  UserManager.instance!.isWholesale
                       ? _activityImage234()
                       : SizedBox(),
-                  UserManager.instance.isWholesale
+                  UserManager.instance!.isWholesale
                       ? SizedBox()
                       : _activityImageRow(),
-                  UserManager.instance.isWholesale
+                  UserManager.instance!.isWholesale
                       ? SizedBox()
                       : _activityT4Image(),
                   HomeCountdownWidget(
@@ -1359,21 +1351,21 @@ class _HomePageState extends BaseStoreState<HomePage>
   _bannerView() {
     if (_backgroundColor == null &&
         _bannerList != null &&
-        _bannerList.length > 0) {
-      BannerModel bannerModel = _bannerList[0];
+        _bannerList!.length > 0) {
+      BannerModel bannerModel = _bannerList![0];
       if (!TextUtils.isEmpty(bannerModel.color)) {
         Color color = ColorsUtil.hexToColor(bannerModel.color);
         _backgroundColor = color;
 
         _wholesaleState(() {});
-        _animatedBackgroundState.currentState.changeColor(color);
-        _sliverAppBarGlobalKey.currentState.updateColor(color);
+        _animatedBackgroundState.currentState!.changeColor(color);
+        _sliverAppBarGlobalKey.currentState!.updateColor(color);
       }
     }
     Widget banner =
         StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
       _bannerState = setState;
-      if (_bannerList == null || _bannerList.length == 0) {
+      if (_bannerList == null || _bannerList!.length == 0) {
         return Container(
           height: bannerHeight,
         );
@@ -1382,15 +1374,15 @@ class _HomePageState extends BaseStoreState<HomePage>
         onPageChanged: (index) {
           int realIndex = index;
           if (realIndex < 0) return;
-          if (realIndex >= _bannerList.length) realIndex = 0;
-          BannerModel bannerModel = _bannerList[realIndex];
+          if (realIndex >= _bannerList!.length) realIndex = 0;
+          BannerModel bannerModel = _bannerList![realIndex];
           if (!TextUtils.isEmpty(bannerModel.color)) {
             Color color = ColorsUtil.hexToColor(bannerModel.color);
             _backgroundColor = color;
 
             _wholesaleState(() {});
-            _animatedBackgroundState.currentState.changeColor(color);
-            _sliverAppBarGlobalKey.currentState.updateColor(color);
+            _animatedBackgroundState.currentState!.changeColor(color);
+            _sliverAppBarGlobalKey.currentState!.updateColor(color);
           }
         },
         height: bannerHeight,
@@ -1402,29 +1394,25 @@ class _HomePageState extends BaseStoreState<HomePage>
             onTap: () {
               if (!TextUtils.isEmpty(
                   (bannerModel as BannerModel).activityUrl)) {
-                AppRouter.push(
-                  context,
-                  RouteName.WEB_VIEW_PAGE,
-                  arguments: WebViewPage.setArguments(
-                      url: (bannerModel as BannerModel).activityUrl,
-                      title: "活动",
-                      hideBar: true),
-                );
+                Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
+                    url: bannerModel.activityUrl, title: "活动", hideBar: true),));
+
               } else {
-                if (UserManager.instance.isWholesale) {
+                if (UserManager.instance!.isWholesale) {
                   Get.to(() => WholesaleDetailPage(
-                        goodsId: (bannerModel as BannerModel).goodsId,
+                        goodsId: bannerModel.goodsId,
                       ));
                 } else {
-                  AppRouter.push(context, RouteName.COMMODITY_PAGE,
+                  Get.to(() => CommodityDetailPage(
                       arguments: CommodityDetailPage.setArguments(
-                          (bannerModel as BannerModel).goodsId));
+                          bannerModel.goodsId)
+                  ));
                 }
               }
             },
             child: FadeInImage.assetNetwork(
               placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-              image: Api.getImgUrl(bannerModel.url),
+              image: Api.getImgUrl(bannerModel.url)!,
               fit: BoxFit.fill,
             ),
             // child: ExtendedImage.network(Api.getImgUrl(bannerModel.url),
@@ -1453,19 +1441,15 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   _activityImageTitle() {
-    HomeAcitvityItem item;
-    if (_activityMap != null && _activityMap.containsKey('a')) {
-      item = _activityMap['a'];
+    HomeAcitvityItem? item;
+    if (_activityMap != null && _activityMap!.containsKey('a')) {
+      item = _activityMap!['a'];
     }
     return GestureDetector(
       onTap: () {
         if (item != null && !TextUtils.isEmpty(item.website)) {
-          AppRouter.push(
-            context,
-            RouteName.WEB_VIEW_PAGE,
-            arguments: WebViewPage.setArguments(
-                url: item.website, title: "活动", hideBar: true),
-          );
+          Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
+              url: item!.website, title: "活动", hideBar: true),));
         }
       },
       child: Container(
@@ -1475,10 +1459,10 @@ class _HomePageState extends BaseStoreState<HomePage>
           right: 10,
         ),
         child: ClipRRect(
-          child: _activityMap != null && _activityMap.containsKey('a')
+          child: _activityMap != null && _activityMap!.containsKey('a')
               ? FadeInImage.assetNetwork(
                   placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-                  image: Api.getImgUrl(item.logoUrl),
+                  image: Api.getImgUrl(item!.logoUrl)!,
                   fit: BoxFit.fill,
                 )
               //
@@ -1503,9 +1487,9 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   _activityT4Image() {
-    HomeAcitvityItem itemD;
-    if (_activityMap != null && _activityMap.containsKey('d')) {
-      itemD = _activityMap['d'];
+    HomeAcitvityItem? itemD;
+    if (_activityMap != null && _activityMap!.containsKey('d')) {
+      itemD = _activityMap!['d'];
     }
     Container con = Container(
       width: screenWidth,
@@ -1513,7 +1497,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       color: AppColor.frenchColor,
       padding: EdgeInsets.symmetric(horizontal: 10),
       child: ClipRRect(
-        child: _activityMap != null && _activityMap.containsKey('d')
+        child: _activityMap != null && _activityMap!.containsKey('d')
             ?
             // ExtendedImage.network(
             //         Api.getImgUrl(itemD.logoUrl),
@@ -1522,7 +1506,7 @@ class _HomePageState extends BaseStoreState<HomePage>
             //       )
             FadeInImage.assetNetwork(
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-                image: Api.getImgUrl(itemD.logoUrl),
+                image: Api.getImgUrl(itemD!.logoUrl)!,
                 fit: BoxFit.fill,
               )
             : Image.asset(
@@ -1537,12 +1521,8 @@ class _HomePageState extends BaseStoreState<HomePage>
     return GestureDetector(
       onTap: () {
         if (itemD != null && !TextUtils.isEmpty(itemD.website)) {
-          AppRouter.push(
-            context,
-            RouteName.WEB_VIEW_PAGE,
-            arguments: WebViewPage.setArguments(
-                url: itemD.website, title: "活动", hideBar: true),
-          );
+          Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
+              url: itemD!.website, title: "活动", hideBar: true),));
         }
       },
       child: con,
@@ -1550,12 +1530,12 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   _activityImageRow() {
-    HomeAcitvityItem itemB, itemC;
-    if (_activityMap != null && _activityMap.containsKey('b')) {
-      itemB = _activityMap['b'];
+    HomeAcitvityItem? itemB, itemC;
+    if (_activityMap != null && _activityMap!.containsKey('b')) {
+      itemB = _activityMap!['b'];
     }
-    if (_activityMap != null && _activityMap.containsKey('c')) {
-      itemC = _activityMap['c'];
+    if (_activityMap != null && _activityMap!.containsKey('c')) {
+      itemC = _activityMap!['c'];
     }
     return Container(
       color: AppColor.frenchColor,
@@ -1573,18 +1553,16 @@ class _HomePageState extends BaseStoreState<HomePage>
                   child: GestureDetector(
                     onTap: () {
                       if (itemB != null && !TextUtils.isEmpty(itemB.website)) {
-                        AppRouter.push(
-                          context,
-                          RouteName.WEB_VIEW_PAGE,
-                          arguments: WebViewPage.setArguments(
-                              url: itemB.website, title: "活动", hideBar: true),
-                        );
+
+                        Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
+                            url: itemB!.website, title: "活动", hideBar: true),));
+
                       }
                     },
                     child: Container(
                       child: ClipRRect(
                         child: _activityMap != null &&
-                                _activityMap.containsKey('b')
+                                _activityMap!.containsKey('b')
                             ?
                             // ExtendedImage.network(
                             //         Api.getImgUrl(itemB.logoUrl),
@@ -1592,7 +1570,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                             //         enableLoadState: true)
                             FadeInImage.assetNetwork(
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-                                image: Api.getImgUrl(itemB.logoUrl),
+                                image: Api.getImgUrl(itemB!.logoUrl)!,
                                 fit: BoxFit.fill,
                               )
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemB.logoUrl),fit: BoxFit.fill,)
@@ -1619,18 +1597,15 @@ class _HomePageState extends BaseStoreState<HomePage>
                   child: GestureDetector(
                     onTap: () {
                       if (itemC != null && !TextUtils.isEmpty(itemC.website)) {
-                        AppRouter.push(
-                          context,
-                          RouteName.WEB_VIEW_PAGE,
-                          arguments: WebViewPage.setArguments(
-                              url: itemC.website, title: "活动", hideBar: true),
-                        );
+
+                        Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
+                            url: itemC!.website, title: "活动", hideBar: true),));
                       }
                     },
                     child: Container(
                       child: ClipRRect(
                         child: _activityMap != null &&
-                                _activityMap.containsKey('c')
+                                _activityMap!.containsKey('c')
                             ?
                             // ExtendedImage.network(
                             //         Api.getImgUrl(itemC.logoUrl),
@@ -1638,7 +1613,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                             //         enableLoadState: true)
                             FadeInImage.assetNetwork(
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-                                image: Api.getImgUrl(itemC.logoUrl),
+                                image: Api.getImgUrl(itemC!.logoUrl)!,
                                 fit: BoxFit.fill,
                               )
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemC.logoUrl),fit: BoxFit.fill,)
@@ -1667,15 +1642,15 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   _activityImage234() {
-    HomeAcitvityItem itemB, itemC, itemD;
-    if (_activityMap != null && _activityMap.containsKey('b')) {
-      itemB = _activityMap['b'];
+    HomeAcitvityItem? itemB, itemC, itemD;
+    if (_activityMap != null && _activityMap!.containsKey('b')) {
+      itemB = _activityMap!['b'];
     }
-    if (_activityMap != null && _activityMap.containsKey('c')) {
-      itemC = _activityMap['c'];
+    if (_activityMap != null && _activityMap!.containsKey('c')) {
+      itemC = _activityMap!['c'];
     }
-    if (_activityMap != null && _activityMap.containsKey('d')) {
-      itemD = _activityMap['d'];
+    if (_activityMap != null && _activityMap!.containsKey('d')) {
+      itemD = _activityMap!['d'];
     }
     return Container(
       color: AppColor.frenchColor,
@@ -1694,23 +1669,20 @@ class _HomePageState extends BaseStoreState<HomePage>
                     onTap: () {
                       if (itemB != null && !TextUtils.isEmpty(itemB.website)) {
                         LoggerData.addData(itemB.website,tag: "BB");
-                        AppRouter.push(
-                          context,
-                          RouteName.WEB_VIEW_PAGE,
-                          arguments: WebViewPage.setArguments(
-                              url: itemB.website, title: "活动", hideBar: true),
-                        );
+
+                        Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
+                            url: itemB!.website, title: "活动", hideBar: true),));
                       }
                     },
                     child: Container(
                       child: ClipRRect(
                         child: _activityMap != null &&
-                                _activityMap.containsKey('b')
+                                _activityMap!.containsKey('b')
                             ?
 
                             FadeInImage.assetNetwork(
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                                image: Api.getImgUrl(itemB.logoUrl),
+                                image: Api.getImgUrl(itemB!.logoUrl)!,
                                 fit: BoxFit.fill,
                               )
 
@@ -1743,22 +1715,19 @@ class _HomePageState extends BaseStoreState<HomePage>
                     onTap: () {
                       if (itemC != null && !TextUtils.isEmpty(itemC.website)) {
                         LoggerData.addData(itemC.website,tag: "cc");
-                        AppRouter.push(
-                          context,
-                          RouteName.WEB_VIEW_PAGE,
-                          arguments: WebViewPage.setArguments(
-                              url: itemC.website, title: "活动", hideBar: true),
-                        );
+
+                        Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
+                            url: itemC!.website, title: "活动", hideBar: true),));
                       }
                     },
                     child: Container(
                       child: ClipRRect(
                         child: _activityMap != null &&
-                                _activityMap.containsKey('c')
+                                _activityMap!.containsKey('c')
                             ?
                             FadeInImage.assetNetwork(
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-                                image: Api.getImgUrl(itemC.logoUrl),
+                                image: Api.getImgUrl(itemC!.logoUrl)!,
                                 fit: BoxFit.fill,
                               )
 
@@ -1785,18 +1754,15 @@ class _HomePageState extends BaseStoreState<HomePage>
                     onTap: () {
                       if (itemD != null && !TextUtils.isEmpty(itemD.website)) {
                         LoggerData.addData(itemD.website,tag: "DD");
-                        AppRouter.push(
-                          context,
-                          RouteName.WEB_VIEW_PAGE,
-                          arguments: WebViewPage.setArguments(
-                              url: itemD.website, title: "活动", hideBar: true),
-                        );
+
+                        Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
+                            url: itemD!.website, title: "活动", hideBar: true),));
                       }
                     },
                     child: Container(
                       child: ClipRRect(
                         child: _activityMap != null &&
-                                _activityMap.containsKey('d')
+                                _activityMap!.containsKey('d')
                             ?
                             // ExtendedImage.network(
                             //         Api.getImgUrl(itemC.logoUrl),
@@ -1804,7 +1770,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                             //         enableLoadState: true)
                             FadeInImage.assetNetwork(
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
-                                image: Api.getImgUrl(itemD.logoUrl),
+                                image: Api.getImgUrl(itemD!.logoUrl)!,
                                 fit: BoxFit.fill,
                               )
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemC.logoUrl),fit: BoxFit.fill,)
@@ -1849,19 +1815,19 @@ class _HomePageState extends BaseStoreState<HomePage>
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     _buttonTitleRow(
-                      kingCoinListModelList[0],
+                      kingCoinListModelList![0],
                     ),
                     _buttonTitleRow(
-                      kingCoinListModelList[1],
+                      kingCoinListModelList![1],
                     ),
                     _buttonTitleRow(
-                      kingCoinListModelList[2],
+                      kingCoinListModelList![2],
                     ),
                     _buttonTitleRow(
-                      kingCoinListModelList[3],
+                      kingCoinListModelList![3],
                     ),
                     _buttonTitleRow(
-                      kingCoinListModelList[4],
+                      kingCoinListModelList![4],
                     ),
                   ],
                 ),
@@ -1897,12 +1863,12 @@ class _HomePageState extends BaseStoreState<HomePage>
                 height: 48,
                 child: FadeInImage.assetNetwork(
                   placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
-                  image: Api.getImgUrl(kingCoin.data.first.url),
+                  image: Api.getImgUrl(kingCoin.data!.first.url)!,
                 )),
             Container(
               margin: EdgeInsets.only(top: 8),
               child: Text(
-                kingCoin.data.first.name,
+                kingCoin.data!.first.name!,
                 style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 12 * 2.sp,
@@ -1912,35 +1878,34 @@ class _HomePageState extends BaseStoreState<HomePage>
           ],
         ),
         onPressed: () {
-          _kingCoinGet(kingCoin.data.first.kingName.name);
+          _kingCoinGet(kingCoin.data!.first.kingName!.name);
         },
       ),
     );
   }
 
-  _kingCoinGet(String name) async {
+  _kingCoinGet(String? name) async {
     switch (name) {
       case '京东优选':
         List<FirstCategory> firstCategoryList = [];
         firstCategoryList = await HomeDao.getJDCategoryList();
-        if (firstCategoryList != null) {
-          Get.to(() => ClassifyPage(
-                jdType: 1,
-                data: firstCategoryList,
-                initValue: '全部',
-              ));
-        }
+        Get.to(() => ClassifyPage(
+              jdType: 1,
+              data: firstCategoryList,
+              initValue: '全部',
+            ));
         break;
       case '一键邀请':
-        if (!UserManager.instance.haveLogin) {
-          AppRouter.push(context, RouteName.LOGIN);
+        if (!UserManager.instance!.haveLogin) {
+          Get.to(()=>LoginPage());
+
           return;
         }
 
         ShareTool().inviteShare(context, customTitle: Container());
         break;
       case '热销榜单':
-        AppRouter.push(context, RouteName.GOODS_HOT_LIST);
+        Get.to(()=>GoodsHotListPage());
         break;
       case '进口专区':
         List<CountryListModel> countryListModelList;
@@ -1951,18 +1916,18 @@ class _HomePageState extends BaseStoreState<HomePage>
         Get.to(() => GoodsPreferentialListPage());
         break;
       case '高额返补':
-        if (!UserManager.instance.haveLogin) {
+        if (!UserManager.instance!.haveLogin) {
           ReToast.err(text: '请先登录');
-          AppRouter.push(context, RouteName.LOGIN);
+          Get.to(()=>LoginPage());
           return;
         }
         Get.to(() => GoodsHighCommissionListPage());
         break;
 
       case 'VIP权益':
-        if (!UserManager.instance.haveLogin) {
+        if (!UserManager.instance!.haveLogin) {
           ReToast.err(text: '请先登录');
-          AppRouter.push(context, RouteName.LOGIN);
+          Get.to(()=>LoginPage());
           return;
         }
         Get.to(() => VipShopCardPage(
@@ -1970,20 +1935,18 @@ class _HomePageState extends BaseStoreState<HomePage>
             ));
         //Get.to(() => GoodsHighCommissionListPage());
         break;
-      case '学院':
-        UserManager.instance.selectTabbarIndex = 1;
-        bool value = UserManager.instance.selectTabbar.value;
-        UserManager.instance.selectTabbar.value = !value;
+      case '阿库学院':
+        UserManager.instance!.selectTabbarIndex = 1;
+        bool value = UserManager.instance!.selectTabbar.value;
+        UserManager.instance!.selectTabbar.value = !value;
         break;
       case '家居生活':
-        AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
-            arguments: GoodsListTempPage.setArguments(
-                title: "家居生活", type: GoodsListTempType.homeLife));
+        Get.to(()=>GoodsListTempPage(arguments: GoodsListTempPage.setArguments(
+            title: "家居生活", type: GoodsListTempType.homeLife),));
         break;
       case '数码家电':
-        AppRouter.push(context, RouteName.GOODS_LIST_TEMP,
-            arguments: GoodsListTempPage.setArguments(
-                title: "数码家电", type: GoodsListTempType.homeAppliances));
+        Get.to(()=>GoodsListTempPage(arguments: GoodsListTempPage.setArguments(
+            title: "数码家电", type: GoodsListTempType.homeAppliances),));
         break;
       case '日用百货':
         break;
@@ -2003,43 +1966,52 @@ class _HomePageState extends BaseStoreState<HomePage>
         break;
       case '全部分类':
         await HomeDao.getCategories(success: (data, code, msg) {
-          CRoute.push(
-              context,
-              ClassifyPage(
-                data: data,
-                initValue: '分类',
-              ));
+          // CRoute.push(
+          //     context,
+          //     ClassifyPage(
+          //       data: data,
+          //       initValue: '分类',
+          //     ));
+          Get.to(()=>  ClassifyPage(
+            data: data,
+            initValue: '分类',
+          ));
         }, failure: (code, msg) {
           Toast.showError(msg);
         });
         break;
       case '批发商城':
         await HomeDao.getCategories(success: (data, code, msg) {
-          CRoute.push(
-              context,
-              ClassifyPage(
-                data: data,
-                initValue: '分类',
-              ));
+          // CRoute.push(
+          //     context,
+          //     ClassifyPage(
+          //       data: data,
+          //       initValue: '分类',
+          //     ));
+
+          Get.to(()=>  ClassifyPage(
+            data: data,
+            initValue: '分类',
+          ));
         }, failure: (code, msg) {
           Toast.showError(msg);
         });
         //Get.to(() => WholesaleHomePage());
         break;
-        final loadingCancel = ReToast.loading();
-        await HomeDao.getCategories(success: (data, code, msg) {
-          loadingCancel();
-          CRoute.push(
-              context,
-              ClassifyPage(
-                data: data,
-                initValue: name,
-              ));
-        }, failure: (code, msg) {
-          Toast.showError(msg);
-        });
-
-        break;
+        // final loadingCancel = ReToast.loading();
+        // await HomeDao.getCategories(success: (data, code, msg) {
+        //   loadingCancel();
+        //   CRoute.push(
+        //       context,
+        //       ClassifyPage(
+        //         data: data,
+        //         initValue: name,
+        //       ));
+        // }, failure: (code, msg) {
+        //   Toast.showError(msg);
+        // });
+        //
+        // break;
     }
   }
 
@@ -2114,12 +2086,16 @@ class _HomePageState extends BaseStoreState<HomePage>
         final loadingCancel = ReToast.loading();
         await HomeDao.getCategories(success: (data, code, msg) {
           loadingCancel();
-          CRoute.push(
-              context,
-              ClassifyPage(
-                data: data,
-                initValue: name,
-              ));
+          // CRoute.push(
+          //     context,
+          //     ClassifyPage(
+          //       data: data,
+          //       initValue: name,
+          //     ));
+          Get.to(()=>  ClassifyPage(
+            data: data,
+            initValue:name,
+          ));
         }, failure: (code, msg) {
           Toast.showError(msg);
         });
@@ -2170,15 +2146,15 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   _getBannerList() async {
     ResultData resultData = await HttpManager.post(HomeApi.banner_list, {
-      "is_sale": UserManager.instance.isWholesale,
+      "is_sale": UserManager.instance!.isWholesale,
     });
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     BannerListModel model = BannerListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
     _bannerState(() {
@@ -2188,15 +2164,15 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   _getActiviteList() async {
     ResultData resultData = await HttpManager.post(HomeApi.activity_list, {
-      "is_sale": UserManager.instance.isWholesale,
+      "is_sale": UserManager.instance!.isWholesale,
     });
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
     if (resultData.data['data'] != null) {
@@ -2218,90 +2194,90 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   _getPromotionList() async {
     ResultData resultData = await HttpManager.post(HomeApi.promotion_list, {
-      "is_sale": UserManager.instance.isWholesale,
+      "is_sale": UserManager.instance!.isWholesale,
     });
 
-    if (_gsRefreshController.isRefresh()) {
+    if (_gsRefreshController!.isRefresh()) {
       // Future.delayed(Duration(milliseconds: 1500), () {
-      _gsRefreshController.refreshCompleted();
-      _gsRefreshController.loadNoData();
+      _gsRefreshController!.refreshCompleted();
+      _gsRefreshController!.loadNoData();
       // });
     }
 
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     PromotionListModel model = PromotionListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
     _promotionList = model.data;
     setState(() {});
-    if (_promotionList == null || _promotionList.length == 0) {
+    if (_promotionList == null || _promotionList!.length == 0) {
       _promotionGoodsList = [];
       setState(() {});
       return;
     }
     int _index = 0;
-    for (Promotion item in _promotionList) {
+    for (Promotion item in _promotionList!) {
       PromotionStatus processStatus = PromotionTimeTool.getPromotionStatus(
           item.startTime, item.getTrueEndTime());
       // DateTime time = DateTime.parse("2020-03-18 23:00:00");
       DateTime time = DateTime.now();
       if (time.hour >= 22 &&
-          DateTime.parse(item.startTime).hour == 20 &&
-          time.day == DateTime.parse(item.startTime).day) {
+          DateTime.parse(item.startTime!).hour == 20 &&
+          time.day == DateTime.parse(item.startTime!).day) {
         //10点以后定位到8点
-        _index = _promotionList.indexOf(item);
+        _index = _promotionList!.indexOf(item);
       } else if (processStatus == PromotionStatus.start) {
-        _index = _promotionList.indexOf(item);
+        _index = _promotionList!.indexOf(item);
       }
     }
-    _homeCountdownController.indexChange(_index);
+    _homeCountdownController!.indexChange(_index);
     _tabController = TabController(
-        vsync: this, length: _promotionList.length, initialIndex: _index);
+        vsync: this, length: _promotionList!.length, initialIndex: _index);
     _tabIndex = _index;
-    _getPromotionGoodsList(_promotionList[_index].id);
+    _getPromotionGoodsList(_promotionList![_index].id);
   }
 
-  _getPromotionGoodsList(int promotionId) async {
+  _getPromotionGoodsList(int? promotionId) async {
     ResultData resultData =
         await HttpManager.post(HomeApi.promotion_goods_list, {
       "timeItemID": promotionId,
-      'user_id': UserManager.instance.user.info.id,
-      "is_sale": UserManager.instance.isWholesale,
+      'user_id': UserManager.instance!.user.info!.id,
+      "is_sale": UserManager.instance!.isWholesale,
     });
     if (!resultData.result) {
-      showError(resultData.msg);
+      showError(resultData.msg??'');
       return;
     }
     PromotionGoodsListModel model =
         PromotionGoodsListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg);
+      showError(model.msg??'');
       return;
     }
     List array = [];
-    if (model.data.goodsList == null) {
-      model.data.goodsList = [];
+    if (model.data!.goodsList == null) {
+      model.data!.goodsList = [];
     } else {
-      array.addAll(model.data.goodsList);
+      array.addAll(model.data!.goodsList!);
     }
-    if (model.data.activityList != null && model.data.activityList.length > 0) {
-      if (model.data.activityList.first.activitySortId != 0) {
-        if (array.length >= model.data.activityList.first.activitySortId) {
-          array.insert(model.data.activityList.first.activitySortId - 1,
-              model.data.activityList.first);
+    if (model.data!.activityList != null && model.data!.activityList!.length > 0) {
+      if (model.data!.activityList!.first.activitySortId != 0) {
+        if (array.length >= model.data!.activityList!.first.activitySortId!) {
+          array.insert(model.data!.activityList!.first.activitySortId! - 1,
+              model.data!.activityList!.first);
         } else {
-          array.add(model.data.activityList.first);
+          array.add(model.data!.activityList!.first);
         }
       } else {
         if (array.length > 3) {
-          array.insert(3, model.data.activityList.first);
+          array.insert(3, model.data!.activityList!.first);
         } else {
-          array.add(model.data.activityList.first);
+          array.add(model.data!.activityList!.first);
         }
       }
     }
@@ -2319,9 +2295,9 @@ class _HomePageState extends BaseStoreState<HomePage>
             ScreenUtil().statusBarHeight -
             tabbarHeight -
             kToolbarHeight;
-        double offset = _sliverListController.offset;
+        double offset = _sliverListController!.offset;
         if (offset > height) {
-          _sliverListController.animateTo(height,
+          _sliverListController!.animateTo(height,
               duration: Duration(milliseconds: 300), curve: Curves.linear);
         }
       });
@@ -2333,26 +2309,26 @@ class _HomePageState extends BaseStoreState<HomePage>
     //cityid、city和ip参数3选一提交，如果不传，默认返回当前ip城市天气，cityid优先级最高。
     String url =
         "https://v0.yiketianqi.com/api?version=v61&appid=81622428&appsecret=AxKzYWq3";
-    if (_weatherCityModel != null && !TextUtils.isEmpty(_weatherCityModel.id)) {
-      url = "$url&cityid=${_weatherCityModel.id}";
+    if (_weatherCityModel != null && !TextUtils.isEmpty(_weatherCityModel!.id)) {
+      url = "$url&cityid=${_weatherCityModel!.id}";
     } else if (_weatherCityModel != null &&
-        !TextUtils.isEmpty(_weatherCityModel.cityZh)) {
-      url = "$url&city=${_weatherCityModel.cityZh}";
+        !TextUtils.isEmpty(_weatherCityModel!.cityZh)) {
+      url = "$url&city=${_weatherCityModel!.cityZh}";
     } else if (_weatherLocation != null &&
-        !TextUtils.isEmpty(_weatherLocation['city'])) {
+        !TextUtils.isEmpty(_weatherLocation!['city'] as String?)) {
       // url = "$url&point=gaode&lng=${_weatherLocation.latLng.longitude.toString()}&lat=${_weatherLocation.latLng.latitude.toString()}";
-      String city = (_weatherLocation['city'] as String).replaceAll("区", "");
+      String city = (_weatherLocation!['city'] as String).replaceAll("区", "");
       city = city.replaceAll("市", "");
       url = "$url&city=$city";
     }
-    Response res = await HttpManager.netFetchNormal(url, null, null, null);
+    Response? res = await HttpManager.netFetchNormal(url, null, null, null);
     if (res == null) {
       return;
     }
     LoggerData.addData(res);
     Map map = json.decode(res.data.toString());
-    _homeWeatherModel = HomeWeatherModel.fromJson(map);
-    UserManager.instance.homeWeatherModel = _homeWeatherModel;
+    _homeWeatherModel = HomeWeatherModel.fromJson(map as Map<String, dynamic>);
+    UserManager.instance!.homeWeatherModel = _homeWeatherModel;
     if (mounted) setState(() {});
   }
 
@@ -2370,10 +2346,10 @@ class _HomePageState extends BaseStoreState<HomePage>
     }
     bool permission = await Permission.location.isGranted;
     if (permission) {
-      HiveStore.appBox.put('location', true);
+      HiveStore.appBox!.put('location', true);
     }
-    print('${HiveStore.appBox.get('location')}');
-    if (HiveStore.appBox.get('location') == null) {
+    print('${HiveStore.appBox!.get('location')}');
+    if (HiveStore.appBox!.get('location') == null) {
       // bool permission = await Permission.locationWhenInUse.isRestricted;
       // bool permanentDenied =
       // await Permission.locationWhenInUse.isDenied;
@@ -2383,15 +2359,15 @@ class _HomePageState extends BaseStoreState<HomePage>
         bool permanentDenied = await Permission.location.isGranted;
         if (permanentDenied) {
           //await PermissionTool.showOpenPermissionDialog(context, '打开定位权限');
-          HiveStore.appBox.put('location', true);
+          HiveStore.appBox!.put('location', true);
         } else {
-          HiveStore.appBox.put('location', false);
+          HiveStore.appBox!.put('location', false);
         }
         permission = await Permission.location.isGranted;
       }
       return permission;
     } else {
-      if (HiveStore.appBox.get('location')) {
+      if (HiveStore.appBox!.get('location')) {
         return true;
       } else {
         if (btn) {

@@ -33,20 +33,20 @@ import 'package:widget_to_image/widget_to_image.dart';
 import '../promotion_time_tool.dart';
 
 class PublishMaterialItem extends StatefulWidget {
-  final VoidCallback focusListener;
+  final VoidCallback? focusListener;
   // final VoidCallback publishMaterialListener;
-  final void Function(Goods) publishMaterialListener;
+  final void Function(Goods)? publishMaterialListener;
   final Function(ByteData) downloadListener;
-  final VoidCallback copyListener;
-  final VoidCallback moreListener;
-  final void Function(int index) picListener;
-  final MaterialModel model;
+  final VoidCallback? copyListener;
+  final VoidCallback? moreListener;
+  final void Function(int index)? picListener;
+  final MaterialModel? model;
 
   const PublishMaterialItem(
-      {Key key,
+      {Key? key,
       this.focusListener,
       this.publishMaterialListener,
-      this.downloadListener,
+      required this.downloadListener,
       this.moreListener,
       this.picListener,
       this.model,
@@ -61,23 +61,23 @@ class PublishMaterialItem extends StatefulWidget {
 
 class _PublishMaterialItemState extends State<PublishMaterialItem> {
   // bool _focused;
-  ByteData byteData;
+  ByteData? byteData;
   List<MainPhotos> _selectPhotos = [];
-  GoodsDetailModel _goodsDetail;
-  String _bigImageUrl = "";
+  GoodsDetailModel? _goodsDetail;
+  String? _bigImageUrl = "";
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
       _goodsDetail = await GoodsDetailModelImpl.getDetailInfo(
-          widget.model.goodsId, UserManager.instance.user.info.id);
-      if (_goodsDetail.code != HttpStatus.SUCCESS) {
+          widget.model!.goodsId, UserManager.instance!.user.info!.id);
+      if (_goodsDetail!.code != HttpStatus.SUCCESS) {
         return;
       }
       // _bottomBarController.setFavorite(_goodsDetail.data.isFavorite);
-      MainPhotos photo = _goodsDetail.data.mainPhotos[0];
-      if (_goodsDetail.data.mainPhotos.length >= 1) {
-        photo = _goodsDetail.data.mainPhotos[0];
+      MainPhotos photo = _goodsDetail!.data!.mainPhotos![0];
+      if (_goodsDetail!.data!.mainPhotos!.length >= 1) {
+        photo = _goodsDetail!.data!.mainPhotos![0];
       }
       photo.isSelect = true;
       photo.isSelectNumber = 1;
@@ -97,9 +97,9 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
     // ];
     // int index11 = Random().nextInt(2);
     // int itemCount = Random().nextInt(5) + 1;
-    int itemCount = widget.model.photos.length;
-    Color focusedColor =
-        !widget.model.isAttention ? Color(0xFFFF1E31) : Colors.grey[600];
+    int itemCount = widget.model!.photos!.length;
+    Color? focusedColor =
+        !widget.model!.isAttention! ? Color(0xFFFF1E31) : Colors.grey[600];
 
     return Container(
       margin: EdgeInsets.only(bottom: 5, top: 5),
@@ -115,7 +115,7 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
                   height: 40.rw,
                   width: 40.rw,
                   placeholder: Assets.icon.icLauncherPlaystore.path,
-                  image: Api.getResizeImgUrl(widget.model.headImgUrl, 300),
+                  image: Api.getResizeImgUrl(widget.model!.headImgUrl!, 300),
                 ),
               ),
               Container(
@@ -126,11 +126,11 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      widget.model.nickname,
+                      widget.model!.nickname!,
                       style: AppTextStyle.generate(15),
                     ),
                     Text(
-                      widget.model.createdAt,
+                      widget.model!.createdAt!,
                       style: AppTextStyle.generate(12, color: Colors.grey),
                     ),
                   ],
@@ -163,11 +163,11 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
                     return CustomCacheImage(
                         imageClick: () {
                           // DPrint.printf("点击了图片——————${widget.model.photos[index].url}");
-                          widget.picListener(index);
+                          widget.picListener!(index);
                         },
                         // imageUrl: list[index11],
                         imageUrl: Api.getResizeImgUrl(
-                            widget.model.photos[index].url, 300),
+                            widget.model!.photos![index].url!, 300),
                         placeholder: AppImageName.placeholder_1x1,
                         fit: itemCount != 1 ? BoxFit.cover : BoxFit.scaleDown);
                   },
@@ -177,7 +177,7 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 10),
                   child: Text(
-                    widget.model.text,
+                    widget.model!.text!,
                     style: AppTextStyle.generate(15,
                         color: Colors.grey[700], fontWeight: FontWeight.w300),
                     maxLines: 100,
@@ -194,7 +194,7 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
   }
 
   Row _bottomItems() {
-    if (!UserManager.instance.haveLogin) {
+    if (!UserManager.instance!.haveLogin) {
       return Row(
         children: <Widget>[
           Container(
@@ -289,7 +289,7 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
                         ),
                       ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,500.rw));
 
-                      widget.downloadListener(byteData );
+                      widget.downloadListener(byteData! );
                     }
                   },
                   type: NormalTextDialogType.delete,
@@ -315,7 +315,7 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
                 ),
               ),pixelRatio: window.devicePixelRatio,size: Size(370.rw,500.rw));
 
-              widget.downloadListener(byteData );
+              widget.downloadListener(byteData! );
             }
             //widget.downloadListener();
           },
@@ -338,7 +338,7 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
           borderRadius: BorderRadius.all(Radius.circular(20)),
           padding: EdgeInsets.symmetric(horizontal: 12),
           onPressed: () {
-            widget.copyListener();
+            widget.copyListener!();
           },
         ),
         Expanded(child: Container()),
@@ -368,7 +368,7 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
       height: 500.rw,
       child: Column(
         children: <Widget>[
-          UserManager.instance.homeWeatherModel != null
+          UserManager.instance!.homeWeatherModel != null
               ? Container(
             color: Colors.white,
             padding: EdgeInsets.only(
@@ -376,7 +376,7 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
             ),
             height: 43.rw,
             child: PostWeatherWidget(
-              homeWeatherModel: UserManager.instance.homeWeatherModel,
+              homeWeatherModel: UserManager.instance!.homeWeatherModel,
             ),
           )
               : Container(),
@@ -385,8 +385,8 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
               vertical: 8,
             ),
             child: PostUserInfo(
-              name: UserManager.instance.user.info.nickname + "的店铺",
-              gysId: _goodsDetail.data.vendorId,
+              name: UserManager.instance!.user.info!.nickname! + "的店铺",
+              gysId: _goodsDetail!.data!.vendorId,
             ),
           ),
           PostBigImage(
@@ -408,20 +408,20 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
   }
 
   String _getTimeInfo() {
-    if (_goodsDetail.data.promotion != null &&
-        _goodsDetail.data.promotion.id > 0) {
+    if (_goodsDetail!.data!.promotion != null &&
+        _goodsDetail!.data!.promotion!.id! > 0) {
       if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
-          _goodsDetail) ==
+          _goodsDetail!) ==
           PromotionStatus.start) {
         //活动中
-        DateTime endTime = DateTime.parse(_goodsDetail.data.promotion.endTime);
+        DateTime endTime = DateTime.parse(_goodsDetail!.data!.promotion!.endTime!);
         return "结束时间\n${DateUtil.formatDate(endTime, format: 'M月d日 HH:mm')}";
       }
       if (PromotionTimeTool.getPromotionStatusWithGoodDetailModel(
-          _goodsDetail) ==
+          _goodsDetail!) ==
           PromotionStatus.ready) {
         DateTime startTime =
-        DateTime.parse(_goodsDetail.data.promotion.startTime);
+        DateTime.parse(_goodsDetail!.data!.promotion!.startTime!);
         return "开始时间\n${DateUtil.formatDate(startTime, format: 'M月d日 HH:mm')}";
       }
     }

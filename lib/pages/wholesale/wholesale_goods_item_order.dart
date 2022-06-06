@@ -8,11 +8,11 @@ import 'package:recook/widgets/custom_cache_image.dart';
 import 'models/wholesale_order_preview_model.dart';
 
 class WholesaleGoodsOrderItem extends StatefulWidget {
-  final SkuList brand;
-  final int index;
-  final int length;
+  final SkuList? brand;
+  final int? index;
+  final int? length;
 
-  const WholesaleGoodsOrderItem({Key key, this.brand,this.length, this.index})
+  const WholesaleGoodsOrderItem({Key? key, this.brand,this.length, this.index})
       : super(key: key);
 
   @override
@@ -51,7 +51,7 @@ class _WholesaleGoodsOrderItemState extends State<WholesaleGoodsOrderItem> {
     return MediaQuery.removePadding(
         context: context,
         removeBottom: true,
-        child: _buildSku(widget.brand)
+        child: _buildSku(widget.brand!)
     );
   }
 
@@ -79,7 +79,7 @@ class _WholesaleGoodsOrderItemState extends State<WholesaleGoodsOrderItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  goods.goodsName,
+                  goods.goodsName!,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.generate(12.rsp,
@@ -94,7 +94,7 @@ class _WholesaleGoodsOrderItemState extends State<WholesaleGoodsOrderItem> {
                   padding:
                   const EdgeInsets.symmetric(vertical: 3, horizontal: 6),
                   child: Text(
-                    goods.skuName,
+                    goods.skuName!,
                     maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: AppTextStyle.generate(11 * 2.sp,
@@ -111,7 +111,7 @@ class _WholesaleGoodsOrderItemState extends State<WholesaleGoodsOrderItem> {
               children: [
                 20.hb,
                 Text(
-                  "￥ ${goods.salePrice.toStringAsFixed(2)}",
+                  "￥ ${goods.salePrice!.toStringAsFixed(2)}",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyle.generate(14 * 2.sp,

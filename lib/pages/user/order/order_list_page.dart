@@ -40,12 +40,12 @@ enum OrderListType {
 }
 
 class OrderListPage extends StatefulWidget {
-  final OrderListType type;
+  final OrderListType? type;
   final OrderPositionType positionType;
-  final OrderListController controller;
+  final OrderListController? controller;
 
   const OrderListPage(
-      {Key key,
+      {Key? key,
       this.type,
       this.positionType = OrderPositionType.onlineOrder,
       this.controller})
@@ -60,10 +60,10 @@ class OrderListPage extends StatefulWidget {
 class _OrderListPageState extends BaseStoreState<OrderListPage>
     with MvpListViewDelegate<OrderModel>
     implements OrderListViewI {
-  OrderListPresenterImpl _presenter;
-  MvpListViewController<OrderModel> _controller;
+  OrderListPresenterImpl? _presenter;
+  MvpListViewController<OrderModel>? _controller;
 
-  VoidCallback _cancelCallback;
+  VoidCallback? _cancelCallback;
 
   @override
   bool get wantKeepAlive {
@@ -71,20 +71,20 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
   }
 
   @override
-  MvpListViewPresenterI<OrderModel, MvpView, MvpModel> getPresenter() {
+  MvpListViewPresenterI<OrderModel, MvpView, MvpModel>? getPresenter() {
     return _presenter;
   }
 
   @override
   void initState() {
     super.initState();
-    widget.controller.refresh = () {
+    widget.controller!.refresh = () {
       if (mounted && _controller != null) {
-        _controller.requestRefresh();
+        _controller!.requestRefresh();
       }
     };
     _presenter = OrderListPresenterImpl();
-    _presenter.attach(this);
+    _presenter!.attach(this);
     _controller = MvpListViewController();
   }
 
@@ -95,41 +95,28 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
       controller: _controller,
       pageSize: 10,
       itemClickListener: (index) {
-        // OrderModel orderModel = _controller.getData()[index];
-        //
-        // AppRouter.push(globalContext, RouteName.ORDER_DETAIL,
-        //         arguments: OrderDetailPage.setArguments(orderModel.id))
-        //     .then(((result) {
-        //   _controller.requestRefresh();
-        //   if (result == null) return;
-        //   DPrint.printf(result);
-        //   setState(() {
-        //     orderModel.status = result;
-        //   });
-        // }));
-//        GSDialog.of(context).showLoadingDialog(context, "");
-//        _presenter.getOrderDetail(UserManager.instance.user.info.id, _controller.getData()[index].id);
+
       },
       itemBuilder: (context, index) {
         return
           OrderListItem(
           itemClick: () {
-            OrderModel orderModel = _controller.getData()[index];
+            OrderModel orderModel = _controller!.getData()[index];
 
-            AppRouter.push(globalContext, RouteName.ORDER_DETAIL,
+            AppRouter.push(globalContext!, RouteName.ORDER_DETAIL,
                 arguments: OrderDetailPage.setArguments(orderModel.id,false))
                 .then(((result) {
-              _controller.requestRefresh();
+              _controller!.requestRefresh();
               if (result == null) return;
               DPrint.printf(result);
               setState(() {
-                orderModel.status = result;
+                orderModel.status = result as int?;
               });
             }));
 //        GSDialog.of(context).showLoadingDialog(context, "");
 //        _presenter.getOrderDetail(UserManager.instance.user.info.id, _controller.getData()[index].id);
           },
-          orderModel: _controller.getData()[index],
+          orderModel: _controller!.getData()[index],
           cancelOrder: (OrderModel order, {callback}) {
             _cancelCallback = callback;
             _cancelOrder(order);
@@ -146,7 +133,7 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
           applyRefund: (OrderModel order, {callback}) {},
           evaluation: (OrderModel order, {callback}) {
             List<EvaluationGoodsModel> goodsList = [];
-            order.goodsList.forEach((goods) {
+            order.goodsList!.forEach((goods) {
               if (goods.assType == 0) {
                 goodsList.add(EvaluationGoodsModel(
                     id: goods.goodsId,
@@ -168,11 +155,11 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
         );
       },
       refreshCallback: () {
-        _presenter.getOrderList(UserManager.instance.user.info.id, 0,
+        _presenter!.getOrderList(UserManager.instance!.user.info!.id, 0,
             widget.type, widget.positionType);
       },
       loadMoreCallback: (page) {
-        _presenter.getOrderList(UserManager.instance.user.info.id, page,
+        _presenter!.getOrderList(UserManager.instance!.user.info!.id, page,
             widget.type, widget.positionType);
       },
       noDataView: noDataView("没有订单数据哦~"),
@@ -181,30 +168,30 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
 
   _deleteOrder(OrderModel order) {
     Alert.show(
-        globalContext,
+        globalContext!,
         NormalTextDialog(
           content: "确定删除订单吗？删除后将不能撤销",
           items: ["我再想想", "确认"],
           listener: (int index) {
-            Alert.dismiss(globalContext);
+            Alert.dismiss(globalContext!);
             if (index == 0) return;
-            GSDialog.of(context).showLoadingDialog(globalContext, "");
-            _presenter.deleteOrder(UserManager.instance.user.info.id, order.id);
+            GSDialog.of(context).showLoadingDialog(globalContext!, "");
+            _presenter!.deleteOrder(UserManager.instance!.user.info!.id, order.id);
           },
         ));
   }
 
   _cancelOrder(OrderModel order) {
     Alert.show(
-        globalContext,
+        globalContext!,
         NormalTextDialog(
           content: "确定取消订单吗？取消后将不能撤销",
           items: ["我再想想", "确认"],
           listener: (int index) {
-            Alert.dismiss(globalContext);
+            Alert.dismiss(globalContext!);
             if (index == 0) return;
-            GSDialog.of(context).showLoadingDialog(globalContext, "");
-            _presenter.cancelOrder(UserManager.instance.user.info.id, order.id,
+            GSDialog.of(context).showLoadingDialog(globalContext!, "");
+            _presenter!.cancelOrder(UserManager.instance!.user.info!.id, order.id,
                 order: order);
           },
         ));
@@ -215,7 +202,7 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
         order.status, order.createdAt);
     OrderPrepayModel model = OrderPrepayModel("SUCCESS", data, "");
 
-    AppRouter.push(globalContext, RouteName.ORDER_PREPAY_PAGE,
+    AppRouter.push(globalContext!, RouteName.ORDER_PREPAY_PAGE,
         arguments: OrderPrepayPage.setArguments(model,goToOrder: true));
 //    Future.delayed(Duration(seconds: 1), ()
 //    {
@@ -244,8 +231,8 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
             } else {
               Alert.dismiss(context);
               GSDialog.of(globalContext).showLoadingDialog(context, "");
-              _presenter.confirmReceipt(
-                  UserManager.instance.user.info.id, orderModel.id);
+              _presenter!.confirmReceipt(
+                  UserManager.instance!.user.info!.id, orderModel.id);
 
             }
           },
@@ -254,28 +241,28 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
 
   @override
   getOrderDetailSuccess(OrderDetailModel detailModel) {
-    GSDialog.of(context).dismiss(globalContext);
+    GSDialog.of(context).dismiss(globalContext!);
 //    AppRouter.push(globalContext, RouteName.ORDER_DETAIL,arguments: OrderDetailPage.setArguments(detailModel.data));
   }
 
   @override
-  cancelOrderSuccess(OrderModel order) {
-    GSDialog.of(context).dismiss(globalContext);
-    order.status = 2;
-    _cancelCallback();
+  cancelOrderSuccess(OrderModel? order) {
+    GSDialog.of(context).dismiss(globalContext!);
+    order!.status = 2;
+    _cancelCallback!();
   }
 
   @override
-  deleteOrderSuccess(int orderId) {
-    GSDialog.of(context).dismiss(globalContext);
-    OrderModel deleteOrderModel;
-    for (OrderModel model in _controller.getData()) {
+  deleteOrderSuccess(int? orderId) {
+    GSDialog.of(context).dismiss(globalContext!);
+    OrderModel? deleteOrderModel;
+    for (OrderModel model in _controller!.getData()) {
       if (model.id == orderId && model.id != null) {
         deleteOrderModel = model;
         break;
       }
     }
-    _controller.getData().remove(deleteOrderModel);
+    _controller!.getData().remove(deleteOrderModel);
     setState(() {});
   }
 
@@ -283,8 +270,8 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
   refundSuccess(msg) {}
 
   @override
-  failure(String msg) {
-    GSDialog.of(context).showError(globalContext, msg);
+  failure(String? msg) {
+    GSDialog.of(context).showError(globalContext!, msg);
   }
 
   @override
@@ -298,11 +285,11 @@ class _OrderListPageState extends BaseStoreState<OrderListPage>
 
   @override
   confirmReceiptSuccess(UserRoleUpgradeModel model) {
-    GSDialog.of(context).dismiss(globalContext);
-    GSDialog.of(globalContext).showSuccess(globalContext, "确认成功").then((value) {
+    GSDialog.of(context).dismiss(globalContext!);
+    GSDialog.of(globalContext).showSuccess(globalContext!, "确认成功").then((value) {
       // UserLevelTool.showUpgradeWidget(model, globalContext, getStore());
     });
-    _presenter.getOrderList(
-        UserManager.instance.user.info.id, 0, widget.type, widget.positionType);
+    _presenter!.getOrderList(
+        UserManager.instance!.user.info!.id, 0, widget.type, widget.positionType);
   }
 }

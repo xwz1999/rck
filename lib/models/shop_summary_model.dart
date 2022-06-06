@@ -1,7 +1,7 @@
 class ShopSummaryModel {
-  String code;
-  String msg;
-  Data data;
+  String? code;
+  String? msg;
+  Data? data;
 
   ShopSummaryModel({this.code, this.msg, this.data});
 
@@ -16,22 +16,22 @@ class ShopSummaryModel {
     data['code'] = this.code;
     data['msg'] = this.msg;
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  num roleLevel;
-  Card card;
-  AccumulateIncome accumulateIncome;
-  MyShoppingWithTime myShoppingWithTime;
-  MyShoppingWithTime shareIncomeWithTime;
-  TeamIncomeWithTime teamIncomeWithTime;
-  OrderCenter orderCenter;
-  Assessment assessment;
-  UpNotify upNotify;
+  num? roleLevel;
+  Card? card;
+  AccumulateIncome? accumulateIncome;
+  MyShoppingWithTime? myShoppingWithTime;
+  MyShoppingWithTime? shareIncomeWithTime;
+  TeamIncomeWithTime? teamIncomeWithTime;
+  OrderCenter? orderCenter;
+  Assessment? assessment;
+  UpNotify? upNotify;
   Data(
       {this.roleLevel,
       this.card,
@@ -73,37 +73,37 @@ class Data {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['roleLevel'] = this.roleLevel;
     if (this.card != null) {
-      data['card'] = this.card.toJson();
+      data['card'] = this.card!.toJson();
     }
     if (this.accumulateIncome != null) {
-      data['accumulateIncome'] = this.accumulateIncome.toJson();
+      data['accumulateIncome'] = this.accumulateIncome!.toJson();
     }
     if (this.myShoppingWithTime != null) {
-      data['myShoppingWithTime'] = this.myShoppingWithTime.toJson();
+      data['myShoppingWithTime'] = this.myShoppingWithTime!.toJson();
     }
     if (this.shareIncomeWithTime != null) {
-      data['shareIncomeWithTime'] = this.shareIncomeWithTime.toJson();
+      data['shareIncomeWithTime'] = this.shareIncomeWithTime!.toJson();
     }
     if (this.teamIncomeWithTime != null) {
-      data['teamIncomeWithTime'] = this.teamIncomeWithTime.toJson();
+      data['teamIncomeWithTime'] = this.teamIncomeWithTime!.toJson();
     }
     if (this.orderCenter != null) {
-      data['orderCenter'] = this.orderCenter.toJson();
+      data['orderCenter'] = this.orderCenter!.toJson();
     }
     if (this.assessment != null) {
-      data['assessment'] = this.assessment.toJson();
+      data['assessment'] = this.assessment!.toJson();
     }
     if (this.upNotify != null) {
-      data['upNotify'] = this.upNotify.toJson();
+      data['upNotify'] = this.upNotify!.toJson();
     }
     return data;
   }
 }
 
 class UpNotify {
-  bool isNotify;
-  String notifyType;
-  String notifyContent;
+  bool? isNotify;
+  String? notifyType;
+  String? notifyContent;
 
   UpNotify({this.isNotify, this.notifyType, this.notifyContent});
 
@@ -123,11 +123,11 @@ class UpNotify {
 }
 
 class Card {
-  num teamIn;
-  num percent;
-  num balance;
-  Stand stand;
-  num target;
+  num? teamIn;
+  num? percent;
+  num? balance;
+  Stand? stand;
+  num? target;
 
   Card({this.teamIn, this.percent, this.balance, this.stand, this.target});
 
@@ -145,7 +145,7 @@ class Card {
     data['percent'] = this.percent;
     data['balance'] = this.balance;
     if (this.stand != null) {
-      data['stand'] = this.stand.toJson();
+      data['stand'] = this.stand!.toJson();
     }
     data['Target'] = this.target;
     return data;
@@ -153,9 +153,9 @@ class Card {
 }
 
 class Stand {
-  num level;
-  num basePercent;
-  List<IncreaseNum> increaseNum;
+  num? level;
+  num? basePercent;
+  List<IncreaseNum>? increaseNum;
 
   Stand({this.level, this.basePercent, this.increaseNum});
 
@@ -165,7 +165,7 @@ class Stand {
     if (json['IncreaseNum'] != null) {
       increaseNum = [];
       json['IncreaseNum'].forEach((v) {
-        increaseNum.add(new IncreaseNum.fromJson(v));
+        increaseNum!.add(new IncreaseNum.fromJson(v));
       });
     }
   }
@@ -175,15 +175,15 @@ class Stand {
     data['Level'] = this.level;
     data['BasePercent'] = this.basePercent;
     if (this.increaseNum != null) {
-      data['IncreaseNum'] = this.increaseNum.map((v) => v.toJson()).toList();
+      data['IncreaseNum'] = this.increaseNum!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class IncreaseNum {
-  num quantity;
-  num percent;
+  num? quantity;
+  num? percent;
 
   IncreaseNum({this.quantity, this.percent});
 
@@ -201,10 +201,10 @@ class IncreaseNum {
 }
 
 class AccumulateIncome {
-  num all;
-  num selfShopping;
-  num share;
-  num team;
+  num? all;
+  num? selfShopping;
+  num? share;
+  num? team;
 
   AccumulateIncome({this.all, this.selfShopping, this.share, this.team});
 
@@ -226,9 +226,9 @@ class AccumulateIncome {
 }
 
 class MyShoppingWithTime {
-  Today today;
-  Today thisMonth;
-  Today prevMonth;
+  Today? today;
+  Today? thisMonth;
+  Today? prevMonth;
 
   MyShoppingWithTime({this.today, this.thisMonth, this.prevMonth});
 
@@ -245,22 +245,22 @@ class MyShoppingWithTime {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.today != null) {
-      data['today'] = this.today.toJson();
+      data['today'] = this.today!.toJson();
     }
     if (this.thisMonth != null) {
-      data['thisMonth'] = this.thisMonth.toJson();
+      data['thisMonth'] = this.thisMonth!.toJson();
     }
     if (this.prevMonth != null) {
-      data['prevMonth'] = this.prevMonth.toJson();
+      data['prevMonth'] = this.prevMonth!.toJson();
     }
     return data;
   }
 }
 
 class TeamIncomeWithTime {
-  TeamInToday today;
-  TeamInToday thisMonth;
-  TeamInToday prevMonth;
+  TeamInToday? today;
+  TeamInToday? thisMonth;
+  TeamInToday? prevMonth;
 
   TeamIncomeWithTime({this.today, this.thisMonth, this.prevMonth});
 
@@ -278,22 +278,22 @@ class TeamIncomeWithTime {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.today != null) {
-      data['today'] = this.today.toJson();
+      data['today'] = this.today!.toJson();
     }
     if (this.thisMonth != null) {
-      data['thisMonth'] = this.thisMonth.toJson();
+      data['thisMonth'] = this.thisMonth!.toJson();
     }
     if (this.prevMonth != null) {
-      data['prevMonth'] = this.prevMonth.toJson();
+      data['prevMonth'] = this.prevMonth!.toJson();
     }
     return data;
   }
 }
 
 class Today {
-  num orderNum;
-  num amount;
-  num historyIncome;
+  num? orderNum;
+  num? amount;
+  num? historyIncome;
 
   Today({this.orderNum, this.amount, this.historyIncome});
 
@@ -313,11 +313,11 @@ class Today {
 }
 
 class TeamInToday {
-  num amount;
-  num percent;
-  num historyIncome;
-  String msg;
-  String alertMsg;
+  num? amount;
+  num? percent;
+  num? historyIncome;
+  String? msg;
+  String? alertMsg;
 
   TeamInToday(
       {this.amount, this.percent, this.historyIncome, this.msg, this.alertMsg});
@@ -342,10 +342,10 @@ class TeamInToday {
 }
 
 class OrderCenter {
-  num waitPay;
-  num waitSend;
-  num waitRecv;
-  num afterSales;
+  num? waitPay;
+  num? waitSend;
+  num? waitRecv;
+  num? afterSales;
 
   OrderCenter({this.waitPay, this.waitSend, this.waitRecv, this.afterSales});
 
@@ -367,12 +367,12 @@ class OrderCenter {
 }
 
 class Assessment {
-  String aTime;
-  UpStandard upStandard;
-  UpStandard keepStandard;
-  Upper upper;
-  Upper keeper;
-  String content;
+  String? aTime;
+  UpStandard? upStandard;
+  UpStandard? keepStandard;
+  Upper? upper;
+  Upper? keeper;
+  String? content;
 
   Assessment({
     this.aTime,
@@ -399,16 +399,16 @@ class Assessment {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.upStandard != null) {
-      data['UpStandard'] = this.upStandard.toJson();
+      data['UpStandard'] = this.upStandard!.toJson();
     }
     if (this.keepStandard != null) {
-      data['KeepStandard'] = this.keepStandard.toJson();
+      data['KeepStandard'] = this.keepStandard!.toJson();
     }
     if (this.upper != null) {
-      data['upper'] = this.upper.toJson();
+      data['upper'] = this.upper!.toJson();
     }
     if (this.keeper != null) {
-      data['keeper'] = this.keeper.toJson();
+      data['keeper'] = this.keeper!.toJson();
     }
     data['aTime'] = this.aTime;
     data['content'] = this.content;
@@ -417,8 +417,8 @@ class Assessment {
 }
 
 class UpStandard {
-  Role200 role200;
-  Role200 role300;
+  Role200? role200;
+  Role200? role300;
 
   UpStandard({this.role200, this.role300});
 
@@ -432,19 +432,19 @@ class UpStandard {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.role200 != null) {
-      data['role200'] = this.role200.toJson();
+      data['role200'] = this.role200!.toJson();
     }
     if (this.role300 != null) {
-      data['role300'] = this.role300.toJson();
+      data['role300'] = this.role300!.toJson();
     }
     return data;
   }
 }
 
 class Role200 {
-  num roleLevel;
-  num person;
-  num quantity;
+  num? roleLevel;
+  num? person;
+  num? quantity;
 
   Role200({this.roleLevel, this.person, this.quantity});
 
@@ -464,9 +464,9 @@ class Role200 {
 }
 
 class Upper {
-  String sale;
-  String developNew;
-  bool switchOnoff;
+  String? sale;
+  String? developNew;
+  bool? switchOnoff;
 
   Upper({this.sale, this.developNew, this.switchOnoff});
 

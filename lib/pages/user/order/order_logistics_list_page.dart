@@ -20,11 +20,11 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/toast.dart';
 
 class OrderLogisticsListPage extends StatefulWidget {
-  final Map arguments;
+  final Map? arguments;
 
-  const OrderLogisticsListPage({Key key, this.arguments}) : super(key: key);
+  const OrderLogisticsListPage({Key? key, this.arguments}) : super(key: key);
 
-  static setArguments({@required int orderId}) {
+  static setArguments({required int? orderId}) {
     return {"orderId": orderId};
   }
 
@@ -35,14 +35,14 @@ class OrderLogisticsListPage extends StatefulWidget {
 }
 
 class _OrderLogisticsListPageState extends BaseStoreState<OrderLogisticsListPage> {
-  OrderListPresenterImpl _presenter;
-  LogisticListModel _listModel;
-  int _orderId;
+  late OrderListPresenterImpl _presenter;
+  LogisticListModel? _listModel;
+  int? _orderId;
 
   @override
   void initState() {
     super.initState();
-    _orderId = widget.arguments["orderId"];
+    _orderId = widget.arguments!["orderId"];
     _presenter = OrderListPresenterImpl();
     _getLogisticList();
   }
@@ -60,29 +60,29 @@ class _OrderLogisticsListPageState extends BaseStoreState<OrderLogisticsListPage
   }
 
   _buildBody() {
-    bool noData = _listModel.data == null || _listModel.data.length == 0;
+    bool noData = _listModel!.data == null || _listModel!.data!.length == 0;
     return noData ? noDataView("没有物流信息哦~") : ListView.builder(
-        itemCount:_listModel.data.length,
+        itemCount:_listModel!.data!.length,
         itemBuilder: (_, index) {
           return CustomImageButton(
             child: LogisticItem(
-              model: _listModel.data[index],
+              model: _listModel!.data![index],
             ),
             onPressed: () {
-              if (_listModel.data==null || _listModel.data.length == 0) {
+              if (_listModel!.data==null || _listModel!.data!.length == 0) {
                 return;
               }
-              AppRouter.push(globalContext, RouteName.ORDER_LOGISTIC_DETAIL,arguments: LogisticDetailPage.setArguments(detailModel:  _listModel.data[index]));
+              AppRouter.push(globalContext!, RouteName.ORDER_LOGISTIC_DETAIL,arguments: LogisticDetailPage.setArguments(detailModel:  _listModel!.data![index]));
             },
           );
         });
   }
 
   _getLogisticList() async {
-    HttpResultModel<LogisticListModel> resultModel =
-        await _presenter.queryLogistic(UserManager.instance.user.info.id, _orderId);
+    HttpResultModel<LogisticListModel?> resultModel =
+        await _presenter.queryLogistic(UserManager.instance!.user.info!.id, _orderId);
     if (!resultModel.result) {
-      Toast.showInfo(resultModel.msg);
+      Toast.showInfo(resultModel.msg??'');
       return;
     }
     setState(() {

@@ -9,11 +9,12 @@ part of 'category_model.dart';
 CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
   return CategoryModel(
       json['code'],
-      (json['data'] as List)
-          ?.map((e) => e == null
-              ? null
-              : FirstCategory.fromJson(e as Map<String, dynamic>))
-          ?.toList(),
+
+      (json['data'] as List<dynamic>?)
+          ?.map((e) =>
+          FirstCategory.fromJson(e as Map<String, dynamic>))
+          .toList(),
+
       json['msg']);
 }
 
@@ -26,15 +27,14 @@ Map<String, dynamic> _$CategoryModelToJson(CategoryModel instance) =>
 
 FirstCategory _$FirstCategoryFromJson(Map<String, dynamic> json) {
   return FirstCategory(
-      json['id'] as int,
-      json['name'] as String,
-      json['parentId'] as int,
-      json['logoUrl'] as String,
-      (json['sub'] as List)
-          ?.map((e) => e == null
-              ? null
-              : SecondCategory.fromJson(e as Map<String, dynamic>))
-          ?.toList());
+      json['id'] as int?,
+      json['name'] as String?,
+      json['parentId'] as int?,
+      json['logoUrl'] as String?,
+  (json['sub'] as List<dynamic>?)
+      ?.map((e) =>
+      SecondCategory.fromJson(e as Map<String, dynamic>))
+      .toList());
 }
 
 Map<String, dynamic> _$FirstCategoryToJson(FirstCategory instance) =>
@@ -47,8 +47,8 @@ Map<String, dynamic> _$FirstCategoryToJson(FirstCategory instance) =>
     };
 
 SecondCategory _$SecondCategoryFromJson(Map<String, dynamic> json) {
-  return SecondCategory(json['id'] as int, json['name'] as String,
-      json['parentId'] as int, json['logoUrl'] as String);
+  return SecondCategory(json['id'] as int?, json['name'] as String?,
+      json['parentId'] as int?, json['logoUrl'] as String?);
 }
 
 Map<String, dynamic> _$SecondCategoryToJson(SecondCategory instance) =>
