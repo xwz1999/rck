@@ -130,10 +130,10 @@ class ShareTool {
         ), itemClick: () {
       Navigator.maybePop(context!);
 
-
+      //裁剪的接口尺寸必须传整数
       WeChatUtils.miniProgramShare(
         id: goodsId,
-        netWorkThumbnail: Api.getResizeImgUrl(miniPicurl!, 500),
+        netWorkThumbnail: Api.getResizeImgUrl(miniPicurl!, (500.w).toInt()),
         des: miniTitle,
       );
     });
