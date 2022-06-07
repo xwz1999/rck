@@ -71,9 +71,11 @@ class _ReleaseMaterialPage extends BaseStoreState<ReleaseMaterialPage> {
             onPressed: () {
               if (_contentText.isEmpty) {
                 GSDialog.of(context).showError(context, '请输入您的想法！');
-              } else if (_goodsModel == null) {
-                GSDialog.of(context).showError(context, '请添加一个关联产品！');
-              } else {
+              }
+              // else if (_goodsModel == null) {
+              //   GSDialog.of(context).showError(context, '请添加一个关联产品！');
+              // }
+              else {
                 _publish();
               }
             },
@@ -98,14 +100,14 @@ class _ReleaseMaterialPage extends BaseStoreState<ReleaseMaterialPage> {
                     ],
                   ),
                 ),
-                Container(
-                  decoration: new BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(rSize(8))),
-                  ),
-                  padding: EdgeInsets.fromLTRB(15, 0, 20, 0),
-                  child: _relationGoods(),
-                ),
+                // Container(
+                //   decoration: new BoxDecoration(
+                //     color: Colors.white,
+                //     borderRadius: BorderRadius.all(Radius.circular(rSize(8))),
+                //   ),
+                //   padding: EdgeInsets.fromLTRB(15, 0, 20, 0),
+                //   child: _relationGoods(),
+                // ),
               ],
             );
           }),
@@ -117,7 +119,7 @@ class _ReleaseMaterialPage extends BaseStoreState<ReleaseMaterialPage> {
     await _uploadImages();
     Map<String, dynamic> params = {
       "userId": UserManager.instance.user.info.id,
-      "goodsId": _goodsModel.id,
+      //"goodsId": _goodsModel.id,
       "text": _contentText == null ? "" : _contentText,
     };
     List<Map<String, dynamic>> images = [];
