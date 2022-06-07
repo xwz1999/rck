@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/styles.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/tabBar/TabbarWidget.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/tabbarWidget/navigation_item.dart';
 
 enum ACEBottomNavigationBarType {
@@ -80,13 +82,14 @@ class _ACEBottomNavigationBar extends State<ACEBottomNavigationBar>
     // widget.barController.selectIndex.addListener(_selectIndex);
     UserManager.instance!.selectTabbar.addListener(_selectTabbar);
   }
+
   // _selectIndex(){
   //   if (!widget.barController.selectIndexChange) {return;}
   //   _setSelected(widget.items[widget.barController.selectIndex.value].key);
   //   widget.barController.selectIndexChange = false;
   //   widget.barController.selectIndex.value = 0;
   // }
-  _selectTabbar(){
+  _selectTabbar() {
     int index = UserManager.instance!.selectTabbarIndex!;
     _setSelected(widget.items[index].key);
   }
@@ -154,6 +157,17 @@ class _ACEBottomNavigationBar extends State<ACEBottomNavigationBar>
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: widget.items
                           .map((item) => NavigationItem(
+                              dotNum: item.dotNum??'',
+                              dotColor: item.dotColor??AppColor.themeColor,
+                              dotFontSize: item.dotFontSize??12.rsp,
+                              dotPosition: item.dotPosition??DotPosition(
+                                top: 0,
+                                left: null,
+                                right: 0,
+                                bottom: null,
+                              ),
+                              dotSize: item.dotSize??10.rw,
+                              dotTextColor: item.dotTextColor??Colors.white,
                               uniqueKey: item.key,
                               selected: item.key ==
                                   widget.items[curSelectedIndex].key,
@@ -199,7 +213,7 @@ class _ACEBottomNavigationBar extends State<ACEBottomNavigationBar>
                                 widget.onTabChangedListener(selected);
                               }))
                           .toList())),
-              protrudingWid()
+              protrudingWid(),
             ]),
       ),
     );
@@ -300,6 +314,12 @@ class NavigationItemBean {
   bool? selected;
   bool? isProtruding;
   ACEBottomNavigationBarType? type;
+  String? dotNum;
+  Color? dotColor;
+  DotPosition? dotPosition;
+  double? dotSize;
+  double? dotFontSize;
+  Color? dotTextColor;
 
   NavigationItemBean(
       {this.selected,
@@ -313,7 +333,13 @@ class NavigationItemBean {
       this.imageSelected,
       this.type,
       this.isProtruding,
-      this.protrudingIcon});
+      this.protrudingIcon,
+      this.dotColor,
+      this.dotFontSize,
+      this.dotNum,
+      this.dotPosition,
+      this.dotSize,
+      this.dotTextColor});
 
   final UniqueKey key = UniqueKey();
 }

@@ -40,6 +40,9 @@ class _TabBarWidgetState extends State<TabBarWidget>
     });
     _tabController = TabController(length: 5, vsync: this);
     _bottomBarController = HomeBottomBarController();
+    UserManager.instance!.refreshMessageNumber.addListener(_refreshMessage);
+
+
     _tabController!.addListener(_tabListener);
 
     UserManager.instance!.login.addListener(_loginListener);
@@ -49,6 +52,19 @@ class _TabBarWidgetState extends State<TabBarWidget>
 
       });
     });
+  }
+
+
+
+  _refreshMessage() {
+    if (UserManager.instance!.refreshMessageNumber.value) {
+      UserManager.instance!.refreshMessageNumber.value = false;
+
+     setState(() {
+
+     });
+
+    }
   }
 
   _loginListener() {
@@ -241,6 +257,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
     _bottomBarController.dispose();
     UserManager.instance!.login.removeListener(_loginListener);
     UserManager.instance!.selectTabbar.removeListener(_selectTabbar);
+    UserManager.instance!.refreshMessageNumber.removeListener(_refreshMessage);
     super.dispose();
   }
 
@@ -297,6 +314,13 @@ class _BottomBarState extends State<BottomBar> {
           imageSelected:UserManager.instance!.isWholesale?AssetImage(Assets.tabbarPHomeSelect.path): AssetImage("assets/tabbar_sale_selected.png"),
         ),
         NavigationItemBean(
+          dotSize: 15,
+          dotFontSize: 8,
+          dotPosition: DotPosition(right: 10.rw, top: 2.rw),
+          dotNum: UserManager.instance!.messageNum>0?UserManager.instance!.messageNum.toString():'',
+          dotColor: AppColor.themeColor,
+          dotTextColor: Colors.white,
+
           textStr: '消息',
           image: AssetImage("assets/tabbar_message.png"),
           imageSelected: AssetImage("assets/tabbar_message_select.png"),

@@ -530,7 +530,7 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
 
   Future _changeOrder(int? addressId,int? previewId,String message) async{
     final cancel = ReToast.loading();
-    ResultData result = await (WholesaleFunc.updateOrder(addressId, previewId, message) as FutureOr<ResultData>);
+    ResultData result = await (WholesaleFunc.updateOrder(addressId, previewId, message));
     cancel();
     if(!result.result){
       ReToast.err(text: result.msg);

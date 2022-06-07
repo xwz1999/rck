@@ -6,6 +6,7 @@ import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/user/banlance/user_balance_page.dart';
 import 'package:recook/pages/user/order/order_detail_page.dart';
 import 'package:recook/widgets/no_data_view.dart';
@@ -329,6 +330,8 @@ class _MessageCenterPageState extends State<MessageCenterPage> {
     if (resultData.data != null) {
       if (resultData.data['data'] != null) {
         _num =  resultData.data['data']['count'];
+        UserManager.instance!.messageNum = (_num!>99?99:_num)!;
+        UserManager.instance!.refreshMessageNumber.value = true;
       }
     }
   }

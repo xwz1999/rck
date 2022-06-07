@@ -201,7 +201,7 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
     _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     ui.Image image =
     await boundary.toImage(pixelRatio: ui.window.devicePixelRatio * 1.2);
-    ByteData byteData = await (image.toByteData(format: ui.ImageByteFormat.png) as FutureOr<ByteData>);
+    ByteData byteData = (await (image.toByteData(format: ui.ImageByteFormat.png)))!;
     Uint8List pngBytes = byteData.buffer.asUint8List();
 
     if (pngBytes.length == 0) {

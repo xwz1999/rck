@@ -260,7 +260,7 @@ class _WholesaleCustomerPageState extends State<WholesaleCustomerPage>
     _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
     ui.Image image =
     await boundary.toImage(pixelRatio: ui.window.devicePixelRatio * 1.2);
-    ByteData byteData = await (image.toByteData(format: ui.ImageByteFormat.png) as FutureOr<ByteData>);
+    ByteData byteData = (await (image.toByteData(format: ui.ImageByteFormat.png)))!;
     Uint8List pngBytes = byteData.buffer.asUint8List();
     if (pngBytes.length == 0) {
       cancel();

@@ -731,7 +731,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                       Future.delayed(Duration.zero, () async {
                         _jDHaveGoods = await (HomeDao.getJDStock(
                             widget.goodsDetail!.data!.sku!.first!.id,
-                            _defaltAddress) as FutureOr<int?>);
+                            _defaltAddress) );
                         print(_jDHaveGoods);
                         setState(() {});
                       });
@@ -759,7 +759,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             if (_defaltAddress != null) {
               Future.delayed(Duration.zero, () async {
                 _jDHaveGoods = await (HomeDao.getJDStock(
-                    widget.goodsDetail!.data!.sku!.first!.id, _defaltAddress) as FutureOr<int?>);
+                    widget.goodsDetail!.data!.sku!.first!.id, _defaltAddress) );
 
                 if(mounted)
                 setState(() {});
@@ -1735,7 +1735,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                                 Future.delayed(Duration.zero, () async {
                                   _jDHaveGoods = await (HomeDao.getJDStock(
                                       widget.goodsDetail!.data!.sku!.first!.id,
-                                      _defaltAddress) as FutureOr<int?>);
+                                      _defaltAddress));
                                   print(_jDHaveGoods);
                                   setState(() {});
                                 });
@@ -1765,7 +1765,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                       if (_defaltAddress != null) {
                         Future.delayed(Duration.zero, () async {
                           _jDHaveGoods = await (HomeDao.getJDStock(
-                              widget.goodsDetail!.data!.sku!.first!.id, _defaltAddress) as FutureOr<int?>);
+                              widget.goodsDetail!.data!.sku!.first!.id, _defaltAddress));
 
                           if(mounted)
                             setState(() {});
@@ -1778,7 +1778,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                   return;
                 } else {
                   _jDHaveGoods =
-                      await (HomeDao.getJDStock(skuModel.sku!.id, _defaltAddress) as FutureOr<int?>);
+                      await (HomeDao.getJDStock(skuModel.sku!.id, _defaltAddress) );
                   setState(() {});
 
                   if (_jDHaveGoods != 1) {
@@ -1866,6 +1866,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       skuModel.num,
       invite: widget.invite,
     );
+    BotToast.closeAllLoading();
     if (order.code != HttpStatus.SUCCESS) {
       // Toast.showError(order.msg);
       Toast.showInfo(order.msg, color: Colors.black87);
@@ -1960,7 +1961,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             widget.goodsDetail!.data!.vendorId == 2000 ||
             widget.goodsDetail!.data!.vendorId == 3000) {
           Future.delayed(Duration.zero, () async {
-            _jDHaveGoods = await (HomeDao.getJDStock(sku.id, _defaltAddress) as FutureOr<int?>);
+            _jDHaveGoods = await (HomeDao.getJDStock(sku.id, _defaltAddress));
             setState(() {});
           });
           setState(() {});

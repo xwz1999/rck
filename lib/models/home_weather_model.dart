@@ -77,8 +77,11 @@ class HomeWeatherModel {
     airLevel = json['air_level'];
     airTips = json['air_tips'];
     alarm = json['alarm'] != null ? new Alarm.fromJson(json['alarm']) : null;
-    if(json['aqi'].runtimeType!=List){
+    if(json['aqi'].runtimeType!=[].runtimeType){
+      print(json['aqi'].runtimeType);
       aqi = ((json['aqi'] != null) ? new Aqi.fromJson(json['aqi']): null);
+    }else{
+      aqi = null;
     }
 
   }

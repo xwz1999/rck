@@ -136,9 +136,8 @@ class WeChatUtils {
         minHeight: 400,
         minWidth: 500,
         quality: quality,
-      ) as FutureOr<Uint8List>);
+      ) );
       print(file.readAsBytesSync().lengthInBytes);
-      print(result.length);
       return result  ;
     }
   }

@@ -107,11 +107,11 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
     var result = await (ImageUtils.compressImageWithBytes(
       file.absolute.path,
       quality: 60,
-    ) as FutureOr<List<int>>);
+    ) );
     print("原大小: " +
         file.lengthSync().toString() +
         "------- 压缩后大小: " +
-        result.length.toString());
+        result!.length.toString());
 
     // FormData formData =
     //     new FormData.from({key: new UploadFileInfo.fromBytes(result, basename(file.path))});

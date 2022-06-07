@@ -36,9 +36,19 @@ class UserManager {
   bool? getSeven = false;
   // 天气数据
   HomeWeatherModel? homeWeatherModel;
+
+  num messageNum = 0;
+
+
+  ValueNotifier<bool> refreshMessageNumber = ValueNotifier(false);
+
   ValueNotifier<bool> login = ValueNotifier(false);
   ValueNotifier<bool> refreshShoppingCart = ValueNotifier(false);
   ValueNotifier<bool> refreshShoppingCartNumber = ValueNotifier(false);
+
+
+
+
   ValueNotifier<bool> refreshShoppingCartNumberWithPage = ValueNotifier(false);
   ValueNotifier<bool> refreshGoodsDetailPromotionState = ValueNotifier(false);
   ValueNotifier<bool> refreshUserRole = ValueNotifier(false);

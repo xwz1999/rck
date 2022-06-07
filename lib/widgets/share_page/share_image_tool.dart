@@ -14,8 +14,8 @@ class ShareImageTool{
       version: QrVersions.auto,
       gapless: false
     ).toImage(size);
-    final a = await (image.toByteData(format: ui.ImageByteFormat.png) as FutureOr<ByteData>);
-    var codec = await ui.instantiateImageCodec(a.buffer.asUint8List());
+    final a = await (image.toByteData(format: ui.ImageByteFormat.png) );
+    var codec = await ui.instantiateImageCodec(a!.buffer.asUint8List());
     ui.FrameInfo fi = await codec.getNextFrame();
     return fi.image;
   }

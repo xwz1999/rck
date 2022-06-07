@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recook/constants/constants.dart';
+import 'package:recook/constants/styles.dart';
+import 'package:recook/utils/text_utils.dart';
+import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/tabbarWidget/ace_bottom_navigation_bar.dart';
 class NavigationItem extends StatelessWidget {
   final UniqueKey uniqueKey;
@@ -18,6 +21,14 @@ class NavigationItem extends StatelessWidget {
   final ACEBottomNavigationBarType? type;
   final Function(UniqueKey uniqueKey) callbackFunction;
 
+  final String dotNum;
+  final Color dotColor;
+  final DotPosition dotPosition;
+  final double dotSize;
+  final double dotFontSize;
+  final Color dotTextColor;
+
+
   NavigationItem(
       {required this.uniqueKey,
       required this.selected,
@@ -32,7 +43,20 @@ class NavigationItem extends StatelessWidget {
       required this.callbackFunction,
       required this.type,
       required this.isProtruding,
-      this.protrudingIcon});
+      this.protrudingIcon,
+        this.dotNum = "",
+        this.dotColor = Colors.red,
+        this.dotTextColor = Colors.white,
+        this.dotPosition = const DotPosition(
+          top: 0,
+          left: null,
+          right: 0,
+          bottom: null,
+        ),
+        this.dotSize = 20,
+        this.dotFontSize = 12,
+
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +94,41 @@ class NavigationItem extends StatelessWidget {
                     duration: Duration(milliseconds: 1000),
                     alignment: picZoomAlignment(),
                     child: childWid())),
+            Positioned(
+                bottom: dotPosition.bottom,
+                top: dotPosition.top,
+                left: dotPosition.left,
+                right: dotPosition.right,
+                child: TextUtils.isEmpty(dotNum)
+                    ? Container()
+                    : Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: rSize(2),
+                    // vertical: rSize(2)
+                  ),
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                          Radius.circular(dotSize)),
+                      color: dotColor),
+                  constraints: BoxConstraints(
+                    minWidth:
+                    dotSize.rw,
+
+                    minHeight:
+                    dotSize.rw,
+
+                  ),
+                  child: Text(
+                    dotNum,
+                    textAlign: TextAlign.center,
+                    style: AppTextStyle.generate(
+                        dotFontSize.rw,
+                        color: dotTextColor,
+                        fontWeight: FontWeight.w500),
+                  ),
+                ))
+
           ]),
         ));
 

@@ -83,7 +83,7 @@ class MyFavoriteItem extends StatelessWidget {
                                   fontWeight: FontWeight.w400))
                         ])),
                     Spacer(),
-                    _itemTextButton('删除', deleteFunc),
+                    _itemTextButton('取消收藏', deleteFunc),
                     Container(
                       width: 10,
                     ),

@@ -42,7 +42,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
         if (!agreeResult) {
           //第1次不同意`
           bool secondAgree =
-              (await (launchPrivacySecondDialog(context) as FutureOr<bool?>)) ?? false;
+              (await (launchPrivacySecondDialog(context) )) ?? false;
           //第2次不同意
           if (!secondAgree)
             SystemNavigator.pop();

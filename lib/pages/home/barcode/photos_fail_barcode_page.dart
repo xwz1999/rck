@@ -106,12 +106,12 @@ class _PhotosFailBarcodePageState
 
 
 
-                var image = await (picker.getImage(source: ImageSource.gallery) as FutureOr<PickedFile>);
+                var image = await (picker.getImage(source: ImageSource.gallery));
 
 
                 // var image =
                 //     await ImagePicker.pickImage(source: ImageSource.gallery);
-                File? cropFile = await ImageUtils.cropImage(File(image.path));
+                File? cropFile = await ImageUtils.cropImage(File(image!.path));
                 if (cropFile == null) {
                   return;
                 }
