@@ -518,7 +518,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
         SizedBox(
           height: rSize(30),
         ),
-        _likeGoodsList!=null ? _buildLikeWidget() : SizedBox(),
+       // _likeGoodsList!=null ? _buildLikeWidget() : SizedBox(),
       ],
     );
   }
@@ -615,7 +615,7 @@ class _ShoppingCartPageState extends BaseStoreState<ShoppingCartPage>
                 UserManager.instance!.user.info!.id, goods, num);
           },
         ),
-        _likeGoodsList!=null ? _buildLikeWidget() : SizedBox(),
+        //_likeGoodsList!=null ? _buildLikeWidget() : SizedBox(),
       ],
     );
   }
