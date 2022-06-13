@@ -35,6 +35,7 @@ import 'package:recook/pages/home/items/item_row_acitivity.dart';
 import 'package:recook/pages/home/model/king_coin_list_model.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
 import 'package:recook/pages/home/search_page.dart';
+import 'package:recook/pages/home/widget/aku_college_page.dart';
 import 'package:recook/pages/home/widget/animated_home_background.dart';
 import 'package:recook/pages/home/widget/good_high_commission_page.dart';
 import 'package:recook/pages/home/widget/good_preferential_list_page.dart';
@@ -1970,10 +1971,11 @@ class _HomePageState extends BaseStoreState<HomePage>
             ));
         //Get.to(() => GoodsHighCommissionListPage());
         break;
-      case '学院':
-        UserManager.instance.selectTabbarIndex = 1;
-        bool value = UserManager.instance.selectTabbar.value;
-        UserManager.instance.selectTabbar.value = !value;
+      case '阿库学院':
+        Get.to(()=>AkuCollegePage());
+        // UserManager.instance.selectTabbarIndex = 1;
+        // bool value = UserManager.instance.selectTabbar.value;
+        // UserManager.instance.selectTabbar.value = !value;
         break;
       case '家居生活':
         AppRouter.push(context, RouteName.GOODS_LIST_TEMP,

@@ -459,65 +459,65 @@ class _SearchPageState extends BaseStoreState<SearchPage>
               height: 200,
             ),
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.only(top: rSize(40), bottom: rSize(10)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: rSize(2),
-                    color: Color(0xFFB8B8B8),
-                    width: rSize(40),
-                  ),
-                  rWBox(10),
-                  Text(
-                    '猜你喜欢',
-                    style: TextStyle(
-                      fontSize: rSP(15),
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
-                    ),
-                  ),
-                  rWBox(10),
-                  Container(
-                    height: rSize(2),
-                    color: Color(0xFFB8B8B8),
-                    width: rSize(40),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          SliverToBoxAdapter(
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                PromotionGoodsModel model = _promotionGoodsList[index];
-                return Container(
-                  padding: EdgeInsets.only(bottom: 5),
-                  color: AppColor.frenchColor,
-                  child: GoodsItemWidget.rowGoods(
-                    gifController: _gifController,
-                    isSingleDayGoods: false,
-                    onBrandClick: () {
-                      AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
-                          arguments: BrandGoodsListPage.setArguments(
-                              model.brandId, model.brandName));
-                    },
-                    model: model,
-                    buyClick: () {
-                      AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                          arguments:
-                              CommodityDetailPage.setArguments(model.goodsId));
-                    },
-                  ),
-                );
-              },
-              itemCount: _promotionGoodsList.length,
-            ),
-          ),
+          // SliverToBoxAdapter(
+          //   child: Padding(
+          //     padding: EdgeInsets.only(top: rSize(40), bottom: rSize(10)),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       children: [
+          //         Container(
+          //           height: rSize(2),
+          //           color: Color(0xFFB8B8B8),
+          //           width: rSize(40),
+          //         ),
+          //         rWBox(10),
+          //         Text(
+          //           '猜你喜欢',
+          //           style: TextStyle(
+          //             fontSize: rSP(15),
+          //             fontWeight: FontWeight.bold,
+          //             color: Colors.black87,
+          //           ),
+          //         ),
+          //         rWBox(10),
+          //         Container(
+          //           height: rSize(2),
+          //           color: Color(0xFFB8B8B8),
+          //           width: rSize(40),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // SliverToBoxAdapter(
+          //   child: ListView.builder(
+          //     shrinkWrap: true,
+          //     physics: NeverScrollableScrollPhysics(),
+          //     itemBuilder: (context, index) {
+          //       PromotionGoodsModel model = _promotionGoodsList[index];
+          //       return Container(
+          //         padding: EdgeInsets.only(bottom: 5),
+          //         color: AppColor.frenchColor,
+          //         child: GoodsItemWidget.rowGoods(
+          //           gifController: _gifController,
+          //           isSingleDayGoods: false,
+          //           onBrandClick: () {
+          //             AppRouter.push(context, RouteName.BRANDGOODS_LIST_PAGE,
+          //                 arguments: BrandGoodsListPage.setArguments(
+          //                     model.brandId, model.brandName));
+          //           },
+          //           model: model,
+          //           buyClick: () {
+          //             AppRouter.push(context, RouteName.COMMODITY_PAGE,
+          //                 arguments:
+          //                     CommodityDetailPage.setArguments(model.goodsId));
+          //           },
+          //         ),
+          //       );
+          //     },
+          //     itemCount: _promotionGoodsList.length,
+          //   ),
+          // ),
         ],
       ),
       autoRefresh: false,
@@ -676,69 +676,69 @@ class _SearchPageState extends BaseStoreState<SearchPage>
           ),
           // ItemTagWidget.getSliverGridDelegate(_displayList, context),
         ),
-        SliverToBoxAdapter(
-          child: _refreshController.isNoData
-              ? Padding(
-                  padding: EdgeInsets.only(top: rSize(40), bottom: rSize(10)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        height: rSize(2),
-                        color: Color(0xFFB8B8B8),
-                        width: rSize(40),
-                      ),
-                      rWBox(10),
-                      Text(
-                        '猜你喜欢',
-                        style: TextStyle(
-                          fontSize: rSP(15),
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
-                      ),
-                      rWBox(10),
-                      Container(
-                        height: rSize(2),
-                        color: Color(0xFFB8B8B8),
-                        width: rSize(40),
-                      ),
-                    ],
-                  ),
-                )
-              : SizedBox(),
-        ),
-        SliverToBoxAdapter(
-            child: _refreshController.isNoData
-                ? ListView.builder(
-                    shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      PromotionGoodsModel model = _promotionGoodsList[index];
-                      return Container(
-                        padding: EdgeInsets.only(bottom: 5),
-                        color: AppColor.frenchColor,
-                        child: GoodsItemWidget.rowGoods(
-                          gifController: _gifController,
-                          isSingleDayGoods: false,
-                          onBrandClick: () {
-                            AppRouter.push(
-                                context, RouteName.BRANDGOODS_LIST_PAGE,
-                                arguments: BrandGoodsListPage.setArguments(
-                                    model.brandId, model.brandName));
-                          },
-                          model: model,
-                          buyClick: () {
-                            AppRouter.push(context, RouteName.COMMODITY_PAGE,
-                                arguments: CommodityDetailPage.setArguments(
-                                    model.goodsId));
-                          },
-                        ),
-                      );
-                    },
-                    itemCount: _promotionGoodsList.length,
-                  )
-                : SizedBox()),
+        // SliverToBoxAdapter(
+        //   child: _refreshController.isNoData
+        //       ? Padding(
+        //           padding: EdgeInsets.only(top: rSize(40), bottom: rSize(10)),
+        //           child: Row(
+        //             mainAxisAlignment: MainAxisAlignment.center,
+        //             children: [
+        //               Container(
+        //                 height: rSize(2),
+        //                 color: Color(0xFFB8B8B8),
+        //                 width: rSize(40),
+        //               ),
+        //               rWBox(10),
+        //               Text(
+        //                 '猜你喜欢',
+        //                 style: TextStyle(
+        //                   fontSize: rSP(15),
+        //                   fontWeight: FontWeight.bold,
+        //                   color: Colors.black87,
+        //                 ),
+        //               ),
+        //               rWBox(10),
+        //               Container(
+        //                 height: rSize(2),
+        //                 color: Color(0xFFB8B8B8),
+        //                 width: rSize(40),
+        //               ),
+        //             ],
+        //           ),
+        //         )
+        //       : SizedBox(),
+        // ),
+        // SliverToBoxAdapter(
+        //     child: _refreshController.isNoData
+        //         ? ListView.builder(
+        //             shrinkWrap: true,
+        //             physics: NeverScrollableScrollPhysics(),
+        //             itemBuilder: (context, index) {
+        //               PromotionGoodsModel model = _promotionGoodsList[index];
+        //               return Container(
+        //                 padding: EdgeInsets.only(bottom: 5),
+        //                 color: AppColor.frenchColor,
+        //                 child: GoodsItemWidget.rowGoods(
+        //                   gifController: _gifController,
+        //                   isSingleDayGoods: false,
+        //                   onBrandClick: () {
+        //                     AppRouter.push(
+        //                         context, RouteName.BRANDGOODS_LIST_PAGE,
+        //                         arguments: BrandGoodsListPage.setArguments(
+        //                             model.brandId, model.brandName));
+        //                   },
+        //                   model: model,
+        //                   buyClick: () {
+        //                     AppRouter.push(context, RouteName.COMMODITY_PAGE,
+        //                         arguments: CommodityDetailPage.setArguments(
+        //                             model.goodsId));
+        //                   },
+        //                 ),
+        //               );
+        //             },
+        //             itemCount: _promotionGoodsList.length,
+        //           )
+        //         : SizedBox()),
       ],
     );
   }

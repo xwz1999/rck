@@ -307,7 +307,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
                       });
                     },
                   ),
-                  _likeGoodsList.isNotEmpty ? _buildLikeWidget() : SizedBox(),
+                 // _likeGoodsList.isNotEmpty ? _buildLikeWidget() : SizedBox(),
                 ],
               );
             }else{
@@ -407,7 +407,7 @@ class _WholesaleCarPageState extends State<WholesaleCarPage>{
         SizedBox(
           height: rSize(30),
         ),
-        _likeGoodsList.isNotEmpty ? _buildLikeWidget() : SizedBox(),
+       // _likeGoodsList.isNotEmpty ? _buildLikeWidget() : SizedBox(),
       ],
     );
   }

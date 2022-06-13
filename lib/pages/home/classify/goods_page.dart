@@ -514,7 +514,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           ? Container(
               //  padding: EdgeInsets.only(left: 10, top: 10, bottom: 5),
               color: Colors.white,
-              child: _recommendsWidget(),
+              //child: _recommendsWidget(),
             )
           : SizedBox(),
 //            _usersLikeGrid(),

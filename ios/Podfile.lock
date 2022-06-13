@@ -17,10 +17,8 @@ PODS:
   - flutter_image_compress (0.0.1):
     - Flutter
     - Mantle
-  - flutter_qr_reader (0.0.1):
-    - Flutter
-    - LBXScan
-    - LBXZBarSDK
+    - SDWebImage
+    - SDWebImageWebPCoder
   - flutter_tencentplayer (2.0.0):
     - Flutter
     - TXLiteAVSDK_Player (= 9.2.10637)
@@ -48,12 +46,15 @@ PODS:
     - Flutter
   - launch_review (0.0.1):
     - Flutter
-  - LBXScan (2.5.1):
-    - LBXScan/All (= 2.5.1)
-  - LBXScan/All (2.5.1):
-    - LBXScan/Types (~> 2.2)
-  - LBXScan/Types (2.5.1)
-  - LBXZBarSDK (1.3.5)
+  - libwebp (1.2.1):
+    - libwebp/demux (= 1.2.1)
+    - libwebp/mux (= 1.2.1)
+    - libwebp/webp (= 1.2.1)
+  - libwebp/demux (1.2.1):
+    - libwebp/webp
+  - libwebp/mux (1.2.1):
+    - libwebp/demux
+  - libwebp/webp (1.2.1)
   - Mantle (2.2.0):
     - Mantle/extobjc (= 2.2.0)
   - Mantle/extobjc (2.2.0)
@@ -65,10 +66,19 @@ PODS:
     - Flutter
   - "permission_handler (5.1.0+2)":
     - Flutter
-  - photo_manager (0.0.1):
+  - photo_manager (1.0.0):
+    - Flutter
+    - FlutterMacOS
+  - scan (0.0.1):
     - Flutter
   - screen (0.0.1):
     - Flutter
+  - SDWebImage (5.12.2):
+    - SDWebImage/Core (= 5.12.2)
+  - SDWebImage/Core (5.12.2)
+  - SDWebImageWebPCoder (0.8.4):
+    - libwebp (~> 1.0)
+    - SDWebImage/Core (~> 5.10)
   - shared_preferences (0.0.1):
     - Flutter
   - sqflite (0.0.2):
@@ -79,6 +89,8 @@ PODS:
   - TOCropViewController (2.6.0)
   - TXLiteAVSDK_Player (9.2.10637)
   - url_launcher (0.0.1):
+    - Flutter
+  - video_player (0.0.1):
     - Flutter
   - webview_flutter (0.0.1):
     - Flutter
@@ -92,7 +104,6 @@ DEPENDENCIES:
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - Flutter (from `Flutter`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
-  - flutter_qr_reader (from `.symlinks/plugins/flutter_qr_reader/ios`)
   - flutter_tencentplayer (from `.symlinks/plugins/flutter_tencentplayer/ios`)
   - fluwx (from `.symlinks/plugins/fluwx/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
@@ -106,11 +117,13 @@ DEPENDENCIES:
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - photo_manager (from `.symlinks/plugins/photo_manager/ios`)
+  - scan (from `.symlinks/plugins/scan/ios`)
   - screen (from `.symlinks/plugins/screen/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - tobias (from `.symlinks/plugins/tobias/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
+  - video_player (from `.symlinks/plugins/video_player/ios`)
   - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
 
 SPEC REPOS:
@@ -120,9 +133,10 @@ SPEC REPOS:
     - FMDB
     - JCore
     - JPush
-    - LBXScan
-    - LBXZBarSDK
+    - libwebp
     - Mantle
+    - SDWebImage
+    - SDWebImageWebPCoder
     - TOCropViewController
     - TXLiteAVSDK_Player
     - WechatOpenSDK_Fuck
@@ -142,8 +156,6 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_image_compress:
     :path: ".symlinks/plugins/flutter_image_compress/ios"
-  flutter_qr_reader:
-    :path: ".symlinks/plugins/flutter_qr_reader/ios"
   flutter_tencentplayer:
     :path: ".symlinks/plugins/flutter_tencentplayer/ios"
   fluwx:
@@ -170,6 +182,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler/ios"
   photo_manager:
     :path: ".symlinks/plugins/photo_manager/ios"
+  scan:
+    :path: ".symlinks/plugins/scan/ios"
   screen:
     :path: ".symlinks/plugins/screen/ios"
   shared_preferences:
@@ -180,6 +194,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/tobias/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
+  video_player:
+    :path: ".symlinks/plugins/video_player/ios"
   webview_flutter:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
@@ -188,38 +204,40 @@ SPEC CHECKSUMS:
   AMapFoundation: 8d8ecbb0b2e9ce5487995360d26c885d94642bfd
   AMapLocation: 5ef44a1117be7dc541cb7a7d43d03c5ee91e4387
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
-  camera: a0ca5080336f7af47b88436e5e26da3dee5568f0
+  camera: 3164201dc344383e62282964016528c4f5a9ad50
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
-  flutter_image_compress: f69d0e0e078ce52b4810695593bc861ee319ae7d
-  flutter_qr_reader: 1b4faf9032e9ddc738107fd3dc067d29bd5cc67d
+  flutter_image_compress: fd2b476345226e1a10ea352fa306af95704642c1
   flutter_tencentplayer: 6e5006ac8ca0ccd360138d4e1ce0717b7c43a3f7
   fluwx: c192ef1ea3617badb813fa1a761ffc5c9c12208a
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   image_cropper: f1668dd8d2cad2d357955caad15a40547856edcb
   image_gallery_saver: 259eab68fb271cfd57d599904f7acdc7832e7ef2
-  image_picker: 66aa71bc96850a90590a35d4c4a2907b0d823109
+  image_picker: 50e7c7ff960e5f58faa4d1f4af84a771c671bc4a
   JCore: 4029befb2497adc36b2496e2cfd6b24d9f671784
   JPush: b7d00f2cc78766e76c8abb30a5741fe94d21e5bc
   jpush_flutter: bc88cfa9a4ff4481031564b641c3fe24024bb2cb
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   launch_review: 75d5a956ba8eaa493e9c9d4bf4c05e505e8d5ed0
-  LBXScan: 90ca10d0c38fb4a5a6980d7782354f3f69f50093
-  LBXZBarSDK: db826d1265fbb4fbdbb2f30d7d1e96142e32bfff
+  libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
-  photo_manager: f7c619c2cc8c2adb8d85c63363babac477de9c67
+  photo_manager: 84fa94fbeb82e607333ea9a13c43b58e0903a463
+  scan: aea35bb4aa59ccc8839c576a18cd57c7d492cc86
   screen: abd91ca7bf3426e1cc3646d27e9b2358d6bf07b0
+  SDWebImage: 240e5c12b592fb1268c1d03b8c90d90e8c2ffe82
+  SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   tobias: 2aded9b83e3663b907360a800d8e3c13284f25c5
   TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
   TXLiteAVSDK_Player: 300e6fc7262ae095ee13b18d7d821c5fae0996f9
-  url_launcher: a1c0cc845906122c4784c542523d8cacbded5626
+  url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
+  video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
   webview_flutter: 3603125dfd3bcbc9d8d418c3f80aeecf331c068b
   WechatOpenSDK_Fuck: aa8f4b0af902837e887a1d40c62f06c060c1dc98
 
