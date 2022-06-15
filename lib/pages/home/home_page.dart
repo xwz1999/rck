@@ -34,6 +34,7 @@ import 'package:recook/pages/home/items/item_row_acitivity.dart';
 import 'package:recook/pages/home/model/king_coin_list_model.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
 import 'package:recook/pages/home/search_page.dart';
+import 'package:recook/pages/home/widget/aku_college_page.dart';
 import 'package:recook/pages/home/widget/animated_home_background.dart';
 import 'package:recook/pages/home/widget/good_high_commission_page.dart';
 import 'package:recook/pages/home/widget/good_preferential_list_page.dart';
@@ -244,22 +245,22 @@ class _HomePageState extends BaseStoreState<HomePage>
     // UserManager.instance.openInstallGoodsId
     //     .addListener(_openInstallGoodsIdListener);
 
-    UserManager.instance!.openInstallLive.addListener(() {
-      if (!TextUtils.isEmpty(getStore().state.openinstall!.type)) {
-        int goodsid = 0;
-        try {
-          goodsid = int.parse(getStore().state.openinstall!.goodsid);
-        } catch (e) {
-          getStore().state.openinstall!.goodsid = "";
-          return;
-        }
-
-        Get.to(()=>CommodityDetailPage(arguments: CommodityDetailPage.setArguments(goodsid)));
-
-
-        getStore().state.openinstall!.goodsid = "";
-      }
-    });
+    // UserManager.instance!.openInstallLive.addListener(() {
+    //   if (!TextUtils.isEmpty(getStore().state.openinstall!.type)) {
+    //     int goodsid = 0;
+    //     try {
+    //       goodsid = int.parse(getStore().state.openinstall!.goodsid);
+    //     } catch (e) {
+    //       getStore().state.openinstall!.goodsid = "";
+    //       return;
+    //     }
+    //
+    //     Get.to(()=>CommodityDetailPage(arguments: CommodityDetailPage.setArguments(goodsid)));
+    //
+    //
+    //     getStore().state.openinstall!.goodsid = "";
+    //   }
+    // });
     // _updateSource();
     _sliverListController = ScrollController();
     _gsRefreshController = GSRefreshController(initialRefresh: true);
@@ -268,10 +269,10 @@ class _HomePageState extends BaseStoreState<HomePage>
       if (getStore().state.goodsId != null && getStore().state.goodsId! > 0) {
         //跳到商品详情页面
 
-        Get.to(()=>CommodityDetailPage(arguments:
-        CommodityDetailPage.setArguments(getStore().state.goodsId)));
+          Get.to(()=>CommodityDetailPage(arguments:
+        CommodityDetailPage.setArguments( getStore().state.goodsId)));
 
-        getStore().state.goodsId = 0;
+        //getStore().state.goodsId = 0;
       }
       // _handleOpenInstallEvents();
     });
@@ -746,15 +747,23 @@ class _HomePageState extends BaseStoreState<HomePage>
           }
         }
 
+
+
         String locationCityName = _weatherLocation != null &&
                 !TextUtils.isEmpty(_weatherLocation!['city'] as String?)
             ? _weatherLocation!['city'] as String
             : "";
+
+        print(_weatherLocation);
+        print(locationCityName);
+
+
         try {
           locationCityName = locationCityName.replaceAll("区", "");
           locationCityName = locationCityName.replaceAll("市", "");
         } catch (e) {}
         if (locationCityName != '') {
+
           Get.to(()=>WeatherCityPage( arguments: WeatherCityPage.setArguments(locationCityName)))!.then((model) {
             if (model is WeatherCityModel) {
               _weatherCityModel = model;
@@ -1936,9 +1945,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         //Get.to(() => GoodsHighCommissionListPage());
         break;
       case '阿库学院':
-        UserManager.instance!.selectTabbarIndex = 1;
-        bool value = UserManager.instance!.selectTabbar.value;
-        UserManager.instance!.selectTabbar.value = !value;
+        Get.to(() => AkuCollegePage());
         break;
       case '家居生活':
         Get.to(()=>GoodsListTempPage(arguments: GoodsListTempPage.setArguments(

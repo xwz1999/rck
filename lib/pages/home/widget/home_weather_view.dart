@@ -97,7 +97,7 @@ class HomeWeatherWidgetState extends State<HomeWeatherWidget>
                           child: GestureDetector(
                             onTap: (){
                               if (widget.homeWeatherModel != null) {
-                                if (widget.homeWeatherModel!.aqi != null)
+                                // if (widget.homeWeatherModel!.aqi != null)
                                   Get.to(HomeWeatherDetailPage(
                                       homeWeatherModel: widget.homeWeatherModel));
                               }

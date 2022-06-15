@@ -79,6 +79,24 @@ class ShareTool {
     }
   }
 
+
+  shareVideo(
+      BuildContext context, {
+        required String url,
+        required String title,
+        required String des,
+        required String headUrl,
+      }) {
+
+    WeChatUtils.shareUrl(
+      url: Api.getImgUrl(url)??'',
+      title: title,
+      description: des,
+      netWorkThumbnail: Api.getImgUrl(headUrl),
+    );
+  }
+
+
   liveShare(
     BuildContext context, {
     required int liveId,

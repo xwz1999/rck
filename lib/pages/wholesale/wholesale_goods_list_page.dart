@@ -56,6 +56,7 @@ class _WholesaleGoodsListState extends BaseStoreState<WholesaleGoodsList>
   @override
   void initState() {
     super.initState();
+    _textEditController = TextEditingController();
     _gifController = GifController(vsync: this)
       ..repeat(
         min: 0,

@@ -208,7 +208,6 @@ class _TabBarWidgetState extends State<TabBarWidget>
               tabController: _tabController,
             ),
             MessageCenterPage(canback: false,),
-            //AkuCollegePage(),
             DiscoveryPage(),
 
             UserManager.instance!.isWholesale?WholesaleCarPage(canBack: false,): ShoppingCartPage(),
@@ -309,7 +308,7 @@ class _BottomBarState extends State<BottomBar> {
       items: [
         NavigationItemBean(
 
-          textStr: UserManager.instance!.isWholesale?'特批':'特推',
+          textStr: UserManager.instance!.isWholesale?'特批':'优选',
           image: UserManager.instance!.isWholesale?AssetImage(Assets.tabbarPHome.path): AssetImage("assets/tabbar_sale_normal.png"),
           imageSelected:UserManager.instance!.isWholesale?AssetImage(Assets.tabbarPHomeSelect.path): AssetImage("assets/tabbar_sale_selected.png"),
         ),

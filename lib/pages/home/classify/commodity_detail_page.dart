@@ -50,6 +50,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
   @override
   void initState() {
     super.initState();
+    print(widget.arguments!["goodsID"]);
     _goodsId = widget.arguments!["goodsID"];
     invite = widget.arguments!["invite"];
 

@@ -5,16 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/pages/home/function/home_fuc.dart';
 import 'package:recook/pages/home/model/aku_video_list_model.dart';
+import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/play_widget/video_player.dart';
 import 'package:velocity_x/velocity_x.dart';
+
 class AkuCollegeDetailPage extends StatefulWidget {
   final AkuVideo akuVideo;
 
   const AkuCollegeDetailPage({Key? key, required this.akuVideo})
       : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _AkuCollegeDetailPageState();
@@ -22,8 +26,6 @@ class AkuCollegeDetailPage extends StatefulWidget {
 }
 
 class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
-
-
   @override
   void initState() {
     super.initState();
@@ -31,15 +33,11 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
       String? code = await HomeFuc.addHits(widget.akuVideo.id);
       print(code);
     });
-
-
   }
 
   @override
   void dispose() {
-
     super.dispose();
-
   }
 
   @override
@@ -49,6 +47,26 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
       appBar: CustomAppBar(
         title: "".text.bold.size(18.rsp).make(),
         themeData: AppThemes.themeDataGrey.appBarTheme,
+        actions: [
+          GestureDetector(
+            onTap: () {
+              ShareTool().shareVideo(context,
+                  title: widget.akuVideo.title ?? '',
+                  des: widget.akuVideo.subTitle ?? '',
+                  headUrl: widget.akuVideo.coverUrl ?? '',
+                  url: widget.akuVideo.videoUrl ?? '');
+            },
+            child: Padding(
+              padding: EdgeInsets.only(right: 15.rw, top: 5.rw),
+              child: Image.asset(
+                Assets.share.path,
+                color: Colors.black,
+                width: 20.rw,
+                height: 20.rw,
+              ),
+            ),
+          ),
+        ],
       ),
       body: _bodyWidget(),
     );
@@ -114,7 +132,12 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
           ],
         ),
         20.hb,
-        widget.akuVideo.type == 1 ? VideoPlayer(url: widget.akuVideo.videoUrl,isNetWork: true,) : _playImagText()
+        widget.akuVideo.type == 1
+            ? VideoPlayer(
+                url: widget.akuVideo.videoUrl,
+                isNetWork: true,
+              )
+            : _playImagText()
       ],
     ));
   }
@@ -128,15 +151,13 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
     }
   }
 
-
   _playImagText() {
-    return HtmlWidget(
-      widget.akuVideo.textBody!,
-      textStyle: TextStyle(color: Color(0xFF333333)),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 5.rw),
+      child: HtmlWidget(
+        widget.akuVideo.textBody!,
+        textStyle: TextStyle(color: Color(0xFF333333)),
+      ),
     );
   }
-
-
-
-
 }

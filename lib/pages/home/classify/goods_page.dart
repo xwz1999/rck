@@ -1703,6 +1703,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 Toast.showError('请先登录...');
                 return;
               }
+
               print("${skuModel.sku!.id} -- ${skuModel.des} -- ${skuModel.num}");
               if (widget.goodsDetail!.data!.vendorId == 1800 ||
                   widget.goodsDetail!.data!.vendorId == 2000 ||
@@ -1873,6 +1874,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
       Get.back();
       return;
     }
+    Get.back();
     Get.to(()=>GoodsOrderPage(arguments: GoodsOrderPage.setArguments(order)));
     // AppRouter.push(context, RouteName.GOODS_ORDER_PAGE,
     //     arguments: GoodsOrderPage.setArguments(order));

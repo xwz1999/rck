@@ -56,7 +56,7 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
       body: Stack(
         children: [
           Positioned(child: Container(
-            height: 130.rw+DeviceInfo.statusBarHeight! + DeviceInfo.appBarHeight,
+            height: 120.rw+DeviceInfo.statusBarHeight! + DeviceInfo.appBarHeight,
             width: double.infinity,
             decoration: BoxDecoration(
                 image: DecorationImage(
@@ -103,14 +103,14 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
         //     width: double.infinity,
         //     height: 160.rw,
         //     child: Image.asset(
-        //       R.ASSETS_SCHOOL_BG_PNG,
+        //       R.AS=SETS_SCHOOL_BG_PNG,
         //       fit: BoxFit.fill,
         //     ),
         //   ),
         // ),
         // 50.hb,
         Container(
-          height:  160.rw+DeviceInfo.statusBarHeight! + DeviceInfo.appBarHeight
+          height:  140.rw+DeviceInfo.statusBarHeight! + DeviceInfo.appBarHeight
         ),
 
         Container(
@@ -156,11 +156,7 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
                     style: TextStyle(color: Colors.black, fontSize: 16.rsp),
                   ),
                 ),
-                Container(
-                  width: 1.rw,
-                  height: 27.rw,
-                  color: Color(0xFFEEEDED),
-                ),
+
                 Container(
                   width: 37.rw,
                   padding: EdgeInsets.symmetric(horizontal: 5),
@@ -179,7 +175,7 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
 
   _buildListView() {
     return Container(
-            margin: EdgeInsets.only(left: 8.rw, right: 8.rw, top: 26.rw),
+            margin: EdgeInsets.only(left: 8.rw, right: 8.rw, top: 8.rw),
             child: RefreshWidget(
                 controller: _refreshController,
                 noData: '没有找到您想要的内容',

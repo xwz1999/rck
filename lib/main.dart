@@ -41,14 +41,6 @@ void main() async {
   AppConfig.setDebug(isDebug);
 
 
-  //
-  // var env = const String.fromEnvironment('ENV', defaultValue: 'dev');
-  //
-  // print('env :$env');
-  //
-  // AppConfig.setDebug(env == 'dev');
-
-
   ErrorWidget.builder = (FlutterErrorDetails flutterErrorDetails) {
     print(flutterErrorDetails.toString());
     if (isDebug) return ErrorWidget(flutterErrorDetails.exception);
