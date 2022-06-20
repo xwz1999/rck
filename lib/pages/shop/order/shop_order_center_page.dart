@@ -328,7 +328,7 @@ class _ShopOrderCenterPageState extends BaseStoreState<ShopOrderCenterPage>
         child: Text(
           title,
           style: AppTextStyle.generate(
-              ScreenAdapterUtils.setSp(selected ? 14 : 13),
+              selected?14.rsp:13.rsp,
               color: selected ? AppColor.themeColor : Colors.black,
               fontWeight: selected
                   ? FontWeight.w500

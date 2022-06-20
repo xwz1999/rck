@@ -1,11 +1,3 @@
-/*
- * ====================================================
- * package   : 
- * author    : Created by nansi.
- * time      : 2019-08-28  14:09 
- * remark    : 
- * ====================================================
- */
 
 import 'dart:io';
 import 'dart:typed_data';
@@ -15,8 +7,7 @@ enum MediaType{
   image
 }
 
-
-class MediaModel {
+class MediaModel  {
   int? width;
   int? height;
   MediaType? type;
@@ -26,6 +17,7 @@ class MediaModel {
 
   MediaModel({this.width, this.height, this.type, this.file,this.result, this.thumbData});
 }
+
 
 class UploadResult {
   bool result;

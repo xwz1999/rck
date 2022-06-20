@@ -90,7 +90,7 @@ class _ImageSelectedViewState extends State<ImageSelectedView> {
                       icon: Icon(
                         AppIcons.icon_delete,
                         color: Colors.white,
-                        size: rSize(18),
+                        size: 18,
                       ),
                       borderRadius: BorderRadius.all(Radius.circular(8.rw)),
                       backgroundColor: Colors.black38,

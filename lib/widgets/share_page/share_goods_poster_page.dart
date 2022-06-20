@@ -63,7 +63,7 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
       _goodsId = int.parse(widget.arguments!["goodsId"]);
     } catch (e) {}
     _getDetail();
-    _getMissingChildren();
+    // _getMissingChildren();
   }
 
   @override

@@ -33,6 +33,24 @@ class _InvoiceDetailInfomationPageState
     });
   }
 
+
+  String  statusString(int invoiceStatus) {
+    switch (invoiceStatus) {
+      case 1:
+        return '开票中';
+      case 2:
+        return '开票异常';
+      case 3:
+        return '开票中';
+      case 4:
+        return '开票失败';
+      case 5:
+        return '开票成功';
+      default:
+        return '未知';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return InvoiceScaffoldWidget(
@@ -59,11 +77,10 @@ class _InvoiceDetailInfomationPageState
                           fontSize: rSize(16),
                         ),
                       ),
+
                       Spacer(),
                       Text(
-                        model!.invoiceStatus== 5
-                            ? '已开票'
-                            : model!.invoiceStatus == 3? '开票中' : '开票失败',
+                        statusString(model!.invoiceStatus??1),
                         style: TextStyle(
                           color: model!.invoiceStatus == 5
                               ? Color(0xFFFF8F44)
