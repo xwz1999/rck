@@ -246,6 +246,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
       collectListener: (bool favorite) {
         if (favorite) {
           if (UserManager.instance!.user.info!.id == 0) {
+            UserManager.instance!.goodsId = _goodsDetail!.data!.id!;
             AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
             Toast.showError('请先登录...');
             return;

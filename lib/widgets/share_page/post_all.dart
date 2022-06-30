@@ -364,7 +364,7 @@ class PostBottomWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     print(AppConfig.debug);
     String qrCode =
-        "https://mallh5.reecook.cn/#/goods/detail/45229/CILACP5I/share";
+        "${AppConfig.debug! ? WebApi.testGoodsDetail : WebApi.goodsDetail}${goodsDetailModel!.data!.id}/${UserManager.instance!.user.info!.invitationNo}/share";
     print(qrCode);
     String info = goodsDetailModel!.data!.goodsName!;
     String crossedPrice =

@@ -111,12 +111,26 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   
   ScrollController _scrollController = ScrollController();
 
+  bool showFab = false;
+
   @override
   bool get wantKeepAlive => true;
 
   @override
   void initState() {
     super.initState();
+
+    _scrollController.addListener(() {
+      if(_scrollController.offset < 600 && showFab){
+        setState(() {
+          showFab = false;
+        });
+      }else if(_scrollController.offset >= 600 && showFab == false){
+        setState(() {
+          showFab = true;
+        });
+      }
+    });
 
     //获取默认地址并且判断有无货源
     if (widget.goodsDetail!.data!.vendorId == 1800 ||
@@ -169,6 +183,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   @override
   void dispose() {
     super.dispose();
+    _scrollController.dispose();
     widget.openSkuChoosePage!.dispose();
   }
 
@@ -187,7 +202,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   _customer(){
     return GestureDetector(
       onTap: () async{
-
+        if(widget.goodsDetail != null)
         _scrollController.jumpTo(0);
       },
       child: Container(
@@ -233,7 +248,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 ),
               ),
             ),
-            Positioned(child: _customer(),bottom: 20.rw,right: 10.rw,)
+            showFab?Positioned(child: _customer(),bottom: 40.rw,right: 15.rw,):SizedBox()
           ],
         ));
   }
@@ -539,6 +554,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           child: GestureDetector(
             onTap: () async {
               if (UserManager.instance!.user.info!.id == 0) {
+                UserManager.instance!.goodsId = widget.goodsDetail!.data!.id!;
                 AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
                 Toast.showError('请先登录...');
                 return;
@@ -701,6 +717,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
     return GestureDetector(
       onTap: () async {
         if (UserManager.instance!.user.info!.id == 0) {
+          UserManager.instance!.goodsId = widget.goodsDetail!.data!.id!;
           AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
           Toast.showError('请先登录...');
           return;
@@ -1699,6 +1716,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             itemModels: _itemModels,
             listener: (SkuChooseModel skuModel) async {
               if (UserManager.instance!.user.info!.id == 0) {
+                UserManager.instance!.goodsId = widget.goodsDetail!.data!.id!;
                 AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
                 Toast.showError('请先登录...');
                 return;

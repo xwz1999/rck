@@ -6,6 +6,7 @@ import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_hot_sell_list_model.dart';
 import 'package:recook/models/goods_simple_list_model.dart';
@@ -13,6 +14,7 @@ import 'package:recook/pages/home/classify/mvp/goods_list_contact.dart';
 import 'package:recook/pages/home/function/home_fuc.dart';
 import 'package:recook/pages/wholesale/wholeasale_detail_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
+import 'package:recook/widgets/custom_floating_action_button_location.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/filter_tool_bar.dart';
 import 'package:recook/widgets/mvp_list_view/mvp_list_view.dart';
@@ -75,13 +77,24 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
 
   ///商品列表
   List<WholesaleGood> _goodsList = [];
+  bool showFab = false;
 
   @override
   void initState() {
     // Future.delayed(Duration.zero, () async {
     //   _recommendWords = await HomeFuc.recommendWords(widget.keyWords);
     // });
-
+    _scrollController.addListener(() {
+      if(_scrollController.offset < 600 && showFab){
+        setState(() {
+          showFab = false;
+        });
+      }else if(_scrollController.offset >= 600 && showFab == false){
+        setState(() {
+          showFab = true;
+        });
+      }
+    });
     if (widget.jdType == 1) {
       _jDType = 1;
       _sortType = SortType.priceAsc;
@@ -104,14 +117,40 @@ class _WholesaleSearchPageState extends BaseStoreState<WholesaleSearchPage>
   @override
   void dispose() {
     _gifController.dispose();
+    _scrollController.dispose();
     super.dispose();
+  }
+
+  _customer(){
+    return GestureDetector(
+      onTap: () async{
+        if(_goodsList.length>4)
+        _scrollController.jumpTo(0);
+      },
+      child: Container(
+        width: 46.rw,
+        height: 46.rw,
+        decoration: BoxDecoration(
+          color: Color(0xFF000000).withOpacity(0.7),
+          borderRadius: BorderRadius.all(Radius.circular(23.rw)),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(Assets.totop.path,width: 30.rw,height: 30.rw,color: Colors.white,),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
   Widget buildContext(BuildContext context, {store}) {
     return Scaffold(
       backgroundColor: AppColor.frenchColor,
-      // appBar: CustomAppBar(title: "搜索"),
+      floatingActionButton:  !TextUtils.isEmpty(_textEditController!.text) &&
+          _startSearch?showFab? _customer():SizedBox():SizedBox(),
+      floatingActionButtonLocation:CustomFloatingActionButtonLocation(FloatingActionButtonLocation.endDocked, 0, -70.rw),
       appBar: CustomAppBar(
         elevation: 0,
         title: _buildTitle(),

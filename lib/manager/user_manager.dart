@@ -37,6 +37,8 @@ class UserManager {
   // 天气数据
   HomeWeatherModel? homeWeatherModel;
 
+  int goodsId = 0;
+
   num messageNum = 0;
 
 

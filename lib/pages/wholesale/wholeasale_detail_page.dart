@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
@@ -27,13 +27,17 @@ import 'models/wholesale_detail_model.dart';
 class WholesaleDetailPage extends StatefulWidget {
   final int? goodsId;
 
-
   const WholesaleDetailPage({
-    Key? key, this.goodsId,
+    Key? key,
+    this.goodsId,
   }) : super(key: key);
 
-  static setArguments(int goodsID,) {
-    return {"goodsID": goodsID, };
+  static setArguments(
+    int goodsID,
+  ) {
+    return {
+      "goodsID": goodsID,
+    };
   }
 
   @override
@@ -44,7 +48,6 @@ class WholesaleDetailPage extends StatefulWidget {
 
 class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
     with TickerProviderStateMixin {
-
   AppBarController? _appBarController;
   BottomBarController? _bottomBarController;
   ValueNotifier<bool> _openSkuChoosePage = ValueNotifier(false);
@@ -72,7 +75,6 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
 
   @override
   void dispose() {
-
     _bottomBarController?.dispose();
     _appBarController?.dispose();
 
@@ -86,13 +88,12 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
     super.didChangeDependencies();
   }
 
-
-
   @override
   Widget buildContext(BuildContext context, {store}) {
     Scaffold scaffold = Scaffold(
       floatingActionButton: _customer(),
-      floatingActionButtonLocation:CustomFloatingActionButtonLocation(FloatingActionButtonLocation.endDocked, 0, -80.rw),
+      floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+          FloatingActionButtonLocation.endDocked, 0, -80.rw),
       backgroundColor: Colors.white,
       body: SafeArea(
         top: true,
@@ -108,10 +109,8 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
                   children: <Widget>[
                     Expanded(
                       flex: 1,
-                      child:
-                            _goodsDetail!=null?
-                            WholesaleGoodsPage(
-
+                      child: _goodsDetail != null
+                          ? WholesaleGoodsPage(
                               goodsId: _goodsId,
                               openSkuChoosePage: _openSkuChoosePage,
                               goodsDetail: _goodsDetail,
@@ -121,15 +120,10 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
                                 double offset = notification.metrics.pixels;
                                 double scale = offset / 180;
                                 scale = scale.clamp(0.0, 1.0);
-
                                 _appBarController!.scale.value = scale;
-
-                                // if (offset > maxScroll + 5) {
-                                //   _tabController.animateTo(1);
-                                // }
                               },
-
-                            ):SizedBox(),
+                            )
+                          : SizedBox(),
                     ),
                     _bottomBar()
                   ],
@@ -160,7 +154,6 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
       elevation: 0,
       titleSpacing: 20,
       themeData: AppThemes.themeDataGrey.appBarTheme,
-
       leading: Center(
         child: CustomImageButton(
           icon: Icon(
@@ -179,36 +172,40 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
     );
   }
 
-
-  _customer(){
+  _customer() {
     return GestureDetector(
-      onTap: () async{
-        WholesaleCustomerModel? model = await
-        WholesaleFunc.getCustomerInfo();
+      onTap: () async {
+        WholesaleCustomerModel? model = await WholesaleFunc.getCustomerInfo();
 
-        Get.to(()=>WholesaleCustomerPage(model: model,));
-
-
+        Get.to(() => WholesaleCustomerPage(
+              model: model,
+            ));
       },
       child: Container(
         width: 46.rw,
         height: 46.rw,
         decoration: BoxDecoration(
-            color: Color(0xFF000000).withOpacity(0.7),
-            borderRadius: BorderRadius.all(Radius.circular(23.rw)),
+          color: Color(0xFF000000).withOpacity(0.7),
+          borderRadius: BorderRadius.all(Radius.circular(23.rw)),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset(R.ASSETS_WHOLESALE_WHOLESALE_CUSTOMER_PNG,width: 20.rw,height: 20.rw,),
+            Image.asset(
+              R.ASSETS_WHOLESALE_WHOLESALE_CUSTOMER_PNG,
+              width: 20.rw,
+              height: 20.rw,
+            ),
             5.hb,
-            Text('客服',style: TextStyle(color: Colors.white,fontSize: 10.rw),)
+            Text(
+              '客服',
+              style: TextStyle(color: Colors.white, fontSize: 10.rw),
+            )
           ],
         ),
       ),
     );
   }
-
 
   _bottomBar() {
     return WholesaleDetailBottomBar(
@@ -224,15 +221,15 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
       //             ? ""
       //             : _goodsDetail.shoppingTrolleyCount.toString(),
       addToShopCartListener: () {
-        Get.to(()=>WholesaleCarPage(canBack: true,));
+        Get.to(() => WholesaleCarPage(
+              canBack: true,
+            ));
       },
       collectListener: (bool favorite) {
         ///加入购物车
-
       },
       buyListener: () {
         _openSkuChoosePage.value = true;
-
       },
       shareListener: () {
         ///批发首页
@@ -240,7 +237,6 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
       },
     );
   }
-
 
   // Future<dynamic> _addToShoppingCart(
   //     BuildContext context, WholesaleSkuChooseModel skuModel) async {
@@ -297,10 +293,9 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
         _goodsId, UserManager.instance!.user.info!.id);
 
     _bottomBarController!.setFavorite(_goodsDetail!.isFavorite);
-    if(mounted){
+    if (mounted) {
       setState(() {});
     }
-
   }
 
   _addFavorite() async {
@@ -324,6 +319,4 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
     }
     _bottomBarController!.setFavorite(false);
   }
-
-
 }

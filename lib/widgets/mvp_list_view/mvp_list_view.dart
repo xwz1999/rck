@@ -115,6 +115,7 @@ class _MvpListViewState<T> extends State<MvpListView>
 
   int _page = 0;
   BuildContext? _context;
+  bool _onLoad = false;
 
   @override
   void initState() {
@@ -167,8 +168,8 @@ class _MvpListViewState<T> extends State<MvpListView>
                 _page++;
                 widget.loadMoreCallback!(_page);
               },
-        body: _mvpController!.getData().length == 0 && widget.noDataView != null
-            ? widget.noDataView
+        body: _mvpController!.getData().length == 0 && widget.noDataView != null?_onLoad?SizedBox()
+            :widget.noDataView
             : widget.type == ListViewType.list
                 ? _buildListView()
                 : _gridView(),
@@ -261,6 +262,7 @@ class _MvpListViewState<T> extends State<MvpListView>
     _mvpController!.refreshController!.refreshCompleted(resetFooterState: true);
     _mvpController!.replaceData(data);
     widget.delegate.refreshSuccess(data);
+    _onLoad = false;
     setState(() {});
   }
 

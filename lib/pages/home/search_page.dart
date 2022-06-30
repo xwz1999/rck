@@ -1,11 +1,3 @@
-/*
- * ====================================================
- * package   : pages.home
- * author    : Created by nansi.
- * time      : 2019/5/8  11:14 AM 
- * remark    : 
- * ====================================================
- */
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -107,13 +99,25 @@ class _SearchPageState extends BaseStoreState<SearchPage>
 
   int _jDType = 0; // 0 默认数据 1传回全部JD数据 2为JD自营数据 3为JD pop数据
   String _jdTypeText = '全部';
+  bool showFab = false;
 
   @override
   void initState() {
     // Future.delayed(Duration.zero, () async {
     //   _recommendWords = await HomeFuc.recommendWords(widget.keyWords);
     // });
-
+    _scrollController.addListener(() {
+      print(_scrollController.offset);//滚动位置
+      if(_scrollController.offset < 600 && showFab){
+        setState(() {
+          showFab = false;
+        });
+      }else if(_scrollController.offset >= 600 && showFab == false){
+        setState(() {
+          showFab = true;
+        });
+      }
+    });
     if (widget.jdType == 1) {
       _jDType = 1;
       _sortType = SortType.priceAsc;
@@ -144,7 +148,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
   _customer(){
     return GestureDetector(
       onTap: () async{
-
+      if(_listViewController!.getData().length>4)
         _scrollController.jumpTo(0);
       },
       child: Container(
@@ -169,15 +173,8 @@ class _SearchPageState extends BaseStoreState<SearchPage>
     return Scaffold(
       backgroundColor: AppColor.frenchColor,
       floatingActionButton:  !TextUtils.isEmpty(_textEditController!.text) &&
-          _startSearch? _customer():SizedBox(),
+          _startSearch? showFab? _customer():SizedBox():SizedBox(),
       floatingActionButtonLocation:CustomFloatingActionButtonLocation(FloatingActionButtonLocation.endDocked, 0, -70.rw),
-
-
-
-
-
-
-      // appBar: CustomAppBar(title: "搜索"),
       appBar: CustomAppBar(
         elevation: 0,
         title: _buildTitle(),
@@ -522,7 +519,6 @@ class _SearchPageState extends BaseStoreState<SearchPage>
       refreshCallback: () {
         if (TextUtils.isEmpty(_searchText)) {
           refreshSuccess([]);
-
           return;
         }
         // _presenter.fetchSearchList(
@@ -531,6 +527,9 @@ class _SearchPageState extends BaseStoreState<SearchPage>
         // );
         _presenter!.fetchList(-99, 0, _sortType, widget.countryId,
             keyword: _searchText, JDType: _jDType);
+        setState(() {
+
+        });
       },
       loadMoreCallback: (int page) {
         // _presenter.fetchSearchList(

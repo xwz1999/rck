@@ -5,11 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/text_button.dart' as TButton;
@@ -623,6 +625,11 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
             // DPrint.printf(" 转化的json ---- " + json.encode(data.toJson()));
             // AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
             AppRouter.fadeAndRemoveUntil(context, RouteName.TAB_BAR);
+
+            if(UserManager.instance!.goodsId!=0){
+              Get.to(()=>CommodityDetailPage(arguments:
+              CommodityDetailPage.setArguments(UserManager.instance!.goodsId)));
+            }
             UserManager.updateUser(data, getStore());
           }
         }, failure: (code, msg) {
@@ -694,6 +701,10 @@ class _PhoneLoginPageState extends BaseStoreState<PhoneLoginPage> {
         // DPrint.printf(" 转化的json ---- " + json.encode(data.toJson()));
         // AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
         AppRouter.fadeAndRemoveUntil(context, RouteName.TAB_BAR);
+        if(UserManager.instance!.goodsId!=0){
+          Get.to(()=>CommodityDetailPage(arguments:
+          CommodityDetailPage.setArguments(UserManager.instance!.goodsId)));
+        }
         UserManager.updateUser(data, getStore());
       }
     }, failure: (code, msg) {

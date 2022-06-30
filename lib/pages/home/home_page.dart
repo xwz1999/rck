@@ -1955,6 +1955,9 @@ class _HomePageState extends BaseStoreState<HomePage>
         Get.to(()=>GoodsListTempPage(arguments: GoodsListTempPage.setArguments(
             title: "数码家电", type: GoodsListTempType.homeAppliances),));
         break;
+      case '生活服务':
+
+        break;
       case '日用百货':
         break;
       case '酒饮冲调':

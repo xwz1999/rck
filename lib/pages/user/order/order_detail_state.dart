@@ -1141,7 +1141,7 @@ abstract class OrderDetailState<T extends StatefulWidget>
                       Row(
                         children: <Widget>[
                           Text(
-                            "￥${((goods.goodsAmount!-goods.coinAmount!)/3).toStringAsFixed(2)}",
+                            "￥${((goods.goodsAmount!-goods.coinAmount!)/(goods.quantity??1)).toStringAsFixed(2)}",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: AppTextStyle.generate(14 * 2.sp,

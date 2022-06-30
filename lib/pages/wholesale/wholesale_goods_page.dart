@@ -9,6 +9,7 @@ import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/daos/home_dao.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/address_list_model.dart';
@@ -67,6 +68,7 @@ class WholesaleGoodsPage extends StatefulWidget {
   final ValueNotifier<bool>? openSkuChoosePage;
   final bool? isWholesale;
 
+
   const WholesaleGoodsPage({
     Key? key,
     this.onScroll,
@@ -105,12 +107,29 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
   // int _seckillStatus = 0;//秒杀状态 0为未开始 1为开始
   String? guige = '请选择规格';
   bool? isWholesale = false;
+  ScrollController _scrollController = ScrollController();
+  bool showFab = false;
+
+
   @override
   bool get wantKeepAlive => true;
 
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(() {
+      if(_scrollController.offset < 600 && showFab){
+        setState(() {
+          showFab = false;
+        });
+      }else if(_scrollController.offset >= 600 && showFab == false){
+        setState(() {
+          showFab = true;
+        });
+      }
+    });
+
+
     if(widget.isWholesale!=null){
       isWholesale = widget.isWholesale;
     }
@@ -185,7 +204,31 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
   @override
   void dispose() {
     super.dispose();
+    _scrollController.dispose();
     widget.openSkuChoosePage!.dispose();
+  }
+
+  _customer(){
+    return GestureDetector(
+      onTap: () async{
+        if(widget.goodsDetail!=null)
+          _scrollController.jumpTo(0);
+      },
+      child: Container(
+        width: 46.rw,
+        height: 46.rw,
+        decoration: BoxDecoration(
+          color: Color(0xFF000000).withOpacity(0.7),
+          borderRadius: BorderRadius.all(Radius.circular(23.rw)),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(Assets.totop.path,width: 30.rw,height: 30.rw,color: Colors.white,),
+          ],
+        ),
+      ),
+    );
   }
 
   @override
@@ -221,12 +264,14 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
                 },
                 child: ListView(
                   //ListView 子项不销毁
+                  controller: _scrollController,
                   cacheExtent: DeviceInfo.screenHeight,
                   physics: BouncingScrollPhysics(),
                   children: _detailListWidget(),
                 ),
               ),
             ),
+            showFab? Positioned(child: _customer(),bottom: 85.rw,right: 15.rw,):SizedBox()
           ],
         ));
   }

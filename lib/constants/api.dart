@@ -333,7 +333,7 @@ class WebApi {
       "https://mallh5.reecook.cn/#/user/diamonds/";
 
   static const String testGoodsDetail =
-      "http://mallh5.reecook.cn/#/goods/detail/";
+      "https://mallh5.reecook.cn/#/goods/detail/";
 
   ///小程序二维码测试服
   static const String testMiniQrcodeGoodsDetail =

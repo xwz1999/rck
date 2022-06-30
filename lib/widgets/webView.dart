@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
@@ -54,6 +55,9 @@ class _WebViewState extends BaseStoreState<WebViewPage> {
   @override
   void initState() {
     super.initState();
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(//状态栏背景颜色
+        statusBarIconBrightness: Brightness.dark  // dark:一般显示黑色   light：一般显示白色
+    ));
     _appBarController = AppBarController();
     _appBarController!.scale.value = 1;
   }
@@ -62,6 +66,9 @@ class _WebViewState extends BaseStoreState<WebViewPage> {
   void dispose() {
     super.dispose();
     _appBarController?.dispose();
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(//状态栏背景颜色
+        statusBarIconBrightness: Brightness.light  // dark:一般显示黑色   light：一般显示白色
+    ));
   }
 
   JavascriptChannel _alertJavascriptChannel(BuildContext context) {

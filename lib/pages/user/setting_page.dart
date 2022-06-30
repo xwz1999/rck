@@ -4,6 +4,7 @@ import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/life_service/life_service_home_page.dart';
 import 'package:recook/pages/user/user_info_page.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -121,6 +122,10 @@ class _SettingItemListViewState extends State<SettingItemListView> with WidgetsB
                         Get.to(AccountAndSafetyPage());
 
                         //push(RouteName.ACCOUNT_AND_SAFETY_PAGE);
+                      }),
+
+                      SCTile.normalTile('生活服务', needDivide: true, listener: () {
+                        Get.to(LifeServiceHomePage());
                       }),
 
                       SCTile.normalTile('接收推送通知',

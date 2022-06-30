@@ -663,7 +663,7 @@ class _OrderListItemState extends State<OrderListItem> {
                               color: AppColor.priceColor),
                         ),
                         TextSpan(
-                          text: "${(goods.goodsAmount!-goods.coinAmount!).toStringAsFixed(2)}",
+                          text: "${((goods.goodsAmount!-goods.coinAmount!)/(goods.quantity??1)).toStringAsFixed(2)}",
                           style: AppTextStyle.generate(14 * 2.sp,
                               color: AppColor.priceColor),
                         ),

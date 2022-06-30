@@ -1157,13 +1157,20 @@ class Assets {
       AssetGenImage('assets/ic_card_vvip.png');
   static const AssetGenImage icCardZhengping =
       AssetGenImage('assets/ic_card_zhengping.png');
+  static const AssetGenImage icCyjl = AssetGenImage('assets/ic_cyjl.png');
+  static const AssetGenImage icDkgjj = AssetGenImage('assets/ic_dkgjj.png');
+  static const AssetGenImage icFyzc = AssetGenImage('assets/ic_fyzc.png');
+  static const AssetGenImage icJcjk = AssetGenImage('assets/ic_jcjk.png');
+  static const AssetGenImage icJryj = AssetGenImage('assets/ic_jryj.png');
   static const AssetGenImage icKefu = AssetGenImage('assets/ic_kefu.png');
+  static const AssetGenImage icLhl = AssetGenImage('assets/ic_lhl.png');
   static const AssetGenImage icLxkf = AssetGenImage('assets/ic_lxkf.png');
   static const AssetGenImage icMessageClear =
       AssetGenImage('assets/ic_message_clear.png');
   static const AssetGenImage icMsgBet = AssetGenImage('assets/ic_msg_bet.png');
   static const AssetGenImage icMsgOrder =
       AssetGenImage('assets/ic_msg_order.png');
+  static const AssetGenImage icNba = AssetGenImage('assets/ic_nba.png');
   static const AssetGenImage icRecharge =
       AssetGenImage('assets/ic_recharge.png');
   static const AssetGenImage icRechargeBank =
@@ -1178,6 +1185,12 @@ class Assets {
       AssetGenImage('assets/ic_recharge_order_pay.png');
   static const AssetGenImage icRechargeRed =
       AssetGenImage('assets/ic_recharge_red.png');
+  static const AssetGenImage icRmsp = AssetGenImage('assets/ic_rmsp.png');
+  static const AssetGenImage icSdyx = AssetGenImage('assets/ic_sdyx.png');
+  static const AssetGenImage icSgtz = AssetGenImage('assets/ic_sgtz.png');
+  static const AssetGenImage icSrhy = AssetGenImage('assets/ic_srhy.png');
+  static const AssetGenImage icSxcx = AssetGenImage('assets/ic_sxcx.png');
+  static const AssetGenImage icSxpd = AssetGenImage('assets/ic_sxpd.png');
   static const AssetGenImage icUserStorage =
       AssetGenImage('assets/ic_user_storage.png');
   static const AssetGenImage icUserWithdrawal =
@@ -1210,21 +1223,76 @@ class Assets {
       AssetGenImage('assets/ic_withdrawal_step4_fail.png');
   static const AssetGenImage icWithdrawalStep5Success =
       AssetGenImage('assets/ic_withdrawal_step5_success.png');
+  static const AssetGenImage icXgjb = AssetGenImage('assets/ic_xgjb.png');
+  static const AssetGenImage icXhdq = AssetGenImage('assets/ic_xhdq.png');
+  static const AssetGenImage icXljt = AssetGenImage('assets/ic_xljt.png');
+  static const AssetGenImage icXwtt = AssetGenImage('assets/ic_xwtt.png');
+  static const AssetGenImage icXzcx = AssetGenImage('assets/ic_xzcx.png');
+  static const AssetGenImage icXzpd = AssetGenImage('assets/ic_xzpd.png');
+  static const AssetGenImage icZctz = AssetGenImage('assets/ic_zctz.png');
+  static const AssetGenImage icZjsc = AssetGenImage('assets/ic_zjsc.png');
+  static const AssetGenImage icZqls = AssetGenImage('assets/ic_zqls.png');
   static const $AssetsIconGen icon = $AssetsIconGen();
   static const AssetGenImage iconIncomeIn =
       AssetGenImage('assets/icon_income_in.png');
   static const AssetGenImage iconIncomeOut =
       AssetGenImage('assets/icon_income_out.png');
+  static const AssetGenImage imgBofang = AssetGenImage('assets/img_bofang.png');
+  static const AssetGenImage imgCarNor =
+      AssetGenImage('assets/img_car_nor.png');
+  static const AssetGenImage imgCarSel =
+      AssetGenImage('assets/img_car_sel.png');
   static const AssetGenImage imgCardBg =
       AssetGenImage('assets/img_card_bg.png');
   static const AssetGenImage imgCardTopBg =
       AssetGenImage('assets/img_card_top_bg.png');
+  static const AssetGenImage imgCartoonNor =
+      AssetGenImage('assets/img_cartoon_nor.png');
+  static const AssetGenImage imgCartoonSel =
+      AssetGenImage('assets/img_cartoon_sel.png');
+  static const AssetGenImage imgDianzan =
+      AssetGenImage('assets/img_dianzan.png');
+  static const AssetGenImage imgDrxq = AssetGenImage('assets/img_drxq.png');
+  static const AssetGenImage imgFensi = AssetGenImage('assets/img_fensi.png');
+  static const AssetGenImage imgFoodNor =
+      AssetGenImage('assets/img_food_nor.png');
+  static const AssetGenImage imgFoodSel =
+      AssetGenImage('assets/img_food_sel.png');
+  static const AssetGenImage imgFuhaoyou =
+      AssetGenImage('assets/img_fuhaoyou.png');
+  static const AssetGenImage imgFuhaozuo =
+      AssetGenImage('assets/img_fuhaozuo.png');
+  static const AssetGenImage imgFunnyNor =
+      AssetGenImage('assets/img_funny_nor.png');
+  static const AssetGenImage imgFunnySel =
+      AssetGenImage('assets/img_funny_sel.png');
+  static const AssetGenImage imgGameNor =
+      AssetGenImage('assets/img_game_nor.png');
+  static const AssetGenImage imgGameSel =
+      AssetGenImage('assets/img_game_sel.png');
+  static const AssetGenImage imgHotNor =
+      AssetGenImage('assets/img_hot_nor.png');
+  static const AssetGenImage imgHotSel =
+      AssetGenImage('assets/img_hot_sel.png');
   static const AssetGenImage imgNoData =
       AssetGenImage('assets/img_no_data.png');
   static const AssetGenImage imgNoDataSearch =
       AssetGenImage('assets/img_no_data_search.png');
+  static const AssetGenImage imgPinglun =
+      AssetGenImage('assets/img_pinglun.png');
+  static const AssetGenImage imgSportsNor =
+      AssetGenImage('assets/img_sports_nor.png');
+  static const AssetGenImage imgSportsSel =
+      AssetGenImage('assets/img_sports_sel.png');
+  static const AssetGenImage imgToutu = AssetGenImage('assets/img_toutu.png');
+  static const AssetGenImage imgTravelNor =
+      AssetGenImage('assets/img_travel_nor.png');
+  static const AssetGenImage imgTravelSel =
+      AssetGenImage('assets/img_travel_sel.png');
+  static const AssetGenImage imgXwtt = AssetGenImage('assets/img_xwtt.png');
   static const AssetGenImage imgYuanquan =
       AssetGenImage('assets/img_yuanquan.png');
+  static const AssetGenImage imgZhishu = AssetGenImage('assets/img_zhishu.png');
   static const AssetGenImage inviteDetailEdit =
       AssetGenImage('assets/invite_detail_edit.png');
   static const AssetGenImage inviteDetailPhone =
@@ -1584,28 +1652,28 @@ class AssetGenImage {
   final String _assetName;
 
   Image image({
-    Key?  key,
-    ImageFrameBuilder?  frameBuilder,
-    ImageErrorWidgetBuilder?  errorBuilder,
-    String?  semanticLabel,
+    Key? key,
+    ImageFrameBuilder? frameBuilder,
+    ImageErrorWidgetBuilder? errorBuilder,
+    String? semanticLabel,
     bool excludeFromSemantics = false,
-    double  scale = 1.0,
-    double?  width,
-    double?  height,
-    Color?  color,
-    Animation<double>?  opacity,
-    BlendMode?  colorBlendMode,
-    BoxFit?  fit,
+    double? scale = 1.0,
+    double? width,
+    double? height,
+    Color? color,
+    Animation<double>? opacity,
+    BlendMode? colorBlendMode,
+    BoxFit? fit,
     AlignmentGeometry alignment = Alignment.center,
     ImageRepeat repeat = ImageRepeat.noRepeat,
-    Rect?  centerSlice,
+    Rect? centerSlice,
     bool matchTextDirection = false,
     bool gaplessPlayback = false,
     bool isAntiAlias = false,
-    String?  package,
+    String? package,
     FilterQuality filterQuality = FilterQuality.low,
-    int?  cacheWidth,
-    int?  cacheHeight,
+    int? cacheWidth,
+    int? cacheHeight,
   }) {
     return Image.asset(
       _assetName,

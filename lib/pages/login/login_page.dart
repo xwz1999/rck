@@ -11,6 +11,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 // import 'package:jpush_flutter/jpush_flutter.dart';
 
 import 'package:recook/base/base_store_state.dart';
@@ -19,6 +20,7 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/daos/user_dao.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/login/wechat_bind_page.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/widgets/alert.dart';
@@ -327,7 +329,14 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
         //     arguments: InvitationCodePage.setArgs(
         //         mode: 1, userID: user.info.id, nickName: user.info.nickname));
       } else {
+
         AppRouter.pushAndRemoveUntil(context, RouteName.TAB_BAR);
+
+        if(UserManager.instance!.goodsId!=0){
+          Get.to(()=>CommodityDetailPage(arguments:
+          CommodityDetailPage.setArguments(UserManager.instance!.goodsId)));
+        }
+
         UserManager.updateUser(user, getStore());
       }
     }, failure: (code, msg) {
