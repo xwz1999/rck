@@ -92,5 +92,7 @@ class AppThemes {
     iconTheme: IconThemeData(color: AppColor.themeColor),
 //    textTheme: TextTheme(title: TextStyle(color: Colors.black)),
     scaffoldBackgroundColor: Colors.white,
+    splashColor: Colors.transparent, // 点击时的高亮效果设置为透明
+    highlightColor: Colors.transparent, // 长按时的扩散效果设置为透明
   );
 }

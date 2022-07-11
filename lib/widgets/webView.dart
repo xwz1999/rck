@@ -66,9 +66,9 @@ class _WebViewState extends BaseStoreState<WebViewPage> {
   void dispose() {
     super.dispose();
     _appBarController?.dispose();
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(//状态栏背景颜色
-        statusBarIconBrightness: Brightness.light  // dark:一般显示黑色   light：一般显示白色
-    ));
+    // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(//状态栏背景颜色
+    //     statusBarIconBrightness: Brightness.light  // dark:一般显示黑色   light：一般显示白色
+    // ));
   }
 
   JavascriptChannel _alertJavascriptChannel(BuildContext context) {

@@ -40,8 +40,6 @@ class _SettingItemListViewState extends State<SettingItemListView> with WidgetsB
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addObserver(this);
-
-
     JPush().isNotificationEnabled().then((bool value) {
       if (value)
         perText = '已开启';

@@ -53,6 +53,7 @@ class _JokesCollectionPageState extends State<JokesCollectionPage>
       extendBody: true,
       appBar: CustomAppBar(
         appBackground: Colors.white,
+        themeData: AppThemes.themeDataGrey.appBarTheme,
         leading: RecookBackButton(
           white: false,
         ),

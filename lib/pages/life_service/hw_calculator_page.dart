@@ -52,6 +52,8 @@ class _HWCalculatorPageState extends State<HWCalculatorPage>
       extendBody: true,
       appBar: CustomAppBar(
         appBackground: Colors.white,
+        themeData: AppThemes.themeDataGrey.appBarTheme,
+
         leading: RecookBackButton(
           white: false,
         ),

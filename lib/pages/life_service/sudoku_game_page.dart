@@ -21,10 +21,11 @@ class _SudokuGamePageState extends State<SudokuGamePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
       extendBody: true,
       appBar: CustomAppBar(
         appBackground: Colors.white,
+        themeData: AppThemes.themeDataGrey.appBarTheme,
         leading: RecookBackButton(
           white: false,
         ),
@@ -44,7 +45,7 @@ class _SudokuGamePageState extends State<SudokuGamePage> {
   _bodyWidget() {
     return Column(
       children: [
-        200.hb,
+
         Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [

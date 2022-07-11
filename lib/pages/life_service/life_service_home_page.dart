@@ -1,13 +1,21 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:recook/constants/api.dart';
+import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/pages/life_service/nba_match_page.dart';
 import 'package:recook/pages/life_service/sudoku_game_page.dart';
+import 'package:recook/pages/life_service/zodiac_page.dart';
 
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/recook_back_button.dart';
+import 'package:recook/widgets/webView.dart';
 
+import 'birth_flower_page.dart';
+import 'football_league_page.dart';
 import 'hot_video_page.dart';
 import 'hw_calculator_page.dart';
 import 'idiom_solitaire_page.dart';
@@ -47,7 +55,13 @@ class _LifeServiceHomePageState extends State<LifeServiceHomePage>
           img: Assets.icFyzc.path,
           title: '2022出行防疫政策指南',
           page: () {
-            Get.to(()=>HWCalculatorPage());
+            AppRouter.push(
+              context,
+              RouteName.WEB_VIEW_PAGE,
+              arguments: WebViewPage.setArguments(
+                url: WebApi.chuXing,
+                hideBar: true,),
+            );
           }),
       Service(
           img: Assets.icSdyx.path,
@@ -83,13 +97,13 @@ class _LifeServiceHomePageState extends State<LifeServiceHomePage>
           img: Assets.icNba.path,
           title: 'NBA赛事',
           page: () {
-            Get.to(()=>HWCalculatorPage());
+            Get.to(()=>NBAMatchPage());
           }),
       Service(
           img: Assets.icZqls.path,
           title: '足球联赛',
           page: () {
-            Get.to(()=>HWCalculatorPage());
+            Get.to(()=>FootballLeaguePage());
           }),
       Service(
           img: Assets.icXljt.path,
@@ -101,13 +115,13 @@ class _LifeServiceHomePageState extends State<LifeServiceHomePage>
           img: Assets.icSrhy.path,
           title: '生日花语',
           page: () {
-            Get.to(()=>HWCalculatorPage());
+            Get.to(()=>BirthFlowerPage());
           }),
       Service(
           img: Assets.icSxcx.path,
           title: '生肖查询',
           page: () {
-            Get.to(()=>HWCalculatorPage());
+            Get.to(()=>ZodiacPage());
           }),
       Service(
           img: Assets.icXzcx.path,
@@ -164,10 +178,11 @@ class _LifeServiceHomePageState extends State<LifeServiceHomePage>
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
       extendBody: true,
       appBar: CustomAppBar(
         appBackground: Colors.white,
+        themeData: AppThemes.themeDataGrey.appBarTheme,
         leading: RecookBackButton(
           white: false,
         ),
@@ -184,14 +199,11 @@ class _LifeServiceHomePageState extends State<LifeServiceHomePage>
   }
 
   _bodyWidget() {
-    return Padding(
-      padding: EdgeInsets.only(top: kToolbarHeight + MediaQuery.of(context).padding.top),
-      child: ListView.builder(
-        itemCount: _items.length,
-        padding: EdgeInsets.only(left: 12.rw, right: 12.rw, top: 0.rw,bottom: 20.rw),
-        itemBuilder: (BuildContext context, int index) =>
-            _itemWidget(_items[index]),
-      ),
+    return ListView.builder(
+      itemCount: _items.length,
+      padding: EdgeInsets.only(left: 12.rw, right: 12.rw, top: 0.rw,bottom: 20.rw),
+      itemBuilder: (BuildContext context, int index) =>
+          _itemWidget(_items[index]),
     );
   }
 

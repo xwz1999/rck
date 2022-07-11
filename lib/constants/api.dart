@@ -321,11 +321,8 @@ class WebApi {
   // static const String inviteRegist = "${recookHttp}download.html?code=";
   static const String goodsDetail = "https://mallh5.reecook.cn/#/goods/detail/";
 
-
   static const String inviteRegist =
       "https://mallh5.reecook.cn/#/user/appRegister/";
-
-
 
   static const String invitePoster = "/v1/shop/share_photo/";
 
@@ -367,6 +364,10 @@ class WebApi {
 
   ///直播分享链接（测试服务器）
   static const String testLiveUrl = 'https://testh5.reecook.cn/#/live/item/';
+
+  ///2022防疫出行
+  static const String chuXing = 'https://mallh5.reecook.cn/expand/chuxing/';
+
 }
 
 class InvoiceApi {

@@ -48,7 +48,7 @@ class _NewsDetailPageState extends State<NewsDetailPage>
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
-      extendBodyBehindAppBar: true,
+      extendBodyBehindAppBar: false,
       extendBody: true,
       appBar: CustomAppBar(
         appBackground: Colors.white,
