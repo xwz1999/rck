@@ -179,9 +179,17 @@ class $AssetsLifeGen {
   AssetGenImage get img76ren =>
       const AssetGenImage('assets/life/img_76ren.png');
 
+  /// File path: assets/life/img_baiyang.png
+  AssetGenImage get imgBaiyang =>
+      const AssetGenImage('assets/life/img_baiyang.png');
+
   /// File path: assets/life/img_buxingzhe.png
   AssetGenImage get imgBuxingzhe =>
       const AssetGenImage('assets/life/img_buxingzhe.png');
+
+  /// File path: assets/life/img_chunv.png
+  AssetGenImage get imgChunv =>
+      const AssetGenImage('assets/life/img_chunv.png');
 
   /// File path: assets/life/img_duxingx.png
   AssetGenImage get imgDuxingx =>
@@ -215,6 +223,10 @@ class $AssetsLifeGen {
   AssetGenImage get imgHuren =>
       const AssetGenImage('assets/life/img_huren.png');
 
+  /// File path: assets/life/img_jinniu.png
+  AssetGenImage get imgJinniu =>
+      const AssetGenImage('assets/life/img_jinniu.png');
+
   /// File path: assets/life/img_juejin.png
   AssetGenImage get imgJuejin =>
       const AssetGenImage('assets/life/img_juejin.png');
@@ -222,6 +234,10 @@ class $AssetsLifeGen {
   /// File path: assets/life/img_jueshi.png
   AssetGenImage get imgJueshi =>
       const AssetGenImage('assets/life/img_jueshi.png');
+
+  /// File path: assets/life/img_juxie.png
+  AssetGenImage get imgJuxie =>
+      const AssetGenImage('assets/life/img_juxie.png');
 
   /// File path: assets/life/img_kaituozhe.png
   AssetGenImage get imgKaituozhe =>
@@ -258,6 +274,10 @@ class $AssetsLifeGen {
   AssetGenImage get imgMoshu =>
       const AssetGenImage('assets/life/img_moshu.png');
 
+  /// File path: assets/life/img_moxie.png
+  AssetGenImage get imgMoxie =>
+      const AssetGenImage('assets/life/img_moxie.png');
+
   /// File path: assets/life/img_nikesi.png
   AssetGenImage get imgNikesi =>
       const AssetGenImage('assets/life/img_nikesi.png');
@@ -278,9 +298,37 @@ class $AssetsLifeGen {
   AssetGenImage get imgSenlinlang =>
       const AssetGenImage('assets/life/img_senlinlang.png');
 
+  /// File path: assets/life/img_sheshou.png
+  AssetGenImage get imgSheshou =>
+      const AssetGenImage('assets/life/img_sheshou.png');
+
+  /// File path: assets/life/img_shizi.png
+  AssetGenImage get imgShizi =>
+      const AssetGenImage('assets/life/img_shizi.png');
+
+  /// File path: assets/life/img_shuangyu.png
+  AssetGenImage get imgShuangyu =>
+      const AssetGenImage('assets/life/img_shuangyu.png');
+
+  /// File path: assets/life/img_shuangzi.png
+  AssetGenImage get imgShuangzi =>
+      const AssetGenImage('assets/life/img_shuangzi.png');
+
+  /// File path: assets/life/img_shuiping.png
+  AssetGenImage get imgShuiping =>
+      const AssetGenImage('assets/life/img_shuiping.png');
+
   /// File path: assets/life/img_taiyang.png
   AssetGenImage get imgTaiyang =>
       const AssetGenImage('assets/life/img_taiyang.png');
+
+  /// File path: assets/life/img_tiancheng.png
+  AssetGenImage get imgTiancheng =>
+      const AssetGenImage('assets/life/img_tiancheng.png');
+
+  /// File path: assets/life/img_tianxie.png
+  AssetGenImage get imgTianxie =>
+      const AssetGenImage('assets/life/img_tianxie.png');
 
   /// File path: assets/life/img_tihu.png
   AssetGenImage get imgTihu => const AssetGenImage('assets/life/img_tihu.png');

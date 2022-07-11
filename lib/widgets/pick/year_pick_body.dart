@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 //import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:recook/constants/header.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'car_picker_box.dart';
@@ -31,7 +32,7 @@ class _YearPickBodyState extends State<YearPickBody> {
   Color _getColor(int index) {
     switch (index) {
       case 0:
-        return const Color(0xFF027AFF);
+        return  const Color(0xFF111111);
       case 1:
         return const Color(0xFF999999);
       case 2:
@@ -74,11 +75,8 @@ class _YearPickBodyState extends State<YearPickBody> {
                   setState(() {});
                 },
                 selectionOverlay: Container(
-                  margin: EdgeInsets.only(left: 20.w),
                   decoration: BoxDecoration(
-                      color: const Color(0xFF027AFF).withOpacity(0.05),
-                      borderRadius:
-                          BorderRadius.horizontal(left: Radius.circular(8.w))),
+                      color:  Color(0xFFdedee0).withOpacity(0.2),),
                 ),
                 children: _years
                     .mapIndexed((e, index) => Center(

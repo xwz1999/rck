@@ -15,6 +15,7 @@ import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/webView.dart';
 
 import 'birth_flower_page.dart';
+import 'constellation_page.dart';
 import 'football_league_page.dart';
 import 'hot_video_page.dart';
 import 'hw_calculator_page.dart';
@@ -127,7 +128,7 @@ class _LifeServiceHomePageState extends State<LifeServiceHomePage>
           img: Assets.icXzcx.path,
           title: '星座查询',
           page: () {
-            Get.to(()=>HWCalculatorPage());
+            Get.to(()=>ConstellationPage());
           }),
       Service(
           img: Assets.icDkgjj.path,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:recook/constants/header.dart';
 
 
 class CarPickerBox extends StatelessWidget {
@@ -62,7 +63,7 @@ class CarPickerBox extends StatelessWidget {
                 trailing: _buildButton(
                   title: confirmString,
                   onPressed: onPressed,
-                  color: Colors.blue,
+                  color: AppColor.themeColor,
                 ),
               ),
             ),
