@@ -183,17 +183,50 @@ class _ZodiacPageState extends State<ZodiacPage>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
-                                child: Column(
-                                  children: [
-                                    Text(zodiacModel.name??'',
-                                        style: TextStyle(
-                                          color: Color(0xFF999999),
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14.rsp,
-                                        )),
-                                    Image.asset(_getIcon(zodiacModel.name??''),width: 24.rw,height: 24.rw,),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(right: BorderSide(color:Color(0xFFE8E8E8),width: 0.5.rw ))
+                                  ),
+                                  padding:EdgeInsets.all(20.rw),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(zodiacModel.name??'',
+                                          style: TextStyle(
+                                            color: AppColor.themeColor,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 24.rsp,
+                                          )),
+                                      25.hb,
 
-                                  ],
+                                      Image.asset(_getIcon(zodiacModel.name??''),width: 24.rw,height: 24.rw,),
+
+                                    ],
+                                  ),
+                                ),
+                              ),
+
+                              Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.all(20.rw),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('吉祥方位',
+                                          style: TextStyle(
+                                            color: Color(0xFF999999),
+                                            fontSize: 14.rsp,
+                                          )),
+                                      16.hb,
+                                      Text(zodiacModel.fw??'',
+                                          style: TextStyle(
+                                            color: Color(0xFF333333),
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14.rsp,
+                                          ),maxLines: 3,),
+
+                                    ],
+                                  ),
                                 ),
                               )
                             ],
@@ -203,6 +236,384 @@ class _ZodiacPageState extends State<ZodiacPage>
                             height: 0.5.rw,
                             color: Color(0xFFE8E8E8),
                           ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      border: Border(right: BorderSide(color:Color(0xFFE8E8E8),width: 0.5.rw ))
+                                  ),
+                                  padding:EdgeInsets.all(20.rw),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('吉忌颜色',
+                                          style: TextStyle(
+                                            color: Color(0xFF999999),
+                                            fontSize: 14.rsp,
+                                          )),
+                                      16.hb,
+                                      Row(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(Radius.circular(10.rw)),
+                                              border: Border.all(color: AppColor.themeColor,width: 1.rw)
+                                            ),
+                                            width: 20.rw,
+                                            height: 20.rw,
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              '吉',style: TextStyle(color: AppColor.themeColor,fontSize: 10.rsp),
+                                            ),
+                                          ),
+                                          8.wb,
+                                          Text('${(zodiacModel.sc??'').split('；')[0].split('：')[1]}',
+                                              style: TextStyle(
+                                                color: AppColor.themeColor,
+                                                fontSize: 12.rsp,
+                                                fontWeight: FontWeight.bold
+                                              )),
+                                        ],
+                                      ),
+                                      16.hb,
+                                      Row(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(Radius.circular(10.rw)),
+                                                border: Border.all(color: Color(0xFF333333),width: 1.rw)
+                                            ),
+                                            width: 20.rw,
+                                            height: 20.rw,
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              '忌',style: TextStyle(color:  Color(0xFF333333),fontSize: 10.rsp),
+                                            ),
+                                          ),
+                                          8.wb,
+                                          Text('${(zodiacModel.sc??'').split('；')[1].split('：')[1]}',
+                                              style: TextStyle(
+                                                  color:  Color(0xFF333333),
+                                                  fontSize: 12.rsp,
+                                                  fontWeight: FontWeight.bold
+                                              )),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
+                              Expanded(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      border: Border(right: BorderSide(color:Color(0xFFE8E8E8),width: 0.5.rw ))
+                                  ),
+                                  padding:EdgeInsets.all(20.rw),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('吉忌数字',
+                                          style: TextStyle(
+                                            color: Color(0xFF999999),
+                                            fontSize: 14.rsp,
+                                          )),
+                                      16.hb,
+                                      Row(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(Radius.circular(10.rw)),
+                                                border: Border.all(color: AppColor.themeColor,width: 1.rw)
+                                            ),
+                                            width: 20.rw,
+                                            height: 20.rw,
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              '吉',style: TextStyle(color: AppColor.themeColor,fontSize: 10.rsp),
+                                            ),
+                                          ),
+                                          8.wb,
+                                          Text('${(zodiacModel.sz??'').split('；')[0].split('：')[1]}',
+                                              style: TextStyle(
+                                                  color: AppColor.themeColor,
+                                                  fontSize: 12.rsp,
+                                                  fontWeight: FontWeight.bold
+                                              )),
+                                        ],
+                                      ),
+                                      16.hb,
+                                      Row(
+                                        children: [
+                                          Container(
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.all(Radius.circular(10.rw)),
+                                                border: Border.all(color: Color(0xFF333333),width: 1.rw)
+                                            ),
+                                            width: 20.rw,
+                                            height: 20.rw,
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              '凶',style: TextStyle(color:  Color(0xFF333333),fontSize: 10.rsp),
+                                            ),
+                                          ),
+                                          8.wb,
+                                          Text('${(zodiacModel.sz??'').split('；')[1].split('：')[1]}',
+                                              style: TextStyle(
+                                                  color:  Color(0xFF333333),
+                                                  fontSize: 12.rsp,
+                                                  fontWeight: FontWeight.bold
+                                              )),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 0.5.rw,
+                            color: Color(0xFFE8E8E8),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(20.rw),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('幸运花',
+                                    style: TextStyle(
+                                      color: Color(0xFF999999),
+                                      fontSize: 14.rsp,
+                                    )),
+                                16.hb,
+                                Text(zodiacModel.xyh??'',
+                                  style: TextStyle(
+                                    color: Color(0xFF333333),
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14.rsp,
+                                  ),maxLines: 3,),
+
+                              ],
+                            ),
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 0.5.rw,
+                            color: Color(0xFFE8E8E8),
+                          ),
+                          Row(
+                            children: [
+                              Expanded(child: GestureDetector(
+                                onTap: (){
+                                  show(
+                                      context,
+                                      _dialog(
+                                        '运势',
+                                         zodiacModel.name??'',
+                                        zodiacModel.ys??'',
+                                      ));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 19.rw),
+                                  decoration: BoxDecoration(
+                                      border: Border(right: BorderSide(color:Color(0xFFE8E8E8),width: 0.5.rw ))
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Column(
+                                    children: [
+                                      Text('运',
+                                          style: TextStyle(
+                                            color: Color(0xFF999999),
+                                            fontSize: 14.rsp,
+                                          )),
+                                      Text('势',
+                                          style: TextStyle(
+                                            color: Color(0xFF999999),
+                                            fontSize: 14.rsp,
+                                          )),
+                                      5.hb,
+                                      Image.asset(Assets.life.icSanjiaoHong.path,width: 20.rw,height: 20.rw,),
+                                    ],
+                                  ),
+                                ),
+                              )),
+                              Expanded(child: GestureDetector(
+                                onTap: (){
+                                  show(
+                                      context,
+                                      _dialog(
+                                        '事业',
+                                        zodiacModel.name??'',
+                                        zodiacModel.sy??'',
+                                      ));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 19.rw),
+                                  decoration: BoxDecoration(
+                                      border: Border(right: BorderSide(color:Color(0xFFE8E8E8),width: 0.5.rw ))
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Column(
+                                    children: [
+                                      Text('事',
+                                          style: TextStyle(
+                                            color: Color(0xFF999999),
+                                            fontSize: 14.rsp,
+                                          )),
+                                      Text('业',
+                                          style: TextStyle(
+                                            color: Color(0xFF999999),
+                                            fontSize: 14.rsp,
+                                          )),
+                                      5.hb,
+                                      Image.asset(Assets.life.icSanjiaoHong.path,width: 20.rw,height: 20.rw,),
+                                    ],
+                                  ),
+                                ),
+                              )),
+                              Expanded(child: GestureDetector(
+                                onTap: (){
+                                  show(
+                                      context,
+                                      _dialog(
+                                        '爱情',
+                                        zodiacModel.name??'',
+                                        zodiacModel.aq??'',
+                                        bottom:_aiQing()
+                                      ));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 19.rw),
+                                  decoration: BoxDecoration(
+                                      border: Border(right: BorderSide(color:Color(0xFFE8E8E8),width: 0.5.rw ))
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Column(
+                                    children: [
+                                      Text('爱',
+                                          style: TextStyle(
+                                            color: Color(0xFF999999),
+                                            fontSize: 14.rsp,
+                                          )),
+                                      Text('情',
+                                          style: TextStyle(
+                                            color: Color(0xFF999999),
+                                            fontSize: 14.rsp,
+                                          )),
+                                      5.hb,
+                                      Image.asset(Assets.life.icSanjiaoHong.path,width: 20.rw,height: 20.rw,),
+                                    ],
+                                  ),
+                                ),
+                              )),
+                              Expanded(child: GestureDetector(
+                                onTap: (){
+                                  show(
+                                      context,
+                                      _dialog(
+                                          '性格',
+                                          zodiacModel.name??'',
+                                          zodiacModel.xg??''
+                                      ));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 19.rw),
+                                  decoration: BoxDecoration(
+                                      border: Border(right: BorderSide(color:Color(0xFFE8E8E8),width: 0.5.rw ))
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Column(
+                                    children: [
+                                      Text('性',
+                                          style: TextStyle(
+                                            color: Color(0xFF999999),
+                                            fontSize: 14.rsp,
+                                          )),
+                                      Text('格',
+                                          style: TextStyle(
+                                            color: Color(0xFF999999),
+                                            fontSize: 14.rsp,
+                                          )),
+                                      5.hb,
+                                      Image.asset(Assets.life.icSanjiaoHong.path,width: 20.rw,height: 20.rw,),
+                                    ],
+                                  ),
+                                ),
+                              )),
+                              Expanded(child: GestureDetector(
+                                onTap: (){
+                                  show(
+                                      context,
+                                      _dialog(
+                                          '优点',
+                                          zodiacModel.name??'',
+                                          zodiacModel.yd??''
+                                      ));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 19.rw),
+                                  decoration: BoxDecoration(
+                                      border: Border(right: BorderSide(color:Color(0xFFE8E8E8),width: 0.5.rw ))
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Column(
+                                    children: [
+                                      Text('优',
+                                          style: TextStyle(
+                                            color: Color(0xFF999999),
+                                            fontSize: 14.rsp,
+                                          )),
+                                      Text('点',
+                                          style: TextStyle(
+                                            color: Color(0xFF999999),
+                                            fontSize: 14.rsp,
+                                          )),
+                                      5.hb,
+                                      Image.asset(Assets.life.icSanjiaoHong.path,width: 20.rw,height: 20.rw,),
+                                    ],
+                                  ),
+                                ),
+                              )),
+                              Expanded(child: GestureDetector(
+                                onTap: (){
+                                  show(
+                                      context,
+                                      _dialog(
+                                          '缺点',
+                                          zodiacModel.name??'',
+                                          zodiacModel.qd??''
+                                      ));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(vertical: 19.rw),
+                                  decoration: BoxDecoration(
+                                      border: Border(right: BorderSide(color:Color(0xFFE8E8E8),width: 0.5.rw ))
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: Column(
+                                    children: [
+                                      Text('缺',
+                                          style: TextStyle(
+                                            color: Color(0xFF999999),
+                                            fontSize: 14.rsp,
+                                          )),
+                                      Text('点',
+                                          style: TextStyle(
+                                            color: Color(0xFF999999),
+                                            fontSize: 14.rsp,
+                                          )),
+                                      5.hb,
+                                      Image.asset(Assets.life.icSanjiaoHong.path,width: 20.rw,height: 20.rw,),
+                                    ],
+                                  ),
+                                ),
+                              )),
+                            ],
+                          )
                         ],
                       ),
                     )
@@ -221,8 +632,8 @@ class _ZodiacPageState extends State<ZodiacPage>
     );
   }
 
-  _dialog(String text1, String text2, String text3, String text4,
-      {String text5 = '', String text6 = ''}) {
+  _dialog(String text1, String text2, String text3,
+      { Widget? bottom}) {
     return Center(
       child: Container(
         width: 327.rw,
@@ -270,44 +681,13 @@ class _ZodiacPageState extends State<ZodiacPage>
                 padding: EdgeInsets.symmetric(horizontal: 12.rw),
                 child: Text(text3,
                     style: TextStyle(
-                      color: Color(0xFF999999),
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14.rsp,
-                    )),
-              ),
-              10.hb,
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.rw),
-                child: Text(text4,
-                    style: TextStyle(
                       color: Color(0xFF333333),
                       fontSize: 14.rsp,
                     )),
               ),
-              40.hb,
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.rw),
-                child: text5 == ''
-                    ? SizedBox()
-                    : Text(text5,
-                        style: TextStyle(
-                          color: Color(0xFF999999),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14.rsp,
-                        )),
-              ),
-              10.hb,
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.rw),
-                child: text6 == ''
-                    ? SizedBox()
-                    : Text(text6,
-                        style: TextStyle(
-                          color: Color(0xFF333333),
-                          fontSize: 14.rsp,
-                        )),
-              ),
-              40.hb,
+
+              bottom??40.hb
+              ,
             ],
           ),
         ),
@@ -342,6 +722,73 @@ class _ZodiacPageState extends State<ZodiacPage>
       case '亥猪':
         return Assets.life.icZhu.path;
     }
+  }
+
+  _aiQing(){
+    return Container(
+      decoration: BoxDecoration(
+          border: Border(right: BorderSide(color:Color(0xFFE8E8E8),width: 0.5.rw ))
+      ),
+      padding:EdgeInsets.all(16.rw),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text('婚配',
+              style: TextStyle(
+                color: Color(0xFF999999),
+                fontSize: 14.rsp,
+              )),
+          16.hb,
+          Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10.rw)),
+                    border: Border.all(color: AppColor.themeColor,width: 1.rw)
+                ),
+                width: 20.rw,
+                height: 20.rw,
+                alignment: Alignment.center,
+                child: Text(
+                  '吉',style: TextStyle(color: AppColor.themeColor,fontSize: 10.rsp),
+                ),
+              ),
+              8.wb,
+              Text('${(zodiacModel.aq??'').split('<br>大吉婚配：')[1].split('<br>忌婚配：')[0]}',
+                  style: TextStyle(
+                      color: AppColor.themeColor,
+                      fontSize: 12.rsp,
+                      fontWeight: FontWeight.bold
+                  )),
+            ],
+          ),
+          16.hb,
+          Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10.rw)),
+                    border: Border.all(color: Color(0xFF333333),width: 1.rw)
+                ),
+                width: 20.rw,
+                height: 20.rw,
+                alignment: Alignment.center,
+                child: Text(
+                  '忌',style: TextStyle(color:  Color(0xFF333333),fontSize: 10.rsp),
+                ),
+              ),
+              8.wb,
+              Text('${(zodiacModel.aq??'').split('<br>忌婚配：')[1]}',
+                  style: TextStyle(
+                      color:  Color(0xFF333333),
+                      fontSize: 12.rsp,
+                      fontWeight: FontWeight.bold
+                  )),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/models/life_service/birth_flower_model.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -236,13 +237,10 @@ class _BirthFlowerPageState extends State<BirthFlowerPage>
                                             fontWeight: FontWeight.bold,
                                             fontSize: 14.rsp,
                                           )),
+
                                       Padding(
                                         padding: EdgeInsets.only(top: 3.rw),
-                                        child: Icon(
-                                          Icons.arrow_right,
-                                          color: Colors.black38,
-                                          size: 24 * 2.sp,
-                                        ),
+                                        child:  Image.asset(Assets.life.icSanjiaoHui.path,width: 20.rw,height: 20.rw,),
                                       ),
                                     ],
                                   ),
@@ -301,13 +299,8 @@ class _BirthFlowerPageState extends State<BirthFlowerPage>
                                                   fontSize: 14.rsp,
                                                 )),
                                             Padding(
-                                              padding:
-                                                  EdgeInsets.only(top: 3.rw),
-                                              child: Icon(
-                                                Icons.arrow_right,
-                                                color: Colors.black38,
-                                                size: 24 * 2.sp,
-                                              ),
+                                              padding: EdgeInsets.only(top: 3.rw),
+                                              child:  Image.asset(Assets.life.icSanjiaoHui.path,width: 20.rw,height: 20.rw,),
                                             ),
                                           ],
                                         ),
@@ -367,13 +360,8 @@ class _BirthFlowerPageState extends State<BirthFlowerPage>
                                                   fontSize: 14.rsp,
                                                 )),
                                             Padding(
-                                              padding:
-                                                  EdgeInsets.only(top: 3.rw),
-                                              child: Icon(
-                                                Icons.arrow_right,
-                                                color: Colors.black38,
-                                                size: 24 * 2.sp,
-                                              ),
+                                              padding: EdgeInsets.only(top: 3.rw),
+                                              child:  Image.asset(Assets.life.icSanjiaoHui.path,width: 20.rw,height: 20.rw,),
                                             ),
                                           ],
                                         ),

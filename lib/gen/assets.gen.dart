@@ -131,6 +131,10 @@ class $AssetsJsonGen {
 class $AssetsLifeGen {
   const $AssetsLifeGen();
 
+  /// File path: assets/life/ ic_sanjiao_hong.png
+  AssetGenImage get icSanjiaoHong =>
+      const AssetGenImage('assets/life/ ic_sanjiao_hong.png');
+
   /// File path: assets/life/ic_gou.png
   AssetGenImage get icGou => const AssetGenImage('assets/life/ic_gou.png');
 
@@ -151,6 +155,10 @@ class $AssetsLifeGen {
 
   /// File path: assets/life/ic_niu.png
   AssetGenImage get icNiu => const AssetGenImage('assets/life/ic_niu.png');
+
+  /// File path: assets/life/ic_sanjiao_hui.png
+  AssetGenImage get icSanjiaoHui =>
+      const AssetGenImage('assets/life/ic_sanjiao_hui.png');
 
   /// File path: assets/life/ic_she.png
   AssetGenImage get icShe => const AssetGenImage('assets/life/ic_she.png');
