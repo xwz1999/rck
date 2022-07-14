@@ -142,10 +142,6 @@ class _UserBalancePageState extends State<UserBalancePage> {
                         Get.to(()=>WithDrawPage());
                       }
 
-
-
-
-
                   },
                   child: Container(
                     height: 36.rw,

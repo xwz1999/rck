@@ -7,6 +7,7 @@ import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/pages/life_service/nba_match_page.dart';
+import 'package:recook/pages/life_service/soul_soother_page.dart';
 import 'package:recook/pages/life_service/sudoku_game_page.dart';
 import 'package:recook/pages/life_service/zodiac_page.dart';
 
@@ -110,7 +111,7 @@ class _LifeServiceHomePageState extends State<LifeServiceHomePage>
           img: Assets.icXljt.path,
           title: '每日心灵鸡汤语录',
           page: () {
-            Get.to(()=>HWCalculatorPage());
+            Get.to(()=>SoulSootherPage());
           }),
       Service(
           img: Assets.icSrhy.path,

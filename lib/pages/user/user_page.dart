@@ -143,8 +143,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                 UserLevelTool.currentRoleLevelEnum() == UserRoleLevel.subsidiary
                     ? _renderBenefitCard(
                         leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
-                        title: '品牌补贴',
-                        alertTitle: '品牌补贴',
+                        title: '店铺收益',
+                        alertTitle: '店铺收益',
                         title1: '未到账收益',
                         title3: '已到账收益',
                         content1: _userIncomeDataModel?.eAmount5 ?? 0,
@@ -154,10 +154,10 @@ class _UserPageState extends BaseStoreState<UserPage> {
                       )
                     : _renderBenefitCard(
                         leadingPath: R.ASSETS_USER_PINK_SHARE_WEBP,
-                        title: '分享收益',
-                        alertTitle: '分享收益',
-                        title1: '未到账收益',
-                        title3: '已到账收益',
+                        title: '分享补贴',
+                        alertTitle: '分享补贴',
+                        title1: '累计未到账收益',
+                        title3: '累计已到账收益',
                         content1: _userIncomeDataModel?.eAmount2 ?? 0,
                         content2: _userIncomeDataModel?.eCount2 ?? 0,
                         content3: _userIncomeDataModel?.amount2 ?? 0,
@@ -179,8 +179,8 @@ class _UserPageState extends BaseStoreState<UserPage> {
                         leadingPath: R.ASSETS_USER_PINK_GROUP_WEBP,
                         title: '开店补贴',
                         alertTitle: '开店补贴',
-                        title1: '未到账收益',
-                        title3: '已到账收益',
+                        title1: '累计未到账收益',
+                        title3: '累计已到账收益',
                         content1: _userIncomeDataModel?.eAmount4 ?? 0,
                         content2: _userIncomeDataModel?.eCount4 ?? 0,
                         content3: _userIncomeDataModel?.amount4 ?? 0,
