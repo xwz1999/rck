@@ -82,7 +82,7 @@ class _GoodPriceViewState extends State<GoodPriceView> {
         minCommission = element.commission;
         minOriginPrice = element.originalPrice;
       }else
-        if(element!.discountPrice!<minPrice!){
+        if((element!.discountPrice! - element.commission!)<(minPrice!-minCommission!)){
           minPrice = element.discountPrice;
           minCommission = element.commission;
           minOriginPrice = element.originalPrice;

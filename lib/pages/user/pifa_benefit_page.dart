@@ -85,7 +85,7 @@ class _PifaBenefitPageState extends State<PifaBenefitPage> {
     _title = widget.type;
     if (widget.type == '批发收益') {
       _type = PifaBenefit.piFa;
-    } else if (widget.type == '品牌补贴') {
+    } else if (widget.type == '店铺收益') {
       _type = PifaBenefit.dianPu;
     } else if (widget.type == '分享收益') {
       // isSelfAndGuide = false;

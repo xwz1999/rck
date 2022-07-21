@@ -3,14 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recook/constants/header.dart';
 
 
-class CarPickerBox extends StatelessWidget {
+class PickerBox extends StatelessWidget {
   final VoidCallback? onPressed;
   final String confirmString;
   final String? title;
   final Widget child;
   final double? height;
 
-  const CarPickerBox(
+  const PickerBox(
       {key,
       this.onPressed,
       this.confirmString = '确定',

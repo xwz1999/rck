@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:amap_flutter_location/amap_flutter_location.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +31,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
 
     //初始化AMap  给android和ios
     //初始化日志工具
-    PowerLogger.start(context, debug:AppConfig.debug!);//AppConfig.debug  在正式服数据下进行调试\
+    PowerLogger.start(context, debug:true);//AppConfig.debug!  在正式服数据下进行调试\
 
     WidgetsBinding.instance!.addPostFrameCallback((callback) async {
       await Future.delayed(Duration(milliseconds: 2450));
@@ -52,8 +51,9 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
               UserManager.instance!.kingCoinListModelList =
               await UserFunc.getKingCoinList();
             });
+
             AMapFlutterLocation.setApiKey(
-                '7225bca14fe7493f9f469315a933f99c', 'e8a8057cfedcdcadcf4e8f2c7f8de982');
+                'adf1ae7949103ce6a255ffe6e1f7eb77', '6e719eb22b154c557105a592d568f452');
 
             //初始化
             cameras = await availableCameras();
@@ -73,7 +73,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
             await UserFunc.getKingCoinList();
           });
           AMapFlutterLocation.setApiKey(
-              '7225bca14fe7493f9f469315a933f99c', 'e8a8057cfedcdcadcf4e8f2c7f8de982');
+              'adf1ae7949103ce6a255ffe6e1f7eb77', '6e719eb22b154c557105a592d568f452');
           //初始化
           cameras = await availableCameras();
           //高德地图隐私协议 在用户同意隐私协议后更新
@@ -90,7 +90,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
           await UserFunc.getKingCoinList();
         });
         AMapFlutterLocation.setApiKey(
-            '7225bca14fe7493f9f469315a933f99c', 'e8a8057cfedcdcadcf4e8f2c7f8de982');
+            'adf1ae7949103ce6a255ffe6e1f7eb77', '6e719eb22b154c557105a592d568f452');
         //初始化
         cameras = await availableCameras();
         //高德地图隐私协议 在用户同意隐私协议后更新

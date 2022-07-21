@@ -16,8 +16,9 @@ class _ActionSheetWidget extends StatefulWidget {
   final List<String>? items;
   final List<String>? subTitles;
   final ActionSheetItemClickListener? listener;
+  final MainAxisAlignment mainAxisAlignment;
 
-  _ActionSheetWidget({this.title, this.items, this.subTitles, this.listener})
+  _ActionSheetWidget({this.title, this.items, this.subTitles, this.listener, this.mainAxisAlignment = MainAxisAlignment.center})
       : assert(items != null && items.length > 0);
 
   @override
@@ -115,7 +116,7 @@ class __ActionSheetWidgetState extends State<_ActionSheetWidget> {
             padding: EdgeInsets.symmetric(vertical: rSize(12)),
             width: double.infinity,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: widget.mainAxisAlignment,
               children: <Widget>[
                 Text(
                   item,
@@ -149,7 +150,7 @@ class ActionSheet {
       {String? title,
       List<String>? items,
       List<String>? subTitles,
-      ActionSheetItemClickListener? listener}) {
+      ActionSheetItemClickListener? listener,MainAxisAlignment mainAxisAlignment = MainAxisAlignment.center}) {
     showCustomModalBottomSheet(
         context: context,
         builder: (context) {
@@ -158,6 +159,7 @@ class ActionSheet {
             items: items,
             subTitles: subTitles,
             listener: listener,
+            mainAxisAlignment: mainAxisAlignment,
           );
         });
   }

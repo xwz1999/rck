@@ -5,7 +5,7 @@ import 'package:velocity_x/velocity_x.dart';
 
 import 'calender_pick_body.dart';
 import 'car_month_pick_body.dart';
-import 'car_picker_box.dart';
+import 'picker_box.dart';
 
 class CarDatePicker {
   static Future<DateTime?> pick(
@@ -78,7 +78,7 @@ class __CarDatePickerState extends State<_CarDatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return CarPickerBox(
+    return PickerBox(
       onPressed: () => Get.back(result: _date),
       child: CupertinoDatePicker(
         use24hFormat: widget.use24H,

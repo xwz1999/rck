@@ -408,10 +408,12 @@ class _HomePageState extends BaseStoreState<HomePage>
         _weatherLocation = event;
         LoggerData.addData(_weatherLocation!['city']);
         _getWeather();
+        _amapFlutterLocation!.stopLocation();
+        _amapFlutterLocation!.destroy();
       },
     );
     _amapFlutterLocation!
-        .setLocationOption(AMapLocationOption(onceLocation: true));
+        .setLocationOption(AMapLocationOption(onceLocation: true,desiredAccuracy: DesiredAccuracy.ThreeKilometers,desiredLocationAccuracyAuthorizationMode: AMapLocationAccuracyAuthorizationMode.ReduceAccuracy));
     _amapFlutterLocation!.startLocation();
   }
 

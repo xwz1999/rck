@@ -141,6 +141,7 @@ class _PifaBenefitDetailPageState extends State<PifaBenefitDetailPage> {
         return SizedBox(
             height: 350 + MediaQuery.of(context).padding.bottom,
             child: BottomTimePicker(
+              yearChoose: false,
               timePickerTypes: timePickerTypes,
               cancle: () {
                 Navigator.maybePop(context);

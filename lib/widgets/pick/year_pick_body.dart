@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:recook/constants/header.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import 'car_picker_box.dart';
+import 'picker_box.dart';
 
 class YearPickBody extends StatefulWidget {
   final DateTime initTime;
@@ -58,7 +58,7 @@ class _YearPickBodyState extends State<YearPickBody> {
 
   @override
   Widget build(BuildContext context) {
-    return CarPickerBox(
+    return PickerBox(
       onPressed: () {
         Navigator.pop(context, _pickedTime);
       },

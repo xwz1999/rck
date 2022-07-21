@@ -70,11 +70,11 @@ class _CashWithdrawResultPageState extends BaseStoreState<CashWithdrawResultPage
             children: <Widget>[
               Expanded(
                 flex: 1,
-                child: _cashProgressColumnCellWidget(_withdrawDetailModel!.data!.status == 1? iconSuccess:iconSelect, "提交申请", _withdrawDetailModel!.data!.createdAt),
+                child: _cashProgressColumnCellWidget(_withdrawDetailModel!.data!.status == 1? iconSuccess:iconSelect, _withdrawDetailModel!.data!.status == 1?"提交申请":'提交成功', _withdrawDetailModel!.data!.createdAt),
               ),
               Expanded(
                 flex: 1,
-                child: _cashProgressColumnCellWidget(_withdrawDetailModel!.data!.status == 1? iconNormal:iconSuccess, "提交成功", TextUtils.isEmpty(_withdrawDetailModel!.data!.doneTime)?"":_withdrawDetailModel!.data!.doneTime),
+                child: _cashProgressColumnCellWidget(_withdrawDetailModel!.data!.status == 1? iconNormal:iconSuccess, _withdrawDetailModel!.data!.status == 1?"提交成功":'提现成功', TextUtils.isEmpty(_withdrawDetailModel!.data!.doneTime)?"":_withdrawDetailModel!.data!.doneTime),
               ),
             ],
           ),

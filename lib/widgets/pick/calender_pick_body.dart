@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:recook/constants/header.dart';
-import 'car_picker_box.dart';
+import 'picker_box.dart';
 
 class CalenderPickBody extends StatefulWidget {
   final DateTime initDate;
@@ -24,7 +24,7 @@ class _CalenderPickBodyState extends State<CalenderPickBody> {
 
   @override
   Widget build(BuildContext context) {
-    return CarPickerBox(
+    return PickerBox(
       height: 800.rw,
       child: TableCalendar(
         locale: 'zh',

@@ -6,6 +6,8 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/pages/life_service/constellation_pairing_page.dart';
+import 'package:recook/pages/life_service/figure_calculator_page.dart';
 import 'package:recook/pages/life_service/nba_match_page.dart';
 import 'package:recook/pages/life_service/soul_soother_page.dart';
 import 'package:recook/pages/life_service/sudoku_game_page.dart';
@@ -15,13 +17,16 @@ import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/webView.dart';
 
+import 'Oil_price_inquiry_page.dart';
 import 'birth_flower_page.dart';
 import 'constellation_page.dart';
 import 'football_league_page.dart';
+import 'health/health_calculator_page.dart';
 import 'hot_video_page.dart';
 import 'hw_calculator_page.dart';
 import 'idiom_solitaire_page.dart';
 import 'jokes_collection_page.dart';
+import 'loan_page.dart';
 import 'news_page.dart';
 
 class LifeServiceHomePage extends StatefulWidget {
@@ -78,12 +83,6 @@ class _LifeServiceHomePageState extends State<LifeServiceHomePage>
             Get.to(()=>JokesCollectionPage());
           }),
       Service(
-          img: Assets.icLhl.path,
-          title: '老黄历',
-          page: () {
-            Get.to(()=>HWCalculatorPage());
-          }),
-      Service(
           img: Assets.icSgtz.path,
           title: '标准身高体重计算器',
           page: () {
@@ -135,31 +134,31 @@ class _LifeServiceHomePageState extends State<LifeServiceHomePage>
           img: Assets.icDkgjj.path,
           title: '贷款公积金计算器',
           page: () {
-            Get.to(()=>HWCalculatorPage());
+            Get.to(()=>LoanPage());
           }),
       Service(
           img: Assets.icZjsc.path,
           title: '最佳身材计算器',
           page: () {
-            Get.to(()=>HWCalculatorPage());
+            Get.to(()=>FigureCalculatorPage());
           }),
       Service(
           img: Assets.icJcjk.path,
           title: '基础健康指数计算器',
           page: () {
-            Get.to(()=>HWCalculatorPage());
+            Get.to(()=>HealthCalculatorPage());
           }),
       Service(
           img: Assets.icXzpd.path,
           title: '星座配对',
           page: () {
-            Get.to(()=>HWCalculatorPage());
+            Get.to(()=>ConstellationPairingPage());
           }),
       Service(
           img: Assets.icJryj.path,
           title: '今日国内油价查询',
           page: () {
-            Get.to(()=>HWCalculatorPage());
+            Get.to(()=>OilPriceInquiryPage());
           }),
       Service(
           img: Assets.icSxpd.path,
