@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/life_service/hw_calculator_model.dart';
 import 'package:recook/pages/life_service/hw_calculator_result_page.dart';
+import 'package:recook/pages/life_service/life_func.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -296,19 +297,19 @@ class _HWCalculatorPageState extends State<HWCalculatorPage>
             color: Colors.white,
             fontSize: 14.rsp,
             borderRadius: BorderRadius.all(Radius.circular(21.rw)),
-            onPressed: () {
+            onPressed: ()async{
               if ((height > 100 && height < 300) &&
-                  (weight > 20 && height < 200)) {
-                Get.to(() => HWCalculatorResultPage(
-                      hwCalculatorModel: HwCalculatorModel(
-                          idealWeight: 61.6,
-                          normalWeight: '55.44 ~ 67.76',
-                          level: 2,
-                          levelMsg: '偏胖',
-                          danger: '增加',
-                          bmi: 27.6,
-                          normalBMI: '18.5 ~ 23.9'),
-                    ));
+                  (weight > 20 && weight < 250)) {
+
+                HwCalculatorModel? hwCalculatorModel  = await LifeFunc.getHwCalculatorModel(sexId,typeId,height,weight)??null;
+
+                if(hwCalculatorModel!=null){
+                  Get.to(() => HWCalculatorResultPage(
+                    hwCalculatorModel: hwCalculatorModel,
+                  ));
+                }
+
+
               } else {
                 BotToast.showText(text: '请输入正确的数据');
               }

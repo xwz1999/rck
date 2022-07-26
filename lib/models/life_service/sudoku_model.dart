@@ -1,36 +1,26 @@
 import 'package:recook/pages/life_service/sudoku_start_game_page.dart';
 
 class SudokuModel {
-  late  List<IntModel> puzzle;
-  late List<IntModel> solution;
+  late  List<List<dynamic>> puzzle;
+  late List<List<dynamic>> solution;
 
   SudokuModel({required this.puzzle, required this.solution});
 
   SudokuModel.fromJson(Map<String, dynamic> json) {
     if (json['puzzle'] != null) {
       puzzle = [];
-      json['puzzle'].forEach((v) { puzzle.add(IntModel.fromJson(v)); });
+      json['puzzle'].forEach((v) { puzzle.add(v); });
     }
     if (json['solution'] != null) {
       solution = [];
-      json['solution'].forEach((v) { solution.add(IntModel.fromJson(v)); });
+      json['solution'].forEach((v) { solution.add(v); });
     }
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.puzzle != null) {
-      data['puzzle'] = this.puzzle.map((v) => v.toJson()).toList();
-    }
-    if (this.solution != null) {
-      data['solution'] = this.solution.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
 }
 
 class IntModel {
-  late List<int> puzzle;
+  late List<dynamic> puzzle;
 
   IntModel({required this.puzzle});
 
@@ -61,3 +51,5 @@ class IntDealModel{
     required this.list,
   });
 }
+
+

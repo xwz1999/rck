@@ -25,7 +25,6 @@ class HotVideoPage extends StatefulWidget {
 }
 
 class _HotVideoPageState extends State<HotVideoPage> with TickerProviderStateMixin{
-  List<HotVideoModel> _videoList = [];
 
   TabController? _tabController;
 

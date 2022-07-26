@@ -13,8 +13,9 @@ import 'package:velocity_x/velocity_x.dart';
 ///数独游戏生成器
 class SudokuStartGamePage extends StatefulWidget {
   final String type;
+  final SudokuModel sudokuModel;
 
-  const SudokuStartGamePage({Key? key, required this.type}) : super(key: key);
+  const SudokuStartGamePage({Key? key, required this.type, required this.sudokuModel}) : super(key: key);
 
   @override
   _SudokuStartGamePageState createState() => _SudokuStartGamePageState();
@@ -23,8 +24,8 @@ class SudokuStartGamePage extends StatefulWidget {
 class _SudokuStartGamePageState extends State<SudokuStartGamePage> {
   late SudokuModel sudokuModel;
   late SudokuDealModel sudokuDealModel;
-  List<IntModel> puzzleList = [];
-  List<IntModel> solutionList = [];
+  List<List<dynamic>> puzzleList = [];
+  List<List<dynamic>> solutionList = [];
 
   int chooseX = -1;
   int chooseY = -1;
@@ -37,34 +38,14 @@ class _SudokuStartGamePageState extends State<SudokuStartGamePage> {
   @override
   void initState() {
     super.initState();
-    sudokuModel = SudokuModel(solution: [
-      IntModel(puzzle: [9, 3, 8, 7, 6, 2, 4, 5, 1]),
-      IntModel(puzzle: [1, 5, 6, 3, 8, 4, 9, 7, 2]),
-      IntModel(puzzle: [4, 7, 2, 1, 9, 5, 3, 8, 6]),
-      IntModel(puzzle: [5, 1, 9, 6, 3, 7, 8, 2, 4]),
-      IntModel(puzzle: [3, 8, 7, 2, 4, 1, 5, 6, 9]),
-      IntModel(puzzle: [6, 2, 4, 8, 5, 9, 1, 3, 7]),
-      IntModel(puzzle: [2, 4, 1, 5, 7, 3, 6, 9, 8]),
-      IntModel(puzzle: [8, 9, 5, 4, 2, 6, 7, 1, 3]),
-      IntModel(puzzle: [7, 6, 3, 9, 1, 8, 2, 4, 5]),
-    ], puzzle: [
-      IntModel(puzzle: [0, 3, 8, 7, 6, 2, 0, 5, 1]),
-      IntModel(puzzle: [1, 0, 0, 3, 8, 4, 9, 0, 2]),
-      IntModel(puzzle: [4, 7, 2, 1, 9, 5, 0, 0, 6]),
-      IntModel(puzzle: [0, 1, 0, 0, 0, 0, 8, 0, 0]),
-      IntModel(puzzle: [0, 0, 0, 0, 0, 1, 0, 0, 9]),
-      IntModel(puzzle: [6, 2, 0, 8, 0, 0, 1, 3, 7]),
-      IntModel(puzzle: [2, 4, 1, 0, 7, 3, 6, 9, 0]),
-      IntModel(puzzle: [8, 9, 5, 4, 2, 6, 7, 1, 3]),
-      IntModel(puzzle: [0, 6, 3, 9, 1, 8, 2, 0, 5]),
-    ]);
+    sudokuModel = widget.sudokuModel;
 
-    puzzleList = sudokuModel.puzzle;
+    puzzleList = sudokuModel.puzzle ;
     solutionList = sudokuModel.solution;
     sudokuDealModel = SudokuDealModel(
         puzzle: sudokuModel.puzzle
             .map((e) => IntDealModel(list: [
-                  ...e.puzzle
+                  ...e
                       .map((e) => OneModel(value: e, needCheck: e == 0))
                       .toList()
                 ]))
@@ -76,7 +57,7 @@ class _SudokuStartGamePageState extends State<SudokuStartGamePage> {
     // )).toList(),);
 
     sudokuModel.solution.forEachIndexed((i, element) {
-      element.puzzle.forEachIndexed((j, e) {
+      element.forEachIndexed((j, e) {
         sudokuDealModel.puzzle[i].list[j].key = e;
       });
     });

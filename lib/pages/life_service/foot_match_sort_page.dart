@@ -12,8 +12,11 @@ import 'package:recook/pages/life_service/hw_calculator_result_page.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
+
+import 'life_func.dart';
 
 class FootMatchSortPage extends StatefulWidget {
   final GSRefreshController refreshController;
@@ -29,70 +32,11 @@ class FootMatchSortPage extends StatefulWidget {
 class _FootMatchSortPageState extends State<FootMatchSortPage>
     with SingleTickerProviderStateMixin {
 
-  late FootRankModel footRankModel;
-
+  FootRankModel? footRankModel;
+  bool _onLoad = true;
   @override
   void initState() {
     super.initState();
-    footRankModel = FootRankModel(ranking: [
-
-      FRanking(
-            rankId: '1',
-            team: '马德里',
-            wins: '49',
-            losses: '23',
-            draw: '8',
-            goals: '65',
-            losingGoals: '24',
-            goalDifference: '41',
-            scores: '83'
-          ),
-      FRanking(
-          rankId: '1',
-          team: '马德里',
-          wins: '49',
-          losses: '23',
-          draw: '8',
-          goals: '65',
-          losingGoals: '24',
-          goalDifference: '41',
-          scores: '83'
-      ),
-      FRanking(
-          rankId: '1',
-          team: '马德里',
-          wins: '49',
-          losses: '23',
-          draw: '8',
-          goals: '65',
-          losingGoals: '24',
-          goalDifference: '41',
-          scores: '83'
-      ),
-      FRanking(
-          rankId: '1',
-          team: '马德里',
-          wins: '49',
-          losses: '23',
-          draw: '8',
-          goals: '65',
-          losingGoals: '24',
-          goalDifference: '41',
-          scores: '83'
-      ),
-      FRanking(
-          rankId: '1',
-          team: '马德里',
-          wins: '49',
-          losses: '23',
-          draw: '8',
-          goals: '65',
-          losingGoals: '24',
-          goalDifference: '41',
-          scores: '83'
-      ),
-
-    ]);
   }
 
   @override
@@ -112,10 +56,21 @@ class _FootMatchSortPageState extends State<FootMatchSortPage>
       color: AppColor.themeColor,
       onRefresh: () async {
         print(widget.type);
+        footRankModel = await LifeFunc.getFootRankModel(widget.type)??null;
         widget.refreshController.refreshCompleted();
-        //setState(() {});
+        _onLoad = false;
+        setState(() {});
       },
-      body: ListView(
+      body: _onLoad?SizedBox(): footRankModel==null
+          ? NoDataView(
+        title: "没有数据哦～",
+        height: 600,
+      ): footRankModel!.ranking==null
+          ? NoDataView(
+        title: "没有数据哦～",
+        height: 600,
+      )
+          :ListView(
         shrinkWrap: true,
         padding: EdgeInsets.only(
           top: 5.rw,
@@ -159,7 +114,7 @@ class _FootMatchSortPageState extends State<FootMatchSortPage>
             color: Colors.white,
             child: Column(
               children: [
-                ...footRankModel.ranking!
+                ...footRankModel!.ranking!
                     .map((e) => Padding(
                   padding:  EdgeInsets.symmetric(vertical: 10.rw),
                   child: Row(

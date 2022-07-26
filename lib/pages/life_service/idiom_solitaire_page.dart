@@ -2,6 +2,8 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/models/life_service/IdiomModel.dart';
+import 'package:recook/pages/life_service/life_func.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
@@ -21,9 +23,10 @@ class _IdiomSolitairePageState extends State<IdiomSolitairePage>
   FocusNode _contentFocusNode = FocusNode();
 
   String content = '';///输入的内容
-  List idiom = [
-    '意义深长','意想不到','意得志满','意气风发','意广才疏','意二三四'
-  ];
+  IdiomModel? idiom;
+  // List idiom = [
+  //   '意义深长','意想不到','意得志满','意气风发','意广才疏','意二三四'
+  // ];
   bool _show = false;///显示查询结果
 
   @override
@@ -95,8 +98,9 @@ class _IdiomSolitairePageState extends State<IdiomSolitairePage>
               },
               focusNode: _contentFocusNode,
               onChanged: (text) {
-                if (text.isNotEmpty) content = text;
-                else _show = false;
+                content = text;
+                if(content.isEmpty)
+                  _show = false;
                 setState(() {
 
                 });
@@ -136,9 +140,13 @@ class _IdiomSolitairePageState extends State<IdiomSolitairePage>
             color: Colors.white,
             fontSize: 14.rsp,
             borderRadius: BorderRadius.all(Radius.circular(21.rw)),
-            onPressed: () {
+            onPressed: () async{
               if (content.isNotEmpty) {
-                _show = true;
+                _show = false;
+                idiom = await LifeFunc.getIdiomModel(content)??null;
+                if(idiom!=null){
+                  _show = true;
+                }
                 setState(() {
 
                 });
@@ -158,10 +166,10 @@ class _IdiomSolitairePageState extends State<IdiomSolitairePage>
           _show?ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
-            itemCount: idiom.length,
+            itemCount: idiom!.data!.length,
             padding: EdgeInsets.only(top: 0.rw,bottom: 20.rw),
             itemBuilder: (BuildContext context, int index) =>
-                _itemWidget(idiom[index]),
+                _itemWidget( idiom!.data![index]),
           ):SizedBox(),
 
         ],

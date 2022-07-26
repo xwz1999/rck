@@ -1,10 +1,10 @@
 class HwCalculatorModel {
-  double? idealWeight;
+  num? idealWeight;
   String? normalWeight;
   int? level;
   String? levelMsg;
   String? danger;
-  double? bmi;
+  num? bmi;
   String? normalBMI;
 
   HwCalculatorModel(

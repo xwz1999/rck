@@ -213,7 +213,7 @@ class _HotPersonDetailPageState extends State<HotPersonDetailPage> {
 
                 Container(
                     width: 200.rw,
-                    height: 50.rw,
+
                     child: Text(model.title??'',style: TextStyle(
                       fontSize: 16.rsp,color: Color(0xFF333333),
                     ),maxLines: 4,overflow: TextOverflow.ellipsis,)),

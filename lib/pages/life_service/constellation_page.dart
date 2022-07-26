@@ -13,6 +13,8 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/pick/car_date_picker.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
+import 'life_func.dart';
+
 ///星座查询
 class ConstellationPage extends StatefulWidget {
   ConstellationPage({
@@ -33,42 +35,17 @@ class _ConstellationPageState extends State<ConstellationPage>
   ///显示查询结果
   DateTime? currentTime = DateTime.now();
   TextEditingController _textEditingController = TextEditingController();
-  late ConstellationModel constellationModel;
-
+  ConstellationModel? constellationModel;
+  FocusNode _contentFocusNode = FocusNode();
   @override
   void initState() {
     super.initState();
-    constellationModel = ConstellationModel(
-      name: '金牛座',
-      range: '4.20-5.20',
-      zxtd: '稳健固执',
-      sssx: '土',
-      zggw: '第二宫',
-      yysx: '阴性',
-      zdtz: '财富',
-      zgxx: '金星',
-      xyys: '粉色',
-      jssw: '翡翠、玉',
-      xyhm: '6',
-      kyjs: '木',
-      bx: '稳定、务实、享受',
-      yd: '沉稳踏实，重视特质，观察力敏锐',
-      qd: '顽固，太过实际，依赖心强',
-      jbtz:
-          '太阳位于金牛座的人给人的感觉稳重、务实，追求稳定与和谐，害怕变动，属于享受派。喜欢安定，最怕没有安全感。但有时显得固执己见，对钱财看得很重。',
-      jttz:
-          '牡羊座是黄道十二宫的第一个星座，这让你有着孩童般的纯真、坦率，同样，也有着与生俱来的创造力，表现出强烈的领导欲望及企图心。太阳落在牡羊座的人是个急先锋，以自我为中心，想到就出发，不爱犹豫；非常享受快节奏的生活步调，冲在最前面才最有优越感。牡羊座的主宰行星是火星，在火星的主导之下，羊族人活力充沛，不畏艰险；力争前茅，惟有竞争才能让你感觉到存在的价值；非常乐观，不畏挫折，在人生的舞台上积极追求成功。太阳落在金牛座的人追求舒适的生活环境，向往高品质的生活，乐于追求金钱，对美好的物质享受充满欲望。稳定和安全感是你衡量事物的唯一标准，是你执着的追求。做任何事若感觉仍有不确定因素存在，不会轻易地涉入，但一旦决心已定，将全力以赴，九头牛也拉你不动。另外，你对于和身体相关的事物都很感兴趣，包括性爱、饮食、运动等，欣赏一切美丽的事物。敏锐的洞察力也让你很能了解他人的心思，是重感情的人。',
-      xsfg:
-          '你思虑周全，行事谨慎，拟定计划是你的强项。在行动前就会考虑到前因后果，分析利弊，而后才会择机小心翼翼地投入，要你打没把握的仗比登天还难。',
-      gxmd:
-          '你的赚钱欲望强烈，也易赚到钱，但也是一个十足的拜金主义者，易给人铁公鸡一毛不拔的印象，别把钱财看得太重；你行事过于谨慎，易错过良机，应加强行动力，思虑太多易将动力消磨殆尽；有时显得倔强，发起牛脾气来还挺吓人，稍加控制情绪，你的人际关系会更加圆融，提升贵人助力。',
-      zj: '金牛座很保守，喜欢稳定，一旦有什么变动就会觉得心里不踏实，性格也比较慢热，但你是理财高手，对于投资理财都有着独特的见解。金牛男的性格有点儿自我，而金牛女就喜欢投资自己，想要过得更好。',
-    );
   }
 
   @override
   void dispose() {
     super.dispose();
+    _contentFocusNode.dispose();
   }
 
   @override
@@ -111,7 +88,7 @@ class _ConstellationPageState extends State<ConstellationPage>
                     fontWeight: FontWeight.bold),
                 children: [
                   TextSpan(
-                    text: '输入日期或星座名称(如：2022-01-01或金牛座)',
+                    text: '  输入日期或星座名称(如：2022-01-01或金牛座)',
                     style: TextStyle(
                       fontSize: 12.rsp,
                       color: Color(0xFF999999),
@@ -124,6 +101,18 @@ class _ConstellationPageState extends State<ConstellationPage>
             height: 50.rw,
             child: TextField(
               autofocus: true,
+              onChanged: (text) {
+                content = text;
+                if(content.isEmpty)
+                  _show = false;
+                setState(() {
+
+                });
+              },
+              onSubmitted: (_submitted) async {
+                _contentFocusNode.unfocus();
+              },
+              focusNode: _contentFocusNode,
               keyboardType: TextInputType.text,
               controller: _textEditingController,
               style: TextStyle(
@@ -133,6 +122,7 @@ class _ConstellationPageState extends State<ConstellationPage>
                 filled: true,
                 fillColor: Color(0xFFF9F9F9),
                 hintText: '请输入',
+
                 hintStyle: TextStyle(
                     color: Color(0xFFD8D8D8),
                     fontSize: 14.rsp,
@@ -160,17 +150,21 @@ class _ConstellationPageState extends State<ConstellationPage>
             color: Colors.white,
             fontSize: 14.rsp,
             borderRadius: BorderRadius.all(Radius.circular(21.rw)),
-            onPressed: () {
+            onPressed: ()async{
+              _show = false;
               if (content.isNotEmpty) {
-                _show = true;
+
+                constellationModel = await LifeFunc.getConstellationModel(content);
+                if(constellationModel!=null)
+                  _show = true;
                 setState(() {});
               } else {
-                BotToast.showText(text: '请先输入日期');
+                BotToast.showText(text: '请先输入生日或星座');
               }
             },
           ),
           100.hb,
-          _show
+          !_show
               ? SizedBox()
               : Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -201,14 +195,14 @@ class _ConstellationPageState extends State<ConstellationPage>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(constellationModel.name ?? '',
+                                      Text(constellationModel!.name ?? '',
                                           style: TextStyle(
                                             color: AppColor.themeColor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 24.rsp,
                                           )),
                                       20.hb,
-                                      Text(constellationModel.range ?? '',
+                                      Text(constellationModel!.range ?? '',
                                           style: TextStyle(
                                             color: Color(0xFF333333),
                                             fontWeight: FontWeight.bold,
@@ -219,7 +213,7 @@ class _ConstellationPageState extends State<ConstellationPage>
                                 ),
                               ),
                               Image.asset(
-                                _getIcon(constellationModel.name ?? ''),
+                                _getIcon(constellationModel!.name ?? ''),
                                 width: 48.rw,
                                 height: 48.rw,
                               ),
@@ -252,7 +246,7 @@ class _ConstellationPageState extends State<ConstellationPage>
                                             fontSize: 14.rsp,
                                           )),
                                       16.hb,
-                                      Text(constellationModel.zxtd ?? '',
+                                      Text(constellationModel!.zxtd ?? '',
                                           style: TextStyle(
                                               color: Color(0xFF333333),
                                               fontSize: 14.rsp,
@@ -279,7 +273,7 @@ class _ConstellationPageState extends State<ConstellationPage>
                                             fontSize: 14.rsp,
                                           )),
                                       16.hb,
-                                      Text(constellationModel.jssw ?? '',
+                                      Text(constellationModel!.jssw ?? '',
                                           style: TextStyle(
                                               color: Color(0xFF333333),
                                               fontSize: 14.rsp,
@@ -301,7 +295,7 @@ class _ConstellationPageState extends State<ConstellationPage>
                                             fontSize: 14.rsp,
                                           )),
                                       16.hb,
-                                      Text(constellationModel.zggw ?? '',
+                                      Text(constellationModel!.zggw ?? '',
                                           style: TextStyle(
                                               color: Color(0xFF333333),
                                               fontSize: 14.rsp,
@@ -338,7 +332,7 @@ class _ConstellationPageState extends State<ConstellationPage>
                                             fontSize: 14.rsp,
                                           )),
                                       16.hb,
-                                      Text(constellationModel.xyys ?? '',
+                                      Text(constellationModel!.xyys ?? '',
                                           style: TextStyle(
                                               color: Color(0xFF333333),
                                               fontSize: 14.rsp,
@@ -365,7 +359,7 @@ class _ConstellationPageState extends State<ConstellationPage>
                                             fontSize: 14.rsp,
                                           )),
                                       16.hb,
-                                      Text(constellationModel.zdtz ?? '',
+                                      Text(constellationModel!.zdtz ?? '',
                                           style: TextStyle(
                                               color: Color(0xFF333333),
                                               fontSize: 14.rsp,
@@ -387,7 +381,7 @@ class _ConstellationPageState extends State<ConstellationPage>
                                             fontSize: 14.rsp,
                                           )),
                                       16.hb,
-                                      Text(constellationModel.zgxx ?? '',
+                                      Text(constellationModel!.zgxx ?? '',
                                           style: TextStyle(
                                               color: Color(0xFF333333),
                                               fontSize: 14.rsp,
@@ -424,7 +418,7 @@ class _ConstellationPageState extends State<ConstellationPage>
                                             fontSize: 14.rsp,
                                           )),
                                       16.hb,
-                                      Text(constellationModel.yysx ?? '',
+                                      Text(constellationModel!.yysx ?? '',
                                           style: TextStyle(
                                               color: Color(0xFF333333),
                                               fontSize: 14.rsp,
@@ -451,7 +445,7 @@ class _ConstellationPageState extends State<ConstellationPage>
                                             fontSize: 14.rsp,
                                           )),
                                       16.hb,
-                                      Text(constellationModel.kyjs ?? '',
+                                      Text(constellationModel!.kyjs ?? '',
                                           style: TextStyle(
                                               color: Color(0xFF333333),
                                               fontSize: 14.rsp,
@@ -481,7 +475,7 @@ class _ConstellationPageState extends State<ConstellationPage>
                                       Padding(
                                         padding: EdgeInsets.only(top: 4.rw),
                                         child: Text(
-                                            constellationModel.xyhm ?? '',
+                                            constellationModel!.xyhm ?? '',
                                             style: TextStyle(
                                                 color: Color(0xFF333333),
                                                 fontSize: 14.rsp,
@@ -504,7 +498,7 @@ class _ConstellationPageState extends State<ConstellationPage>
                                             fontSize: 14.rsp,
                                           )),
                                       16.hb,
-                                      Text(constellationModel.kyjs ?? '',
+                                      Text(constellationModel!.kyjs ?? '',
                                           style: TextStyle(
                                               color: Color(0xFF333333),
                                               fontSize: 14.rsp,
@@ -532,7 +526,7 @@ class _ConstellationPageState extends State<ConstellationPage>
                                     )),
                                 16.hb,
                                 Text(
-                                  constellationModel.bx ?? '',
+                                  constellationModel!.bx ?? '',
                                   style: TextStyle(
                                     color: Color(0xFF333333),
                                     fontWeight: FontWeight.bold,
@@ -560,7 +554,7 @@ class _ConstellationPageState extends State<ConstellationPage>
                                     )),
                                 16.hb,
                                 Text(
-                                  constellationModel.yd ?? '',
+                                  constellationModel!.yd ?? '',
                                   style: TextStyle(
                                     color: Color(0xFF333333),
                                     fontWeight: FontWeight.bold,
@@ -588,7 +582,7 @@ class _ConstellationPageState extends State<ConstellationPage>
                                     )),
                                 16.hb,
                                 Text(
-                                  constellationModel.qd ?? '',
+                                  constellationModel!.qd ?? '',
                                   style: TextStyle(
                                     color: Color(0xFF333333),
                                     fontWeight: FontWeight.bold,
@@ -613,8 +607,8 @@ class _ConstellationPageState extends State<ConstellationPage>
                                       context,
                                       _dialog(
                                         '基本特质',
-                                        constellationModel.name ?? '',
-                                        constellationModel.jbtz ?? '',
+                                        constellationModel!.name ?? '',
+                                        constellationModel!.jbtz ?? '',
                                       ));
                                 },
                                 child: Container(
@@ -665,8 +659,8 @@ class _ConstellationPageState extends State<ConstellationPage>
                                       context,
                                       _dialog(
                                         '具体特质',
-                                        constellationModel.name ?? '',
-                                        constellationModel.jttz ?? '',
+                                        constellationModel!.name ?? '',
+                                        constellationModel!.jttz ?? '',
                                       ));
                                 },
                                 child: Container(
@@ -717,8 +711,8 @@ class _ConstellationPageState extends State<ConstellationPage>
                                       context,
                                       _dialog(
                                         '行事风格',
-                                        constellationModel.name ?? '',
-                                        constellationModel.xsfg ?? '',
+                                        constellationModel!.name ?? '',
+                                        constellationModel!.xsfg ?? '',
                                       ));
                                 },
                                 child: Container(
@@ -769,8 +763,8 @@ class _ConstellationPageState extends State<ConstellationPage>
                                       context,
                                       _dialog(
                                         '个性缺点',
-                                        constellationModel.name ?? '',
-                                        constellationModel.gxmd ?? '',
+                                        constellationModel!.name ?? '',
+                                        constellationModel!.gxmd ?? '',
                                       ));
                                 },
                                 child: Container(
@@ -821,8 +815,8 @@ class _ConstellationPageState extends State<ConstellationPage>
                                       context,
                                       _dialog(
                                         '总体评价',
-                                        constellationModel.name ?? '',
-                                        constellationModel.zj ?? '',
+                                        constellationModel!.name ?? '',
+                                        constellationModel!.zj ?? '',
                                       ));
                                 },
                                 child: Container(

@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/models/life_service/sudoku_model.dart';
+import 'package:recook/pages/life_service/life_func.dart';
 import 'package:recook/pages/life_service/sudoku_start_game_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/recook_back_button.dart';
@@ -60,9 +62,16 @@ class _SudokuGamePageState extends State<SudokuGamePage> {
         ),
         24.hb,
         GestureDetector(
-          onTap: (){
+          onTap: ()async{
             type = 'easy';
-            Get.to(()=>SudokuStartGamePage(type: '简单',));
+            SudokuModel? sudokuModel;
+
+            sudokuModel = await LifeFunc.getSudokuModel(type);
+
+            if(sudokuModel!=null){
+              Get.to(()=>SudokuStartGamePage(type: '简单', sudokuModel: sudokuModel!,));
+            }
+
           },
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 24.rw),
@@ -109,9 +118,15 @@ class _SudokuGamePageState extends State<SudokuGamePage> {
         ),
         64.hb,
         GestureDetector(
-          onTap: (){
+          onTap: ()async{
             type = 'normal';
-            Get.to(()=>SudokuStartGamePage(type: '普通',));
+            SudokuModel? sudokuModel;
+
+            sudokuModel = await LifeFunc.getSudokuModel(type);
+
+            if(sudokuModel!=null){
+              Get.to(()=>SudokuStartGamePage(type: '普通', sudokuModel: sudokuModel!,));
+            }
           },
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 24.rw),
@@ -158,9 +173,15 @@ class _SudokuGamePageState extends State<SudokuGamePage> {
         ),
         64.hb,
         GestureDetector(
-          onTap: (){
+          onTap: ()async {
             type = 'hard';
-            Get.to(()=>SudokuStartGamePage(type: '困难',));
+            SudokuModel? sudokuModel;
+
+            sudokuModel = await LifeFunc.getSudokuModel(type);
+
+            if(sudokuModel!=null){
+              Get.to(()=>SudokuStartGamePage(type: '困难', sudokuModel: sudokuModel!,));
+            }
           },
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 24.rw),
@@ -207,9 +228,15 @@ class _SudokuGamePageState extends State<SudokuGamePage> {
         ),
         64.hb,
         GestureDetector(
-            onTap: (){
+            onTap: ()async{
               type = 'veryhard';
-              Get.to(()=>SudokuStartGamePage(type: '非常困难',));
+              SudokuModel? sudokuModel;
+
+              sudokuModel = await LifeFunc.getSudokuModel(type);
+
+              if(sudokuModel!=null){
+                Get.to(()=>SudokuStartGamePage(type: '非常困难', sudokuModel: sudokuModel!,));
+              }
           },
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: 24.rw),

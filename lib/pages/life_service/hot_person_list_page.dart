@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/life_service/hot_person_model.dart';
+import 'package:recook/pages/life_service/life_func.dart';
 
 import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
 import 'hot_person_detail_page.dart';
@@ -25,40 +27,11 @@ class _HotPersonListPageState extends State<HotPersonListPage>
       GSRefreshController(initialRefresh: true);
 
   List<HotPersonModel> hotPersonList = [];
-
+  int page = 0;
+  bool _onLoad = true;
   @override
   void initState() {
     super.initState();
-    hotPersonList = [
-      HotPersonModel(
-          nickname: '冬冬和37',
-          followerCount: 13971653,
-          effectValue: 6661462,
-          avatar:
-              'https:\/\/p6.douyinpic.com\/aweme\/100x100\/aweme-avatar\/tos-cn-avt-0015_557462ba1632b1bd0185ae348cc315fb.jpeg?from=2956013662',
-          videoList: [
-            VideoList(
-                title: '当我又用钢丝球逗我姥@37 #vlog日常',
-                itemCover:
-                    'https:\/\/p6-sign.douyinpic.com\/tos-cn-p-0015\/199d6896022349e4a98f5a0edcbe6426_1656330257~c5_300x400.jpeg?x-expires=1657677600&x-signature=QQ9XmYyck700ocW%2FkKGMeJRPkFg%3D&from=2563711402_large,',
-                shareUrl:
-                    'https:\/\/www.iesdouyin.com\/share\/video\/7113884163974941985\/?region=CN&mid=7113884244014893861&u_code=0&titleType=title&did=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1')
-          ]),
-      HotPersonModel(
-          nickname: '冬冬和37',
-          followerCount: 13971653,
-          effectValue: 6661462,
-          avatar:
-          'https:\/\/p6.douyinpic.com\/aweme\/100x100\/aweme-avatar\/tos-cn-avt-0015_557462ba1632b1bd0185ae348cc315fb.jpeg?from=2956013662',
-          videoList: [
-            VideoList(
-                title: '当我又用钢丝球逗我姥@37 #vlog日常',
-                itemCover:
-                'https:\/\/p6-sign.douyinpic.com\/tos-cn-p-0015\/199d6896022349e4a98f5a0edcbe6426_1656330257~c5_300x400.jpeg?x-expires=1657677600&x-signature=QQ9XmYyck700ocW%2FkKGMeJRPkFg%3D&from=2563711402_large,',
-                shareUrl:
-                'https:\/\/www.iesdouyin.com\/share\/video\/7113884163974941985\/?region=CN&mid=7113884244014893861&u_code=0&titleType=title&did=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&iid=MS4wLjABAAAANwkJuWIRFOzg5uCpDRpMj4OX-QryoDgn-yYlXQnRwQQ&with_sec_did=1')
-          ]),
-    ];
   }
 
   @override
@@ -73,10 +46,27 @@ class _HotPersonListPageState extends State<HotPersonListPage>
       controller: _refreshController,
       color: AppColor.themeColor,
       onRefresh: () async {
+        page = 1;
+        hotPersonList = await LifeFunc.getHotPersonList(widget.index,page)??[];
         _refreshController.refreshCompleted();
-        //setState(() {});
+        _onLoad = false;
+        setState(() {});
       },
-      body: ListView.builder(
+      onLoadMore: () async {
+        page+=10;
+        await LifeFunc.getHotPersonList(widget.index,page).then((models) {
+          setState(() {
+            hotPersonList.addAll(models ?? []);
+          });
+          _refreshController.loadComplete();
+        });
+      },
+      body:  _onLoad?SizedBox(): hotPersonList.isEmpty
+          ? NoDataView(
+        title: "没有数据哦～",
+        height: 600,
+      )
+          :  ListView.builder(
         itemCount: hotPersonList.length,
         padding: EdgeInsets.only(
           left: 12.rw,

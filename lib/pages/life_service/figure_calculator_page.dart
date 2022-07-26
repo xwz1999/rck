@@ -12,6 +12,7 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/pick/list_pick_body.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
+import 'life_func.dart';
 import 'loan_result_page.dart';
 
 class FigureCalculatorPage extends StatefulWidget {
@@ -27,7 +28,7 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
     with TickerProviderStateMixin {
   FocusNode _contentFocusNode = FocusNode();
   FocusNode _weightFocusNode = FocusNode();
-  late FigureModel figureModel;
+  FigureModel? figureModel;
 
   String _height = '0';
   String type = '厘米(CM)';
@@ -37,36 +38,6 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
   @override
   void initState() {
     super.initState();
-    figureModel = FigureModel(
-      stw: Stw(
-          cm: "23.7 厘米",
-          yc: "9.33 英寸"
-      ),
-      xw: Stw(
-          cm: "23.7 厘米",
-          yc: "9.33 英寸"
-      ),
-      xtw: Stw(
-          cm: "23.7 厘米",
-          yc: "9.33 英寸"
-      ),
-      xyw: Stw(
-          cm: "23.7 厘米",
-          yc: "9.33 英寸"
-      ),
-      syw: Stw(
-          cm: "23.7 厘米",
-          yc: "9.33 英寸"
-      ),
-      dtw: Stw(
-          cm: "23.7 厘米",
-          yc: "9.33 英寸"
-      ),
-      tw: Stw(
-          cm: "23.7 厘米",
-          yc: "9.33 英寸"
-      ),
-    );
   }
 
   @override
@@ -137,10 +108,19 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
                 _weightFocusNode.unfocus();
               },
               focusNode: _weightFocusNode,
+              // onChanged: (text) {
+              //   if (text.isNotEmpty) _height = text;
+              //   else
+              //     _height = '0';
+              // },
               onChanged: (text) {
-                if (text.isNotEmpty) _height = text;
-                else
-                  _height = '0';
+                _height = text;
+                if(_height.isEmpty)
+
+                  _show = false;
+                setState(() {
+
+                });
               },
               style: TextStyle(
                   color: Colors.black, textBaseline: TextBaseline.ideographic),
@@ -218,10 +198,14 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
             color: Colors.white,
             fontSize: 14.rsp,
             borderRadius: BorderRadius.all(Radius.circular(21.rw)),
-            onPressed: () {
+            onPressed: () async{
               if ((double.parse(_height)< 300&&double.parse(_height)> 0 ) &&
                   (type!='')) {
-                _show = true;
+                _show = false;
+                figureModel = await LifeFunc.getFigureModel(num.parse(_height))??null;
+                if(figureModel!=null){
+                  _show = true;
+                }
                 setState(() {
 
                 });
@@ -231,7 +215,7 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
             },
           ),
           100.hb,
-          Row(
+          _show?Row(
             children: [
               Text('查询结果',
                   style: TextStyle(
@@ -239,7 +223,7 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
                     fontSize: 12.rsp,
                   )),
             ],
-          ),
+          ):SizedBox(),
          _show? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -271,7 +255,7 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
                                 10.hb,
                                 Row(
                                   children: [
-                                    Text((isCM? figureModel.stw!.cm!.split('厘米')[0]:figureModel.stw!.yc!.split('英寸')[0]),
+                                    Text((isCM? figureModel!.stw!.cm!.split('厘米')[0]:figureModel!.stw!.yc!.split('英寸')[0]),
                                         style: TextStyle(
                                           color: Color(0xFFDB2D2D),
                                           fontWeight: FontWeight.bold,
@@ -309,7 +293,7 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
                                 10.hb,
                                 Row(
                                   children: [
-                                    Text((isCM? figureModel.tw!.cm!.split('厘米')[0]:figureModel.tw!.yc!.split('英寸')[0]),
+                                    Text((isCM? figureModel!.tw!.cm!.split('厘米')[0]:figureModel!.tw!.yc!.split('英寸')[0]),
                                         style: TextStyle(
                                           color: Color(0xFFDB2D2D),
                                           fontWeight: FontWeight.bold,
@@ -352,7 +336,7 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
                                 10.hb,
                                 Row(
                                   children: [
-                                    Text((isCM? figureModel.xw!.cm!.split('厘米')[0]:figureModel.xw!.yc!.split('英寸')[0]),
+                                    Text((isCM? figureModel!.xw!.cm!.split('厘米')[0]:figureModel!.xw!.yc!.split('英寸')[0]),
                                         style: TextStyle(
                                           color: Color(0xFFDB2D2D),
                                           fontWeight: FontWeight.bold,
@@ -390,7 +374,7 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
                                 10.hb,
                                 Row(
                                   children: [
-                                    Text((isCM? figureModel.syw!.cm!.split('厘米')[0]:figureModel.syw!.yc!.split('英寸')[0]),
+                                    Text((isCM? figureModel!.syw!.cm!.split('厘米')[0]:figureModel!.syw!.yc!.split('英寸')[0]),
                                         style: TextStyle(
                                           color: Color(0xFFDB2D2D),
                                           fontWeight: FontWeight.bold,
@@ -428,7 +412,7 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
                                 10.hb,
                                 Row(
                                   children: [
-                                    Text((isCM? figureModel.xyw!.cm!.split('厘米')[0]:figureModel.xyw!.yc!.split('英寸')[0]),
+                                    Text((isCM? figureModel!.xyw!.cm!.split('厘米')[0]:figureModel!.xyw!.yc!.split('英寸')[0]),
                                         style: TextStyle(
                                           color: Color(0xFFDB2D2D),
                                           fontWeight: FontWeight.bold,
@@ -471,7 +455,7 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
                                 10.hb,
                                 Row(
                                   children: [
-                                    Text((isCM? figureModel.dtw!.cm!.split('厘米')[0]:figureModel.dtw!.yc!.split('英寸')[0]),
+                                    Text((isCM? figureModel!.dtw!.cm!.split('厘米')[0]:figureModel!.dtw!.yc!.split('英寸')[0]),
                                         style: TextStyle(
                                           color: Color(0xFFDB2D2D),
                                           fontWeight: FontWeight.bold,
@@ -509,7 +493,7 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
                                 10.hb,
                                 Row(
                                   children: [
-                                    Text((isCM? figureModel.xtw!.cm!.split('厘米')[0]:figureModel.xtw!.yc!.split('英寸')[0]),
+                                    Text((isCM? figureModel!.xtw!.cm!.split('厘米')[0]:figureModel!.xtw!.yc!.split('英寸')[0]),
                                         style: TextStyle(
                                           color: Color(0xFFDB2D2D),
                                           fontWeight: FontWeight.bold,

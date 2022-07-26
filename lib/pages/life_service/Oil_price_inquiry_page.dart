@@ -83,7 +83,7 @@ class _OilPriceInquiryPageState extends State<OilPriceInquiryPage>
           white: false,
         ),
         elevation: 0,
-        title: Text('星座配对',
+        title: Text('国内油价查询',
             style: TextStyle(
               color: Color(0xFF333333),
               fontWeight: FontWeight.bold,

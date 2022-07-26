@@ -289,14 +289,15 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
   ///[ header] 外加头
   ///[ option] 配置
   static Future<Response?> netFetchNormal(
-      url, params, Map<String, String>? header, Options? option,
+      url, params, Map<String, dynamic>? header, Options? option,
       {noTip = false}) async {
-    Map<String, String> headers = new HashMap();
+    Map<String, dynamic> headers = new HashMap();
     if (header != null) {
       headers.addAll(header);
     }
 
     if (option != null) {
+      option = new Options(method: "post");
       option.headers = headers;
     } else {
       option = new Options(method: "get");
@@ -360,6 +361,7 @@ NDL7HaaKOvh1rUrnKh0q0yU6OJuVOw6c9Av6zph9hmfyAiovSEvyEIK6o6w34az/
         key: rsaDecryptKey, decryptString: response["body"]);
     return decryptStr;
   }
+
 }
 
 class ResultData {
@@ -373,3 +375,15 @@ class ResultData {
 
   ResultData(this.data, this.result, this.code, this.msg, {this.headers});
 }
+
+
+class JuHeResultData {
+  var result;
+
+  String reason;
+
+  int error_code;
+
+  JuHeResultData( this.result, this.error_code,this.reason );
+}
+

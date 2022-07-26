@@ -10,11 +10,15 @@ import 'package:recook/pages/life_service/hw_calculator_result_page.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
+import 'life_func.dart';
+
 class JokesCollectionPage extends StatefulWidget {
+  final  List<JokeModel> jokes;
   JokesCollectionPage({
-    Key? key,
+    Key? key, required this.jokes,
   }) : super(key: key);
 
   @override
@@ -26,17 +30,11 @@ class _JokesCollectionPageState extends State<JokesCollectionPage>
 
   List<JokeModel> _jokes = [];
   int index = 0;
-
   @override
   void initState() {
     super.initState();
-    _jokes = [
-      JokeModel(content: '有一天晚上我俩一起吃西瓜，老大把西瓜籽很整洁的吐在了一张纸上，\r\n过了几天，我从教室回但宿舍看到老大在磕瓜子，\r\n我就问他：老大，你什么时候买的瓜子？\r\n老大说：刚晒好，说着抓了一把要递给我……'),
-      JokeModel(content: '我女朋友气跑了＂\r\n＂怎么回事？严重吗？你怎么着她了？＂\r\n＂不严重，我只是很久没用了'),
-      JokeModel(content: '还说神马来一场说走就走的旅行，\r\n工作后就连一场说走就走的下班都不行。'),
-      JokeModel(content: '高速路上堵车，路边葡萄地里有一哥们竟然在偷葡萄，心想太没素质了吧！\r\n不管了我也去，刚溜进葡萄地，那哥们竟问我干嘛，\r\n我撇了一眼反问道你干嘛呢？\r\n那哥们答道摘葡萄呢！\r\n我答道：我也摘葡萄呢！\r\n哥们郁闷了说我摘我家的你呢？\r\n我顿时脸红，哥你家葡萄咋卖呢？'),
-      JokeModel(content: '和老婆在街边散步，我手上捏着一张已揉成一团的传单，\r\n走了好一会终于看到个垃圾桶，我赶紧跑过去想扔掉，\r\n没想到老婆从后边一把拉住我说：老公，那个肯定吃不得了，别捡。\r\n我一愣，发现垃圾桶顶盖上放着半个西瓜。'),
-    ];
+    _jokes = widget.jokes;
+
   }
 
   @override
@@ -65,7 +63,12 @@ class _JokesCollectionPageState extends State<JokesCollectionPage>
               fontSize: 17.rsp,
             )),
       ),
-      body: _bodyWidget(),
+      body: _jokes.isEmpty
+          ? NoDataView(
+        title: "没有数据哦～",
+        height: 600,
+      )
+          : _bodyWidget(),
     );
   }
 
@@ -143,15 +146,20 @@ class _JokesCollectionPageState extends State<JokesCollectionPage>
             Expanded(
               child: CustomImageButton(
                 height: 42.rw,
-                title: "下一个",
+                title: index+1>=_jokes.length?'获取更多': "下一个",
                 backgroundColor: AppColor.themeColor,
                 color: Colors.white,
                 fontSize: 14.rsp,
                 borderRadius: BorderRadius.all(Radius.circular(21.rw)),
-                onPressed: () {
+                onPressed: () async{
                   if(_jokes.isNotEmpty){
                     if(index+1>=_jokes.length){
-                      BotToast.showText(text: '没有更多了');
+                      //BotToast.showText(text: '没有更多了');
+
+                       await LifeFunc.getJokeList().then((value) => _jokes.addAll(value!));
+                       setState(() {
+
+                       });
                     }else{
                       index++;
                       setState(() {

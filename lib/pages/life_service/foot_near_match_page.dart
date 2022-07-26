@@ -7,9 +7,11 @@ import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/models/life_service/hw_calculator_model.dart';
 import 'package:recook/models/life_service/nba_model.dart';
 import 'package:recook/pages/life_service/hw_calculator_result_page.dart';
+import 'package:recook/pages/life_service/life_func.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
@@ -28,108 +30,13 @@ class _FootNearMatchPageState extends State<FootNearMatchPage>
     with SingleTickerProviderStateMixin {
 
 
-  late NbaModel nbaModel;
+  NbaModel? nbaModel;
+  bool _onLoad = true;
+
 
   @override
   void initState() {
     super.initState();
-    nbaModel = NbaModel(
-        matchs: [
-          Matchs(
-              date: '2021-05-13',
-              week: '周四',
-              list: [
-                Match(
-                  timeStart: '07:00',
-                  status: '1',
-                  statusText: '未开赛',
-                  team1: '亚特兰大老鹰',
-                  team2: '华盛顿奇才',
-                  team1Score: '0',
-                  team2Score: '0',
-                ),
-                Match(
-                  timeStart: '07:00',
-                  status: '2',
-                  statusText: '进行中',
-                  team1: '亚特兰大老鹰',
-                  team2: '华盛顿奇才',
-                  team1Score: '120',
-                  team2Score: '116',
-                ),
-              ]
-          ),
-          Matchs(
-              date: '2021-06-13',
-              week: '周六',
-              list: [
-                Match(
-                  timeStart: '07:00',
-                  status: '3',
-                  statusText: '完赛',
-                  team1: '亚特兰大老鹰',
-                  team2: '华盛顿奇才',
-                  team1Score: '120',
-                  team2Score: '116',
-                ),
-                Match(
-                  timeStart: '07:00',
-                  status: '4',
-                  statusText: '延期',
-                  team1: '亚特兰大老鹰',
-                  team2: '华盛顿奇才',
-                  team1Score: '120',
-                  team2Score: '116',
-                ),
-              ]
-          ),
-          Matchs(
-              date: '2021-06-20',
-              week: '周日',
-              list: [
-                Match(
-                  timeStart: '07:00',
-                  status: '3',
-                  statusText: '完赛',
-                  team1: '亚特兰大老鹰',
-                  team2: '华盛顿奇才',
-                  team1Score: '120',
-                  team2Score: '116',
-                ),
-              ]
-          ),
-          Matchs(
-              date: '2021-06-20',
-              week: '周日',
-              list: [
-                Match(
-                  timeStart: '07:00',
-                  status: '3',
-                  statusText: '完赛',
-                  team1: '亚特兰大老鹰',
-                  team2: '华盛顿奇才',
-                  team1Score: '120',
-                  team2Score: '116',
-                ),
-              ]
-          ),
-          Matchs(
-              date: '2021-06-20',
-              week: '周日',
-              list: [
-                Match(
-                  timeStart: '07:00',
-                  status: '3',
-                  statusText: '完赛',
-                  team1: '亚特兰大老鹰',
-                  team2: '华盛顿奇才',
-                  team1Score: '120',
-                  team2Score: '116',
-                ),
-              ]
-          )
-        ]
-    );
   }
 
   @override
@@ -148,18 +55,28 @@ class _FootNearMatchPageState extends State<FootNearMatchPage>
       controller: widget.refreshController,
       color: AppColor.themeColor,
       onRefresh: () async {
+        nbaModel = await LifeFunc.getFootModel(widget.type)??null;
         widget.refreshController.refreshCompleted();
-        print(widget.type);
-        //setState(() {});
+        _onLoad = false;
+        setState(() {});
       },
-      body: ListView.builder(
+      body:_onLoad?SizedBox(): nbaModel==null
+          ? NoDataView(
+        title: "没有数据哦～",
+        height: 600,
+      ): nbaModel!.matchs==null
+          ? NoDataView(
+        title: "没有数据哦～",
+        height: 600,
+      )
+          : ListView.builder(
         shrinkWrap: true,
-        itemCount: nbaModel.matchs!.length,
+        itemCount: nbaModel!.matchs!.length,
         padding: EdgeInsets.only(
           top: 5.rw,
         ),
         itemBuilder: (BuildContext context, int index) =>
-            _itemWidget(nbaModel.matchs![index]),
+            _itemWidget(nbaModel!.matchs![index]),
       ),
     );
   }
@@ -228,12 +145,15 @@ class _FootNearMatchPageState extends State<FootNearMatchPage>
                                   children: [
                                     Text(
                                       e.team1Score ?? '',
-                                      style: TextStyle(
+                                      style: e.status==3?TextStyle(
                                           color: int.parse(
-                                                      e.team1Score ?? '0') >
-                                                  int.parse(e.team2Score ?? '0')
+                                              e.team2Score ?? '0') >
+                                              int.parse(e.team1Score ?? '0')
                                               ? Color(0xFF333333)
                                               : Color(0xFF999999),
+                                          fontSize: 22.rsp,
+                                          fontWeight: FontWeight.bold): TextStyle(
+                                          color:  Color(0xFF999999),
                                           fontSize: 22.rsp,
                                           fontWeight: FontWeight.bold),
                                     ),
@@ -246,12 +166,15 @@ class _FootNearMatchPageState extends State<FootNearMatchPage>
                                     60.wb,
                                     Text(
                                       e.team2Score ?? '',
-                                      style: TextStyle(
+                                      style: e.status==3?TextStyle(
                                           color: int.parse(
                                               e.team2Score ?? '0') >
                                               int.parse(e.team1Score ?? '0')
                                               ? Color(0xFF333333)
                                               : Color(0xFF999999),
+                                          fontSize: 22.rsp,
+                                          fontWeight: FontWeight.bold): TextStyle(
+                                          color:  Color(0xFF999999),
                                           fontSize: 22.rsp,
                                           fontWeight: FontWeight.bold),
                                     ),

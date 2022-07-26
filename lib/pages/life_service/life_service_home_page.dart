@@ -6,12 +6,15 @@ import 'package:recook/constants/api.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/models/life_service/joke_model.dart';
 import 'package:recook/pages/life_service/constellation_pairing_page.dart';
 import 'package:recook/pages/life_service/figure_calculator_page.dart';
+import 'package:recook/pages/life_service/life_func.dart';
 import 'package:recook/pages/life_service/nba_match_page.dart';
 import 'package:recook/pages/life_service/soul_soother_page.dart';
 import 'package:recook/pages/life_service/sudoku_game_page.dart';
 import 'package:recook/pages/life_service/zodiac_page.dart';
+import 'package:recook/pages/life_service/zodiac_pairing_page.dart';
 
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/recook_back_button.dart';
@@ -79,8 +82,10 @@ class _LifeServiceHomePageState extends State<LifeServiceHomePage>
       Service(
           img: Assets.icXhdq.path,
           title: '笑话大全',
-          page: () {
-            Get.to(()=>JokesCollectionPage());
+          page: () async{
+            List<JokeModel> _jokes = (await LifeFunc.getJokeList( ))??[];
+            if(_jokes.isNotEmpty)
+            Get.to(()=>JokesCollectionPage(jokes: _jokes,));
           }),
       Service(
           img: Assets.icSgtz.path,
@@ -109,8 +114,10 @@ class _LifeServiceHomePageState extends State<LifeServiceHomePage>
       Service(
           img: Assets.icXljt.path,
           title: '每日心灵鸡汤语录',
-          page: () {
-            Get.to(()=>SoulSootherPage());
+          page: () async{
+           String text = (await LifeFunc.getSoul())??'';
+           if(text.isNotEmpty)
+            Get.to(()=>SoulSootherPage(text: text,));
           }),
       Service(
           img: Assets.icSrhy.path,
@@ -164,7 +171,7 @@ class _LifeServiceHomePageState extends State<LifeServiceHomePage>
           img: Assets.icSxpd.path,
           title: '生肖配对',
           page: () {
-            Get.to(()=>HWCalculatorPage());
+            Get.to(()=>ZodiacPairingPage());
           }),
     ];
   }

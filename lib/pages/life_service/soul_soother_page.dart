@@ -13,8 +13,9 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
 class SoulSootherPage extends StatefulWidget {
+  final String text;
   SoulSootherPage({
-    Key? key,
+    Key? key, required this.text,
   }) : super(key: key);
 
   @override
@@ -30,7 +31,7 @@ class _SoulSootherPageState extends State<SoulSootherPage>
   @override
   void initState() {
     super.initState();
-    soul = '无论有多困难，都坚强地抬头挺胸，人生是一场醒悟，不要昨天，不要明天，只要今天活在当下，放眼未来。人生是一种态度，心静自然天地宽。不一样的你我，不一样的心态，不一样的人生。';
+    soul = widget.text;
   }
 
   @override

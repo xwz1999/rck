@@ -277,12 +277,18 @@ class HWCalculatorResultPage extends StatelessWidget {
                     fontSize: 14.rsp,
                   )),
               Spacer(),
-              Text('${hwCalculatorModel.danger}',
-                  style: TextStyle(
-                    color: Color(0xFF333333),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16.rsp,
-                  )),
+              Container(
+                width: 150.rw,
+
+                child: Text('${hwCalculatorModel.danger}',
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Color(0xFF333333),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16.rsp,
+                    )),
+              ),
               24.wb,
             ],
           ),

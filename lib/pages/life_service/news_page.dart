@@ -5,9 +5,11 @@ import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/models/life_service/news_detail_model.dart';
 import 'package:recook/models/life_service/news_model.dart';
+import 'package:recook/pages/life_service/life_func.dart';
 import 'package:recook/pages/life_service/sudoku_start_game_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
+import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
@@ -22,79 +24,16 @@ class NewsPage extends StatefulWidget {
 }
 
 class _NewsPageState extends State<NewsPage> {
-  List<NewsModel> _newsList = [];
+  List<NewsModel?> _newsList = [];
 
   GSRefreshController _refreshController =
       GSRefreshController(initialRefresh: true);
+  int page = 1;
+  bool _onLoad = true;
 
   @override
   void initState() {
     super.initState();
-    _newsList = [
-      NewsModel(
-        title: '“新时代女性的自我关爱”主题沙龙暨双山街道福泰社区妇儿活动家园启动仪式举行',
-        date: '2021-03-08 13:47:00',
-        authorName: '鲁网',
-        thumbnailPicS:
-            'https://dfzximg02.dftoutiao.com//news//20220627//20220627141409_018fce642b59c40e57e73fd0b87ba247_1_mwpm_03201609.jpeg',
-      ),
-      NewsModel(
-        title: '“新时代女性的自我关爱”主题沙龙暨双山街道福泰社区妇儿活动家园启动仪式举行',
-        date: '2021-03-08 13:47:00',
-        authorName: '鲁网',
-        thumbnailPicS:
-            'https://dfzximg02.dftoutiao.com//news//20220627//20220627141409_018fce642b59c40e57e73fd0b87ba247_1_mwpm_03201609.jpeg',
-      ),
-      NewsModel(
-        title: '“新时代女性的自我关爱”主题沙龙暨双山街道福泰社区妇儿活动家园启动仪式举行',
-        date: '2021-03-08 13:47:00',
-        authorName: '鲁网',
-        thumbnailPicS:
-            'https://dfzximg02.dftoutiao.com//news//20220627//20220627141409_018fce642b59c40e57e73fd0b87ba247_1_mwpm_03201609.jpeg',
-      ),
-      NewsModel(
-        title:
-            '“新时代女性的自我关爱”主题沙龙暨双山街道福泰社区妇儿活动家园启动仪式举行主题沙龙暨双山街道福泰社区妇儿活动家园启动仪式举行主题沙龙暨双山街道福泰社区妇儿活动家园启动仪式举行',
-        date: '2021-03-08 13:47:00',
-        authorName: '鲁网',
-        thumbnailPicS:
-            'https://dfzximg02.dftoutiao.com//news//20220627//20220627141409_018fce642b59c40e57e73fd0b87ba247_1_mwpm_03201609.jpeg',
-      ),
-      NewsModel(
-        title: '“新时代女性的自我关爱”主题沙龙暨双山街道福泰社区妇儿活动家园启动仪式举行',
-        date: '2021-03-08 13:47:00',
-        authorName: '鲁网',
-        thumbnailPicS: '',
-      ),
-      NewsModel(
-        title:
-        '“新时代女性的自我关爱”主题沙龙暨双山街道福泰社区妇儿活动家园启动仪式举行主题沙龙暨双山街道福泰社区妇儿活动家园启动仪式举行主题沙龙暨双山街道福泰社区妇儿活动家园启动仪式举行',
-        date: '2021-03-08 13:47:00',
-        authorName: '鲁网',
-        thumbnailPicS:
-        'https://dfzximg02.dftoutiao.com//news//20220627//20220627141409_018fce642b59c40e57e73fd0b87ba247_1_mwpm_03201609.jpeg',
-      ),
-      NewsModel(
-        title: '“新时代女性的自我关爱”主题沙龙暨双山街道福泰社区妇儿活动家园启动仪式举行',
-        date: '2021-03-08 13:47:00',
-        authorName: '鲁网',
-        thumbnailPicS: '',
-      ),
-      NewsModel(
-        title:
-        '“新时代女性的自我关爱”主题沙龙暨双山街道福泰社区妇儿活动家园启动仪式举行主题沙龙暨双山街道福泰社区妇儿活动家园启动仪式举行主题沙龙暨双山街道福泰社区妇儿活动家园启动仪式举行',
-        date: '2021-03-08 13:47:00',
-        authorName: '鲁网',
-        thumbnailPicS:
-        'https://dfzximg02.dftoutiao.com//news//20220627//20220627141409_018fce642b59c40e57e73fd0b87ba247_1_mwpm_03201609.jpeg',
-      ),
-      NewsModel(
-        title: '“新时代女性的自我关爱”主题沙龙暨双山街道福泰社区妇儿活动家园启动仪式举行',
-        date: '2021-03-08 13:47:00',
-        authorName: '鲁网',
-        thumbnailPicS: '',
-      ),
-    ];
   }
 
   @override
@@ -154,19 +93,36 @@ class _NewsPageState extends State<NewsPage> {
                 controller: _refreshController,
                 color: Colors.white,
                 onRefresh: () async {
+                  page = 1;
+                  _newsList = await LifeFunc.getNewsList(page)??[];
                   _refreshController.refreshCompleted();
-                  //setState(() {});
+                  _onLoad = false;
+                  setState(() {});
                 },
-                body: ListView.builder(
-                  itemCount: _newsList.length,
-                  padding: EdgeInsets.only(
-                    left: 12.rw,
-                    right: 12.rw,
-                    top: 0.rw,
-                  ),
-                  itemBuilder: (BuildContext context, int index) =>
-                      _itemWidget(_newsList[index]),
-                ),
+                onLoadMore: () async {
+                  page++;
+                  await LifeFunc.getNewsList(page).then((models) {
+                    setState(() {
+                      _newsList.addAll(models ?? []);
+                    });
+                    _refreshController.loadComplete();
+                  });
+                },
+                body: _onLoad?SizedBox(): _newsList.isEmpty
+                    ? NoDataView(
+                        title: "没有数据哦～",
+                        height: 600,
+                      )
+                    : ListView.builder(
+                        itemCount: _newsList.length,
+                        padding: EdgeInsets.only(
+                          left: 12.rw,
+                          right: 12.rw,
+                          top: 0.rw,
+                        ),
+                        itemBuilder: (BuildContext context, int index) =>
+                            _itemWidget(_newsList[index]!),
+                      ),
               ),
             ),
           ],
@@ -177,8 +133,13 @@ class _NewsPageState extends State<NewsPage> {
 
   _itemWidget(NewsModel model) {
     return GestureDetector(
-      onTap: (){
-        Get.to(()=>NewsDetailPage(newsDetailModel: NewsDetailModel(),));
+      onTap: () async{
+
+        NewsDetailModel? newsDetailModel = await LifeFunc.getNewsDetailModel(model.uniquekey??'');
+        if(newsDetailModel!=null)
+        Get.to(() => NewsDetailPage(
+              newsDetailModel: newsDetailModel,
+            ));
       },
       child: Container(
         width: double.infinity,
@@ -199,15 +160,16 @@ class _NewsPageState extends State<NewsPage> {
                       color: Color(0xFF333333)),
                 )),
                 24.wb,
-                model.thumbnailPicS!=null&&model.thumbnailPicS!.isNotEmpty? Container(
-                    width: 88.rw,
-                    height: 66.rw,
-                    child:CustomCacheImage(
-                            borderRadius: BorderRadius.circular(4.rw),
-                            imageUrl: model.thumbnailPicS ?? '',
-                            fit: BoxFit.fill,
-                          )
-                      ):SizedBox()
+                model.thumbnailPicS != null && model.thumbnailPicS!.isNotEmpty
+                    ? Container(
+                        width: 88.rw,
+                        height: 66.rw,
+                        child: CustomCacheImage(
+                          borderRadius: BorderRadius.circular(4.rw),
+                          imageUrl: model.thumbnailPicS ?? '',
+                          fit: BoxFit.fill,
+                        ))
+                    : SizedBox()
               ],
             ),
             8.hb,

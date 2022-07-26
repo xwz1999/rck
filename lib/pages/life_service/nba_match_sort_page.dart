@@ -8,9 +8,11 @@ import 'package:recook/models/life_service/hw_calculator_model.dart';
 import 'package:recook/models/life_service/nba_model.dart';
 import 'package:recook/models/life_service/nba_rank_model.dart';
 import 'package:recook/pages/life_service/hw_calculator_result_page.dart';
+import 'package:recook/pages/life_service/life_func.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 
@@ -28,86 +30,12 @@ class _NBAMatchSortPageState extends State<NBAMatchSortPage>
   GSRefreshController _refreshController =
       GSRefreshController(initialRefresh: true);
 
-  late NBARankModel nbaRankModel;
+  NBARankModel? nbaRankModel;
+  bool _onLoad = true;
 
   @override
   void initState() {
     super.initState();
-    nbaRankModel = NBARankModel(ranking: [
-      Ranking(
-        name: '东部排名',
-        list: [
-          Rank(
-            rankId: '1',
-            team: '费城76人',
-            wins: '49',
-            losses: '23',
-            winsRate: '68%',
-            avgScore: '113.6',
-            avgLoseScore: '108.1'
-          ),
-          Rank(
-              rankId: '2',
-              team: '费城76人',
-              wins: '49',
-              losses: '23',
-              winsRate: '68%',
-              avgScore: '113.6',
-              avgLoseScore: '108.1'
-          ),
-          Rank(
-              rankId: '3',
-              team: '费城76人',
-              wins: '49',
-              losses: '23',
-              winsRate: '68%',
-              avgScore: '113.6',
-              avgLoseScore: '108.1'
-          ),
-          Rank(
-              rankId: '4',
-              team: '费城76人',
-              wins: '49',
-              losses: '23',
-              winsRate: '68%',
-              avgScore: '113.6',
-              avgLoseScore: '108.1'
-          ),
-          Rank(
-              rankId: '5',
-              team: '费城76人',
-              wins: '49',
-              losses: '23',
-              winsRate: '68%',
-              avgScore: '113.6',
-              avgLoseScore: '108.1'
-          ),
-        ]
-      ),
-      Ranking(
-          name: '西部排名',
-          list: [
-            Rank(
-                rankId: '1',
-                team: '费城76人',
-                wins: '49',
-                losses: '23',
-                winsRate: '68%',
-                avgScore: '113.6',
-                avgLoseScore: '108.1'
-            ),
-            Rank(
-                rankId: '2',
-                team: '费城76人',
-                wins: '49',
-                losses: '23',
-                winsRate: '68%',
-                avgScore: '113.6',
-                avgLoseScore: '108.1'
-            ),
-          ]
-      ),
-    ]);
   }
 
   @override
@@ -127,17 +55,24 @@ class _NBAMatchSortPageState extends State<NBAMatchSortPage>
       controller: _refreshController,
       color: AppColor.themeColor,
       onRefresh: () async {
+        nbaRankModel = await LifeFunc.getNBARankModel()??null;
         _refreshController.refreshCompleted();
-        //setState(() {});
+        _onLoad = false;
+        setState(() {});
       },
-      body: ListView.builder(
+      body:_onLoad?SizedBox(): (nbaRankModel==null||nbaRankModel!.ranking==null)
+          ? NoDataView(
+        title: "没有数据哦～",
+        height: 600,
+      )
+          : ListView.builder(
         shrinkWrap: true,
-        itemCount: nbaRankModel.ranking!.length,
+        itemCount: nbaRankModel!.ranking!.length,
         padding: EdgeInsets.only(
           top: 5.rw,
         ),
         itemBuilder: (BuildContext context, int index) =>
-            _itemWidget(nbaRankModel.ranking![index]),
+            _itemWidget(nbaRankModel!.ranking![index]),
       ),
     );
   }
