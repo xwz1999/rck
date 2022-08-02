@@ -143,11 +143,14 @@ class _NewsPageState extends State<NewsPage> {
       },
       child: Container(
         width: double.infinity,
+        color: Colors.transparent,
         height: 115.rw,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Expanded(
                     child: Text(
@@ -172,26 +175,25 @@ class _NewsPageState extends State<NewsPage> {
                     : SizedBox()
               ],
             ),
-            8.hb,
+
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
+
               children: [
-                Text(model.authorName ?? '',
+                Text(((model.authorName??'').split('，')[0]),
                     style: TextStyle(
                       color: Color(0xFF999999),
                       fontSize: 12.rsp,
                     )),
                 16.wb,
-                Padding(
-                  padding: EdgeInsets.only(top: 3.rw),
-                  child: Text(model.date ?? '',
-                      style: TextStyle(
-                        color: Color(0xFF999999),
-                        fontSize: 12.rsp,
-                      )),
-                ),
+                Text(model.date ?? '',
+                    style: TextStyle(
+                      color: Color(0xFF999999),
+                      fontSize: 12.rsp,
+                    )),
               ],
-            )
+            ),
+            20.hb,
           ],
         ),
       ),

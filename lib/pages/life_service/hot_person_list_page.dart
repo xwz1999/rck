@@ -99,9 +99,12 @@ class _HotPersonListPageState extends State<HotPersonListPage>
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(model.nickname??'',style: TextStyle(
-                  fontSize: 16.rsp,color: Color(0xFF333333),fontWeight: FontWeight.bold
-                )),
+                Container(
+                  width: 150.rw,
+                  child: Text(model.nickname??'',style: TextStyle(
+                    fontSize: 16.rsp,color: Color(0xFF333333),fontWeight: FontWeight.bold,
+                  )),
+                ),
                 Text('粉丝数：${_getNumWithW(model.followerCount??0)}',style: TextStyle(
                   fontSize: 12.rsp,color: Color(0xFF999999),
                 )),

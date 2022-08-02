@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/models/life_service/FigureModel.dart';
+import 'package:recook/models/life_service/figure_model.dart';
 import 'package:recook/models/life_service/hw_calculator_model.dart';
 import 'package:recook/models/life_service/loan_model.dart';
 import 'package:recook/pages/life_service/hw_calculator_result_page.dart';
@@ -31,7 +31,7 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
   FigureModel? figureModel;
 
   String _height = '0';
-  String type = '厘米(CM)';
+  String type = '请选择';
   bool get isCM => type =='厘米(CM)';
   bool _show = false;
 
@@ -102,7 +102,6 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
           Container(
             height: 50.rw,
             child: TextField(
-              autofocus: true,
               keyboardType: TextInputType.number,
               onSubmitted: (_submitted) async {
                 _weightFocusNode.unfocus();
@@ -157,7 +156,7 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
             onTap: () async{
               type =  (await ListPickBody.listPicker([
                 '厘米(CM)','英寸(IN)'
-              ], '计算单位'))??'';
+              ], '计算单位'))??'请选择';
               setState(() {
 
               });
@@ -176,7 +175,7 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
                     type,
                     style: TextStyle(
                         fontSize: 14.rsp,
-                        color: Color(0xFF333333),
+                        color: type=='请选择'?Color(0xFFD8D8D8): Color(0xFF333333),
                         fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
@@ -199,8 +198,9 @@ class _FigureCalculatorPageState extends State<FigureCalculatorPage>
             fontSize: 14.rsp,
             borderRadius: BorderRadius.all(Radius.circular(21.rw)),
             onPressed: () async{
+              FocusManager.instance.primaryFocus!.unfocus();
               if ((double.parse(_height)< 300&&double.parse(_height)> 0 ) &&
-                  (type!='')) {
+                  (type!='请选择')) {
                 _show = false;
                 figureModel = await LifeFunc.getFigureModel(num.parse(_height))??null;
                 if(figureModel!=null){

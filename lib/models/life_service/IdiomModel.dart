@@ -1,13 +1,13 @@
 class IdiomModel {
   String? lastWord;
-  List<String>? data;
+  List<dynamic>? data;
   int? totalCount;
 
   IdiomModel({this.lastWord, this.data, this.totalCount});
 
   IdiomModel.fromJson(Map<String, dynamic> json) {
     lastWord = json['last_word'];
-    data = json['data'].cast<String>();
+    data = json['data'];
     totalCount = json['total_count'];
   }
 

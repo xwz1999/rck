@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
-import 'package:recook/models/life_service/FigureModel.dart';
+import 'package:recook/models/life_service/figure_model.dart';
 import 'package:recook/models/life_service/constellation_pairing_model.dart';
 import 'package:recook/models/life_service/hw_calculator_model.dart';
 import 'package:recook/models/life_service/loan_model.dart';
@@ -14,6 +14,7 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/pick/list_pick_body.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
+import 'life_func.dart';
 import 'loan_result_page.dart';
 
 class ConstellationPairingPage extends StatefulWidget {
@@ -31,22 +32,11 @@ class _ConstellationPairingPageState extends State<ConstellationPairingPage>
   String constellationM = '请选择';
   String constellationW = '请选择';
   bool _show = false;
-  late ConstellationPairingModel constellationPairingModel;
+  ConstellationPairingModel? constellationPairingModel;
 
   @override
   void initState() {
     super.initState();
-    constellationPairingModel = ConstellationPairingModel(
-        men: "白羊",
-        women: "金牛",
-        zhishu: "70",/*配对指数*/
-        bizhong: "54:46",/*配对比重*/
-        xiangyue: "4",/*两情相悦指数*/
-        tcdj: "3",/*天长地久指数*/
-        jieguo: "小吵小闹的一对 ",
-        lianai: "白羊座性急，金牛座慢半拍，这两个星座在一起就像龟兔赛跑，牛儿永远跟在羊儿身后。你们在一起更多的互补作用，金牛座总是无怨无悔地为性急的白羊座收拾善后，默默地付出。有时你们也会像一对童心未泯的孩子，童心很重，在一定程度，牛儿还蛮依赖羊儿。",
-        zhuyi: "白羊座和金牛座在一起，其实也是一对孩子气蛮重的组合，他们都有着童心未泯的个性。牛儿虽然很能容忍、不妒忌，但占有欲强，羊儿个性豪迈，喜欢交际，牛儿若爱上羊儿，可以在一定程度上给予对方更大的自由和空间。同时牛儿也不必时时为羊儿善后，不妨放开心胸促使不要学习平稳冷静，带着羊儿向前，在生活上学习取长补短。"
-    );
   }
 
   @override
@@ -100,7 +90,7 @@ class _ConstellationPairingPageState extends State<ConstellationPairingPage>
             onTap: () async{
               constellationM =  (await ListPickBody.listPicker([
                 '白羊','金牛','双子','巨蟹','狮子','处女','天秤','天蝎','射手','摩羯','水瓶','双鱼'
-              ], '男方星座'))??'';
+              ], '男方星座'))??'请选择';
               setState(() {
 
               });
@@ -119,7 +109,7 @@ class _ConstellationPairingPageState extends State<ConstellationPairingPage>
                     constellationM,
                     style: TextStyle(
                         fontSize: 14.rsp,
-                        color: Color(0xFF333333),
+                        color: constellationM=='请选择'?  Color(0xFFD8D8D8):Color(0xFF333333),
                         fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
@@ -146,7 +136,7 @@ class _ConstellationPairingPageState extends State<ConstellationPairingPage>
             onTap: () async{
               constellationW =  (await ListPickBody.listPicker([
                 '白羊','金牛','双子','巨蟹','狮子','处女','天秤','天蝎','射手','摩羯','水瓶','双鱼'
-              ], '女方星座'))??'';
+              ], '女方星座'))??'请选择';
               setState(() {
 
               });
@@ -165,7 +155,7 @@ class _ConstellationPairingPageState extends State<ConstellationPairingPage>
                     constellationW,
                     style: TextStyle(
                         fontSize: 14.rsp,
-                        color: Color(0xFF333333),
+                        color: constellationW=='请选择'?  Color(0xFFD8D8D8):Color(0xFF333333),
                         fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
@@ -187,12 +177,14 @@ class _ConstellationPairingPageState extends State<ConstellationPairingPage>
             color: Colors.white,
             fontSize: 14.rsp,
             borderRadius: BorderRadius.all(Radius.circular(21.rw)),
-            onPressed: () {
+            onPressed: ()async {
+              _show = false;
               if (constellationW!='请选择'&&constellationM!='请选择') {
-                _show = true;
-                setState(() {
+                constellationPairingModel = await LifeFunc.getConstellationPairingModel(constellationM,constellationW);
+                if(constellationPairingModel!=null)
+                  _show = true;
 
-                });
+                if (mounted) setState(() {});
               } else {
                 BotToast.showText(text: '请输入正确的数据');
               }
@@ -237,7 +229,7 @@ class _ConstellationPairingPageState extends State<ConstellationPairingPage>
                                       fontSize: 12.rsp,
                                     )),
                                 10.hb,
-                                Text(constellationPairingModel.zhishu??"",
+                                Text(constellationPairingModel!.zhishu??"",
                                     style: TextStyle(
                                       color: Color(0xFFDB2D2D),
                                       fontWeight: FontWeight.bold,
@@ -254,13 +246,13 @@ class _ConstellationPairingPageState extends State<ConstellationPairingPage>
                             child: Row(
                               children: [
                                 Image.asset(
-                                  _getIcon(constellationPairingModel.men??''),
+                                  _getIcon(constellationPairingModel!.men??''),
                                   width: 48.rw,
                                   height: 48.rw,
                                 ),
                                 24.wb,
                                 Image.asset(
-                                  _getIcon(constellationPairingModel.women ?? ''),
+                                  _getIcon(constellationPairingModel!.women ?? ''),
                                   width: 48.rw,
                                   height: 48.rw,
                                 ),
@@ -292,7 +284,7 @@ class _ConstellationPairingPageState extends State<ConstellationPairingPage>
                                       fontSize: 12.rsp,
                                     )),
                                 10.hb,
-                                Text(constellationPairingModel.bizhong??'',
+                                Text(constellationPairingModel!.bizhong??'',
                                     style: TextStyle(
                                       color: Color(0xFF333333),
                                       fontWeight: FontWeight.bold,
@@ -320,7 +312,7 @@ class _ConstellationPairingPageState extends State<ConstellationPairingPage>
                                       fontSize: 12.rsp,
                                     )),
                                 10.hb,
-                                Text(constellationPairingModel.xiangyue??'',
+                                Text(constellationPairingModel!.xiangyue??'',
                                     style: TextStyle(
                                       color: Color(0xFF333333),
                                       fontWeight: FontWeight.bold,
@@ -353,7 +345,7 @@ class _ConstellationPairingPageState extends State<ConstellationPairingPage>
                                       fontSize: 12.rsp,
                                     )),
                                 10.hb,
-                                Text(constellationPairingModel.tcdj??'',
+                                Text(constellationPairingModel!.tcdj??'',
                                     style: TextStyle(
                                       color: Color(0xFF333333),
                                       fontWeight: FontWeight.bold,
@@ -381,7 +373,7 @@ class _ConstellationPairingPageState extends State<ConstellationPairingPage>
                                       fontSize: 12.rsp,
                                     )),
                                 10.hb,
-                                Text(constellationPairingModel.jieguo??'',
+                                Text(constellationPairingModel!.jieguo??'',
                                     style: TextStyle(
                                       color: Color(0xFF333333),
                                       fontWeight: FontWeight.bold,
@@ -408,8 +400,8 @@ class _ConstellationPairingPageState extends State<ConstellationPairingPage>
                                   context,
                                   _dialog(
                                     '恋爱建议',
-                                    (constellationPairingModel.men ?? '')+'座与'+(constellationPairingModel.women ?? '')+'座',
-                                    constellationPairingModel.lianai ?? '',
+                                    (constellationPairingModel!.men ?? '')+'座与'+(constellationPairingModel!.women ?? '')+'座',
+                                    constellationPairingModel!.lianai ?? '',
                                   ));
                             },
                             child: Container(
@@ -456,8 +448,8 @@ class _ConstellationPairingPageState extends State<ConstellationPairingPage>
                                   context,
                                   _dialog(
                                     '注意事项',
-                                    (constellationPairingModel.men ?? '')+'座与'+(constellationPairingModel.women ?? '')+'座',
-                                    constellationPairingModel.zhuyi ?? '',
+                                    (constellationPairingModel!.men ?? '')+'座与'+(constellationPairingModel!.women ?? '')+'座',
+                                    constellationPairingModel!.zhuyi ?? '',
                                   ));
                             },
                             child: Container(

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
-import 'package:recook/models/life_service/FigureModel.dart';
+import 'package:recook/models/life_service/figure_model.dart';
 import 'package:recook/models/life_service/constellation_pairing_model.dart';
 import 'package:recook/models/life_service/hw_calculator_model.dart';
 import 'package:recook/models/life_service/loan_model.dart';
@@ -15,6 +15,7 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/pick/list_pick_body.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
+import 'life_func.dart';
 import 'loan_result_page.dart';
 
 class ZodiacPairingPage extends StatefulWidget {
@@ -32,16 +33,12 @@ class _ZodiacPairingPageState extends State<ZodiacPairingPage>
   String zodiacPairingM = '请选择';
   String zodiacPairingW = '请选择';
   bool _show = false;
-  late ZodiacPairingModel zodiacPairingModel;
+  ZodiacPairingModel? zodiacPairingModel;
 
   @override
   void initState() {
     super.initState();
-    zodiacPairingModel = ZodiacPairingModel(
-        men: '猪',
-        women: '羊',
-        data: '不会很好，你喜欢他的财富，而他未必肯付出太多。'
-    );
+
   }
 
   @override
@@ -94,8 +91,8 @@ class _ZodiacPairingPageState extends State<ZodiacPairingPage>
           GestureDetector(
             onTap: () async{
               zodiacPairingM =  (await ListPickBody.listPicker([
-                '鼠','羊','虎','兔','龙','蛇','马','羊','猴','鸡','狗','猪'
-              ], '男方生肖'))??'';
+                '鼠','牛','羊','虎','兔','龙','蛇','马','羊','猴','鸡','狗','猪'
+              ], '男方生肖'))??'请选择';
               setState(() {
 
               });
@@ -114,7 +111,7 @@ class _ZodiacPairingPageState extends State<ZodiacPairingPage>
                     zodiacPairingM,
                     style: TextStyle(
                         fontSize: 14.rsp,
-                        color: Color(0xFF333333),
+                        color: zodiacPairingM=='请选择'? Color(0xFFD8D8D8):Color(0xFF333333),
                         fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
@@ -140,8 +137,8 @@ class _ZodiacPairingPageState extends State<ZodiacPairingPage>
           GestureDetector(
             onTap: () async{
               zodiacPairingW =  (await ListPickBody.listPicker([
-                '鼠','羊','虎','兔','龙','蛇','马','羊','猴','鸡','狗','猪'
-              ], '女方生肖'))??'';
+                '鼠','牛','羊','虎','兔','龙','蛇','马','羊','猴','鸡','狗','猪'
+              ], '女方生肖'))??'请选择';
               setState(() {
 
               });
@@ -160,7 +157,7 @@ class _ZodiacPairingPageState extends State<ZodiacPairingPage>
                     zodiacPairingW,
                     style: TextStyle(
                         fontSize: 14.rsp,
-                        color: Color(0xFF333333),
+                        color:zodiacPairingW=='请选择'? Color(0xFFD8D8D8):Color(0xFF333333),
                         fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
@@ -182,14 +179,21 @@ class _ZodiacPairingPageState extends State<ZodiacPairingPage>
             color: Colors.white,
             fontSize: 14.rsp,
             borderRadius: BorderRadius.all(Radius.circular(21.rw)),
-            onPressed: () {
+            onPressed: () async{
+              _show = false;
               if (zodiacPairingW!='请选择'&&zodiacPairingM!='请选择') {
+
+                zodiacPairingModel = await LifeFunc.getZodiacPairingModel(zodiacPairingM,zodiacPairingW);
+                if(zodiacPairingModel!=null)
+                  _show = true;
+
+                if (mounted) setState(() {});
                 _show = true;
                 setState(() {
 
                 });
               } else {
-                BotToast.showText(text: '请输入正确的数据');
+                BotToast.showText(text: '请先选择生肖');
               }
             },
           ),
@@ -223,7 +227,7 @@ class _ZodiacPairingPageState extends State<ZodiacPairingPage>
                           fontSize: 12.rsp,
                         )),
                     10.hb,
-                    Text(zodiacPairingModel.data??"",
+                    Text(zodiacPairingModel!.data??"",
                         style: TextStyle(
                           color: Color(0xFF333333),
                           fontWeight: FontWeight.bold,

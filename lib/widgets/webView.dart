@@ -11,6 +11,7 @@ import 'package:recook/pages/home/widget/modify_detail_app_bar.dart';
 import 'package:recook/pages/wholesale/wholeasale_detail_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewPage extends StatefulWidget {
@@ -127,6 +128,10 @@ class _WebViewState extends BaseStoreState<WebViewPage> {
                 _alertJavascriptChannel(context),
               ].toSet(),
               initialUrl: widget.arguments!["url"],
+              navigationDelegate: (NavigationRequest request){
+                _launchInBrowser(request.url);
+                return NavigationDecision.prevent;
+              },
               onWebViewCreated: (WebViewController web) {
                 web.canGoBack().then((res) {
                   print(res); // 是否能返回上一级
@@ -220,5 +225,16 @@ class _WebViewState extends BaseStoreState<WebViewPage> {
             ),
           )
         : Text('');
+  }
+
+  Future<void> _launchInBrowser(String url) async {
+    ///打开webView中的url链接
+    /// 先判断是否可以launch url
+    if (await canLaunch(url)) {
+      /// 如果可以则启动
+      await launch(url);
+    } else {
+      print('${url}无法打开');
+    }
   }
 }

@@ -459,18 +459,16 @@ class JuHeAPI{
 
 
   ///基础健康指数
-  String get fapig=>
-      'fapig/healthy/';
   String get fapigKey =>
       'b96202f114ad5e24ee73f71c72a528a1';
   String get bmr =>
-      'bmr';
+      'fapig/healthy/bmr';
   String get calorie =>
-      'calorie';
+      'fapig/healthy/calorie';
   String get bfr =>
-      'bfr';
+      'fapig/healthy/bfr';
   String get blood =>
-      'blood';
+      'fapig/healthy/blood';
 
 
   ///最佳身材计算器
@@ -578,9 +576,16 @@ class JuHeAPI{
       '1f7ed44ac7f75179c5e84986779f492d';
 
 
-  ///老黄历
-  String get lhl=>
-      'laohuangli/d';
-  String get lhlKey =>
-      'edfd263c72451fd0b50c348259445879';
+  // ///老黄历
+  // String get lhl=>
+  //     'laohuangli/d';
+  // String get lhlKey =>
+  //     'edfd263c72451fd0b50c348259445879';
+
+
+  ///万年历
+  String get wnl=>
+      'calendar/day';
+  String get wnlKey =>
+      '85fb227b9a3c1e9e8937f4f8e52be972';
 }

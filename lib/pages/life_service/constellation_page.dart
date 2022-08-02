@@ -5,7 +5,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
-import 'package:recook/models/life_service/ConstellationModel.dart';
+import 'package:recook/models/life_service/constellation_model.dart';
 import 'package:recook/models/life_service/birth_flower_model.dart';
 import 'package:recook/models/life_service/zodiac_model.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -100,7 +100,6 @@ class _ConstellationPageState extends State<ConstellationPage>
           Container(
             height: 50.rw,
             child: TextField(
-              autofocus: true,
               onChanged: (text) {
                 content = text;
                 if(content.isEmpty)
@@ -151,6 +150,7 @@ class _ConstellationPageState extends State<ConstellationPage>
             fontSize: 14.rsp,
             borderRadius: BorderRadius.all(Radius.circular(21.rw)),
             onPressed: ()async{
+              _contentFocusNode.unfocus();
               _show = false;
               if (content.isNotEmpty) {
 

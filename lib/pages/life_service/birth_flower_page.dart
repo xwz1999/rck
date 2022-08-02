@@ -108,7 +108,6 @@ class _BirthFlowerPageState extends State<BirthFlowerPage>
             child: Container(
               height: 50.rw,
               child: TextField(
-                autofocus: true,
                 keyboardType: TextInputType.text,
                 enabled: false,
                 controller: _textEditingController,

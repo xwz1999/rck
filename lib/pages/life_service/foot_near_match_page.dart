@@ -76,7 +76,7 @@ class _FootNearMatchPageState extends State<FootNearMatchPage>
           top: 5.rw,
         ),
         itemBuilder: (BuildContext context, int index) =>
-            _itemWidget(nbaModel!.matchs![index]),
+            _itemWidget(nbaModel!.matchs![nbaModel!.matchs!.length-index-1]),
       ),
     );
   }
@@ -109,7 +109,6 @@ class _FootNearMatchPageState extends State<FootNearMatchPage>
             children: [
               ...matchs.list!
                   .map((e) => Row(
-
                         children: [
                           Expanded(
                             flex: 2,

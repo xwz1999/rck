@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/models/life_service/bfr_model.dart';
 import 'package:recook/models/life_service/loan_model.dart';
+import 'package:recook/pages/life_service/life_func.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
@@ -58,14 +60,14 @@ class _HealthCalculatorPageState extends State<HealthCalculatorPage>
     }
   }
 
-  String sexString = '去选择';
+  String sexString = '请选择';
 
   num height = 0;
   num weight = 0;
   num waistline = 0;
 
   int? age;
-  String ageString = '去选择';
+  String ageString = '请选择';
 
   ///1-5
   int? get level {
@@ -84,13 +86,13 @@ class _HealthCalculatorPageState extends State<HealthCalculatorPage>
     }
   }
 
-  String leverString = '去选择';
+  String leverString = '请选择';
 
   ///父亲血型
-  String pType = '去选择';
+  String pType = '请选择';
 
   ///母亲血型
-  String mType = '去选择';
+  String mType = '请选择';
 
   @override
   void initState() {
@@ -154,7 +156,7 @@ class _HealthCalculatorPageState extends State<HealthCalculatorPage>
               typeTitle = (await ListPickBody.listPicker(
                       ['基础代谢(BMR)', '每日热量/卡路里消耗', '体脂率(BFR)', '子女血型预测'],
                       '计算类型')) ??
-                  (typeTitle != '' ? typeTitle : '基础代谢(BMR)');
+                  (typeTitle != '请选择' ? typeTitle : '基础代谢(BMR)');
               setState(() {});
             },
             child: Container(
@@ -171,7 +173,7 @@ class _HealthCalculatorPageState extends State<HealthCalculatorPage>
                     typeTitle,
                     style: TextStyle(
                         fontSize: 14.rsp,
-                        color: Color(0xFF333333),
+                        color: typeTitle=='请选择'?Color(0xFFD8D8D8): Color(0xFF333333),
                         fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
@@ -202,7 +204,7 @@ class _HealthCalculatorPageState extends State<HealthCalculatorPage>
                     FocusScope.of(context).unfocus();
                     sexString =
                         (await ListPickBody.listPicker(['男', '女'], '性别')) ??
-                            '去选择';
+                            '请选择';
                     setState(() {});
                   },
                   child: Container(
@@ -219,7 +221,7 @@ class _HealthCalculatorPageState extends State<HealthCalculatorPage>
                           sexString,
                           style: TextStyle(
                               fontSize: 14.rsp,
-                              color: Color(0xFF333333),
+                              color: sexString=='请选择'?Color(0xFFD8D8D8): Color(0xFF333333),
                               fontWeight: FontWeight.bold),
                         ),
                         Spacer(),
@@ -257,7 +259,6 @@ class _HealthCalculatorPageState extends State<HealthCalculatorPage>
               : Container(
                   height: 50.rw,
                   child: TextField(
-                    autofocus: true,
                     keyboardType: TextInputType.number,
                     onSubmitted: (_submitted) async {
                       _heightFocusNode.unfocus();
@@ -317,7 +318,6 @@ class _HealthCalculatorPageState extends State<HealthCalculatorPage>
               : Container(
                   height: 50.rw,
                   child: TextField(
-                    autofocus: true,
                     keyboardType: TextInputType.number,
                     onSubmitted: (_submitted) async {
                       _weightFocusNode.unfocus();
@@ -370,7 +370,7 @@ class _HealthCalculatorPageState extends State<HealthCalculatorPage>
                     FocusScope.of(context).unfocus();
                     ageString =
                         (await ListPickBody.listPicker(ageList, '选择年龄')) ??
-                            '去选择';
+                            '请选择';
                     age = int.parse(ageString);
                     setState(() {});
                   },
@@ -388,7 +388,7 @@ class _HealthCalculatorPageState extends State<HealthCalculatorPage>
                           ageString,
                           style: TextStyle(
                               fontSize: 14.rsp,
-                              color: Color(0xFF333333),
+                              color:ageString=='请选择'?Color(0xFFD8D8D8): Color(0xFF333333),
                               fontWeight: FontWeight.bold),
                         ),
                         Spacer(),
@@ -497,7 +497,6 @@ class _HealthCalculatorPageState extends State<HealthCalculatorPage>
               : Container(
                   height: 50.rw,
                   child: TextField(
-                    autofocus: true,
                     keyboardType: TextInputType.number,
                     onSubmitted: (_submitted) async {
                       _waistFocusNode.unfocus();
@@ -550,7 +549,7 @@ class _HealthCalculatorPageState extends State<HealthCalculatorPage>
                     FocusScope.of(context).unfocus();
                     pType = (await ListPickBody.listPicker(
                             ['A', 'B', 'O', 'AB'], '父亲血型')) ??
-                        '';
+                        '请选择';
                     setState(() {});
                   },
                   child: Container(
@@ -567,7 +566,7 @@ class _HealthCalculatorPageState extends State<HealthCalculatorPage>
                           pType,
                           style: TextStyle(
                               fontSize: 14.rsp,
-                              color: Color(0xFF333333),
+                              color: pType=='请选择'?Color(0xFFD8D8D8): Color(0xFF333333),
                               fontWeight: FontWeight.bold),
                         ),
                         Spacer(),
@@ -598,7 +597,7 @@ class _HealthCalculatorPageState extends State<HealthCalculatorPage>
                     FocusScope.of(context).unfocus();
                     mType = (await ListPickBody.listPicker(
                             ['A', 'B', 'O', 'AB'], '母亲血型')) ??
-                        '';
+                        '请选择';
                     setState(() {});
                   },
                   child: Container(
@@ -615,7 +614,7 @@ class _HealthCalculatorPageState extends State<HealthCalculatorPage>
                           mType,
                           style: TextStyle(
                               fontSize: 14.rsp,
-                              color: Color(0xFF333333),
+                              color:  mType=='请选择'?Color(0xFFD8D8D8): Color(0xFF333333),
                               fontWeight: FontWeight.bold),
                         ),
                         Spacer(),
@@ -636,40 +635,88 @@ class _HealthCalculatorPageState extends State<HealthCalculatorPage>
             color: Colors.white,
             fontSize: 14.rsp,
             borderRadius: BorderRadius.all(Radius.circular(21.rw)),
-            onPressed: () {
+            onPressed: () async {
+              FocusManager.instance.primaryFocus!.unfocus();
               if (type == 0) {
-                Get.to(HealthResultDXPage(
-                  result: '1654.78 ~ 1725.15 大卡',
-                  weight: weight,
-                  height: height,
-                  sex: sex!,
-                  age: age!,
-                ));
+                if (sex != null &&
+                    age != null &&
+                    height > 100 &&
+                    height < 250 &&
+                    weight > 20 &&
+                    weight < 300) {
+                  String result =
+                      (await LifeFunc.getBMR(sex!, age!, height, weight)) ?? '';
+
+                  if (result.isNotEmpty)
+                    Get.to(HealthResultDXPage(
+                      result: result,
+                      weight: weight,
+                      height: height,
+                      sex: sex!,
+                      age: age!,
+                    ));
+                } else {
+                  BotToast.showText(text: '请输入正确的数据');
+                }
               } else if (type == 1) {
-                Get.to(HealthResultKLLPage(
-                  result: '1654.78 ~ 1725.15 大卡',
-                  weight: weight,
-                  height: height,
-                  sex: sex!,
-                  age: age!,
-                  level: level!,
-                ));
+                if (sex != null &&
+                    age != null &&
+                    height > 100 &&
+                    height < 250 &&
+                    weight > 20 &&
+                    weight < 300 &&
+                    level != null) {
+                  String result = (await LifeFunc.getKLL(
+                          sex!, age!, height, weight, level!)) ??
+                      '';
+
+                  if (result.isNotEmpty)
+                    Get.to(HealthResultKLLPage(
+                      result: result,
+                      weight: weight,
+                      height: height,
+                      sex: sex!,
+                      age: age!,
+                      level: level!,
+                    ));
+                } else {
+                  BotToast.showText(text: '请输入正确的数据');
+                }
               } else if (type == 2) {
-                Get.to(HealthResultTZPage(
-                  weight: weight,
-                  sex: sex!,
-                  remark: '您的体脂率太低了',
-                  bfr: '-28.89%',
-                  waistline: waistline,
-                ));
+                if (sex != null &&
+                    waistline > 0 &&
+                    waistline < 100 &&
+                    weight > 20 &&
+                    weight < 300 &&
+                    level != null) {
+                  BFRModel? result =
+                      (await LifeFunc.getBFR(sex!, waistline, weight)) ?? null;
+
+                  if (result != null)
+                    Get.to(HealthResultTZPage(
+                      weight: weight,
+                      sex: sex!,
+                      remark: result.remark ?? '',
+                      bfr: '${result.bfr}%',
+                      waistline: waistline,
+                    ));
+                } else {
+                  BotToast.showText(text: '请输入正确的数据');
+                }
               } else if (type == 3) {
-                Get.to(HealthResultXXPage(
-                  mType: mType,
-                  remark: '您的孩子的血型可能为：A、B、AB型之一，不可能为 O 型',
-                  pType: pType,
-                ));
+                if (pType!='请选择'&& mType!='请选择') {
+                  String result = (await LifeFunc.getBlood(pType, mType)) ?? '';
+
+                  if (result.isNotEmpty)
+                    Get.to(HealthResultXXPage(
+                      mType: mType,
+                      remark: result,
+                      pType: pType,
+                    ));
+                }
+              } else {
+                BotToast.showText(text: '请输入正确的数据');
               }
-              // BotToast.showText(text: '请输入正确的数据');
             },
           )
         ],

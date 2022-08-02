@@ -58,15 +58,15 @@ class _HotVideoListWidgetState extends State<HotVideoListWidget> {
         _onLoad = false;
         setState(() {});
       },
-      onLoadMore: () async {
-        page++;
-        await LifeFunc.getHotVideoList('hot_video').then((models) {
-          setState(() {
-            _videoList.addAll(models ?? []);
-          });
-          _refreshController.loadComplete();
-        });
-      },
+      // onLoadMore: () async {
+      //   page++;
+      //   await LifeFunc.getHotVideoList('hot_video').then((models) {
+      //     setState(() {
+      //       _videoList.addAll(models ?? []);
+      //     });
+      //     _refreshController.loadComplete();
+      //   });
+      // },
       body: _onLoad
           ? SizedBox()
           : _videoList.isEmpty

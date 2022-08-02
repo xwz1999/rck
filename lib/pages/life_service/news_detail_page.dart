@@ -109,7 +109,7 @@ class _NewsDetailPageState extends State<NewsDetailPage>
 
   _htmlWidget() {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 12.rw),
+      padding: EdgeInsets.only(left: 12.rw,right: 12.rw,bottom: 24.rw),
       child: HtmlWidget(
         newsDetailModel.content ?? '',
         textStyle: TextStyle(color: Color(0xFF333333)),

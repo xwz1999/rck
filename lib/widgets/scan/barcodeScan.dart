@@ -36,14 +36,9 @@ class BarcodeScanPage extends StatefulWidget {
 
 class _BarcodeScanPageState extends BaseStoreState<BarcodeScanPage> {
   String barcode = "";
-  // GlobalKey<QrcodeReaderViewState> _key = GlobalKey();
-
   final player = AudioPlayer();
-
   final picker = ImagePicker();
-
   ScanController controller = ScanController();
-
   String _platformVersion = 'Unknown';
 
   bool _openLight = false;

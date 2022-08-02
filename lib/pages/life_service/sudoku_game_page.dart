@@ -85,9 +85,11 @@ class _SudokuGamePageState extends State<SudokuGamePage> {
             ),
             alignment: Alignment.center,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('简单',
                         style: TextStyle(
@@ -143,6 +145,7 @@ class _SudokuGamePageState extends State<SudokuGamePage> {
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('普通',
                         style: TextStyle(
@@ -198,6 +201,7 @@ class _SudokuGamePageState extends State<SudokuGamePage> {
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('困难',
                         style: TextStyle(
@@ -253,6 +257,7 @@ class _SudokuGamePageState extends State<SudokuGamePage> {
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('非常困难',
                         style: TextStyle(

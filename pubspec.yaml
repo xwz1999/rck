@@ -63,7 +63,7 @@ dependencies:
       url: https://github.com/xwz1999/flutter_screen.git
 
 
-  url_launcher: ^6.0.0
+  url_launcher: 6.0.0
 
   # 权限组件
   permission_handler: ^8.0.1
@@ -298,6 +298,9 @@ flutter:
     - assets/weather/
     - assets/wholesale/
     - assets/life/
+    - assets/audio/
+    - assets/images/chat/
+    - assets/images/feedback/
   fonts:
     - family: AppIcons
       fonts:

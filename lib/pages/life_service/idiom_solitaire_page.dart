@@ -91,7 +91,6 @@ class _IdiomSolitairePageState extends State<IdiomSolitairePage>
           Container(
             height: 50.rw,
             child: TextField(
-              autofocus: true,
               keyboardType: TextInputType.text,
               onSubmitted: (_submitted) async {
                 _contentFocusNode.unfocus();
@@ -141,8 +140,9 @@ class _IdiomSolitairePageState extends State<IdiomSolitairePage>
             fontSize: 14.rsp,
             borderRadius: BorderRadius.all(Radius.circular(21.rw)),
             onPressed: () async{
+              FocusManager.instance.primaryFocus!.unfocus();
+              _show = false;
               if (content.isNotEmpty) {
-                _show = false;
                 idiom = await LifeFunc.getIdiomModel(content)??null;
                 if(idiom!=null){
                   _show = true;
@@ -157,13 +157,14 @@ class _IdiomSolitairePageState extends State<IdiomSolitairePage>
           ),
           100.hb,
 
-          _show?Text('查询结果',
+          _show?Text(idiom!.data==null?'没有找到相关成语': '查询结果',
               style: TextStyle(
                 color: Color(0xFF999999),
                 fontWeight: FontWeight.bold,
                 fontSize: 14.rsp,
               )):SizedBox(),
-          _show?ListView.builder(
+          _show&&idiom!.data!=null?
+          ListView.builder(
             shrinkWrap: true,
             physics: NeverScrollableScrollPhysics(),
             itemCount: idiom!.data!.length,

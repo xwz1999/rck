@@ -1899,6 +1899,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   }
 
   _chooseValues() {
+    print(_validSkuResult);
     return widget.goodsDetail!.data!.attributes!.map((Attributes attr) {
       return SelectedListItemModel(
           attr.name,
@@ -1923,7 +1924,13 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         List ids = sku.combineId!.split(",");
         ids.forEach((id) {
           if (!_validSkuResult.contains(id)) {
-            _validSkuResult.add(id);
+            if(widget.goodsDetail!.data!.attributes!.length>1){
+              if(ids.length>1){
+                _validSkuResult.add(id);
+              }
+            }else{
+              _validSkuResult.add(id);
+            }
           }
         });
         _listCombination(ids);
@@ -1944,12 +1951,20 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
         // 如果复制数组长度为0了，则打印变量
         temp.sort();
         if (!_validSkuResult.contains(temp.join("-"))) {
-          _validSkuResult.add(temp.join("-"));
+          if(widget.goodsDetail!.data!.attributes!.length>1){
+            if(widget.goodsDetail!.data!.sku!.first!.combineId!.split(",").length>1){
+              _validSkuResult.add(temp.join("-"));
+            }
+          }else{
+            _validSkuResult.add(temp.join("-"));
+          }
+
         }
       } else {
         // 否则进行递归
         _listCombination(copy);
       }
+      print(_validSkuResult);
       // 递归完了之后删除最后一个元素，保证下一次插入的时候没有上一次的元素
       temp.clear();
     }

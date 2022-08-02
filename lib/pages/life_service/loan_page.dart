@@ -26,9 +26,9 @@ class _LoanPageState extends State<LoanPage>
   FocusNode _weightFocusNode = FocusNode();
 
   String money = '';
-  String year = '';
+  String year = '请选择';
   String active = '';
-  String type = '';
+  String type = '请选择';
 
   @override
   void initState() {
@@ -97,7 +97,6 @@ class _LoanPageState extends State<LoanPage>
           Container(
             height: 50.rw,
             child: TextField(
-              autofocus: true,
               keyboardType: TextInputType.number,
               onSubmitted: (_submitted) async {
                 _weightFocusNode.unfocus();
@@ -141,9 +140,10 @@ class _LoanPageState extends State<LoanPage>
           24.hb,
           GestureDetector(
             onTap: () async{
+              FocusManager.instance.primaryFocus!.unfocus();
               year =  (await ListPickBody.listPicker([
                 '5','10','15','20','25','30'
-              ], '贷款年限'))??'';
+              ], '贷款年限'))??'请选择';
               setState(() {
 
               });
@@ -162,7 +162,7 @@ class _LoanPageState extends State<LoanPage>
                     year,
                     style: TextStyle(
                         fontSize: 14.rsp,
-                        color: Color(0xFF333333),
+                        color:year=='请选择'?Color(0xFFD8D8D8):  Color(0xFF333333),
                         fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
@@ -186,9 +186,10 @@ class _LoanPageState extends State<LoanPage>
           24.hb,
           GestureDetector(
             onTap: ()async {
+              FocusManager.instance.primaryFocus!.unfocus();
               type =  (await ListPickBody.listPicker([
               '等额本息','等额本金'
-              ], '还款方式'))??'';
+              ], '还款方式'))??'请选择';
               setState(() {
 
               });
@@ -208,7 +209,7 @@ class _LoanPageState extends State<LoanPage>
                     type,
                     style: TextStyle(
                         fontSize: 14.rsp,
-                        color: Color(0xFF333333),
+                        color: type=='请选择'?Color(0xFFD8D8D8):  Color(0xFF333333),
                         fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
@@ -234,7 +235,6 @@ class _LoanPageState extends State<LoanPage>
           Container(
             height: 50.rw,
             child: TextField(
-              autofocus: true,
               keyboardType: TextInputType.number,
               onSubmitted: (_submitted) async {
                 _contentFocusNode.unfocus();
@@ -278,8 +278,9 @@ class _LoanPageState extends State<LoanPage>
             fontSize: 14.rsp,
             borderRadius: BorderRadius.all(Radius.circular(21.rw)),
             onPressed: () async{
-              if ((double.parse(active)< 20 && double.parse(money)<500) &&
-                  (type!=''&& year!='')) {
+              FocusManager.instance.primaryFocus!.unfocus();
+              if ((active.isNotEmpty && money.isNotEmpty&& double.parse(active)< 20 &&  double.parse(money)<500) &&
+                  (type!='请选择'&& year!='请选择')) {
                 LoanModel? loanModel = (await LifeFunc.getLoanModel(num.parse(money), year, active))??null;
                 if(loanModel!=null)
                 Get.to(() => LoanResultPage(loanModel: loanModel, year: year, type: type,));

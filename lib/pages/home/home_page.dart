@@ -43,6 +43,7 @@ import 'package:recook/pages/home/widget/goods_list_temp_page.dart';
 import 'package:recook/pages/home/widget/home_countdown_widget.dart';
 import 'package:recook/pages/home/widget/home_sliver_app_bar.dart';
 import 'package:recook/pages/home/widget/home_weather_view.dart';
+import 'package:recook/pages/life_service/life_service_home_page.dart';
 import 'package:recook/pages/login/login_page.dart';
 import 'package:recook/pages/tabBar/rui_code_listener.dart';
 import 'package:recook/pages/user/functions/user_func.dart';
@@ -210,7 +211,6 @@ class _HomePageState extends BaseStoreState<HomePage>
       });
     }
 
-
     _updateSource();
     _getWeather();
     Future.delayed(Duration.zero, () async {
@@ -269,8 +269,9 @@ class _HomePageState extends BaseStoreState<HomePage>
       if (getStore().state.goodsId != null && getStore().state.goodsId! > 0) {
         //跳到商品详情页面
 
-          Get.to(()=>CommodityDetailPage(arguments:
-        CommodityDetailPage.setArguments( getStore().state.goodsId)));
+        Get.to(() => CommodityDetailPage(
+            arguments:
+                CommodityDetailPage.setArguments(getStore().state.goodsId)));
 
         //getStore().state.goodsId = 0;
       }
@@ -293,8 +294,6 @@ class _HomePageState extends BaseStoreState<HomePage>
         //     extra: {"fa": "0"});
         // jpush.sendLocalNotification(noti).then((value) => null);
 
-
-
         _activityMap = null;
         UserManager.instance!.isWholesale = !UserManager.instance!.isWholesale;
         _gsRefreshController!.requestRefresh();
@@ -302,9 +301,8 @@ class _HomePageState extends BaseStoreState<HomePage>
             !UserManager.instance!.refreshHomeBottomTabbar.value;
 
         ///解决切换到批发以后还会出现分享弹窗的问题
-        ClipboardData data = new ClipboardData(text:'');
+        ClipboardData data = new ClipboardData(text: '');
         Clipboard.setData(data);
-
 
         setState(() {});
       },
@@ -410,10 +408,16 @@ class _HomePageState extends BaseStoreState<HomePage>
         _getWeather();
         _amapFlutterLocation!.stopLocation();
         _amapFlutterLocation!.destroy();
+        print('高德地图已销毁');
+
       },
     );
-    _amapFlutterLocation!
-        .setLocationOption(AMapLocationOption(onceLocation: true,desiredAccuracy: DesiredAccuracy.ThreeKilometers,desiredLocationAccuracyAuthorizationMode: AMapLocationAccuracyAuthorizationMode.ReduceAccuracy));
+    _amapFlutterLocation!.setLocationOption(AMapLocationOption(
+        locationMode: AMapLocationMode.Battery_Saving,
+        onceLocation: true,
+        desiredAccuracy: DesiredAccuracy.ThreeKilometers,
+        desiredLocationAccuracyAuthorizationMode:
+            AMapLocationAccuracyAuthorizationMode.ReduceAccuracy));
     _amapFlutterLocation!.startLocation();
   }
 
@@ -431,7 +435,6 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
-
     if (state == AppLifecycleState.paused) _updateTag = true;
     if (state == AppLifecycleState.resumed) {
       //TODO 修复订单无法下单的问题，该问题只在华为设备中发生，
@@ -498,7 +501,6 @@ class _HomePageState extends BaseStoreState<HomePage>
               child: RefreshWidget(
                 header: HomeGifHeader(),
                 isInNest: true,
-
                 color: Colors.black,
                 controller: _gsRefreshController,
                 onRefresh: () async {
@@ -508,7 +510,6 @@ class _HomePageState extends BaseStoreState<HomePage>
                 body: _buildBody(context),
               ),
             ),
-            
           ],
         )));
   }
@@ -565,7 +566,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     GestureDetector scanCon = GestureDetector(
       onTap: () async {
         if (Platform.isIOS) {
-          Get.to(()=>BarcodeScanPage());
+          Get.to(() => BarcodeScanPage());
           return;
         }
         bool permission = await Permission.camera.isGranted;
@@ -599,14 +600,14 @@ class _HomePageState extends BaseStoreState<HomePage>
                       context, "没有相机使用权限,授予相机使用权限后才能进行扫码");
                   return;
                 } else {
-                  Get.to(()=>BarcodeScanPage());
+                  Get.to(() => BarcodeScanPage());
                 }
               },
               type: NormalTextDialogType.delete,
             ),
           );
         } else {
-          Get.to(()=>BarcodeScanPage());
+          Get.to(() => BarcodeScanPage());
         }
       },
       child: Container(
@@ -665,10 +666,10 @@ class _HomePageState extends BaseStoreState<HomePage>
               ));
       },
     );
-    String locationCityName =
-        _weatherLocation != null && !TextUtils.isEmpty(_weatherLocation!['city'] as String?)
-            ? _weatherLocation!['city'] as String
-            : "";
+    String locationCityName = _weatherLocation != null &&
+            !TextUtils.isEmpty(_weatherLocation!['city'] as String?)
+        ? _weatherLocation!['city'] as String
+        : "";
     try {
       locationCityName = locationCityName.replaceAll("区", "");
       locationCityName = locationCityName.replaceAll("市", "");
@@ -741,15 +742,14 @@ class _HomePageState extends BaseStoreState<HomePage>
           } else {
             var value = await requestPermission(true);
             if (value) {
+              initLocation();
               //监听要在设置参数之前 否则无法获取定位
-              _amapFlutterLocation!
-                  .setLocationOption(AMapLocationOption(onceLocation: true));
-              _amapFlutterLocation!.startLocation();
+              // _amapFlutterLocation!
+              //     .setLocationOption(AMapLocationOption(onceLocation: true));
+              // _amapFlutterLocation!.startLocation();
             }
           }
         }
-
-
 
         String locationCityName = _weatherLocation != null &&
                 !TextUtils.isEmpty(_weatherLocation!['city'] as String?)
@@ -759,20 +759,19 @@ class _HomePageState extends BaseStoreState<HomePage>
         print(_weatherLocation);
         print(locationCityName);
 
-
         try {
           locationCityName = locationCityName.replaceAll("区", "");
           locationCityName = locationCityName.replaceAll("市", "");
         } catch (e) {}
         if (locationCityName != '') {
-
-          Get.to(()=>WeatherCityPage( arguments: WeatherCityPage.setArguments(locationCityName)))!.then((model) {
+          Get.to(() => WeatherCityPage(
+                  arguments: WeatherCityPage.setArguments(locationCityName)))!
+              .then((model) {
             if (model is WeatherCityModel) {
               _weatherCityModel = model;
               _getWeather();
             }
           });
-
         }
       },
       child: Container(
@@ -833,29 +832,30 @@ class _HomePageState extends BaseStoreState<HomePage>
             actions: _actionsWidget(),
             title: _buildTitle(),
             backgroundColor: AppColor.themeColor,
-            expandedHeight: _promotionList == null || _promotionList!.length == 0
-                ? weatherHeight +
-                    bannerHeight +
-                    buttonsHeight +
-                    t1Height +
-                    t23Height +
-                    (UserManager.instance!.isWholesale ? 50.rw : t4Height) +
-                    rSize(62) +
-                    timeHeight +
-                    tabbarHeight -
-                    ScreenUtil().statusBarHeight -
-                    4
-                : weatherHeight +
-                    bannerHeight +
-                    buttonsHeight +
-                    t1Height +
-                    t23Height +
-                    (UserManager.instance!.isWholesale ? 50.rw : t4Height) +
-                    rSize(62) +
-                    timeHeight +
-                    tabbarHeight -
-                    ScreenUtil().statusBarHeight +
-                    4,
+            expandedHeight:
+                _promotionList == null || _promotionList!.length == 0
+                    ? weatherHeight +
+                        bannerHeight +
+                        buttonsHeight +
+                        t1Height +
+                        t23Height +
+                        (UserManager.instance!.isWholesale ? 50.rw : t4Height) +
+                        rSize(62) +
+                        timeHeight +
+                        tabbarHeight -
+                        ScreenUtil().statusBarHeight -
+                        4
+                    : weatherHeight +
+                        bannerHeight +
+                        buttonsHeight +
+                        t1Height +
+                        t23Height +
+                        (UserManager.instance!.isWholesale ? 50.rw : t4Height) +
+                        rSize(62) +
+                        timeHeight +
+                        tabbarHeight -
+                        ScreenUtil().statusBarHeight +
+                        4,
             flexibleSpace: _flexibleSpaceBar(context),
             bottom: _promotionList == null || _promotionList!.length == 0
                 ? PreferredSize(
@@ -923,17 +923,17 @@ class _HomePageState extends BaseStoreState<HomePage>
                           buildCtx: context,
                           isSingleDayGoods: false,
                           onBrandClick: () {
-
-
-                            Get.to(()=>BrandGoodsListPage(argument: BrandGoodsListPage.setArguments(
-                                model.brandId as int?, model.brandName),));
-
+                            Get.to(() => BrandGoodsListPage(
+                                  argument: BrandGoodsListPage.setArguments(
+                                      model.brandId as int?, model.brandName),
+                                ));
                           },
                           model: model,
                           buyClick: () {
-
-                            Get.to(()=>CommodityDetailPage(arguments: CommodityDetailPage.setArguments(
-                                model.goodsId),));
+                            Get.to(() => CommodityDetailPage(
+                                  arguments: CommodityDetailPage.setArguments(
+                                      model.goodsId),
+                                ));
                           },
                         ),
                       );
@@ -944,9 +944,12 @@ class _HomePageState extends BaseStoreState<HomePage>
                       return RowActivityItem(
                         model: activityModel,
                         click: () {
-
-                          Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
-                              url: activityModel.activityUrl, title: "活动", hideBar: true),));
+                          Get.to(() => WebViewPage(
+                                arguments: WebViewPage.setArguments(
+                                    url: activityModel.activityUrl,
+                                    title: "活动",
+                                    hideBar: true),
+                              ));
                         },
                       );
                     } else {
@@ -967,8 +970,12 @@ class _HomePageState extends BaseStoreState<HomePage>
                 return RowActivityItem(
                   model: activityModel,
                   click: () {
-                    Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
-                        url: activityModel.activityUrl, title: "活动", hideBar: true),));
+                    Get.to(() => WebViewPage(
+                          arguments: WebViewPage.setArguments(
+                              url: activityModel.activityUrl,
+                              title: "活动",
+                              hideBar: true),
+                        ));
                   },
                 );
               } else {
@@ -1053,8 +1060,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     );
   }
 
-
-  _brandWidget(){
+  _brandWidget() {
     return Container(
       color: AppColor.frenchColor,
       padding: EdgeInsets.all(8.rw),
@@ -1092,8 +1098,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                 Text(
                   '健康轻食新主张',
                   style: TextStyle(
-                      color: Colors.white.withOpacity(0.7),
-                      fontSize: 8 * 2.sp),
+                      color: Colors.white.withOpacity(0.7), fontSize: 8 * 2.sp),
                 ),
                 16.hb,
                 Container(
@@ -1135,7 +1140,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                   42.wb,
                   Expanded(
                     child: Padding(
-                      padding:  EdgeInsets.symmetric(vertical: 10.rw),
+                      padding: EdgeInsets.symmetric(vertical: 10.rw),
                       child: Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
@@ -1145,7 +1150,6 @@ class _HomePageState extends BaseStoreState<HomePage>
                           ),
                         ),
                         child: Column(
-
                           children: [
                             16.hb,
                             Container(
@@ -1155,7 +1159,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                             ),
                             Expanded(
                               child: Padding(
-                                padding:  EdgeInsets.symmetric(horizontal: 6.rw),
+                                padding: EdgeInsets.symmetric(horizontal: 6.rw),
                                 child: Column(
                                   children: [
                                     5.hb,
@@ -1166,23 +1170,27 @@ class _HomePageState extends BaseStoreState<HomePage>
                                       style: TextStyle(
                                         color: Color(0xFF333333),
                                         fontSize: 10.rsp,
-
                                       ),
-
                                     ),
                                     5.hb,
                                     Row(
                                       children: [
-                                        Text(' ¥', style: TextStyle(color: Color(0xFFC92219), fontSize: 10.rsp,fontWeight: FontWeight.bold)),
-                                        Text('30.00', style: TextStyle(color: Color(0xFFC92219), fontSize: 12.rsp,fontWeight: FontWeight.bold)),
+                                        Text(' ¥',
+                                            style: TextStyle(
+                                                color: Color(0xFFC92219),
+                                                fontSize: 10.rsp,
+                                                fontWeight: FontWeight.bold)),
+                                        Text('30.00',
+                                            style: TextStyle(
+                                                color: Color(0xFFC92219),
+                                                fontSize: 12.rsp,
+                                                fontWeight: FontWeight.bold)),
                                       ],
                                     )
                                   ],
                                 ),
                               ),
                             ),
-
-
                           ],
                         ),
                       ),
@@ -1191,7 +1199,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                   15.wb,
                   Expanded(
                     child: Padding(
-                      padding:  EdgeInsets.symmetric(vertical: 10.rw),
+                      padding: EdgeInsets.symmetric(vertical: 10.rw),
                       child: Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
@@ -1201,7 +1209,6 @@ class _HomePageState extends BaseStoreState<HomePage>
                           ),
                         ),
                         child: Column(
-
                           children: [
                             16.hb,
                             Container(
@@ -1211,7 +1218,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                             ),
                             Expanded(
                               child: Padding(
-                                padding:  EdgeInsets.symmetric(horizontal: 6.rw),
+                                padding: EdgeInsets.symmetric(horizontal: 6.rw),
                                 child: Column(
                                   children: [
                                     5.hb,
@@ -1222,23 +1229,27 @@ class _HomePageState extends BaseStoreState<HomePage>
                                       style: TextStyle(
                                         color: Color(0xFF333333),
                                         fontSize: 10.rsp,
-
                                       ),
-
                                     ),
                                     5.hb,
                                     Row(
                                       children: [
-                                        Text(' ¥', style: TextStyle(color: Color(0xFFC92219), fontSize: 10.rsp,fontWeight: FontWeight.bold)),
-                                        Text('30.00', style: TextStyle(color: Color(0xFFC92219), fontSize: 12.rsp,fontWeight: FontWeight.bold)),
+                                        Text(' ¥',
+                                            style: TextStyle(
+                                                color: Color(0xFFC92219),
+                                                fontSize: 10.rsp,
+                                                fontWeight: FontWeight.bold)),
+                                        Text('30.00',
+                                            style: TextStyle(
+                                                color: Color(0xFFC92219),
+                                                fontSize: 12.rsp,
+                                                fontWeight: FontWeight.bold)),
                                       ],
                                     )
                                   ],
                                 ),
                               ),
                             ),
-
-
                           ],
                         ),
                       ),
@@ -1247,7 +1258,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                   15.wb,
                   Expanded(
                     child: Padding(
-                      padding:  EdgeInsets.symmetric(vertical: 10.rw),
+                      padding: EdgeInsets.symmetric(vertical: 10.rw),
                       child: Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
@@ -1257,7 +1268,6 @@ class _HomePageState extends BaseStoreState<HomePage>
                           ),
                         ),
                         child: Column(
-
                           children: [
                             16.hb,
                             Container(
@@ -1267,7 +1277,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                             ),
                             Expanded(
                               child: Padding(
-                                padding:  EdgeInsets.symmetric(horizontal: 6.rw),
+                                padding: EdgeInsets.symmetric(horizontal: 6.rw),
                                 child: Column(
                                   children: [
                                     5.hb,
@@ -1278,23 +1288,27 @@ class _HomePageState extends BaseStoreState<HomePage>
                                       style: TextStyle(
                                         color: Color(0xFF333333),
                                         fontSize: 10.rsp,
-
                                       ),
-
                                     ),
                                     5.hb,
                                     Row(
                                       children: [
-                                        Text(' ¥', style: TextStyle(color: Color(0xFFC92219), fontSize: 10.rsp,fontWeight: FontWeight.bold)),
-                                        Text('30.00', style: TextStyle(color: Color(0xFFC92219), fontSize: 12.rsp,fontWeight: FontWeight.bold)),
+                                        Text(' ¥',
+                                            style: TextStyle(
+                                                color: Color(0xFFC92219),
+                                                fontSize: 10.rsp,
+                                                fontWeight: FontWeight.bold)),
+                                        Text('30.00',
+                                            style: TextStyle(
+                                                color: Color(0xFFC92219),
+                                                fontSize: 12.rsp,
+                                                fontWeight: FontWeight.bold)),
                                       ],
                                     )
                                   ],
                                 ),
                               ),
                             ),
-
-
                           ],
                         ),
                       ),
@@ -1369,8 +1383,8 @@ class _HomePageState extends BaseStoreState<HomePage>
         _backgroundColor = color;
 
         _wholesaleState(() {});
-        _animatedBackgroundState.currentState!.changeColor(color);
-        _sliverAppBarGlobalKey.currentState!.updateColor(color);
+        _animatedBackgroundState.currentState?.changeColor(color);
+        _sliverAppBarGlobalKey.currentState?.updateColor(color);
       }
     }
     Widget banner =
@@ -1405,9 +1419,12 @@ class _HomePageState extends BaseStoreState<HomePage>
             onTap: () {
               if (!TextUtils.isEmpty(
                   (bannerModel as BannerModel).activityUrl)) {
-                Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
-                    url: bannerModel.activityUrl, title: "活动", hideBar: true),));
-
+                Get.to(() => WebViewPage(
+                      arguments: WebViewPage.setArguments(
+                          url: bannerModel.activityUrl,
+                          title: "活动",
+                          hideBar: true),
+                    ));
               } else {
                 if (UserManager.instance!.isWholesale) {
                   Get.to(() => WholesaleDetailPage(
@@ -1416,8 +1433,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                 } else {
                   Get.to(() => CommodityDetailPage(
                       arguments: CommodityDetailPage.setArguments(
-                          bannerModel.goodsId)
-                  ));
+                          bannerModel.goodsId)));
                 }
               }
             },
@@ -1459,8 +1475,10 @@ class _HomePageState extends BaseStoreState<HomePage>
     return GestureDetector(
       onTap: () {
         if (item != null && !TextUtils.isEmpty(item.website)) {
-          Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
-              url: item!.website, title: "活动", hideBar: true),));
+          Get.to(() => WebViewPage(
+                arguments: WebViewPage.setArguments(
+                    url: item!.website, title: "活动", hideBar: true),
+              ));
         }
       },
       child: Container(
@@ -1532,8 +1550,10 @@ class _HomePageState extends BaseStoreState<HomePage>
     return GestureDetector(
       onTap: () {
         if (itemD != null && !TextUtils.isEmpty(itemD.website)) {
-          Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
-              url: itemD!.website, title: "活动", hideBar: true),));
+          Get.to(() => WebViewPage(
+                arguments: WebViewPage.setArguments(
+                    url: itemD!.website, title: "活动", hideBar: true),
+              ));
         }
       },
       child: con,
@@ -1564,10 +1584,12 @@ class _HomePageState extends BaseStoreState<HomePage>
                   child: GestureDetector(
                     onTap: () {
                       if (itemB != null && !TextUtils.isEmpty(itemB.website)) {
-
-                        Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
-                            url: itemB!.website, title: "活动", hideBar: true),));
-
+                        Get.to(() => WebViewPage(
+                              arguments: WebViewPage.setArguments(
+                                  url: itemB!.website,
+                                  title: "活动",
+                                  hideBar: true),
+                            ));
                       }
                     },
                     child: Container(
@@ -1608,9 +1630,12 @@ class _HomePageState extends BaseStoreState<HomePage>
                   child: GestureDetector(
                     onTap: () {
                       if (itemC != null && !TextUtils.isEmpty(itemC.website)) {
-
-                        Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
-                            url: itemC!.website, title: "活动", hideBar: true),));
+                        Get.to(() => WebViewPage(
+                              arguments: WebViewPage.setArguments(
+                                  url: itemC!.website,
+                                  title: "活动",
+                                  hideBar: true),
+                            ));
                       }
                     },
                     child: Container(
@@ -1679,24 +1704,25 @@ class _HomePageState extends BaseStoreState<HomePage>
                   child: GestureDetector(
                     onTap: () {
                       if (itemB != null && !TextUtils.isEmpty(itemB.website)) {
-                        LoggerData.addData(itemB.website,tag: "BB");
+                        LoggerData.addData(itemB.website, tag: "BB");
 
-                        Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
-                            url: itemB!.website, title: "活动", hideBar: true),));
+                        Get.to(() => WebViewPage(
+                              arguments: WebViewPage.setArguments(
+                                  url: itemB!.website,
+                                  title: "活动",
+                                  hideBar: true),
+                            ));
                       }
                     },
                     child: Container(
                       child: ClipRRect(
                         child: _activityMap != null &&
                                 _activityMap!.containsKey('b')
-                            ?
-
-                            FadeInImage.assetNetwork(
+                            ? FadeInImage.assetNetwork(
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                                 image: Api.getImgUrl(itemB!.logoUrl)!,
                                 fit: BoxFit.fill,
                               )
-
                             : Image.asset(
                                 R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                                 fit: BoxFit.fill,
@@ -1725,23 +1751,25 @@ class _HomePageState extends BaseStoreState<HomePage>
                   child: GestureDetector(
                     onTap: () {
                       if (itemC != null && !TextUtils.isEmpty(itemC.website)) {
-                        LoggerData.addData(itemC.website,tag: "cc");
+                        LoggerData.addData(itemC.website, tag: "cc");
 
-                        Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
-                            url: itemC!.website, title: "活动", hideBar: true),));
+                        Get.to(() => WebViewPage(
+                              arguments: WebViewPage.setArguments(
+                                  url: itemC!.website,
+                                  title: "活动",
+                                  hideBar: true),
+                            ));
                       }
                     },
                     child: Container(
                       child: ClipRRect(
                         child: _activityMap != null &&
                                 _activityMap!.containsKey('c')
-                            ?
-                            FadeInImage.assetNetwork(
+                            ? FadeInImage.assetNetwork(
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
                                 image: Api.getImgUrl(itemC!.logoUrl)!,
                                 fit: BoxFit.fill,
                               )
-
                             : Image.asset(
                                 R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
                                 fit: BoxFit.fitWidth,
@@ -1764,10 +1792,14 @@ class _HomePageState extends BaseStoreState<HomePage>
                   child: GestureDetector(
                     onTap: () {
                       if (itemD != null && !TextUtils.isEmpty(itemD.website)) {
-                        LoggerData.addData(itemD.website,tag: "DD");
+                        LoggerData.addData(itemD.website, tag: "DD");
 
-                        Get.to(()=>WebViewPage(arguments: WebViewPage.setArguments(
-                            url: itemD!.website, title: "活动", hideBar: true),));
+                        Get.to(() => WebViewPage(
+                              arguments: WebViewPage.setArguments(
+                                  url: itemD!.website,
+                                  title: "活动",
+                                  hideBar: true),
+                            ));
                       }
                     },
                     child: Container(
@@ -1897,6 +1929,9 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   _kingCoinGet(String? name) async {
     switch (name) {
+      case '生活服务':
+        Get.to(() => LifeServiceHomePage());
+        break;
       case '京东优选':
         List<FirstCategory> firstCategoryList = [];
         firstCategoryList = await HomeDao.getJDCategoryList();
@@ -1908,7 +1943,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         break;
       case '一键邀请':
         if (!UserManager.instance!.haveLogin) {
-          Get.to(()=>LoginPage());
+          Get.to(() => LoginPage());
 
           return;
         }
@@ -1916,7 +1951,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         ShareTool().inviteShare(context, customTitle: Container());
         break;
       case '热销榜单':
-        Get.to(()=>GoodsHotListPage());
+        Get.to(() => GoodsHotListPage());
         break;
       case '进口专区':
         List<CountryListModel> countryListModelList;
@@ -1929,7 +1964,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       case '高额返补':
         if (!UserManager.instance!.haveLogin) {
           ReToast.err(text: '请先登录');
-          Get.to(()=>LoginPage());
+          Get.to(() => LoginPage());
           return;
         }
         Get.to(() => GoodsHighCommissionListPage());
@@ -1938,27 +1973,28 @@ class _HomePageState extends BaseStoreState<HomePage>
       case 'VIP权益':
         if (!UserManager.instance!.haveLogin) {
           ReToast.err(text: '请先登录');
-          Get.to(()=>LoginPage());
+          Get.to(() => LoginPage());
           return;
         }
-        Get.to(() => VipShopCardPage(
-
-            ));
+        Get.to(() => VipShopCardPage());
         //Get.to(() => GoodsHighCommissionListPage());
         break;
       case '阿库学院':
         Get.to(() => AkuCollegePage());
         break;
       case '家居生活':
-        Get.to(()=>GoodsListTempPage(arguments: GoodsListTempPage.setArguments(
-            title: "家居生活", type: GoodsListTempType.homeLife),));
+        Get.to(() => GoodsListTempPage(
+              arguments: GoodsListTempPage.setArguments(
+                  title: "家居生活", type: GoodsListTempType.homeLife),
+            ));
         break;
       case '数码家电':
-        Get.to(()=>GoodsListTempPage(arguments: GoodsListTempPage.setArguments(
-            title: "数码家电", type: GoodsListTempType.homeAppliances),));
+        Get.to(() => GoodsListTempPage(
+              arguments: GoodsListTempPage.setArguments(
+                  title: "数码家电", type: GoodsListTempType.homeAppliances),
+            ));
         break;
       case '生活服务':
-
         break;
       case '日用百货':
         break;
@@ -1976,6 +2012,7 @@ class _HomePageState extends BaseStoreState<HomePage>
         break;
       case '美妆护肤':
         break;
+
       case '全部分类':
         await HomeDao.getCategories(success: (data, code, msg) {
           // CRoute.push(
@@ -1984,10 +2021,10 @@ class _HomePageState extends BaseStoreState<HomePage>
           //       data: data,
           //       initValue: '分类',
           //     ));
-          Get.to(()=>  ClassifyPage(
-            data: data,
-            initValue: '分类',
-          ));
+          Get.to(() => ClassifyPage(
+                data: data,
+                initValue: '分类',
+              ));
         }, failure: (code, msg) {
           Toast.showError(msg);
         });
@@ -2001,29 +2038,29 @@ class _HomePageState extends BaseStoreState<HomePage>
           //       initValue: '分类',
           //     ));
 
-          Get.to(()=>  ClassifyPage(
-            data: data,
-            initValue: '分类',
-          ));
+          Get.to(() => ClassifyPage(
+                data: data,
+                initValue: '分类',
+              ));
         }, failure: (code, msg) {
           Toast.showError(msg);
         });
         //Get.to(() => WholesaleHomePage());
         break;
-        // final loadingCancel = ReToast.loading();
-        // await HomeDao.getCategories(success: (data, code, msg) {
-        //   loadingCancel();
-        //   CRoute.push(
-        //       context,
-        //       ClassifyPage(
-        //         data: data,
-        //         initValue: name,
-        //       ));
-        // }, failure: (code, msg) {
-        //   Toast.showError(msg);
-        // });
-        //
-        // break;
+      // final loadingCancel = ReToast.loading();
+      // await HomeDao.getCategories(success: (data, code, msg) {
+      //   loadingCancel();
+      //   CRoute.push(
+      //       context,
+      //       ClassifyPage(
+      //         data: data,
+      //         initValue: name,
+      //       ));
+      // }, failure: (code, msg) {
+      //   Toast.showError(msg);
+      // });
+      //
+      // break;
     }
   }
 
@@ -2104,10 +2141,10 @@ class _HomePageState extends BaseStoreState<HomePage>
           //       data: data,
           //       initValue: name,
           //     ));
-          Get.to(()=>  ClassifyPage(
-            data: data,
-            initValue:name,
-          ));
+          Get.to(() => ClassifyPage(
+                data: data,
+                initValue: name,
+              ));
         }, failure: (code, msg) {
           Toast.showError(msg);
         });
@@ -2161,12 +2198,12 @@ class _HomePageState extends BaseStoreState<HomePage>
       "is_sale": UserManager.instance!.isWholesale,
     });
     if (!resultData.result) {
-      showError(resultData.msg??'');
+      showError(resultData.msg ?? '');
       return;
     }
     BannerListModel model = BannerListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg??'');
+      showError(model.msg ?? '');
       return;
     }
     _bannerState(() {
@@ -2179,12 +2216,12 @@ class _HomePageState extends BaseStoreState<HomePage>
       "is_sale": UserManager.instance!.isWholesale,
     });
     if (!resultData.result) {
-      showError(resultData.msg??'');
+      showError(resultData.msg ?? '');
       return;
     }
     BaseModel model = BaseModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg??'');
+      showError(model.msg ?? '');
       return;
     }
     if (resultData.data['data'] != null) {
@@ -2217,12 +2254,12 @@ class _HomePageState extends BaseStoreState<HomePage>
     }
 
     if (!resultData.result) {
-      showError(resultData.msg??'');
+      showError(resultData.msg ?? '');
       return;
     }
     PromotionListModel model = PromotionListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg??'');
+      showError(model.msg ?? '');
       return;
     }
     _promotionList = model.data;
@@ -2262,13 +2299,13 @@ class _HomePageState extends BaseStoreState<HomePage>
       "is_sale": UserManager.instance!.isWholesale,
     });
     if (!resultData.result) {
-      showError(resultData.msg??'');
+      showError(resultData.msg ?? '');
       return;
     }
     PromotionGoodsListModel model =
         PromotionGoodsListModel.fromJson(resultData.data);
     if (model.code != HttpStatus.SUCCESS) {
-      showError(model.msg??'');
+      showError(model.msg ?? '');
       return;
     }
     List array = [];
@@ -2277,7 +2314,8 @@ class _HomePageState extends BaseStoreState<HomePage>
     } else {
       array.addAll(model.data!.goodsList!);
     }
-    if (model.data!.activityList != null && model.data!.activityList!.length > 0) {
+    if (model.data!.activityList != null &&
+        model.data!.activityList!.length > 0) {
       if (model.data!.activityList!.first.activitySortId != 0) {
         if (array.length >= model.data!.activityList!.first.activitySortId!) {
           array.insert(model.data!.activityList!.first.activitySortId! - 1,
@@ -2321,7 +2359,8 @@ class _HomePageState extends BaseStoreState<HomePage>
     //cityid、city和ip参数3选一提交，如果不传，默认返回当前ip城市天气，cityid优先级最高。
     String url =
         "https://v0.yiketianqi.com/api?version=v61&appid=81622428&appsecret=AxKzYWq3";
-    if (_weatherCityModel != null && !TextUtils.isEmpty(_weatherCityModel!.id)) {
+    if (_weatherCityModel != null &&
+        !TextUtils.isEmpty(_weatherCityModel!.id)) {
       url = "$url&cityid=${_weatherCityModel!.id}";
     } else if (_weatherCityModel != null &&
         !TextUtils.isEmpty(_weatherCityModel!.cityZh)) {

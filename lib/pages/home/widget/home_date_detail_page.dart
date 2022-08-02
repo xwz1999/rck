@@ -11,6 +11,8 @@ import 'package:flutter_custom_calendar/widget/calendar_view.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/home_weather_model.dart';
+import 'package:recook/models/life_service/wannianli_model.dart';
+import 'package:recook/pages/life_service/life_func.dart';
 import 'package:recook/widgets/calendar/calendar_weekbar_widget.dart';
 import 'package:recook/widgets/calendar/holiday_calendar_model.dart';
 import 'package:recook/widgets/calendar/perpetual_calendar_model.dart';
@@ -31,8 +33,11 @@ class HomeDateDetailPage extends StatefulWidget {
 
 class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
   late CalendarController _calendarController;
-  PerpetualCalendarModel? _perpetualCalendarModel;
+
   HolidayCalendarModel? _holidayCalendarModel;
+
+  WanNianLiModel? wanNianLiModel;
+
   Set<DateTime> _dates = Set<DateTime>();
   DateModel? _dateModel;
 
@@ -45,6 +50,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
   void initState() {
     super.initState();
     DateTime dateNow = DateTime.now();
+
     _getPerpetual(DateUtil.formatDate(dateNow, format: 'yyyy-MM-dd'));
 
     _calendarController = CalendarController(
@@ -115,7 +121,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
     return ListView(
       children: [
         _dateWidget(),
-        _perpetualCalendarModel != null ? _nongli() : SizedBox(),
+        wanNianLiModel != null ? _nongli() : SizedBox(),
       ],
     );
   }
@@ -369,18 +375,12 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
               40.wb,
               Text(
                 '农历' +
-                    _perpetualCalendarModel!.newslist!.first.lubarmonth! +
-                    _perpetualCalendarModel!.newslist!.first.lunarday!,
+                   ( wanNianLiModel!.lunar??""),
                 style: TextStyle(color: Color(0xFF181818), fontSize: 16.rsp),
               ),
               Spacer(),
               Text(
-                _perpetualCalendarModel!.newslist!.first.tiangandizhiyear! +
-                    '年 ' +
-                    _perpetualCalendarModel!.newslist!.first.tiangandizhimonth! +
-                    '月 ' +
-                    _perpetualCalendarModel!.newslist!.first.tiangandizhiday! +
-                    '日',
+                  ( wanNianLiModel!.lunarYear??""),
                 style: TextStyle(color: Color(0xFF181818), fontSize: 16.rsp),
               ),
               40.wb
@@ -391,16 +391,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
             children: [
               40.wb,
               Text(
-                _perpetualCalendarModel!.newslist!.first.festival!.isNotEmpty ||
-                        _perpetualCalendarModel!
-                            .newslist!.first.lunarFestival!.isNotEmpty
-                    ? _perpetualCalendarModel!.newslist!.first.festival!.isNotEmpty
-                        ? '"${_perpetualCalendarModel!.newslist!.first.festival}"'
-                        : _perpetualCalendarModel!
-                                .newslist!.first.lunarFestival!.isNotEmpty
-                            ? '"${_perpetualCalendarModel!.newslist!.first.lunarFestival}"'
-                            : ''
-                    : '',
+                  ( wanNianLiModel!.holiday??""),
                 style: TextStyle(color: Color(0xFF181818), fontSize: 16.rsp),
               ),
               Spacer(),
@@ -434,7 +425,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
               ),
               40.wb,
               Container(
-                child: Text(_perpetualCalendarModel!.newslist!.first.fitness!,
+                child: Text( ( wanNianLiModel!.suit??""),
                     maxLines: 5,
                     overflow: TextOverflow.ellipsis,
                     style:
@@ -471,7 +462,7 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
               ),
               40.wb,
               Container(
-                child: Text(_perpetualCalendarModel!.newslist!.first.taboo!,
+                child: Text(( wanNianLiModel!.avoid??""),
                     maxLines: 5,
                     overflow: TextOverflow.ellipsis,
                     style:
@@ -486,15 +477,8 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
   }
 
   _getPerpetual(String time) async {
-    String url =
-        "http://api.tianapi.com/txapi/lunar/index?key=f2599751017c50b91d6f31261ce6dbc0&date=$time";
-    Response res = (await (HttpManager.netFetchNormal(url, null, null, null) ))!;
-    Map map = json.decode(res.data.toString());
-
-    _perpetualCalendarModel = PerpetualCalendarModel.fromJson(map as Map<String, dynamic>);
-    print(_perpetualCalendarModel);
+    wanNianLiModel = await LifeFunc.getWanNianLiModel(time);
     setState(() {});
-    //_homeWeatherModel = HomeWeatherModel.fromJson(map);
   }
 
   _getholiday(String time) async {

@@ -122,10 +122,6 @@ class _SettingItemListViewState extends State<SettingItemListView> with WidgetsB
                         //push(RouteName.ACCOUNT_AND_SAFETY_PAGE);
                       }),
 
-                      SCTile.normalTile('生活服务', needDivide: true, listener: () {
-                        Get.to(LifeServiceHomePage());
-                      }),
-
                       SCTile.normalTile('接收推送通知',
                           needArrow: true, value: perText, listener: () async {
                         JPush().openSettingsForNotification();

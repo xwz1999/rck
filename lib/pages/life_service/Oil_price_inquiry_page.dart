@@ -4,22 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
-import 'package:recook/models/life_service/FigureModel.dart';
-import 'package:recook/models/life_service/constellation_pairing_model.dart';
-import 'package:recook/models/life_service/hw_calculator_model.dart';
-import 'package:recook/models/life_service/loan_model.dart';
-import 'package:recook/pages/life_service/hw_calculator_result_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/pick/list_pick_body.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
 import 'OilPriceModel.dart';
-import 'loan_result_page.dart';
 
 class OilPriceInquiryPage extends StatefulWidget {
+  final List<OilPriceModel> oilList;
   OilPriceInquiryPage({
-    Key? key,
+    Key? key, required this.oilList,
   }) : super(key: key);
 
   @override
@@ -37,29 +32,7 @@ class _OilPriceInquiryPageState extends State<OilPriceInquiryPage>
   @override
   void initState() {
     super.initState();
-    oilList = [
-      OilPriceModel(
-          city:"北京",
-          s92h:"8.78",
-          s95h:"9.35",
-          s98h:"10.33",
-          s0h:"8.53"
-      ),
-      OilPriceModel(
-          city:"上海",
-          s92h:"8.78",
-          s95h:"9.35",
-          s98h:"10.33",
-          s0h:"8.44"
-      ),
-      OilPriceModel(
-          city:"天津",
-          s92h:"8.78",
-          s95h:"9.35",
-          s98h:"10.33",
-          s0h:"8.55"
-      ),
-    ];
+    oilList = widget.oilList;
   }
 
   @override
@@ -102,7 +75,7 @@ class _OilPriceInquiryPageState extends State<OilPriceInquiryPage>
         children: [
           64.hb,
           Text(
-            '城市',
+            '省份',
             style: TextStyle(
                 fontSize: 14.rsp,
                 color: Color(0xFF999999),
@@ -114,7 +87,7 @@ class _OilPriceInquiryPageState extends State<OilPriceInquiryPage>
               city =  (await ListPickBody.listPicker([
                 '北京','上海','天津','重庆','福建','甘肃','广东','广西','贵州','海南','河北','河南','湖北','湖南','吉林','江苏','江西','辽宁','内蒙古','安徽','宁夏',
                 '青海','山东','陕西','陕西','四川','西藏','黑龙江','新疆','云南','浙江','深圳',
-              ], '选择城市'))??'';
+              ], '选择城市'))??'请选择';
               setState(() {
               });
             },
@@ -132,7 +105,7 @@ class _OilPriceInquiryPageState extends State<OilPriceInquiryPage>
                     city,
                     style: TextStyle(
                         fontSize: 14.rsp,
-                        color: Color(0xFF333333),
+                        color: city=='请选择'? Color(0xFFD8D8D8):Color(0xFF333333),
                         fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
@@ -158,7 +131,6 @@ class _OilPriceInquiryPageState extends State<OilPriceInquiryPage>
             onPressed: () {
               if (city!='请选择') {
 
-                // chooseOilPriceModel = oilList.firstWhere((element) => element.city == city);
                 print(city);
                 for(int i=0;i<oilList.length;i++){
                   if(oilList[i].city == city){

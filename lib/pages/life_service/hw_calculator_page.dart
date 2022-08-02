@@ -48,7 +48,7 @@ class _HWCalculatorPageState extends State<HWCalculatorPage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: true,
       extendBodyBehindAppBar: true,
       extendBody: true,
       appBar: CustomAppBar(
@@ -201,7 +201,6 @@ class _HWCalculatorPageState extends State<HWCalculatorPage>
           Container(
             height: 50.rw,
             child: TextField(
-              autofocus: true,
               keyboardType: TextInputType.number,
               onSubmitted: (_submitted) async {
                 _contentFocusNode.unfocus();
@@ -256,7 +255,6 @@ class _HWCalculatorPageState extends State<HWCalculatorPage>
           Container(
             height: 50.rw,
             child: TextField(
-              autofocus: true,
               keyboardType: TextInputType.number,
               onSubmitted: (_submitted) async {
                 _weightFocusNode.unfocus();
@@ -265,7 +263,7 @@ class _HWCalculatorPageState extends State<HWCalculatorPage>
               onChanged: (text) {
                 if (text.isNotEmpty) weight = double.parse(text);
                 else
-                  height = 0;
+                  weight = 0;
               },
               style: TextStyle(
                   color: Colors.black, textBaseline: TextBaseline.ideographic),
@@ -298,6 +296,9 @@ class _HWCalculatorPageState extends State<HWCalculatorPage>
             fontSize: 14.rsp,
             borderRadius: BorderRadius.all(Radius.circular(21.rw)),
             onPressed: ()async{
+              FocusManager.instance.primaryFocus!.unfocus();
+              print(height);
+              print(weight);
               if ((height > 100 && height < 300) &&
                   (weight > 20 && weight < 250)) {
 

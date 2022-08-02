@@ -278,6 +278,7 @@ class HWCalculatorResultPage extends StatelessWidget {
                   )),
               Spacer(),
               Container(
+                alignment: Alignment.centerRight,
                 width: 150.rw,
 
                 child: Text('${hwCalculatorModel.danger}',
