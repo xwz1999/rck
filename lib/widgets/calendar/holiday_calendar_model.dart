@@ -1,17 +1,17 @@
 class HolidayCalendarModel {
-  int? code;
+  String? code;
   String? msg;
-  List<Newslist>? newslist;
+  List<Newslist>? data;
 
-  HolidayCalendarModel({this.code, this.msg, this.newslist});
+  HolidayCalendarModel({this.code, this.msg, this.data});
 
   HolidayCalendarModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     msg = json['msg'];
-    if (json['newslist'] != null) {
-      newslist =  [];
-      json['newslist'].forEach((v) {
-        newslist!.add(new Newslist.fromJson(v));
+    if (json['data'] != null) {
+      data =  [];
+      json['data'].forEach((v) {
+        data!.add(new Newslist.fromJson(v));
       });
     }
   }
@@ -20,8 +20,8 @@ class HolidayCalendarModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['code'] = this.code;
     data['msg'] = this.msg;
-    if (this.newslist != null) {
-      data['newslist'] = this.newslist!.map((v) => v.toJson()).toList();
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }

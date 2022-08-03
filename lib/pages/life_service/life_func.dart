@@ -25,10 +25,28 @@ import 'package:recook/models/life_service/news_model.dart';
 import 'package:recook/models/life_service/sudoku_model.dart';
 import 'package:recook/models/life_service/zodiac_model.dart';
 import 'package:recook/models/life_service/zodiac_pairing_model.dart';
+import 'package:recook/widgets/calendar/holiday_calendar_model.dart';
 
 import 'OilPriceModel.dart';
 
 class LifeFunc {
+
+  ///获取全年的节假日
+  static Future<HolidayCalendarModel?> getHoliday(String year) async {
+
+    ResultData result = await HttpManager.post(APIV2.juHeAPI.holiday, {"year":year});
+    if (result.data != null) {
+      if (result.data['code'] != null) {
+        if(result.data['code']=='FAIL'){
+          return null;
+        }else{
+          return HolidayCalendarModel.fromJson(result.data);
+        }
+      }else
+        return null;
+    }else
+      return null;
+  }
   static Future<Response?> getJuHe(String url, String params, String key,
       {bool isList = false}) async {
     return await HttpManager.netFetchNormal(
@@ -512,15 +530,23 @@ class LifeFunc {
 
   ///万年历
   static Future<WanNianLiModel?> getWanNianLiModel(String date) async {
+    print(date);
     print(date[5]);
+    print(date[8]);
     if(date[5]=='0'){
       date =  date.substring(0,5)  + date.substring(6,10);
       print(date);
-    }
-    if(date[7]=='0'){
-      date =  date.substring(0,7)  + date.substring(8,9);
+      print(date[7]);
+      if(date[7]=='0'){
+        date =  date.substring(0,7)  + date.substring(8,9);
+        print(date);
+      }
+    }else if(date[8]=='0'){
+      date =  date.substring(0,8)  + date.substring(9,10);
       print(date);
     }
+
+    print('处理完成'+date);
     Response? res = await getJuHe(
         APIV2.juHeAPI.wnl, '&date=$date', APIV2.juHeAPI.wnlKey,isList: true);
     if (res == null) {

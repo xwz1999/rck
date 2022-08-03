@@ -482,22 +482,25 @@ class _HomeDateDetailPageState extends State<HomeDateDetailPage> {
   }
 
   _getholiday(String time) async {
-    String url =
-        "http://api.tianapi.com/txapi/jiejiari/index?key=f2599751017c50b91d6f31261ce6dbc0&date=$time&type=1";
-    Response res = (await (HttpManager.netFetchNormal(url, null, null, null)))!;
-    Map map = json.decode(res.data.toString());
+    // String url =
+    //     "http://api.tianapi.com/txapi/jiejiari/index?key=f2599751017c50b91d6f31261ce6dbc0&date=$time&type=1";
+    // Response res = (await (HttpManager.netFetchNormal(url, null, null, null)))!;
+    // Map map = json.decode(res.data.toString());
+    _holidayCalendarModel =  await LifeFunc.getHoliday(time);
 
-    _holidayCalendarModel = HolidayCalendarModel.fromJson(map as Map<String, dynamic>);
+    //_holidayCalendarModel = HolidayCalendarModel.fromJson(map as Map<String, dynamic>);
     print(_holidayCalendarModel);
-    for (int i = 0; i < _holidayCalendarModel!.newslist!.length; i++) {
+
+
+    for (int i = 0; i < _holidayCalendarModel!.data!.length; i++) {
       if (_holiday.isNotEmpty)
-        _holiday += _holidayCalendarModel!.newslist![i].vacation! + '|';
+        _holiday += _holidayCalendarModel!.data![i].vacation! + '|';
       else
-        _holiday += _holidayCalendarModel!.newslist![i].vacation!;
+        _holiday += _holidayCalendarModel!.data![i].vacation!;
       if (_workday.isNotEmpty)
-        _workday += _holidayCalendarModel!.newslist![i].remark! + '|';
+        _workday += _holidayCalendarModel!.data![i].remark! + '|';
       else
-        _workday += _holidayCalendarModel!.newslist![i].vacation!;
+        _workday += _holidayCalendarModel!.data![i].vacation!;
     }
     // _workday =
     //     '2021-01-01|2021-01-02|2021-01-03|2021-02-07|2021-02-20||2021-04-25|2021-05-08||2021-09-18|2021-09-26|2021-10-09|';

@@ -588,4 +588,7 @@ class JuHeAPI{
       'calendar/day';
   String get wnlKey =>
       '85fb227b9a3c1e9e8937f4f8e52be972';
+
+
+  String get holiday => '/v2/app/thridapi/holidays';
 }
