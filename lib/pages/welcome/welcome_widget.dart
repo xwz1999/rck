@@ -58,6 +58,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
           child: Column(
         children: <Widget>[
           Stack(
+            alignment: Alignment.center,
             children: <Widget>[
               GestureDetector(
                 onTap: () {
@@ -96,6 +97,31 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                     child: Text(
                       '跳过' +
                           "${_countDownNum > 0 ? " ${_countDownNum.toString()}" : ""}",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15 * 2.sp),
+                    ),
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white, width: 0.6.rw),
+                        borderRadius: BorderRadius.all(Radius.circular(23.rw)),
+                        color: Colors.black.withAlpha(60)),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 400.rw,
+                // left: (width/2).w,
+                child: GestureDetector(
+                  onTap: () {
+                    _close = true;
+                    _pushToTabbar();
+                  },
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10.rw, vertical: 5.rw),
+                    alignment: Alignment.center,
+                    child: Text(
+                      '点击前往商品详情页',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w400,

@@ -52,6 +52,7 @@ android {
             JPUSH_PKGNAME : "com.akuhome.recook",
             JPUSH_APPKEY : "2dba4439e97b3c0b78146fab", // NOTE: JPush 上注册的包名对应的 Appkey.
             JPUSH_CHANNEL : "developer-default", //暂时填写默认值即可.
+            applicationName: "io.flutter.app.FlutterApplication"
         ]
         multiDexEnabled true
     }
