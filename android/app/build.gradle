@@ -29,7 +29,7 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 33
     ndkVersion "21.0.6113669"
     lintOptions {
         disable 'InvalidPackage'
@@ -91,7 +91,7 @@ android {
         resolutionStrategy {
             resolutionStrategy.eachDependency { details ->
                 if (details.requested.group == 'androidx.core') {
-                    details.useVersion "1.0.2"
+                    details.useVersion "1.5.0"
                 }
                 if (details.requested.group == 'androidx.lifecycle') {
                     details.useVersion "2.0.0"
@@ -121,8 +121,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     implementation 'com.amap.api:location:5.2.0'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation(name: 'LiteAVSDK_Player_9.2.10639', ext: 'aar')
-    implementation(name: 'libsuperplayer', ext: 'aar')
+//    implementation(name: 'LiteAVSDK_Player_9.2.10639', ext: 'aar')
+//    implementation(name: 'libsuperplayer', ext: 'aar')
 
 }
 

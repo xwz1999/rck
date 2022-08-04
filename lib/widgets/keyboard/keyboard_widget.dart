@@ -25,52 +25,52 @@ class MyKeyboardStat extends State<MyKeyboard> {
   ///回调函数执行体
   var backMethod;
   void onCommitChange() {
-    widget.callback(new KeyEvent("commit"));
+    widget.callback(new KeyEventR("commit"));
   }
 
   void onOneChange(BuildContext cont) {
-    widget.callback(new KeyEvent("1"));
+    widget.callback(new KeyEventR("1"));
   }
 
   void onTwoChange(BuildContext cont) {
-    widget.callback(new KeyEvent("2"));
+    widget.callback(new KeyEventR("2"));
   }
 
   void onThreeChange(BuildContext cont) {
-    widget.callback(new KeyEvent("3"));
+    widget.callback(new KeyEventR("3"));
   }
 
   void onFourChange(BuildContext cont) {
-    widget.callback(new KeyEvent("4"));
+    widget.callback(new KeyEventR("4"));
   }
 
   void onFiveChange(BuildContext cont) {
-    widget.callback(new KeyEvent("5"));
+    widget.callback(new KeyEventR("5"));
   }
 
   void onSixChange(BuildContext cont) {
-    widget.callback(new KeyEvent("6"));
+    widget.callback(new KeyEventR("6"));
   }
 
   void onSevenChange(BuildContext cont) {
-    widget.callback(new KeyEvent("7"));
+    widget.callback(new KeyEventR("7"));
   }
 
   void onEightChange(BuildContext cont) {
-    widget.callback(new KeyEvent("8"));
+    widget.callback(new KeyEventR("8"));
   }
 
   void onNineChange(BuildContext cont) {
-    widget.callback(new KeyEvent("9"));
+    widget.callback(new KeyEventR("9"));
   }
 
   void onZeroChange(BuildContext cont) {
-    widget.callback(new KeyEvent("0"));
+    widget.callback(new KeyEventR("0"));
   }
 
   /// 点击删除
   void onDeleteChange() {
-    widget.callback(new KeyEvent("del"));
+    widget.callback(new KeyEventR("del"));
   }
 
   @override

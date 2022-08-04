@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:extended_image/extended_image.dart';
@@ -74,7 +75,7 @@ class _EvaluationItemState extends BaseStoreState<EvaluationItem> {
                   entitys.add(values);
                   for (var element in entitys) {
                     File? file = await element!.file;
-                    Uint8List? thumbData = await element.thumbData;
+                    Uint8List? thumbData = await element.thumbnailData;
                     if (widget.evaluationModel!.imageFiles!.length < 9) {
                       widget.evaluationModel!.imageFiles!.add(MediaModel(
                         width: element.width,
@@ -99,14 +100,16 @@ class _EvaluationItemState extends BaseStoreState<EvaluationItem> {
                   setState(() {});
                 }
                 if (index == 1) {
-                  var values = await AssetPicker.pickAssets(context, maxAssets: widget.maxSelectImage -
-                      widget.evaluationModel!.imageFiles!.length);
+                  var values = await AssetPicker.pickAssets(context, pickerConfig: AssetPickerConfig(
+                      maxAssets:  widget.maxSelectImage -
+                          widget.evaluationModel!.imageFiles!.length
+                  ) );
                   List<AssetEntity> entitys = [];
                   if (values == null) return;
                   entitys.addAll(values);
                   for (var element in entitys) {
                     File? file = await element.file;
-                    Uint8List? thumbData = await element.thumbData;
+                    Uint8List? thumbData = await element.thumbnailData;
                     widget.evaluationModel!.imageFiles!.add(MediaModel(
                       width: element.width,
                       height: element.height,

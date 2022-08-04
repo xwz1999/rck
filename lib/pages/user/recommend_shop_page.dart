@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:async/async.dart';
@@ -490,7 +491,7 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
             }
             for (var element in entitys) {
               File? file = await element!.file;
-              Uint8List? thumbData = await element.thumbData;
+              Uint8List? thumbData = await element.thumbnailData;
               if (list.length < 3) {
                 list.add(MediaModel(
                   width: element.width,
@@ -513,13 +514,15 @@ class _RecommendShopPageState extends State<RecommendShopPage>{
             setState(() {});
           }
           if (index == 1) {
-            var values = await AssetPicker.pickAssets(context, maxAssets: 3-list.length);
+            var values = await AssetPicker.pickAssets(context,pickerConfig: AssetPickerConfig(
+                maxAssets: 3-list.length
+            ) );
             List<AssetEntity> entitys = [];
             if (values == null) return;
             entitys.addAll(values);
             for (var element in entitys) {
               File? file = await element.file;
-              Uint8List? thumbData = await element.thumbData;
+              Uint8List? thumbData = await element.thumbnailData;
               list.add(MediaModel(
                 width: element.width,
                 height: element.height,

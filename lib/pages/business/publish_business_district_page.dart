@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:async/async.dart';
@@ -190,7 +191,7 @@ class _PublishBusinessDistrictPageState
                 entitys.add(values);
                 for (var element in entitys) {
                   File? file = await element!.file;
-                  Uint8List? thumbData = await element.thumbData;
+                  Uint8List? thumbData = await element.thumbnailData;
                   _imageFiles.add(MediaModel(
                     width: element.width,
                     height: element.height,
@@ -202,13 +203,15 @@ class _PublishBusinessDistrictPageState
                 setState(() {});
               }
               if (index == 1) {
-                var values = await AssetPicker.pickAssets(context, maxAssets: 9);
+                var values = await AssetPicker.pickAssets(context, pickerConfig: AssetPickerConfig(
+                    maxAssets: 9
+                ));
                 List<AssetEntity> entitys = [];
                 if (values == null) return;
                 entitys.addAll(values);
                 for (var element in entitys) {
                   File? file = await element.file;
-                  Uint8List? thumbData = await element.thumbData;
+                  Uint8List? thumbData = await element.thumbnailData;
                   _imageFiles.add(MediaModel(
                     width: element.width,
                     height: element.height,

@@ -81,33 +81,31 @@ class _InvoiceUploadDonePageState extends State<InvoiceUploadDonePage> {
                     ),
                   ),
                   SizedBox(height: rSize(16)),
-                  OutlineButton(
-                    color: Color(0xFF666666),
-                    borderSide: BorderSide(
-                      color: Color(0xFF666666),
-                    ),
-                    splashColor: AppColor.redColor.withOpacity(0.1),
-                    highlightedBorderColor: Color(0xFF666666),
-                    padding: EdgeInsets.symmetric(
-                      vertical: rSize(12),
-                    ),
-                    onPressed: () {
+                  GestureDetector(
+                    onTap: (){
                       Navigator.pop(context);
                       Navigator.pop(context);
                       Navigator.pop(context);
                       AppRouter.push(context, RouteName.USER_INVOICE_HISTORY);
                     },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(rSize(4)),
-                    ),
-                    child: Text(
-                      '开票历史',
-                      style: TextStyle(
-                        color: Color(0xFF666666),
-                        fontSize: 16 * 2.sp,
+                    child: Container(
+                      color:  Color(0xFF666666),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Color(0xFF666666),),
+                        borderRadius: BorderRadius.circular(rSize(4)),
+                      ),
+                      padding: EdgeInsets.symmetric(
+                        vertical: rSize(12),
+                      ),
+                      child: Text(
+                        '开票历史',
+                        style: TextStyle(
+                          color: Color(0xFF666666),
+                          fontSize: 16 * 2.sp,
+                        ),
                       ),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

@@ -13,9 +13,9 @@ class  ReviewCard extends StatelessWidget {
   final bool reviewStatusAdd;
   const ReviewCard(
       {Key? key,
-      required this.model,
-      required this.onBack,
-      this.reviewStatusAdd = true})
+        required this.model,
+        required this.onBack,
+        this.reviewStatusAdd = true})
       : super(key: key);
 
   @override
@@ -76,7 +76,7 @@ class  ReviewCard extends StatelessWidget {
                                 ),
                                 TextSpan(
                                   text:
-                                      '¥ ${model.myOrderGoodsDea!.goodsAmount!.toStringAsFixed(0)}',
+                                  '¥ ${model.myOrderGoodsDea!.goodsAmount!.toStringAsFixed(0)}',
                                   style: TextStyle(
                                     color: Color(0xFF333333),
                                   ),
@@ -121,40 +121,40 @@ class  ReviewCard extends StatelessWidget {
           Align(
             alignment: Alignment.centerRight,
             child: SizedBox(
-              height: rSize(28),
-              width: rSize(76),
-              child: OutlineButton(
-                padding: EdgeInsets.all(1),
-                onPressed: () {
-                  if (reviewStatusAdd) {
-                    CRoute.push(
-                      context,
-                      AddReviewPage(
-                        goodsDetailId: model.myOrderGoodsDea!.goodsDetailId,
-                        model: model,
+                height: rSize(28),
+                width: rSize(76),
+                child:
+                GestureDetector(
+                  onTap: (){
+                    if (reviewStatusAdd) {
+                      CRoute.push(
+                        context,
+                        AddReviewPage(
+                          goodsDetailId: model.myOrderGoodsDea!.goodsDetailId,
+                          model: model,
+                        ),
+                      ).then((value) {
+                        onBack();
+                      });
+                    } else {
+                      Get.to(ReviewDetailPage(reviewModel: model));
+                    }
+                  },
+                  child: Container(
+                    color:  Color(0xFF666666),
+                    decoration: BoxDecoration(
+                      border: Border.all( color: Colors.red,),
+                      borderRadius: BorderRadius.circular(rSize(14)),
+                    ),
+                    padding: EdgeInsets.all(1),
+                    child: Text(
+                      reviewStatusAdd ? '评价' : '查看评价',
+                      style: TextStyle(
+                        color: Color(0xFFDB2D2D),
                       ),
-                    ).then((value) {
-                      onBack();
-                    });
-                  } else {
-                    Get.to(ReviewDetailPage(reviewModel: model));
-                  }
-                },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(rSize(14)),
-                ),
-                child: Text(
-                  reviewStatusAdd ? '评价' : '查看评价',
-                  style: TextStyle(
-                    color: Color(0xFFDB2D2D),
+                    ),
                   ),
-                ),
-                splashColor: Colors.red.withOpacity(0.3),
-                highlightedBorderColor: Colors.red,
-                borderSide: BorderSide(
-                  color: Colors.red,
-                ),
-              ),
+                )
             ),
           ),
         ],

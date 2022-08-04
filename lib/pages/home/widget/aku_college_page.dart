@@ -244,15 +244,7 @@ class _AkuCollegePageState extends BaseStoreState<AkuCollegePage> {
           GestureDetector(
             onTap: () {
               //跳转页面
-             //Get.to(AkuCollegeDetailPage(akuVideo: akuVideo));
-              AppRouter.push(
-                context,
-                RouteName.WEB_VIEW_PAGE,
-                arguments: WebViewPage.setArguments(
-                    url: WebApi.privacy,
-                    title: "隐私政策",
-                    hideBar: true),
-              );
+             Get.to(AkuCollegeDetailPage(akuVideo: akuVideo));
             },
             child: Stack(
               alignment: Alignment.center,

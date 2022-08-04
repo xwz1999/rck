@@ -193,7 +193,7 @@ class _PicSwiperState extends State<PicSwiper>
 
                 rebuildIndex.add(index);
               },
-              controller: PageController(
+              controller: ExtendedPageController(
                 initialPage: currentIndex!,
               ),
               scrollDirection: Axis.horizontal,

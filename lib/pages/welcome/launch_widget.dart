@@ -33,7 +33,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
     //初始化日志工具
     PowerLogger.start(context, debug:AppConfig.debug!);//AppConfig.debug!  在正式服数据下进行调试\
 
-    WidgetsBinding.instance!.addPostFrameCallback((callback) async {
+    WidgetsBinding.instance?.addPostFrameCallback((callback) async {
       await Future.delayed(Duration(milliseconds: 2450));
       if (HiveStore.appBox!.get('privacy_init') == null) {
         // if (true) {

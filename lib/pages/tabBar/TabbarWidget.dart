@@ -35,7 +35,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((callback) {
+    WidgetsBinding.instance?.addPostFrameCallback((callback) {
       VersionTool.checkVersionInfo(_context);
     });
     _tabController = TabController(length: 5, vsync: this);

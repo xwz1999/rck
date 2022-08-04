@@ -7,6 +7,7 @@
  * ====================================================
  */
 
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:async/async.dart';
@@ -562,7 +563,7 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
 
             for (var element in entitys) {
               File? file = await element!.file;
-              Uint8List? thumbData = await element.thumbData;
+              Uint8List? thumbData = await element.thumbnailData;
               if (_imageFiles.length < maxImages) {
                 _imageFiles.add(MediaModel(
                   width: element.width,
@@ -586,13 +587,15 @@ class _GoodsReturnPageState extends BaseStoreState<GoodsReturnPage> {
             setState(() {});
           }
           if (index == 1) {
-            var values = await AssetPicker.pickAssets(context, maxAssets: maxImages-_imageFiles.length);
+            var values = await AssetPicker.pickAssets(context, pickerConfig: AssetPickerConfig(
+                maxAssets:  maxImages-_imageFiles.length
+            ) );
             List<AssetEntity> entitys = [];
             if (values == null) return;
             entitys.addAll(values);
             for (var element in entitys) {
               File? file = await element.file;
-              Uint8List? thumbData = await element.thumbData;
+              Uint8List? thumbData = await element.thumbnailData;
               _imageFiles.add(MediaModel(
                 width: element.width,
                 height: element.height,

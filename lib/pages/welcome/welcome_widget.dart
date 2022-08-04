@@ -160,7 +160,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     _autoLogin();
     _showController();
     initPlatformState();
-    WidgetsBinding.instance!.addPostFrameCallback((callback) {
+    WidgetsBinding.instance?.addPostFrameCallback((callback) {
       _beginCountDown();
       UserManager.instance!.updateUserBriefInfo(getStore());
       print(UserManager.instance!.userBrief);

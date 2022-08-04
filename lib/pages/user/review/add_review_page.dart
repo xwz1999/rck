@@ -164,7 +164,7 @@ class _AddReviewPageState extends State<AddReviewPage> {
 
                                   for (var element in entitys) {
                                     File? file = await element!.file;
-                                    Uint8List? thumbData = await element.thumbData;
+                                    Uint8List? thumbData = await element.thumbnailData;
                                     if (_mediaModels.length < 6) {
                                       _mediaModels.add(MediaModel(
                                         width: element.width,
@@ -198,13 +198,15 @@ class _AddReviewPageState extends State<AddReviewPage> {
                                   //     setState(() {});
                                   //   },
                                   // );
-                                  var values = await AssetPicker.pickAssets(context, maxAssets: 6-_mediaModels.length);
+                                  var values = await AssetPicker.pickAssets(context, pickerConfig: AssetPickerConfig(
+                                      maxAssets: 6-_mediaModels.length
+                                  ));
                                   List<AssetEntity> entitys = [];
                                   if (values == null) return;
                                   entitys.addAll(values);
                                   for (var element in entitys) {
                                     File? file = await element.file;
-                                    Uint8List? thumbData = await element.thumbData;
+                                    Uint8List? thumbData = await element.thumbnailData;
                                     _mediaModels.add(MediaModel(
                                       width: element.width,
                                       height: element.height,

@@ -50,68 +50,69 @@ class _LiveAttentionButtonState extends State<LiveAttentionButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: _height,
-      width: _width,
-      child: widget.filled
-          ? MaterialButton(
-              child: _title,
-              padding: EdgeInsets.zero,
-              shape: widget.rounded
-                  ? RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(_height! / 2),
-                    )
-                  : null,
-              color: _widgetColor,
-              onPressed: () {
-                widget.onAttention(_isAttention);
-                setState(() {
-                  _isAttention = !_isAttention;
-                });
-              },
-            )
-          : OutlineButton(
-              padding: EdgeInsets.zero,
-              child: _title,
-              shape: RoundedRectangleBorder(
+        height: _height,
+        width: _width,
+        child: widget.filled
+            ? MaterialButton(
+          child: _title,
+          padding: EdgeInsets.zero,
+          shape: widget.rounded
+              ? RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(_height! / 2),
+          )
+              : null,
+          color: _widgetColor,
+          onPressed: () {
+            widget.onAttention(_isAttention);
+            setState(() {
+              _isAttention = !_isAttention;
+            });
+          },
+        )
+            :
+        GestureDetector(
+          onTap: (){
+            widget.onAttention(_isAttention);
+            setState(() {
+              _isAttention = !_isAttention;
+            });
+          },
+          child: Container(
+              color:  Color(0xFF666666),
+              decoration: BoxDecoration(
+                border: Border.all(   color: _widgetColor,
+                  width: rSize(1),),
                 borderRadius: BorderRadius.circular(_height! / 2),
               ),
-              borderSide: BorderSide(
-                color: _widgetColor,
-                width: rSize(1),
-              ),
-              textColor: _widgetColor,
-              onPressed: () {
-                widget.onAttention(_isAttention);
-                setState(() {
-                  _isAttention = !_isAttention;
-                });
-              },
-            ),
+              padding: EdgeInsets.zero,
+              child: _title
+          ),
+        )
     );
   }
 
   TextStyle get _textStyle => TextStyle(
-        fontSize: rSP(14),
-        height: 1,
-      );
+    fontSize: rSP(14),
+    height: 1,
+  );
   Color get _widgetColor =>
       _isAttention ? Color(0xFF666666) : Color(0xFFDB2D2D);
 
   Widget get _title => _isAttention
       ? Text(
-          '已关注',
-          maxLines: 1,
-          overflow: TextOverflow.visible,
-          softWrap: false,
-          textAlign: TextAlign.center,
-          style: _textStyle,
-        )
+    '已关注',
+    maxLines: 1,
+    overflow: TextOverflow.visible,
+    softWrap: false,
+    textAlign: TextAlign.center,
+    style: _textStyle,
+  )
       : Text(
-          '+ 关注',
-          maxLines: 1,
-          style: _textStyle,
-          softWrap: false,
-          textAlign: TextAlign.center,
-          overflow: TextOverflow.visible,
-        );
+    '+ 关注',
+    maxLines: 1,
+    style: _textStyle,
+    softWrap: false,
+    textAlign: TextAlign.center,
+    overflow: TextOverflow.visible,
+  );
 }

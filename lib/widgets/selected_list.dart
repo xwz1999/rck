@@ -86,7 +86,7 @@ class _SelectedListItemState extends State<SelectedListItem> {
   void initState() {
     super.initState();
     _index = widget.itemModel!.selectedIndex;
-    WidgetsBinding.instance!.addPostFrameCallback((callback) {
+    WidgetsBinding.instance?.addPostFrameCallback((callback) {
       widget.itemClick(widget.itemModel!.selectedIndex!);
     });
   }

@@ -1,12 +1,10 @@
 import 'dart:io';
 
-// import 'package:chewie/chewie.dart';
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:recook/widgets/play_widget/video_player.dart';
-// import 'package:video_player/video_player.dart';
-
+import 'package:video_player/video_player.dart';
 class LocalFileVideo extends StatefulWidget {
-  final File? file;
+  final File file;
   final double? aspectRatio;
   LocalFileVideo({
     Key? key,
@@ -19,23 +17,39 @@ class LocalFileVideo extends StatefulWidget {
 }
 
 class _LocalFileVideoState extends State<LocalFileVideo> {
+  late ChewieController _chewieController;
+  late VideoPlayerController _videoPlayerController;
 
   @override
   void initState() {
     super.initState();
-
+    _videoPlayerController = VideoPlayerController.file(widget.file);
+    _videoPlayerController.initialize().then((value) {
+      _chewieController = ChewieController(
+        aspectRatio: _videoPlayerController.value.aspectRatio,
+        autoPlay: true,
+        showControls: false,
+        looping: true,
+        placeholder: new Container(color: Colors.black),
+        videoPlayerController: _videoPlayerController,
+      );
+      setState(() {});
+    });
   }
 
   @override
   void dispose() {
-
+    _videoPlayerController.dispose();
+    _chewieController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return  VideoPlayer(
-            isNetWork: false,url: widget.file!.path,
-          );
+    return _chewieController == null
+        ? Center(child: CircularProgressIndicator())
+        : Chewie(
+      controller: _chewieController,
+    );
   }
 }

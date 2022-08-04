@@ -1,9 +1,11 @@
 import 'dart:async';
 
+import 'package:chewie/chewie.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/pages/home/function/home_fuc.dart';
@@ -12,6 +14,7 @@ import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/play_widget/video_player.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:video_player/video_player.dart';
 
 class AkuCollegeDetailPage extends StatefulWidget {
   final AkuVideo akuVideo;
@@ -26,6 +29,9 @@ class AkuCollegeDetailPage extends StatefulWidget {
 }
 
 class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
+  VideoPlayerController? _videoPlayerController;
+  ChewieController? _chewieController;
+
   @override
   void initState() {
     super.initState();
@@ -33,11 +39,29 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
       String? code = await HomeFuc.addHits(widget.akuVideo.id);
       print(code);
     });
+    if (widget.akuVideo.type == 1) {
+      _videoPlayerController = VideoPlayerController.network(
+          Api.getImgUrl(widget.akuVideo.videoUrl) ?? '');
+      _videoPlayerController?.initialize().then((_) {
+        _chewieController = ChewieController(
+          videoPlayerController: _videoPlayerController!,
+          aspectRatio: _videoPlayerController!.value.aspectRatio,
+          autoPlay: false,
+          showControls: true,
+        );
+
+        setState(() {});
+      });
+    } else {
+      if (widget.akuVideo.textBody != null) {}
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
+    _videoPlayerController?.dispose();
+    _chewieController?.dispose();
   }
 
   @override
@@ -132,12 +156,7 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
           ],
         ),
         20.hb,
-        widget.akuVideo.type == 1
-            ? VideoPlayer(
-                url: widget.akuVideo.videoUrl,
-                isNetWork: true,
-              )
-            : _playImagText()
+        widget.akuVideo.type == 1 ? _playVideo() : _playImagText()
       ],
     ));
   }
@@ -149,6 +168,18 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
       DateTime? dateTime = DateUtil.getDateTime(date);
       return DateUtil.formatDate(dateTime, format: 'yyyy-MM-dd');
     }
+  }
+
+  _playVideo() {
+    return Container(
+      padding: EdgeInsets.only(top: 20.rw, left: 15.rw, right: 15.rw),
+      height: 230.rw,
+      child: _chewieController != null
+          ? Chewie(
+              controller: _chewieController!,
+            )
+          : SizedBox(),
+    );
   }
 
   _playImagText() {

@@ -41,7 +41,7 @@ class _HomePageTabbarPage extends State<HomePageTabbar>
     super.initState();
     hour = DateTime.now().hour;
     _gifController = GifController(vsync: this, value: 0);
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
       _gifController.repeat(
           min: 0, max: 44, period: Duration(milliseconds: 1500));
     });

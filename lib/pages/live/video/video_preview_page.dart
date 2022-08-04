@@ -26,7 +26,7 @@ class _VideoPreviewPageState extends State<VideoPreviewPage> {
         child: Hero(
           child: widget.file == null
               ? NetworkFileVideo(path: widget.path)
-              : LocalFileVideo(file: widget.file),
+              : LocalFileVideo(file: widget.file!),
           tag: 'preview_video',
         ),
       ),

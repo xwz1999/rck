@@ -1,6 +1,6 @@
-
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:recook/widgets/play_widget/video_player.dart';
+import 'package:video_player/video_player.dart';
 
 class VideoView extends StatefulWidget {
   final String? videoUrl;
@@ -10,10 +10,24 @@ class VideoView extends StatefulWidget {
 }
 
 class _VideoViewState extends State<VideoView> {
-
+  VideoPlayerController? _videoController;
+  ChewieController? _chewieController;
   @override
   void initState() {
-
+    _videoController = VideoPlayerController.network(widget.videoUrl??"");
+    _chewieController = ChewieController(
+      videoPlayerController: _videoController!,
+      aspectRatio: 16 / 9,
+      autoPlay: !true,
+      showControls: true,
+      // 占位图
+      placeholder: new Container(
+        color: Colors.grey,
+      ),
+      // 是否在 UI 构建的时候就加载视频
+      autoInitialize: true,
+      // looping: true,
+    );
     super.initState();
   }
 
@@ -26,7 +40,7 @@ class _VideoViewState extends State<VideoView> {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      child: VideoPlayer(url:widget.videoUrl ,isNetWork: true,),
+      child: Chewie(controller: _chewieController!,),
     );
   }
 

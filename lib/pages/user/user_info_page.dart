@@ -279,7 +279,7 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
         }
         for (var element in entitys) {
           File? file = await element!.file;
-          Uint8List? thumbData = await element.thumbData;
+          Uint8List? thumbData = await element.thumbnailData;
           _imageFiles.clear();
 
           _imageFiles.add(MediaModel(
@@ -297,13 +297,15 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
 
       }
       if (index == 1) {
-        var values = await AssetPicker.pickAssets(context, maxAssets: 1);
+        var values = await AssetPicker.pickAssets(context, pickerConfig: AssetPickerConfig(
+            maxAssets: 1
+        ));
         List<AssetEntity> entitys = [];
         if (values == null) return;
         entitys.addAll(values);
         for (var element in entitys) {
           File? file = await element.file;
-          Uint8List? thumbData = await element.thumbData;
+          Uint8List? thumbData = await element.thumbnailData;
           _imageFiles.clear();
           _imageFiles.add(MediaModel(
             width: element.width,

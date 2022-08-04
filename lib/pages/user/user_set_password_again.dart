@@ -155,7 +155,7 @@ class _UserSetPasswordAgainState extends BaseStoreState<UserSetPasswordAgain> {
         });
   }
 
-  void _onKeyDown(KeyEvent data) {
+  void _onKeyDown(KeyEventR data) {
     if (data.isDelete()) {
       if (pwdData.length > 0) {
         pwdData = pwdData.substring(0, pwdData.length - 1);

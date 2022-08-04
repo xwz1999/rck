@@ -50,7 +50,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
   void initState() {
     super.initState();
     _refreshController = GSRefreshController(initialRefresh: true);
-    WidgetsBinding.instance!.addPostFrameCallback((callback) {
+    WidgetsBinding.instance?.addPostFrameCallback((callback) {
       if (_isFirstLoad) {
         _isFirstLoad = false;
       } else {

@@ -101,7 +101,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     //   }
     // });
     UserManager.instance!.setPassword.addListener(_setPassword);
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance?.addObserver(this);
     _presenter = OrderPresenterImpl();
     _model = widget.arguments!["model"];
     _goToOrder = widget.arguments!["goToOrder"];
@@ -138,7 +138,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
 
   @override
   void dispose() {
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance?.removeObserver(this);
     UserManager.instance!.setPassword.removeListener(_setPassword);
     super.dispose();
   }

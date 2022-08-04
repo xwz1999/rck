@@ -265,7 +265,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     _sliverListController = ScrollController();
     _gsRefreshController = GSRefreshController(initialRefresh: true);
     _tabController = TabController(length: _promotionList!.length, vsync: this);
-    WidgetsBinding.instance!.addPostFrameCallback((callback) {
+    WidgetsBinding.instance?.addPostFrameCallback((callback) {
       if (getStore().state.goodsId != null && getStore().state.goodsId! > 0) {
         //跳到商品详情页面
 
@@ -277,7 +277,7 @@ class _HomePageState extends BaseStoreState<HomePage>
       }
       // _handleOpenInstallEvents();
     });
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance?.addObserver(this);
   }
 
   _change() {
@@ -427,7 +427,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     _tabController!.dispose();
     _amapFlutterLocation?.stopLocation();
     _amapFlutterLocation?.destroy();
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance?.removeObserver(this);
     super.dispose();
   }
 
