@@ -86,6 +86,10 @@ class _UserGroupCardDetailPageState extends State<UserGroupCardDetailPage> {
                           image: Api.getImgUrl(_memberInfoModel!.headImgUrl)!,
                           height: 44.rw,
                           width: 44.rw,
+                          imageErrorBuilder: (context, error, stackTrace) {
+                            return Image.asset(Assets.icon.icLauncherPlaystore.path,height: 44.rw,
+                              width: 44.rw,);
+                          },
                         ),
                       ),
                     ),

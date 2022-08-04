@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/models/activity_review_list_model.dart';
 import 'package:recook/utils/date/recook_date_util.dart';
@@ -179,6 +180,10 @@ class _ReviewChildCardsState extends State<ReviewChildCards> {
             image: Api.getImgUrl(model.headImgUrl)!,
             height: rSize(28),
             width: rSize(28),
+            imageErrorBuilder: (context, error, stackTrace) {
+              return Image.asset(Assets.placeholderNew1x1A.path,height: 28.rw,
+                width: 28.rw,);
+            },
           ),
         ),
         SizedBox(width: rSize(6)),

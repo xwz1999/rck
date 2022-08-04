@@ -277,6 +277,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             image: Api.getImgUrl(image.url)!,
             placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
             fit: BoxFit.cover,
+            imageErrorBuilder: (context, error, stackTrace) {
+              return Image.asset(Assets.placeholderNew1x1A.path,fit: BoxFit.cover,);
+            },
           ),
         ),
       )) as Widget;
@@ -307,6 +310,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
               child: FadeInImage.assetNetwork(
                 image: Api.getImgUrl(widget.goodsDetail!.data!.brand!.firstImg)!,
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return Image.asset(Assets.placeholderNew1x1A.path);
+                },
               ),
             ),
           ));
@@ -322,6 +328,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
           child: FadeInImage.assetNetwork(
             image: Api.getImgUrl(widget.goodsDetail!.data!.brand!.lastImg)!,
             placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+            imageErrorBuilder: (context, error, stackTrace) {
+              return Image.asset(Assets.placeholderNew1x1A.path,);
+            },
           ),
         ),
       ));
@@ -373,6 +382,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             FadeInImage.assetNetwork(
               placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
               image: Api.getImgUrl(widget.goodsDetail!.data!.notice!.img![i])!,
+              imageErrorBuilder: (context, error, stackTrace) {
+                return Image.asset(Assets.placeholderNew2x1A.path);
+              },
             ),
           );
         }
@@ -385,6 +397,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
             FadeInImage.assetNetwork(
               placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
               image: Api.getImgUrl(widget.goodsDetail!.data!.notice!.img![i])!,
+              imageErrorBuilder: (context, error, stackTrace) {
+                return Image.asset(Assets.placeholderNew2x1A.path);
+              },
             ),
           );
         }
@@ -658,6 +673,9 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                                     placeholder:
                                         R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
                                     image: currentValue!.picUrl!,
+                                    imageErrorBuilder: (context, error, stackTrace) {
+                                      return Image.asset(Assets.placeholderNew2x1A.path);
+                                    },
                                   ),
                                 )
                               : SizedBox();

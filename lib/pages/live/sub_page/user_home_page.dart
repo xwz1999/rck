@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/models/live_base_info_model.dart';
@@ -99,6 +100,10 @@ class _UserHomePageState extends State<UserHomePage>
                               image: Api.getImgUrl(model.headImgUrl)!,
                               height: rSize(54),
                               width: rSize(54),
+                              imageErrorBuilder: (context, error, stackTrace) {
+                                return Image.asset(Assets.placeholderNew1x1A.path,height: 54.w,
+                                  width: 54.w,);
+                              },
                             ),
                           ),
                           SizedBox(width: rSize(10)),

@@ -1441,6 +1441,9 @@ class _HomePageState extends BaseStoreState<HomePage>
               placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
               image: Api.getImgUrl(bannerModel.url)!,
               fit: BoxFit.fill,
+              imageErrorBuilder: (context, error, stackTrace) {
+                return Image.asset(Assets.placeholderNew2x1A.path, fit: BoxFit.fill,);
+              },
             ),
             // child: ExtendedImage.network(Api.getImgUrl(bannerModel.url),
             //     fit: BoxFit.fill, enableLoadState: true),
@@ -1493,6 +1496,9 @@ class _HomePageState extends BaseStoreState<HomePage>
                   placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
                   image: Api.getImgUrl(item!.logoUrl)!,
                   fit: BoxFit.fill,
+            imageErrorBuilder: (context, error, stackTrace) {
+              return Image.asset(Assets.placeholderNew2x1A.path, fit: BoxFit.fill,);
+            },
                 )
               //
               // ExtendedImage.network(
@@ -1537,6 +1543,9 @@ class _HomePageState extends BaseStoreState<HomePage>
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
                 image: Api.getImgUrl(itemD!.logoUrl)!,
                 fit: BoxFit.fill,
+              imageErrorBuilder: (context, error, stackTrace) {
+                return Image.asset(Assets.placeholderNew2x1A.path, fit: BoxFit.fill,);
+              },
               )
             : Image.asset(
                 R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
@@ -1605,6 +1614,9 @@ class _HomePageState extends BaseStoreState<HomePage>
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
                                 image: Api.getImgUrl(itemB!.logoUrl)!,
                                 fit: BoxFit.fill,
+                              imageErrorBuilder: (context, error, stackTrace) {
+                                return Image.asset(Assets.placeholderNew2x1A.path, fit: BoxFit.fill,);
+                              },
                               )
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemB.logoUrl),fit: BoxFit.fill,)
                             : Image.asset(
@@ -1651,6 +1663,9 @@ class _HomePageState extends BaseStoreState<HomePage>
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
                                 image: Api.getImgUrl(itemC!.logoUrl)!,
                                 fit: BoxFit.fill,
+                              imageErrorBuilder: (context, error, stackTrace) {
+                                return Image.asset(Assets.placeholderNew2x1A.path, fit: BoxFit.fill,);
+                              },
                               )
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemC.logoUrl),fit: BoxFit.fill,)
                             : Image.asset(
@@ -1722,6 +1737,9 @@ class _HomePageState extends BaseStoreState<HomePage>
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                                 image: Api.getImgUrl(itemB!.logoUrl)!,
                                 fit: BoxFit.fill,
+                          imageErrorBuilder: (context, error, stackTrace) {
+                            return Image.asset(Assets.placeholderNew1x1A.path, fit: BoxFit.fill,);
+                          },
                               )
                             : Image.asset(
                                 R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
@@ -1769,6 +1787,9 @@ class _HomePageState extends BaseStoreState<HomePage>
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
                                 image: Api.getImgUrl(itemC!.logoUrl)!,
                                 fit: BoxFit.fill,
+                          imageErrorBuilder: (context, error, stackTrace) {
+                            return Image.asset(Assets.placeholderNew2x1A.path, fit: BoxFit.fill,);
+                          },
                               )
                             : Image.asset(
                                 R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
@@ -1815,6 +1836,9 @@ class _HomePageState extends BaseStoreState<HomePage>
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
                                 image: Api.getImgUrl(itemD!.logoUrl)!,
                                 fit: BoxFit.fill,
+                              imageErrorBuilder: (context, error, stackTrace) {
+                                return Image.asset(Assets.placeholderNew2x1A.path, fit: BoxFit.fill,);
+                              },
                               )
                             // CustomCacheImage(imageUrl: Api.getImgUrl(itemC.logoUrl),fit: BoxFit.fill,)
                             : Image.asset(
@@ -1902,11 +1926,16 @@ class _HomePageState extends BaseStoreState<HomePage>
             ),
             Container(
                 margin: EdgeInsets.only(top: 5),
-                width: 48,
-                height: 48,
+                width: 48.rw,
+                height: 48.rw,
                 child: FadeInImage.assetNetwork(
+
                   placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                   image: Api.getImgUrl(kingCoin.data!.first.url)!,
+                  imageErrorBuilder: (context, error, stackTrace) {
+                    return Image.asset(Assets.placeholderNew1x1A.path,height: 48.rw,
+                      width: 48.rw,);
+                  },
                 )),
             Container(
               margin: EdgeInsets.only(top: 8),

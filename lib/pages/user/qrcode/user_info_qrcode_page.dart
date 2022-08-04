@@ -88,6 +88,11 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
                       height: 60.rw,
                       width: 60.rw,
                       fit:  BoxFit.cover,
+                      imageErrorBuilder: (context, error, stackTrace) {
+                        return Image.asset( Assets.icon.icLauncherPlaystore.path,height: 60.rw,
+                          width: 60.rw,
+                          fit:  BoxFit.cover,);
+                      },
                     ),
                   ),
                 ),

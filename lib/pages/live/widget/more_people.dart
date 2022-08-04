@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 
 class MorePeople extends StatefulWidget {
   final List<String>? images;
@@ -57,6 +58,10 @@ class _MorePeopleState extends State<MorePeople> {
           image: Api.getImgUrl(widget.images![index - 1])!,
           height: rSize(28),
           width: rSize(28),
+          imageErrorBuilder: (context, error, stackTrace) {
+            return Image.asset(Assets.placeholderNew1x1A.path,height: rSize(28),
+              width: rSize(28),);
+          },
         ),
       ),
     );

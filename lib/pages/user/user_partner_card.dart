@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/utils/user_level_tool.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -106,6 +107,10 @@ class UserPartnerCard extends StatelessWidget {
                 image: Api.getImgUrl(headImgUrl)!,
                 height: 40.rw,
                 width: 40.rw,
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return Image.asset(Assets.placeholderNew1x1A.path,height: 40.rw,
+                    width: 40.rw,);
+                },
               ),
             ),
             8.hb,

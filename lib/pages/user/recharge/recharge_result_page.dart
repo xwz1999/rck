@@ -340,6 +340,9 @@ class _RechargeResultPageState extends State<RechargeResultPage>
                                     image: Api.getImgUrl(
                                       images[index],
                                     )!,
+                                    imageErrorBuilder: (context, error, stackTrace) {
+                                      return Image.asset(Assets.placeholderNew1x1A.path,);
+                                    },
                                   )),
                             );
                           }),

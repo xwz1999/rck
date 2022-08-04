@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/models/live_exit_model.dart';
@@ -100,6 +101,10 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                             UserManager.instance!.user.info!.headImgUrl)!,
                         height: rSize(80),
                         width: rSize(80),
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return Image.asset(Assets.placeholderNew1x1A.path,   height: rSize(80),
+                            width: rSize(80),);
+                        },
                       ),
                     ),
                     rHBox(30),
@@ -243,6 +248,10 @@ class _LiveBlurPageState extends State<LiveBlurPage> {
                         image: Api.getImgUrl(widget.streamModel!.headImgUrl)!,
                         height: rSize(80),
                         width: rSize(80),
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return Image.asset(Assets.placeholderNew1x1A.path,         height: rSize(80),
+                            width: rSize(80),);
+                        },
                       ),
                     ),
                     rHBox(55),

@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/media_model.dart';
@@ -70,6 +71,10 @@ class _AddReviewPageState extends State<AddReviewPage> {
                         widget.model.myOrderGoodsDea!.mainPhotoUrl)!,
                     height: rSize(56),
                     width: rSize(56),
+                    imageErrorBuilder: (context, error, stackTrace) {
+                      return Image.asset(Assets.placeholderNew1x1A.path,height: 56.rw,
+                        width: 56.rw,);
+                    },
                   ),
                   SizedBox(width: rSize(10)),
                   Expanded(

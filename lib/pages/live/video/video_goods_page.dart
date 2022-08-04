@@ -2,6 +2,7 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/goods/small_coupon_widget.dart';
 import 'package:recook/pages/live/models/video_goods_model.dart';
@@ -254,6 +255,10 @@ class _VideoGoodsPageState extends State<VideoGoodsPage> {
               image: Api.getImgUrl(model.mainPhotoUrl)!,
               height: _height,
               width: _height,
+              imageErrorBuilder: (context, error, stackTrace) {
+                return Image.asset(Assets.placeholderNew1x1A.path,height: _height,
+                  width: _height,);
+              },
             ),
           ),
           rWBox(10),

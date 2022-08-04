@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/category_model.dart';
 import 'package:recook/pages/live/live_stream/pick_view/brand_goods_list_view.dart';
@@ -117,6 +118,10 @@ class _AllGoodsViewState extends State<AllGoodsView>
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
                                 image: Api.getImgUrl(e.logoUrl)!,
                                 height: rSize(80),
+                                imageErrorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(Assets.placeholderNew2x1A.path,height: rSize(80),
+                                    width: rSize(80),);
+                                },
                               ),
                             ),
                             Expanded(
@@ -150,6 +155,10 @@ class _AllGoodsViewState extends State<AllGoodsView>
                                                 e.sub![index].logoUrl)!,
                                             height: rSize(50),
                                             width: rSize(50),
+                                            imageErrorBuilder: (context, error, stackTrace) {
+                                              return Image.asset(Assets.placeholderNew1x1A.path,         height: rSize(50),
+                                                width: rSize(50),);
+                                            },
                                           ),
                                         ),
                                         Text(

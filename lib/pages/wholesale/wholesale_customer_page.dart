@@ -7,6 +7,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -160,6 +161,9 @@ class _WholesaleCustomerPageState extends State<WholesaleCustomerPage>
                           image: Api.getImgUrl(widget.model!.photo)!,
                           placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                           fit: BoxFit.cover,
+                          imageErrorBuilder: (context, error, stackTrace) {
+                            return Image.asset(Assets.placeholderNew1x1A.path, fit: BoxFit.cover,);
+                          },
                         ),
                       ),
                       10.wb,

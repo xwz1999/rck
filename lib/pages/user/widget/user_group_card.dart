@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/user/widget/user_group_card_detail_page.dart';
@@ -91,6 +92,10 @@ class _UserGroupCardState extends State<UserGroupCard> {
               image: Api.getImgUrl(widget.headImg)!,
               height: 40.rw,
               width: 40.rw,
+              imageErrorBuilder: (context, error, stackTrace) {
+                return Image.asset(Assets.placeholderNew1x1A.path,height: 40.rw,
+                  width: 40.rw,);
+              },
             ),
           ),
           10.wb,

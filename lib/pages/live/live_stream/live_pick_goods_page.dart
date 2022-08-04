@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/live_stream/pick_search_goods_page.dart';
 import 'package:recook/pages/live/live_stream/pick_view/all_goods_view.dart';
@@ -297,6 +298,10 @@ class _ReorderLiveGoodsListViewState extends State<ReorderLiveGoodsListView> {
                       image: Api.getImgUrl(e.mainPhotoUrl)!,
                       height: rSize(86),
                       width: rSize(86),
+                      imageErrorBuilder: (context, error, stackTrace) {
+                        return Image.asset(Assets.placeholderNew1x1A.path,         height: rSize(86),
+                          width: rSize(86),);
+                      },
                     ),
                   ),
                   rWBox(10),

@@ -3,6 +3,7 @@ import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
@@ -103,6 +104,10 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
                                         )!,
                                         width: rSize(110),
                                         height: rSize(110),
+                                        imageErrorBuilder: (context, error, stackTrace) {
+                                          return Image.asset(Assets.placeholderNew1x1A.path,  width: rSize(110),
+                                            height: rSize(110),);
+                                        },
                                       ),
                                     ),
                                     Positioned(
@@ -325,6 +330,9 @@ class _ActivityPreviewPageState extends State<ActivityPreviewPage> {
         return FadeInImage.assetNetwork(
           placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
           image: Api.getImgUrl(widget.model.imgList![index].url)!,
+          imageErrorBuilder: (context, error, stackTrace) {
+            return Image.asset(Assets.placeholderNew1x1A.path);
+          },
         );
       },
       itemCount: widget.model.imgList!.length,

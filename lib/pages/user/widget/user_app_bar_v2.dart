@@ -46,6 +46,10 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                       height: 60.rw,
                       width: 60.rw,
                       placeholder: Assets.icon.icLauncherPlaystore.path,
+                      imageErrorBuilder: (context, error, stackTrace) {
+                        return Image.asset(Assets.icon.icLauncherPlaystore.path,height: 60.rw,
+                          width: 60.rw,);
+                      },
                       image: TextUtils.isEmpty(
                               UserManager.instance!.user.info!.headImgUrl)
                           ? ""
@@ -153,6 +157,10 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                         height: 48.rw,
                         width: 48.rw,
                         placeholder: Assets.icon.icLauncherPlaystore.path,
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return Image.asset(Assets.icon.icLauncherPlaystore.path,height: 48.rw,
+                            width: 48.rw,);
+                        },
                         image: TextUtils.isEmpty(
                             UserManager.instance!.user.info!.headImgUrl)
                             ? ""
@@ -346,6 +354,10 @@ class _UserAppBarV2State extends BaseStoreState<UserAppBarV2> {
                         height: 48.rw,
                         width: 48.rw,
                         placeholder: Assets.icon.icLauncherPlaystore.path,
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return Image.asset(Assets.icon.icLauncherPlaystore.path,height: 48.rw,
+                            width: 48.rw,);
+                        },
                         image: TextUtils.isEmpty(
                             UserManager.instance!.user.info!.headImgUrl)
                             ? ""

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/models/follow_list_model.dart';
@@ -106,6 +107,10 @@ Widget _buildUserCard(FollowListModel model) {
             image: Api.getImgUrl(model.headImgUrl)!,
             height: rSize(42),
             width: rSize(42),
+            imageErrorBuilder: (context, error, stackTrace) {
+              return Image.asset(Assets.placeholderNew1x1A.path,height: 42.w,
+                width: 42.w,);
+            },
           ),
         ),
         SizedBox(width: rSize(15)),
@@ -150,6 +155,10 @@ Widget _buildUserCard(FollowListModel model) {
             image: Api.getImgUrl(model.headImgUrl)!,
             height: rSize(40),
             width: rSize(40),
+            imageErrorBuilder: (context, error, stackTrace) {
+              return Image.asset(Assets.placeholderNew1x1A.path,height: 40.w,
+                width: 40.w,);
+            },
           ),
         )
       ],

@@ -45,6 +45,10 @@ class _WholesaleUserAppBarState extends BaseStoreState<WholesaleUserAppBar> {
                       height: 60.rw,
                       width: 60.rw,
                       placeholder: Assets.icon.icLauncherPlaystore.path,
+                      imageErrorBuilder: (context, error, stackTrace) {
+                        return Image.asset(Assets.icon.icLauncherPlaystore.path,height: 60.rw,
+                          width: 60.rw,);
+                      },
                       image: TextUtils.isEmpty(
                               UserManager.instance!.user.info!.headImgUrl)
                           ? ""
@@ -149,6 +153,10 @@ class _WholesaleUserAppBarState extends BaseStoreState<WholesaleUserAppBar> {
                       child: FadeInImage.assetNetwork(
                         height: 48.rw,
                         width: 48.rw,
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return Image.asset(Assets.icon.icLauncherPlaystore.path,height: 48.rw,
+                            width: 48.rw,);
+                        },
                         placeholder: Assets.icon.icLauncherPlaystore.path,
                         image: TextUtils.isEmpty(
                             UserManager.instance!.user.info!.headImgUrl)
@@ -337,10 +345,15 @@ class _WholesaleUserAppBarState extends BaseStoreState<WholesaleUserAppBar> {
                     position: DecorationPosition.foreground,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(30.rw),
+
                       child: FadeInImage.assetNetwork(
                         height: 48.rw,
                         width: 48.rw,
                         placeholder: Assets.icon.icLauncherPlaystore.path,
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return Image.asset(Assets.icon.icLauncherPlaystore.path,height: 48.rw,
+                            width: 48.rw,);
+                        },
                         image: TextUtils.isEmpty(
                             UserManager.instance!.user.info!.headImgUrl)
                             ? ""

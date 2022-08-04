@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/models/goods_hot_sell_list_model.dart'
@@ -467,6 +468,7 @@ class GoodsItemWidget extends StatelessWidget {
               width: _height - 8,
               height: _height - 8,
               imageUrl: Api.getImgUrl(this.mainPhotoUrl),
+              placeholder: Assets.placeholderNew1x1A.path,
               fit: BoxFit.cover,
             ),
           ),

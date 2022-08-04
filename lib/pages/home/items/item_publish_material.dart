@@ -116,6 +116,10 @@ class _PublishMaterialItemState extends State<PublishMaterialItem> {
                   width: 40.rw,
                   placeholder: Assets.icon.icLauncherPlaystore.path,
                   image: Api.getResizeImgUrl(widget.model!.headImgUrl!, 300),
+                  imageErrorBuilder: (context, error, stackTrace) {
+                    return Image.asset( Assets.icon.icLauncherPlaystore.path,      height: 40.rw,
+                      width: 40.rw,);
+                  },
                 ),
               ),
               Container(

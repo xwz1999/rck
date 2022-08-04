@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/pages/user/review/add_review_page.dart';
 import 'package:recook/pages/user/review/models/order_review_list_model.dart';
 import 'package:recook/pages/user/review/review_detail_page.dart';
@@ -37,6 +38,10 @@ class  ReviewCard extends StatelessWidget {
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                 height: rSize(80),
                 width: rSize(80),
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return Image.asset(Assets.placeholderNew1x1A.path,height: 80.rw,
+                    width: 80.rw,);
+                },
               ),
               SizedBox(width: rSize(10)),
               Expanded(

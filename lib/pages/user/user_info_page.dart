@@ -81,6 +81,10 @@ class _UserInfoPageState extends BaseStoreState<UserInfoPage> {
                 height: 60.rw,
                 width: 60.rw,
                 placeholder: Assets.icon.icLauncherPlaystore.path,
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return Image.asset(Assets.icon.icLauncherPlaystore.path,height: 60.rw,
+                    width: 60.rw,);
+                },
                 image: TextUtils.isEmpty(
                     UserManager.instance!.user.info!.headImgUrl)
                     ? ""

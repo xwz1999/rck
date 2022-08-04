@@ -3,6 +3,7 @@ import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/models/guide_order_item_model.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -24,6 +25,10 @@ class GuideOrderCard extends StatelessWidget {
               image: Api.getImgUrl(item.mainPhotoUrl)!,
               height: 100.rw,
               width: 100.rw,
+              imageErrorBuilder: (context, error, stackTrace) {
+                return Image.asset(Assets.placeholderNew1x1A.path,height: 100.rw,
+                  width: 100.rw,);
+              },
             ),
           ),
           10.wb,

@@ -3,6 +3,7 @@ import 'package:recook/const/resource.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/constants.dart';
 import 'package:recook/constants/styles.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/user/review/models/order_review_list_model.dart';
 import 'package:recook/pages/user/review/models/review_result_model.dart';
@@ -73,6 +74,10 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
                               widget.reviewModel.myOrderGoodsDea!.mainPhotoUrl)!,
                           height: rSize(56),
                           width: rSize(56),
+                          imageErrorBuilder: (context, error, stackTrace) {
+                            return Image.asset(Assets.placeholderNew1x1A.path,height: 56.rw,
+                              width: 56.rw,);
+                          },
                         ),
                         SizedBox(width: rSize(10)),
                         Expanded(
@@ -207,6 +212,9 @@ class _ReviewDetailPageState extends State<ReviewDetailPage> {
                                         image: Api.getImgUrl(
                                             _model!.goodsEvaGoods![index].url)!,
                                         fit: BoxFit.cover,
+                                        imageErrorBuilder: (context, error, stackTrace) {
+                                          return Image.asset(Assets.placeholderNew1x1A.path,fit: BoxFit.cover,);
+                                        },
                                       ),
                                     );
                                   },

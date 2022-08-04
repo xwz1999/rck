@@ -302,6 +302,9 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
             image: Api.getImgUrl(image.url)!,
             placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
             fit: BoxFit.cover,
+            imageErrorBuilder: (context, error, stackTrace) {
+              return Image.asset(Assets.placeholderNew1x1A.path,  fit: BoxFit.cover,);
+            },
           ),
         ),
       )) as Widget;
@@ -332,6 +335,9 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
               child: FadeInImage.assetNetwork(
                 image: Api.getImgUrl(widget.goodsDetail!.brand!.firstImg)!,
                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return Image.asset(Assets.placeholderNew1x1A.path,);
+                },
               ),
             ),
           ));
@@ -347,6 +353,9 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
           child: FadeInImage.assetNetwork(
             image: Api.getImgUrl(widget.goodsDetail!.brand!.lastImg)!,
             placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+            imageErrorBuilder: (context, error, stackTrace) {
+              return Image.asset(Assets.placeholderNew1x1A.path);
+            },
           ),
         ),
       ));
@@ -399,6 +408,9 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
             FadeInImage.assetNetwork(
               placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
               image: Api.getImgUrl(widget.goodsDetail!.notice!.img![i])!,
+              imageErrorBuilder: (context, error, stackTrace) {
+                return Image.asset(Assets.placeholderNew2x1A.path,);
+              },
             ),
           );
         }
@@ -412,6 +424,9 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
           FadeInImage.assetNetwork(
             placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
             image: Api.getImgUrl(widget.goodsDetail!.notice!.img![i])!,
+            imageErrorBuilder: (context, error, stackTrace) {
+              return Image.asset(Assets.placeholderNew2x1A.path);
+            },
           ),
         );
         }
@@ -658,6 +673,10 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
                             child:     FadeInImage.assetNetwork(
                               placeholder: R.ASSETS_PLACEHOLDER_NEW_2X1_A_PNG,
                               image: Api.getImgUrl(currentValue!.picUrl)! ,
+                              imageErrorBuilder: (context, error, stackTrace) {
+                                return Image.asset(Assets.placeholderNew2x1A.path,height: 32.rw,
+                                  width: 32.rw,);
+                              },
                             ),
                           ):SizedBox();
                         } ).toList(),

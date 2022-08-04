@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
 
 class LiveUserBar extends StatefulWidget {
@@ -58,6 +59,10 @@ class LiveUserBarState extends State<LiveUserBar> {
                 image: Api.getImgUrl(widget.avatar)!,
                 height: rSize(32),
                 width: rSize(32),
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return Image.asset(Assets.placeholderNew1x1A.path,height: 32.rw,
+                    width: 32.rw,);
+                },
               ),
             ),
           ),

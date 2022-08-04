@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/live_stream/pick_view/pick_cart.dart';
 import 'package:recook/pages/live/models/live_brand_model.dart';
@@ -73,6 +74,10 @@ class _BrandGoodsViewState extends State<BrandGoodsView>
             image: Api.getImgUrl(model.logoUrl)!,
             height: rSize(64),
             width: rSize(64),
+            imageErrorBuilder: (context, error, stackTrace) {
+              return Image.asset(Assets.placeholderNew1x1A.path,height: 64.w,
+                width: 64.w,);
+            },
           ),
           Spacer(),
           Text(

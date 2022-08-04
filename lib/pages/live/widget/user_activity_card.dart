@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/live/activity/activity_preview_page.dart';
@@ -157,6 +158,9 @@ class _UserActivityCardState extends State<UserActivityCard> {
                           .map((e) => FadeInImage.assetNetwork(
                                 placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                                 image: Api.getImgUrl(e.url)!,
+                        imageErrorBuilder: (context, error, stackTrace) {
+                          return Image.asset(Assets.placeholderNew1x1A.path,);
+                        },
                               ))
                           .toList(),
                       shrinkWrap: true,
@@ -167,6 +171,9 @@ class _UserActivityCardState extends State<UserActivityCard> {
                   FadeInImage.assetNetwork(
                     placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                     image: Api.getImgUrl(widget.model.short!.coverUrl)!,
+                    imageErrorBuilder: (context, error, stackTrace) {
+                      return Image.asset(Assets.placeholderNew1x1A.path);
+                    },
                   ),
                   Positioned(
                     left: 0,
@@ -211,6 +218,10 @@ class _UserActivityCardState extends State<UserActivityCard> {
                 image: Api.getImgUrl(widget.model.goods!.mainPhotoURL)!,
                 height: rSize(48),
                 width: rSize(48),
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return Image.asset(Assets.placeholderNew1x1A.path,height: 48.w,
+                    width: 48.w,);
+                },
               ),
               SizedBox(width: rSize(12)),
               Expanded(

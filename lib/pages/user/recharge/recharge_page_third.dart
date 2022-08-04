@@ -327,6 +327,9 @@ class _RechargePageThirdState extends State<RechargePageThird>
                                   placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                                   image: Api.getImgUrl(
                                       images[index],)!,
+                                  imageErrorBuilder: (context, error, stackTrace) {
+                                    return Image.asset(Assets.placeholderNew1x1A.path,);
+                                  },
                                 )),
                           );
 

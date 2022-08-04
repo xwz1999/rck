@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/pages/live/models/topic_base_info_model.dart';
 import 'package:recook/pages/live/models/topic_content_list_model.dart';
@@ -76,6 +77,9 @@ class _TopicPageState extends State<TopicPage> {
                             placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
                             image: Api.getImgUrl(_topicBaseInfoModel.topicImg)!,
                             fit: BoxFit.cover,
+                            imageErrorBuilder: (context, error, stackTrace) {
+                              return Image.asset(Assets.placeholderNew1x1A.path,fit: BoxFit.cover,);
+                            },
                           ),
                         ),
                         BackdropFilter(
@@ -98,6 +102,10 @@ class _TopicPageState extends State<TopicPage> {
                                 height: rSize(64),
                                 width: rSize(64),
                                 alignment: Alignment.bottomRight,
+                                imageErrorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(Assets.placeholderNew1x1A.path,height: 64.w,
+                                    width: 64.w,);
+                                },
                               ),
                               SizedBox(width: rSize(15)),
                               Expanded(
@@ -222,6 +230,9 @@ class _TopicPageState extends State<TopicPage> {
             FadeInImage.assetNetwork(
               placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
               image: model.coverUrl!,
+              imageErrorBuilder: (context, error, stackTrace) {
+                return Image.asset(Assets.placeholderNew1x1A.path);
+              },
             ),
             Container(
               padding: EdgeInsets.all(rSize(10)),
@@ -249,6 +260,10 @@ class _TopicPageState extends State<TopicPage> {
                           image: Api.getImgUrl(model.headImgUrl)!,
                           height: rSize(18),
                           width: rSize(18),
+                          imageErrorBuilder: (context, error, stackTrace) {
+                            return Image.asset(Assets.placeholderNew1x1A.path,height: 18.w,
+                              width: 18.w,);
+                          },
                         ),
                       ),
                       rWBox(4),

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:recook/const/resource.dart';
 import 'package:recook/constants/api.dart';
+import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
@@ -77,6 +78,10 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
                 image: Api.getImgUrl(model.brandImg)!,
                 width: 44.w,
                 height: 44.w,
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return Image.asset(Assets.placeholderNew1x1A.path,height: 44.w,
+                    width: 44.w,);
+                },
               ),
             ),
             20.w.widthBox,
@@ -98,6 +103,10 @@ class _QRScarerResultPageState extends State<QRScarerResultPage> {
                 width: 200.w,
                 height: 200.w,
                 fit: BoxFit.contain,
+                imageErrorBuilder: (context, error, stackTrace) {
+                  return Image.asset(Assets.placeholderNew1x1A.path,height:200.w,
+                    width: 200.w,);
+                },
               ),
             ),
             20.w.widthBox,
