@@ -1,8 +1,13 @@
 
+import 'dart:convert';
+
+import 'package:bytedesk_kefu/bytedesk_kefu.dart';
+import 'package:bytedesk_kefu/util/bytedesk_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -17,6 +22,7 @@ import 'package:recook/pages/home/widget/modify_detail_bottom_bar.dart';
 import 'package:recook/pages/shopping_cart/shopping_cart_page.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/cache_tab_bar_view.dart';
+import 'package:recook/widgets/custom_floating_action_button_location.dart';
 import 'package:recook/widgets/toast.dart';
 
 class CommodityDetailPage extends StatefulWidget {
@@ -114,12 +120,63 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
     } else {}
   }
 
-
+  _customer() {
+    return GestureDetector(
+      onTap: () async {
+        // WholesaleCustomerModel? model = await WholesaleFunc.getCustomerInfo();
+        //
+        // Get.to(() => WholesaleCustomerPage(
+        //       model: model,
+        //     ));
+        var custom = json.encode({
+          "type": BytedeskConstants.MESSAGE_TYPE_COMMODITY, // 不能修改
+          "title": _goodsDetail?.data?.goodsName??"", // 可自定义, 类型为字符串
+          "content": _goodsDetail?.data?.description??"", // 可自定义, 类型为字符串
+          "price": (_goodsDetail?.data?.sku?.first?.discountPrice??0) - (_goodsDetail?.data?.sku?.first?.commission??0) , // 可自定义, 类型为字符串
+          // "url":
+          // "https://item.m.jd.com/product/12172344.html", // 必须为url网址, 类型为字符串
+          "imageUrl":
+          Api.getImgUrl(_goodsDetail?.data?.sku?.first?.picUrl), //必须为图片网址, 类型为字符串
+          "id": _goodsDetail?.data?.sku?.first?.goodsId, // 可自定义
+          "categoryCode": _goodsDetail?.data?.sku?.first?.code, // 可自定义, 类型为字符串
+          "client": "flutter" // 可自定义, 类型为字符串
+        });
+        BytedeskKefu.startWorkGroupChatShop(
+            context, AppConfig.WORK_GROUP_WID, "客服", custom);
+        // BytedeskKefu.startWorkGroupChat(context, AppConfig.WORK_GROUP_WID, "客服");
+      },
+      child: Container(
+        width: 46.rw,
+        height: 46.rw,
+        decoration: BoxDecoration(
+          color: Color(0xFF000000).withOpacity(0.7),
+          borderRadius: BorderRadius.all(Radius.circular(23.rw)),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              R.ASSETS_WHOLESALE_WHOLESALE_CUSTOMER_PNG,
+              width: 20.rw,
+              height: 20.rw,
+            ),
+            5.hb,
+            Text(
+              '客服',
+              style: TextStyle(color: Colors.white, fontSize: 10.rw),
+            )
+          ],
+        ),
+      ),
+    );
+  }
 
   @override
   Widget buildContext(BuildContext context, {store}) {
     Scaffold scaffold = Scaffold(
-
+      floatingActionButton: _customer(),
+      floatingActionButtonLocation: CustomFloatingActionButtonLocation(
+          FloatingActionButtonLocation.endDocked, 0, -80.rw),
       backgroundColor: Colors.white,
       body: SafeArea(
         top: true,

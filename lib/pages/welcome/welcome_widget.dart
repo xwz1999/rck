@@ -62,9 +62,9 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  _close = true;
-                  getStore().state.goodsId = _goodsId;
-                  _pushToTabbar();
+                  // _close = true;
+                  // getStore().state.goodsId = _goodsId;
+                  // _pushToTabbar();
                 },
                 child: Container(
                   width: width,
@@ -115,17 +115,18 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
                 child: GestureDetector(
                   onTap: () {
                     _close = true;
+                    getStore().state.goodsId = _goodsId;
                     _pushToTabbar();
                   },
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10.rw, vertical: 5.rw),
+                    padding: EdgeInsets.symmetric(horizontal: 10.rw, vertical: 10.rw),
                     alignment: Alignment.center,
                     child: Text(
                       '点击前往商品详情页',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w400,
-                          fontSize: 15 * 2.sp),
+                          fontSize: 18 * 2.sp),
                     ),
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.white, width: 0.6.rw),

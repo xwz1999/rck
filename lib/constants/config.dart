@@ -23,6 +23,16 @@ class AppConfig {
   static const String WX_APP_SECRET = "83f8932eb742257316e3168ba9e920dc";
   static const String WX_APP_MINIPRO_USERNAME = "gh_530bd0866836";
 
+  static const String MAP_ANDROID_KEY = "adf1ae7949103ce6a255ffe6e1f7eb77";
+  static const String MAP_IOS_KEY = "6e719eb22b154c557105a592d568f452";
+
+  static const String LBS_ANDROID_KEY = "6891e275-61d4-4866-96ae-476d1479fc60";
+  static const String LBS_IOS_KEY = "4d853603-836d-4cfa-838d-f25e47169821";
+  static const String LBS_SUBDOMAIN = "202104201749561";
+  static const String WORK_GROUP_WID = "2021042017495732a907d876a3d41d580bb50d7b6a1ccf1";
+
+
+
   static initial({
     bool dev = true,
     bool useEncrypt = true,

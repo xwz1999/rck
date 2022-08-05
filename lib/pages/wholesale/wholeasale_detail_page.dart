@@ -1,7 +1,12 @@
+import 'dart:convert';
+
+import 'package:bytedesk_kefu/bytedesk_kefu.dart';
+import 'package:bytedesk_kefu/util/bytedesk_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -175,11 +180,27 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
   _customer() {
     return GestureDetector(
       onTap: () async {
-        WholesaleCustomerModel? model = await WholesaleFunc.getCustomerInfo();
-
-        Get.to(() => WholesaleCustomerPage(
-              model: model,
-            ));
+        // WholesaleCustomerModel? model = await WholesaleFunc.getCustomerInfo();
+        //
+        // Get.to(() => WholesaleCustomerPage(
+        //       model: model,
+        //     ));
+        var custom = json.encode({
+          "type": BytedeskConstants.MESSAGE_TYPE_COMMODITY, // 不能修改
+          "title": _goodsDetail?.goodsName??"", // 可自定义, 类型为字符串
+          "content": _goodsDetail?.description??"", // 可自定义, 类型为字符串
+          "price": _goodsDetail?.sku?.first?.salePrice, // 可自定义, 类型为字符串
+          // "url":
+          // "https://item.m.jd.com/product/12172344.html", // 必须为url网址, 类型为字符串
+          "imageUrl":
+          Api.getImgUrl(_goodsDetail?.sku?.first?.picUrl), //必须为图片网址, 类型为字符串
+          "id": _goodsDetail?.sku?.first?.goodsId, // 可自定义
+          "categoryCode": _goodsDetail?.sku?.first?.code, // 可自定义, 类型为字符串
+          "client": "flutter" // 可自定义, 类型为字符串
+        });
+        BytedeskKefu.startWorkGroupChatShop(
+            context, AppConfig.WORK_GROUP_WID, "客服", custom);
+        // BytedeskKefu.startWorkGroupChat(context, AppConfig.WORK_GROUP_WID, "客服");
       },
       child: Container(
         width: 46.rw,

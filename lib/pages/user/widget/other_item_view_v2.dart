@@ -1,3 +1,4 @@
+import 'package:bytedesk_kefu/bytedesk_kefu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
@@ -89,12 +90,13 @@ class OtherItemViewV2 extends StatelessWidget {
                 () async {
                   if (UserManager.instance!.haveLogin) {
                     //跳转到客服页面
-                    WholesaleCustomerModel? model =
-                        await WholesaleFunc.getCustomerInfo();
-
-                    Get.to(() => WholesaleCustomerPage(
-                          model: model,
-                        ));
+                    // WholesaleCustomerModel? model =
+                    //     await WholesaleFunc.getCustomerInfo();
+                    //
+                    // Get.to(() => WholesaleCustomerPage(
+                    //       model: model,
+                    //     ));
+                    BytedeskKefu.startWorkGroupChat(context, AppConfig.WORK_GROUP_WID, "客服");
                   } else {
                     AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
                     // showError("请先登录!");

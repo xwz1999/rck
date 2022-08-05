@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:amap_flutter_location/amap_flutter_location.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ import 'package:recook/pages/welcome/welcome_widget.dart';
 import 'package:recook/utils/storage/hive_store.dart';
 import 'package:package_info/package_info.dart';
 import 'package:power_logger/power_logger.dart';
-
+import 'package:bytedesk_kefu/bytedesk_kefu.dart';
 import 'launch_privacy_dialog.dart';
 
 List<CameraDescription>? cameras;
@@ -47,63 +48,39 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
             SystemNavigator.pop();
           else{
             HiveStore.appBox!.put('privacy_init', true);
-            Future.delayed(Duration.zero, () async {
-              UserManager.instance!.kingCoinListModelList =
-              await UserFunc.getKingCoinList();
-            });
-
-            AMapFlutterLocation.setApiKey(
-                'adf1ae7949103ce6a255ffe6e1f7eb77', '6e719eb22b154c557105a592d568f452');
-
-            //初始化
-            cameras = await availableCameras();
-            //高德地图隐私协议 在用户同意隐私协议后更新
-            AMapFlutterLocation.updatePrivacyShow(true, true);
-            AMapFlutterLocation.updatePrivacyAgree(true);
-            //获取apk包的信息(版本)
-            PackageInfo _packageInfo = await PackageInfo.fromPlatform();
-            AppConfig.versionNumber = _packageInfo.buildNumber;
-            Get.offAll(WelcomeWidget());
+            initDate();
           }
 
         } else{
           HiveStore.appBox!.put('privacy_init', true);
-          Future.delayed(Duration.zero, () async {
-            UserManager.instance!.kingCoinListModelList =
-            await UserFunc.getKingCoinList();
-          });
-          AMapFlutterLocation.setApiKey(
-              'adf1ae7949103ce6a255ffe6e1f7eb77', '6e719eb22b154c557105a592d568f452');
-          //初始化
-          cameras = await availableCameras();
-          //高德地图隐私协议 在用户同意隐私协议后更新
-          AMapFlutterLocation.updatePrivacyShow(true, true);
-          AMapFlutterLocation.updatePrivacyAgree(true);
-          //获取apk包的信息(版本)
-          PackageInfo _packageInfo = await PackageInfo.fromPlatform();
-          AppConfig.versionNumber = _packageInfo.buildNumber;
-          Get.offAll(() => WelcomeWidget());
+          initDate();
         }
       }else{
-        Future.delayed(Duration.zero, () async {
-          UserManager.instance!.kingCoinListModelList =
-          await UserFunc.getKingCoinList();
-        });
-        AMapFlutterLocation.setApiKey(
-            'adf1ae7949103ce6a255ffe6e1f7eb77', '6e719eb22b154c557105a592d568f452');
-        //初始化
-        cameras = await availableCameras();
-        //高德地图隐私协议 在用户同意隐私协议后更新
-        AMapFlutterLocation.updatePrivacyShow(true, true);
-        AMapFlutterLocation.updatePrivacyAgree(true);
-        //获取apk包的信息(版本)
-        PackageInfo _packageInfo = await PackageInfo.fromPlatform();
-        AppConfig.versionNumber = _packageInfo.buildNumber;
-        Get.offAll(() => WelcomeWidget());
+        initDate();
+
       }
     });
   }
 
+  initDate()async{
+    Future.delayed(Duration.zero, () async {
+      UserManager.instance!.kingCoinListModelList =
+      await UserFunc.getKingCoinList();
+    });
+    BytedeskKefu.init(Platform.isAndroid?AppConfig.LBS_ANDROID_KEY:AppConfig.LBS_ANDROID_KEY,AppConfig.LBS_SUBDOMAIN);
+    AMapFlutterLocation.setApiKey(
+        AppConfig.MAP_ANDROID_KEY,  AppConfig.MAP_IOS_KEY);
+
+    //初始化
+    cameras = await availableCameras();
+    //高德地图隐私协议 在用户同意隐私协议后更新
+    AMapFlutterLocation.updatePrivacyShow(true, true);
+    AMapFlutterLocation.updatePrivacyAgree(true);
+    //获取apk包的信息(版本)
+    PackageInfo _packageInfo = await PackageInfo.fromPlatform();
+    AppConfig.versionNumber = _packageInfo.buildNumber;
+    Get.offAll(WelcomeWidget());
+  }
   @override
   Widget buildContext(BuildContext context, {store}) {
     Constants.initial(context);

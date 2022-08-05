@@ -105,7 +105,7 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
   String? _defaltAddress;
   int? _jDHaveGoods = -1;
   // int _seckillStatus = 0;//秒杀状态 0为未开始 1为开始
-  String? guige = '请选择Get.to(()=>LifeServiceHomePage())';
+  String? guige = '请选择';
   bool? isWholesale = false;
   ScrollController _scrollController = ScrollController();
   bool showFab = false;

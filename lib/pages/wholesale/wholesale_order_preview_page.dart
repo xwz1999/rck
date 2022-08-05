@@ -1,6 +1,7 @@
 
 import 'dart:async';
 
+import 'package:bytedesk_kefu/bytedesk_kefu.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
@@ -573,11 +574,11 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
   _customer(){
     return GestureDetector(
       onTap: () async{
-        WholesaleCustomerModel? model = await
-        WholesaleFunc.getCustomerInfo();
-
-        Get.to(()=>WholesaleCustomerPage(model: model,));
-
+        // WholesaleCustomerModel? model = await
+        // WholesaleFunc.getCustomerInfo();
+        //
+        // Get.to(()=>WholesaleCustomerPage(model: model,));
+        BytedeskKefu.startWorkGroupChat(context, AppConfig.WORK_GROUP_WID, "客服");
 
       },
       child: Container(

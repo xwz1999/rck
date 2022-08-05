@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bytedesk_kefu/bytedesk_kefu.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -237,12 +238,13 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
                     Spacer(),
                     GestureDetector(
                       onTap: () async {
-                        WholesaleCustomerModel? model =
-                            await WholesaleFunc.getCustomerInfo();
-
-                        Get.to(() => WholesaleCustomerPage(
-                              model: model,
-                            ));
+                        // WholesaleCustomerModel? model =
+                        //     await WholesaleFunc.getCustomerInfo();
+                        //
+                        // Get.to(() => WholesaleCustomerPage(
+                        //       model: model,
+                        //     ));
+                        BytedeskKefu.startWorkGroupChat(context, AppConfig.WORK_GROUP_WID, "客服");
                       },
                       child: Container(
                         height: 32.rw,

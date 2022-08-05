@@ -273,7 +273,7 @@ dependencies:
       path:
         bytedesk_kefu
       ref:
-        '3649631'
+        'd3cb995'
 
 dev_dependencies:
   flutter_test:
@@ -307,6 +307,9 @@ flutter:
     - assets/weather/
     - assets/wholesale/
     - assets/life/
+    - assets/audio/
+    - assets/images/chat/
+    - assets/images/feedback/
   fonts:
     - family: AppIcons
       fonts:

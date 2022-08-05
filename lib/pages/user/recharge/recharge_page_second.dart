@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:async/async.dart';
+import 'package:bytedesk_kefu/bytedesk_kefu.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/cupertino.dart';
@@ -245,12 +246,13 @@ class _RechargePageSecondState extends State<RechargePageSecond>
                     Spacer(),
                     GestureDetector(
                       onTap: () async{
-                        WholesaleCustomerModel? model =
-                        await WholesaleFunc.getCustomerInfo();
-
-                        Get.to(() => WholesaleCustomerPage(
-                          model: model,
-                        ));
+                        // WholesaleCustomerModel? model =
+                        // await WholesaleFunc.getCustomerInfo();
+                        //
+                        // Get.to(() => WholesaleCustomerPage(
+                        //   model: model,
+                        // ));
+                        BytedeskKefu.startWorkGroupChat(context, AppConfig.WORK_GROUP_WID, "客服");
                       },
                       child: Container(
                         height: 32.rw,
