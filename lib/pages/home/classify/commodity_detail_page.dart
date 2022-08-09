@@ -132,7 +132,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
           "type": BytedeskConstants.MESSAGE_TYPE_COMMODITY, // 不能修改
           "title": _goodsDetail?.data?.goodsName??"", // 可自定义, 类型为字符串
           "content": _goodsDetail?.data?.description??"", // 可自定义, 类型为字符串
-          "price": (_goodsDetail?.data?.sku?.first?.discountPrice??0) - (_goodsDetail?.data?.sku?.first?.commission??0) , // 可自定义, 类型为字符串
+          "price": ((_goodsDetail?.data?.sku?.first?.discountPrice??0) - (_goodsDetail?.data?.sku?.first?.commission??0)).toStringAsFixed(2) , // 可自定义, 类型为字符串
           // "url":
           // "https://item.m.jd.com/product/12172344.html", // 必须为url网址, 类型为字符串
           "imageUrl":
@@ -176,7 +176,7 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
     Scaffold scaffold = Scaffold(
       floatingActionButton: _customer(),
       floatingActionButtonLocation: CustomFloatingActionButtonLocation(
-          FloatingActionButtonLocation.endDocked, 0, -80.rw),
+          FloatingActionButtonLocation.endDocked,2.rw, -130.rw),
       backgroundColor: Colors.white,
       body: SafeArea(
         top: true,

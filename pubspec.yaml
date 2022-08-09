@@ -2,7 +2,7 @@ name: recook
 description: Recook Market App.
 publish_to: "none"
 
-version: 2.0.8-dev+411
+version: 2.0.8-dev+412
 environment:
   sdk: '>=2.12.0 <3.0.0'
 
@@ -42,28 +42,21 @@ dependencies:
   #扫码
   scan: ^1.6.0
 
-
-  image_picker: ^0.8.5
-
-  webview_flutter: ^2.0.0
+  #重复引用
+#  image_picker: ^0.8.5
+  #重复引用
+#  webview_flutter: ^2.0.0
 
   video_player: ^2.0.0
   chewie: ^1.0.0
 
 
-  #解决部分机型画面乱码撕裂的问题
-#  flutter_tencentplayer:
+#  screen:
 #    git:
-#      url: https://github.com/qq326646683/flutter_tencentplayer.git
+#      url: https://github.com/xwz1999/flutter_screen.git
 
-#  screen: 0.0.5
-
-  screen:
-    git:
-      url: https://github.com/xwz1999/flutter_screen.git
-
-
-  url_launcher: any
+  #重复引用
+#  url_launcher: any
 
   # 权限组件
   permission_handler: ^8.0.1
@@ -76,8 +69,8 @@ dependencies:
   # json解析
   json_annotation: ^4.0.1
 
-  # 路径
-  path_provider: ^2.0.1
+  # 路径  #重复引用
+#  path_provider: ^2.0.1
   path:
 
   # 网络请求
@@ -102,10 +95,6 @@ dependencies:
   flutter_image_compress: 1.1.0
   image_cropper: 1.4.0
 
-#  # svg
-#  flutter_svg: ^0.21.0-nullsafety.0
-#
-#  sprintf: 4.0.2
 
   # 下拉刷新
   #
@@ -132,8 +121,8 @@ dependencies:
   #
   tobias: ^2.1.2+1
 
-  # 小数据缓存
-  shared_preferences: ^2.0.5
+  # 小数据缓存  #重复引用
+#  shared_preferences: ^2.0.5
 
   # 屏幕适配
   flutter_screenutil: 5.0.0
@@ -149,9 +138,6 @@ dependencies:
 #
 #  flutter_union_pay: ^0.0.4
 
-#  meiqia_flutter:
-#    git:
-#      url: https://github.com/Mocaris/meiqia_flutter
 
   # 加密
   encrypt: ^5.0.0
@@ -170,34 +156,12 @@ dependencies:
   # 侧滑item
 #  flutter_slidable: 0.5.7
 
-  # 图片选择
-#  photo:provider
-#    git:
-#      url: https://github.com/customPub/flutter_photo
-#      ref: patch-1
+
   wechat_assets_picker: ^7.0.0
 
   wechat_camera_picker: any
 
   image_gallery_saver: 1.7.1
-
-
-
-  # 因为项目compileSdkVersion 28
-  # 第三方包compileSdkVersion 是27 所以需要修改 不然build会出错
-  #
-  # flutter_bugly:
-  #   git:
-  #     url: https://github.com/crazecoder/flutter_bugly.git
-  #     ref: dev
-#  flutter_bugly: 0.2.8 安全检查原因暂时停用
-
-  # pull_to_refresh:
-  #   git:
-  #     url: https://github.com/YuzuWang/flutter_pulltorefresh.git
-  #     ref: f07d8ed25b2776e28baddae105a64664cee2922c
-
-#  flip_card: ^0.4.4
 
 
   #腾讯直播
@@ -213,16 +177,9 @@ dependencies:
   #瀑布流
   waterfall_flow: ^3.0.0
   #相机
-#  camera: ^0.8.0
+#  camera: ^0.9.8+1
   #工具类库
   flustars: ^2.0.1
-  #视频剪辑
-#  video_trimmer: ^0.5.4
-#  video_trimmer:
-#    git:
-#      url: https://github.com/customPub/video_trimmer
-#      #ref: 1761a6454623f19ef1d1c9b24f26dad47c2587b2
-
 
   #加载html
   flutter_widget_from_html_core: ^0.6.2

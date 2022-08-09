@@ -189,7 +189,7 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
           "type": BytedeskConstants.MESSAGE_TYPE_COMMODITY, // 不能修改
           "title": _goodsDetail?.goodsName??"", // 可自定义, 类型为字符串
           "content": _goodsDetail?.description??"", // 可自定义, 类型为字符串
-          "price": _goodsDetail?.sku?.first?.salePrice, // 可自定义, 类型为字符串
+          "price": _goodsDetail?.sku?.first?.salePrice?.toStringAsFixed(2), // 可自定义, 类型为字符串
           // "url":
           // "https://item.m.jd.com/product/12172344.html", // 必须为url网址, 类型为字符串
           "imageUrl":

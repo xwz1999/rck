@@ -41,13 +41,15 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
     });
     if (widget.akuVideo.type == 1) {
       _videoPlayerController = VideoPlayerController.network(
-          Api.getImgUrl(widget.akuVideo.videoUrl) ?? '');
+          Api.getImgUrl(widget.akuVideo.videoUrl) ??'');//
       _videoPlayerController?.initialize().then((_) {
         _chewieController = ChewieController(
           videoPlayerController: _videoPlayerController!,
           aspectRatio: _videoPlayerController!.value.aspectRatio,
           autoPlay: false,
           showControls: true,
+          customControls: CupertinoControls(    backgroundColor: Color.fromRGBO(41, 41, 41, 0.7),
+            iconColor: Color.fromARGB(255, 200, 200, 200),),
         );
 
         setState(() {});
@@ -105,7 +107,7 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
           children: [
             30.wb,
             Text(
-              widget.akuVideo.title!,
+              widget.akuVideo.title??'',
               maxLines: 2,
               softWrap: true,
               overflow: TextOverflow.ellipsis,
@@ -122,7 +124,7 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
           children: [
             30.wb,
             Text(
-              widget.akuVideo.subTitle!,
+              widget.akuVideo.subTitle??'',
               softWrap: true,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -134,7 +136,7 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
             Container(
               padding: EdgeInsets.only(top: 3.rw),
               child: Text(
-                _getDateTime(widget.akuVideo.createDTime!),
+                _getDateTime(widget.akuVideo.createDTime??''),
                 softWrap: true,
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
@@ -145,7 +147,7 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
             ),
             40.wb,
             Text(
-              widget.akuVideo.numberOfHits.toString() + '人已学习',
+              (widget.akuVideo.numberOfHits??0).toString() + '人已学习',
               softWrap: true,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -186,7 +188,7 @@ class _AkuCollegeDetailPageState extends BaseStoreState<AkuCollegeDetailPage> {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 5.rw),
       child: HtmlWidget(
-        widget.akuVideo.textBody!,
+        widget.akuVideo.textBody??'',
         textStyle: TextStyle(color: Color(0xFF333333)),
       ),
     );

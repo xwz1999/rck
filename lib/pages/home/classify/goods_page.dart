@@ -248,7 +248,7 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
                 ),
               ),
             ),
-            showFab?Positioned(child: _customer(),bottom: 40.rw,right: 15.rw,):SizedBox()
+            showFab?Positioned(child: _customer(),bottom: 20.rw,right: 15.rw,):SizedBox()
           ],
         ));
   }

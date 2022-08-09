@@ -34,6 +34,7 @@ import 'package:recook/pages/home/items/item_row_acitivity.dart';
 import 'package:recook/pages/home/model/king_coin_list_model.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
 import 'package:recook/pages/home/search_page.dart';
+import 'package:recook/pages/home/widget/aku_college_detail_page.dart';
 import 'package:recook/pages/home/widget/aku_college_page.dart';
 import 'package:recook/pages/home/widget/animated_home_background.dart';
 import 'package:recook/pages/home/widget/good_high_commission_page.dart';
@@ -78,6 +79,7 @@ import 'package:power_logger/power_logger.dart';
 import 'package:waterfall_flow/waterfall_flow.dart';
 
 import 'classify/classify_country_page.dart';
+import 'model/aku_video_list_model.dart';
 
 class HomeItem {
   String title;
