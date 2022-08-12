@@ -109,8 +109,6 @@ PODS:
     - FlutterMacOS
   - scan (0.0.1):
     - Flutter
-  - screen (0.0.1):
-    - Flutter
   - SDWebImage (5.12.2):
     - SDWebImage/Core (= 5.12.2)
   - SDWebImage/Core (5.12.2)
@@ -162,7 +160,6 @@ DEPENDENCIES:
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
   - photo_manager (from `.symlinks/plugins/photo_manager/ios`)
   - scan (from `.symlinks/plugins/scan/ios`)
-  - screen (from `.symlinks/plugins/screen/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - tobias (from `.symlinks/plugins/tobias/ios`)
@@ -238,8 +235,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/photo_manager/ios"
   scan:
     :path: ".symlinks/plugins/scan/ios"
-  screen:
-    :path: ".symlinks/plugins/screen/ios"
   shared_preferences_ios:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
   sqflite:
@@ -289,7 +284,6 @@ SPEC CHECKSUMS:
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   photo_manager: 4f6810b7dfc4feb03b461ac1a70dacf91fba7604
   scan: aea35bb4aa59ccc8839c576a18cd57c7d492cc86
-  screen: abd91ca7bf3426e1cc3646d27e9b2358d6bf07b0
   SDWebImage: 240e5c12b592fb1268c1d03b8c90d90e8c2ffe82
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad

@@ -230,7 +230,7 @@ dependencies:
       path:
         bytedesk_kefu
       ref:
-        'd3cb995'
+        'd3e2613'
 
 dev_dependencies:
   flutter_test:
