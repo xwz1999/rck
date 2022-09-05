@@ -68,6 +68,7 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
       await UserFunc.getKingCoinList();
     });
     BytedeskKefu.init(Platform.isAndroid?AppConfig.LBS_ANDROID_KEY:AppConfig.LBS_ANDROID_KEY,AppConfig.LBS_SUBDOMAIN);
+
     AMapFlutterLocation.setApiKey(
         AppConfig.MAP_ANDROID_KEY,  AppConfig.MAP_IOS_KEY);
 

@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/recharge_record_mdel.dart';
 import 'package:recook/pages/wholesale/func/wholesale_func.dart';
 import 'package:recook/pages/wholesale/models/wholesale_customer_model.dart';
@@ -14,6 +15,7 @@ import 'package:recook/pages/wholesale/wholesale_customer_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/pic_swiper.dart';
 import 'package:recook/widgets/recook_back_button.dart';
+import 'package:recook/widgets/toast.dart';
 
 class RechargeResultPage extends StatefulWidget {
   final RechargeRecord? history;
@@ -240,6 +242,11 @@ class _RechargeResultPageState extends State<RechargeResultPage>
                         // Get.to(() => WholesaleCustomerPage(
                         //       model: model,
                         //     ));
+                        if (UserManager.instance!.user.info!.id == 0) {
+                          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                          Toast.showError('请先登录...');
+                          return;
+                        }
                         BytedeskKefu.startWorkGroupChat(context, AppConfig.WORK_GROUP_WID, "客服");
                       },
                       child: Container(

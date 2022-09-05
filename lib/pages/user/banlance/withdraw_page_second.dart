@@ -19,6 +19,7 @@ import 'package:recook/pages/wholesale/wholesale_customer_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook_back_button.dart';
+import 'package:recook/widgets/toast.dart';
 
 class WithDrawPageSecond extends StatefulWidget {
   final WithdrawAmountModel? amount;
@@ -248,6 +249,11 @@ class _WithDrawPageSecondState extends State<WithDrawPageSecond>
                         // Get.to(() => WholesaleCustomerPage(
                         //   model: model,
                         // ));
+                        if (UserManager.instance!.user.info!.id == 0) {
+                          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                          Toast.showError('请先登录...');
+                          return;
+                        }
                         BytedeskKefu.startWorkGroupChat(context, AppConfig.WORK_GROUP_WID, "客服");
                       },
                       child: Container(

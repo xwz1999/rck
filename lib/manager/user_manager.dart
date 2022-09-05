@@ -10,6 +10,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bytedesk_kefu/bytedesk_kefu.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/base/http_result_model.dart';
 import 'package:recook/constants/api_v2.dart';
@@ -108,7 +109,7 @@ class UserManager {
     // store.dispatch(UpdateUserAction(user));
     HiveStore.appBox!.put('key_user', jsonStr);
     UserManager.instance!.updateUserBriefInfo(store);
-
+    BytedeskKefu.updateNickname(UserManager.instance?.user.info?.nickname??'');
 
     await  UserFunc.activeJpush(Platform.isIOS?2:1,UserManager.instance!.jpushRid);
 

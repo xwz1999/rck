@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/withdraw_historyc_model.dart';
 import 'package:recook/pages/user/functions/user_balance_func.dart';
 import 'package:recook/pages/user/model/company_info_model.dart';
@@ -15,6 +16,7 @@ import 'package:recook/pages/wholesale/models/wholesale_customer_model.dart';
 import 'package:recook/pages/wholesale/wholesale_customer_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/recook_back_button.dart';
+import 'package:recook/widgets/toast.dart';
 
 class WithDrawResultPage extends StatefulWidget {
   final History? history;
@@ -244,6 +246,11 @@ class _WithDrawResultPageState extends State<WithDrawResultPage>
                         // Get.to(() => WholesaleCustomerPage(
                         //       model: model,
                         //     ));
+                        if (UserManager.instance!.user.info!.id == 0) {
+                          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                          Toast.showError('请先登录...');
+                          return;
+                        }
                         BytedeskKefu.startWorkGroupChat(context, AppConfig.WORK_GROUP_WID, "客服");
                       },
                       child: Container(

@@ -5,6 +5,15 @@ import 'package:permission_handler/permission_handler.dart';
 
 
 class PermissionTool {
+  static Future<bool> haveLocationPermission() async {
+    bool permission = await Permission.location.isGranted;
+    if (!permission) {
+      await Permission.location.request();
+      permission = await Permission.location.isGranted;
+    }
+    return permission;
+  }
+
   static Future<bool> haveCameraPermission() async {
     bool permission = await Permission.camera.isGranted;
     if (!permission) {

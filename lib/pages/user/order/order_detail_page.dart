@@ -74,7 +74,11 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
         // WholesaleFunc.getCustomerInfo();
         //
         // Get.to(()=>WholesaleCustomerPage(model: model,));
-
+        if (UserManager.instance!.user.info!.id == 0) {
+          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+          Toast.showError('请先登录...');
+          return;
+        }
         BytedeskKefu.startWorkGroupChat(context, AppConfig.WORK_GROUP_WID, "客服");
 
       },

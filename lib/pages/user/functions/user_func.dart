@@ -1,6 +1,8 @@
+import 'package:recook/constants/api.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
+import 'package:recook/models/order_list_model.dart';
 import 'package:recook/pages/home/model/king_coin_list_model.dart';
 import 'package:recook/pages/user/model/user_common_model.dart';
 
@@ -92,6 +94,26 @@ class UserFunc {
       if (result.data['data'] != null) {
         return (result.data['data'] as List)
             .map((e) => KingCoinListModel.fromJson(e))
+            .toList();
+      }
+    }
+    return null;
+  }
+
+
+
+  //获取金刚区图标
+  static Future<List<OrderModel>?> getOrderList(int page) async {//new
+    ResultData result = await HttpManager.post(OrderApi.order_list_all, {
+      'userId': UserManager.instance!.user.info!.id != null
+          ? UserManager.instance!.user.info!.id
+          : 0,
+      "page": page,
+    });
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return (result.data['data'] as List)
+            .map((e) => OrderModel.fromJson(e))
             .toList();
       }
     }

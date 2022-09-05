@@ -22,6 +22,7 @@ import 'package:recook/widgets/custom_floating_action_button_location.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/input_view.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
+import 'package:recook/widgets/toast.dart';
 
 import 'models/wholesale_customer_model.dart';
 import 'models/wholesale_order_preview_model.dart';
@@ -578,6 +579,11 @@ class _WholesaleGoodsOrderPageState extends BaseStoreState<WholesaleGoodsOrderPa
         // WholesaleFunc.getCustomerInfo();
         //
         // Get.to(()=>WholesaleCustomerPage(model: model,));
+        if (UserManager.instance!.user.info!.id == 0) {
+          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+          Toast.showError('请先登录...');
+          return;
+        }
         BytedeskKefu.startWorkGroupChat(context, AppConfig.WORK_GROUP_WID, "客服");
 
       },

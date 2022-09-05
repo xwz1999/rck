@@ -10,6 +10,7 @@ import 'package:recook/pages/home/vip_shop_push_page.dart';
 import 'package:recook/pages/user/model/user_income_data_model.dart';
 import 'package:recook/pages/user/order/order_after_sale_page.dart';
 import 'package:recook/pages/user/order/order_center_page.dart';
+import 'package:recook/pages/user/other_item_view_v.dart';
 import 'package:recook/pages/user/pifa_benefit_page.dart';
 import 'package:recook/pages/user/review/review_page.dart';
 import 'package:recook/pages/user/user_benefit_sub_page.dart';
@@ -291,7 +292,7 @@ class _UserPageState extends BaseStoreState<UserPage> {
                     )
                   : SizedBox(),
               20.w.heightBox,
-              OtherItemViewV2(),
+              OtherItemViewV(),
             ],
           ),
         ),

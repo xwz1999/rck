@@ -5,6 +5,7 @@ import 'dart:io';
 
 import 'package:amap_flutter_location/amap_flutter_location.dart';
 import 'package:amap_flutter_location/amap_location_option.dart';
+import 'package:bytedesk_kefu/bytedesk_kefu.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -180,6 +181,11 @@ class _HomePageState extends BaseStoreState<HomePage>
   @override
   void initState() {
     super.initState();
+    if (UserManager.instance!.user.info!.id != 0) {
+      BytedeskKefu.updateNickname(UserManager.instance?.user.info?.nickname??'');
+    }
+
+
     if (UserManager.instance!.haveLogin) {
       Future.delayed(Duration.zero, () async {
         UserManager.instance!.getSeven = await WholesaleFunc.get7();
@@ -396,9 +402,6 @@ class _HomePageState extends BaseStoreState<HomePage>
     // _getKeyWords();
     Future.delayed(Duration.zero, () async {
       kingCoinListModelList = await UserFunc.getKingCoinList();
-      // setState(() {
-      //
-      // });
     });
   }
 
@@ -687,70 +690,75 @@ class _HomePageState extends BaseStoreState<HomePage>
         if (Platform.isIOS) {
           print(_weatherLocation);
         } else {
-          bool permission = await Permission.location.isGranted;
-          if (!permission) {
-            Alert.show(
-              context,
-              NormalContentDialog(
-                title: '需要获取以下权限',
-                content: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Image.asset(
-                      R.ASSETS_LOCATION_PER_PNG,
-                      width: 35.rw,
-                      height: 35.rw,
-                    ),
-                    4.wb,
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '定位权限',
-                          style: TextStyle(
-                              color: Color(0xFF333333),
-                              fontSize: 15.rsp,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Container(
-                            width: 200.rw,
-                            child: Text(
-                              '允许访问您的大概位置来查询城市天气',
-                              style: TextStyle(
-                                  color: Color(0xFF666666), fontSize: 13.rsp),
-                            )),
-                      ],
-                    )
-                  ],
-                ),
-                items: ["残忍拒绝"],
-                listener: (index) {
-                  Alert.dismiss(context);
-                  HiveStore.appBox!.put('locationPermission', false);
-                },
-                deleteItem: "立即授权",
-                deleteListener: () async {
-                  Alert.dismiss(context);
-
-                  HiveStore.appBox!.put('locationPermission', true);
-                  var value = await requestPermission(true);
-                  if (value) {
-                    initLocation();
-                  }
-                },
-                type: NormalTextDialogType.delete,
-              ),
-            );
-          } else {
-            var value = await requestPermission(true);
-            if (value) {
+          await PermissionTool.haveLocationPermission().then((value)  {
+            if(value){
               initLocation();
-              //监听要在设置参数之前 否则无法获取定位
-              // _amapFlutterLocation!
-              //     .setLocationOption(AMapLocationOption(onceLocation: true));
-              // _amapFlutterLocation!.startLocation();
             }
-          }
+            else{
+              PermissionTool.showOpenPermissionDialog(
+                  context, '如果您想要改变您的定位，请先打开定位权限。');
+            }
+          });
+          // bool permission = await Permission.location.isGranted;
+          // if (!permission) {
+          //   Alert.show(
+          //     context,
+          //     NormalContentDialog(
+          //       title: '需要获取以下权限',
+          //       content: Row(
+          //         mainAxisAlignment: MainAxisAlignment.start,
+          //         children: [
+          //           Image.asset(
+          //             R.ASSETS_LOCATION_PER_PNG,
+          //             width: 35.rw,
+          //             height: 35.rw,
+          //           ),
+          //           4.wb,
+          //           Column(
+          //             crossAxisAlignment: CrossAxisAlignment.start,
+          //             children: [
+          //               Text(
+          //                 '定位权限',
+          //                 style: TextStyle(
+          //                     color: Color(0xFF333333),
+          //                     fontSize: 15.rsp,
+          //                     fontWeight: FontWeight.bold),
+          //               ),
+          //               Container(
+          //                   width: 200.rw,
+          //                   child: Text(
+          //                     '允许访问您的大概位置来查询城市天气',
+          //                     style: TextStyle(
+          //                         color: Color(0xFF666666), fontSize: 13.rsp),
+          //                   )),
+          //             ],
+          //           )
+          //         ],
+          //       ),
+          //       items: ["残忍拒绝"],
+          //       listener: (index) {
+          //         Alert.dismiss(context);
+          //         HiveStore.appBox!.put('location', false);
+          //       },
+          //       deleteItem: "立即授权",
+          //       deleteListener: () async {
+          //         Alert.dismiss(context);
+          //
+          //         HiveStore.appBox!.put('location', true);
+          //         var value = await requestPermission(true);
+          //         if (value) {
+          //           initLocation();
+          //         }
+          //       },
+          //       type: NormalTextDialogType.delete,
+          //     ),
+          //   );
+          // } else {
+          //   var value = await requestPermission(true);
+          //   if (value) {
+          //     initLocation();
+          //   }
+          // }
         }
 
         String locationCityName = _weatherLocation != null &&
@@ -1350,6 +1358,7 @@ class _HomePageState extends BaseStoreState<HomePage>
                   ),
                   _bannerView(),
                   _buildGoodsCards(),
+
                   kingCoinListModelList != null
                       ? _buttonTitle(context)
                       : SizedBox(),

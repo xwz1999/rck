@@ -56,7 +56,7 @@ class _HomeCountdownWidgetState extends State<HomeCountdownWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Image.asset(UserManager.instance!.isWholesale?"assets/home_list_times_2.png": "assets/home_list_times_1.png", width: 77*1.5, height: 20*1.5),
+            Image.asset(UserManager.instance!.isWholesale?"assets/home_list_times_2.png": "assets/home_list_times_1.png", width: 77*1.5, height: 20*1.5),
           // Spacer(),
           // widget.promotionList!=null&&widget.promotionList.length>0?_rightWidget():Container(),
         ],

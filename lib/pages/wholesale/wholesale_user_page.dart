@@ -9,6 +9,7 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/home/vip_shop_push_page.dart';
 import 'package:recook/pages/user/model/user_income_data_model.dart';
+import 'package:recook/pages/user/other_item_view_v.dart';
 import 'package:recook/pages/user/pifa_benefit_page.dart';
 import 'package:recook/pages/user/user_benefit_sub_page.dart';
 import 'package:recook/pages/user/widget/other_item_view_v2.dart';
@@ -269,7 +270,7 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
         ),
       ):SizedBox(),
       20.w.heightBox,
-              OtherItemViewV2(),
+              OtherItemViewV(),
             ],
           ),
         ),

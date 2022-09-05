@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/http_manager.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/media_model.dart';
 import 'package:recook/pages/user/functions/user_balance_func.dart';
 import 'package:recook/pages/user/recharge/recharge_page_third.dart';
@@ -24,6 +25,7 @@ import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/image_selected_view.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook_back_button.dart';
+import 'package:recook/widgets/toast.dart';
 import 'package:wechat_assets_picker/wechat_assets_picker.dart';
 import 'package:wechat_camera_picker/wechat_camera_picker.dart';
 // import 'package:photo/photo.dart';
@@ -252,6 +254,11 @@ class _RechargePageSecondState extends State<RechargePageSecond>
                         // Get.to(() => WholesaleCustomerPage(
                         //   model: model,
                         // ));
+                        if (UserManager.instance!.user.info!.id == 0) {
+                          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+                          Toast.showError('请先登录...');
+                          return;
+                        }
                         BytedeskKefu.startWorkGroupChat(context, AppConfig.WORK_GROUP_WID, "客服");
                       },
                       child: Container(

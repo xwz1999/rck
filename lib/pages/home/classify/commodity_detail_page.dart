@@ -128,10 +128,15 @@ class _CommodityDetailPageState extends BaseStoreState<CommodityDetailPage>
         // Get.to(() => WholesaleCustomerPage(
         //       model: model,
         //     ));
+        if (UserManager.instance!.user.info!.id == 0) {
+          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+          Toast.showError('请先登录...');
+          return;
+        }
         var custom = json.encode({
           "type": BytedeskConstants.MESSAGE_TYPE_COMMODITY, // 不能修改
-          "title": _goodsDetail?.data?.sku?.first?.name??"", // 可自定义, 类型为字符串
-          "content": _goodsDetail?.data?.description??"", // 可自定义, 类型为字符串
+          "title": _goodsDetail?.data?.goodsName??"", // 可自定义, 类型为字符串
+          "content": UserManager.instance!.user.info!.id, // 可自定义, 类型为字符串
           "price": ((_goodsDetail?.data?.sku?.first?.discountPrice??0)).toStringAsFixed(2) , // 可自定义, 类型为字符串
           // "url":
           // "https://item.m.jd.com/product/12172344.html", // 必须为url网址, 类型为字符串

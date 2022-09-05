@@ -185,6 +185,12 @@ class _WholesaleDetailPageState extends BaseStoreState<WholesaleDetailPage>
         // Get.to(() => WholesaleCustomerPage(
         //       model: model,
         //     ));
+        if (UserManager.instance!.user.info!.id == 0) {
+          AppRouter.pushAndRemoveUntil(context, RouteName.LOGIN);
+          Toast.showError('请先登录...');
+          return;
+        }
+
         var custom = json.encode({
           "type": BytedeskConstants.MESSAGE_TYPE_COMMODITY, // 不能修改
           "title": _goodsDetail?.goodsName??"", // 可自定义, 类型为字符串
