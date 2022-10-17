@@ -18,7 +18,9 @@ class _InvoiceWithGoodsPageState extends State<InvoiceWithGoodsPage> {
   GSRefreshController _refreshController =
       GSRefreshController(initialRefresh: true);
   InvoicePresenter _invoicePresenter = InvoicePresenter();
-  List<InvoiceGetBillModel> _models = [];
+  List<InvoiceGetBillModel> _models = [
+
+  ];
   List<int?> _selectedIds = [];
   double _price = 0.0;
   int _page = 0;

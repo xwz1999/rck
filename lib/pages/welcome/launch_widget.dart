@@ -29,10 +29,13 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
   @override
   void initState() {
     super.initState();
-
+    Future.delayed(Duration.zero, () async {
+      UserManager.instance!.kingCoinListModelList =
+      await UserFunc.getKingCoinList();
+    });
     //初始化AMap  给android和ios
     //初始化日志工具
-    PowerLogger.start(context, debug:AppConfig.debug!);//AppConfig.debug!  在正式服数据下进行调试\
+    PowerLogger.start(context, debug:true);//AppConfig.debug!  在正式服数据下进行调试\
 
     WidgetsBinding.instance?.addPostFrameCallback((callback) async {
       await Future.delayed(Duration(milliseconds: 2450));
@@ -45,43 +48,39 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
               (await (launchPrivacySecondDialog(context) )) ?? false;
           //第2次不同意
           if (!secondAgree)
-            SystemNavigator.pop();
+            // SystemNavigator.pop();
+            initDate();
           else{
             HiveStore.appBox!.put('privacy_init', true);
+            initAgreeDate();
             initDate();
           }
-
         } else{
           HiveStore.appBox!.put('privacy_init', true);
+          initAgreeDate();
           initDate();
         }
       }else{
         initDate();
-
       }
     });
   }
 
   initDate()async{
-    Future.delayed(Duration.zero, () async {
-      UserManager.instance!.kingCoinListModelList =
-      await UserFunc.getKingCoinList();
-    });
-    BytedeskKefu.init(Platform.isAndroid?AppConfig.LBS_ANDROID_KEY:AppConfig.LBS_ANDROID_KEY,AppConfig.LBS_SUBDOMAIN);
-
-    AMapFlutterLocation.setApiKey(
-        AppConfig.MAP_ANDROID_KEY,  AppConfig.MAP_IOS_KEY);
-
-    //初始化
-    cameras = await availableCameras();
-    //高德地图隐私协议 在用户同意隐私协议后更新
-    AMapFlutterLocation.updatePrivacyShow(true, true);
-    AMapFlutterLocation.updatePrivacyAgree(true);
     //获取apk包的信息(版本)
-    PackageInfo _packageInfo = await PackageInfo.fromPlatform();
-    AppConfig.versionNumber = _packageInfo.buildNumber;
+    BytedeskKefu.init(Platform.isAndroid?AppConfig.LBS_ANDROID_KEY:AppConfig.LBS_ANDROID_KEY,AppConfig.LBS_SUBDOMAIN);
     Get.offAll(WelcomeWidget());
   }
+
+  initAgreeDate(){
+    //BytedeskKefu.init(Platform.isAndroid?AppConfig.LBS_ANDROID_KEY:AppConfig.LBS_ANDROID_KEY,AppConfig.LBS_SUBDOMAIN);
+    AMapFlutterLocation.setApiKey(
+        AppConfig.MAP_ANDROID_KEY,  AppConfig.MAP_IOS_KEY);
+    AMapFlutterLocation.updatePrivacyShow(true, true);
+    AMapFlutterLocation.updatePrivacyAgree(true);
+  }
+
+
   @override
   Widget buildContext(BuildContext context, {store}) {
     Constants.initial(context);

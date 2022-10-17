@@ -37,6 +37,7 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
   GSRefreshController? _refreshController;
   bool _isFirstLoad = true;
   num? _allBenefitAmount = 0;
+  num? _allPiFaAmount  = 0;
   UserIncomeDataModel? _userIncomeDataModel;
 
   @override
@@ -113,6 +114,7 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
 
       ///累计收益
       _allBenefitAmount = _userIncomeDataModel!.total;
+      _allPiFaAmount = _userIncomeDataModel!.eTotal;
     }
   }
 
@@ -563,7 +565,7 @@ class _WholesaleUserPageState extends BaseStoreState<WholesaleUserPage> {
                     ),
 
                     Spacer(),
-                    Text(_allBenefitAmount!.toStringAsFixed(2),
+                    Text(_allPiFaAmount!.toStringAsFixed(2),
                         style: TextStyle(
                             color: Colors.black, fontSize: 18)),
                     40.wb,

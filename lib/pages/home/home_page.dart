@@ -224,6 +224,7 @@ class _HomePageState extends BaseStoreState<HomePage>
     Future.delayed(Duration.zero, () async {
       bool location = await Permission.location.isGranted;
       if (Platform.isIOS) {
+
         initLocation();
       }
       if (location == true) {
@@ -291,16 +292,6 @@ class _HomePageState extends BaseStoreState<HomePage>
   _change() {
     return GestureDetector(
       onTap: () {
-        // var fireDate = DateTime.fromMillisecondsSinceEpoch(
-        //     DateTime.now().millisecondsSinceEpoch + 5000);
-        // var noti = LocalNotification(
-        //     id: 234,
-        //     title: '测试',
-        //     buildId: 1,
-        //     content: '推送测试，测试测试',
-        //     fireTime: fireDate,
-        //     extra: {"fa": "0"});
-        // jpush.sendLocalNotification(noti).then((value) => null);
 
         _activityMap = null;
         UserManager.instance!.isWholesale = !UserManager.instance!.isWholesale;
@@ -406,6 +397,10 @@ class _HomePageState extends BaseStoreState<HomePage>
   }
 
   initLocation() {
+    AMapFlutterLocation.setApiKey(
+        AppConfig.MAP_ANDROID_KEY,  AppConfig.MAP_IOS_KEY);
+    AMapFlutterLocation.updatePrivacyShow(true, true);
+    AMapFlutterLocation.updatePrivacyAgree(true);
     _amapFlutterLocation!.onLocationChanged().listen(
       (event) {
         _weatherLocation = event;
@@ -892,7 +887,8 @@ class _HomePageState extends BaseStoreState<HomePage>
                         tabController: _tabController,
                       ),
                     ),
-                  )),
+                  )
+        ),
         // SliverToBoxAdapter(
         //   child: !UserManager.instance.isWholesale
         //       ? _brandWidget()

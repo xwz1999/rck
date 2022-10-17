@@ -56,7 +56,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           title: title is String
               ? Text(
                   title,
-                  style: TextStyle(fontSize: rSize(18)),
+                  style: TextStyle(fontSize: rSize(18),color: Color(0xFF333333)),
                 )
               : title,
           leading: _backButton(context),

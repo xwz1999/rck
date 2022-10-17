@@ -255,7 +255,7 @@ class _PrivacySecondDialog extends StatelessWidget {
                   children: [
                     MaterialButton(
                       child: Text(
-                        '退出应用',
+                        '不同意',
                         style: TextStyle(
                           color: Color(0xFFFD3212),
                           fontSize: rSP(14),

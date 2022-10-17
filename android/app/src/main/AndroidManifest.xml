@@ -9,28 +9,28 @@
          FlutterApplication and put your custom class here. -->
 
     <!--允许程序读写手机状态和身份-->
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />     
-    <!--访问网络-->
-    <permission android:name="android.permission.INTERNET"/>
-    <!--用于获取运营商信息，用于支持提供运营商信息相关的接口-->
-    <permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
-    <permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!--用于读取手机当前的状态-->
-    <permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <!--用于写入缓存数据到扩展存储卡-->
-    <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <!--允许程序访问CellID或WiFi热点来获取粗略的位置-->
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> 
+<!--    <uses-permission android:name="android.permission.READ_PHONE_STATE" />     -->
+<!--    &lt;!&ndash;访问网络&ndash;&gt;-->
+<!--    <permission android:name="android.permission.INTERNET"/>-->
+<!--    &lt;!&ndash;用于获取运营商信息，用于支持提供运营商信息相关的接口&ndash;&gt;-->
+<!--    <permission android:name="android.permission.ACCESS_NETWORK_STATE"/>-->
+<!--    &lt;!&ndash;用于访问wifi网络信息，wifi信息会用于进行网络定位&ndash;&gt;-->
+<!--    <permission android:name="android.permission.ACCESS_WIFI_STATE"/>-->
+<!--    &lt;!&ndash;用于读取手机当前的状态&ndash;&gt;-->
+<!--    <permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>-->
+<!--    &lt;!&ndash;用于写入缓存数据到扩展存储卡&ndash;&gt;-->
+<!--    <permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>-->
+<!--    &lt;!&ndash;允许程序访问CellID或WiFi热点来获取粗略的位置&ndash;&gt;-->
+<!--    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> -->
     <!--精确定位-->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<!--    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
     <!--申请调用A-GPS模块-->
-    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
-    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
+<!--    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />-->
+<!--    &lt;!&ndash;用于获取wifi的获取权限，wifi信息会用来进行网络定位&ndash;&gt;-->
+<!--&lt;!&ndash;    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />&ndash;&gt;-->
+<!--    <uses-permission android:name="android.permission.CAMERA" />-->
     <!-- 用于充值话费时获取通讯录的权限 -->
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
+<!--    <uses-permission android:name="android.permission.READ_CONTACTS" />-->
     <!--        tools:replace="android:name"-->
     <!-- android:theme="@style/LaunchTheme" -->
     <application
@@ -42,7 +42,7 @@
         android:usesCleartextTraffic="true"
         android:requestLegacyExternalStorage="true">
         <uses-library android:name="android.test.runner" />
-        <meta-data android:name="com.amap.api.v2.apikey" android:value="7225bca14fe7493f9f469315a933f99c"/>
+<!--        <meta-data android:name="com.amap.api.v2.apikey" android:value="adf1ae7949103ce6a255ffe6e1f7eb77"/>-->
         <meta-data
                 android:name="flutterEmbedding"
                 android:value="2" />
@@ -74,6 +74,16 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                        android:scheme="akuhome"
+                        android:host="recook"
+                />
             </intent-filter>
 
 <!--            <intent-filter>-->

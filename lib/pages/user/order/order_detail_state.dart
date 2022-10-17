@@ -303,9 +303,9 @@ abstract class OrderDetailState<T extends StatefulWidget>
                   "支付方式",
                   orderDetail!.payMethod == 1
                       ? '微信支付'
-                      : orderDetail!.payMethod == 1
+                      : orderDetail!.payMethod == 2
                           ? '支付宝支付'
-                          : '')
+                          : orderDetail!.payMethod == 0?'余额支付':orderDetail!.payMethod == 4?'小程序支付':'')
               : SizedBox(),
           !TextUtils.isEmpty(orderDetail!.payTime)
               ? _wholesaleTitle("付款时间", orderDetail!.payTime)

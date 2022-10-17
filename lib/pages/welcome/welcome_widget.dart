@@ -1,11 +1,4 @@
-/*
- * ====================================================
- * package   : pages.welcome
- * author    : Created by nansi.
- * time      : 2019/5/5  4:47 PM 
- * remark    : 
- * ====================================================
- */
+
 
 import 'dart:async';
 import 'dart:convert';

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:bytedesk_kefu/bytedesk_kefu.dart';
 import 'package:bytedesk_kefu/util/bytedesk_constants.dart';
@@ -114,16 +115,16 @@ class OtherItemViewV2 extends StatelessWidget {
                       return;
                     }
 
-                    var custom = json.encode({
-                      "type": BytedeskConstants.MESSAGE_TYPE_COMMODITY, // 不能修改
-                      "title": "", // 可自定义, 类型为字符串
-                      "content": "", // 可自定义, 类型为字符串
-                      "price": "" , // 可自定义, 类型为字符串
-                      "imageUrl":"", //必须为图片网址, 类型为字符串
-                      "id":"", // 可自定义
-                      "categoryCode":"", // 可自定义, 类型为字符串
-                      "client": "flutter" // 可自定义, 类型为字符串
-                    });
+                    // var custom = json.encode({
+                    //   "type": BytedeskConstants.MESSAGE_TYPE_COMMODITY, // 不能修改
+                    //   "title": "", // 可自定义, 类型为字符串
+                    //   "content": "", // 可自定义, 类型为字符串
+                    //   "price": "" , // 可自定义, 类型为字符串
+                    //   "imageUrl":"", //必须为图片网址, 类型为字符串
+                    //   "id":"", // 可自定义
+                    //   "categoryCode":"", // 可自定义, 类型为字符串
+                    //   "client": "flutter" // 可自定义, 类型为字符串
+                    // });
 
 
                     BytedeskKefu.startWorkGroupChatOrderCallback(context, AppConfig.WORK_GROUP_WID, "客服", (value) {}, () {

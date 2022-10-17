@@ -445,8 +445,6 @@ class GoodsItemWidget extends StatelessWidget {
       } else {
         sellout = true;
       }
-
-
     double cir = 5;
     return Container(
       width: _height - 8,

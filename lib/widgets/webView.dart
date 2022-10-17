@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -122,7 +123,34 @@ class _WebViewState extends BaseStoreState<WebViewPage> {
         bottom: false,
         child: Stack(
           children: <Widget>[
+            Platform.isIOS?
             WebView(
+              javascriptMode: JavascriptMode.unrestricted,
+              javascriptChannels: <JavascriptChannel>[
+                _alertJavascriptChannel(context),
+              ].toSet(),
+              initialUrl: widget.arguments!["url"],
+              // navigationDelegate: (NavigationRequest request){
+              //   _launchInBrowser(request.url);
+              //   return NavigationDecision.prevent;
+              // },
+              onWebViewCreated: (WebViewController web) {
+                web.canGoBack().then((res) {
+                  print(res); // 是否能返回上一级
+                });
+                web.currentUrl().then((url) {
+                  print(url); // 返回当前url
+                });
+                web.canGoForward().then((res) {
+                  print(res); //是否能前进
+                });
+              },
+              onPageFinished: (String value) {
+                setState(() {
+                  _isLoading = false;
+                });
+              },
+            ):WebView(
               javascriptMode: JavascriptMode.unrestricted,
               javascriptChannels: <JavascriptChannel>[
                 _alertJavascriptChannel(context),

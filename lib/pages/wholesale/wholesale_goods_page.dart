@@ -1548,40 +1548,40 @@ class _WholesaleGoodsPageState extends BaseStoreState<WholesaleGoodsPage> {
 
 
   Future<dynamic> _createOrder(WholesaleSkuChooseModel skuModel) async {
-    if(UserLevelTool.currentRoleLevelEnum() !=
-        UserRoleLevel.subsidiary&&UserLevelTool.currentRoleLevelEnum() !=
-        UserRoleLevel.physical){
-
-      Alert.show(
-        context,
-        NormalContentDialog(
-          title: '提示',
-          content: Text(
-            '批发下单需开通VIP店铺',
-            textAlign: TextAlign.center,
-            style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp),
-          ),
-          items: ["取消"],
-          listener: (index) {
-            Alert.dismiss(context);
-
-          },
-          deleteItem: "去开通",
-          deleteListener: () async{
-            Alert.dismiss(context);
-
-            Get.off(() => VipShopCardPage(
-
-            ));
-          },
-          type: NormalTextDialogType.delete,
-        ),
-      );
-
-
-      return;
-
-    }
+    // if(UserLevelTool.currentRoleLevelEnum() !=
+    //     UserRoleLevel.subsidiary&&UserLevelTool.currentRoleLevelEnum() !=
+    //     UserRoleLevel.physical){
+    //
+    //   Alert.show(
+    //     context,
+    //     NormalContentDialog(
+    //       title: '提示',
+    //       content: Text(
+    //         '批发下单需开通VIP店铺',
+    //         textAlign: TextAlign.center,
+    //         style: TextStyle(color: Color(0xFF333333), fontSize: 14.rsp),
+    //       ),
+    //       items: ["取消"],
+    //       listener: (index) {
+    //         Alert.dismiss(context);
+    //
+    //       },
+    //       deleteItem: "去开通",
+    //       deleteListener: () async{
+    //         Alert.dismiss(context);
+    //
+    //         Get.off(() => VipShopCardPage(
+    //
+    //         ));
+    //       },
+    //       type: NormalTextDialogType.delete,
+    //     ),
+    //   );
+    //
+    //
+    //   return;
+    //
+    // }
 
 
 

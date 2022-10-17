@@ -108,7 +108,11 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
     _fromTo = widget.arguments!["fromTo"];
 
     _canUseBalance = widget.arguments!['canUseBalance'] ?? true;
-    _isPifa = UserManager.instance!.isWholesale;
+
+    if(widget.arguments!["isPifa"]!=null){
+      _isPifa = UserManager.instance!.isWholesale||widget.arguments!["isPifa"];
+      print(widget.arguments!["isPifa"]);
+    }
 
     _presenter
         .queryRecookPayFund(UserManager.instance!.user.info!.id)
@@ -214,7 +218,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
           height: rSize(50),
         ),
 
-        UserManager.instance!.isWholesale? _payTile(
+        _isPifa? _payTile(
                 "",
                 Image.asset(
                   AppSvg.svg_balance_pay,
@@ -346,7 +350,7 @@ class _OrderPrepayPageState extends BaseStoreState<OrderPrepayPage>
       onPressed: !enable
           ? () {
               if (!_canUseBalance) {
-                ReToast.err(text: '订单含跨境商品，无法使用余额支付');
+                ReToast.err(text: '无法使用余额支付');
               } else {
                 ReToast.err(text: '余额不足');
               }

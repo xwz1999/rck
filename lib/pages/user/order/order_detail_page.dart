@@ -57,8 +57,10 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
     super.initState();
     int? orderId = widget.arguments!["orderId"];
 
+    if(widget.arguments!["isPifa"]!=null){
+      isPifa = UserManager.instance!.isWholesale||widget.arguments!["isPifa"];
+    }
 
-    isPifa = UserManager.instance!.isWholesale;
     print(orderId);
     _presenter = OrderListPresenterImpl();
     _presenter.attach(this);
