@@ -1,6 +1,8 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:power_logger/power_logger.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
@@ -19,6 +21,7 @@ import 'package:recook/widgets/cache_tab_bar_view.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/tabbarWidget/ace_bottom_navigation_bar.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:uni_links/uni_links.dart';
 
 class TabBarWidget extends StatefulWidget {
   @override
@@ -32,19 +35,20 @@ class _TabBarWidgetState extends State<TabBarWidget>
   TabController? _tabController;
   late HomeBottomBarController _bottomBarController;
   BuildContext? _context;
+
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback((callback) {
       VersionTool.checkVersionInfo(_context);
     });
+
     _tabController = TabController(length: 5, vsync: this);
     _bottomBarController = HomeBottomBarController();
     UserManager.instance!.refreshMessageNumber.addListener(_refreshMessage);
 
-
     _tabController!.addListener(_tabListener);
-
+    _selectTabbar();
     UserManager.instance!.login.addListener(_loginListener);
     UserManager.instance!.selectTabbar.addListener(_selectTabbar);
     UserManager.instance!.refreshHomeBottomTabbar.addListener(() {
@@ -53,6 +57,7 @@ class _TabBarWidgetState extends State<TabBarWidget>
       });
     });
   }
+
 
 
 
@@ -286,6 +291,7 @@ class _BottomBarState extends State<BottomBar> {
   Color selectedColor = AppColor.themeColor;
   Color unSelectedColor = Colors.black;
 
+
   @override
   void initState() {
     super.initState();
@@ -297,6 +303,7 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return ACEBottomNavigationBar(
+      initSelectedIndex: UserManager.instance!.selectTabbarIndex!,
       barController: widget.barController,
       type: widget.barController.type.value,
       textUnSelectedColor: unSelectedColor,

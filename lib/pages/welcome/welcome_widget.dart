@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:power_logger/power_logger.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/config.dart';
@@ -25,6 +26,7 @@ import 'package:recook/utils/storage/hive_store.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:package_info/package_info.dart';
+import 'package:uni_links/uni_links.dart';
 
 class WelcomeWidget extends StatefulWidget {
   @override
@@ -39,6 +41,8 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
   int? _goodsId = 0;
   Timer? _timer;
   final JPush jpush = new JPush();
+
+  String? initialLink = '';
   @override
   Widget buildContext(BuildContext context, {store}) {
     Constants.initial(context);
@@ -150,6 +154,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
   @override
   void initState() {
     super.initState();
+    initPlatformStateForStringUniLinks();
     getPackageInfo();
     _autoLogin();
     _showController();
@@ -163,6 +168,38 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
       }
     });
 
+  }
+
+
+  Future<void> initPlatformStateForStringUniLinks() async {
+    // App未打开的状态在这个地方捕获scheme
+    try {
+      initialLink = await getInitialLink();
+      if (initialLink != null) {
+        //  跳转到指定页面
+        LoggerData.addData(initialLink);
+        schemeJump(initialLink!);
+      }
+    } on PlatformException {
+      initialLink = 'Failed to get initial link.';
+    } on FormatException {
+      initialLink = 'Failed to parse the initial link as Uri.';
+    }
+  }
+
+  void schemeJump(String schemeUrl) {
+    final _jumpUri = Uri.parse(schemeUrl.replaceFirst(
+      'recook://',
+      'http://path/',
+    ));
+    switch (_jumpUri.path) {
+      case '/akuhome':
+        UserManager.instance!.isWholesale = true;
+        UserManager.instance!.selectTabbarIndex = 4;
+        break;
+      default:
+        break;
+    }
   }
 
   Future<void> initPlatformState() async {

@@ -81,8 +81,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                        android:scheme="akuhome"
-                        android:host="recook"
+                        android:scheme="recook"
+                        android:host="akuhome"
                 />
             </intent-filter>
 

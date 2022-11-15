@@ -6,6 +6,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:power_logger/power_logger.dart';
+import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/user_brief_info_model.dart';
 import 'package:recook/models/user_model.dart';
 import 'package:recook/pages/welcome/launch_widget.dart';
@@ -16,6 +18,7 @@ import 'package:recook/utils/storage/hive_store.dart';
 import 'package:recook/utils/test.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:redux/redux.dart';
+import 'package:uni_links/uni_links.dart';
 
 import 'constants/header.dart';
 
@@ -92,13 +95,17 @@ class MyApp extends StatefulWidget {
 
 class MyAppState extends State<MyApp> {
 
+  String? initialLink = '';
   final Store<RecookState> store;
   MyAppState(this.store);
 
   @override
   void initState() {
     super.initState();
+
   }
+
+
 
 
   final Widget Function(BuildContext, Widget) botToastBuilder = BotToastInit();
