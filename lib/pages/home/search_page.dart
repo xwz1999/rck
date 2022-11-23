@@ -336,7 +336,7 @@ class _SearchPageState extends BaseStoreState<SearchPage>
         }
         // _presenter.fetchList(widget.category.id, 0, _sortType);
         // _presenter.fetchList(_category.id, 0, _sortType);
-        _listViewController!.stopRefresh();
+       // _listViewController!.stopRefresh();
         _listViewController!.requestRefresh();
       },
     );

@@ -1,12 +1,3 @@
-/*
- * ====================================================
- * package   : pages
- * author    : Created by nansi.
- * time      : 2019/5/14  4:26 PM 
- * remark    : 
- * ====================================================
- */
-
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -22,6 +13,7 @@ import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/login/wechat_bind_page.dart';
+import 'package:recook/pages/shopping_cart/function/shopping_cart_fuc.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/toast.dart';
@@ -323,8 +315,12 @@ class _LoginPageState extends BaseStoreState<LoginPage> {
       DPrint.printf("user.status ----------------- ${user!.status}");
       _weChatLoginLoading = false;
       if (user.status == 0) {
+
         AppRouter.push(context, RouteName.WECHAT_BIND,
             arguments: WeChatBindPage.setArgument(user.info!.wxUnionId));
+
+
+
         // AppRouter.push(context, RouteName.INPUT_INVITATION,
         //     arguments: InvitationCodePage.setArgs(
         //         mode: 1, userID: user.info.id, nickName: user.info.nickname));

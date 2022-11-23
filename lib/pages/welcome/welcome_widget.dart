@@ -1,7 +1,6 @@
-
-
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
@@ -177,23 +176,41 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
       initialLink = await getInitialLink();
       if (initialLink != null) {
         //  跳转到指定页面
-        LoggerData.addData(initialLink);
+        LoggerData.addData(initialLink,tag:'initialLink');
         schemeJump(initialLink!);
       }
     } on PlatformException {
       initialLink = 'Failed to get initial link.';
+      LoggerData.addData(initialLink,tag:'initialLink');
     } on FormatException {
       initialLink = 'Failed to parse the initial link as Uri.';
+      LoggerData.addData(initialLink,tag:'initialLink');
     }
   }
 
   void schemeJump(String schemeUrl) {
-    final _jumpUri = Uri.parse(schemeUrl.replaceFirst(
-      'recook://',
-      'http://path/',
-    ));
+    Uri _jumpUri;
+    if(Platform.isIOS){
+       _jumpUri = Uri.parse(schemeUrl.replaceFirst(
+        'https://reecook.cn/recook/',
+        'http://path/',
+      ));
+    }else{
+       _jumpUri = Uri.parse(schemeUrl.replaceFirst(
+        'recook://',
+        'http://path/',
+      ));
+    }
+
+    LoggerData.addData(_jumpUri,tag:'_jumpUri');
+    LoggerData.addData(_jumpUri.path,tag:'_jumpUri.path');
+
     switch (_jumpUri.path) {
       case '/akuhome':
+        UserManager.instance!.isWholesale = true;
+        UserManager.instance!.selectTabbarIndex = 4;
+        break;
+      case '/ios':
         UserManager.instance!.isWholesale = true;
         UserManager.instance!.selectTabbarIndex = 4;
         break;

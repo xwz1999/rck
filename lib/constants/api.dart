@@ -113,6 +113,10 @@ class UserApi {
 
   static const String wx_register = "/v1/users/profile/wx/register";
   static const String wx_login = "/v1/users/profile/wx/login";
+
+
+
+
   static const String wx_invitation = "/v1/users/profile/wx/invitation";
   static const String wx_binding = "/v1/users/profile/mobile/wx/binding";
 

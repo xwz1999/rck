@@ -1,11 +1,4 @@
-/*
- * ====================================================
- * package   : constants
- * author    : Created by nansi.
- * time      : 2019/5/6  9:13 AM 
- * remark    : 
- * ====================================================
- */
+
 
 import 'package:flutter/material.dart';
 
