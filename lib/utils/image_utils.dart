@@ -133,8 +133,9 @@ class ImageUtils {
 
   static Future<bool?> saveImage(
       List<Uint8List> fileDatas,
-      void Function(int index) callBack,
-      void Function(bool success) endBack,{int quality=80}) async {
+      void Function(String index) callBack,
+      void Function(bool success,String path) endBack,{int quality=80}) async {
+     Map<dynamic, dynamic> result;
     //
     try{
       if (Platform.isAndroid) {
@@ -156,18 +157,22 @@ class ImageUtils {
           await (ImageGallerySaver.saveImage(data,quality: quality) );
 
           LoggerData.addData(result.containsValue(true));
+          LoggerData.addData(result['filePath']);
+          // print(result['filePath']);
+          // print(result['filePath'].toString());
           if (Platform.isAndroid) {
+            //print(result.containsValue(true));
             if (result.containsValue(true)) {
-              callBack(i);
+              callBack(result['filePath'].toString());
             } else {
-              endBack(false);
+              endBack(false,'');
               return false;
             }
           } else if (Platform.isIOS) {
             if (result.containsValue(true)) {
-              callBack(i);
+              callBack(result['filePath'].toString());
             } else {
-              endBack(false);
+              endBack(false,'');
               return false;
             }
           }
@@ -176,9 +181,9 @@ class ImageUtils {
           LoggerData.addData(e.toString());
           if (e is ArgumentError) {
             if (Platform.isIOS) {
-              callBack(i);
+              callBack('');
               if (i == (fileDatas.length - 1)) {
-                endBack(true);
+                endBack(true,'');
                 return true;
               }
               continue;
@@ -186,11 +191,11 @@ class ImageUtils {
           }
           LoggerData.addData(e.toString());
           DPrint.printf(e);
-          endBack(false);
+          endBack(false,'');
           return false;
         }
       }
-      endBack(true);
+      endBack(true,'');
       return true;
     }
     catch(e){

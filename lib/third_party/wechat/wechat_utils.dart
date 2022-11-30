@@ -12,6 +12,7 @@ import 'dart:core';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
@@ -113,34 +114,127 @@ class WeChatUtils {
   }
 
 
+  static Future shareNetWorkImage(///分享图片到微信
+      {required String title,
+        required String imgUrl,
+        fluwx.WeChatScene scene = fluwx.WeChatScene.SESSION}) async {
 
-  static Future<Uint8List?> compressFile(File file) async {
-    ///小程序分享的图片限制在128kb
-    int quality = 100;
-    if(file.readAsBytesSync().lengthInBytes/1024 <128){
+    var data = await handleImage(imgUrl);
+    if (data == null) {
+      return;
+    } else {
 
-      var result = await FlutterImageCompress.compressWithFile(
-        file.absolute.path,
-        minHeight: 400,
-        minWidth: 500,
-        quality: 1,
+      var re = await fluwx.shareToWeChat(
+        fluwx.WeChatShareImageModel(
+          fluwx.WeChatImage.binary(data),
+          scene: scene,
+          title: title,
+        ),
       );
-      return result;
-    }else {
-      quality =  (128/(file.readAsBytesSync().lengthInBytes/1024)*100).toInt();
-
-      print(quality);
-
-      var result = await (FlutterImageCompress.compressWithFile(
-        file.absolute.path,
-        minHeight: 400,
-        minWidth: 500,
-        quality: quality,
-      ) );
-      print(file.readAsBytesSync().lengthInBytes);
-      return result  ;
+      if (!re) {
+        BotToast.showText(text: '分享失败');
+      }
     }
   }
+
+
+  static Future shareFileImage(///分享本地图片到微信
+      {required String title,
+        required File file,
+        fluwx.WeChatScene scene = fluwx.WeChatScene.SESSION}) async {
+
+    Uint8List? img = await handleImageFile(file);
+    var re = await fluwx.shareToWeChat(
+      fluwx.WeChatShareImageModel(
+        fluwx.WeChatImage.binary(img!),
+        scene: scene,
+        title: title,
+      ),
+    );
+    if (!re) {
+      BotToast.showText(text: '分享失败');
+    }
+  }
+
+  /// 图片处理
+  static Future<Uint8List?> handleImage(String imgUrl) async {
+    var response = await Dio().get(
+        imgUrl,
+        options: Options(responseType: ResponseType.bytes));
+
+
+    Uint8List data = await compressList(Uint8List.fromList(response.data));
+
+    if (data == null) {
+      BotToast.showText(text: '图片不存在');
+      return null;
+    }
+    if (data.length > 128000) {
+      data = await compressImageList(data);
+    }
+    return data;
+  }
+
+  /// 压缩图片
+  static Future<Uint8List> compressImageList(Uint8List data) async {
+    var result = await FlutterImageCompress.compressWithList(
+      data,
+      minHeight: 300,
+      minWidth: 500,
+      quality: 96,
+    );
+    if (result.length > 128000 ) {
+      result = await compressImageList(result);
+    }
+    return result;
+  }
+
+
+
+  /// 图片处理
+  static Future<Uint8List?> handleImageFile(File file) async {
+
+    Uint8List data = await file.readAsBytes();
+    if (data == null) {
+      BotToast.showText(text: '图片不存在');
+      return null;
+    }
+    if (data.lengthInBytes/1024 > 128000) {
+      data = await compressImageList(data);
+    }
+    return data;
+  }
+
+
+
+
+  // static Future<Uint8List?> compressFile(File file) async {
+  //   ///小程序分享的图片限制在128kb
+  //   int quality = 100;
+  //   if(file.readAsBytesSync().lengthInBytes/1024 <128){
+  //
+  //     var result = await FlutterImageCompress.compressWithFile(
+  //       file.absolute.path,
+  //       minHeight: 400,
+  //       minWidth: 500,
+  //       quality: 96,
+  //     );
+  //     return result;
+  //   }else {
+  //     quality =  (128/(file.readAsBytesSync().lengthInBytes/1024)*100).toInt();
+  //
+  //     print(quality);
+  //
+  //     var result = await (FlutterImageCompress.compressWithFile(
+  //       file.absolute.path,
+  //       minHeight: 400,
+  //       minWidth: 500,
+  //       quality: quality,
+  //     ) );
+  //     print(file.readAsBytesSync().lengthInBytes);
+  //     return result  ;
+  //   }
+  // }
 
   static Future<Uint8List> compressList(Uint8List list) async {
     ///小程序分享的图片限制在128kb

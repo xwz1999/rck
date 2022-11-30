@@ -675,7 +675,7 @@ class _OrderListItemState extends State<OrderListItem> {
                       ])),
                       Spacer(),
                       Text(
-                        goods.rStatus!,
+                      _status=='订单已取消'?'已取消': goods.rStatus!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: AppTextStyle.generate(14 * 2.sp,

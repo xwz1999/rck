@@ -1,11 +1,3 @@
-/*
- * ====================================================
- * package   : 
- * author    : Created by nansi.
- * time      : 2019-08-08  10:16 
- * remark    : 
- * ====================================================
- */
 
 import 'package:bytedesk_kefu/bytedesk_kefu.dart';
 import 'package:flutter/material.dart';
@@ -108,7 +100,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
       floatingActionButton: isPifa? _customer():SizedBox(),
       floatingActionButtonLocation:CustomFloatingActionButtonLocation(FloatingActionButtonLocation.endDocked, 0, -120.rw),
       appBar: CustomAppBar(
-      title: orderDetail==null?'':getTitle(),
+      title: Text(orderDetail==null?'':getTitle(),style: TextStyle(color: Color(0xFF333333)),) ,
       themeData: AppThemes.themeDataGrey.appBarTheme,
       elevation: 0,
       background: AppColor.frenchColor,
@@ -189,7 +181,6 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
       return  "部分商品已发货";
     }
     if (orderDetail!.expressStatus == 2) {
-
       return "已发货";
     }
   }
@@ -332,7 +323,7 @@ class _OrderDetailPageState extends OrderDetailState<OrderDetailPage>
               orderDetail!.createdAt);
           OrderPrepayModel model = OrderPrepayModel("SUCCESS", data, "");
           AppRouter.push(globalContext!, RouteName.ORDER_PREPAY_PAGE,
-              arguments: OrderPrepayPage.setArguments(model,isPifa: true, goToOrder: true,fromTo: orderDetail!.canPay!&&isPifa?'1':''));
+              arguments: OrderPrepayPage.setArguments(model,isPifa: isPifa, goToOrder: true,fromTo: orderDetail!.canPay!&&isPifa?'1':''));
         },
       ));
     return items;

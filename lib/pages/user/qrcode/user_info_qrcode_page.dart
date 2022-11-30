@@ -214,7 +214,7 @@ class _UserInfoQrCodePageState extends BaseStoreState<UserInfoQrCodePage> {
       showError("图片获取失败...");
       return;
     }
-    ImageUtils.saveImage([pngBytes], (index) {}, (success) {
+    ImageUtils.saveImage([pngBytes], (index) {}, (success,path) {
       dismissLoading();
       if (success) {
         showSuccess("图片已经保存到相册!");

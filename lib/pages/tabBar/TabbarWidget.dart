@@ -1,14 +1,10 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:power_logger/power_logger.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/business/release_material_page.dart';
 import 'package:recook/pages/home/home_page.dart';
-import 'package:recook/pages/home/widget/aku_college_page.dart';
 import 'package:recook/pages/live/pages/discovery_page.dart';
 import 'package:recook/pages/live/widget/live_fab_location.dart';
 import 'package:recook/pages/message/message_ceter_page.dart';
@@ -21,7 +17,6 @@ import 'package:recook/widgets/cache_tab_bar_view.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/tabbarWidget/ace_bottom_navigation_bar.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:uni_links/uni_links.dart';
 
 class TabBarWidget extends StatefulWidget {
   @override

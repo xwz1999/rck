@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-
+import 'package:flutter_absolute_path/flutter_absolute_path.dart';
+import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:recook/base/base_store_state.dart';
@@ -12,6 +14,7 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/models/missing_children_model.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
+import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/utils/permission_tool.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -132,7 +135,7 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
     if (pngBytes.length == 0) {
       dismissLoading();
       showError("图片获取失败...");
-      return;
+      return '';
     }
 
 
@@ -168,7 +171,7 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
               return;
             } else {
 
-              ImageUtils.saveImage([pngBytes], (index) {}, (success) {
+              ImageUtils.saveImage([pngBytes], (index) {}, (success,path) {
 
                 if (success) {
                   showSuccess("图片已经保存到相册!");
@@ -201,7 +204,7 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
 
     }else{
       dismissLoading();
-      ImageUtils.saveImage([pngBytes], (index) {}, (success) {
+      ImageUtils.saveImage([pngBytes], (index) {}, (success,path) {
 
         if (success) {
           showSuccess("图片已经保存到相册!");
@@ -228,19 +231,6 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
       });
     }
 
-
-
-
-    // dismissLoading();
-
-    // var filePath = await ImagePickerSaver.saveFile(fileData: pngBytes);
-
-    // var savedFile = File.fromUri(Uri.file(filePath));
-    // setState(() {
-    //   Future<File>.sync(() => savedFile);
-    // });
-    // // '保存成功'
-    // showSuccess("保存成功!");
   }
 
   _getDetail() async {
@@ -268,20 +258,170 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
   }
 
   _bottomWidget() {
-    return Container(
-      margin: EdgeInsets.only(bottom: ScreenUtil().bottomBarHeight),
-      padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
-      height: 60,
-      child: CustomImageButton(
-        onPressed: () {
-          _capturePng();
-        },
-        boxDecoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(30),
-            color: AppColor.themeColor),
-        title: "保存到相册",
-        style: TextStyle(color: Colors.white, fontSize: 16),
-      ),
+    return Row(
+      children: [
+
+        Expanded(
+          child: Container(
+            margin: EdgeInsets.only(bottom: ScreenUtil().bottomBarHeight),
+            padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+            height: 60,
+            child: CustomImageButton(
+              onPressed: () {
+                _capturePng();
+              },
+              boxDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: AppColor.themeColor),
+              title: "保存到相册",
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ),
+        Expanded(
+          child:
+          Container(
+            margin: EdgeInsets.only(bottom: ScreenUtil().bottomBarHeight),
+            padding: EdgeInsets.symmetric(horizontal: 22, vertical: 8),
+            height: 60,
+            child: CustomImageButton(
+              onPressed: () async{
+
+                showLoading("");
+                RenderRepaintBoundary boundary =
+                _globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
+                ui.Image image =
+                await boundary.toImage(pixelRatio: ui.window.devicePixelRatio * 1.2);
+                ByteData byteData = (await (image.toByteData(format: ui.ImageByteFormat.png) ))!;
+
+                Uint8List pngBytes = byteData.buffer.asUint8List();
+
+                if (pngBytes.length == 0) {
+                  dismissLoading();
+                  showError("图片获取失败...");
+                  return ;
+                }
+
+
+                bool permission = await Permission.storage.isGranted;
+                if(!permission){
+                  dismissLoading();
+                  Alert.show(
+                    context,
+                    NormalContentDialog(
+                      title: '存储权限',
+                      content:
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          //Image.asset(R.ASSETS_LOCATION_PER_PNG,width: 44.rw,height: 44.rw,),
+                          Text('允许应用获取存储权限来保存图片', style: TextStyle(
+                              color: Color(0xFF666666), fontSize: 14.rsp),),
+                        ],
+                      ),
+                      items: ["残忍拒绝"],
+                      listener: (index) {
+                        Alert.dismiss(context);
+
+                      },
+                      deleteItem: "立即授权",
+                      deleteListener: () async {
+                        Alert.dismiss(context);
+
+                        bool  canUseCamera = await PermissionTool.haveStoragePermission();
+                        if (!canUseCamera) {
+                          PermissionTool.showOpenPermissionDialog(
+                              context, "没有存储权限,授予后才能保存图片");
+                          return;
+                        } else {
+
+                          ImageUtils.saveImage([pngBytes], (index) {}, (success,path) {
+
+                            if (success) {
+                              showSuccess("图片已经保存到相册!");
+                            } else {
+                              Alert.show(
+                                context,
+                                NormalContentDialog(
+                                  title: '提示',
+                                  content: Text('图片保存失败，请前往应用权限页，设置存储权限为始终允许',style: TextStyle(color: Color(0xFF333333),fontSize: 14.rsp),),
+                                  items: ["取消"],
+                                  listener: (index) {
+                                    Alert.dismiss(context);
+                                  },
+                                  deleteItem: "确认",
+                                  deleteListener: () async{
+
+                                    Alert.dismiss(context);
+                                    bool isOpened = await openAppSettings();
+                                  },
+                                  type: NormalTextDialogType.delete,
+                                ),
+                              );
+                            }
+                          });
+                        }
+                      },
+                      type: NormalTextDialogType.delete,
+                    ),
+                  );
+
+                }else{
+                  dismissLoading();
+                  ImageUtils.saveImage([pngBytes], (index) async {
+                    if(index!=null&&index!=''){
+                      var img = await FlutterAbsolutePath.getAbsolutePath(index);
+                      print(img);
+                      WeChatUtils.shareFileImage(
+                        title: '商品海报',
+                        file: File(img??''),
+                        scene:fluwx.WeChatScene.TIMELINE,
+                      );
+                    }
+
+                  }, (success,path) async {
+
+                    if (success) {
+
+                    } else {
+                      Alert.show(
+                        context,
+                        NormalContentDialog(
+                          title: '提示',
+                          content: Text('图片保存失败，请前往应用权限页，设置存储权限为始终允许',style: TextStyle(color: Color(0xFF333333),fontSize: 14.rsp),),
+                          items: ["取消"],
+                          listener: (index) {
+                            Alert.dismiss(context);
+                          },
+                          deleteItem: "确认",
+                          deleteListener: () async{
+
+                            Alert.dismiss(context);
+                            bool isOpened = await openAppSettings();
+                          },
+                          type: NormalTextDialogType.delete,
+                        ),
+                      );
+                    }
+                  });
+                }
+
+
+
+
+
+              },
+              boxDecoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: AppColor.themeColor),
+              title: "分享到朋友圈",
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ),
+
+
+      ],
     );
   }
 }

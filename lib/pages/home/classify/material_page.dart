@@ -228,7 +228,7 @@ class _MaterialPageState extends State<MaterialPage>
       return;
     }
 
-    await ImageUtils.saveImage( [pngBytes], (index) {}, (success) {
+    await ImageUtils.saveImage( [pngBytes], (index) {}, (success,path) {
 
       if (success) {
         //showSuccess("图片已经保存到相册!");

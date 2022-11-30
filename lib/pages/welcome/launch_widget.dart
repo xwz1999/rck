@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:amap_flutter_location/amap_flutter_location.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/header.dart';
@@ -12,7 +11,6 @@ import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:recook/pages/welcome/welcome_widget.dart';
 import 'package:recook/utils/storage/hive_store.dart';
-import 'package:package_info/package_info.dart';
 import 'package:power_logger/power_logger.dart';
 import 'package:bytedesk_kefu/bytedesk_kefu.dart';
 import 'launch_privacy_dialog.dart';
@@ -33,14 +31,12 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
       UserManager.instance!.kingCoinListModelList =
       await UserFunc.getKingCoinList();
     });
-    //初始化AMap  给android和ios
     //初始化日志工具
-    PowerLogger.start(context, debug:true);//AppConfig.debug!  在正式服数据下进行调试\
+    PowerLogger.start(context, debug:AppConfig.debug!);//AppConfig.debug!  在正式服数据下进行调试\
 
     WidgetsBinding.instance?.addPostFrameCallback((callback) async {
       await Future.delayed(Duration(milliseconds: 2450));
       if (HiveStore.appBox!.get('privacy_init') == null) {
-        // if (true) {
         bool agreeResult = (await launchPrivacyDialog(context)) ?? false;
         if (!agreeResult) {
           //第1次不同意`
@@ -48,7 +44,6 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
               (await (launchPrivacySecondDialog(context) )) ?? false;
           //第2次不同意
           if (!secondAgree)
-            // SystemNavigator.pop();
             initDate();
           else{
             HiveStore.appBox!.put('privacy_init', true);
@@ -67,13 +62,11 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
   }
 
   initDate()async{
-    //获取apk包的信息(版本)
     BytedeskKefu.init(Platform.isAndroid?AppConfig.LBS_ANDROID_KEY:AppConfig.LBS_ANDROID_KEY,AppConfig.LBS_SUBDOMAIN);
     Get.offAll(WelcomeWidget());
   }
 
   initAgreeDate(){
-    //BytedeskKefu.init(Platform.isAndroid?AppConfig.LBS_ANDROID_KEY:AppConfig.LBS_ANDROID_KEY,AppConfig.LBS_SUBDOMAIN);
     AMapFlutterLocation.setApiKey(
         AppConfig.MAP_ANDROID_KEY,  AppConfig.MAP_IOS_KEY);
     AMapFlutterLocation.updatePrivacyShow(true, true);

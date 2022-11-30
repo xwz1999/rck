@@ -274,7 +274,7 @@ class _FocusPageState extends BaseStoreState<FocusPage>
 
       await ImageUtils.saveImage( [pngBytes], (index) {
 
-      }, (success) {
+      }, (success,path) {
 
         if (success) {
           //showSuccess("图片已经保存到相册!");

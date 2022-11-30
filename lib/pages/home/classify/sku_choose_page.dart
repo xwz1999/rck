@@ -221,7 +221,7 @@ class _SkuChoosePageState extends BaseStoreState<SkuChoosePage> {
             fit: BoxFit.cover,
             borderRadius: BorderRadius.all(Radius.circular(8)),
             imageUrl: _sku == null
-                ? Api.getImgUrl(widget.model!.data!.mainPhotos![0].url)
+                ? widget.model!.data!.mainPhotos==null?'': Api.getImgUrl(widget.model!.data!.mainPhotos![0].url)
                 : Api.getImgUrl(_sku!.picUrl),
           ),
           Expanded(

@@ -42,7 +42,7 @@ packages:
       name: asn1lib
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.3.0"
+    version: "1.4.0"
   async:
     dependency: transitive
     description:
@@ -56,7 +56,7 @@ packages:
       name: audio_session
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.1.10"
+    version: "0.1.11"
   auto_size_text_pk:
     dependency: transitive
     description:
@@ -152,8 +152,8 @@ packages:
     dependency: "direct main"
     description:
       path: bytedesk_kefu
-      ref: b6596fc
-      resolved-ref: b6596fc599f6af6d2f0077583ee2aacff144f89a
+      ref: "9b8f21e"
+      resolved-ref: "9b8f21ee7e0cc3bd96eea185208dda9a165ccefc"
       url: "https://github.com/xwz1999/bytedesk-flutter.git"
     source: git
     version: "1.4.0"
@@ -345,14 +345,14 @@ packages:
       name: decimal
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.3.0"
+    version: "2.3.1"
   device_info:
     dependency: "direct main"
     description:
       name: device_info
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.0.3"
+    version: "2.0.0"
   device_info_platform_interface:
     dependency: transitive
     description:
@@ -533,6 +533,15 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_absolute_path:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: df1fa48139b7352e08daa13a5c7a5e4ccad019e8
+      url: "https://github.com/xwz1999/flutter_absolute_path.git"
+    source: git
+    version: "1.0.6"
   flutter_bloc:
     dependency: transitive
     description:
@@ -1013,7 +1022,7 @@ packages:
       name: mime
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   nested:
     dependency: transitive
     description:
@@ -1209,7 +1218,7 @@ packages:
       name: photo_manager
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.5.0"
+    version: "2.5.1+1"
   photo_view:
     dependency: transitive
     description:
@@ -1330,7 +1339,7 @@ packages:
       name: rational
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.2.0"
+    version: "2.2.1"
   redux:
     dependency: transitive
     description:
@@ -1344,7 +1353,7 @@ packages:
       name: rxdart
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.27.6"
+    version: "0.27.7"
   scan:
     dependency: "direct main"
     description:

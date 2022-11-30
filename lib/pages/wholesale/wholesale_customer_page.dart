@@ -271,7 +271,7 @@ class _WholesaleCustomerPageState extends State<WholesaleCustomerPage>
       ReToast.err(text: '保存失败');
       return;
     }
-    ImageUtils.saveImage([pngBytes], (index) {}, (success) {
+    ImageUtils.saveImage([pngBytes], (index) {}, (success,path) {
       cancel();
       if (success) {
         ReToast.success(text: '保存成功');
