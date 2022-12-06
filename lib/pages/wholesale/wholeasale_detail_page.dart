@@ -8,7 +8,6 @@ import 'package:get/get.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/pages/home/classify/mvp/goods_detail_model_impl.dart';
@@ -16,7 +15,6 @@ import 'package:recook/pages/home/widget/modify_detail_app_bar.dart';
 import 'package:recook/pages/home/widget/modify_detail_bottom_bar.dart';
 import 'package:recook/pages/tabBar/TabbarWidget.dart';
 import 'package:recook/pages/wholesale/wholesale_car_page.dart';
-import 'package:recook/pages/wholesale/wholesale_customer_page.dart';
 import 'package:recook/pages/wholesale/wholesale_goods_page.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
@@ -26,7 +24,6 @@ import 'package:recook/widgets/toast.dart';
 
 import 'Wholesale_modify_detail_bottom_bar.dart';
 import 'func/wholesale_func.dart';
-import 'models/wholesale_customer_model.dart';
 import 'models/wholesale_detail_model.dart';
 
 class WholesaleDetailPage extends StatefulWidget {

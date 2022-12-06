@@ -12,7 +12,6 @@ import 'package:recook/pages/user/model/user_income_data_model.dart';
 import 'package:recook/pages/user/other_item_view_v.dart';
 import 'package:recook/pages/user/pifa_benefit_page.dart';
 import 'package:recook/pages/user/user_benefit_sub_page.dart';
-import 'package:recook/pages/user/widget/other_item_view_v2.dart';
 import 'package:recook/pages/wholesale/wholesale_capital_view.dart';
 import 'package:recook/pages/wholesale/wholesale_order_central_view.dart';
 import 'package:recook/pages/wholesale/wholesale_order_home_page.dart';

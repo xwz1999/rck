@@ -10,7 +10,6 @@ import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
-import 'package:recook/widgets/webView.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'aku_college_detail_page.dart';

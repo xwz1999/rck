@@ -13,6 +13,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -28,7 +29,6 @@ import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/pic_swiper.dart';
 import 'package:recook/widgets/toast.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class MaterialPage extends StatefulWidget {
   final int? goodsID;

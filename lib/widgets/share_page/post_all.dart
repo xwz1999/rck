@@ -2,6 +2,8 @@ import 'package:extended_image/extended_image.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lunar_calendar_converter_new/lunar_solar_converter.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
@@ -10,8 +12,6 @@ import 'package:recook/models/goods_detail_model.dart';
 import 'package:recook/models/home_weather_model.dart';
 import 'package:recook/models/missing_children_model.dart';
 import 'package:recook/pages/home/promotion_time_tool.dart';
-import 'package:lunar_calendar_converter_new/lunar_solar_converter.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 import '../custom_cache_image.dart';
 
@@ -370,7 +370,7 @@ class PostBottomWidget extends StatelessWidget {
     String crossedPrice =
         goodsDetailModel!.data!.price!.max!.originalPrice!.toStringAsFixed(2);
     String price = goodsDetailModel!.data!.getPriceString();
-
+    print(qrCode);
     return Container(
       height: 95.rw,
       width: double.infinity,

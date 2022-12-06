@@ -6,8 +6,6 @@ import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/models/life_service/news_detail_model.dart';
 import 'package:recook/models/life_service/news_model.dart';
 import 'package:recook/pages/life_service/life_func.dart';
-import 'package:recook/pages/life_service/sudoku_start_game_page.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/recook_back_button.dart';

@@ -1,15 +1,13 @@
 
 
 import 'dart:math' as math;
+import 'dart:ui' as ui show instantiateImageCodec, Codec, Image;
+import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'dart:ui' as ui show instantiateImageCodec, Codec, Image;
-import 'dart:ui';
-
 import 'package:recook/gen/assets.gen.dart';
 
 

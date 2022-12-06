@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
@@ -18,7 +19,6 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/recook/recook_like_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
-import 'package:oktoast/oktoast.dart';
 
 class UserActivityCard extends StatefulWidget {
   final ActivityListModel model;

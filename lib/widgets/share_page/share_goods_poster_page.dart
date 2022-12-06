@@ -1,8 +1,5 @@
-import 'dart:async';
-import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:fluwx/fluwx.dart' as fluwx;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -302,109 +299,125 @@ class _ShareGoodsPosterPageState extends BaseStoreState<ShareGoodsPosterPage> {
                   return ;
                 }
 
-
-                bool permission = await Permission.storage.isGranted;
-                if(!permission){
                   dismissLoading();
-                  Alert.show(
-                    context,
-                    NormalContentDialog(
-                      title: '存储权限',
-                      content:
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          //Image.asset(R.ASSETS_LOCATION_PER_PNG,width: 44.rw,height: 44.rw,),
-                          Text('允许应用获取存储权限来保存图片', style: TextStyle(
-                              color: Color(0xFF666666), fontSize: 14.rsp),),
-                        ],
-                      ),
-                      items: ["残忍拒绝"],
-                      listener: (index) {
-                        Alert.dismiss(context);
+                WeChatUtils.shareImageByU8(
+                  title: '商品海报',
+                  imgUrl: pngBytes,
+                  scene:fluwx.WeChatScene.TIMELINE,
+                );
 
-                      },
-                      deleteItem: "立即授权",
-                      deleteListener: () async {
-                        Alert.dismiss(context);
-
-                        bool  canUseCamera = await PermissionTool.haveStoragePermission();
-                        if (!canUseCamera) {
-                          PermissionTool.showOpenPermissionDialog(
-                              context, "没有存储权限,授予后才能保存图片");
-                          return;
-                        } else {
-
-                          ImageUtils.saveImage([pngBytes], (index) {}, (success,path) {
-
-                            if (success) {
-                              showSuccess("图片已经保存到相册!");
-                            } else {
-                              Alert.show(
-                                context,
-                                NormalContentDialog(
-                                  title: '提示',
-                                  content: Text('图片保存失败，请前往应用权限页，设置存储权限为始终允许',style: TextStyle(color: Color(0xFF333333),fontSize: 14.rsp),),
-                                  items: ["取消"],
-                                  listener: (index) {
-                                    Alert.dismiss(context);
-                                  },
-                                  deleteItem: "确认",
-                                  deleteListener: () async{
-
-                                    Alert.dismiss(context);
-                                    bool isOpened = await openAppSettings();
-                                  },
-                                  type: NormalTextDialogType.delete,
-                                ),
-                              );
-                            }
-                          });
-                        }
-                      },
-                      type: NormalTextDialogType.delete,
-                    ),
-                  );
-
-                }else{
-                  dismissLoading();
-                  ImageUtils.saveImage([pngBytes], (index) async {
-                    if(index!=null&&index!=''){
-                      var img = await FlutterAbsolutePath.getAbsolutePath(index);
-                      print(img);
-                      WeChatUtils.shareFileImage(
-                        title: '商品海报',
-                        file: File(img??''),
-                        scene:fluwx.WeChatScene.TIMELINE,
-                      );
-                    }
-
-                  }, (success,path) async {
-
-                    if (success) {
-
-                    } else {
-                      Alert.show(
-                        context,
-                        NormalContentDialog(
-                          title: '提示',
-                          content: Text('图片保存失败，请前往应用权限页，设置存储权限为始终允许',style: TextStyle(color: Color(0xFF333333),fontSize: 14.rsp),),
-                          items: ["取消"],
-                          listener: (index) {
-                            Alert.dismiss(context);
-                          },
-                          deleteItem: "确认",
-                          deleteListener: () async{
-
-                            Alert.dismiss(context);
-                            bool isOpened = await openAppSettings();
-                          },
-                          type: NormalTextDialogType.delete,
-                        ),
-                      );
-                    }
-                  });
-                }
+                // bool permission = await Permission.storage.isGranted;
+                // if(!permission){
+                //   dismissLoading();
+                //   Alert.show(
+                //     context,
+                //     NormalContentDialog(
+                //       title: '存储权限',
+                //       content:
+                //       Row(
+                //         mainAxisAlignment: MainAxisAlignment.center,
+                //         children: [
+                //           //Image.asset(R.ASSETS_LOCATION_PER_PNG,width: 44.rw,height: 44.rw,),
+                //           Text('允许应用获取存储权限来保存图片', style: TextStyle(
+                //               color: Color(0xFF666666), fontSize: 14.rsp),),
+                //         ],
+                //       ),
+                //       items: ["残忍拒绝"],
+                //       listener: (index) {
+                //         Alert.dismiss(context);
+                //
+                //       },
+                //       deleteItem: "立即授权",
+                //       deleteListener: () async {
+                //         Alert.dismiss(context);
+                //
+                //         bool  canUseCamera = await PermissionTool.haveStoragePermission();
+                //         if (!canUseCamera) {
+                //           PermissionTool.showOpenPermissionDialog(
+                //               context, "没有存储权限,授予后才能保存图片");
+                //           return;
+                //         } else {
+                //
+                //           ImageUtils.saveImage([pngBytes], (index) {}, (success,path) {
+                //
+                //             if (success) {
+                //               showSuccess("图片已经保存到相册!");
+                //             } else {
+                //               Alert.show(
+                //                 context,
+                //                 NormalContentDialog(
+                //                   title: '提示',
+                //                   content: Text('图片保存失败，请前往应用权限页，设置存储权限为始终允许',style: TextStyle(color: Color(0xFF333333),fontSize: 14.rsp),),
+                //                   items: ["取消"],
+                //                   listener: (index) {
+                //                     Alert.dismiss(context);
+                //                   },
+                //                   deleteItem: "确认",
+                //                   deleteListener: () async{
+                //
+                //                     Alert.dismiss(context);
+                //                     bool isOpened = await openAppSettings();
+                //                   },
+                //                   type: NormalTextDialogType.delete,
+                //                 ),
+                //               );
+                //             }
+                //           });
+                //         }
+                //       },
+                //       type: NormalTextDialogType.delete,
+                //     ),
+                //   );
+                //
+                // }else{
+                //   dismissLoading();
+                //   WeChatUtils.shareImageByU8(
+                //     title: '商品海报',
+                //     imgUrl: pngBytes,
+                //     scene:fluwx.WeChatScene.TIMELINE,
+                //   );
+                  // ImageUtils.saveImage([pngBytes], (index) async {
+                  //
+                  //   print(index);
+                  //   if(index!=null&&index!=''){
+                  //
+                  //       var img = await FlutterAbsolutePath.getAbsolutePath(index);
+                  //       print(img);
+                  //       WeChatUtils.shareFileImage(
+                  //         title: '商品海报',
+                  //         file: File(img??''),
+                  //         scene:fluwx.WeChatScene.TIMELINE,
+                  //       );
+                  //
+                  //
+                  //   }
+                  //
+                  // }, (success,path) async {
+                  //
+                  //   if (success) {
+                  //
+                  //   } else {
+                  //     Alert.show(
+                  //       context,
+                  //       NormalContentDialog(
+                  //         title: '提示',
+                  //         content: Text('图片保存失败，请前往应用权限页，设置存储权限为始终允许',style: TextStyle(color: Color(0xFF333333),fontSize: 14.rsp),),
+                  //         items: ["取消"],
+                  //         listener: (index) {
+                  //           Alert.dismiss(context);
+                  //         },
+                  //         deleteItem: "确认",
+                  //         deleteListener: () async{
+                  //
+                  //           Alert.dismiss(context);
+                  //           bool isOpened = await openAppSettings();
+                  //         },
+                  //         type: NormalTextDialogType.delete,
+                  //       ),
+                  //     );
+                  //   }
+                  // });
+                //}
 
 
 

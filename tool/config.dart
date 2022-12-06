@@ -18,6 +18,19 @@ class Config {
   static String get apksignerPath =>
       '$androidSdkRoot/build-tools/30.0.3/apksigner';
 
+
+  ///zipalign目录
+  static String get zipalignPath =>
+      '$androidSdkRoot/build-tools/30.0.3/zipalign';
+
+  ///keyPath
+  static String get keyPath =>
+      '$homeDir/recook/jks/recook.keystore';
+
+  // /Users/datang/Library/Java/JavaVirtualMachines/jdk1.8.0_291.jdk/Contents/Home//man/man1/jarsigner.1
+
+
+
   ///下载目录
   static String get downloadPath => '$homeDir/Downloads';
 

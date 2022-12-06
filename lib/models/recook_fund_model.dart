@@ -7,7 +7,6 @@
  * ====================================================
  */
 
-import 'package:recook/models/base_model.dart';
 /*
 {
     "code":"SUCCESS",
@@ -21,6 +20,7 @@ import 'package:recook/models/base_model.dart';
  */
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:recook/models/base_model.dart';
 
 part 'recook_fund_model.g.dart';
 

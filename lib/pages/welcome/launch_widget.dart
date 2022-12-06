@@ -27,12 +27,6 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () async {
-      UserManager.instance!.kingCoinListModelList =
-      await UserFunc.getKingCoinList();
-    });
-    //初始化日志工具
-    PowerLogger.start(context, debug:AppConfig.debug!);//AppConfig.debug!  在正式服数据下进行调试\
 
     WidgetsBinding.instance?.addPostFrameCallback((callback) async {
       await Future.delayed(Duration(milliseconds: 2450));
@@ -62,6 +56,12 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
   }
 
   initDate()async{
+
+      UserManager.instance!.kingCoinListModelList =
+      await UserFunc.getKingCoinList();
+
+    //初始化日志工具
+    PowerLogger.start(context, debug:AppConfig.debug!);//AppConfig.debug!  在正式服数据下进行调试\
     BytedeskKefu.init(Platform.isAndroid?AppConfig.LBS_ANDROID_KEY:AppConfig.LBS_ANDROID_KEY,AppConfig.LBS_SUBDOMAIN);
     Get.offAll(WelcomeWidget());
   }

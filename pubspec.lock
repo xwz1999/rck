@@ -533,15 +533,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_absolute_path:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: HEAD
-      resolved-ref: df1fa48139b7352e08daa13a5c7a5e4ccad019e8
-      url: "https://github.com/xwz1999/flutter_absolute_path.git"
-    source: git
-    version: "1.0.6"
   flutter_bloc:
     dependency: transitive
     description:

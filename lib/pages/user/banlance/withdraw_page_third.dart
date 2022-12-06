@@ -2,16 +2,12 @@ import 'dart:ui';
 
 import 'package:bytedesk_kefu/bytedesk_kefu.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/user/functions/user_balance_func.dart';
 import 'package:recook/pages/user/model/company_info_model.dart';
 import 'package:recook/pages/user/model/contact_info_model.dart';
-import 'package:recook/pages/wholesale/func/wholesale_func.dart';
-import 'package:recook/pages/wholesale/models/wholesale_customer_model.dart';
-import 'package:recook/pages/wholesale/wholesale_customer_page.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/toast.dart';

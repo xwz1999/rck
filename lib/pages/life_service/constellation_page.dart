@@ -1,16 +1,12 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/models/life_service/constellation_model.dart';
-import 'package:recook/models/life_service/birth_flower_model.dart';
-import 'package:recook/models/life_service/zodiac_model.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
-import 'package:recook/widgets/pick/car_date_picker.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
 import 'life_func.dart';

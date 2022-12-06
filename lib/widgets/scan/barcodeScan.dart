@@ -5,7 +5,8 @@ import 'package:flutter/services.dart';
 // import 'package:flutter_qr_reader/flutter_qr_reader.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
-
+import 'package:just_audio/just_audio.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
@@ -18,8 +19,6 @@ import 'package:recook/pages/home/barcode/photos_fail_barcode_page.dart';
 import 'package:recook/pages/home/barcode/qr_scaner_result_page.dart';
 import 'package:recook/utils/image_utils.dart';
 import 'package:recook/utils/permission_tool.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:scan/scan.dart';

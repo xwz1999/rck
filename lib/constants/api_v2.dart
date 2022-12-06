@@ -261,6 +261,10 @@ class UserAPI {
   ///获取买卡收益
   String get cardProfit => '/v2/app/user/profit/card';
 
+
+  ///获取是否是黑色模式
+  String get isGrayMode => '/v2/app/switch';
+
 }
 
 class BenefitAPI {

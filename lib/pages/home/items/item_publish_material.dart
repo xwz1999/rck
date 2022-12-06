@@ -12,6 +12,7 @@ import 'dart:ui';
 
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
@@ -27,7 +28,6 @@ import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/nine_grid_view.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/share_page/post_all.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:widget_to_image/widget_to_image.dart';
 
 import '../promotion_time_tool.dart';

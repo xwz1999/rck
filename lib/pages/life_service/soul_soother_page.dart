@@ -1,15 +1,8 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
-import 'package:recook/models/life_service/hw_calculator_model.dart';
-import 'package:recook/models/life_service/joke_model.dart';
-import 'package:recook/pages/life_service/hw_calculator_result_page.dart';
-import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 
 class SoulSootherPage extends StatefulWidget {

@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/life_service/hot_person_model.dart';
 import 'package:recook/pages/life_service/life_func.dart';
-
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/no_data_view.dart';
 import 'package:recook/widgets/refresh_widget.dart';

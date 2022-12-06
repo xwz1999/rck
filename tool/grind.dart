@@ -16,7 +16,7 @@ test() => new TestRunner().testAsync();
 
 ///打包APK
 @Task()
-Future releaseApk() async {
+Future buildApk() async {
   stdout.write("Build APK 📦\n");
   stdout.write("BUILDINGAPK\n");
   await Process.start('fvm', [//arm64向下兼容
@@ -53,6 +53,11 @@ Future releaseApk() async {
   await Process.run(
       'open', ['https://jiagu.360.cn/#/app/android/list']);
   stdout.write("请将加固后的文件重命名为${Config.packageName}_reinforce.apk,并移动至builds文件夹");
+
+
+  await Process.run(
+      'open', ['https://console.cloud.tencent.com/']);
+  stdout.write("上传华为应用市场的应用包需使用腾讯提供的加固，加固完后，执行jarSign->zipalign->check->txSign");
 }
 
 @Task()
@@ -86,6 +91,8 @@ Future releaseDev() async {
 sign() async {
   //TaskArgs args = context.invocation.arguments;
   //String input = args.getOption('input');
+  String date = DateUtil.formatDate(DateTime.now(), format: 'yy_MM_dd_HH_mm');
+  String? version = await getVersion();
   stdout.write('start SIGN 🔑\n');
   ProcessResult process = await Process.run(
     Config.apksignerPath,
@@ -100,7 +107,7 @@ sign() async {
       '--key-pass',
       'pass:${Config.recookPassword}',
       '--out',
-      '${Config.downloadPath}/builds/${Config.packageName}_release_signed.apk',
+      '${Config.downloadPath}/builds/${Config.packageName}_${version}_signed_$date.apk',
       // input,
       // '--input',
       '${Config.downloadPath}/builds/${Config.packageName}_reinforce.apk'
@@ -111,9 +118,124 @@ sign() async {
   stdout.write('end SIGN 🔑\n');
   Process.run('adb', [
     'install',
-    '${Config.downloadPath}/builds/${Config.packageName}_release_signed.apk',
+    '${Config.downloadPath}/builds/${Config.packageName}_${version}_signed_$date.apk',
   ]);
 }
+
+
+@Task()
+jarSign() async {///360加固后华为应用市场过不了审核 需要换成tx加固 ，tx加固以后用这个签名命令 jarSign ->zipalign->check->txSign
+  //TaskArgs args = context.invocation.arguments;
+  //String input = args.getOption('input');
+  stdout.write('start jarSign 🔑\n');
+
+  await runAsync('jarsigner', arguments:
+    [
+      '-verbose',
+      '-keystore',
+      Config.keyPath,
+      '-storepass',
+      Config.recookPassword,
+      '-signedjar',
+      '${Config.downloadPath}/builds/${Config.packageName}_jar_signed.apk',
+      '${Config.downloadPath}/builds/${Config.packageName}_reinforce.apk',
+      'alias'
+    ],
+  );
+
+  stdout.write('end jarSign 🔑\n');
+}
+
+
+@Task()
+txSign() async {///360加固后华为应用市场过不了审核 需要换成tx加固 ，tx加固以后签名有问题 需要先jarSign ->zipalign->check->txSign
+  //TaskArgs args = context.invocation.arguments;
+  //String input = args.getOption('input');
+  stdout.write('start SIGN 🔑\n');
+  String date = DateUtil.formatDate(DateTime.now(), format: 'yy_MM_dd_HH_mm');
+  String? version = await getVersion();
+
+
+  ProcessResult process = await Process.run(
+    Config.apksignerPath,
+    [
+      'sign',
+      '--ks',
+      Config.keystorePath,
+      '--ks-key-alias',
+      'alias',
+      '--ks-pass',
+      'pass:${Config.recookPassword}',
+      '--key-pass',
+      'pass:${Config.recookPassword}',
+      '--out',
+      '${Config.downloadPath}/builds/${Config.packageName}_${version}_signed_$date.apk',
+      '${Config.downloadPath}/builds/${Config.packageName}_release_signed_z.apk'
+    ],
+  );
+  stdout.write(process.stdout);
+  stderr.write(process.stderr);
+  stdout.write('end SIGN 🔑\n');
+  Process.run('adb', [
+    'install',
+    '${Config.downloadPath}/builds/${Config.packageName}_${version}_signed_$date.apk',
+  ]);
+}
+
+
+@Task()
+verify() async {
+
+
+  ProcessResult process = await Process.run(
+    Config.apksignerPath,
+    [
+      'verify',
+      '-v',
+      '${Config.downloadPath}/builds/${Config.packageName}_release_signed.apk'
+    ],
+  );
+  stdout.write(process.stdout);
+  stderr.write(process.stderr);
+  stdout.write('end SIGN 🔑\n');
+}
+
+@Task()
+zipalign() async {///360加固后华为应用市场过不了审核 需要换成tx加固 ，tx加固以后用这个签名命令
+
+  ProcessResult process = await Process.run(
+    Config.zipalignPath,
+    [ '-p',
+      '-f',
+      '-v',
+      '4',
+      '${Config.downloadPath}/builds/${Config.packageName}_jar_signed.apk',
+      '${Config.downloadPath}/builds/${Config.packageName}_release_signed_z.apk'
+    ],
+  );
+  stdout.write(process.stdout);
+  stderr.write(process.stderr);
+  stdout.write('end SIGN 🔑\n');
+}
+
+
+@Task()
+check() async {///360加固后华为应用市场过不了审核 需要换成tx加固 ，tx加固以后用这个签名命令
+
+  ProcessResult process = await Process.run(
+    Config.zipalignPath,
+    [
+      '-c',
+      '-v',
+      '4',
+      '${Config.downloadPath}/builds/${Config.packageName}_release_signed_z.apk',
+    ],
+  );
+  stdout.write(process.stdout);
+  stderr.write(process.stderr);
+  stdout.write('end SIGN 🔑\n');
+}
+
 
 @DefaultTask()
 @Depends(test)
@@ -124,23 +246,23 @@ build() {
 @Task()
 clean() => defaultClean();
 
-@Task()
-buildApk() async {
-  await runAsync('fvm', arguments: [
-    'flutter',
-    'build',
-    'apk',
-    '--target-platform=android-arm64,android-arm',
-    '--dart-define',
-    'ISDEBUG=false'
-  ]);
-  String date = DateUtil.formatDate(DateTime.now(), format: 'yy_MM_dd_HH_mm');
-  String? version = await getVersion();
-  await runAsync('mv', arguments: [
-    Config.buildPath,
-    '${Config.buildDir}/${Config.packageName}_${version}_release_$date.apk'
-  ]);
-}
+// @Task()
+// buildApk() async {
+//   await runAsync('fvm', arguments: [
+//     'flutter',
+//     'build',
+//     'apk',
+//     '--target-platform=android-arm64,android-arm',
+//     '--dart-define',
+//     'ISDEBUG=false'
+//   ]);
+//   String date = DateUtil.formatDate(DateTime.now(), format: 'yy_MM_dd_HH_mm');
+//   String? version = await getVersion();
+//   await runAsync('mv', arguments: [
+//     Config.buildPath,
+//     '${Config.buildDir}/${Config.packageName}_${version}_release_$date.apk'
+//   ]);
+// }
 
 @Task()
 buildApk32() async {

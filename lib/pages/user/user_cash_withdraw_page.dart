@@ -10,15 +10,12 @@ import 'package:recook/manager/http_manager.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/models/base_model.dart';
 import 'package:recook/pages/user/withdraw_rule_page.dart';
-
-
 import 'package:recook/utils/storage/hive_store.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/keyboard/bottom_keyboard_widget.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
-
 import 'package:recook/widgets/webView.dart';
 
 import 'model/withdraw_amount_model.dart';

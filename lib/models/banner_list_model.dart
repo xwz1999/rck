@@ -1,5 +1,5 @@
-import 'package:recook/models/base_model.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:recook/models/base_model.dart';
 
 part 'banner_list_model.g.dart';
 

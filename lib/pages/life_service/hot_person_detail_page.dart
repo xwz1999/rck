@@ -1,19 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/models/life_service/hot_person_model.dart';
-import 'package:recook/models/life_service/news_detail_model.dart';
-import 'package:recook/models/life_service/news_model.dart';
-import 'package:recook/pages/life_service/sudoku_start_game_page.dart';
-import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/refresh_widget.dart';
 import 'package:recook/widgets/webView.dart';
-
-import 'news_detail_page.dart';
 
 ///达人详情
 class HotPersonDetailPage extends StatefulWidget {

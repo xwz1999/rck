@@ -29,6 +29,26 @@ import 'package:recook/widgets/toast.dart';
 import 'package:redux/redux.dart';
 
 class UserManager {
+
+  ///是否领取过7天体验卡
+  static Future<int?> getGrayMode() async {
+
+    ResultData result = await HttpManager.post(APIV2.userAPI.isGrayMode, {});
+
+    if (result.data != null) {
+      if (result.data['data'] != null) {
+        return result.data['data']['condole'];
+      }else
+        return 0;
+    }else
+      return 0;
+  }
+
+  // ///是否添加灰色蒙版
+  // bool? getGray = false;
+
+  ValueNotifier<bool> getGray = ValueNotifier(false);
+
   static bool shouldRefresh = false;
   late User user;
   UserBrief? userBrief;

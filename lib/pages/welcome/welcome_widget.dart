@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:jpush_flutter/jpush_flutter.dart';
+import 'package:package_info/package_info.dart';
 import 'package:power_logger/power_logger.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
@@ -23,8 +25,6 @@ import 'package:recook/utils/print_util.dart';
 import 'package:recook/utils/share_preference.dart';
 import 'package:recook/utils/storage/hive_store.dart';
 import 'package:recook/widgets/toast.dart';
-import 'package:jpush_flutter/jpush_flutter.dart';
-import 'package:package_info/package_info.dart';
 import 'package:uni_links/uni_links.dart';
 
 class WelcomeWidget extends StatefulWidget {

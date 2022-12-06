@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:pin_input_text_field/pin_input_text_field.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -12,7 +13,6 @@ import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/keyboard/keyboard_widget.dart';
 import 'package:recook/widgets/keyboard/pay_password.dart';
 import 'package:recook/widgets/toast.dart';
-import 'package:pin_input_text_field/pin_input_text_field.dart';
 
 class UserSetPasswordVarCode extends StatefulWidget {
   @override

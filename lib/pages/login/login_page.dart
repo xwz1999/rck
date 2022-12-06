@@ -13,7 +13,6 @@ import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/manager/user_manager.dart';
 import 'package:recook/pages/home/classify/commodity_detail_page.dart';
 import 'package:recook/pages/login/wechat_bind_page.dart';
-import 'package:recook/pages/shopping_cart/function/shopping_cart_fuc.dart';
 import 'package:recook/third_party/wechat/wechat_utils.dart';
 import 'package:recook/widgets/alert.dart';
 import 'package:recook/widgets/toast.dart';

@@ -1,13 +1,10 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/models/life_service/hw_calculator_model.dart';
-
 import 'package:recook/widgets/custom_app_bar.dart';
-
 import 'package:recook/widgets/recook_back_button.dart';
 
 class HWCalculatorResultPage extends StatelessWidget {

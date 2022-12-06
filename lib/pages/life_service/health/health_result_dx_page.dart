@@ -1,10 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/models/life_service/loan_model.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/recook_back_button.dart';
-import 'package:velocity_x/velocity_x.dart';
 class HealthResultDXPage extends StatefulWidget {
   final int sex;
   final num height;

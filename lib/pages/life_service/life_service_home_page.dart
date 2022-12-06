@@ -1,9 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/api.dart';
-import 'package:recook/constants/api_v2.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
 import 'package:recook/models/life_service/joke_model.dart';
@@ -15,7 +13,6 @@ import 'package:recook/pages/life_service/soul_soother_page.dart';
 import 'package:recook/pages/life_service/sudoku_game_page.dart';
 import 'package:recook/pages/life_service/zodiac_page.dart';
 import 'package:recook/pages/life_service/zodiac_pairing_page.dart';
-
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:recook/widgets/webView.dart';

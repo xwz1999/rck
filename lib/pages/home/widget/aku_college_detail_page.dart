@@ -12,7 +12,6 @@ import 'package:recook/pages/home/function/home_fuc.dart';
 import 'package:recook/pages/home/model/aku_video_list_model.dart';
 import 'package:recook/utils/share_tool.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
-import 'package:recook/widgets/play_widget/video_player.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:video_player/video_player.dart';
 

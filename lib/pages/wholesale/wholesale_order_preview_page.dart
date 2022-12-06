@@ -15,7 +15,6 @@ import 'package:recook/pages/home/classify/mvp/order_mvp/order_presenter_impl.da
 import 'package:recook/pages/user/address/receiving_address_page.dart';
 import 'package:recook/pages/user/order/order_detail_page.dart';
 import 'package:recook/pages/wholesale/func/wholesale_func.dart';
-import 'package:recook/pages/wholesale/wholesale_customer_page.dart';
 import 'package:recook/pages/wholesale/wholesale_goods_item_order.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_floating_action_button_location.dart';
@@ -24,7 +23,6 @@ import 'package:recook/widgets/input_view.dart';
 import 'package:recook/widgets/progress/re_toast.dart';
 import 'package:recook/widgets/toast.dart';
 
-import 'models/wholesale_customer_model.dart';
 import 'models/wholesale_order_preview_model.dart';
 
 class WholesaleGoodsOrderPage extends StatefulWidget {

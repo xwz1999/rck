@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/gen/assets.gen.dart';
@@ -10,7 +11,6 @@ import 'package:recook/pages/live/sub_page/user_home_page.dart';
 import 'package:recook/pages/user/user_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/refresh_widget.dart';
-import 'package:oktoast/oktoast.dart';
 
 class UserAttentionView extends StatefulWidget {
   final int? id;

@@ -4,14 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/models/life_service/bfr_model.dart';
-import 'package:recook/models/life_service/loan_model.dart';
 import 'package:recook/pages/life_service/life_func.dart';
 import 'package:recook/widgets/bottom_sheet/action_sheet.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/pick/list_pick_body.dart';
 import 'package:recook/widgets/recook_back_button.dart';
-import '../loan_result_page.dart';
+
 import 'health_result_dx_page.dart';
 import 'health_result_kll_page.dart';
 import 'health_result_tz_page.dart';

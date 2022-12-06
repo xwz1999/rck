@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+// import 'package:flutter_txugcupload/flutter_txugcupload.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
 import 'package:recook/manager/http_manager.dart';
@@ -11,8 +13,6 @@ import 'package:recook/pages/live/video/video_goods_page.dart';
 import 'package:recook/pages/live/video/video_preview_page.dart';
 import 'package:recook/utils/custom_route.dart';
 import 'package:recook/widgets/recook/recook_list_tile.dart';
-// import 'package:flutter_txugcupload/flutter_txugcupload.dart';
-import 'package:oktoast/oktoast.dart';
 
 class UploadVideoPage extends StatefulWidget {
   final File videoFile;

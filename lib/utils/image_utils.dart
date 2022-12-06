@@ -16,10 +16,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:recook/constants/header.dart';
-import 'package:recook/utils/print_util.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:power_logger/power_logger.dart';
+import 'package:recook/constants/header.dart';
+import 'package:recook/utils/print_util.dart';
 
 class ImageUtils {
   static Future<File?> cropImage(file) async {
@@ -136,6 +136,7 @@ class ImageUtils {
       void Function(String index) callBack,
       void Function(bool success,String path) endBack,{int quality=80}) async {
      Map<dynamic, dynamic> result;
+     print(fileDatas);
     //
     try{
       if (Platform.isAndroid) {
@@ -155,6 +156,8 @@ class ImageUtils {
         try {
           final Map<dynamic, dynamic> result =
           await (ImageGallerySaver.saveImage(data,quality: quality) );
+
+          print(result);
 
           LoggerData.addData(result.containsValue(true));
           LoggerData.addData(result['filePath']);

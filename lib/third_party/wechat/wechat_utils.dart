@@ -138,6 +138,27 @@ class WeChatUtils {
   }
 
 
+
+  static Future shareImageByU8(///分享Uint8List格式的图片到微信
+      {required String title,
+        required Uint8List imgUrl,
+        fluwx.WeChatScene scene = fluwx.WeChatScene.SESSION}) async {
+
+      var re = await fluwx.shareToWeChat(
+        fluwx.WeChatShareImageModel(
+          fluwx.WeChatImage.binary(imgUrl),
+          scene: scene,
+          title: title,
+        ),
+      );
+      if (!re) {
+        BotToast.showText(text: '分享失败');
+      }
+
+  }
+
+
+
   static Future shareFileImage(///分享本地图片到微信
       {required String title,
         required File file,

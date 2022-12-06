@@ -1,7 +1,4 @@
-import 'dart:async';
-import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:flustars/flustars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_calendar/constants/constants.dart';
@@ -9,13 +6,11 @@ import 'package:flutter_custom_calendar/controller.dart';
 import 'package:flutter_custom_calendar/model/date_model.dart';
 import 'package:flutter_custom_calendar/widget/calendar_view.dart';
 import 'package:recook/constants/header.dart';
-import 'package:recook/manager/http_manager.dart';
 import 'package:recook/models/home_weather_model.dart';
 import 'package:recook/models/life_service/wannianli_model.dart';
 import 'package:recook/pages/life_service/life_func.dart';
 import 'package:recook/widgets/calendar/calendar_weekbar_widget.dart';
 import 'package:recook/widgets/calendar/holiday_calendar_model.dart';
-import 'package:recook/widgets/calendar/perpetual_calendar_model.dart';
 import 'package:recook/widgets/custom_app_bar.dart';
 import 'package:recook/widgets/recook_back_button.dart';
 import 'package:velocity_x/velocity_x.dart';

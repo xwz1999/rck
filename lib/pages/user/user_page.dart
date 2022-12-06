@@ -16,7 +16,6 @@ import 'package:recook/pages/user/review/review_page.dart';
 import 'package:recook/pages/user/user_benefit_sub_page.dart';
 import 'package:recook/pages/user/widget/capital_view.dart';
 import 'package:recook/pages/user/widget/order_central_view.dart';
-import 'package:recook/pages/user/widget/other_item_view_v2.dart';
 import 'package:recook/pages/user/widget/user_app_bar_v2.dart';
 import 'package:recook/redux/recook_state.dart';
 import 'package:recook/utils/user_level_tool.dart';

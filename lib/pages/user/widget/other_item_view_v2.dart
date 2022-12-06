@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:bytedesk_kefu/bytedesk_kefu.dart';
 import 'package:bytedesk_kefu/util/bytedesk_constants.dart';
@@ -14,9 +13,6 @@ import 'package:recook/models/order_list_model.dart';
 import 'package:recook/pages/user/address/receiving_address_page.dart';
 import 'package:recook/pages/user/functions/user_func.dart';
 import 'package:recook/pages/user/setting_page.dart';
-import 'package:recook/pages/wholesale/func/wholesale_func.dart';
-import 'package:recook/pages/wholesale/models/wholesale_customer_model.dart';
-import 'package:recook/pages/wholesale/wholesale_customer_page.dart';
 import 'package:recook/widgets/custom_cache_image.dart';
 import 'package:recook/widgets/custom_image_button.dart';
 import 'package:recook/widgets/no_data_view.dart';
