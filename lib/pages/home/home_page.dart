@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:get/get.dart' hide Response;
-import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:power_logger/power_logger.dart';
 import 'package:recook/base/base_store_state.dart';
@@ -157,8 +156,6 @@ class _HomePageState extends BaseStoreState<HomePage>
 
   String debugLable = 'Unknown';
 
-  /*错误信息*/
-  final JPush jpush = new JPush();
 
   @override
   bool needStore() {

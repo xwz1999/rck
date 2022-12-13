@@ -2,9 +2,9 @@ PODS:
   - amap_flutter_location (0.0.1):
     - AMapLocation
     - Flutter
-  - AMapFoundation (1.6.9)
-  - AMapLocation (2.8.0):
-    - AMapFoundation (~> 1.6.9)
+  - AMapFoundation (1.8.0)
+  - AMapLocation (2.9.0):
+    - AMapFoundation (>= 1.7.0)
   - audio_session (0.0.1):
     - Flutter
   - bytedesk_kefu (0.0.1):
@@ -17,14 +17,14 @@ PODS:
     - Flutter
   - devicelocale (0.0.1):
     - Flutter
-  - DKImagePickerController/Core (4.3.2):
+  - DKImagePickerController/Core (4.3.4):
     - DKImagePickerController/ImageDataManager
     - DKImagePickerController/Resource
-  - DKImagePickerController/ImageDataManager (4.3.2)
-  - DKImagePickerController/PhotoGallery (4.3.2):
+  - DKImagePickerController/ImageDataManager (4.3.4)
+  - DKImagePickerController/PhotoGallery (4.3.4):
     - DKImagePickerController/Core
     - DKPhotoGallery
-  - DKImagePickerController/Resource (4.3.2)
+  - DKImagePickerController/Resource (4.3.4)
   - DKPhotoGallery (0.0.17):
     - DKPhotoGallery/Core (= 0.0.17)
     - DKPhotoGallery/Model (= 0.0.17)
@@ -73,26 +73,26 @@ PODS:
     - Flutter
   - image_picker_ios (0.0.1):
     - Flutter
-  - JCore (3.1.0)
-  - JPush (4.4.0):
+  - JCore (3.2.5)
+  - JPush (4.8.1):
     - JCore (>= 2.0.0)
   - jpush_flutter (0.0.2):
     - Flutter
-    - JCore (= 3.1.0)
-    - JPush (= 4.4.0)
+    - JCore (= 3.2.5)
+    - JPush (= 4.8.1)
   - just_audio (0.0.1):
     - Flutter
   - launch_review (0.0.1):
     - Flutter
-  - libwebp (1.2.1):
-    - libwebp/demux (= 1.2.1)
-    - libwebp/mux (= 1.2.1)
-    - libwebp/webp (= 1.2.1)
-  - libwebp/demux (1.2.1):
+  - libwebp (1.2.4):
+    - libwebp/demux (= 1.2.4)
+    - libwebp/mux (= 1.2.4)
+    - libwebp/webp (= 1.2.4)
+  - libwebp/demux (1.2.4):
     - libwebp/webp
-  - libwebp/mux (1.2.1):
+  - libwebp/mux (1.2.4):
     - libwebp/demux
-  - libwebp/webp (1.2.1)
+  - libwebp/webp (1.2.4)
   - Mantle (2.2.0):
     - Mantle/extobjc (= 2.2.0)
   - Mantle/extobjc (2.2.0)
@@ -109,22 +109,22 @@ PODS:
     - FlutterMacOS
   - scan (0.0.1):
     - Flutter
-  - SDWebImage (5.12.2):
-    - SDWebImage/Core (= 5.12.2)
-  - SDWebImage/Core (5.12.2)
-  - SDWebImageWebPCoder (0.8.4):
+  - SDWebImage (5.14.2):
+    - SDWebImage/Core (= 5.14.2)
+  - SDWebImage/Core (5.14.2)
+  - SDWebImageWebPCoder (0.9.1):
     - libwebp (~> 1.0)
-    - SDWebImage/Core (~> 5.10)
+    - SDWebImage/Core (~> 5.13)
   - shared_preferences_ios (0.0.1):
     - Flutter
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
-  - SwiftyGif (5.4.2)
+  - SwiftyGif (5.4.3)
   - Toast (4.0.0)
   - tobias (0.0.1):
     - Flutter
-  - TOCropViewController (2.6.0)
+  - TOCropViewController (2.6.1)
   - uni_links (0.0.1):
     - Flutter
   - url_launcher_ios (0.0.1):
@@ -257,15 +257,15 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   amap_flutter_location: 44ff5beb64f42e0bf5feb402fe299dac0013af6f
-  AMapFoundation: 8d8ecbb0b2e9ce5487995360d26c885d94642bfd
-  AMapLocation: 5ef44a1117be7dc541cb7a7d43d03c5ee91e4387
+  AMapFoundation: f48153f724114b58da9b01875ab88a1f6856e3db
+  AMapLocation: f5eb11e11c62f0f599f80b578eec8a1f70deb985
   audio_session: 4f3e461722055d21515cf3261b64c973c062f345
   bytedesk_kefu: ca69f7b243932a665dc7001be5a8e04fe7f30c57
   camera_avfoundation: 07c77549ea54ad95d8581be86617c094a46280d9
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
   devicelocale: b22617f40038496deffba44747101255cee005b0
-  DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
+  DKImagePickerController: b512c28220a2b8ac7419f21c491fc8534b7601ac
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
   file_picker: 817ab1d8cd2da9d2da412a417162deee3500fc95
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
@@ -276,12 +276,12 @@ SPEC CHECKSUMS:
   image_cropper: f1668dd8d2cad2d357955caad15a40547856edcb
   image_gallery_saver: 259eab68fb271cfd57d599904f7acdc7832e7ef2
   image_picker_ios: b786a5dcf033a8336a657191401bfdf12017dabb
-  JCore: 4029befb2497adc36b2496e2cfd6b24d9f671784
-  JPush: b7d00f2cc78766e76c8abb30a5741fe94d21e5bc
-  jpush_flutter: bc88cfa9a4ff4481031564b641c3fe24024bb2cb
+  JCore: 4c9febdfdb1a5675ab361bc1f06c0905391d7b23
+  JPush: 2caabdb6d62d009bc07a9bd115d03c7c42512b5e
+  jpush_flutter: 3badd7fb60be478508730b46a701430be4d13c48
   just_audio: baa7252489dbcf47a4c7cc9ca663e9661c99aafa
   launch_review: 75d5a956ba8eaa493e9c9d4bf4c05e505e8d5ed0
-  libwebp: 98a37e597e40bfdb4c911fc98f2c53d0b12d05fc
+  libwebp: f62cb61d0a484ba548448a4bd52aabf150ff6eef
   Mantle: c5aa8794a29a022dfbbfc9799af95f477a69b62d
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
@@ -289,19 +289,19 @@ SPEC CHECKSUMS:
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
   photo_manager: 4f6810b7dfc4feb03b461ac1a70dacf91fba7604
   scan: aea35bb4aa59ccc8839c576a18cd57c7d492cc86
-  SDWebImage: 240e5c12b592fb1268c1d03b8c90d90e8c2ffe82
-  SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
+  SDWebImage: b9a731e1d6307f44ca703b3976d18c24ca561e84
+  SDWebImageWebPCoder: 18503de6621dd2c420d680e33d46bf8e1d5169b0
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
-  SwiftyGif: dec758a9dd3d278e5a855dbf279bf062c923c387
+  SwiftyGif: 6c3eafd0ce693cad58bb63d2b2fb9bacb8552780
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   tobias: 2aded9b83e3663b907360a800d8e3c13284f25c5
-  TOCropViewController: 3105367e808b7d3d886a74ff59bf4804e7d3ab38
+  TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
   video_player_avfoundation: e489aac24ef5cf7af82702979ed16f2a5ef84cff
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
-  webview_flutter: 9f491a9b5a66f2573946a389b2677987b0ff8c0b
+  webview_flutter: 3603125dfd3bcbc9d8d418c3f80aeecf331c068b
   WechatOpenSDK_Fuck: aa8f4b0af902837e887a1d40c62f06c060c1dc98
 
 PODFILE CHECKSUM: 1e9449703bfe4988c58fc84e30598177f37a1111

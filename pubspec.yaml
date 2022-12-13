@@ -2,7 +2,7 @@ name: recook
 description: Recook Market App.
 publish_to: "none"
 
-version: 2.1.4-dev+422
+version: 2.1.5-dev+424
 environment:
   sdk: '>=2.12.0 <3.0.0'
 
@@ -18,7 +18,7 @@ dependencies:
 
   timeline_tile: 2.0.0
   # 高德定位
-  amap_flutter_location: ^3.0.0
+  amap_flutter_location: 3.0.0
   #高德基础依赖库
   amap_flutter_base: 3.0.0
   # 拼音
@@ -45,11 +45,12 @@ dependencies:
   #重复引用
 #  image_picker: ^0.8.5
   #重复引用
-  webview_flutter: 2.0.4
-
+  webview_flutter: 2.0.13
+  #webview_flutter: any
   video_player: ^2.0.0
   chewie: ^1.0.0
 
+#  flutter_inappwebview: any
 
 #  screen:
 #    git:
@@ -182,7 +183,7 @@ dependencies:
   flustars: ^2.0.1
 
   #加载html
-  flutter_widget_from_html_core: ^0.6.2
+  flutter_widget_from_html_core: ^0.8.5
 
   #展开组件
   expandable: ^5.0.1
@@ -191,7 +192,7 @@ dependencies:
   #badges: ^2.0.1
 
   #极光推送
-  jpush_flutter: 2.2.3
+  jpush_flutter: 2.4.0
 
   #缓存图片 解决金刚区图加载缓慢的问题
   cached_network_image: ^3.1.0

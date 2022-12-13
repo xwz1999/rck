@@ -25,9 +25,12 @@ class _PostSelectImageState extends State<PostSelectImage> {
     for (MainPhotos photo in widget.goodsDetailModel!.data!.mainPhotos!) {
       if (photo.isSelect) selectImages.add(photo);
     }
+
+    print(selectImages);
     selectImages.sort((a, b){
       return a.isSelectNumber.compareTo(b.isSelectNumber);
     });
+    print(selectImages);
   }
   @override
   Widget build(BuildContext context) {

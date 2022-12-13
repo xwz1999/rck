@@ -26,6 +26,16 @@ class Api {
     host = "$domain/api";
   }
 
+
+
+  static String? getHtmlImgUrl(String? url, {bool print = false}) {
+    if (!TextUtils.isEmpty(url) && url!.startsWith("http")) {
+      return url;
+    }
+    return "https:$url";
+  }
+
+
   static String? getImgUrl(String? url, {bool print = false}) {
     if (!TextUtils.isEmpty(url) && url!.startsWith("http")) {
       return url;

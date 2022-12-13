@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jpush_flutter/jpush_flutter.dart';
 import 'package:package_info/package_info.dart';
 import 'package:power_logger/power_logger.dart';
 import 'package:recook/base/base_store_state.dart';
@@ -39,7 +38,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
   int _countDownNum = 3;
   int? _goodsId = 0;
   Timer? _timer;
-  final JPush jpush = new JPush();
+
 
   String? initialLink = '';
   @override
@@ -157,7 +156,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     getPackageInfo();
     _autoLogin();
     _showController();
-    initPlatformState();
+
     WidgetsBinding.instance?.addPostFrameCallback((callback) {
       _beginCountDown();
       UserManager.instance!.updateUserBriefInfo(getStore());
@@ -219,73 +218,7 @@ class _WelcomeWidgetState extends BaseStoreState<WelcomeWidget> {
     }
   }
 
-  Future<void> initPlatformState() async {
-    String? platformVersion;
 
-    try {
-      jpush.addEventHandler(
-          onReceiveNotification: (Map<String, dynamic> message) async {
-
-
-        print("123213123546897045769876458907543248935743895743805: $message");
-        // setState(() {
-        //   debugLable = "flutter onReceiveNotification: $message";
-        // });
-
-      }, onOpenNotification: (Map<String, dynamic> message) async {
-
-        print("123213123546897045769876458907543248935743895743805: $message");
-
-
-        Get.to(() => MessageCenterPage(canback: true,));
-
-        // print("flutter onOpenNotification: $message");
-        // setState(() {
-        //   debugLable = "flutter onOpenNotification: $message";
-        // });
-      }, onReceiveMessage: (Map<String, dynamic> message) async {
-        print("flutter onReceiveMessage: $message");
-        setState(() {
-          debugLable = "flutter onReceiveMessage: $message";
-        });
-      }, onReceiveNotificationAuthorization:
-              (Map<String, dynamic> message) async {
-        print("flutter onReceiveNotificationAuthorization: $message");
-        setState(() {
-          debugLable = "flutter onReceiveNotificationAuthorization: $message";
-        });
-      });
-    } on PlatformException {
-      platformVersion = 'Failed to get platform version.';
-    }
-
-    jpush.setup(
-      appKey: "2dba4439e97b3c0b78146fab", //你自己应用的 AppKey
-      channel: "theChannel",
-      production: false,
-      debug: true,
-    );
-    jpush.applyPushAuthority(
-        new NotificationSettingsIOS(sound: true, alert: true, badge: true));
-
-    // Platform messages may fail, so we use a try/catch PlatformException.
-
-    // If the widget was removed from the tree while the asynchronous platform
-    // message was in flight, we want to discard the reply rather than calling
-    // setState to update our non-existent appearance.
-    if (!mounted) return;
-
-    setState(() {
-      debugLable = platformVersion;
-    });
-    jpush.getRegistrationID().then((rid)  {
-      print("flutter get registration id : $rid");
-      UserManager.instance!.jpushRid = rid;
-
-    });
-
-
-  }
 
   getPackageInfo() async {
     PackageInfo _packageInfo = await PackageInfo.fromPlatform();

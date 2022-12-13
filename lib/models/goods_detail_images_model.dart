@@ -25,6 +25,7 @@ class GoodsDetailImagesModel {
 class Data {
   Brand? brand;
   List<Images>? list;
+  String? content;
 
   Data({this.brand, this.list});
 
@@ -36,6 +37,7 @@ class Data {
         list!.add(new Images.fromJson(v));
       });
     }
+    content = json['content'];
   }
 
   Map<String, dynamic> toJson() {
@@ -46,6 +48,7 @@ class Data {
     if (this.list != null) {
       data['list'] = this.list!.map((v) => v.toJson()).toList();
     }
+    data['content'] = this.content;
     return data;
   }
 }

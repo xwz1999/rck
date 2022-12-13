@@ -5,6 +5,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:power_logger/power_logger.dart';
 import 'package:recook/base/base_store_state.dart';
 import 'package:recook/constants/api.dart';
 import 'package:recook/constants/header.dart';
@@ -43,6 +44,7 @@ import 'package:recook/widgets/selected_list.dart';
 import 'package:recook/widgets/toast.dart';
 import 'package:recook/widgets/video_view.dart';
 import 'package:velocity_x/velocity_x.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import 'commodity_detail_page.dart';
 import 'evaluation_list_page.dart';
@@ -261,13 +263,69 @@ class _GoodsPageState extends BaseStoreState<GoodsPage> {
   }
 
   List<Widget> _goodDetailImages() {
+
+    if(_model?.data?.content!=''&&_model?.data?.content!=null){
+
+      ///去除一些无用的符号以及空格
+      String? result1 =  _model?.data?.content?.replaceAll("\\\\n", "")
+          .replaceAll('\\\\', '').replaceAll(new RegExp(r"\s+\b|\b\s"), "");
+
+      LoggerData.addData(result1,tag: 'html2');
+      List images = [];
+
+      var regExp1 = RegExp(r'<imgsrc="([\w\d\:\.\-\/]+)"');
+      var regExp2 = RegExp(r'background[^;"]+url\(([^\)]+)\).');
+
+
+
+      //var regExp3 =   RegExp(r'<ahref="[\w\d\:\.\-\/]+">');
+      images.addAll(regExp1.allMatches(result1??'').map((e) => e.group(1)).toList());
+      images.addAll(regExp2.allMatches(result1??'').map((e) => e.group(1)).toList());
+      // images.addAll(regExp3.allMatches(result1??'').map((e) => e.group(1)).toList());
+      // print(images.last);
+
+      if(images.isNotEmpty)
+      return [
+        Container(
+          width: double.infinity,
+          color: Colors.white,
+          padding: EdgeInsets.only(
+            left: 10,
+            right: 10,
+            bottom: 10,
+            top: 15,
+          ),
+          child: Text("图文详情",
+              style: AppTextStyle.generate(14.rsp,
+                  fontWeight: FontWeight.bold, color: Color(0xFF111111))),
+        ),
+        ...images.map((e) =>  GestureDetector(
+          onLongPress: () {
+            _saveImageWithUrl(Api.getHtmlImgUrl(e));
+          },
+          child: Transform.translate(
+            offset: Offset(0, 0 - images.indexOf(e).toDouble()),
+            child: FadeInImage.assetNetwork(
+              image:Api.getHtmlImgUrl(e)??'',
+              placeholder: R.ASSETS_PLACEHOLDER_NEW_1X1_A_PNG,
+              fit: BoxFit.cover,
+              imageErrorBuilder: (context, error, stackTrace) {
+                return Image.asset(Assets.placeholderNew1x1A.path,fit: BoxFit.cover,);
+              },
+            ),
+          ),
+        )).toList()
+      ];
+    }
+
     if (_model == null) return [];
 
     List<Widget> children = _model!.data!.list!.map((Images image) {
       // Rect imageRect = await WidgetUtil.getImageWH(url: "Url");
 
       // ignore: unnecessary_cast
-      return (GestureDetector(
+      return (
+          GestureDetector(
         onLongPress: () {
           _saveImageWithUrl(image.url);
         },
