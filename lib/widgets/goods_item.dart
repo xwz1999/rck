@@ -826,6 +826,7 @@ class GoodsItemWidget extends StatelessWidget {
     );
   }
 
+  ///
   Future _shareEvent() async {
     String? imgUrl;
     GoodsDetailModel imagesModel = await GoodsDetailModelImpl.getDetailInfo(

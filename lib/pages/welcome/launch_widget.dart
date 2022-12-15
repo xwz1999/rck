@@ -168,7 +168,6 @@ class _LaunchWidgetState extends BaseStoreState<LaunchWidget>
               ),
             ),
             50.hb,
-
             Text(
                 '数字化批发零售服务平台',
               style: TextStyle(

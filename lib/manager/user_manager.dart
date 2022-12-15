@@ -44,8 +44,6 @@ class UserManager {
       return 0;
   }
 
-  // ///是否添加灰色蒙版
-  // bool? getGray = false;
 
   ValueNotifier<bool> getGray = ValueNotifier(false);
 

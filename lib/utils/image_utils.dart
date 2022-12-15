@@ -23,7 +23,7 @@ import 'package:recook/utils/print_util.dart';
 
 class ImageUtils {
   static Future<File?> cropImage(file) async {
-    File? croppedFile = await ImageCropper.cropImage(
+    File? croppedFile = await ImageCropper().cropImage(
       sourcePath: file.path,
       androidUiSettings: AndroidUiSettings(
           toolbarTitle: "裁剪",

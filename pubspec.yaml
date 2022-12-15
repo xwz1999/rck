@@ -22,7 +22,7 @@ dependencies:
   #高德基础依赖库
   amap_flutter_base: 3.0.0
   # 拼音
-  lpinyin: 2.0.0
+  lpinyin: 2.0.3
   # 城市列表
   azlistview: 2.0.0
 
@@ -31,10 +31,10 @@ dependencies:
   lunar_calendar_converter_new: ^2.0.0
 
   # 进度条 视频录制
-  percent_indicator: ^3.0.1
+  percent_indicator: ^4.0.0
 
   #扫码提示音
-  just_audio: ^0.7.3
+  just_audio: ^0.9.30
 
   # 展示二维码
   qr_flutter: ^4.0.0
@@ -45,10 +45,10 @@ dependencies:
   #重复引用
 #  image_picker: ^0.8.5
   #重复引用
-  webview_flutter: 2.0.13
-  #webview_flutter: any
-  video_player: ^2.0.0
-  chewie: ^1.0.0
+  #webview_flutter: 2.0.13
+
+  video_player: ^2.3.0
+  chewie: ^1.3.0
 
 #  flutter_inappwebview: any
 
@@ -60,41 +60,42 @@ dependencies:
 #  url_launcher: any
 
   # 权限组件
-  permission_handler: ^8.0.1
+  permission_handler: ^10.2.0
 
-  cupertino_icons: ^1.0.2
+#  cupertino_icons: ^1.0.5
 
   # 全局状态控制
-  flutter_redux: ^0.8.0
+  flutter_redux: ^0.9.0
 
   # json解析
-  json_annotation: ^4.0.1
+  json_annotation: ^4.6.0
 
   # 路径  #重复引用
 #  path_provider: ^2.0.1
-  path:
+  path: ^1.8.0
 
   # 网络请求
-  dio: ^4.0.0-prev3
+  dio: ^4.0.6
 
   # loading界面
-  flutter_spinkit: ^5.0.0
+  flutter_spinkit: ^5.1.0
 
   # toast提示
-  oktoast: 3.0.0
+  oktoast: ^3.1.5
 
   # 应用信息
   package_info: ^2.0.0
 
   #缓存图片
   #  cached_network_image: ^1.1.0
-  extended_text: any
+  extended_text: 8.0.2
 #  extended_image: ^3.0.0
   # image_gallery_saver: ^1.2.1
 
   # 图片压缩
-  flutter_image_compress: 1.1.0
-  image_cropper: 1.4.0
+  flutter_image_compress: 1.1.3
+  #图片裁剪
+  image_cropper: 1.5.1
 
 
   # 下拉刷新
@@ -112,7 +113,8 @@ dependencies:
 #  flutter_gifimage: ^1.0.0
 
   # 微信登录 支付等
-  fluwx: 3.6.1+4
+  fluwx: 3.12.0
+  #fluwx: 3.6.1+4
     # git:
     #   url: http://test.akuhotel.com:8099/laiiihz/fluwx.git
 
@@ -120,13 +122,13 @@ dependencies:
   # 源码 TobiasPlugin.m
   # 判断支付宝是否安装时  源码不正确  应将 alipays 改为 alipay #########################3
   #
-  tobias: ^2.1.2+1
+  tobias: ^2.4.1
 
   # 小数据缓存  #重复引用
 #  shared_preferences: ^2.0.5
 
   # 屏幕适配
-  flutter_screenutil: 5.0.0
+  flutter_screenutil: 5.6.0
 
   #轮播图
   flutter_swiper_null_safety: ^1.0.2
@@ -141,7 +143,7 @@ dependencies:
 
 
   # 加密
-  encrypt: ^5.0.0
+  encrypt: ^5.0.1
 
   # 时间选择器 #该版本有报错 未修改
   flutter_datetime_picker: ^1.5.1
@@ -158,9 +160,9 @@ dependencies:
 #  flutter_slidable: 0.5.7
 
 
-  wechat_assets_picker: ^7.0.0
+  wechat_assets_picker: ^7.2.0
 
-  wechat_camera_picker: any
+  wechat_camera_picker: ^3.1.0
 
   image_gallery_saver: 1.7.1
 
@@ -176,14 +178,14 @@ dependencies:
 #    git:
 #      url: https://github.com/customPub/tencent_im_plugin
   #瀑布流
-  waterfall_flow: ^3.0.0
+  waterfall_flow: ^3.0.2
   #相机
 #  camera: ^0.9.8+1
   #工具类库
   flustars: ^2.0.1
 
   #加载html
-  flutter_widget_from_html_core: ^0.8.5
+  flutter_widget_from_html_core: ^0.8.5+3
 
   #展开组件
   expandable: ^5.0.1
@@ -195,22 +197,25 @@ dependencies:
   jpush_flutter: 2.4.0
 
   #缓存图片 解决金刚区图加载缓慢的问题
-  cached_network_image: ^3.1.0
+  cached_network_image: ^3.2.0
 
-  hive: ^2.0.0
-  hive_flutter: ^1.0.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
-  pin_input_text_field: ^4.0.0
-  velocity_x: 3.3.0
+  pin_input_text_field: ^4.2.0
+  velocity_x: 3.4.0
 
-  device_info: 2.0.0
+  #device_info: 2.0.0
+
+  device_info_plus: ^2.0.1
+
   #日志
   power_logger:
       git:
         url: https://git.oa00.com/flutter_pub/power_logger.git
 
-  bot_toast: ^4.0.2
-  get: 4.0.2
+  bot_toast: ^4.0.3
+  get: 4.6.5
 
 
   #跳转到应用市场进行更新
@@ -220,10 +225,10 @@ dependencies:
 
   uni_links: ^0.5.1
 
-  flutter_picker: ^2.0.3
+  flutter_picker: ^2.0.5
 
   #日历组件
-  table_calendar: 3.0.0
+  table_calendar: 3.0.8
   #萝卜丝客服
   bytedesk_kefu:
     git:
@@ -240,11 +245,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^2.0.4
+  build_runner: ^2.2.0
   json_serializable: any
   grinder:
   import_sorter:
-  yaml: ^3.1.0
+  yaml: ^3.1.1
 
 flutter:
   uses-material-design: true

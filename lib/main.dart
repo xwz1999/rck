@@ -133,7 +133,7 @@ class MyAppState extends State<MyApp> {
                       : Colors.transparent, BlendMode.color),
               child: ScreenUtilInit(
                 designSize: Size(750, 1334),
-                builder: () =>
+                builder: (context,widget) =>
                     GestureDetector(
                       onTap: () {
                         //只能响应点击非手势识别的组件
