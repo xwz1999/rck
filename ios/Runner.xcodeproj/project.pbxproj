@@ -381,6 +381,7 @@
 				DEVELOPMENT_TEAM = HV8WM8C68W;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -453,8 +454,6 @@
 					"-framework",
 					"\"audio_session\"",
 					"-framework",
-					"\"device_info\"",
-					"-framework",
 					"\"device_info_plus\"",
 					"-framework",
 					"\"flutter_image_compress\"",
@@ -471,7 +470,7 @@
 					"-framework",
 					"\"package_info_plus\"",
 					"-framework",
-					"\"permission_handler\"",
+					"\"permission_handler_apple\"",
 					"-framework",
 					"\"photo_manager\"",
 					"-framework",
@@ -642,6 +641,7 @@
 				DEVELOPMENT_TEAM = HV8WM8C68W;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -714,8 +714,6 @@
 					"-framework",
 					"\"audio_session\"",
 					"-framework",
-					"\"device_info\"",
-					"-framework",
 					"\"device_info_plus\"",
 					"-framework",
 					"\"flutter_image_compress\"",
@@ -732,7 +730,7 @@
 					"-framework",
 					"\"package_info_plus\"",
 					"-framework",
-					"\"permission_handler\"",
+					"\"permission_handler_apple\"",
 					"-framework",
 					"\"photo_manager\"",
 					"-framework",
@@ -769,6 +767,7 @@
 				DEVELOPMENT_TEAM = HV8WM8C68W;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Runner/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -841,8 +840,6 @@
 					"-framework",
 					"\"audio_session\"",
 					"-framework",
-					"\"device_info\"",
-					"-framework",
 					"\"device_info_plus\"",
 					"-framework",
 					"\"flutter_image_compress\"",
@@ -859,7 +856,7 @@
 					"-framework",
 					"\"package_info_plus\"",
 					"-framework",
-					"\"permission_handler\"",
+					"\"permission_handler_apple\"",
 					"-framework",
 					"\"photo_manager\"",
 					"-framework",
