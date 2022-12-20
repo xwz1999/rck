@@ -183,6 +183,8 @@ class UserManager {
     ResultData result = await HttpManager.post(APIV2.userAPI.activePeople, {
       'id': UserManager.instance!.user.info!.id,
     });
+    print('更新活跃人数');
+    print(result);
     return null;
   }
 }

@@ -10,17 +10,10 @@ buildscript {
     ext.kotlin_version = '1.6.10'
     ext.flutterFFmpegPackage = 'min-lts'
     repositories {
-//        google()
-//        jcenter()
-//
-//        maven { url 'http://download.flutter.io' }
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
-        maven { url 'https://maven.aliyun.com/nexus/content/groups/public' }
-        maven { url 'http://download.flutter.io' }
-        mavenLocal()
-        mavenCentral()
+        google()
+        jcenter()
 
+      //  maven { url 'http://download.flutter.io' }
 //        maven {
 //            url "http://mvn.mob.com/android"
 //        }
@@ -38,11 +31,8 @@ buildscript {
 
 allprojects {
     repositories {
-//        google()
-//        jcenter()
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/jcenter' }
-        maven { url 'https://maven.aliyun.com/nexus/content/groups/public' }
+        google()
+        jcenter()
         flatDir {
             dirs "${plugins.get("flutter_tencentplayer")}android/libs"
         }

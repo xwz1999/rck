@@ -114,28 +114,28 @@ class WeChatUtils {
   }
 
 
-  static Future shareNetWorkImage(///分享图片到微信
-      {required String title,
-        required String imgUrl,
-        fluwx.WeChatScene scene = fluwx.WeChatScene.SESSION}) async {
-
-    var data = await handleImage(imgUrl);
-    if (data == null) {
-      return;
-    } else {
-
-      var re = await fluwx.shareToWeChat(
-        fluwx.WeChatShareImageModel(
-          fluwx.WeChatImage.binary(data),
-          scene: scene,
-          title: title,
-        ),
-      );
-      if (!re) {
-        BotToast.showText(text: '分享失败');
-      }
-    }
-  }
+  // static Future shareNetWorkImage(///分享图片到微信
+  //     {required String title,
+  //       required String imgUrl,
+  //       fluwx.WeChatScene scene = fluwx.WeChatScene.SESSION}) async {
+  //
+  //   var data = await handleImage(imgUrl);
+  //   if (data == null) {
+  //     return;
+  //   } else {
+  //
+  //     var re = await fluwx.shareToWeChat(
+  //       fluwx.WeChatShareImageModel(
+  //         fluwx.WeChatImage.binary(data),
+  //         scene: scene,
+  //         title: title,
+  //       ),
+  //     );
+  //     if (!re) {
+  //       BotToast.showText(text: '分享失败');
+  //     }
+  //   }
+  // }
 
 
 
@@ -159,124 +159,120 @@ class WeChatUtils {
 
 
 
-  static Future shareFileImage(///分享本地图片到微信
-      {required String title,
-        required File file,
-        fluwx.WeChatScene scene = fluwx.WeChatScene.SESSION}) async {
-
-    Uint8List? img = await handleImageFile(file);
-    var re = await fluwx.shareToWeChat(
-      fluwx.WeChatShareImageModel(
-        fluwx.WeChatImage.binary(img!),
-        scene: scene,
-        title: title,
-      ),
-    );
-    if (!re) {
-      BotToast.showText(text: '分享失败');
-    }
-  }
-
-  /// 图片处理
-  static Future<Uint8List?> handleImage(String imgUrl) async {
-    var response = await Dio().get(
-        imgUrl,
-        options: Options(responseType: ResponseType.bytes));
-
-
-    Uint8List data = await compressList(Uint8List.fromList(response.data));
-
-    if (data == null) {
-      BotToast.showText(text: '图片不存在');
-      return null;
-    }
-    if (data.length > 128000) {
-      data = await compressImageList(data);
-    }
-    return data;
-  }
-
-  /// 压缩图片
-  static Future<Uint8List> compressImageList(Uint8List data) async {
-    var result = await FlutterImageCompress.compressWithList(
-      data,
-      minHeight: 300,
-      minWidth: 500,
-      quality: 96,
-    );
-    if (result.length > 128000 ) {
-      result = await compressImageList(result);
-    }
-    return result;
-  }
-
-
-
-  /// 图片处理
-  static Future<Uint8List?> handleImageFile(File file) async {
-
-    Uint8List data = await file.readAsBytes();
-    if (data == null) {
-      BotToast.showText(text: '图片不存在');
-      return null;
-    }
-    if (data.lengthInBytes/1024 > 128000) {
-      data = await compressImageList(data);
-    }
-    return data;
-  }
-
-
-
-
-  // static Future<Uint8List?> compressFile(File file) async {
-  //   ///小程序分享的图片限制在128kb
-  //   int quality = 100;
-  //   if(file.readAsBytesSync().lengthInBytes/1024 <128){
+  // static Future shareFileImage(///分享本地图片到微信
+  //     {required String title,
+  //       required File file,
+  //       fluwx.WeChatScene scene = fluwx.WeChatScene.SESSION}) async {
   //
-  //     var result = await FlutterImageCompress.compressWithFile(
-  //       file.absolute.path,
-  //       minHeight: 400,
-  //       minWidth: 500,
-  //       quality: 96,
-  //     );
-  //     return result;
-  //   }else {
-  //     quality =  (128/(file.readAsBytesSync().lengthInBytes/1024)*100).toInt();
-  //
-  //     print(quality);
-  //
-  //     var result = await (FlutterImageCompress.compressWithFile(
-  //       file.absolute.path,
-  //       minHeight: 400,
-  //       minWidth: 500,
-  //       quality: quality,
-  //     ) );
-  //     print(file.readAsBytesSync().lengthInBytes);
-  //     return result  ;
+  //   Uint8List? img = await handleImageFile(file);
+  //   var re = await fluwx.shareToWeChat(
+  //     fluwx.WeChatShareImageModel(
+  //       fluwx.WeChatImage.binary(img!),
+  //       scene: scene,
+  //       title: title,
+  //     ),
+  //   );
+  //   if (!re) {
+  //     BotToast.showText(text: '分享失败');
   //   }
   // }
 
-  static Future<Uint8List> compressList(Uint8List list) async {
+  // /// 图片处理
+  // static Future<Uint8List?> handleImage(String imgUrl) async {
+  //   var response = await Dio().get(
+  //       imgUrl,
+  //       options: Options(responseType: ResponseType.bytes));
+  //
+  //
+  //   Uint8List data = await compressList(Uint8List.fromList(response.data));
+  //
+  //   if (data == null) {
+  //     BotToast.showText(text: '图片不存在');
+  //     return null;
+  //   }
+  //   if (data.length > 128000) {
+  //     data = await compressImageList(data);
+  //   }
+  //   return data;
+  // }
+
+  // /// 压缩图片
+  // static Future<Uint8List> compressImageList(Uint8List data) async {
+  //   var result = await FlutterImageCompress.compressWithList(
+  //     data,
+  //     minHeight: 300,
+  //     minWidth: 500,
+  //     quality: 96,
+  //   );
+  //   if (result.length > 128000 ) {
+  //     result = await compressImageList(result);
+  //   }
+  //   return result;
+  // }
+
+
+
+  // /// 图片处理
+  // static Future<Uint8List?> handleImageFile(File file) async {
+  //
+  //   Uint8List data = await file.readAsBytes();
+  //   if (data == null) {
+  //     BotToast.showText(text: '图片不存在');
+  //     return null;
+  //   }
+  //   if (data.lengthInBytes/1024 > 128000) {
+  //     data = await compressImageList(data);
+  //   }
+  //   return data;
+  // }
+
+
+
+
+  static Future<Uint8List?> compressFile(File file) async {
     ///小程序分享的图片限制在128kb
     int quality = 100;
-    if(list.lengthInBytes/1024 <128){
-      return list;
+    if(file.readAsBytesSync().lengthInBytes/1024 <128){
+
+      var result = await FlutterImageCompress.compressWithFile(
+        file.absolute.path,
+        minHeight: 400,
+        minWidth: 500,
+        quality: 96,
+      );
+      return result;
     }else {
-      quality =  (128/(list.lengthInBytes/1024)*100).toInt();
+      quality =  (128/(file.readAsBytesSync().lengthInBytes/1024)*100).toInt();
 
       print(quality);
 
-      var result = await FlutterImageCompress.compressWithList(
-        list,
+      var result = await (FlutterImageCompress.compressWithFile(
+        file.absolute.path,
         minHeight: 400,
         minWidth: 500,
         quality: quality,
-      );
-      print(list.length);
-      print(result.length);
-      return Uint8List.fromList(result)  ;
+      ) );
+      print(file.readAsBytesSync().lengthInBytes);
+      return result  ;
     }
+  }
+
+  static Future<Uint8List> compressImageList(Uint8List data,int num) async {
+
+    print(num);
+    print(data.length);
+    var result = await FlutterImageCompress.compressWithList(
+      data,
+      minHeight: 400,
+      minWidth: 500,
+      quality: 95 - num*10,
+    );
+    print(result.length);
+
+    if (result.length > 128000&&result.length<=data.length) {
+      result = await compressImageList(result, num+1);
+    }
+    return Uint8List.fromList(result)  ;
   }
 
 
@@ -293,7 +289,7 @@ class WeChatUtils {
           options: Options(responseType: ResponseType.bytes));
 
 
-      Uint8List list = await compressList(Uint8List.fromList(response.data));
+      Uint8List list = await compressImageList(Uint8List.fromList(response.data),0);
 
 
 

@@ -44,14 +44,6 @@ class _GoodsListTempPageState extends BaseStoreState<GoodsListTempPage> with Tic
   @override
   Widget buildContext(BuildContext context, {store}) {
     Scaffold scaffold = Scaffold(
-        // appBar: AppBar(
-        //   title: Image.asset(_goodsListTempType == GoodsListTempType.recookMake
-        //    ? "assets/listtemp_recookmaketitle.png"
-        //    : _goodsListTempType == GoodsListTempType.homeAppliances
-        //    ? "assets/listtemp_homeappliances.png"
-        //    : "assets/listtemp_homelifetitle.png"),
-        //   leading: _backButton(context),
-        // ),
         backgroundColor: Color.fromARGB(255, 236, 236, 236),
         body: SafeArea(
           top: false,
